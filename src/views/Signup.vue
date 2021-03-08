@@ -4,17 +4,23 @@
   >
     <div class="w-1/4 space-y-8">
       <div>
-         <h2 class="mt-6 text-center text-3xl font-extrabold text-indigo-800">
+        <h2 class="mt-6 text-center text-3xl font-extrabold text-indigo-800">
           Signup
         </h2>
+        <!-- <svg class="ml-12" height="25" width="440">
+          <g fill="">
+            <path stroke-width="10" stroke="yellow" d="M2 5 l180 0" />
+          </g>
+        </svg> -->
       </div>
-      <form class="mt-6 space-y-6" action="#" method="POST">
+      <form class="mt-6 space-y-6" @submit.prevent="submit">
         <input type="hidden" name="remember" value="true" />
         <div class="rounded-md shadow-sm -space-y-px">
           <div>
             <span class="py-2">Email</span>
             <label for="email-address" class="sr-only">Email</label>
             <input
+              v-model="data.email"
               id="email-address"
               name="email"
               type="email"
@@ -29,6 +35,7 @@
           <span class="py-2">Password</span>
           <label for="password" class="sr-only">Password</label>
           <input
+            v-model="data.password"
             id="password"
             name="password"
             type="password"
@@ -42,6 +49,7 @@
           <span class="py-2">Confirm Password</span>
           <label for="password" class="sr-only">Confirm Password</label>
           <input
+            v-model="data.confirmPassword"
             id="confirm-password"
             name="confirm-password"
             type="password"
@@ -67,3 +75,24 @@
     </div>
   </div>
 </template>
+<script lang="ts">
+import { reactive } from "vue";
+
+export default {
+  name: "Register",
+  setup() {
+    const data = reactive({
+      email: "",
+      password: "",
+      confirmPassword: "",
+    });
+    const submit = () => {
+      console.log(data);
+    };
+    return {
+      data,
+      submit,
+    };
+  },
+};
+</script>

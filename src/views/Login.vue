@@ -7,14 +7,16 @@
         <h2 class="mt-6 text-center text-3xl font-extrabold text-indigo-800">
           Login
         </h2>
+        
       </div>
-      <form class="mt-8 space-y-6" action="#" method="POST">
+      <form @submit.prevent="submit">
         <input type="hidden" name="remember" value="true" />
         <div class="rounded-md shadow-sm -space-y-px">
           <div>
-            <span class="py-2">Username</span>
+            <span class="py-2">Email</span>
             <label for="email-address" class="sr-only">Email address</label>
             <input
+              v-model="data.email"
               id="email-address"
               name="email"
               type="email"
@@ -28,6 +30,7 @@
           <span class="py-2">Password</span>
           <label for="password" class="sr-only">Password</label>
           <input
+            v-model="data.password"
             id="password"
             name="password"
             type="password"
@@ -63,3 +66,22 @@
     </div>
   </div>
 </template>
+<script lang="ts">
+import { reactive } from "vue";
+export default {
+  name: "Signup",
+  setup() {
+    const data = reactive({
+      email: "",
+      password: "",
+    });
+    const submit = () => {
+      console.log(data);
+    };
+    return {
+      data,
+      submit,
+    };
+  },
+};
+</script>
