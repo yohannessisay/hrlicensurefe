@@ -14,9 +14,9 @@
                 </div>
            </div> 
            <div class="right">
-                <p class="">Kebele</p>
+                <p class="">Email(Optional)</p>
                 <div class="">
-                    <input v-model ="contactInfo.kebele" type="text" name="kebele" placeholder="Kebele" />
+                    <input v-model ="contactInfo.email" type="text" name="email" placeholder="Email" />
                 </div>
             </div>   
         </div>
@@ -34,7 +34,7 @@
        
         <div>
         <div class="item">
-           <div class="left">
+           <div class="left-uni">
                 <p class="">P.O Box(Optional)</p>
                 <div class="">
                     <input v-model ="contactInfo.poBox" type="text" name="poBox" placeholder="P.O Box" />
@@ -63,6 +63,16 @@
           float: left;
               
           width: calc(50% - 20px);
+      }
+     .left-uni{
+          float: left;
+              
+           width: 100%;
+      }
+    .left-uni input{
+          float: left;
+              
+           width:  calc(50% - 30px)
       }
 
       .right-radio{
@@ -209,8 +219,9 @@
       opacity: 1;
       }
       .btn-block {
-      margin-top: 10px;
+      margin-top: 250px;
       text-align: center;
+      width: 100%;
       }
       button {
       width: 150px;
@@ -238,7 +249,7 @@
 
       contactInfo: { 
           mobileNumber: null,
-          kebele: null,
+          email: null,
           telephoneNumber: null,
           poBox: null
 
