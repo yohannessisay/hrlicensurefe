@@ -269,22 +269,7 @@
       button:hover {
       background: #6581a3;
       }
-      @media (min-width: 568px) {
-      .name-item, .city-item {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      }
-      .name-item input, .city-item input {
-      width: calc(50% - 20px);
-      }
-    .name-item p, .city-item p {
-      width: calc(50% - 20px);
-      }
-      .city-item select {
-      width: calc(50% - 8px);
-      }
-      }
+
     </style>
 
 <script>
