@@ -26,13 +26,13 @@
            <div class="left">
                 <p class="">Zone</p>
                 <div class="">
-                    <input v-model ="addressInfo.zone" type="text" name="name" placeholder="Zone" />
+                    <input v-model ="addressInfo.zone" type="text" name="zone" placeholder="Zone" />
                 </div>
            </div> 
            <div class="right">
                 <p class="">House No(Optional)</p>
                 <div class="">
-                    <input v-model ="addressInfo.houseNumber" type="text" name="name" placeholder="House No." />
+                    <input v-model ="addressInfo.houseNumber" type="text" name="houseNumber" placeholder="House No." />
                 </div>
             </div>   
         </div>
@@ -41,13 +41,13 @@
            <div class="left">
                 <p class="">Wereda</p>
                 <div class="">
-                    <input v-model ="addressInfo.wereda" type="text" name="name" placeholder="Wereda" />
+                    <input v-model ="addressInfo.wereda" type="text" name="wereda" placeholder="Wereda" />
                 </div>
            </div> 
            <div class="right">
                 <p>Residence</p>
                 <div class="">
-                    <input v-model ="addressInfo.residence" type="text" name="name" placeholder="Residence" />
+                    <input v-model ="addressInfo.residence" type="text" name="residence" placeholder="Residence" />
                 </div>
             </div>   
         </div>

@@ -10,13 +10,13 @@
            <div class="left">
                 <p class="">Mobile Number</p>
                 <div class="">
-                    <input v-model ="contactInfo.mobileNumber" type="text" name="name" placeholder="Mobile Number" />
+                    <input v-model ="contactInfo.mobileNumber" type="tel" name="mobileNumber" placeholder="Mobile Number" />
                 </div>
            </div> 
            <div class="right">
                 <p class="">Kebele</p>
                 <div class="">
-                    <input v-model ="contactInfo.kebele" type="text" name="name" placeholder="Kebele" />
+                    <input v-model ="contactInfo.kebele" type="text" name="kebele" placeholder="Kebele" />
                 </div>
             </div>   
         </div>
@@ -26,7 +26,7 @@
            <div class="left">
                 <p class="">Telephone Number(Optional)</p>
                 <div class="">
-                    <input v-model ="contactInfo.telephoneNumber" type="text" name="name" placeholder="Telephone No." />
+                    <input v-model ="contactInfo.telephoneNumber" type="tel" name="telephoneNumber" placeholder="Telephone No." />
                 </div>
            </div> 
    
@@ -37,7 +37,7 @@
            <div class="left">
                 <p class="">P.O Box(Optional)</p>
                 <div class="">
-                    <input v-model ="contactInfo.poBox" type="text" name="name" placeholder="P.O Box" />
+                    <input v-model ="contactInfo.poBox" type="text" name="poBox" placeholder="P.O Box" />
                 </div>
            </div> 
   

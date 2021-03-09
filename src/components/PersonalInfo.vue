@@ -26,13 +26,13 @@
            <div class="left">
                 <p class="">Father Name</p>
                 <div class="">
-                    <input v-model ="personalInfo.fatherName" type="text" name="name" placeholder="Father Name" />
+                    <input v-model ="personalInfo.fatherName" type="text" name="fatherName" placeholder="Father Name" />
                 </div>
            </div> 
            <div class="right">
                 <p class="">Place of birth(Optional)</p>
                 <div class="">
-                    <input v-model ="personalInfo.placeOfBirth" type="text" name="name" placeholder="Place of Birth" />
+                    <input v-model ="personalInfo.placeOfBirth" type="text" name="placeOfBirth" placeholder="Place of Birth" />
                 </div>
             </div>   
         </div>
@@ -41,7 +41,7 @@
            <div class="left">
                 <p class="">Grand Father Name</p>
                 <div class="">
-                    <input v-model ="personalInfo.grandFatherName" type="text" name="name" placeholder="Grand Father Name" />
+                    <input v-model ="personalInfo.grandFatherName" type="text" name="gradFatherName" placeholder="Grand Father Name" />
                 </div>
            </div> 
            <div class="right">
