@@ -5,7 +5,7 @@
   </div>
   <PersonalInfo />
   <!-- <AddressInfo /> -->
-  <ContactInfo/>
+  <!-- <ContactInfo/> -->
 </template>
 
 <script>
