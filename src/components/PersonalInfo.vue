@@ -56,12 +56,12 @@
                     <p>Gender</p>
                     <div class="radio-option">
                         <div class="left-radio">
-                            <input v-model ="personalInfo.gender" type="radio" value="none" id="radio_1" name="gender"/>
-                            <label for="radio_1" class="radio"><span>Male</span></label>
+                            <input v-model ="personalInfo.gender" type="radio" value="male" id="male" name="gender"/>
+                            <label for="male" class="radio"><span>Male</span></label>
                         </div>
                         <div class="left-radio">
-                            <input v-model ="personalInfo.gender" type="radio" value="none" id="radio_2" name="gender"/>
-                            <label for="radio_2" class="radio"><span>Female</span></label>
+                            <input v-model ="personalInfo.gender" type="radio" value="female" id="female" name="gender"/>
+                            <label for="female" class="radio"><span>Female</span></label>
                         </div>
                     </div>
                 </div>
@@ -71,16 +71,16 @@
                     <p>Martial Status</p>
                     <div class="radio-option">
                         <div class="left-radio">
-                            <input v-model ="personalInfo.martialStatus" type="radio" value="none" id="radio_3" name="martial"/>
-                            <label for="radio_3" class="radio"><span>Single</span></label>
+                            <input v-model ="personalInfo.martialStatus" type="radio" value="none" id="single" name="martial"/>
+                            <label for="single" value="single" class="radio"><span>Single</span></label>
                         </div>
                         <div class="left-radio">
-                            <input v-model ="personalInfo.martialStatus" type="radio" value="none" id="radio_4" name="marital"/>
-                            <label for="radio_4" class="radio"><span>Married</span></label>
+                            <input v-model ="personalInfo.martialStatus" type="radio" value="none" id="married" name="marital"/>
+                            <label for="married" value = "married" class="radio"><span>Married</span></label>
                         </div>
                         <div class="right-radio">
-                            <input v-model ="personalInfo.martialStatus" type="radio" value="none" id="radio_5" name="marital"/>
-                            <label for="radio_5" class="radio"><span>Divorced</span></label>
+                            <input v-model ="personalInfo.martialStatus" type="radio" value="none" id="divorced" name="marital"/>
+                            <label for="divorced" value="divorced" class="radio"><span>Divorced</span></label>
                         </div>
                     </div>
                 </div>
