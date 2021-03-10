@@ -71,15 +71,15 @@
                     <p>Martial Status</p>
                     <div class="radio-option">
                         <div class="left-radio">
-                            <input v-model ="personalInfo.martialStatus" type="radio" value="none" id="single" name="martial"/>
+                            <input v-model ="personalInfo.martialStatus" type="radio" value="single" id="single" name="martial"/>
                             <label for="single" value="single" class="radio"><span>Single</span></label>
                         </div>
                         <div class="left-radio">
-                            <input v-model ="personalInfo.martialStatus" type="radio" value="none" id="married" name="marital"/>
+                            <input v-model ="personalInfo.martialStatus" type="radio" value="married" id="married" name="marital"/>
                             <label for="married" value = "married" class="radio"><span>Married</span></label>
                         </div>
                         <div class="right-radio">
-                            <input v-model ="personalInfo.martialStatus" type="radio" value="none" id="divorced" name="marital"/>
+                            <input v-model ="personalInfo.martialStatus" type="radio" value="divorced" id="divorced" name="marital"/>
                             <label for="divorced" value="divorced" class="radio"><span>Divorced</span></label>
                         </div>
                     </div>
