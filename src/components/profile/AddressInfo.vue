@@ -32,7 +32,7 @@
            <div class="right">
                 <p class="">House No(Optional)</p>
                 <div class="">
-                    <input v-model ="address.houseNumber" type="text" name="houseNumber" placeholder="House No." />
+                    <input v-model ="address.houseNo" type="text" name="houseNo" placeholder="House No." />
                 </div>
             </div>   
         </div>
@@ -248,7 +248,7 @@
           region: null,
           kebele: null,
           zone: null,
-          houseNumber: null,
+          houseNo: null,
           wereda:null,
           residence:null
 

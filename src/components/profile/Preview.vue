@@ -45,7 +45,7 @@
                         <td>{{address.zone}}</td>
                         <td>{{address.wereda}}</td>
                         <td>{{address.kebele}}</td>
-                        <td>{{address.houseNumber}}</td>
+                        <td>{{address.houseNo}}</td>
                         <td>{{address.residence}}</td>
                     </tr>
                 </tbody>
@@ -160,7 +160,7 @@
           region: 'A.A',
           kebele: '11',
           zone: '04',
-          houseNumber: '5670',
+          houseNo: '5670',
           wereda: '4232',
           residence: 'A.A res'
         }
