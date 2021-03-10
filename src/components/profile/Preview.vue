@@ -103,7 +103,7 @@
       color: #365a86;
     }
 
-    .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+    .table > thead > tr > th, table > thead > tr > td, .table > tbody > tr > td{
     border-top: none;
     line-height: 1.42857;
     padding: 12px;
