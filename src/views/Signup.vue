@@ -7,11 +7,6 @@
         <h2 class="mt-6 text-center text-3xl font-extrabold text-indigo-800">
           Signup
         </h2>
-        <!-- <svg class="ml-12" height="25" width="440">
-          <g fill="">
-            <path stroke-width="10" stroke="yellow" d="M2 5 l180 0" />
-          </g>
-        </svg> -->
       </div>
       <form class="mt-6 space-y-6" @submit.prevent="submit">
         <input type="hidden" name="remember" value="true" />
@@ -20,7 +15,7 @@
             <span class="py-2">Email</span>
             <label for="email-address" class="sr-only">Email</label>
             <input
-              v-model="data.email"
+              v-model="credentials.email"
               id="email-address"
               name="email"
               type="email"
@@ -35,7 +30,7 @@
           <span class="py-2">Password</span>
           <label for="password" class="sr-only">Password</label>
           <input
-            v-model="data.password"
+            v-model="credentials.password"
             id="password"
             name="password"
             type="password"
@@ -49,11 +44,11 @@
           <span class="py-2">Confirm Password</span>
           <label for="password" class="sr-only">Confirm Password</label>
           <input
-            v-model="data.confirmPassword"
+            v-model="credentials.confirmPassword"
             id="confirm-password"
             name="confirm-password"
             type="password"
-            autocomplete="current-password"
+            autocomplete="current-confirm-password"
             required
             class="appearance-none rounded-lg relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
             placeholder="Confirm Password"
@@ -61,7 +56,7 @@
         </div>
         <div class="flex justify-center">
           <button
-            type="submit"
+            @click="submit()"
             class="w-44 focus:outline-none text-white justify-center text-sm py-2 px-12 rounded-3xl bg-blue-500 hover:bg-blue-600 hover:shadow-lg"
           >
             Signup
@@ -75,24 +70,22 @@
     </div>
   </div>
 </template>
-<script lang="ts">
-import { reactive } from "vue";
-
+<script>
 export default {
   name: "Register",
-  setup() {
-    const data = reactive({
-      email: "",
-      password: "",
-      confirmPassword: "",
-    });
-    const submit = () => {
-      console.log(data);
-    };
+  data() {
     return {
-      data,
-      submit,
+      credentials: {
+        email: "",
+        password: "",
+        confirmPassword: "",
+      },
     };
+  },
+  methods: {
+    submit() {
+      // this.$store.dispatch("apiCall", this.credentials);
+    },
   },
 };
 </script>

@@ -7,7 +7,6 @@
         <h2 class="mt-6 text-center text-3xl font-extrabold text-indigo-800">
           Login
         </h2>
-        
       </div>
       <form @submit.prevent="submit">
         <input type="hidden" name="remember" value="true" />
@@ -16,7 +15,7 @@
             <span class="py-2">Email</span>
             <label for="email-address" class="sr-only">Email address</label>
             <input
-              v-model="data.email"
+              v-model="credentials.email"
               id="email-address"
               name="email"
               type="email"
@@ -30,7 +29,7 @@
           <span class="py-2">Password</span>
           <label for="password" class="sr-only">Password</label>
           <input
-            v-model="data.password"
+            v-model="credentials.password"
             id="password"
             name="password"
             type="password"
@@ -52,7 +51,7 @@
 
         <div class="flex justify-center">
           <button
-            type="submit"
+            @click="submit()"
             class="w-52 focus:outline-none text-white justify-center text-sm py-2 px-12 rounded-3xl bg-blue-500 hover:bg-blue-600 hover:shadow-lg"
           >
             Login
@@ -69,19 +68,16 @@
 <script lang="ts">
 import { reactive } from "vue";
 export default {
-  name: "Signup",
-  setup() {
-    const data = reactive({
-      email: "",
-      password: "",
-    });
-    const submit = () => {
-      console.log(data);
-    };
+  data() {
     return {
-      data,
-      submit,
+      credentials: {
+        email: "",
+        password: "",
+      },
     };
+  },
+  methods: {
+    submit() {},
   },
 };
 </script>

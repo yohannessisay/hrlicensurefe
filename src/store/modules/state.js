@@ -1,0 +1,47 @@
+export default {
+  state: {
+    profile: {
+      firstName: "",
+      fatherName: "",
+      grandFatherName: "",
+      gender: "",
+      nationality: "",
+      pob: "",
+      dob: "",
+      maritalStatus: "",
+      region: "",
+      address_kebele: "",
+      city: "",
+      zone: "",
+      kebele: "",
+      poBox: "",
+      houseNo: "",
+    },
+    personalInfo: {
+      firstName: "",
+      fatherName: "",
+      grandFatherName: "",
+      gender: "",
+      nationality: "",
+      pob: "",
+      dob: "",
+      maritalStatus: "",
+    },
+    address: {
+      region: "",
+      address_kebele: "",
+      city: "",
+      zone: "",
+      kebele: "",
+    },
+    contact: {
+      poBox: "",
+      houseNo: "",
+    },
+    apiCall: {
+      loading: "",
+      error: "",
+      success: "",
+    },
+  },
+};
