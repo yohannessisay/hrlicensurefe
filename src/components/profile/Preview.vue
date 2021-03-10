@@ -41,12 +41,12 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>{{addressInfo.region}}</td>
-                        <td>{{addressInfo.zone}}</td>
-                        <td>{{addressInfo.wereda}}</td>
-                        <td>{{addressInfo.kebele}}</td>
-                        <td>{{addressInfo.houseNumber}}</td>
-                        <td>{{addressInfo.residence}}</td>
+                        <td>{{address.region}}</td>
+                        <td>{{address.zone}}</td>
+                        <td>{{address.wereda}}</td>
+                        <td>{{address.kebele}}</td>
+                        <td>{{address.houseNumber}}</td>
+                        <td>{{address.residence}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -63,10 +63,10 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>{{contactInfo.mobileNumber}}</td>
-                        <td>{{contactInfo.telephoneNumber}}</td>
-                        <td>{{contactInfo.poBox}}</td>
-                        <td>{{contactInfo.email}}</td>
+                        <td>{{contact.mobileNumber}}</td>
+                        <td>{{contact.telephoneNumber}}</td>
+                        <td>{{contact.poBox}}</td>
+                        <td>{{contact.email}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -140,7 +140,7 @@
 
     data: () => ({
       
-        contactInfo: { 
+        contact: { 
             mobileNumber: '+251900000000',
             email: 'a@a.com',
             telephoneNumber: '940390303',
@@ -156,7 +156,7 @@
             gender:'male',
             martialStatus:'single'
         },      
-        addressInfo: { 
+        address: { 
           region: 'A.A',
           kebele: '11',
           zone: '04',
@@ -168,7 +168,7 @@
     }),
     methods: {
         submit:function(){
-            console.log(this.addressInfo);
+            console.log(this.address);
         }
     },
     mounted() {

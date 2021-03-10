@@ -10,13 +10,13 @@
            <div class="left">
                 <p class="">Region</p>
                 <div class="">
-                    <input v-model ="addressInfo.region" type="text" name="name" placeholder="First" />
+                    <input v-model ="address.region" type="text" name="name" placeholder="First" />
                 </div>
            </div> 
            <div class="right">
                 <p class="">Kebele</p>
                 <div class="">
-                    <input v-model ="addressInfo.kebele" type="text" name="name" placeholder="Nationality" />
+                    <input v-model ="address.kebele" type="text" name="name" placeholder="Nationality" />
                 </div>
             </div>   
         </div>
@@ -26,13 +26,13 @@
            <div class="left">
                 <p class="">Zone</p>
                 <div class="">
-                    <input v-model ="addressInfo.zone" type="text" name="zone" placeholder="Zone" />
+                    <input v-model ="address.zone" type="text" name="zone" placeholder="Zone" />
                 </div>
            </div> 
            <div class="right">
                 <p class="">House No(Optional)</p>
                 <div class="">
-                    <input v-model ="addressInfo.houseNumber" type="text" name="houseNumber" placeholder="House No." />
+                    <input v-model ="address.houseNumber" type="text" name="houseNumber" placeholder="House No." />
                 </div>
             </div>   
         </div>
@@ -41,13 +41,13 @@
            <div class="left">
                 <p class="">Wereda</p>
                 <div class="">
-                    <input v-model ="addressInfo.wereda" type="text" name="wereda" placeholder="Wereda" />
+                    <input v-model ="address.wereda" type="text" name="wereda" placeholder="Wereda" />
                 </div>
            </div> 
            <div class="right">
                 <p>Residence</p>
                 <div class="">
-                    <input v-model ="addressInfo.residence" type="text" name="residence" placeholder="Residence" />
+                    <input v-model ="address.residence" type="text" name="residence" placeholder="Residence" />
                 </div>
             </div>   
         </div>
@@ -244,7 +244,7 @@
 
     data: () => ({
 
-      addressInfo: { 
+      address: { 
           region: null,
           kebele: null,
           zone: null,
@@ -258,7 +258,7 @@
     }),
     methods: {
         nextStep:function(){
-            console.log(this.addressInfo);
+            console.log(this.address);
         }
     },
     mounted() {

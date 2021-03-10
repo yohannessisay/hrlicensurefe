@@ -10,13 +10,13 @@
            <div class="left">
                 <p class="">Mobile Number</p>
                 <div class="">
-                    <input v-model ="contactInfo.mobileNumber" type="tel" name="mobileNumber" placeholder="Mobile Number" />
+                    <input v-model ="contact.mobileNumber" type="tel" name="mobileNumber" placeholder="Mobile Number" />
                 </div>
            </div> 
            <div class="right">
                 <p class="">Email(Optional)</p>
                 <div class="">
-                    <input v-model ="contactInfo.email" type="text" name="email" placeholder="Email" />
+                    <input v-model ="contact.email" type="text" name="email" placeholder="Email" />
                 </div>
             </div>   
         </div>
@@ -26,7 +26,7 @@
            <div class="left">
                 <p class="">Telephone Number(Optional)</p>
                 <div class="">
-                    <input v-model ="contactInfo.telephoneNumber" type="tel" name="telephoneNumber" placeholder="Telephone No." />
+                    <input v-model ="contact.telephoneNumber" type="tel" name="telephoneNumber" placeholder="Telephone No." />
                 </div>
            </div> 
    
@@ -37,7 +37,7 @@
            <div class="left-uni">
                 <p class="">P.O Box(Optional)</p>
                 <div class="">
-                    <input v-model ="contactInfo.poBox" type="text" name="poBox" placeholder="P.O Box" />
+                    <input v-model ="contact.poBox" type="text" name="poBox" placeholder="P.O Box" />
                 </div>
            </div> 
   
@@ -247,7 +247,7 @@
 
     data: () => ({
 
-      contactInfo: { 
+      contact: { 
           mobileNumber: null,
           email: null,
           telephoneNumber: null,
@@ -259,7 +259,7 @@
     }),
     methods: {
         nextStep:function(){
-            console.log(this.contactInfo);
+            console.log(this.contact);
         }
     },
     mounted() {
