@@ -6,14 +6,16 @@
   <!-- <PersonalInfo /> -->
   <!-- <AddressInfo /> -->
   <!-- <ContactInfo/> -->
+  <Preview/>
 </template>
 
 <script>
 // @ is an alias to /src
 import HelloWorld from "@/components/HelloWorld.vue";
-import PersonalInfo from "@/components/PersonalInfo.vue";
-import AddressInfo from "@/components/AddressInfo.vue";
-import ContactInfo from "@/components/ContactInfo.vue";
+import PersonalInfo from "@/components/profile/PersonalInfo.vue";
+import AddressInfo from "@/components/profile/AddressInfo.vue";
+import ContactInfo from "@/components/profile/ContactInfo.vue";
+import Preview from "@/components/profile/Preview.vue";
 
 export default {
   name: "Home",
@@ -21,7 +23,8 @@ export default {
     HelloWorld,
     PersonalInfo,
     AddressInfo,
-    ContactInfo
+    ContactInfo,
+    Preview
   }
 };
 </script>
