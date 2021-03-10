@@ -32,7 +32,7 @@
            <div class="right">
                 <p class="">Place of birth(Optional)</p>
                 <div class="">
-                    <input v-model ="personalInfo.placeOfBirth" type="text" name="placeOfBirth" placeholder="Place of Birth" />
+                    <input v-model ="personalInfo.pob" type="text" name="placeOfBirth" placeholder="Place of Birth" />
                 </div>
             </div>   
         </div>
@@ -46,7 +46,7 @@
            </div> 
            <div class="right">
                 <p>Date of birth(Optional)</p>
-                <input v-model ="personalInfo.dateOfBirth" type="date" name="bdate" required/>
+                <input v-model ="personalInfo.dob" type="date" name="bdate" required/>
                 <i class="fas fa-calendar-alt"></i>
             </div>   
         </div>
@@ -284,8 +284,8 @@
           grandFatherName: null,
           fatherName: null,
           nationality: null,
-          placeOfBirth: null,
-          dateOfBirth: null,
+          pob: null,
+          dob: null,
           gender:null,
           martialStatus:null
 

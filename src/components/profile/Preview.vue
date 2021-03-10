@@ -20,8 +20,8 @@
                         <td>{{personalInfo.firstName + " " +personalInfo.fatherName + " " + personalInfo.grandFatherName}}</td>
                         <td>{{personalInfo.gender}}</td>
                         <td>{{personalInfo.nationality}}</td>
-                        <td>{{personalInfo.placeOfBirth}}</td>
-                        <td>{{personalInfo.dateOfBirth}}</td>
+                        <td>{{personalInfo.pob}}</td>
+                        <td>{{personalInfo.dob}}</td>
                         <td>{{personalInfo.martialStatus}}</td>
                     </tr>
                 </tbody>
@@ -151,8 +151,8 @@
             fatherName: 'Ame',
             grandFatherName: 'Someone',
             nationality: 'Ethiopian',
-            placeOfBirth: 'Addis Ababa',
-            dateOfBirth: '12/12/1995',
+            pob: 'Addis Ababa',
+            dob: '12/12/1995',
             gender:'male',
             martialStatus:'single'
         },      
