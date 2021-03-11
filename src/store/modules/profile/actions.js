@@ -1,29 +1,40 @@
-import axios from "axios";
-export const setProfile = ({ commit }, profile) => {
-  return axios
-    .post("http://localhost:5000/api/profiles/add:2", { profile })
-    .then((response) => {
-      const newProfile = response.data;
-      commit("SET_PROFILE", newProfile);
-      return newProfile;
-    })
-    .catch((err) => {
-      return err;
-    });
-};
+import ApiService from "../../services/api.service";
+import {
+  SET_PROFILE,
+  SET_PERSONAL_INFO,
+  SET_ADDRESS,
+  SET_CONTACT,
+  SET_API_CALL,
+  ADD_PROFILE_LOADING,
+  ADD_PROFILE_SUCCESS,
+  ADD_PROFILE_ERROR
+} from "./mutation-types";
 
-export const setProfileInfo = ({ commit }, profileInfo) => {
-  commit("SET_PERSONAL_INFO", profileInfo);
-};
+export default {
+  async setProfile({ commit }, profile) {
+    commit(ADD_PROFILE_LOADING);
+    try {
+      const resp = await ApiService.get("/profiles/1", { profile });
+      commit(SET_PROFILE, resp.data);
+      commit(ADD_PROFILE_SUCCESS);
+    } catch (error) {
+      commit(ADD_PROFILE_ERROR);
+    }
+  },
 
-export const setAddress = ({ commit }, address) => {
-  commit("SET_ADDRESS", address);
-};
+  setProfileInfo({ commit }, profileInfo) {
+    commit(SET_PERSONAL_INFO, profileInfo);
+  },
 
-export const setContact = ({ commit }, contact) => {
-  commit("SET_CONTACT", contact);
-};
+  setAddress({ commit }, address) {
+    commit(SET_ADDRESS, address);
+  },
 
-export const apiCall = ({ commit }, api) => {
-  commit("SET_API_CALL", api);
+  setContact({ commit }, contact) {
+    commit(SET_CONTACT, contact);
+  },
+
+  apiCall({ commit }, api) {
+    commit(SET_API_CALL, api);
+  }
 };

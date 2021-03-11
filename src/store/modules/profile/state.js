@@ -1,22 +1,5 @@
 export default {
   state: {
-    profile: {
-      firstName: "",
-      fatherName: "",
-      grandFatherName: "",
-      gender: "",
-      nationality: "",
-      pob: "",
-      dob: "",
-      maritalStatus: "",
-      region: "",
-      address_kebele: "",
-      city: "",
-      zone: "",
-      kebele: "",
-      poBox: "",
-      houseNo: "",
-    },
     personalInfo: {
       firstName: "",
       fatherName: "",
@@ -25,23 +8,21 @@ export default {
       nationality: "",
       pob: "",
       dob: "",
-      maritalStatus: "",
+      maritalStatus: ""
     },
     address: {
       region: "",
       address_kebele: "",
       city: "",
       zone: "",
-      kebele: "",
+      kebele: ""
     },
     contact: {
       poBox: "",
-      houseNo: "",
+      houseNo: ""
     },
-    apiCall: {
-      loading: "",
-      error: "",
-      success: "",
-    },
-  },
+    addProfileLoading: false,
+    addProfileSuccess: false,
+    addProfileError: false
+  }
 };
