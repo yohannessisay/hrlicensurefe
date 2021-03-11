@@ -23,6 +23,7 @@
               required
               class="appearance-none rounded-lg relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
             />
+            <span style="color: red">{{ credentialsErrors.email }}</span>
           </div>
         </div>
         <div>
@@ -37,6 +38,7 @@
             required
             class="appearance-none rounded-lg relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
           />
+          <span style="color: red">{{ credentialsErrors.password }}</span>
         </div>
         <div class="flex items-center justify-end">
           <div class="text-sm">
@@ -65,8 +67,7 @@
     </div>
   </div>
 </template>
-<script lang="ts">
-import { reactive } from "vue";
+<script>
 export default {
   data() {
     return {
@@ -74,10 +75,34 @@ export default {
         email: "",
         password: "",
       },
+      credentialsErrors: {
+        email: undefined,
+        password: undefined,
+      },
     };
   },
   methods: {
-    submit() {},
+    submit() {
+      this.credentialsErrors = this.validateForm(this.credentials);
+      if (Object.keys(this.credentialsErrors).length) return;
+      this.$store.dispatch("setUserInfo", this.credentials);
+      this.$store.dispatch("setAuth", true);
+      this.$router.push('/signup');
+    },
+    validateForm(credentials) {
+      const errors = {};
+      if (!credentials.email) errors.email = "Email Required";
+      if (!credentials.password) errors.password = "Password Required";
+
+      if (credentials.email && !this.isEmail(credentials.email)) {
+        errors.email = "Invalid Email";
+      }
+      return errors;
+    },
+    isEmail(email) {
+      const re = /\S+@\S+\.\S+/;
+      return re.test(email);
+    },
   },
 };
 </script>

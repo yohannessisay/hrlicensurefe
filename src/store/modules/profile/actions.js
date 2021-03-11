@@ -1,3 +1,4 @@
+import axios from "axios";
 export const setProfile = ({ commit }, profile) => {
   return axios
     .post("http://localhost:5000/api/profiles/add:2", { profile })
@@ -7,7 +8,7 @@ export const setProfile = ({ commit }, profile) => {
       return newProfile;
     })
     .catch((err) => {
-      console.log(err);
+      return err;
     });
 };
 

@@ -24,6 +24,7 @@
               class="appearance-none rounded-lg relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
               placeholder="Email address"
             />
+            <span style="color: red">{{ credentialsErrors.email }}</span>
           </div>
         </div>
         <div>
@@ -39,6 +40,7 @@
             class="appearance-none rounded-lg relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
             placeholder="Password"
           />
+          <span style="color: red">{{ credentialsErrors.password }}</span>
         </div>
         <div>
           <span class="py-2">Confirm Password</span>
@@ -53,6 +55,12 @@
             class="appearance-none rounded-lg relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
             placeholder="Confirm Password"
           />
+          <span style="color: red">{{
+            credentialsErrors.confirmPassword
+          }}</span>
+           <span style="color: red">{{
+            credentialsErrors.diffPassword
+          }}</span>
         </div>
         <div class="flex justify-center">
           <button
@@ -80,11 +88,37 @@ export default {
         password: "",
         confirmPassword: "",
       },
+      credentialsErrors: {
+        email: undefined,
+        password: undefined,
+        confirmPassword: undefined,
+        diffPassword: undefined,
+      },
     };
   },
   methods: {
     submit() {
       // this.$store.dispatch("apiCall", this.credentials);
+      this.credentialsErrors = this.validateForm(this.credentials);
+      if (Object.keys(this.credentialsErrors).length) return;
+      this.$router.push({ path: '/login' });
+    },
+    validateForm(credentials) {
+      const errors = {};
+      if (!credentials.email) errors.email = "Email Required";
+      if (!credentials.password) errors.password = "Password Required";
+      if (!credentials.confirmPassword)
+        errors.confirmPassword = "Confirmation Password Required";
+      if (credentials.email && !this.isEmail(credentials.email)) {
+        errors.email = "Invalid Email";
+      }
+      if(credentials.password != credentials.confirmPassword)
+        errors.diffPassword = "Password does not match";
+      return errors;
+    },
+    isEmail(email) {
+      const re = /\S+@\S+\.\S+/;
+      return re.test(email);
     },
   },
 };
