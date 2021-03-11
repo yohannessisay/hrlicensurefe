@@ -5,5 +5,4 @@ export default createStore({
   modules: {
     profile
   }
-})
-
+});
