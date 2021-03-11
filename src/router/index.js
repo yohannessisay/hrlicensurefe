@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "../views/Home.vue";
-import store from "../store/modules/user";
 
 const routes = [
   {
@@ -28,12 +27,11 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
-  
 });
-router.beforeEach((to, from, next) => {
-  const auth = store.state.auth;
-  if (!auth && to.path !== "/login") next("/login");
-  else next();
-});
+// router.beforeEach((to, from, next) => {
+  // const auth = store.state.auth;
+  // if (!auth && to.path !== "/login") next("/login");
+  // else next();
+// });
 
 export default router;

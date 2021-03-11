@@ -1,6 +1,4 @@
-export const getUser = (state) => {
-    return state.user;
-}
-export const auth = (state) => {
-    return state.auth;
-}
+export default {
+  getUser: (state) => state.userInfo,
+  auth: (state) => state.auth,
+};

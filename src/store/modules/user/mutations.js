@@ -1,6 +1,10 @@
-export const SET_PROFILE = (state, profile) => {
-  state.profile = profile;
+import { SET_PROFILE, SET_AUTH } from "./mutation-types";
+
+export default {
+  [SET_PROFILE](state, userInfo) {
+    state.userInfo = userInfo;
+  },
+  [SET_AUTH](state, auth) {
+    state.auth = auth;
+  },
 };
-export const SET_AUTH = (state, auth) => {
-  state.auth = auth;
-}
