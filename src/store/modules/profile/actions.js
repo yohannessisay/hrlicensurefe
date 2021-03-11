@@ -1,10 +1,9 @@
-import ApiService from "../../services/api.service";
+import ApiService from "../../../services/api.service";
 import {
   SET_PROFILE,
   SET_PERSONAL_INFO,
   SET_ADDRESS,
   SET_CONTACT,
-  SET_API_CALL,
   ADD_PROFILE_LOADING,
   ADD_PROFILE_SUCCESS,
   ADD_PROFILE_ERROR
@@ -32,9 +31,5 @@ export default {
 
   setContact({ commit }, contact) {
     commit(SET_CONTACT, contact);
-  },
-
-  apiCall({ commit }, api) {
-    commit(SET_API_CALL, api);
   }
 };

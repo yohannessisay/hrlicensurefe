@@ -1,8 +1,6 @@
 import { createStore } from "vuex";
-import profile from "./modules/index.js";
+import modules from "./modules";
 
 export default createStore({
-  modules: {
-    profile
-  }
+  modules
 });

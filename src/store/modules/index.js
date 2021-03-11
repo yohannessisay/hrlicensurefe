@@ -1,11 +1,22 @@
-import state from "./state";
-import * as getters from "./getters";
-import * as mutations from "./mutations";
-import * as actions from "./actions";
+// https://vuex.vuejs.org/en/modules.html
+//Import all modules exist under the modules directory
+const requireModule = require.context(".", true, /\.js$/);
+const modules = {};
 
-export default {
-  state,
-  getters,
-  mutations,
-  actions
-};
+requireModule.keys().forEach(fileName => {
+  if (fileName === "./index.js") return;
+
+  // Replace ./ and .js
+  const path = fileName.replace(/(\.\/|\.js)/g, "");
+  const [moduleName, imported] = path.split("/");
+
+  if (!modules[moduleName]) {
+    modules[moduleName] = {
+      namespaced: true //Make all modules namespaced
+    };
+  }
+
+  modules[moduleName][imported] = requireModule(fileName).default;
+});
+
+export default modules;

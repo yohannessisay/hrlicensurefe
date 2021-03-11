@@ -3,7 +3,6 @@ import {
   SET_PERSONAL_INFO,
   SET_ADDRESS,
   SET_CONTACT,
-  SET_API_CALL,
   ADD_PROFILE_LOADING,
   ADD_PROFILE_SUCCESS,
   ADD_PROFILE_ERROR
@@ -24,10 +23,6 @@ export default {
 
   [SET_CONTACT](state, contact) {
     state.contact = contact;
-  },
-
-  [SET_API_CALL](state, apiCall) {
-    state.apiCall = apiCall;
   },
 
   [ADD_PROFILE_LOADING](state) {
