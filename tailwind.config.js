@@ -7,6 +7,13 @@ module.exports = {
       opacity: {
         "10": "0.1",
         "90": "0.9"
+      },
+      spacing: {
+        tiny: "5px",
+        small: "15px",
+        medium: "30px",
+        large: "30px",
+        xl: "100px"
       }
     }
   },
@@ -81,4 +88,3 @@ module.exports = {
   },
   plugins: []
 };
-
