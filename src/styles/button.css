@@ -1,0 +1,20 @@
+@tailwind base;
+
+@layer base {
+    [type='button'],
+    [type='submit'],
+    button {
+        @apply py-tiny px-small bg-red-500 text-white m-tiny rounded cursor-pointer;
+        min-width: 150px;
+        &:hover{
+            @apply bg-red-700;
+        }
+    }
+
+    [variant='outline']{
+        @apply bg-white border border-red-500 text-red-500;
+        &:hover{
+            @apply bg-red-100;
+        }
+    }
+}

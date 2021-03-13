@@ -8,6 +8,13 @@ module.exports = {
         "10": "0.1",
         "90": "0.9"
       },
+      fontFamily: {
+        sans: ["Atkinson-Hyperlegible"],
+        serif: ["Atkinson-Hyperlegible"],
+        mono: ["Atkinson-Hyperlegible"],
+        display: ["Atkinson-Hyperlegible"],
+        body: ["Atkinson-Hyperlegible"]
+      },
       spacing: {
         tiny: "5px",
         small: "15px",

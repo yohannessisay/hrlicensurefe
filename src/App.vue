@@ -7,5 +7,7 @@
 </template>
 
 <style>
-@import "assets/styles/tailwind.postcss";
+@import "styles/tailwind.postcss";
+@import "styles/button.css";
+@import "styles/fonts.css";
 </style>
