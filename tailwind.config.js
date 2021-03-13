@@ -13,7 +13,19 @@ module.exports = {
         serif: ["Atkinson-Hyperlegible"],
         mono: ["Atkinson-Hyperlegible"],
         display: ["Atkinson-Hyperlegible"],
-        body: ["Atkinson-Hyperlegible"]
+        body: ["Atkinson-Hyperlegible"],
+        AtkinsonHyperlegible: ["Atkinson-Hyperlegible"],
+        AtkinsonHyperlegibleBold: ["Atkinson-Hyperlegible-Bold"]
+      },
+      fontSize: {
+        xs: "12px",
+        sm: "14px",
+        base: "16px",
+        lg: "18px",
+        xl: "20px",
+        "2xl": "22px",
+        "3xl": "24px",
+        display: "48px"
       },
       spacing: {
         tiny: "5px",

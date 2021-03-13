@@ -10,4 +10,5 @@
 @import "styles/tailwind.postcss";
 @import "styles/button.css";
 @import "styles/fonts.css";
+@import "styles/typography.css";
 </style>
