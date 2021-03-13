@@ -2,30 +2,30 @@
 
 @layer base {
     h1 {
-        @apply text-3xl font-AtkinsonHyperlegibleBold;
+        @apply text-primary-1000 text-3xl font-AtkinsonHyperlegibleBold;
     }
 
     h2 {
-        @apply text-2xl font-AtkinsonHyperlegible;
+        @apply text-primary-1000 text-2xl font-AtkinsonHyperlegible;
     }
 
     h3 {
-        @apply text-xl font-AtkinsonHyperlegible;
+        @apply text-primary-1000 text-xl font-AtkinsonHyperlegible;
     }
  
     h4 {
-        @apply text-lg font-AtkinsonHyperlegible;
+        @apply text-primary-1000 text-lg font-AtkinsonHyperlegible;
     }
 
-    h5, p, label {
-        @apply text-base font-AtkinsonHyperlegible;
+    h5, p, label,a {
+        @apply text-primary-1000 text-base font-AtkinsonHyperlegible;
     }
 
     h6 {
-        @apply text-sm font-AtkinsonHyperlegible;
+        @apply text-primary-1000 text-sm font-AtkinsonHyperlegible;
     }
 
     span {
-        @apply text-xs font-AtkinsonHyperlegible;
+        @apply text-primary-1000 text-xs font-AtkinsonHyperlegible;
     }
 }

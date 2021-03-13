@@ -1,6 +1,6 @@
 <template>
   <div class="w-screen flex flex-col justify-center items-center">
-    <div class="w-auto flex flex-col mt-32">
+    <div class="w-auto flex flex-col mt-large">
       <h1 class="text-largeDisplay">Large Display</h1>
       <h1 class="text-display">Display</h1>
       <h1>h1</h1>
