@@ -8,7 +8,6 @@
 
 <style>
 @import "styles/tailwind.postcss";
-@import "styles/button.css";
 @import "styles/fonts.css";
-@import "styles/typography.css";
+@import "styles/design-system.css";
 </style>

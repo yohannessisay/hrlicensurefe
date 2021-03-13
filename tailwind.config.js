@@ -16,7 +16,7 @@ module.exports = {
       lg: "18px",
       xl: "20px",
       "2xl": "22px",
-      "3xl": "24px",
+      "3xl": "36px",
       display: "48px",
       largeDisplay: "54px"
     },
@@ -68,7 +68,9 @@ module.exports = {
     extend: {
       spacing: {
         tiny: "5px",
+        6: "6px",
         small: "15px",
+        16: "16px",
         medium: "30px",
         large: "30px",
         xl: "100px"

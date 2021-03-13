@@ -1,17 +1,11 @@
 <template>
   <div class="w-screen flex flex-col justify-center items-center">
-    <div class="w-auto flex flex-col mt-large">
-      <h1 class="text-largeDisplay">Large Display</h1>
-      <h1 class="text-display">Display</h1>
-      <h1>h1</h1>
-      <h2>h2</h2>
-      <h3>h3</h3>
-      <h4>h4</h4>
-      <h5>h5</h5>
-      <h6>h6</h6>
-      <p>paragraph</p>
-      <label>label</label>
-      <span>span</span>
+    <div class="flex flex-col mt-large w-3/12">
+      <button>Default</button>
+      <br />
+      <button variant="outline">Outline</button><br />
+      <button variant="block">Block</button><br />
+      <button variant="outline-block">Outline Block</button>
     </div>
   </div>
 </template>

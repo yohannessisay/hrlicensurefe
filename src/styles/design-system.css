@@ -1,0 +1,93 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .blue-with-light-blue-gradient {
+    background-image: linear-gradient(to right, #1e40af, #2563eb);
+  }
+  .blue-gradient-dark {
+    background-image: linear-gradient(to right, #183490, #2357c7);
+  }
+  .no-background-image {
+    background-image: none;
+  }
+  .blue-box-shadow {
+    box-shadow: 0px 3px 6px #1e40af82;
+  }
+  .raised-box-shadow{
+    box-shadow: 0px 6px 14px rgb(37 98 234 / 54%);
+  }
+  .blue-box-shadow-light {
+    box-shadow: 0px 3px 6px #6c8bf09e;
+  }
+  .box-shadow-focus{
+      box-shadow: 0px 0px 0px 3px #3674b96b;
+  }
+}
+
+@layer base {
+  h1 {
+    @apply text-primary-1000 text-3xl font-AtkinsonHyperlegibleBold;
+  }
+
+  h2 {
+    @apply text-primary-1000 text-2xl font-AtkinsonHyperlegible;
+  }
+
+  h3 {
+    @apply text-primary-1000 text-xl font-AtkinsonHyperlegible;
+  }
+
+  h4 {
+    @apply text-primary-1000 text-lg font-AtkinsonHyperlegible;
+  }
+
+  h5,
+  p,
+  label,
+  a {
+    @apply text-primary-1000 text-base font-AtkinsonHyperlegible;
+  }
+
+  h6 {
+    @apply text-primary-1000 text-sm font-AtkinsonHyperlegible;
+  }
+
+  span {
+    @apply text-primary-1000 text-xs font-AtkinsonHyperlegible;
+  }
+
+  [type="button"],
+  [type="submit"],
+  button {
+    @apply px-medium blue-with-light-blue-gradient text-white blue-box-shadow text-lg m-tiny cursor-pointer rounded-full transition duration-500;
+    min-width: 150px;
+    min-height: 44px;
+    width: fit-content;
+    outline: none;
+    &:hover {
+      @apply blue-gradient-dark raised-box-shadow;
+    }
+    &:focus {
+      @apply outline-none box-shadow-focus border border-white;
+      
+    }
+  }
+
+  [variant="outline"],
+  [variant="outline-block"] {
+    @apply bg-white no-background-image border border-primary-500 text-primary-500 blue-box-shadow-light;
+    &:hover {
+      @apply bg-primary-200 no-background-image border;
+    }
+    &:focus {
+        @apply border-primary-500;
+        
+      }
+  }
+  [variant="block"],
+  [variant="outline-block"] {
+    @apply w-full;
+  }
+}
