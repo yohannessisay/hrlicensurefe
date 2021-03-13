@@ -25,7 +25,8 @@ module.exports = {
         xl: "20px",
         "2xl": "22px",
         "3xl": "24px",
-        display: "48px"
+        display: "48px",
+        largeDisplay: "54px"
       },
       spacing: {
         tiny: "5px",
