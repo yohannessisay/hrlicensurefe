@@ -1,5 +1,5 @@
 <template>
-  <div class="m-tiny">
+  <div>
     <Address v-if="illustration === 'Address'" />
     <Certificate v-if="illustration === 'Certificate'" />
     <Contact v-if="illustration === 'Contact'" />
@@ -60,6 +60,6 @@ export default {
 
 <style lang="postcss" scoped>
 svg {
-  height: 68px;
+  height: 64px;
 }
 </style>
