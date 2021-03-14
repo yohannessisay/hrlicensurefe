@@ -86,7 +86,6 @@
     }
     &:focus {
         @apply border-primary-500;
-        
       }
   }
   [variant="block"],
