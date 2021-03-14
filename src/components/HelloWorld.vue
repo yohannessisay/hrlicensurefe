@@ -7,6 +7,18 @@
           <label>Input text</label>
           <input type="text" />
         </div>
+        <div class="flex flex-col mb-medium">
+          <label>Input text</label>
+          <input type="text" />
+        </div>
+        <div class="flex flex-col mb-medium">
+          <label>Input text</label>
+          <input type="text" />
+        </div>
+        <div class="flex flex-col mb-medium">
+          <label>Input text</label>
+          <input type="text" />
+        </div>
       </form>
     </div>
   </div>
