@@ -104,6 +104,7 @@
   [type="tel"],
   [type="time"],
   [type="week"],
+  [type="checkbox"],
   [multiple],
   textarea,
   select {
@@ -114,5 +115,9 @@
       @apply border-primary-500;
       box-shadow: 0px 0px 0px 4px #60a5fa5e;
     }
+  }
+
+  [type="checkbox"]{
+    
   }
 }
