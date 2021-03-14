@@ -1,5 +1,5 @@
 <template>
-  <svg xmlns="http://www.w3.org/2000/svg" width="139.044" height="119">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 139.044 119">
     <g data-name="MOH LOGO" fill="#0e74b8">
       <path
         data-name="Path 778"

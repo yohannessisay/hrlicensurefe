@@ -1,19 +1,19 @@
 <template>
-  <div>
-    <Address v-if="illustration === Address" />
-    <Certificate v-if="illustration === Certificate" />
-    <Contact v-if="illustration === Contact" />
-    <GoodStanding v-if="illustration === GoodStanding" />
-    <Id v-if="illustration === Id" />
-    <Institution v-if="illustration === Institution" />
-    <Logo v-if="illustration === Logo" />
-    <MOH v-if="illustration === MOH" />
-    <PersonalInfo v-if="illustration === PersonalInfo" />
-    <Renewal v-if="illustration === Renewal" />
-    <SimpleCertificate v-if="illustration === SimpleCertificate" />
-    <Success v-if="illustration === Success" />
-    <User v-if="illustration === User" />
-    <Verification v-if="illustration === Verification" />
+  <div class="m-tiny">
+    <Address v-if="illustration === 'Address'" />
+    <Certificate v-if="illustration === 'Certificate'" />
+    <Contact v-if="illustration === 'Contact'" />
+    <GoodStanding v-if="illustration === 'GoodStanding'" />
+    <Id v-if="illustration === 'Id'" />
+    <Institution v-if="illustration === 'Institution'" />
+    <Logo v-if="illustration === 'Logo'" />
+    <MOH v-if="illustration === 'MOH'" />
+    <PersonalInfo v-if="illustration === 'PersonalInfo'" />
+    <Renewal v-if="illustration === 'Renewal'" />
+    <SimpleCertificate v-if="illustration === 'SimpleCertificate'" />
+    <Success v-if="illustration === 'Success'" />
+    <User v-if="illustration === 'User'" />
+    <Verification v-if="illustration === 'Verification'" />
   </div>
 </template>
 <script>
@@ -31,7 +31,6 @@ import SimpleCertificate from "./illustrations/simpleCertificate";
 import Success from "./illustrations/success";
 import User from "./illustrations/user";
 import Verification from "./illustrations/verification";
-
 export default {
   components: {
     Address,
@@ -51,13 +50,16 @@ export default {
   },
   props: {
     illustration: {
-      type: String
+      type: String,
+      required: true
     }
-  }
+  },
+  setup() {}
 };
 </script>
+
 <style lang="postcss" scoped>
 svg {
-  height: 20px;
+  height: 68px;
 }
 </style>
