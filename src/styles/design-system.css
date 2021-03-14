@@ -130,4 +130,8 @@
   [type="radio"]{
     @apply rounded-full;
   }
+
+  [type="textarea"]{
+    @apply outline-none h-32 align-top;
+  }
 }

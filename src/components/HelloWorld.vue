@@ -92,17 +92,12 @@
 
         <div class="flex flex-col mb-medium">
           <label>Select</label>
-          <input type="select" />
-        </div>
-
-        <div class="flex flex-col mb-medium">
-          <label>Select Multiple</label>
-          <input type="radio" />
-        </div>
-
-        <div class="flex flex-col mb-medium">
-          <label>Textarea</label>
-          <input type="textarea" />
+          <select v-model="selected">
+            <option disabled value="">Please select one</option>
+            <option>Value one</option>
+            <option>I'm the second one</option>
+            <option>Select me</option>
+          </select>
         </div>
       </form>
     </div>
