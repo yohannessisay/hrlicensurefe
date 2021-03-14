@@ -24,6 +24,9 @@
   .box-shadow-focus{
       box-shadow: 0px 0px 0px 3px #3674b96b;
   }
+  .yellow-gradient{
+    background-image: linear-gradient(to right, #E2B72D, #FDE68A);
+  }
 }
 
 @layer base {
@@ -32,7 +35,7 @@
   }
 
   h2 {
-    @apply text-primary-1000 text-2xl font-AtkinsonHyperlegible;
+    @apply text-primary-600 text-2xl font-AtkinsonHyperlegible;
   }
 
   h3 {
