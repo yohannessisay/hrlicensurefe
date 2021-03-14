@@ -61,23 +61,33 @@
         </div>
 
         <div class="flex flex-col mb-medium">
-          <div class="flex items-center">
+          <div class="flex items-center mb-small">
             <input type="checkbox" id="jack" value="Jack" />
             <label class="ml-tiny" for="jack">Jack</label>
           </div>
-          <div class="flex items-center">
+          <div class="flex items-center mb-small">
             <input type="checkbox" id="john" value="John" />
             <label class="ml-tiny" for="john">John</label>
           </div>
-          <div class="flex items-center">
+          <div class="flex items-center mb-small">
             <input type="checkbox" id="mike" value="Mike" />
             <label class="ml-tiny" for="mike">Mike</label>
           </div>
         </div>
 
         <div class="flex flex-col mb-medium">
-          <label>Radio</label>
-          <input type="radio" />
+          <div class="flex items-center mb-small">
+            <input type="radio" id="moh" value="moh" />
+            <label class="ml-tiny" for="moh">MOH</label>
+          </div>
+          <div class="flex items-center mb-small">
+            <input type="radio" id="hris" value="hris" />
+            <label class="ml-tiny" for="hris">HRIS</label>
+          </div>
+          <div class="flex items-center mb-small">
+            <input type="radio" id="license" value="license" />
+            <label class="ml-tiny" for="license">License</label>
+          </div>
         </div>
 
         <div class="flex flex-col mb-medium">
