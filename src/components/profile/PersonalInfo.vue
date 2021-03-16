@@ -87,6 +87,37 @@
            </div>
            
         </div>
+        <div class="item">
+           <div class="left">
+                <div class="">
+                  <p>User Type</p>
+                  <select class="" v-model="personalInfo.userType"> 
+                      <option value="">Select User Type</option>
+                      <!-- <option v-for="data in userType" value="data.id">{{data.name}}</option> -->
+                  </select>
+                </div>
+           </div>  
+           <div class="right">
+                <div class="">
+                  <p>Expert Level</p>
+                  <select class="" v-model="personalInfo.expertLevel" @change="fetchExpertLevel"> 
+                      <option value="">Select Expert Level</option>
+                  </select>
+                </div>
+           </div>
+           
+        </div>
+                <div class="item">
+           <div class="left">
+                <div class="">
+                  <p>Health Office</p>
+                  <select class="" v-model="personalInfo.healthOffice" @change="fetchHealthOffice"> 
+                      <option value="">Select Health Office</option>
+                  </select>
+                </div>
+           </div>  
+           
+        </div>
 
         <div class="btn-block">
           <button @click.prevent="nextStep" href="/">Next</button>
@@ -279,19 +310,23 @@
 
     data: () => ({
 
-      personalInfo: { 
-          firstName: null,
-          grandFatherName: null,
-          fatherName: null,
-          nationality: null,
-          pob: null,
-          dob: null,
-          gender:null,
-          martialStatus:null
+        personalInfo: { 
+            firstName: null,
+            grandFatherName: null,
+            fatherName: null,
+            nationality: null,
+            pob: null,
+            dob: null,
+            gender:null,
+            martialStatus:null,
 
 
 
-      }
+
+        },
+        userType: {},
+        expertLevel: {},
+        healthOffice: {}
     }),
     methods: {
         nextStep:function(){
@@ -299,7 +334,9 @@
         }
     },
     mounted() {
-       
+     axios
+      .get('http://localhost:5000/api/lookups/userTypes')
+      .then(response => (this.personalInfo.userType = response.data));
     }
   }
 </script>
