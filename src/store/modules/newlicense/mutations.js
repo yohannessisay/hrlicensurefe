@@ -3,11 +3,15 @@ import {
   ADD_PROFILE_LOADING,
   ADD_PROFILE_SUCCESS,
   ADD_PROFILE_ERROR,
+  SET_ACTIVE_STATE,
 } from "./mutation-types";
 
 export default {
   [SET_LICENSE](state, license) {
     state.license = license;
+  },
+  [SET_ACTIVE_STATE](state, activeState) {
+    state.activeState = activeState;
   },
   [ADD_PROFILE_LOADING](state) {
     state.addProfileLoading = true;

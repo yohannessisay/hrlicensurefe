@@ -4,7 +4,7 @@
       <TitleWithIllustration illustration="Institution" message="Institution" />
       <form @submit.prevent="submit" class="flex flex-col mt-4">
         <div class="flex justify-center">
-          <div class="flex flex-col mb-medium ml-4">
+          <div class="flex flex-col mb-medium mr-4">
             <label>Institution</label>
             <select v-model="selected">
               <option disabled value="">Please select one</option>
@@ -24,7 +24,7 @@
           </div>
         </div>
         <div class="flex justify-center">
-          <div class="flex flex-col mb-medium ml-4">
+          <div class="flex flex-col mb-medium mr-4">
             <label> Institution Type</label>
             <div class="flex items-center mb-small">
               <input type="radio" id="moh" value="moh" />
@@ -40,8 +40,9 @@
             </div>
           </div>
           <div class="flex flex-col mb-medium ml-4">
+            <label>Applicant Type</label>
+
             <div class="flex items-center mb-small">
-              <label>Applicant Type</label>
               <input type="radio" id="moh" value="moh" />
               <label class="ml-tiny" for="moh">Local</label>
             </div>

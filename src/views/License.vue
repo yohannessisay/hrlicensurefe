@@ -4,7 +4,8 @@
   </div>
   <div class="flex justify-center mt-8">
     <div
-      style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border-radius: 30px"
+      style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);"
+      variant="borderRadius"
       class="container mr-12"
     >
       <div class="flex justify-center w-64 h-40">
@@ -20,7 +21,8 @@
     </div>
 
     <div
-      style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border-radius: 30px"
+      style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);"
+      variant="borderRadius"
       class="container mr-12"
     >
       <div class="flex justify-center w-64 h-40">
@@ -36,7 +38,8 @@
     </div>
 
     <div
-      style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border-radius: 30px"
+      style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);"
+      variant="borderRadius"
       class="container mr-12"
     >
       <div class="flex justify-center w-64 h-40">
@@ -52,7 +55,8 @@
     </div>
 
     <div
-      style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border-radius: 30px"
+      style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);"
+      variant="borderRadius"
       class="container mr-12"
     >
       <div class="flex justify-center w-64 h-40">

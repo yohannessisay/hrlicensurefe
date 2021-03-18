@@ -10,7 +10,7 @@
             <span class="py-2">Email</span>
             <label for="email-address" class="sr-only">Email</label>
             <input
-              v-model="credentials.email"
+              v-model="credentials.emailAddress"
               id="email-address"
               name="email"
               type="email"
@@ -23,21 +23,21 @@
           </div>
         </div>
         <div>
-          <span class="py-2">Password</span>
-          <label for="password" class="sr-only">Password</label>
+          <span class="py-2">Phone Number</span>
+          <label for="password" class="sr-only">Phone Number</label>
           <input
-            v-model="credentials.password"
-            id="password"
-            name="password"
-            type="password"
-            autocomplete="current-password"
+            v-model="credentials.phoneNumber"
+            id="phone"
+            name="phone"
+            type="text"
+            autocomplete="current-number"
             required
             class="appearance-none rounded-lg relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
             placeholder="Password"
           />
-          <span style="color: red">{{ credentialsErrors.password }}</span>
+          <span style="color: red">{{ credentialsErrors.phoneNumber }}</span>
         </div>
-        <div>
+        <!-- <div>
           <span class="py-2">Confirm Password</span>
           <label for="password" class="sr-only">Confirm Password</label>
           <input
@@ -54,11 +54,9 @@
             credentialsErrors.confirmPassword
           }}</span>
           <span style="color: red">{{ credentialsErrors.diffPassword }}</span>
-        </div>
+        </div> -->
         <div class="flex justify-center">
-          <button
-            @click="submit()"
-          >
+          <button click="submit()">
             Signup
           </button>
         </div>
@@ -78,36 +76,41 @@ export default {
   data() {
     return {
       credentials: {
-        email: "",
-        password: "",
-        confirmPassword: "",
+        emailAddress: "",
+        phoneNumber: "",
       },
+      // credentialsErrors: {
+      //   email: undefined,
+      //   password: undefined,
+      //   confirmPassword: undefined,
+      //   diffPassword: undefined,
+      // },
       credentialsErrors: {
-        email: undefined,
-        password: undefined,
-        confirmPassword: undefined,
-        diffPassword: undefined,
+        emailAddress: undefined,
+        phoneNumber: undefined,
       },
     };
   },
   methods: {
     submit() {
-      // this.$store.dispatch("apiCall", this.credentials);
       this.credentialsErrors = this.validateForm(this.credentials);
       if (Object.keys(this.credentialsErrors).length) return;
-      this.$router.push({ path: "/login" });
+      // this.$store.dispatch("apiCall", this.credentials);
+
+      // this.$router.push({ path: "/login" });
     },
     validateForm(credentials) {
       const errors = {};
-      if (!credentials.email) errors.email = "Email Required";
-      if (!credentials.password) errors.password = "Password Required";
-      if (!credentials.confirmPassword)
-        errors.confirmPassword = "Confirmation Password Required";
-      if (credentials.email && !this.isEmail(credentials.email)) {
-        errors.email = "Invalid Email";
+      if (!credentials.emailAddress) errors.emailAddress = "Email Required";
+      if (!credentials.phoneNumber)
+        errors.phoneNumber = "Phone Number Required";
+      // if (!credentials.confirmPassword)
+      //   errors.confirmPassword = "Confirmation Password Required";
+      if (credentials.emailAddress && !this.isEmail(credentials.emailAddress)) {
+        errors.emailAddress = "Invalid Email";
       }
-      if (credentials.password != credentials.confirmPassword)
-        errors.diffPassword = "Password does not match";
+      // if (credentials.password != credentials.confirmPassword)
+      //   errors.diffPassword = "Password does not match";
       return errors;
     },
     isEmail(email) {

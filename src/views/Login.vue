@@ -6,14 +6,14 @@
         <div class="flex flex-col mb-medium">
           <label>Email</label>
           <input
-            v-model="credentials.email"
+            v-model="credentials.emailAddress"
             id="email-address"
             name="email"
             type="email"
             autocomplete="email"
             required
           />
-          <span style="color: red">{{ credentialsErrors.email }}</span>
+          <span style="color: red">{{ credentialsErrors.emailAddress }}</span>
         </div>
         <div class="flex flex-col mb-medium">
           <label>Password</label>
@@ -39,7 +39,7 @@
             </div>
           </div>
           <div class="flex justify-center">
-            <button @click="submit()">Login</button>
+            <button click="submit()">Login</button>
           </div>
         </div>
         <div class="text-indigo-700 flex justify-center">
@@ -57,11 +57,11 @@ export default {
   data() {
     return {
       credentials: {
-        email: "",
+        emailAddress: "",
         password: "",
       },
       credentialsErrors: {
-        email: undefined,
+        emailAddress: undefined,
         password: undefined,
       },
     };
@@ -70,17 +70,25 @@ export default {
     submit() {
       this.credentialsErrors = this.validateForm(this.credentials);
       if (Object.keys(this.credentialsErrors).length) return;
-      console.log(this.credentials);
-      // this.$store.dispatch("setUserInfo", this.credentials);
-      // this.$store.dispatch("setAuth", true);
+      let email = {
+        emailAddress: this.credentials.emailAddress,
+      };
+      console.log(email);
+      let auth = "auth";
+      localStorage.setItem("token", auth);  
+      // this.$store.dispatch("setContact", email);
       this.$router.push("/license");
     },
     validateForm(credentials) {
       const errors = {};
-      if (!credentials.email) errors.email = "Email Required";
+      if (!credentials.emailAddress)
+        errors.ememailAddressail = "Email Required";
       if (!credentials.password) errors.password = "Password Required";
 
-      if (credentials.email && !this.isEmail(credentials.email)) {
+      if (
+        credentials.ememailAddressail &&
+        !this.isEmail(credentials.emailAddress)
+      ) {
         errors.email = "Invalid Email";
       }
       return errors;
