@@ -1,269 +1,71 @@
 <template>
-
-    <div class="formbox">
-      <form action="/">
-        <div class="banner">
-          <h1>Contact</h1>
+  <div class="w-screen max-w-4xl">
+    <div
+      class="flex flex-col mt-large w-full bg-white blue-box-shadow-light rounded"
+    >
+      <div class="mt-large">
+        <TitleWithIllustration illustration="Contact" message="Contact Info" />
+      </div>
+      <form class="mx-auto max-w-3xl w-full mt-10">
+        <div class="flex">
+          <div class="flex flex-col mb-medium w-1/2 mr-12">
+            <label class="text-primary-700">Mobile Number</label>
+            <div class="relative w-full">
+              <p class="absolute inset-y-0 left-0 flex items-center pl-2">
+                +251
+              </p>
+              <input class="px-12 max-w-3xl w-full" type="tel" />
+            </div>
+          </div>
+          <div class="flex flex-col mb-medium w-1/2 m1-12">
+            <label class="text-primary-700">Email(Optional)</label>
+            <input class="max-w-3xl" type="email" />
+          </div>
         </div>
-
-        <div class="item">
-           <div class="left">
-                <p class="">Mobile Number</p>
-                <div class="">
-                    <input v-model ="contact.mobileNumber" type="tel" name="mobileNumber" placeholder="Mobile Number" />
-                </div>
-           </div> 
-           <div class="right">
-                <p class="">Email(Optional)</p>
-                <div class="">
-                    <input v-model ="contact.email" type="text" name="email" placeholder="Email" />
-                </div>
-            </div>   
+        <div class="flex">
+          <div class="flex flex-col mb-medium w-1/2 mr-12">
+            <label class="text-primary-700">Telephone Number</label>
+            <input class="max-w-3xl" type="tel" />
+          </div>
+          <div class="flex flex-col mb-medium w-1/2 m1-12"></div>
         </div>
-
-        
-        <div class="item">
-           <div class="left">
-                <p class="">Telephone Number(Optional)</p>
-                <div class="">
-                    <input v-model ="contact.telephoneNumber" type="tel" name="telephoneNumber" placeholder="Telephone No." />
-                </div>
-           </div> 
-   
+        <div class="flex">
+          <div class="flex flex-col mb-medium w-1/2 mr-12">
+            <label class="text-primary-700">PO Box(Optional)</label>
+            <input class="max-w-3xl" type="text" />
+          </div>
+          <div class="flex flex-col mb-medium w-1/2 m1-12"></div>
         </div>
-       
-        <div>
-        <div class="item">
-           <div class="left-uni">
-                <p class="">P.O Box(Optional)</p>
-                <div class="">
-                    <input v-model ="contact.poBox" type="text" name="poBox" placeholder="P.O Box" />
-                </div>
-           </div> 
-  
-        </div>
-         </div>
-            
-
-        <div class="btn-block">
-          <button @click.prevent="nextStep" href="/">Next</button>
+        <div class="flex mb-medium w-full mt-medium">
+          <button
+            class="mx-auto w-1/2  bg-lightBlue-500 hover:bg-lightBlue-600 hover:shadow-lg"
+            variant="block"
+          >
+            Next
+          </button>
         </div>
       </form>
     </div>
-
+  </div>
 </template>
-    <style scoped>
-
-      .right{
-          float: right;
-              
-          width: calc(50% - 20px);
-      }
-     .left{
-          float: left;
-              
-          width: calc(50% - 20px);
-      }
-     .left-uni{
-          float: left;
-              
-           width: 100%;
-      }
-    .left-uni input{
-          float: left;
-              
-           width:  calc(50% - 30px)
-      }
-
-      .right-radio{
-          float: right;
-              
-          width: calc(50% - 5px);
-      }
-     .left-radio{
-          float: left;
-              
-          width: calc(25% - 5px);
-      }
-
-      h1 {
-      position: absolute;
-      margin: 0;
-      font-size: 38px;
-      color: #fff;
-      z-index: 2;
-      }
-      .formbox {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: inherit;
-      padding: 20px;
-      }
-      form {
-      width: 55%;
-      height: 60%;
-      padding: 20px;
-      border-radius: 6px;
-      background: #fff;
-      box-shadow: 0 0 25px 0 #6581a3; 
-      }
-      .banner {
-      position: relative;
-      height: 210px;  
-      background-size: cover;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      }
-      .banner::after {
-      content: "";
-      background-color: rgba(0, 0, 0, 0.3); 
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      }
-      input, select, textarea {
-      margin-bottom: 10px;
-      border: 1px solid #ccc;
-      border-radius: 3px;
-      }
-      input {
-      width: calc(100% - 10px);
-      padding: 5px;
-      }
-      input[type="date"] {
-      padding: 4px 5px;
-      }
-      select {
-      width: 100%;
-      padding: 7px 0;
-      background: transparent;
-      }
-      textarea {
-      width: calc(100% - 12px);
-      padding: 5px;
-      }
-      item{
-          color: #6581a3;
-      }
-     .item:hover i, .radio label:hover, input:hover::placeholder {
-      color: #587599;
-      }
-
-      .item input:hover, .item select:hover, .item textarea:hover {
-      border: 1px solid transparent;
-      box-shadow: 0 0 6px 0 #6581a3;
-      color: #587599;
-      }
-      .item {
-      position: relative;
-      margin: 10px 0;
-      }
-
-      .item i, input[type="date"]::-webkit-calendar-picker-indicator {
-      position: absolute;
-      font-size: 20px;
-      color: #a9a9a9;
-      }
-      .item i {
-      right: 2%;
-      top: 30px;
-      z-index: 1;
-      }
-      [type="date"]::-webkit-calendar-picker-indicator {
-      right: 1%;
-      z-index: 2;
-      opacity: 0;
-      cursor: pointer;
-      }
-      input[type=radio], input[type=checkbox]  {
-      display: none;
-      }
-      label.radio {
-      position: relative;
-      display: inline-block;
-      margin: 5px 20px 15px 0;
-      cursor: pointer;
-      }
-      .radio span {
-      margin-left: 30px;
-      }
-      label.radio:before {
-      content: "";
-      position: absolute;
-      left: 0;
-      width: 17px;
-      height: 17px;
-      border-radius: 50%;
-      border: 2px solid #ccc;
-      }
-      input[type=radio]:checked + label:before, label.radio:hover:before {
-      border: 2px solid #6581a3;
-      }
-      label.radio:after {
-      content: "";
-      position: absolute;
-      top: 6px;
-      left: 5px;
-      width: 8px;
-      height: 4px;
-      border: 3px solid #6581a3;
-      border-top: none;
-      border-right: none;
-      transform: rotate(-45deg);
-      opacity: 0;
-      }
-      input[type=radio]:checked + label:after {
-      opacity: 1;
-      }
-      .btn-block {
-      margin-top: 250px;
-      text-align: center;
-      width: 100%;
-      }
-      button {
-      width: 150px;
-      margin-top: 6px;
-      padding: 10px;
-      border: none;
-      border-radius: 5px; 
-      background: #6581a3;
-      font-size: 16px;
-      color: #fff;
-      cursor: pointer;
-      }
-      button:hover {
-      background: #6581a3;
-      }
-
-    </style>
-
 <script>
- 
+import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
 
-  export default {
-
-    data: () => ({
-
-      contact: { 
-          mobileNumber: null,
-          email: null,
-          telephoneNumber: null,
-          poBox: null
-
-
-
-      }
-    }),
-    methods: {
-        nextStep:function(){
-            console.log(this.contact);
-        }
-    },
-    mounted() {
-       
+export default {
+  components: { TitleWithIllustration },
+  data: () => ({
+    contact: {
+      mobileNumber: null,
+      email: null,
+      telephoneNumber: null,
+      poBox: null
     }
-  }
+  }),
+  methods: {
+    nextStep: function() {
+      console.log(this.contact);
+    }
+  },
+  mounted() {}
+};
 </script>
