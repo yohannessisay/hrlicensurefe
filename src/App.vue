@@ -17,14 +17,7 @@ export default {
 }
 </script>
 <style>
-@import "assets/styles/tailwind.postcss";
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.5s ease-out;
-}
+@import "styles/tailwind.postcss";
+@import "styles/fonts.css";
+@import "styles/design-system.css";
 </style>
