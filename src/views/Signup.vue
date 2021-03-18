@@ -1,13 +1,8 @@
 <template>
-  <div
-    class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8"
-  >
-    <div class="w-1/4 space-y-8">
-      <div>
-        <h2 class="mt-6 text-center text-3xl font-extrabold text-indigo-800">
-          Signup
-        </h2>
-      </div>
+  <div class="w-screen flex flex-col justify-center items-center">
+    <div class="flex flex-col mt-large w-3/12">
+      <Title message="Signup" />
+
       <form class="mt-6 space-y-6" @submit.prevent="submit">
         <input type="hidden" name="remember" value="true" />
         <div class="rounded-md shadow-sm -space-y-px">
@@ -58,14 +53,11 @@
           <span style="color: red">{{
             credentialsErrors.confirmPassword
           }}</span>
-           <span style="color: red">{{
-            credentialsErrors.diffPassword
-          }}</span>
+          <span style="color: red">{{ credentialsErrors.diffPassword }}</span>
         </div>
         <div class="flex justify-center">
           <button
             @click="submit()"
-            class="w-44 focus:outline-none text-white justify-center text-sm py-2 px-12 rounded-3xl bg-blue-500 hover:bg-blue-600 hover:shadow-lg"
           >
             Signup
           </button>
@@ -79,8 +71,10 @@
   </div>
 </template>
 <script>
+import Title from "@/sharedComponents/Title";
+
 export default {
-  name: "Register",
+  components: { Title },
   data() {
     return {
       credentials: {
@@ -101,7 +95,7 @@ export default {
       // this.$store.dispatch("apiCall", this.credentials);
       this.credentialsErrors = this.validateForm(this.credentials);
       if (Object.keys(this.credentialsErrors).length) return;
-      this.$router.push({ path: '/login' });
+      this.$router.push({ path: "/login" });
     },
     validateForm(credentials) {
       const errors = {};
@@ -112,7 +106,7 @@ export default {
       if (credentials.email && !this.isEmail(credentials.email)) {
         errors.email = "Invalid Email";
       }
-      if(credentials.password != credentials.confirmPassword)
+      if (credentials.password != credentials.confirmPassword)
         errors.diffPassword = "Password does not match";
       return errors;
     },

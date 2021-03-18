@@ -22,6 +22,41 @@ const routes = [
     name: "Login",
     component: () => import("../views/Login.vue"),
   },
+  {
+    path: "/license",
+    name: "License",
+    component: () => import("../views/License.vue"),
+  },
+  {
+    path: "/newlicense",
+    name: "NewLicense",
+    component: () => import("../views/NewLicense.vue"),
+  },
+  {
+    path: "/renewal",
+    name: "Renewal",
+    component: () => import("../views/Renewal.vue"),
+  },
+  {
+    path: "/verification",
+    name: "Verification",
+    component: () => import("../views/Verification.vue"),
+  },
+  {
+    path: "/renewal",
+    name: "Renewal",
+    component: () => import("../views/Renewal.vue"),
+  },
+   {
+    path: "/renewal",
+    name: "Renewal",
+    component: () => import("../views/Renewal.vue"),
+  },
+  {
+    path: "/institution",
+    name: "Renewal",
+    component: () => import("../views/Institution.vue"),
+  },
 ];
 
 const router = createRouter({
@@ -29,9 +64,9 @@ const router = createRouter({
   routes,
 });
 // router.beforeEach((to, from, next) => {
-  // const auth = store.state.auth;
-  // if (!auth && to.path !== "/login") next("/login");
-  // else next();
+// const auth = store.state.auth;
+// if (!auth && to.path !== "/login") next("/login");
+// else next();
 // });
 
 export default router;
