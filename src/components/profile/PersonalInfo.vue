@@ -1,5 +1,5 @@
 <template>
-  <div class="w-screen max-w-4xl">
+  <div class="w-screen max-w-4xl mt-xl h-screen">
     <div
       class="flex flex-col mt-large w-full bg-white blue-box-shadow-light rounded"
     >
@@ -129,22 +129,47 @@
         <div class="flex">
           <div class="flex flex-col mb-medium w-1/2 mr-12">
             <label class="text-primary-700">User Type</label>
-            <select class="max-w-3xl" v-model="selected">
-              <option disabled value="">Please select one</option>
-              <option>Value one</option>
-              <option>I'm the second one</option>
-              <option>Select me</option>
+            <select class="max-w-3xl" v-model="personalInfo.userTypeId">
+              <option
+                v-for="types in userTypes"
+                v-bind:key="types.name"
+                v-bind:value="types.id"
+              >
+                {{ types.name }}
+              </option>
             </select>
           </div>
           <div class="flex flex-col mb-medium w-1/2 m1-12">
             <label class="text-primary-700">Expert Level</label>
-            <select class="max-w-3xl" v-model="selected">
-              <option disabled value="">Please select one</option>
-              <option>Value one</option>
-              <option>I'm the second one</option>
-              <option>Select me</option>
+            <select
+              class="max-w-3xl"
+              v-model="personalInfo.expertLevelId"
+              @change="fetchHealthOffices()"
+            >
+              <option
+                v-for="types in expertLevel"
+                v-bind:key="types.name"
+                v-bind:value="types.id"
+              >
+                {{ types.name }}
+              </option>
             </select>
           </div>
+        </div>
+        <div class="flex" v-if="personalInfo.expertLevelId == 4">
+          <div class="flex flex-col mb-medium w-1/2 mr-12">
+            <label class="text-primary-700">Health Office</label>
+            <select class="max-w-3xl" v-model="personalInfo.healthOfficeId">
+              <option
+                v-for="types in healthOffices"
+                v-bind:key="types.name"
+                v-bind:value="types.id"
+              >
+                {{ types.name }}
+              </option>
+            </select>
+          </div>
+          <div class="flex flex-col mb-medium w-1/2 ml-12"></div>
         </div>
         <div class="flex mb-medium w-full mt-medium">
           <button
@@ -160,7 +185,7 @@
 
 <script>
 import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
-
+import axios from "axios";
 export default {
   components: { TitleWithIllustration },
   data: () => ({
@@ -172,17 +197,80 @@ export default {
       pob: null,
       dob: null,
       gender: null,
-      martialStatus: null
+      martialStatus: null,
+      userTypeId: null,
+      experLevelId: null,
+      healthOfficeId: null
     },
-    userType: {},
-    expertLevel: {},
-    healthOffice: {}
+    userTypes: [],
+    expertLevel: [],
+    healthOffices: []
   }),
   methods: {
+    async fetchUserTypes() {
+      try {
+        const url = `http://localhost:5000/api/lookups/userTypes`;
+        const response = await axios.get(url);
+        const results = response.data;
+        this.userTypes = results.data;
+      } catch (err) {
+        if (err.response) {
+          // client received an error response
+          console.log("Server Error:", err);
+        } else if (err.request) {
+          // client never received a response, or request never left
+          console.log("Network Error:", err);
+        } else {
+          console.log("Client Error:", err);
+        }
+      }
+    },
+    async fetchExpertLevel() {
+      try {
+        const url = `http://localhost:5000/api/lookups/expertLevels`;
+        const response = await axios.get(url);
+        const results = response.data;
+        this.expertLevel = results.data;
+      } catch (err) {
+        if (err.response) {
+          // client received an error response
+          console.log("Server Error:", err);
+        } else if (err.request) {
+          // client never received a response, or request never left
+          console.log("Network Error:", err);
+        } else {
+          console.log("Client Error:", err);
+        }
+      }
+    },
+    async fetchHealthOffices() {
+      if (this.personalInfo.expertLevelId == 4) {
+        try {
+          const url = `http://localhost:5000/api/lookups/healthOffices`;
+          const response = await axios.get(url);
+          const results = response.data;
+          this.healthOffices = results.data;
+          console.log(this.healthOffices);
+        } catch (err) {
+          if (err.response) {
+            // client received an error response
+            console.log("Server Error:", err);
+          } else if (err.request) {
+            // client never received a response, or request never left
+            console.log("Network Error:", err);
+          } else {
+            console.log("Client Error:", err);
+          }
+        }
+      }
+    },
     nextStep: function() {
       console.log(this.personalInfo);
     }
   },
-  mounted() {}
+  mounted() {
+    this.fetchUserTypes();
+    this.fetchExpertLevel();
+  }
 };
 </script>
