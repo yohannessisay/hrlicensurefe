@@ -334,9 +334,9 @@
         }
     },
     mounted() {
-     axios
-      .get('http://localhost:5000/api/lookups/userTypes')
-      .then(response => (this.personalInfo.userType = response.data));
+    //  axios
+    //   .get('http://localhost:5000/api/lookups/userTypes')
+    //   .then(response => (this.personalInfo.userType = response.data));
     }
   }
 </script>
