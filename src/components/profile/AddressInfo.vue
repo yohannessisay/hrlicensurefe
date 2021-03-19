@@ -12,7 +12,7 @@
             <label class="text-primary-700">Region</label>
             <select
               class="max-w-3xl"
-              v-model="address.regionId"
+              v-model="address.city"
               @change="fetchZones()"
             >
               <option
@@ -26,7 +26,7 @@
           </div>
           <div class="flex flex-col mb-medium w-1/2 m1-12">
             <label class="text-primary-700">Kebele</label>
-            <input class="max-w-3xl" type="text" />
+            <input class="max-w-3xl" type="text" v-model="address.kebele" />
           </div>
         </div>
         <div class="flex">
@@ -48,7 +48,11 @@
           </div>
           <div class="flex flex-col mb-medium w-1/2 m1-12">
             <label class="text-primary-700">House No(Optional)</label>
-            <input class="max-w-3xl" type="text" />
+            <input
+              class="max-w-3xl"
+              type="text"
+              v-model="address.houseNumber"
+            />
           </div>
         </div>
         <div class="flex">
@@ -66,7 +70,7 @@
           </div>
           <div class="flex flex-col mb-medium w-1/2 m1-12">
             <label class="text-primary-700">Residence</label>
-            <input class="max-w-3xl" type="text" />
+            <input class="max-w-3xl" type="text" v-model="address.residence" />
           </div>
         </div>
         <div class="flex mb-medium w-full mt-medium">
@@ -86,12 +90,11 @@ export default {
   components: { TitleWithIllustration },
   data: () => ({
     address: {
-      regionId: null,
-      kebele: null,
-      zoneId: null,
-      houseNo: null,
-      woredaId: null,
-      residence: null
+      houseNo: "",
+      woredaId: "",
+      kebele: "",
+      city: "",
+      residence: ""
     },
     regions: [],
     zones: [],

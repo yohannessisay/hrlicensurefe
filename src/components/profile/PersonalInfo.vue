@@ -13,41 +13,51 @@
         <div class="flex">
           <div class="flex flex-col mb-medium w-1/2 mr-12">
             <label class="text-primary-700">First Name</label>
-            <input class="max-w-3xl" type="text" />
+            <input class="max-w-3xl" type="text" v-model="personalInfo.name" />
           </div>
           <div class="flex flex-col mb-medium w-1/2 m1-12">
             <label class="text-primary-700">Nationality</label>
-            <input class="max-w-3xl" type="text" />
+            <input
+              class="max-w-3xl"
+              type="text"
+              v-model="personalInfo.nationality"
+            />
           </div>
         </div>
         <div class="flex">
           <div class="flex flex-col mb-medium w-1/2 mr-12">
             <label class="text-primary-700">Father Name</label>
-            <input class="max-w-3xl" type="text" />
+            <input
+              class="max-w-3xl"
+              type="text"
+              v-model="personalInfo.fatherName"
+            />
           </div>
           <div class="flex flex-col mb-medium w-1/2 m1-12">
             <label class="text-primary-700">Place of birth(Optional)</label>
-            <input class="max-w-3xl" type="text" />
+            <input
+              class="max-w-3xl"
+              type="text"
+              v-model="personalInfo.placeOfBirth"
+            />
           </div>
         </div>
         <div class="flex">
           <div class="flex flex-col mb-medium w-1/2 mr-12">
             <label class="text-primary-700">Grand Father Name</label>
-            <input class="max-w-3xl" type="text" />
+            <input
+              class="max-w-3xl"
+              type="text"
+              v-model="personalInfo.grandFatherName"
+            />
           </div>
           <div class="flex flex-col mb-medium w-1/2 m1-12">
             <label class="text-primary-700">Date of birth(Optional)</label>
-            <input class="max-w-3xl" type="text" />
-          </div>
-        </div>
-        <div class="flex">
-          <div class="flex flex-col mb-medium w-1/2 mr-12">
-            <label class="text-primary-700">Gender</label>
-            <input class="max-w-3xl" type="text" />
-          </div>
-          <div class="flex flex-col mb-medium w-1/2 m1-12">
-            <label class="text-primary-700">Date of birth(Optional)</label>
-            <input class="max-w-3xl" type="date" />
+            <input
+              class="max-w-3xl"
+              type="date"
+              v-model="personalInfo.dateOfBirth"
+            />
           </div>
         </div>
         <div class="flex">
@@ -62,6 +72,7 @@
                       type="radio"
                       id="male"
                       value="male"
+                      v-model="personalInfo.gender"
                     />
                     <label
                       class="ml-tiny flex flex-col text-primary-700"
@@ -74,7 +85,12 @@
                 <div class="flex w-1/3">
                   <div class="flex flex-col w-1/3">
                     <div class="flex py-2">
-                      <input type="radio" id="female" value="female" />
+                      <input
+                        type="radio"
+                        id="female"
+                        value="female"
+                        v-model="personalInfo.gender"
+                      />
                       <label class="ml-tiny text-primary-700" for="female">
                         Female
                       </label>
@@ -94,7 +110,8 @@
                       class="flex flex-col"
                       type="radio"
                       id="single"
-                      value="single"
+                      value="1"
+                      v-model="personalInfo.maritalStatusId"
                     />
                     <label
                       class="ml-tiny flex flex-col text-primary-700"
@@ -107,7 +124,12 @@
                 <div class="flex w-1/3">
                   <div class="flex flex-col w-1/3">
                     <div class="flex py-2">
-                      <input type="radio" id="married" value="married" />
+                      <input
+                        type="radio"
+                        id="married"
+                        value="2"
+                        v-model="personalInfo.maritalStatusId"
+                      />
                       <label class="ml-tiny text-primary-700" for="married">
                         Married
                       </label>
@@ -116,7 +138,12 @@
                 </div>
                 <div class="flex  flex-col w-1/3">
                   <div class="flex py-2">
-                    <input type="radio" id="divorced" value="divorced" />
+                    <input
+                      type="radio"
+                      id="divorced"
+                      value="3"
+                      v-model="personalInfo.maritalStatusId"
+                    />
                     <label class="ml-tiny text-primary-700" for="divorced">
                       Divorced
                     </label>
@@ -174,6 +201,7 @@
         <div class="flex mb-medium w-full mt-medium">
           <button
             class="block mx-auto w-1/2  bg-lightBlue-500 hover:bg-lightBlue-600 hover:shadow-lg"
+            v-on:click="nextStep()"
           >
             Next
           </button>
@@ -190,16 +218,16 @@ export default {
   components: { TitleWithIllustration },
   data: () => ({
     personalInfo: {
-      firstName: null,
+      name: null,
       grandFatherName: null,
       fatherName: null,
       nationality: null,
-      pob: null,
-      dob: null,
+      placeOfBirth: null,
+      dateOfBirth: null,
       gender: null,
-      martialStatus: null,
+      maritalStatusId: null,
       userTypeId: null,
-      experLevelId: null,
+      expertLevelId: null,
       healthOfficeId: null
     },
     userTypes: [],
@@ -264,7 +292,7 @@ export default {
         }
       }
     },
-    nextStep: function() {
+    nextStep() {
       console.log(this.personalInfo);
     }
   },

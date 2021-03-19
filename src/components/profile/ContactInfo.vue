@@ -32,7 +32,7 @@
         <div class="flex">
           <div class="flex flex-col mb-medium w-1/2 mr-12">
             <label class="text-primary-700">PO Box(Optional)</label>
-            <input class="max-w-3xl" type="text" />
+            <input class="max-w-3xl" type="text" v-model="contact.poBox" />
           </div>
           <div class="flex flex-col mb-medium w-1/2 m1-12"></div>
         </div>
@@ -55,10 +55,7 @@ export default {
   components: { TitleWithIllustration },
   data: () => ({
     contact: {
-      mobileNumber: null,
-      email: null,
-      telephoneNumber: null,
-      poBox: null
+      poBox: ""
     }
   }),
   methods: {
