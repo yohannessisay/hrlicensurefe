@@ -1,13 +1,4 @@
 <template>
-<<<<<<< HEAD
-  <div class="w-screen flex item-center justify-center">
-    <router-link to="/" class="px-4">Home</router-link> |
-    <router-link to="/about" class="px-4">About</router-link> |
-    <router-link to="/signup" class="px-4">Signup</router-link> |
-    <router-link to="/login" class="px-4">Login</router-link>
-  </div>
-  <router-view v-slot="{ Component }" :key="$route.fullPath">
-=======
   <nav class="relative select-none lg:flex lg:items-stretch w-full">
     <div class="flex flex-no-shrink items-stretch h-12">
       <h5
@@ -62,16 +53,12 @@
   </nav>
 
   <router-view v-slot="{ Component }">
->>>>>>> 754714da72b1e97b2e1a9dd67f272482a656f8fd
     <transition name="fade" mode="out-in">
       <component :is="Component" />
     </transition>
   </router-view>
 </template>
 <script>
-<<<<<<< HEAD
-export default {};
-=======
 import Title from "@/sharedComponents/Title";
 import RenderIllustration from "@/sharedComponents/RenderIllustration";
 
@@ -88,14 +75,11 @@ export default {
     },
   },
 };
->>>>>>> 754714da72b1e97b2e1a9dd67f272482a656f8fd
 </script>
 <style>
 @import "styles/tailwind.postcss";
 @import "styles/fonts.css";
 @import "styles/design-system.css";
-<<<<<<< HEAD
-=======
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
@@ -105,5 +89,4 @@ export default {
 .fade-leave-active {
   transition: opacity 0.5s ease-out;
 }
->>>>>>> 754714da72b1e97b2e1a9dd67f272482a656f8fd
 </style>
