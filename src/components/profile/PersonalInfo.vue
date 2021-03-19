@@ -112,6 +112,7 @@
                       id="single"
                       value="1"
                       v-model="personalInfo.maritalStatusId"
+                      @change="genderChanged()"
                     />
                     <label
                       class="ml-tiny flex flex-col text-primary-700"
@@ -129,6 +130,7 @@
                         id="married"
                         value="2"
                         v-model="personalInfo.maritalStatusId"
+                        @change="genderChanged()"
                       />
                       <label class="ml-tiny text-primary-700" for="married">
                         Married
@@ -143,6 +145,7 @@
                       id="divorced"
                       value="3"
                       v-model="personalInfo.maritalStatusId"
+                      @change="genderChanged()"
                     />
                     <label class="ml-tiny text-primary-700" for="divorced">
                       Divorced
@@ -228,13 +231,15 @@ export default {
       dateOfBirth: null,
       gender: null,
       maritalStatusId: null,
+      maritalStatus: null,
       userTypeId: null,
       expertLevelId: null,
       healthOfficeId: null
     },
     userTypes: [],
     expertLevel: [],
-    healthOffices: []
+    healthOffices: [],
+    maritalStatuses: []
   }),
   methods: {
     ...mapActions(["setPersonalInfo"]),
@@ -296,8 +301,19 @@ export default {
       }
     },
     nextStep: function() {
-      this.setPersonalnfo(this.personalInfo);
+      //this.setPersonalnfo(this.personalInfo);
       console.log(this.personalInfo);
+    },
+    genderChanged: function() {
+      if (this.personalInfo.maritalStatusId == 3) {
+        this.personalInfo.maritalStatus = "Divorced";
+      }
+      if (this.personalInfo.maritalStatusId == 2) {
+        this.personalInfo.maritalStatus = "MArried";
+      }
+      if (this.personalInfo.maritalStatusId == 1) {
+        this.personalInfo.maritalStatus = "Single";
+      }
     }
   },
   mounted() {

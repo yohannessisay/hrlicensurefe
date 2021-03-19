@@ -89,9 +89,11 @@ export default {
     address: {
       houseNumber: "",
       woredaId: "",
+      woreda: "",
       kebele: "",
       city: "",
-      residence: ""
+      residence: "",
+      zone: ""
     },
     regionId: "",
     regions: [],

@@ -8,7 +8,7 @@
   <div v-if="showContactInfo == true">
     <ContactInfo />
   </div>
- <div v-if="howPreview == true">
+ <div v-if="showPreview == true">
     <Preview />
  </div>
 
@@ -25,8 +25,8 @@ export default {
   name: "NewProfile",
   data: () => ({
     showContactInfo: false,
-    showPersonalInfo: false,
-    showAddressInfo: true,
+    showPersonalInfo: true,
+    showAddressInfo: false,
     showPreview: false
   }),
   components: {

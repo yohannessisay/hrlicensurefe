@@ -30,7 +30,7 @@ const routes = [
   {
     path: "/newlicense",
     name: "NewLicense",
-    component: () => import("../components/NewLicense/NewLicense.vue"),
+    component: () => import("../components/NewLicense/NewLicense.vue")
   },
   {
     path: "/renewal",
