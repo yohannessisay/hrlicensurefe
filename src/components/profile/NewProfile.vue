@@ -25,8 +25,8 @@ export default {
   name: "NewProfile",
   data: () => ({
     showContactInfo: false,
-    showPersonalInfo: true,
-    showAddressInfo: false,
+    showPersonalInfo: false,
+    showAddressInfo: true,
     showPreview: false
   }),
   components: {

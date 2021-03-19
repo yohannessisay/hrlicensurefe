@@ -10,15 +10,11 @@
         <div class="flex">
           <div class="flex flex-col mb-medium w-1/2 mr-12">
             <label class="text-primary-700">Region</label>
-            <select
-              class="max-w-3xl"
-              v-model="address.city"
-              @change="fetchZones()"
-            >
+            <select class="max-w-3xl" v-model="cityObj" @change="fetchZones()">
               <option
                 v-for="types in regions"
                 v-bind:key="types.name"
-                v-bind:value="types.id"
+                v-bind:value="types"
               >
                 {{ types.name }}
               </option>
@@ -32,11 +28,7 @@
         <div class="flex">
           <div class="flex flex-col mb-medium w-1/2 mr-12">
             <label class="text-primary-700">Zone</label>
-            <select
-              class="max-w-3xl"
-              v-model="address.zoneId"
-              @change="fetchWoredas()"
-            >
+            <select class="max-w-3xl" @change="fetchWoredas()" v-model="zoneId">
               <option
                 v-for="types in zones"
                 v-bind:key="types.name"
@@ -74,7 +66,10 @@
           </div>
         </div>
         <div class="flex mb-medium w-full mt-medium">
-          <button class="mx-auto w-1/2 blue-with-light-blue-gradient" variant="block">
+          <button
+            class="mx-auto w-1/2 blue-with-light-blue-gradient"
+            variant="block"
+          >
             Next
           </button>
         </div>
@@ -96,9 +91,12 @@ export default {
       city: "",
       residence: ""
     },
+    regionId: "",
     regions: [],
     zones: [],
-    woredas: []
+    woredas: [],
+    cityObj: {},
+    zoneId: ""
   }),
   methods: {
     async fetchRegions() {
@@ -119,8 +117,9 @@ export default {
     },
     async fetchZones() {
       try {
-        const url =
-          `http://localhost:5000/api/lookups/zones/` + this.address.regionId;
+        this.address.city = this.cityObj.name;
+        this.regionId = this.cityObj.id;
+        const url = `http://localhost:5000/api/lookups/zones/` + this.regionId;
         const response = await axios.get(url);
         const results = response.data;
         this.zones = results.data;

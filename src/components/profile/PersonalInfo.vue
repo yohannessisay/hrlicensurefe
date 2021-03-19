@@ -213,9 +213,11 @@
 
 <script>
 import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
+import { mapActions } from "vuex";
 import axios from "axios";
 export default {
   components: { TitleWithIllustration },
+  // computed: mapGetters(["getPersonalInfo"]),
   data: () => ({
     personalInfo: {
       name: null,
@@ -235,6 +237,7 @@ export default {
     healthOffices: []
   }),
   methods: {
+    ...mapActions(["setPersonalInfo"]),
     async fetchUserTypes() {
       try {
         const url = `http://localhost:5000/api/lookups/userTypes`;
@@ -293,6 +296,7 @@ export default {
       }
     },
     nextStep() {
+      this.setPersonalnfo(this.personalInfo);
       console.log(this.personalInfo);
     }
   },
