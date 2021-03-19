@@ -1,10 +1,10 @@
 <template>
   <div class="flex justify-center">
-    <div class="w-screen max-w-4xl mt-xl h-screen">
+    <div class="w-screen max-w-4xl h-screen">
       <div
         class="flex flex-col mt-large w-full bg-white blue-box-shadow-light rounded "
       >
-        <TitleWithIllustration illustration="Id" message="ID/Passport" class="mt-8" />
+        <TitleWithIllustration illustration="Certificate" message="Health Examination Certificate" class="mt-8" />
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
           <div class="flex justify-center">
             <div>
@@ -30,6 +30,7 @@
     </div>
   </div>
 </template>
+
 
 <script>
 import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";

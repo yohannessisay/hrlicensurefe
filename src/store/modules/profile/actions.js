@@ -21,7 +21,6 @@ export default {
       commit(ADD_PROFILE_ERROR);
     }
   },
-
   setProfileInfo({ commit }, profileInfo) {
     commit(SET_PERSONAL_INFO, profileInfo);
   },
@@ -36,5 +35,54 @@ export default {
 
   apiCall({ commit }, api) {
     commit(SET_API_CALL, api);
-  }
+  },
+  async getExpertLevels() {
+    try {
+      const resp = await ApiService.get("/api/lookups/expertLevels");
+    } catch (error) {
+      const resp = error;
+    }
+    return resp;
+  },
+  async getHealthOffice() {
+    try {
+      const resp = await ApiService.get("/api/lookups/healthOffices");
+    } catch (error) {
+      const resp = error;
+    }
+    return resp;
+  },
+  async getMaritalStatus() {
+    try {
+      const resp = await ApiService.get("/api/lookups/maritalStatuses");
+    } catch (error) {
+      const resp = error;
+    }
+    return resp;
+  },
+  async getRegions() {
+    try {
+      const resp = await ApiService.get("/api/lookups/regions");
+    } catch (error) {
+      const resp = error;
+    }
+    return resp;
+  },
+  async getWoredas() {
+    try {
+      const resp = await ApiService.get("/api/lookups/woredas");
+    } catch (error) {
+      const resp = error;
+    }
+    return resp;
+  },
+  async getZones() {
+    try {
+      const resp = await ApiService.get("/api/lookups/zones");
+    } catch (error) {
+      const resp = error;
+    }
+    return resp;
+  },
+
 };

@@ -52,6 +52,9 @@
 </template>
 <script>
 import Title from "@/sharedComponents/Title";
+import {createNamespacedHelpers} from 'vuex';
+const {mapGetters} = createNamespacedHelpers('user');
+
 export default {
   components: { Title },
   data() {
@@ -73,20 +76,18 @@ export default {
       let email = {
         emailAddress: this.credentials.emailAddress,
       };
-      console.log(email);
       let auth = "auth";
-      localStorage.setItem("token", auth);  
-      // this.$store.dispatch("setContact", email);
-      this.$router.push("/license");
+      localStorage.setItem("token", auth);
+      this.$store.dispatch("user/actions/setContact", email);
+      // this.$router.push("/license");
     },
     validateForm(credentials) {
       const errors = {};
-      if (!credentials.emailAddress)
-        errors.ememailAddressail = "Email Required";
+      if (!credentials.emailAddress) errors.emailAddress = "Email Required";
       if (!credentials.password) errors.password = "Password Required";
 
       if (
-        credentials.ememailAddressail &&
+        credentials.ememailAddress &&
         !this.isEmail(credentials.emailAddress)
       ) {
         errors.email = "Invalid Email";
