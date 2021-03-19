@@ -6,7 +6,7 @@
       <div class="mt-large">
         <TitleWithIllustration illustration="Contact" message="Contact Info" />
       </div>
-      <form class="mx-auto max-w-3xl w-full mt-10">
+      <form class="mx-auto max-w-3xl w-full mt-10" @submit.prevent="nextStep">
         <div class="flex">
           <div class="flex flex-col mb-medium w-1/2 mr-12">
             <label class="text-primary-700">Mobile Number</label>

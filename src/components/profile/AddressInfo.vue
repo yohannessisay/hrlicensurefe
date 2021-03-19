@@ -6,7 +6,7 @@
       <div class="mt-large">
         <TitleWithIllustration illustration="Address" message="Address Info" />
       </div>
-      <form class="mx-auto max-w-3xl w-full mt-10">
+      <form class="mx-auto max-w-3xl w-full mt-10" @submit.prevent="nextStep">
         <div class="flex">
           <div class="flex flex-col mb-medium w-1/2 mr-12">
             <label class="text-primary-700">Region</label>
@@ -22,7 +22,7 @@
           </div>
           <div class="flex flex-col mb-medium w-1/2 m1-12">
             <label class="text-primary-700">Kebele</label>
-            <input class="max-w-3xl" type="text" v-model="address.kebele" />
+            <input class="max-w-3xl" type="number" v-model="address.kebele" />
           </div>
         </div>
         <div class="flex">
@@ -69,6 +69,7 @@
           <button
             class="mx-auto w-1/2 blue-with-light-blue-gradient"
             variant="block"
+            click="nextStep()"
           >
             Next
           </button>
@@ -80,12 +81,13 @@
 
 <script>
 import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
+import { mapActions } from "vuex";
 import axios from "axios";
 export default {
   components: { TitleWithIllustration },
   data: () => ({
     address: {
-      houseNo: "",
+      houseNumber: "",
       woredaId: "",
       kebele: "",
       city: "",
@@ -98,7 +100,9 @@ export default {
     cityObj: {},
     zoneId: ""
   }),
+  computed: {},
   methods: {
+    ...mapActions(["setAddress"]),
     async fetchRegions() {
       try {
         const url = `http://localhost:5000/api/lookups/regions/`;
@@ -135,7 +139,7 @@ export default {
     },
     async fetchWoredas() {
       try {
-        const url = 
+        const url =
           `http://localhost:5000/api/lookups/woredas` + this.address.zoneId;
         const response = await axios.get(url);
         const results = response.data;
@@ -151,6 +155,7 @@ export default {
       }
     },
     nextStep: function() {
+      this.setAddress(this.address);
       console.log(this.address);
     }
   },
