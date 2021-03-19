@@ -30,7 +30,7 @@ const routes = [
   {
     path: "/newlicense",
     name: "NewLicense",
-    component: () => import("../views/NewLicense.vue")
+    component: () => import("../components/NewLicense/NewLicense.vue"),
   },
   {
     path: "/renewal",
@@ -50,28 +50,28 @@ const routes = [
   {
     path: "/institution",
     name: "Institution",
-    component: () => import("../views/Institution.vue")
+    component: () => import("../components/NewLicense/Institution.vue"),
   },
   {
     path: "/photo",
     name: "Photo",
-    component: () => import("../views/Photo.vue")
+    component: () => import("../components/NewLicense/Photo.vue"),
   },
   {
     path: "/id",
     name: "ID",
-    component: () => import("../views/Passport.vue")
+    component: () => import("../components/NewLicense/Passport.vue"),
   },
   {
     path: "/certificate",
     name: "Certificate",
-    component: () => import("../views/HealthExamCert.vue")
+    component: () => import("../components/NewLicense/HealthExamCert.vue"),
   },
   {
     path: "/licenseSummary",
     name: "LicenseSummary",
-    component: () => import("../views/LicenseSummary.vue")
-  }
+    component: () => import("../components/NewLicense/LicenseSummary.vue"),
+  },
 ];
 
 const router = createRouter({

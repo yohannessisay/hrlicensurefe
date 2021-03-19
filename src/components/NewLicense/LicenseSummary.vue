@@ -127,8 +127,14 @@
 import Title from "@/sharedComponents/Title";
 
 export default {
+  props: ["activeState"],
   components: {
     Title,
+  },
+  methods: {
+    submit() {
+       this.$emit('changeActiveState');
+    },
   },
 };
 </script>

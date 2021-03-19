@@ -1,6 +1,6 @@
 <template>
   <div class="flex justify-center">
-    <div class="w-screen max-w-4xl mt-xl h-screen">
+    <div class="w-screen max-w-4xl h-screen">
       <div
         class="flex flex-col mt-large w-full bg-white blue-box-shadow-light rounded"
       >
@@ -10,7 +10,7 @@
             message="Institution"
           />
         </div>
-        <form class="mx-auto max-w-3xl w-full mt-10">
+        <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-10">
           <div class="flex">
             <div class="flex flex-col mb-medium w-1/2 mr-12">
               <label class="text-primary-700">Institution</label>
@@ -49,6 +49,7 @@
                   <div class="flex flex-col mb-small w-1/3">
                     <div class="flex py-2">
                       <input
+                        v-model="institutionTypeId"
                         class="flex flex-col"
                         type="radio"
                         id="inst"
@@ -65,7 +66,12 @@
                   <div class="flex w-1/3">
                     <div class="flex flex-col w-1/3">
                       <div class="flex py-2">
-                        <input type="radio" id="private" value="private" />
+                        <input
+                          type="radio"
+                          id="private"
+                          value="private"
+                          v-model="institutionTypeId"
+                        />
                         <label class="ml-tiny text-primary-700" for="private">
                           Private
                         </label>
@@ -75,7 +81,12 @@
                   <div class="flex w-1/3">
                     <div class="flex flex-col w-1/3">
                       <div class="flex py-2">
-                        <input type="radio" id="faith" value="faith" />
+                        <input
+                          type="radio"
+                          id="faith"
+                          value="faith"
+                          v-model="institutionTypeId"
+                        />
                         <label class="ml-tiny text-primary-700" for="faith">
                           Faith Based or Charity
                         </label>
@@ -92,6 +103,7 @@
                   <div class="flex flex-col mb-small w-1/3">
                     <div class="flex py-2">
                       <input
+                        v-model="departmentTypeId"
                         class="flex flex-col"
                         type="radio"
                         id="apptype"
@@ -109,6 +121,7 @@
                     <div class="flex flex-col w-1/3">
                       <div class="flex py-2">
                         <input
+                          v-model="departmentTypeId"
                           type="radio"
                           id="international"
                           value="international"
@@ -127,8 +140,8 @@
             </div>
           </div>
 
-          <div class="flex justify-center mb-medium w-full mt-medium">
-            <button>
+          <div class="flex justify-center mb-8">
+            <button click="submit()">
               Next
             </button>
             <button variant="outline">
@@ -144,22 +157,27 @@
 <script>
 import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
 export default {
+  props: ["activeState"],
   components: { TitleWithIllustration },
   data: () => ({
     licenseInfo: {
       applicantId: 1,
       applicantTypeId: 2,
       education: {
-        departmentId: 1,
-        institutionId: 2,
+        departmentId: "",
+        institutionId: "",
       },
     },
+    institutionTypeId: "",
+    departmentTypeId: "",
     institutions: ["ald", "lskd"],
     departments: ["ald", "lskd"],
   }),
 
-  nextStep: function() {
-    console.log(this.personalInfo);
+  methods: {
+    submit() {
+       this.$emit('changeActiveState');
+    },
   },
 };
 </script>

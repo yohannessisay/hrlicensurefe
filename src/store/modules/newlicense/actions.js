@@ -22,4 +22,36 @@ export default {
     console.log(state);
     commit(SET_ACTIVE_STATE, state);
   },
+  async getUserType() {
+    try {
+      const resp = await ApiService.get("/api/lookups/userTypes");
+    } catch (error) {
+      const resp = error;
+    }
+    return resp;
+  },
+  async getInstitutionType() {
+    try {
+      const resp = await ApiService.get("/api/lookups/institutionTypes");
+    } catch (error) {
+      const resp = error;
+    }
+    return resp;
+  },
+  async getInstitutions() {
+    try {
+      const resp = await ApiService.get("/api/lookups/institutions");
+    } catch (error) {
+      const resp = error;
+    }
+    return resp;
+  },
+  async getApplicantType() {
+    try {
+      const resp = await ApiService.get("/api/lookups/applicantTypes");
+    } catch (error) {
+      const resp = error;
+    }
+    return resp;
+  },
 };

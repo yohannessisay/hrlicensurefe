@@ -2,6 +2,7 @@ import ApiService from "../../../services/api.service";
 import { SET_PROFILE, SET_AUTH } from "./mutation-types";
 export default {
   async setContact({ commit }, profile) {
+    console.log(profile);
     commit(ADD_PROFILE_LOADING);
     try {
       const resp = await ApiService.post("/api/login", { profile });
