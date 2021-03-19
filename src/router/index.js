@@ -1,82 +1,82 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "../views/Home.vue";
-
+import About from "../views/About.vue";
 const routes = [
   {
     path: "/",
     name: "Home",
-    component: Home,
+    component: Home
   },
   {
     path: "/about",
     name: "About",
-    component: () => import("../views/About.vue"),
+    component: About
   },
   {
     path: "/signup",
     name: "Signup",
-    component: () => import("../views/Signup.vue"),
+    component: () => import("../views/Signup.vue")
   },
   {
     path: "/login",
     name: "Login",
-    component: () => import("../views/Login.vue"),
+    component: () => import("../views/Login.vue")
   },
   {
     path: "/license",
     name: "License",
-    component: () => import("../views/License.vue"),
+    component: () => import("../views/License.vue")
   },
   {
     path: "/newlicense",
     name: "NewLicense",
-    component: () => import("../views/NewLicense.vue"),
+    component: () => import("../views/NewLicense.vue")
   },
   {
     path: "/renewal",
     name: "Renewal",
-    component: () => import("../views/Renewal.vue"),
+    component: () => import("../views/Renewal.vue")
   },
   {
     path: "/verification",
     name: "Verification",
-    component: () => import("../views/Verification.vue"),
+    component: () => import("../views/Verification.vue")
   },
   {
     path: "/goodstanding",
     name: "GoodStanding",
-    component: () => import("../views/GoodStanding.vue"),
+    component: () => import("../views/GoodStanding.vue")
   },
   {
     path: "/institution",
     name: "Institution",
-    component: () => import("../views/Institution.vue"),
+    component: () => import("../views/Institution.vue")
   },
   {
     path: "/photo",
     name: "Photo",
-    component: () => import("../views/Photo.vue"),
+    component: () => import("../views/Photo.vue")
   },
   {
     path: "/id",
     name: "ID",
-    component: () => import("../views/Passport.vue"),
+    component: () => import("../views/Passport.vue")
   },
   {
     path: "/certificate",
     name: "Certificate",
-    component: () => import("../views/HealthExamCert.vue"),
+    component: () => import("../views/HealthExamCert.vue")
   },
   {
     path: "/licenseSummary",
     name: "LicenseSummary",
-    component: () => import("../views/LicenseSummary.vue"),
-  },
+    component: () => import("../views/LicenseSummary.vue")
+  }
 ];
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
-  routes,
+  routes
 });
 router.beforeEach((to, from, next) => {
   const auth = localStorage.getItem("token");

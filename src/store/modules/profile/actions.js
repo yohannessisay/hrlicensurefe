@@ -22,8 +22,8 @@ export default {
     }
   },
 
-  setProfileInfo({ commit }, profileInfo) {
-    commit(SET_PERSONAL_INFO, profileInfo);
+  setPersonalInfo({ commit }, personalInfo) {
+    commit(SET_PERSONAL_INFO, personalInfo);
   },
 
   setAddress({ commit }, address) {
