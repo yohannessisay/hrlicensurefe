@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-row justify-center">
+  <div id="navg" class="flex flex-row justify-center">
     <nav
       class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px"
       aria-label="Pagination"
@@ -78,3 +78,14 @@ export default {
   },
 };
 </script>
+<style>
+#navg a {
+  margin-left: 20px;
+  height: 45px;
+  width: 45px;
+  background-color: #2F639D;
+  color: white;
+  border-radius: 100%;
+  display: inline-block;
+}
+</style>

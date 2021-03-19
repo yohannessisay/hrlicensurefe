@@ -140,7 +140,7 @@
             </div>
           </div>
 
-          <div class="flex justify-center">
+          <div class="flex justify-center mb-8">
             <button click="submit()">
               Next
             </button>
