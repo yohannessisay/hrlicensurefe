@@ -3,8 +3,8 @@
     class="w-screen h-screen bg-lightBlue-100 flex items-center justify-center"
   >
     <!-- <HelloWorld msg="Welcome to Your Vue.js App" /> -->
-    <!-- <PersonalInfo /> -->
-    <AddressInfo />
+    <PersonalInfo />
+    <!-- <AddressInfo /> -->
     <!-- <ContactInfo /> -->
     <!-- <Preview /> -->
   </div>
