@@ -4,7 +4,11 @@
       <div
         class="flex flex-col mt-large w-full bg-white blue-box-shadow-light rounded "
       >
-        <TitleWithIllustration illustration="Certificate" message="Health Examination Certificate" class="mt-8" />
+        <TitleWithIllustration
+          illustration="Certificate"
+          message="Health Examination Certificate"
+          class="mt-8"
+        />
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
           <div class="flex justify-center">
             <div>
@@ -31,12 +35,17 @@
   </div>
 </template>
 
-
 <script>
 import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
 
 export default {
+  props: ["activeState"],
   components: { TitleWithIllustration },
+  methods: {
+    submit() {
+      this.$emit("changeActiveState");
+    },
+  },
   setup() {},
 };
 </script>

@@ -37,19 +37,19 @@
     </nav>
   </div>
   <div v-if="this.activeState == 1">
-    <Institution />
+    <Institution :activeState="1" @changeActiveState="activeState++" />
   </div>
   <div v-if="this.activeState == 2">
-    <Photo />
+    <Photo :activeState="2" @changeActiveState="activeState++" />
   </div>
   <div v-if="this.activeState == 3">
-    <Passport />
+    <Passport :activeState="3" @changeActiveState="activeState++" />
   </div>
   <div v-if="this.activeState == 4">
-    <HealthExamCert />
+    <HealthExamCert :activeState="4" @changeActiveState="activeState++" />
   </div>
   <div v-if="this.activeState == 5">
-    <LicenseSummary />
+    <LicenseSummary :activeState="5" @changeActiveState="activeState++" />
   </div>
 </template>
 <script>

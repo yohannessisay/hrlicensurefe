@@ -157,6 +157,7 @@
 <script>
 import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
 export default {
+  props: ["activeState"],
   components: { TitleWithIllustration },
   data: () => ({
     licenseInfo: {
@@ -175,7 +176,7 @@ export default {
 
   methods: {
     submit() {
-      console.log(this.licenseInfo);
+       this.$emit('changeActiveState');
     },
   },
 };
