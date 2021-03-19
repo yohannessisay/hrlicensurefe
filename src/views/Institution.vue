@@ -1,77 +1,165 @@
 <template>
-  <div class="w-full justify-center items-center">
-    <div class="w-full flex flex-col mt-large">
-      <TitleWithIllustration illustration="Institution" message="Institution" />
-      <form @submit.prevent="submit" class="flex flex-col mt-4">
-        <div class="flex justify-center">
-          <div class="flex flex-col mb-medium mr-4">
-            <label>Institution</label>
-            <select v-model="selected">
-              <option disabled value="">Please select one</option>
-              <option>Value one</option>
-              <option>I'm the second one</option>
-              <option>Select me</option>
-            </select>
-          </div>
-          <div class="flex flex-col mb-medium ml-4">
-            <label>Department</label>
-            <select v-model="selected">
-              <option disabled value="">Please select one</option>
-              <option>Value one</option>
-              <option>I'm the second one</option>
-              <option>Select me</option>
-            </select>
-          </div>
+  <div class="flex justify-center">
+    <div class="w-screen max-w-4xl mt-xl h-screen">
+      <div
+        class="flex flex-col mt-large w-full bg-white blue-box-shadow-light rounded"
+      >
+        <div class="mt-large">
+          <TitleWithIllustration
+            illustration="Institution"
+            message="Institution"
+          />
         </div>
-        <div class="flex justify-center">
-          <div class="flex flex-col mb-medium mr-4">
-            <label> Institution Type</label>
-            <div class="flex items-center mb-small">
-              <input type="radio" id="moh" value="moh" />
-              <label class="ml-tiny" for="moh">Public</label>
+        <form class="mx-auto max-w-3xl w-full mt-10">
+          <div class="flex">
+            <div class="flex flex-col mb-medium w-1/2 mr-12">
+              <label class="text-primary-700">Institution</label>
+              <select
+                class="max-w-3xl"
+                v-model="licenseInfo.education.institutionId"
+              >
+                <option
+                  v-for="institution in institutions"
+                  v-bind:key="institution.name"
+                >
+                  {{ institution }}
+                </option>
+              </select>
             </div>
-            <div class="flex items-center mb-small">
-              <input type="radio" id="hris" value="hris" />
-              <label class="ml-tiny" for="hris">Private</label>
-            </div>
-            <div class="flex items-center mb-small">
-              <input type="radio" id="hris" value="hris" />
-              <label class="ml-tiny" for="hris">Faith based or Charity</label>
+            <div class="flex flex-col mb-medium w-1/2 mr-12">
+              <label class="text-primary-700">Department</label>
+              <select
+                class="max-w-3xl"
+                v-model="licenseInfo.education.departmentId"
+              >
+                <option
+                  v-for="department in departments"
+                  v-bind:key="department.name"
+                >
+                  {{ department }}
+                </option>
+              </select>
             </div>
           </div>
-          <div class="flex flex-col mb-medium ml-4">
-            <label>Applicant Type</label>
+          <div class="flex">
+            <div class="flex w-1/2 mb-medium  mr-12">
+              <div class="flex flex-col w-full">
+                <label class="text-primary-700">Institution Type</label>
+                <div class="flex w-full">
+                  <div class="flex flex-col mb-small w-1/3">
+                    <div class="flex py-2">
+                      <input
+                        class="flex flex-col"
+                        type="radio"
+                        id="inst"
+                        value="public"
+                      />
+                      <label
+                        class="ml-tiny flex flex-col text-primary-700"
+                        for="public"
+                      >
+                        Public
+                      </label>
+                    </div>
+                  </div>
+                  <div class="flex w-1/3">
+                    <div class="flex flex-col w-1/3">
+                      <div class="flex py-2">
+                        <input type="radio" id="private" value="private" />
+                        <label class="ml-tiny text-primary-700" for="private">
+                          Private
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="flex w-1/3">
+                    <div class="flex flex-col w-1/3">
+                      <div class="flex py-2">
+                        <input type="radio" id="faith" value="faith" />
+                        <label class="ml-tiny text-primary-700" for="faith">
+                          Faith Based or Charity
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="flex w-1/2 mb-medium  mr-12">
+              <div class="flex flex-col w-full">
+                <label class="text-primary-700">Institution Type</label>
+                <div class="flex w-full">
+                  <div class="flex flex-col mb-small w-1/3">
+                    <div class="flex py-2">
+                      <input
+                        class="flex flex-col"
+                        type="radio"
+                        id="apptype"
+                        value="local"
+                      />
+                      <label
+                        class="ml-tiny flex flex-col text-primary-700"
+                        for="local"
+                      >
+                        Local
+                      </label>
+                    </div>
+                  </div>
+                  <div class="flex w-1/3">
+                    <div class="flex flex-col w-1/3">
+                      <div class="flex py-2">
+                        <input
+                          type="radio"
+                          id="international"
+                          value="international"
+                        />
+                        <label
+                          class="ml-tiny text-primary-700"
+                          for="international"
+                        >
+                          International
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
 
-            <div class="flex items-center mb-small">
-              <input type="radio" id="moh" value="moh" />
-              <label class="ml-tiny" for="moh">Local</label>
-            </div>
-            <div class="flex items-center mb-small">
-              <input type="radio" id="hris" value="hris" />
-              <label class="ml-tiny" for="hris">International</label>
-            </div>
-          </div>
-        </div>
-        <div class="flex justify-center">
-          <div>
-            <button>Next</button>
-          </div>
-          <div>
+          <div class="flex justify-center mb-medium w-full mt-medium">
+            <button>
+              Next
+            </button>
             <button variant="outline">
               Finish Later
             </button>
           </div>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
-
 export default {
   components: { TitleWithIllustration },
-  setup() {},
+  data: () => ({
+    licenseInfo: {
+      applicantId: 1,
+      applicantTypeId: 2,
+      education: {
+        departmentId: 1,
+        institutionId: 2,
+      },
+    },
+    institutions: ["ald", "lskd"],
+    departments: ["ald", "lskd"],
+  }),
+
+  nextStep: function() {
+    console.log(this.personalInfo);
+  },
 };
 </script>

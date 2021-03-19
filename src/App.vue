@@ -1,5 +1,5 @@
 <template>
-  <nav variants="background: responsive" class="relative select-none lg:flex lg:items-stretch w-full">
+  <nav class="relative select-none lg:flex lg:items-stretch w-full">
     <div class="flex flex-no-shrink items-stretch h-12">
       <h5
         class="flex-no-grow flex-no-shrink relative py-2 px-4 leading-normal text-Black no-underline flex items-center hover:bg-grey-dark"
@@ -39,13 +39,15 @@
 
     <div
       v-if="this.auth"
-      class="sm:flex sm:items-stretch sm:flex-no-shrink sm:flex-grow"
+      class="lg:flex lg:items-stretch lg:flex-no-shrink lg:flex-grow"
     >
-      <div class="xs ml-auto">
-        <RenderIllustration
-          class="mt-2 mr-8"
-          illustration="User"
-        />
+      <div class="lg:flex lg:items-stretch lg:justify-end ml-auto">
+        <button
+          class="flex-no-grow flex-no-shrink relative py-2 px-4 leading-normal no-underline flex items-center hover:bg-grey-dark"
+          variant="outline"
+        >
+          Logout
+        </button>
       </div>
     </div>
   </nav>
@@ -68,7 +70,7 @@ export default {
   },
   watch: {
     token: function(newVal, oldVal) {
-      console.log("changed")
+      console.log("changed");
       this.auth = !this.auth;
     },
   },
