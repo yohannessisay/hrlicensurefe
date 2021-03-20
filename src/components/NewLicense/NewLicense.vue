@@ -36,21 +36,33 @@
       </a>
     </nav>
   </div>
-  <div v-if="this.activeState == 1">
-    <Institution :activeState="1" @changeActiveState="activeState++" />
-  </div>
-  <div v-if="this.activeState == 2">
-    <Photo :activeState="2" @changeActiveState="activeState++" />
-  </div>
-  <div v-if="this.activeState == 3">
-    <Passport :activeState="3" @changeActiveState="activeState++" />
-  </div>
-  <div v-if="this.activeState == 4">
-    <HealthExamCert :activeState="4" @changeActiveState="activeState++" />
-  </div>
-  <div v-if="this.activeState == 5">
-    <LicenseSummary :activeState="5" @changeActiveState="activeState++" />
-  </div>
+  <transition name="fade" mode="out-in">
+    <div v-if="this.activeState == 1">
+      <Institution :activeState="1" @changeActiveState="activeState++" />
+    </div>
+  </transition>
+  <transition name="fade" mode="out-in">
+    <div v-if="this.activeState == 2">
+      <Photo :activeState="2" @changeActiveState="activeState++" />
+    </div>
+  </transition>
+  <transition name="fade" mode="out-in">
+    <div v-if="this.activeState == 3">
+      <Passport :activeState="3" @changeActiveState="activeState++" />
+    </div>
+  </transition>
+
+  <transition name="fade" mode="out-in">
+    <div v-if="this.activeState == 4">
+      <HealthExamCert :activeState="4" @changeActiveState="activeState++" />
+    </div>
+  </transition>
+
+  <transition name="fade" mode="out-in">
+    <div v-if="this.activeState == 5">
+      <LicenseSummary :activeState="5" @changeActiveState="activeState++" />
+    </div>
+  </transition>
 </template>
 <script>
 import Institution from "./Institution.vue";
@@ -83,9 +95,25 @@ export default {
   margin-left: 20px;
   height: 45px;
   width: 45px;
-  background-color: #2F639D;
+  background-color: #d1d5db;
   color: white;
   border-radius: 100%;
   display: inline-block;
+}
+#navg a:hover {
+  background-color: #2f639d;
+  cursor: pointer;
+}
+#navg a:visited {
+  background-color: #2f639d;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.6s ease-out ease-in;
 }
 </style>

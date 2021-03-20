@@ -1,7 +1,15 @@
 <template>
-  <div class="mt-8 ml-20">
-    <h4>Select License Type</h4>
+  <div class="flex mt-4">
+    <div class="mt-5 ml-20">
+      <h4>Your Previous Requests</h4>
+    </div>
+    <div class="lg:flex lg:items-stretch lg:justify-end ml-auto mr-24">
+      <router-link to="/license">
+        <button>New License Request</button>
+      </router-link>
+    </div>
   </div>
+
   <div class="flex justify-center mt-8">
     <div
       style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);"
@@ -15,7 +23,7 @@
               <RenderIllustration illustration="GoodStanding" />
             </router-link>
           </div>
-          <h4>New License</h4>
+          <h4>Approved</h4>
         </div>
       </div>
     </div>
@@ -32,7 +40,7 @@
               <RenderIllustration illustration="Renewal" />
             </router-link>
           </div>
-          <h4>License Renewal</h4>
+          <h4>Submitted</h4>
         </div>
       </div>
     </div>
@@ -49,7 +57,7 @@
               <RenderIllustration illustration="Verification" />
             </router-link>
           </div>
-          <h4>Verification</h4>
+          <h4>Draft</h4>
         </div>
       </div>
     </div>
@@ -66,7 +74,7 @@
               <RenderIllustration illustration="GoodStanding" />
             </router-link>
           </div>
-          <h4>GoodStanding</h4>
+          <h4>On Review</h4>
         </div>
       </div>
     </div>
