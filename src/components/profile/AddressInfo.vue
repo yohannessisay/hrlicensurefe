@@ -49,7 +49,7 @@
         </div>
         <div class="flex">
           <div class="flex flex-col mb-medium w-1/2 mr-12">
-            <label class="text-primary-700">Wereda</label>
+            <label class="text-primary-700">Woreda</label>
             <select class="max-w-3xl" v-model="address.woredaId">
               <option
                 v-for="types in woredas"

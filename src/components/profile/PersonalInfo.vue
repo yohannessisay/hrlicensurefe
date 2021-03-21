@@ -61,7 +61,7 @@
           </div>
         </div>
         <div class="flex">
-          <div class="flex w-1/2 mb-medium  mr-12">
+          <div class="flex w-1/2 mb-small  mr-12">
             <div class="flex flex-col w-full">
               <label class="text-primary-700">Gender</label>
               <div class="flex w-full">
@@ -100,7 +100,7 @@
               </div>
             </div>
           </div>
-          <div class="flex w-1/2 mb-medium m1-12">
+          <div class="flex w-1/2 mb-small m1-12">
             <div class="flex flex-col w-full">
               <label class="text-primary-700">Martial Status</label>
               <div class="flex w-full">
