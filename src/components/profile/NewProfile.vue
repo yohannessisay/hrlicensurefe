@@ -1,17 +1,11 @@
 <template>
-  <div v-if="showPersonalInfo == true">
-    <PersonalInfo />
-  </div>
-  <div v-if="showAddressInfo == true">
-    <AddressInfo />
-  </div>
-  <div v-if="showContactInfo == true">
-    <ContactInfo />
-  </div>
- <div v-if="showPreview == true">
-    <Preview />
- </div>
+  <PersonalInfo v-if="showPersonalInfo == true" />
 
+  <AddressInfo v-if="showAddressInfo == true" />
+
+  <ContactInfo v-if="showAddressInfo == true" />
+
+  <Preview v-if="showAddressInfo == true" />
 </template>
 
 <script>
