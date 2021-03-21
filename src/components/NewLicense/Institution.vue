@@ -159,6 +159,12 @@ import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
 export default {
   props: ["activeState"],
   components: { TitleWithIllustration },
+  // created: {
+    //call an action to fetch institution
+    //this.institutions = []
+    //call an action to fetch deparment
+    //this.department = []
+  // },
   data: () => ({
     licenseInfo: {
       applicantId: 1,
@@ -178,6 +184,7 @@ export default {
     submit() {
        this.$emit('changeActiveState');
        console.log(this.licenseInfo);
+       //call an 
     },
   },
 };

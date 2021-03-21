@@ -1,13 +1,12 @@
 <template>
-  <nav class="relative select-none lg:flex lg:items-stretch w-full">
+  <nav class="relative select-none lg:flex lg:items-stretch w-full mt-4 mb-4">
     <div class="flex flex-no-shrink items-stretch h-12">
       <h5
         class="flex-no-grow flex-no-shrink relative py-2 px-4 leading-normal text-Black no-underline flex items-center hover:bg-grey-dark"
       >
         <router-link to="/">
           <RenderIllustration
-            style="height:40px"
-            class="mt-2"
+            class=""
             illustration="Logo"
             message="Address"
           />
@@ -54,20 +53,33 @@ import RenderIllustration from "@/sharedComponents/RenderIllustration";
 
 export default {
   components: { Title, RenderIllustration },
+  data() {
+    return {
+      auth: false,
+      token: '',
+    };
+  },
   created() {
-    let token = localStorage.getItem("token");
-    if (token) this.auth = true;
+    this.token = localStorage.getItem("token");
+    if (this.token != undefined) this.auth = true;
   },
   methods: {
     logout() {
       localStorage.removeItem("token");
     },
   },
-  watch: {
-    token: function(newVal, oldVal) {
-      console.log("changed");
-      this.auth = !this.auth;
-    },
+  computed() {
+    if (this.token != undefined) {
+      this.auth = true;
+    } else {
+      this.auth = false;
+    }
   },
+  // watch: {
+  //   token: function(newVal, oldVal) {
+  //     console.log("changed");
+  //     this.auth = !this.auth;
+  //   },
+  // },
 };
 </script>
