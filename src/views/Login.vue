@@ -52,8 +52,8 @@
 </template>
 <script>
 import Title from "@/sharedComponents/Title";
-import {createNamespacedHelpers} from 'vuex';
-const {mapGetters} = createNamespacedHelpers('user');
+import { createNamespacedHelpers } from "vuex";
+const { mapGetters } = createNamespacedHelpers("user");
 
 export default {
   components: { Title },
@@ -78,8 +78,8 @@ export default {
       };
       let auth = "auth";
       localStorage.setItem("token", auth);
-      this.$store.dispatch("user/actions/setContact", email);
-      // this.$router.push("/license");
+      // this.$store.dispatch("user/actions/setContact", email);
+      this.$router.push("/menu");
     },
     validateForm(credentials) {
       const errors = {};

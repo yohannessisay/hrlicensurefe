@@ -177,6 +177,7 @@ export default {
   methods: {
     submit() {
        this.$emit('changeActiveState');
+       console.log(this.licenseInfo);
     },
   },
 };
