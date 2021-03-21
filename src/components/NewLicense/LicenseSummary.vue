@@ -108,7 +108,7 @@
     </div>
     <div class="mt-12 flex justify-center">
       <div>
-        <button>Submit Request</button>
+        <button @click="submitRequest()">Submit Request</button>
       </div>
     </div>
     <div class="flex justify-center mt-8">
@@ -131,9 +131,13 @@ export default {
   components: {
     Title,
   },
+  data: () => ({
+    //createProfile object includes personal info, address and contact
+    //license object includes institution, photo, id and healthexamcert
+  }),
   methods: {
-    submit() {
-       this.$emit('changeActiveState');
+    submitRequest() {
+      // this.$emit("changeActiveState");
     },
   },
 };
