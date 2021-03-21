@@ -85,22 +85,23 @@ import { mapActions } from "vuex";
 import axios from "axios";
 export default {
   components: { TitleWithIllustration },
+  props: ["activeState"],
   data: () => ({
     address: {
-      houseNumber: "",
-      woredaId: "",
-      woreda: "",
-      kebele: "",
-      city: "",
-      residence: "",
-      zone: ""
+      houseNumber: null,
+      woredaId: null,
+      woreda: null,
+      kebele: null,
+      city: null,
+      residence: null,
+      zone: null
     },
-    regionId: "",
+    regionId: null,
     regions: [],
     zones: [],
     woredas: [],
     cityObj: {},
-    zoneId: ""
+    zoneId: null
   }),
   computed: {},
   methods: {
@@ -157,7 +158,8 @@ export default {
       }
     },
     nextStep: function() {
-      this.setAddress(this.address);
+      // this.setAddress(this.address);
+      this.$emit("changeActiveState");
       console.log(this.address);
     }
   },

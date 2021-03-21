@@ -220,6 +220,7 @@ import { mapActions } from "vuex";
 import axios from "axios";
 export default {
   components: { TitleWithIllustration },
+  props: ["activeState"],
   // computed: mapGetters(["getPersonalInfo"]),
   data: () => ({
     personalInfo: {
@@ -302,6 +303,7 @@ export default {
     },
     nextStep: function() {
       //this.setPersonalnfo(this.personalInfo);
+      this.$emit("changeActiveState");
       console.log(this.personalInfo);
     },
     genderChanged: function() {
@@ -309,7 +311,7 @@ export default {
         this.personalInfo.maritalStatus = "Divorced";
       }
       if (this.personalInfo.maritalStatusId == 2) {
-        this.personalInfo.maritalStatus = "MArried";
+        this.personalInfo.maritalStatus = "Married";
       }
       if (this.personalInfo.maritalStatusId == 1) {
         this.personalInfo.maritalStatus = "Single";

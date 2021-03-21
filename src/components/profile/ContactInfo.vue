@@ -53,13 +53,15 @@ import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
 
 export default {
   components: { TitleWithIllustration },
+  props: ["activeState"],
   data: () => ({
     contact: {
-      poBox: ""
+      poBox: null
     }
   }),
   methods: {
     nextStep: function() {
+      this.$emit("changeActiveState");
       console.log(this.contact);
     }
   },
