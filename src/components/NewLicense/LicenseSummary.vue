@@ -140,24 +140,27 @@ export default {
   created() {
     this.fetchProfile();
     this.userId = localStorage.getItem("userId");
-    this.applicantId = this.getApplicantId;
-    this.applicantTypeId = this.getApplicantTypeId;
-    this.education = this.getEducation;
+    this.license = this.getLicense;
+    this.applicantId = this.getLicense.state.applicantId;
+    this.applicantTypeId = this.getLicense.state.applicantTypeId;
+    this.education.departmentId = this.getLicense.state.education.departmentId;
+    this.education.institutionId = this.getLicense.state.education.institutionId;
   },
   data: () => ({
     profileInfo: {},
     userId: "",
     applicantId: "",
     applicantTypeId: "",
-    education: {},
+    education: {
+      departmentId: "",
+      institutionId: "",
+    },
     //createProfile object includes personal info, address and contact
     //license object includes institution, photo, id and healthexamcert
   }),
   computed: {
     ...mapGetters({
-      getApplicantId: "newlicense/getApplicantId",
-      getApplicantTypeId: "newlicense/getApplicantTypeId",
-      getEducation: "newlicense/geteducation",
+      getLicense: "newlicense/getLicense",
     }),
   },
   methods: {
@@ -165,13 +168,15 @@ export default {
       let license = {
         applicantId: this.applicantId,
         applicantTypeId: this.applicantTypeId,
-        education: this.education,
+        education: {
+          institutionId: this.education.departmentId,
+          departmentId: this.education.institutionId,
+        },
       };
-      console.log(license);
+      const resp = this.$store.dispatch("newlicense/newLicense", license);
     },
     async fetchProfile() {
       try {
-        console.log(this.userId);
         const url = `http://ca9dee52bc55.ngrok.io/api/profiles/` + this.userId;
         const response = await axios.get(url);
         const results = response.data;

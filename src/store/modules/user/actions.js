@@ -33,6 +33,7 @@ export default {
       commit(ADD_PROFILE_ERROR);
     }
   },
+  
   async signUp({ commit }, profile) {
     commit(ADD_PROFILE_LOADING);
     try {
