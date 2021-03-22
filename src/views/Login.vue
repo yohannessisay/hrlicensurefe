@@ -75,7 +75,6 @@ export default {
       let email = {
         "emailAddress": this.credentials.emailAddress,
       };
-      // console.log(JSON.parse(email));
       this.$store.dispatch('user/setContact', email);
 
       this.$router.push({ path: "/menu" });

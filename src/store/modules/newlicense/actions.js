@@ -10,8 +10,8 @@ export default {
   async setLicense({ commit }, license) {
     commit(ADD_PROFILE_LOADING);
     try {
-      const resp = await ApiService.post("/api/newLicenses/add", { license });
-      commit(SET_LICENSE, resp.data);
+      // const resp = await ApiService.post("/api/newLicenses/add", { license });
+      commit(SET_LICENSE, license);
       commit(ADD_PROFILE_SUCCESS);
     } catch (error) {
       commit(ADD_PROFILE_ERROR);

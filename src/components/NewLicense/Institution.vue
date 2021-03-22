@@ -17,7 +17,8 @@
               <select class="max-w-3xl" v-model="licenseInfo.applicantTypeId">
                 <option
                   v-for="applicant in applicantTypes"
-                  v-bind:key="applicant['id']"
+                  v-bind:key="applicant.name"
+                  v-bind:value="applicant.id"
                 >
                   {{ applicant.name }}
                 </option>
@@ -31,7 +32,8 @@
               >
                 <option
                   v-for="department in departments"
-                  v-bind:key="department['id']"
+                  v-bind:key="department.name"
+                  v-bind:value="department.id"
                 >
                   {{ department.name }}
                 </option>
@@ -46,14 +48,15 @@
                   <div
                     class="flex flex-col mb-small w-1/3"
                     v-for="institution in institutions"
-                    v-bind:key="institution['id']"
+                    v-bind:key="institution.name"
                   >
                     <div class="flex py-2">
                       <input
                         v-model="licenseInfo.education.institutionId"
                         class="flex flex-col"
                         type="radio"
-                        name="{{institution.name}}"
+                        name="institution"
+                        :value="institution.id"
                       />
                       <label class="ml-tiny flex flex-col text-primary-700">
                         {{ institution.name }}
@@ -107,7 +110,16 @@ export default {
   methods: {
     submit() {
       this.$emit("changeActiveState");
-      console.log(this.licenseInfo);
+      let license = {
+        applicantId: this.licenseInfo.applicantId,
+        applicantTypeId: this.licenseInfo.applicantTypeId,
+        education: {
+          departmentId: this.licenseInfo.education.departmentId,
+          institutionId: this.licenseInfo.education.institutionId,
+        },
+      };
+      this.$store.dispatch("user/setContact", license);
+      console.log(license);
     },
     async fetchInstitutions() {
       try {
@@ -131,7 +143,6 @@ export default {
         const response = await axios.get(url);
         const results = response.data.data;
         this.departments = results;
-        console.log(results);
       } catch (err) {
         if (err.response) {
           console.log("Server Error:", err);
@@ -148,6 +159,7 @@ export default {
         const response = await axios.get(url);
         const results = response.data.data;
         this.applicantTypes = results;
+        console.log(results);
       } catch (err) {
         if (err.response) {
           console.log("Server Error:", err);
