@@ -9,7 +9,6 @@ import {
 export default {
   [SET_LICENSE](state, license) {
     state.license = license;
-    console.log(state);
   },
   [SET_ACTIVE_STATE](state, activeState) {
     state.activeState = activeState;
