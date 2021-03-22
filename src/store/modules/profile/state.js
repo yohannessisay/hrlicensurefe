@@ -1,25 +1,33 @@
 export default {
   state: {
     personalInfo: {
-      firstName: "",
-      fatherName: "",
+      name: "",
       grandFatherName: "",
-      gender: "",
+      fatherName: "",
       nationality: "",
-      pob: "",
-      dob: "",
-      maritalStatus: ""
+      placeOfBirth: "",
+      dateOfBirth: "",
+      gender: "",
+      maritalStatusId: "",
+      maritalStatus: "",
+      userTypeId: "",
+      expertLevelId: "",
+      healthOfficeId: ""
     },
     address: {
-      region: "",
-      address_kebele: "",
+      houseNumber: "",
+      woredaId: "",
+      woreda: "",
+      kebele: "",
       city: "",
-      zone: "",
-      kebele: ""
+      residence: "",
+      zone: ""
     },
     contact: {
-      poBox: "",
-      houseNo: ""
+      mobileNumber: "",
+      email: "",
+      telephoneNumber: "",
+      poBox: ""
     },
     addProfileLoading: false,
     addProfileSuccess: false,

@@ -15,7 +15,7 @@ export default {
   },
 
   [SET_PERSONAL_INFO](state, personalInfo) {
-    state.profile = personalInfo;
+    state.personalInfo = personalInfo;
   },
 
   [SET_ADDRESS](state, address) {
