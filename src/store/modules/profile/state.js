@@ -9,18 +9,24 @@ export default {
       dateOfBirth: "",
       gender: "",
       maritalStatusId: "",
+      maritalStatus: "",
       userTypeId: "",
       expertLevelId: "",
       healthOfficeId: ""
     },
     address: {
+      houseNumber: "",
       woredaId: "",
+      woreda: "",
       kebele: "",
       city: "",
-      houseNumber: "",
-      residence: ""
+      residence: "",
+      zone: ""
     },
     contact: {
+      mobileNumber: "",
+      email: "",
+      telephoneNumber: "",
       poBox: ""
     },
     addProfileLoading: false,

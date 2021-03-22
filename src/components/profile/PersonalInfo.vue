@@ -187,7 +187,7 @@
           </div>
         </div>
         <div class="flex" v-if="personalInfo.expertLevelId == 4">
-          <div class="flex flex-col mb-medium w-1/2 mr-12">
+          <div class="flex flex-col mb-medium w-1/2 mr-14">
             <label class="text-primary-700">Health Office</label>
             <select class="max-w-3xl" v-model="personalInfo.healthOfficeId">
               <option
@@ -204,7 +204,6 @@
         <div class="flex mb-medium w-full mt-medium">
           <button
             class="block mx-auto w-1/2  bg-lightBlue-500 hover:bg-lightBlue-600 hover:shadow-lg"
-            v-on:click="nextStep()"
           >
             Next
           </button>
@@ -216,12 +215,12 @@
 
 <script>
 import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
-import { mapActions } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import axios from "axios";
 export default {
   components: { TitleWithIllustration },
   props: ["activeState"],
-  // computed: mapGetters(["getPersonalInfo"]),
+  computed: mapGetters(["profile/getPersonalInfo"]),
   data: () => ({
     personalInfo: {
       name: null,
@@ -243,7 +242,7 @@ export default {
     maritalStatuses: []
   }),
   methods: {
-    ...mapActions(["setPersonalInfo"]),
+    ...mapActions(["profile/setProfileInfo"]),
     async fetchUserTypes() {
       try {
         const url = `http://localhost:5000/api/lookups/userTypes`;
@@ -302,7 +301,9 @@ export default {
       }
     },
     nextStep: function() {
-      //this.setPersonalnfo(this.personalInfo);
+      // this.setProfileInfo(this.personalInfo);
+      //this.$store.dispatch("profile/setProfileInfo", this.personalInfo);
+      this.$store.dispatch("profile/setProfileInfo", this.personalInfo);
       this.$emit("changeActiveState");
       console.log(this.personalInfo);
     },

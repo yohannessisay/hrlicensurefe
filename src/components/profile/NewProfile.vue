@@ -1,6 +1,6 @@
 <template>
-  <div id="navg" class="flex flex-row justify-center">
-    <nav
+  <div id="navg" class="flex flex-row justify-center mb-medium">
+    <!-- <nav
       class="relative z-10 inline-flex rounded-md shadow-sm -space-x-px top-0"
       aria-label="Pagination"
     >
@@ -28,7 +28,7 @@
       >
         4
       </a>
-    </nav>
+    </nav> -->
   </div>
   <transition name="fade" mode="out-in">
     <div v-if="this.activeState == 1">

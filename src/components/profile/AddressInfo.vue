@@ -1,6 +1,6 @@
 <template>
-  <div class="w-screen max-w-4xl">
-    <div 
+  <div class="w-screen max-w-4xl mt-xl h-screen">
+    <div
       class="flex flex-col mt-large w-full bg-white blue-box-shadow-light rounded"
     >
       <div class="mt-large">
@@ -50,7 +50,11 @@
         <div class="flex">
           <div class="flex flex-col mb-medium w-1/2 mr-12">
             <label class="text-primary-700">Woreda</label>
-            <select class="max-w-3xl" v-model="address.woredaId">
+            <select
+              class="max-w-3xl"
+              v-model="address.woredaId"
+              @change="woredaChanged()"
+            >
               <option
                 v-for="types in woredas"
                 v-bind:key="types.name"
@@ -69,7 +73,6 @@
           <button
             class="mx-auto w-1/2 blue-with-light-blue-gradient"
             variant="block"
-            click="nextStep()"
           >
             Next
           </button>
@@ -81,7 +84,7 @@
 
 <script>
 import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
-import { mapActions } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import axios from "axios";
 export default {
   components: { TitleWithIllustration },
@@ -103,7 +106,9 @@ export default {
     cityObj: {},
     zoneId: null
   }),
-  computed: {},
+  computed: {
+    ...mapGetters({ getPersonalInfo: "profile/getPersonalInfo" })
+  },
   methods: {
     ...mapActions(["setAddress"]),
     async fetchRegions() {
@@ -142,11 +147,15 @@ export default {
     },
     async fetchWoredas() {
       try {
-        const url =
-          `http://localhost:5000/api/lookups/woredas` + this.address.zoneId;
+        const url = `http://localhost:5000/api/lookups/woredas/` + this.zoneId;
         const response = await axios.get(url);
         const results = response.data;
         this.woredas = results.data;
+        for (const item of Object.entries(this.zones)) {
+          if (item[1].id == this.zoneId) {
+            this.address.zone = item[1].name;
+          }
+        }
       } catch (err) {
         if (err.response) {
           console.log("Server Error:", err);
@@ -157,14 +166,29 @@ export default {
         }
       }
     },
+    woredaChanged() {
+      for (const item of Object.entries(this.woredas)) {
+        console.log(item[1].name);
+        console.log(item[1].id);
+        console.log(this.address.woredaId);
+        if (item[1].id == this.address.woredaId) {
+          this.address.woreda = item[1].name;
+        }
+      }
+    },
     nextStep: function() {
-      // this.setAddress(this.address);
+      this.$store.dispatch("profile/setAddress", this.address);
       this.$emit("changeActiveState");
       console.log(this.address);
     }
   },
   mounted() {
     this.fetchRegions();
+    // console.log(this.getPersonalInfo);
+  },
+  created() {
+    console.log(this.getPersonalInfo);
+    //console.log(this.$store.getters.getPersonalInfo);
   }
 };
 </script>
