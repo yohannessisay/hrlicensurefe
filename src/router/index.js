@@ -1,26 +1,26 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "../views/Home.vue";
-
+import About from "../views/About.vue";
 const routes = [
   {
     path: "/",
     name: "Home",
-    component: Home,
+    component: Home
   },
   {
     path: "/about",
     name: "About",
-    component: () => import("../views/About.vue"),
+    component: About
   },
   {
     path: "/signup",
     name: "Signup",
-    component: () => import("../views/Signup.vue"),
+    component: () => import("../views/Signup.vue")
   },
   {
     path: "/login",
     name: "Login",
-    component: () => import("../views/Login.vue"),
+    component: () => import("../views/Login.vue")
   },
   {
     path: "/menu",
@@ -30,12 +30,17 @@ const routes = [
   {
     path: "/license",
     name: "License",
-    component: () => import("../views/License.vue"),
+    component: () => import("../views/License.vue")
   },
   {
     path: "/newlicense",
     name: "NewLicense",
-    component: () => import("../components/NewLicense/NewLicense.vue"),
+    component: () => import("../components/NewLicense/NewLicense.vue")
+  },
+  {
+    path: "/lis",
+    name: "LIs",
+    component: () => import("../components/NewLicense/LicenseSummary.vue"),
   },
   {
     path: "/renewal",
@@ -56,7 +61,7 @@ const routes = [
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
-  routes,
+  routes
 });
 router.beforeEach((to, from, next) => {
   const auth = localStorage.getItem("token");

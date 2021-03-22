@@ -1,7 +1,7 @@
 <template>
-  <div id="navg" class="flex flex-row justify-center">
-    <nav
-      class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px"
+  <div id="navg" class="flex flex-row justify-center mb-medium">
+    <!-- <nav
+      class="relative z-10 inline-flex rounded-md shadow-sm -space-x-px top-0"
       aria-label="Pagination"
     >
       <a
@@ -28,68 +28,31 @@
       >
         4
       </a>
-      <a
-        @click="submit(5)"
-        class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-50"
-      >
-        5
-      </a>
-    </nav>
+    </nav> -->
   </div>
   <transition name="fade" mode="out-in">
     <div v-if="this.activeState == 1">
-      <Institution :activeState="1" @changeActiveState="activeState++" />
+      <PersonalInfo :activeState="1" @changeActiveState="activeState++" />
     </div>
   </transition>
   <transition name="fade" mode="out-in">
     <div v-if="this.activeState == 2">
-      <Photo :activeState="2" @changeActiveState="activeState++" />
+      <AddressInfo :activeState="2" @changeActiveState="activeState++" />
     </div>
   </transition>
+
   <transition name="fade" mode="out-in">
     <div v-if="this.activeState == 3">
-      <Passport :activeState="3" @changeActiveState="activeState++" />
+      <ContactInfo :activeState="3" @changeActiveState="activeState++" />
     </div>
   </transition>
 
   <transition name="fade" mode="out-in">
     <div v-if="this.activeState == 4">
-      <HealthExamCert :activeState="4" @changeActiveState="activeState++" />
-    </div>
-  </transition>
-
-  <transition name="fade" mode="out-in">
-    <div v-if="this.activeState == 5">
-      <LicenseSummary :activeState="5" @changeActiveState="activeState++" />
+      <Preview :activeState="4" @changeActiveState="activeState++" />
     </div>
   </transition>
 </template>
-<script>
-import Institution from "./Institution.vue";
-import Photo from "./Photo.vue";
-import Passport from "./Passport.vue";
-import HealthExamCert from "./HealthExamCert.vue";
-import LicenseSummary from "./LicenseSummary.vue";
-
-export default {
-  created() {},
-  data: () => ({
-    activeState: 1,
-  }),
-  components: {
-    Institution,
-    Photo,
-    Passport,
-    HealthExamCert,
-    LicenseSummary,
-  },
-  methods: {
-    submit(n) {
-      this.activeState = n;
-    },
-  },
-};
-</script>
 <style>
 #navg a {
   margin-left: 20px;
@@ -117,3 +80,28 @@ export default {
   transition: opacity 0.6s ease-out ease-in;
 }
 </style>
+<script>
+// @ is an alias to /src
+import PersonalInfo from "@/components/profile/PersonalInfo.vue";
+import AddressInfo from "@/components/profile/AddressInfo.vue";
+import ContactInfo from "@/components/profile/ContactInfo.vue";
+import Preview from "@/components/profile/Preview.vue";
+
+export default {
+  name: "NewProfile",
+  data: () => ({
+    activeState: 1
+  }),
+  components: {
+    PersonalInfo,
+    AddressInfo,
+    ContactInfo,
+    Preview
+  },
+  methods: {
+    submit(n) {
+      this.activeState = n;
+    }
+  }
+};
+</script>

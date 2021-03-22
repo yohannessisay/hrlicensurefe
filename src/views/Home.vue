@@ -1,17 +1,19 @@
 <template>
-  <div class="w-screen flex items-center justify-center">
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+  <div
+    class="w-screen h-screen bg-lightBlue-100 flex items-center justify-center"
+  >
+    <NewProfile />
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
+import NewProfile from "@/components/profile/NewProfile.vue";
 
 export default {
   name: "Home",
   components: {
-    HelloWorld
+    NewProfile
   }
 };
 </script>

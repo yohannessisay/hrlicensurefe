@@ -39,50 +39,56 @@ export default {
   async getExpertLevels() {
     try {
       const resp = await ApiService.get("/api/lookups/expertLevels");
+      return resp;
     } catch (error) {
       const resp = error;
+      return resp;
     }
-    return resp;
   },
   async getHealthOffice() {
     try {
       const resp = await ApiService.get("/api/lookups/healthOffices");
+      return resp;
     } catch (error) {
       const resp = error;
+      return resp;
     }
-    return resp;
   },
   async getMaritalStatus() {
     try {
       const resp = await ApiService.get("/api/lookups/maritalStatuses");
+      return resp;
     } catch (error) {
       const resp = error;
+      return resp;
     }
-    return resp;
   },
   async getRegions() {
     try {
       const resp = await ApiService.get("/api/lookups/regions");
+      return resp;
     } catch (error) {
       const resp = error;
+      return resp;
     }
-    return resp;
   },
   async getWoredas() {
     try {
       const resp = await ApiService.get("/api/lookups/woredas");
+      return resp;
     } catch (error) {
       const resp = error;
+      return resp;
     }
-    return resp;
   },
   async getZones() {
     try {
       const resp = await ApiService.get("/api/lookups/zones");
+      return resp;
     } catch (error) {
       const resp = error;
+      return resp;
     }
-    return resp;
   },
 
 };

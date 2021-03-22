@@ -76,7 +76,6 @@ export default {
         "emailAddress": this.credentials.emailAddress,
       };
       this.$store.dispatch('user/setContact', email);
-
       this.$router.push({ path: "/menu" });
     },
     validateForm(credentials) {
