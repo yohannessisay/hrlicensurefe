@@ -54,8 +54,8 @@ module.exports = {
       },
       lightBlue: {
         100: "#EFF6FF",
-        200: "#DBEAFE", 
-        300: "#BFDBFE", 
+        200: "#DBEAFE",
+        300: "#BFDBFE",
         400: "#93C5FD",
         500: "#60A5FA",
         600: "#3B82F6",
@@ -69,6 +69,9 @@ module.exports = {
         200: "#eceff5",
         300: "#e2e9f5",
         400: "#a0b0cb"
+      },
+      blue: {
+        100: "#3c5d82"
       }
     },
     extend: {
