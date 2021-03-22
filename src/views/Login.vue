@@ -58,7 +58,7 @@ export default {
   data() {
     return {
       credentials: {
-        emailAddress: "",
+        "emailAddress": "",
         password: "",
       },
       credentialsErrors: {
@@ -73,14 +73,10 @@ export default {
       this.credentialsErrors = this.validateForm(this.credentials);
       if (Object.keys(this.credentialsErrors).length) return;
       let email = {
-        emailAddress: this.credentials.emailAddress,
+        "emailAddress": this.credentials.emailAddress,
       };
-      let auth = "auth";
-      localStorage.setItem("token", auth);
       this.$store.dispatch('user/setContact', email);
-      console.log(this.$store.getters['user/auth']);
-      // this.$store.getters['user/auth']
-      // this.$router.push({ path: "/menu" });
+      this.$router.push({ path: "/menu" });
     },
     validateForm(credentials) {
       const errors = {};

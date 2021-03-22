@@ -38,6 +38,11 @@ const routes = [
     component: () => import("../components/NewLicense/NewLicense.vue")
   },
   {
+    path: "/lis",
+    name: "LIs",
+    component: () => import("../components/NewLicense/LicenseSummary.vue"),
+  },
+  {
     path: "/renewal",
     name: "Renewal",
     component: () => import("../components/Renewal/Renewal.vue"),

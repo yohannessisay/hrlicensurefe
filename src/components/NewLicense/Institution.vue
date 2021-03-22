@@ -14,15 +14,13 @@
           <div class="flex">
             <div class="flex flex-col mb-medium w-1/2 mr-12">
               <label class="text-primary-700">Institution</label>
-              <select
-                class="max-w-3xl"
-                v-model="licenseInfo.education.institutionId"
-              >
+              <select class="max-w-3xl" v-model="licenseInfo.applicantTypeId">
                 <option
-                  v-for="institution in institutions"
-                  v-bind:key="institution.name"
+                  v-for="applicant in applicantTypes"
+                  v-bind:key="applicant.name"
+                  v-bind:value="applicant.id"
                 >
-                  {{ institution }}
+                  {{ applicant.name }}
                 </option>
               </select>
             </div>
@@ -35,8 +33,9 @@
                 <option
                   v-for="department in departments"
                   v-bind:key="department.name"
+                  v-bind:value="department.id"
                 >
-                  {{ department }}
+                  {{ department.name }}
                 </option>
               </select>
             </div>
@@ -46,93 +45,22 @@
               <div class="flex flex-col w-full">
                 <label class="text-primary-700">Institution Type</label>
                 <div class="flex w-full">
-                  <div class="flex flex-col mb-small w-1/3">
+                  <div
+                    class="flex flex-col mb-small w-1/3"
+                    v-for="institution in institutions"
+                    v-bind:key="institution.name"
+                  >
                     <div class="flex py-2">
                       <input
-                        v-model="institutionTypeId"
+                        v-model="licenseInfo.education.institutionId"
                         class="flex flex-col"
                         type="radio"
-                        id="inst"
-                        value="public"
+                        name="institution"
+                        :value="institution.id"
                       />
-                      <label
-                        class="ml-tiny flex flex-col text-primary-700"
-                        for="public"
-                      >
-                        Public
+                      <label class="ml-tiny flex flex-col text-primary-700">
+                        {{ institution.name }}
                       </label>
-                    </div>
-                  </div>
-                  <div class="flex w-1/3">
-                    <div class="flex flex-col w-1/3">
-                      <div class="flex py-2">
-                        <input
-                          type="radio"
-                          id="private"
-                          value="private"
-                          v-model="institutionTypeId"
-                        />
-                        <label class="ml-tiny text-primary-700" for="private">
-                          Private
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="flex w-1/3">
-                    <div class="flex flex-col w-1/3">
-                      <div class="flex py-2">
-                        <input
-                          type="radio"
-                          id="faith"
-                          value="faith"
-                          v-model="institutionTypeId"
-                        />
-                        <label class="ml-tiny text-primary-700" for="faith">
-                          Faith Based or Charity
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="flex w-1/2 mb-medium  mr-12">
-              <div class="flex flex-col w-full">
-                <label class="text-primary-700">Institution Type</label>
-                <div class="flex w-full">
-                  <div class="flex flex-col mb-small w-1/3">
-                    <div class="flex py-2">
-                      <input
-                        v-model="departmentTypeId"
-                        class="flex flex-col"
-                        type="radio"
-                        id="apptype"
-                        value="local"
-                      />
-                      <label
-                        class="ml-tiny flex flex-col text-primary-700"
-                        for="local"
-                      >
-                        Local
-                      </label>
-                    </div>
-                  </div>
-                  <div class="flex w-1/3">
-                    <div class="flex flex-col w-1/3">
-                      <div class="flex py-2">
-                        <input
-                          v-model="departmentTypeId"
-                          type="radio"
-                          id="international"
-                          value="international"
-                        />
-                        <label
-                          class="ml-tiny text-primary-700"
-                          for="international"
-                        >
-                          International
-                        </label>
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -156,35 +84,90 @@
 
 <script>
 import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
+import axios from "axios";
 export default {
   props: ["activeState"],
   components: { TitleWithIllustration },
-  // created: {
-    //call an action to fetch institution
-    //this.institutions = []
-    //call an action to fetch deparment
-    //this.department = []
-  // },
+  mounted() {
+    this.fetchInstitutions();
+    this.fetchDepartments();
+    this.fetchApplicantType();
+  },
   data: () => ({
     licenseInfo: {
-      applicantId: 1,
-      applicantTypeId: 2,
+      applicantId: localStorage.getItem("userId"),
+      applicantTypeId: "",
       education: {
         departmentId: "",
         institutionId: "",
       },
     },
-    institutionTypeId: "",
-    departmentTypeId: "",
-    institutions: ["ald", "lskd"],
-    departments: ["ald", "lskd"],
+    applicantTypes: [],
+    institutions: [],
+    departments: [],
   }),
 
   methods: {
     submit() {
-       this.$emit('changeActiveState');
-       console.log(this.licenseInfo);
-       //call an 
+      this.$emit("changeActiveState");
+      let license = {
+        applicantId: this.licenseInfo.applicantId,
+        applicantTypeId: this.licenseInfo.applicantTypeId,
+        education: {
+          departmentId: this.licenseInfo.education.departmentId,
+          institutionId: this.licenseInfo.education.institutionId,
+        },
+      };
+      this.$store.dispatch("newlicense/setLicense", license);
+    },
+    async fetchInstitutions() {
+      try {
+        const url = `http://ca9dee52bc55.ngrok.io/api/lookups/institutionTypes`;
+        const response = await axios.get(url);
+        const results = response.data.data;
+        this.institutions = results;
+      } catch (err) {
+        if (err.response) {
+          console.log("Server Error:", err);
+        } else if (err.request) {
+          console.log("Network Error:", err);
+        } else {
+          console.log("Client Error:", err);
+        }
+      }
+    },
+    async fetchDepartments() {
+      try {
+        const url = `http://ca9dee52bc55.ngrok.io/api/lookups/departments`;
+        const response = await axios.get(url);
+        const results = response.data.data;
+        this.departments = results;
+      } catch (err) {
+        if (err.response) {
+          console.log("Server Error:", err);
+        } else if (err.request) {
+          console.log("Network Error:", err);
+        } else {
+          console.log("Client Error:", err);
+        }
+      }
+    },
+    async fetchApplicantType() {
+      try {
+        const url = `http://ca9dee52bc55.ngrok.io/api/lookups/applicantTypes`;
+        const response = await axios.get(url);
+        const results = response.data.data;
+        this.applicantTypes = results;
+        console.log(results);
+      } catch (err) {
+        if (err.response) {
+          console.log("Server Error:", err);
+        } else if (err.request) {
+          console.log("Network Error:", err);
+        } else {
+          console.log("Client Error:", err);
+        }
+      }
     },
   },
 };

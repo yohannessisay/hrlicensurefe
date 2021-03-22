@@ -10,27 +10,31 @@
     <div class="flex flex-row">
       <div>
         <label class="ml-8"> Full Name</label>
-        <h5 class="ml-8">Eyasu</h5>
+        <h5 class="ml-8">
+          {{ this.profileInfo["fatherName"] }}
+
+          {{ this.profileInfo["grandFatherName"] }}
+        </h5>
       </div>
       <div>
         <label class="ml-8"> Gender</label>
-        <h5 class="ml-8">M</h5>
+        <h5 class="ml-8">{{ this.profileInfo["gender"] }}</h5>
       </div>
       <div>
         <label class="ml-8"> Nationality</label>
-        <h5 class="ml-8">Ethiopian</h5>
+        <h5 class="ml-8">{{ this.profileInfo["nationality"] }}</h5>
       </div>
       <div>
         <label class="ml-8"> Place of Birth</label>
-        <h5 class="ml-8">Addis Ababa</h5>
+        <h5 class="ml-8">{{ this.profileInfo["placeOfBirth"] }}</h5>
       </div>
       <div>
         <label class="ml-8"> Date of Birth</label>
-        <h5 class="ml-8">10-04-12</h5>
+        <h5 class="ml-8">{{ this.profileInfo["dateOfBirth"] }}</h5>
       </div>
       <div>
         <label class="ml-8"> Marital Status</label>
-        <h5 class="ml-8">Married</h5>
+        <h5 class="ml-8">{{ this.profileInfo["maritalStatus"]["name"] }}</h5>
       </div>
     </div>
 
@@ -40,27 +44,31 @@
     <div class="flex flex-row">
       <div>
         <label class="ml-8"> Region</label>
-        <h5 class="ml-8">Amhara</h5>
+        <h5 class="ml-8">
+          {{ this.profileInfo["woreda"]["zone"]["region"]["name"] }}
+        </h5>
       </div>
       <div>
         <label class="ml-8"> Zone</label>
-        <h5 class="ml-8">Semen Gonder</h5>
+        <h5 class="ml-8">{{ this.profileInfo["woreda"]["zone"]["name"] }}</h5>
       </div>
       <div>
         <label class="ml-8"> Wereda</label>
-        <h5 class="ml-8">3</h5>
+        <h5 class="ml-8">
+          {{ this.profileInfo["woreda"]["name"] }}
+        </h5>
       </div>
       <div>
         <label class="ml-8"> Kebele</label>
-        <h5 class="ml-8">16</h5>
+        <h5 class="ml-8">{{ this.profileInfo["kebele"] }}</h5>
       </div>
       <div>
         <label class="ml-8"> House Number</label>
-        <h5 class="ml-8">1234</h5>
+        <h5 class="ml-8">{{ this.profileInfo["houseNumber"] }}</h5>
       </div>
       <div>
         <label class="ml-8"> Residence</label>
-        <h5 class="ml-8">Some Value</h5>
+        <h5 class="ml-8">{{ this.profileInfo["residence"] }}</h5>
       </div>
     </div>
     <div class="flex justify-start">
@@ -69,19 +77,16 @@
     <div class="flex flex-row">
       <div>
         <label class="ml-8"> Mobile Number</label>
-        <h5 class="ml-8">+251987546690</h5>
+        <h5 class="ml-8">{{ this.profileInfo["user"]["phoneNumber"] }}</h5>
       </div>
-      <div>
-        <label class="ml-8"> Telephone Number</label>
-        <h5 class="ml-8">0112890999</h5>
-      </div>
+
       <div>
         <label class="ml-8"> Email</label>
-        <h5 class="ml-8">jsi@jsi.com</h5>
+        <h5 class="ml-8">{{ this.profileInfo["user"]["emailAddress"] }}</h5>
       </div>
       <div>
         <label class="ml-8"> Applicant Type</label>
-        <h5 class="ml-8">Local</h5>
+        <h5 class="ml-8">{{ this.profileInfo["userType"]["name"] }}</h5>
       </div>
     </div>
     <div class="flex justify-start">
@@ -125,19 +130,61 @@
 
 <script>
 import Title from "@/sharedComponents/Title";
-
+import axios from "axios";
+import { mapGetters } from "vuex";
 export default {
   props: ["activeState"],
   components: {
     Title,
   },
+  created() {
+    this.fetchProfile();
+    this.userId = localStorage.getItem("userId");
+    this.applicantId = this.getApplicantId;
+    this.applicantTypeId = this.getApplicantTypeId;
+    this.education = this.getEducation;
+  },
   data: () => ({
+    profileInfo: {},
+    userId: "",
+    applicantId: "",
+    applicantTypeId: "",
+    education: {},
     //createProfile object includes personal info, address and contact
     //license object includes institution, photo, id and healthexamcert
   }),
+  computed: {
+    ...mapGetters({
+      getApplicantId: "newlicense/getApplicantId",
+      getApplicantTypeId: "newlicense/getApplicantTypeId",
+      getEducation: "newlicense/geteducation",
+    }),
+  },
   methods: {
     submitRequest() {
-      // this.$emit("changeActiveState");
+      let license = {
+        applicantId: this.applicantId,
+        applicantTypeId: this.applicantTypeId,
+        education: this.education,
+      };
+      console.log(license);
+    },
+    async fetchProfile() {
+      try {
+        console.log(this.userId);
+        const url = `http://ca9dee52bc55.ngrok.io/api/profiles/` + this.userId;
+        const response = await axios.get(url);
+        const results = response.data;
+        this.profileInfo = results.data[0];
+      } catch (err) {
+        if (err.response) {
+          console.log("Server Error:", err);
+        } else if (err.request) {
+          console.log("Network Error:", err);
+        } else {
+          console.log("Client Error:", err);
+        }
+      }
     },
   },
 };
