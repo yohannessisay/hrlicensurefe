@@ -118,8 +118,7 @@ export default {
           institutionId: this.licenseInfo.education.institutionId,
         },
       };
-      this.$store.dispatch("user/setContact", license);
-      console.log(license);
+      this.$store.dispatch("newlicense/setLicense", license);
     },
     async fetchInstitutions() {
       try {

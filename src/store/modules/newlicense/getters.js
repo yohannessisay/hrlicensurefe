@@ -1,3 +1,5 @@
 export default {
-  getState: (state) => state.activeState,
+  getApplicantId: (state) => state.applicantId,
+  getApplicantTypeId: (state) => state.applicantTypeId,
+  geteducation: (state) => state.education,
 };
