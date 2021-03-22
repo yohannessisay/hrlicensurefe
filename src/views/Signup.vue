@@ -93,11 +93,15 @@ export default {
   },
   methods: {
     submit() {
-      this.credentialsErrors = this.validateForm(this.credentials);
-      if (Object.keys(this.credentialsErrors).length) return;
-      // this.$store.dispatch("apiCall", this.credentials);
-
-      // this.$router.push({ path: "/login" });
+      // this.credentialsErrors = this.validateForm(this.credentials);
+      // if (Object.keys(this.credentialsErrors).length) return;
+      let signup = {
+        "emailAddress" : this.credentials.emailAddress,
+        "phoneNumber" : this.credentials.phoneNumber
+      }
+      this.$store.dispatch("user/signUp", signup);
+      console.log(signup);
+      this.$router.push({ path: "/login" });
     },
     validateForm(credentials) {
       const errors = {};

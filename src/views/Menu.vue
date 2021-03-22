@@ -4,7 +4,7 @@
       <h4>Your Previous Requests</h4>
     </div>
     <div class="lg:flex lg:items-stretch lg:justify-end ml-auto mr-24">
-      <router-link to="/license">
+      <router-link to="/newlicense">
         <button>New License Request</button>
       </router-link>
     </div>

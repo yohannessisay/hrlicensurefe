@@ -125,19 +125,42 @@
 
 <script>
 import Title from "@/sharedComponents/Title";
+import axios from "axios";
 
 export default {
   props: ["activeState"],
   components: {
     Title,
   },
+  created() {
+    this.fetchProfile();
+  },
   data: () => ({
+    profileInfo: {},
     //createProfile object includes personal info, address and contact
     //license object includes institution, photo, id and healthexamcert
   }),
   methods: {
     submitRequest() {
       // this.$emit("changeActiveState");
+    },
+    async fetchProfile() {
+      try {
+        const url = `http://ca9dee52bc55.ngrok.io/api/profiles/2`;
+        const response = await axios.get(url);
+        const results = response.data;
+        console.log(results);
+      } catch (err) {
+        if (err.response) {
+          // client received an error response
+          console.log("Server Error:", err);
+        } else if (err.request) {
+          // client never received a response, or request never left
+          console.log("Network Error:", err);
+        } else {
+          console.log("Client Error:", err);
+        }
+      }
     },
   },
 };
