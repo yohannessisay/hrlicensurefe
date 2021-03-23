@@ -12,15 +12,15 @@
   </div>
 </template>
 <script>
-import LandingTopNav from "./LandingTopNav";
-import GetCertifiedSection from "./GetCertifiedSection";
-import NewLicenseSection from "./NewLicenseSection";
-import RenewalSection from "./RenewalSection";
-import VerificationSection from "./VerificationSection";
-import GoodStandingSection from "./GoodStandingSection";
-import DeviceAccessibilitySection from "./DeviceAccessibilitySection";
-import MinistryOfHealthSection from "./MinistryOfHealthSection";
-import FooterSection from "./FooterSection";
+import LandingTopNav from "./sections/LandingTopNav";
+import GetCertifiedSection from "./sections/GetCertifiedSection";
+import NewLicenseSection from "./sections/NewLicenseSection";
+import RenewalSection from "./sections/RenewalSection";
+import VerificationSection from "./sections/VerificationSection";
+import GoodStandingSection from "./sections/GoodStandingSection";
+import DeviceAccessibilitySection from "./sections/DeviceAccessibilitySection";
+import MinistryOfHealthSection from "./sections/MinistryOfHealthSection";
+import FooterSection from "./sections/FooterSection";
 
 export default {
   components: {
