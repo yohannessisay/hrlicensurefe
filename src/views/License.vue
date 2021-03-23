@@ -1,15 +1,15 @@
 <template>
   <div class="bg-lightBlueB-200 h-screen">
-    <div class="ml-20">
-      <h4>Select License Type</h4>
+    <div class="flex pl-24 pt-8 ">
+      <h2 class="text-lightBlueB-400">Select License Type</h2>
     </div>
-    <div class="flex justify-center mt-8 rounded bg-lightGrey-100 ">
-      <div class="container mr-12 box-shadow-pop">
+    <div class="flex justify-center mt-8 rounded ">
+      <div class="container mr-12 box-shadow-pop rounded-lg bg-lightGrey-100 ">
         <div class="flex justify-center w-64 h-40">
           <div class="p-1">
-            <div class="mt-4">
+            <div class="mt-4 justify-center">
               <router-link to="/newlicense">
-                <RenderIllustration illustration="GoodStanding" />
+                <RenderIllustration illustration="Certificate" />
               </router-link>
             </div>
             <h4>New License</h4>
@@ -17,10 +17,10 @@
         </div>
       </div>
 
-      <div class="container mr-12 box-shadow-pop">
-        <div class="flex justify-center w-64 h-40">
+      <div class="container mr-12 box-shadow-pop rounded-lg bg-lightGrey-100 ">
+        <div class="flex justify-center content-center w-64 h-40">
           <div class="p-1">
-            <div class="mt-4">
+            <div class="mt-4 object-center mx-22">
               <router-link to="/renewal">
                 <RenderIllustration illustration="Renewal" />
               </router-link>
@@ -30,7 +30,7 @@
         </div>
       </div>
 
-      <div class="container mr-12 box-shadow-pop">
+      <div class="container mr-12 box-shadow-pop rounded-lg bg-lightGrey-100 ">
         <div class="flex justify-center w-64 h-40">
           <div class="p-1">
             <div class="mt-4">
@@ -43,7 +43,7 @@
         </div>
       </div>
 
-      <div class="container mr-12 box-shadow-pop">
+      <div class="container mr-12 box-shadow-pop rounded-lg bg-lightGrey-100 ">
         <div class="flex justify-center w-64 h-40">
           <div class="p-1">
             <div class="mt-4">
