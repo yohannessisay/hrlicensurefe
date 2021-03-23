@@ -3,18 +3,24 @@
     <LandingTopNav />
     <GetCertifiedSection />
     <NewLicenseSection />
+    <RenewalSection />
+    <VerificationSection />
   </div>
 </template>
 <script>
 import LandingTopNav from "./LandingTopNav";
 import GetCertifiedSection from "./GetCertifiedSection";
 import NewLicenseSection from "./NewLicenseSection";
+import RenewalSection from "./RenewalSection";
+import VerificationSection from "./VerificationSection";
 
 export default {
   components: {
     LandingTopNav,
     GetCertifiedSection,
-    NewLicenseSection
+    NewLicenseSection,
+    RenewalSection,
+    VerificationSection
   }
 };
 </script>

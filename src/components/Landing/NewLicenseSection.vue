@@ -1,7 +1,7 @@
 <template>
 <!-- w-full blue-gradient flex justify-center items-center -->
   <div class="w-full blue-gradient flex justify-center items-center py-xl">
-    <section class="content-wrapper flex justify-center items-center">
+    <section class="content-wrapper flex justify-start items-center">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 166.215 143.74">
         <defs>
           <linearGradient
@@ -30,7 +30,7 @@
           </h1>
           <hr class="yellow-gradient separator border-none" />
         </div>
-        <h3 class="mt-medium text-primary-100">
+        <h3 class="mt-small text-primary-100">
           Create and manage a new license request, follow up on the status.
         </h3>
       </section>
