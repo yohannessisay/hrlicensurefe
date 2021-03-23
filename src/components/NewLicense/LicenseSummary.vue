@@ -11,30 +11,30 @@
       <div>
         <label class="ml-8"> Full Name</label>
         <h5 class="ml-8">
-          {{ this.profileInfo["fatherName"] }}
+          <!-- {{ this.profileInfo["fatherName"] }} -->
 
-          {{ this.profileInfo["grandFatherName"] }}
+          <!-- {{ this.profileInfo["grandFatherName"] }} -->
         </h5>
       </div>
       <div>
         <label class="ml-8"> Gender</label>
-        <h5 class="ml-8">{{ this.profileInfo["gender"] }}</h5>
+        <!-- <h5 class="ml-8">{{ this.profileInfo["gender"] }}</h5> -->
       </div>
       <div>
         <label class="ml-8"> Nationality</label>
-        <h5 class="ml-8">{{ this.profileInfo["nationality"] }}</h5>
+        <!-- <h5 class="ml-8">{{ this.profileInfo["nationality"] }}</h5> -->
       </div>
       <div>
         <label class="ml-8"> Place of Birth</label>
-        <h5 class="ml-8">{{ this.profileInfo["placeOfBirth"] }}</h5>
+        <!-- <h5 class="ml-8">{{ this.profileInfo["placeOfBirth"] }}</h5> -->
       </div>
       <div>
         <label class="ml-8"> Date of Birth</label>
-        <h5 class="ml-8">{{ this.profileInfo["dateOfBirth"] }}</h5>
+        <!-- <h5 class="ml-8">{{ this.profileInfo["dateOfBirth"] }}</h5> -->
       </div>
       <div>
         <label class="ml-8"> Marital Status</label>
-        <h5 class="ml-8">{{ this.profileInfo["maritalStatus"]["name"] }}</h5>
+        <!-- <h5 class="ml-8">{{ this.profileInfo["maritalStatus"]["name"] }}</h5> -->
       </div>
     </div>
 
@@ -45,30 +45,30 @@
       <div>
         <label class="ml-8"> Region</label>
         <h5 class="ml-8">
-          {{ this.profileInfo["woreda"]["zone"]["region"]["name"] }}
+          <!-- {{ this.profileInfo["woreda"]["zone"]["region"]["name"] }} -->
         </h5>
       </div>
       <div>
         <label class="ml-8"> Zone</label>
-        <h5 class="ml-8">{{ this.profileInfo["woreda"]["zone"]["name"] }}</h5>
+        <!-- <h5 class="ml-8">{{ this.profileInfo["woreda"]["zone"]["name"] }}</h5> -->
       </div>
       <div>
         <label class="ml-8"> Wereda</label>
         <h5 class="ml-8">
-          {{ this.profileInfo["woreda"]["name"] }}
+          <!-- {{ this.profileInfo["woreda"]["name"] }} -->
         </h5>
       </div>
       <div>
         <label class="ml-8"> Kebele</label>
-        <h5 class="ml-8">{{ this.profileInfo["kebele"] }}</h5>
+        <!-- <h5 class="ml-8">{{ this.profileInfo["kebele"] }}</h5> -->
       </div>
       <div>
         <label class="ml-8"> House Number</label>
-        <h5 class="ml-8">{{ this.profileInfo["houseNumber"] }}</h5>
+        <!-- <h5 class="ml-8">{{ this.profileInfo["houseNumber"] }}</h5> -->
       </div>
       <div>
         <label class="ml-8"> Residence</label>
-        <h5 class="ml-8">{{ this.profileInfo["residence"] }}</h5>
+        <!-- <h5 class="ml-8">{{ this.profileInfo["residence"] }}</h5> -->
       </div>
     </div>
     <div class="flex justify-start">
@@ -77,16 +77,16 @@
     <div class="flex flex-row">
       <div>
         <label class="ml-8"> Mobile Number</label>
-        <h5 class="ml-8">{{ this.profileInfo["user"]["phoneNumber"] }}</h5>
+        <!-- <h5 class="ml-8">{{ this.profileInfo["user"]["phoneNumber"] }}</h5> -->
       </div>
 
       <div>
         <label class="ml-8"> Email</label>
-        <h5 class="ml-8">{{ this.profileInfo["user"]["emailAddress"] }}</h5>
+        <!-- <h5 class="ml-8">{{ this.profileInfo["user"]["emailAddress"] }}</h5> -->
       </div>
       <div>
         <label class="ml-8"> Applicant Type</label>
-        <h5 class="ml-8">{{ this.profileInfo["userType"]["name"] }}</h5>
+        <!-- <h5 class="ml-8">{{ this.profileInfo["userType"]["name"] }}</h5> -->
       </div>
     </div>
     <div class="flex justify-start">
@@ -108,6 +108,9 @@
     </div>
     <div class="flex justify-start">
       <Title class="" message="Photo" />
+      <picture>
+        <img v-bind:src="photoView" />
+      </picture>
       <Title class="ml-12" message="ID/Passport" />
       <Title class="ml-12" message="Health Examination Certificate" />
     </div>
@@ -141,10 +144,17 @@ export default {
     this.fetchProfile();
     this.userId = localStorage.getItem("userId");
     this.license = this.getLicense;
-    this.applicantId = this.getLicense.state.applicantId;
-    this.applicantTypeId = this.getLicense.state.applicantTypeId;
-    this.education.departmentId = this.getLicense.state.education.departmentId;
-    this.education.institutionId = this.getLicense.state.education.institutionId;
+    // this.applicantId = this.getLicense.applicantId;
+    // this.applicantTypeId = this.getLicense.state.applicantTypeId;
+    // this.education.departmentId = this.getLicense.state.education.departmentId;
+    // this.education.institutionId = this.getLicense.state.education.institutionId;
+    this.docs = this.getDocs;
+    this.filePath = this.docs.data[0].filePath;
+    this.photoView = this.filePreview + this.filePath;
+    // for (let index = 0; index < this.docs.length; index++) {
+    //   console.log(this.docs[index]);
+
+    // }
   },
   data: () => ({
     profileInfo: {},
@@ -155,12 +165,14 @@ export default {
       departmentId: "",
       institutionId: "",
     },
+    filePreview: "http://localhost:5000/"
     //createProfile object includes personal info, address and contact
     //license object includes institution, photo, id and healthexamcert
   }),
   computed: {
     ...mapGetters({
       getLicense: "newlicense/getLicense",
+      getDocs: "newlicense/getDocs",
     }),
   },
   methods: {
@@ -177,7 +189,7 @@ export default {
     },
     async fetchProfile() {
       try {
-        const url = `http://ca9dee52bc55.ngrok.io/api/profiles/` + this.userId;
+        const url = `http://localhost:5000/api/profiles/` + this.userId;
         const response = await axios.get(url);
         const results = response.data;
         this.profileInfo = results.data[0];

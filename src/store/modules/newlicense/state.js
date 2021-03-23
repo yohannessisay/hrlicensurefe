@@ -6,9 +6,16 @@ export default {
       departmentId: "",
       institutionId: "",
     },
-    photo: {},
-    passport: {},
-    healthExaminationCertificate: {},
+    file: {
+      profilePhoto: ""
+    },
+    file2: {
+      passport: ""
+    },
+    file3: {
+      healthExamCert: ""
+    },
+    docs: {},
     addProfileLoading: false,
     addProfileSuccess: false,
     addProfileError: false,
