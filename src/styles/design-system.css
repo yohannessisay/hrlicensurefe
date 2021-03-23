@@ -18,6 +18,10 @@
   .raised-box-shadow {
     box-shadow: 0px 6px 14px rgb(37 98 234 / 54%);
   }
+  .inset-box-shadow {
+    box-shadow: inset -1px -4px 0px #e6ebf4;
+  }
+
   .blue-box-shadow-light {
     box-shadow: 0px 3px 6px #6c8bf09e;
   }
