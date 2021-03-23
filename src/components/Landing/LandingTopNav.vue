@@ -1,9 +1,7 @@
 <template>
-  <section
-    class="w-screen bg-white shadow-md h-large px-tiny sm:px-small flex justify-between items-center"
-  >
+  <section class="wrapper">
     <div class="flex justify-center items-center">
-      <RenderIllustration illustration="Logo" class="hidden sm:block"/>
+      <RenderIllustration illustration="Logo" class="hidden sm:block" />
       <h3 class="ml-tiny font-AtkinsonHyperlegibleBold">HRIS - Lisence</h3>
     </div>
     <button variant="outline" class="h-small">Log In</button>
@@ -16,6 +14,18 @@ export default {
 };
 </script>
 <style lang="postcss" scoped>
+.wrapper {
+  @apply w-screen bg-white shadow-md h-large px-tiny flex justify-between items-center fixed top-0;
+  background: #ffffff20;
+  backdrop-filter: blur(5px);
+}
+
+@screen sm {
+  .wrapper {
+    @apply px-small;
+  }
+}
+
 h3 {
   -webkit-text-fill-color: transparent;
   -webkit-box-decoration-break: clone;
