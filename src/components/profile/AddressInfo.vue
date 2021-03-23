@@ -179,7 +179,7 @@ export default {
     nextStep: function() {
       this.$store.dispatch("profile/setAddress", this.address);
       this.$emit("changeActiveState");
-      console.log(this.address);
+      // console.log(this.address);
     }
   },
   mounted() {

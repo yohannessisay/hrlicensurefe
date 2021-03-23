@@ -6,37 +6,47 @@
         class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px"
         aria-label="Pagination"
       >
-        <a
-          @click="submit(1)"
-          class="relative inline-flex items-center px-4 py-2 border border-gray-30 text-sm font-medium text-gray-700 hover:bg-gray-50"
-        >
-          1
-        </a>
-        <a
-          @click="submit(2)"
-          class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-50"
-        >
-          2
-        </a>
-        <a
-          @click="submit(3)"
-          class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-50"
-        >
-          3
-        </a>
-        <a
-          @click="submit(4)"
-          class="relative inline-flex items-center px-4 py-2 border border-gray-30 text-sm font-medium text-gray-700 hover:bg-gray-50"
-        >
-          4
-        </a>
-        <a
-          @click="submit(5)"
-          class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-50"
-        >
-          5
-        </a>
-      </nav>
+      <a
+        @click="submit(1)"
+        class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-50"
+      >
+        1
+      </a>
+      <a
+        @click="submit(2)"
+        class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-50"
+      >
+        2
+      </a>
+      <a
+        @click="submit(3)"
+        class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-50"
+      >
+        3
+      </a>
+      <a
+        @click="submit(4)"
+        class="relative inline-flex items-center px-4 py-2 border border-gray-30 text-sm font-medium text-gray-700 hover:bg-gray-50"
+      >
+        4
+      </a>
+      <a
+        @click="submit(5)"
+        class="relative inline-flex items-center px-4 py-2 border border-gray-30 text-sm font-medium text-gray-700 hover:bg-gray-50"
+      >
+        5
+      </a>
+      <a
+        @click="submit(6)"
+        class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-50"
+      >
+        6
+      </a>
+    </nav>
+  </div>
+  <transition name="fade" mode="out-in">
+    <div v-if="this.activeState == 1">
+      <Institution :activeState="1" @changeActiveState="activeState++" />
     </div>
     <transition name="fade" mode="out-in">
       <div v-if="this.activeState == 1">
@@ -60,12 +70,17 @@
       </div>
     </transition>
 
-    <transition name="fade" mode="out-in">
-      <div v-if="this.activeState == 5">
-        <LicenseSummary :activeState="5" @changeActiveState="activeState++" />
-      </div>
-    </transition>
-  </div>
+  <transition name="fade" mode="out-in">
+    <div v-if="this.activeState == 5">
+      <ServiceFee :activeState="5" @changeActiveState="activeState++" />
+    </div>
+  </transition>
+
+  <transition name="fade" mode="out-in">
+    <div v-if="this.activeState == 6">
+      <LicenseSummary :activeState="6" @changeActiveState="activeState++" />
+    </div>
+  </transition>
 </template>
 <script>
 import Navigation from "@/views/Navigation";
@@ -74,6 +89,7 @@ import Photo from "./Photo.vue";
 import Passport from "./Passport.vue";
 import HealthExamCert from "./HealthExamCert.vue";
 import LicenseSummary from "./LicenseSummary.vue";
+import ServiceFee from "./ServiceFee.vue";
 
 export default {
   created() {},
@@ -86,6 +102,7 @@ export default {
     Passport,
     HealthExamCert,
     LicenseSummary,
+    ServiceFee,
     Navigation
   },
   methods: {
