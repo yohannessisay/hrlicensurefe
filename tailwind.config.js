@@ -81,7 +81,7 @@ module.exports = {
         small: "15px",
         16: "16px",
         medium: "30px",
-        large: "30px",
+        large: "60px",
         xl: "100px"
       },
       inset: {
