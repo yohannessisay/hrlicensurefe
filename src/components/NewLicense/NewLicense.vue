@@ -1,8 +1,10 @@
 <template>
   <Navigation />
-  <div class="bg-lightBlueB-200 h-full pt-medium">
-    <div id="navg" class="flex flex-row justify-center">
-      <nav
+  <div
+    class="w-screen h-full bg-lightBlueB-200 flex items-center justify-center"
+  >
+    <div id="navg" class="flex flex-row justify-center mb-medium">
+      <!-- <nav
         class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px"
         aria-label="Pagination"
       >
@@ -42,11 +44,7 @@
       >
         6
       </a>
-    </nav>
-  </div>
-  <transition name="fade" mode="out-in">
-    <div v-if="this.activeState == 1">
-      <Institution :activeState="1" @changeActiveState="activeState++" />
+    </nav> -->
     </div>
     <transition name="fade" mode="out-in">
       <div v-if="this.activeState == 1">
@@ -70,18 +68,20 @@
       </div>
     </transition>
 
-  <transition name="fade" mode="out-in">
-    <div v-if="this.activeState == 5">
-      <ServiceFee :activeState="5" @changeActiveState="activeState++" />
-    </div>
-  </transition>
+    <transition name="fade" mode="out-in">
+      <div v-if="this.activeState == 5">
+        <ServiceFee :activeState="5" @changeActiveState="activeState++" />
+      </div>
+    </transition>
 
-  <transition name="fade" mode="out-in">
-    <div v-if="this.activeState == 6">
-      <LicenseSummary :activeState="6" @changeActiveState="activeState++" />
-    </div>
-  </transition>
+    <transition name="fade" mode="out-in">
+      <div v-if="this.activeState == 6">
+        <LicenseSummary :activeState="6" @changeActiveState="activeState++" />
+      </div>
+    </transition>
+  </div>
 </template>
+
 <script>
 import Navigation from "@/views/Navigation";
 import Institution from "./Institution.vue";
@@ -103,7 +103,7 @@ export default {
     HealthExamCert,
     LicenseSummary,
     ServiceFee,
-    Navigation
+    Navigation,
   },
   methods: {
     submit(n) {
