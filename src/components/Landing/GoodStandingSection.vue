@@ -1,7 +1,11 @@
 <template>
   <!-- w-full blue-gradient flex justify-center items-center -->
-  <div class="w-full bg-white flex justify-center items-center py-xl">
-    <section class="content-wrapper flex justify-start items-center">
+  <div
+    class="w-full bg-white flex justify-center items-center py-large sm:py-xl box-border"
+  >
+    <section
+      class="content-wrapper flex flex-col md:flex-row justify-center md:justify-start items-center"
+    >
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 136.063 136.002">
         <defs>
           <linearGradient
@@ -22,9 +26,13 @@
           fill="url(#goodStanding)"
         />
       </svg>
-      <section class="flex flex-col ml-large items-start">
+      <section
+        class="flex flex-col px-small sm:ml-large items-center md:items-start"
+      >
         <div class="flex flex-col items-center">
-          <h1 class="text-largeDisplay blue-text-gradient -mb-small">
+          <h1
+            class="text-3xl sm:text-largeDisplay blue-text-gradient -mb-tiny sm:-mb-small"
+          >
             Good Standing
           </h1>
           <hr class="yellow-gradient separator border-none" />
