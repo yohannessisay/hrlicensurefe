@@ -4,7 +4,7 @@
   >
     <div class="flex flex-col items-center justify-center mb-medium">
       <h1
-        class="text-3xl sm:text-largeDisplay white-text-gradient -mb-tiny sm:-mb-small text-center"
+        class="text-2xl sm:text-largeDisplay white-text-gradient -mb-tiny sm:-mb-small text-center"
       >
         Accessible on any device
       </h1>
