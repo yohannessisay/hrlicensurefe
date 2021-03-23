@@ -12,13 +12,15 @@
           />
         </section>
 
-        <section>
+        <section class="flex flex-col">
           <h3 class="mt-medium text-primary-600">
             Everything you need for managing you medical licenses in Ethiopia.
           </h3>
           <h3 class="mt-small text-primary-600">
             Create, Manage and follow up on your license request online
           </h3>
+
+          <button class="self-end px-xl">Sign Up</button>
         </section>
       </div>
     </div>
