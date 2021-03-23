@@ -1,16 +1,16 @@
 <template>
   <div class="flex justify-center">
-    <div class="w-screen max-w-4xl">
+    <div class="w-screen max-w-4xl h-screen">
       <div
-        class="flex flex-col pt-large w-full bg-white blue-box-shadow-light rounded "
+        class="flex flex-col mt-large w-full bg-white blue-box-shadow-light rounded "
       >
         <TitleWithIllustration
-          illustration="User"
-          message="Photo"
+          illustration="Certificate"
+          message="Service Fee(Optional)"
           class="mt-8"
         />
-        <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
-          <div class="flex justify-center">
+        <form @submit.prevent="nextStep" class="mx-auto max-w-3xl w-full mt-8">
+          <div class="flex justify-center mb-10">
             <div>
               <span v-if="showUpload">
                 <label class="text-primary-700"
@@ -18,8 +18,8 @@
                   <div class="dropbox">
                     <input
                       type="file"
-                      id="photoFile"
-                      ref="photoFile"
+                      id="serviceFeeFile"
+                      ref="serviceFeeFile"
                       v-on:change="handleFileUpload()"
                       style="margin-bottom: 15px !important;"
                     />
@@ -41,16 +41,12 @@
               <span v-if="!showUpload && !isImage">
                 <img :src="filePreview" alt="" class="preview" />
               </span>
-
-              <h6 style="margin-top: 15px !important;">
-                Your photo should be passport size
-              </h6>
             </div>
           </div>
 
-          <div class="flex justify-center mb-8 mt-medium">
+          <div class="flex justify-center mb-8">
             <div>
-              <button>Next</button>
+              <button @click="submit()">Next</button>
             </div>
             <div>
               <button variant="outline">
@@ -67,13 +63,14 @@
 <script>
 import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
 import { mapGetters, mapActions } from "vuex";
+import axios from "axios";
 
 export default {
-  components: { TitleWithIllustration },
   props: ["activeState"],
+  components: { TitleWithIllustration },
   data() {
     return {
-      photoFile: "",
+      serviceFeeFile: "",
       showPreview: false,
       filePreview: "",
       showUpload: true,
@@ -82,25 +79,29 @@ export default {
   },
   computed: {
     ...mapGetters({
-      getLicense: "newlicense/getLicense"
-    })
+      getHealthExamCert: "newlicense/getHealthExamCert",
+      getPassport: "newlicense/getPassport",
+      getPhoto: "newlicense/getPhoto",
+    }),
   },
   created() {
-    this.license = this.getLicense;
+    this.healthExamCert = this.getHealthExamCert;
+    this.passport = this.getPassport;
+    this.photo = this.getPhoto;
   },
   methods: {
-    ...mapActions(["setPhoto"]),
+    ...mapActions(["setServiceFee"]),
     reset() {
       // reset form to initial state
       this.showUpload = true;
       this.showPreview = false;
-      this.photoFile = "";
+      this.serviceFeeFile = "";
       this.filePreview = "";
       this.isImage = true;
     },
     handleFileUpload() {
       this.showUpload = false;
-      this.photoFile = this.$refs.photoFile.files[0];
+      this.serviceFeeFile = this.$refs.serviceFeeFile.files[0];
       let reader = new FileReader();
 
       reader.addEventListener(
@@ -112,24 +113,65 @@ export default {
         false
       );
 
-      if (this.photoFile) {
-        if (/\.(jpe?g|png|gif)$/i.test(this.photoFile.name)) {
+      if (this.serviceFeeFile) {
+        if (/\.(jpe?g|png|gif)$/i.test(this.serviceFeeFile.name)) {
           this.isImage = true;
-          reader.readAsDataURL(this.photoFile);
-        } else if (/\.(pdf)$/i.test(this.photoFile.name)) {
+          reader.readAsDataURL(this.serviceFeeFile);
+        } else if (/\.(pdf)$/i.test(this.serviceFeeFile.name)) {
           this.isImage = false;
-          reader.readAsText(this.photoFile);
+          reader.readAsText(this.serviceFeeFile);
         }
       }
     },
-    submit() {
-      this.$emit("changeActiveState");
-      let file = {
-        profilePhoto: this.photoFile
+    async submit() {
+      let file4 = {
+        serviceFee: this.serviceFeeFile,
       };
-      this.$store.dispatch("newlicense/setPhoto", file);
+
+      let formData = new FormData();
+      formData.append("photo", this.photo.profilePhoto);
+      formData.append("passport", this.passport.passport);
+      formData.append("healthExamCert", this.healthExamCert.healthExamCert);
+      formData.append("serviceFee", file4.serviceFee);
+
+      try {
+        const response = await axios.post(
+          "http://localhost:5000/api/documentUploads/newLicense/NA",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+
+        if (response.status === 200) {
+          this.$emit("changeActiveState");
+        //   const docResponse = [];
+          
+        // console.log(response);
+        //   for (let index = 0; index < response.data.data.length; index++) {
+        //     const elementId = response.data.data[index].id;
+        //     const elementName = response.data.data[index].fieldName;
+        //     const docFile = {};
+        //     docFile[`${elementName}`] = elementId;
+
+        //     docResponse.push(docFile);
+        //   }
+          this.$store.dispatch("newlicense/setDocs", response.data);
+        } else {
+          console.log("Error occurred");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    nextStep() {
+      //   this.$emit("changeActiveState");
+      //   this.$store.dispatch("newlicense/setServiceFee", file4);
     },
   },
+  setup() {},
 };
 </script>
 <style>
@@ -138,7 +180,7 @@ img {
   height: 250px;
 }
 
-#photoFile {
+#serviceFeeFile {
   opacity: 0; /* invisible but it's there! */
   width: 100%;
   height: 200px;
