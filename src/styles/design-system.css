@@ -28,6 +28,9 @@
   .box-shadow-focus {
     box-shadow: 0px 0px 0px 3px #3674b96b;
   }
+  .box-shadow-pop {
+    box-shadow: 0px 0px 0px 3px #e6e9ee;
+  }
   .yellow-gradient {
     background-image: linear-gradient(to right, #e2b72d, #fde68a);
   }

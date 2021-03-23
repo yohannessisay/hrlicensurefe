@@ -72,6 +72,9 @@ module.exports = {
       },
       blue: {
         100: "#3c5d82"
+      },
+      lightGrey:{
+        100: "#f3f4f6"
       }
     },
     extend: {
