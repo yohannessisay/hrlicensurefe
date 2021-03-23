@@ -73,9 +73,76 @@
         </div>
       </div>
     </div>
+  <Navigation />
+  <div class="bg-lightBlueB-200 h-full pt-medium">
+    <div id="navg" class="flex flex-row justify-center">
+      <nav
+        class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px"
+        aria-label="Pagination"
+      >
+        <a
+          @click="submit(1)"
+          class="relative inline-flex items-center px-4 py-2 border border-gray-30 text-sm font-medium text-gray-700 hover:bg-gray-50"
+        >
+          1
+        </a>
+        <a
+          @click="submit(2)"
+          class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-50"
+        >
+          2
+        </a>
+        <a
+          @click="submit(3)"
+          class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-50"
+        >
+          3
+        </a>
+        <a
+          @click="submit(4)"
+          class="relative inline-flex items-center px-4 py-2 border border-gray-30 text-sm font-medium text-gray-700 hover:bg-gray-50"
+        >
+          4
+        </a>
+        <a
+          @click="submit(5)"
+          class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-50"
+        >
+          5
+        </a>
+      </nav>
+    </div>
+    <transition name="fade" mode="out-in">
+      <div v-if="this.activeState == 1">
+        <Institution :activeState="1" @changeActiveState="activeState++" />
+      </div>
+    </transition>
+    <transition name="fade" mode="out-in">
+      <div v-if="this.activeState == 2">
+        <Photo :activeState="2" @changeActiveState="activeState++" />
+      </div>
+    </transition>
+    <transition name="fade" mode="out-in">
+      <div v-if="this.activeState == 3">
+        <Passport :activeState="3" @changeActiveState="activeState++" />
+      </div>
+    </transition>
+
+    <transition name="fade" mode="out-in">
+      <div v-if="this.activeState == 4">
+        <HealthExamCert :activeState="4" @changeActiveState="activeState++" />
+      </div>
+    </transition>
+
+    <transition name="fade" mode="out-in">
+      <div v-if="this.activeState == 5">
+        <LicenseSummary :activeState="5" @changeActiveState="activeState++" />
+      </div>
+    </transition>
   </div>
 </template>
 <script>
+import Navigation from "@/views/Navigation";
 import Institution from "./Institution.vue";
 import Photo from "./Photo.vue";
 import Passport from "./Passport.vue";
@@ -93,6 +160,7 @@ export default {
     Passport,
     HealthExamCert,
     LicenseSummary,
+    Navigation
   },
   methods: {
     submit(n) {
