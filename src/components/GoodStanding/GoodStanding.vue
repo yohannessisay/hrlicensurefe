@@ -55,46 +55,21 @@
           </div>
           <div class="flex">
             <div class="flex mb-small mr-12">
-              <div class="flex flex-col">
-                <label class="text-primary-700">Institution Type</label>
-                <div class="flex">
-                  <div class="flex flex-col w-full mb-small">
-                    <div class="flex py-2">
-                      <input
-                        class="flex"
-                        type="radio"
-                        id="public"
-                        value="public"
-                      />
-                      <label
-                        class="ml-tiny flex flex-col text-primary-700"
-                        for="public"
-                      >
-                        Public
-                      </label>
-                    </div>
-                  </div>
-                  <div class="flex flex-col w-full">
-                    <div class="flex">
-                      <div class="flex py-2">
-                        <input type="radio" id="Private" value="Private" />
-                        <label class="ml-tiny text-primary-700" for="female">
-                          Private
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="flex flex-col w-full mb-small">
-                    <div class="flex py-2">
-                      <input class="flex" type="radio" id="fbc" value="fbc" />
-                      <label
-                        class="ml-tiny flex flex-col text-primary-700"
-                        for="fbc"
-                      >
-                        Faith based or Charity
-                      </label>
-                    </div>
-                  </div>
+              <div class="flex flex-col mb-medium mr-4">
+                <label class="text-primary-700"> Institution Type</label>
+                <div class="flex items-center mb-small">
+                  <input type="radio" id="moh" value="moh" />
+                  <label class="ml-tiny text-primary-700" for="moh">Public</label>
+                </div>
+                <div class="flex items-center mb-small">
+                  <input type="radio" id="hris" value="hris" />
+                  <label class="ml-tiny text-primary-700" for="hris">Private</label>
+                </div>
+                <div class="flex items-center mb-small">
+                  <input type="radio" id="fbc" value="fbc" />
+                  <label class="ml-tiny text-primary-700" for="fbc">
+                    Faith based or Charity
+                  </label>
                 </div>
               </div>
             </div>

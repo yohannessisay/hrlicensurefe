@@ -1,81 +1,92 @@
 <template>
-  <div class="w-full justify-center items-center">
-    <div class="w-full flex flex-col mt-large">
-      <TitleWithIllustration
-        illustration="Verification"
-        message="Verification"
-      />
-      <form @submit.prevent="submit" class="flex flex-col mt-4">
-        <div class="flex justify-center">
-          <div class="flex flex-col mb-medium mr-4">
-            <label>Institution</label>
-            <select v-model="selected">
-              <option disabled value="">Please select one</option>
-              <option>Value one</option>
-              <option>I'm the second one</option>
-              <option>Select me</option>
-            </select>
-          </div>
-          <div class="flex flex-col mb-medium ml-4">
-            <label>Department</label>
-            <select v-model="selected">
-              <option disabled value="">Please select one</option>
-              <option>Value one</option>
-              <option>I'm the second one</option>
-              <option>Select me</option>
-            </select>
-          </div>
+  <div
+    class="w-screen h-full bg-lightBlueB-200 flex items-center justify-center"
+  >
+    <div class="w-screen max-w-4xl mt-medium h-screen">
+      <div
+        class="flex flex-col mt-large w-full bg-white blue-box-shadow-light rounded mb-large"
+      >
+        <div class="mt-large">
+          <TitleWithIllustration
+            illustration="Verification"
+            message="Good Standing"
+          />
         </div>
-        <div class="flex justify-center">
-          <div class="flex flex-col mb-medium mr-4">
-            <label>Institution Email</label>
-            <input type="email" />
-          </div>
-          <div class="flex flex-col mb-medium ml-4">
-            <label>Application Institution</label>
-            <input type="text" />
-          </div>
-        </div>
-        <div class="flex justify-center">
-          <div class="flex flex-col mb-medium mr-4">
-            <label> Institution Type</label>
-            <div class="flex items-center mb-small">
-              <input type="radio" id="moh" value="moh" />
-              <label class="ml-tiny" for="moh">Public</label>
+        <form class="mx-auto max-w-3xl w-full mt-10" @submit.prevent="nextStep">
+          <div class="flex">
+            <div class="flex flex-col mb-medium w-1/2 mr-12">
+              <label class="text-primary-700">Name of inistitution</label>
+              <select class="max-w-3xl" v-model="selected">
+                <option disabled value="">Please select one</option>
+                <option>Value one</option>
+                <option>I'm the second one</option>
+                <option>Select me</option>
+              </select>
             </div>
-            <div class="flex items-center mb-small">
-              <input type="radio" id="hris" value="hris" />
-              <label class="ml-tiny" for="hris">Private</label>
-            </div>
-            <div class="flex items-center mb-small">
-              <input type="radio" id="hris" value="hris" />
-              <label class="ml-tiny" for="hris">Faith based or Charity</label>
+            <div class="flex flex-col mb-medium w-1/2 m1-12">
+              <label class="text-primary-700">Department</label>
+              <select class="max-w-3xl" v-model="selected">
+                <option disabled value="">Please select one</option>
+                <option>Value one</option>
+                <option>I'm the second one</option>
+                <option>Select me</option>
+              </select>
             </div>
           </div>
-          <div class="flex flex-col mb-medium ml-4">
-            <label>Applicant Type</label>
-
-            <div class="flex items-center mb-small">
-              <input type="radio" id="moh" value="moh" />
-              <label class="ml-tiny" for="moh">Local</label>
+          <div class="flex">
+            <div class="flex flex-col mb-medium w-1/2 mr-12">
+              <label class="text-primary-700">Inistitution Email</label>
+              <select class="max-w-3xl" v-model="selected">
+                <option disabled value="">Please select one</option>
+                <option>Value one</option>
+                <option>I'm the second one</option>
+                <option>Select me</option>
+              </select>
             </div>
-            <div class="flex items-center mb-small">
-              <input type="radio" id="hris" value="hris" />
-              <label class="ml-tiny" for="hris">International</label>
+            <div class="flex flex-col mb-medium w-1/2 m1-12">
+              <label class="text-primary-700">Application Institution</label>
+              <select class="max-w-3xl" v-model="selected">
+                <option disabled value="">Please select one</option>
+                <option>Value one</option>
+                <option>I'm the second one</option>
+                <option>Select me</option>
+              </select>
             </div>
           </div>
-        </div>
-        <div class="flex justify-center">
-          <div>
-            <button>Submit Request</button>
+          <div class="flex">
+            <div class="flex mb-small mr-12">
+              <div class="flex flex-col mb-medium mr-4">
+                <label class="text-primary-700"> Institution Type</label>
+                <div class="flex items-center mb-small">
+                  <input type="radio" id="moh" value="moh" />
+                  <label class="ml-tiny text-primary-700" for="moh">Public</label>
+                </div>
+                <div class="flex items-center mb-small">
+                  <input type="radio" id="hris" value="hris" />
+                  <label class="ml-tiny text-primary-700" for="hris">Private</label>
+                </div>
+                <div class="flex items-center mb-small">
+                  <input type="radio" id="fbc" value="fbc" />
+                  <label class="ml-tiny text-primary-700" for="fbc">
+                    Faith based or Charity
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="flex w-1/2 mb-small m1-12"></div>
           </div>
-          <div>
-            <button variant="outline">
-              Save as Draft
-            </button>
+          <div class="flex justify-center mb-medium">
+            <div>
+              <button>Submit Request</button>
+            </div>
+            <div>
+              <button variant="outline">
+                Save as Draft
+              </button>
+            </div>
           </div>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   </div>
 </template>
@@ -85,6 +96,6 @@ import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
 
 export default {
   components: { TitleWithIllustration },
-  setup() {},
+  setup() {}
 };
 </script>
