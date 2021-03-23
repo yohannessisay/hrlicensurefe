@@ -5,53 +5,53 @@
     </div>
     <div class="flex justify-center mt-8 rounded ">
       <div class="container mr-12 box-shadow-pop rounded-lg bg-lightGrey-100 ">
-        <div class="flex justify-center w-64 h-40">
+        <div class="flex justify-center items-center w-64 h-40">
           <div class="p-1">
-            <div class="mt-4 justify-center">
+            <div class="flex content-center justify-center">
               <router-link to="/newlicense">
                 <RenderIllustration illustration="Certificate" />
               </router-link>
             </div>
-            <h4>New License</h4>
+            <h4 class="text-lightBlueB-500">New License</h4>
           </div>
         </div>
       </div>
 
       <div class="container mr-12 box-shadow-pop rounded-lg bg-lightGrey-100 ">
-        <div class="flex justify-center content-center w-64 h-40">
+        <div class="flex justify-center items-center w-64 h-40">
           <div class="p-1">
-            <div class="mt-4 object-center mx-22">
+            <div class="my-auto flex justify-center">
               <router-link to="/renewal">
                 <RenderIllustration illustration="Renewal" />
               </router-link>
             </div>
-            <h4>License Renewal</h4>
+            <h4 class="text-lightBlueB-500">License Renewal</h4>
           </div>
         </div>
       </div>
 
       <div class="container mr-12 box-shadow-pop rounded-lg bg-lightGrey-100 ">
-        <div class="flex justify-center w-64 h-40">
+        <div class="flex justify-center items-center w-64 h-40">
           <div class="p-1">
-            <div class="mt-4">
+            <div class="my-auto flex justify-center">
               <router-link to="/verification">
                 <RenderIllustration illustration="Verification" />
               </router-link>
             </div>
-            <h4>Verification</h4>
+            <h4 class="text-lightBlueB-500">Verification</h4>
           </div>
         </div>
       </div>
 
       <div class="container mr-12 box-shadow-pop rounded-lg bg-lightGrey-100 ">
-        <div class="flex justify-center w-64 h-40">
+        <div class="flex justify-center items-center w-64 h-40">
           <div class="p-1">
-            <div class="mt-4">
+            <div class="my-auto flex justify-center">
               <router-link to="/goodstanding">
                 <RenderIllustration illustration="GoodStanding" />
               </router-link>
             </div>
-            <h4>GoodStanding</h4>
+            <h4 class="text-lightBlueB-500">GoodStanding</h4>
           </div>
         </div>
       </div>
