@@ -5,7 +5,7 @@ const routes = [
   {
     path: "/",
     name: "Home",
-    component: Home
+    component: Home,
   },
   {
     path: "/addProfile",
@@ -15,17 +15,17 @@ const routes = [
   {
     path: "/about",
     name: "About",
-    component: About
+    component: About,
   },
   {
     path: "/signup",
     name: "Signup",
-    component: () => import("../views/Signup.vue")
+    component: () => import("../views/Signup.vue"),
   },
   {
     path: "/login",
     name: "Login",
-    component: () => import("../views/Login.vue")
+    component: () => import("../views/Login.vue"),
   },
   {
     path: "/menu",
@@ -35,12 +35,12 @@ const routes = [
   {
     path: "/license",
     name: "License",
-    component: () => import("../views/License.vue")
+    component: () => import("../views/License.vue"),
   },
   {
     path: "/newlicense",
     name: "NewLicense",
-    component: () => import("../components/NewLicense/NewLicense.vue")
+    component: () => import("../components/NewLicense/NewLicense.vue"),
   },
   {
     path: "/lis",
@@ -62,11 +62,21 @@ const routes = [
     name: "GoodStanding",
     component: () => import("../components/GoodStanding/GoodStanding.vue"),
   },
+  {
+    path: "/goodstanding",
+    name: "GoodStanding",
+    component: () => import("../components/GoodStanding/GoodStanding.vue"),
+  },
+  {
+    path: "/submitted",
+    name: "Submitted",
+    component: () => import("../views/Submitted.vue"),
+  },
 ];
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
-  routes
+  routes,
 });
 router.beforeEach((to, from, next) => {
   const auth = localStorage.getItem("token");

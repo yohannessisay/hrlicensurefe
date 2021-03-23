@@ -36,7 +36,7 @@
       <div class="flex justify-center w-64 h-40">
         <div class="p-1">
           <div class="mt-4">
-            <router-link to="/renewal">
+            <router-link to="/submitted">
               <RenderIllustration illustration="Renewal" />
             </router-link>
           </div>
