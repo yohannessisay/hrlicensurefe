@@ -9,6 +9,12 @@
   .blue-gradient-dark {
     background-image: linear-gradient(to right, #183490, #2357c7);
   }
+  .blue-text-gradient{
+    -webkit-text-fill-color: transparent;
+    -webkit-box-decoration-break: clone;
+    background: linear-gradient(-70deg, #4185D0, #285180);
+    -webkit-background-clip: text;
+  }
   .no-background-image {
     background-image: none;
   }
