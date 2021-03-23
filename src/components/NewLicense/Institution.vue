@@ -13,7 +13,7 @@
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-10">
           <div class="flex">
             <div class="flex flex-col mb-medium w-1/2 mr-12">
-              <label class="text-primary-700">Institution</label>
+              <label class="text-primary-700">ApplicantType</label>
               <select class="max-w-3xl" v-model="licenseInfo.applicantTypeId">
                 <option
                   v-for="applicant in applicantTypes"
@@ -95,7 +95,7 @@ export default {
   },
   data: () => ({
     licenseInfo: {
-      applicantId: localStorage.getItem("userId"),
+      applicantId: parseInt(localStorage.getItem("userId")),
       applicantTypeId: "",
       education: {
         departmentId: "",

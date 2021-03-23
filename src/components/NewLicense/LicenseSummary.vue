@@ -8,33 +8,77 @@
       <Title message="Personal Info" />
     </div>
     <div class="flex flex-row">
-      <div>
+      <div :class="[this.profileInfo.name === null ? errorClass : activeClass]">
         <label class="ml-8"> Full Name</label>
         <h5 class="ml-8">
-          <!-- {{ this.profileInfo["fatherName"] }} -->
-
-          <!-- {{ this.profileInfo["grandFatherName"] }} -->
+          {{
+            this.profileInfo.name +
+              " " +
+              this.profileInfo.fatherName +
+              " " +
+              this.profileInfo.grandFatherName
+          }}
         </h5>
       </div>
-      <div>
+      <div
+        :class="[this.profileInfo.gender === null ? errorClass : activeClass]"
+      >
         <label class="ml-8"> Gender</label>
-        <!-- <h5 class="ml-8">{{ this.profileInfo["gender"] }}</h5> -->
+        <h5 class="ml-8">
+          {{ this.profileInfo.gender ? this.profileInfo["gender"] : "-" }}
+        </h5>
       </div>
-      <div>
+      <div
+        :class="[
+          this.profileInfo.nationality === null ? errorClass : activeClass,
+        ]"
+      >
         <label class="ml-8"> Nationality</label>
-        <!-- <h5 class="ml-8">{{ this.profileInfo["nationality"] }}</h5> -->
+        <h5 class="ml-8">
+          {{
+            this.profileInfo.nationality ? this.profileInfo.nationality : "-"
+          }}
+        </h5>
       </div>
-      <div>
+      <div
+        :class="[
+          this.profileInfo.placeOfBirth === null ? errorClass : activeClass,
+        ]"
+      >
         <label class="ml-8"> Place of Birth</label>
-        <!-- <h5 class="ml-8">{{ this.profileInfo["placeOfBirth"] }}</h5> -->
+        <h5 class="ml-8">
+          {{
+            this.profileInfo.placeOfBirth ? this.profileInfo.placeOfBirth : "-"
+          }}
+        </h5>
       </div>
-      <div>
+      <div
+        :class="[
+          this.profileInfo.dateOfBirth === null ? errorClass : activeClass,
+        ]"
+      >
         <label class="ml-8"> Date of Birth</label>
-        <!-- <h5 class="ml-8">{{ this.profileInfo["dateOfBirth"] }}</h5> -->
+        <h5 class="ml-8">
+          {{
+            this.profileInfo.dateOfBirth ? this.profileInfo.dateOfBirth : "-"
+          }}
+        </h5>
       </div>
-      <div>
+      <div
+        :class="[
+          this.profileInfo.maritalStatus.name === null
+            ? errorClass
+            : activeClass,
+        ]"
+      >
         <label class="ml-8"> Marital Status</label>
-        <!-- <h5 class="ml-8">{{ this.profileInfo["maritalStatus"]["name"] }}</h5> -->
+        <h5 class="ml-8">
+          {{
+            this.profileInfo.maritalStatus.name
+              ? this.profileInfo.maritalStatus.name
+              : "-"
+          }}
+        </h5>
       </div>
     </div>
 
@@ -42,51 +86,109 @@
       <Title message="Address" />
     </div>
     <div class="flex flex-row">
-      <div>
+      <div
+        :class="[
+          this.profileInfo.woreda.zone.region === null
+            ? errorClass
+            : activeClass,
+        ]"
+      >
         <label class="ml-8"> Region</label>
         <h5 class="ml-8">
-          <!-- {{ this.profileInfo["woreda"]["zone"]["region"]["name"] }} -->
+          {{
+            this.profileInfo.woreda.zone.region
+              ? this.profileInfo.woreda.zone.region.name
+              : "-"
+          }}
         </h5>
       </div>
-      <div>
+      <div
+        :class="[
+          this.profileInfo.woreda.zone === null ? errorClass : activeClass,
+        ]"
+      >
         <label class="ml-8"> Zone</label>
-        <!-- <h5 class="ml-8">{{ this.profileInfo["woreda"]["zone"]["name"] }}</h5> -->
+        <h5 class="ml-8">
+          {{
+            this.profileInfo.woreda.zone
+              ? this.profileInfo.woreda.zone.name
+              : "-"
+          }}
+        </h5>
       </div>
-      <div>
+      <div
+        :class="[this.profileInfo.woreda === null ? errorClass : activeClass]"
+      >
         <label class="ml-8"> Wereda</label>
         <h5 class="ml-8">
-          <!-- {{ this.profileInfo["woreda"]["name"] }} -->
+          {{ this.profileInfo.woreda ? this.profileInfo.woreda.name : "-" }}
         </h5>
       </div>
-      <div>
+      <div
+        :class="[this.profileInfo.kebele === null ? errorClass : activeClass]"
+      >
         <label class="ml-8"> Kebele</label>
-        <!-- <h5 class="ml-8">{{ this.profileInfo["kebele"] }}</h5> -->
+        <h5 class="ml-8">
+          {{ this.profileInfo.kebele ? this.profileInfo.kebele : "-" }}
+        </h5>
       </div>
-      <div>
+      <div
+        :class="[
+          this.profileInfo.houseNumber === null ? errorClass : activeClass,
+        ]"
+      >
         <label class="ml-8"> House Number</label>
-        <!-- <h5 class="ml-8">{{ this.profileInfo["houseNumber"] }}</h5> -->
+        <h5 class="ml-8">
+          {{
+            this.profileInfo.houseNumber ? this.profileInfo.houseNumber : "-"
+          }}
+        </h5>
       </div>
-      <div>
+      <div
+        :class="[
+          this.profileInfo.residence === null ? errorClass : activeClass,
+        ]"
+      >
         <label class="ml-8"> Residence</label>
-        <!-- <h5 class="ml-8">{{ this.profileInfo["residence"] }}</h5> -->
+        <h5 class="ml-8">
+          {{ this.profileInfo.residence ? this.profileInfo.residence : "-" }}
+        </h5>
       </div>
     </div>
     <div class="flex justify-start">
       <Title message="Contact" />
     </div>
     <div class="flex flex-row">
-      <div>
+      <div :class="[this.profileInfo.name === null ? errorClass : activeClass]">
         <label class="ml-8"> Mobile Number</label>
-        <!-- <h5 class="ml-8">{{ this.profileInfo["user"]["phoneNumber"] }}</h5> -->
+        <h5 class="ml-8">
+          {{
+            this.profileInfo.user.phoneNumber
+              ? this.profileInfo.user.phoneNumber
+              : "-"
+          }}
+        </h5>
       </div>
 
-      <div>
+      <div :class="[this.profileInfo.name === null ? errorClass : activeClass]">
         <label class="ml-8"> Email</label>
-        <!-- <h5 class="ml-8">{{ this.profileInfo["user"]["emailAddress"] }}</h5> -->
+        <h5 class="ml-8">
+          {{
+            this.profileInfo.user.emailAddress
+              ? this.profileInfo.user.emailAddress
+              : "-"
+          }}
+        </h5>
       </div>
-      <div>
+      <div :class="[this.profileInfo.name === null ? errorClass : activeClass]">
         <label class="ml-8"> Applicant Type</label>
-        <!-- <h5 class="ml-8">{{ this.profileInfo["userType"]["name"] }}</h5> -->
+        <h5 class="ml-8">
+          {{
+            this.profileInfo.userType.name
+              ? this.profileInfo.userType.name
+              : "-"
+          }}
+        </h5>
       </div>
     </div>
     <div class="flex justify-start">
@@ -107,12 +209,12 @@
       </div>
     </div>
     <div class="flex justify-start">
-      <Title class="" message="Photo" />
-      <picture>
-        <img v-bind:src="photoView" />
-      </picture>
-      <Title class="ml-12" message="ID/Passport" />
-      <Title class="ml-12" message="Health Examination Certificate" />
+      <div v-for="file in docs" v-bind:key="file.id">
+        <Title class="" :message="file.fieldName" />
+        <picture>
+          <img :src="basePath + file.filePath" />
+        </picture>
+      </div>
     </div>
     <div class="mt-12 flex justify-center">
       <div>
@@ -140,34 +242,40 @@ export default {
   components: {
     Title,
   },
-  created() {
-    this.fetchProfile();
-    this.userId = localStorage.getItem("userId");
-    this.license = this.getLicense;
-    // this.applicantId = this.getLicense.applicantId;
-    // this.applicantTypeId = this.getLicense.state.applicantTypeId;
-    // this.education.departmentId = this.getLicense.state.education.departmentId;
-    // this.education.institutionId = this.getLicense.state.education.institutionId;
-    this.docs = this.getDocs;
-    this.filePath = this.docs.data[0].filePath;
-    this.photoView = this.filePreview + this.filePath;
-    // for (let index = 0; index < this.docs.length; index++) {
-    //   console.log(this.docs[index]);
+  beforeCreate() {
+    this.userId = parseInt(localStorage.getItem("userId"));
+  },
 
-    // }
+  async created() {
+    const url = `http://localhost:5000/api/profiles/` + this.userId;
+    const getProfile = await axios.get(url, {
+      responseType: "json"
+    });
+    if (getProfile) {
+      this.setData(getProfile.data.data);
+    } else {
+      console.log("Server Error!");
+    }
+
+    this.license = this.getLicense;
+    this.applicantId = this.license.applicantId;
+    this.applicantTypeId = this.license.applicantTypeId;
+    this.education.departmentId = this.license.education.departmentId;
+    this.education.institutionId = this.license.education.institutionId;
+    this.docs = this.getDocs.data;
   },
   data: () => ({
     profileInfo: {},
-    userId: "",
     applicantId: "",
     applicantTypeId: "",
     education: {
       departmentId: "",
       institutionId: "",
     },
-    filePreview: "http://localhost:5000/"
-    //createProfile object includes personal info, address and contact
-    //license object includes institution, photo, id and healthexamcert
+    basePath: "http://localhost:5000/",
+    activeClass: "active",
+    errorClass: "text-danger",
+    dataFetched: false
   }),
   computed: {
     ...mapGetters({
@@ -176,7 +284,7 @@ export default {
     }),
   },
   methods: {
-    submitRequest() {
+    async submitRequest() {
       let license = {
         applicantId: this.applicantId,
         applicantTypeId: this.applicantTypeId,
@@ -185,25 +293,68 @@ export default {
           departmentId: this.education.institutionId,
         },
       };
-      const resp = this.$store.dispatch("newlicense/newLicense", license);
-    },
-    async fetchProfile() {
-      try {
-        const url = `http://localhost:5000/api/profiles/` + this.userId;
-        const response = await axios.get(url);
-        const results = response.data;
-        this.profileInfo = results.data[0];
-      } catch (err) {
-        if (err.response) {
-          console.log("Server Error:", err);
-        } else if (err.request) {
-          console.log("Network Error:", err);
-        } else {
-          console.log("Client Error:", err);
+
+      for (let index = 0; index < this.docs.length; index++) {
+        const aDoc = this.docs[index];
+
+        if (aDoc.fieldName === "photo") {
+          license.photoId = aDoc.id;
+        } else if (aDoc.fieldName === "passport") {
+          license.passportId = aDoc.id;
+        } else if (aDoc.fieldName === "healthExamCert") {
+          license.healthExamCertId = aDoc.id;
+        } else if (aDoc.fieldName === "serviceFee") {
+          license.serviceFeeId = aDoc.id;
         }
       }
+
+      try {
+        await axios
+          .post("http://localhost:5000/api/newLicenses", license)
+          .then(response => {
+            if (response.statusText == "Created") {
+              this.Success = true;
+            }
+            //console.log(this.a);
+            console.log(response);
+          });
+      } catch (error) {
+        console.log(error);
+      }
     },
+    // async fetchProfile() {
+    //   console.log('methodd');
+    //   try {
+    //     const url = `http://localhost:5000/api/profiles/` + this.userId;
+    //     const response = await axios.get(url);
+    //     const fetchedData = response.data;
+    //     const result = fetchedData.data;
+    //     return result;
+    //     // this.profileInfo = result;
+    //   } catch (err) {
+    //     if (err.response) {
+    //       console.log("Server Error:", err);
+    //     } else if (err.request) {
+    //       console.log("Network Error:", err);
+    //     } else {
+    //       console.log("Client Error:", err);
+    //     }
+    //     return null;
+    //   }
+    // },
+    setData(data) {
+      if (data) {
+        this.profileInfo = data;
+      } else {
+        this.profileInfo = null;
+      }
+    }
   },
 };
 </script>
-<style></style>
+<style>
+.text-danger > label,
+.text-danger > h5 {
+  color: red;
+}
+</style>
