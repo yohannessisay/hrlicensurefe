@@ -7,6 +7,7 @@
     <VerificationSection />
     <GoodStandingSection />
     <DeviceAccessibilitySection />
+    <MinistryOfHealthSection/>
   </div>
 </template>
 <script>
@@ -17,6 +18,7 @@ import RenewalSection from "./RenewalSection";
 import VerificationSection from "./VerificationSection";
 import GoodStandingSection from "./GoodStandingSection";
 import DeviceAccessibilitySection from "./DeviceAccessibilitySection";
+import MinistryOfHealthSection from "./MinistryOfHealthSection";
 
 export default {
   components: {
@@ -26,7 +28,8 @@ export default {
     RenewalSection,
     VerificationSection,
     GoodStandingSection,
-    DeviceAccessibilitySection
+    DeviceAccessibilitySection,
+    MinistryOfHealthSection
   }
 };
 </script>

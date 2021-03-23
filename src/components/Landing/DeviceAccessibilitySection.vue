@@ -1,5 +1,4 @@
 <template>
-  <!-- w-full blue-gradient flex justify-center items-center -->
   <div
     class="w-full blue-gradient flex flex-col justify-center items-center pt-xl"
   >
