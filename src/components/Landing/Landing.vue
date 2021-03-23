@@ -5,6 +5,7 @@
     <NewLicenseSection />
     <RenewalSection />
     <VerificationSection />
+    <GoodStandingSection />
   </div>
 </template>
 <script>
@@ -13,6 +14,7 @@ import GetCertifiedSection from "./GetCertifiedSection";
 import NewLicenseSection from "./NewLicenseSection";
 import RenewalSection from "./RenewalSection";
 import VerificationSection from "./VerificationSection";
+import GoodStandingSection from "./GoodStandingSection";
 
 export default {
   components: {
@@ -20,7 +22,8 @@ export default {
     GetCertifiedSection,
     NewLicenseSection,
     RenewalSection,
-    VerificationSection
+    VerificationSection,
+    GoodStandingSection
   }
 };
 </script>
