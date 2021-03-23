@@ -1,5 +1,4 @@
 <template>
-  <Navigation />
   <router-view v-slot="{ Component }">
     <!-- <transition name="fade" mode="out-in"> -->
     <component :is="Component" />
@@ -7,11 +6,7 @@
   </router-view>
 </template>
 <script>
-import Navigation from "./views/Navigation";
-
-export default {
-  components: {Navigation },
-};
+export default {};
 </script>
 <style>
 @import "styles/tailwind.postcss";

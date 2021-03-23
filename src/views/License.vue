@@ -1,4 +1,5 @@
 <template>
+  <Navigation/>
   <div class="mt-8 ml-20">
     <h4>Select License Type</h4>
   </div>
@@ -74,10 +75,11 @@
 </template>
 
 <script>
+import Navigation from "@/views/Navigation";
 import RenderIllustration from "@/sharedComponents/RenderIllustration";
 
 export default {
-  components: { RenderIllustration },
+  components: { RenderIllustration, Navigation }
 };
 </script>
 <style></style>

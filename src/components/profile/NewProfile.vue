@@ -1,4 +1,5 @@
 <template>
+  <Navigation />
   <div
     class="w-screen h-full bg-lightBlueB-200 flex items-center justify-center"
   >
@@ -86,6 +87,7 @@
 </style>
 <script>
 // @ is an alias to /src
+import Navigation from "@/views/Navigation";
 import PersonalInfo from "@/components/profile/PersonalInfo.vue";
 import AddressInfo from "@/components/profile/AddressInfo.vue";
 import ContactInfo from "@/components/profile/ContactInfo.vue";
@@ -100,7 +102,8 @@ export default {
     PersonalInfo,
     AddressInfo,
     ContactInfo,
-    Preview
+    Preview,
+    Navigation
   },
   methods: {
     submit(n) {
