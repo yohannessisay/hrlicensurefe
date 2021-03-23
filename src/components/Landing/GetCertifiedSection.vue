@@ -1,13 +1,22 @@
 <template>
   <section class="wrapper">
-    <div class="illustration-and-message">
-      <LandingIllustration />
-      <div class="flex justify-center">
+    <div class="illustration-and-message relative">
+      <LandingIllustration class="absolute"/>
+      <div class="flex justify-center flex-col ml-small w-5/12">
         <section class="flex flex-col items-end">
           <h1 class="text-largeDisplay blue-text-gradient -mb-small">
             Get Certified
           </h1>
           <hr class="yellow-gradient separator-glow border-none" />
+        </section>
+
+        <section>
+          <h3 class="mt-medium text-primary-600">
+            Everything you need for managing you medical licenses in Ethiopia.
+          </h3>
+          <h3 class="mt-small text-primary-600">
+            Create, Manage and follow up on your license request online
+          </h3>
         </section>
       </div>
     </div>
@@ -28,12 +37,13 @@ export default {
   height: 530px;
 }
 svg {
-  margin-top: 30px;
+  margin-top: 60px;
   height: 590px;
+  left: 0px;
 }
 
 .illustration-and-message {
-  @apply w-screen flex justify-between items-center;
+  @apply w-screen flex justify-end items-center;
   max-width: 1185px;
 }
 .separator-glow {
