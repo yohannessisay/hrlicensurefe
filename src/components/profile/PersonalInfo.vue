@@ -305,7 +305,6 @@ export default {
       //this.$store.dispatch("profile/setProfileInfo", this.personalInfo);
       this.$store.dispatch("profile/setProfileInfo", this.personalInfo);
       this.$emit("changeActiveState");
-      console.log(this.personalInfo);
     },
     genderChanged: function() {
       if (this.personalInfo.maritalStatusId == 3) {
