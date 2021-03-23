@@ -1,7 +1,11 @@
 <template>
   <!-- w-full blue-gradient flex justify-center items-center -->
-  <div class="w-full bg-white flex justify-center items-center py-xl">
-    <section class="content-wrapper flex justify-start items-center">
+  <div
+    class="w-full bg-white flex justify-center items-center  py-large sm:py-xl"
+  >
+    <section
+      class="content-wrapper flex flex-col md:flex-row justify-center md:justify-start items-center"
+    >
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 143.945 143.736">
         <defs>
           <linearGradient
@@ -22,14 +26,16 @@
           fill="url(#renewal)"
         />
       </svg>
-      <section class="flex flex-col ml-large items-start">
+      <section class="flex flex-col sm:ml-large items-center md:items-start">
         <div class="flex flex-col items-center">
-          <h1 class="text-largeDisplay blue-text-gradient -mb-small">
+          <h1
+            class="text-3xl sm:text-largeDisplay blue-text-gradient -mb-small"
+          >
             Renewal
           </h1>
           <hr class="yellow-gradient separator border-none" />
         </div>
-        <h3 class="mt-small text-primary-600">
+        <h3 class="mt-small text-primary-600 text-center">
           Renew existing previous license
         </h3>
       </section>
