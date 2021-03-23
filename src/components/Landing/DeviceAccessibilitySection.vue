@@ -1,9 +1,11 @@
 <template>
   <div
-    class="w-full blue-gradient flex flex-col justify-center items-center pt-xl"
+    class="w-full blue-gradient flex flex-col justify-center items-center pt-large sm:pt-xl box-border"
   >
     <div class="flex flex-col items-center justify-center mb-medium">
-      <h1 class="text-largeDisplay white-text-gradient -mb-small">
+      <h1
+        class="text-3xl sm:text-largeDisplay white-text-gradient -mb-tiny sm:-mb-small text-center"
+      >
         Accessible on any device
       </h1>
       <hr class="yellow-gradient separator border-none" />
@@ -212,7 +214,13 @@
 </template>
 <style lang="postcss" scoped>
 svg {
-  width: 935px !important;
-  max-width: 935px !important;
+  width: 100%;
+}
+
+@screen md {
+  svg {
+    width: 935px !important;
+    max-width: 935px !important;
+  }
 }
 </style>
