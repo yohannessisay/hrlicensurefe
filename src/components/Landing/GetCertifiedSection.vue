@@ -1,10 +1,18 @@
 <template>
   <section class="wrapper">
-    <div class="illustration-and-message relative">
-      <LandingIllustration class="absolute" />
-      <div class="flex justify-center flex-col ml-small w-5/12">
-        <section class="flex flex-col items-end">
-          <h1 class="text-largeDisplay blue-text-gradient -mb-small">
+    <div
+      class="illustration-and-message relative px-small pt-xl lg:pt-large xl:pt-0 box-border w-full flex flex-col-reverse lg:flex-row justify-end items-center"
+    >
+      <LandingIllustration
+        class="block lg:absolute z-0 -mb-small sm:-mb-large"
+      />
+      <div
+        class="flex justify-center flex-col lg:ml-small w-full sm:w-4/5 lg:w-5/12 z-10 -mb-large sm:-mb-xl lg:-mb-0"
+      >
+        <section class="flex flex-col items-center lg:items-end">
+          <h1
+            class="text-3xl sm:text-largeDisplay blue-text-gradient -mb-tiny sm:-mb-small"
+          >
             Get Certified
           </h1>
           <hr
@@ -12,15 +20,15 @@
           />
         </section>
 
-        <section class="flex flex-col">
-          <h3 class="mt-medium text-primary-600">
+        <section class="flex flex-col items-center">
+          <h3 class="mt-medium text-primary-600 text-center lg:text-left">
             Everything you need for managing you medical licenses in Ethiopia.
           </h3>
-          <h3 class="mt-small text-primary-600">
+          <h3 class="mt-small text-primary-600 text-center lg:text-left">
             Create, Manage and follow up on your license request online
           </h3>
 
-          <button class="self-end px-xl">Sign Up</button>
+          <button class="mt-medium lg:mt-0 lg:self-end px-xl">Sign Up</button>
         </section>
       </div>
     </div>
@@ -38,16 +46,32 @@ export default {
 <style lang="postcss" scoped>
 .wrapper {
   @apply w-full bg-primary-100 flex justify-center items-center;
-  height: 530px;
+  height: auto;
 }
+
 svg {
   margin-top: 60px;
-  height: 590px;
-  left: 0px;
+  height: auto;
+  width: 98%;
+}
+
+@screen sm {
+  svg {
+    width: 70%;
+  }
+}
+
+@screen lg {
+  .wrapper {
+    height: 500px;
+  }
+  svg {
+    height: 530px;
+    left: 0;
+  }
 }
 
 .illustration-and-message {
-  @apply w-full flex justify-end items-center;
   max-width: 1185px;
 }
 </style>

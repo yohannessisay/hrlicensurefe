@@ -15,7 +15,7 @@ export default {
 </script>
 <style lang="postcss" scoped>
 .wrapper {
-  @apply w-full bg-white shadow-md h-large px-tiny flex justify-between items-center fixed top-0;
+  @apply w-full bg-white shadow-md h-large px-tiny flex justify-between items-center fixed top-0 z-50;
   background: #ffffff20;
   backdrop-filter: blur(5px);
 }
