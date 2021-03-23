@@ -7,12 +7,18 @@
     background-image: linear-gradient(to right, #1e40af, #2563eb);
   }
   .blue-gradient-dark {
-    background-image: linear-gradient(to right, #183490, #2357c7);
+    background-image: linear-gradient(to right, #2357c7, #183490);
   }
-  .blue-text-gradient{
+  .blue-text-gradient {
     -webkit-text-fill-color: transparent;
     -webkit-box-decoration-break: clone;
-    background: linear-gradient(-70deg, #4185D0, #285180);
+    background: linear-gradient(-70deg, #4185d0, #285180);
+    -webkit-background-clip: text;
+  }
+  .white-text-gradient {
+    -webkit-text-fill-color: transparent;
+    -webkit-box-decoration-break: clone;
+    background: linear-gradient(-70deg, #9caecc, #eceff5);
     -webkit-background-clip: text;
   }
   .no-background-image {
@@ -128,20 +134,21 @@
     }
   }
 
-  [type="checkbox"], [type="radio"] {
+  [type="checkbox"],
+  [type="radio"] {
     border-radius: 2px;
     width: 20px;
     height: 20px;
-    &:checked{
+    &:checked {
       @apply bg-primary-500;
     }
   }
 
-  [type="radio"]{
+  [type="radio"] {
     @apply rounded-full;
   }
 
-  [type="textarea"]{
+  [type="textarea"] {
     @apply outline-none h-32 align-top;
   }
 }

@@ -1,15 +1,40 @@
 <template>
-  <LandingTopNav />
-  <GetCertifiedSection />
+  <div class="w-screen overflow-x-hidden">
+    <LandingTopNav />
+    <GetCertifiedSection />
+    <NewLicenseSection />
+  </div>
 </template>
 <script>
 import LandingTopNav from "./LandingTopNav";
 import GetCertifiedSection from "./GetCertifiedSection";
+import NewLicenseSection from "./NewLicenseSection";
 
 export default {
   components: {
     LandingTopNav,
-    GetCertifiedSection
+    GetCertifiedSection,
+    NewLicenseSection
   }
 };
 </script>
+<style lang="postcss">
+.blue-gradient {
+  background-image: linear-gradient(to bottom, #285180, #162b43);
+}
+
+.separator {
+  height: 13px;
+  border-radius: 12px;
+  height: 10px;
+  width: 144px;
+}
+
+.separator-large {
+  width: 250px;
+}
+
+.glow {
+  box-shadow: 0px 3px 6px #fde68a;
+}
+</style>
