@@ -13,7 +13,7 @@
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-10">
           <div class="flex">
             <div class="flex flex-col mb-medium w-1/2 mr-12">
-              <label class="text-primary-700">ApplicantType</label>
+              <label class="text-primary-700">Institution</label>
               <select class="max-w-3xl" v-model="licenseInfo.applicantTypeId">
                 <option
                   v-for="applicant in applicantTypes"
@@ -95,7 +95,7 @@ export default {
   },
   data: () => ({
     licenseInfo: {
-      applicantId: parseInt(localStorage.getItem("userId")),
+      applicantId: localStorage.getItem("userId"),
       applicantTypeId: "",
       education: {
         departmentId: "",
@@ -158,6 +158,7 @@ export default {
         const response = await axios.get(url);
         const results = response.data.data;
         this.applicantTypes = results;
+        console.log(results);
       } catch (err) {
         if (err.response) {
           console.log("Server Error:", err);

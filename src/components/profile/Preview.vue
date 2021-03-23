@@ -98,16 +98,17 @@
         </div>
       </div>
     </div>
-    <sweet-modal v-if="this.success==true" icon="success"> Profile Added Successfully!! </sweet-modal>
+    <div v-if="showFlash"><FlashMessage /></div>
   </div>
 </template>
 
 <script>
 import Title from "@/sharedComponents/TitleWithIllustration";
+import FlashMessage from "@/sharedComponents/FlashMessage";
 import axios from "axios";
 import { mapGetters } from "vuex";
 export default {
-  components: { Title },
+  components: { Title, FlashMessage },
   data: () => ({
     success: false,
     a: true,
@@ -155,7 +156,8 @@ export default {
       woreda: null,
       residence: null
     },
-    response: {}
+    response: {},
+    showFlash: false
   }),
   computed: {
     ...mapGetters({
@@ -212,6 +214,7 @@ export default {
         .then(response => {
           if (response.statusText == "Created") {
             this.Success = true;
+            this.showFlash = true;
           }
           //console.log(this.a);
           console.log(response);

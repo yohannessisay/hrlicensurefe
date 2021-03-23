@@ -1,19 +1,14 @@
 <template>
-  <div
-    class="w-screen h-screen bg-lightBlueB-200 flex items-center justify-center"
-  >
-    <NewProfile />
+  <div>
+    <License />
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import NewProfile from "@/components/profile/NewProfile.vue";
-
+import License from "@/views/License";
 export default {
   name: "Home",
-  components: {
-    NewProfile
-  }
+  components: { License }
 };
 </script>
