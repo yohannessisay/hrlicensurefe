@@ -98,7 +98,7 @@
         </div>
       </div>
     </div>
-    <div><FlashMessage /></div>
+    <div v-if="showFlash"><FlashMessage /></div>
   </div>
 </template>
 
@@ -156,7 +156,8 @@ export default {
       woreda: null,
       residence: null
     },
-    response: {}
+    response: {},
+    showFlash: false
   }),
   computed: {
     ...mapGetters({
@@ -213,6 +214,7 @@ export default {
         .then(response => {
           if (response.statusText == "Created") {
             this.Success = true;
+            this.showFlash = true;
           }
           //console.log(this.a);
           console.log(response);
