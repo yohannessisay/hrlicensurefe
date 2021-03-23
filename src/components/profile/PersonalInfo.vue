@@ -1,7 +1,7 @@
 <template>
   <div class="w-screen max-w-4xl mt-xl h-screen">
     <div
-      class="flex flex-col mt-large w-full bg-white blue-box-shadow-light rounded"
+      class="flex flex-col mt-large w-full bg-white blue-box-shadow-light rounded mb-large"
     >
       <div class="mt-large">
         <TitleWithIllustration

@@ -122,7 +122,7 @@ export default {
     },
     async fetchInstitutions() {
       try {
-        const url = `http://ca9dee52bc55.ngrok.io/api/lookups/institutionTypes`;
+        const url = `http://localhost:5000/api/lookups/institutionTypes`;
         const response = await axios.get(url);
         const results = response.data.data;
         this.institutions = results;
@@ -138,7 +138,7 @@ export default {
     },
     async fetchDepartments() {
       try {
-        const url = `http://ca9dee52bc55.ngrok.io/api/lookups/departments`;
+        const url = `http://localhost:5000/api/lookups/departments`;
         const response = await axios.get(url);
         const results = response.data.data;
         this.departments = results;
@@ -154,7 +154,7 @@ export default {
     },
     async fetchApplicantType() {
       try {
-        const url = `http://ca9dee52bc55.ngrok.io/api/lookups/applicantTypes`;
+        const url = `http://localhost:5000/api/lookups/applicantTypes`;
         const response = await axios.get(url);
         const results = response.data.data;
         this.applicantTypes = results;
