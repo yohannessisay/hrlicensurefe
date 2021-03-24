@@ -95,7 +95,7 @@ export default {
   },
   data: () => ({
     licenseInfo: {
-      applicantId: parseInt(localStorage.getItem("userId")),
+      applicantId: +localStorage.getItem("userId"),
       applicantTypeId: "",
       education: {
         departmentId: "",

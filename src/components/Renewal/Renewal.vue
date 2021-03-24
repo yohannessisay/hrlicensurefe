@@ -35,9 +35,33 @@
               </a>
               <a
                 @click="submit(5)"
-                class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-50"
+                class="relative inline-flex items-center px-4 py-2 border border-gray-30 text-sm font-medium text-gray-700 hover:bg-gray-50"
               >
                 5
+              </a>
+              <a
+                @click="submit(6)"
+                class="relative inline-flex items-center px-4 py-2 border border-gray-30 text-sm font-medium text-gray-700 hover:bg-gray-50"
+              >
+                6
+              </a>
+              <a
+                @click="submit(7)"
+                class="relative inline-flex items-center px-4 py-2 border border-gray-30 text-sm font-medium text-gray-700 hover:bg-gray-50"
+              >
+                7
+              </a>
+              <a
+                @click="submit(8)"
+                class="relative inline-flex items-center px-4 py-2 border border-gray-30 text-sm font-medium text-gray-700 hover:bg-gray-50"
+              >
+                8
+              </a>
+              <a
+                @click="submit(9)"
+                class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-50"
+              >
+                9
               </a>
             </nav>
           </div>
@@ -69,7 +93,31 @@
 
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 5">
-                <LicenseSummary :activeState="5" @changeActiveState="activeState++" />
+                <ServiceFee :activeState="5" @changeActiveState="activeState++" />
+              </div>
+            </transition>
+
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 6">
+                <CPD :activeState="6" @changeActiveState="activeState++" />
+              </div>
+            </transition>
+
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 7">
+                <WorkExperience :activeState="7" @changeActiveState="activeState++" />
+              </div>
+            </transition>
+
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 8">
+                <PreviousLicense :activeState="8" @changeActiveState="activeState++" />
+              </div>
+            </transition>
+
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 9">
+                <LicenseSummary :activeState="9" @changeActiveState="activeState++" />
               </div>
             </transition>
           </div>
@@ -84,7 +132,11 @@ import Institution from "./Institution.vue";
 import Photo from "./Photo.vue";
 import Passport from "./Passport.vue";
 import HealthExamCert from "./HealthExamCert.vue";
-import LicenseSummary from "./LicenseSummary.vue";
+import LicenseSummary from "./RenewalSummary.vue";
+import ServiceFee from "./ServiceFee.vue";
+import CPD from "./CPD.vue";
+import WorkExperience from "./WorkExperience.vue";
+import PreviousLicense from "./PreviousLicense";
 
 export default {
   created() {},
@@ -97,7 +149,11 @@ export default {
     Passport,
     HealthExamCert,
     LicenseSummary,
-    Navigation
+    Navigation,
+    ServiceFee,
+    CPD,
+    WorkExperience,
+    PreviousLicense
   },
   methods: {
     submit(n) {

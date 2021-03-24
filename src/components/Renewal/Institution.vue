@@ -13,8 +13,11 @@
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-10">
           <div class="flex">
             <div class="flex flex-col mb-medium w-1/2 mr-12">
-              <label class="text-primary-700">Institution</label>
-              <select class="max-w-3xl" v-model="licenseInfo.applicantTypeId">
+              <label class="text-primary-700">Applicant Type</label>
+              <select
+                class="max-w-3xl"
+                v-model="renewalLicenseInfo.applicantTypeId"
+              >
                 <option
                   v-for="applicant in applicantTypes"
                   v-bind:key="applicant.name"
@@ -28,7 +31,7 @@
               <label class="text-primary-700">Department</label>
               <select
                 class="max-w-3xl"
-                v-model="licenseInfo.education.departmentId"
+                v-model="renewalLicenseInfo.education.departmentId"
               >
                 <option
                   v-for="department in departments"
@@ -52,7 +55,7 @@
                   >
                     <div class="flex py-2">
                       <input
-                        v-model="licenseInfo.education.institutionId"
+                        v-model="renewalLicenseInfo.education.institutionId"
                         class="flex flex-col"
                         type="radio"
                         name="institution"
@@ -94,31 +97,31 @@ export default {
     this.fetchApplicantType();
   },
   data: () => ({
-    licenseInfo: {
-      applicantId: localStorage.getItem("userId"),
+    renewalLicenseInfo: {
+      applicantId: +localStorage.getItem("userId"),
       applicantTypeId: "",
       education: {
         departmentId: "",
-        institutionId: "",
-      },
+        institutionId: ""
+      }
     },
     applicantTypes: [],
     institutions: [],
-    departments: [],
+    departments: []
   }),
 
   methods: {
     submit() {
       this.$emit("changeActiveState");
-      let license = {
-        applicantId: this.licenseInfo.applicantId,
-        applicantTypeId: this.licenseInfo.applicantTypeId,
+      let renewalLicense = {
+        applicantId: this.renewalLicenseInfo.applicantId,
+        applicantTypeId: this.renewalLicenseInfo.applicantTypeId,
         education: {
-          departmentId: this.licenseInfo.education.departmentId,
-          institutionId: this.licenseInfo.education.institutionId,
-        },
+          departmentId: this.renewalLicenseInfo.education.departmentId,
+          institutionId: this.renewalLicenseInfo.education.institutionId
+        }
       };
-      this.$store.dispatch("newlicense/setLicense", license);
+      this.$store.dispatch("renewal/setRenewal", renewalLicense);
     },
     async fetchInstitutions() {
       try {
@@ -158,7 +161,6 @@ export default {
         const response = await axios.get(url);
         const results = response.data.data;
         this.applicantTypes = results;
-        console.log(results);
       } catch (err) {
         if (err.response) {
           console.log("Server Error:", err);
@@ -168,7 +170,7 @@ export default {
           console.log("Client Error:", err);
         }
       }
-    },
-  },
+    }
+  }
 };
 </script>

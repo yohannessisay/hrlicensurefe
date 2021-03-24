@@ -6,7 +6,7 @@
       >
         <TitleWithIllustration
           illustration="Certificate"
-          message="Health Examination Certificate"
+          message="Previous License"
           class="mt-8"
         />
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
@@ -18,9 +18,9 @@
                   <div class="dropbox">
                     <input
                       type="file"
-                      id="healthExamCertFile"
+                      id="previousLicenseFile"
                       class="photoFile"
-                      ref="healthExamCertFile"
+                      ref="previousLicenseFile"
                       v-on:change="handleFileUpload()"
                       style="margin-bottom: 15px !important;"
                     />
@@ -64,13 +64,14 @@
 <script>
 import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
 import { mapGetters, mapActions } from "vuex";
+import axios from "axios";
 
 export default {
   props: ["activeState"],
   components: { TitleWithIllustration },
   data() {
     return {
-      healthExamCertFile: "",
+      previousLicenseFile: "",
       showPreview: false,
       filePreview: "",
       showUpload: true,
@@ -79,26 +80,36 @@ export default {
   },
   computed: {
     ...mapGetters({
+      getRenewalWorkExperience: "renewal/getRenewalWorkExperience",
       getRenewalPassport: "renewal/getRenewalPassport",
+      getRenewalPhoto: "renewal/getRenewalPhoto",
+      getRenewalHealthExamCert: "renewal/getRenewalHealthExamCert",
+      getRenewalCpd: "renewal/getRenewalCpd",
+      getRenewalServiceFee: "renewal/getRenewalServiceFee",
     }),
   },
   created() {
+    this.photo = this.getRenewalPhoto;
     this.passport = this.getRenewalPassport;
-    console.log(this.getRenewalPassport)
+    this.healthExamCert = this.getRenewalHealthExamCert;
+    this.serviceFee = this.getRenewalServiceFee;
+    this.cpd = this.getRenewalCpd;
+    this.workExperience = this.getRenewalWorkExperience;
+    console.log(this.getRenewalWorkExperience);
   },
   methods: {
-    ...mapActions(["setRenewalHealthExamCert"]),
+    ...mapActions(["setRenewalWorkExperience"]),
     reset() {
       // reset form to initial state
       this.showUpload = true;
       this.showPreview = false;
-      this.healthExamCertFile = "";
+      this.previousLicenseFile = "";
       this.filePreview = "";
       this.isImage = true;
     },
     handleFileUpload() {
       this.showUpload = false;
-      this.healthExamCertFile = this.$refs.healthExamCertFile.files[0];
+      this.previousLicenseFile = this.$refs.previousLicenseFile.files[0];
       let reader = new FileReader();
 
       reader.addEventListener(
@@ -110,22 +121,51 @@ export default {
         false
       );
 
-      if (this.healthExamCertFile) {
-        if (/\.(jpe?g|png|gif)$/i.test(this.healthExamCertFile.name)) {
+      if (this.previousLicenseFile) {
+        if (/\.(jpe?g|png|gif)$/i.test(this.previousLicenseFile.name)) {
           this.isImage = true;
-          reader.readAsDataURL(this.healthExamCertFile);
-        } else if (/\.(pdf)$/i.test(this.healthExamCertFile.name)) {
+          reader.readAsDataURL(this.previousLicenseFile);
+        } else if (/\.(pdf)$/i.test(this.previousLicenseFile.name)) {
           this.isImage = false;
-          reader.readAsText(this.healthExamCertFile);
+          reader.readAsText(this.previousLicenseFile);
         }
       }
     },
-    submit() {
-      this.$emit("changeActiveState");
-      let file3 = {
-        healthExamCert: this.healthExamCertFile,
+    async submit() {
+      let file7 = {
+        previousLicense: this.previousLicenseFile,
       };
-      this.$store.dispatch("renewal/setRenewalHealthExamCert", file3);
+
+      let formData = new FormData();
+      formData.append("photo", this.photo.profilePhoto);
+      formData.append("passport", this.passport.passport);
+      formData.append("healthExamCert", this.healthExamCert.healthExamCert);
+      formData.append("serviceFee", this.serviceFee.serviceFee);
+      formData.append("cpd", this.cpd.cpd);
+      formData.append("workExperience", this.workExperience.workExperience);
+      formData.append("previousLicense", file7.previousLicense);
+
+      try {
+        const response = await axios.post(
+          "http://localhost:5000/api/documentUploads/renewal/RA",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+
+        if (response.status === 200) {
+            console.log(response.data);
+          this.$store.dispatch("renewal/setDocs", response.data);
+          this.$emit("changeActiveState");
+        } else {
+          console.log("Error occurred");
+        }
+      } catch (error) {
+        console.log(error);
+      }
     },
   },
 };

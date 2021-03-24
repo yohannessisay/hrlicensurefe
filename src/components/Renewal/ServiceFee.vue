@@ -6,7 +6,7 @@
       >
         <TitleWithIllustration
           illustration="Certificate"
-          message="Health Examination Certificate"
+          message="Service Fee(optional)"
           class="mt-8"
         />
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
@@ -18,9 +18,9 @@
                   <div class="dropbox">
                     <input
                       type="file"
-                      id="healthExamCertFile"
+                      id="serviceFeeFile"
                       class="photoFile"
-                      ref="healthExamCertFile"
+                      ref="serviceFeeFile"
                       v-on:change="handleFileUpload()"
                       style="margin-bottom: 15px !important;"
                     />
@@ -70,7 +70,7 @@ export default {
   components: { TitleWithIllustration },
   data() {
     return {
-      healthExamCertFile: "",
+      serviceFeeFile: "",
       showPreview: false,
       filePreview: "",
       showUpload: true,
@@ -79,26 +79,26 @@ export default {
   },
   computed: {
     ...mapGetters({
-      getRenewalPassport: "renewal/getRenewalPassport",
+      getRenewalHealthExamCert: "renewal/getRenewalHealthExamCert",
     }),
   },
   created() {
-    this.passport = this.getRenewalPassport;
-    console.log(this.getRenewalPassport)
+    this.healthExamCert = this.getRenewalHealthExamCert;
+    console.log(this.healthExamCert)
   },
   methods: {
-    ...mapActions(["setRenewalHealthExamCert"]),
+    ...mapActions(["setRenewalServiceFee"]),
     reset() {
       // reset form to initial state
       this.showUpload = true;
       this.showPreview = false;
-      this.healthExamCertFile = "";
+      this.serviceFeeFile = "";
       this.filePreview = "";
       this.isImage = true;
     },
     handleFileUpload() {
       this.showUpload = false;
-      this.healthExamCertFile = this.$refs.healthExamCertFile.files[0];
+      this.serviceFeeFile = this.$refs.serviceFeeFile.files[0];
       let reader = new FileReader();
 
       reader.addEventListener(
@@ -110,22 +110,22 @@ export default {
         false
       );
 
-      if (this.healthExamCertFile) {
-        if (/\.(jpe?g|png|gif)$/i.test(this.healthExamCertFile.name)) {
+      if (this.serviceFeeFile) {
+        if (/\.(jpe?g|png|gif)$/i.test(this.serviceFeeFile.name)) {
           this.isImage = true;
-          reader.readAsDataURL(this.healthExamCertFile);
-        } else if (/\.(pdf)$/i.test(this.healthExamCertFile.name)) {
+          reader.readAsDataURL(this.serviceFeeFile);
+        } else if (/\.(pdf)$/i.test(this.serviceFeeFile.name)) {
           this.isImage = false;
-          reader.readAsText(this.healthExamCertFile);
+          reader.readAsText(this.serviceFeeFile);
         }
       }
     },
     submit() {
       this.$emit("changeActiveState");
-      let file3 = {
-        healthExamCert: this.healthExamCertFile,
+      let file4 = {
+        serviceFee: this.serviceFeeFile,
       };
-      this.$store.dispatch("renewal/setRenewalHealthExamCert", file3);
+      this.$store.dispatch("renewal/setRenewalServiceFee", file4);
     },
   },
 };

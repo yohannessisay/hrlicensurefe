@@ -6,7 +6,7 @@
       >
         <TitleWithIllustration
           illustration="Certificate"
-          message="Health Examination Certificate"
+          message="CPD(optional)"
           class="mt-8"
         />
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
@@ -18,9 +18,9 @@
                   <div class="dropbox">
                     <input
                       type="file"
-                      id="healthExamCertFile"
+                      id="cpdFile"
                       class="photoFile"
-                      ref="healthExamCertFile"
+                      ref="cpdFile"
                       v-on:change="handleFileUpload()"
                       style="margin-bottom: 15px !important;"
                     />
@@ -70,7 +70,7 @@ export default {
   components: { TitleWithIllustration },
   data() {
     return {
-      healthExamCertFile: "",
+      cpdFile: "",
       showPreview: false,
       filePreview: "",
       showUpload: true,
@@ -79,26 +79,26 @@ export default {
   },
   computed: {
     ...mapGetters({
-      getRenewalPassport: "renewal/getRenewalPassport",
+      getRenewalServiceFee: "renewal/getRenewalServiceFee",
     }),
   },
   created() {
-    this.passport = this.getRenewalPassport;
-    console.log(this.getRenewalPassport)
+    this.serviceFee = this.getRenewalServiceFee;
+    console.log(this.serviceFee)
   },
   methods: {
-    ...mapActions(["setRenewalHealthExamCert"]),
+    ...mapActions(["setRenewalCpd"]),
     reset() {
       // reset form to initial state
       this.showUpload = true;
       this.showPreview = false;
-      this.healthExamCertFile = "";
+      this.cpdFile = "";
       this.filePreview = "";
       this.isImage = true;
     },
     handleFileUpload() {
       this.showUpload = false;
-      this.healthExamCertFile = this.$refs.healthExamCertFile.files[0];
+      this.cpdFile = this.$refs.cpdFile.files[0];
       let reader = new FileReader();
 
       reader.addEventListener(
@@ -110,22 +110,22 @@ export default {
         false
       );
 
-      if (this.healthExamCertFile) {
-        if (/\.(jpe?g|png|gif)$/i.test(this.healthExamCertFile.name)) {
+      if (this.cpdFile) {
+        if (/\.(jpe?g|png|gif)$/i.test(this.cpdFile.name)) {
           this.isImage = true;
-          reader.readAsDataURL(this.healthExamCertFile);
-        } else if (/\.(pdf)$/i.test(this.healthExamCertFile.name)) {
+          reader.readAsDataURL(this.cpdFile);
+        } else if (/\.(pdf)$/i.test(this.cpdFile.name)) {
           this.isImage = false;
-          reader.readAsText(this.healthExamCertFile);
+          reader.readAsText(this.cpdFile);
         }
       }
     },
     submit() {
       this.$emit("changeActiveState");
-      let file3 = {
-        healthExamCert: this.healthExamCertFile,
+      let file5 = {
+        cpd: this.cpdFile,
       };
-      this.$store.dispatch("renewal/setRenewalHealthExamCert", file3);
+      this.$store.dispatch("renewal/setRenewalCpd", file5);
     },
   },
 };

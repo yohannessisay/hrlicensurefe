@@ -12,10 +12,36 @@
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
           <div class="flex justify-center">
             <div>
-              <picture>
-                <img src="/fonts/logo.png" />
+              <span v-if="showUpload">
+                <label class="text-primary-700"
+                  >Upload image:
+                  <div class="dropbox">
+                    <input
+                      type="file"
+                      id="passportFile"
+                      class="photoFile"
+                      ref="passportFile"
+                      v-on:change="handleFileUpload()"
+                      style="margin-bottom: 15px !important;"
+                    />
+                    <p>
+                      Drag your file(s) here to begin<br />
+                      or click to browse
+                    </p>
+                  </div>
+                </label>
+              </span>
+
+              <picture v-if="!showUpload && isImage">
+                <p>
+                  <a href="javascript:void(0)" @click="reset()">Upload again</a>
+                </p>
+                <img v-bind:src="filePreview" v-show="showPreview" />
               </picture>
-              <h6>Your photo should be passport size</h6>
+
+              <span v-if="!showUpload && !isImage">
+                <img :src="filePreview" alt="" class="preview" />
+              </span>
             </div>
           </div>
 
@@ -37,19 +63,75 @@
 
 <script>
 import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   components: { TitleWithIllustration },
   props: ["activeState"],
-  setup() {},
+  data() {
+    return {
+      passportFile: "",
+      showPreview: false,
+      filePreview: "",
+      showUpload: true,
+      isImage: true,
+    };
+  },
+  computed: {
+    ...mapGetters({
+      getRenewalPhoto: "renewal/getRenewalPhoto"
+    })
+  },
+  created() {
+    this.photo = this.getRenewalPhoto;
+    console.log(this.photo);
+  },
   methods: {
+    ...mapActions(["setRenewalPassport"]),
+    reset() {
+      // reset form to initial state
+      this.showUpload = true;
+      this.showPreview = false;
+      this.passportFile = "";
+      this.filePreview = "";
+      this.isImage = true;
+    },
+    handleFileUpload() {
+      this.showUpload = false;
+      this.passportFile = this.$refs.passportFile.files[0];
+      let reader = new FileReader();
+
+      reader.addEventListener(
+        "load",
+        function() {
+          this.showPreview = true;
+          this.filePreview = reader.result;
+        }.bind(this),
+        false
+      );
+
+      if (this.passportFile) {
+        if (/\.(jpe?g|png|gif)$/i.test(this.passportFile.name)) {
+          this.isImage = true;
+          reader.readAsDataURL(this.passportFile);
+        } else if (/\.(pdf)$/i.test(this.passportFile.name)) {
+          this.isImage = false;
+          reader.readAsText(this.passportFile);
+        }
+      }
+    },
     submit() {
       this.$emit("changeActiveState");
+      let file2 = {
+        passport: this.passportFile
+      };
+      this.$store.dispatch("renewal/setRenewalPassport", file2);
     },
   },
 };
 </script>
 <style>
+@import "../../styles/document-upload.css";
 img {
   width: 250px;
   height: 250px;
