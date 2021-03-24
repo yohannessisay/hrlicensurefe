@@ -1,8 +1,8 @@
 <template>
   <div class="flex justify-center">
-    <div class="w-screen max-w-4xl h-screen">
+    <div class="w-screen max-w-4xl">
       <div
-        class="flex flex-col mt-large w-full bg-white blue-box-shadow-light rounded "
+        class="flex flex-col pt-large w-full bg-white blue-box-shadow-light rounded "
       >
         <TitleWithIllustration
           illustration="Certificate"
@@ -44,7 +44,7 @@
             </div>
           </div>
 
-          <div class="flex justify-center mb-8">
+          <div class="flex justify-center mb-8 mt-medium">
             <div>
               <button>Next</button>
             </div>

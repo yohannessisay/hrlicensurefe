@@ -19,6 +19,7 @@
                     <input
                       type="file"
                       id="photoFile"
+                      class="photoFile"
                       ref="photoFile"
                       v-on:change="handleFileUpload()"
                       style="margin-bottom: 15px !important;"
@@ -77,19 +78,20 @@ export default {
       showPreview: false,
       filePreview: "",
       showUpload: true,
-      isImage: true,
+      isImage: true
     };
   },
   computed: {
     ...mapGetters({
-      getLicense: "newlicense/getLicense"
+      getRenewalLicense: "renewal/getRenewalLicense"
     })
   },
   created() {
-    this.license = this.getLicense;
+    this.renewalLicense = this.getRenewalLicense;
+    console.log(this.renewalLicense);
   },
   methods: {
-    ...mapActions(["setPhoto"]),
+    ...mapActions(["setRenewalPhoto"]),
     reset() {
       // reset form to initial state
       this.showUpload = true;
@@ -127,43 +129,15 @@ export default {
       let file = {
         profilePhoto: this.photoFile
       };
-      this.$store.dispatch("newlicense/setPhoto", file);
-    },
-  },
+      this.$store.dispatch("renewal/setRenewalPhoto", file);
+    }
+  }
 };
 </script>
 <style>
+@import "../../styles/document-upload.css";
 img {
   width: 250px;
   height: 250px;
-}
-
-#photoFile {
-  opacity: 0; /* invisible but it's there! */
-  width: 100%;
-  height: 200px;
-  position: absolute;
-  cursor: pointer;
-}
-
-.dropbox {
-  outline: 2px dashed grey; /* the dash box */
-  outline-offset: -10px;
-  background: lightcyan;
-  color: dimgray;
-  padding: 10px 10px;
-  min-height: 200px; /* minimum height */
-  position: relative;
-  cursor: pointer;
-}
-
-.dropbox:hover {
-  background: lightblue; /* when mouse over to the drop zone, change color */
-}
-
-.dropbox p {
-  font-size: 1.2em;
-  text-align: center;
-  padding: 50px 0;
 }
 </style>
