@@ -33,7 +33,7 @@
           >
             Renewal
           </h1>
-          <hr class="yellow-gradient separator border-none" />
+          <hr class="yellow-gradient glow separator border-none" />
         </div>
         <h3 class="mt-small text-primary-600 text-center">
           Renew existing previous license

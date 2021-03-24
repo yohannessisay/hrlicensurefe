@@ -35,7 +35,7 @@
           >
             Good Standing
           </h1>
-          <hr class="yellow-gradient separator border-none" />
+          <hr class="yellow-gradient glow separator border-none" />
         </div>
       </section>
     </section>
