@@ -6,6 +6,7 @@ export default {
       departmentId: "",
       institutionId: "",
     },
+    
     file: {
       profilePhoto: ""
     },
