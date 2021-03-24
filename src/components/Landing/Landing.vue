@@ -55,4 +55,44 @@ export default {
 .glow {
   box-shadow: 0px 3px 6px #fde68a;
 }
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 1s ease-in;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.slide-fade-to-top-enter-active,
+.slide-fade-to-right-enter-active,
+.slide-fade-to-left-enter-active {
+  transition: all 0.8s ease-in;
+}
+
+.slide-fade-to-top-leave-active,
+.slide-fade-to-right-leave-active,
+.slide-fade-to-left-leave-active {
+  transition: all 0.3s all-ease;
+}
+
+.slide-fade-to-top-enter-from,
+.slide-fade-to-top-leave-to {
+  transform: translateY(30px);
+  opacity: 0;
+}
+
+.slide-fade-to-right-enter-from,
+.slide-fade-to-right-leave-to {
+  transform: translateX(-30px);
+  opacity: 0;
+}
+
+.slide-fade-to-left-enter-from,
+.slide-fade-to-left-leave-to {
+  transform: translateX(30px);
+  opacity: 0;
+}
 </style>

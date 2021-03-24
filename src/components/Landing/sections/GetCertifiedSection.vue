@@ -7,28 +7,49 @@
         class="block lg:absolute z-0 -mb-small sm:-mb-large"
       />
       <div
-        class="flex justify-center flex-col lg:ml-small w-full sm:w-4/5 lg:w-5/12 z-10 -mb-large sm:-mb-xl lg:-mb-0"
+        class="content-wrapper-crtified flex justify-center flex-col lg:ml-small w-full sm:w-4/5 lg:w-5/12 z-10 -mb-large sm:-mb-xl lg:-mb-0"
       >
-        <section class="flex flex-col items-center lg:items-end">
-          <h1
-            class="text-3xl sm:text-largeDisplay blue-text-gradient -mb-tiny sm:-mb-small"
+        <transition name="slide-fade-to-left">
+          <section
+            v-if="showGetCertified"
+            class="flex flex-col items-center lg:items-end"
           >
-            Get Certified
-          </h1>
-          <hr
-            class="yellow-gradient separator glow border-none separator-large"
-          />
-        </section>
+            <h1
+              class="text-3xl sm:text-largeDisplay blue-text-gradient -mb-tiny sm:-mb-small"
+            >
+              Get Certified
+            </h1>
+            <hr
+              class="yellow-gradient separator glow border-none separator-large"
+            />
+          </section>
+        </transition>
 
         <section class="flex flex-col items-center">
-          <h3 class="mt-medium text-primary-600 text-center lg:text-left">
-            Everything you need for managing you medical licenses in Ethiopia.
-          </h3>
-          <h3 class="mt-small text-primary-600 text-center lg:text-left">
-            Create, Manage and follow up on your license request online
-          </h3>
-
-          <button class="mt-medium lg:mt-0 lg:self-end px-xl">Sign Up</button>
+          <transition name="fade">
+            <h3
+              class="mt-medium text-primary-600 text-center lg:text-left"
+              v-if="showContent"
+            >
+              Everything you need for managing you medical licenses in Ethiopia.
+            </h3>
+          </transition>
+          <transition name="fade">
+            <h3
+              class="mt-small text-primary-600 text-center lg:text-left"
+              v-if="showContent"
+            >
+              Create, Manage and follow up on your license request online
+            </h3>
+          </transition>
+          <transition name="slide-fade-to-left">
+            <button
+              class="mt-medium lg:mt-0 lg:self-end px-xl"
+              v-if="showSignup"
+            >
+              Sign Up
+            </button>
+          </transition>
         </section>
       </div>
     </div>
@@ -40,6 +61,26 @@ import LandingIllustration from "./LandingIllustration";
 export default {
   components: {
     LandingIllustration
+  },
+  data() {
+    return {
+      showGetCertified: false,
+      showContent: false,
+      showSignup: false
+    };
+  },
+  mounted() {
+    setTimeout(() => {
+      this.showGetCertified = true;
+    }, 500);
+
+    setTimeout(() => {
+      this.showContent = true;
+    }, 500);
+
+    setTimeout(() => {
+      this.showSignup = true;
+    }, 500);
   }
 };
 </script>
@@ -73,5 +114,9 @@ svg {
 
 .illustration-and-message {
   max-width: 1185px;
+}
+
+.content-wrapper-crtified {
+  min-height: 300px;
 }
 </style>
