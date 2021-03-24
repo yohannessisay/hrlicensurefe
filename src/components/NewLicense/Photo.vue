@@ -87,6 +87,7 @@ export default {
   },
   created() {
     this.license = this.getLicense;
+    console.log(this.license);
   },
   methods: {
     ...mapActions(["setPhoto"]),

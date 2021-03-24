@@ -72,6 +72,11 @@ const routes = [
     name: "Submitted",
     component: () => import("../views/Submitted.vue"),
   },
+  {
+    path: "/renewalSubmitted",
+    name: "renewalSubmitted",
+    component: () => import("../views/RenewalSubmitted.vue"),
+  },
 ];
 
 const router = createRouter({

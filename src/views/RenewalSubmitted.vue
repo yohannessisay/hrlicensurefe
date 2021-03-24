@@ -9,7 +9,7 @@
           class="ml-8 mt-5 mr-8 mb-12"
         >
           <div class="flex justify-center">
-            <Title message="Applied New license Detail" />
+            <Title message="Applied Renewal license Detail" />
           </div>
           <div class="flex justify-start">
             <Title message="Personal Info" />
@@ -248,7 +248,7 @@
           <div class="flex flex-row">
             <div
               :class="[
-                this.licenseInfo.education.institution.name === null
+                this.renewalLicenseInfo.education.institution.name === null
                   ? errorClass
                   : activeClass,
               ]"
@@ -256,15 +256,15 @@
               <label class="ml-8"> Institution Name</label>
               <h5 class="ml-8">
                 {{
-                  this.licenseInfo["education"]["institution"]["name"]
-                    ? this.licenseInfo["education"]["institution"]["name"]
+                  this.renewalLicenseInfo["education"]["institution"]["name"]
+                    ? this.renewalLicenseInfo["education"]["institution"]["name"]
                     : "-"
                 }}
               </h5>
             </div>
             <div
               :class="[
-                this.licenseInfo.education.institution.institutionType.name ===
+                this.renewalLicenseInfo.education.institution.institutionType.name ===
                 null
                   ? errorClass
                   : activeClass,
@@ -273,10 +273,10 @@
               <label class="ml-8"> Institution Type</label>
               <h5 class="ml-8">
                 {{
-                  this.licenseInfo["education"]["institution"][
+                  this.renewalLicenseInfo["education"]["institution"][
                     "institutionType"
                   ]["name"]
-                    ? this.licenseInfo["education"]["institution"][
+                    ? this.renewalLicenseInfo["education"]["institution"][
                         "institutionType"
                       ]["name"]
                     : "-"
@@ -285,7 +285,7 @@
             </div>
             <div
               :class="[
-                this.licenseInfo.education.department.name === null
+                this.renewalLicenseInfo.education.department.name === null
                   ? errorClass
                   : activeClass,
               ]"
@@ -293,15 +293,15 @@
               <label class="ml-8"> Department</label>
               <h5 class="ml-8">
                 {{
-                  this.licenseInfo["education"]["department"]["name"]
-                    ? this.licenseInfo["education"]["department"]["name"]
+                  this.renewalLicenseInfo["education"]["department"]["name"]
+                    ? this.renewalLicenseInfo["education"]["department"]["name"]
                     : "-"
                 }}
               </h5>
             </div>
             <div
               :class="[
-                this.licenseInfo.applicantType.name === null
+                this.renewalLicenseInfo.applicantType.name === null
                   ? errorClass
                   : activeClass,
               ]"
@@ -309,36 +309,54 @@
               <label class="ml-8"> Applicant Type</label>
               <h5 class="ml-8">
                 {{
-                  this.licenseInfo["applicantType"]["name"]
-                    ? this.licenseInfo["applicantType"]["name"]
+                  this.renewalLicenseInfo["applicantType"]["name"]
+                    ? this.renewalLicenseInfo["applicantType"]["name"]
                     : "-"
                 }}
               </h5>
             </div>
           </div>
           <div class="flex justify-start flex-wrap">
-            <div v-if="this.licenseInfo.photo.filePath">
+            <div v-if="this.renewalLicenseInfo.photo.filePath">
               <Title class="" message="Photo" />
               <picture>
-                <img :src="basePath + licenseInfo.photo.filePath" />
+                <img :src="basePath + renewalLicenseInfo.photo.filePath" />
               </picture>
             </div>
-            <div v-if="this.licenseInfo.passport.filePath">
+            <div v-if="this.renewalLicenseInfo.passport.filePath">
               <Title class="" message="Passport" />
               <picture>
-                <img :src="basePath + licenseInfo.passport.filePath" />
+                <img :src="basePath + renewalLicenseInfo.passport.filePath" />
               </picture>
             </div>
-            <div v-if="this.licenseInfo.healthExamCert.filePath">
+            <div v-if="this.renewalLicenseInfo.healthExamCert.filePath">
               <Title class="" message="Healt Examination Certificate" />
               <picture>
-                <img :src="basePath + licenseInfo.healthExamCert.filePath" />
+                <img :src="basePath + renewalLicenseInfo.healthExamCert.filePath" />
               </picture>
             </div>
-            <div v-if="this.licenseInfo.serviceFee.filePath">
+            <div v-if="this.renewalLicenseInfo.serviceFee.filePath">
               <Title class="" message="Service Fee" />
               <picture>
-                <img :src="basePath + licenseInfo.serviceFee.filePath" />
+                <img :src="basePath + renewalLicenseInfo.serviceFee.filePath" />
+              </picture>
+            </div>
+            <div v-if="this.renewalLicenseInfo.cpd.filePath">
+              <Title class="" message="CPD" />
+              <picture>
+                <img :src="basePath + renewalLicenseInfo.cpd.filePath" />
+              </picture>
+            </div>
+            <div v-if="this.renewalLicenseInfo.workExperience.filePath">
+              <Title class="" message="Work Experience" />
+              <picture>
+                <img :src="basePath + renewalLicenseInfo.workExperience.filePath" />
+              </picture>
+            </div>
+            <div v-if="this.renewalLicenseInfo.previousLicense.filePath">
+              <Title class="" message="Previous License" />
+              <picture>
+                <img :src="basePath + renewalLicenseInfo.previousLicense.filePath" />
               </picture>
             </div>
           </div>
@@ -396,7 +414,7 @@ export default {
         name: "",
       },
     },
-    licenseInfo: {
+    renewalLicenseInfo: {
       applicantType: {
         name: "Local",
       },
@@ -427,6 +445,18 @@ export default {
         fieldName: "",
         filePath: "",
       },
+      cpd: {
+        fieldName: "",
+        filePath: "",
+      },
+      workExperience: {
+        fieldName: "",
+        filePath: "",
+      },
+      previousLicense: {
+        fieldName: "",
+        filePath: "",
+      },
     },
     basePath: "http://localhost:5000/",
     activeClass: "active",
@@ -435,13 +465,13 @@ export default {
   methods: {
     async fetchSubmitted() {
       try {
-        const url = `http://localhost:5000/api/newLicenses/user/` + this.userId;
+        const url = `http://localhost:5000/api/renewals/user/` + this.userId;
         const response = await axios.get(url);
         console.log(response);
         const results = response.data.data;
         const lastSubmitted = results.length - 1;
-        this.licenseInfo = results[lastSubmitted];
-        console.log(this.licenseInfo);
+        this.renewalLicenseInfo = results[lastSubmitted];
+        console.log(this.renewalLicenseInfo);
       } catch (err) {
         if (err.response) {
           console.log("Server Error:", err);
