@@ -46,6 +46,7 @@
             <button
               class="mt-medium lg:mt-0 lg:self-end px-xl"
               v-if="showSignup"
+              @click="onSignupClick"
             >
               Sign Up
             </button>
@@ -81,6 +82,11 @@ export default {
     setTimeout(() => {
       this.showSignup = true;
     }, 500);
+  },
+  methods: {
+    onSignupClick() {
+      this.$emit("setShowSignup", true);
+    }
   }
 };
 </script>

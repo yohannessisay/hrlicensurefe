@@ -1,7 +1,7 @@
 <template>
   <div class="w-screen overflow-x-hidden">
-    <LandingTopNav />
-    <GetCertifiedSection />
+    <LandingTopNav @setShowLogin="setShowLogin" />
+    <GetCertifiedSection @setShowSignup="setShowSignup" />
     <NewLicenseSection />
     <RenewalSection />
     <VerificationSection />
@@ -9,6 +9,12 @@
     <DeviceAccessibilitySection />
     <MinistryOfHealthSection />
     <FooterSection />
+    <Modal v-if="showLogin">
+      <h1>Login</h1>
+    </Modal>
+    <Modal v-if="showSignUp">
+      <h1>Sign Up</h1>
+    </Modal>
   </div>
 </template>
 <script>
@@ -21,6 +27,7 @@ import GoodStandingSection from "./sections/GoodStandingSection";
 import DeviceAccessibilitySection from "./sections/DeviceAccessibilitySection";
 import MinistryOfHealthSection from "./sections/MinistryOfHealthSection";
 import FooterSection from "./sections/FooterSection";
+import Modal from "@/sharedComponents/Modal";
 
 export default {
   components: {
@@ -32,7 +39,22 @@ export default {
     GoodStandingSection,
     DeviceAccessibilitySection,
     MinistryOfHealthSection,
-    FooterSection
+    FooterSection,
+    Modal
+  },
+  data() {
+    return {
+      showLogin: false,
+      showSignUp: false
+    };
+  },
+  methods: {
+    setShowLogin(showLogin) {
+      this.showLogin = showLogin;
+    },
+    setShowSignup(showSignUp) {
+      this.showSignUp = showSignUp;
+    }
   }
 };
 </script>

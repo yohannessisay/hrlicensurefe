@@ -2,7 +2,7 @@
   <!-- w-full blue-gradient flex justify-center items-center -->
   <div
     class="w-full blue-gradient flex justify-center items-center py-large sm:py-xl box-border"
-    ref="wrapperRef"
+    ref="newLicenseWrapperRef"
   >
     <section
       class="content-wrapper-new-license w-full flex flex-col md:flex-row justify-center md:justify-start items-center"
@@ -66,6 +66,7 @@ export default {
   mounted() {
     this.observer = new IntersectionObserver(
       ([entry]) => {
+        console.log("entry.intersectionRatio", entry.intersectionRatio);
         if (entry.intersectionRatio === 1) {
           this.showElement = true;
         }
@@ -76,9 +77,8 @@ export default {
         threshold: 1.0
       }
     );
-    if (this.$refs.wrapperRef) {
-      console.log("ref exists");
-      this.observer.observe(this.$refs.wrapperRef);
+    if (this.$refs.newLicenseWrapperRef) {
+      this.observer.observe(this.$refs.newLicenseWrapperRef);
     }
   }
 };
