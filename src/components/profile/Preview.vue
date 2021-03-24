@@ -98,7 +98,9 @@
         </div>
       </div>
     </div>
-    <div v-if="showFlash"><FlashMessage /></div>
+    <div v-if="showFlash">
+      <FlashMessage message="Your profile is successfully created" />
+    </div>
   </div>
 </template>
 
@@ -225,7 +227,13 @@ export default {
       this.addProfile();
     }
   },
-  mounted() {},
+  mounted() {
+    this.$nextTick(function() {
+      window.setInterval(() => {
+        this.showFlash = false;
+      }, 5000);
+    });
+  },
   created() {
     this.personalInfo = this.getPersonalInfo;
     this.address = this.getAddress;

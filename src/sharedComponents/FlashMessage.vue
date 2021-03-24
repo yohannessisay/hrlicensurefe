@@ -1,35 +1,29 @@
 <template>
-  <div class="fixed top-0 right-0 m-6">
-    <div
-      :class="{
-        'bg-red-200 text-red-900': message.type === 'error',
-        'bg-green-200 text-green-900': message.type === 'success'
-      }"
-      class="rounded-lg shadow-md p-6 pr-10 bg-primary-400 text-grey-100"
-      style="min-width: 240px"
-    >
-      <a
-        class="opacity-75 cursor-pointer absolute top-0 right-0 py-2 px-3 hover:opacity-100"
-        href="#"
-      >
-        ×
-      </a>
-      <div class="flex items-center">
-        {{ message.text }}
+  <div class="fixed top-0 right-0 m-6 w-120 pt-4 ">
+    <div class="  bg-blue-200 rounded-lg px-4 py-3 box-shadow-pop" role="alert">
+      <div class="flex">
+        <div class="py-1"><RenderIllustration illustration="Success" /></div>
+        <div>
+          <p class="font-bold text-white">
+            Success
+          </p>
+          <p class="text-sm text-white">{{ message }}</p>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import RenderIllustration from "@/sharedComponents/RenderIllustration";
 export default {
-  data() {
-    return {
-      message: {
-        text: 'Successfully Created!!',
-        type: 'success',
-      }
-    };
-  }
+  components: { RenderIllustration },
+  props: {
+    message: {
+      type: String,
+      required: true
+    }
+  },
+  data() {}
 };
 </script>
