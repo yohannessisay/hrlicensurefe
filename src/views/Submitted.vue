@@ -117,9 +117,27 @@
       </div>
     </div>
     <div class="flex justify-start">
-      <Title class="" message="Photo" />
+      <div>
+        <Title class="" message="Photo" />
+      </div>
+      <div>
+        <picture>
+          <img v-bind:src="this.photo.filePath" />
+        </picture>
+      </div>
+
       <Title class="ml-12" message="ID/Passport" />
+      <picture>
+        <img v-bind:src="this.passport.filePath" />
+      </picture>
       <Title class="ml-12" message="Health Examination Certificate" />
+      <picture>
+        <img v-bind:src="this.healthExamCert.filePath" />
+      </picture>
+      <Title class="ml-12" message="Service Fee" />
+      <picture>
+        <img v-bind:src="this.serviceFee.filePath" />
+      </picture>
     </div>
   </div>
 </template>
@@ -134,12 +152,187 @@ export default {
   },
   created() {
     this.userId = localStorage.getItem("userId");
-    this.fetchProfile();
-    this.fetchSubmitted();
+    // this.fetchProfile();
+    // this.fetchSubmitted();
   },
   data: () => ({
-    profileInfo: {},
-    licenseInfo: {},
+    // profileInfo: {},
+    // licenseInfo: {},
+    // photo: {},
+    // passport: {},
+    // healthExamCert: {},
+    // serviceFee: {}
+    profileInfo: {
+      id: 2,
+      name: "Test1",
+      fatherName: "Test1",
+      grandFatherName: "Test",
+      gender: "Male",
+      dateOfBirth: null,
+      placeOfBirth: null,
+      nationality: "Ethiopian",
+      userTypeId: 5,
+      expertLevelId: 3,
+      healthOfficeId: null,
+      maritalStatusId: 1,
+      woredaId: 1,
+      kebele: null,
+      houseNumber: null,
+      residence: "Test",
+      city: null,
+      poBox: null,
+      userId: 1,
+      createdAt: "2021-03-01T20:59:06.979Z",
+      updatedAt: "2021-03-01T21:07:19.745Z",
+      userType: {
+        id: 5,
+        name: "Applicant",
+        code: "APP",
+        createdAt: "2021-02-25T16:23:50.228Z",
+        updatedAt: "2021-02-25T16:23:50.228Z",
+      },
+      expertLevel: {
+        id: 3,
+        name: "Federal",
+        code: "FED",
+        createdAt: "2021-02-25T16:23:50.256Z",
+        updatedAt: "2021-02-25T16:23:50.256Z",
+      },
+      healthOffice: null,
+      maritalStatus: {
+        id: 1,
+        name: "Single",
+        code: "SIN",
+        createdAt: "2021-02-25T18:05:47.774Z",
+        updatedAt: "2021-02-25T18:05:47.775Z",
+      },
+      woreda: {
+        id: 1,
+        name: "Hargelle",
+        code: "HAR",
+        zoneId: 1,
+        createdAt: "2021-02-25T16:23:50.228Z",
+        updatedAt: "2021-02-25T16:23:50.228Z",
+        zone: {
+          id: 1,
+          name: "Afder",
+          code: "AFD",
+          regionId: 2,
+          createdAt: "2021-02-25T16:23:50.228Z",
+          updatedAt: "2021-02-25T16:23:50.228Z",
+          region: {
+            id: 2,
+            name: "Somali",
+            code: "SOM",
+            createdAt: "2021-02-25T16:23:50.228Z",
+            updatedAt: "2021-02-25T16:23:50.228Z",
+          },
+        },
+      },
+      user: {
+        id: 1,
+        emailAddress: "test1@gmail.com",
+        phoneNumber: "0911111112",
+        createdAt: "2021-03-01T19:02:03.093Z",
+        updatedAt: "2021-03-01T19:55:56.910Z",
+      },
+    },
+    licenseInfo: {
+      id: 1,
+      applicantId: 1,
+      applicantTypeId: 1,
+      educationId: 2,
+      createdAt: "2021-03-09T18:45:22.416Z",
+      updatedAt: "2021-03-09T19:55:30.429Z",
+      applicant: {
+        id: 1,
+        emailAddress: "test1@gmail.com",
+        phoneNumber: "0911111112",
+        createdAt: "2021-03-01T19:02:03.093Z",
+        updatedAt: "2021-03-01T19:55:56.910Z",
+      },
+      applicantType: {
+        id: 1,
+        name: "Local",
+        code: "LOC",
+        createdAt: "2021-03-04T18:15:43.061Z",
+        updatedAt: "2021-03-04T18:15:43.061Z",
+      },
+      education: {
+        id: 2,
+        departmentId: 2,
+        institutionId: 1,
+        createdAt: "2021-03-09T18:45:22.345Z",
+        updatedAt: "2021-03-09T21:57:48.656Z",
+        institution: {
+          id: 1,
+          name: "Institution 1",
+          code: "INST1",
+          institutionTypeId: 1,
+          isLocal: true,
+          createdAt: "2021-03-09T17:28:15.182Z",
+          updatedAt: "2021-03-09T17:28:15.182Z",
+          institutionType: {
+            id: 1,
+            name: "Public",
+            code: "PUB",
+            createdAt: "2021-03-04T23:16:28.132Z",
+            updatedAt: "2021-03-04T23:16:28.132Z",
+          },
+        },
+        department: {
+          id: 2,
+          name: "Department 2",
+          code: "DEP2",
+          createdAt: "2021-03-09T14:24:58.300Z",
+          updatedAt: "2021-03-09T14:24:58.300Z",
+        },
+      },
+    },
+    photo: {
+      id: 209,
+      applicationCategoryCode: "NA",
+      fieldName: "photo",
+      originalFileName: "Document 44-1 - edited.png",
+      filePath: "public\\uploads\\NA\\1616495780641.png",
+      fileType: "image/png",
+      fileName: "1616495780641.png",
+      createdAt: "2021-03-23T10:36:20.698Z",
+      updatedAt: "2021-03-23T10:36:20.698Z",
+    },
+    passport: {
+      id: 210,
+      applicationCategoryCode: "NA",
+      fieldName: "passport",
+      originalFileName: "Document 44-2 - edited.png",
+      filePath: "public\\uploads\\NA\\1616495780662.png",
+      fileType: "image/png",
+      fileName: "1616495780662.png",
+      createdAt: "2021-03-23T10:36:20.698Z",
+      updatedAt: "2021-03-23T10:36:20.698Z",
+    },
+    healthExamCert: {
+      id: 211,
+      applicationCategoryCode: "NA",
+      fieldName: "healthExamCert",
+      originalFileName: "photo_2021-03-12_09-33-07.png",
+      filePath: "public\\uploads\\NA\\1616495780682.png",
+      fileType: "image/png",
+      fileName: "1616495780682.png",
+      createdAt: "2021-03-23T10:36:20.698Z",
+      updatedAt: "2021-03-23T10:36:20.698Z",
+    },
+    serviceFee: {
+      id: 212,
+      applicationCategoryCode: "NA",
+      fieldName: "serviceFee",
+      originalFileName: "Document 44-2 - edited.png",
+      filePath: "public\\uploads\\NA\\1616495780684.png",
+      fileType: "image/png",
+      fileName: "1616495780684.png",
+      createdAt: "2021-03-23T10:36:20.698Z",
+      updatedAt: "2021-03-23T10:36:20.698Z",
+    },
   }),
   methods: {
     async fetchSubmitted() {

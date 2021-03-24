@@ -220,6 +220,8 @@ export default {
     submit: function() {
       this.prepareObject();
       this.addProfile();
+      this.$router.push({ path: "/menu" });
+
     }
   },
   mounted() {},
