@@ -1,12 +1,18 @@
 <template>
   <!-- w-full blue-gradient flex justify-center items-center -->
   <div
-    class="w-full bg-white flex justify-center items-center  py-large sm:py-xl"
+    class="w-full bg-white flex justify-center items-center py-large sm:py-xl renewal-wrapper"
+    ref="renewalWrapperRef"
   >
     <section
       class="content-wrapper flex flex-col md:flex-row justify-center md:justify-start items-center"
+      v-if="showElement"
     >
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 143.945 143.736">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 143.945 143.736"
+        v-if="showElement"
+      >
         <defs>
           <linearGradient
             id="renewal"
@@ -26,7 +32,10 @@
           fill="url(#renewal)"
         />
       </svg>
-      <section class="flex flex-col sm:ml-large items-center md:items-start">
+      <section
+        class="flex flex-col sm:ml-large items-center md:items-start"
+        v-if="showElement"
+      >
         <div class="flex flex-col items-center">
           <h1
             class="text-3xl sm:text-largeDisplay blue-text-gradient -mb-small"
@@ -42,7 +51,45 @@
     </section>
   </div>
 </template>
+<script>
+export default {
+  data() {
+    return {
+      showElement: false,
+      observer: null
+    };
+  },
+  mounted() {
+    console.log("mount intersection bserver");
+    this.observer = new IntersectionObserver(
+      ([entry]) => {
+        console.log("entry", entry.intersectionRatio);
+        if (entry.intersectionRatio === 1) {
+          this.showElement = true;
+        }
+      },
+      {
+        root: null,
+        rootMargin: "5%",
+        threshold: 1.0
+      }
+    );
+    console.log(
+      "this.$refs.renewalWrapperRef : ",
+      this.$refs.renewalWrapperRef
+    );
+    if (this.$refs.renewalWrapperRef) {
+      console.log("ref exists");
+      // observer.observe(elementRef.current);
+      this.observer.observe(this.$refs.renewalWrapperRef);
+    }
+  }
+};
+</script>
 <style lang="postcss" scoped>
+.renewal-wrapper {
+  min-height: 300px;
+}
 .new-license-wrapper {
   height: 370px;
 }
