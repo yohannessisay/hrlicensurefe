@@ -63,11 +63,6 @@ const routes = [
     component: () => import("../components/GoodStanding/GoodStanding.vue"),
   },
   {
-    path: "/goodstanding",
-    name: "GoodStanding",
-    component: () => import("../components/GoodStanding/GoodStanding.vue"),
-  },
-  {
     path: "/submitted",
     name: "Submitted",
     component: () => import("../views/Submitted.vue"),
@@ -76,6 +71,11 @@ const routes = [
     path: "/renewalSubmitted",
     name: "renewalSubmitted",
     component: () => import("../views/RenewalSubmitted.vue"),
+  },
+  {
+    path: "/verificationSubmitted",
+    name: "verificationSubmitted",
+    component: () => import("../views/VerificationSubmitted.vue"),
   },
 ];
 
