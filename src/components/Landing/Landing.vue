@@ -9,10 +9,10 @@
     <DeviceAccessibilitySection />
     <MinistryOfHealthSection />
     <FooterSection />
-    <Modal v-if="showLogin">
+    <Modal v-if="showLogin" @closeModal="setShowLogin">
       <h1>Login</h1>
     </Modal>
-    <Modal v-if="showSignUp">
+    <Modal v-if="showSignUp" @closeModal="setShowSignup">
       <h1>Sign Up</h1>
     </Modal>
   </div>
