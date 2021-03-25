@@ -10,10 +10,10 @@
     <MinistryOfHealthSection />
     <FooterSection />
     <Modal v-if="showLogin">
-      <Login @closeModal="setShowLogin" />
+      <Login @closeModal="setShowLogin" @redirectToSignup="redirectToSignup" />
     </Modal>
     <Modal v-if="showSignUp">
-      <Signup @closeModal="setShowSignup" />
+      <Signup @closeModal="setShowSignup" @redirectToLogin="redirectToLogin" />
     </Modal>
   </div>
 </template>
@@ -29,7 +29,7 @@ import MinistryOfHealthSection from "./sections/MinistryOfHealthSection";
 import FooterSection from "./sections/FooterSection";
 import Modal from "@/sharedComponents/Modal";
 import Login from "@/components/Login/Login";
-import Signup from "@/views/Signup";
+import Signup from "@/components/Signup/Signup";
 
 export default {
   components: {
@@ -58,6 +58,14 @@ export default {
     },
     setShowSignup(showSignUp) {
       this.showSignUp = showSignUp;
+    },
+    redirectToSignup() {
+      this.showLogin = false;
+      this.showSignUp = true;
+    },
+    redirectToLogin() {
+      this.showLogin = true;
+      this.showSignUp = false;
     }
   }
 };

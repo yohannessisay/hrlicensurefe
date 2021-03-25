@@ -67,11 +67,11 @@
       <button click="submit()">
         Sign up
       </button>
-      <router-link
-        to="/signup"
-        class="text-base text-primary-500 hover:underline"
-        >Already have an account? Log in</router-link
-      >
+      <a
+        class="text-base text-primary-500 hover:underline cursor-pointer"
+        :onClick="redirectToLogin"
+        >Already have an account? Log in
+      </a>
     </form>
   </div>
 </template>
@@ -101,6 +101,9 @@ export default {
   methods: {
     closeOption() {
       this.$emit("closeModal", false);
+    },
+    redirectToLogin(){
+      this.$emit("redirectToLogin");
     },
     submit() {
       // this.credentialsErrors = this.validateForm(this.credentials);

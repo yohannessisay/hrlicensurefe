@@ -54,11 +54,11 @@
         Forgot password?
       </a>
       <button click="submit()" class="mt-medium">Login</button>
-      <router-link
-        to="/signup"
-        class="text-base text-primary-500 hover:underline"
-        >Don't have an account? Sign Up</router-link
-      >
+      <a
+        class="text-base text-primary-500 hover:underline cursor-pointer"
+        :onClick="redirectToSignup"
+        >Don't have an account? Sign Up
+      </a>
     </form>
   </div>
 </template>
@@ -83,6 +83,9 @@ export default {
   methods: {
     closeOption() {
       this.$emit("closeModal", false);
+    },
+    redirectToSignup() {
+      this.$emit("redirectToSignup");
     },
     submit() {
       this.credentialsErrors = this.validateForm(this.credentials);
