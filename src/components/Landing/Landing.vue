@@ -28,7 +28,7 @@ import DeviceAccessibilitySection from "./sections/DeviceAccessibilitySection";
 import MinistryOfHealthSection from "./sections/MinistryOfHealthSection";
 import FooterSection from "./sections/FooterSection";
 import Modal from "@/sharedComponents/Modal";
-import Login from "@/views/Login";
+import Login from "@/components/Login/Login";
 
 export default {
   components: {
