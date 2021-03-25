@@ -241,7 +241,7 @@ import { mapGetters } from "vuex";
 export default {
   props: ["activeState"],
   components: {
-    Title,
+    Title
   },
   beforeCreate() {
     this.userId = localStorage.getItem("userId");
@@ -250,7 +250,7 @@ export default {
   async created() {
     const url = `http://afeb4bdfee26.ngrok.io/api/profiles/2`;
     const getProfile = await axios.get(url, {
-      responseType: "json",
+      responseType: "json"
     });
     if (getProfile) {
       this.show = true;
@@ -274,19 +274,18 @@ export default {
     applicantTypeId: "",
     education: {
       departmentId: "",
-      institutionId: "",
+      institutionId: ""
     },
     basePath: "http://localhost:5000/",
     activeClass: "active",
     errorClass: "text-danger",
-    dataFetched: false,
+    dataFetched: false
   }),
   computed: {
     ...mapGetters({
       getLicense: "newlicense/getLicense",
-      getDocs: "newlicense/getDocs",
-      
-    }),
+      getDocs: "newlicense/getDocs"
+    })
   },
   methods: {
     async submitRequest() {
@@ -353,7 +352,7 @@ export default {
       } else {
         this.profileInfo = null;
       }
-    },
+    }
   },
 };
 </script>

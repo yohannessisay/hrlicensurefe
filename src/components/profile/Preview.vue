@@ -226,14 +226,13 @@ export default {
       this.prepareObject();
       this.addProfile();
       this.$router.push({ path: "/menu" });
-
     }
   },
   mounted() {
     this.$nextTick(function() {
       window.setInterval(() => {
         this.showFlash = false;
-      }, 5000);
+      }, 10000);
     });
   },
   created() {

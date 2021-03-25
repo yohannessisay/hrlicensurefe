@@ -113,13 +113,13 @@ export default {
     HealthExamCert,
     LicenseSummary,
     ServiceFee,
-    Navigation,
+    Navigation
   },
   methods: {
     submit(n) {
       this.activeState = n;
-    },
-  },
+    }
+  }
 };
 </script>
 <style>

@@ -158,8 +158,8 @@ export default {
   methods: {
     submit(n) {
       this.activeState = n;
-    },
-  },
+    }
+  }
 };
 </script>
 <style>
