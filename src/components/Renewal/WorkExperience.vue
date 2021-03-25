@@ -6,7 +6,7 @@
       >
         <TitleWithIllustration
           illustration="Certificate"
-          message="Health Examination Certificate"
+          message="Work Experience(3 to 4 years)"
           class="mt-8"
         />
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
@@ -18,8 +18,9 @@
                   <div class="dropbox">
                     <input
                       type="file"
-                      id="healthExamCertFile"
-                      ref="healthExamCertFile"
+                      id="workExperienceFile"
+                      class="photoFile"
+                      ref="workExperienceFile"
                       v-on:change="handleFileUpload()"
                       style="margin-bottom: 15px !important;"
                     />
@@ -69,7 +70,7 @@ export default {
   components: { TitleWithIllustration },
   data() {
     return {
-      healthExamCertFile: "",
+      workExperienceFile: "",
       showPreview: false,
       filePreview: "",
       showUpload: true,
@@ -78,25 +79,26 @@ export default {
   },
   computed: {
     ...mapGetters({
-      getPassport: "newlicense/getPassport",
+      getRenewalCpd: "renewal/getRenewalCpd",
     }),
   },
   created() {
-    this.passport = this.getPassport;
+    this.cpd = this.getRenewalCpd;
+    console.log(this.cpd)
   },
   methods: {
-    ...mapActions(["setHealthExamCert"]),
+    ...mapActions(["setRenewalWorkExperience"]),
     reset() {
       // reset form to initial state
       this.showUpload = true;
       this.showPreview = false;
-      this.healthExamCertFile = "";
+      this.workExperienceFile = "";
       this.filePreview = "";
       this.isImage = true;
     },
     handleFileUpload() {
       this.showUpload = false;
-      this.healthExamCertFile = this.$refs.healthExamCertFile.files[0];
+      this.workExperienceFile = this.$refs.workExperienceFile.files[0];
       let reader = new FileReader();
 
       reader.addEventListener(
@@ -108,59 +110,30 @@ export default {
         false
       );
 
-      if (this.healthExamCertFile) {
-        if (/\.(jpe?g|png|gif)$/i.test(this.healthExamCertFile.name)) {
+      if (this.workExperienceFile) {
+        if (/\.(jpe?g|png|gif)$/i.test(this.workExperienceFile.name)) {
           this.isImage = true;
-          reader.readAsDataURL(this.healthExamCertFile);
-        } else if (/\.(pdf)$/i.test(this.healthExamCertFile.name)) {
+          reader.readAsDataURL(this.workExperienceFile);
+        } else if (/\.(pdf)$/i.test(this.workExperienceFile.name)) {
           this.isImage = false;
-          reader.readAsText(this.healthExamCertFile);
+          reader.readAsText(this.workExperienceFile);
         }
       }
     },
     submit() {
       this.$emit("changeActiveState");
-      let file3 = {
-        healthExamCert: this.healthExamCertFile,
+      let file6 = {
+        workExperience: this.workExperienceFile,
       };
-      this.$store.dispatch("newlicense/setHealthExamCert", file3);
+      this.$store.dispatch("renewal/setRenewalWorkExperience", file6);
     },
   },
-  setup() {},
 };
 </script>
 <style>
+@import "../../styles/document-upload.css";
 img {
   width: 250px;
   height: 250px;
-}
-
-#healthExamCertFile {
-  opacity: 0; /* invisible but it's there! */
-  width: 100%;
-  height: 200px;
-  position: absolute;
-  cursor: pointer;
-}
-
-.dropbox {
-  outline: 2px dashed grey; /* the dash box */
-  outline-offset: -10px;
-  background: lightcyan;
-  color: dimgray;
-  padding: 10px 10px;
-  min-height: 200px; /* minimum height */
-  position: relative;
-  cursor: pointer;
-}
-
-.dropbox:hover {
-  background: lightblue; /* when mouse over to the drop zone, change color */
-}
-
-.dropbox p {
-  font-size: 1.2em;
-  text-align: center;
-  padding: 50px 0;
 }
 </style>
