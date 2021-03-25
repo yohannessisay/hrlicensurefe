@@ -115,6 +115,12 @@ export default {
     this.fetchInstitutions();
     this.fetchDepartments();
     this.fetchApplicantType();
+    this.$nextTick(function() {
+      window.setInterval(() => {
+        this.showFlash = false;
+        this.showErrorFlash = false;
+      }, 10000);
+    });
   },
   data: () => ({
     goodStandingInfo: {
@@ -122,14 +128,14 @@ export default {
       applicantTypeId: "",
       education: {
         departmentId: "",
-        institutionId: "",
-      },
+        institutionId: ""
+      }
     },
     applicantTypes: [],
     institutions: [],
     departments: [],
     showFlash: false,
-    showErrorFlash: false,
+    showErrorFlash: false
   }),
 
   methods: {
@@ -143,14 +149,14 @@ export default {
         education: {
           departmentId: this.goodStandingInfo.education.departmentId,
           institutionId: this.goodStandingInfo.education.institutionId,
-        },
+        }
       };
       console.log(goodStanding);
       // verification.applicantTypeId = 10000;
       try {
         await axios
           .post("http://localhost:5000/api/goodStandings/add", goodStanding)
-          .then((response) => {
+          .then(response => {
             if (response.statusText == "Created") {
               this.Success = true;
               this.showFlash = true;
@@ -159,7 +165,7 @@ export default {
               this.$router.push({ path: "/goodStandingSubmitted" });
             }
           })
-          .catch((err) => {
+          .catch(err => {
             console.log("am here");
             this.Error = true;
             this.showErrorFlash = true;
@@ -216,7 +222,7 @@ export default {
           console.log("Client Error:", err);
         }
       }
-    },
-  },
+    }
+  }
 };
 </script>

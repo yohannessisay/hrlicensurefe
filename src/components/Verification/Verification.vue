@@ -109,12 +109,18 @@ export default {
     TitleWithIllustration,
     Navigation,
     FlashMessage,
-    ErrorFlashMessage,
+    ErrorFlashMessage
   },
   mounted() {
     this.fetchInstitutions();
     this.fetchDepartments();
     this.fetchApplicantType();
+    this.$nextTick(function() {
+      window.setInterval(() => {
+        this.showFlash = false;
+        this.showErrorFlash = false;
+      }, 10000);
+    });
   },
   data: () => ({
     verificationInfo: {
@@ -122,14 +128,14 @@ export default {
       applicantTypeId: "",
       education: {
         departmentId: "",
-        institutionId: "",
+        institutionId: ""
       },
     },
     applicantTypes: [],
     institutions: [],
     departments: [],
     showFlash: false,
-    showErrorFlash: false,
+    showErrorFlash: false
   }),
 
   methods: {
@@ -142,15 +148,15 @@ export default {
         applicantTypeId: this.verificationInfo.applicantTypeId,
         education: {
           departmentId: this.verificationInfo.education.departmentId,
-          institutionId: this.verificationInfo.education.institutionId,
-        },
+          institutionId: this.verificationInfo.education.institutionId
+        }
       };
       console.log(verification);
       // verification.applicantTypeId = 10000;
       try {
         await axios
           .post("http://localhost:5000/api/verifications/add", verification)
-          .then((response) => {
+          .then(response => {
             if (response.statusText == "Created") {
               this.Success = true;
               this.showFlash = true;
@@ -159,7 +165,7 @@ export default {
               this.$router.push({ path: "/verificationSubmitted" });
             }
           })
-          .catch((err) => {
+          .catch(err => {
             console.log("am here");
             this.Error = true;
             this.showErrorFlash = true;
@@ -216,7 +222,7 @@ export default {
           console.log("Client Error:", err);
         }
       }
-    },
-  },
+    }
+  }
 };
 </script>

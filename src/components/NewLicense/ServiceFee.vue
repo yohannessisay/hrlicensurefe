@@ -81,8 +81,8 @@ export default {
     ...mapGetters({
       getHealthExamCert: "newlicense/getHealthExamCert",
       getPassport: "newlicense/getPassport",
-      getPhoto: "newlicense/getPhoto",
-    }),
+      getPhoto: "newlicense/getPhoto"
+    })
   },
   created() {
     this.healthExamCert = this.getHealthExamCert;
@@ -140,8 +140,8 @@ export default {
           formData,
           {
             headers: {
-              "Content-Type": "multipart/form-data",
-            },
+              "Content-Type": "multipart/form-data"
+            }
           }
         );
 

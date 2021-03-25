@@ -176,9 +176,7 @@
 
       <div
         :class="[
-          this.profileInfo.user.emailAddress === null
-            ? errorClass
-            : activeClass,
+          this.profileInfo.user.emailAddress === null ? errorClass : activeClass
         ]"
       >
         <label class="ml-8"> Email</label>
@@ -276,7 +274,7 @@ export default {
   async created() {
     const url = `http://localhost:5000/api/profiles/` + this.userId;
     const getProfile = await axios.get(url, {
-      responseType: "json",
+      responseType: "json"
     });
     if (getProfile) {
       this.setData(getProfile.data.data);
@@ -301,45 +299,45 @@ export default {
       placeOfBirth: "",
       dateOfBirth: "",
       maritalStatus: {
-        name: "",
+        name: ""
       },
       woreda: {
         name: "",
         zone: {
           name: "",
           region: {
-            name: "",
-          },
-        },
+            name: ""
+          }
+        }
       },
       kebele: "",
       houseNumber: "",
       residence: "",
       user: {
         phoneNumber: "",
-        emailAddress: "",
+        emailAddress: ""
       },
       userType: {
-        name: "",
-      },
+        name: ""
+      }
     },
     applicantId: "",
     applicantTypeId: "",
     education: {
       departmentId: "",
-      institutionId: "",
+      institutionId: ""
     },
     basePath: "http://localhost:5000/",
     activeClass: "active",
     errorClass: "text-danger",
     dataFetched: false,
     showFlash: false,
-    showErrorFlash: false,
+    showErrorFlash: false
   }),
   computed: {
     ...mapGetters({
       getRenewalLicense: "renewal/getRenewalLicense",
-      getDocs: "renewal/getDocs",
+      getDocs: "renewal/getDocs"
     }),
   },
   methods: {
@@ -351,8 +349,8 @@ export default {
         applicantTypeId: this.applicantTypeId,
         education: {
           institutionId: this.education.departmentId,
-          departmentId: this.education.institutionId,
-        },
+          departmentId: this.education.institutionId
+        }
       };
 
       for (let index = 0; index < this.docs.length; index++) {
@@ -379,7 +377,7 @@ export default {
       try {
         await axios
           .post("http://localhost:5000/api/renewals/add", renewal)
-          .then((response) => {
+          .then(response => {
             if (response.statusText == "Created") {
               this.Success = true;
               this.showFlash = true;
@@ -391,7 +389,7 @@ export default {
             this.$router.push({ path: "/menu" });
             console.log(response);
           })
-          .catch((error) => {
+          .catch(error => {
             this.Success = false;
             this.showErrorFlash = true;
             console.log(error);
@@ -406,8 +404,16 @@ export default {
       } else {
         this.profileInfo = null;
       }
-    },
+    }
   },
+  mounted() {
+    this.$nextTick(function() {
+      window.setInterval(() => {
+        this.showFlash = false;
+        this.showErrorFlash = false;
+      }, 10000);
+    });
+  }
 };
 </script>
 <style>
