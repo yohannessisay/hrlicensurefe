@@ -1,83 +1,20 @@
 <template>
-  <div class="w-screen flex flex-col justify-center items-center">
-    <div class="flex flex-col mt-large w-3/12">
-      <Title message="Signup" />
-
-      <form class="mt-6 space-y-6" @submit.prevent="submit">
-        <input type="hidden" name="remember" value="true" />
-        <div class="rounded-md shadow-sm -space-y-px">
-          <div>
-            <span class="py-2">Email</span>
-            <label for="email-address" class="sr-only">Email</label>
-            <input
-              v-model="credentials.emailAddress"
-              id="email-address"
-              name="email"
-              type="email"
-              autocomplete="email"
-              required
-              class="appearance-none rounded-lg relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-              placeholder="Email address"
-            />
-            <span style="color: red">{{ credentialsErrors.email }}</span>
-          </div>
-        </div>
-        <div>
-          <span class="py-2">Phone Number</span>
-          <label for="password" class="sr-only">Phone Number</label>
-          <input
-            v-model="credentials.phoneNumber"
-            id="phone"
-            name="phone"
-            type="text"
-            autocomplete="current-number"
-            required
-            class="appearance-none rounded-lg relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-            placeholder="Password"
-          />
-          <span style="color: red">{{ credentialsErrors.phoneNumber }}</span>
-        </div>
-        <!-- <div>
-          <span class="py-2">Confirm Password</span>
-          <label for="password" class="sr-only">Confirm Password</label>
-          <input
-            v-model="credentials.confirmPassword"
-            id="confirm-password"
-            name="confirm-password"
-            type="password"
-            autocomplete="current-confirm-password"
-            required
-            class="appearance-none rounded-lg relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-            placeholder="Confirm Password"
-          />
-          <span style="color: red">{{
-            credentialsErrors.confirmPassword
-          }}</span>
-          <span style="color: red">{{ credentialsErrors.diffPassword }}</span>
-        </div> -->
-        <div class="flex justify-center">
-          <button click="submit()">
-            Signup
-          </button>
-        </div>
-        <div class="text-indigo-700 flex justify-center">
-          <span>Already have an account?</span>
-          <router-link to="/login" class="px-4">Login</router-link>
-        </div>
-      </form>
-    </div>
+  <div
+    class="w-screen h-screen flex justify-center items-center bg-primary-100"
+  >
+    <SignupCard />
   </div>
 </template>
 <script>
-import Title from "@/sharedComponents/Title";
+import SignupCard from "@/components/Signup/Signup";
 
 export default {
-  components: { Title },
+  components: { SignupCard },
   data() {
     return {
       credentials: {
         emailAddress: "",
-        phoneNumber: "",
+        phoneNumber: ""
       },
       // credentialsErrors: {
       //   email: undefined,
@@ -87,18 +24,21 @@ export default {
       // },
       credentialsErrors: {
         emailAddress: undefined,
-        phoneNumber: undefined,
-      },
+        phoneNumber: undefined
+      }
     };
   },
   methods: {
+    closeOption() {
+      this.$emit("closeModal", false);
+    },
     submit() {
       // this.credentialsErrors = this.validateForm(this.credentials);
       // if (Object.keys(this.credentialsErrors).length) return;
       let signup = {
-        "emailAddress" : this.credentials.emailAddress,
-        "phoneNumber" : this.credentials.phoneNumber
-      }
+        emailAddress: this.credentials.emailAddress,
+        phoneNumber: this.credentials.phoneNumber
+      };
       this.$store.dispatch("user/signUp", signup);
       console.log(signup);
       this.$router.push({ path: "/addProfile" });
@@ -120,7 +60,36 @@ export default {
     isEmail(email) {
       const re = /\S+@\S+\.\S+/;
       return re.test(email);
-    },
-  },
+    }
+  }
 };
 </script>
+
+<style lang="postcss" scoped>
+.close-svg {
+  width: 16px;
+}
+
+.close-button {
+  min-width: 48px;
+  width: 48px;
+  min-height: 48px;
+  height: 48px;
+  padding: 0;
+  margin: 0;
+  border-radius: 9999px !important;
+  top: 10px;
+  right: 10px;
+}
+
+.card-wrapper {
+  max-width: 450px;
+  box-shadow: 0px -8px 6px rgb(30 64 175 / 51%);
+}
+
+@screen md {
+  .card-wrapper {
+    box-shadow: 0px 3px 6px #1e40af82;
+  }
+}
+</style>

@@ -8,9 +8,14 @@ const routes = [
     component: Home,
   },
   {
+    path: "/landing",
+    name: "Landing",
+    component: () => import("../components/Landing/Landing.vue"),
+  },
+  {
     path: "/addProfile",
     name: "NewProfile",
-    component: () => import("../components/profile/NewProfile.vue")
+    component: () => import("../components/profile/NewProfile.vue"),
   },
   {
     path: "/about",
@@ -88,11 +93,17 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
 });
-// router.beforeEach((to, from, next) => {
-//   const auth = localStorage.getItem("token");
-//   if (!auth && to.path !== "/login" && to.path !== "/signup" && to.path !== "/")
-//     next("/login");
-//   else next();
-// });
+router.beforeEach((to, from, next) => {
+  const auth = localStorage.getItem("token");
+  if (
+    !auth &&
+    to.path !== "/login" &&
+    to.path !== "/signup" &&
+    to.path !== "/landing" &&
+    to.path !== "/"
+  )
+    next("/login");
+  else next();
+});
 
 export default router;

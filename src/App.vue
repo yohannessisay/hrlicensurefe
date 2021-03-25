@@ -5,9 +5,6 @@
     <!-- </transition> -->
   </router-view>
 </template>
-<script>
-export default {};
-</script>
 <style>
 @import "styles/tailwind.postcss";
 @import "styles/fonts.css";

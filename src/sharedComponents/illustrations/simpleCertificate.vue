@@ -1,5 +1,9 @@
 <template>
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 85.571 74.001">
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 85.571 74.001"
+    id="illustration-style"
+  >
     <defs>
       <linearGradient
         id="a"
