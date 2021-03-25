@@ -177,9 +177,7 @@
 
       <div
         :class="[
-          this.profileInfo.user.emailAddress === null
-            ? errorClass
-            : activeClass,
+          this.profileInfo.user.emailAddress === null ? errorClass : activeClass
         ]"
       >
         <label class="ml-8"> Email</label>
@@ -266,7 +264,7 @@ export default {
   components: {
     Title,
     FlashMessage,
-    ErrorFlashMessage,
+    ErrorFlashMessage
   },
   beforeCreate() {
     this.userId = +localStorage.getItem("userId");
@@ -275,7 +273,7 @@ export default {
   async created() {
     const url = `http://localhost:5000/api/profiles/2`;
     const getProfile = await axios.get(url, {
-      responseType: "json",
+      responseType: "json"
     });
     if (getProfile) {
       this.show = true;
@@ -299,20 +297,20 @@ export default {
     applicantTypeId: "",
     education: {
       departmentId: "",
-      institutionId: "",
+      institutionId: ""
     },
     basePath: "http://localhost:5000/",
     activeClass: "active",
     errorClass: "text-danger",
     dataFetched: false,
     showFlash: false,
-    showErrorFlash: false,
+    showErrorFlash: false
   }),
   computed: {
     ...mapGetters({
       getLicense: "newlicense/getLicense",
-      getDocs: "newlicense/getDocs",
-    }),
+      getDocs: "newlicense/getDocs"
+    })
   },
   methods: {
     async submitRequest() {
@@ -323,8 +321,8 @@ export default {
         applicantTypeId: this.applicantTypeId,
         education: {
           institutionId: this.education.departmentId,
-          departmentId: this.education.institutionId,
-        },
+          departmentId: this.education.institutionId
+        }
       };
 
       for (let index = 0; index < this.docs.length; index++) {
@@ -344,7 +342,7 @@ export default {
       try {
         await axios
           .post("http://localhost:5000/api/newLicenses/add", license)
-          .then((response) => {
+          .then(response => {
             if (response.statusText == "Created") {
               this.Success = true;
               this.showFlash = true;
@@ -354,7 +352,7 @@ export default {
             }
             //console.log(this.a);
           })
-          .catch((err) => {
+          .catch(err => {
             this.Success = false;
             this.showErrorFlash = true;
             console.log(err);
@@ -369,8 +367,16 @@ export default {
       } else {
         this.profileInfo = null;
       }
-    },
+    }
   },
+  mounted() {
+    this.$nextTick(function() {
+      window.setInterval(() => {
+        this.showFlash = false;
+        this.showErrorFlash = false;
+      }, 10000);
+    });
+  }
 };
 </script>
 <style>
