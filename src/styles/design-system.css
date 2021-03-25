@@ -24,6 +24,9 @@
   .no-background-image {
     background-image: none;
   }
+  .modal-mobile-box-shadow{
+    box-shadow:0px -8px 6px rgb(30 64 175 / 51%);
+  }
   .blue-box-shadow {
     box-shadow: 0px 3px 6px #1e40af82;
   }
@@ -33,7 +36,7 @@
   .inset-box-shadow {
     box-shadow: inset -1px -4px 0px #e6ebf4;
   }
-
+  
   .blue-box-shadow-light {
     box-shadow: 0px 3px 6px #6c8bf09e;
   }

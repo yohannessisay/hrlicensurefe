@@ -10,7 +10,7 @@
     <MinistryOfHealthSection />
     <FooterSection />
     <Modal v-if="showLogin" @closeModal="setShowLogin">
-      <h1>Login</h1>
+      <Login />
     </Modal>
     <Modal v-if="showSignUp" @closeModal="setShowSignup">
       <h1>Sign Up</h1>
@@ -28,6 +28,7 @@ import DeviceAccessibilitySection from "./sections/DeviceAccessibilitySection";
 import MinistryOfHealthSection from "./sections/MinistryOfHealthSection";
 import FooterSection from "./sections/FooterSection";
 import Modal from "@/sharedComponents/Modal";
+import Login from "@/views/Login";
 
 export default {
   components: {
@@ -40,7 +41,8 @@ export default {
     DeviceAccessibilitySection,
     MinistryOfHealthSection,
     FooterSection,
-    Modal
+    Modal,
+    Login
   },
   data() {
     return {

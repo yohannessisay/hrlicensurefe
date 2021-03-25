@@ -1,53 +1,50 @@
 <template>
-  <div class="w-screen flex flex-col justify-center items-center">
-    <div class="flex flex-col mt-large w-3/12">
-      <Title message="Login" />
-      <form @submit.prevent="submit" class="flex flex-col w-full mt-4">
-        <div class="flex flex-col mb-medium">
-          <label>Email</label>
-          <input
-            v-model="credentials.emailAddress"
-            id="email-address"
-            name="email"
-            type="email"
-            autocomplete="email"
-            required
-          />
-          <span style="color: red">{{ credentialsErrors.emailAddress }}</span>
-        </div>
-        <div class="flex flex-col mb-medium">
-          <label>Password</label>
-          <input
-            v-model="credentials.password"
-            type="password"
-            id="password"
-            name="password"
-            autocomplete="current-password"
-            required
-          />
-          <span style="color: red">{{ credentialsErrors.password }}</span>
-        </div>
-        <div>
-          <div class="flex items-center justify-end">
-            <div class="text-sm">
-              <a
-                href="#"
-                class="font-medium primary text-indigo-600 hover:text-indigo-500"
-              >
-                Forgot password?
-              </a>
-            </div>
-          </div>
-          <div class="flex justify-center">
-            <button click="submit()">Login</button>
-          </div>
-        </div>
-        <div class="text-indigo-700 flex justify-center">
-          <span>Don't have an account? </span>
-          <router-link to="/signup" class="px-4">Sign Up</router-link>
-        </div>
-      </form>
-    </div>
+  <div
+    class="card-wrapper bg-white sm:rounded-lg w-full p-large flex flex-col justify-center items-center"
+  >
+    <Title message="Login" />
+
+    <form
+      @submit.prevent="submit"
+      class="flex flex-col justify-center items-center w-full mt-4"
+    >
+      <div class="flex flex-col mb-medium w-full">
+        <label>Email</label>
+        <input
+          v-model="credentials.emailAddress"
+          id="email-address"
+          name="email"
+          type="email"
+          autocomplete="email"
+          required
+        />
+        <span style="color: red">{{ credentialsErrors.emailAddress }}</span>
+      </div>
+      <div class="flex flex-col mb-tiny w-full">
+        <label>Password</label>
+        <input
+          v-model="credentials.password"
+          type="password"
+          id="password"
+          name="password"
+          autocomplete="current-password"
+          required
+        />
+        <span style="color: red">{{ credentialsErrors.password }}</span>
+      </div>
+      <a
+        href="#"
+        class="text-primary-500 w-full text-right mr-small hover:underline"
+      >
+        Forgot password?
+      </a>
+      <button click="submit()" class="mt-medium">Login</button>
+      <router-link
+        to="/signup"
+        class="text-base text-primary-500 hover:underline"
+        >Don't have an account? Sign Up</router-link
+      >
+    </form>
   </div>
 </template>
 <script>
@@ -58,13 +55,13 @@ export default {
   data() {
     return {
       credentials: {
-        "emailAddress": "",
-        password: "",
+        emailAddress: "",
+        password: ""
       },
       credentialsErrors: {
         emailAddress: undefined,
-        password: undefined,
-      },
+        password: undefined
+      }
     };
   },
 
@@ -73,9 +70,9 @@ export default {
       this.credentialsErrors = this.validateForm(this.credentials);
       if (Object.keys(this.credentialsErrors).length) return;
       let email = {
-        "emailAddress": this.credentials.emailAddress,
+        emailAddress: this.credentials.emailAddress
       };
-      this.$store.dispatch('user/setContact', email);
+      this.$store.dispatch("user/setContact", email);
       this.$router.push({ path: "/menu" });
     },
     validateForm(credentials) {
@@ -94,7 +91,19 @@ export default {
     isEmail(email) {
       const re = /\S+@\S+\.\S+/;
       return re.test(email);
-    },
-  },
+    }
+  }
 };
 </script>
+<style lang="postcss" scoped>
+.card-wrapper {
+  max-width: 450px;
+  box-shadow: 0px -8px 6px rgb(30 64 175 / 51%);
+}
+
+@screen md {
+  .card-wrapper {
+    box-shadow: 0px 3px 6px #1e40af82;
+  }
+}
+</style>
