@@ -56,33 +56,38 @@
   </div>
 </template>
 <script>
+import { ref, onMounted } from "vue";
+
 export default {
-  data() {
-    return {
-      showElement: false,
-      observer: null
-    };
-  },
-  mounted() {
-    this.observer = new IntersectionObserver(
-      ([entry]) => {
-        console.log("entry.intersectionRatio", entry.intersectionRatio);
-        if (entry.intersectionRatio === 1) {
-          this.showElement = true;
+  setup() {
+    const showElement = ref(false);
+    const newLicenseWrapperRef = ref(null);
+    const observeVisibilityOnTheDOM = () => {
+      let observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.intersectionRatio === 1) {
+            showElement.value = true;
+          }
+        },
+        {
+          root: null,
+          rootMargin: "5%",
+          threshold: 1.0
         }
-      },
-      {
-        root: null,
-        rootMargin: "5%",
-        threshold: 1.0
+      );
+      if (newLicenseWrapperRef.value) {
+        observer.observe(newLicenseWrapperRef.value);
       }
-    );
-    if (this.$refs.newLicenseWrapperRef) {
-      this.observer.observe(this.$refs.newLicenseWrapperRef);
-    }
+    };
+    onMounted(observeVisibilityOnTheDOM);
+    return {
+      showElement,
+      newLicenseWrapperRef
+    };
   }
 };
 </script>
+
 <style lang="postcss" scoped>
 .new-license-wrapper {
   height: 370px;
