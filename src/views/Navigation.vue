@@ -132,6 +132,7 @@
                   @click="logout()"
                   class="block px-4 py-2 text-sm text-blue-100 hover:bg-gray-100 hover:text-gray-900"
                   role="menuitem"
+                  id="logout"
                 >
                   Sign Out
                 </a>
@@ -164,7 +165,8 @@ export default {
   methods: {
     logout() {
       localStorage.removeItem("token");
-      // this.$router.push({ path: "/menu" });
+      localStorage.removeItem("userId");
+      this.$router.push({ path: "/login" });
     },
     showDropDown() {
       this.showDD = !this.showDD;
@@ -179,3 +181,9 @@ export default {
   },
 };
 </script>
+<style>
+
+#logout {
+  cursor: pointer;
+}
+</style>
