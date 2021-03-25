@@ -1,57 +1,15 @@
 <template>
   <div
-    class="card-wrapper bg-white sm:rounded-lg w-full p-large flex flex-col justify-center items-center"
+    class="w-screen h-screen flex justify-center items-center bg-primary-100"
   >
-    <Title message="Login" />
-
-    <form
-      @submit.prevent="submit"
-      class="flex flex-col justify-center items-center w-full mt-4"
-    >
-      <div class="flex flex-col mb-medium w-full">
-        <label>Email</label>
-        <input
-          v-model="credentials.emailAddress"
-          id="email-address"
-          name="email"
-          type="email"
-          autocomplete="email"
-          required
-        />
-        <span style="color: red">{{ credentialsErrors.emailAddress }}</span>
-      </div>
-      <div class="flex flex-col mb-tiny w-full">
-        <label>Password</label>
-        <input
-          v-model="credentials.password"
-          type="password"
-          id="password"
-          name="password"
-          autocomplete="current-password"
-          required
-        />
-        <span style="color: red">{{ credentialsErrors.password }}</span>
-      </div>
-      <a
-        href="#"
-        class="text-primary-500 w-full text-right mr-small hover:underline"
-      >
-        Forgot password?
-      </a>
-      <button click="submit()" class="mt-medium">Login</button>
-      <router-link
-        to="/signup"
-        class="text-base text-primary-500 hover:underline"
-        >Don't have an account? Sign Up</router-link
-      >
-    </form>
+    <LoginCard />
   </div>
 </template>
 <script>
-import Title from "@/sharedComponents/Title";
+import LoginCard from "@/components/Login/Login";
 
 export default {
-  components: { Title },
+  components: { LoginCard },
   data() {
     return {
       credentials: {
