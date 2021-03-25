@@ -7,7 +7,7 @@
       </div> -->
       <div class="flex pl-24 pt-8">
         <div class="mt-5">
-          <h4 class="text-lightBlueB-400">Your Previous Requests</h4>
+          <h2 class="text-lightBlueB-400">Your Previous Requests</h2>
         </div>
         <div class="lg:flex lg:items-stretch lg:justify-end ml-auto mr-24">
           <router-link to="/newlicense">
@@ -23,10 +23,10 @@
             <div class="p-1">
               <div class="flex content-center justify-center">
                 <router-link to="/newlicense">
-                  <RenderIllustration illustration="GoodStanding" />
+                  <RenderIllustration illustration="SimpleCertificate" />
                 </router-link>
               </div>
-              <h4 class="text-lightBlueB-500 mt-tiny">Good Standing</h4>
+              <h4 class="text-lightBlueB-500 mt-tiny">Approved</h4>
             </div>
           </div>
         </div>
