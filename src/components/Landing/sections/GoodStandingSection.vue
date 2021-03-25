@@ -52,29 +52,34 @@
   </div>
 </template>
 <script>
+import { ref, onMounted } from "vue";
+
 export default {
-  data() {
-    return {
-      showElement: false,
-      observer: null
-    };
-  },
-  mounted() {
-    this.observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.intersectionRatio === 1) {
-          this.showElement = true;
+  setup() {
+    const showElement = ref(false);
+    const goodStandingWrapperRef = ref(null);
+    const observeVisibilityOnTheDOM = () => {
+      let observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.intersectionRatio === 1) {
+            showElement.value = true;
+          }
+        },
+        {
+          root: null,
+          rootMargin: "5%",
+          threshold: 1.0
         }
-      },
-      {
-        root: null,
-        rootMargin: "5%",
-        threshold: 1.0
+      );
+      if (goodStandingWrapperRef.value) {
+        observer.observe(goodStandingWrapperRef.value);
       }
-    );
-    if (this.$refs.goodStandingWrapperRef) {
-      this.observer.observe(this.$refs.goodStandingWrapperRef);
-    }
+    };
+    onMounted(observeVisibilityOnTheDOM);
+    return {
+      showElement,
+      goodStandingWrapperRef
+    };
   }
 };
 </script>
