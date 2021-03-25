@@ -12,17 +12,9 @@ export default {
     commit(ADD_PROFILE_LOADING);
     try {
       const resp = await axios.post(
-        "https://ca9dee52bc55.ngrok.io/api/login",
+        "http://5245d8af90be.ngrok.io/api/login",
         profile,
-        {
-          headers: {
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Methods":
-              "GET, POST, PATCH, PUT, DELETE, OPTIONS",
-            "Access-Control-Allow-Headers":
-              "Origin, Content-Type, X-Auth-Token",
-          },
-        }
+        {}
       );
       console.log(resp.data);
       window.localStorage.setItem("token", resp.data["userToken"]);

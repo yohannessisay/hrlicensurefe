@@ -1,6 +1,5 @@
 <template>
   <div
-    v-if="this.show"
     style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);"
     class="ml-8 mt-8 mr-8 mb-12"
   >
@@ -223,12 +222,14 @@
         <h5 class="ml-8">Private</h5>
       </div>
     </div>
-    <div class="flex justify-start flex-wrap">
-      <div v-for="file in docs" v-bind:key="file.id">
-        <Title class="" :message="file.fieldName" />
-        <picture>
-          <img :src="basePath + file.filePath" />
-        </picture>
+    <div class="flex justify-start">
+      <div class="flex flex-row flex-wrap">
+        <div v-for="file in docs" v-bind:key="file.id">
+          <Title class="" :message="file.fieldName" />
+          <picture>
+            <img :src="basePath + file.filePath" />
+          </picture>
+        </div>
       </div>
     </div>
     <div class="mt-12 flex justify-center">
@@ -246,11 +247,12 @@
       <button variant="outline">I will finish Later</button>
     </div>
   </div>
+
   <div v-if="showFlash">
-    <FlashMessage message="Your new license is applied successfully!" />
+    <FlashMessage message="Your renewal license is applied successfully!" />
   </div>
   <div v-if="showErrorFlash">
-    <ErrorFlashMessage message="Unable to apply your new license!" />
+    <ErrorFlashMessage message="Unable to apply your renewal license!" />
   </div>
 </template>
 
@@ -260,7 +262,6 @@ import axios from "axios";
 import { mapGetters } from "vuex";
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
-
 export default {
   props: ["activeState"],
   components: {
@@ -273,28 +274,55 @@ export default {
   },
 
   async created() {
-    const url = `http://localhost:5000/api/profiles/2`;
+    const url = `http://localhost:5000/api/profiles/` + this.userId;
     const getProfile = await axios.get(url, {
       responseType: "json",
     });
     if (getProfile) {
-      this.show = true;
       this.setData(getProfile.data.data);
-      console.log(this.setData);
     } else {
       console.log("Server Error!");
     }
 
-    this.license = this.getLicense;
-    this.applicantId = this.license.applicantId;
-    this.applicantTypeId = this.license.applicantTypeId;
-    this.education.departmentId = this.license.education.departmentId;
-    this.education.institutionId = this.license.education.institutionId;
+    this.renewalLicense = this.getRenewalLicense;
+    this.applicantId = this.renewalLicense.applicantId;
+    this.applicantTypeId = this.renewalLicense.applicantTypeId;
+    this.education.departmentId = this.renewalLicense.education.departmentId;
+    this.education.institutionId = this.renewalLicense.education.institutionId;
     this.docs = this.getDocs.data;
   },
   data: () => ({
-    show: false,
-    profileInfo: {},
+    profileInfo: {
+      name: "",
+      fatherName: "",
+      grandFatherName: "",
+      gender: "",
+      nationality: "",
+      placeOfBirth: "",
+      dateOfBirth: "",
+      maritalStatus: {
+        name: "",
+      },
+      woreda: {
+        name: "",
+        zone: {
+          name: "",
+          region: {
+            name: "",
+          },
+        },
+      },
+      kebele: "",
+      houseNumber: "",
+      residence: "",
+      user: {
+        phoneNumber: "",
+        emailAddress: "",
+      },
+      userType: {
+        name: "",
+      },
+    },
     applicantId: "",
     applicantTypeId: "",
     education: {
@@ -310,15 +338,15 @@ export default {
   }),
   computed: {
     ...mapGetters({
-      getLicense: "newlicense/getLicense",
-      getDocs: "newlicense/getDocs",
+      getRenewalLicense: "renewal/getRenewalLicense",
+      getDocs: "renewal/getDocs",
     }),
   },
   methods: {
     async submitRequest() {
       this.showFlash = false;
       this.showErrorFlash = false;
-      let license = {
+      let renewal = {
         applicantId: this.applicantId,
         applicantTypeId: this.applicantTypeId,
         education: {
@@ -331,33 +359,42 @@ export default {
         const aDoc = this.docs[index];
 
         if (aDoc.fieldName === "photo") {
-          license.photoId = aDoc.id;
+          renewal.photoId = aDoc.id;
         } else if (aDoc.fieldName === "passport") {
-          license.passportId = aDoc.id;
+          renewal.passportId = aDoc.id;
         } else if (aDoc.fieldName === "healthExamCert") {
-          license.healthExamCertId = aDoc.id;
+          renewal.healthExamCertId = aDoc.id;
         } else if (aDoc.fieldName === "serviceFee") {
-          license.serviceFeeId = aDoc.id;
+          renewal.serviceFeeId = aDoc.id;
+        } else if (aDoc.fieldName === "cpd") {
+          renewal.cpdId = aDoc.id;
+        } else if (aDoc.fieldName === "workExperience") {
+          renewal.workExperienceId = aDoc.id;
+        } else if (aDoc.fieldName === "previousLicense") {
+          renewal.previousLicenseId = aDoc.id;
         }
       }
+      console.log(renewal);
 
       try {
         await axios
-          .post("http://localhost:5000/api/newLicenses/add", license)
+          .post("http://localhost:5000/api/renewals/add", renewal)
           .then((response) => {
             if (response.statusText == "Created") {
               this.Success = true;
               this.showFlash = true;
 
               console.log(response);
-              this.$router.push({ path: "/menu" });
+              this.$router.push({ path: "/renewalSubmitted" });
             }
             //console.log(this.a);
+            this.$router.push({ path: "/menu" });
+            console.log(response);
           })
-          .catch((err) => {
+          .catch((error) => {
             this.Success = false;
             this.showErrorFlash = true;
-            console.log(err);
+            console.log(error);
           });
       } catch (error) {
         console.log(error);

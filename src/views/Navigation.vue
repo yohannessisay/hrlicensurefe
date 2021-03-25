@@ -56,7 +56,9 @@
               message="Address"
             />
           </router-link>
-          <h2 class="text-md AtkinsonHyperlegibleBold text-primary-600 ml-2 ">HRIS - license</h2>
+          <h2 class="text-md AtkinsonHyperlegibleBold text-primary-600 ml-2 ">
+            HRIS - license
+          </h2>
         </div>
 
         <div class="flex items-center space-x-5">
@@ -100,10 +102,14 @@
             </a>
             <div
               v-if="showDD == true"
-              class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+              class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white focus:outline-none"
+              role="menu"
+              aria-orientation="vertical"
+              aria-labelledby="options-menu"
+            >
               <div class="py-1" role="none">
                 <a
-                  href="#" 
+                  href="#"
                   class="block px-4 py-2 text-sm text-blue-100  hover:bg-gray-100 hover:text-gray-900"
                   role="menuitem"
                   >Profile
@@ -123,9 +129,10 @@
                   >Display Settings
                 </a>
                 <a
-                  href="#"
+                  @click="logout()"
                   class="block px-4 py-2 text-sm text-blue-100 hover:bg-gray-100 hover:text-gray-900"
                   role="menuitem"
+                  id="logout"
                 >
                   Sign Out
                 </a>
@@ -143,12 +150,12 @@ import Title from "@/sharedComponents/Title";
 import RenderIllustration from "@/sharedComponents/RenderIllustration";
 
 export default {
-  components: { Title, RenderIllustration},
+  components: { Title, RenderIllustration },
   data() {
     return {
       auth: false,
-      token: '',
-      showDD: false
+      token: "",
+      showDD: false,
     };
   },
   created() {
@@ -158,10 +165,12 @@ export default {
   methods: {
     logout() {
       localStorage.removeItem("token");
+      localStorage.removeItem("userId");
+      this.$router.push({ path: "/login" });
     },
     showDropDown() {
       this.showDD = !this.showDD;
-    }
+    },
   },
   computed() {
     if (this.token != undefined) {
@@ -170,11 +179,11 @@ export default {
       this.auth = false;
     }
   },
-  // watch: {
-  //   token: function(newVal, oldVal) {
-  //     console.log("changed");
-  //     this.auth = !this.auth;
-  //   },
-  // },
 };
 </script>
+<style>
+
+#logout {
+  cursor: pointer;
+}
+</style>

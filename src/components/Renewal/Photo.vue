@@ -5,12 +5,12 @@
         class="flex flex-col pt-large w-full bg-white blue-box-shadow-light rounded "
       >
         <TitleWithIllustration
-          illustration="Certificate"
-          message="Health Examination Certificate"
+          illustration="User"
+          message="Photo"
           class="mt-8"
         />
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
-          <div class="flex justify-center mb-10">
+          <div class="flex justify-center">
             <div>
               <span v-if="showUpload">
                 <label class="text-primary-700"
@@ -18,8 +18,9 @@
                   <div class="dropbox">
                     <input
                       type="file"
-                      id="healthExamCertFile"
-                      ref="healthExamCertFile"
+                      id="photoFile"
+                      class="photoFile"
+                      ref="photoFile"
                       v-on:change="handleFileUpload()"
                       style="margin-bottom: 15px !important;"
                     />
@@ -41,6 +42,10 @@
               <span v-if="!showUpload && !isImage">
                 <img :src="filePreview" alt="" class="preview" />
               </span>
+
+              <h6 style="margin-top: 15px !important;">
+                Your photo should be passport size
+              </h6>
             </div>
           </div>
 
@@ -65,38 +70,39 @@ import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
 import { mapGetters, mapActions } from "vuex";
 
 export default {
-  props: ["activeState"],
   components: { TitleWithIllustration },
+  props: ["activeState"],
   data() {
     return {
-      healthExamCertFile: "",
+      photoFile: "",
       showPreview: false,
       filePreview: "",
       showUpload: true,
-      isImage: true,
+      isImage: true
     };
   },
   computed: {
     ...mapGetters({
-      getPassport: "newlicense/getPassport",
-    }),
+      getRenewalLicense: "renewal/getRenewalLicense"
+    })
   },
   created() {
-    this.passport = this.getPassport;
+    this.renewalLicense = this.getRenewalLicense;
+    console.log(this.renewalLicense);
   },
   methods: {
-    ...mapActions(["setHealthExamCert"]),
+    ...mapActions(["setRenewalPhoto"]),
     reset() {
       // reset form to initial state
       this.showUpload = true;
       this.showPreview = false;
-      this.healthExamCertFile = "";
+      this.photoFile = "";
       this.filePreview = "";
       this.isImage = true;
     },
     handleFileUpload() {
       this.showUpload = false;
-      this.healthExamCertFile = this.$refs.healthExamCertFile.files[0];
+      this.photoFile = this.$refs.photoFile.files[0];
       let reader = new FileReader();
 
       reader.addEventListener(
@@ -108,59 +114,30 @@ export default {
         false
       );
 
-      if (this.healthExamCertFile) {
-        if (/\.(jpe?g|png|gif)$/i.test(this.healthExamCertFile.name)) {
+      if (this.photoFile) {
+        if (/\.(jpe?g|png|gif)$/i.test(this.photoFile.name)) {
           this.isImage = true;
-          reader.readAsDataURL(this.healthExamCertFile);
-        } else if (/\.(pdf)$/i.test(this.healthExamCertFile.name)) {
+          reader.readAsDataURL(this.photoFile);
+        } else if (/\.(pdf)$/i.test(this.photoFile.name)) {
           this.isImage = false;
-          reader.readAsText(this.healthExamCertFile);
+          reader.readAsText(this.photoFile);
         }
       }
     },
     submit() {
       this.$emit("changeActiveState");
-      let file3 = {
-        healthExamCert: this.healthExamCertFile,
+      let file = {
+        profilePhoto: this.photoFile
       };
-      this.$store.dispatch("newlicense/setHealthExamCert", file3);
-    },
-  },
-  setup() {},
+      this.$store.dispatch("renewal/setRenewalPhoto", file);
+    }
+  }
 };
 </script>
 <style>
+@import "../../styles/document-upload.css";
 img {
   width: 250px;
   height: 250px;
-}
-
-#healthExamCertFile {
-  opacity: 0; /* invisible but it's there! */
-  width: 100%;
-  height: 200px;
-  position: absolute;
-  cursor: pointer;
-}
-
-.dropbox {
-  outline: 2px dashed grey; /* the dash box */
-  outline-offset: -10px;
-  background: lightcyan;
-  color: dimgray;
-  padding: 10px 10px;
-  min-height: 200px; /* minimum height */
-  position: relative;
-  cursor: pointer;
-}
-
-.dropbox:hover {
-  background: lightblue; /* when mouse over to the drop zone, change color */
-}
-
-.dropbox p {
-  font-size: 1.2em;
-  text-align: center;
-  padding: 50px 0;
 }
 </style>

@@ -160,11 +160,7 @@
       <Title message="Contact" />
     </div>
     <div class="flex flex-row">
-      <div
-        :class="[
-          this.profileInfo.user.phoneNumber === null ? errorClass : activeClass,
-        ]"
-      >
+      <div :class="[this.profileInfo.name === null ? errorClass : activeClass]">
         <label class="ml-8"> Mobile Number</label>
         <h5 class="ml-8">
           {{
@@ -175,13 +171,7 @@
         </h5>
       </div>
 
-      <div
-        :class="[
-          this.profileInfo.user.emailAddress === null
-            ? errorClass
-            : activeClass,
-        ]"
-      >
+      <div :class="[this.profileInfo.name === null ? errorClass : activeClass]">
         <label class="ml-8"> Email</label>
         <h5 class="ml-8">
           {{
@@ -191,12 +181,8 @@
           }}
         </h5>
       </div>
-      <div
-        :class="[
-          this.profileInfo.userType.name === null ? errorClass : activeClass,
-        ]"
-      >
-        <label class="ml-8"> User Type</label>
+      <div :class="[this.profileInfo.name === null ? errorClass : activeClass]">
+        <label class="ml-8"> Applicant Type</label>
         <h5 class="ml-8">
           {{
             this.profileInfo.userType.name
@@ -223,7 +209,7 @@
         <h5 class="ml-8">Private</h5>
       </div>
     </div>
-    <div class="flex justify-start flex-wrap">
+    <div class="flex justify-start">
       <div v-for="file in docs" v-bind:key="file.id">
         <Title class="" :message="file.fieldName" />
         <picture>
@@ -246,34 +232,23 @@
       <button variant="outline">I will finish Later</button>
     </div>
   </div>
-  <div v-if="showFlash">
-    <FlashMessage message="Your new license is applied successfully!" />
-  </div>
-  <div v-if="showErrorFlash">
-    <ErrorFlashMessage message="Unable to apply your new license!" />
-  </div>
 </template>
 
 <script>
 import Title from "@/sharedComponents/Title";
 import axios from "axios";
 import { mapGetters } from "vuex";
-import FlashMessage from "@/sharedComponents/FlashMessage";
-import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
-
 export default {
   props: ["activeState"],
   components: {
     Title,
-    FlashMessage,
-    ErrorFlashMessage,
   },
   beforeCreate() {
-    this.userId = +localStorage.getItem("userId");
+    this.userId = localStorage.getItem("userId");
   },
 
   async created() {
-    const url = `http://localhost:5000/api/profiles/2`;
+    const url = `http://afeb4bdfee26.ngrok.io/api/profiles/2`;
     const getProfile = await axios.get(url, {
       responseType: "json",
     });
@@ -305,8 +280,6 @@ export default {
     activeClass: "active",
     errorClass: "text-danger",
     dataFetched: false,
-    showFlash: false,
-    showErrorFlash: false,
   }),
   computed: {
     ...mapGetters({
@@ -316,8 +289,6 @@ export default {
   },
   methods: {
     async submitRequest() {
-      this.showFlash = false;
-      this.showErrorFlash = false;
       let license = {
         applicantId: this.applicantId,
         applicantTypeId: this.applicantTypeId,
@@ -343,26 +314,40 @@ export default {
 
       try {
         await axios
-          .post("http://localhost:5000/api/newLicenses/add", license)
+          .post("http://localhost:5000/api/newLicenses", license)
           .then((response) => {
             if (response.statusText == "Created") {
               this.Success = true;
-              this.showFlash = true;
-
-              console.log(response);
-              this.$router.push({ path: "/menu" });
             }
             //console.log(this.a);
-          })
-          .catch((err) => {
-            this.Success = false;
-            this.showErrorFlash = true;
-            console.log(err);
+            this.$router.push({ path: "/menu" });
+
+            console.log(response);
           });
       } catch (error) {
         console.log(error);
       }
     },
+    // async fetchProfile() {
+    //   console.log('methodd');
+    //   try {
+    //     const url = `http://localhost:5000/api/profiles/` + this.userId;
+    //     const response = await axios.get(url);
+    //     const fetchedData = response.data;
+    //     const result = fetchedData.data;
+    //     return result;
+    //     // this.profileInfo = result;
+    //   } catch (err) {
+    //     if (err.response) {
+    //       console.log("Server Error:", err);
+    //     } else if (err.request) {
+    //       console.log("Network Error:", err);
+    //     } else {
+    //       console.log("Client Error:", err);
+    //     }
+    //     return null;
+    //   }
+    // },
     setData(data) {
       if (data) {
         this.profileInfo = data;

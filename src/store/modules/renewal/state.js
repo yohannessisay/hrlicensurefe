@@ -6,7 +6,6 @@ export default {
       departmentId: "",
       institutionId: "",
     },
-    
     file: {
       profilePhoto: ""
     },
@@ -16,10 +15,22 @@ export default {
     file3: {
       healthExamCert: ""
     },
+    file4: {
+      serviceFee: ""
+    },
+    file5: {
+      cpd: ""
+    },
+    file6: {
+      workExperience: ""
+    },
+    file7: {
+      previousLicense: ""
+    },
     docs: {},
-    addProfileLoading: false,
-    addProfileSuccess: false,
-    addProfileError: false,
+    addRenewalLoading: false,
+    addRenewalSuccess: false,
+    addRenewalError: false,
     activeState: 0,
   },
 };

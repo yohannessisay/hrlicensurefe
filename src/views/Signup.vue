@@ -101,7 +101,7 @@ export default {
       }
       this.$store.dispatch("user/signUp", signup);
       console.log(signup);
-      this.$router.push({ path: "/login" });
+      this.$router.push({ path: "/addProfile" });
     },
     validateForm(credentials) {
       const errors = {};

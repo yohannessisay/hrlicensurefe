@@ -78,7 +78,7 @@ export default {
     nextStep: function() {
       this.$store.dispatch("profile/setContact", this.contact);
       this.$emit("changeActiveState");
-      console.log(this.contact);
+      // console.log(this.contact);
     }
   },
   mounted() {

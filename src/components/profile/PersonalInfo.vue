@@ -11,9 +11,27 @@
       </div>
       <form class="mx-auto max-w-3xl w-full mt-10" @submit.prevent="nextStep">
         <div class="flex">
-          <div class="flex flex-col mb-medium w-1/2 mr-12">
+          <div class="flex flex-col mb-medium w-1/2 mr-6">
             <label class="text-primary-700">First Name</label>
             <input class="max-w-3xl" type="text" v-model="personalInfo.name" />
+          </div>
+          <div class="flex flex-col mb-medium w-1/2 ml-12">
+            <label class="text-primary-700">Father Name</label>
+            <input
+              class="max-w-3xl"
+              type="text"
+              v-model="personalInfo.fatherName"
+            />
+          </div>
+        </div>
+        <div class="flex">
+          <div class="flex flex-col mb-medium w-1/2 mr-12">
+            <label class="text-primary-700">Grand Father Name</label>
+            <input
+              class="max-w-3xl"
+              type="text"
+              v-model="personalInfo.grandFatherName"
+            />
           </div>
           <div class="flex flex-col mb-medium w-1/2 m1-12">
             <label class="text-primary-700">Nationality</label>
@@ -26,29 +44,11 @@
         </div>
         <div class="flex">
           <div class="flex flex-col mb-medium w-1/2 mr-12">
-            <label class="text-primary-700">Father Name</label>
-            <input
-              class="max-w-3xl"
-              type="text"
-              v-model="personalInfo.fatherName"
-            />
-          </div>
-          <div class="flex flex-col mb-medium w-1/2 m1-12">
             <label class="text-primary-700">Place of birth(Optional)</label>
             <input
               class="max-w-3xl"
               type="text"
               v-model="personalInfo.placeOfBirth"
-            />
-          </div>
-        </div>
-        <div class="flex">
-          <div class="flex flex-col mb-medium w-1/2 mr-12">
-            <label class="text-primary-700">Grand Father Name</label>
-            <input
-              class="max-w-3xl"
-              type="text"
-              v-model="personalInfo.grandFatherName"
             />
           </div>
           <div class="flex flex-col mb-medium w-1/2 m1-12">
@@ -305,7 +305,6 @@ export default {
       //this.$store.dispatch("profile/setProfileInfo", this.personalInfo);
       this.$store.dispatch("profile/setProfileInfo", this.personalInfo);
       this.$emit("changeActiveState");
-      console.log(this.personalInfo);
     },
     genderChanged: function() {
       if (this.personalInfo.maritalStatusId == 3) {

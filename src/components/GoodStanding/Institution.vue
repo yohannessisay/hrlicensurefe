@@ -1,8 +1,8 @@
 <template>
   <div class="flex justify-center">
-    <div class="w-screen max-w-4xl">
+    <div class="w-screen max-w-4xl h-screen">
       <div
-        class="flex flex-col pt-large w-full bg-white blue-box-shadow-light rounded"
+        class="flex flex-col mt-large w-full bg-white blue-box-shadow-light rounded"
       >
         <div class="mt-large">
           <TitleWithIllustration
@@ -95,7 +95,7 @@ export default {
   },
   data: () => ({
     licenseInfo: {
-      applicantId: +localStorage.getItem("userId"),
+      applicantId: parseInt(localStorage.getItem("userId")),
       applicantTypeId: "",
       education: {
         departmentId: "",
