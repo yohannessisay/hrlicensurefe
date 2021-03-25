@@ -285,7 +285,6 @@ export default {
     ...mapGetters({
       getLicense: "newlicense/getLicense",
       getDocs: "newlicense/getDocs",
-      
     }),
   },
   methods: {
@@ -321,6 +320,8 @@ export default {
               this.Success = true;
             }
             //console.log(this.a);
+            this.$router.push({ path: "/menu" });
+
             console.log(response);
           });
       } catch (error) {

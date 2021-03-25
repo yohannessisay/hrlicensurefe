@@ -388,6 +388,7 @@ export default {
               this.$router.push({ path: "/renewalSubmitted" });
             }
             //console.log(this.a);
+            this.$router.push({ path: "/menu" });
             console.log(response);
           })
           .catch((error) => {
