@@ -11,7 +11,7 @@
       >
         <transition name="slide-fade-to-left">
           <section
-            v-if="showGetCertified"
+            v-if="showContent"
             class="flex flex-col items-center lg:items-end"
           >
             <h1
@@ -45,8 +45,8 @@
           <transition name="slide-fade-to-left">
             <button
               class="mt-medium lg:mt-0 lg:self-end px-xl"
-              v-if="showSignup"
-              @click="onSignupClick"
+              v-if="showContent"
+              @click="$emit('setShowSignup', true)"
             >
               Sign Up
             </button>
@@ -57,36 +57,24 @@
   </section>
 </template>
 <script>
+import { ref, onMounted } from "vue";
 import LandingIllustration from "./LandingIllustration";
 
 export default {
   components: {
     LandingIllustration
   },
-  data() {
+  emits: ["setShowSignup"],
+  setup() {
+    const showContent = ref(false);
+    onMounted(() => {
+      setTimeout(() => {
+        showContent.value = true;
+      }, 500);
+    });
     return {
-      showGetCertified: false,
-      showContent: false,
-      showSignup: false
+      showContent
     };
-  },
-  mounted() {
-    setTimeout(() => {
-      this.showGetCertified = true;
-    }, 500);
-
-    setTimeout(() => {
-      this.showContent = true;
-    }, 500);
-
-    setTimeout(() => {
-      this.showSignup = true;
-    }, 500);
-  },
-  methods: {
-    onSignupClick() {
-      this.$emit("setShowSignup", true);
-    }
   }
 };
 </script>

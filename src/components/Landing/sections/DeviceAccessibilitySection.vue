@@ -222,29 +222,34 @@
   </div>
 </template>
 <script>
+import { ref, onMounted } from "vue";
+
 export default {
-  data() {
-    return {
-      showElement: false,
-      observer: null
-    };
-  },
-  mounted() {
-    this.observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.intersectionRatio === 1) {
-          this.showElement = true;
+  setup() {
+    const showElement = ref(false);
+    const deviceAccessibilityRef = ref(null);
+    const observeVisibilityOnTheDOM = () => {
+      let observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.intersectionRatio === 1) {
+            showElement.value = true;
+          }
+        },
+        {
+          root: null,
+          rootMargin: "2%",
+          threshold: 1.0
         }
-      },
-      {
-        root: null,
-        rootMargin: "2%",
-        threshold: 1.0
+      );
+      if (deviceAccessibilityRef.value) {
+        observer.observe(deviceAccessibilityRef.value);
       }
-    );
-    if (this.$refs.deviceAccessibilityRef) {
-      this.observer.observe(this.$refs.deviceAccessibilityRef);
-    }
+    };
+    onMounted(observeVisibilityOnTheDOM);
+    return {
+      showElement,
+      deviceAccessibilityRef
+    };
   }
 };
 </script>
