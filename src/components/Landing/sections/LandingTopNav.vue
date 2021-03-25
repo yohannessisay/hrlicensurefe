@@ -6,7 +6,11 @@
       <RenderIllustration illustration="Logo" class="hidden sm:block" />
       <h3 class="ml-tiny font-AtkinsonHyperlegibleBold">HRIS - Lisence</h3>
     </div>
-    <button variant="outline" class="h-small" @click="onLoginClick">
+    <button
+      variant="outline"
+      class="h-small"
+      @click="$emit('setShowLogin', true)"
+    >
       Log In
     </button>
   </section>
@@ -15,11 +19,7 @@
 import RenderIllustration from "@/sharedComponents/RenderIllustration";
 export default {
   components: { RenderIllustration },
-  methods: {
-    onLoginClick() {
-      this.$emit("setShowLogin", true);
-    }
-  }
+  emits: ["setShowLogin"]
 };
 </script>
 <style lang="postcss" scoped>
