@@ -9,7 +9,7 @@
           class="ml-8 mt-5 mr-8 mb-12"
         >
           <div class="flex justify-center">
-            <Title message="Applied New license Detail" />
+            <Title message="Good Standing Detail" />
           </div>
           <div class="flex justify-start">
             <Title message="Personal Info" />
@@ -248,7 +248,7 @@
           <div class="flex flex-row">
             <div
               :class="[
-                this.licenseInfo.education.institution.name === null
+                this.goodStandingInfo.education.institution.name === null
                   ? errorClass
                   : activeClass,
               ]"
@@ -256,16 +256,16 @@
               <label class="ml-8"> Institution Name</label>
               <h5 class="ml-8">
                 {{
-                  this.licenseInfo["education"]["institution"]["name"]
-                    ? this.licenseInfo["education"]["institution"]["name"]
+                  this.goodStandingInfo["education"]["institution"]["name"]
+                    ? this.goodStandingInfo["education"]["institution"]["name"]
                     : "-"
                 }}
               </h5>
             </div>
             <div
               :class="[
-                this.licenseInfo.education.institution.institutionType.name ===
-                null
+                this.goodStandingInfo.education.institution.institutionType
+                  .name === null
                   ? errorClass
                   : activeClass,
               ]"
@@ -273,10 +273,10 @@
               <label class="ml-8"> Institution Type</label>
               <h5 class="ml-8">
                 {{
-                  this.licenseInfo["education"]["institution"][
+                  this.goodStandingInfo["education"]["institution"][
                     "institutionType"
                   ]["name"]
-                    ? this.licenseInfo["education"]["institution"][
+                    ? this.goodStandingInfo["education"]["institution"][
                         "institutionType"
                       ]["name"]
                     : "-"
@@ -285,7 +285,7 @@
             </div>
             <div
               :class="[
-                this.licenseInfo.education.department.name === null
+                this.goodStandingInfo.education.department.name === null
                   ? errorClass
                   : activeClass,
               ]"
@@ -293,15 +293,15 @@
               <label class="ml-8"> Department</label>
               <h5 class="ml-8">
                 {{
-                  this.licenseInfo["education"]["department"]["name"]
-                    ? this.licenseInfo["education"]["department"]["name"]
+                  this.goodStandingInfo["education"]["department"]["name"]
+                    ? this.goodStandingInfo["education"]["department"]["name"]
                     : "-"
                 }}
               </h5>
             </div>
             <div
               :class="[
-                this.licenseInfo.applicantType.name === null
+                this.goodStandingInfo.applicantType.name === null
                   ? errorClass
                   : activeClass,
               ]"
@@ -309,37 +309,11 @@
               <label class="ml-8"> Applicant Type</label>
               <h5 class="ml-8">
                 {{
-                  this.licenseInfo["applicantType"]["name"]
-                    ? this.licenseInfo["applicantType"]["name"]
+                  this.goodStandingInfo["applicantType"]["name"]
+                    ? this.goodStandingInfo["applicantType"]["name"]
                     : "-"
                 }}
               </h5>
-            </div>
-          </div>
-          <div class="flex justify-start flex-wrap">
-            <div v-if="this.licenseInfo.photo.filePath">
-              <Title class="" message="Photo" />
-              <picture>
-                <img :src="basePath + licenseInfo.photo.filePath" />
-              </picture>
-            </div>
-            <div v-if="this.licenseInfo.passport.filePath">
-              <Title class="" message="Passport" />
-              <picture>
-                <img :src="basePath + licenseInfo.passport.filePath" />
-              </picture>
-            </div>
-            <div v-if="this.licenseInfo.healthExamCert.filePath">
-              <Title class="" message="Healt Examination Certificate" />
-              <picture>
-                <img :src="basePath + licenseInfo.healthExamCert.filePath" />
-              </picture>
-            </div>
-            <div v-if="this.licenseInfo.serviceFee.filePath">
-              <Title class="" message="Service Fee" />
-              <picture>
-                <img :src="basePath + licenseInfo.serviceFee.filePath" />
-              </picture>
             </div>
           </div>
         </div>
@@ -396,7 +370,7 @@ export default {
         name: "",
       },
     },
-    licenseInfo: {
+    goodStandingInfo: {
       applicantType: {
         name: "Local",
       },
@@ -411,22 +385,6 @@ export default {
           name: "",
         },
       },
-      photo: {
-        fieldName: "",
-        filePath: "",
-      },
-      passport: {
-        fieldName: "",
-        filePath: "",
-      },
-      healthExamCert: {
-        fieldName: "",
-        filePath: "",
-      },
-      serviceFee: {
-        fieldName: "",
-        filePath: "",
-      },
     },
     basePath: "http://localhost:5000/",
     activeClass: "active",
@@ -435,13 +393,14 @@ export default {
   methods: {
     async fetchSubmitted() {
       try {
-        const url = `http://localhost:5000/api/newLicenses/user/` + this.userId;
+        const url =
+          `http://localhost:5000/api/goodStandings/user/` + this.userId;
         const response = await axios.get(url);
         console.log(response);
         const results = response.data.data;
         const lastSubmitted = results.length - 1;
-        this.licenseInfo = results[lastSubmitted];
-        console.log(this.licenseInfo);
+        this.goodStandingInfo = results[lastSubmitted];
+        console.log(this.goodStandingInfo);
       } catch (err) {
         if (err.response) {
           console.log("Server Error:", err);

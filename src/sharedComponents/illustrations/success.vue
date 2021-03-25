@@ -1,7 +1,12 @@
 <template>
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 71.645 69.557">
     <defs>
-      <linearGradient id="successSVG" x2=".924" y2="1" gradientUnits="objectBoundingBox">
+      <linearGradient
+        id="successSVG"
+        x2=".924"
+        y2="1"
+        gradientUnits="objectBoundingBox"
+      >
         <stop offset="0" stop-color="#fff" />
         <stop offset=".492" stop-color="#fff" />
         <stop offset="1" stop-color="#fde68a" />

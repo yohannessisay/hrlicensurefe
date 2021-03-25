@@ -147,17 +147,17 @@ export default {
 
         if (response.status === 200) {
           this.$emit("changeActiveState");
-        //   const docResponse = [];
-          
-        // console.log(response);
-        //   for (let index = 0; index < response.data.data.length; index++) {
-        //     const elementId = response.data.data[index].id;
-        //     const elementName = response.data.data[index].fieldName;
-        //     const docFile = {};
-        //     docFile[`${elementName}`] = elementId;
+          //   const docResponse = [];
 
-        //     docResponse.push(docFile);
-        //   }
+          // console.log(response);
+          //   for (let index = 0; index < response.data.data.length; index++) {
+          //     const elementId = response.data.data[index].id;
+          //     const elementName = response.data.data[index].fieldName;
+          //     const docFile = {};
+          //     docFile[`${elementName}`] = elementId;
+
+          //     docResponse.push(docFile);
+          //   }
           this.$store.dispatch("newlicense/setDocs", response.data);
         } else {
           console.log("Error occurred");
