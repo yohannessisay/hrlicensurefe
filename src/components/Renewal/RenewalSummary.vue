@@ -344,6 +344,8 @@ export default {
   },
   methods: {
     async submitRequest() {
+      this.showFlash = false;
+      this.showErrorFlash = false;
       let renewal = {
         applicantId: this.applicantId,
         applicantTypeId: this.applicantTypeId,

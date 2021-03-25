@@ -88,16 +88,29 @@
       </div>
     </div>
   </div>
+  <div v-if="showFlash">
+    <FlashMessage message="Your verification is applied successfully!" />
+  </div>
+  <div v-if="showErrorFlash">
+    <ErrorFlashMessage message="Unable to apply your verification!" />
+  </div>
 </template>
 
 <script>
 import Navigation from "@/views/Navigation";
 import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
 import axios from "axios";
+import FlashMessage from "@/sharedComponents/FlashMessage";
+import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 
 export default {
   props: ["activeState"],
-  components: { TitleWithIllustration, Navigation },
+  components: {
+    TitleWithIllustration,
+    Navigation,
+    FlashMessage,
+    ErrorFlashMessage,
+  },
   mounted() {
     this.fetchInstitutions();
     this.fetchDepartments();
@@ -115,10 +128,14 @@ export default {
     applicantTypes: [],
     institutions: [],
     departments: [],
+    showFlash: false,
+    showErrorFlash: false,
   }),
 
   methods: {
     async submit() {
+      this.showFlash = false;
+      this.showErrorFlash = false;
       this.$emit("changeActiveState");
       let verification = {
         applicantId: this.verificationInfo.applicantId,
@@ -129,6 +146,7 @@ export default {
         },
       };
       console.log(verification);
+      // verification.applicantTypeId = 10000;
       try {
         await axios
           .post("http://localhost:5000/api/verifications/add", verification)
@@ -140,10 +158,10 @@ export default {
               console.log(response);
               this.$router.push({ path: "/verificationSubmitted" });
             }
-            //console.log(this.a);
           })
           .catch((err) => {
-            this.Success = false;
+            console.log("am here");
+            this.Error = true;
             this.showErrorFlash = true;
             console.log(err);
           });

@@ -316,6 +316,8 @@ export default {
   },
   methods: {
     async submitRequest() {
+      this.showFlash = false;
+      this.showErrorFlash = false;
       let license = {
         applicantId: this.applicantId,
         applicantTypeId: this.applicantTypeId,

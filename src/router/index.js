@@ -77,6 +77,11 @@ const routes = [
     name: "verificationSubmitted",
     component: () => import("../views/VerificationSubmitted.vue"),
   },
+  {
+    path: "/goodStandingSubmitted",
+    name: "goodStandingSubmitted",
+    component: () => import("../views/GoodStandingSubmitted.vue"),
+  }
 ];
 
 const router = createRouter({
