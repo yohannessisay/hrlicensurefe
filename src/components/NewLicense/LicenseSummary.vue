@@ -348,7 +348,7 @@ export default {
               this.showFlash = true;
 
               console.log(response);
-              this.$router.push({ path: "/submitted" });
+              this.$router.push({ path: "/menu" });
             }
             //console.log(this.a);
           })

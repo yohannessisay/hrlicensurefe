@@ -225,7 +225,7 @@ export default {
     submit: function() {
       this.prepareObject();
       this.addProfile();
-      this.$router.push({ path: "/menu" });
+      this.$router.push({ path: "/login" });
     }
   },
   mounted() {

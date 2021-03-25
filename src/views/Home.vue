@@ -1,14 +1,14 @@
 <template>
   <div>
-    <License />
+    <Login />
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import License from "@/views/License";
+import Login from "./Login.vue";
 export default {
   name: "Home",
-  components: { License }
+  components: { Login }
 };
 </script>

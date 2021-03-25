@@ -294,8 +294,8 @@ export default {
         applicantTypeId: this.applicantTypeId,
         education: {
           institutionId: this.education.departmentId,
-          departmentId: this.education.institutionId,
-        },
+          departmentId: this.education.institutionId
+        }
       };
 
       for (let index = 0; index < this.docs.length; index++) {
@@ -320,6 +320,8 @@ export default {
               this.Success = true;
             }
             //console.log(this.a);
+            this.$router.push({ path: "/menu" });
+
             console.log(response);
           });
       } catch (error) {
