@@ -56,33 +56,38 @@
   </div>
 </template>
 <script>
+import { ref, onMounted } from "vue";
+
 export default {
-  data() {
-    return {
-      showElement: false,
-      observer: null
-    };
-  },
-  mounted() {
-    this.observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.intersectionRatio === 1) {
-          this.showElement = true;
+  setup() {
+    const showElement = ref(false);
+    const renewalWrapperRef = ref(null);
+    const observeVisibilityOnTheDOM = () => {
+      let observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.intersectionRatio === 1) {
+            showElement.value = true;
+          }
+        },
+        {
+          root: null,
+          rootMargin: "5%",
+          threshold: 1.0
         }
-      },
-      {
-        root: null,
-        rootMargin: "5%",
-        threshold: 1.0
+      );
+      if (renewalWrapperRef.value) {
+        observer.observe(renewalWrapperRef.value);
       }
-    );
-    if (this.$refs.renewalWrapperRef) {
-      console.log("ref exists");
-      this.observer.observe(this.$refs.renewalWrapperRef);
-    }
+    };
+    onMounted(observeVisibilityOnTheDOM);
+    return {
+      showElement,
+      renewalWrapperRef
+    };
   }
 };
 </script>
+
 <style lang="postcss">
 .renewal-wrapper {
   min-height: 300px;

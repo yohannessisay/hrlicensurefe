@@ -55,34 +55,40 @@
     </section>
   </div>
 </template>
+
 <script>
+import { ref, onMounted } from "vue";
+
 export default {
-  data() {
-    return {
-      showElement: false,
-      observer: null
-    };
-  },
-  mounted() {
-    this.observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.intersectionRatio === 1) {
-          this.showElement = true;
+  setup() {
+    const showElement = ref(false);
+    const verificationWrapperRef = ref(null);
+    const observeVisibilityOnTheDOM = () => {
+      let observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.intersectionRatio === 1) {
+            showElement.value = true;
+          }
+        },
+        {
+          root: null,
+          rootMargin: "5%",
+          threshold: 1.0
         }
-      },
-      {
-        root: null,
-        rootMargin: "5%",
-        threshold: 1.0
+      );
+      if (verificationWrapperRef.value) {
+        observer.observe(verificationWrapperRef.value);
       }
-    );
-    if (this.$refs.verificationWrapperRef) {
-      console.log("ref exists");
-      this.observer.observe(this.$refs.verificationWrapperRef);
-    }
+    };
+    onMounted(observeVisibilityOnTheDOM);
+    return {
+      showElement,
+      verificationWrapperRef
+    };
   }
 };
 </script>
+
 <style lang="postcss" scoped>
 .new-license-wrapper {
   height: 370px;
