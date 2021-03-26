@@ -2,7 +2,7 @@
   <!-- w-full blue-gradient flex justify-center items-center -->
   <div
     class="w-full blue-gradient flex justify-center items-center py-large sm:py-xl box-border"
-    ref="verificationWrapperRef"
+    ref="wrapperRef"
   >
     <section
       class="content-wrapper flex  flex-col md:flex-row justify-center md:justify-start items-center"
@@ -57,38 +57,17 @@
 </template>
 
 <script>
-import { ref, onMounted } from "vue";
-
+import useIntersectionObserver from "@/composables/useIntersectionObserver";
 export default {
   setup() {
-    const showElement = ref(false);
-    const verificationWrapperRef = ref(null);
-    const observeVisibilityOnTheDOM = () => {
-      let observer = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.intersectionRatio === 1) {
-            showElement.value = true;
-          }
-        },
-        {
-          root: null,
-          rootMargin: "5%",
-          threshold: 1.0
-        }
-      );
-      if (verificationWrapperRef.value) {
-        observer.observe(verificationWrapperRef.value);
-      }
-    };
-    onMounted(observeVisibilityOnTheDOM);
+    const { showElement, wrapperRef } = useIntersectionObserver();
     return {
       showElement,
-      verificationWrapperRef
+      wrapperRef
     };
   }
 };
 </script>
-
 <style lang="postcss" scoped>
 .new-license-wrapper {
   height: 370px;

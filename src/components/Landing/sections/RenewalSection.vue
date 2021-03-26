@@ -2,7 +2,7 @@
   <!-- w-full blue-gradient flex justify-center items-center -->
   <div
     class="w-full bg-white flex justify-center items-center py-large sm:py-xl renewal-wrapper"
-    ref="renewalWrapperRef"
+    ref="wrapperRef"
   >
     <section
       class="content-wrapper flex flex-col md:flex-row justify-center md:justify-start items-center"
@@ -56,38 +56,18 @@
   </div>
 </template>
 <script>
-import { ref, onMounted } from "vue";
+import useIntersectionObserver from "@/composables/useIntersectionObserver";
 
 export default {
   setup() {
-    const showElement = ref(false);
-    const renewalWrapperRef = ref(null);
-    const observeVisibilityOnTheDOM = () => {
-      let observer = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.intersectionRatio === 1) {
-            showElement.value = true;
-          }
-        },
-        {
-          root: null,
-          rootMargin: "5%",
-          threshold: 1.0
-        }
-      );
-      if (renewalWrapperRef.value) {
-        observer.observe(renewalWrapperRef.value);
-      }
-    };
-    onMounted(observeVisibilityOnTheDOM);
+    const { showElement, wrapperRef } = useIntersectionObserver();
     return {
       showElement,
-      renewalWrapperRef
+      wrapperRef
     };
   }
 };
 </script>
-
 <style lang="postcss">
 .renewal-wrapper {
   min-height: 300px;

@@ -1,7 +1,7 @@
 <template>
   <div
     class="w-full blue-gradient flex flex-col justify-center items-center pt-large sm:pt-xl box-border"
-    ref="deviceAccessibilityRef"
+    ref="wrapperRef"
   >
     <transition name="fade">
       <div
@@ -222,33 +222,14 @@
   </div>
 </template>
 <script>
-import { ref, onMounted } from "vue";
+import useIntersectionObserver from "@/composables/useIntersectionObserver";
 
 export default {
   setup() {
-    const showElement = ref(false);
-    const deviceAccessibilityRef = ref(null);
-    const observeVisibilityOnTheDOM = () => {
-      let observer = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.intersectionRatio === 1) {
-            showElement.value = true;
-          }
-        },
-        {
-          root: null,
-          rootMargin: "2%",
-          threshold: 1.0
-        }
-      );
-      if (deviceAccessibilityRef.value) {
-        observer.observe(deviceAccessibilityRef.value);
-      }
-    };
-    onMounted(observeVisibilityOnTheDOM);
+    const { showElement, wrapperRef } = useIntersectionObserver("2%");
     return {
       showElement,
-      deviceAccessibilityRef
+      wrapperRef
     };
   }
 };
