@@ -2,7 +2,7 @@
   <!-- w-full blue-gradient flex justify-center items-center -->
   <div
     class="w-full bg-white flex justify-center items-center py-large sm:py-xl renewal-wrapper"
-    ref="renewalWrapperRef"
+    ref="wrapperRef"
   >
     <section
       class="content-wrapper flex flex-col md:flex-row justify-center md:justify-start items-center"
@@ -56,30 +56,15 @@
   </div>
 </template>
 <script>
+import useIntersectionObserver from "@/composables/useIntersectionObserver";
+
 export default {
-  data() {
+  setup() {
+    const { showElement, wrapperRef } = useIntersectionObserver();
     return {
-      showElement: false,
-      observer: null
+      showElement,
+      wrapperRef
     };
-  },
-  mounted() {
-    this.observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.intersectionRatio === 1) {
-          this.showElement = true;
-        }
-      },
-      {
-        root: null,
-        rootMargin: "5%",
-        threshold: 1.0
-      }
-    );
-    if (this.$refs.renewalWrapperRef) {
-      console.log("ref exists");
-      this.observer.observe(this.$refs.renewalWrapperRef);
-    }
   }
 };
 </script>

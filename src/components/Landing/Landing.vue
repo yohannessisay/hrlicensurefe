@@ -1,7 +1,7 @@
 <template>
   <div class="w-screen overflow-x-hidden">
-    <LandingTopNav @setShowLogin="setShowLogin" />
-    <GetCertifiedSection @setShowSignup="setShowSignup" />
+    <LandingTopNav @setShowLogin="showLogin = true" />
+    <GetCertifiedSection @setShowSignup="showSignUp = true" />
     <NewLicenseSection />
     <RenewalSection />
     <VerificationSection />
@@ -10,14 +10,21 @@
     <MinistryOfHealthSection />
     <FooterSection />
     <Modal v-if="showLogin">
-      <Login @closeModal="setShowLogin" @redirectToSignup="redirectToSignup" />
+      <Login
+        @closeModal="showLogin = false"
+        @redirectToSignup="redirectToSignup"
+      />
     </Modal>
     <Modal v-if="showSignUp">
-      <Signup @closeModal="setShowSignup" @redirectToLogin="redirectToLogin" />
+      <Signup
+        @closeModal="showSignUp = false"
+        @redirectToLogin="redirectToLogin"
+      />
     </Modal>
   </div>
 </template>
 <script>
+import { ref } from "vue";
 import LandingTopNav from "./sections/LandingTopNav";
 import GetCertifiedSection from "./sections/GetCertifiedSection";
 import NewLicenseSection from "./sections/NewLicenseSection";
@@ -46,27 +53,25 @@ export default {
     Login,
     Signup
   },
-  data() {
-    return {
-      showLogin: false,
-      showSignUp: false
+  setup() {
+    const showLogin = ref(false);
+    const showSignUp = ref(false);
+
+    const redirectToSignup = () => {
+      showLogin.value = false;
+      showSignUp.value = true;
     };
-  },
-  methods: {
-    setShowLogin(showLogin) {
-      this.showLogin = showLogin;
-    },
-    setShowSignup(showSignUp) {
-      this.showSignUp = showSignUp;
-    },
-    redirectToSignup() {
-      this.showLogin = false;
-      this.showSignUp = true;
-    },
-    redirectToLogin() {
-      this.showLogin = true;
-      this.showSignUp = false;
-    }
+    const redirectToLogin = () => {
+      showLogin.value = true;
+      showSignUp.value = false;
+    };
+
+    return {
+      showLogin,
+      showSignUp,
+      redirectToSignup,
+      redirectToLogin
+    };
   }
 };
 </script>

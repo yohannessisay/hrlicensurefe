@@ -1,7 +1,7 @@
 <template>
   <div
     class="w-full blue-gradient flex flex-col justify-center items-center pt-large sm:pt-xl box-border"
-    ref="deviceAccessibilityRef"
+    ref="wrapperRef"
   >
     <transition name="fade">
       <div
@@ -222,29 +222,15 @@
   </div>
 </template>
 <script>
+import useIntersectionObserver from "@/composables/useIntersectionObserver";
+
 export default {
-  data() {
+  setup() {
+    const { showElement, wrapperRef } = useIntersectionObserver("2%");
     return {
-      showElement: false,
-      observer: null
+      showElement,
+      wrapperRef
     };
-  },
-  mounted() {
-    this.observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.intersectionRatio === 1) {
-          this.showElement = true;
-        }
-      },
-      {
-        root: null,
-        rootMargin: "2%",
-        threshold: 1.0
-      }
-    );
-    if (this.$refs.deviceAccessibilityRef) {
-      this.observer.observe(this.$refs.deviceAccessibilityRef);
-    }
   }
 };
 </script>
