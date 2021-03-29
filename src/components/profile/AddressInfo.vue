@@ -111,66 +111,26 @@ export default {
   },
   methods: {
     ...mapActions(["setAddress"]),
-    async fetchRegions() {
-      try {
-        const url = `http://localhost:5000/api/lookups/regions/`;
-        const response = await axios.get(url);
-        const results = response.data;
-        this.regions = results.data;
-      } catch (err) {
-        if (err.response) {
-          console.log("Server Error:", err);
-        } else if (err.request) {
-          console.log("Network Error:", err);
-        } else {
-          console.log("Client Error:", err);
-        }
-      }
+    fetchRegions() {
+      this.$store.dispatch("profile/getRegions").then(res => {
+        const regionsResult = res.data;
+        this.regions = regionsResult.data;
+      });
     },
-    async fetchZones() {
-      try {
-        this.address.city = this.cityObj.name;
-        this.regionId = this.cityObj.id;
-        const url = `http://localhost:5000/api/lookups/zones/` + this.regionId;
-        const response = await axios.get(url);
-        const results = response.data;
-        this.zones = results.data;
-      } catch (err) {
-        if (err.response) {
-          console.log("Server Error:", err);
-        } else if (err.request) {
-          console.log("Network Error:", err);
-        } else {
-          console.log("Client Error:", err);
-        }
-      }
+    fetchZones() {
+      this.$store.dispatch("profile/getZones").then(res => {
+        const zonesResult = res.data;
+        this.zones = zonesResult.data;
+      });
     },
     async fetchWoredas() {
-      try {
-        const url = `http://localhost:5000/api/lookups/woredas/` + this.zoneId;
-        const response = await axios.get(url);
-        const results = response.data;
-        this.woredas = results.data;
-        for (const item of Object.entries(this.zones)) {
-          if (item[1].id == this.zoneId) {
-            this.address.zone = item[1].name;
-          }
-        }
-      } catch (err) {
-        if (err.response) {
-          console.log("Server Error:", err);
-        } else if (err.request) {
-          console.log("Network Error:", err);
-        } else {
-          console.log("Client Error:", err);
-        }
-      }
+      this.$store.dispatch("profile/getWoredas").then(res => {
+        const woredasResult = res.data;
+        this.woredas = woredasResult.data;
+      });
     },
     woredaChanged() {
       for (const item of Object.entries(this.woredas)) {
-        console.log(item[1].name);
-        console.log(item[1].id);
-        console.log(this.address.woredaId);
         if (item[1].id == this.address.woredaId) {
           this.address.woreda = item[1].name;
         }

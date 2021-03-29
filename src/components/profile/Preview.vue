@@ -192,8 +192,8 @@ export default {
     },
     async addProfile() {
       console.log(this.profile);
-      await axios.post(
-        "http://localhost:5000/api/profiles/add", {
+      this.$store
+        .dispatch("profile/addProfile", {
           name: this.personalInfo.name,
           fatherName: this.personalInfo.fatherName,
           grandFatherName: this.personalInfo.grandFatherName,
@@ -213,6 +213,7 @@ export default {
           poBox: this.contact.poBox,
           userId: "1"
         })
+
         .then(response => {
           if (response.statusText == "Created") {
             this.Success = true;

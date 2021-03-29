@@ -216,7 +216,6 @@
 <script>
 import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
 import { mapGetters, mapActions } from "vuex";
-import axios from "axios";
 export default {
   components: { TitleWithIllustration },
   props: ["activeState"],
@@ -243,61 +242,24 @@ export default {
   }),
   methods: {
     ...mapActions(["profile/setProfileInfo"]),
-    async fetchUserTypes() {
-      try {
-        const url = `http://localhost:5000/api/lookups/userTypes`;
-        const response = await axios.get(url);
-        const results = response.data;
-        this.userTypes = results.data;
-      } catch (err) {
-        if (err.response) {
-          // client received an error response
-          console.log("Server Error:", err);
-        } else if (err.request) {
-          // client never received a response, or request never left
-          console.log("Network Error:", err);
-        } else {
-          console.log("Client Error:", err);
-        }
-      }
+    fetchUserTypes() {
+      this.$store.dispatch("profile/getUserTypes").then(res => {
+        const utResults = res.data;
+        this.userTypes = utResults.data;
+      });
     },
-    async fetchExpertLevel() {
-      try {
-        const url = `http://localhost:5000/api/lookups/expertLevels`;
-        const response = await axios.get(url);
-        const results = response.data;
-        this.expertLevel = results.data;
-      } catch (err) {
-        if (err.response) {
-          // client received an error response
-          console.log("Server Error:", err);
-        } else if (err.request) {
-          // client never received a response, or request never left
-          console.log("Network Error:", err);
-        } else {
-          console.log("Client Error:", err);
-        }
-      }
+    fetchExpertLevel() {
+      this.$store.dispatch("profile/getExpertLevels").then(res => {
+        const elResults = res.data;
+        this.expertLevel = elResults.data;
+      });
     },
-    async fetchHealthOffices() {
+    fetchHealthOffices() {
       if (this.personalInfo.expertLevelId == 4) {
-        try {
-          const url = `http://localhost:5000/api/lookups/healthOffices`;
-          const response = await axios.get(url);
-          const results = response.data;
-          this.healthOffices = results.data;
-          console.log(this.healthOffices);
-        } catch (err) {
-          if (err.response) {
-            // client received an error response
-            console.log("Server Error:", err);
-          } else if (err.request) {
-            // client never received a response, or request never left
-            console.log("Network Error:", err);
-          } else {
-            console.log("Client Error:", err);
-          }
-        }
+        this.$store.dispatch("profile/getHealthOffice").then(res => {
+          const hoResults = res.data;
+          this.healthOffices = hoResults.data;
+        });
       }
     },
     nextStep: function() {
