@@ -4,7 +4,7 @@
   >
     <button
       class="close-button flex items-center justify-center rounded-full absolute"
-      :onClick="closeOption"
+      :onClick="$emit('closeModal', false)"
     >
       <svg
         viewBox="0 0 329.269 329"
@@ -46,94 +46,69 @@
         />
         <span style="color: red">{{ credentialsErrors.phoneNumber }}</span>
       </div>
-      <!-- <div>
-          <span class="py-2">Confirm Password</span>
-          <label for="password" class="sr-only">Confirm Password</label>
-          <input
-            v-model="credentials.confirmPassword"
-            id="confirm-password"
-            name="confirm-password"
-            type="password"
-            autocomplete="current-confirm-password"
-            required
-            class="appearance-none rounded-lg relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-            placeholder="Confirm Password"
-          />
-          <span style="color: red">{{
-            credentialsErrors.confirmPassword
-          }}</span>
-          <span style="color: red">{{ credentialsErrors.diffPassword }}</span>
-        </div> -->
       <button click="submit()">
         Sign up
       </button>
       <a
         class="text-base text-primary-500 hover:underline cursor-pointer"
-        :onClick="redirectToLogin"
+        :onClick="$emit('redirectToLogin')"
         >Already have an account? Log in
       </a>
     </form>
   </div>
 </template>
 <script>
+import { ref } from "vue";
+import { useStore } from "vuex";
 import Title from "@/sharedComponents/Title";
 
 export default {
   components: { Title },
-  data() {
-    return {
-      credentials: {
-        emailAddress: "",
-        phoneNumber: ""
-      },
-      // credentialsErrors: {
-      //   email: undefined,
-      //   password: undefined,
-      //   confirmPassword: undefined,
-      //   diffPassword: undefined,
-      // },
-      credentialsErrors: {
-        emailAddress: undefined,
-        phoneNumber: undefined
-      }
-    };
-  },
-  methods: {
-    closeOption() {
-      this.$emit("closeModal", false);
-    },
-    redirectToLogin(){
-      this.$emit("redirectToLogin");
-    },
-    submit() {
-      // this.credentialsErrors = this.validateForm(this.credentials);
-      // if (Object.keys(this.credentialsErrors).length) return;
+  setup() {
+    const store = useStore();
+
+    const credentials = ref({
+      emailAddress: "",
+      phoneNumber: ""
+    });
+
+    const credentialsErrors = ref({
+      emailAddress: undefined,
+      phoneNumber: undefined
+    });
+
+    const submit = () => {
       let signup = {
-        emailAddress: this.credentials.emailAddress,
-        phoneNumber: this.credentials.phoneNumber
+        emailAddress: credentials.value.emailAddress,
+        phoneNumber: credentials.value.phoneNumber
       };
-      this.$store.dispatch("user/signUp", signup);
+      store.dispatch("user/signUp", signup);
       console.log(signup);
       this.$router.push({ path: "/addProfile" });
-    },
-    validateForm(credentials) {
-      const errors = {};
-      if (!credentials.emailAddress) errors.emailAddress = "Email Required";
-      if (!credentials.phoneNumber)
-        errors.phoneNumber = "Phone Number Required";
-      // if (!credentials.confirmPassword)
-      //   errors.confirmPassword = "Confirmation Password Required";
-      if (credentials.emailAddress && !this.isEmail(credentials.emailAddress)) {
-        errors.emailAddress = "Invalid Email";
-      }
-      // if (credentials.password != credentials.confirmPassword)
-      //   errors.diffPassword = "Password does not match";
-      return errors;
-    },
-    isEmail(email) {
+    };
+
+    const isEmail = email => {
       const re = /\S+@\S+\.\S+/;
       return re.test(email);
-    }
+    };
+
+    const validateForm = formData => {
+      const errors = {};
+      if (!formData.emailAddress) errors.emailAddress = "Email Required";
+      if (!formData.phoneNumber) errors.phoneNumber = "Phone Number Required";
+      if (formData.emailAddress && !this.isEmail(formData.emailAddress)) {
+        errors.emailAddress = "Invalid Email";
+      }
+      return errors;
+    };
+
+    return {
+      credentials,
+      credentialsErrors,
+      submit,
+      isEmail,
+      validateForm
+    };
   }
 };
 </script>
