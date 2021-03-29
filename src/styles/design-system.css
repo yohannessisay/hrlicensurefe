@@ -24,8 +24,8 @@
   .no-background-image {
     background-image: none;
   }
-  .modal-mobile-box-shadow{
-    box-shadow:0px -8px 6px rgb(30 64 175 / 51%);
+  .modal-mobile-box-shadow {
+    box-shadow: 0px -8px 6px rgb(30 64 175 / 51%);
   }
   .blue-box-shadow {
     box-shadow: 0px 3px 6px #1e40af82;
@@ -36,7 +36,7 @@
   .inset-box-shadow {
     box-shadow: inset -1px -4px 0px #e6ebf4;
   }
-  
+
   .blue-box-shadow-light {
     box-shadow: 0px 3px 6px #6c8bf09e;
   }
@@ -44,7 +44,8 @@
     box-shadow: 0px 0px 0px 3px #3674b96b;
   }
   .box-shadow-pop {
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+      0 2px 4px -1px rgba(0, 0, 0, 0.06);
   }
   .white-shadow-inner {
     box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
@@ -119,6 +120,16 @@
   [variant="block"],
   [variant="outline-block"] {
     @apply w-full;
+  }
+  [variant="rounded"] {
+    @apply flex items-center justify-center rounded-full;
+    min-width: 48px;
+    width: 48px;
+    min-height: 48px;
+    height: 48px;
+    padding: 0;
+    margin: 0;
+    border-radius: 9999px !important;
   }
 
   [type="text"],
