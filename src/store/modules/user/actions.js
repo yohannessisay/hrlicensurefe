@@ -5,7 +5,7 @@ import {
   SET_AUTH,
   ADD_PROFILE_LOADING,
   ADD_PROFILE_SUCCESS,
-  ADD_PROFILE_ERROR,
+  ADD_PROFILE_ERROR
 } from "./mutation-types";
 export default {
   async setContact({ commit }, profile) {
@@ -25,7 +25,7 @@ export default {
       commit(ADD_PROFILE_ERROR);
     }
   },
-  
+
   async signUp({ commit }, profile) {
     commit(ADD_PROFILE_LOADING);
     try {
@@ -37,9 +37,8 @@ export default {
             "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Methods":
               "GET, POST, PATCH, PUT, DELETE, OPTIONS",
-            "Access-Control-Allow-Headers":
-              "Origin, Content-Type, X-Auth-Token",
-          },
+            "Access-Control-Allow-Headers": "Origin, Content-Type, X-Auth-Token"
+          }
         }
       );
       commit(ADD_PROFILE_SUCCESS);
@@ -49,5 +48,5 @@ export default {
   },
   apiCall({ commit }, auth) {
     commit(SET_AUTH, auth);
-  },
+  }
 };
