@@ -3,8 +3,9 @@
     class="card-wrapper bg-white sm:rounded-lg w-full p-large flex flex-col justify-center items-center relative"
   >
     <button
-      class="close-button flex items-center justify-center rounded-full absolute"
-      :onClick="$emit('closeModal', false)"
+      class="absolute top-0 right-0 mr-2 mt-2"
+      @click="$emit('closeModal', false)"
+      variant="rounded"
     >
       <svg
         viewBox="0 0 329.269 329"
@@ -34,6 +35,7 @@
         />
         <span style="color: red">{{ credentialsErrors.email }}</span>
       </div>
+
       <div class="flex flex-col mb-medium w-full">
         <label for="password">Phone Number</label>
         <input
@@ -51,7 +53,7 @@
       </button>
       <a
         class="text-base text-primary-500 hover:underline cursor-pointer"
-        :onClick="$emit('redirectToLogin')"
+        @click="$emit('redirectToLogin')"
         >Already have an account? Log in
       </a>
     </form>
@@ -116,18 +118,6 @@ export default {
 <style lang="postcss" scoped>
 .close-svg {
   width: 16px;
-}
-
-.close-button {
-  min-width: 48px;
-  width: 48px;
-  min-height: 48px;
-  height: 48px;
-  padding: 0;
-  margin: 0;
-  border-radius: 9999px !important;
-  top: 10px;
-  right: 10px;
 }
 
 .card-wrapper {

@@ -3,8 +3,9 @@
     class="card-wrapper bg-white sm:rounded-lg w-full p-large flex flex-col justify-center items-center relative"
   >
     <button
-      class="close-button flex items-center justify-center rounded-full absolute"
-      :onClick="closeOption"
+      @click="closeOption"
+      variant="rounded"
+      class="absolute top-0 right-0 mr-2 mt-2"
     >
       <svg
         viewBox="0 0 329.269 329"
@@ -17,7 +18,7 @@
       </svg>
     </button>
 
-    <Title message="Login" />
+    <Title message="Log In" />
 
     <form
       @submit.prevent="submit"
@@ -56,7 +57,7 @@
       <button click="submit()" class="mt-medium">Login</button>
       <a
         class="text-base text-primary-500 hover:underline cursor-pointer"
-        :onClick="redirectToSignup"
+        @click="redirectToSignup"
         >Don't have an account? Sign Up
       </a>
     </form>
@@ -119,17 +120,6 @@ export default {
 <style lang="postcss" scoped>
 .close-svg {
   width: 16px;
-}
-.close-button {
-  min-width: 48px;
-  width: 48px;
-  min-height: 48px;
-  height: 48px;
-  padding: 0;
-  margin: 0;
-  border-radius: 9999px !important;
-  top: 10px;
-  right: 10px;
 }
 
 .card-wrapper {
