@@ -85,7 +85,6 @@ export default {
         phoneNumber: credentials.value.phoneNumber
       };
       store.dispatch("user/signUp", signup);
-      console.log(signup);
       this.$router.push({ path: "/addProfile" });
     };
 
