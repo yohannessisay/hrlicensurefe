@@ -124,7 +124,7 @@ export default {
   },
   data: () => ({
     goodStandingInfo: {
-      applicantId: +localStorage.getItem("userId"),
+      applicantId: localStorage.getItem("userId"),
       applicantTypeId: "",
       education: {
         departmentId: "",
@@ -152,7 +152,6 @@ export default {
         }
       };
       console.log(goodStanding);
-      // verification.applicantTypeId = 10000;
       try {
         await axios
           .post("http://localhost:5000/api/goodStandings/add", goodStanding)

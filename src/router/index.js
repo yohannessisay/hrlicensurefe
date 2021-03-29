@@ -93,17 +93,17 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
 });
-router.beforeEach((to, from, next) => {
-  const auth = localStorage.getItem("token");
-  if (
-    !auth &&
-    to.path !== "/login" &&
-    to.path !== "/signup" &&
-    to.path !== "/landing" &&
-    to.path !== "/"
-  )
-    next("/login");
-  else next();
-});
+// router.beforeEach((to, from, next) => {
+//   const auth = localStorage.getItem("token");
+//   if (
+//     !auth &&
+//     to.path !== "/login" &&
+//     to.path !== "/signup" &&
+//     to.path !== "/landing" &&
+//     to.path !== "/"
+//   )
+//     next("/login");
+//   else next();
+// });
 
 export default router;

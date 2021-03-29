@@ -96,7 +96,7 @@ export default {
       return re.test(email);
     };
 
-    const validateForm = formData => {
+    const validateForm = (formData) => {
       const errors = {};
       if (!formData.emailAddress) errors.emailAddress = "Email Required";
       if (!formData.phoneNumber) errors.phoneNumber = "Phone Number Required";

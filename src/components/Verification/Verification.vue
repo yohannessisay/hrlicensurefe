@@ -124,7 +124,7 @@ export default {
   },
   data: () => ({
     verificationInfo: {
-      applicantId: +localStorage.getItem("userId"),
+      applicantId: localStorage.getItem("userId"),
       applicantTypeId: "",
       education: {
         departmentId: "",
