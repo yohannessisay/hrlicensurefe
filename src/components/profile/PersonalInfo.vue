@@ -161,7 +161,7 @@
             <label class="text-primary-700">User Type</label>
             <select class="max-w-3xl" v-model="personalInfo.userTypeId">
               <option
-                v-for="types in userTypes"
+                v-for="types in state.userTypes"
                 v-bind:key="types.name"
                 v-bind:value="types.id"
               >
@@ -177,7 +177,7 @@
               @change="fetchHealthOffices()"
             >
               <option
-                v-for="types in expertLevel"
+                v-for="types in state.expertLevel"
                 v-bind:key="types.name"
                 v-bind:value="types.id"
               >
@@ -191,7 +191,7 @@
             <label class="text-primary-700">Health Office</label>
             <select class="max-w-3xl" v-model="personalInfo.healthOfficeId">
               <option
-                v-for="types in healthOffices"
+                v-for="types in state.healthOffices"
                 v-bind:key="types.name"
                 v-bind:value="types.id"
               >
@@ -214,14 +214,16 @@
 </template>
 
 <script>
+import { ref, onMounted } from "vue";
+import { useStore } from "vuex";
 import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
-import { mapGetters, mapActions } from "vuex";
 export default {
   components: { TitleWithIllustration },
   props: ["activeState"],
-  computed: mapGetters(["profile/getPersonalInfo"]),
-  data: () => ({
-    personalInfo: {
+  setup(props, { emit }) {
+    const store = useStore();
+
+    let personalInfo = ref({
       name: null,
       grandFatherName: null,
       fatherName: null,
@@ -234,55 +236,69 @@ export default {
       userTypeId: null,
       expertLevelId: null,
       healthOfficeId: null
-    },
-    userTypes: [],
-    expertLevel: [],
-    healthOffices: [],
-    maritalStatuses: []
-  }),
-  methods: {
-    ...mapActions(["profile/setProfileInfo"]),
-    fetchUserTypes() {
-      this.$store.dispatch("profile/getUserTypes").then(res => {
+    });
+
+    let state = ref({
+      userTypes: {},
+      expertLevel: {},
+      healthOffices: {},
+      maritalStatuses: {}
+    });
+
+    const fetchUserTypes = () => {
+      store.dispatch("profile/getUserTypes").then(res => {
         const utResults = res.data;
-        this.userTypes = utResults.data;
+        state.value.userTypes = utResults.data;
+        console.log(state.value.userTypes);
       });
-    },
-    fetchExpertLevel() {
-      this.$store.dispatch("profile/getExpertLevels").then(res => {
+    };
+
+    const fetchExpertLevel = () => {
+      store.dispatch("profile/getExpertLevels").then(res => {
         const elResults = res.data;
-        this.expertLevel = elResults.data;
+        state.value.expertLevel = elResults.data;
       });
-    },
-    fetchHealthOffices() {
-      if (this.personalInfo.expertLevelId == 4) {
-        this.$store.dispatch("profile/getHealthOffice").then(res => {
+    };
+
+    const fetchHealthOffices = () => {
+      if (personalInfo.value.expertLevelId == 4) {
+        store.dispatch("profile/getHealthOffice").then(res => {
           const hoResults = res.data;
-          this.healthOffices = hoResults.data;
+          state.value.healthOffices = hoResults.data;
         });
       }
-    },
-    nextStep: function() {
-      // this.setProfileInfo(this.personalInfo);
-      //this.$store.dispatch("profile/setProfileInfo", this.personalInfo);
-      this.$store.dispatch("profile/setProfileInfo", this.personalInfo);
-      this.$emit("changeActiveState");
-    },
-    genderChanged: function() {
-      if (this.personalInfo.maritalStatusId == 3) {
-        this.personalInfo.maritalStatus = "Divorced";
+    };
+
+    const nextStep = () => {
+      store.dispatch("profile/setProfileInfo", personalInfo);
+      emit("changeActiveState");
+    };
+
+    const genderChanged = () => {
+      if (personalInfo.value.maritalStatusId == 3) {
+        personalInfo.value.maritalStatus = "Divorced";
       }
-      if (this.personalInfo.maritalStatusId == 2) {
-        this.personalInfo.maritalStatus = "Married";
+      if (personalInfo.value.maritalStatusId == 2) {
+        personalInfo.value.maritalStatus = "Married";
       }
-      if (this.personalInfo.maritalStatusId == 1) {
-        this.personalInfo.maritalStatus = "Single";
+      if (personalInfo.value.maritalStatusId == 1) {
+        personalInfo.value.maritalStatus = "Single";
       }
-    }
-  },
-  mounted() {
-    this.fetchUserTypes();
-    this.fetchExpertLevel();
+    };
+
+    onMounted(() => {
+      fetchUserTypes();
+      fetchExpertLevel();
+    });
+    return {
+      personalInfo,
+      state,
+      fetchUserTypes,
+      fetchExpertLevel,
+      fetchHealthOffices,
+      nextStep,
+      genderChanged
+    };
   }
 };
 </script>

@@ -10,9 +10,9 @@
         <div class="flex">
           <div class="flex flex-col mb-medium w-1/2 mr-12">
             <label class="text-primary-700">Region</label>
-            <select class="max-w-3xl" v-model="cityObj" @change="fetchZones()">
+            <select class="max-w-3xl" v-model="state.cityObj" @change="fetchZones()">
               <option
-                v-for="types in regions"
+                v-for="types in state.regions"
                 v-bind:key="types.name"
                 v-bind:value="types"
               >
@@ -28,9 +28,9 @@
         <div class="flex">
           <div class="flex flex-col mb-medium w-1/2 mr-12">
             <label class="text-primary-700">Zone</label>
-            <select class="max-w-3xl" @change="fetchWoredas()" v-model="zoneId">
+            <select class="max-w-3xl" @change="fetchWoredas()" v-model="state.zoneId">
               <option
-                v-for="types in zones"
+                v-for="types in state.zones"
                 v-bind:key="types.name"
                 v-bind:value="types.id"
               >
@@ -56,7 +56,7 @@
               @change="woredaChanged()"
             >
               <option
-                v-for="types in woredas"
+                v-for="types in state.woredas"
                 v-bind:key="types.name"
                 v-bind:value="types.id"
               >
@@ -83,14 +83,16 @@
 </template>
 
 <script>
+import { ref, onMounted } from "vue";
+import { useStore } from "vuex";
 import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
-import { mapGetters, mapActions } from "vuex";
-import axios from "axios";
 export default {
   components: { TitleWithIllustration },
   props: ["activeState"],
-  data: () => ({
-    address: {
+  setup(props, { emit }) {
+    const store = useStore();
+
+    let address = ref({
       houseNumber: null,
       woredaId: null,
       woreda: null,
@@ -98,57 +100,73 @@ export default {
       city: null,
       residence: null,
       zone: null
-    },
-    regionId: null,
-    regions: [],
-    zones: [],
-    woredas: [],
-    cityObj: {},
-    zoneId: null
-  }),
-  computed: {
-    ...mapGetters({ getPersonalInfo: "profile/getPersonalInfo" })
-  },
-  methods: {
-    ...mapActions(["setAddress"]),
-    fetchRegions() {
-      this.$store.dispatch("profile/getRegions").then(res => {
+    });
+
+    let state = ref({
+      regionId: "",
+      regions: [],
+      zones: [],
+      woredas: [],
+      cityObj: {},
+      zoneId: ""
+    });
+
+    const fetchRegions = () => {
+      store.dispatch("profile/getRegions").then(res => {
         const regionsResult = res.data;
-        this.regions = regionsResult.data;
+        state.value.regions = regionsResult.data;
       });
-    },
-    fetchZones() {
-      this.$store.dispatch("profile/getZones").then(res => {
+    };
+
+    const fetchZones = () => {
+      address.value.city = state.value.cityObj.name;
+      state.value.regionId = state.value.cityObj.id;
+      console.log(state.value.regionId);
+      store.dispatch("profile/getZones", state.value.regionId).then(res => {
         const zonesResult = res.data;
-        this.zones = zonesResult.data;
+        state.value.zones = zonesResult.data;
       });
-    },
-    async fetchWoredas() {
-      this.$store.dispatch("profile/getWoredas").then(res => {
+    };
+
+    const fetchWoredas = () => {
+      store.dispatch("profile/getWoredas", state.value.zoneId).then(res => {
         const woredasResult = res.data;
-        this.woredas = woredasResult.data;
+        state.value.woredas = woredasResult.data;
+        for (const item of Object.entries(state.value.zones)) {
+          if (item[1].id == state.value.zoneId) {
+            address.value.zone = item[1].name;
+          }
+        }
       });
-    },
-    woredaChanged() {
-      for (const item of Object.entries(this.woredas)) {
-        if (item[1].id == this.address.woredaId) {
-          this.address.woreda = item[1].name;
+    };
+
+    const woredaChanged = () => {
+      for (const item of Object.entries(state.value.woredas)) {
+        if (item[1].id == address.value.woredaId) {
+          address.value.woreda = item[1].name;
         }
       }
-    },
-    nextStep: function() {
-      this.$store.dispatch("profile/setAddress", this.address);
-      this.$emit("changeActiveState");
+    };
+
+    const nextStep = () => {
+      store.dispatch("profile/setAddress", address);
+      emit("changeActiveState");
       // console.log(this.address);
-    }
-  },
-  mounted() {
-    this.fetchRegions();
-    // console.log(this.getPersonalInfo);
-  },
-  created() {
-    console.log(this.getPersonalInfo);
-    //console.log(this.$store.getters.getPersonalInfo);
+    };
+
+    onMounted(() => {
+      fetchRegions();
+    });
+
+    return {
+      address,
+      state,
+      fetchRegions,
+      fetchZones,
+      fetchWoredas,
+      woredaChanged,
+      nextStep
+    };
   }
 };
 </script>

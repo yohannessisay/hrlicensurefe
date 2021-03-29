@@ -57,35 +57,36 @@
   </div>
 </template>
 <script>
+import { ref } from "vue";
+import { useStore } from "vuex";
 import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
-import { mapGetters } from "vuex";
 
 export default {
   components: { TitleWithIllustration },
   props: ["activeState"],
-  data: () => ({
-    contact: {
+  setup(props, { emit }) {
+    const store = useStore();
+
+    let contact = ref({
       mobileNumber: null,
       email: null,
       telephoneNumber: null,
       poBox: null
-    }
-  }),
-  computed: {
-    ...mapGetters({ getPersonalInfo: "profile/getPersonalInfo" })
-  },
-  methods: {
-    nextStep: function() {
-      this.$store.dispatch("profile/setContact", this.contact);
-      this.$emit("changeActiveState");
-      // console.log(this.contact);
-    }
-  },
-  mounted() {
-    // console.log(this.getPersonalInfo);
+    });
+
+    const nextStep = () => {
+      store.dispatch("profile/setContact", contact);
+      emit("changeActiveState");
+    };
+
+    return {
+      contact,
+      nextStep
+    };
   },
   created() {
     console.log(this.getPersonalInfo);
+    console.log(this.getAddress);
   }
 };
 </script>

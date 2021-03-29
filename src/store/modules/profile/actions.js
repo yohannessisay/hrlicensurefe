@@ -81,18 +81,22 @@ export default {
       return resp;
     }
   },
-  async getWoredas() {
+  async getWoredas(context, zoneId) {
     try {
-      const resp = await ApiService.get("http://localhost:5000/api/lookups/woredas");
+      console.log(zoneId);
+      const url = "http://localhost:5000/api/lookups/woredas/" + zoneId;
+      const resp = await ApiService.get(url);
       return resp;
     } catch (error) {
       const resp = error;
       return resp;
     }
   },
-  async getZones() {
+  async getZones(context, regionId) {
     try {
-      const resp = await ApiService.get("http://localhost:5000/api/lookups/zones");
+      console.log(regionId);
+      const url = "http://localhost:5000/api/lookups/zones/" + regionId;
+      const resp = await ApiService.get(url);
       return resp;
     } catch (error) {
       const resp = error;
