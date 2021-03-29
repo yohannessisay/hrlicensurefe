@@ -4,7 +4,7 @@
   >
     <button
       class="close-button flex items-center justify-center rounded-full absolute"
-      :onClick="closeOption"
+      @click="closeOption"
     >
       <svg
         viewBox="0 0 329.269 329"
@@ -17,7 +17,7 @@
       </svg>
     </button>
 
-    <Title message="Login" />
+    <Title message="Log In" />
 
     <form
       @submit.prevent="submit"
@@ -56,7 +56,7 @@
       <button click="submit()" class="mt-medium">Login</button>
       <a
         class="text-base text-primary-500 hover:underline cursor-pointer"
-        :onClick="redirectToSignup"
+        @click="redirectToSignup"
         >Don't have an account? Sign Up
       </a>
     </form>

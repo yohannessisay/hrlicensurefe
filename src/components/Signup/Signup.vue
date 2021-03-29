@@ -4,7 +4,7 @@
   >
     <button
       class="close-button flex items-center justify-center rounded-full absolute"
-      :onClick="$emit('closeModal', false)"
+      @click="$emit('closeModal', false)"
     >
       <svg
         viewBox="0 0 329.269 329"
@@ -34,6 +34,7 @@
         />
         <span style="color: red">{{ credentialsErrors.email }}</span>
       </div>
+
       <div class="flex flex-col mb-medium w-full">
         <label for="password">Phone Number</label>
         <input
@@ -51,7 +52,7 @@
       </button>
       <a
         class="text-base text-primary-500 hover:underline cursor-pointer"
-        :onClick="$emit('redirectToLogin')"
+        @click="$emit('redirectToLogin')"
         >Already have an account? Log in
       </a>
     </form>
