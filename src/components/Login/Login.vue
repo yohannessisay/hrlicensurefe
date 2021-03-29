@@ -83,13 +83,12 @@ export default {
     });
 
     const submit = () => {
-      credentialsErrors = validateForm(credentials);
-      if (Object.keys(credentialsErrors).length) return;
       let email = {
         emailAddress: credentials.value.emailAddress,
       };
-      store.dispatch("user/setContact", email);
-      this.$router.push({ path: "/menu" });
+      store.dispatch("user/setContact", email).then(() => {
+        this.$router.push({ path: "/menu" });
+      });
     };
 
     const isEmail = (email) => {
@@ -97,12 +96,12 @@ export default {
       return re.test(email);
     };
 
-    const validateForm = (credentials) => {
+    const validateForm = formData => {
       const errors = {};
-      if (!credentials.emailAddress) errors.emailAddress = "Email Required";
-      if (!credentials.password) errors.password = "Password Required";
-      if (credentials.emailAddress && isEmail(credentials.emailAddress)) {
-        errors.email = "Invalid Email";
+      if (!formData.emailAddress) errors.emailAddress = "Email Required";
+      if (!formData.phoneNumber) errors.phoneNumber = "Phone Number Required";
+      if (formData.emailAddress && !this.isEmail(formData.emailAddress)) {
+        errors.emailAddress = "Invalid Email";
       }
       return errors;
     };
