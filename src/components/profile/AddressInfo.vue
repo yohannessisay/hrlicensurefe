@@ -19,10 +19,12 @@
                 {{ types.name }}
               </option>
             </select>
+            <span style="color: red">{{ addressErrors.city }}</span>
           </div>
           <div class="flex flex-col mb-medium w-1/2 m1-12">
             <label class="text-primary-700">Kebele</label>
             <input class="max-w-3xl" type="number" v-model="address.kebele" />
+            <span style="color: red">{{ addressErrors.kebele }}</span>
           </div>
         </div>
         <div class="flex">
@@ -37,6 +39,7 @@
                 {{ types.name }}
               </option>
             </select>
+            <span style="color: red">{{ addressErrors.zone }}</span>
           </div>
           <div class="flex flex-col mb-medium w-1/2 m1-12">
             <label class="text-primary-700">House No(Optional)</label>
@@ -63,10 +66,12 @@
                 {{ types.name }}
               </option>
             </select>
+            <span style="color: red">{{ addressErrors.woreda }}</span>
           </div>
           <div class="flex flex-col mb-medium w-1/2 m1-12">
             <label class="text-primary-700">Residence</label>
             <input class="max-w-3xl" type="text" v-model="address.residence" />
+            <span style="color: red">{{ addressErrors.residence }}</span>
           </div>
         </div>
         <div class="flex mb-medium w-full mt-medium">
@@ -93,13 +98,20 @@ export default {
     const store = useStore();
 
     let address = ref({
-      houseNumber: null,
-      woredaId: null,
-      woreda: null,
-      kebele: null,
-      city: null,
-      residence: null,
-      zone: null
+      houseNumber: "",
+      woreda: "",
+      kebele: "",
+      city: "",
+      residence: "",
+      zone: ""
+    });
+
+    let addressErrors = ref({
+      woreda: "",
+      kebele: "",
+      city: "",
+      residence: "",
+      zone: ""
     });
 
     let state = ref({
@@ -149,17 +161,48 @@ export default {
     };
 
     const nextStep = () => {
-      store.dispatch("profile/setAddress", address);
-      emit("changeActiveState");
-      // console.log(this.address);
+      addressErrors.value = validateForm(address.value);
+      let empty = isEmpty(addressErrors.value);
+      if (empty == false) {
+        console.log(addressErrors.value);
+        return;
+      }
+      if (empty == true) {
+        store.dispatch("profile/setAddress", address);
+        emit("changeActiveState");
+      }
     };
 
+    const validateForm = formData => {
+      const errors = {};
+
+      if (!state.value.cityObj.name) errors.city = "Region Required";
+      if (!formData.kebele) errors.kebele = "Kebele Required";
+      if (!state.value.zoneId) errors.zone = "Zone Required";
+      if (!formData.woredaId) errors.woreda = "Woreda Required";
+      if (!formData.residence) errors.residence = "Residence Required";
+
+      return errors;
+    };
+
+    const isEmpty = obj => {
+      for (var prop in obj) {
+        if (obj.hasOwnProperty(prop)) {
+          return false;
+        }
+      }
+
+      return true;
+    };
     onMounted(() => {
       fetchRegions();
     });
 
     return {
       address,
+      addressErrors,
+      validateForm,
+      isEmpty,
       state,
       fetchRegions,
       fetchZones,

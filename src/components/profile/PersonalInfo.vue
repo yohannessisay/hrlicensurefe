@@ -14,6 +14,7 @@
           <div class="flex flex-col mb-medium w-1/2 mr-6">
             <label class="text-primary-700">First Name</label>
             <input class="max-w-3xl" type="text" v-model="personalInfo.name" />
+            <span style="color: red">{{ personalInfoErrors.name }}</span>
           </div>
           <div class="flex flex-col mb-medium w-1/2 ml-12">
             <label class="text-primary-700">Father Name</label>
@@ -22,6 +23,7 @@
               type="text"
               v-model="personalInfo.fatherName"
             />
+            <span style="color: red">{{ personalInfoErrors.fatherName }}</span>
           </div>
         </div>
         <div class="flex">
@@ -32,6 +34,9 @@
               type="text"
               v-model="personalInfo.grandFatherName"
             />
+            <span style="color: red">{{
+              personalInfoErrors.grandFatherName
+            }}</span>
           </div>
           <div class="flex flex-col mb-medium w-1/2 m1-12">
             <label class="text-primary-700">Nationality</label>
@@ -40,6 +45,7 @@
               type="text"
               v-model="personalInfo.nationality"
             />
+            <span style="color: red">{{ personalInfoErrors.nationality }}</span>
           </div>
         </div>
         <div class="flex">
@@ -98,6 +104,9 @@
                   </div>
                 </div>
               </div>
+              <span style="color: red" class="mt-0">
+                {{ personalInfoErrors.gender }}</span
+              >
             </div>
           </div>
           <div class="flex w-1/2 mb-small m1-12">
@@ -153,6 +162,9 @@
                   </div>
                 </div>
               </div>
+              <span style="color: red">{{
+                personalInfoErrors.maritalStatusId
+              }}</span>
             </div>
           </div>
         </div>
@@ -168,6 +180,7 @@
                 {{ types.name }}
               </option>
             </select>
+            <span style="color: red">{{ personalInfoErrors.userTypeId }}</span>
           </div>
           <div class="flex flex-col mb-medium w-1/2 m1-12">
             <label class="text-primary-700">Expert Level</label>
@@ -184,6 +197,9 @@
                 {{ types.name }}
               </option>
             </select>
+            <span style="color: red">{{
+              personalInfoErrors.expertLevelId
+            }}</span>
           </div>
         </div>
         <div class="flex" v-if="personalInfo.expertLevelId == 4">
@@ -222,20 +238,30 @@ export default {
   props: ["activeState"],
   setup(props, { emit }) {
     const store = useStore();
-
     let personalInfo = ref({
-      name: null,
-      grandFatherName: null,
-      fatherName: null,
-      nationality: null,
-      placeOfBirth: null,
-      dateOfBirth: null,
-      gender: null,
-      maritalStatusId: null,
-      maritalStatus: null,
-      userTypeId: null,
-      expertLevelId: null,
-      healthOfficeId: null
+      name: "",
+      grandFatherName: "",
+      fatherName: "",
+      nationality: "",
+      placeOfBirth: "",
+      dateOfBirth: "",
+      gender: "",
+      maritalStatusId: "",
+      maritalStatus: "",
+      userTypeId: "",
+      expertLevelId: "",
+      healthOfficeId: ""
+    });
+    let personalInfoErrors = ref({
+      name: "",
+      grandFatherName: "",
+      fatherName: "",
+      nationality: "",
+      gender: "",
+      maritalStatusId: "",
+      maritalStatus: "",
+      userTypeId: "",
+      expertLevelId: ""
     });
 
     let state = ref({
@@ -249,7 +275,6 @@ export default {
       store.dispatch("profile/getUserTypes").then(res => {
         const utResults = res.data;
         state.value.userTypes = utResults.data;
-        console.log(state.value.userTypes);
       });
     };
 
@@ -270,8 +295,15 @@ export default {
     };
 
     const nextStep = () => {
-      store.dispatch("profile/setProfileInfo", personalInfo);
-      emit("changeActiveState");
+      personalInfoErrors.value = validateForm(personalInfo.value);
+      let empty = isEmpty(personalInfoErrors.value);
+      if (empty == false) {
+        return;
+      }
+      if (empty == true) {
+        store.dispatch("profile/setProfileInfo", personalInfo);
+        emit("changeActiveState");
+      }
     };
 
     const genderChanged = () => {
@@ -286,12 +318,42 @@ export default {
       }
     };
 
+    const validateForm = formData => {
+      const errors = {};
+
+      if (!formData.name) errors.name = "First Name Required";
+      if (!formData.fatherName) errors.fatherName = "Father Name Required";
+      if (!formData.grandFatherName)
+        errors.grandFatherName = "Grand Father Name Required";
+      if (!formData.nationality) errors.nationality = "Nationality Required";
+      if (!formData.gender) errors.gender = "Gender Required";
+      if (!formData.maritalStatusId)
+        errors.maritalStatusId = "Marital Status Required";
+      if (!formData.userTypeId) errors.userTypeId = "User Type Required";
+      if (!formData.expertLevelId)
+        errors.expertLevelId = "Expert Level Required";
+
+      return errors;
+    };
+    const isEmpty = obj => {
+      for (var prop in obj) {
+        if (obj.hasOwnProperty(prop)) {
+          return false;
+        }
+      }
+
+      return true;
+    };
+
     onMounted(() => {
       fetchUserTypes();
       fetchExpertLevel();
     });
     return {
       personalInfo,
+      personalInfoErrors,
+      validateForm,
+      isEmpty,
       state,
       fetchUserTypes,
       fetchExpertLevel,
