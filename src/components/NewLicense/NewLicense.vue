@@ -47,15 +47,15 @@
               </a>
             </nav>
           </div> -->
+          <transition name="fade" mode="out-in">
+            <div v-if="this.activeState == 1">
+              <Institution
+                :activeState="1"
+                @changeActiveState="activeState++"
+              />
+            </div>
+          </transition>   
           <div v-if="this.foreign">
-            <transition name="fade" mode="out-in">
-              <div v-if="this.activeState == 1">
-                <Institution
-                  :activeState="1"
-                  @changeActiveState="activeState++"
-                />
-              </div>
-            </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 2">
                 <Photo :activeState="2" @changeActiveState="activeState++" />
@@ -111,14 +111,6 @@
           </div>
 
           <div v-if="this.ethForeign">
-            <transition name="fade" mode="out-in">
-              <div v-if="this.activeState == 1">
-                <Institution
-                  :activeState="1"
-                  @changeActiveState="activeState++"
-                />
-              </div>
-            </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 2">
                 <Photo :activeState="2" @changeActiveState="activeState++" />
@@ -187,14 +179,6 @@
           </div>
 
           <div v-if="this.ethLocal">
-            <transition name="fade" mode="out-in">
-              <div v-if="this.activeState == 1">
-                <Institution
-                  :activeState="1"
-                  @changeActiveState="activeState++"
-                />
-              </div>
-            </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 2">
                 <Photo :activeState="2" @changeActiveState="activeState++" />
@@ -295,7 +279,7 @@ export default {
     activeState: 1,
     foreign: true,
     ethForeign: false,
-    ethLocal: false
+    ethLocal: false,
   }),
   components: {
     Institution,

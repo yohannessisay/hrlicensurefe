@@ -7,7 +7,14 @@ import {
   SET_PHOTO,
   SET_PASSPORT,
   SET_HEALTH_EXAM_CERT,
-  SET_DOCS
+  SET_DOCS,
+  SET_LANGUAGE,
+  SET_PROFESSIONAL_DOCUMENT,
+  SET_HERQA,
+  SET_SUPPORT_LETTER,
+  SET_COC,
+  SET_EDUCATIONAL_DOCUMENT,
+  SET_WORK_EXPERIENCE,
 } from "./mutation-types";
 
 export default {
@@ -25,6 +32,27 @@ export default {
   },
   [SET_DOCS](state, docs) {
     state.docs = docs;
+  },
+  [SET_LANGUAGE](state, englishLanguage) {
+    state.englishLanguage = englishLanguage;
+  },
+  [SET_PROFESSIONAL_DOCUMENT](state, professionalDocuments) {
+    state.professionalDocuments = professionalDocuments;
+  },
+  [SET_HERQA](state, herqa) {
+    state.herqa = herqa;
+  },
+  [SET_SUPPORT_LETTER](state, supportLetter) {
+    state.supportLetter = supportLetter;
+  },
+  [SET_COC](state, coc) {
+    state.coc = coc;
+  },
+  [SET_EDUCATIONAL_DOCUMENT](state, educationalDocuments) {
+    state.educationalDocuments = educationalDocuments;
+  },
+  [SET_WORK_EXPERIENCE](state, workExperience) {
+    state.workExperience = workExperience;
   },
   [SET_ACTIVE_STATE](state, activeState) {
     state.activeState = activeState;

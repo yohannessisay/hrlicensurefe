@@ -82,7 +82,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      getLicense: "newlicense/getLicense"
+      getLicense: "newlicense/getEnglishLanguage"
     })
   },
   created() {
@@ -90,7 +90,7 @@ export default {
     console.log(this.license);
   },
   methods: {
-    ...mapActions(["setPhoto"]),
+    ...mapActions(["setLanguage"]),
     reset() {
       // reset form to initial state
       this.showUpload = true;
@@ -128,7 +128,7 @@ export default {
       let file = {
         profilePhoto: this.photoFile
       };
-      this.$store.dispatch("newlicense/setPhoto", file);
+      this.$store.dispatch("newlicense/setLanguage", file);
     },
   },
 };

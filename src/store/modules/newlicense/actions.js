@@ -8,7 +8,14 @@ import {
   SET_PHOTO,
   SET_PASSPORT,
   SET_HEALTH_EXAM_CERT,
-  SET_DOCS
+  SET_DOCS,
+  SET_LANGUAGE,
+  SET_PROFESSIONAL_DOCUMENT,
+  SET_HERQA,
+  SET_SUPPORT_LETTER,
+  SET_COC,
+  SET_EDUCATIONAL_DOCUMENT,
+  SET_WORK_EXPERIENCE,
 } from "./mutation-types";
 
 export default {
@@ -26,6 +33,27 @@ export default {
   },
   setDocs({ commit }, docs) {
     commit(SET_DOCS, docs);
+  },
+  setLanguage({commit}, language){
+    commit(SET_LANGUAGE, language);
+  },
+  setProfessionalDoc({commit}, professionalDoc){
+    commit(SET_PROFESSIONAL_DOCUMENT, professionalDoc);
+  },
+  setHerqa({commit}, herqa){
+    commit(SET_HERQA, herqa);
+  },
+  setSupportLetter({commit}, letter){
+    commit(SET_SUPPORT_LETTER, letter);
+  },
+  setCOC({commit}, coc){
+    commit(SET_COC, coc);
+  },
+  setEducationalDocument({commit}, educationalDoc){
+    commit(SET_EDUCATIONAL_DOCUMENT, educationalDoc);
+  },
+  setWorkExperience({commit}, workExperience){
+    commit(SET_WORK_EXPERIENCE, workExperience);
   },
   setActiveState({ commit }, state) {
     console.log(state);

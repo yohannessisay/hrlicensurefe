@@ -86,6 +86,16 @@ const routes = [
     path: "/goodStandingSubmitted",
     name: "goodStandingSubmitted",
     component: () => import("../views/GoodStandingSubmitted.vue"),
+  },
+  {
+    path: "/prodoc",
+    name: "professionalDocument",
+    component: () => import("../components/NewLicense/Foreigner/ProfessionalDocument.vue"),
+  },
+  {
+    path: "/educational",
+    name: "educational",
+    component: () => import("../components/NewLicense/Ethiopians L/EducationalDoc.vue"),
   }
 ];
 

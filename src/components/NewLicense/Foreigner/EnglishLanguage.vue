@@ -18,8 +18,8 @@
                   <div class="dropbox">
                     <input
                       type="file"
-                      id="photoFile"
-                      ref="photoFile"
+                      id="englishLanguage"
+                      ref="englishLanguage"
                       v-on:change="handleFileUpload()"
                       style="margin-bottom: 15px !important;"
                     />
@@ -73,7 +73,7 @@ export default {
   props: ["activeState"],
   data() {
     return {
-      photoFile: "",
+      englishLanguage: "",
       showPreview: false,
       filePreview: "",
       showUpload: true,
@@ -90,18 +90,18 @@ export default {
     console.log(this.license);
   },
   methods: {
-    ...mapActions(["setPhoto"]),
+    ...mapActions(["setLanguage"]),
     reset() {
       // reset form to initial state
       this.showUpload = true;
       this.showPreview = false;
-      this.photoFile = "";
+      this.englishLanguage = "";
       this.filePreview = "";
       this.isImage = true;
     },
     handleFileUpload() {
       this.showUpload = false;
-      this.photoFile = this.$refs.photoFile.files[0];
+      this.englishLanguage = this.$refs.englishLanguage.files[0];
       let reader = new FileReader();
 
       reader.addEventListener(
@@ -114,21 +114,22 @@ export default {
       );
 
       if (this.photoFile) {
-        if (/\.(jpe?g|png|gif)$/i.test(this.photoFile.name)) {
+        if (/\.(jpe?g|png|gif)$/i.test(this.englishLanguage.name)) {
           this.isImage = true;
           reader.readAsDataURL(this.photoFile);
-        } else if (/\.(pdf)$/i.test(this.photoFile.name)) {
+        } else if (/\.(pdf)$/i.test(this.englishLanguage.name)) {
           this.isImage = false;
-          reader.readAsText(this.photoFile);
+          reader.readAsText(this.englishLanguage);
         }
       }
     },
     submit() {
       this.$emit("changeActiveState");
       let file = {
-        profilePhoto: this.photoFile
+        englishLanguage: this.englishLanguage
       };
-      this.$store.dispatch("newlicense/setPhoto", file);
+      console.log(file);
+      this.$store.dispatch("newlicense/setLanguage", file);
     },
   },
 };
