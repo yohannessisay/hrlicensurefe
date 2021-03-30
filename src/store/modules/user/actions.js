@@ -12,7 +12,7 @@ export default {
     commit(ADD_PROFILE_LOADING);
     try {
       const resp = await axios.post(
-        "http://5245d8af90be.ngrok.io/api/login",
+        "http://0d619080f4b9.ngrok.io/api/login",
         profile,
         {}
       );
