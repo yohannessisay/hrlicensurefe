@@ -11,4 +11,4 @@ export default {
   getCoc: (state) => state.coc,
   getEducationalDocuments: (state) => state.educationalDocuments,
   getWorkExperience: (state) => state.workExperience,
-};
+};                                                            

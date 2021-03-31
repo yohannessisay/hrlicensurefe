@@ -63,13 +63,22 @@
 <script>
 import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
 import { mapGetters, mapActions } from "vuex";
-import axios from "axios";
 
 export default {
   props: ["activeState"],
   components: { TitleWithIllustration },
   data() {
     return {
+      photo: "",
+      passport: "",
+      healthExamCert: "",
+      englishLanguage: "",
+      professionalDoc: [],
+      herqa: "",
+      supportLetter: "",
+      coc: "",
+      educationalDoc: [],
+      workExperience: "",
       serviceFeeFile: "",
       showPreview: false,
       filePreview: "",
@@ -79,15 +88,29 @@ export default {
   },
   computed: {
     ...mapGetters({
-      getHealthExamCert: "newlicense/getHealthExamCert",
+      getPhoto: "newlicense/getPhoto",
       getPassport: "newlicense/getPassport",
-      getPhoto: "newlicense/getPhoto"
-    })
+      getHealthExamCert: "newlicense/getHealthExamCert",
+      getEnglishLanguage: "newlicense/getEnglishLanguage",
+      getProfessionalDocuments: "newlicense/getProfessionalDocuments",
+      getHerqa: "newlicense/getHerqa",
+      getSupportLetter: "newlicense/getSupportLetter",
+      getCoc: "newlicense/getCoc",
+      getEducationalDocuments: "newlicense/getEducationalDocuments",
+      getWorkExperience: "newlicense/getWorkExperience",
+    }),
   },
   created() {
-    this.healthExamCert = this.getHealthExamCert;
-    this.passport = this.getPassport;
     this.photo = this.getPhoto;
+    this.passport = this.getPassport;
+    this.healthExamCert = this.getHealthExamCert;
+    this.englishLanguage = this.getEnglishLanguage;
+    this.professionalDoc = this.getProfessionalDocuments;
+    this.herqa = this.getHerqa;
+    this.supportLetter = this.getSupportLetter;
+    this.coc = this.getCoc;
+    this.educationalDoc = this.getEducationalDocuments;
+    this.workExperience = this.getWorkExperience;
   },
   methods: {
     ...mapActions(["setServiceFee"]),
@@ -127,48 +150,30 @@ export default {
       let file4 = {
         serviceFee: this.serviceFeeFile,
       };
-
       let formData = new FormData();
-      formData.append("photo", this.photo.profilePhoto);
-      formData.append("passport", this.passport.passport);
-      formData.append("healthExamCert", this.healthExamCert.healthExamCert);
+      formData.append("photo", this.photo);
+      formData.append("passport", this.passport);
+      formData.append("healthExamCert", this.healthExamCert);
+      formData.append("englishLanguage", this.englishLanguage);
+      formData.append("professionalDoc", this.professionalDoc);
+      formData.append("herqa", this.herqa);
+      formData.append("supportLetter", this.supportLetter);
+      formData.append("coc", this.getCoc);
+      formData.append("educationalDocuments", this.educationalDoc);
+      formData.append("workExperience", this.getWorkExperience);
       formData.append("serviceFee", file4.serviceFee);
-
-      try {
-        const response = await axios.post(
-          "http://localhost:5000/api/documentUploads/newLicense/NA",
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data"
-            }
-          }
-        );
-
-        if (response.status === 200) {
+      console.log(formData);
+      this.$store.dispatch("newlicense/uploadDocuments").then((res) => {
+        if (res.status === 200) {
           this.$emit("changeActiveState");
-          //   const docResponse = [];
-
-          // console.log(response);
-          //   for (let index = 0; index < response.data.data.length; index++) {
-          //     const elementId = response.data.data[index].id;
-          //     const elementName = response.data.data[index].fieldName;
-          //     const docFile = {};
-          //     docFile[`${elementName}`] = elementId;
-
-          //     docResponse.push(docFile);
-          //   }
-          this.$store.dispatch("newlicense/setDocs", response.data);
+          this.$store.dispatch("newlicense/setDocs", res.data);
         } else {
-          console.log("Error occurred");
+          console.log("Error Occurred");
         }
-      } catch (error) {
-        console.log(error);
-      }
+      });
     },
     nextStep() {
-        this.$emit("changeActiveState");
-      //   this.$store.dispatch("newlicense/setServiceFee", file4);
+      this.$emit("changeActiveState");
     },
   },
   setup() {},

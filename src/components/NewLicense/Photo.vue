@@ -87,7 +87,6 @@ export default {
   },
   created() {
     this.license = this.getLicense;
-    console.log(this.license);
   },
   methods: {
     ...mapActions(["setPhoto"]),
@@ -125,10 +124,7 @@ export default {
     },
     submit() {
       this.$emit("changeActiveState");
-      let file = {
-        profilePhoto: this.photoFile
-      };
-      this.$store.dispatch("newlicense/setPhoto", file);
+      this.$store.dispatch("newlicense/setPhoto", this.photoFile);
     },
   },
 };

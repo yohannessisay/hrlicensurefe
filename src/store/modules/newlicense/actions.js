@@ -18,6 +18,8 @@ import {
   SET_WORK_EXPERIENCE,
 } from "./mutation-types";
 
+const url = "http://49f72b2f2bdd.ngrok.io/api/";
+
 export default {
   setLicense({ commit }, license) {
     commit(SET_LICENSE, license);
@@ -34,25 +36,25 @@ export default {
   setDocs({ commit }, docs) {
     commit(SET_DOCS, docs);
   },
-  setLanguage({commit}, language){
+  setLanguage({ commit }, language) {
     commit(SET_LANGUAGE, language);
   },
-  setProfessionalDoc({commit}, professionalDoc){
+  setProfessionalDoc({ commit }, professionalDoc) {
     commit(SET_PROFESSIONAL_DOCUMENT, professionalDoc);
   },
-  setHerqa({commit}, herqa){
+  setHerqa({ commit }, herqa) {
     commit(SET_HERQA, herqa);
   },
-  setSupportLetter({commit}, letter){
+  setSupportLetter({ commit }, letter) {
     commit(SET_SUPPORT_LETTER, letter);
   },
-  setCOC({commit}, coc){
+  setCOC({ commit }, coc) {
     commit(SET_COC, coc);
   },
-  setEducationalDocument({commit}, educationalDoc){
+  setEducationalDocument({ commit }, educationalDoc) {
     commit(SET_EDUCATIONAL_DOCUMENT, educationalDoc);
   },
-  setWorkExperience({commit}, workExperience){
+  setWorkExperience({ commit }, workExperience) {
     commit(SET_WORK_EXPERIENCE, workExperience);
   },
   setActiveState({ commit }, state) {
@@ -61,47 +63,47 @@ export default {
   },
   async newLicense({ commit }, license) {
     try {
-      const rep = await axios.post(
-        "https://ca9dee52bc55.ngrok.io/api/newLicenses/add",
-        license
-      );
+      const resp = await ApiService.post(url + "newLicenses/add", license);
+      return resp;
     } catch (error) {
-      const resp = error;
+      return error;
     }
-    return resp;
   },
-  async getUserType() {
+  async uploadDocuments(documents) {
     try {
-      const resp = await ApiService.get("/api/lookups/userTypes");
+      const resp = await ApiService.post(url + "newLicense/NA", documents, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      return resp;
     } catch (error) {
-      const resp = error;
+      return error;
     }
-    return resp;
+  },
+
+  async getApplicantType() {
+    try {
+      const resp = await ApiService.get(url + "lookups/applicantTypes");
+      return resp;
+    } catch (error) {
+      return error;
+    }
   },
   async getInstitutionType() {
     try {
-      const resp = await axios.post(
-        "https://ca9dee52bc55.ngrok.io/api/newLicenses/add",
-        profile
-      );
+      const resp = await ApiService.get(url + "lookups/institutionTypes");
+      return resp;
     } catch (error) {
-      const resp = error;
+      return error;
     }
   },
-  async getInstitutions() {
+  async getDepartmentType() {
     try {
-      const resp = await ApiService.get("/api/lookups/institutions");
+      const resp = await ApiService.get(url + "lookups/departments");
+      return resp;
     } catch (error) {
-      const resp = error;
+      return error;
     }
-    return resp;
-  },
-  async getApplicantType() {
-    try {
-      const resp = await ApiService.get("/api/lookups/applicantTypes");
-    } catch (error) {
-      const resp = error;
-    }
-    return resp;
   },
 };

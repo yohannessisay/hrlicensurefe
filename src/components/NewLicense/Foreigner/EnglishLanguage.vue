@@ -87,7 +87,6 @@ export default {
   },
   created() {
     this.license = this.getLicense;
-    console.log(this.license);
   },
   methods: {
     ...mapActions(["setLanguage"]),
@@ -125,11 +124,7 @@ export default {
     },
     submit() {
       this.$emit("changeActiveState");
-      let file = {
-        englishLanguage: this.englishLanguage
-      };
-      console.log(file);
-      this.$store.dispatch("newlicense/setLanguage", file);
+      this.$store.dispatch("newlicense/setLanguage", this.englishLanguage);
     },
   },
 };

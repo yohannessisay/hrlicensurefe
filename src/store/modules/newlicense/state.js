@@ -6,38 +6,17 @@ export default {
       departmentId: "",
       institutionId: "",
     },
-
-    file: {
-      profilePhoto: "",
-    },
-    file2: {
-      passport: "",
-    },
-    file3: {
-      healthExamCert: "",
-    },
-    docs: {},
-    file4: {
-      englishLanguage: "",
-    },
-    file5: {
-      professionalDocuments: [],
-    },
-    file6: {
-      herqa: "",
-    },
-    file7: {
-      supportLetter: "",
-    },
-    file8: {
-      coc: "",
-    },
-    file9: {
-      educationalDocuments: [],
-    },
-    file10: {
-      workExperience: "",
-    },
+    photo: "",
+    passport: "",
+    healthExamCert: "",
+    docs: "",
+    englishLanguage: "",
+    professionalDocuments: [],
+    herqa: "",
+    supportLetter: "",
+    coc: "",
+    educationalDocuments: [],
+    workExperience: "",
     addProfileLoading: false,
     addProfileSuccess: false,
     addProfileError: false,

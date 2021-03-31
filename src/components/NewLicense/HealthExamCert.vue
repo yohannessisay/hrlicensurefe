@@ -120,10 +120,10 @@ export default {
     },
     submit() {
       this.$emit("changeActiveState");
-      let file3 = {
-        healthExamCert: this.healthExamCertFile,
-      };
-      this.$store.dispatch("newlicense/setHealthExamCert", file3);
+      this.$store.dispatch(
+        "newlicense/setHealthExamCert",
+        this.healthExamCertFile
+      );
     },
   },
   setup() {},

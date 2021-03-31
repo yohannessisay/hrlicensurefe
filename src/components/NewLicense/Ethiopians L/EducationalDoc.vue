@@ -372,7 +372,6 @@ export default {
         this.certificateFile4,
       ];
       this.$store.dispatch("newlicense/setProfessionalDoc", file);
-      // console.log(this.getPersonalDoc);
     },
   },
 };

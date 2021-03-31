@@ -89,13 +89,13 @@ export default {
   props: ["activeState"],
   components: { TitleWithIllustration },
   mounted() {
+    this.fetchApplicantType();
     this.fetchInstitutions();
     this.fetchDepartments();
-    this.fetchApplicantType();
   },
   data: () => ({
     licenseInfo: {
-      applicantId: +localStorage.getItem("userId"),
+      applicantId: localStorage.getItem("userId"),
       applicantTypeId: "",
       education: {
         departmentId: "",
@@ -118,55 +118,26 @@ export default {
           institutionId: this.licenseInfo.education.institutionId,
         },
       };
+      this.$emit("applicantTypeValue", this.licenseInfo.applicantTypeId);
       this.$store.dispatch("newlicense/setLicense", license);
     },
-    async fetchInstitutions() {
-      try {
-        const url = `http://localhost:5000/api/lookups/institutionTypes`;
-        const response = await axios.get(url);
-        const results = response.data.data;
-        this.institutions = results;
-      } catch (err) {
-        if (err.response) {
-          console.log("Server Error:", err);
-        } else if (err.request) {
-          console.log("Network Error:", err);
-        } else {
-          console.log("Client Error:", err);
-        }
-      }
-    },
-    async fetchDepartments() {
-      try {
-        const url = `http://localhost:5000/api/lookups/departments`;
-        const response = await axios.get(url);
-        const results = response.data.data;
-        this.departments = results;
-      } catch (err) {
-        if (err.response) {
-          console.log("Server Error:", err);
-        } else if (err.request) {
-          console.log("Network Error:", err);
-        } else {
-          console.log("Client Error:", err);
-        }
-      }
-    },
-    async fetchApplicantType() {
-      try {
-        const url = `http://localhost:5000/api/lookups/applicantTypes`;
-        const response = await axios.get(url);
-        const results = response.data.data;
+    fetchApplicantType() {
+      this.$store.dispatch("newlicense/getApplicantType").then((res) => {
+        const results = res.data.data;
         this.applicantTypes = results;
-      } catch (err) {
-        if (err.response) {
-          console.log("Server Error:", err);
-        } else if (err.request) {
-          console.log("Network Error:", err);
-        } else {
-          console.log("Client Error:", err);
-        }
-      }
+      });
+    },
+    fetchInstitutions() {
+      this.$store.dispatch("newlicense/getInstitutionType").then((res) => {
+        const results = res.data.data;
+        this.institutions = results;
+      });
+    },
+    fetchDepartments() {
+      this.$store.dispatch("newlicense/getDepartmentType").then((res) => {
+        const results = res.data.data;
+        this.departments = results;
+      });
     },
   },
 };

@@ -120,10 +120,7 @@ export default {
     },
     submit() {
       this.$emit("changeActiveState");
-      let file2 = {
-        passport: this.passportFile
-      };
-      this.$store.dispatch("newlicense/setPassport", file2);
+      this.$store.dispatch("newlicense/setPassport", this.passportFile);
     },
   },
 };
