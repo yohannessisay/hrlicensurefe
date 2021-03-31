@@ -3,7 +3,6 @@ export default {
   getPhoto: (state) => state.photo,
   getPassport: (state) => state.passport,
   getHealthExamCert: (state) => state.healthExamCert,
-  getDocs: (state) => state.docs,
   getEnglishLanguage: (state) => state.englishLanguage,
   getProfessionalDocuments: (state) => state.professionalDocuments,
   getHerqa: (state) => state.herqa,
@@ -11,4 +10,5 @@ export default {
   getCoc: (state) => state.coc,
   getEducationalDocuments: (state) => state.educationalDocuments,
   getWorkExperience: (state) => state.workExperience,
-};                                                            
+  getDocs: (state) => state.docs,
+};

@@ -162,8 +162,7 @@ export default {
       formData.append("educationalDocuments", this.educationalDoc);
       formData.append("workExperience", this.getWorkExperience);
       formData.append("serviceFee", file4.serviceFee);
-      console.log(formData);
-      this.$store.dispatch("newlicense/uploadDocuments").then((res) => {
+      this.$store.dispatch("newlicense/uploadDocuments", formData).then((res) => {
         if (res.status === 200) {
           this.$emit("changeActiveState");
           this.$store.dispatch("newlicense/setDocs", res.data);

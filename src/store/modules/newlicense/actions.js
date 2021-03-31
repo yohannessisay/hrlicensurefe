@@ -33,9 +33,6 @@ export default {
   setHealthExamCert({ commit }, healthExamCert) {
     commit(SET_HEALTH_EXAM_CERT, healthExamCert);
   },
-  setDocs({ commit }, docs) {
-    commit(SET_DOCS, docs);
-  },
   setLanguage({ commit }, language) {
     commit(SET_LANGUAGE, language);
   },
@@ -57,9 +54,8 @@ export default {
   setWorkExperience({ commit }, workExperience) {
     commit(SET_WORK_EXPERIENCE, workExperience);
   },
-  setActiveState({ commit }, state) {
-    console.log(state);
-    commit(SET_ACTIVE_STATE, state);
+  setDocs({ commit }, docs) {
+    commit(SET_DOCS, docs);
   },
   async newLicense({ commit }, license) {
     try {
@@ -71,11 +67,15 @@ export default {
   },
   async uploadDocuments(documents) {
     try {
-      const resp = await ApiService.post(url + "newLicense/NA", documents, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const resp = await ApiService.post(
+        url + "newLicense/documentUploads",
+        documents,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
       return resp;
     } catch (error) {
       return error;

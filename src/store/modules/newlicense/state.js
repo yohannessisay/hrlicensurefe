@@ -9,7 +9,6 @@ export default {
     photo: "",
     passport: "",
     healthExamCert: "",
-    docs: "",
     englishLanguage: "",
     professionalDocuments: [],
     herqa: "",
@@ -17,9 +16,9 @@ export default {
     coc: "",
     educationalDocuments: [],
     workExperience: "",
+    docs: "",
     addProfileLoading: false,
     addProfileSuccess: false,
     addProfileError: false,
-    activeState: 0,
   },
 };
