@@ -6,7 +6,7 @@
       >
         <TitleWithIllustration
           illustration="User"
-          message="English Language Proficiency"
+          message="English Language Proficiency Certificate"
           class="mt-8"
         />
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
@@ -82,14 +82,14 @@ export default {
   },
   computed: {
     ...mapGetters({
-      getLicense: "newlicense/getEnglishLanguage"
+      getLicense: "newlicense/getLicense"
     })
   },
   created() {
     this.license = this.getLicense;
   },
   methods: {
-    ...mapActions(["setLanguage"]),
+    ...mapActions(["setPhoto"]),
     reset() {
       // reset form to initial state
       this.showUpload = true;

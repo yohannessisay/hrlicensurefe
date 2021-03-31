@@ -18,8 +18,8 @@
                   <div class="dropbox">
                     <input
                       type="file"
-                      id="englishLanguage"
-                      ref="englishLanguage"
+                      id="photoFile"
+                      ref="photoFile"
                       v-on:change="handleFileUpload()"
                       style="margin-bottom: 15px !important;"
                     />
@@ -73,7 +73,7 @@ export default {
   props: ["activeState"],
   data() {
     return {
-      englishLanguage: "",
+      photoFile: "",
       showPreview: false,
       filePreview: "",
       showUpload: true,
@@ -89,18 +89,18 @@ export default {
     this.license = this.getLicense;
   },
   methods: {
-    ...mapActions(["setLanguage"]),
+    ...mapActions(["setPhoto"]),
     reset() {
       // reset form to initial state
       this.showUpload = true;
       this.showPreview = false;
-      this.englishLanguage = "";
+      this.photoFile = "";
       this.filePreview = "";
       this.isImage = true;
     },
     handleFileUpload() {
       this.showUpload = false;
-      this.englishLanguage = this.$refs.englishLanguage.files[0];
+      this.photoFile = this.$refs.photoFile.files[0];
       let reader = new FileReader();
 
       reader.addEventListener(
@@ -113,18 +113,18 @@ export default {
       );
 
       if (this.photoFile) {
-        if (/\.(jpe?g|png|gif)$/i.test(this.englishLanguage.name)) {
+        if (/\.(jpe?g|png|gif)$/i.test(this.photoFile.name)) {
           this.isImage = true;
           reader.readAsDataURL(this.photoFile);
-        } else if (/\.(pdf)$/i.test(this.englishLanguage.name)) {
+        } else if (/\.(pdf)$/i.test(this.photoFile.name)) {
           this.isImage = false;
-          reader.readAsText(this.englishLanguage);
+          reader.readAsText(this.photoFile);
         }
       }
     },
     submit() {
       this.$emit("changeActiveState");
-      this.$store.dispatch("newlicense/setLanguage", this.englishLanguage);
+      this.$store.dispatch("newlicense/setLanguage", this.photoFile);
     },
   },
 };
