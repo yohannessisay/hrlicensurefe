@@ -2,9 +2,6 @@ import axios from "axios";
 import ApiService from "../../../services/api.service";
 import {
   SET_LICENSE,
-  ADD_PROFILE_LOADING,
-  ADD_PROFILE_SUCCESS,
-  ADD_PROFILE_ERROR,
   SET_PHOTO,
   SET_PASSPORT,
   SET_HEALTH_EXAM_CERT,
@@ -16,6 +13,9 @@ import {
   SET_COC,
   SET_EDUCATIONAL_DOCUMENT,
   SET_WORK_EXPERIENCE,
+  ADD_PROFILE_LOADING,
+  ADD_PROFILE_SUCCESS,
+  ADD_PROFILE_ERROR,
 } from "./mutation-types";
 
 const url = "http://49f72b2f2bdd.ngrok.io/api/";
