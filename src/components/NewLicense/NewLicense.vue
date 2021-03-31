@@ -2,7 +2,7 @@
   <div>
     <Navigation />
     <div class="w-screen bg-lightBlueB-200 flex items-center justify-center">
-      <div class="w-screen max-w-4xl mt-large">
+      <div class="w-screen max-w-4xl mt-medium">
         <div class="flex flex-col w-full bg-white rounded mb-large">
           <!-- <div id="navg" class="flex justify-center bg-lightBlueB-200">
             <nav
@@ -302,7 +302,7 @@ export default {
   },
   methods: {
     applicantTypeSet: function(params) {
-      if (params == null || params == undefined) {
+      if (params == null || params == undefined || params == "") {
         this.applicantType = 1;
       } else {
         this.applicantType = params;
