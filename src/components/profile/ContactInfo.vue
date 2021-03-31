@@ -80,6 +80,7 @@ export default {
 
     let contactErrors = ref({
       mobileNumber: "",
+      email: "",
       telephoneNumber: ""
     });
 
@@ -90,6 +91,9 @@ export default {
         errors.mobileNumber = "Mobile Number Required";
       if (!formData.telephoneNumber)
         errors.telephoneNumber = "Telephone Number Required";
+      if (formData.email && !isEmail(formData.email)) {
+        errors.email = "Invalid Email";
+      }
 
       return errors;
     };
@@ -114,6 +118,11 @@ export default {
       }
     };
 
+    const isEmail = email => {
+      const re = /\S+@\S+\.\S+/;
+      return re.test(email);
+    };
+
     const nextStep = () => {
       contactErrors.value = validateForm(contact.value);
       let empty = isEmpty(contactErrors.value);
@@ -132,6 +141,7 @@ export default {
       validateForm,
       isNumber,
       isEmpty,
+      isEmail,
       nextStep
     };
   },
