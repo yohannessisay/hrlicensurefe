@@ -8,65 +8,65 @@
       <Title message="Personal Info" />
     </div>
     <div class="flex flex-row">
-      <div :class="[this.profileInfo.name === null ? errorClass : activeClass]">
+      <div :class="[profileInfo.name === null ? errorClass : activeClass]">
         <label class="ml-8"> Full Name</label>
         <h5 class="ml-8">
           {{
-            this.profileInfo.name +
+              profileInfo.name +
               " " +
-              this.profileInfo.fatherName +
+              profileInfo.fatherName +
               " " +
-              this.profileInfo.grandFatherName
+              profileInfo.grandFatherName
           }}
         </h5>
       </div>
       <div
-        :class="[this.profileInfo.gender === null ? errorClass : activeClass]"
+        :class="[profileInfo.gender === null ? errorClass : activeClass]"
       >
         <label class="ml-8"> Gender</label>
         <h5 class="ml-8">
-          {{ this.profileInfo.gender ? this.profileInfo["gender"] : "-" }}
+          {{ profileInfo.gender ? profileInfo["gender"] : "-" }}
         </h5>
       </div>
       <div
         :class="[
-          this.profileInfo.nationality === null ? errorClass : activeClass,
+          profileInfo.nationality === null ? errorClass : activeClass,
         ]"
       >
         <label class="ml-8"> Nationality</label>
         <h5 class="ml-8">
           {{
-            this.profileInfo.nationality ? this.profileInfo.nationality : "-"
+            profileInfo.nationality ? profileInfo.nationality : "-"
           }}
         </h5>
       </div>
       <div
         :class="[
-          this.profileInfo.placeOfBirth === null ? errorClass : activeClass,
+          profileInfo.placeOfBirth === null ? errorClass : activeClass,
         ]"
       >
         <label class="ml-8"> Place of Birth</label>
         <h5 class="ml-8">
           {{
-            this.profileInfo.placeOfBirth ? this.profileInfo.placeOfBirth : "-"
+            profileInfo.placeOfBirth ? profileInfo.placeOfBirth : "-"
           }}
         </h5>
       </div>
       <div
         :class="[
-          this.profileInfo.dateOfBirth === null ? errorClass : activeClass,
+          profileInfo.dateOfBirth === null ? errorClass : activeClass,
         ]"
       >
         <label class="ml-8"> Date of Birth</label>
         <h5 class="ml-8">
           {{
-            this.profileInfo.dateOfBirth ? this.profileInfo.dateOfBirth : "-"
+            profileInfo.dateOfBirth ? profileInfo.dateOfBirth : "-"
           }}
         </h5>
       </div>
       <div
         :class="[
-          this.profileInfo.maritalStatus.name === null
+          profileInfo.maritalStatus.name === null
             ? errorClass
             : activeClass,
         ]"
@@ -74,8 +74,8 @@
         <label class="ml-8"> Marital Status</label>
         <h5 class="ml-8">
           {{
-            this.profileInfo.maritalStatus.name
-              ? this.profileInfo.maritalStatus.name
+            profileInfo.maritalStatus.name
+              ? profileInfo.maritalStatus.name
               : "-"
           }}
         </h5>
@@ -88,7 +88,7 @@
     <div class="flex flex-row">
       <div
         :class="[
-          this.profileInfo.woreda.zone.region === null
+          profileInfo.woreda.zone.region === null
             ? errorClass
             : activeClass,
         ]"
@@ -96,62 +96,62 @@
         <label class="ml-8"> Region</label>
         <h5 class="ml-8">
           {{
-            this.profileInfo.woreda.zone.region
-              ? this.profileInfo.woreda.zone.region.name
+            profileInfo.woreda.zone.region
+              ? profileInfo.woreda.zone.region.name
               : "-"
           }}
         </h5>
       </div>
       <div
         :class="[
-          this.profileInfo.woreda.zone === null ? errorClass : activeClass,
+          profileInfo.woreda.zone === null ? errorClass : activeClass,
         ]"
       >
         <label class="ml-8"> Zone</label>
         <h5 class="ml-8">
           {{
-            this.profileInfo.woreda.zone
-              ? this.profileInfo.woreda.zone.name
+            profileInfo.woreda.zone
+              ? profileInfo.woreda.zone.name
               : "-"
           }}
         </h5>
       </div>
       <div
-        :class="[this.profileInfo.woreda === null ? errorClass : activeClass]"
+        :class="[profileInfo.woreda === null ? errorClass : activeClass]"
       >
         <label class="ml-8"> Wereda</label>
         <h5 class="ml-8">
-          {{ this.profileInfo.woreda ? this.profileInfo.woreda.name : "-" }}
+          {{ profileInfo.woreda ? profileInfo.woreda.name : "-" }}
         </h5>
       </div>
       <div
-        :class="[this.profileInfo.kebele === null ? errorClass : activeClass]"
+        :class="[profileInfo.kebele === null ? errorClass : activeClass]"
       >
         <label class="ml-8"> Kebele</label>
         <h5 class="ml-8">
-          {{ this.profileInfo.kebele ? this.profileInfo.kebele : "-" }}
+          {{ profileInfo.kebele ? profileInfo.kebele : "-" }}
         </h5>
       </div>
       <div
         :class="[
-          this.profileInfo.houseNumber === null ? errorClass : activeClass,
+          profileInfo.houseNumber === null ? errorClass : activeClass,
         ]"
       >
         <label class="ml-8"> House Number</label>
         <h5 class="ml-8">
           {{
-            this.profileInfo.houseNumber ? this.profileInfo.houseNumber : "-"
+            profileInfo.houseNumber ? profileInfo.houseNumber : "-"
           }}
         </h5>
       </div>
       <div
         :class="[
-          this.profileInfo.residence === null ? errorClass : activeClass,
+          profileInfo.residence === null ? errorClass : activeClass,
         ]"
       >
         <label class="ml-8"> Residence</label>
         <h5 class="ml-8">
-          {{ this.profileInfo.residence ? this.profileInfo.residence : "-" }}
+          {{ profileInfo.residence ? profileInfo.residence : "-" }}
         </h5>
       </div>
     </div>
@@ -161,14 +161,14 @@
     <div class="flex flex-row">
       <div
         :class="[
-          this.profileInfo.user.phoneNumber === null ? errorClass : activeClass,
+          profileInfo.user.phoneNumber === null ? errorClass : activeClass,
         ]"
       >
         <label class="ml-8"> Mobile Number</label>
         <h5 class="ml-8">
           {{
-            this.profileInfo.user.phoneNumber
-              ? this.profileInfo.user.phoneNumber
+            profileInfo.user.phoneNumber
+              ? profileInfo.user.phoneNumber
               : "-"
           }}
         </h5>
@@ -176,28 +176,28 @@
 
       <div
         :class="[
-          this.profileInfo.user.emailAddress === null ? errorClass : activeClass
+          profileInfo.user.emailAddress === null ? errorClass : activeClass
         ]"
       >
         <label class="ml-8"> Email</label>
         <h5 class="ml-8">
           {{
-            this.profileInfo.user.emailAddress
-              ? this.profileInfo.user.emailAddress
+            profileInfo.user.emailAddress
+              ? profileInfo.user.emailAddress
               : "-"
           }}
         </h5>
       </div>
       <div
         :class="[
-          this.profileInfo.userType.name === null ? errorClass : activeClass,
+          profileInfo.userType.name === null ? errorClass : activeClass,
         ]"
       >
         <label class="ml-8"> User Type</label>
         <h5 class="ml-8">
           {{
-            this.profileInfo.userType.name
-              ? this.profileInfo.userType.name
+            profileInfo.userType.name
+              ? profileInfo.userType.name
               : "-"
           }}
         </h5>
@@ -255,9 +255,10 @@
 </template>
 
 <script>
+import { ref, onMounted, nextTick } from "vue";
+import { useStore } from "vuex";
 import Title from "@/sharedComponents/Title";
 import axios from "axios";
-import { mapGetters } from "vuex";
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 export default {
@@ -265,32 +266,12 @@ export default {
   components: {
     Title,
     FlashMessage,
-    ErrorFlashMessage,
+    ErrorFlashMessage
   },
-  beforeCreate() {
-    this.userId = +localStorage.getItem("userId");
-  },
+  setup() {
+    const store = useStore();
 
-  async created() {
-    const url = `http://localhost:5000/api/profiles/` + this.userId;
-    const getProfile = await axios.get(url, {
-      responseType: "json"
-    });
-    if (getProfile) {
-      this.setData(getProfile.data.data);
-    } else {
-      console.log("Server Error!");
-    }
-
-    this.renewalLicense = this.getRenewalLicense;
-    this.applicantId = this.renewalLicense.applicantId;
-    this.applicantTypeId = this.renewalLicense.applicantTypeId;
-    this.education.departmentId = this.renewalLicense.education.departmentId;
-    this.education.institutionId = this.renewalLicense.education.institutionId;
-    this.docs = this.getDocs.data;
-  },
-  data: () => ({
-    profileInfo: {
+    let profileInfo = {
       name: "",
       fatherName: "",
       grandFatherName: "",
@@ -320,41 +301,39 @@ export default {
       userType: {
         name: ""
       }
-    },
-    applicantId: "",
-    applicantTypeId: "",
-    education: {
+    };
+
+    let renewalLicense = ref(null);
+    let docs = ref(null);
+    let userId = ref(null);
+    let applicantId = ref("");
+    let applicantTypeId = ref("");
+    let education = {
       departmentId: "",
       institutionId: ""
-    },
-    basePath: "http://localhost:5000/",
-    activeClass: "active",
-    errorClass: "text-danger",
-    dataFetched: false,
-    showFlash: false,
-    showErrorFlash: false
-  }),
-  computed: {
-    ...mapGetters({
-      getRenewalLicense: "renewal/getRenewalLicense",
-      getDocs: "renewal/getDocs"
-    }),
-  },
-  methods: {
-    async submitRequest() {
-      this.showFlash = false;
-      this.showErrorFlash = false;
+    };
+    let basePath = ref("http://localhost:5000/");
+    let activeClass = ref("active");
+    let errorClass = ref("text-danger");
+    let dataFetched = ref(false);
+    let showFlash = ref(false);
+    let showErrorFlash = ref(false);
+    let Success = ref(null);
+
+    let submitRequest = async () => {
+      showFlash.value = false;
+      showErrorFlash.value = false;
       let renewal = {
-        applicantId: this.applicantId,
-        applicantTypeId: this.applicantTypeId,
+        applicantId: applicantId.value,
+        applicantTypeId: applicantTypeId.value,
         education: {
-          institutionId: this.education.departmentId,
-          departmentId: this.education.institutionId
+          institutionId: education.departmentId,
+          departmentId: education.institutionId
         }
       };
 
-      for (let index = 0; index < this.docs.length; index++) {
-        const aDoc = this.docs[index];
+      for (let index = 0; index < docs.value.length; index++) {
+        const aDoc = docs[index].value;
 
         if (aDoc.fieldName === "photo") {
           renewal.photoId = aDoc.id;
@@ -379,40 +358,80 @@ export default {
           .post("http://localhost:5000/api/renewals/add", renewal)
           .then(response => {
             if (response.statusText == "Created") {
-              this.Success = true;
-              this.showFlash = true;
+              showFlash.value = true;
 
               console.log(response);
-              this.$router.push({ path: "/renewalSubmitted" });
+              // this.$router.push({ path: "/renewalSubmitted" });
             }
             //console.log(this.a);
-            this.$router.push({ path: "/menu" });
+            // this.$router.push({ path: "/menu" });
             console.log(response);
           })
           .catch(error => {
-            this.Success = false;
-            this.showErrorFlash = true;
+            showErrorFlash.value = true;
             console.log(error);
           });
       } catch (error) {
         console.log(error);
       }
-    },
-    setData(data) {
+    };
+
+    let setData = data => {
       if (data) {
-        this.profileInfo = data;
+        profileInfo = data;
       } else {
-        this.profileInfo = null;
+        profileInfo = null;
       }
-    }
-  },
-  mounted() {
-    this.$nextTick(function() {
-      window.setInterval(() => {
-        this.showFlash = false;
-        this.showErrorFlash = false;
-      }, 10000);
+    };
+
+    let created = async () => {
+      const url = `http://localhost:5000/api/profiles/` + this.userId;
+      const getProfile = await axios.get(url, {
+        responseType: "json"
+      });
+      if (getProfile) {
+        setData(getProfile.data.data);
+      } else {
+        console.log("Server Error!");
+      }
+
+      applicantId.value = renewalLicense.value.applicantId;
+      applicantTypeId.value = renewalLicense.value.applicantTypeId;
+      education.epartmentId = renewalLicense.value.education.departmentId;
+      education.institutionId = renewalLicense.value.education.institutionId;
+      docs.value = docs.value.data;
+    };
+
+    onMounted(() => {
+      nextTick(function() {
+        window.setInterval(() => {
+          showFlash.value = false;
+        }, 10000);
+      });
+      renewalLicense = store.getters["renewal/getRenewalLicense"];
+      docs = store.getters["renewal/getDocs"];
+      userId = +localStorage.getItem("userId");
+      created();
     });
+
+    return {
+      applicantId,
+      applicantTypeId,
+      basePath,
+      activeClass,
+      errorClass,
+      dataFetched,
+      showFlash,
+      showErrorFlash,
+      renewalLicense,
+      docs,
+      userId,
+      submitRequest,
+      Success,
+      setData,
+      created,
+      profileInfo
+    }
   }
 };
 </script>

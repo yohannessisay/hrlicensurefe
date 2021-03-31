@@ -20,7 +20,7 @@
                       type="file"
                       id="serviceFeeFile"
                       class="photoFile"
-                      ref="serviceFeeFile"
+                      ref="serviceFeeFileP"
                       v-on:change="handleFileUpload()"
                       style="margin-bottom: 15px !important;"
                     />
@@ -62,72 +62,81 @@
 </template>
 
 <script>
+import { ref, onMounted } from "vue";
+import { useStore } from "vuex";
 import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
-import { mapGetters, mapActions } from "vuex";
 
 export default {
   props: ["activeState"],
   components: { TitleWithIllustration },
-  data() {
-    return {
-      serviceFeeFile: "",
-      showPreview: false,
-      filePreview: "",
-      showUpload: true,
-      isImage: true,
+  setup(props, { emit }) {
+    const store = useStore();
+
+    let serviceFeeFile = ref("");
+    let serviceFeeFileP = ref("");
+    let showPreview = ref(false);
+    let filePreview = ref("");
+    let showUpload = ref(true);
+    let isImage = ref(true);
+
+    const reset = () => {
+      showUpload.value = true;
+      showPreview.value = false;
+      serviceFeeFile.value = "";
+      filePreview.value = "";
+      isImage.value = true;
     };
-  },
-  computed: {
-    ...mapGetters({
-      getRenewalHealthExamCert: "renewal/getRenewalHealthExamCert",
-    }),
-  },
-  created() {
-    this.healthExamCert = this.getRenewalHealthExamCert;
-    console.log(this.healthExamCert)
-  },
-  methods: {
-    ...mapActions(["setRenewalServiceFee"]),
-    reset() {
-      // reset form to initial state
-      this.showUpload = true;
-      this.showPreview = false;
-      this.serviceFeeFile = "";
-      this.filePreview = "";
-      this.isImage = true;
-    },
-    handleFileUpload() {
-      this.showUpload = false;
-      this.serviceFeeFile = this.$refs.serviceFeeFile.files[0];
+    const handleFileUpload = () => {
+      showUpload.value = false;
+      serviceFeeFile.value = serviceFeeFileP.value.files[0];
+      console.log(serviceFeeFile.value);
       let reader = new FileReader();
 
       reader.addEventListener(
         "load",
         function() {
-          this.showPreview = true;
-          this.filePreview = reader.result;
-        }.bind(this),
+          showPreview.value = true;
+          filePreview.value = reader.result;
+        },
         false
       );
 
-      if (this.serviceFeeFile) {
-        if (/\.(jpe?g|png|gif)$/i.test(this.serviceFeeFile.name)) {
-          this.isImage = true;
-          reader.readAsDataURL(this.serviceFeeFile);
-        } else if (/\.(pdf)$/i.test(this.serviceFeeFile.name)) {
-          this.isImage = false;
-          reader.readAsText(this.serviceFeeFile);
+      if (serviceFeeFile.value) {
+        if (/\.(jpe?g|png|gif)$/i.test(serviceFeeFile.value.name)) {
+          isImage.value = true;
+          reader.readAsDataURL(serviceFeeFile.value);
+        } else if (/\.(pdf)$/i.test(serviceFeeFile.value.name)) {
+          isImage.value = false;
+          reader.readAsText(serviceFeeFile.value);
         }
       }
-    },
-    submit() {
-      this.$emit("changeActiveState");
+    };
+    const submit = () => {
+      emit("changeActiveState");
       let file4 = {
-        serviceFee: this.serviceFeeFile,
+        serviceFee: serviceFeeFile.value,
       };
-      this.$store.dispatch("renewal/setRenewalServiceFee", file4);
-    },
-  },
+      store.dispatch("renewal/setRenewalServiceFee", file4);
+      console.log(serviceFeeFile.value);
+    };
+
+    onMounted(() => {
+      const renewalHealthExamCert = store.getters["renewal/getRenewalHealthExamCert"];
+      console.log(renewalHealthExamCert);
+    });
+
+    return {
+      serviceFeeFile,
+      serviceFeeFileP,
+      showPreview,
+      filePreview,
+      showUpload,
+      isImage,
+      handleFileUpload,
+      reset,
+      submit
+    };
+  }
 };
 </script>
 <style>

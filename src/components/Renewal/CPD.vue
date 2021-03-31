@@ -20,7 +20,7 @@
                       type="file"
                       id="cpdFile"
                       class="photoFile"
-                      ref="cpdFile"
+                      ref="cpdFileP"
                       v-on:change="handleFileUpload()"
                       style="margin-bottom: 15px !important;"
                     />
@@ -62,72 +62,81 @@
 </template>
 
 <script>
+import { ref, onMounted } from "vue";
+import { useStore } from "vuex";
 import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
-import { mapGetters, mapActions } from "vuex";
 
 export default {
   props: ["activeState"],
   components: { TitleWithIllustration },
-  data() {
-    return {
-      cpdFile: "",
-      showPreview: false,
-      filePreview: "",
-      showUpload: true,
-      isImage: true,
+  setup(props, { emit }) {
+    const store = useStore();
+
+    let cpdFile = ref("");
+    let cpdFileP = ref("");
+    let showPreview = ref(false);
+    let filePreview = ref("");
+    let showUpload = ref(true);
+    let isImage = ref(true);
+
+    const reset = () => {
+      showUpload.value = true;
+      showPreview.value = false;
+      cpdFile.value = "";
+      filePreview.value = "";
+      isImage.value = true;
     };
-  },
-  computed: {
-    ...mapGetters({
-      getRenewalServiceFee: "renewal/getRenewalServiceFee",
-    }),
-  },
-  created() {
-    this.serviceFee = this.getRenewalServiceFee;
-    console.log(this.serviceFee)
-  },
-  methods: {
-    ...mapActions(["setRenewalCpd"]),
-    reset() {
-      // reset form to initial state
-      this.showUpload = true;
-      this.showPreview = false;
-      this.cpdFile = "";
-      this.filePreview = "";
-      this.isImage = true;
-    },
-    handleFileUpload() {
-      this.showUpload = false;
-      this.cpdFile = this.$refs.cpdFile.files[0];
+    const handleFileUpload = () => {
+      showUpload.value = false;
+      cpdFile.value = cpdFileP.value.files[0];
+      console.log(cpdFile.value);
       let reader = new FileReader();
 
       reader.addEventListener(
         "load",
         function() {
-          this.showPreview = true;
-          this.filePreview = reader.result;
-        }.bind(this),
+          showPreview.value = true;
+          filePreview.value = reader.result;
+        },
         false
       );
 
-      if (this.cpdFile) {
-        if (/\.(jpe?g|png|gif)$/i.test(this.cpdFile.name)) {
-          this.isImage = true;
-          reader.readAsDataURL(this.cpdFile);
-        } else if (/\.(pdf)$/i.test(this.cpdFile.name)) {
-          this.isImage = false;
-          reader.readAsText(this.cpdFile);
+      if (cpdFile.value) {
+        if (/\.(jpe?g|png|gif)$/i.test(cpdFile.value.name)) {
+          isImage.value = true;
+          reader.readAsDataURL(cpdFile.value);
+        } else if (/\.(pdf)$/i.test(cpdFile.value.name)) {
+          isImage.value = false;
+          reader.readAsText(cpdFile.value);
         }
       }
-    },
-    submit() {
-      this.$emit("changeActiveState");
+    };
+    const submit = () => {
+      emit("changeActiveState");
       let file5 = {
-        cpd: this.cpdFile,
+        cpd: cpdFile.value
       };
-      this.$store.dispatch("renewal/setRenewalCpd", file5);
-    },
-  },
+      store.dispatch("renewal/setRenewalCpd", file5);
+      console.log(cpdFile.value);
+    };
+
+    onMounted(() => {
+      const renewalServiceFee = store.getters["renewal/getRenewalServiceFee"];
+      console.log(renewalServiceFee);
+    });
+
+    return {
+      cpdFile,
+      cpdFileP,
+      showPreview,
+      filePreview,
+      showUpload,
+      isImage,
+      handleFileUpload,
+      reset,
+      submit
+    };
+  }
 };
 </script>
 <style>

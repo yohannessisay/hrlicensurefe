@@ -20,7 +20,7 @@
                       type="file"
                       id="passportFile"
                       class="photoFile"
-                      ref="passportFile"
+                      ref="passportFileP"
                       v-on:change="handleFileUpload()"
                       style="margin-bottom: 15px !important;"
                     />
@@ -62,73 +62,134 @@
 </template>
 
 <script>
+import { ref, onMounted } from "vue";
+import { useStore } from "vuex";
 import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
-import { mapGetters, mapActions } from "vuex";
 
 export default {
   components: { TitleWithIllustration },
   props: ["activeState"],
-  data() {
-    return {
-      passportFile: "",
-      showPreview: false,
-      filePreview: "",
-      showUpload: true,
-      isImage: true,
+  setup(props, { emit }) {
+    const store = useStore();
+
+    let passportFile = ref("");
+    let passportFileP = ref("");
+    let showPreview = ref(false);
+    let filePreview = ref("");
+    let showUpload = ref(true);
+    let isImage = ref(true);
+
+    const reset = () => {
+      showUpload.value = true;
+      showPreview.value = false;
+      passportFile.value = "";
+      filePreview.value = "";
+      isImage.value = true;
     };
-  },
-  computed: {
-    ...mapGetters({
-      getRenewalPhoto: "renewal/getRenewalPhoto"
-    })
-  },
-  created() {
-    this.photo = this.getRenewalPhoto;
-    console.log(this.photo);
-  },
-  methods: {
-    ...mapActions(["setRenewalPassport"]),
-    reset() {
-      // reset form to initial state
-      this.showUpload = true;
-      this.showPreview = false;
-      this.passportFile = "";
-      this.filePreview = "";
-      this.isImage = true;
-    },
-    handleFileUpload() {
-      this.showUpload = false;
-      this.passportFile = this.$refs.passportFile.files[0];
+    const handleFileUpload = () => {
+      showUpload.value = false;
+      passportFile.value = passportFileP.value.files[0];
+      console.log(passportFile.value);
       let reader = new FileReader();
 
       reader.addEventListener(
         "load",
         function() {
-          this.showPreview = true;
-          this.filePreview = reader.result;
-        }.bind(this),
+          showPreview.value = true;
+          filePreview.value = reader.result;
+        },
         false
       );
 
-      if (this.passportFile) {
-        if (/\.(jpe?g|png|gif)$/i.test(this.passportFile.name)) {
-          this.isImage = true;
-          reader.readAsDataURL(this.passportFile);
-        } else if (/\.(pdf)$/i.test(this.passportFile.name)) {
-          this.isImage = false;
-          reader.readAsText(this.passportFile);
+      if (passportFile.value) {
+        if (/\.(jpe?g|png|gif)$/i.test(passportFile.value.name)) {
+          isImage.value = true;
+          reader.readAsDataURL(passportFile.value);
+        } else if (/\.(pdf)$/i.test(passportFile.value.name)) {
+          isImage.value = false;
+          reader.readAsText(passportFile.value);
         }
       }
-    },
-    submit() {
-      this.$emit("changeActiveState");
+    };
+    const submit = () => {
+      emit("changeActiveState");
       let file2 = {
-        passport: this.passportFile
+        passport: passportFile.value
       };
-      this.$store.dispatch("renewal/setRenewalPassport", file2);
-    },
-  },
+      store.dispatch("renewal/setRenewalPassport", file2);
+      console.log(passportFile.value);
+    };
+
+    onMounted(() => {
+      const renewalPhoto = store.getters["renewal/getRenewalPhoto"];
+      console.log(renewalPhoto);
+    });
+
+    return {
+      passportFile,
+      passportFileP,
+      showPreview,
+      filePreview,
+      showUpload,
+      isImage,
+      handleFileUpload,
+      reset,
+      submit
+    };
+  }
 };
+  // computed: {
+  //   ...mapGetters({
+  //     getRenewalPhoto: "renewal/getRenewalPhoto"
+  //   })
+  // },
+  // created() {
+  //   this.photo = this.getRenewalPhoto;
+  //   console.log(this.photo);
+  // },
+  // methods: {
+  //   ...mapActions(["setRenewalPassport"]),
+    // reset() {
+    //   // reset form to initial state
+    //   this.showUpload = true;
+    //   this.showPreview = false;
+    //   this.passportFile = "";
+    //   this.filePreview = "";
+    //   this.isImage = true;
+    // },
+//     handleFileUpload() {
+//       this.showUpload = false;
+//       this.passportFile = this.$refs.passportFile.files[0];
+//       let reader = new FileReader();
+
+//       reader.addEventListener(
+//         "load",
+//         function() {
+//           this.showPreview = true;
+//           this.filePreview = reader.result;
+//         }.bind(this),
+//         false
+//       );
+
+//       if (this.passportFile) {
+//         if (/\.(jpe?g|png|gif)$/i.test(this.passportFile.name)) {
+//           this.isImage = true;
+//           reader.readAsDataURL(this.passportFile);
+//         } else if (/\.(pdf)$/i.test(this.passportFile.name)) {
+//           this.isImage = false;
+//           reader.readAsText(this.passportFile);
+//         }
+//       }
+//     },
+//     submit() {
+//       this.$emit("changeActiveState");
+//       let file2 = {
+//         passport: this.passportFile
+//       };
+//       this.$store.dispatch("renewal/setRenewalPassport", file2);
+//     },
+//   },
+// };
 </script>
 <style>
 @import "../../styles/document-upload.css";

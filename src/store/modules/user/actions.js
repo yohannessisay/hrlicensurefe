@@ -12,7 +12,7 @@ export default {
     commit(ADD_PROFILE_LOADING);
     try {
       const resp = await axios.post(
-        "http://5245d8af90be.ngrok.io/api/login",
+        "http://localhost:5000/api/login",
         profile,
         {}
       );
@@ -30,7 +30,7 @@ export default {
     commit(ADD_PROFILE_LOADING);
     try {
       const resp = await axios.post(
-        "https://ca9dee52bc55.ngrok.io/api/users/add",
+        "http://localhost:5000/api/users/add",
         profile,
         {
           headers: {

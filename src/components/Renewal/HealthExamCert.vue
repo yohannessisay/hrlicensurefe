@@ -20,7 +20,7 @@
                       type="file"
                       id="healthExamCertFile"
                       class="photoFile"
-                      ref="healthExamCertFile"
+                      ref="healthExamCertFileP"
                       v-on:change="handleFileUpload()"
                       style="margin-bottom: 15px !important;"
                     />
@@ -62,72 +62,81 @@
 </template>
 
 <script>
+import { ref, onMounted } from "vue";
+import { useStore } from "vuex";
 import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
-import { mapGetters, mapActions } from "vuex";
 
 export default {
   props: ["activeState"],
   components: { TitleWithIllustration },
-  data() {
-    return {
-      healthExamCertFile: "",
-      showPreview: false,
-      filePreview: "",
-      showUpload: true,
-      isImage: true,
+  setup(props, { emit }) {
+    const store = useStore();
+
+    let healthExamCertFile = ref("");
+    let healthExamCertFileP = ref("");
+    let showPreview = ref(false);
+    let filePreview = ref("");
+    let showUpload = ref(true);
+    let isImage = ref(true);
+
+    const reset = () => {
+      showUpload.value = true;
+      showPreview.value = false;
+      healthExamCertFile.value = "";
+      filePreview.value = "";
+      isImage.value = true;
     };
-  },
-  computed: {
-    ...mapGetters({
-      getRenewalPassport: "renewal/getRenewalPassport",
-    }),
-  },
-  created() {
-    this.passport = this.getRenewalPassport;
-    console.log(this.getRenewalPassport)
-  },
-  methods: {
-    ...mapActions(["setRenewalHealthExamCert"]),
-    reset() {
-      // reset form to initial state
-      this.showUpload = true;
-      this.showPreview = false;
-      this.healthExamCertFile = "";
-      this.filePreview = "";
-      this.isImage = true;
-    },
-    handleFileUpload() {
-      this.showUpload = false;
-      this.healthExamCertFile = this.$refs.healthExamCertFile.files[0];
+    const handleFileUpload = () => {
+      showUpload.value = false;
+      healthExamCertFile.value = healthExamCertFileP.value.files[0];
+      console.log(healthExamCertFile.value);
       let reader = new FileReader();
 
       reader.addEventListener(
         "load",
         function() {
-          this.showPreview = true;
-          this.filePreview = reader.result;
-        }.bind(this),
+          showPreview.value = true;
+          filePreview.value = reader.result;
+        },
         false
       );
 
-      if (this.healthExamCertFile) {
-        if (/\.(jpe?g|png|gif)$/i.test(this.healthExamCertFile.name)) {
-          this.isImage = true;
-          reader.readAsDataURL(this.healthExamCertFile);
-        } else if (/\.(pdf)$/i.test(this.healthExamCertFile.name)) {
-          this.isImage = false;
-          reader.readAsText(this.healthExamCertFile);
+      if (healthExamCertFile.value) {
+        if (/\.(jpe?g|png|gif)$/i.test(healthExamCertFile.value.name)) {
+          isImage.value = true;
+          reader.readAsDataURL(healthExamCertFile.value);
+        } else if (/\.(pdf)$/i.test(healthExamCertFile.value.name)) {
+          isImage.value = false;
+          reader.readAsText(healthExamCertFile.value);
         }
       }
-    },
-    submit() {
-      this.$emit("changeActiveState");
+    };
+    const submit = () => {
+      emit("changeActiveState");
       let file3 = {
-        healthExamCert: this.healthExamCertFile,
+        healthExamCert: healthExamCertFile.value,
       };
-      this.$store.dispatch("renewal/setRenewalHealthExamCert", file3);
-    },
-  },
+      store.dispatch("renewal/setRenewalHealthExamCert", file3);
+      console.log(healthExamCertFile.value);
+    };
+
+    onMounted(() => {
+      const renewalPassport = store.getters["renewal/getRenewalPassport"];
+      console.log(renewalPassport);
+    });
+
+    return {
+      healthExamCertFile,
+      healthExamCertFileP,
+      showPreview,
+      filePreview,
+      showUpload,
+      isImage,
+      handleFileUpload,
+      reset,
+      submit
+    };
+  }
 };
 </script>
 <style>
