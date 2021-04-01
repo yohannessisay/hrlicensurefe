@@ -129,12 +129,6 @@ export default {
     let institutions = ref([]);
     let departments = ref([]);
 
-    // let lookUp = ref({
-    //   applicantTypes: [],
-    //   institutions: [],
-    //   departments: []
-    // });
-
     let showFlash = ref(false);
     let showErrorFlash = ref(false);
 
