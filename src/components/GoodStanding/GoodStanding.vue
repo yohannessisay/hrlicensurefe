@@ -88,141 +88,255 @@
       </div>
     </div>
   </div>
-  <div v-if="showFlash">
+  <div v-if="showFlash == true">
     <FlashMessage message="Your good standing is applied successfully!" />
   </div>
-  <div v-if="showErrorFlash">
+  <div v-if="showErrorFlash == false">
     <ErrorFlashMessage message="Unable to apply your good standing!" />
   </div>
 </template>
 
 <script>
+import { ref, onMounted, nextTick } from "vue";
+import { useStore } from "vuex";
+import { useRoute, useRouter } from 'vue-router'
 import Navigation from "@/views/Navigation";
 import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
 import axios from "axios";
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
-
 export default {
   props: ["activeState"],
   components: {
     TitleWithIllustration,
     Navigation,
     FlashMessage,
-    ErrorFlashMessage,
-  },
-  mounted() {
-    this.fetchInstitutions();
-    this.fetchDepartments();
-    this.fetchApplicantType();
-    this.$nextTick(function() {
-      window.setInterval(() => {
-        this.showFlash = false;
-        this.showErrorFlash = false;
-      }, 10000);
-    });
-  },
-  data: () => ({
-    goodStandingInfo: {
+    ErrorFlashMessage,},
+  setup(props, { emit }) {
+    const store = useStore();
+    const router = useRouter();
+
+    let goodStandingInfo = ref({
       applicantId: +localStorage.getItem("userId"),
       applicantTypeId: "",
       education: {
         departmentId: "",
         institutionId: ""
       }
-    },
-    applicantTypes: [],
-    institutions: [],
-    departments: [],
-    showFlash: false,
-    showErrorFlash: false
-  }),
+    });
 
-  methods: {
-    async submit() {
-      this.showFlash = false;
-      this.showErrorFlash = false;
-      this.$emit("changeActiveState");
-      let goodStanding = {
-        applicantId: this.goodStandingInfo.applicantId,
-        applicantTypeId: this.goodStandingInfo.applicantTypeId,
+    let applicantTypes = ref([]);
+    let institutions = ref([]);
+    let departments = ref([]);
+
+    // let lookUp = ref({
+    //   applicantTypes: [],
+    //   institutions: [],
+    //   departments: []
+    // });
+
+    let showFlash = ref(false);
+    let showErrorFlash = ref(false);
+
+    const fetchInstitutions = async () => {
+      store.dispatch("renewal/getInstitutions").then(res => {
+        const inResults = res.data;
+        institutions.value = inResults.data;
+      });
+    };
+
+    const fetchDepartments = async () => {
+      store.dispatch("renewal/getDepartments").then(res => {
+        const inResults = res.data;
+        departments.value = inResults.data;
+      });
+    };
+
+    const fetchApplicantType = async () => {
+      store.dispatch("renewal/getApplicantType").then(res => {
+        const inResults = res.data;
+        applicantTypes.value = inResults.data;
+      });
+    };
+
+    const submit = async () => {
+      emit("changeActiveState");
+      let goodStandingInfoP = {
+        applicantId: goodStandingInfo.value.applicantId,
+        applicantTypeId: goodStandingInfo.value.applicantTypeId,
         education: {
-          departmentId: this.goodStandingInfo.education.departmentId,
-          institutionId: this.goodStandingInfo.education.institutionId,
+          departmentId: goodStandingInfo.value.education.departmentId,
+          institutionId: goodStandingInfo.value.education.institutionId
         }
       };
-      console.log(goodStanding);
-      // verification.applicantTypeId = 10000;
+      console.log(goodStandingInfoP);
       try {
         await axios
-          .post("http://localhost:5000/api/goodStandings/add", goodStanding)
+          .post("http://localhost:5000/api/goodStandings/add", goodStandingInfoP)
           .then(response => {
+            console.log(response.data.status);
             if (response.statusText == "Created") {
-              this.Success = true;
-              this.showFlash = true;
+              showFlash.value = true;
 
               console.log(response);
-              this.$router.push({ path: "/goodStandingSubmitted" });
+              router.push({ path: "/goodStandingSubmitted" });
             }
           })
           .catch(err => {
             console.log("am here");
-            this.Error = true;
-            this.showErrorFlash = true;
+            showErrorFlash.value = true;
             console.log(err);
           });
       } catch (error) {
         console.log(error);
       }
-    },
-    async fetchInstitutions() {
-      try {
-        const url = `http://localhost:5000/api/lookups/institutionTypes`;
-        const response = await axios.get(url);
-        const results = response.data.data;
-        this.institutions = results;
-      } catch (err) {
-        if (err.response) {
-          console.log("Server Error:", err);
-        } else if (err.request) {
-          console.log("Network Error:", err);
-        } else {
-          console.log("Client Error:", err);
-        }
-      }
-    },
-    async fetchDepartments() {
-      try {
-        const url = `http://localhost:5000/api/lookups/departments`;
-        const response = await axios.get(url);
-        const results = response.data.data;
-        this.departments = results;
-      } catch (err) {
-        if (err.response) {
-          console.log("Server Error:", err);
-        } else if (err.request) {
-          console.log("Network Error:", err);
-        } else {
-          console.log("Client Error:", err);
-        }
-      }
-    },
-    async fetchApplicantType() {
-      try {
-        const url = `http://localhost:5000/api/lookups/applicantTypes`;
-        const response = await axios.get(url);
-        const results = response.data.data;
-        this.applicantTypes = results;
-      } catch (err) {
-        if (err.response) {
-          console.log("Server Error:", err);
-        } else if (err.request) {
-          console.log("Network Error:", err);
-        } else {
-          console.log("Client Error:", err);
-        }
-      }
-    }
+    };
+
+    onMounted(() => {
+      fetchInstitutions();
+      fetchDepartments();
+      fetchApplicantType();
+      nextTick(function() {
+        window.setInterval(() => {
+          showFlash.value = false;
+          showErrorFlash.value = false;
+        }, 10000);
+      });
+    });
+
+    return {
+      goodStandingInfo,
+      submit,
+      fetchInstitutions,
+      fetchDepartments,
+      fetchApplicantType,
+      applicantTypes,
+      institutions,
+      departments
+    };
   }
 };
+
+// export default {
+  // props: ["activeState"],
+  // components: {
+  //   TitleWithIllustration,
+  //   Navigation,
+  //   FlashMessage,
+  //   ErrorFlashMessage,
+  // },
+  // mounted() {
+  //   this.fetchInstitutions();
+  //   this.fetchDepartments();
+  //   this.fetchApplicantType();
+  //   this.$nextTick(function() {
+  //     window.setInterval(() => {
+  //       this.showFlash = false;
+  //       this.showErrorFlash = false;
+  //     }, 10000);
+  //   });
+  // },
+  // data: () => ({
+  //   goodStandingInfo: {
+  //     applicantId: +localStorage.getItem("userId"),
+  //     applicantTypeId: "",
+  //     education: {
+  //       departmentId: "",
+  //       institutionId: ""
+  //     }
+  //   },
+  //   applicantTypes: [],
+  //   institutions: [],
+  //   departments: [],
+  //   showFlash: false,
+  //   showErrorFlash: false
+  // }),
+
+  // methods: {
+  //   async submit() {
+  //     this.showFlash = false;
+  //     this.showErrorFlash = false;
+  //     this.$emit("changeActiveState");
+  //     let goodStanding = {
+  //       applicantId: this.goodStandingInfo.applicantId,
+  //       applicantTypeId: this.goodStandingInfo.applicantTypeId,
+  //       education: {
+  //         departmentId: this.goodStandingInfo.education.departmentId,
+  //         institutionId: this.goodStandingInfo.education.institutionId,
+  //       }
+  //     };
+  //     console.log(goodStanding);
+  //     // verification.applicantTypeId = 10000;
+  //     try {
+  //       await axios
+  //         .post("http://localhost:5000/api/goodStandings/add", goodStanding)
+  //         .then(response => {
+  //           if (response.statusText == "Created") {
+  //             this.Success = true;
+  //             this.showFlash = true;
+
+  //             console.log(response);
+  //             this.$router.push({ path: "/goodStandingSubmitted" });
+  //           }
+  //         })
+  //         .catch(err => {
+  //           console.log("am here");
+  //           this.Error = true;
+  //           this.showErrorFlash = true;
+  //           console.log(err);
+  //         });
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   },
+  //   async fetchInstitutions() {
+  //     try {
+  //       const url = `http://localhost:5000/api/lookups/institutionTypes`;
+  //       const response = await axios.get(url);
+  //       const results = response.data.data;
+  //       this.institutions = results;
+  //     } catch (err) {
+  //       if (err.response) {
+  //         console.log("Server Error:", err);
+  //       } else if (err.request) {
+  //         console.log("Network Error:", err);
+  //       } else {
+  //         console.log("Client Error:", err);
+  //       }
+  //     }
+  //   },
+  //   async fetchDepartments() {
+  //     try {
+  //       const url = `http://localhost:5000/api/lookups/departments`;
+  //       const response = await axios.get(url);
+  //       const results = response.data.data;
+  //       this.departments = results;
+  //     } catch (err) {
+  //       if (err.response) {
+  //         console.log("Server Error:", err);
+  //       } else if (err.request) {
+  //         console.log("Network Error:", err);
+  //       } else {
+  //         console.log("Client Error:", err);
+  //       }
+  //     }
+  //   },
+  //   async fetchApplicantType() {
+  //     try {
+  //       const url = `http://localhost:5000/api/lookups/applicantTypes`;
+  //       const response = await axios.get(url);
+  //       const results = response.data.data;
+  //       this.applicantTypes = results;
+  //     } catch (err) {
+  //       if (err.response) {
+  //         console.log("Server Error:", err);
+  //       } else if (err.request) {
+  //         console.log("Network Error:", err);
+  //       } else {
+  //         console.log("Client Error:", err);
+  //       }
+  //     }
+  //   }
+  // }
+// };
 </script>

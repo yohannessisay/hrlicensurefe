@@ -65,7 +65,6 @@
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
 import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
-import { mapGetters, mapActions } from "vuex";
 import axios from "axios";
 
 export default {
@@ -127,12 +126,12 @@ export default {
       };
 
       let formData = new FormData();
-      formData.append("photo", photo.profilePhoto.value);
-      formData.append("passport", passport.passport.value);
-      formData.append("healthExamCert", healthExamCert.healthExamCert.value);
-      formData.append("serviceFee", serviceFee.serviceFee.value);
-      formData.append("cpd", cpd.cpd.value);
-      formData.append("workExperience", workExperience.workExperience.value);
+      formData.append("photo", photo.value.profilePhoto);
+      formData.append("passport", passport.value.passport);
+      formData.append("healthExamCert", healthExamCert.value).healthExamCert;
+      formData.append("serviceFee", serviceFee.value.serviceFee);
+      formData.append("cpd", cpd.value.cpd);
+      formData.append("workExperience", workExperience.vlaue.workExperience);
       formData.append("previousLicense", file7.previousLicense);
 
       try {
