@@ -84,7 +84,6 @@
 
 <script>
 import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
-import axios from "axios";
 export default {
   props: ["activeState"],
   components: { TitleWithIllustration },

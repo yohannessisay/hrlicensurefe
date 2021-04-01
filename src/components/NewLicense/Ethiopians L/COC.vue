@@ -18,8 +18,9 @@
                   <div class="dropbox">
                     <input
                       type="file"
-                      id="photoFile"
-                      ref="photoFile"
+                      id="COCFile"
+                      class="photoFile"
+                      ref="COCFileP"
                       v-on:change="handleFileUpload()"
                       style="margin-bottom: 15px !important;"
                     />
@@ -65,102 +66,79 @@
 </template>
 
 <script>
+import { ref, onMounted } from "vue";
 import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
-import { mapGetters, mapActions } from "vuex";
+import { useStore } from "vuex";
 
 export default {
   components: { TitleWithIllustration },
   props: ["activeState"],
-  data() {
-    return {
-      photoFile: "",
-      showPreview: false,
-      filePreview: "",
-      showUpload: true,
-      isImage: true,
+  setup(props, { emit }) {
+    const store = useStore();
+
+    let COCFile = ref("");
+    let COCFileP = ref("");
+    let showPreview = ref(false);
+    let filePreview = ref("");
+    let showUpload = ref(true);
+    let isImage = ref(false);
+
+    const reset = () => {
+      showUpload.value = true;
+      showPreview.value = false;
+      COCFile.value = "";
+      filePreview.value = "";
+      isImage.value = true;
     };
-  },
-  computed: {
-    ...mapGetters({
-      getLicense: "newlicense/getCoc"
-    })
-  },
-  created() {
-    this.license = this.getLicense;
-  },
-  methods: {
-    ...mapActions(["setCOC"]),
-    reset() {
-      // reset form to initial state
-      this.showUpload = true;
-      this.showPreview = false;
-      this.photoFile = "";
-      this.filePreview = "";
-      this.isImage = true;
-    },
-    handleFileUpload() {
-      this.showUpload = false;
-      this.photoFile = this.$refs.photoFile.files[0];
+
+    const handleFileUpload = () => {
+      showUpload.value = false;
+      COCFile.value = COCFileP.value.files[0];
       let reader = new FileReader();
 
       reader.addEventListener(
         "load",
         function() {
-          this.showPreview = true;
-          this.filePreview = reader.result;
-        }.bind(this),
+          showPreview.value = true;
+          filePreview.value = reader.result;
+        },
         false
       );
 
-      if (this.photoFile) {
-        if (/\.(jpe?g|png|gif)$/i.test(this.photoFile.name)) {
-          this.isImage = true;
-          reader.readAsDataURL(this.photoFile);
-        } else if (/\.(pdf)$/i.test(this.photoFile.name)) {
-          this.isImage = false;
-          reader.readAsText(this.photoFile);
+      if (COCFile.value) {
+        if (/\.(jpe?g|png|gif)$/i.test(COCFile.value.name)) {
+          isImage.value = true;
+          reader.readAsDataURL(COCFile.value);
+        } else if (/\.(pdf)$/i.test(COCFile.value.name)) {
+          isImage.value = false;
+          reader.readAsText(COCFile.value);
         }
       }
-    },
-    submit() {
-      this.$emit("changeActiveState");
-      this.$store.dispatch("newlicense/setCOC", this.photoFile);
-    },
+    };
+    const submit = () => {
+      emit("changeActiveState");
+      store.dispatch("newlicense/setCOC", COCFile);
+    };
+    onMounted(() => {
+    });
+    return {
+      COCFile,
+      COCFileP,
+      showPreview,
+      filePreview,
+      showUpload,
+      isImage,
+      handleFileUpload,
+      reset,
+      submit,
+    };
   },
 };
 </script>
 <style>
+@import "../../../styles/document-upload.css";
 img {
   width: 250px;
   height: 250px;
-}
-
-#photoFile {
-  opacity: 0; /* invisible but it's there! */
-  width: 100%;
-  height: 200px;
-  position: absolute;
-  cursor: pointer;
-}
-
-.dropbox {
-  outline: 2px dashed grey; /* the dash box */
-  outline-offset: -10px;
-  background: lightcyan;
-  color: dimgray;
-  padding: 10px 10px;
-  min-height: 200px; /* minimum height */
-  position: relative;
-  cursor: pointer;
-}
-
-.dropbox:hover {
-  background: lightblue; /* when mouse over to the drop zone, change color */
-}
-
-.dropbox p {
-  font-size: 1.2em;
-  text-align: center;
-  padding: 50px 0;
 }
 </style>

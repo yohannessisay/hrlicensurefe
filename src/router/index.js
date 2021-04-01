@@ -18,11 +18,6 @@ const routes = [
     component: () => import("../components/profile/NewProfile.vue"),
   },
   {
-    path: "/about",
-    name: "About",
-    component: About,
-  },
-  {
     path: "/signup",
     name: "Signup",
     component: () => import("../views/Signup.vue"),
@@ -46,11 +41,6 @@ const routes = [
     path: "/newlicense",
     name: "NewLicense",
     component: () => import("../components/NewLicense/NewLicense.vue"),
-  },
-  {
-    path: "/lis",
-    name: "LIs",
-    component: () => import("../components/NewLicense/LicenseSummary.vue"),
   },
   {
     path: "/renewal",
@@ -96,6 +86,11 @@ const routes = [
     path: "/educational",
     name: "educational",
     component: () => import("../components/NewLicense/Ethiopians L/EducationalDoc.vue"),
+  },
+  {
+    path: "/lang",
+    name: "lang",
+    component: () => import("../components/NewLicense/Photo.vue"),
   }
 ];
 
