@@ -1,4 +1,5 @@
 import axios from "axios";
+import { getParsedCommandLineOfConfigFile } from "typescript";
 import ApiService from "../../../services/api.service";
 import {
   SET_LICENSE,
@@ -57,7 +58,7 @@ export default {
   setDocs({ commit }, docs) {
     commit(SET_DOCS, docs);
   },
-  async newLicense({ commit }, license) {
+  async addNewLicense({ commit }, license) {
     try {
       const resp = await ApiService.post(url + "newLicenses/add", license);
       return resp;
@@ -101,6 +102,15 @@ export default {
   async getDepartmentType() {
     try {
       const resp = await ApiService.get(url + "lookups/departments");
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+  async getProfile(id) {
+    try {
+      const resp = await ApiService.get(url + "/profiles/2");
+      // const resp = await ApiService.get(url + "/profiles/" + id);
       return resp;
     } catch (error) {
       return error;

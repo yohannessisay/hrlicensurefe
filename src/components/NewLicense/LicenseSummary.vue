@@ -177,7 +177,9 @@
 
       <div
         :class="[
-          this.profileInfo.user.emailAddress === null ? errorClass : activeClass
+          this.profileInfo.user.emailAddress === null
+            ? errorClass
+            : activeClass,
         ]"
       >
         <label class="ml-8"> Email</label>
@@ -264,17 +266,17 @@ export default {
   components: {
     Title,
     FlashMessage,
-    ErrorFlashMessage
+    ErrorFlashMessage,
   },
   beforeCreate() {
     this.userId = +localStorage.getItem("userId");
   },
 
   async created() {
-    const url = `http://localhost:5000/api/profiles/2`;
-    const getProfile = await axios.get(url, {
-      responseType: "json"
+    this.$store.dispatch("newlicense/getProfile").then((res) => {
+      const getProfile = res;
     });
+
     if (getProfile) {
       this.show = true;
       this.setData(getProfile.data.data);
@@ -297,20 +299,19 @@ export default {
     applicantTypeId: "",
     education: {
       departmentId: "",
-      institutionId: ""
+      institutionId: "",
     },
-    basePath: "http://localhost:5000/",
     activeClass: "active",
     errorClass: "text-danger",
     dataFetched: false,
     showFlash: false,
-    showErrorFlash: false
+    showErrorFlash: false,
   }),
   computed: {
     ...mapGetters({
       getLicense: "newlicense/getLicense",
-      getDocs: "newlicense/getDocs"
-    })
+      getDocs: "newlicense/getDocs",
+    }),
   },
   methods: {
     async submitRequest() {
@@ -321,8 +322,8 @@ export default {
         applicantTypeId: this.applicantTypeId,
         education: {
           institutionId: this.education.departmentId,
-          departmentId: this.education.institutionId
-        }
+          departmentId: this.education.institutionId,
+        },
       };
 
       for (let index = 0; index < this.docs.length; index++) {
@@ -338,28 +339,21 @@ export default {
           license.serviceFeeId = aDoc.id;
         }
       }
-
       try {
-        await axios
-          .post("http://localhost:5000/api/newLicenses/add", license)
-          .then(response => {
-            if (response.statusText == "Created") {
+        this.$store
+          .dispatch("newlicense/addNewLicense", license)
+          .then((res) => {
+            if (res.statusText == "Created") {
               this.Success = true;
               this.showFlash = true;
-
-              console.log(response);
               this.$router.push({ path: "/menu" });
             }
-            //console.log(this.a);
           })
-          .catch(err => {
+          .catch((err) => {
             this.Success = false;
             this.showErrorFlash = true;
-            console.log(err);
           });
-      } catch (error) {
-        console.log(error);
-      }
+      } catch (error) {}
     },
     setData(data) {
       if (data) {
@@ -367,7 +361,7 @@ export default {
       } else {
         this.profileInfo = null;
       }
-    }
+    },
   },
   mounted() {
     this.$nextTick(function() {
@@ -376,7 +370,7 @@ export default {
         this.showErrorFlash = false;
       }, 10000);
     });
-  }
+  },
 };
 </script>
 <style>
