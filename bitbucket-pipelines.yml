@@ -57,7 +57,6 @@ pipelines:
             size: 2x
             name: Deploy
             image: google/cloud-sdk:latest
-            deployment: staging
             script:
             - echo $GCLOUD_API_KEYFILE > ~/.gcloud-api-key.json
             - export ASPNETCORE_ENVIRONMENT=Staging
