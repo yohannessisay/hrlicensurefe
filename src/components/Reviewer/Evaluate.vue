@@ -1,10 +1,10 @@
 <template>
-  <div class="w-screen bg-lightBlueB-200 flex items-center justify-center">
-    <div class="w-screen max-w-4xl mt-medium mb-large box-shadow-pop">
+  <div class="w-screen bg-white flex items-center justify-center">
+    <div
+      class="w-screen max-w-6xl mt-medium mb-large box-shadow-pop bg-lightGrey-100"
+    >
       <div class="flex mb-large mt-medium justify-center">
-        <div
-          class="w-64 h-40 container box-shadow-pop rounded-lg bg-lightGrey-100"
-        >
+        <div class="w-64 h-40 container box-shadow-pop rounded-lg">
           <div class="mt-8">
             <div class="my-auto flex justify-center items-center">
               <h2 class="text-lightBlueB-500 text-2xl">0</h2>
@@ -25,10 +25,8 @@
             <h4 class="mt-2">Applicant Name</h4>
           </div>
         </div>
-        <div
-          class="ml-12 w-64 h-40  container box-shadow-pop rounded-lg bg-lightGrey-100 "
-        >
-          <div class="rejected mt-8">
+        <div class="ml-12 w-64 h-40  container box-shadow-pop rounded-lg">
+          <div class="mt-8">
             <div class="my-auto flex justify-center items-center">
               <h2 class="text-red-200 text-2xl">0</h2>
             </div>
@@ -68,7 +66,7 @@
           </div>
           <div class="mt-medium">
             <button class="mr-medium">Accept</button>
-            <button class="bg-red-200">Reject</button>
+            <button class="bg-red-500">Reject</button>
           </div>
           <div class="relative pt-1 mt-medium">
             <div
@@ -114,9 +112,9 @@
         </div>
       </div>
 
-      <div class="flex justify-center">
+      <div class="flex justify-center mb-medium">
         <button variant="outline">I will finish Later</button>
-        <button class="outline bg-red-200">Reject Application</button>
+        <button class="outline display bg-red-200">Reject Application</button>
       </div>
     </div>
   </div>
