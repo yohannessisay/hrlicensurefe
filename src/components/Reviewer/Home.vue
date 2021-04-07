@@ -84,52 +84,97 @@
           </button>
         </div>
       </div>
-      <div class="flex justify-center items-center mt-medium rounded ">
-        <div
-          class="container"
-          v-for="(item, index) in pendingOrders"
-          v-bind:key="item.name.first"
-          v-bind:value="item.id"
-        >
+
+      <div class="box">
+        <div class="flex justify-center items-center mt-medium rounded">
           <div
-            v-if="index < 5"
-            class="flex justify-center items-center ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
+            class="container flip-box"
+            v-for="(item, index) in pendingOrders"
+            v-bind:key="item.name.first"
+            v-bind:value="item.id"
           >
             <div
-              class="p-4 w-48 h-64"
-              @mouseover="hover = true"
-              @mouseleave="hover = false"
+              v-if="index < 5"
+              class="flex justify-center items-center ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100 flip-box-front"
             >
-              <div class="flex content-center justify-center">
-                <router-link to="/newlicense">
-                  <img class="box-shadow-pop" v-bind:src="item.picture.large" />
-                </router-link>
-              </div>
-              <h4
-                class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+              <div
+                class="p-4 w-48 h-64"
+                @mouseover="hover = true"
+                @mouseleave="hover = false"
               >
-                {{ item.name.first + " " + item.name.last }}
-              </h4>
-              <h6
-                class="text-lightBlueB-500 mt-tiny flex justify-center content-center">
-                {{ item.registered.date }}
-              </h6>
-              <h6
-                class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
-              >
-                New Licence ID: {{ item.id.value }}
-              </h6>
-              <!-- <div class="flex ml-small w-32" v-if="hover==true">
-                <button
-                  class="block mx-auto  bg-lightBlue-300 hover:bg-lightBlue-600 hover:shadow-lg"
+                <div class="flex content-center justify-center">
+                  <router-link to="/newlicense">
+                    <img
+                      class="box-shadow-pop"
+                      v-bind:src="item.picture.large"
+                    />
+                  </router-link>
+                </div>
+                <h4
+                  class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
                 >
-                  View All
-                </button>
-              </div> -->
+                  {{ item.name.first + " " + item.name.last }}
+                </h4>
+                <h6
+                  class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                >
+                  {{ item.registered.date }}
+                </h6>
+                <h6
+                  class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                >
+                  New Licence ID: {{ item.id.value }}
+                </h6>
+                <!-- <div class="flex ml-small w-32" v-if="hover==true">
+                  <button
+                    class="block mx-auto  bg-lightBlue-300 hover:bg-lightBlue-600 hover:shadow-lg"
+                  >
+                    View All
+                  </button>
+                </div> -->
+              </div>
+            </div>
+            
+            <div
+              v-if="index < 5"
+              class="absolute inset-0 flex justify-center items-center z-10 ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100 flip-box-back"
+            >
+              <div
+                class="p-4 w-48 h-64"
+                @mouseover="hover = true"
+                @mouseleave="hover = false"
+              >
+                <h4
+                  class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                >
+                  {{ item.name.first + " " + item.name.last }}
+                </h4>
+                <h6
+                  class="text-lightBlueB-500 mt-tiny flex justify-center content-center">
+                  {{ item.registered.date }}
+                </h6>
+                <h6
+                  class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                >
+                  New Licence ID: {{ item.id.value }}
+                </h6>
+                <div class="flex ml-small w-32 pt-small justify-center content-center">
+                  <router-link to="/newlicense">
+                    <button
+                      class="block mx-auto  bg-lightBlue-300 hover:bg-lightBlue-600 hover:shadow-lg"
+                    >
+                      Take this Order
+                    </button>
+                  </router-link>
+                </div>
+              </div>
             </div>
           </div>
         </div>
+        <!-- Second Card!-->
       </div>
+      <!-- Flip Box End!-->
+      <!-- Second Card!-->
 
       <div class="flex pl-12 mt-medium ">
         <Title message="Recently Finished" />
@@ -152,7 +197,8 @@
         >
           <div
             v-if="index < 5"
-            class="justify-center items-center ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100">
+            class="justify-center items-center ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
+          >
             <div class="p-4 w-48 h-64">
               <div class="flex content-center justify-center">
                 <router-link to="/newlicense">
@@ -165,13 +211,19 @@
                 {{ item.name.first + " " + item.name.last }}
               </h4>
               <h6
-                class="text-lightBlueB-500 mt-tiny flex justify-center content-center">
+                class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+              >
                 {{ item.registered.date }}
               </h6>
               <h6
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
               >
                 New Licence ID: {{ item.id.value }}
+              </h6>
+              <h6
+                class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+              >
+                Approved
               </h6>
             </div>
           </div>
@@ -247,7 +299,58 @@ img {
   border-color: steelblue;
   background-color: steelblue;
 }
-.hoveredCard{
+.hoveredCard {
   background-color: white;
+}
+/* .b{
+  cursor: pointer;
+  position: absolute;
+  transform: translate(-50%, -50%);
+} */
+.flip-box {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  cursor: pointer;
+}
+
+.flip-box-front,
+.flip-box-back {
+  transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
+  backface-visibility: hidden;
+}
+
+.flip-box-front {
+  transform: rotateY(0deg);
+  transform-style: preserve-3d;
+}
+
+.flip-box:hover .flip-box-front {
+  transform: rotateY(-180deg);
+  transform-style: preserve-3d;
+}
+
+.flip-box-back {
+  /* position: absolute; */
+  transform: rotateY(180deg);
+  transform-style: preserve-3d;
+}
+
+.flip-box:hover .flip-box-back {
+  transform: rotateY(0deg);
+  transform-style: preserve-3d;
+}
+
+.flip-box .inner {
+  /* position:absolute;
+  perspective: inherit;
+  z-index: 2;
+  transform: translateY(-50%)translateZ(60px) scale(.94); */
+}
+/* .box {
+  position: relative;
+} */
+
+.b {
+  /* position: absolute; */
 }
 </style>
