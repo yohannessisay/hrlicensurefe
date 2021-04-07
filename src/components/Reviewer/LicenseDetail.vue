@@ -13,7 +13,9 @@
             <Title message="Personal Info" />
           </div>
           <div class="flex flex-row">
-            <div :class="[profileInfo.name === null ? errorClass : activeClass]">
+            <div
+              :class="[profileInfo.name === null ? errorClass : activeClass]"
+            >
               <label class="ml-8"> Full Name</label>
               <h5 class="ml-8">
                 {{
@@ -25,14 +27,18 @@
                 }}
               </h5>
             </div>
-            <div :class="[profileInfo.gender === null ? errorClass : activeClass]">
+            <div
+              :class="[profileInfo.gender === null ? errorClass : activeClass]"
+            >
               <label class="ml-8"> Gender</label>
               <h5 class="ml-8">
                 {{ profileInfo.gender ? profileInfo["gender"] : "-" }}
               </h5>
             </div>
             <div
-              :class="[profileInfo.nationality === null ? errorClass : activeClass]"
+              :class="[
+                profileInfo.nationality === null ? errorClass : activeClass
+              ]"
             >
               <label class="ml-8"> Nationality</label>
               <h5 class="ml-8">
@@ -49,7 +55,9 @@
               </h5>
             </div>
             <div
-              :class="[profileInfo.dateOfBirth === null ? errorClass : activeClass]"
+              :class="[
+                profileInfo.dateOfBirth === null ? errorClass : activeClass
+              ]"
             >
               <label class="ml-8"> Date of Birth</label>
               <h5 class="ml-8">
@@ -58,7 +66,9 @@
             </div>
             <div
               :class="[
-                profileInfo.maritalStatus.name === null ? errorClass : activeClass
+                profileInfo.maritalStatus.name === null
+                  ? errorClass
+                  : activeClass
               ]"
             >
               <label class="ml-8"> Marital Status</label>
@@ -78,7 +88,9 @@
           <div class="flex flex-row">
             <div
               :class="[
-                profileInfo.woreda.zone.region === null ? errorClass : activeClass
+                profileInfo.woreda.zone.region === null
+                  ? errorClass
+                  : activeClass
               ]"
             >
               <label class="ml-8"> Region</label>
@@ -91,34 +103,47 @@
               </h5>
             </div>
             <div
-              :class="[profileInfo.woreda.zone === null ? errorClass : activeClass]"
+              :class="[
+                profileInfo.woreda.zone === null ? errorClass : activeClass
+              ]"
             >
               <label class="ml-8"> Zone</label>
               <h5 class="ml-8">
-                {{ profileInfo.woreda.zone ? profileInfo.woreda.zone.name : "-" }}
+                {{
+                  profileInfo.woreda.zone ? profileInfo.woreda.zone.name : "-"
+                }}
               </h5>
             </div>
-            <div :class="[profileInfo.woreda === null ? errorClass : activeClass]">
+            <div
+              :class="[profileInfo.woreda === null ? errorClass : activeClass]"
+            >
               <label class="ml-8"> Wereda</label>
               <h5 class="ml-8">
                 {{ profileInfo.woreda ? profileInfo.woreda.name : "-" }}
               </h5>
             </div>
-            <div :class="[profileInfo.kebele === null ? errorClass : activeClass]">
+            <div
+              :class="[profileInfo.kebele === null ? errorClass : activeClass]"
+            >
               <label class="ml-8"> Kebele</label>
               <h5 class="ml-8">
                 {{ profileInfo.kebele ? profileInfo.kebele : "-" }}
               </h5>
             </div>
             <div
-              :class="[profileInfo.houseNumber === null ? errorClass : activeClass]"
+              :class="[
+                profileInfo.houseNumber === null ? errorClass : activeClass
+              ]"
             >
               <label class="ml-8"> House Number</label>
               <h5 class="ml-8">
                 {{ profileInfo.houseNumber ? profileInfo.houseNumber : "-" }}
               </h5>
             </div>
-            <div :class="[profileInfo.residence === null ? errorClass : activeClass]">
+            <div
+              :class="[
+                profileInfo.residence === null ? errorClass : activeClass
+              ]">
               <label class="ml-8"> Residence</label>
               <h5 class="ml-8">
                 {{ profileInfo.residence ? profileInfo.residence : "-" }}
@@ -137,29 +162,39 @@
               <label class="ml-8"> Mobile Number</label>
               <h5 class="ml-8">
                 {{
-                  profileInfo.user.phoneNumber ? profileInfo.user.phoneNumber : "-"
+                  profileInfo.user.phoneNumber
+                    ? profileInfo.user.phoneNumber
+                    : "-"
                 }}
               </h5>
             </div>
 
             <div
               :class="[
-                profileInfo.user.emailAddress === null ? errorClass : activeClass
+                profileInfo.user.emailAddress === null
+                  ? errorClass
+                  : activeClass
               ]"
             >
               <label class="ml-8"> Email</label>
               <h5 class="ml-8">
                 {{
-                  profileInfo.user.emailAddress ? profileInfo.user.emailAddress : "-"
+                  profileInfo.user.emailAddress
+                    ? profileInfo.user.emailAddress
+                    : "-"
                 }}
               </h5>
             </div>
             <div
-              :class="[profileInfo.userType.name === null ? errorClass : activeClass]"
+              :class="[
+                profileInfo.userType.name === null ? errorClass : activeClass
+              ]"
             >
               <label class="ml-8"> User Type</label>
               <h5 class="ml-8">
-                {{ profileInfo.userType.name ? profileInfo.userType.name : "-" }}
+                {{
+                  profileInfo.userType.name ? profileInfo.userType.name : "-"
+                }}
               </h5>
             </div>
           </div>
