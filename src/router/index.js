@@ -87,6 +87,26 @@ const routes = [
     component: () => import("../components/Reviewer/Home.vue")
   },
   {
+    path: "/myWork",
+    name: "myWork",
+    component: () => import("../components/Reviewer/MyWork.vue")
+  },
+  {
+    path: "/unfinished",
+    name: "unfinished",
+    component: () => import("../components/Reviewer/Unfinished.vue")
+  },
+  {
+    path: "/assignedToYou",
+    name: "assignedToYou",
+    component: () => import("../components/Reviewer/AssignedToYou.vue")
+  },
+  {
+    path: "/unassigned",
+    name: "unassigned",
+    component: () => import("../components/Reviewer/Unassigned.vue")
+  },
+  {
     path: "/prodoc",
     name: "professionalDocument",
     component: () =>

@@ -19,7 +19,7 @@ export default {
       return resp;
     }
   },
-  async getPendingOrders() {
+  async getUnassigned() {
     try {
       const resp = await ApiService.get("https://randomuser.me/api/?results=10");
       return resp;

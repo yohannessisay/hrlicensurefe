@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ReviewerNavBar />
+    <ReviewerNavBar tab="Home" />
     <div class="bg-lightBlueB-200 h-full">
       <div class="flex pl-12 pt-medium"><Title message="Unfinished" /></div>
       <div class="flex justify-center items-center mt-medium rounded ">
@@ -12,7 +12,8 @@
         >
           <div
             v-if="index < 5"
-            class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100">
+            class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
+          >
             <div class="p-4 w-48 h-64">
               <div class="flex content-center justify-center">
                 <router-link to="/newlicense">
@@ -48,7 +49,8 @@
         >
           <div
             v-if="index < 5"
-            class="flex justify-center items-center ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100">
+            class="flex justify-center items-center ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
+          >
             <div class="p-4 w-48 h-64">
               <div class="flex content-center justify-center">
                 <router-link to="/newlicense">
@@ -75,8 +77,8 @@
       </div>
 
       <div class="flex pl-12 mt-medium">
-        <Title message="Pending Orders" />
-        <div class="flex ml-small" v-if="pendingOrders.length >= 5">
+        <Title message="Unassigned"/>
+        <div class="flex ml-small" v-if="unassigned.length >= 5">
           <button
             class="block mx-auto  bg-lightBlue-300 hover:bg-lightBlue-600 hover:shadow-lg"
           >
@@ -89,7 +91,7 @@
         <div class="flex justify-center items-center mt-medium rounded">
           <div
             class="container flip-box"
-            v-for="(item, index) in pendingOrders"
+            v-for="(item, index) in unassigned"
             v-bind:key="item.name.first"
             v-bind:value="item.id"
           >
@@ -125,16 +127,9 @@
                 >
                   New Licence ID: {{ item.id.value }}
                 </h6>
-                <!-- <div class="flex ml-small w-32" v-if="hover==true">
-                  <button
-                    class="block mx-auto  bg-lightBlue-300 hover:bg-lightBlue-600 hover:shadow-lg"
-                  >
-                    View All
-                  </button>
-                </div> -->
               </div>
             </div>
-            
+
             <div
               v-if="index < 5"
               class="absolute inset-0 flex justify-center items-center z-10 ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100 flip-box-back"
@@ -150,7 +145,8 @@
                   {{ item.name.first + " " + item.name.last }}
                 </h4>
                 <h6
-                  class="text-lightBlueB-500 mt-tiny flex justify-center content-center">
+                  class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                >
                   {{ item.registered.date }}
                 </h6>
                 <h6
@@ -158,12 +154,14 @@
                 >
                   New Licence ID: {{ item.id.value }}
                 </h6>
-                <div class="flex ml-small w-32 pt-small justify-center content-center">
+                <div
+                  class="flex ml-small w-32 pt-small justify-center content-center"
+                >
                   <router-link to="/newlicense">
                     <button
                       class="block mx-auto  bg-lightBlue-300 hover:bg-lightBlue-600 hover:shadow-lg"
                     >
-                      Take this Order
+                      Assign to Me
                     </button>
                   </router-link>
                 </div>
@@ -171,10 +169,8 @@
             </div>
           </div>
         </div>
-        <!-- Second Card!-->
       </div>
       <!-- Flip Box End!-->
-      <!-- Second Card!-->
 
       <div class="flex pl-12 mt-medium ">
         <Title message="Recently Finished" />
@@ -246,7 +242,7 @@ export default {
     const store = useStore();
     let unfinished = ref({});
     let assignedToyou = ref({});
-    let pendingOrders = ref({});
+    let unassigned = ref({});
     let recentlyFinished = ref({});
     let hover = ref(false);
 
@@ -262,9 +258,9 @@ export default {
       });
     };
 
-    const fetchPendingOrders = () => {
-      store.dispatch("reviewer/getPendingOrders").then(res => {
-        pendingOrders.value = res.data.results;
+    const fetchUnassignedApplications = () => {
+      store.dispatch("reviewer/getUnassigned").then(res => {
+        unassigned.value = res.data.results;
       });
     };
 
@@ -277,14 +273,14 @@ export default {
     onMounted(() => {
       fetchUnfinished();
       fetchAssignedtoYou();
-      fetchPendingOrders();
+      fetchUnassignedApplications();
       fetchRecentlyFinished();
     });
 
     return {
       unfinished,
       assignedToyou,
-      pendingOrders,
+      unassigned,
       recentlyFinished,
       hover
     };
