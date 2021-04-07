@@ -10,9 +10,7 @@
               message="Address"
             />
           </router-link>
-          <h2 class="text-md AtkinsonHyperlegibleBold text-primary-600 ml-2 ">
-            HRIS - license
-          </h2>
+          <h3 class="ml-tiny font-AtkinsonHyperlegibleBold">HRIS - Lisence</h3>
           <div
             class="flex flex-col items-center justify-between ml-medium width-64 bg-gray-800"
           >
@@ -47,10 +45,87 @@
 
         <div class="flex items-center space-x-5">
           <div>
-            <a class="text-primary-300 mr-small"> Home </a>
-            <a class="text-primary-300 mr-small"> My Work </a>
-            <a class="text-primary-300 mr-small"> Orders </a>
-            <a class="text-primary-300 mr-small"> Reviewers </a>
+            <router-link to="/review">
+              <a v-if="tab != `Home`" class="text-primary-300 mr-small"> Home </a>
+              <a
+                v-if="tab == `Home`"
+                class="text-primary-300 mr-small width-small inline-block pr-12 justify-center item-center"
+              >
+                <p class="text-primary-600 font-AtkinsonHyperlegibleBold">Home</p>
+                <hr class="yellow-gradient border-none" />
+              </a>
+            </router-link>
+            <router-link to="/myWork">
+              <a v-if="tab != `MyWork`" class="text-primary-300 mr-small">
+                My Work
+              </a>
+              <a
+                v-if="tab == `MyWork`"
+                class="text-primary-300 mr-small width-medium inline-block pr-tiny justify-center item-center"
+              >
+                <p class="text-primary-600 font-AtkinsonHyperlegibleBold">
+                  My Work
+                </p>
+                <hr class="yellow-gradient border-none" />
+              </a>
+            </router-link>
+            <router-link to="/unfinished">
+              <a v-if="tab != `Unfinished`" class="text-primary-300 mr-small">
+                Unfinished
+              </a>
+              <a
+                v-if="tab == `Unfinished`"
+                class="text-primary-300 mr-small width-small inline-block pr-20 justify-center item-center"
+              >
+                <p class="text-primary-600 font-AtkinsonHyperlegibleBold">
+                  Unfinished
+                </p>
+                <hr class="yellow-gradient border-none" />
+              </a>
+            </router-link>
+            <router-link to="/assignedToYou">
+              <a
+                v-if="tab != `AssignedToYou`"
+                class="text-primary-300 mr-small"
+              >
+                Assigned to You
+              </a>
+              <a
+                v-if="tab == `AssignedToYou`"
+                class="text-primary-300 mr-small width-medium inline-block pr-tiny justify-center item-center"
+              >
+                <p class="text-primary-600 font-AtkinsonHyperlegibleBold">
+                  Assigned to You
+                </p>
+                <hr class="yellow-gradient border-none" />
+              </a>
+            </router-link>
+            <router-link to="/unassigned">
+              <a v-if="tab != `Unassigned`" class="text-primary-300 mr-small">
+                Unassigned
+              </a>
+              <a
+                v-if="tab == `Unassigned`"
+                class="text-primary-300 mr-small width-medium inline-block pr-tiny justify-center item-center"
+              >
+                <p class="text-primary-600 font-AtkinsonHyperlegibleBold">
+                  Unassigned
+                </p>
+                <hr class="yellow-gradient border-none" />
+              </a>
+            </router-link>
+            <a v-if="tab != `Reviewers`" class="text-primary-300 mr-small">
+              Reviewers
+            </a>
+            <a
+              v-if="tab == `Reviewers`"
+              class="text-primary-300 mr-small width-small inline-block pr-12 justify-center item-center"
+            >
+              <p class="text-primary-600 font-AtkinsonHyperlegibleBold">
+                Reviewers
+              </p>
+              <hr class="yellow-gradient border-none" />
+            </a>
           </div>
           <div class="relative inline-block text-left">
             <a
@@ -118,52 +193,57 @@
 </template>
 
 <script scoped>
+import { ref, onMounted } from "vue";
 import Title from "@/sharedComponents/Title";
 import RenderIllustration from "@/sharedComponents/RenderIllustration";
 
 export default {
   components: { Title, RenderIllustration },
-  data() {
-    return {
-      auth: false,
-      token: "",
-      showDD: false
+  props: {
+    tab: {
+      type: String,
+      required: true,
+      default: "No title"
+    }
+  },
+  setup() {
+    let showDD = ref(false);
+
+    const showDropDown = () => {
+      showDD.value = !showDD.value;
     };
-  },
-  created() {
-    this.token = localStorage.getItem("token");
-    if (this.token != undefined) this.auth = true;
-  },
-  methods: {
-    logout() {
-      localStorage.removeItem("token");
-      localStorage.removeItem("userId");
-      this.$router.push({ path: "/login" });
-    },
-    showDropDown() {
-      this.showDD = !this.showDD;
-    }
-  },
-  computed() {
-    if (this.token != undefined) {
-      this.auth = true;
-    } else {
-      this.auth = false;
-    }
+    return {
+      showDD,
+      showDropDown
+    };
   }
 };
 </script>
-<style>
+<style lang="postcss" scoped>
 #logout {
   cursor: pointer;
 }
-.width-548{
+.width-548 {
   width: 548px;
 }
-.width-8{
+.width-8 {
   width: 22px;
 }
-.height-8{
- height: 22px;
+.width-small {
+  width: 8px;
+}
+.height-8 {
+  height: 22px;
+}
+h3 {
+  -webkit-text-fill-color: transparent;
+  -webkit-box-decoration-break: clone;
+  background: linear-gradient(-85deg, #3674b9, #b5b173);
+  -webkit-background-clip: text;
+}
+hr {
+  width: 32px;
+  height: 3px;
+  border-radius: 3px;
 }
 </style>
