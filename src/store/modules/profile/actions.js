@@ -36,9 +36,18 @@ export default {
   apiCall({ commit }, api) {
     commit(SET_API_CALL, api);
   },
+  async getUserTypes() {
+    try {
+      const resp = await ApiService.get("http://localhost:5000/api/lookups/userTypes");
+      return resp;
+    } catch (error) {
+      const resp = error;
+      return resp;
+    }
+  },
   async getExpertLevels() {
     try {
-      const resp = await ApiService.get("/api/lookups/expertLevels");
+      const resp = await ApiService.get("http://localhost:5000/api/lookups/expertLevels");
       return resp;
     } catch (error) {
       const resp = error;
@@ -47,7 +56,7 @@ export default {
   },
   async getHealthOffice() {
     try {
-      const resp = await ApiService.get("/api/lookups/healthOffices");
+      const resp = await ApiService.get("http://localhost:5000/api/lookups/healthOffices");
       return resp;
     } catch (error) {
       const resp = error;
@@ -56,7 +65,7 @@ export default {
   },
   async getMaritalStatus() {
     try {
-      const resp = await ApiService.get("/api/lookups/maritalStatuses");
+      const resp = await ApiService.get("http://localhost:5000/api/lookups/maritalStatuses");
       return resp;
     } catch (error) {
       const resp = error;
@@ -65,30 +74,47 @@ export default {
   },
   async getRegions() {
     try {
-      const resp = await ApiService.get("/api/lookups/regions");
+      const resp = await ApiService.get("http://localhost:5000/api/lookups/regions");
       return resp;
     } catch (error) {
       const resp = error;
       return resp;
     }
   },
-  async getWoredas() {
+  async getWoredas(context, zoneId) {
     try {
-      const resp = await ApiService.get("/api/lookups/woredas");
+      console.log(zoneId);
+      const url = "http://localhost:5000/api/lookups/woredas/" + zoneId;
+      const resp = await ApiService.get(url);
       return resp;
     } catch (error) {
       const resp = error;
       return resp;
     }
   },
-  async getZones() {
+  async getZones(context, regionId) {
     try {
-      const resp = await ApiService.get("/api/lookups/zones");
+      console.log(regionId);
+      const url = "http://localhost:5000/api/lookups/zones/" + regionId;
+      const resp = await ApiService.get(url);
       return resp;
     } catch (error) {
       const resp = error;
       return resp;
     }
   },
-
+  async addProfile({ commit }, profile) {
+    commit(ADD_PROFILE_LOADING);
+    try {
+      const resp = await ApiService.post(
+        "http://localhost:5000/api/profiles/add",
+        profile
+      );
+      commit(ADD_PROFILE_SUCCESS);
+      return resp;
+    } catch (error) {
+      commit(ADD_PROFILE_ERROR);
+      return error;
+    }
+  }
 };

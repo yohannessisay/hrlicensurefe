@@ -19,7 +19,7 @@
                 v-model="renewalLicenseInfo.applicantTypeId"
               >
                 <option
-                  v-for="applicant in applicantTypes"
+                  v-for="applicant in lookUp.applicantTypes"
                   v-bind:key="applicant.name"
                   v-bind:value="applicant.id"
                 >
@@ -34,7 +34,7 @@
                 v-model="renewalLicenseInfo.education.departmentId"
               >
                 <option
-                  v-for="department in departments"
+                  v-for="department in lookUp.departments"
                   v-bind:key="department.name"
                   v-bind:value="department.id"
                 >
@@ -50,7 +50,7 @@
                 <div class="flex w-full">
                   <div
                     class="flex flex-col mb-small w-1/3"
-                    v-for="institution in institutions"
+                    v-for="institution in lookUp.institutions"
                     v-bind:key="institution.name"
                   >
                     <div class="flex py-2">
@@ -86,91 +86,79 @@
 </template>
 
 <script>
+import { ref, onMounted } from "vue";
+import { useStore } from "vuex";
 import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
 import axios from "axios";
 export default {
   props: ["activeState"],
   components: { TitleWithIllustration },
-  mounted() {
-    this.fetchInstitutions();
-    this.fetchDepartments();
-    this.fetchApplicantType();
-  },
-  data: () => ({
-    renewalLicenseInfo: {
+  setup(props, { emit }) {
+    const store = useStore();
+
+    let renewalLicenseInfo = ref({
       applicantId: +localStorage.getItem("userId"),
       applicantTypeId: "",
       education: {
         departmentId: "",
         institutionId: ""
       }
-    },
-    applicantTypes: [],
-    institutions: [],
-    departments: []
-  }),
+    });
 
-  methods: {
-    submit() {
-      this.$emit("changeActiveState");
+    let lookUp = ref({
+      applicantTypes: [],
+      institutions: [],
+      departments: []
+    });
+
+    const fetchInstitutions = async () => {
+      store.dispatch("renewal/getInstitutions").then(res => {
+        const inResults = res.data;
+        lookUp.value.institutions = inResults.data;
+      });
+    };
+
+    const fetchDepartments = async () => {
+      store.dispatch("renewal/getDepartments").then(res => {
+        const inResults = res.data;
+        lookUp.value.departments = inResults.data;
+      });
+    };
+
+    const fetchApplicantType = async () => {
+      store.dispatch("renewal/getApplicantType").then(res => {
+        const inResults = res.data;
+        lookUp.value.applicantTypes = inResults.data;
+      });
+    };
+
+    const submit = () => {
+      emit("changeActiveState");
       let renewalLicense = {
-        applicantId: this.renewalLicenseInfo.applicantId,
-        applicantTypeId: this.renewalLicenseInfo.applicantTypeId,
+        applicantId: renewalLicenseInfo.value.applicantId,
+        applicantTypeId: renewalLicenseInfo.value.applicantTypeId,
         education: {
-          departmentId: this.renewalLicenseInfo.education.departmentId,
-          institutionId: this.renewalLicenseInfo.education.institutionId
+          departmentId: renewalLicenseInfo.value.education.departmentId,
+          institutionId: renewalLicenseInfo.value.education.institutionId
         }
       };
-      this.$store.dispatch("renewal/setRenewal", renewalLicense);
-    },
-    async fetchInstitutions() {
-      try {
-        const url = `http://localhost:5000/api/lookups/institutionTypes`;
-        const response = await axios.get(url);
-        const results = response.data.data;
-        this.institutions = results;
-      } catch (err) {
-        if (err.response) {
-          console.log("Server Error:", err);
-        } else if (err.request) {
-          console.log("Network Error:", err);
-        } else {
-          console.log("Client Error:", err);
-        }
-      }
-    },
-    async fetchDepartments() {
-      try {
-        const url = `http://localhost:5000/api/lookups/departments`;
-        const response = await axios.get(url);
-        const results = response.data.data;
-        this.departments = results;
-      } catch (err) {
-        if (err.response) {
-          console.log("Server Error:", err);
-        } else if (err.request) {
-          console.log("Network Error:", err);
-        } else {
-          console.log("Client Error:", err);
-        }
-      }
-    },
-    async fetchApplicantType() {
-      try {
-        const url = `http://localhost:5000/api/lookups/applicantTypes`;
-        const response = await axios.get(url);
-        const results = response.data.data;
-        this.applicantTypes = results;
-      } catch (err) {
-        if (err.response) {
-          console.log("Server Error:", err);
-        } else if (err.request) {
-          console.log("Network Error:", err);
-        } else {
-          console.log("Client Error:", err);
-        }
-      }
-    }
+      store.dispatch("renewal/setRenewal", renewalLicense);
+    };
+
+    onMounted(() => {
+      fetchInstitutions();
+      fetchDepartments();
+      fetchApplicantType();
+    });
+
+    return {
+      renewalLicenseInfo,
+      submit,
+      fetchInstitutions,
+      fetchDepartments,
+      fetchApplicantType,
+      lookUp
+    };
   }
 };
 </script>

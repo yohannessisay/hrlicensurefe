@@ -18,7 +18,9 @@
                 class="px-12 max-w-3xl w-full"
                 type="tel"
                 v-model="contact.mobileNumber"
+                @keypress="isNumber($event)"
               />
+              <span style="color: red">{{ contactErrors.mobileNumber }}</span>
             </div>
           </div>
           <div class="flex flex-col mb-medium w-1/2 m1-12">
@@ -30,10 +32,12 @@
           <div class="flex flex-col mb-medium w-1/2 mr-12">
             <label class="text-primary-700">Telephone Number</label>
             <input
-              class="max-w-3xl" 
-              type="tel" 
+              class="max-w-3xl"
+              type="tel"
               v-model="contact.telephoneNumber"
+              @keypress="isNumber($event)"
             />
+            <span style="color: red">{{ contactErrors.telephoneNumber }}</span>
           </div>
           <div class="flex flex-col mb-medium w-1/2 m1-12"></div>
         </div>
@@ -57,35 +61,93 @@
   </div>
 </template>
 <script>
+import { ref } from "vue";
+import { useStore } from "vuex";
 import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
-import { mapGetters } from "vuex";
 
 export default {
   components: { TitleWithIllustration },
   props: ["activeState"],
-  data: () => ({
-    contact: {
-      mobileNumber: null,
-      email: null,
-      telephoneNumber: null,
-      poBox: null
-    }
-  }),
-  computed: {
-    ...mapGetters({ getPersonalInfo: "profile/getPersonalInfo" })
-  },
-  methods: {
-    nextStep: function() {
-      this.$store.dispatch("profile/setContact", this.contact);
-      this.$emit("changeActiveState");
-      // console.log(this.contact);
-    }
-  },
-  mounted() {
-    // console.log(this.getPersonalInfo);
+  setup(props, { emit }) {
+    const store = useStore();
+
+    let contact = ref({
+      mobileNumber: "",
+      email: "",
+      telephoneNumber: "",
+      poBox: ""
+    });
+
+    let contactErrors = ref({
+      mobileNumber: "",
+      email: "",
+      telephoneNumber: ""
+    });
+
+    const validateForm = formData => {
+      const errors = {};
+
+      if (!formData.mobileNumber)
+        errors.mobileNumber = "Mobile Number Required";
+      if (!formData.telephoneNumber)
+        errors.telephoneNumber = "Telephone Number Required";
+      if (formData.email && !isEmail(formData.email)) {
+        errors.email = "Invalid Email";
+      }
+
+      return errors;
+    };
+
+    const isEmpty = obj => {
+      for (var prop in obj) {
+        if (obj.hasOwnProperty(prop)) {
+          return false;
+        }
+      }
+
+      return true;
+    };
+
+    const isNumber = evt => {
+      evt = evt ? evt : window.event;
+      var charCode = evt.which ? evt.which : evt.keyCode;
+      if ((charCode > 31 && (charCode < 48 || charCode > 57)) && charCode !== 46 ) {
+        evt.preventDefault();
+      } else {
+        return true;
+      }
+    };
+
+    const isEmail = email => {
+      const re = /\S+@\S+\.\S+/;
+      return re.test(email);
+    };
+
+    const nextStep = () => {
+      contactErrors.value = validateForm(contact.value);
+      let empty = isEmpty(contactErrors.value);
+      if (empty == false) {
+        return;
+      }
+      if (empty == true) {
+        store.dispatch("profile/setContact", contact);
+        emit("changeActiveState");
+      }
+    };
+
+    return {
+      contact,
+      contactErrors,
+      validateForm,
+      isNumber,
+      isEmpty,
+      isEmail,
+      nextStep
+    };
   },
   created() {
     console.log(this.getPersonalInfo);
+    console.log(this.getAddress);
   }
 };
 </script>

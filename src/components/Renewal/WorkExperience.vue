@@ -20,7 +20,7 @@
                       type="file"
                       id="workExperienceFile"
                       class="photoFile"
-                      ref="workExperienceFile"
+                      ref="workExperienceFileP"
                       v-on:change="handleFileUpload()"
                       style="margin-bottom: 15px !important;"
                     />
@@ -62,72 +62,81 @@
 </template>
 
 <script>
+import { ref, onMounted } from "vue";
+import { useStore } from "vuex";
 import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
-import { mapGetters, mapActions } from "vuex";
 
 export default {
   props: ["activeState"],
   components: { TitleWithIllustration },
-  data() {
-    return {
-      workExperienceFile: "",
-      showPreview: false,
-      filePreview: "",
-      showUpload: true,
-      isImage: true,
+  setup(props, { emit }) {
+    const store = useStore();
+
+    let workExperienceFile = ref("");
+    let workExperienceFileP = ref("");
+    let showPreview = ref(false);
+    let filePreview = ref("");
+    let showUpload = ref(true);
+    let isImage = ref(true);
+
+    const reset = () => {
+      showUpload.value = true;
+      showPreview.value = false;
+      workExperienceFile.value = "";
+      filePreview.value = "";
+      isImage.value = true;
     };
-  },
-  computed: {
-    ...mapGetters({
-      getRenewalCpd: "renewal/getRenewalCpd",
-    }),
-  },
-  created() {
-    this.cpd = this.getRenewalCpd;
-    console.log(this.cpd)
-  },
-  methods: {
-    ...mapActions(["setRenewalWorkExperience"]),
-    reset() {
-      // reset form to initial state
-      this.showUpload = true;
-      this.showPreview = false;
-      this.workExperienceFile = "";
-      this.filePreview = "";
-      this.isImage = true;
-    },
-    handleFileUpload() {
-      this.showUpload = false;
-      this.workExperienceFile = this.$refs.workExperienceFile.files[0];
+    const handleFileUpload = () => {
+      showUpload.value = false;
+      workExperienceFile.value = workExperienceFileP.value.files[0];
+      console.log(workExperienceFile.value);
       let reader = new FileReader();
 
       reader.addEventListener(
         "load",
         function() {
-          this.showPreview = true;
-          this.filePreview = reader.result;
-        }.bind(this),
+          showPreview.value = true;
+          filePreview.value = reader.result;
+        },
         false
       );
 
-      if (this.workExperienceFile) {
-        if (/\.(jpe?g|png|gif)$/i.test(this.workExperienceFile.name)) {
-          this.isImage = true;
-          reader.readAsDataURL(this.workExperienceFile);
-        } else if (/\.(pdf)$/i.test(this.workExperienceFile.name)) {
-          this.isImage = false;
-          reader.readAsText(this.workExperienceFile);
+      if (workExperienceFile.value) {
+        if (/\.(jpe?g|png|gif)$/i.test(workExperienceFile.value.name)) {
+          isImage.value = true;
+          reader.readAsDataURL(workExperienceFile.value);
+        } else if (/\.(pdf)$/i.test(workExperienceFile.value.name)) {
+          isImage.value = false;
+          reader.readAsText(workExperienceFile.value);
         }
       }
-    },
-    submit() {
-      this.$emit("changeActiveState");
+    };
+    const submit = () => {
+      emit("changeActiveState");
       let file6 = {
-        workExperience: this.workExperienceFile,
+        workExperience: workExperienceFile.value
       };
-      this.$store.dispatch("renewal/setRenewalWorkExperience", file6);
-    },
-  },
+      store.dispatch("renewal/setRenewalWorkExperience", file6);
+      console.log(workExperienceFile.value);
+    };
+
+    onMounted(() => {
+      const renewalCpd = store.getters["renewal/getRenewalCpd"];
+      console.log(renewalCpd);
+    });
+
+    return {
+      workExperienceFile,
+      workExperienceFileP,
+      showPreview,
+      filePreview,
+      showUpload,
+      isImage,
+      handleFileUpload,
+      reset,
+      submit
+    };
+  }
 };
 </script>
 <style>

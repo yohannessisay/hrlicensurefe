@@ -20,7 +20,7 @@
                       type="file"
                       id="photoFile"
                       class="photoFile"
-                      ref="photoFile"
+                      ref="photoFileP"
                       v-on:change="handleFileUpload()"
                       style="margin-bottom: 15px !important;"
                     />
@@ -66,71 +66,81 @@
 </template>
 
 <script>
+import { ref, onMounted } from "vue";
+import { useStore } from "vuex";
 import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
-import { mapGetters, mapActions } from "vuex";
+// import { mapGetters, mapActions } from "vuex";
 
 export default {
   components: { TitleWithIllustration },
   props: ["activeState"],
-  data() {
-    return {
-      photoFile: "",
-      showPreview: false,
-      filePreview: "",
-      showUpload: true,
-      isImage: true
+  setup(props, { emit }) {
+    const store = useStore();
+
+    let photoFile = ref("");
+    let photoFileP = ref("");
+    let showPreview = ref(false);
+    let filePreview = ref("");
+    let showUpload = ref(true);
+    let isImage = ref(true);
+
+    const reset = () => {
+      showUpload.value = true;
+      showPreview.value = false;
+      photoFile.value = "";
+      filePreview.value = "";
+      isImage.value = true;
     };
-  },
-  computed: {
-    ...mapGetters({
-      getRenewalLicense: "renewal/getRenewalLicense"
-    })
-  },
-  created() {
-    this.renewalLicense = this.getRenewalLicense;
-    console.log(this.renewalLicense);
-  },
-  methods: {
-    ...mapActions(["setRenewalPhoto"]),
-    reset() {
-      // reset form to initial state
-      this.showUpload = true;
-      this.showPreview = false;
-      this.photoFile = "";
-      this.filePreview = "";
-      this.isImage = true;
-    },
-    handleFileUpload() {
-      this.showUpload = false;
-      this.photoFile = this.$refs.photoFile.files[0];
+    const handleFileUpload = () => {
+      showUpload.value = false;
+      photoFile.value = photoFileP.value.files[0];
+      console.log(photoFile.value);
       let reader = new FileReader();
 
       reader.addEventListener(
         "load",
         function() {
-          this.showPreview = true;
-          this.filePreview = reader.result;
-        }.bind(this),
+          showPreview.value = true;
+          filePreview.value = reader.result;
+        },
         false
       );
 
-      if (this.photoFile) {
-        if (/\.(jpe?g|png|gif)$/i.test(this.photoFile.name)) {
-          this.isImage = true;
-          reader.readAsDataURL(this.photoFile);
-        } else if (/\.(pdf)$/i.test(this.photoFile.name)) {
-          this.isImage = false;
-          reader.readAsText(this.photoFile);
+      if (photoFile.value) {
+        if (/\.(jpe?g|png|gif)$/i.test(photoFile.value.name)) {
+          isImage.value = true;
+          reader.readAsDataURL(photoFile.value);
+        } else if (/\.(pdf)$/i.test(photoFile.value.name)) {
+          isImage.value = false;
+          reader.readAsText(photoFile.value);
         }
       }
-    },
-    submit() {
-      this.$emit("changeActiveState");
+    };
+    const submit = () => {
+      emit("changeActiveState");
       let file = {
-        profilePhoto: this.photoFile
+        profilePhoto: photoFile.value
       };
-      this.$store.dispatch("renewal/setRenewalPhoto", file);
-    }
+      console.log(photoFile.value);
+      store.dispatch("renewal/setRenewalPhoto", file);
+    };
+
+    onMounted(() => {
+      const renewalLicense = store.getters["renewal/getRenewalLicense"];
+      console.log(renewalLicense);
+    });
+
+    return {
+      photoFile,
+      photoFileP,
+      showPreview,
+      filePreview,
+      showUpload,
+      isImage,
+      handleFileUpload,
+      reset,
+      submit
+    };
   }
 };
 </script>

@@ -1,5 +1,5 @@
-// import axios from "axios";
-// import ApiService from "../../../services/api.service";
+import axios from "axios";
+import ApiService from "../../../services/api.service";
 import {
   SET_RENEWAL,
   SET_RENEWAL_PHOTO,
@@ -86,20 +86,31 @@ export default {
   //     const resp = error;
   //   }
   // },
-  // async getInstitutions() {
-  //   try {
-  //     const resp = await ApiService.get("/api/lookups/institutions");
-  //   } catch (error) {
-  //     const resp = error;
-  //   }
-  //   return resp;
-  // },
-  // async getApplicantType() {
-  //   try {
-  //     const resp = await ApiService.get("/api/lookups/applicantTypes");
-  //   } catch (error) {
-  //     const resp = error;
-  //   }
-  //   return resp;
-  // },
+  async getInstitutions() {
+    try {
+      const resp = await ApiService.get("http://localhost:5000/api/lookups/institutionTypes");
+      return resp;
+    } catch (error) {
+      const resp = error;
+      return resp;
+    }
+  },
+  async getApplicantType() {
+    try {
+      const resp = await ApiService.get("http://localhost:5000/api/lookups/applicantTypes");
+      return resp;
+    } catch (error) {
+      const resp = error;
+      return resp;
+    }
+  },
+  async getDepartments() {
+    try {
+      const resp = await ApiService.get("http://localhost:5000/api/lookups/departments");
+      return resp;
+    } catch (error) {
+      const resp = error;
+      return resp;
+    }
+  }
 };

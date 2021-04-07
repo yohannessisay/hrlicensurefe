@@ -105,140 +105,111 @@
 </template>
 
 <script>
+import { ref, onMounted, nextTick } from "vue";
+import { useStore } from "vuex";
 import Title from "@/sharedComponents/TitleWithIllustration";
 import FlashMessage from "@/sharedComponents/FlashMessage";
-import axios from "axios";
-import { mapGetters } from "vuex";
 export default {
   components: { Title, FlashMessage },
-  data: () => ({
-    success: false,
-    a: true,
-    profile: {
+  setup() {
+    const store = useStore();
+
+    let personalInfo = {
       name: null,
-      fatherName: null,
       grandFatherName: null,
-      gender: null,
-      dateOfBirth: null,
-      placeOfBirth: null,
+      fatherName: null,
       nationality: null,
+      placeOfBirth: null,
+      dateOfBirth: null,
+      gender: null,
+      maritalStatusId: null,
+      maritalStatus: null,
       userTypeId: null,
       expertLevelId: null,
-      healthOfficeId: null,
-      maritalStatusId: null,
-      woredaId: null,
-      kebele: null,
-      houseNumber: null,
-      poBox: null,
-      residence: null,
-      city: null,
-      userId: 1
-    },
-    contact: {
-      mobileNumber: null,
-      email: null,
-      telephoneNumber: null,
-      poBox: null
-    },
-    personalInfo: {
-      name: null,
-      fatherName: null,
-      grandFatherName: null,
-      nationality: null,
-      placeOfBirth: null,
-      dateOfBirth: null,
-      gender: null,
-      maritalStatus: null
-    },
-    address: {
+      healthOfficeId: null
+    };
+
+    let address = {
       city: null,
       kebele: null,
       zone: null,
       houseNumber: null,
       woreda: null,
       residence: null
-    },
-    response: {},
-    showFlash: false
-  }),
-  computed: {
-    ...mapGetters({
-      getPersonalInfo: "profile/getPersonalInfo",
-      getAddress: "profile/getAddress",
-      getContact: "profile/getContact"
-    })
-  },
+    };
 
-  methods: {
-    prepareObject() {
-      this.profile.name = this.personalInfo.name;
-      this.profile.fatherName = this.personalInfo.fatherName;
-      this.profile.grandFatherName = this.personalInfo.grandFatherName;
-      this.profile.gender = this.personalInfo.gender;
-      this.profile.dateOfBirth = this.personalInfo.dateOfBirth;
-      this.profile.placeOfBirth = this.personalInfo.placeOfBirth;
-      this.profile.nationality = this.personalInfo.nationality;
-      this.profile.userTypeId = this.personalInfo.userTypeId;
-      this.profile.expertLevelId = this.personalInfo.expertLevelId;
-      this.profile.healthOfficeId = "ee";
-      this.profile.maritalStatusId = this.personalInfo.maritalStatusId;
-      this.profile.woredaId = this.address.woredaId;
-      this.profile.kebele = this.address.kebele;
-      this.profile.houseNumber = this.address.houseNumber;
-      this.profile.residence = this.address.residence;
-      this.profile.city = this.address.city;
-      this.profile.poBox = this.contact.poBox;
-      this.profile.userId = 1;
-    },
-    async addProfile() {
-      console.log(this.profile);
-      await axios.post(
-        "http://localhost:5000/api/profiles/add", {
-          name: this.personalInfo.name,
-          fatherName: this.personalInfo.fatherName,
-          grandFatherName: this.personalInfo.grandFatherName,
-          gender: this.personalInfo.gender,
-          dateOfBirth: this.personalInfo.dateOfBirth,
-          placeOfBirth: this.personalInfo.placeOfBirth,
-          nationality: this.personalInfo.nationality,
-          userTypeId: this.personalInfo.userTypeId,
-          expertLevelId: this.personalInfo.expertLevelId,
-          healthOfficeId: this.personalInfo.healthOfficeId,
-          maritalStatusId: this.personalInfo.maritalStatusId,
-          woredaId: this.address.woredaId,
-          kebele: this.address.kebele,
-          houseNumber: this.address.houseNumber,
-          residence: this.address.residence,
-          city: this.address.city,
-          poBox: this.contact.poBox,
+    let contact = {
+      mobileNumber: null,
+      email: null,
+      telephoneNumber: null,
+      poBox: null
+    };
+
+    let success = ref(false);
+    let a = true;
+    let response = {};
+    let showFlash = ref(false);
+    let getPersonalInfo = "profile/getPersonalInfo";
+
+    const addProfile = () => {
+      store
+        .dispatch("profile/addProfile", {
+          name: personalInfo.name,
+          fatherName: personalInfo.fatherName,
+          grandFatherName: personalInfo.grandFatherName,
+          gender: personalInfo.gender,
+          dateOfBirth: personalInfo.dateOfBirth,
+          placeOfBirth: personalInfo.placeOfBirth,
+          nationality: personalInfo.nationality,
+          userTypeId: personalInfo.userTypeId,
+          expertLevelId: personalInfo.expertLevelId,
+          healthOfficeId: personalInfo.healthOfficeId,
+          maritalStatusId: personalInfo.maritalStatusId,
+          woredaId: address.woredaId,
+          kebele: address.kebele,
+          houseNumber: address.houseNumber,
+          residence: address.residence,
+          city: address.city,
+          poBox: contact.poBox,
           userId: "1"
         })
+
         .then(response => {
           if (response.statusText == "Created") {
-            this.Success = true;
-            this.showFlash = true;
+            showFlash.value = true;
           }
-          //console.log(this.a);
           console.log(response);
         });
-    },
-    submit: function() {
-      this.prepareObject();
-      this.addProfile();
-      this.$router.push({ path: "/login" });
-    }
-  },
-  mounted() {
-    this.$nextTick(function() {
-      window.setInterval(() => {
-        this.showFlash = false;
-      }, 10000);
+    };
+
+    const submit = () => {
+      addProfile();
+    };
+
+    personalInfo = store.getters["profile/getPersonalInfo"];
+    address = store.getters["profile/getAddress"];
+    contact = store.getters["profile/getContact"];
+    console.log(personalInfo.name);
+
+    onMounted(() => {
+      nextTick(function() {
+        window.setInterval(() => {
+          showFlash.value = false;
+        }, 10000);
+      });
     });
-  },
-  created() {
-    this.personalInfo = this.getPersonalInfo;
-    this.address = this.getAddress;
-    this.contact = this.getContact;
+
+    return {
+      personalInfo,
+      address,
+      contact,
+      success,
+      a,
+      response,
+      showFlash,
+      submit,
+      getPersonalInfo
+    };
   }
 };
 </script>

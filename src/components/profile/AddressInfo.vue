@@ -10,33 +10,36 @@
         <div class="flex">
           <div class="flex flex-col mb-medium w-1/2 mr-12">
             <label class="text-primary-700">Region</label>
-            <select class="max-w-3xl" v-model="cityObj" @change="fetchZones()">
+            <select class="max-w-3xl" v-model="state.cityObj" @change="fetchZones()">
               <option
-                v-for="types in regions"
+                v-for="types in state.regions"
                 v-bind:key="types.name"
                 v-bind:value="types"
               >
                 {{ types.name }}
               </option>
             </select>
+            <span style="color: red">{{ addressErrors.city }}</span>
           </div>
           <div class="flex flex-col mb-medium w-1/2 m1-12">
             <label class="text-primary-700">Kebele</label>
             <input class="max-w-3xl" type="number" v-model="address.kebele" />
+            <span style="color: red">{{ addressErrors.kebele }}</span>
           </div>
         </div>
         <div class="flex">
           <div class="flex flex-col mb-medium w-1/2 mr-12">
             <label class="text-primary-700">Zone</label>
-            <select class="max-w-3xl" @change="fetchWoredas()" v-model="zoneId">
+            <select class="max-w-3xl" @change="fetchWoredas()" v-model="state.zoneId">
               <option
-                v-for="types in zones"
+                v-for="types in state.zones"
                 v-bind:key="types.name"
                 v-bind:value="types.id"
               >
                 {{ types.name }}
               </option>
             </select>
+            <span style="color: red">{{ addressErrors.zone }}</span>
           </div>
           <div class="flex flex-col mb-medium w-1/2 m1-12">
             <label class="text-primary-700">House No(Optional)</label>
@@ -56,17 +59,19 @@
               @change="woredaChanged()"
             >
               <option
-                v-for="types in woredas"
+                v-for="types in state.woredas"
                 v-bind:key="types.name"
                 v-bind:value="types.id"
               >
                 {{ types.name }}
               </option>
             </select>
+            <span style="color: red">{{ addressErrors.woreda }}</span>
           </div>
           <div class="flex flex-col mb-medium w-1/2 m1-12">
             <label class="text-primary-700">Residence</label>
             <input class="max-w-3xl" type="text" v-model="address.residence" />
+            <span style="color: red">{{ addressErrors.residence }}</span>
           </div>
         </div>
         <div class="flex mb-medium w-full mt-medium">
@@ -83,112 +88,128 @@
 </template>
 
 <script>
+import { ref, onMounted } from "vue";
+import { useStore } from "vuex";
 import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
-import { mapGetters, mapActions } from "vuex";
-import axios from "axios";
 export default {
   components: { TitleWithIllustration },
   props: ["activeState"],
-  data: () => ({
-    address: {
-      houseNumber: null,
-      woredaId: null,
-      woreda: null,
-      kebele: null,
-      city: null,
-      residence: null,
-      zone: null
-    },
-    regionId: null,
-    regions: [],
-    zones: [],
-    woredas: [],
-    cityObj: {},
-    zoneId: null
-  }),
-  computed: {
-    ...mapGetters({ getPersonalInfo: "profile/getPersonalInfo" })
-  },
-  methods: {
-    ...mapActions(["setAddress"]),
-    async fetchRegions() {
-      try {
-        const url = `http://localhost:5000/api/lookups/regions/`;
-        const response = await axios.get(url);
-        const results = response.data;
-        this.regions = results.data;
-      } catch (err) {
-        if (err.response) {
-          console.log("Server Error:", err);
-        } else if (err.request) {
-          console.log("Network Error:", err);
-        } else {
-          console.log("Client Error:", err);
-        }
-      }
-    },
-    async fetchZones() {
-      try {
-        this.address.city = this.cityObj.name;
-        this.regionId = this.cityObj.id;
-        const url = `http://localhost:5000/api/lookups/zones/` + this.regionId;
-        const response = await axios.get(url);
-        const results = response.data;
-        this.zones = results.data;
-      } catch (err) {
-        if (err.response) {
-          console.log("Server Error:", err);
-        } else if (err.request) {
-          console.log("Network Error:", err);
-        } else {
-          console.log("Client Error:", err);
-        }
-      }
-    },
-    async fetchWoredas() {
-      try {
-        const url = `http://localhost:5000/api/lookups/woredas/` + this.zoneId;
-        const response = await axios.get(url);
-        const results = response.data;
-        this.woredas = results.data;
-        for (const item of Object.entries(this.zones)) {
-          if (item[1].id == this.zoneId) {
-            this.address.zone = item[1].name;
+  setup(props, { emit }) {
+    const store = useStore();
+
+    let address = ref({
+      houseNumber: "",
+      woreda: "",
+      kebele: "",
+      city: "",
+      residence: "",
+      zone: ""
+    });
+
+    let addressErrors = ref({
+      woreda: "",
+      kebele: "",
+      city: "",
+      residence: "",
+      zone: ""
+    });
+
+    let state = ref({
+      regionId: "",
+      regions: [],
+      zones: [],
+      woredas: [],
+      cityObj: {},
+      zoneId: ""
+    });
+
+    const fetchRegions = () => {
+      store.dispatch("profile/getRegions").then(res => {
+        const regionsResult = res.data;
+        state.value.regions = regionsResult.data;
+      });
+    };
+
+    const fetchZones = () => {
+      address.value.city = state.value.cityObj.name;
+      state.value.regionId = state.value.cityObj.id;
+      console.log(state.value.regionId);
+      store.dispatch("profile/getZones", state.value.regionId).then(res => {
+        const zonesResult = res.data;
+        state.value.zones = zonesResult.data;
+      });
+    };
+
+    const fetchWoredas = () => {
+      store.dispatch("profile/getWoredas", state.value.zoneId).then(res => {
+        const woredasResult = res.data;
+        state.value.woredas = woredasResult.data;
+        for (const item of Object.entries(state.value.zones)) {
+          if (item[1].id == state.value.zoneId) {
+            address.value.zone = item[1].name;
           }
         }
-      } catch (err) {
-        if (err.response) {
-          console.log("Server Error:", err);
-        } else if (err.request) {
-          console.log("Network Error:", err);
-        } else {
-          console.log("Client Error:", err);
+      });
+    };
+
+    const woredaChanged = () => {
+      for (const item of Object.entries(state.value.woredas)) {
+        if (item[1].id == address.value.woredaId) {
+          address.value.woreda = item[1].name;
         }
       }
-    },
-    woredaChanged() {
-      for (const item of Object.entries(this.woredas)) {
-        console.log(item[1].name);
-        console.log(item[1].id);
-        console.log(this.address.woredaId);
-        if (item[1].id == this.address.woredaId) {
-          this.address.woreda = item[1].name;
+    };
+
+    const nextStep = () => {
+      addressErrors.value = validateForm(address.value);
+      let empty = isEmpty(addressErrors.value);
+      if (empty == false) {
+        console.log(addressErrors.value);
+        return;
+      }
+      if (empty == true) {
+        store.dispatch("profile/setAddress", address);
+        emit("changeActiveState");
+      }
+    };
+
+    const validateForm = formData => {
+      const errors = {};
+
+      if (!state.value.cityObj.name) errors.city = "Region Required";
+      if (!formData.kebele) errors.kebele = "Kebele Required";
+      if (!state.value.zoneId) errors.zone = "Zone Required";
+      if (!formData.woredaId) errors.woreda = "Woreda Required";
+      if (!formData.residence) errors.residence = "Residence Required";
+
+      return errors;
+    };
+
+    const isEmpty = obj => {
+      for (var prop in obj) {
+        if (obj.hasOwnProperty(prop)) {
+          return false;
         }
       }
-    },
-    nextStep: function() {
-      this.$store.dispatch("profile/setAddress", this.address);
-      this.$emit("changeActiveState");
-      // console.log(this.address);
-    }
-  },
-  mounted() {
-    this.fetchRegions();
-    // console.log(this.getPersonalInfo);
-  },
-  created() {
-    console.log(this.getPersonalInfo);
-    //console.log(this.$store.getters.getPersonalInfo);
+
+      return true;
+    };
+    onMounted(() => {
+      fetchRegions();
+    });
+
+    return {
+      address,
+      addressErrors,
+      validateForm,
+      isEmpty,
+      state,
+      fetchRegions,
+      fetchZones,
+      fetchWoredas,
+      woredaChanged,
+      nextStep
+    };
   }
 };
 </script>
