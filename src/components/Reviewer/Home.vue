@@ -233,13 +233,15 @@
 import Title from "@/sharedComponents/TitleWithIllustration";
 import ReviewerNavBar from "@/components/Reviewer/ReviewerNavBar";
 import { useStore } from "vuex";
-
+import { useRouter } from 'vue-router'
 import { ref, onMounted } from "vue";
 
 export default {
   components: { ReviewerNavBar, Title },
   setup() {
     const store = useStore();
+    const router = useRouter();
+    
     let unfinished = ref({});
     let assignedToyou = ref({});
     let unassigned = ref({});
@@ -270,6 +272,10 @@ export default {
       });
     };
 
+    const evaluate = () => {
+      // router.push("{ path: "/verificationSubmitted" }");
+    }
+
     onMounted(() => {
       fetchUnfinished();
       fetchAssignedtoYou();
@@ -282,7 +288,8 @@ export default {
       assignedToyou,
       unassigned,
       recentlyFinished,
-      hover
+      hover,
+      evaluate
     };
   }
 };

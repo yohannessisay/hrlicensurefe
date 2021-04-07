@@ -19,7 +19,7 @@ import {
   ADD_PROFILE_ERROR,
 } from "./mutation-types";
 
-const url = "http://49f72b2f2bdd.ngrok.io/api/";
+const url = "http://localhost:5000/api";
 
 export default {
   setLicense({ commit }, license) {

@@ -110,23 +110,28 @@ const routes = [
     path: "/prodoc",
     name: "professionalDocument",
     component: () =>
-      import("../components/NewLicense/Foreigner/ProfessionalDocument.vue"),
+      import("../components/NewLicense/Foreigner/ProfessionalDocument.vue")
   },
   {
     path: "/educational",
     name: "educational",
     component: () =>
-      import("../components/NewLicense/Ethiopians L/EducationalDoc.vue"),
+      import("../components/NewLicense/Ethiopians L/EducationalDoc.vue")
   },
   {
     path: "/lang",
     name: "lang",
-    component: () => import("../components/NewLicense/Photo.vue"),
+    component: () => import("../components/NewLicense/Photo.vue")
   },
   {
     path: "/evaluate",
     name: "evaluate",
-    component: () => import("../components/Reviewer/Evaluate.vue"),
+    component: () => import("../components/Reviewer/Evaluate.vue")
+  },
+  {
+    path: "/detail",
+    name: "detail",
+    component: () => import("../components/Reviewer/LicenseDetail.vue")
   },
 ];
 
