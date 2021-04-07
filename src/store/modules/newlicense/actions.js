@@ -1,15 +1,25 @@
 import axios from "axios";
+import { getParsedCommandLineOfConfigFile } from "typescript";
 import ApiService from "../../../services/api.service";
 import {
   SET_LICENSE,
-  ADD_PROFILE_LOADING,
-  ADD_PROFILE_SUCCESS,
-  ADD_PROFILE_ERROR,
   SET_PHOTO,
   SET_PASSPORT,
   SET_HEALTH_EXAM_CERT,
-  SET_DOCS
+  SET_DOCS,
+  SET_LANGUAGE,
+  SET_PROFESSIONAL_DOCUMENT,
+  SET_HERQA,
+  SET_SUPPORT_LETTER,
+  SET_COC,
+  SET_EDUCATIONAL_DOCUMENT,
+  SET_WORK_EXPERIENCE,
+  ADD_PROFILE_LOADING,
+  ADD_PROFILE_SUCCESS,
+  ADD_PROFILE_ERROR,
 } from "./mutation-types";
+
+const url = "http://49f72b2f2bdd.ngrok.io/api/";
 
 export default {
   setLicense({ commit }, license) {
@@ -24,56 +34,86 @@ export default {
   setHealthExamCert({ commit }, healthExamCert) {
     commit(SET_HEALTH_EXAM_CERT, healthExamCert);
   },
+  setLanguage({ commit }, language) {
+    commit(SET_LANGUAGE, language);
+  },
+  setProfessionalDoc({ commit }, professionalDoc) {
+    commit(SET_PROFESSIONAL_DOCUMENT, professionalDoc);
+  },
+  setHerqa({ commit }, herqa) {
+    commit(SET_HERQA, herqa);
+  },
+  setSupportLetter({ commit }, letter) {
+    commit(SET_SUPPORT_LETTER, letter);
+  },
+  setCOC({ commit }, coc) {
+    commit(SET_COC, coc);
+  },
+  setEducationalDocument({ commit }, educationalDoc) {
+    commit(SET_EDUCATIONAL_DOCUMENT, educationalDoc);
+  },
+  setWorkExperience({ commit }, workExperience) {
+    commit(SET_WORK_EXPERIENCE, workExperience);
+  },
   setDocs({ commit }, docs) {
     commit(SET_DOCS, docs);
   },
-  setActiveState({ commit }, state) {
-    console.log(state);
-    commit(SET_ACTIVE_STATE, state);
-  },
-  async newLicense({ commit }, license) {
+  async addNewLicense({ commit }, license) {
     try {
-      const rep = await axios.post(
-        "https://ca9dee52bc55.ngrok.io/api/newLicenses/add",
-        license
+      const resp = await ApiService.post(url + "newLicenses/add", license);
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+  async uploadDocuments(documents) {
+    try {
+      const resp = await ApiService.post(
+        url + "newLicense/documentUploads",
+        documents,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
       );
+      return resp;
     } catch (error) {
-      const resp = error;
+      return error;
     }
-    return resp;
   },
-  async getUserType() {
+
+  async getApplicantType() {
     try {
-      const resp = await ApiService.get("/api/lookups/userTypes");
+      const resp = await ApiService.get(url + "lookups/applicantTypes");
+      return resp;
     } catch (error) {
-      const resp = error;
+      return error;
     }
-    return resp;
   },
   async getInstitutionType() {
     try {
-      const resp = await axios.post(
-        "https://ca9dee52bc55.ngrok.io/api/newLicenses/add",
-        profile
-      );
+      const resp = await ApiService.get(url + "lookups/institutionTypes");
+      return resp;
     } catch (error) {
-      const resp = error;
+      return error;
     }
   },
-  async getInstitutions() {
+  async getDepartmentType() {
     try {
-      const resp = await ApiService.get("/api/lookups/institutions");
+      const resp = await ApiService.get(url + "lookups/departments");
+      return resp;
     } catch (error) {
-      const resp = error;
+      return error;
     }
-    return resp;
   },
-  async getApplicantType() {
+  async getProfile(id) {
     try {
-      const resp = await ApiService.get("/api/lookups/applicantTypes");
+      const resp = await ApiService.get(url + "/profiles/2");
+      // const resp = await ApiService.get(url + "/profiles/" + id);
+      return resp;
     } catch (error) {
-      const resp = error;
+      return error;
     }
-    return resp;
   },
 };

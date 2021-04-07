@@ -3,9 +3,9 @@
     class="card-wrapper bg-white sm:rounded-lg w-full p-large flex flex-col justify-center items-center relative"
   >
     <button
-      @click="closeOption"
-      variant="rounded"
       class="absolute top-0 right-0 mr-2 mt-2"
+      @click="$emit('closeModal', false)"
+      variant="rounded"
     >
       <svg
         viewBox="0 0 329.269 329"
@@ -65,56 +65,54 @@
 </template>
 <script>
 import Title from "@/sharedComponents/Title";
-
+import { useStore } from "vuex";
+import { ref } from "vue";
 export default {
   components: { Title },
-  data() {
-    return {
-      credentials: {
-        emailAddress: "",
-        password: ""
-      },
-      credentialsErrors: {
-        emailAddress: undefined,
-        password: undefined
-      }
-    };
-  },
+  setup() {
+    const store = useStore();
 
-  methods: {
-    closeOption() {
-      this.$emit("closeModal", false);
-    },
-    redirectToSignup() {
-      this.$emit("redirectToSignup");
-    },
-    submit() {
-      this.credentialsErrors = this.validateForm(this.credentials);
-      if (Object.keys(this.credentialsErrors).length) return;
+    const credentials = ref({
+      emailAddress: "",
+      password: "",
+    });
+
+    const credentialsErrors = ref({
+      emailAddress: undefined,
+      password: undefined,
+    });
+
+    const submit = () => {
       let email = {
-        emailAddress: this.credentials.emailAddress
+        emailAddress: credentials.value.emailAddress,
       };
-      this.$store.dispatch("user/setContact", email);
-      this.$router.push({ path: "/menu" });
-    },
-    validateForm(credentials) {
-      const errors = {};
-      if (!credentials.emailAddress) errors.emailAddress = "Email Required";
-      if (!credentials.password) errors.password = "Password Required";
+      store.dispatch("user/login", email).then(() => {
+         root.$router.push({ path: "/menu" });
+      });
+    };
 
-      if (
-        credentials.ememailAddress &&
-        !this.isEmail(credentials.emailAddress)
-      ) {
-        errors.email = "Invalid Email";
-      }
-      return errors;
-    },
-    isEmail(email) {
+    const isEmail = (email) => {
       const re = /\S+@\S+\.\S+/;
       return re.test(email);
-    }
-  }
+    };
+
+    const validateForm = (formData) => {
+      const errors = {};
+      if (!formData.emailAddress) errors.emailAddress = "Email Required";
+      if (!formData.phoneNumber) errors.phoneNumber = "Phone Number Required";
+      if (formData.emailAddress && !this.isEmail(formData.emailAddress)) {
+        errors.emailAddress = "Invalid Email";
+      }
+      return errors;
+    };
+    return {
+      credentials,
+      credentialsErrors,
+      submit,
+      isEmail,
+      validateForm,
+    };
+  },
 };
 </script>
 <style lang="postcss" scoped>

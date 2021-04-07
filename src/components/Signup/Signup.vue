@@ -71,30 +71,29 @@ export default {
 
     const credentials = ref({
       emailAddress: "",
-      phoneNumber: ""
+      phoneNumber: "",
     });
 
     const credentialsErrors = ref({
       emailAddress: undefined,
-      phoneNumber: undefined
+      phoneNumber: undefined,
     });
 
     const submit = () => {
       let signup = {
         emailAddress: credentials.value.emailAddress,
-        phoneNumber: credentials.value.phoneNumber
+        phoneNumber: credentials.value.phoneNumber,
       };
       store.dispatch("user/signUp", signup);
-      console.log(signup);
-      this.$router.push({ path: "/addProfile" });
+      root.$router.push({ path: "/addProfile" });
     };
 
-    const isEmail = email => {
+    const isEmail = (email) => {
       const re = /\S+@\S+\.\S+/;
       return re.test(email);
     };
 
-    const validateForm = formData => {
+    const validateForm = (formData) => {
       const errors = {};
       if (!formData.emailAddress) errors.emailAddress = "Email Required";
       if (!formData.phoneNumber) errors.phoneNumber = "Phone Number Required";
@@ -109,9 +108,9 @@ export default {
       credentialsErrors,
       submit,
       isEmail,
-      validateForm
+      validateForm,
     };
-  }
+  },
 };
 </script>
 

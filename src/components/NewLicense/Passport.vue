@@ -5,12 +5,12 @@
         class="flex flex-col pt-large w-full bg-white blue-box-shadow-light rounded "
       >
         <TitleWithIllustration
-          illustration="Id"
-          message="ID/Passport"
+          illustration="User"
+          message="Passport"
           class="mt-8"
         />
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
-          <div class="flex justify-center mb-10">
+          <div class="flex justify-center">
             <div>
               <span v-if="showUpload">
                 <label class="text-primary-700"
@@ -19,7 +19,8 @@
                     <input
                       type="file"
                       id="passportFile"
-                      ref="passportFile"
+                      class="photoFile"
+                      ref="passportFileP"
                       v-on:change="handleFileUpload()"
                       style="margin-bottom: 15px !important;"
                     />
@@ -41,6 +42,10 @@
               <span v-if="!showUpload && !isImage">
                 <img :src="filePreview" alt="" class="preview" />
               </span>
+
+              <h6 style="margin-top: 15px !important;">
+                Your photo should be passport size
+              </h6>
             </div>
           </div>
 
@@ -61,105 +66,78 @@
 </template>
 
 <script>
+import { ref, onMounted } from "vue";
 import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
-import { mapGetters, mapActions } from "vuex";
+import { useStore } from "vuex";
 
 export default {
   components: { TitleWithIllustration },
   props: ["activeState"],
-  data() {
-    return {
-      passportFile: "",
-      showPreview: false,
-      filePreview: "",
-      showUpload: true,
-      isImage: true,
+  setup(props, { emit }) {
+    const store = useStore();
+
+    let passportFile = ref("");
+    let passportFileP = ref("");
+    let showPreview = ref(false);
+    let filePreview = ref("");
+    let showUpload = ref(true);
+    let isImage = ref(false);
+
+    const reset = () => {
+      showUpload.value = true;
+      showPreview.value = false;
+      passportFile.value = "";
+      filePreview.value = "";
+      isImage.value = true;
     };
-  },
-  computed: {
-    ...mapGetters({
-      getPhoto: "newlicense/getPhoto"
-    })
-  },
-  created() {
-    this.photo = this.getPhoto;
-  },
-  methods: {
-    ...mapActions(["setPassport"]),
-    reset() {
-      // reset form to initial state
-      this.showUpload = true;
-      this.showPreview = false;
-      this.passportFile = "";
-      this.filePreview = "";
-      this.isImage = true;
-    },
-    handleFileUpload() {
-      this.showUpload = false;
-      this.passportFile = this.$refs.passportFile.files[0];
+
+    const handleFileUpload = () => {
+      showUpload.value = false;
+      passportFile.value = passportFileP.value.files[0];
       let reader = new FileReader();
 
       reader.addEventListener(
         "load",
         function() {
-          this.showPreview = true;
-          this.filePreview = reader.result;
-        }.bind(this),
+          showPreview.value = true;
+          filePreview.value = reader.result;
+        },
         false
       );
 
-      if (this.passportFile) {
-        if (/\.(jpe?g|png|gif)$/i.test(this.passportFile.name)) {
-          this.isImage = true;
-          reader.readAsDataURL(this.passportFile);
-        } else if (/\.(pdf)$/i.test(this.passportFile.name)) {
-          this.isImage = false;
-          reader.readAsText(this.passportFile);
+      if (passportFile.value) {
+        if (/\.(jpe?g|png|gif)$/i.test(passportFile.value.name)) {
+          isImage.value = true;
+          reader.readAsDataURL(passportFile.value);
+        } else if (/\.(pdf)$/i.test(passportFile.value.name)) {
+          isImage.value = false;
+          reader.readAsText(passportFile.value);
         }
       }
-    },
-    submit() {
-      this.$emit("changeActiveState");
-      let file2 = {
-        passport: this.passportFile
-      };
-      this.$store.dispatch("newlicense/setPassport", file2);
-    },
+    };
+    const submit = () => {
+      emit("changeActiveState");
+      store.dispatch("newlicense/setPassport", passportFile);
+    };
+    onMounted(() => {});
+    return {
+      passportFile,
+      passportFileP,
+      showPreview,
+      filePreview,
+      showUpload,
+      isImage,
+      handleFileUpload,
+      reset,
+      submit,
+    };
   },
 };
 </script>
 <style>
+@import "../../styles/document-upload.css";
 img {
   width: 250px;
   height: 250px;
-}
-
-#passportFile {
-  opacity: 0; /* invisible but it's there! */
-  width: 100%;
-  height: 200px;
-  position: absolute;
-  cursor: pointer;
-}
-
-.dropbox {
-  outline: 2px dashed grey; /* the dash box */
-  outline-offset: -10px;
-  background: lightcyan;
-  color: dimgray;
-  padding: 10px 10px;
-  min-height: 200px; /* minimum height */
-  position: relative;
-  cursor: pointer;
-}
-
-.dropbox:hover {
-  background: lightblue; /* when mouse over to the drop zone, change color */
-}
-
-.dropbox p {
-  font-size: 1.2em;
-  text-align: center;
-  padding: 50px 0;
 }
 </style>

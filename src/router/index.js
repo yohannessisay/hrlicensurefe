@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "../views/Home.vue";
-import About from "../views/About.vue";
 const routes = [
   {
     path: "/",
@@ -16,11 +15,6 @@ const routes = [
     path: "/addProfile",
     name: "NewProfile",
     component: () => import("../components/profile/NewProfile.vue")
-  },
-  {
-    path: "/about",
-    name: "About",
-    component: About
   },
   {
     path: "/signup",
@@ -91,24 +85,46 @@ const routes = [
     path: "/review",
     name: "Home",
     component: () => import("../components/Reviewer/Home.vue")
-  }
+  },
+  {
+    path: "/prodoc",
+    name: "professionalDocument",
+    component: () =>
+      import("../components/NewLicense/Foreigner/ProfessionalDocument.vue"),
+  },
+  {
+    path: "/educational",
+    name: "educational",
+    component: () =>
+      import("../components/NewLicense/Ethiopians L/EducationalDoc.vue"),
+  },
+  {
+    path: "/lang",
+    name: "lang",
+    component: () => import("../components/NewLicense/Photo.vue"),
+  },
+  {
+    path: "/evaluate",
+    name: "evaluate",
+    component: () => import("../components/Reviewer/Evaluate.vue"),
+  },
 ];
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
 });
-router.beforeEach((to, from, next) => {
-  const auth = localStorage.getItem("token");
-  if (
-    !auth &&
-    to.path !== "/login" &&
-    to.path !== "/signup" &&
-    to.path !== "/landing" &&
-    to.path !== "/"
-  )
-    next("/login");
-  else next();
-});
+// router.beforeEach((to, from, next) => {
+//   const auth = localStorage.getItem("token");
+//   if (
+//     !auth &&
+//     to.path !== "/login" &&
+//     to.path !== "/signup" &&
+//     to.path !== "/landing" &&
+//     to.path !== "/"
+//   )
+//     next("/login");
+//   else next();
+// });
 
 export default router;
