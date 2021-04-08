@@ -120,6 +120,8 @@ export default {
       emit("changeActiveState");
       store.dispatch("newlicense/setLanguage", languageFile);
     };
+    const draft = (action) => {};
+    buttons = store.getters["newlicense/getButtons"];
     onMounted(() => {
       const languageFile = store.getters["newlicense/getEnglishLanguage"];
       buttons = store.getters["newlicense/getButtons"];
@@ -134,6 +136,7 @@ export default {
       handleFileUpload,
       reset,
       submit,
+      draft,
       buttons,
     };
   },

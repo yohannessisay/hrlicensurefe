@@ -167,18 +167,15 @@
               </h6>
             </div>
           </div>
-
-          <div class="flex justify-center mb-8 mt-medium">
-            <div>
-              <button>Next</button>
-            </div>
-            <div>
-              <button variant="outline">
-                Finish Later
-              </button>
-            </div>
-          </div>
         </form>
+        <div class="flex justify-center mb-8">
+          <button @click="submit">
+            Next
+          </button>
+          <button @click="draft(this.buttons[0].action)" variant="outline">
+            {{ this.buttons[0]["name"] }}
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -365,6 +362,9 @@ export default {
         this.experienceFile,
       ];
       this.$store.dispatch("newlicense/setProfessionalDoc", file);
+    },
+    draft(action) {
+      console.log(action);
     },
   },
 };

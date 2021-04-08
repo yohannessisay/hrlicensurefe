@@ -48,18 +48,19 @@
               </h6>
             </div>
           </div>
-
-          <div class="flex justify-center mb-8 mt-medium">
-            <div>
-              <button>Next</button>
-            </div>
-            <div>
-              <button variant="outline">
-                Finish Later
-              </button>
-            </div>
-          </div>
         </form>
+        <div v-if="buttons" class="flex justify-center mb-8">
+          <button @click="submit">
+            Next
+          </button>
+          <button
+            class="buttons[0].class"
+            @click="draft(buttons[0].action)"
+            variant="outline"
+          >
+            {{ buttons[0].name }}
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -82,7 +83,7 @@ export default {
     let filePreview = ref("");
     let showUpload = ref(true);
     let isImage = ref(false);
-    let buttons = [];
+    let buttons = ref([]);
 
     const reset = () => {
       showUpload.value = true;
@@ -120,6 +121,9 @@ export default {
       emit("changeActiveState");
       store.dispatch("newlicense/setPhoto", photoFile);
     };
+    const draft = (action) => {};
+    buttons = store.getters["newlicense/getButtons"];
+
     onMounted(() => {
       buttons = store.getters["newlicense/getButtons"];
     });
@@ -133,6 +137,7 @@ export default {
       handleFileUpload,
       reset,
       submit,
+      draft,
       buttons,
     };
   },
