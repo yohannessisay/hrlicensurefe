@@ -82,6 +82,7 @@ export default {
     let filePreview = ref("");
     let showUpload = ref(true);
     let isImage = ref(false);
+    let buttons = [];
 
     const reset = () => {
       showUpload.value = true;
@@ -118,8 +119,11 @@ export default {
     const submit = () => {
       emit("changeActiveState");
       store.dispatch("newlicense/setWorkExperience", workExperienceFile);
+
     };
-    onMounted(() => {});
+    onMounted(() => {
+      buttons = store.getters["newlicense/getButtons"];
+    });
     return {
       workExperienceFile,
       workExperienceFileP,
@@ -130,6 +134,7 @@ export default {
       handleFileUpload,
       reset,
       submit,
+      buttons,
     };
   },
 };

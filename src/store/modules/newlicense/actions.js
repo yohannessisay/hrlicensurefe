@@ -1,5 +1,3 @@
-import axios from "axios";
-import { getParsedCommandLineOfConfigFile } from "typescript";
 import ApiService from "../../../services/api.service";
 import {
   SET_LICENSE,
@@ -14,12 +12,13 @@ import {
   SET_COC,
   SET_EDUCATIONAL_DOCUMENT,
   SET_WORK_EXPERIENCE,
+  SET_BUTTONS,
   ADD_PROFILE_LOADING,
   ADD_PROFILE_SUCCESS,
   ADD_PROFILE_ERROR,
 } from "./mutation-types";
 
-const url = "http://49f72b2f2bdd.ngrok.io/api/";
+const url = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api/";
 
 export default {
   setLicense({ commit }, license) {
@@ -57,6 +56,9 @@ export default {
   },
   setDocs({ commit }, docs) {
     commit(SET_DOCS, docs);
+  },
+  setButtons({ commit }, buttons) {
+    commit(SET_BUTTONS, buttons);
   },
   async addNewLicense({ commit }, license) {
     try {
@@ -111,6 +113,30 @@ export default {
     try {
       const resp = await ApiService.get(url + "/profiles/2");
       // const resp = await ApiService.get(url + "/profiles/" + id);
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+  async getApplicationStatuses() {
+    try {
+      const resp = await ApiService.get(url + "applicationStatuses");
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+  async getApplicationCategories() {
+    try {
+      const resp = await ApiService.get(url + "applicationCategories");
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+  async getDocumentSpecs() {
+    try {
+      const resp = await ApiService.get(url + "documentSpecs");
       return resp;
     } catch (error) {
       return error;

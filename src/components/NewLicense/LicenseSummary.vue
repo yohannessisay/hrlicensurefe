@@ -291,6 +291,7 @@ export default {
     this.education.departmentId = this.license.education.departmentId;
     this.education.institutionId = this.license.education.institutionId;
     this.docs = this.getDocs.data;
+    this.buttons = this.getButtons;
   },
   data: () => ({
     show: false,
@@ -306,11 +307,13 @@ export default {
     dataFetched: false,
     showFlash: false,
     showErrorFlash: false,
+    buttons: [],
   }),
   computed: {
     ...mapGetters({
       getLicense: "newlicense/getLicense",
       getDocs: "newlicense/getDocs",
+      getButtons: "newlicense/getButtons",
     }),
   },
   methods: {

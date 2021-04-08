@@ -82,6 +82,7 @@ export default {
     let filePreview = ref("");
     let showUpload = ref(true);
     let isImage = ref(false);
+    let buttons = [];
 
     const reset = () => {
       showUpload.value = true;
@@ -119,7 +120,9 @@ export default {
       emit("changeActiveState");
       store.dispatch("newlicense/setPassport", passportFile);
     };
-    onMounted(() => {});
+    onMounted(() => {
+      buttons = store.getters["newlicense/getButtons"];
+    });
     return {
       passportFile,
       passportFileP,
@@ -130,6 +133,7 @@ export default {
       handleFileUpload,
       reset,
       submit,
+      buttons,
     };
   },
 };

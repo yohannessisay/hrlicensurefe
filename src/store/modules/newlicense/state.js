@@ -17,6 +17,7 @@ export default {
     educationalDocuments: [],
     workExperience: "",
     docs: "",
+    buttons: [],
     addProfileLoading: false,
     addProfileSuccess: false,
     addProfileError: false,

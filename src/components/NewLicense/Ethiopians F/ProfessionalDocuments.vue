@@ -216,15 +216,19 @@ export default {
       experiencePreview: "",
       showExperienceUpload: true,
       isExperienceImage: true,
+
+      buttons: [],
     };
   },
   computed: {
     ...mapGetters({
       getPersonalDoc: "newlicense/getProfessionalDocuments",
+      getButtons: "newlicense/getButtons",
     }),
   },
   created() {
     this.license = this.getLicense;
+    this.buttons = this.getButtons;
   },
   methods: {
     ...mapActions(["setProfessionalDoc"]),

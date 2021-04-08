@@ -11,4 +11,5 @@ export default {
   getEducationalDocuments: (state) => state.educationalDocuments,
   getWorkExperience: (state) => state.workExperience,
   getDocs: (state) => state.docs,
+  getButtons: (state) => state.buttons,
 };

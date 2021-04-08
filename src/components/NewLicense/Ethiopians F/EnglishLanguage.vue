@@ -82,6 +82,7 @@ export default {
     let filePreview = ref("");
     let showUpload = ref(true);
     let isImage = ref(false);
+    let buttons = [];
 
     const reset = () => {
       showUpload.value = true;
@@ -121,6 +122,7 @@ export default {
     };
     onMounted(() => {
       const languageFile = store.getters["newlicense/getEnglishLanguage"];
+      buttons = store.getters["newlicense/getButtons"];
     });
     return {
       languageFile,
@@ -132,6 +134,7 @@ export default {
       handleFileUpload,
       reset,
       submit,
+      buttons,
     };
   },
 };

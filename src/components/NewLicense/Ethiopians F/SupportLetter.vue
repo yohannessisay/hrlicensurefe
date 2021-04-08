@@ -82,6 +82,7 @@ export default {
     let filePreview = ref("");
     let showUpload = ref(true);
     let isImage = ref(false);
+    let buttons = [];
 
     const reset = () => {
       showUpload.value = true;
@@ -120,6 +121,7 @@ export default {
       store.dispatch("newlicense/setSupportLetter", supportLetterFile);
     };
     onMounted(() => {
+      buttons = store.getters["newlicense/getButtons"];
     });
     return {
       supportLetterFile,
@@ -131,6 +133,7 @@ export default {
       handleFileUpload,
       reset,
       submit,
+      buttons,
     };
   },
 };

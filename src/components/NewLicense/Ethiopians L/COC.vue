@@ -4,11 +4,7 @@
       <div
         class="flex flex-col pt-large w-full bg-white blue-box-shadow-light rounded "
       >
-        <TitleWithIllustration
-          illustration="User"
-          message="COC"
-          class="mt-8"
-        />
+        <TitleWithIllustration illustration="User" message="COC" class="mt-8" />
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
           <div class="flex justify-center">
             <div>
@@ -82,6 +78,7 @@ export default {
     let filePreview = ref("");
     let showUpload = ref(true);
     let isImage = ref(false);
+    let buttons = [];
 
     const reset = () => {
       showUpload.value = true;
@@ -120,6 +117,7 @@ export default {
       store.dispatch("newlicense/setCOC", COCFile);
     };
     onMounted(() => {
+      buttons = store.getters["newlicense/getButtons"];
     });
     return {
       COCFile,
@@ -131,6 +129,7 @@ export default {
       handleFileUpload,
       reset,
       submit,
+      buttons,
     };
   },
 };
