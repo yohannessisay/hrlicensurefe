@@ -10,6 +10,7 @@ export default {
   getCoc: (state) => state.coc,
   getEducationalDocuments: (state) => state.educationalDocuments,
   getWorkExperience: (state) => state.workExperience,
-  getDocs: (state) => state.docs,
+  getServiceFee: (state) => state.serviceFee,
   getButtons: (state) => state.buttons,
+  getApplicationId: (state) => state.applicationId,
 };

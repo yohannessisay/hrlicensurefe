@@ -43,18 +43,15 @@
               </span>
             </div>
           </div>
-
-          <div class="flex justify-center mb-8">
-            <div>
-              <button @click="submit()">Next</button>
-            </div>
-            <div>
-              <button variant="outline">
-                Finish Later
-              </button>
-            </div>
-          </div>
         </form>
+        <div class="flex justify-center mb-8">
+          <button @click="nextStep">
+            Next
+          </button>
+          <button @click="draft(this.buttons[0].action)" variant="outline">
+            {{ this.buttons[0]["name"] }}
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -69,49 +66,24 @@ export default {
   components: { TitleWithIllustration },
   data() {
     return {
-      photo: "",
-      passport: "",
-      healthExamCert: "",
-      englishLanguage: "",
-      professionalDoc: [],
-      herqa: "",
-      supportLetter: "",
-      coc: "",
-      educationalDoc: [],
-      workExperience: "",
       serviceFeeFile: "",
       showPreview: false,
       filePreview: "",
       showUpload: true,
       isImage: true,
+      buttons: [],
     };
+  },
+  created() {
+    this.buttons = this.getButtons;
   },
   computed: {
     ...mapGetters({
-      getPhoto: "newlicense/getPhoto",
-      getPassport: "newlicense/getPassport",
-      getHealthExamCert: "newlicense/getHealthExamCert",
-      getEnglishLanguage: "newlicense/getEnglishLanguage",
-      getProfessionalDocuments: "newlicense/getProfessionalDocuments",
-      getHerqa: "newlicense/getHerqa",
-      getSupportLetter: "newlicense/getSupportLetter",
-      getCoc: "newlicense/getCoc",
-      getEducationalDocuments: "newlicense/getEducationalDocuments",
-      getWorkExperience: "newlicense/getWorkExperience",
+      getServiceFee: "newlicense/getServiceFee",
+      getButtons: "newlicense/getButtons",
     }),
   },
-  created() {
-    this.photo = this.getPhoto;
-    this.passport = this.getPassport;
-    this.healthExamCert = this.getHealthExamCert;
-    this.englishLanguage = this.getEnglishLanguage;
-    this.professionalDoc = this.getProfessionalDocuments;
-    this.herqa = this.getHerqa;
-    this.supportLetter = this.getSupportLetter;
-    this.coc = this.getCoc;
-    this.educationalDoc = this.getEducationalDocuments;
-    this.workExperience = this.getWorkExperience;
-  },
+
   methods: {
     ...mapActions(["setServiceFee"]),
     reset() {
@@ -146,36 +118,13 @@ export default {
         }
       }
     },
-    async submit() {
-      let file4 = {
-        serviceFee: this.serviceFeeFile,
-      };
-      let formData = new FormData();
-      formData.append("photo", this.photo);
-      formData.append("passport", this.passport);
-      formData.append("healthExamCert", this.healthExamCert);
-      formData.append("englishLanguage", this.englishLanguage);
-      formData.append("professionalDoc", this.professionalDoc);
-      formData.append("herqa", this.herqa);
-      formData.append("supportLetter", this.supportLetter);
-      formData.append("coc", this.getCoc);
-      formData.append("educationalDocuments", this.educationalDoc);
-      formData.append("workExperience", this.getWorkExperience);
-      formData.append("serviceFee", file4.serviceFee);
-      this.$store.dispatch("newlicense/uploadDocuments", formData).then((res) => {
-        if (res.status === 200) {
-          this.$emit("changeActiveState");
-          this.$store.dispatch("newlicense/setDocs", res.data);
-        } else {
-          console.log("Error Occurred");
-        }
-      });
+    draft(action) {
     },
     nextStep() {
       this.$emit("changeActiveState");
+      this.$store.dispatch("newlicense/setServiceFee", this.serviceFeeFile);
     },
   },
-  setup() {},
 };
 </script>
 <style>

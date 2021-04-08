@@ -4,7 +4,7 @@ import {
   SET_PHOTO,
   SET_PASSPORT,
   SET_HEALTH_EXAM_CERT,
-  SET_DOCS,
+  SET_SERVICE_FEE,
   SET_LANGUAGE,
   SET_PROFESSIONAL_DOCUMENT,
   SET_HERQA,
@@ -13,12 +13,15 @@ import {
   SET_EDUCATIONAL_DOCUMENT,
   SET_WORK_EXPERIENCE,
   SET_BUTTONS,
+  SET_APPLICATION_ID,
   ADD_PROFILE_LOADING,
   ADD_PROFILE_SUCCESS,
   ADD_PROFILE_ERROR,
 } from "./mutation-types";
 
 const url = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api/";
+
+const userId = 2;
 
 export default {
   setLicense({ commit }, license) {
@@ -54,11 +57,15 @@ export default {
   setWorkExperience({ commit }, workExperience) {
     commit(SET_WORK_EXPERIENCE, workExperience);
   },
-  setDocs({ commit }, docs) {
-    commit(SET_DOCS, docs);
+  setServiceFee({ commit }, serviceFee) {
+    commit(SET_SERVICE_FEE, serviceFee);
   },
   setButtons({ commit }, buttons) {
     commit(SET_BUTTONS, buttons);
+  },
+  setApplicationId({ commit }, id) {
+    console.log(id);
+    commit(SET_APPLICATION_ID, id);
   },
   async addNewLicense({ commit }, license) {
     try {
@@ -111,8 +118,8 @@ export default {
   },
   async getProfile(id) {
     try {
-      const resp = await ApiService.get(url + "/profiles/2");
-      // const resp = await ApiService.get(url + "/profiles/" + id);
+      const resp = await ApiService.get(url + "profiles/" + userId);
+      // const resp = await ApiService.get(url + "/profiles/1");
       return resp;
     } catch (error) {
       return error;
@@ -134,9 +141,10 @@ export default {
       return error;
     }
   },
-  async getDocumentSpecs() {
+  async getDocumentSpecs(id) {
     try {
-      const resp = await ApiService.get(url + "documentSpecs");
+      // const resp = await ApiService.get(url + "documentSpecs/" + id);
+      const resp = await ApiService.get(url + "documentSpecs/1");
       return resp;
     } catch (error) {
       return error;

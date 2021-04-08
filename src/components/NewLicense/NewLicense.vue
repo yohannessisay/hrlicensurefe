@@ -245,6 +245,7 @@ export default {
     applicationCategories: "",
     documentSpecs: "",
     buttons: [],
+    applicationId: "",
   }),
   components: {
     Institution,
@@ -265,6 +266,7 @@ export default {
     ProfessionalDocumentForeigner,
     Navigation,
   },
+
   methods: {
     applicantTypeSet: function(params) {
       if (params == null || params == undefined || params == "") {
@@ -290,13 +292,20 @@ export default {
         .then((res) => {
           const results = res.data.data;
           this.applicationCategories = results;
+          const newApplicationData = this.applicationCategories.filter(
+            (item) => {
+              return item.name == "New Application";
+            }
+          );
+          this.applicationId = newApplicationData[0]["id"];
+          this.$store.dispatch("newlicense/setApplicationId", this.applicationId);
         });
     },
     fetchDocumentSpec() {
-      this.$store.dispatch("newlicense/getDocumentSpecs").then((res) => {
-        const results = res.data.data;
-        this.documentSpecs = results;
-      });
+      // this.$store.dispatch("newlicense/getDocumentSpecs", this.applicationId).then((res) => {
+      //   const results = res.data.data;
+      //   this.documentSpecs = results;
+      // });
     },
   },
 };
