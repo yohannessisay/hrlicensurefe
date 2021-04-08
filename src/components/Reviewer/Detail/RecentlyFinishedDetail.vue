@@ -204,15 +204,15 @@
           <div class="flex flex-row">
             <div>
               <label class="ml-8"> Institution Name</label>
-              <h5 class="ml-8">Hawassa University</h5>
+              <h5 class="ml-8">{{ education.institutionName }}</h5>
             </div>
             <div>
               <label class="ml-8"> Department</label>
-              <h5 class="ml-8">Electrical Engineering</h5>
+              <h5 class="ml-8">{{ education.departmentName }}</h5>
             </div>
             <div>
               <label class="ml-8"> Institution Type</label>
-              <h5 class="ml-8">Private</h5>
+              <h5 class="ml-8">{{ education.institutionTypeName }}</h5>
             </div>
           </div>
           <div class="flex justify-start flex-wrap">
@@ -222,20 +222,6 @@
                 <img :src="basePath + file.filePath" />
               </picture>
             </div> -->
-          </div>
-          <div class="mt-12 flex justify-center">
-            <div>
-              <button @click="evaluate()">Start Evaluating</button>
-            </div>
-          </div>
-          <div class="flex justify-center mt-8">
-            <h6>
-              If you don't have all the required informations you can come back and
-              finish later.
-            </h6>
-          </div>
-          <div class="flex justify-center mt-8 mb-8">
-            <button variant="outline">I will finish Later</button>
           </div>
         </div>
       </div>
@@ -262,6 +248,16 @@ export default {
 
     let userId = ref(null);
     let show = ref(false);
+    let license = ref({
+      applicant: {},
+      applicantType: {},
+      education: {
+        institution: {
+          institutionType: {}
+        },
+        department: {}
+      }
+    });
     let profileInfo = ref({
       maritalStatus: {},
       woreda: {
@@ -283,11 +279,25 @@ export default {
     let showErrorFlash = ref(false);
     let profile = ref({});
 
-    const created = async () => {
-      store.dispatch("newlicense/getProfile").then((res) => {
+    const created = async (id) => {
+      console.log(id);
+      store.dispatch("reviewer/getProfile", id).then((res) => {
         profileInfo.value = res.data.data;
         show.value = true;
         console.log(profileInfo.value);
+      });
+      store.dispatch("reviewer/getLicense", id).then((res) => {
+        license.value = res.data.data;
+        console.log(license.value);
+        applicantId.value = license.value.applicantId;
+        applicantTypeId.value = license.value.applicantTypeId;
+        education.value.departmentName =
+          license.value.education.department.name;
+        education.value.institutionName =
+          license.value.education.institution.name;
+        education.value.institutionTypeName =
+          license.value.education.institution.institutionType.name;
+        // docs.value = this.getDocs.data;
       });
     };
 
@@ -298,11 +308,12 @@ export default {
     onMounted(() => {
       //userId.value = +localStorage.getItem("userId");
       userId = 2;
-      created();
+      created(2);
     });
 
     return {
       userId,
+      license,
       profileInfo,
       activeClass,
       errorClass,

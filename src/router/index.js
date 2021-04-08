@@ -131,7 +131,19 @@ const routes = [
   {
     path: "/detail",
     name: "detail",
-    component: () => import("../components/Reviewer/LicenseDetail.vue")
+    component: () => import("../components/Reviewer/Detail/LicenseDetail.vue")
+  },
+  {
+    path: "/unfinishedDetail",
+    name: "unfinishedDetail",
+    component: () =>
+      import("../components/Reviewer/Detail/UnfinishedDetail.vue")
+  },
+  {
+    path: "/recentlyFinishedDetail",
+    name: "recentlyFinishedDetail",
+    component: () =>
+      import("../components/Reviewer/Detail/RecentlyFinishedDetail.vue")
   },
 ];
 
@@ -151,5 +163,19 @@ const router = createRouter({
 //     next("/login");
 //   else next();
 // });
+
+router.beforeResolve((to, from, next) => {
+  // If this isn't an initial page load.
+  if (to.name) {
+    // Start the route progress bar.
+    NProgress.start()
+  }
+  next()
+})
+
+router.afterEach((to, from) => {
+  // Complete the animation of the route progress bar.
+  NProgress.done()
+})
 
 export default router;

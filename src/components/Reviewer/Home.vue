@@ -2,7 +2,18 @@
   <div>
     <ReviewerNavBar tab="Home" />
     <div class="bg-lightBlueB-200 h-full">
-      <div class="flex pl-12 pt-medium"><Title message="Unfinished" /></div>
+      <div class="flex pl-12 pt-medium">
+        <Title message="Unfinished" />
+        <div class="flex ml-small" v-if="unfinished.length >= 5">
+          <router-link to="/unfinished">
+            <button
+              class="block mx-auto  bg-lightBlue-300 hover:bg-lightBlue-600 hover:shadow-lg"
+            >
+              View All
+            </button>
+          </router-link>
+        </div>
+      </div>
       <div class="flex justify-center items-center mt-medium rounded ">
         <div
           class="container"
@@ -14,11 +25,9 @@
             v-if="index < 5"
             class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
           >
-            <div class="p-4 w-48 h-64">
+            <div class="p-4 w-48 h-64" @Click="detail(`/unfinishedDetail`)">
               <div class="flex content-center justify-center">
-                <router-link to="/newlicense">
                   <img class="box-shadow-pop" v-bind:src="item.picture.large" />
-                </router-link>
               </div>
               <h4
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
@@ -39,7 +48,18 @@
         </div>
       </div>
 
-      <div class="flex pl-12 mt-medium"><Title message="Assigned to You" /></div>
+      <div class="flex pl-12 mt-medium">
+        <Title message="Assigned to You" />
+        <div class="flex ml-small" v-if="assignedToyou.length >= 5">
+          <router-link to="/assignedToyou">
+            <button
+              class="block mx-auto  bg-lightBlue-300 hover:bg-lightBlue-600 hover:shadow-lg"
+            >
+              View All
+            </button>
+          </router-link>
+        </div>
+      </div>
       <div class="flex justify-center items-center mt-medium rounded ">
         <div
           class="container"
@@ -51,7 +71,7 @@
             v-if="index < 5"
             class="flex justify-center items-center ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
           >
-            <div class="p-4 w-48 h-64">
+            <div class="p-4 w-48 h-64" @Click="detail(`/detail`)">
               <div class="flex content-center justify-center">
                 <router-link to="/newlicense">
                   <img class="box-shadow-pop" v-bind:src="item.picture.large" />
@@ -79,11 +99,13 @@
       <div class="flex pl-12 mt-medium">
         <Title message="Unassigned"/>
         <div class="flex ml-small" v-if="unassigned.length >= 5">
-          <button
-            class="block mx-auto  bg-lightBlue-300 hover:bg-lightBlue-600 hover:shadow-lg"
-          >
-            View All
-          </button>
+          <router-link to="/unassigned">
+            <button
+              class="block mx-auto  bg-lightBlue-300 hover:bg-lightBlue-600 hover:shadow-lg"
+            >
+              View All
+            </button>
+          </router-link>
         </div>
       </div>
 
@@ -138,6 +160,7 @@
                 class="p-4 w-48 h-64"
                 @mouseover="hover = true"
                 @mouseleave="hover = false"
+                @Click="detail()"
               >
                 <h4
                   class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
@@ -175,11 +198,13 @@
       <div class="flex pl-12 mt-medium ">
         <Title message="Recently Finished" />
         <div class="flex ml-small" v-if="recentlyFinished.length >= 5">
-          <button
-            class="block mx-auto  bg-lightBlue-300 hover:bg-lightBlue-600 hover:shadow-lg"
-          >
-            View All
-          </button>
+          <router-link to="/newlicense">
+            <button
+              class="block mx-auto  bg-lightBlue-300 hover:bg-lightBlue-600 hover:shadow-lg"
+            >
+              View All
+            </button>
+          </router-link>
         </div>
       </div>
       <div
@@ -195,7 +220,10 @@
             v-if="index < 5"
             class="justify-center items-center ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
           >
-            <div class="p-4 w-48 h-64">
+            <div
+              class="p-4 w-48 h-64"
+              @Click="detail(`/recentlyFinishedDetail`)"
+            >
               <div class="flex content-center justify-center">
                 <router-link to="/newlicense">
                   <img class="box-shadow-pop" v-bind:src="item.picture.large" />
@@ -241,7 +269,7 @@ export default {
   setup() {
     const store = useStore();
     const router = useRouter();
-    
+
     let unfinished = ref({});
     let assignedToyou = ref({});
     let unassigned = ref({});
@@ -272,9 +300,9 @@ export default {
       });
     };
 
-    const evaluate = () => {
-      // router.push("{ path: "/verificationSubmitted" }");
-    }
+    const detail = (data) => {
+      router.push(data);
+    };
 
     onMounted(() => {
       fetchUnfinished();
@@ -289,7 +317,7 @@ export default {
       unassigned,
       recentlyFinished,
       hover,
-      evaluate
+      detail
     };
   }
 };
@@ -301,6 +329,9 @@ img {
   width: 80px;
   border-color: steelblue;
   background-color: steelblue;
+}
+.container {
+  cursor: pointer;
 }
 .hoveredCard {
   background-color: white;
@@ -315,7 +346,6 @@ img {
   perspective: 1000px;
   cursor: pointer;
 }
-
 .flip-box-front,
 .flip-box-back {
   transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);

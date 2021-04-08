@@ -1,5 +1,7 @@
 import ApiService from "../../../services/api.service";
 
+const baseUrl = "http://localhost:5000/api";
+
 export default {
   async getUnfinished() {
     try {
@@ -36,5 +38,25 @@ export default {
       const resp = error;
       return resp;
     }
-  }
+  },
+  async getProfile(context, id) {
+    try {
+      console.log(id);
+      const url = baseUrl + "/profiles/" + id;
+      const resp = await ApiService.get(url);
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+  async getLicense(context, id) {
+    try {
+      console.log(id);
+      const url = baseUrl + "/newLicenses/" + id;
+      const resp = await ApiService.get(url);
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
 };
