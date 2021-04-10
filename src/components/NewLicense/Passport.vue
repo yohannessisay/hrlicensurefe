@@ -193,7 +193,6 @@ export default {
           .then((res) => {
             if (res.data.status == "Success") {
               route.push({ path: "/menu" });
-              // this.$router.push({ path: "/menu" });
             }
           })
           .catch((err) => {});

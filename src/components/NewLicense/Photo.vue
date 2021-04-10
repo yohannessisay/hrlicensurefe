@@ -70,12 +70,14 @@
 import { ref, onMounted } from "vue";
 import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
 import { useStore } from "vuex";
+import { useRouter } from "vue-router";
 
 export default {
   components: { TitleWithIllustration },
   props: ["activeState"],
   setup(props, { emit }) {
     const store = useStore();
+    const route = useRouter();
 
     let photoFile = ref("");
     let photoFileP = ref("");
@@ -197,13 +199,10 @@ export default {
           .then((res) => {
             console.log(res.data.status);
             if (res.data.status == "Success") {
-              showFlash.value = true;
-              this.$router.push({ path: "/menu" });
+              route.push({ path: "/menu" });
             }
           })
-          .catch((err) => {
-            showErrorFlash.value = true;
-          });
+          .catch((err) => {});
       });
     };
     onMounted(() => {

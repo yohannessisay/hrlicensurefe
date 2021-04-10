@@ -66,12 +66,14 @@
 import { ref, onMounted } from "vue";
 import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
 import { useStore } from "vuex";
+import { useRouter } from "vue-router";
 
 export default {
   components: { TitleWithIllustration },
   props: ["activeState"],
   setup(props, { emit }) {
     const store = useStore();
+    const route = useRouter();
 
     let COCFile = ref("");
     let COCFileP = ref("");
@@ -83,6 +85,19 @@ export default {
     let documentSpecs = ref([]);
     let userId = ref(2);
     let licenseInfo = ref("");
+
+    let photo = ref("");
+    let passport = ref("");
+    let healthExamCert = ref("");
+    let professionalDoc = ref("");
+    let professionalDocDiploma = ref("");
+    let professionalDocTranscript = ref("");
+    let herqa = ref("");
+    let englishLanguage = ref("");
+    let supportLetter = ref("");
+    let educationDoc = ref("");
+    let workExperience = ref("");
+    let serviceFee = ref("");
 
     const reset = () => {
       showUpload.value = true;
@@ -123,6 +138,18 @@ export default {
     buttons = store.getters["newlicense/getButtons"];
     documentSpecs = store.getters["newlicense/getDocumentSpec"];
     licenseInfo = store.getters["newlicense/getLicense"];
+
+    photo = store.getters["newlicense/getPhoto"];
+    passport = store.getters["newlicense/getPassport"];
+    englishLanguage = store.getters["newlicense/getEnglishLanguage"];
+    professionalDoc = store.getters["newlicense/getProfessionalDocuments"];
+    herqa = store.getters["newlicense/getHerqa"];
+    healthExamCert = store.getters["newlicense/getHealthExamCert"];
+    supportLetter = store.getters["newlicense/getSupportLetter"];
+    educationDoc = store.getters["newlicense/getEducationalDocuments"];
+    workExperience = store.getters["newlicense/getWorkExperience"];
+    serviceFee = store.getters["newlicense/getServiceFee"];
+
     const draft = (action) => {
       let license = {
         action: action,
@@ -135,8 +162,44 @@ export default {
           },
         },
       };
-      console.log(license);
+      store.dispatch("newlicense/addNewLicense", license).then((res) => {
+        let licenseId = res.data.data.id;
+        let formData = new FormData();
+        formData.append(documentSpecs[0].documentType.code, photo);
+        formData.append(documentSpecs[1].documentType.code, passport);
+        formData.append(documentSpecs[2].documentType.code, healthExamCert);
+        formData.append(documentSpecs[3].documentType.code, serviceFee);
+        formData.append(documentSpecs[4].documentType.code, workExperience);
+        formData.append(documentSpecs[5].documentType.code, englishLanguage);
+        formData.append(documentSpecs[6].documentType.code, professionalDoc);
+        formData.append(
+          documentSpecs[7].documentType.code,
+          professionalDocDiploma
+        );
+        formData.append(
+          documentSpecs[8].documentType.code,
+          professionalDocTranscript
+        );
+        formData.append(documentSpecs[9].documentType.code, COCFile);
+        // formData.append(this.documentTypes[10].documentType.code, photoFile);
+        // formData.append(this.documentTypes[11].documentType.code, photoFile);
+        // formData.append(this.documentTypes[12].documentType.code, photoFile);
+        // formData.append(this.documentTypes[13].documentType.code, photoFile);
+        // formData.append(this.documentTypes[14].documentType.code, photoFile);
+        formData.append(documentSpecs[15].documentType.code, supportLetter);
+        console.log(licenseId);
+        let payload = { document: formData, id: licenseId };
+        store
+          .dispatch("newlicense/uploadDocuments", payload)
+          .then((res) => {
+            if (res.data.status == "Success") {
+              route.push({ path: "/menu" });
+            }
+          })
+          .catch((err) => {});
+      });
     };
+
     onMounted(() => {
       buttons = store.getters["newlicense/getButtons"];
     });
