@@ -78,11 +78,11 @@ export default {
       return error;
     }
   },
-  async uploadDocuments(documents) {
+  async uploadDocuments({ commit }, documents) {
     try {
       const resp = await ApiService.post(
-        url + "newLicense/documentUploads",
-        documents,
+        url + "documentUploads/licenseDocument/" + documents.id,
+        documents.document,
         {
           headers: {
             "Content-Type": "multipart/form-data",

@@ -334,9 +334,9 @@ export default {
       getCoc: "newlicense/getCoc",
       getEducationalDocuments: "newlicense/getEducationalDocuments",
       getWorkExperience: "newlicense/getWorkExperience",
+      getServiceFee: "newlicense/getServiceFee",
       getButtons: "newlicense/getButtons",
       getApplicationId: "newlicense/getApplicationId",
-      getServiceFee: "newlicense/getServiceFee",
     }),
   },
   methods: {
@@ -360,33 +360,6 @@ export default {
       this.docs.push(this.serviceFeeFile);
     },
 
-    //  async submit() {
-    //   let file4 = {
-    //     serviceFee: this.serviceFeeFile,
-    //   };
-    //   let formData = new FormData();
-    //   formData.append("photo", this.photo);
-    //   formData.append("passport", this.passport);
-    //   formData.append("healthExamCert", this.healthExamCert);
-    //   formData.append("englishLanguage", this.englishLanguage);
-    //   formData.append("professionalDoc", this.professionalDoc);
-    //   formData.append("herqa", this.herqa);
-    //   formData.append("supportLetter", this.supportLetter);
-    //   formData.append("coc", this.getCoc);
-    //   formData.append("educationalDocuments", this.educationalDoc);
-    //   formData.append("workExperience", this.getWorkExperience);
-    //   formData.append("serviceFee", file4.serviceFee);
-    //   this.$store
-    //     .dispatch("newlicense/uploadDocuments", formData)
-    //     .then((res) => {
-    //       if (res.status === 200) {
-    //         this.$emit("changeActiveState");
-    //         this.$store.dispatch("newlicense/setDocs", res.data);
-    //       } else {
-    //         console.log("Error Occurred");
-    //       }
-    //     });
-    // },
     getDocumentSpecs() {
       const applicationId = this.getApplicationId;
       this.$store
