@@ -13,4 +13,5 @@ export default {
   getServiceFee: (state) => state.serviceFee,
   getButtons: (state) => state.buttons,
   getApplicationId: (state) => state.applicationId,
+  getDocumentSpec: (state) => state.documentSpec,
 };

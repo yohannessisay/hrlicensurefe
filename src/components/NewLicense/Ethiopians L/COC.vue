@@ -80,6 +80,9 @@ export default {
     let showUpload = ref(true);
     let isImage = ref(false);
     let buttons = [];
+    let documentSpecs = ref([]);
+    let userId = ref(2);
+    let licenseInfo = ref("");
 
     const reset = () => {
       showUpload.value = true;
@@ -117,8 +120,23 @@ export default {
       emit("changeActiveState");
       store.dispatch("newlicense/setCOC", COCFile);
     };
-    const draft = (action) => {};
     buttons = store.getters["newlicense/getButtons"];
+    documentSpecs = store.getters["newlicense/getDocumentSpec"];
+    licenseInfo = store.getters["newlicense/getLicense"];
+    const draft = (action) => {
+      let license = {
+        action: action,
+        data: {
+          applicantId: userId.value,
+          applicantTypeId: licenseInfo.applicantTypeId,
+          education: {
+            departmentId: licenseInfo.education.departmentId,
+            institutionId: licenseInfo.education.institutionId,
+          },
+        },
+      };
+      console.log(license);
+    };
     onMounted(() => {
       buttons = store.getters["newlicense/getButtons"];
     });

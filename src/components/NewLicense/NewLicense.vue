@@ -234,9 +234,8 @@ import ProfessionalDocumentForeigner from "./Foreigner/ProfessionalDocument";
 
 export default {
   created() {
-    this.fetchINIT();
+    this.fetchApplicationStatuses();
     this.fetchApplicationCategory();
-    this.fetchDocumentSpec();
   },
   data: () => ({
     activeState: 1,
@@ -270,7 +269,7 @@ export default {
   methods: {
     applicantTypeSet: function(params) {
       if (params == null || params == undefined || params == "") {
-        this.applicantType = 1;
+        this.applicantType = 3;
       } else {
         this.applicantType = params;
       }
@@ -278,12 +277,16 @@ export default {
     submit(n) {
       this.activeState = n;
     },
-    fetchINIT() {
+    fetchApplicationStatuses() {
       this.$store.dispatch("newlicense/getApplicationStatuses").then((res) => {
         const results = res.data.data;
         this.applicationStatuses = results;
         this.buttons = this.applicationStatuses[3].buttons;
         this.$store.dispatch("newlicense/setButtons", this.buttons);
+
+        // let appStatus = this.applicationStatuses.filter(function(applicationStatus){
+        //   return applicationStatus.code == "INIT";
+        // })
       });
     },
     fetchApplicationCategory() {
@@ -298,14 +301,21 @@ export default {
             }
           );
           this.applicationId = newApplicationData[0]["id"];
-          this.$store.dispatch("newlicense/setApplicationId", this.applicationId);
+          this.$store.dispatch(
+            "newlicense/setApplicationId",
+            this.applicationId
+          );
+          this.fetchDocumentSpec();
         });
     },
     fetchDocumentSpec() {
-      // this.$store.dispatch("newlicense/getDocumentSpecs", this.applicationId).then((res) => {
-      //   const results = res.data.data;
-      //   this.documentSpecs = results;
-      // });
+      this.$store.dispatch("newlicense/getDocumentSpecs", this.applicationId).then((res) => {
+        const results = res.data.data;
+        this.documentSpecs = results;
+        this.$store.dispatch("newlicense/setDocumentSpecs", this.documentSpecs).then((res) => {
+
+        });
+      });
     },
   },
 };

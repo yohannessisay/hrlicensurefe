@@ -2,7 +2,7 @@
   <div class="flex justify-center">
     <div class="w-screen max-w-4xl">
       <div
-        class="flex flex-col mt-large w-full bg-white blue-box-shadow-light rounded "
+        class="flex flex-col pt-large w-full bg-white blue-box-shadow-light rounded "
       >
         <TitleWithIllustration
           illustration="Certificate"
@@ -72,15 +72,22 @@ export default {
       showUpload: true,
       isImage: true,
       buttons: [],
+      documentSpec: [],
+      licenseInfo: "",
+      userId: 2,
     };
   },
   created() {
+    this.license = this.getLicense;
     this.buttons = this.getButtons;
+    this.documentSpec = this.getDocumentSpec;
   },
   computed: {
     ...mapGetters({
       getServiceFee: "newlicense/getServiceFee",
       getButtons: "newlicense/getButtons",
+      getLicense: "newlicense/getLicense",
+      getDocumentSpec: "newlicense/getDocumentSpec",
     }),
   },
 
@@ -119,6 +126,18 @@ export default {
       }
     },
     draft(action) {
+      let license = {
+        action: action,
+        data: {
+          applicantId: this.userId,
+          applicantTypeId: this.license.applicantTypeId,
+          education: {
+            institutionId: this.license.education.departmentId,
+            departmentId: this.license.education.institutionId,
+          },
+        },
+      };
+      console.log(license);
     },
     nextStep() {
       this.$emit("changeActiveState");

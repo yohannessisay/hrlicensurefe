@@ -1,9 +1,5 @@
 <template>
-  <div
-    v-if="this.show"
-    style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);"
-    class="ml-8 mt-8 mr-8 mb-12"
-  >
+  <div v-if="this.show">
     <div class="flex justify-center"><Title message="Summary" /></div>
     <div class="flex justify-start">
       <Title message="Personal Info" />
@@ -244,7 +240,7 @@
         finish later.
       </h6>
     </div>
-    <div class="flex justify-center mt-8 mb-8">
+    <div class="flex justify-center mt-8 ">
       <button variant="outline" @click="saveDraft(this.buttons[0].action)">
         {{ this.buttons[0].name }}
       </button>
@@ -271,12 +267,9 @@ export default {
     FlashMessage,
     ErrorFlashMessage,
   },
-  beforeCreate() {
-    // this.userId = +localStorage.getItem("userId");
-    this.userId = 1;
-  },
-
   async created() {
+    // this.userId = +localStorage.getItem("userId");
+    this.userId = 2;
     this.photo = this.getPhoto;
     this.passport = this.getPassport;
     this.healthExamCert = this.getHealthExamCert;
@@ -287,6 +280,7 @@ export default {
     this.coc = this.getCoc;
     this.educationalDoc = this.getEducationalDocuments;
     this.workExperience = this.getWorkExperience;
+    this.serviceFeeFile = this.getServiceFee;
     this.buttons = this.getButtons;
     this.fetchProfileInfo();
     this.setDocs();
@@ -324,6 +318,7 @@ export default {
     serviceFeeFile: "",
     applicationId: "",
     buttons: [],
+    documentTypes: [],
     docs: [],
   }),
   computed: {
@@ -341,17 +336,17 @@ export default {
       getWorkExperience: "newlicense/getWorkExperience",
       getButtons: "newlicense/getButtons",
       getApplicationId: "newlicense/getApplicationId",
+      getServiceFee: "newlicense/getServiceFee",
     }),
   },
   methods: {
     fetchProfileInfo() {
-      this.$store.dispatch("newlicense/getProfile").then((res) => {
+      this.$store.dispatch("newlicense/getProfile", this.userId).then((res) => {
         this.profileInfo = res.data.data;
         this.show = true;
       });
     },
     setDocs() {
-      console.log(this.photo);
       this.docs.push(this.photo);
       this.docs.push(this.passport);
       this.docs.push(this.healthExamCert);
@@ -362,6 +357,7 @@ export default {
       this.docs.push(this.coc);
       this.docs.push(this.educationalDoc);
       this.docs.push(this.workExperience);
+      this.docs.push(this.serviceFeeFile);
     },
 
     //  async submit() {
@@ -396,50 +392,66 @@ export default {
       this.$store
         .dispatch("newlicense/getDocumentSpecs", applicationId)
         .then((res) => {
-          console.log(res);
+          this.documentTypes = res.data.data;
         });
     },
 
-    async submitRequest() {
+    async submitRequest(act) {
+      let action = act;
       this.showFlash = false;
       this.showErrorFlash = false;
+      let formData = new FormData();
+      formData.append(this.documentTypes[0].documentType.code, this.photo);
+      formData.append(this.documentTypes[1].documentType.code, this.passport);
+      formData.append(
+        this.documentTypes[2].documentType.code,
+        this.healthExamCert
+      );
+      formData.append(
+        this.documentTypes[3].documentType.code,
+        this.serviceFeeFile
+      );
       let license = {
-        applicantId: this.applicantId,
-        applicantTypeId: this.applicantTypeId,
-        education: {
-          institutionId: this.education.departmentId,
-          departmentId: this.education.institutionId,
+        action: action,
+        data: {
+          applicantId: this.userId,
+          applicantTypeId: this.applicantTypeId,
+          education: {
+            institutionId: this.education.departmentId,
+            departmentId: this.education.institutionId,
+          },
         },
       };
-
-      for (let index = 0; index < this.docs.length; index++) {
-        const aDoc = this.docs[index];
-
-        if (aDoc.fieldName === "photo") {
-          license.photoId = aDoc.id;
-        } else if (aDoc.fieldName === "passport") {
-          license.passportId = aDoc.id;
-        } else if (aDoc.fieldName === "healthExamCert") {
-          license.healthExamCertId = aDoc.id;
-        } else if (aDoc.fieldName === "serviceFee") {
-          license.serviceFeeId = aDoc.id;
-        }
-      }
-      try {
+      this.$store.dispatch("newlicense/addNewLicense", license).then((res) => {
+        let licenseId = res.data.data.id;
+        let payload = { document: formData, id: licenseId };
         this.$store
-          .dispatch("newlicense/addNewLicense", license)
+          .dispatch("newlicense/uploadDocuments", payload)
           .then((res) => {
-            if (res.statusText == "Created") {
-              this.Success = true;
+            console.log(res.data.status);
+            if (res.data.status == "Success") {
               this.showFlash = true;
-              this.$router.push({ path: "/menu" });
+              // this.$router.push({ path: "/menu" });
             }
           })
           .catch((err) => {
-            this.Success = false;
             this.showErrorFlash = true;
           });
-      } catch (error) {}
+      });
+
+      // for (let index = 0; index < this.docs.length; index++) {
+      //   const aDoc = this.docs[index];
+
+      //   if (aDoc.fieldName === "photo") {
+      //     license.photoId = aDoc.id;
+      //   } else if (aDoc.fieldName === "passport") {
+      //     license.passportId = aDoc.id;
+      //   } else if (aDoc.fieldName === "healthExamCert") {
+      //     license.healthExamCertId = aDoc.id;
+      //   } else if (aDoc.fieldName === "serviceFee") {
+      //     license.serviceFeeId = aDoc.id;
+      //   }
+      // }
     },
   },
   mounted() {

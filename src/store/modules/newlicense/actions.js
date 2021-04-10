@@ -14,6 +14,7 @@ import {
   SET_WORK_EXPERIENCE,
   SET_BUTTONS,
   SET_APPLICATION_ID,
+  SET_DOCUMENT_SPEC,
   ADD_PROFILE_LOADING,
   ADD_PROFILE_SUCCESS,
   ADD_PROFILE_ERROR,
@@ -64,8 +65,10 @@ export default {
     commit(SET_BUTTONS, buttons);
   },
   setApplicationId({ commit }, id) {
-    console.log(id);
     commit(SET_APPLICATION_ID, id);
+  },
+  setDocumentSpecs({ commit }, documentSpecs) {
+    commit(SET_DOCUMENT_SPEC, documentSpecs);
   },
   async addNewLicense({ commit }, license) {
     try {

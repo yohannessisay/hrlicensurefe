@@ -1,16 +1,16 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Home from "../views/Home.vue";
+import Landing from "../components/Landing/Landing.vue";
 const routes = [
   {
     path: "/",
-    name: "Home",
-    component: Home,
-  },
-  {
-    path: "/landing",
     name: "Landing",
-    component: () => import("../components/Landing/Landing.vue"),
+    component: Landing,
   },
+  // {
+  //   path: "/landing",
+  //   name: "Landing",
+  //   component: () => import("../components/Landing/Landing.vue"),
+  // },
   {
     path: "/addProfile",
     name: "NewProfile",
@@ -78,9 +78,9 @@ const routes = [
   },
 
   {
-    path: "/detail",
-    name: "detail",
-    component: () => import("../components/NewLicense/LicenseSummary.vue"),
+    path: "/evaluate",
+    name: "evaluate",
+    component: () => import("../components/Reviewer/Evaluate.vue"),
   },
 ];
 

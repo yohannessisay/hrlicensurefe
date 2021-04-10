@@ -48,18 +48,19 @@
               </h6>
             </div>
           </div>
-
-          <div class="flex justify-center mb-8 mt-medium">
-            <div>
-              <button>Next</button>
-            </div>
-            <div>
-              <button variant="outline">
-                Finish Later
-              </button>
-            </div>
-          </div>
         </form>
+        <div v-if="buttons" class="flex justify-center mb-8">
+          <button @click="submit">
+            Next
+          </button>
+          <button
+            class="buttons[0].class"
+            @click="draft(buttons[0].action)"
+            variant="outline"
+          >
+            {{ buttons[0].name }}
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -83,6 +84,9 @@ export default {
     let showUpload = ref(true);
     let isImage = ref(false);
     let buttons = [];
+    let documentSpecs = ref([]);
+    let userId = ref(2);
+    let licenseInfo = ref("");
 
     const reset = () => {
       showUpload.value = true;
@@ -120,8 +124,23 @@ export default {
       emit("changeActiveState");
       store.dispatch("newlicense/setLanguage", languageFile);
     };
-    const draft = (action) => {};
     buttons = store.getters["newlicense/getButtons"];
+    documentSpecs = store.getters["newlicense/getDocumentSpec"];
+    licenseInfo = store.getters["newlicense/getLicense"];
+    const draft = (action) => {
+      let license = {
+        action: action,
+        data: {
+          applicantId: userId.value,
+          applicantTypeId: licenseInfo.applicantTypeId,
+          education: {
+            departmentId: licenseInfo.education.departmentId,
+            institutionId: licenseInfo.education.institutionId,
+          },
+        },
+      };
+      console.log(license);
+    };
     onMounted(() => {
       const languageFile = store.getters["newlicense/getEnglishLanguage"];
       buttons = store.getters["newlicense/getButtons"];

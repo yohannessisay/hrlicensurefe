@@ -19,6 +19,7 @@ export default {
     serviceFee: "",
     buttons: [],
     applicationId: 0,
+    documentSpec: [],
     addProfileLoading: false,
     addProfileSuccess: false,
     addProfileError: false,

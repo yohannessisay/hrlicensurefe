@@ -84,6 +84,9 @@ export default {
     let showUpload = ref(true);
     let isImage = ref(false);
     let buttons = ref([]);
+    let documentSpecs = ref([]);
+    let userId = ref(2);
+    let licenseInfo = ref("");
 
     const reset = () => {
       showUpload.value = true;
@@ -117,12 +120,44 @@ export default {
         }
       }
     };
+    buttons = store.getters["newlicense/getButtons"];
+    documentSpecs = store.getters["newlicense/getDocumentSpec"];
+    licenseInfo = store.getters["newlicense/getLicense"];
+
     const submit = () => {
       emit("changeActiveState");
       store.dispatch("newlicense/setPhoto", photoFile);
     };
-    const draft = (action) => {};
-    buttons = store.getters["newlicense/getButtons"];
+    const draft = (action) => {
+      let license = {
+        action: action,
+        data: {
+          applicantId: userId.value,
+          applicantTypeId: licenseInfo.applicantTypeId,
+          education: {
+            departmentId: licenseInfo.education.departmentId,
+            institutionId: licenseInfo.education.institutionId,
+          },
+        },
+      };
+      store.dispatch("newlicense/addNewLicense", license).then((res) => {
+        let licenseId = res.data.data.id;
+        console.log(licenseId);
+        // let payload = { document: formData, id: licenseId };
+        // this.$store
+        //   .dispatch("newlicense/uploadDocuments", payload)
+        //   .then((res) => {
+        //     console.log(res.data.status);
+        //     if (res.data.status == "Success") {
+        //       this.showFlash = true;
+        //       // this.$router.push({ path: "/menu" });
+        //     }
+        //   })
+        //   .catch((err) => {
+        //     this.showErrorFlash = true;
+        //   });
+      });
+    };
 
     onMounted(() => {
       buttons = store.getters["newlicense/getButtons"];

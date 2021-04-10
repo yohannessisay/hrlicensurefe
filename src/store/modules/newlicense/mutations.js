@@ -13,6 +13,7 @@ import {
   SET_SERVICE_FEE,
   SET_BUTTONS,
   SET_APPLICATION_ID,
+  SET_DOCUMENT_SPEC,
   ADD_PROFILE_LOADING,
   ADD_PROFILE_SUCCESS,
   ADD_PROFILE_ERROR,
@@ -60,6 +61,9 @@ export default {
   },
   [SET_APPLICATION_ID](state, id) {
     state.applicationId = id;
+  },
+  [SET_DOCUMENT_SPEC](state, documentSpec){
+    state.documentSpec = documentSpec;
   },
   [ADD_PROFILE_LOADING](state) {
     state.addProfileLoading = true;

@@ -216,17 +216,23 @@ export default {
 
       buttons: [],
       showButtons: false,
+      documentSpec: [],
+      licenseInfo: "",
+      userId: 2,
     };
   },
   computed: {
     ...mapGetters({
       getPersonalDoc: "newlicense/getProfessionalDocuments",
       getButtons: "newlicense/getButtons",
+      getLicense: "newlicense/getLicense",
+      getDocumentSpec: "newlicense/getDocumentSpec",
     }),
   },
   created() {
     this.license = this.getLicense;
     this.buttons = this.getButtons;
+    this.documentSpec = this.getDocumentSpec;
   },
   methods: {
     ...mapActions(["setProfessionalDoc"]),
@@ -365,7 +371,18 @@ export default {
       this.$store.dispatch("newlicense/setProfessionalDoc", file);
     },
     draft(action) {
-      console.log(action);
+      let license = {
+        action: action,
+        data: {
+          applicantId: this.userId,
+          applicantTypeId: this.license.applicantTypeId,
+          education: {
+            institutionId: this.license.education.departmentId,
+            departmentId: this.license.education.institutionId,
+          },
+        },
+      };
+      console.log(license);
     },
   },
 };

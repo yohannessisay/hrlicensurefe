@@ -57,7 +57,7 @@
             />
           </router-link>
           <h2 class="text-md AtkinsonHyperlegibleBold text-primary-600 ml-2 ">
-            HRIS - license
+            HRIS - License
           </h2>
         </div>
 

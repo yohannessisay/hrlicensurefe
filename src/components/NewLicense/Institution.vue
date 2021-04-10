@@ -96,7 +96,7 @@ export default {
   },
   data: () => ({
     licenseInfo: {
-      applicantId: localStorage.getItem("userId"),
+      applicantId: 2,
       applicantTypeId: "",
       education: {
         departmentId: "",
@@ -112,7 +112,17 @@ export default {
 
   methods: {
     draft(action) {
-      console.log(action);
+      let license = {
+        action: action,
+        data: {
+          applicantId: this.licenseInfo.applicantId,
+          applicantTypeId: this.licenseInfo.applicantTypeId,
+          education: {
+            departmentId: this.licenseInfo.education.departmentId,
+            institutionId: this.licenseInfo.education.institutionId,
+          },
+        },
+      };
     },
     submit() {
       this.$emit("changeActiveState");
