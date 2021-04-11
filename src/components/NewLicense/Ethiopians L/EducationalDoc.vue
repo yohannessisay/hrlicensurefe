@@ -1,6 +1,6 @@
 <template>
   <div class="flex justify-center">
-    <div class="w-screen max-w-6xl">
+    <div class="w-screen max-w-full">
       <div
         class="flex flex-col pt-large w-full bg-white blue-box-shadow-light rounded "
       >
@@ -9,173 +9,213 @@
           message="Educational Documents"
           class="mt-8"
         />
-        <form @submit.prevent="submit" class="mx-auto mt-6">
-          <div class="flex justify-center">
-            <div class="ml-4" style="width:220px">
-              <span v-if="showCertificate1Upload">
-                <label class="text-primary-700"
-                  >Upload 8th Grade Certificate:
-                  <div class="dropbox">
-                    <input
-                      type="file"
-                      id="certificateFile1"
-                      ref="certificateFile1"
-                      v-on:change="handleCertificate1Upload()"
-                      style="margin-bottom: 15px !important;"
-                    />
-                    <p>
-                      Drag your file(s) here to begin<br />
-                      or click to browse
-                    </p>
-                  </div>
-                </label>
-              </span>
+        <div class="flex-row justify-center">
+          <div class="ml-4" style="width:220px">
+            <span v-if="showCertificate1Upload">
+              <label class="text-primary-700"
+                >Upload 8th Grade Certificate:
+                <div class="dropbox">
+                  <input
+                    type="file"
+                    id="certificateFile1"
+                    ref="certificateFile1"
+                    v-on:change="handleCertificate1Upload()"
+                    style="margin-bottom: 15px !important;"
+                  />
+                  <p>
+                    Drag your file(s) here to begin<br />
+                    or click to browse
+                  </p>
+                </div>
+              </label>
+            </span>
 
-              <picture v-if="!showCertificate1Upload && isCertificate1">
-                <p>
-                  <a href="javascript:void(0)" @click="resetCert1()"
-                    >Upload again</a
-                  >
-                </p>
-                <img
-                  v-bind:src="certificate1Preview"
-                  v-show="showCertificate1Preview"
-                />
-              </picture>
+            <picture v-if="!showCertificate1Upload && isCertificate1">
+              <p>
+                <a href="javascript:void(0)" @click="resetCert1()"
+                  >Upload again</a
+                >
+              </p>
+              <img
+                v-bind:src="certificate1Preview"
+                v-show="showCertificate1Preview"
+              />
+            </picture>
 
-              <span v-if="!showCertificate1Upload && !isCertificate1">
-                <img :src="certificate1Preview" alt="" class="preview" />
-              </span>
+            <span v-if="!showCertificate1Upload && !isCertificate1">
+              <img :src="certificate1Preview" alt="" class="preview" />
+            </span>
 
-              <h6 style="margin-top: 15px !important;">
-                Your photo should be passport size
-              </h6>
-            </div>
-
-            <div class="ml-4" style="width:220px">
-              <span v-if="showCertificate2Upload">
-                <label class="text-primary-700"
-                  >Upload 10th Grade Certificate:
-                  <div class="dropbox">
-                    <input
-                      type="file"
-                      id="certificateFile2"
-                      ref="certificateFile2"
-                      v-on:change="handleCertificate2Upload()"
-                      style="margin-bottom: 15px !important;"
-                    />
-                    <p>
-                      Drag your file(s) here to begin<br />
-                      or click to browse
-                    </p>
-                  </div>
-                </label>
-              </span>
-
-              <picture v-if="!showCertificate2Upload && isCertificate2">
-                <p>
-                  <a href="javascript:void(0)" @click="resetCert2()"
-                    >Upload again</a
-                  >
-                </p>
-                <img
-                  v-bind:src="certificate2Preview"
-                  v-show="showCertificate2Preview"
-                />
-              </picture>
-
-              <span v-if="!showCertificate2Upload && !isCertificate2">
-                <img :src="certificate2Preview" alt="" class="preview" />
-              </span>
-
-              <h6 style="margin-top: 15px !important;">
-                Your photo should be passport size
-              </h6>
-            </div>
-
-            <div class="ml-4" style="width:220px">
-              <span v-if="showCertificate3Upload">
-                <label class="text-primary-700"
-                  >Upload 12th Grade Certificate:
-                  <div class="dropbox">
-                    <input
-                      type="file"
-                      id="certificateFile3"
-                      ref="certificateFile3"
-                      v-on:change="handleCertificate3Upload()"
-                      style="margin-bottom: 15px !important;"
-                    />
-                    <p>
-                      Drag your file(s) here to begin<br />
-                      or click to browse
-                    </p>
-                  </div>
-                </label>
-              </span>
-
-              <picture v-if="!showCertificate3Upload && isCertificate3">
-                <p>
-                  <a href="javascript:void(0)" @click="resetCert3()"
-                    >Upload again</a
-                  >
-                </p>
-                <img
-                  v-bind:src="certificate3Preview"
-                  v-show="showCertificate3Preview"
-                />
-              </picture>
-
-              <span v-if="!showCertificate3Upload && !isCertificate3">
-                <img :src="certificate3Preview" alt="" class="preview" />
-              </span>
-
-              <h6 style="margin-top: 15px !important;">
-                Your photo should be passport size
-              </h6>
-            </div>
-
-            <div class="ml-4" style="width:220px">
-              <span v-if="showCertificate4Upload">
-                <label class="text-primary-700"
-                  >Upload Transcript:
-                  <div class="dropbox">
-                    <input
-                      type="file"
-                      id="certificateFile4"
-                      ref="certificateFile4"
-                      v-on:change="handleCertificate4Upload()"
-                      style="margin-bottom: 15px !important;"
-                    />
-                    <p>
-                      Drag your file(s) here to begin<br />
-                      or click to browse
-                    </p>
-                  </div>
-                </label>
-              </span>
-
-              <picture v-if="!showCertificate4Upload && isCertificate4">
-                <p>
-                  <a href="javascript:void(0)" @click="resetCert4()"
-                    >Upload again</a
-                  >
-                </p>
-                <img
-                  v-bind:src="certificate4Preview"
-                  v-show="showCertificate4Preview"
-                />
-              </picture>
-
-              <span v-if="!showCertificate4Upload && !isCertificate4">
-                <img :src="certificate4Preview" alt="" class="preview" />
-              </span>
-
-              <h6 style="margin-top: 15px !important;">
-                Your photo should be passport size
-              </h6>
-            </div>
+            <h6 style="margin-top: 15px !important;">
+              Your photo should be passport size
+            </h6>
           </div>
-        </form>
+
+          <div class="ml-4" style="width:220px">
+            <span v-if="showCertificate2Upload">
+              <label class="text-primary-700"
+                >Upload 10th Grade Certificate:
+                <div class="dropbox">
+                  <input
+                    type="file"
+                    id="certificateFile2"
+                    ref="certificateFile2"
+                    v-on:change="handleCertificate2Upload()"
+                    style="margin-bottom: 15px !important;"
+                  />
+                  <p>
+                    Drag your file(s) here to begin<br />
+                    or click to browse
+                  </p>
+                </div>
+              </label>
+            </span>
+
+            <picture v-if="!showCertificate2Upload && isCertificate2">
+              <p>
+                <a href="javascript:void(0)" @click="resetCert2()"
+                  >Upload again</a
+                >
+              </p>
+              <img
+                v-bind:src="certificate2Preview"
+                v-show="showCertificate2Preview"
+              />
+            </picture>
+
+            <span v-if="!showCertificate2Upload && !isCertificate2">
+              <img :src="certificate2Preview" alt="" class="preview" />
+            </span>
+
+            <h6 style="margin-top: 15px !important;">
+              Your photo should be passport size
+            </h6>
+          </div>
+
+          <div class="ml-4" style="width:220px">
+            <span v-if="showCertificate3Upload">
+              <label class="text-primary-700"
+                >Upload 12th Grade Certificate:
+                <div class="dropbox">
+                  <input
+                    type="file"
+                    id="certificateFile3"
+                    ref="certificateFile3"
+                    v-on:change="handleCertificate3Upload()"
+                    style="margin-bottom: 15px !important;"
+                  />
+                  <p>
+                    Drag your file(s) here to begin<br />
+                    or click to browse
+                  </p>
+                </div>
+              </label>
+            </span>
+
+            <picture v-if="!showCertificate3Upload && isCertificate3">
+              <p>
+                <a href="javascript:void(0)" @click="resetCert3()"
+                  >Upload again</a
+                >
+              </p>
+              <img
+                v-bind:src="certificate3Preview"
+                v-show="showCertificate3Preview"
+              />
+            </picture>
+
+            <span v-if="!showCertificate3Upload && !isCertificate3">
+              <img :src="certificate3Preview" alt="" class="preview" />
+            </span>
+
+            <h6 style="margin-top: 15px !important;">
+              Your photo should be passport size
+            </h6>
+          </div>
+
+          <div class="ml-4" style="width:220px">
+            <span v-if="showCertificate4Upload">
+              <label class="text-primary-700"
+                >Upload Transcript 9-10:
+                <div class="dropbox">
+                  <input
+                    type="file"
+                    id="certificateFile4"
+                    ref="certificateFile4"
+                    v-on:change="handleCertificate4Upload()"
+                    style="margin-bottom: 15px !important;"
+                  />
+                  <p>
+                    Drag your file(s) here to begin<br />
+                    or click to browse
+                  </p>
+                </div>
+              </label>
+            </span>
+
+            <picture v-if="!showCertificate4Upload && isCertificate4">
+              <p>
+                <a href="javascript:void(0)" @click="resetCert4()"
+                  >Upload again</a
+                >
+              </p>
+              <img
+                v-bind:src="certificate4Preview"
+                v-show="showCertificate4Preview"
+              />
+            </picture>
+
+            <span v-if="!showCertificate4Upload && !isCertificate4">
+              <img :src="certificate4Preview" alt="" class="preview" />
+            </span>
+
+            <h6 style="margin-top: 15px !important;">
+              Your photo should be passport size
+            </h6>
+          </div>
+
+          <div class="ml-4" style="width:220px">
+            <span v-if="showCertificate5Upload">
+              <label class="text-primary-700"
+                >Upload Transcript 11-12:
+                <div class="dropbox">
+                  <input
+                    type="file"
+                    id="certificateFile5"
+                    ref="certificateFile5"
+                    v-on:change="handleCertificate5Upload()"
+                    style="margin-bottom: 15px !important;"
+                  />
+                  <p>
+                    Drag your file(s) here to begin<br />
+                    or click to browse
+                  </p>
+                </div>
+              </label>
+            </span>
+
+            <picture v-if="!showCertificate5Upload && isCertificate5">
+              <p>
+                <a href="javascript:void(0)" @click="resetCert5()"
+                  >Upload again</a
+                >
+              </p>
+              <img
+                v-bind:src="certificate5Preview"
+                v-show="showCertificate5Preview"
+              />
+            </picture>
+
+            <span v-if="!showCertificate5Upload && !isCertificate5">
+              <img :src="certificate5Preview" alt="" class="preview" />
+            </span>
+
+            <h6 style="margin-top: 15px !important;">
+              Your photo should be passport size
+            </h6>
+          </div>
+        </div>
+
         <div class="flex justify-center mb-8">
           <button @click="submit">
             Next
@@ -221,6 +261,12 @@ export default {
       certificate4Preview: "",
       showCertificate4Upload: true,
       isCertificate4: true,
+
+      certificateFile5: "",
+      showCertificate5Preview: false,
+      certificate5Preview: "",
+      showCertificate5Upload: true,
+      isCertificate5: true,
 
       buttons: [],
       documentSpec: [],
@@ -271,6 +317,13 @@ export default {
       this.certificateFile4 = "";
       this.certificate4Preview = "";
       this.isCertificate4 = true;
+    },
+    resetCert5() {
+      this.showCertificate5Upload = true;
+      this.showCertificate5Preview = false;
+      this.certificateFile5 = "";
+      this.certificate5Preview = "";
+      this.isCertificate5 = true;
     },
     handleCertificate1Upload() {
       this.showCertificate1Upload = false;
@@ -348,8 +401,8 @@ export default {
     },
 
     handleCertificate4Upload() {
-      this.showExperienceUpload = false;
-      this.experienceFile = this.$refs.experienceFile.files[0];
+      this.showCertificate4Upload = false;
+      this.certificateFile4 = this.$refs.certificateFile4.files[0];
       let reader = new FileReader();
 
       reader.addEventListener(
@@ -370,14 +423,40 @@ export default {
         }
       }
     },
+
+    handleCertificate5Upload() {
+      this.showCertificate5Upload = false;
+      this.certificateFile5 = this.$refs.certificateFile5.files[0];
+      let reader = new FileReader();
+
+      reader.addEventListener(
+        "load",
+        function() {
+          this.showCertificate5Preview = true;
+          this.certificate5Preview = reader.result;
+        }.bind(this),
+        false
+      );
+      if (this.certificateFile5) {
+        if (/\.(jpe?g|png|gif)$/i.test(this.certificateFile5.name)) {
+          this.isCertificate5 = true;
+          reader.readAsDataURL(this.certificateFile5);
+        } else if (/\.(pdf)$/i.test(this.certificateFile5.name)) {
+          this.isCertificate5 = false;
+          reader.readAsText(this.certificateFile5);
+        }
+      }
+    },
     submit() {
-      this.$emit("changeActiveState");
+      // this.$emit("changeActiveState");
       let file = [
         this.certificateFile1,
         this.certificateFile2,
         this.certificateFile3,
         this.certificateFile4,
+        this.certificateFile5,
       ];
+
       this.$store.dispatch("newlicense/setProfessionalDoc", file);
     },
     draft(action) {

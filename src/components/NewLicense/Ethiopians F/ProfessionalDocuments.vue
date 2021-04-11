@@ -1,6 +1,6 @@
 <template>
   <div class="flex justify-center">
-    <div class="w-screen max-w-6xl">
+    <div class="w-screen max-w-full">
       <div
         class="flex flex-col pt-large w-full bg-white blue-box-shadow-light rounded "
       >
@@ -9,12 +9,11 @@
           message="Professional Documents"
           class="mt-8"
         />
-        <form @submit.prevent="submit" class="mx-auto mt-6">
-          <div class="flex justify-center">
-            <div class="ml-4" style="width:220px">
+          <div class="flex-row justify-center">
+            <div class="ml-4" style="width:250px">
               <span v-if="showUpload">
                 <label class="text-primary-700"
-                  >Upload Certificate:
+                  >Professional Document:
                   <div class="dropbox">
                     <input
                       type="file"
@@ -47,7 +46,7 @@
               </h6>
             </div>
 
-            <div class="ml-4" style="width:220px">
+            <div class="ml-4" style="width:250px">
               <span v-if="showDiplomaUpload">
                 <label class="text-primary-700"
                   >Upload Diploma:
@@ -85,7 +84,7 @@
               </h6>
             </div>
 
-            <div class="ml-4" style="width:220px">
+            <div class="ml-4" style="width:250px">
               <span v-if="showTranscriptUpload">
                 <label class="text-primary-700"
                   >Upload Transcript:
@@ -125,7 +124,7 @@
                 Your photo should be passport size
               </h6>
             </div>
-
+<!-- 
             <div class="ml-4" style="width:220px">
               <span v-if="showExperienceUpload">
                 <label class="text-primary-700"
@@ -165,9 +164,8 @@
               <h6 style="margin-top: 15px !important;">
                 Your photo should be passport size
               </h6>
-            </div>
+            </div> -->
           </div>
-        </form>
         <div class="flex justify-center mb-8">
           <button @click="submit">
             Next
@@ -208,11 +206,11 @@ export default {
       showTranscriptUpload: true,
       isTranscriptImage: true,
 
-      experienceFile: "",
-      showExperiencePreview: false,
-      experiencePreview: "",
-      showExperienceUpload: true,
-      isExperienceImage: true,
+      // experienceFile: "",
+      // showExperiencePreview: false,
+      // experiencePreview: "",
+      // showExperienceUpload: true,
+      // isExperienceImage: true,
 
       buttons: [],
       showButtons: false,
@@ -258,13 +256,13 @@ export default {
       this.transcriptPreview = "";
       this.isTranscriptImage = true;
     },
-    resetExperience() {
-      this.showExperienceUpload = true;
-      this.showExperiencePreview = false;
-      this.experienceFile = "";
-      this.experiencePreview = "";
-      this.isExperienceImage = true;
-    },
+    // resetExperience() {
+    //   this.showExperienceUpload = true;
+    //   this.showExperiencePreview = false;
+    //   this.experienceFile = "";
+    //   this.experiencePreview = "";
+    //   this.isExperienceImage = true;
+    // },
     handleCertificateUpload() {
       this.showUpload = false;
       this.photoFile = this.$refs.photoFile.files[0];
@@ -337,36 +335,35 @@ export default {
         }
       }
     },
-    handleExperienceUpload() {
-      this.showExperienceUpload = false;
-      this.experienceFile = this.$refs.experienceFile.files[0];
-      let reader = new FileReader();
+    // handleExperienceUpload() {
+    //   this.showExperienceUpload = false;
+    //   this.experienceFile = this.$refs.experienceFile.files[0];
+    //   let reader = new FileReader();
 
-      reader.addEventListener(
-        "load",
-        function() {
-          this.showExperiencePreview = true;
-          this.experiencePreview = reader.result;
-        }.bind(this),
-        false
-      );
-      if (this.experienceFile) {
-        if (/\.(jpe?g|png|gif)$/i.test(this.experienceFile.name)) {
-          this.isExperienceImage = true;
-          reader.readAsDataURL(this.experienceFile);
-        } else if (/\.(pdf)$/i.test(this.experienceFile.name)) {
-          this.isExperienceImage = false;
-          reader.readAsText(this.experienceFile);
-        }
-      }
-    },
+    //   reader.addEventListener(
+    //     "load",
+    //     function() {
+    //       this.showExperiencePreview = true;
+    //       this.experiencePreview = reader.result;
+    //     }.bind(this),
+    //     false
+    //   );
+    //   if (this.experienceFile) {
+    //     if (/\.(jpe?g|png|gif)$/i.test(this.experienceFile.name)) {
+    //       this.isExperienceImage = true;
+    //       reader.readAsDataURL(this.experienceFile);
+    //     } else if (/\.(pdf)$/i.test(this.experienceFile.name)) {
+    //       this.isExperienceImage = false;
+    //       reader.readAsText(this.experienceFile);
+    //     }
+    //   }
+    // },
     submit() {
       this.$emit("changeActiveState");
       let file = [
         this.photoFile,
         this.diplomaFile,
         this.transcriptFile,
-        this.experienceFile,
       ];
       this.$store.dispatch("newlicense/setProfessionalDoc", file);
     },

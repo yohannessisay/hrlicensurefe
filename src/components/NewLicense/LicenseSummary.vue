@@ -374,16 +374,47 @@ export default {
       this.showFlash = false;
       this.showErrorFlash = false;
       let formData = new FormData();
-      formData.append(this.documentTypes[0].documentType.code, this.photo);
-      formData.append(this.documentTypes[1].documentType.code, this.passport);
+      formData.append(this.documentSpec[0].documentType.code, this.photo);
+      formData.append(this.documentSpec[1].documentType.code, this.passport);
       formData.append(
-        this.documentTypes[2].documentType.code,
+        this.documentSpec[2].documentType.code,
         this.healthExamCert
       );
       formData.append(
-        this.documentTypes[3].documentType.code,
+        this.documentSpec[3].documentType.code,
         this.serviceFeeFile
       );
+      formData.append(
+        this.documentSpec[4].documentType.code,
+        this.workExperience
+      );
+      formData.append(
+        this.documentSpec[5].documentType.code,
+        this.englishLanguage
+      );
+      formData.append(
+        this.documentSpec[6].documentType.code,
+        this.professionalDoc
+      );
+      formData.append(
+        this.documentSpec[7].documentType.code,
+        this.professionalDocDiploma
+      );
+      formData.append(
+        this.documentSpec[8].documentType.code,
+        this.professionalDocTranscript
+      );
+      formData.append(this.documentSpec[9].documentType.code, this.coc);
+      // formData.append(this.documentSpec[10].documentType.code, photoFile);
+      // formData.append(this.documentSpec[11].documentType.code, photoFile);
+      // formData.append(this.documentSpec[12].documentType.code, photoFile);
+      // formData.append(this.documentSpec[13].documentType.code, photoFile);
+      // formData.append(this.documentSpec[14].documentType.code, photoFile);
+      formData.append(
+        this.documentSpec[15].documentType.code,
+        this.supportLetter
+      );
+
       let license = {
         action: action,
         data: {

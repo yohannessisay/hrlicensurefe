@@ -73,21 +73,58 @@ export default {
       isImage: true,
       buttons: [],
       documentSpec: [],
-      licenseInfo: "",
       userId: 2,
+      license: "",
+
+      photo: "",
+      passport: "",
+      healthExamCert: "",
+      workExperience: "",
+      englishLanguage: "",
+      professionalDoc: "",
+      herqa: "",
+      educationalDocs: "",
+      professionalDocDiploma: "",
+      professionalDocTranscript: "",
+      coc: "",
+      supportLetter: "",
     };
   },
   created() {
     this.license = this.getLicense;
     this.buttons = this.getButtons;
     this.documentSpec = this.getDocumentSpec;
+
+    this.photo = this.getPhoto;
+    this.passport = this.getPassport;
+    this.healthExamCert = this.getHealthExamCert;
+    this.englishLanguage = this.getEnglishLanguage;
+    this.professionalDoc = this.getProfessionalDocuments;
+    this.herqa = this.getHerqa;
+    this.supportLetter = this.getSupportLetter;
+    this.coc = this.getCoc;
+    this.educationalDocs = this.getEducationalDocuments;
+    this.workExperience = this.getWorkExperience;
+
   },
   computed: {
     ...mapGetters({
-      getServiceFee: "newlicense/getServiceFee",
       getButtons: "newlicense/getButtons",
       getLicense: "newlicense/getLicense",
       getDocumentSpec: "newlicense/getDocumentSpec",
+
+      getPhoto: "newlicense/getPhoto",
+      getPassport: "newlicense/getPassport",
+      getHealthExamCert: "newlicense/getHealthExamCert",
+      getEnglishLanguage: "newlicense/getEnglishLanguage",
+      getProfessionalDocuments: "newlicense/getProfessionalDocuments",
+      getHerqa: "newlicense/getHerqa",
+      getSupportLetter: "newlicense/getSupportLetter",
+      getCoc: "newlicense/getCoc",
+      getEducationalDocuments: "newlicense/getEducationalDocuments",
+      getWorkExperience: "newlicense/getWorkExperience",
+      getServiceFee: "newlicense/getServiceFee",
+
     }),
   },
 
@@ -137,7 +174,48 @@ export default {
           },
         },
       };
-      console.log(license);
+      this.$store.dispatch("newlicense/addNewLicense", license).then((res) => {
+        let licenseId = res.data.data.id;
+        let formData = new FormData();
+        formData.append(this.documentSpec[0].documentType.code, this.photo);
+        formData.append(this.documentSpec[1].documentType.code, this.passport);
+        formData.append(this.documentSpec[2].documentType.code, this.healthExamCert);
+        formData.append(this.documentSpec[3].documentType.code, this.serviceFeeFile);
+        formData.append(this.documentSpec[4].documentType.code, this.workExperience);
+        formData.append(
+          this.documentSpec[5].documentType.code,
+          this.englishLanguage
+        );
+        formData.append(
+          this.documentSpec[6].documentType.code,
+          this.professionalDoc
+        );
+        formData.append(
+          this.documentSpec[7].documentType.code,
+          this.professionalDocDiploma
+        );
+        formData.append(
+          this.documentSpec[8].documentType.code,
+          this.professionalDocTranscript
+        );
+        formData.append(this.documentSpec[9].documentType.code, this.coc);
+        // formData.append(this.documentSpec[10].documentType.code, photoFile);
+        // formData.append(this.documentSpec[11].documentType.code, photoFile);
+        // formData.append(this.documentSpec[12].documentType.code, photoFile);
+        // formData.append(this.documentSpec[13].documentType.code, photoFile);
+        // formData.append(this.documentSpec[14].documentType.code, photoFile);
+        formData.append(this.documentSpec[15].documentType.code, this.supportLetter);
+
+        let payload = { document: formData, id: licenseId };
+        this.$store
+          .dispatch("newlicense/uploadDocuments", payload)
+          .then((res) => {
+            if (res.data.status == "Success") {
+              this.$router.push({ path: "/menu" });
+            }
+          })
+          .catch((err) => {});
+      });
     },
     nextStep() {
       this.$emit("changeActiveState");

@@ -96,7 +96,7 @@ export default {
     let professionalDoc = ref("");
     let professionalDocDiploma = ref("");
     let professionalDocTranscript = ref("");
-    let herqa = ref("");
+    let englishLanguage = ref("");
     let supportLetter = ref("");
     let coc = ref("");
     let educationDoc = ref("");
