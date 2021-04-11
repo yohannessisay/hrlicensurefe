@@ -81,11 +81,9 @@ export default {
       healthExamCert: "",
       workExperience: "",
       englishLanguage: "",
-      professionalDoc: "",
+      professionalDoc: [],
       herqa: "",
-      educationalDocs: "",
-      professionalDocDiploma: "",
-      professionalDocTranscript: "",
+      educationalDocs: [],
       coc: "",
       supportLetter: "",
     };
@@ -94,7 +92,6 @@ export default {
     this.license = this.getLicense;
     this.buttons = this.getButtons;
     this.documentSpec = this.getDocumentSpec;
-
     this.photo = this.getPhoto;
     this.passport = this.getPassport;
     this.healthExamCert = this.getHealthExamCert;
@@ -105,7 +102,6 @@ export default {
     this.coc = this.getCoc;
     this.educationalDocs = this.getEducationalDocuments;
     this.workExperience = this.getWorkExperience;
-
   },
   computed: {
     ...mapGetters({
@@ -123,8 +119,6 @@ export default {
       getCoc: "newlicense/getCoc",
       getEducationalDocuments: "newlicense/getEducationalDocuments",
       getWorkExperience: "newlicense/getWorkExperience",
-      getServiceFee: "newlicense/getServiceFee",
-
     }),
   },
 
@@ -179,32 +173,66 @@ export default {
         let formData = new FormData();
         formData.append(this.documentSpec[0].documentType.code, this.photo);
         formData.append(this.documentSpec[1].documentType.code, this.passport);
-        formData.append(this.documentSpec[2].documentType.code, this.healthExamCert);
-        formData.append(this.documentSpec[3].documentType.code, this.serviceFeeFile);
-        formData.append(this.documentSpec[4].documentType.code, this.workExperience);
+        formData.append(
+          this.documentSpec[2].documentType.code,
+          this.healthExamCert
+        );
+        formData.append(
+          this.documentSpec[3].documentType.code,
+          this.serviceFeeFile
+        );
+        formData.append(
+          this.documentSpec[4].documentType.code,
+          this.workExperience
+        );
         formData.append(
           this.documentSpec[5].documentType.code,
           this.englishLanguage
         );
-        formData.append(
-          this.documentSpec[6].documentType.code,
-          this.professionalDoc
-        );
-        formData.append(
-          this.documentSpec[7].documentType.code,
-          this.professionalDocDiploma
-        );
-        formData.append(
-          this.documentSpec[8].documentType.code,
-          this.professionalDocTranscript
-        );
+
+        if (this.professionalDoc != undefined) {
+          formData.append(
+            this.documentSpec[6].documentType.code,
+            this.professionalDoc[0]
+          );
+          formData.append(
+            this.documentSpec[7].documentType.code,
+            this.professionalDoc[1]
+          );
+          formData.append(
+            this.documentSpec[8].documentType.code,
+            this.professionalDoc[2]
+          );
+        }
+
         formData.append(this.documentSpec[9].documentType.code, this.coc);
-        // formData.append(this.documentSpec[10].documentType.code, photoFile);
-        // formData.append(this.documentSpec[11].documentType.code, photoFile);
-        // formData.append(this.documentSpec[12].documentType.code, photoFile);
-        // formData.append(this.documentSpec[13].documentType.code, photoFile);
-        // formData.append(this.documentSpec[14].documentType.code, photoFile);
-        formData.append(this.documentSpec[15].documentType.code, this.supportLetter);
+        if (this.educationalDocs != undefined) {
+          formData.append(
+            this.documentSpec[10].documentType.code,
+            this.educationalDocs[0]
+          );
+          formData.append(
+            this.documentSpec[11].documentType.code,
+            this.educationalDocs[1]
+          );
+          formData.append(
+            this.documentSpec[12].documentType.code,
+            this.educationalDocs[2]
+          );
+          formData.append(
+            this.documentSpec[13].documentType.code,
+            this.educationalDocs[3]
+          );
+          formData.append(
+            this.documentSpec[14].documentType.code,
+            this.educationalDocs[4]
+          );
+        }
+
+        formData.append(
+          this.documentSpec[15].documentType.code,
+          this.supportLetter
+        );
 
         let payload = { document: formData, id: licenseId };
         this.$store

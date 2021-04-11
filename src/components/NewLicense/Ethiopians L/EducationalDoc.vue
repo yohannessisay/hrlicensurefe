@@ -272,6 +272,17 @@ export default {
       documentSpec: [],
       licenseInfo: "",
       userId: 2,
+
+      photo: "",
+      passport: "",
+      healthExamCert: "",
+      workExperience: "",
+      englishLanguage: "",
+      herqa: "",
+      professionalDoc: [],
+      coc: "",
+      supportLetter: "",
+      serviceFee: "",
     };
   },
   computed: {
@@ -280,12 +291,34 @@ export default {
       getButtons: "newlicense/getButtons",
       getLicense: "newlicense/getLicense",
       getDocumentSpec: "newlicense/getDocumentSpec",
+
+      getPhoto: "newlicense/getPhoto",
+      getPassport: "newlicense/getPassport",
+      getHealthExamCert: "newlicense/getHealthExamCert",
+      getEnglishLanguage: "newlicense/getEnglishLanguage",
+      getHerqa: "newlicense/getHerqa",
+      getSupportLetter: "newlicense/getSupportLetter",
+      getCoc: "newlicense/getCoc",
+      getProfessionalDoc: "newlicense/getProfessionalDocuments",
+      getWorkExperience: "newlicense/getWorkExperience",
+      getServiceFee: "newlicense/getServiceFee",
     }),
   },
   created() {
     this.license = this.getLicense;
     this.buttons = this.getButtons;
     this.documentSpec = this.getDocumentSpec;
+
+    this.photo = this.getPhoto;
+    this.passport = this.getPassport;
+    this.healthExamCert = this.getHealthExamCert;
+    this.englishLanguage = this.getEnglishLanguage;
+    this.professionalDoc = this.getProfessionalDocuments;
+    this.herqa = this.getHerqa;
+    this.supportLetter = this.getSupportLetter;
+    this.coc = this.getCoc;
+    this.workExperience = this.getWorkExperience;
+    this.serviceFee = this.getServiceFee;
   },
   methods: {
     ...mapActions(["setProfessionalDoc"]),
@@ -448,7 +481,7 @@ export default {
       }
     },
     submit() {
-      // this.$emit("changeActiveState");
+      this.$emit("changeActiveState");
       let file = [
         this.certificateFile1,
         this.certificateFile2,
@@ -471,7 +504,79 @@ export default {
           },
         },
       };
-      console.log(license);
+      this.$store.dispatch("newlicense/addNewLicense", license).then((res) => {
+        let licenseId = res.data.data.id;
+        let formData = new FormData();
+        formData.append(this.documentSpec[0].documentType.code, this.photo);
+        formData.append(this.documentSpec[1].documentType.code, this.passport);
+        formData.append(
+          this.documentSpec[2].documentType.code,
+          this.healthExamCert
+        );
+        formData.append(
+          this.documentSpec[3].documentType.code,
+          this.serviceFee
+        );
+        formData.append(
+          this.documentSpec[4].documentType.code,
+          this.workExperience
+        );
+        formData.append(
+          this.documentSpec[5].documentType.code,
+          this.englishLanguage
+        );
+        if (this.professionalDoc != undefined) {
+          formData.append(
+            this.documentSpec[6].documentType.code,
+            this.professionalDoc[0]
+          );
+          formData.append(
+            this.documentSpec[7].documentType.code,
+            this.professionalDoc[1]
+          );
+          formData.append(
+            this.documentSpec[8].documentType.code,
+            this.professionalDoc[2]
+          );
+        }
+
+        formData.append(this.documentSpec[9].documentType.code, this.coc);
+        formData.append(
+          this.documentSpec[10].documentType.code,
+          this.certificateFile1
+        );
+        formData.append(
+          this.documentSpec[11].documentType.code,
+          this.certificateFile2
+        );
+        formData.append(
+          this.documentSpec[12].documentType.code,
+          this.certificateFile3
+        );
+        formData.append(
+          this.documentSpec[13].documentType.code,
+          this.certificateFile4
+        );
+        formData.append(
+          this.documentSpec[14].documentType.code,
+          this.certificateFile5
+        );
+
+        formData.append(
+          this.documentSpec[15].documentType.code,
+          this.supportLetter
+        );
+
+        let payload = { document: formData, id: licenseId };
+        this.$store
+          .dispatch("newlicense/uploadDocuments", payload)
+          .then((res) => {
+            if (res.data.status == "Success") {
+              this.$router.push({ path: "/menu" });
+            }
+          })
+          .catch((err) => {});
+      });
     },
   },
 };

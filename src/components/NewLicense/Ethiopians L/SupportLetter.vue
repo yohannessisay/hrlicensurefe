@@ -94,13 +94,11 @@ export default {
     let photo = ref("");
     let passport = ref("");
     let healthExamCert = ref("");
-    let professionalDoc = ref("");
-    let professionalDocDiploma = ref("");
-    let professionalDocTranscript = ref("");
+    let professionalDoc = ref([]);
     let herqa = ref("");
     let englishLanguage = ref("");
     let coc = ref("");
-    let educationDoc = ref("");
+    let educationDoc = ref([]);
     let workExperience = ref("");
     let serviceFee = ref("");
 
@@ -176,23 +174,16 @@ export default {
         formData.append(documentSpecs[3].documentType.code, serviceFee);
         formData.append(documentSpecs[4].documentType.code, workExperience);
         formData.append(documentSpecs[5].documentType.code, englishLanguage);
-        formData.append(documentSpecs[6].documentType.code, professionalDoc);
-        formData.append(
-          documentSpecs[7].documentType.code,
-          professionalDocDiploma
-        );
-        formData.append(
-          documentSpecs[8].documentType.code,
-          professionalDocTranscript
-        );
+        formData.append(documentSpecs[6].documentType.code, professionalDoc[0]);
+        formData.append(documentSpecs[7].documentType.code, professionalDoc[1]);
+        formData.append(documentSpecs[8].documentType.code, professionalDoc[2]);
         formData.append(documentSpecs[9].documentType.code, coc);
-        // formData.append(this.documentTypes[10].documentType.code, photoFile);
-        // formData.append(this.documentTypes[11].documentType.code, photoFile);
-        // formData.append(this.documentTypes[12].documentType.code, photoFile);
-        // formData.append(this.documentTypes[13].documentType.code, photoFile);
-        // formData.append(this.documentTypes[14].documentType.code, photoFile);
+        formData.append(documentSpecs[10].documentType.code, educationDoc[0]);
+        formData.append(documentSpecs[11].documentType.code, educationDoc[1]);
+        formData.append(documentSpecs[12].documentType.code, educationDoc[2]);
+        formData.append(documentSpecs[13].documentType.code, educationDoc[3]);
+        formData.append(documentSpecs[14].documentType.code, educationDoc[4]);
         formData.append(documentSpecs[15].documentType.code, supportLetterFile);
-        console.log(licenseId);
         let payload = { document: formData, id: licenseId };
         store
           .dispatch("newlicense/uploadDocuments", payload)
