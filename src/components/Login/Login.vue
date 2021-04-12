@@ -86,8 +86,10 @@ export default {
       let email = {
         emailAddress: credentials.value.emailAddress,
       };
-      store.dispatch("user/login", email).then(() => {
-         root.$router.push({ path: "/menu" });
+      store.dispatch("user/login", email).then((res) => {
+        if (res) {
+          root.$router.push({ path: "/menu" });
+        }
       });
     };
 
