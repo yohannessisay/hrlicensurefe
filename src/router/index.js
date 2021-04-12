@@ -78,9 +78,9 @@ const routes = [
   },
 
   {
-    path: "/evaluate",
-    name: "evaluate",
-    component: () => import("../components/Reviewer/Evaluate.vue"),
+    path: "/draft",
+    name: "draft",
+    component: () => import("../views/Draft.vue"),
   },
 ];
 

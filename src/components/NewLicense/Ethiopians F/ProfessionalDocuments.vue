@@ -9,10 +9,10 @@
           message="Professional Documents"
           class="mt-8"
         />
-        <div class="flex-row justify-center">
+        <div class="flex-row justify-center px-8 py-4">
           <div class="ml-4" style="width:250px">
             <span v-if="showUpload">
-              <label class="text-primary-700"
+              <label class="text-primary-700 text-lg"
                 >Professional Document:
                 <div class="dropbox">
                   <input
@@ -48,7 +48,7 @@
 
           <div class="ml-4" style="width:250px">
             <span v-if="showDiplomaUpload">
-              <label class="text-primary-700"
+              <label class="text-primary-700 text-lg"
                 >Upload Diploma:
                 <div class="dropbox">
                   <input
@@ -86,7 +86,7 @@
 
           <div class="ml-4" style="width:250px">
             <span v-if="showTranscriptUpload">
-              <label class="text-primary-700"
+              <label class="text-primary-700 text-lg"
                 >Upload Transcript:
                 <div class="dropbox">
                   <input

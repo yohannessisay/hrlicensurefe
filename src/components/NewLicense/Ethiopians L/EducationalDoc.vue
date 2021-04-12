@@ -9,10 +9,10 @@
           message="Educational Documents"
           class="mt-8"
         />
-        <div class="flex-row justify-center">
-          <div class="ml-4" style="width:220px">
+        <div class="flex-row justify-center px-8 py-4">
+          <div class="ml-4" style="width:250px">
             <span v-if="showCertificate1Upload">
-              <label class="text-primary-700"
+              <label class="text-primary-700 text-lg"
                 >Upload 8th Grade Certificate:
                 <div class="dropbox">
                   <input
@@ -51,9 +51,9 @@
             </h6>
           </div>
 
-          <div class="ml-4" style="width:220px">
+          <div class="ml-4" style="width:250px">
             <span v-if="showCertificate2Upload">
-              <label class="text-primary-700"
+              <label class="text-primary-700 text-lg"
                 >Upload 10th Grade Certificate:
                 <div class="dropbox">
                   <input
@@ -92,9 +92,9 @@
             </h6>
           </div>
 
-          <div class="ml-4" style="width:220px">
+          <div class="ml-4" style="width:250px">
             <span v-if="showCertificate3Upload">
-              <label class="text-primary-700"
+              <label class="text-primary-700 text-lg"
                 >Upload 12th Grade Certificate:
                 <div class="dropbox">
                   <input
@@ -133,9 +133,9 @@
             </h6>
           </div>
 
-          <div class="ml-4" style="width:220px">
+          <div class="ml-4" style="width:250px">
             <span v-if="showCertificate4Upload">
-              <label class="text-primary-700"
+              <label class="text-primary-700 text-lg"
                 >Upload Transcript 9-10:
                 <div class="dropbox">
                   <input
@@ -174,9 +174,9 @@
             </h6>
           </div>
 
-          <div class="ml-4" style="width:220px">
+          <div class="ml-4" style="width:250px">
             <span v-if="showCertificate5Upload">
-              <label class="text-primary-700"
+              <label class="text-primary-700 text-lg"
                 >Upload Transcript 11-12:
                 <div class="dropbox">
                   <input

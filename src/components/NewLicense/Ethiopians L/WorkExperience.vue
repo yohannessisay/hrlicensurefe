@@ -173,15 +173,28 @@ export default {
         formData.append(documentSpecs[3].documentType.code, serviceFee);
         formData.append(documentSpecs[4].documentType.code, workExperienceFile);
         formData.append(documentSpecs[5].documentType.code, englishLanguage);
-        formData.append(documentSpecs[6].documentType.code, professionalDoc[0]);
-        formData.append(documentSpecs[7].documentType.code, professionalDoc[1]);
-        formData.append(documentSpecs[8].documentType.code, professionalDoc[2]);
+        if (professionalDoc != undefined) {
+          formData.append(
+            documentSpecs[6].documentType.code,
+            professionalDoc[0]
+          );
+          formData.append(
+            documentSpecs[7].documentType.code,
+            professionalDoc[1]
+          );
+          formData.append(
+            documentSpecs[8].documentType.code,
+            professionalDoc[2]
+          );
+        }
         formData.append(documentSpecs[9].documentType.code, coc);
-        formData.append(documentSpecs[10].documentType.code, educationDoc[0]);
-        formData.append(documentSpecs[11].documentType.code, educationDoc[1]);
-        formData.append(documentSpecs[12].documentType.code, educationDoc[2]);
-        formData.append(documentSpecs[13].documentType.code, educationDoc[3]);
-        formData.append(documentSpecs[14].documentType.code, educationDoc[4]);
+        if (educationDoc != undefined) {
+          formData.append(documentSpecs[10].documentType.code, educationDoc[0]);
+          formData.append(documentSpecs[11].documentType.code, educationDoc[1]);
+          formData.append(documentSpecs[12].documentType.code, educationDoc[2]);
+          formData.append(documentSpecs[13].documentType.code, educationDoc[3]);
+          formData.append(documentSpecs[14].documentType.code, educationDoc[4]);
+        }
         formData.append(documentSpecs[15].documentType.code, supportLetter);
         let payload = { document: formData, id: licenseId };
         store
