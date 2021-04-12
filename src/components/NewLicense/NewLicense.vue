@@ -232,12 +232,16 @@ import SupportLetterEthiopian from "./Ethiopians L/SupportLetter";
 import EnglishLanguageForeigner from "./Foreigner/EnglishLanguage";
 import ProfessionalDocumentForeigner from "./Foreigner/ProfessionalDocument";
 
+
 export default {
   created() {
+    // this.appData = this.$route.params.data;
+    console.log(this.$route.params);
     this.fetchApplicationStatuses();
     this.fetchApplicationCategory();
   },
   data: () => ({
+    appData: "",
     activeState: 1,
     applicantType: 1,
     applicationStatuses: "",
@@ -309,13 +313,15 @@ export default {
         });
     },
     fetchDocumentSpec() {
-      this.$store.dispatch("newlicense/getDocumentSpecs", this.applicationId).then((res) => {
-        const results = res.data.data;
-        this.documentSpecs = results;
-        this.$store.dispatch("newlicense/setDocumentSpecs", this.documentSpecs).then((res) => {
-
+      this.$store
+        .dispatch("newlicense/getDocumentSpecs", this.applicationId)
+        .then((res) => {
+          const results = res.data.data;
+          this.documentSpecs = results;
+          this.$store
+            .dispatch("newlicense/setDocumentSpecs", this.documentSpecs)
+            .then((res) => {});
         });
-      });
     },
   },
 };

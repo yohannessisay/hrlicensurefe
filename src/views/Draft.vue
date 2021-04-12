@@ -13,7 +13,7 @@
             v-bind:key="item"
             v-bind:value="item"
           >
-            <router-link to="/newlicense">
+            <router-link :to="{ name: 'NewLicense', params: item }">
               <div
                 class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
               >
