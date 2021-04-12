@@ -21,8 +21,7 @@ import {
 } from "./mutation-types";
 
 const url = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api/";
-
-const userId = 2;
+const userId = 1;
 
 export default {
   setLicense({ commit }, license) {
@@ -144,10 +143,19 @@ export default {
       return error;
     }
   },
-  async getDocumentSpecs(id) {
+  async getDocumentSpecs({commit}, id) {
     try {
       // const resp = await ApiService.get(url + "documentSpecs/" + id);
-      const resp = await ApiService.get(url + "documentSpecs/1");
+      const resp = await ApiService.get(url + "documentSpecs/" + id);
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+
+  async getNewLicense({ commit }) {
+    try {
+      const resp = await ApiService.get(url + "newLicenses/user/" + userId);
       return resp;
     } catch (error) {
       return error;

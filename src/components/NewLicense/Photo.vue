@@ -203,7 +203,6 @@ export default {
         store
           .dispatch("newlicense/uploadDocuments", payload)
           .then((res) => {
-            console.log(res.data.status);
             if (res.data.status == "Success") {
               route.push({ path: "/menu" });
             }
