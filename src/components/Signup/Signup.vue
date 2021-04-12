@@ -101,12 +101,15 @@ export default {
       };
       store.dispatch("user/signUp", signup).then((res) => {
         if (res.data.status == "Success") {
+          message.value.showFlash = !message.value.showFlash;
+
           setTimeout(() => {
-            message.value.showFlash = !message.value.showFlash;
-          }, 10000);
-          router.push({ path: "/addProfile" });
+            router.push({ path: "/addProfile" });
+          }, 7000);
         } else {
           message.value.showErrorFlash = !message.value.showErrorFlash;
+          setTimeout(() => {
+          }, 7000);
         }
       });
     };
