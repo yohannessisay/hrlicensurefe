@@ -7,13 +7,13 @@
       </div>
       <div class="flex mt-medium rounded ml-large">
         <div v-for="i in Math.ceil(newlicense.length / 3)" v-bind:key="i">
-          <router-link to="/newlicense">
-            <div
-              class="container mb-medium"
-              v-for="item in newlicense.slice((i - 1) * 3, i * 3)"
-              v-bind:key="item"
-              v-bind:value="item"
-            >
+          <div
+            class="container mb-medium"
+            v-for="item in newlicense.slice((i - 1) * 3, i * 3)"
+            v-bind:key="item"
+            v-bind:value="item"
+          >
+            <router-link to="/newlicense">
               <div
                 class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
               >
@@ -38,8 +38,8 @@
                   </h4>
                 </div>
               </div>
-            </div>
-          </router-link>
+            </router-link>
+          </div>
         </div>
       </div>
     </div>
