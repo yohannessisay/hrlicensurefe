@@ -40,7 +40,6 @@ export default {
         phoneNumber: this.credentials.phoneNumber
       };
       this.$store.dispatch("user/signUp", signup);
-      console.log(signup);
       this.$router.push({ path: "/addProfile" });
     },
     validateForm(credentials) {

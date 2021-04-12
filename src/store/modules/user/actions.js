@@ -6,7 +6,7 @@ import {
   ADD_PROFILE_SUCCESS,
   ADD_PROFILE_ERROR,
 } from "./mutation-types";
-const url = "http://49f72b2f2bdd.ngrok.io/api/";
+const url = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api/";
 export default {
   async login({ commit }, profile) {
     commit(ADD_PROFILE_LOADING);
