@@ -52,7 +52,7 @@
           <div class="flex justify-center items-center w-64 h-40">
             <div class="p-1">
               <div class="flex">
-                <router-link to="/verification">
+                <router-link to="/draft">
                   <RenderIllustration illustration="Verification" />
                 </router-link>
               </div>

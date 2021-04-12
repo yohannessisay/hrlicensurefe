@@ -1,0 +1,385 @@
+<template>
+  <div>
+    <Navigation tab="Home" />
+    <div class="bg-lightBlueB-200 h-full">
+      <div class="flex pl-12 pt-medium">
+        <Title message="New License" />
+        <div class="flex ml-small" v-if="unfinished.length >= 5">
+          <router-link to="/unfinished">
+            <button
+              class="block mx-auto  bg-lightBlue-300 hover:bg-lightBlue-600 hover:shadow-lg"
+            >
+              View All
+            </button>
+          </router-link>
+        </div>
+      </div>
+      <div class="flex justify-center items-center mt-medium rounded ">
+        <div
+          class="container"
+          v-for="(item, index) in unfinished"
+          v-bind:key="item.name.first"
+          v-bind:value="item.id"
+        >
+          <div
+            v-if="index < 5"
+            class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
+          >
+            <div class="p-4 w-48 h-64">
+              <div class="flex content-center justify-center">
+                <img class="box-shadow-pop" v-bind:src="item.picture.large" />
+              </div>
+              <h4
+                class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+              >
+                {{ item.name.first + " " + item.name.last }}
+              </h4>
+              <h6
+                class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+              >
+                {{ item.registered.date }}
+              </h6>
+              <h6
+                class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+              >
+                New Licence ID: {{ item.id.value }}
+              </h6>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex pl-12 mt-medium">
+        <Title message="Renewal" />
+        <div class="flex ml-small" v-if="assignedToyou.length >= 5">
+          <router-link to="/assignedToyou">
+            <button
+              class="block mx-auto  bg-lightBlue-300 hover:bg-lightBlue-600 hover:shadow-lg"
+            >
+              View All
+            </button>
+          </router-link>
+        </div>
+      </div>
+      <div class="flex justify-center items-center mt-medium rounded ">
+        <div
+          class="container"
+          v-for="(item, index) in assignedToyou"
+          v-bind:key="item.name.first"
+          v-bind:value="item.id"
+        >
+          <div
+            v-if="index < 5"
+            class="flex justify-center items-center ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
+          >
+            <div class="p-4 w-48 h-64">
+              <div class="flex content-center justify-center">
+                <router-link to="/newlicense">
+                  <img class="box-shadow-pop" v-bind:src="item.picture.large" />
+                </router-link>
+              </div>
+              <h4
+                class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+              >
+                {{ item.name.first + " " + item.name.last }}
+              </h4>
+              <h6
+                class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+              >
+                {{ item.registered.date }}
+              </h6>
+              <h6
+                class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+              >
+                New Licence ID: {{ item.id.value }}
+              </h6>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex pl-12 mt-medium">
+        <Title message="Verification" />
+        <div class="flex ml-small" v-if="unassigned.length >= 5">
+          <router-link to="/unassigned">
+            <button
+              class="block mx-auto  bg-lightBlue-300 hover:bg-lightBlue-600 hover:shadow-lg"
+            >
+              View All
+            </button>
+          </router-link>
+        </div>
+      </div>
+      <div class="box">
+        <div class="flex justify-center items-center mt-medium rounded">
+          <div
+            class="container flip-box"
+            v-for="(item, index) in unassigned"
+            v-bind:key="item.name.first"
+            v-bind:value="item.id"
+          >
+            <div
+              v-if="index < 5"
+              class="flex justify-center items-center ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100 flip-box-front"
+            >
+              <div
+                class="p-4 w-48 h-64"
+                @mouseover="hover = true"
+                @mouseleave="hover = false"
+              >
+                <div class="flex content-center justify-center">
+                  <router-link to="/newlicense">
+                    <img
+                      class="box-shadow-pop"
+                      v-bind:src="item.picture.large"
+                    />
+                  </router-link>
+                </div>
+                <h4
+                  class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                >
+                  {{ item.name.first + " " + item.name.last }}
+                </h4>
+                <h6
+                  class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                >
+                  {{ item.registered.date }}
+                </h6>
+                <h6
+                  class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                >
+                  New Licence ID: {{ item.id.value }}
+                </h6>
+              </div>
+            </div>
+
+            <div
+              v-if="index < 5"
+              class="absolute inset-0 flex justify-center items-center z-10 ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100 flip-box-back"
+            >
+              <div
+                class="p-4 w-48 h-64"
+                @mouseover="hover = true"
+                @mouseleave="hover = false"
+                @Click="detail()"
+              >
+                <h4
+                  class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                >
+                  {{ item.name.first + " " + item.name.last }}
+                </h4>
+                <h6
+                  class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                >
+                  {{ item.registered.date }}
+                </h6>
+                <h6
+                  class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                >
+                  New Licence ID: {{ item.id.value }}
+                </h6>
+                <div
+                  class="flex ml-small w-32 pt-small justify-center content-center"
+                >
+                  <router-link to="/newlicense">
+                    <button
+                      class="block mx-auto  bg-lightBlue-300 hover:bg-lightBlue-600 hover:shadow-lg"
+                    >
+                      Assign to Me
+                    </button>
+                  </router-link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Flip Box End!-->
+      <div class="flex pl-12 mt-medium ">
+        <Title message="Good Standing" />
+        <div class="flex ml-small" v-if="recentlyFinished.length >= 5">
+          <router-link to="/newlicense">
+            <button
+              class="block mx-auto  bg-lightBlue-300 hover:bg-lightBlue-600 hover:shadow-lg"
+            >
+              View All
+            </button>
+          </router-link>
+        </div>
+      </div>
+      <div
+        class="flex justify-center items-center mt-medium pb-medium rounded "
+      >
+        <div
+          class="container"
+          v-for="(item, index) in recentlyFinished"
+          v-bind:key="item.name.first"
+          v-bind:value="item.id"
+        >
+          <div
+            v-if="index < 5"
+            class="justify-center items-center ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
+          >
+            <div class="p-4 w-48 h-64">
+              <div class="flex content-center justify-center">
+                <router-link to="/newlicense">
+                  <img class="box-shadow-pop" v-bind:src="item.picture.large" />
+                </router-link>
+              </div>
+              <h4
+                class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+              >
+                {{ item.name.first + " " + item.name.last }}
+              </h4>
+              <h6
+                class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+              >
+                {{ item.registered.date }}
+              </h6>
+              <h6
+                class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+              >
+                New Licence ID: {{ item.id.value }}
+              </h6>
+              <h6
+                class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+              >
+                Approved
+              </h6>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import Title from "@/sharedComponents/TitleWithIllustration";
+import Navigation from "@/views/Navigation";
+import { useStore } from "vuex";
+import { useRouter } from "vue-router";
+import { ref, onMounted } from "vue";
+
+export default {
+  components: { Navigation, Title },
+  setup() {
+    const store = useStore();
+    const router = useRouter();
+
+    let unfinished = ref({});
+    let assignedToyou = ref({});
+    let unassigned = ref({});
+    let recentlyFinished = ref({});
+    let hover = ref(false);
+
+    const fetchUnfinished = () => {
+      store.dispatch("reviewer/getUnfinished").then((res) => {
+        unfinished.value = res.data.results;
+      });
+    };
+
+    const fetchAssignedtoYou = () => {
+      store.dispatch("reviewer/getAssignedToYou").then((res) => {
+        assignedToyou.value = res.data.results;
+      });
+    };
+
+    const fetchUnassignedApplications = () => {
+      store.dispatch("reviewer/getUnassigned").then((res) => {
+        unassigned.value = res.data.results;
+      });
+    };
+
+    const fetchRecentlyFinished = () => {
+      store.dispatch("reviewer/getRecentlyFinished").then((res) => {
+        recentlyFinished.value = res.data.results;
+      });
+    };
+
+    const detail = (data) => {
+      router.push(data);
+    };
+
+    onMounted(() => {
+      fetchUnfinished();
+      fetchAssignedtoYou();
+      fetchUnassignedApplications();
+      fetchRecentlyFinished();
+    });
+    return {
+      unfinished,
+      assignedToyou,
+      unassigned,
+      recentlyFinished,
+      hover,
+      detail,
+    };
+  },
+};
+</script>
+<style>
+img {
+  border-radius: 50%;
+  margin-bottom: 1rem;
+  width: 80px;
+  border-color: steelblue;
+  background-color: steelblue;
+}
+.container {
+  cursor: pointer;
+}
+.hoveredCard {
+  background-color: white;
+}
+/* .b{
+  cursor: pointer;
+  position: absolute;
+  transform: translate(-50%, -50%);
+} */
+.flip-box {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  cursor: pointer;
+}
+.flip-box-front,
+.flip-box-back {
+  transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
+  backface-visibility: hidden;
+}
+
+.flip-box-front {
+  transform: rotateY(0deg);
+  transform-style: preserve-3d;
+}
+
+.flip-box:hover .flip-box-front {
+  transform: rotateY(-180deg);
+  transform-style: preserve-3d;
+}
+
+.flip-box-back {
+  /* position: absolute; */
+  transform: rotateY(180deg);
+  transform-style: preserve-3d;
+}
+
+.flip-box:hover .flip-box-back {
+  transform: rotateY(0deg);
+  transform-style: preserve-3d;
+}
+
+.flip-box .inner {
+  /* position:absolute;
+  perspective: inherit;
+  z-index: 2;
+  transform: translateY(-50%)translateZ(60px) scale(.94); */
+}
+/* .box {
+  position: relative;
+} */
+
+.b {
+  /* position: absolute; */
+}
+</style>
