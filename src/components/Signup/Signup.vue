@@ -58,16 +58,31 @@
       </a>
     </form>
   </div>
+  <div v-if="message.showFlash">
+    <FlashMessage message="Your new license is applied successfully!" />
+  </div>
+  <div v-if="message.showErrorFlash">
+    <ErrorFlashMessage message="Unable to apply your new license!" />
+  </div>
 </template>
 <script>
 import { ref } from "vue";
 import { useStore } from "vuex";
 import Title from "@/sharedComponents/Title";
+import { useRouter } from "vue-router";
+import FlashMessage from "@/sharedComponents/FlashMessage";
+import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 
 export default {
-  components: { Title },
+  components: { Title, FlashMessage, ErrorFlashMessage },
+
   setup() {
     const store = useStore();
+    const router = useRouter();
+    let message = ref({
+      showFlash: false,
+      showErrorFlash: false,
+    });
 
     const credentials = ref({
       emailAddress: "",
@@ -84,8 +99,16 @@ export default {
         emailAddress: credentials.value.emailAddress,
         phoneNumber: credentials.value.phoneNumber,
       };
-      store.dispatch("user/signUp", signup);
-      root.$router.push({ path: "/addProfile" });
+      store.dispatch("user/signUp", signup).then((res) => {
+        if (res.data.status == "Success") {
+          setTimeout(() => {
+            message.value.showFlash = !message.value.showFlash;
+          }, 10000);
+          router.push({ path: "/addProfile" });
+        } else {
+          message.value.showErrorFlash = !message.value.showErrorFlash;
+        }
+      });
     };
 
     const isEmail = (email) => {
@@ -109,6 +132,7 @@ export default {
       submit,
       isEmail,
       validateForm,
+      message,
     };
   },
 };

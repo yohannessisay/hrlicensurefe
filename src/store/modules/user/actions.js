@@ -1,5 +1,4 @@
 import ApiService from "../../../services/api.service";
-import axios from "axios";
 import {
   SET_PROFILE,
   ADD_PROFILE_LOADING,
@@ -16,6 +15,7 @@ export default {
       window.localStorage.setItem("userId", resp.data.data["id"]);
       commit(SET_PROFILE, resp.data);
       commit(ADD_PROFILE_SUCCESS);
+      return resp;
     } catch (error) {
       commit(ADD_PROFILE_ERROR);
     }
@@ -24,11 +24,14 @@ export default {
   async signUp({ commit }, profile) {
     commit(ADD_PROFILE_LOADING);
     try {
-      const resp = await axios.post(url + "/users/add", profile, {});
+      const resp = await ApiService.post(url + "users/add", profile, {});
+      window.localStorage.setItem("token", resp.data["sldkfj"]);
+      window.localStorage.setItem("userId", resp.data.data["id"]);
       commit(ADD_PROFILE_SUCCESS);
       return resp;
     } catch (error) {
       commit(ADD_PROFILE_ERROR);
+      return error;
     }
   },
 };
