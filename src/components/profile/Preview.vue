@@ -106,6 +106,7 @@
 
 <script>
 import { ref, onMounted, nextTick } from "vue";
+import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 import Title from "@/sharedComponents/TitleWithIllustration";
 import FlashMessage from "@/sharedComponents/FlashMessage";
@@ -113,6 +114,7 @@ export default {
   components: { Title, FlashMessage },
   setup() {
     const store = useStore();
+    const router = useRouter();
 
     let personalInfo = {
       name: null,
@@ -171,12 +173,13 @@ export default {
           residence: address.residence,
           city: address.city,
           poBox: contact.poBox,
-          userId: "1"
+          userId: +localStorage.getItem("userId")
         })
 
         .then(response => {
           if (response.statusText == "Created") {
             showFlash.value = true;
+            router.push("/menu");
           }
           console.log(response);
         });

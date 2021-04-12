@@ -279,14 +279,14 @@ export default {
     let showErrorFlash = ref(false);
     let profile = ref({});
 
-    const created = async (id) => {
+    const created = async id => {
       console.log(id);
-      store.dispatch("reviewer/getProfile", id).then((res) => {
+      store.dispatch("reviewer/getProfile", id).then(res => {
         profileInfo.value = res.data.data;
         show.value = true;
         console.log(profileInfo.value);
       });
-      store.dispatch("reviewer/getLicense", id).then((res) => {
+      store.dispatch("reviewer/getLicense", id).then(res => {
         license.value = res.data.data;
         console.log(license.value);
         applicantId.value = license.value.applicantId;
