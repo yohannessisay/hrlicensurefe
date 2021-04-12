@@ -245,10 +245,9 @@
 
 <script>
 import { useStore } from "vuex";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import Title from "@/sharedComponents/Title";
 import ReviewerNavBar from "@/components/Reviewer/ReviewerNavBar";
-import { mapGetters } from "vuex";
 import { ref, onMounted } from "vue";
 
 export default {
@@ -260,6 +259,7 @@ export default {
   setup() {
     const store = useStore();
     const router = useRouter();
+    const route = useRoute();
 
     let userId = ref(null);
     let show = ref(false);
@@ -295,14 +295,14 @@ export default {
     let showErrorFlash = ref(false);
     let profile = ref({});
 
-    const created = async (id) => {
-      console.log(id);
-      store.dispatch("reviewer/getProfile", id).then((res) => {
+    const created = async (applicationId, applicantId) => {
+      console.log(applicantId);
+      store.dispatch("reviewer/getProfile", applicantId).then((res) => {
         profileInfo.value = res.data.data;
         show.value = true;
         console.log(profileInfo.value);
       });
-      store.dispatch("reviewer/getLicense", id).then((res) => {
+      store.dispatch("reviewer/getLicense", applicationId).then((res) => {
         license.value = res.data.data;
         console.log(license.value);
         applicantId.value = license.value.applicantId;
@@ -324,7 +324,7 @@ export default {
     onMounted(() => {
       //userId.value = +localStorage.getItem("userId");
       userId = 2;
-      created(2);
+      created(route.params.applicationId, route.params.applicantId);
     });
 
     return {

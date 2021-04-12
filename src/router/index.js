@@ -129,12 +129,12 @@ const routes = [
     component: () => import("../components/Reviewer/Evaluate.vue")
   },
   {
-    path: "/detail",
+    path: "/detail/:applicationId/:applicantId",
     name: "detail",
     component: () => import("../components/Reviewer/Detail/LicenseDetail.vue")
   },
   {
-    path: "/unfinishedDetail",
+    path: "/unfinishedDetail/:applicationId/:applicantId",
     name: "unfinishedDetail",
     component: () =>
       import("../components/Reviewer/Detail/UnfinishedDetail.vue")
@@ -145,6 +145,13 @@ const routes = [
     component: () =>
       import("../components/Reviewer/Detail/RecentlyFinishedDetail.vue")
   },
+  {
+    path: "/unassignedDetail/:applicationId/:applicantId",
+    name: "unassignedDetail",
+    component: () =>
+      import("../components/Reviewer/Detail/UnassignedDetail.vue")
+  },
+  
 ];
 
 const router = createRouter({

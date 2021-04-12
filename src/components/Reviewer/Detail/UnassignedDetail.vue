@@ -7,7 +7,38 @@
         style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);"
         class="ml-8  mr-8 mb-12"
       >
-        <div class="mt-large bg-white"> 
+        <div class="mt-large bg-white">
+          <div v-if="role.code == `TL`" class="flex">
+            <div class="flex flex-col mb-medium w-2/3 ml-small mt-small"></div>
+            <div class="flex flex-col mb-medium w-1/3 mr-small mt-small">
+              <label class="text-primary-700">Assign To</label>
+              <select class="max-w-3xl" v-model="assign.reviewerId" @change="gen()">
+                <option
+                  v-for="types in admins"
+                  v-bind:key="types.name"
+                  v-bind:value="types.id"
+                >
+                  {{ types.name }}
+                </option>
+              </select>
+              <button
+                class="block mx-auto  bg-lightBlue-300 hover:bg-lightBlue-600 hover:shadow-lg mt-small"
+                @click="assignReviewer()"
+              >
+                Assign
+              </button>
+            </div>
+          </div>
+          <div v-if="role.code != `TL`" class="flex ">
+            <div class="flex flex-col mb-medium w-2/3 ml-small mt-small"></div>
+            <div class="flex flex-col  mb-medium w-1/3 mr-small mt-small">
+              <button
+                class="block mx-auto  bg-lightBlue-300 hover:bg-lightBlue-600 hover:shadow-lg"
+              >
+                Assign to me
+              </button>
+            </div>
+          </div>
           <div class="flex justify-center"><Title message="Summary" /></div>
           <div class="flex justify-start">
             <Title message="Personal Info" />
@@ -224,7 +255,7 @@
               </picture>
             </div> -->
           </div>
-          <div class="mt-12 flex justify-center">
+          <!-- <div class="mt-12 flex justify-center">
             <div>
               <button @click="evaluate()">Continue Evaluating</button>
             </div>
@@ -237,6 +268,9 @@
           </div>
           <div class="flex justify-center mt-8 mb-8">
             <button variant="outline">I will finish Later</button>
+          </div> -->
+          <div v-if="showFlash">
+            <FlashMessage message="Your profile is successfully created" />
           </div>
         </div>
       </div>
@@ -294,11 +328,22 @@ export default {
     let showFlash = ref(false);
     let showErrorFlash = ref(false);
     let profile = ref({});
+    let admins = ref({});
+    let assign = ref({
+      reviewerId: "",
+      licenseId: "",
+      createdBy: ""
+    });
+    let role = ref({});
+
+    const gen = () => {
+      console.log(assign.value.reviewerId);
+    };
 
     const created = async (applicationId, applicantId) => {
       console.log(applicationId);
       console.log(applicantId);
-      store.dispatch("reviewer/getProfile", applicantId).then((res) => {
+      store.dispatch("reviewer/getProfile", 2).then((res) => {
         profileInfo.value = res.data.data;
         show.value = true;
         console.log(profileInfo.value);
@@ -307,7 +352,8 @@ export default {
         license.value = res.data.data;
         console.log(license.value);
         applicantId.value = license.value.applicantId;
-        applicantTypeId.value = license.value.applicantTypeId;
+        // applicantTypeId.value = license.value.applicantTypeId;
+        applicantId.value = 2;
         education.value.departmentName =
           license.value.education.department.name;
         education.value.institutionName =
@@ -318,6 +364,49 @@ export default {
       });
     };
 
+    const fetchAdmins = () => {
+      store.dispatch("reviewer/getAdmins").then(res => {
+        admins.value = res.data.data;
+        console.log(admins.value);
+      });
+    };
+
+    const fetchRole = userId => {
+      store.dispatch("reviewer/getRoles", userId).then(res => {
+        role.value = res.data.data.role;
+        console.log(role.value);
+      });
+    };
+
+    const assignReviewer = () => {
+      console.log(assign.value.reviewerID);
+      if (role.value.code == "TL") {
+        assign.value = {
+          licenseId: route.params.applicationId,
+          reviewerId: assign.value.reviewerId,
+          createdBy: +localStorage.getItem("userId")
+        };
+      }
+
+      if (role.value.code == "REV") {
+        assign.value = {
+          licenseId: route.params.applicationId,
+          reviewerId: +localStorage.getItem("userId"),
+          createdBy: +localStorage.getItem("userId")
+        };
+      }
+      store
+        .dispatch("reviewer/assignReviewer", assign.value)
+
+        .then(response => {
+          if (response.statusText == "Created") {
+            showFlash.value = true;
+            router.push("/review");
+          }
+          console.log(response);
+        });
+    };
+
     const evaluate = () => {
       router.push("/evaluate");
     };
@@ -326,11 +415,15 @@ export default {
       //userId.value = +localStorage.getItem("userId");
       // userId = 2;
       created(route.params.applicationId, route.params.applicantId);
+      fetchAdmins();
+    //   fetchRole(userId);
+      fetchRole(2);
     });
 
     return {
       userId,
       license,
+      role,
       profileInfo,
       activeClass,
       errorClass,
@@ -338,12 +431,17 @@ export default {
       showFlash,
       showErrorFlash,
       profile,
+      assign,
+      admins,
       applicantId,
       applicantTypeId,
       education,
       show,
       created,
-      evaluate
+      evaluate,
+      fetchAdmins,
+      assignReviewer,
+      gen
     };
   }
 
