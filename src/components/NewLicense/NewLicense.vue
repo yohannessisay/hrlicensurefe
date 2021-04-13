@@ -158,21 +158,21 @@
               </div>
             </transition>
 
-            <transition name="fade" mode="out-in">
+            <!-- <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 5">
                 <EnglishLanguageEthiopian
                   :activeState="5"
                   @changeActiveState="activeState++"
                 />
               </div>
-            </transition>
+            </transition> -->
             <transition name="fade" mode="out-in">
-              <div v-if="this.activeState == 6">
+              <div v-if="this.activeState == 5">
                 <HERQA :activeState="6" @changeActiveState="activeState++" />
               </div>
             </transition>
             <transition name="fade" mode="out-in">
-              <div v-if="this.activeState == 7">
+              <div v-if="this.activeState == 6">
                 <ProfessionalDocumentEthiopian
                   :activeState="7"
                   @changeActiveState="activeState++"
@@ -180,7 +180,7 @@
               </div>
             </transition>
             <transition name="fade" mode="out-in">
-              <div v-if="this.activeState == 8">
+              <div v-if="this.activeState == 7">
                 <SupportLetterForeign
                   :activeState="8"
                   @changeActiveState="activeState++"
@@ -188,7 +188,7 @@
               </div>
             </transition>
             <transition name="fade" mode="out-in">
-              <div v-if="this.activeState == 9">
+              <div v-if="this.activeState == 8">
                 <ServiceFee
                   :activeState="9"
                   @changeActiveState="activeState++"
@@ -196,7 +196,7 @@
               </div>
             </transition>
             <transition name="fade" mode="out-in">
-              <div v-if="this.activeState == 10">
+              <div v-if="this.activeState == 9">
                 <LicenseSummary
                   :activeState="10"
                   @changeActiveState="activeState++"
