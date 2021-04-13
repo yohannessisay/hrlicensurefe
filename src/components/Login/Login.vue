@@ -62,7 +62,7 @@
       </a>
     </form>
   </div>
-  <div v-if="message.showFlash">
+  <div class="mr-3xl" v-if="message.showFlash">
     <FlashMessage message="Login Successful!" />
   </div>
   <div v-if="message.showErrorFlash">
