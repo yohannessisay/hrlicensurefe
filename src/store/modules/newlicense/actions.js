@@ -1,4 +1,3 @@
-import { getLineAndCharacterOfPosition } from "typescript";
 import ApiService from "../../../services/api.service";
 import {
   SET_LICENSE,
@@ -16,6 +15,7 @@ import {
   SET_BUTTONS,
   SET_APPLICATION_ID,
   SET_DOCUMENT_SPEC,
+  SET_DRAFT,
   ADD_PROFILE_LOADING,
   ADD_PROFILE_SUCCESS,
   ADD_PROFILE_ERROR,
@@ -70,6 +70,9 @@ export default {
   setDocumentSpecs({ commit }, documentSpecs) {
     commit(SET_DOCUMENT_SPEC, documentSpecs);
   },
+  setDraft({commit}, draft){
+    commit(SET_DRAFT, draft);
+  },
   async addNewLicense({ commit }, license) {
     try {
       const resp = await ApiService.post(url + "newLicenses/add", license);
@@ -103,9 +106,9 @@ export default {
       return error;
     }
   },
-  async getInstitutionType() {
+  async getInstitution() {
     try {
-      const resp = await ApiService.get(url + "lookups/institutionTypes");
+      const resp = await ApiService.get(url + "lookups/institutions");
       return resp;
     } catch (error) {
       return error;
@@ -170,4 +173,5 @@ export default {
       return error;
     }
   },
+
 };

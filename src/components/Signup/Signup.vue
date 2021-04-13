@@ -58,16 +58,31 @@
       </a>
     </form>
   </div>
+  <div v-if="message.showFlash">
+    <FlashMessage message="Signup Successful!" />
+  </div>
+  <div v-if="message.showErrorFlash">
+    <ErrorFlashMessage message="Signup Failed!" />
+  </div>
 </template>
 <script>
 import { ref } from "vue";
 import { useStore } from "vuex";
 import Title from "@/sharedComponents/Title";
+import { useRouter } from "vue-router";
+import FlashMessage from "@/sharedComponents/FlashMessage";
+import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 
 export default {
-  components: { Title },
+  components: { Title, FlashMessage, ErrorFlashMessage },
+
   setup() {
     const store = useStore();
+    const router = useRouter();
+    let message = ref({
+      showFlash: false,
+      showErrorFlash: false,
+    });
 
     const credentials = ref({
       emailAddress: "",
@@ -84,8 +99,19 @@ export default {
         emailAddress: credentials.value.emailAddress,
         phoneNumber: credentials.value.phoneNumber,
       };
-      store.dispatch("user/signUp", signup);
-      root.$router.push({ path: "/addProfile" });
+      store.dispatch("user/signUp", signup).then((res) => {
+        if (res.data.status == "Success") {
+          message.value.showFlash = !message.value.showFlash;
+
+          setTimeout(() => {
+            router.push({ path: "/addProfile" });
+          }, 7000);
+        } else {
+          message.value.showErrorFlash = !message.value.showErrorFlash;
+          setTimeout(() => {
+          }, 7000);
+        }
+      });
     };
 
     const isEmail = (email) => {
@@ -109,6 +135,7 @@ export default {
       submit,
       isEmail,
       validateForm,
+      message,
     };
   },
 };

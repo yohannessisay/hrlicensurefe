@@ -14,4 +14,5 @@ export default {
   getButtons: (state) => state.buttons,
   getApplicationId: (state) => state.applicationId,
   getDocumentSpec: (state) => state.documentSpec,
+  getDraft: (state) => state.draft,
 };

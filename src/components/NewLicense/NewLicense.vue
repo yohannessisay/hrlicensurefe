@@ -235,7 +235,9 @@ import ProfessionalDocumentForeigner from "./Foreigner/ProfessionalDocument";
 export default {
   created() {
     this.draftId = this.$route.params.id;
-    this.fetchDraft(this.draftId);
+    if (this.draftId != undefined) {
+      this.fetchDraft(this.draftId);
+    }
     this.fetchApplicationStatuses();
     this.fetchApplicationCategory();
   },
@@ -331,7 +333,7 @@ export default {
     fetchDraft(id) {
       this.$store.dispatch("newlicense/getDraft", id).then((res) => {
         const results = res.data.data;
-        console.log(results);
+        this.$store.dispatch("newlicense/setDraft", results);
       });
     },
   },

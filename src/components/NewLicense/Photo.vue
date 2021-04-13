@@ -79,6 +79,8 @@ export default {
     const store = useStore();
     const route = useRouter();
 
+    const basePath = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/";
+
     let photoFile = ref("");
     let photoFileP = ref("");
     let showPreview = ref(false);
@@ -90,6 +92,7 @@ export default {
     let documentSpecs = ref([]);
     let userId = ref(2);
     let licenseInfo = ref("");
+    let draftData = ref("");
 
     let passport = ref("");
     let healthExamCert = ref("");
@@ -113,6 +116,8 @@ export default {
     const handleFileUpload = () => {
       showUpload.value = false;
       photoFile.value = photoFileP.value.files[0];
+      console.log(photoFile.value);
+
       let reader = new FileReader();
 
       reader.addEventListener(
@@ -120,6 +125,7 @@ export default {
         function() {
           showPreview.value = true;
           filePreview.value = reader.result;
+          console.log(filePreview.value);
         },
         false
       );
@@ -212,6 +218,14 @@ export default {
     };
     onMounted(() => {
       buttons = store.getters["newlicense/getButtons"];
+      draftData = store.getters["newlicense/getDraft"];
+      if (draftData != undefined) {
+        showUpload.value = false;
+        // isImage.value = true;
+        photoFile.value = draftData.documents[5];
+        showPreview.value = true;
+        filePreview.value = basepath + "" + draftData.documents[5].filePath;
+      }
     });
     return {
       photoFile,
@@ -225,6 +239,8 @@ export default {
       submit,
       draft,
       buttons,
+      draftData,
+      basePath,
     };
   },
 };

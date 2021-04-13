@@ -20,6 +20,7 @@ export default {
     buttons: [],
     applicationId: 0,
     documentSpec: [],
+    draft: "",
     addProfileLoading: false,
     addProfileSuccess: false,
     addProfileError: false,
