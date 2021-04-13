@@ -1,16 +1,16 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Home from "../views/Home.vue";
+import Landing from "../components/Landing/Landing.vue";
 const routes = [
   {
     path: "/",
-    name: "Home",
-    component: Home,
-  },
-  {
-    path: "/landing",
     name: "Landing",
-    component: () => import("../components/Landing/Landing.vue"),
+    component: Landing,
   },
+  // {
+  //   path: "/landing",
+  //   name: "Landing",
+  //   component: () => import("../components/Landing/Landing.vue"),
+  // },
   {
     path: "/addProfile",
     name: "NewProfile",
@@ -81,52 +81,11 @@ const routes = [
     name: "goodStandingSubmitted",
     component: () => import("../views/GoodStandingSubmitted.vue"),
   },
+
   {
-    path: "/review",
-    name: "ReviewerHome",
-    component: () => import("../components/Reviewer/Home.vue"),
-  },
-  {
-    path: "/myWork",
-    name: "myWork",
-    component: () => import("../components/Reviewer/MyWork.vue"),
-  },
-  {
-    path: "/unfinished",
-    name: "unfinished",
-    component: () => import("../components/Reviewer/Unfinished.vue"),
-  },
-  {
-    path: "/assignedToYou",
-    name: "assignedToYou",
-    component: () => import("../components/Reviewer/AssignedToYou.vue"),
-  },
-  {
-    path: "/unassigned",
-    name: "unassigned",
-    component: () => import("../components/Reviewer/Unassigned.vue"),
-  },
-  {
-    path: "/prodoc",
-    name: "professionalDocument",
-    component: () =>
-      import("../components/NewLicense/Foreigner/ProfessionalDocument.vue"),
-  },
-  {
-    path: "/educational",
-    name: "educational",
-    component: () =>
-      import("../components/NewLicense/Ethiopians L/EducationalDoc.vue"),
-  },
-  {
-    path: "/lang",
-    name: "lang",
-    component: () => import("../components/NewLicense/Photo.vue"),
-  },
-  {
-    path: "/evaluate",
-    name: "evaluate",
-    component: () => import("../components/Reviewer/Evaluate.vue"),
+    path: "/draft",
+    name: "draft",
+    component: () => import("../views/Draft.vue"),
   },
 ];
 

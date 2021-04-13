@@ -1,6 +1,5 @@
 import {
   SET_LICENSE,
-  SET_ACTIVE_STATE,
   SET_PHOTO,
   SET_PASSPORT,
   SET_HEALTH_EXAM_CERT,
@@ -11,7 +10,10 @@ import {
   SET_COC,
   SET_EDUCATIONAL_DOCUMENT,
   SET_WORK_EXPERIENCE,
-  SET_DOCS,
+  SET_SERVICE_FEE,
+  SET_BUTTONS,
+  SET_APPLICATION_ID,
+  SET_DOCUMENT_SPEC,
   ADD_PROFILE_LOADING,
   ADD_PROFILE_SUCCESS,
   ADD_PROFILE_ERROR,
@@ -30,8 +32,8 @@ export default {
   [SET_HEALTH_EXAM_CERT](state, healthExamCert) {
     state.healthExamCert = healthExamCert;
   },
-  [SET_DOCS](state, docs) {
-    state.docs = docs;
+  [SET_SERVICE_FEE](state, serviceFee) {
+    state.serviceFee = serviceFee;
   },
   [SET_LANGUAGE](state, englishLanguage) {
     state.englishLanguage = englishLanguage;
@@ -54,8 +56,14 @@ export default {
   [SET_WORK_EXPERIENCE](state, workExperience) {
     state.workExperience = workExperience;
   },
-  [SET_ACTIVE_STATE](state, activeState) {
-    state.activeState = activeState;
+  [SET_BUTTONS](state, buttons) {
+    state.buttons = buttons;
+  },
+  [SET_APPLICATION_ID](state, id) {
+    state.applicationId = id;
+  },
+  [SET_DOCUMENT_SPEC](state, documentSpec){
+    state.documentSpec = documentSpec;
   },
   [ADD_PROFILE_LOADING](state) {
     state.addProfileLoading = true;

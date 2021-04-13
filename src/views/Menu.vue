@@ -15,6 +15,7 @@
           </router-link>
         </div>
       </div>
+
       <div class="flex justify-center mt-8 rounded ">
         <div
           class="container mr-12 box-shadow-pop rounded-lg bg-lightGrey-100 "
@@ -52,7 +53,7 @@
           <div class="flex justify-center items-center w-64 h-40">
             <div class="p-1">
               <div class="flex">
-                <router-link to="/verification">
+                <router-link to="/draft">
                   <RenderIllustration illustration="Verification" />
                 </router-link>
               </div>
@@ -89,7 +90,7 @@ import Navigation from "@/views/Navigation";
 import RenderIllustration from "@/sharedComponents/RenderIllustration";
 
 export default {
-  components: { RenderIllustration, Navigation }
+  components: { RenderIllustration, Navigation },
 };
 </script>
 <style></style>

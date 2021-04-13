@@ -1,9 +1,5 @@
 <template>
-  <div
-    v-if="this.show"
-    style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);"
-    class="ml-8 mt-8 mr-8 mb-12"
-  >
+  <div v-if="this.show">
     <div class="flex justify-center"><Title message="Summary" /></div>
     <div class="flex justify-start">
       <Title message="Personal Info" />
@@ -223,17 +219,19 @@
         <h5 class="ml-8">Private</h5>
       </div>
     </div>
-    <div class="flex justify-start flex-wrap">
-      <div v-for="file in docs" v-bind:key="file.id">
-        <Title class="" :message="file.fieldName" />
+    <!-- <div class="flex justify-start flex-wrap">
+      <div v-for="file in docs" v-bind:key="file.name">
+        <Title class="" :message="file.name" />
         <picture>
           <img :src="basePath + file.filePath" />
         </picture>
       </div>
-    </div>
+    </div> -->
     <div class="mt-12 flex justify-center">
       <div>
-        <button @click="submitRequest()">Submit Request</button>
+        <button @click="submitRequest(this.buttons[1].action)">
+          {{ this.buttons[1].name }}
+        </button>
       </div>
     </div>
     <div class="flex justify-center mt-8">
@@ -242,8 +240,10 @@
         finish later.
       </h6>
     </div>
-    <div class="flex justify-center mt-8 mb-8">
-      <button variant="outline">I will finish Later</button>
+    <div class="flex justify-center mt-8 ">
+      <button variant="outline" @click="saveDraft(this.buttons[0].action)">
+        {{ this.buttons[0].name }}
+      </button>
     </div>
   </div>
   <div v-if="showFlash">
@@ -256,7 +256,6 @@
 
 <script>
 import Title from "@/sharedComponents/Title";
-import axios from "axios";
 import { mapGetters } from "vuex";
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
@@ -268,29 +267,30 @@ export default {
     FlashMessage,
     ErrorFlashMessage,
   },
-  beforeCreate() {
-    this.userId = +localStorage.getItem("userId");
-  },
-
   async created() {
-    this.$store.dispatch("newlicense/getProfile").then((res) => {
-      const getProfile = res;
-    });
-
-    if (getProfile) {
-      this.show = true;
-      this.setData(getProfile.data.data);
-      console.log(this.setData);
-    } else {
-      console.log("Server Error!");
-    }
-
+    // this.userId = +localStorage.getItem("userId");
+    this.userId = 2;
+    this.photo = this.getPhoto;
+    this.passport = this.getPassport;
+    this.healthExamCert = this.getHealthExamCert;
+    this.englishLanguage = this.getEnglishLanguage;
+    this.professionalDoc = this.getProfessionalDocuments;
+    this.herqa = this.getHerqa;
+    this.supportLetter = this.getSupportLetter;
+    this.coc = this.getCoc;
+    this.educationalDoc = this.getEducationalDocuments;
+    this.workExperience = this.getWorkExperience;
+    this.serviceFeeFile = this.getServiceFee;
+    this.buttons = this.getButtons;
+    this.fetchProfileInfo();
+    this.setDocs();
+    this.getDocumentSpecs();
     this.license = this.getLicense;
     this.applicantId = this.license.applicantId;
     this.applicantTypeId = this.license.applicantTypeId;
     this.education.departmentId = this.license.education.departmentId;
     this.education.institutionId = this.license.education.institutionId;
-    this.docs = this.getDocs.data;
+    this.buttons = this.getButtons;
   },
   data: () => ({
     show: false,
@@ -303,64 +303,159 @@ export default {
     },
     activeClass: "active",
     errorClass: "text-danger",
-    dataFetched: false,
     showFlash: false,
     showErrorFlash: false,
+    photo: "",
+    passport: "",
+    healthExamCert: "",
+    englishLanguage: "",
+    professionalDoc: [],
+    herqa: "",
+    supportLetter: "",
+    coc: "",
+    educationalDoc: [],
+    workExperience: "",
+    serviceFeeFile: "",
+    applicationId: "",
+    buttons: [],
+    documentTypes: [],
+    docs: [],
   }),
   computed: {
     ...mapGetters({
       getLicense: "newlicense/getLicense",
-      getDocs: "newlicense/getDocs",
+      getPhoto: "newlicense/getPhoto",
+      getPassport: "newlicense/getPassport",
+      getHealthExamCert: "newlicense/getHealthExamCert",
+      getEnglishLanguage: "newlicense/getEnglishLanguage",
+      getProfessionalDocuments: "newlicense/getProfessionalDocuments",
+      getHerqa: "newlicense/getHerqa",
+      getSupportLetter: "newlicense/getSupportLetter",
+      getCoc: "newlicense/getCoc",
+      getEducationalDocuments: "newlicense/getEducationalDocuments",
+      getWorkExperience: "newlicense/getWorkExperience",
+      getServiceFee: "newlicense/getServiceFee",
+      getButtons: "newlicense/getButtons",
+      getApplicationId: "newlicense/getApplicationId",
     }),
   },
   methods: {
-    async submitRequest() {
+    fetchProfileInfo() {
+      this.$store.dispatch("newlicense/getProfile", this.userId).then((res) => {
+        this.profileInfo = res.data.data;
+        this.show = true;
+      });
+    },
+    setDocs() {
+      this.docs.push(this.photo);
+      this.docs.push(this.passport);
+      this.docs.push(this.healthExamCert);
+      this.docs.push(this.englishLanguage);
+      this.docs.push(this.professionalDoc);
+      this.docs.push(this.herqa);
+      this.docs.push(this.supportLetter);
+      this.docs.push(this.coc);
+      this.docs.push(this.educationalDoc);
+      this.docs.push(this.workExperience);
+      this.docs.push(this.serviceFeeFile);
+    },
+
+    getDocumentSpecs() {
+      const applicationId = this.getApplicationId;
+      this.$store
+        .dispatch("newlicense/getDocumentSpecs", applicationId)
+        .then((res) => {
+          this.documentTypes = res.data.data;
+        });
+    },
+
+    async submitRequest(act) {
+      let action = act;
       this.showFlash = false;
       this.showErrorFlash = false;
+      let formData = new FormData();
+      formData.append(this.documentSpec[0].documentType.code, this.photo);
+      formData.append(this.documentSpec[1].documentType.code, this.passport);
+      formData.append(
+        this.documentSpec[2].documentType.code,
+        this.healthExamCert
+      );
+      formData.append(
+        this.documentSpec[3].documentType.code,
+        this.serviceFeeFile
+      );
+      formData.append(
+        this.documentSpec[4].documentType.code,
+        this.workExperience
+      );
+      formData.append(
+        this.documentSpec[5].documentType.code,
+        this.englishLanguage
+      );
+      formData.append(
+        this.documentSpec[6].documentType.code,
+        this.professionalDoc
+      );
+      formData.append(
+        this.documentSpec[7].documentType.code,
+        this.professionalDocDiploma
+      );
+      formData.append(
+        this.documentSpec[8].documentType.code,
+        this.professionalDocTranscript
+      );
+      formData.append(this.documentSpec[9].documentType.code, this.coc);
+      // formData.append(this.documentSpec[10].documentType.code, photoFile);
+      // formData.append(this.documentSpec[11].documentType.code, photoFile);
+      // formData.append(this.documentSpec[12].documentType.code, photoFile);
+      // formData.append(this.documentSpec[13].documentType.code, photoFile);
+      // formData.append(this.documentSpec[14].documentType.code, photoFile);
+      formData.append(
+        this.documentSpec[15].documentType.code,
+        this.supportLetter
+      );
+
       let license = {
-        applicantId: this.applicantId,
-        applicantTypeId: this.applicantTypeId,
-        education: {
-          institutionId: this.education.departmentId,
-          departmentId: this.education.institutionId,
+        action: action,
+        data: {
+          applicantId: this.userId,
+          applicantTypeId: this.applicantTypeId,
+          education: {
+            institutionId: this.education.departmentId,
+            departmentId: this.education.institutionId,
+          },
         },
       };
-
-      for (let index = 0; index < this.docs.length; index++) {
-        const aDoc = this.docs[index];
-
-        if (aDoc.fieldName === "photo") {
-          license.photoId = aDoc.id;
-        } else if (aDoc.fieldName === "passport") {
-          license.passportId = aDoc.id;
-        } else if (aDoc.fieldName === "healthExamCert") {
-          license.healthExamCertId = aDoc.id;
-        } else if (aDoc.fieldName === "serviceFee") {
-          license.serviceFeeId = aDoc.id;
-        }
-      }
-      try {
+      this.$store.dispatch("newlicense/addNewLicense", license).then((res) => {
+        let licenseId = res.data.data.id;
+        let payload = { document: formData, id: licenseId };
         this.$store
-          .dispatch("newlicense/addNewLicense", license)
+          .dispatch("newlicense/uploadDocuments", payload)
           .then((res) => {
-            if (res.statusText == "Created") {
-              this.Success = true;
+            console.log(res.data.status);
+            if (res.data.status == "Success") {
               this.showFlash = true;
-              this.$router.push({ path: "/menu" });
+              // this.$router.push({ path: "/menu" });
             }
           })
           .catch((err) => {
-            this.Success = false;
             this.showErrorFlash = true;
           });
-      } catch (error) {}
-    },
-    setData(data) {
-      if (data) {
-        this.profileInfo = data;
-      } else {
-        this.profileInfo = null;
-      }
+      });
+
+      // for (let index = 0; index < this.docs.length; index++) {
+      //   const aDoc = this.docs[index];
+
+      //   if (aDoc.fieldName === "photo") {
+      //     license.photoId = aDoc.id;
+      //   } else if (aDoc.fieldName === "passport") {
+      //     license.passportId = aDoc.id;
+      //   } else if (aDoc.fieldName === "healthExamCert") {
+      //     license.healthExamCertId = aDoc.id;
+      //   } else if (aDoc.fieldName === "serviceFee") {
+      //     license.serviceFeeId = aDoc.id;
+      //   }
+      // }
     },
   },
   mounted() {

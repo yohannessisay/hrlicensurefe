@@ -4,49 +4,6 @@
     <div class="w-screen bg-lightBlueB-200 flex items-center justify-center">
       <div class="w-screen max-w-4xl mt-medium">
         <div class="flex flex-col w-full bg-white rounded mb-large">
-          <!-- <div id="navg" class="flex justify-center bg-lightBlueB-200">
-            <nav
-              class="relative z-0 inline-flex rounded-md shadow-sm mb-medium"
-              aria-label="Pagination"
-            >
-              <a
-                @click="submit(1)"
-                class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-50"
-              >
-                1
-              </a>
-              <a
-                @click="submit(2)"
-                class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-50"
-              >
-                2
-              </a>
-              <a
-                @click="submit(3)"
-                class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-50"
-              >
-                3
-              </a>
-              <a
-                @click="submit(4)"
-                class="relative inline-flex items-center px-4 py-2 border border-gray-30 text-sm font-medium text-gray-700 hover:bg-gray-50"
-              >
-                4
-              </a>
-              <a
-                @click="submit(5)"
-                class="relative inline-flex items-center px-4 py-2 border border-gray-30 text-sm font-medium text-gray-700 hover:bg-gray-50"
-              >
-                5
-              </a>
-              <a
-                @click="submit(6)"
-                class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-50"
-              >
-                6
-              </a>
-            </nav>
-          </div> -->
           <transition name="fade" mode="out-in">
             <div v-if="this.activeState == 1">
               <Institution
@@ -276,10 +233,21 @@ import EnglishLanguageForeigner from "./Foreigner/EnglishLanguage";
 import ProfessionalDocumentForeigner from "./Foreigner/ProfessionalDocument";
 
 export default {
-  created() {},
+  created() {
+    this.draftId = this.$route.params.id;
+    this.fetchDraft(this.draftId);
+    this.fetchApplicationStatuses();
+    this.fetchApplicationCategory();
+  },
   data: () => ({
     activeState: 1,
     applicantType: 1,
+    applicationStatuses: "",
+    applicationCategories: "",
+    documentSpecs: "",
+    buttons: [],
+    applicationId: "",
+    draftId: "",
   }),
   components: {
     Institution,
@@ -300,16 +268,71 @@ export default {
     ProfessionalDocumentForeigner,
     Navigation,
   },
+
   methods: {
     applicantTypeSet: function(params) {
       if (params == null || params == undefined || params == "") {
-        this.applicantType = 1;
+        this.applicantType = 3;
       } else {
         this.applicantType = params;
       }
     },
     submit(n) {
       this.activeState = n;
+    },
+    fetchApplicationStatuses() {
+      this.$store.dispatch("newlicense/getApplicationStatuses").then((res) => {
+        const results = res.data.data;
+        this.applicationStatuses = results;
+        if (this.draftId != undefined) {
+          let status = this.applicationStatuses.filter(function(e) {
+            return e.code == "DRA";
+          });
+          this.buttons = status[0]["buttons"];
+        } else {
+          let status = this.applicationStatuses.filter(function(e) {
+            return e.code == "INIT";
+          });
+          this.buttons = status[0]["buttons"];
+        }
+        this.$store.dispatch("newlicense/setButtons", this.buttons);
+      });
+    },
+    fetchApplicationCategory() {
+      this.$store
+        .dispatch("newlicense/getApplicationCategories")
+        .then((res) => {
+          const results = res.data.data;
+          this.applicationCategories = results;
+          const newApplicationData = this.applicationCategories.filter(
+            (item) => {
+              return item.name == "New Application";
+            }
+          );
+          this.applicationId = newApplicationData[0]["id"];
+          this.$store.dispatch(
+            "newlicense/setApplicationId",
+            this.applicationId
+          );
+          this.fetchDocumentSpec();
+        });
+    },
+    fetchDocumentSpec() {
+      this.$store
+        .dispatch("newlicense/getDocumentSpecs", this.applicationId)
+        .then((res) => {
+          const results = res.data.data;
+          this.documentSpecs = results;
+          this.$store
+            .dispatch("newlicense/setDocumentSpecs", this.documentSpecs)
+            .then((res) => {});
+        });
+    },
+    fetchDraft(id) {
+      this.$store.dispatch("newlicense/getDraft", id).then((res) => {
+        const results = res.data.data;
+        console.log(results);
+      });
     },
   },
 };
