@@ -230,8 +230,8 @@
           </div>
           <div class="flex justify-center mt-8">
             <h6>
-              If you don't have all the required informations you can come back and
-              finish later.
+              If you don't have all the required informations you can come back
+              and finish later.
             </h6>
           </div>
           <div class="flex justify-center mt-8 mb-8">
@@ -282,6 +282,7 @@ export default {
       userType: {}
     });
     let applicantId = ref("");
+    let licenseId = ref("");
     let applicantTypeId = ref("");
     let education = ref({
       departmentId: "",
@@ -297,6 +298,7 @@ export default {
 
     const created = async (applicationId, applicantId) => {
       console.log(applicantId);
+      licenseId.value = applicationId;
       store.dispatch("reviewer/getProfile", applicantId).then((res) => {
         profileInfo.value = res.data.data;
         show.value = true;
@@ -318,7 +320,8 @@ export default {
     };
 
     const evaluate = () => {
-      router.push("/evaluate");
+      const url = "/evaluate" + "/" + licenseId.value;
+      router.push(url);
     };
 
     onMounted(() => {
@@ -338,6 +341,7 @@ export default {
       showErrorFlash,
       profile,
       applicantId,
+      licenseId,
       applicantTypeId,
       education,
       show,

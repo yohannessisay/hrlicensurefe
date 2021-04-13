@@ -343,7 +343,7 @@ export default {
     const created = async (applicationId, applicantId) => {
       console.log(applicationId);
       console.log(applicantId);
-      store.dispatch("reviewer/getProfile", 2).then((res) => {
+      store.dispatch("reviewer/getProfile", 1).then((res) => {
         profileInfo.value = res.data.data;
         show.value = true;
         console.log(profileInfo.value);
@@ -416,7 +416,7 @@ export default {
       // userId = 2;
       created(route.params.applicationId, route.params.applicantId);
       fetchAdmins();
-    //   fetchRole(userId);
+      //   fetchRole(userId);
       fetchRole(2);
     });
 

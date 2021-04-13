@@ -311,6 +311,7 @@ export default {
     const fetchUnassignedApplications = () => {
       store.dispatch("reviewer/getUnassigned").then(res => {
         unassigned.value = res.data.data;
+        console.log("====Unassigned====");
         console.log(unassigned.value);
       });
     };

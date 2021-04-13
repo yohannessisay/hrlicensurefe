@@ -90,6 +90,15 @@ export default {
     } catch (error) {
       return error;
     }
+  },
+  async getApplication(context, applicationId) {
+    try {
+      const url = baseUrl + "/newLicenses/" + applicationId;
+      const urll = baseUrl + "/newLicenses/125";
+      const resp = await ApiService.get(urll);
+      return resp;
+    } catch (error) {
+      return error;
+    }
   }
-
 };

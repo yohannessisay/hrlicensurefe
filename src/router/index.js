@@ -124,7 +124,7 @@ const routes = [
     component: () => import("../components/NewLicense/Photo.vue")
   },
   {
-    path: "/evaluate",
+    path: "/evaluate/:applicationId",
     name: "evaluate",
     component: () => import("../components/Reviewer/Evaluate.vue")
   },

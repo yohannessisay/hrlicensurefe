@@ -60,9 +60,21 @@
         <div class="flex flex-col justify-center items-center ml-large ">
           <div class="ml-medium">
             <label class="ml-large text-grey-200 text-2xl"> Residence</label>
-            <h5 class="ml-8 text-black-100 text-3xl">
+            <!-- <h5 class="ml-8 text-black-100 text-3xl">
               Addis Ababa
-            </h5>
+            </h5> -->
+            <div class="flex justify-start flex-wrap">
+              <!-- <div v-for="file in docs" v-bind:key="file.name">
+                <Title class="" :message="file.name" />
+                <picture>
+                  <img :src="basePath + file.filePath" />
+                </picture>
+              </div> -->
+              <picture>
+                <img :src="docs[index].filePath" />
+              </picture>
+              <!-- {{docs[0].filePath}} -->
+            </div>
           </div>
           <div class="mt-medium">
             <button class="mr-medium">Accept</button>
@@ -121,8 +133,35 @@
 </template>
 
 <script>
+import { useStore } from "vuex";
+import { useRoute } from "vue-router";
+import { ref, onMounted } from "vue";
 export default {
-  setup() {},
+  setup() {
+    const route = useRoute();
+    const store = useStore();
+    const newLicense = ref({
+      documents: []
+    });
+    let docs = ref([]);
+    let index = ref(0);
+    const created = async () => {
+      store.dispatch("reviewer/getApplication", route.params.applicationId).then(res => {
+          // newLicense.value = res.data.data;
+          docs.value = res.data.data.documents;
+
+          console.log(docs.value);
+        });
+    };
+    onMounted(() => {
+      created();
+    });
+    return {
+      newLicense,
+      index,
+      docs
+    };
+  }
 };
 </script>
 <style>
