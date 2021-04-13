@@ -105,11 +105,11 @@ export default {
 
           setTimeout(() => {
             router.push({ path: "/addProfile" });
-          }, 7000);
+          }, 3000);
         } else {
           message.value.showErrorFlash = !message.value.showErrorFlash;
           setTimeout(() => {
-          }, 7000);
+          }, 3000);
         }
       });
     };
