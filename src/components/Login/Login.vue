@@ -63,10 +63,10 @@
     </form>
   </div>
   <div v-if="message.showFlash">
-    <FlashMessage message="Your new license is applied successfully!" />
+    <FlashMessage message="Login Successful!" />
   </div>
   <div v-if="message.showErrorFlash">
-    <ErrorFlashMessage message="Unable to apply your new license!" />
+    <ErrorFlashMessage message="Login Failed!" />
   </div>
 </template>
 <script>
