@@ -13,7 +13,12 @@
             v-bind:key="item"
             v-bind:value="item"
           >
-            <router-link :to="{ name: 'NewLicense', params: item }">
+            <router-link
+              :to="{
+                name: 'NewLicense',
+                params: { id: item.id }
+              }"
+            >
               <div
                 class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
               >
@@ -73,7 +78,6 @@ export default {
         newlicense.value = license.value.filter(function(e) {
           return e.applicationStatus.code == "DRA";
         });
-        console.log(newlicense.value);
       });
     };
 

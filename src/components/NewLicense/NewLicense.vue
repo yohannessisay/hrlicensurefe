@@ -232,16 +232,13 @@ import SupportLetterEthiopian from "./Ethiopians L/SupportLetter";
 import EnglishLanguageForeigner from "./Foreigner/EnglishLanguage";
 import ProfessionalDocumentForeigner from "./Foreigner/ProfessionalDocument";
 
-
 export default {
   created() {
-    // this.appData = this.$route.params.data;
-    console.log(this.$route.params);
+    this.draftId = this.$route.params.id;
     this.fetchApplicationStatuses();
     this.fetchApplicationCategory();
   },
   data: () => ({
-    appData: "",
     activeState: 1,
     applicantType: 1,
     applicationStatuses: "",
@@ -249,6 +246,7 @@ export default {
     documentSpecs: "",
     buttons: [],
     applicationId: "",
+    draftId: "",
   }),
   components: {
     Institution,
@@ -285,12 +283,19 @@ export default {
       this.$store.dispatch("newlicense/getApplicationStatuses").then((res) => {
         const results = res.data.data;
         this.applicationStatuses = results;
-        this.buttons = this.applicationStatuses[3].buttons;
+        if (this.draftId != undefined) {
+          let status = this.applicationStatuses.filter(function(e) {
+            return e.code == "DRA";
+          });
+          this.buttons = status[0]['buttons'];
+          console.log(this.buttons);
+        } else {
+          let status = this.applicationStatuses.filter(function(e) {
+            return e.code == "INIT";
+          });
+          this.buttons = status[0]['buttons'];
+        }
         this.$store.dispatch("newlicense/setButtons", this.buttons);
-
-        // let appStatus = this.applicationStatuses.filter(function(applicationStatus){
-        //   return applicationStatus.code == "INIT";
-        // })
       });
     },
     fetchApplicationCategory() {

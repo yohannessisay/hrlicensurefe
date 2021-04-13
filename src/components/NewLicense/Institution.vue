@@ -64,6 +64,13 @@
           <button @click="draft(this.buttons[0].action)" variant="outline">
             {{ this.buttons[0]["name"] }}
           </button>
+          <button
+            v-if="this.buttons.length > 2"
+            @click="withdraw(this.buttons[2].action)"
+            variant="outline"
+          >
+            {{ this.buttons[2]["name"] }}
+          </button>
         </div>
       </div>
     </div>
