@@ -49,7 +49,7 @@
     <nav class="">
       <main class="flex items-center justify-between">
         <div class="flex items-center">
-          <router-link to="/">
+          <router-link to="/menu">
             <RenderIllustration
               class=""
               illustration="Logo"
@@ -166,7 +166,7 @@ export default {
     logout() {
       localStorage.removeItem("token");
       localStorage.removeItem("userId");
-      this.$router.push({ path: "/login" });
+      this.$router.push({ path: "/" });
     },
     showDropDown() {
       this.showDD = !this.showDD;

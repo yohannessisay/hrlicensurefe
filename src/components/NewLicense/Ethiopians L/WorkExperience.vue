@@ -196,6 +196,7 @@ export default {
           formData.append(documentSpecs[14].documentType.code, educationDoc[4]);
         }
         formData.append(documentSpecs[15].documentType.code, supportLetter);
+        formData.append(documentSpecs[16].documentType.code, herqa);
         let payload = { document: formData, id: licenseId };
         store
           .dispatch("newlicense/uploadDocuments", payload)

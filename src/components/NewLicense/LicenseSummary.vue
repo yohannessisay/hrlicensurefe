@@ -374,44 +374,62 @@ export default {
       this.showFlash = false;
       this.showErrorFlash = false;
       let formData = new FormData();
-      formData.append(this.documentSpec[0].documentType.code, this.photo);
-      formData.append(this.documentSpec[1].documentType.code, this.passport);
+      formData.append(this.documentTypes[0].documentType.code, this.photo);
+      formData.append(this.documentTypes[1].documentType.code, this.passport);
       formData.append(
-        this.documentSpec[2].documentType.code,
+        this.documentTypes[2].documentType.code,
         this.healthExamCert
       );
+      formData.append(this.documentTypes[3].documentType.code, this.serviceFee);
       formData.append(
-        this.documentSpec[3].documentType.code,
-        this.serviceFeeFile
-      );
-      formData.append(
-        this.documentSpec[4].documentType.code,
+        this.documentTypes[4].documentType.code,
         this.workExperience
       );
       formData.append(
-        this.documentSpec[5].documentType.code,
+        this.documentTypes[5].documentType.code,
         this.englishLanguage
       );
+      if (this.professionalDoc != undefined) {
+        formData.append(
+          this.documentTypes[6].documentType.code,
+          this.professionalDoc[0]
+        );
+        formData.append(
+          this.documentTypes[7].documentType.code,
+          this.professionalDoc[1]
+        );
+        formData.append(
+          this.documentTypes[8].documentType.code,
+          this.professionalDoc[2]
+        );
+      }
+
+      formData.append(this.documentTypes[9].documentType.code, this.coc);
+      if (this.educationalDocs != undefined) {
+        formData.append(
+          this.documentTypes[10].documentType.code,
+          this.educationalDocs[0]
+        );
+        formData.append(
+          this.documentTypes[11].documentType.code,
+          this.educationalDocs[1]
+        );
+        formData.append(
+          this.documentTypes[12].documentType.code,
+          this.educationalDocs[2]
+        );
+        formData.append(
+          this.documentTypes[13].documentType.code,
+          this.educationalDocs[3]
+        );
+        formData.append(
+          this.documentTypes[14].documentType.code,
+          this.educationalDocs[4]
+        );
+      }
+
       formData.append(
-        this.documentSpec[6].documentType.code,
-        this.professionalDoc
-      );
-      formData.append(
-        this.documentSpec[7].documentType.code,
-        this.professionalDocDiploma
-      );
-      formData.append(
-        this.documentSpec[8].documentType.code,
-        this.professionalDocTranscript
-      );
-      formData.append(this.documentSpec[9].documentType.code, this.coc);
-      // formData.append(this.documentSpec[10].documentType.code, photoFile);
-      // formData.append(this.documentSpec[11].documentType.code, photoFile);
-      // formData.append(this.documentSpec[12].documentType.code, photoFile);
-      // formData.append(this.documentSpec[13].documentType.code, photoFile);
-      // formData.append(this.documentSpec[14].documentType.code, photoFile);
-      formData.append(
-        this.documentSpec[15].documentType.code,
+        this.documentTypes[15].documentType.code,
         this.supportLetter
       );
 
@@ -432,30 +450,107 @@ export default {
         this.$store
           .dispatch("newlicense/uploadDocuments", payload)
           .then((res) => {
-            console.log(res.data.status);
             if (res.data.status == "Success") {
               this.showFlash = true;
-              // this.$router.push({ path: "/menu" });
+              this.$router.push({ path: "/menu" });
             }
           })
           .catch((err) => {
             this.showErrorFlash = true;
           });
       });
+    },
 
-      // for (let index = 0; index < this.docs.length; index++) {
-      //   const aDoc = this.docs[index];
+    async submitdraft(act) {
+      let action = act;
+      this.showFlash = false;
+      this.showErrorFlash = false;
+      let formData = new FormData();
+      formData.append(this.documentTypes[0].documentType.code, this.photo);
+      formData.append(this.documentTypes[1].documentType.code, this.passport);
+      formData.append(
+        this.documentTypes[2].documentType.code,
+        this.healthExamCert
+      );
+      formData.append(this.documentTypes[3].documentType.code, this.serviceFee);
+      formData.append(
+        this.documentTypes[4].documentType.code,
+        this.workExperience
+      );
+      formData.append(
+        this.documentTypes[5].documentType.code,
+        this.englishLanguage
+      );
+      if (this.professionalDoc != undefined) {
+        formData.append(
+          this.documentTypes[6].documentType.code,
+          this.professionalDoc[0]
+        );
+        formData.append(
+          this.documentTypes[7].documentType.code,
+          this.professionalDoc[1]
+        );
+        formData.append(
+          this.documentTypes[8].documentType.code,
+          this.professionalDoc[2]
+        );
+      }
 
-      //   if (aDoc.fieldName === "photo") {
-      //     license.photoId = aDoc.id;
-      //   } else if (aDoc.fieldName === "passport") {
-      //     license.passportId = aDoc.id;
-      //   } else if (aDoc.fieldName === "healthExamCert") {
-      //     license.healthExamCertId = aDoc.id;
-      //   } else if (aDoc.fieldName === "serviceFee") {
-      //     license.serviceFeeId = aDoc.id;
-      //   }
-      // }
+      formData.append(this.documentTypes[9].documentType.code, this.coc);
+      if (this.educationalDocs != undefined) {
+        formData.append(
+          this.documentTypes[10].documentType.code,
+          this.educationalDocs[0]
+        );
+        formData.append(
+          this.documentTypes[11].documentType.code,
+          this.educationalDocs[1]
+        );
+        formData.append(
+          this.documentTypes[12].documentType.code,
+          this.educationalDocs[2]
+        );
+        formData.append(
+          this.documentTypes[13].documentType.code,
+          this.educationalDocs[3]
+        );
+        formData.append(
+          this.documentTypes[14].documentType.code,
+          this.educationalDocs[4]
+        );
+      }
+
+      formData.append(
+        this.documentTypes[15].documentType.code,
+        this.supportLetter
+      );
+
+      let license = {
+        action: action,
+        data: {
+          applicantId: this.userId,
+          applicantTypeId: this.applicantTypeId,
+          education: {
+            institutionId: this.education.departmentId,
+            departmentId: this.education.institutionId,
+          },
+        },
+      };
+      this.$store.dispatch("newlicense/addNewLicense", license).then((res) => {
+        let licenseId = res.data.data.id;
+        let payload = { document: formData, id: licenseId };
+        this.$store
+          .dispatch("newlicense/uploadDocuments", payload)
+          .then((res) => {
+            if (res.data.status == "Success") {
+              this.showFlash = true;
+              this.$router.push({ path: "/menu" });
+            }
+          })
+          .catch((err) => {
+            this.showErrorFlash = true;
+          });
+      });
     },
   },
   mounted() {

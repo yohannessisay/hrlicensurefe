@@ -14,6 +14,7 @@ import {
   SET_BUTTONS,
   SET_APPLICATION_ID,
   SET_DOCUMENT_SPEC,
+  SET_DRAFT,
   ADD_PROFILE_LOADING,
   ADD_PROFILE_SUCCESS,
   ADD_PROFILE_ERROR,
@@ -62,8 +63,11 @@ export default {
   [SET_APPLICATION_ID](state, id) {
     state.applicationId = id;
   },
-  [SET_DOCUMENT_SPEC](state, documentSpec){
+  [SET_DOCUMENT_SPEC](state, documentSpec) {
     state.documentSpec = documentSpec;
+  },
+  [SET_DRAFT](state, draft) {
+    state.draft = draft;
   },
   [ADD_PROFILE_LOADING](state) {
     state.addProfileLoading = true;

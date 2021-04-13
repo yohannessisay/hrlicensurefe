@@ -42,7 +42,7 @@
           </div>
 
           <div class="flex flex-col mb-medium w-1/2 mr-12">
-            <label class="text-primary-700">Institution Type</label>
+            <label class="text-primary-700">Institution</label>
             <select
               class="max-w-3xl"
               v-model="licenseInfo.education.institutionId"
@@ -93,12 +93,19 @@ export default {
     setTimeout(() => {
       this.buttons = this.getButtons;
       this.showButtons = true;
-    }, 3000);
+    }, 5000);
+    this.draftId = this.$route.params.id;
+    if (this.draftId != undefined) {
+      setTimeout(() => {
+        this.fetchDraft();
+      }, 5000);
+    }
   },
 
   computed: {
     ...mapGetters({
       getButtons: "newlicense/getButtons",
+      getDraft: "newlicense/getDraft",
     }),
   },
   data: () => ({
@@ -151,7 +158,8 @@ export default {
       });
     },
     fetchInstitutions() {
-      this.$store.dispatch("newlicense/getInstitutionType").then((res) => {
+      this.$store.dispatch("newlicense/getInstitution").then((res) => {
+        console.log(res.data);
         const results = res.data.data;
         this.institutions = results;
       });
@@ -161,6 +169,15 @@ export default {
         const results = res.data.data;
         this.departments = results;
       });
+    },
+    fetchDraft() {
+      let draftData = this.getDraft;
+      this.licenseInfo.applicantId = draftData.applicantId;
+      this.licenseInfo.applicantTypeId = draftData.applicantTypeId;
+      this.licenseInfo.education.departmentId =
+        draftData.education.departmentId;
+      this.licenseInfo.education.institutionId =
+        draftData.education.institutionId;
     },
   },
 };

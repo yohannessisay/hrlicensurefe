@@ -62,7 +62,7 @@
       </a>
     </form>
   </div>
-  <div v-if="message.showFlash">
+  <div class="mr-3xl" v-if="message.showFlash">
     <FlashMessage message="Login Successful!" />
   </div>
   <div v-if="message.showErrorFlash">
@@ -106,10 +106,10 @@ export default {
 
           setTimeout(() => {
             router.push({ path: "/menu" });
-          }, 7000);
+          }, 3000);
         } else {
           message.value.showErrorFlash = !message.value.showErrorFlash;
-          setTimeout(() => {}, 7000);
+          setTimeout(() => {}, 3000);
         }
       });
     };

@@ -566,6 +566,7 @@ export default {
           this.documentSpec[15].documentType.code,
           this.supportLetter
         );
+        formData.append(this.documentSpec[16].documentType.code, this.herqa);
 
         let payload = { document: formData, id: licenseId };
         this.$store
