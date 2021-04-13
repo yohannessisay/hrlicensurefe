@@ -235,6 +235,7 @@ import ProfessionalDocumentForeigner from "./Foreigner/ProfessionalDocument";
 export default {
   created() {
     this.draftId = this.$route.params.id;
+    this.fetchDraft(this.draftId);
     this.fetchApplicationStatuses();
     this.fetchApplicationCategory();
   },
@@ -287,13 +288,12 @@ export default {
           let status = this.applicationStatuses.filter(function(e) {
             return e.code == "DRA";
           });
-          this.buttons = status[0]['buttons'];
-          console.log(this.buttons);
+          this.buttons = status[0]["buttons"];
         } else {
           let status = this.applicationStatuses.filter(function(e) {
             return e.code == "INIT";
           });
-          this.buttons = status[0]['buttons'];
+          this.buttons = status[0]["buttons"];
         }
         this.$store.dispatch("newlicense/setButtons", this.buttons);
       });
@@ -327,6 +327,12 @@ export default {
             .dispatch("newlicense/setDocumentSpecs", this.documentSpecs)
             .then((res) => {});
         });
+    },
+    fetchDraft(id) {
+      this.$store.dispatch("newlicense/getDraft", id).then((res) => {
+        const results = res.data.data;
+        console.log(results);
+      });
     },
   },
 };

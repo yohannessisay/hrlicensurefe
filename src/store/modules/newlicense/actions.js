@@ -1,3 +1,4 @@
+import { getLineAndCharacterOfPosition } from "typescript";
 import ApiService from "../../../services/api.service";
 import {
   SET_LICENSE,
@@ -143,7 +144,7 @@ export default {
       return error;
     }
   },
-  async getDocumentSpecs({commit}, id) {
+  async getDocumentSpecs({ commit }, id) {
     try {
       // const resp = await ApiService.get(url + "documentSpecs/" + id);
       const resp = await ApiService.get(url + "documentSpecs/" + id);
@@ -156,6 +157,14 @@ export default {
   async getNewLicense({ commit }) {
     try {
       const resp = await ApiService.get(url + "newLicenses/user/" + userId);
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+  async getDraft({ commit }, id) {
+    try {
+      const resp = await ApiService.get(url + "newLicenses/" + id);
       return resp;
     } catch (error) {
       return error;
