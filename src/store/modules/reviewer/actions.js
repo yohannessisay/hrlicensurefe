@@ -94,8 +94,18 @@ export default {
   async getApplication(context, applicationId) {
     try {
       const url = baseUrl + "/newLicenses/" + applicationId;
-      const urll = baseUrl + "/newLicenses/125";
+      // const urll = baseUrl + "/newLicenses/125";
+      const urll = baseUrl + "/newLicenses/177";
       const resp = await ApiService.get(urll);
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+  async getDocumentTypes() {
+    try {
+      const url = baseUrl + "/documentTypes";
+      const resp = await ApiService.get(url);
       return resp;
     } catch (error) {
       return error;
