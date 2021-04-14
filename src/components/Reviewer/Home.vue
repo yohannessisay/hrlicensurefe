@@ -25,14 +25,21 @@
             v-if="index < 5"
             class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
           >
-            <div class="p-4 w-48 h-64" @Click="detail(`/unfinishedDetail`, item.id, item.applicant.id)">
+            <div
+              class="p-4 w-48 h-64"
+              @Click="detail(`/unfinishedDetail`, item.id, item.applicant.id)"
+            >
               <div class="flex content-center justify-center">
                 <!-- <img class="box-shadow-pop" v-bind:src="item.picture.large" /> -->
               </div>
               <h4
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
               >
-                <!-- {{ item.name.first + " " + item.name.last }} -->
+                {{
+                  item.applicant.profile.name +
+                    " " +
+                    item.applicant.profile.fatherName
+                }}
               </h4>
               <h6
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center">
@@ -71,7 +78,10 @@
             v-if="index < 5"
             class="flex justify-center items-center ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
           >
-            <div class="p-4 w-48 h-64" @Click="detail(`/detail`, item.id, item.applicant.id)">
+            <div
+              class="p-4 w-48 h-64" 
+              @Click="detail(`/detail`, item.id, item.applicant.id)"
+            >
               <div class="flex content-center justify-center">
                 <router-link to="/newlicense">
                   <!-- <img class="box-shadow-pop" v-bind:src="item.picture.large" /> -->
@@ -80,7 +90,11 @@
               <h4
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
               >
-                <!-- {{ item.name.first + " " + item.name.last }} -->
+                {{
+                  item.applicant.profile.name +
+                    " " +
+                    item.applicant.profile.fatherName
+                }}
               </h4>
               <h6
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center">
@@ -137,7 +151,7 @@
                 <h4
                   class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
                 >
-                  <!-- {{ item.name.first + " " + item.name.last }} -->
+                  <!-- {{ item.applicant.profile.name + " " + item.applicant.profile.fatherName }} -->
                 </h4>
                 <h6
                   class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
