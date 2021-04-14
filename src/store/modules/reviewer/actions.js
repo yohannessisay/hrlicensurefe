@@ -1,6 +1,6 @@
 import ApiService from "../../../services/api.service";
 
-const baseUrl = "http://localhost:5000/api";
+const baseUrl = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api";
 
 export default {
   async getUnfinished(context, id) {
@@ -26,7 +26,7 @@ export default {
   async getUnassigned() {
     try {
       // const resp = await ApiService.get("https://randomuser.me/api/?results=10");
-      const resp = await ApiService.get("http://localhost:5000/api/newLicenses/status/3");
+      const resp = await ApiService.get(baseUrl + "/newLicenses/status/3");
       return resp;
     } catch (error) {
       const resp = error;
@@ -83,7 +83,7 @@ export default {
   async assignReviewer({ commit }, assign) {
     try {
       const resp = await ApiService.post(
-        "http://localhost:5000/api/licenseReviewers/assign",
+        baseUrl + "/licenseReviewers/assign",
         assign
       );
       return resp;

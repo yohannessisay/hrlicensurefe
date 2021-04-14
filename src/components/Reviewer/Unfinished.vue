@@ -21,6 +21,10 @@
             >
               <div class="flex content-center justify-center">
                 <!-- <img class="box-shadow-pop" v-bind:src="item.picture.large" /> -->
+                <img
+                  class="box-shadow-pop"
+                  src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
+                />
               </div>
               <h4
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center"

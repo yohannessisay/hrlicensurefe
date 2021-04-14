@@ -10,7 +10,7 @@ import {
   ADD_PROFILE_ERROR
 } from "./mutation-types";
 
-const url = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api/";
+const baseUrl = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api";
 
 export default {
   async setProfile({ commit }, profile) {
@@ -40,7 +40,7 @@ export default {
   },
   async getUserTypes() {
     try {
-      const resp = await ApiService.get("http://localhost:5000/api/lookups/userTypes");
+      const resp = await ApiService.get(baseUrl + "/lookups/userTypes");
       return resp;
     } catch (error) {
       const resp = error;
@@ -49,7 +49,7 @@ export default {
   },
   async getExpertLevels() {
     try {
-      const resp = await ApiService.get("http://localhost:5000/api/lookups/expertLevels");
+      const resp = await ApiService.get(baseUrl + "/lookups/expertLevels");
       return resp;
     } catch (error) {
       const resp = error;
@@ -58,7 +58,7 @@ export default {
   },
   async getHealthOffice() {
     try {
-      const resp = await ApiService.get("http://localhost:5000/api/lookups/healthOffices");
+      const resp = await ApiService.get(baseUrl + "/lookups/healthOffices");
       return resp;
     } catch (error) {
       const resp = error;
@@ -67,7 +67,7 @@ export default {
   },
   async getMaritalStatus() {
     try {
-      const resp = await ApiService.get("http://localhost:5000/api/lookups/maritalStatuses");
+      const resp = await ApiService.get(baseUrl + "/lookups/maritalStatuses");
       return resp;
     } catch (error) {
       const resp = error;
@@ -76,7 +76,7 @@ export default {
   },
   async getRegions() {
     try {
-      const resp = await ApiService.get("http://localhost:5000/api/lookups/regions");
+      const resp = await ApiService.get(baseUrl + "/lookups/regions");
       return resp;
     } catch (error) {
       const resp = error;
@@ -86,7 +86,7 @@ export default {
   async getWoredas(context, zoneId) {
     try {
       console.log(zoneId);
-      const url = "http://localhost:5000/api/lookups/woredas/" + zoneId;
+      const url = baseUrl + "/lookups/woredas/" + zoneId;
       const resp = await ApiService.get(url);
       return resp;
     } catch (error) {
@@ -97,7 +97,7 @@ export default {
   async getZones(context, regionId) {
     try {
       console.log(regionId);
-      const url = "http://localhost:5000/api/lookups/zones/" + regionId;
+      const url = baseUrl + "/lookups/zones/" + regionId;
       const resp = await ApiService.get(url);
       return resp;
     } catch (error) {
@@ -109,7 +109,7 @@ export default {
     commit(ADD_PROFILE_LOADING);
     try {
       const resp = await ApiService.post(
-        "http://localhost:5000/api/profiles/add",
+        baseUrl + "/profiles/add",
         profile
       );
       commit(ADD_PROFILE_SUCCESS);
@@ -121,7 +121,7 @@ export default {
   },
   async getProfiles() {
     try {
-      const resp = await ApiService.get(url + "profiles/");
+      const resp = await ApiService.get(baseUrl + "/profiles/");
       return resp;
     } catch (error) {
       return error;
@@ -130,7 +130,7 @@ export default {
   async getProfileById({ commit }, id) {
     commit(ADD_PROFILE_LOADING);
     try {
-      const resp = await ApiService.get(url + "profiles/" + id);
+      const resp = await ApiService.get(baseUrl + "/profiles/" + id);
       return resp;
     } catch (error) {
       return error;
