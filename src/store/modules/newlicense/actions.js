@@ -124,7 +124,7 @@ export default {
   },
   async getProfile(id) {
     try {
-      const resp = await ApiService.get(url + "profiles/" + userId);
+      const resp = await ApiService.get(url + "profiles/1");
       return resp;
     } catch (error) {
       return error;
@@ -157,7 +157,8 @@ export default {
 
   async getNewLicense({ commit }) {
     try {
-      const resp = await ApiService.get(url + "newLicenses/user/2");
+      // const resp = await ApiService.get(url + "newLicenses/user/" + userId);
+      const resp = await ApiService.get("https://hrlicensurebe.dev.k8s.sandboxaddis.com/api/newLicenses/user/2");
       return resp;
     } catch (error) {
       return error;

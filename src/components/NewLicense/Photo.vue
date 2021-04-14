@@ -80,7 +80,7 @@ export default {
     const route = useRoute();
 
     const basePath =
-      "https://hrlicensurebe.dev.k8s.sandboxaddis.com/public/uploads/146/1618380626106.jpeg";
+      "https://hrlicensurebe.dev.k8s.sandboxaddis.com/";
 
     let photoFile = ref("");
     let photoFileP = ref("");
@@ -226,6 +226,7 @@ export default {
         // isImage.value = true;
         photoFile.value = draftData.documents[5];
         showPreview.value = true;
+        console.log(draftData.documents);
         filePreview.value = basePath;
         console.log(filePreview.value);
       }

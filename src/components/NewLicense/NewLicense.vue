@@ -333,7 +333,6 @@ export default {
     fetchDraft(id) {
       this.$store.dispatch("newlicense/getDraft", id).then((res) => {
         const results = res.data.data;
-        console.log(results.documents);
         this.$store.dispatch("newlicense/setDraft", results);
       });
     },
