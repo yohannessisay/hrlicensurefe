@@ -13,7 +13,7 @@
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-10">
           <div class="flex">
             <div class="flex flex-col mb-medium w-1/2 mr-12">
-              <label class="text-primary-700">ApplicantType</label>
+              <label class="text-primary-700">Applicant Type</label>
               <select class="max-w-3xl" v-model="licenseInfo.applicantTypeId">
                 <option
                   v-for="applicant in applicantTypes"
@@ -40,43 +40,38 @@
               </select>
             </div>
           </div>
-          <div class="flex">
-            <div class="flex w-1/2 mb-medium  mr-12">
-              <div class="flex flex-col w-full">
-                <label class="text-primary-700">Institution Type</label>
-                <div class="flex w-full">
-                  <div
-                    class="flex flex-col mb-small w-1/3"
-                    v-for="institution in institutions"
-                    v-bind:key="institution.name"
-                  >
-                    <div class="flex py-2">
-                      <input
-                        v-model="licenseInfo.education.institutionId"
-                        class="flex flex-col"
-                        type="radio"
-                        name="institution"
-                        :value="institution.id"
-                      />
-                      <label class="ml-tiny flex flex-col text-primary-700">
-                        {{ institution.name }}
-                      </label>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
 
-          <div class="flex justify-center mb-8">
-            <button click="submit()">
-              Next
-            </button>
-            <button variant="outline">
-              Finish Later
-            </button>
+          <div class="flex flex-col mb-medium w-1/2 mr-12">
+            <label class="text-primary-700">Institution</label>
+            <select
+              class="max-w-3xl"
+              v-model="licenseInfo.education.institutionId"
+            >
+              <option
+                v-for="institution in institutions"
+                v-bind:key="institution.name"
+                v-bind:value="institution.id"
+              >
+                {{ institution.name }}
+              </option>
+            </select>
           </div>
         </form>
+        <div v-if="this.showButtons" class="flex justify-center mb-8">
+          <button @click="submit">
+            Next
+          </button>
+          <button @click="draft(this.buttons[0].action)" variant="outline">
+            {{ this.buttons[0]["name"] }}
+          </button>
+          <button
+            v-if="this.buttons.length > 2"
+            @click="withdraw(this.buttons[2].action)"
+            variant="outline"
+          >
+            {{ this.buttons[2]["name"] }}
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -84,17 +79,38 @@
 
 <script>
 import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
+import { mapGetters, mapActions } from "vuex";
+
 export default {
   props: ["activeState"],
+
   components: { TitleWithIllustration },
-  mounted() {
+
+  async created() {
     this.fetchApplicantType();
     this.fetchInstitutions();
     this.fetchDepartments();
+    setTimeout(() => {
+      this.buttons = this.getButtons;
+      this.showButtons = true;
+    }, 5000);
+    this.draftId = this.$route.params.id;
+    if (this.draftId != undefined) {
+      setTimeout(() => {
+        this.fetchDraft();
+      }, 5000);
+    }
+  },
+
+  computed: {
+    ...mapGetters({
+      getButtons: "newlicense/getButtons",
+      getDraft: "newlicense/getDraft",
+    }),
   },
   data: () => ({
     licenseInfo: {
-      applicantId: localStorage.getItem("userId"),
+      applicantId: 2,
       applicantTypeId: "",
       education: {
         departmentId: "",
@@ -104,9 +120,24 @@ export default {
     applicantTypes: [],
     institutions: [],
     departments: [],
+    buttons: [],
+    showButtons: false,
   }),
 
   methods: {
+    draft(action) {
+      let license = {
+        action: action,
+        data: {
+          applicantId: this.licenseInfo.applicantId,
+          applicantTypeId: this.licenseInfo.applicantTypeId,
+          education: {
+            departmentId: this.licenseInfo.education.departmentId,
+            institutionId: this.licenseInfo.education.institutionId,
+          },
+        },
+      };
+    },
     submit() {
       this.$emit("changeActiveState");
       let license = {
@@ -127,7 +158,8 @@ export default {
       });
     },
     fetchInstitutions() {
-      this.$store.dispatch("newlicense/getInstitutionType").then((res) => {
+      this.$store.dispatch("newlicense/getInstitution").then((res) => {
+        console.log(res.data);
         const results = res.data.data;
         this.institutions = results;
       });
@@ -137,6 +169,15 @@ export default {
         const results = res.data.data;
         this.departments = results;
       });
+    },
+    fetchDraft() {
+      let draftData = this.getDraft;
+      this.licenseInfo.applicantId = draftData.applicantId;
+      this.licenseInfo.applicantTypeId = draftData.applicantTypeId;
+      this.licenseInfo.education.departmentId =
+        draftData.education.departmentId;
+      this.licenseInfo.education.institutionId =
+        draftData.education.institutionId;
     },
   },
 };

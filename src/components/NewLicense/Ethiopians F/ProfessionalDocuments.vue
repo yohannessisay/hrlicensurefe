@@ -1,6 +1,6 @@
 <template>
   <div class="flex justify-center">
-    <div class="w-screen max-w-6xl">
+    <div class="w-screen max-w-full">
       <div
         class="flex flex-col pt-large w-full bg-white blue-box-shadow-light rounded "
       >
@@ -9,123 +9,122 @@
           message="Professional Documents"
           class="mt-8"
         />
-        <form @submit.prevent="submit" class="mx-auto mt-6">
-          <div class="flex justify-center">
-            <div class="ml-4" style="width:220px">
-              <span v-if="showUpload">
-                <label class="text-primary-700"
-                  >Upload Certificate:
-                  <div class="dropbox">
-                    <input
-                      type="file"
-                      id="photoFile"
-                      ref="photoFile"
-                      v-on:change="handleCertificateUpload()"
-                      style="margin-bottom: 15px !important;"
-                    />
-                    <p>
-                      Drag your file(s) here to begin<br />
-                      or click to browse
-                    </p>
-                  </div>
-                </label>
-              </span>
+        <div class="flex-row justify-center px-8 py-4">
+          <div class="ml-4" style="width:250px">
+            <span v-if="showUpload">
+              <label class="text-primary-700 text-lg"
+                >Professional Document:
+                <div class="dropbox">
+                  <input
+                    type="file"
+                    id="photoFile"
+                    ref="photoFile"
+                    v-on:change="handleCertificateUpload()"
+                    style="margin-bottom: 15px !important;"
+                  />
+                  <p>
+                    Drag your file(s) here to begin<br />
+                    or click to browse
+                  </p>
+                </div>
+              </label>
+            </span>
 
-              <picture v-if="!showUpload && isImage">
-                <p>
-                  <a href="javascript:void(0)" @click="reset()">Upload again</a>
-                </p>
-                <img v-bind:src="filePreview" v-show="showPreview" />
-              </picture>
+            <picture v-if="!showUpload && isImage">
+              <p>
+                <a href="javascript:void(0)" @click="reset()">Upload again</a>
+              </p>
+              <img v-bind:src="filePreview" v-show="showPreview" />
+            </picture>
 
-              <span v-if="!showUpload && !isImage">
-                <img :src="filePreview" alt="" class="preview" />
-              </span>
+            <span v-if="!showUpload && !isImage">
+              <img :src="filePreview" alt="" class="preview" />
+            </span>
 
-              <h6 style="margin-top: 15px !important;">
-                Your photo should be passport size
-              </h6>
-            </div>
+            <h6 style="margin-top: 15px !important;">
+              Your photo should be passport size
+            </h6>
+          </div>
 
-            <div class="ml-4" style="width:220px">
-              <span v-if="showDiplomaUpload">
-                <label class="text-primary-700"
-                  >Upload Diploma:
-                  <div class="dropbox">
-                    <input
-                      type="file"
-                      id="diplomaFile"
-                      ref="diplomaFile"
-                      v-on:change="handleDiplomaUpload()"
-                      style="margin-bottom: 15px !important;"
-                    />
-                    <p>
-                      Drag your file(s) here to begin<br />
-                      or click to browse
-                    </p>
-                  </div>
-                </label>
-              </span>
+          <div class="ml-4" style="width:250px">
+            <span v-if="showDiplomaUpload">
+              <label class="text-primary-700 text-lg"
+                >Upload Diploma:
+                <div class="dropbox">
+                  <input
+                    type="file"
+                    id="diplomaFile"
+                    ref="diplomaFile"
+                    v-on:change="handleDiplomaUpload()"
+                    style="margin-bottom: 15px !important;"
+                  />
+                  <p>
+                    Drag your file(s) here to begin<br />
+                    or click to browse
+                  </p>
+                </div>
+              </label>
+            </span>
 
-              <picture v-if="!showDiplomaUpload && isDiplomaImage">
-                <p>
-                  <a href="javascript:void(0)" @click="resetDiploma()"
-                    >Upload again</a
-                  >
-                </p>
-                <img v-bind:src="diplomaPreview" v-show="showDiplomaPreview" />
-              </picture>
+            <picture v-if="!showDiplomaUpload && isDiplomaImage">
+              <p>
+                <a href="javascript:void(0)" @click="resetDiploma()"
+                  >Upload again</a
+                >
+              </p>
+              <img v-bind:src="diplomaPreview" v-show="showDiplomaPreview" />
+            </picture>
 
-              <span v-if="!showDiplomaUpload && !isDiplomaImage">
-                <img :src="diplomaPreview" alt="" class="preview" />
-              </span>
+            <span v-if="!showDiplomaUpload && !isDiplomaImage">
+              <img :src="diplomaPreview" alt="" class="preview" />
+            </span>
 
-              <h6 style="margin-top: 15px !important;">
-                Your photo should be passport size
-              </h6>
-            </div>
+            <h6 style="margin-top: 15px !important;">
+              Your photo should be passport size
+            </h6>
+          </div>
 
-            <div class="ml-4" style="width:220px">
-              <span v-if="showTranscriptUpload">
-                <label class="text-primary-700"
-                  >Upload Transcript:
-                  <div class="dropbox">
-                    <input
-                      type="file"
-                      id="transcriptFile"
-                      ref="transcriptFile"
-                      v-on:change="handleTranscriptUpload()"
-                      style="margin-bottom: 15px !important;"
-                    />
-                    <p>
-                      Drag your file(s) here to begin<br />
-                      or click to browse
-                    </p>
-                  </div>
-                </label>
-              </span>
+          <div class="ml-4" style="width:250px">
+            <span v-if="showTranscriptUpload">
+              <label class="text-primary-700 text-lg"
+                >Upload Transcript:
+                <div class="dropbox">
+                  <input
+                    type="file"
+                    id="transcriptFile"
+                    ref="transcriptFile"
+                    v-on:change="handleTranscriptUpload()"
+                    style="margin-bottom: 15px !important;"
+                  />
+                  <p>
+                    Drag your file(s) here to begin<br />
+                    or click to browse
+                  </p>
+                </div>
+              </label>
+            </span>
 
-              <picture v-if="!showTranscriptUpload && isTranscriptImage">
-                <p>
-                  <a href="javascript:void(0)" @click="resetTranscript()"
-                    >Upload again</a
-                  >
-                </p>
-                <img
-                  v-bind:src="transcriptPreview"
-                  v-show="showTranscriptPreview"
-                />
-              </picture>
+            <picture v-if="!showTranscriptUpload && isTranscriptImage">
+              <p>
+                <a href="javascript:void(0)" @click="resetTranscript()"
+                  >Upload again</a
+                >
+              </p>
+              <img
+                v-bind:src="transcriptPreview"
+                v-show="showTranscriptPreview"
+              />
+            </picture>
 
-              <span v-if="!showTranscriptUpload && !isTranscriptImage">
-                <img :src="transcriptPreview" alt="" class="preview" />
-              </span>
+            <span v-if="!showTranscriptUpload && !isTranscriptImage">
+              <img :src="transcriptPreview" alt="" class="preview" />
+            </span>
 
-              <h6 style="margin-top: 15px !important;">
-                Your photo should be passport size
-              </h6>
-            </div>
-
+            <h6 style="margin-top: 15px !important;">
+              Your photo should be passport size
+            </h6>
+          </div>
+          <!-- 
             <div class="ml-4" style="width:220px">
               <span v-if="showExperienceUpload">
                 <label class="text-primary-700"
@@ -165,20 +164,16 @@
               <h6 style="margin-top: 15px !important;">
                 Your photo should be passport size
               </h6>
-            </div>
-          </div>
-
-          <div class="flex justify-center mb-8 mt-medium">
-            <div>
-              <button>Next</button>
-            </div>
-            <div>
-              <button variant="outline">
-                Finish Later
-              </button>
-            </div>
-          </div>
-        </form>
+            </div> -->
+        </div>
+        <div class="flex justify-center mb-8">
+          <button @click="submit">
+            Next
+          </button>
+          <button @click="draft(this.buttons[0].action)" variant="outline">
+            {{ this.buttons[0]["name"] }}
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -211,20 +206,66 @@ export default {
       showTranscriptUpload: true,
       isTranscriptImage: true,
 
-      experienceFile: "",
-      showExperiencePreview: false,
-      experiencePreview: "",
-      showExperienceUpload: true,
-      isExperienceImage: true,
+      // experienceFile: "",
+      // showExperiencePreview: false,
+      // experiencePreview: "",
+      // showExperienceUpload: true,
+      // isExperienceImage: true,
+
+      buttons: [],
+      showButtons: false,
+      documentSpec: [],
+      licenseInfo: "",
+      userId: 2,
+
+      photo: "",
+      passport: "",
+      healthExamCert: "",
+      workExperience: "",
+      englishLanguage: "",
+      professionalDoc: [],
+      herqa: "",
+      educationalDocs: [],
+      coc: "",
+      supportLetter: "",
+      serviceFee: "",
     };
   },
   computed: {
     ...mapGetters({
       getPersonalDoc: "newlicense/getProfessionalDocuments",
+      getButtons: "newlicense/getButtons",
+      getLicense: "newlicense/getLicense",
+      getDocumentSpec: "newlicense/getDocumentSpec",
+
+      getPhoto: "newlicense/getPhoto",
+      getPassport: "newlicense/getPassport",
+      getHealthExamCert: "newlicense/getHealthExamCert",
+      getEnglishLanguage: "newlicense/getEnglishLanguage",
+      getHerqa: "newlicense/getHerqa",
+      getSupportLetter: "newlicense/getSupportLetter",
+      getCoc: "newlicense/getCoc",
+      getEducationalDocuments: "newlicense/getEducationalDocuments",
+      getWorkExperience: "newlicense/getWorkExperience",
+      getServiceFee: "newlicense/getServiceFee",
     }),
   },
   created() {
     this.license = this.getLicense;
+    this.buttons = this.getButtons;
+    this.documentSpec = this.getDocumentSpec;
+
+    this.photo = this.getPhoto;
+    this.passport = this.getPassport;
+    this.healthExamCert = this.getHealthExamCert;
+    this.englishLanguage = this.getEnglishLanguage;
+    this.professionalDoc = this.getProfessionalDocuments;
+    this.herqa = this.getHerqa;
+    this.supportLetter = this.getSupportLetter;
+    this.coc = this.getCoc;
+    this.educationalDocs = this.getEducationalDocuments;
+    this.workExperience = this.getWorkExperience;
+    this.serviceFee = this.getServiceFee;
   },
   methods: {
     ...mapActions(["setProfessionalDoc"]),
@@ -250,13 +291,13 @@ export default {
       this.transcriptPreview = "";
       this.isTranscriptImage = true;
     },
-    resetExperience() {
-      this.showExperienceUpload = true;
-      this.showExperiencePreview = false;
-      this.experienceFile = "";
-      this.experiencePreview = "";
-      this.isExperienceImage = true;
-    },
+    // resetExperience() {
+    //   this.showExperienceUpload = true;
+    //   this.showExperiencePreview = false;
+    //   this.experienceFile = "";
+    //   this.experiencePreview = "";
+    //   this.isExperienceImage = true;
+    // },
     handleCertificateUpload() {
       this.showUpload = false;
       this.photoFile = this.$refs.photoFile.files[0];
@@ -329,38 +370,113 @@ export default {
         }
       }
     },
-    handleExperienceUpload() {
-      this.showExperienceUpload = false;
-      this.experienceFile = this.$refs.experienceFile.files[0];
-      let reader = new FileReader();
+    // handleExperienceUpload() {
+    //   this.showExperienceUpload = false;
+    //   this.experienceFile = this.$refs.experienceFile.files[0];
+    //   let reader = new FileReader();
 
-      reader.addEventListener(
-        "load",
-        function() {
-          this.showExperiencePreview = true;
-          this.experiencePreview = reader.result;
-        }.bind(this),
-        false
-      );
-      if (this.experienceFile) {
-        if (/\.(jpe?g|png|gif)$/i.test(this.experienceFile.name)) {
-          this.isExperienceImage = true;
-          reader.readAsDataURL(this.experienceFile);
-        } else if (/\.(pdf)$/i.test(this.experienceFile.name)) {
-          this.isExperienceImage = false;
-          reader.readAsText(this.experienceFile);
-        }
-      }
-    },
+    //   reader.addEventListener(
+    //     "load",
+    //     function() {
+    //       this.showExperiencePreview = true;
+    //       this.experiencePreview = reader.result;
+    //     }.bind(this),
+    //     false
+    //   );
+    //   if (this.experienceFile) {
+    //     if (/\.(jpe?g|png|gif)$/i.test(this.experienceFile.name)) {
+    //       this.isExperienceImage = true;
+    //       reader.readAsDataURL(this.experienceFile);
+    //     } else if (/\.(pdf)$/i.test(this.experienceFile.name)) {
+    //       this.isExperienceImage = false;
+    //       reader.readAsText(this.experienceFile);
+    //     }
+    //   }
+    // },
     submit() {
       this.$emit("changeActiveState");
-      let file = [
-        this.photoFile,
-        this.diplomaFile,
-        this.transcriptFile,
-        this.experienceFile,
-      ];
+      let file = [this.photoFile, this.diplomaFile, this.transcriptFile];
       this.$store.dispatch("newlicense/setProfessionalDoc", file);
+    },
+    draft(action) {
+      let license = {
+        action: action,
+        data: {
+          applicantId: this.userId,
+          applicantTypeId: this.license.applicantTypeId,
+          education: {
+            institutionId: this.license.education.departmentId,
+            departmentId: this.license.education.institutionId,
+          },
+        },
+      };
+      this.$store.dispatch("newlicense/addNewLicense", license).then((res) => {
+        let licenseId = res.data.data.id;
+        let formData = new FormData();
+        formData.append(this.documentSpec[0].documentType.code, this.photo);
+        formData.append(this.documentSpec[1].documentType.code, this.passport);
+        formData.append(
+          this.documentSpec[2].documentType.code,
+          this.healthExamCert
+        );
+        formData.append(
+          this.documentSpec[3].documentType.code,
+          this.serviceFee
+        );
+        formData.append(
+          this.documentSpec[4].documentType.code,
+          this.workExperience
+        );
+        formData.append(
+          this.documentSpec[5].documentType.code,
+          this.englishLanguage
+        );
+
+        formData.append(this.documentSpec[6].documentType.code, this.photoFile);
+        formData.append(this.documentSpec[7].documentType.code, this.diplomaFile);
+        formData.append(this.documentSpec[8].documentType.code, this.transcriptFile);
+
+        formData.append(this.documentSpec[9].documentType.code, this.coc);
+        if (this.educationalDocs != undefined) {
+          formData.append(
+            this.documentSpec[10].documentType.code,
+            this.educationalDocs[0]
+          );
+          formData.append(
+            this.documentSpec[11].documentType.code,
+            this.educationalDocs[1]
+          );
+          formData.append(
+            this.documentSpec[12].documentType.code,
+            this.educationalDocs[2]
+          );
+          formData.append(
+            this.documentSpec[13].documentType.code,
+            this.educationalDocs[3]
+          );
+          formData.append(
+            this.documentSpec[14].documentType.code,
+            this.educationalDocs[4]
+          );
+        }
+
+        formData.append(
+          this.documentSpec[15].documentType.code,
+          this.supportLetter
+        );
+        formData.append(this.documentSpec[16].documentType.code, this.herqa);
+
+
+        let payload = { document: formData, id: licenseId };
+        this.$store
+          .dispatch("newlicense/uploadDocuments", payload)
+          .then((res) => {
+            if (res.data.status == "Success") {
+              this.$router.push({ path: "/menu" });
+            }
+          })
+          .catch((err) => {});
+      });
     },
   },
 };

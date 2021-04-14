@@ -1,20 +1,20 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Home from "../views/Home.vue";
+import Landing from "../components/Landing/Landing.vue";
 const routes = [
   {
     path: "/",
-    name: "Home",
-    component: Home
-  },
-  {
-    path: "/landing",
     name: "Landing",
-    component: () => import("../components/Landing/Landing.vue")
+    component: Landing,
   },
+  // {
+  //   path: "/landing",
+  //   name: "Landing",
+  //   component: () => import("../components/Landing/Landing.vue"),
+  // },
   {
     path: "/addProfile",
     name: "NewProfile",
-    component: () => import("../components/profile/NewProfile.vue")
+    component: () => import("../components/profile/NewProfile.vue"),
   },
   {
     path: "/signup",
@@ -24,57 +24,57 @@ const routes = [
   {
     path: "/login",
     name: "Login",
-    component: () => import("../views/Login.vue")
+    component: () => import("../views/Login.vue"),
   },
   {
     path: "/menu",
     name: "Menu",
-    component: () => import("../views/Menu.vue")
+    component: () => import("../views/Menu.vue"),
   },
   {
     path: "/license",
     name: "License",
-    component: () => import("../views/License.vue")
+    component: () => import("../views/License.vue"),
   },
   {
     path: "/newlicense",
     name: "NewLicense",
-    component: () => import("../components/NewLicense/NewLicense.vue")
+    component: () => import("../components/NewLicense/NewLicense.vue"),
   },
   {
     path: "/lis",
     name: "LIs",
-    component: () => import("../components/NewLicense/LicenseSummary.vue")
+    component: () => import("../components/NewLicense/LicenseSummary.vue"),
   },
   {
     path: "/renewal",
     name: "Renewal",
-    component: () => import("../components/Renewal/Renewal.vue")
+    component: () => import("../components/Renewal/Renewal.vue"),
   },
   {
     path: "/verification",
     name: "Verification",
-    component: () => import("../components/Verification/Verification.vue")
+    component: () => import("../components/Verification/Verification.vue"),
   },
   {
     path: "/goodstanding",
     name: "GoodStanding",
-    component: () => import("../components/GoodStanding/GoodStanding.vue")
+    component: () => import("../components/GoodStanding/GoodStanding.vue"),
   },
   {
     path: "/submitted",
     name: "Submitted",
-    component: () => import("../views/Submitted.vue")
+    component: () => import("../views/Submitted.vue"),
   },
   {
     path: "/renewalSubmitted",
     name: "renewalSubmitted",
-    component: () => import("../views/RenewalSubmitted.vue")
+    component: () => import("../views/RenewalSubmitted.vue"),
   },
   {
     path: "/verificationSubmitted",
     name: "verificationSubmitted",
-    component: () => import("../views/VerificationSubmitted.vue")
+    component: () => import("../views/VerificationSubmitted.vue"),
   },
   {
     path: "/goodStandingSubmitted",
@@ -123,10 +123,16 @@ const routes = [
     name: "lang",
     component: () => import("../components/NewLicense/Photo.vue")
   },
+
   {
     path: "/evaluate/:applicationId",
     name: "evaluate",
     component: () => import("../components/Reviewer/Evaluate.vue")
+  },
+  {
+    path: "/draft",
+    name: "draft",
+    component: () => import("../views/Draft.vue"),
   },
   {
     path: "/detail/:applicationId/:applicantId",
@@ -150,26 +156,18 @@ const routes = [
     name: "unassignedDetail",
     component: () =>
       import("../components/Reviewer/Detail/UnassignedDetail.vue")
-  },
-  
+  }
 ];
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
-  routes
+  routes,
 });
-// router.beforeEach((to, from, next) => {
-//   const auth = localStorage.getItem("token");
-//   if (
-//     !auth &&
-//     to.path !== "/login" &&
-//     to.path !== "/signup" &&
-//     to.path !== "/landing" &&
-//     to.path !== "/"
-//   )
-//     next("/login");
-//   else next();
-// });
+router.beforeEach((to, from, next) => {
+  const auth = localStorage.getItem("token");
+  if (!auth && to.path !== "/landing" && to.path !== "/") next("/landing");
+  else next();
+});
 
 router.beforeResolve((to, from, next) => {
   // If this isn't an initial page load.

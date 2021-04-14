@@ -1,5 +1,5 @@
 <template>
-  <div class="fixed top-0 right-0 m-6 w-120 pt-4 ">
+  <div style="width: 340px" class="fixed top-0 right-0 m-6 w-180 pt-4 mr-large">
     <div class="  bg-red-200 rounded-lg px-4 py-3 box-shadow-pop" role="alert">
       <div class="flex">
         <div class="py-1"><RenderIllustration illustration="Error" /></div>
@@ -21,9 +21,9 @@ export default {
   props: {
     message: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
-  data() {}
+  data() {},
 };
 </script>

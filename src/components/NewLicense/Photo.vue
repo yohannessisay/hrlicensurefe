@@ -48,18 +48,19 @@
               </h6>
             </div>
           </div>
-
-          <div class="flex justify-center mb-8 mt-medium">
-            <div>
-              <button>Next</button>
-            </div>
-            <div>
-              <button variant="outline">
-                Finish Later
-              </button>
-            </div>
-          </div>
         </form>
+        <div v-if="buttons" class="flex justify-center mb-8">
+          <button @click="submit">
+            Next
+          </button>
+          <button
+            class="buttons[0].class"
+            @click="draft(buttons[0].action)"
+            variant="outline"
+          >
+            {{ buttons[0].name }}
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -69,12 +70,16 @@
 import { ref, onMounted } from "vue";
 import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
 import { useStore } from "vuex";
+import { useRouter } from "vue-router";
 
 export default {
   components: { TitleWithIllustration },
   props: ["activeState"],
   setup(props, { emit }) {
     const store = useStore();
+    const route = useRouter();
+
+    const basePath = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/";
 
     let photoFile = ref("");
     let photoFileP = ref("");
@@ -82,6 +87,23 @@ export default {
     let filePreview = ref("");
     let showUpload = ref(true);
     let isImage = ref(false);
+
+    let buttons = ref([]);
+    let documentSpecs = ref([]);
+    let userId = ref(2);
+    let licenseInfo = ref("");
+    let draftData = ref("");
+
+    let passport = ref("");
+    let healthExamCert = ref("");
+    let englishLanguage = ref("");
+    let professionalDoc = ref([]);
+    let herqa = ref("");
+    let supportLetter = ref("");
+    let coc = ref("");
+    let educationDoc = ref([]);
+    let workExperience = ref("");
+    let serviceFee = ref("");
 
     const reset = () => {
       showUpload.value = true;
@@ -94,6 +116,8 @@ export default {
     const handleFileUpload = () => {
       showUpload.value = false;
       photoFile.value = photoFileP.value.files[0];
+      console.log(photoFile.value);
+
       let reader = new FileReader();
 
       reader.addEventListener(
@@ -101,6 +125,7 @@ export default {
         function() {
           showPreview.value = true;
           filePreview.value = reader.result;
+          console.log(filePreview.value);
         },
         false
       );
@@ -115,11 +140,93 @@ export default {
         }
       }
     };
+    buttons = store.getters["newlicense/getButtons"];
+    documentSpecs = store.getters["newlicense/getDocumentSpec"];
+    licenseInfo = store.getters["newlicense/getLicense"];
+
+    passport = store.getters["newlicense/getPassport"];
+    healthExamCert = store.getters["newlicense/getHealthExamCert"];
+    englishLanguage = store.getters["newlicense/getEnglishLanguage"];
+    professionalDoc = store.getters["newlicense/getProfessionalDocuments"];
+    herqa = store.getters["newlicense/getHerqa"];
+    supportLetter = store.getters["newlicense/getSupportLetter"];
+    coc = store.getters["newlicense/getCoc"];
+    educationDoc = store.getters["newlicense/getEducationalDocuments"];
+    workExperience = store.getters["newlicense/getWorkExperience"];
+    serviceFee = store.getters["newlicense/getServiceFee"];
+
     const submit = () => {
       emit("changeActiveState");
       store.dispatch("newlicense/setPhoto", photoFile);
     };
-    onMounted(() => {});
+    const draft = (action) => {
+      let license = {
+        action: action,
+        data: {
+          applicantId: userId.value,
+          applicantTypeId: licenseInfo.applicantTypeId,
+          education: {
+            departmentId: licenseInfo.education.departmentId,
+            institutionId: licenseInfo.education.institutionId,
+          },
+        },
+      };
+      store.dispatch("newlicense/addNewLicense", license).then((res) => {
+        let licenseId = res.data.data.id;
+        let formData = new FormData();
+        formData.append(documentSpecs[0].documentType.code, photoFile);
+        formData.append(documentSpecs[1].documentType.code, passport);
+        formData.append(documentSpecs[2].documentType.code, healthExamCert);
+        formData.append(documentSpecs[3].documentType.code, serviceFee);
+        formData.append(documentSpecs[4].documentType.code, workExperience);
+        formData.append(documentSpecs[5].documentType.code, englishLanguage);
+        if (professionalDoc != undefined) {
+          formData.append(
+            documentSpecs[6].documentType.code,
+            professionalDoc[0]
+          );
+          formData.append(
+            documentSpecs[7].documentType.code,
+            professionalDoc[1]
+          );
+          formData.append(
+            documentSpecs[8].documentType.code,
+            professionalDoc[2]
+          );
+        }
+        formData.append(documentSpecs[9].documentType.code, coc);
+        if (educationDoc != undefined) {
+          formData.append(documentSpecs[10].documentType.code, educationDoc[0]);
+          formData.append(documentSpecs[11].documentType.code, educationDoc[1]);
+          formData.append(documentSpecs[12].documentType.code, educationDoc[2]);
+          formData.append(documentSpecs[13].documentType.code, educationDoc[3]);
+          formData.append(documentSpecs[14].documentType.code, educationDoc[4]);
+        }
+
+        formData.append(documentSpecs[15].documentType.code, supportLetter);
+
+        let payload = { document: formData, id: licenseId };
+        store
+          .dispatch("newlicense/uploadDocuments", payload)
+          .then((res) => {
+            if (res.data.status == "Success") {
+              route.push({ path: "/menu" });
+            }
+          })
+          .catch((err) => {});
+      });
+    };
+    onMounted(() => {
+      buttons = store.getters["newlicense/getButtons"];
+      draftData = store.getters["newlicense/getDraft"];
+      if (draftData != undefined) {
+        showUpload.value = false;
+        // isImage.value = true;
+        photoFile.value = draftData.documents[5];
+        showPreview.value = true;
+        filePreview.value = basepath + "" + draftData.documents[5].filePath;
+      }
+    });
     return {
       photoFile,
       photoFileP,
@@ -130,6 +237,10 @@ export default {
       handleFileUpload,
       reset,
       submit,
+      draft,
+      buttons,
+      draftData,
+      basePath,
     };
   },
 };

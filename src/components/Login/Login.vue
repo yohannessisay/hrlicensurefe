@@ -62,15 +62,29 @@
       </a>
     </form>
   </div>
+  <div class="mr-3xl" v-if="message.showFlash">
+    <FlashMessage message="Login Successful!" />
+  </div>
+  <div v-if="message.showErrorFlash">
+    <ErrorFlashMessage message="Login Failed!" />
+  </div>
 </template>
 <script>
 import Title from "@/sharedComponents/Title";
 import { useStore } from "vuex";
-import { ref } from "vue";
+import { ref, reactive } from "vue";
+import { useRouter } from "vue-router";
+import FlashMessage from "@/sharedComponents/FlashMessage";
+import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 export default {
-  components: { Title },
+  components: { Title, FlashMessage, ErrorFlashMessage },
   setup() {
     const store = useStore();
+    const router = useRouter();
+    let message = ref({
+      showFlash: false,
+      showErrorFlash: false,
+    });
 
     const credentials = ref({
       emailAddress: "",
@@ -86,8 +100,27 @@ export default {
       let email = {
         emailAddress: credentials.value.emailAddress,
       };
-      store.dispatch("user/login", email).then(() => {
-         root.$router.push({ path: "/menu" });
+      store.dispatch("user/login", email).then((res) => {
+        if (res.data.status == "Success") {
+          const userId = res.data.data.id;
+          store.dispatch("profile/getProfileById", userId).then(res => {
+            const getProfiles = res.data ? res.data.data : null;
+            message.value.showFlash = !message.value.showFlash;
+
+            if (getProfiles) {
+              setTimeout(() => {
+                router.push({ path: "/menu" });
+              }, 3000);
+            } else {
+              setTimeout(() => {
+                router.push({ path: "/addProfile" });
+              }, 3000);
+            }
+          });
+        } else {
+          message.value.showErrorFlash = !message.value.showErrorFlash;
+          setTimeout(() => {}, 3000);
+        }
       });
     };
 
@@ -111,6 +144,7 @@ export default {
       submit,
       isEmail,
       validateForm,
+      message,
     };
   },
 };
