@@ -110,7 +110,7 @@ export default {
   },
   data: () => ({
     licenseInfo: {
-      applicantId: 2,
+      applicantId: localStorage.getItem('userId'),
       applicantTypeId: "",
       education: {
         departmentId: "",
@@ -159,7 +159,6 @@ export default {
     },
     fetchInstitutions() {
       this.$store.dispatch("newlicense/getInstitution").then((res) => {
-        console.log(res.data);
         const results = res.data.data;
         this.institutions = results;
       });

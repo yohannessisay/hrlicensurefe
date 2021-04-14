@@ -461,7 +461,7 @@ export default {
       });
     },
 
-    async submitdraft(act) {
+    async saveDraft(act) {
       let action = act;
       this.showFlash = false;
       this.showErrorFlash = false;

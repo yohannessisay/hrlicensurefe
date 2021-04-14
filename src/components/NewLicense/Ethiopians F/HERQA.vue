@@ -6,7 +6,7 @@
       >
         <TitleWithIllustration
           illustration="User"
-          message="HERQA"
+          message="Higher Education Relevance and Quality Agency center(HERQA)"
           class="mt-8"
         />
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
@@ -49,7 +49,7 @@
             </div>
           </div>
         </form>
-        <div v-if="buttons" class="flex justify-center mb-8">
+          <div v-if="buttons" class="flex justify-center mb-8">
           <button @click="submit">
             Next
           </button>
@@ -87,7 +87,7 @@ export default {
     let isImage = ref(false);
     let buttons = [];
     let documentSpecs = ref([]);
-    let userId = ref(2);
+    let userId = localStorage.getItem("userId");
     let licenseInfo = ref("");
 
     let photo = ref("");
@@ -156,7 +156,7 @@ export default {
       let license = {
         action: action,
         data: {
-          applicantId: userId.value,
+          applicantId: userId,
           applicantTypeId: licenseInfo.applicantTypeId,
           education: {
             departmentId: licenseInfo.education.departmentId,

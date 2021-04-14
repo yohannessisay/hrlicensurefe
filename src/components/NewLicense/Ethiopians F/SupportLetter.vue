@@ -88,7 +88,7 @@ export default {
 
     let buttons = [];
     let documentSpecs = ref([]);
-    let userId = ref(2);
+    let userId = localStorage.getItem("userId");
     let licenseInfo = ref("");
 
     let photo = ref("");
@@ -157,7 +157,7 @@ export default {
       let license = {
         action: action,
         data: {
-          applicantId: userId.value,
+          applicantId: userId,
           applicantTypeId: licenseInfo.applicantTypeId,
           education: {
             departmentId: licenseInfo.education.departmentId,

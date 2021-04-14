@@ -82,7 +82,7 @@ export default {
     let isImage = ref(false);
     let buttons = [];
     let documentSpecs = ref([]);
-    let userId = ref(2);
+    let userId = localStorage.getItem("userId");
     let licenseInfo = ref("");
 
     let photo = ref("");
@@ -151,7 +151,7 @@ export default {
       let license = {
         action: action,
         data: {
-          applicantId: userId.value,
+          applicantId: userId,
           applicantTypeId: licenseInfo.applicantTypeId,
           education: {
             departmentId: licenseInfo.education.departmentId,
@@ -192,7 +192,6 @@ export default {
         }
         formData.append(documentSpecs[15].documentType.code, supportLetter);
         formData.append(documentSpecs[16].documentType.code, herqa);
-
 
         let payload = { document: formData, id: licenseId };
         store

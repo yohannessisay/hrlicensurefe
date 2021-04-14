@@ -70,16 +70,17 @@
 import { ref, onMounted } from "vue";
 import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
 import { useStore } from "vuex";
-import { useRouter } from "vue-router";
+import { useRoute } from "vue-router";
 
 export default {
   components: { TitleWithIllustration },
   props: ["activeState"],
   setup(props, { emit }) {
     const store = useStore();
-    const route = useRouter();
+    const route = useRoute();
 
-    const basePath = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/";
+    const basePath =
+      "https://hrlicensurebe.dev.k8s.sandboxaddis.com/public/uploads/146/1618380626106.jpeg";
 
     let photoFile = ref("");
     let photoFileP = ref("");
@@ -90,7 +91,7 @@ export default {
 
     let buttons = ref([]);
     let documentSpecs = ref([]);
-    let userId = ref(2);
+    let userId = localStorage.getItem("userId");
     let licenseInfo = ref("");
     let draftData = ref("");
 
@@ -163,7 +164,7 @@ export default {
       let license = {
         action: action,
         data: {
-          applicantId: userId.value,
+          applicantId: userId,
           applicantTypeId: licenseInfo.applicantTypeId,
           education: {
             departmentId: licenseInfo.education.departmentId,
@@ -204,6 +205,7 @@ export default {
         }
 
         formData.append(documentSpecs[15].documentType.code, supportLetter);
+        formData.append(documentSpecs[16].documentType.code, herqa);
 
         let payload = { document: formData, id: licenseId };
         store
@@ -219,12 +221,13 @@ export default {
     onMounted(() => {
       buttons = store.getters["newlicense/getButtons"];
       draftData = store.getters["newlicense/getDraft"];
-      if (draftData != undefined) {
+      if (route.params.id) {
         showUpload.value = false;
         // isImage.value = true;
         photoFile.value = draftData.documents[5];
         showPreview.value = true;
-        filePreview.value = basepath + "" + draftData.documents[5].filePath;
+        filePreview.value = basePath;
+        console.log(filePreview.value);
       }
     });
     return {

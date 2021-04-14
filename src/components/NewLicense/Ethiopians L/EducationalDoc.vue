@@ -271,7 +271,7 @@ export default {
       buttons: [],
       documentSpec: [],
       licenseInfo: "",
-      userId: 2,
+      userId: localStorage.getItem("userId"),
 
       photo: "",
       passport: "",

@@ -75,6 +75,7 @@ export default {
     const fetchLicensebyId = () => {
       store.dispatch("newlicense/getNewLicense").then((res) => {
         license.value = res.data.data;
+        console.log(newlicense.value);
         newlicense.value = license.value.filter(function(e) {
           return e.applicationStatus.code == "DRA";
         });

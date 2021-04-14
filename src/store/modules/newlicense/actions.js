@@ -22,7 +22,7 @@ import {
 } from "./mutation-types";
 
 const url = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api/";
-const userId = 1;
+const userId = localStorage.getItem('userId');
 
 export default {
   setLicense({ commit }, license) {
@@ -125,7 +125,6 @@ export default {
   async getProfile(id) {
     try {
       const resp = await ApiService.get(url + "profiles/" + userId);
-      // const resp = await ApiService.get(url + "/profiles/1");
       return resp;
     } catch (error) {
       return error;
@@ -149,7 +148,6 @@ export default {
   },
   async getDocumentSpecs({ commit }, id) {
     try {
-      // const resp = await ApiService.get(url + "documentSpecs/" + id);
       const resp = await ApiService.get(url + "documentSpecs/" + id);
       return resp;
     } catch (error) {
@@ -159,7 +157,7 @@ export default {
 
   async getNewLicense({ commit }) {
     try {
-      const resp = await ApiService.get(url + "newLicenses/user/" + userId);
+      const resp = await ApiService.get(url + "newLicenses/user/2");
       return resp;
     } catch (error) {
       return error;

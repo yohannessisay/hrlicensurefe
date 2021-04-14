@@ -73,7 +73,7 @@ export default {
       isImage: true,
       buttons: [],
       documentSpec: [],
-      userId: 2,
+      userId: localStorage.getItem('userId'),
       license: "",
 
       photo: "",
