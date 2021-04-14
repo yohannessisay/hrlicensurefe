@@ -1,0 +1,23 @@
+import ApiService from "../../../services/api.service";
+import {
+  SET_ADMIN,
+  ADD_ADMIN_LOADING,
+  ADD_ADMIN_SUCCESS,
+  ADD_ADMIN_ERROR,
+} from "./mutation-types";
+const url = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api/";
+export default {
+  async login({ commit }, admin) {
+    commit(ADD_ADMIN_LOADING);
+    try {
+      const resp = await ApiService.post(url + "admins/login", admin, {});
+      window.localStorage.setItem("token", resp.data["token"]);
+      window.localStorage.setItem("adminId", resp.data.data["id"]);
+      commit(SET_ADMIN, resp.data);
+      commit(ADD_ADMIN_SUCCESS);
+      return resp;
+    } catch (error) {
+      commit(ADD_ADMIN_ERROR);
+    }
+  }
+};

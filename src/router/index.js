@@ -6,11 +6,11 @@ const routes = [
     name: "Landing",
     component: Landing,
   },
-  // {
-  //   path: "/landing",
-  //   name: "Landing",
-  //   component: () => import("../components/Landing/Landing.vue"),
-  // },
+  {
+    path: "/landing",
+    name: "Landing",
+    component: () => import("../components/Landing/Landing.vue"),
+  },
   {
     path: "/addProfile",
     name: "NewProfile",
@@ -87,6 +87,11 @@ const routes = [
     name: "draft",
     component: () => import("../views/Draft.vue"),
   },
+  {
+    path: "/admin",
+    name: "Admin",
+    component: () => import("../components/Landing/AdminLanding.vue")
+  }
 ];
 
 const router = createRouter({
@@ -95,7 +100,7 @@ const router = createRouter({
 });
 router.beforeEach((to, from, next) => {
   const auth = localStorage.getItem("token");
-  if (!auth && to.path !== "/landing" && to.path !== "/") next("/landing");
+  if (!auth && to.path !== "/landing" && to.path !== "/" && to.path !== "/admin") next("/landing");
   else next();
 });
 
