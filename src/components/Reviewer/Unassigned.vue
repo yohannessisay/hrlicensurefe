@@ -126,6 +126,9 @@ img {
   border-color: steelblue;
   background-color: steelblue;
 }
+.container {
+  cursor: pointer;
+}
 .flip-box {
   transform-style: preserve-3d;
   perspective: 1000px;
