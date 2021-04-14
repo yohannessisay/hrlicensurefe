@@ -10,6 +10,8 @@ import {
   ADD_PROFILE_ERROR
 } from "./mutation-types";
 
+const url = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api/";
+
 export default {
   async setProfile({ commit }, profile) {
     commit(ADD_PROFILE_LOADING);
@@ -114,6 +116,23 @@ export default {
       return resp;
     } catch (error) {
       commit(ADD_PROFILE_ERROR);
+      return error;
+    }
+  },
+  async getProfiles() {
+    try {
+      const resp = await ApiService.get(url + "profiles/");
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+  async getProfileById({ commit }, id) {
+    commit(ADD_PROFILE_LOADING);
+    try {
+      const resp = await ApiService.get(url + "profiles/" + id);
+      return resp;
+    } catch (error) {
       return error;
     }
   }

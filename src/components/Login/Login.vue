@@ -102,11 +102,21 @@ export default {
       };
       store.dispatch("user/login", email).then((res) => {
         if (res.data.status == "Success") {
-          message.value.showFlash = !message.value.showFlash;
+          const userId = res.data.data.id;
+          store.dispatch("profile/getProfileById", userId).then(res => {
+            const getProfiles = res.data ? res.data.data : null;
+            message.value.showFlash = !message.value.showFlash;
 
-          setTimeout(() => {
-            router.push({ path: "/menu" });
-          }, 3000);
+            if (getProfiles) {
+              setTimeout(() => {
+                router.push({ path: "/menu" });
+              }, 3000);
+            } else {
+              setTimeout(() => {
+                router.push({ path: "/addProfile" });
+              }, 3000);
+            }
+          });
         } else {
           message.value.showErrorFlash = !message.value.showErrorFlash;
           setTimeout(() => {}, 3000);

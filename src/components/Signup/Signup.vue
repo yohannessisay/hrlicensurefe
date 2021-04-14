@@ -104,7 +104,7 @@ export default {
           message.value.showFlash = !message.value.showFlash;
 
           setTimeout(() => {
-            router.push({ path: "/addProfile" });
+            router.push({ path: "/landing" });
           }, 3000);
         } else {
           message.value.showErrorFlash = !message.value.showErrorFlash;
