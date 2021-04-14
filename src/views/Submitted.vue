@@ -1,346 +1,49 @@
 <template>
   <div>
-    <Navigation />
-
-    <div class="w-screen bg-lightBlueB-200 flex items-center justify-center">
-      <div class="w-screen max-w-5xl mt-large">
-        <div
-          style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);"
-          class="ml-8 mt-5 mr-8 mb-12"
-        >
-          <div class="flex justify-center">
-            <Title message="Applied New license Detail" />
-          </div>
-          <div class="flex justify-start">
-            <Title message="Personal Info" />
-          </div>
-          <div class="flex flex-row">
-            <div
-              :class="[
-                this.profileInfo.name === null ? errorClass : activeClass,
-              ]"
+    <Navigation tab="Home" />
+    <div v-if="message.render" class="bg-lightBlueB-200 h-full">
+      <div class="flex pl-12 pt-medium">
+        <Title message="New License" />
+      </div>
+      <div class=" mt-medium rounded ml-large">
+        <div class="flex " v-for="i in newlicense.length" v-bind:key="i">
+          <div
+            class="container mb-medium"
+            v-for="item in newlicense.slice((i - 1) * 5, i * 5)"
+            v-bind:key="item"
+            v-bind:value="item"
+          >
+            <router-link
+              :to="{
+                name: 'NewLicense',
+                params: { id: item.id },
+              }"
             >
-              <label class="ml-8"> Full Name</label>
-              <h5 class="ml-8">
-                {{
-                  this.profileInfo["name"] +
-                    " " +
-                    this.profileInfo["fatherName"] +
-                    " " +
-                    this.profileInfo["grandFatherName"]
-                }}
-              </h5>
-            </div>
-            <div
-              :class="[
-                this.profileInfo.gender === null ? errorClass : activeClass,
-              ]"
-            >
-              <label class="ml-8"> Gender</label>
-              <h5 class="ml-8">
-                {{ this.profileInfo.gender ? this.profileInfo["gender"] : "-" }}
-              </h5>
-            </div>
-            <div
-              :class="[
-                this.profileInfo.nationality === null
-                  ? errorClass
-                  : activeClass,
-              ]"
-            >
-              <label class="ml-8"> Nationality</label>
-              <h5 class="ml-8">
-                {{
-                  this.profileInfo.nationality
-                    ? this.profileInfo.nationality
-                    : "-"
-                }}
-              </h5>
-            </div>
-            <div
-              :class="[
-                this.profileInfo.placeOfBirth === null
-                  ? errorClass
-                  : activeClass,
-              ]"
-            >
-              <label class="ml-8"> Place of Birth</label>
-              <h5 class="ml-8">
-                {{
-                  this.profileInfo.placeOfBirth
-                    ? this.profileInfo.placeOfBirth
-                    : "-"
-                }}
-              </h5>
-            </div>
-            <div
-              :class="[
-                this.profileInfo.dateOfBirth === null
-                  ? errorClass
-                  : activeClass,
-              ]"
-            >
-              <label class="ml-8"> Date of Birth</label>
-              <h5 class="ml-8">
-                {{
-                  this.profileInfo.dateOfBirth
-                    ? this.profileInfo.dateOfBirth
-                    : "-"
-                }}
-              </h5>
-            </div>
-            <div
-              :class="[
-                this.profileInfo.maritalStatus.name === null
-                  ? errorClass
-                  : activeClass,
-              ]"
-            >
-              <label class="ml-8"> Marital Status</label>
-              <h5 class="ml-8">
-                {{
-                  this.profileInfo.maritalStatus.name
-                    ? this.profileInfo.maritalStatus.name
-                    : "-"
-                }}
-              </h5>
-            </div>
-          </div>
-
-          <div class="flex justify-start">
-            <Title message="Address" />
-          </div>
-          <div class="flex flex-row">
-            <div
-              :class="[
-                this.profileInfo.woreda.zone.region === null
-                  ? errorClass
-                  : activeClass,
-              ]"
-            >
-              <label class="ml-8"> Region</label>
-              <h5 class="ml-8">
-                {{
-                  this.profileInfo.woreda.zone.region
-                    ? this.profileInfo.woreda.zone.region.name
-                    : "-"
-                }}
-              </h5>
-            </div>
-            <div
-              :class="[
-                this.profileInfo.woreda.zone === null
-                  ? errorClass
-                  : activeClass,
-              ]"
-            >
-              <label class="ml-8"> Zone</label>
-              <h5 class="ml-8">
-                {{
-                  this.profileInfo.woreda.zone
-                    ? this.profileInfo.woreda.zone.name
-                    : "-"
-                }}
-              </h5>
-            </div>
-            <div
-              :class="[
-                this.profileInfo.woreda === null ? errorClass : activeClass,
-              ]"
-            >
-              <label class="ml-8"> Wereda</label>
-              <h5 class="ml-8">
-                {{
-                  this.profileInfo.woreda ? this.profileInfo.woreda.name : "-"
-                }}
-              </h5>
-            </div>
-            <div
-              :class="[
-                this.profileInfo.kebele === null ? errorClass : activeClass,
-              ]"
-            >
-              <label class="ml-8"> Kebele</label>
-              <h5 class="ml-8">
-                {{ this.profileInfo.kebele ? this.profileInfo.kebele : "-" }}
-              </h5>
-            </div>
-            <div
-              :class="[
-                this.profileInfo.houseNumber === null
-                  ? errorClass
-                  : activeClass,
-              ]"
-            >
-              <label class="ml-8"> House Number</label>
-              <h5 class="ml-8">
-                {{
-                  this.profileInfo.houseNumber
-                    ? this.profileInfo.houseNumber
-                    : "-"
-                }}
-              </h5>
-            </div>
-            <div
-              :class="[
-                this.profileInfo.residence === null ? errorClass : activeClass,
-              ]"
-            >
-              <label class="ml-8"> Residence</label>
-              <h5 class="ml-8">
-                {{
-                  this.profileInfo.residence ? this.profileInfo.residence : "-"
-                }}
-              </h5>
-            </div>
-          </div>
-          <div class="flex justify-start">
-            <Title message="Contact" />
-          </div>
-          <div class="flex flex-row">
-            <div
-              :class="[
-                this.profileInfo.user.phoneNumber === null
-                  ? errorClass
-                  : activeClass,
-              ]"
-            >
-              <label class="ml-8"> Phone Number</label>
-              <h5 class="ml-8">
-                {{ this.profileInfo["user"]["phoneNumber"] }}
-              </h5>
-            </div>
-
-            <div
-              :class="[
-                this.profileInfo.user.emailAddress === null
-                  ? errorClass
-                  : activeClass,
-              ]"
-            >
-              <label class="ml-8"> Email</label>
-              <h5 class="ml-8">
-                {{
-                  this.profileInfo.user.emailAddress
-                    ? this.profileInfo.user.emailAddress
-                    : "-"
-                }}
-              </h5>
-            </div>
-            <div
-              :class="[
-                this.profileInfo.name === null ? errorClass : activeClass,
-              ]"
-            >
-              <label class="ml-8"> User Type</label>
-              <h5 class="ml-8">
-                {{
-                  this.profileInfo.userType.name
-                    ? this.profileInfo.userType.name
-                    : "-"
-                }}
-              </h5>
-            </div>
-          </div>
-          <div class="flex justify-start">
-            <Title message="Institution" />
-          </div>
-          <div class="flex flex-row">
-            <div
-              :class="[
-                this.licenseInfo.education.institution.name === null
-                  ? errorClass
-                  : activeClass,
-              ]"
-            >
-              <label class="ml-8"> Institution Name</label>
-              <h5 class="ml-8">
-                {{
-                  this.licenseInfo["education"]["institution"]["name"]
-                    ? this.licenseInfo["education"]["institution"]["name"]
-                    : "-"
-                }}
-              </h5>
-            </div>
-            <div
-              :class="[
-                this.licenseInfo.education.institution.institutionType.name ===
-                null
-                  ? errorClass
-                  : activeClass,
-              ]"
-            >
-              <label class="ml-8"> Institution Type</label>
-              <h5 class="ml-8">
-                {{
-                  this.licenseInfo["education"]["institution"][
-                    "institutionType"
-                  ]["name"]
-                    ? this.licenseInfo["education"]["institution"][
-                        "institutionType"
-                      ]["name"]
-                    : "-"
-                }}
-              </h5>
-            </div>
-            <div
-              :class="[
-                this.licenseInfo.education.department.name === null
-                  ? errorClass
-                  : activeClass,
-              ]"
-            >
-              <label class="ml-8"> Department</label>
-              <h5 class="ml-8">
-                {{
-                  this.licenseInfo["education"]["department"]["name"]
-                    ? this.licenseInfo["education"]["department"]["name"]
-                    : "-"
-                }}
-              </h5>
-            </div>
-            <div
-              :class="[
-                this.licenseInfo.applicantType.name === null
-                  ? errorClass
-                  : activeClass,
-              ]"
-            >
-              <label class="ml-8"> Applicant Type</label>
-              <h5 class="ml-8">
-                {{
-                  this.licenseInfo["applicantType"]["name"]
-                    ? this.licenseInfo["applicantType"]["name"]
-                    : "-"
-                }}
-              </h5>
-            </div>
-          </div>
-          <div class="flex justify-start flex-wrap">
-            <div v-if="this.licenseInfo.photo.filePath">
-              <Title class="" message="Photo" />
-              <picture>
-                <img :src="basePath + licenseInfo.photo.filePath" />
-              </picture>
-            </div>
-            <div v-if="this.licenseInfo.passport.filePath">
-              <Title class="" message="Passport" />
-              <picture>
-                <img :src="basePath + licenseInfo.passport.filePath" />
-              </picture>
-            </div>
-            <div v-if="this.licenseInfo.healthExamCert.filePath">
-              <Title class="" message="Healt Examination Certificate" />
-              <picture>
-                <img :src="basePath + licenseInfo.healthExamCert.filePath" />
-              </picture>
-            </div>
-            <div v-if="this.licenseInfo.serviceFee.filePath">
-              <Title class="" message="Service Fee" />
-              <picture>
-                <img :src="basePath + licenseInfo.serviceFee.filePath" />
-              </picture>
-            </div>
+              <div
+                class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
+              >
+                <div class="p-4 w-48 h-64">
+                  <!-- <div class="flex content-center justify-center">
+                <img class="box-shadow-pop" />
+              </div> -->
+                  <h4
+                    class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                  >
+                    {{ item.applicantType.name }}
+                  </h4>
+                  <h4
+                    class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                  >
+                    {{ item.applicationStatus.name }}
+                  </h4>
+                  <h4
+                    class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                  >
+                    Code: {{ item.newLicenseCode }}
+                  </h4>
+                </div>
+              </div>
+            </router-link>
           </div>
         </div>
       </div>
@@ -349,135 +52,125 @@
 </template>
 
 <script>
-import Title from "@/sharedComponents/Title";
-import axios from "axios";
+import Title from "@/sharedComponents/TitleWithIllustration";
 import Navigation from "@/views/Navigation";
+import { useStore } from "vuex";
+import { useRouter } from "vue-router";
+import { ref, onMounted } from "vue";
 
 export default {
-  props: ["activeState"],
-  components: {
-    Title,
-    Navigation,
-  },
-  created() {
-    this.userId = localStorage.getItem("userId");
-    this.fetchProfile();
-    this.fetchSubmitted();
-  },
-  data: () => ({
-    profileInfo: {
-      name: "",
-      fatherName: "",
-      grandFatherName: "",
-      gender: "",
-      nationality: "",
-      placeOfBirth: "",
-      dateOfBirth: "",
-      maritalStatus: {
-        name: "",
-      },
-      woreda: {
-        name: "",
-        zone: {
-          name: "",
-          region: {
-            name: "",
-          },
-        },
-      },
-      kebele: "",
-      houseNumber: "",
-      residence: "",
-      user: {
-        phoneNumber: "",
-        emailAddress: "",
-      },
-      userType: {
-        name: "",
-      },
-    },
-    licenseInfo: {
-      applicantType: {
-        name: "Local",
-      },
-      education: {
-        institution: {
-          name: "",
-          institutionType: {
-            name: "",
-          },
-        },
-        department: {
-          name: "",
-        },
-      },
-      photo: {
-        fieldName: "",
-        filePath: "",
-      },
-      passport: {
-        fieldName: "",
-        filePath: "",
-      },
-      healthExamCert: {
-        fieldName: "",
-        filePath: "",
-      },
-      serviceFee: {
-        fieldName: "",
-        filePath: "",
-      },
-    },
-    basePath: "http://localhost:5000/",
-    activeClass: "active",
-    errorClass: "text-danger",
-  }),
-  methods: {
-    async fetchSubmitted() {
-      try {
-        const url = `http://localhost:5000/api/newLicenses/user/` + this.userId;
-        const response = await axios.get(url);
-        console.log(response);
-        const results = response.data.data;
-        const lastSubmitted = results.length - 1;
-        this.licenseInfo = results[lastSubmitted];
-        console.log(this.licenseInfo);
-      } catch (err) {
-        if (err.response) {
-          console.log("Server Error:", err);
-        } else if (err.request) {
-          console.log("Network Error:", err);
-        } else {
-          console.log("Client Error:", err);
-        }
-      }
-    },
-    async fetchProfile() {
-      try {
-        const url = `http://localhost:5000/api/profiles/` + this.userId;
-        const response = await axios.get(url);
-        const results = response.data;
-        this.profileInfo = results.data;
-      } catch (err) {
-        if (err.response) {
-          console.log("Server Error:", err);
-        } else if (err.request) {
-          console.log("Network Error:", err);
-        } else {
-          console.log("Client Error:", err);
-        }
-      }
-    },
+  components: { Navigation, Title },
+  setup() {
+    const store = useStore();
+    const router = useRouter();
+
+    let license = ref([]);
+    let newlicense = ref([]);
+    let renewal = ref([]);
+    let verification = ref([]);
+    let goodstanding = ref([]);
+    let itemsPerRow = 5;
+    let message = ref({
+      render: false,
+    });
+    let hover = ref(false);
+
+    const fetchLicensebyId = () => {
+      store.dispatch("newlicense/getNewLicense").then((res) => {
+        license.value = res.data.data;
+        message.value.render = !message.value.render;
+        newlicense.value = license.value.filter(function(e) {
+          return e.applicationStatus.code == "SUB";
+        });
+      });
+    };
+
+    const rowCount = () => {
+      return Math.ceil(newlicense.length / itemsPerRow);
+    };
+
+    const itemCountInRow = (index) => {
+      return newlicense.slice((index - 1) * itemsPerRow, index * itemsPerRow);
+    };
+
+    onMounted(() => {
+      fetchLicensebyId();
+    });
+    return {
+      license,
+      newlicense,
+      renewal,
+      verification,
+      goodstanding,
+      hover,
+      itemsPerRow,
+      message,
+    };
   },
 };
 </script>
 <style>
-.text-danger > label,
-.text-danger > h5 {
-  color: red;
-}
 img {
-  width: 250px;
-  height: 250px;
+  border-radius: 50%;
+  margin-bottom: 1rem;
+  width: 80px;
+  border-color: steelblue;
+  background-color: steelblue;
+}
+.container {
+  cursor: pointer;
+}
+.hoveredCard {
+  background-color: white;
+}
+/* .b{
+  cursor: pointer;
+  position: absolute;
+  transform: translate(-50%, -50%);
+} */
+.flip-box {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  cursor: pointer;
+}
+.flip-box-front,
+.flip-box-back {
+  transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
+  backface-visibility: hidden;
+}
+
+.flip-box-front {
+  transform: rotateY(0deg);
+  transform-style: preserve-3d;
+}
+
+.flip-box:hover .flip-box-front {
+  transform: rotateY(-180deg);
+  transform-style: preserve-3d;
+}
+
+.flip-box-back {
+  /* position: absolute; */
+  transform: rotateY(180deg);
+  transform-style: preserve-3d;
+}
+
+.flip-box:hover .flip-box-back {
+  transform: rotateY(0deg);
+  transform-style: preserve-3d;
+}
+
+.flip-box .inner {
+  /* position:absolute;
+  perspective: inherit;
+  z-index: 2;
+  transform: translateY(-50%)translateZ(60px) scale(.94); */
+}
+/* .box {
+  position: relative;
+} */
+
+.b {
+  /* position: absolute; */
 }
 </style>
