@@ -79,13 +79,83 @@ const routes = [
   {
     path: "/goodStandingSubmitted",
     name: "goodStandingSubmitted",
-    component: () => import("../views/GoodStandingSubmitted.vue"),
+    component: () => import("../views/GoodStandingSubmitted.vue")
+  },
+  {
+    path: "/review",
+    name: "Home",
+    component: () => import("../components/Reviewer/Home.vue")
+  },
+  {
+    path: "/myWork",
+    name: "myWork",
+    component: () => import("../components/Reviewer/MyWork.vue")
+  },
+  {
+    path: "/unfinished",
+    name: "unfinished",
+    component: () => import("../components/Reviewer/Unfinished.vue")
+  },
+  {
+    path: "/assignedToYou",
+    name: "assignedToYou",
+    component: () => import("../components/Reviewer/AssignedToYou.vue")
+  },
+  {
+    path: "/unassigned",
+    name: "unassigned",
+    component: () => import("../components/Reviewer/Unassigned.vue")
+  },
+  {
+    path: "/prodoc",
+    name: "professionalDocument",
+    component: () =>
+      import("../components/NewLicense/Foreigner/ProfessionalDocument.vue")
+  },
+  {
+    path: "/educational",
+    name: "educational",
+    component: () =>
+      import("../components/NewLicense/Ethiopians L/EducationalDoc.vue")
+  },
+  {
+    path: "/lang",
+    name: "lang",
+    component: () => import("../components/NewLicense/Photo.vue")
   },
 
+  {
+    path: "/evaluate/:applicationId",
+    name: "evaluate",
+    component: () => import("../components/Reviewer/Evaluate.vue")
+  },
   {
     path: "/draft",
     name: "draft",
     component: () => import("../views/Draft.vue"),
+  },
+  {
+    path: "/detail/:applicationId/:applicantId",
+    name: "detail",
+    component: () => import("../components/Reviewer/Detail/LicenseDetail.vue")
+  },
+  {
+    path: "/unfinishedDetail/:applicationId/:applicantId",
+    name: "unfinishedDetail",
+    component: () =>
+      import("../components/Reviewer/Detail/UnfinishedDetail.vue")
+  },
+  {
+    path: "/recentlyFinishedDetail",
+    name: "recentlyFinishedDetail",
+    component: () =>
+      import("../components/Reviewer/Detail/RecentlyFinishedDetail.vue")
+  },
+  {
+    path: "/unassignedDetail/:applicationId/:applicantId",
+    name: "unassignedDetail",
+    component: () =>
+      import("../components/Reviewer/Detail/UnassignedDetail.vue")
   },
   {
     path: "/admin",
@@ -103,5 +173,19 @@ router.beforeEach((to, from, next) => {
   if (!auth && to.path !== "/landing" && to.path !== "/" && to.path !== "/admin") next("/landing");
   else next();
 });
+
+router.beforeResolve((to, from, next) => {
+  // If this isn't an initial page load.
+  if (to.name) {
+    // Start the route progress bar.
+    NProgress.start()
+  }
+  next()
+})
+
+router.afterEach((to, from) => {
+  // Complete the animation of the route progress bar.
+  NProgress.done()
+})
 
 export default router;

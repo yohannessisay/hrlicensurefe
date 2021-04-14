@@ -2,74 +2,108 @@
   <div>
     <ReviewerNavBar tab="Home" />
     <div class="bg-lightBlueB-200 h-full">
-      <div class="flex pl-12 pt-medium"><Title message="Unfinished" /></div>
-      <div class="flex justify-center items-center mt-medium rounded ">
+      <div class="flex pl-12 pt-medium">
+        <Title message="Unfinished" />
+        <div class="flex ml-small" v-if="unfinished.length >= 5">
+          <router-link to="/unfinished">
+            <button
+              class="block mx-auto  bg-lightBlue-300 hover:bg-lightBlue-600 hover:shadow-lg"
+            >
+              View All
+            </button>
+          </router-link>
+        </div>
+      </div>
+      <div class="flex  mt-medium rounded ">
         <div
           class="container"
           v-for="(item, index) in unfinished"
-          v-bind:key="item.name.first"
+          v-bind:key="item.applicationStatus.name"
           v-bind:value="item.id"
         >
           <div
             v-if="index < 5"
             class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
           >
-            <div class="p-4 w-48 h-64">
+            <div
+              class="p-4 w-48 h-64"
+              @Click="detail(`/unfinishedDetail`, item.id, item.applicant.id)"
+            >
               <div class="flex content-center justify-center">
-                <router-link to="/newlicense">
-                  <img class="box-shadow-pop" v-bind:src="item.picture.large" />
-                </router-link>
+                <!-- <img class="box-shadow-pop" v-bind:src="item.picture.large" /> -->
               </div>
               <h4
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
               >
-                {{ item.name.first + " " + item.name.last }}
+                {{
+                  item.applicant.profile.name +
+                    " " +
+                    item.applicant.profile.fatherName
+                }}
               </h4>
               <h6
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center">
-                {{ item.registered.date }}
+                {{ item.createdAt }}
               </h6>
               <h6
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
               >
-                New Licence ID: {{ item.id.value }}
+                New Licence ID: {{ item.newLicenseCode }}
               </h6>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="flex pl-12 mt-medium"><Title message="Assigned to You" /></div>
-      <div class="flex justify-center items-center mt-medium rounded ">
+      <div class="flex pl-12 mt-medium">
+        <Title message="Assigned to You" />
+        <div class="flex ml-small" v-if="assignedToyou.length >= 5">
+          <router-link to="/assignedToyou">
+            <button
+              class="block mx-auto  bg-lightBlue-300 hover:bg-lightBlue-600 hover:shadow-lg"
+            >
+              View All
+            </button>
+          </router-link>
+        </div>
+      </div>
+      <div class="flex mt-medium rounded ">
         <div
           class="container"
           v-for="(item, index) in assignedToyou"
-          v-bind:key="item.name.first"
+          v-bind:key="item.applicationStatus.name"
           v-bind:value="item.id"
         >
           <div
             v-if="index < 5"
             class="flex justify-center items-center ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
           >
-            <div class="p-4 w-48 h-64">
+            <div
+              class="p-4 w-48 h-64" 
+              @Click="detail(`/detail`, item.id, item.applicant.id)"
+            >
               <div class="flex content-center justify-center">
                 <router-link to="/newlicense">
-                  <img class="box-shadow-pop" v-bind:src="item.picture.large" />
+                  <!-- <img class="box-shadow-pop" v-bind:src="item.picture.large" /> -->
                 </router-link>
               </div>
               <h4
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
               >
-                {{ item.name.first + " " + item.name.last }}
+                {{
+                  item.applicant.profile.name +
+                    " " +
+                    item.applicant.profile.fatherName
+                }}
               </h4>
               <h6
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center">
-                {{ item.registered.date }}
+                {{ item.createdAt }}
               </h6>
               <h6
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
               >
-                New Licence ID: {{ item.id.value }}
+                New Licence ID: {{ item.newLicenseCode }}
               </h6>
             </div>
           </div>
@@ -79,11 +113,13 @@
       <div class="flex pl-12 mt-medium">
         <Title message="Unassigned"/>
         <div class="flex ml-small" v-if="unassigned.length >= 5">
-          <button
-            class="block mx-auto  bg-lightBlue-300 hover:bg-lightBlue-600 hover:shadow-lg"
-          >
-            View All
-          </button>
+          <router-link to="/unassigned">
+            <button
+              class="block mx-auto  bg-lightBlue-300 hover:bg-lightBlue-600 hover:shadow-lg"
+            >
+              View All
+            </button>
+          </router-link>
         </div>
       </div>
 
@@ -92,7 +128,7 @@
           <div
             class="container flip-box"
             v-for="(item, index) in unassigned"
-            v-bind:key="item.name.first"
+            v-bind:key="item.applicationStatus.name"
             v-bind:value="item.id"
           >
             <div
@@ -106,26 +142,26 @@
               >
                 <div class="flex content-center justify-center">
                   <router-link to="/newlicense">
-                    <img
+                    <!-- <img
                       class="box-shadow-pop"
                       v-bind:src="item.picture.large"
-                    />
+                    /> -->
                   </router-link>
                 </div>
                 <h4
                   class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
                 >
-                  {{ item.name.first + " " + item.name.last }}
+                  <!-- {{ item.applicant.profile.name + " " + item.applicant.profile.fatherName }} -->
                 </h4>
                 <h6
                   class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
                 >
-                  {{ item.registered.date }}
+                  {{ item.createdAt }}
                 </h6>
                 <h6
                   class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
                 >
-                  New Licence ID: {{ item.id.value }}
+                  New Licence ID: {{ item.newLicenseCode }}
                 </h6>
               </div>
             </div>
@@ -138,21 +174,22 @@
                 class="p-4 w-48 h-64"
                 @mouseover="hover = true"
                 @mouseleave="hover = false"
+                @Click="detail(`/unassignedDetail`, item.id, item.applicant.id)"
               >
                 <h4
                   class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
                 >
-                  {{ item.name.first + " " + item.name.last }}
+                  <!-- {{ item.name.first + " " + item.name.last }} -->
                 </h4>
                 <h6
                   class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
                 >
-                  {{ item.registered.date }}
+                  {{ item.createdAt }}
                 </h6>
                 <h6
                   class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
                 >
-                  New Licence ID: {{ item.id.value }}
+                  New Licence ID: {{ item.newLicenseCode }}
                 </h6>
                 <div
                   class="flex ml-small w-32 pt-small justify-center content-center"
@@ -161,7 +198,7 @@
                     <button
                       class="block mx-auto  bg-lightBlue-300 hover:bg-lightBlue-600 hover:shadow-lg"
                     >
-                      Assign to Me
+                      Assign to
                     </button>
                   </router-link>
                 </div>
@@ -175,11 +212,13 @@
       <div class="flex pl-12 mt-medium ">
         <Title message="Recently Finished" />
         <div class="flex ml-small" v-if="recentlyFinished.length >= 5">
-          <button
-            class="block mx-auto  bg-lightBlue-300 hover:bg-lightBlue-600 hover:shadow-lg"
-          >
-            View All
-          </button>
+          <router-link to="/newlicense">
+            <button
+              class="block mx-auto  bg-lightBlue-300 hover:bg-lightBlue-600 hover:shadow-lg"
+            >
+              View All
+            </button>
+          </router-link>
         </div>
       </div>
       <div
@@ -195,7 +234,10 @@
             v-if="index < 5"
             class="justify-center items-center ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
           >
-            <div class="p-4 w-48 h-64">
+            <div
+              class="p-4 w-48 h-64"
+              @Click="detail(`/recentlyFinishedDetail`)"
+            >
               <div class="flex content-center justify-center">
                 <router-link to="/newlicense">
                   <img class="box-shadow-pop" v-bind:src="item.picture.large" />
@@ -233,34 +275,58 @@
 import Title from "@/sharedComponents/TitleWithIllustration";
 import ReviewerNavBar from "@/components/Reviewer/ReviewerNavBar";
 import { useStore } from "vuex";
-
+import { useRouter } from "vue-router";
 import { ref, onMounted } from "vue";
 
 export default {
   components: { ReviewerNavBar, Title },
   setup() {
     const store = useStore();
+    const router = useRouter();
+
     let unfinished = ref({});
     let assignedToyou = ref({});
     let unassigned = ref({});
     let recentlyFinished = ref({});
     let hover = ref(false);
+    let userId = +localStorage.getItem("userId");
+    // let userId = 2;
+    let x = ref([]);
+    let activeFilters = ref([]);
 
     const fetchUnfinished = () => {
-      store.dispatch("reviewer/getUnfinished").then(res => {
-        unfinished.value = res.data.results;
+      store.dispatch("reviewer/getUnfinished", userId).then(res => {
+        // unfinished.value = res.data.results;
+        x.value = res.data.data;
+
+        unfinished.value = x.value.filter(a => {
+          if (a.applicationStatus.code == "REVDRA") {
+            console.log(a);
+            return a;
+          }
+        });
+        assignedToyou.value = x.value.filter(a => {
+          if (a.applicationStatus.code == "IRV") {
+            console.log(a);
+            return a;
+          }
+        });
+        // console.log(x);
+        console.log(unfinished.value);
       });
     };
 
-    const fetchAssignedtoYou = () => {
-      store.dispatch("reviewer/getAssignedToYou").then(res => {
-        assignedToyou.value = res.data.results;
-      });
-    };
+    // const fetchAssignedtoYou = () => {
+    //   store.dispatch("reviewer/getAssignedToYou").then(res => {
+    //     assignedToyou.value = res.data.results;
+    //   });
+    // };
 
     const fetchUnassignedApplications = () => {
       store.dispatch("reviewer/getUnassigned").then(res => {
-        unassigned.value = res.data.results;
+        unassigned.value = res.data.data;
+        console.log("====Unassigned====");
+        console.log(unassigned.value);
       });
     };
 
@@ -270,19 +336,31 @@ export default {
       });
     };
 
+    const detail = (data, applicationId, applicantId) => {
+      // router.push(data, id);
+      const url = data + "/" + applicationId + "/" + applicantId;
+      console.log("=========Application ID and Applicant Id =========");
+      console.log(url);
+      console.log("=========Application ID and Applicant Id =========");
+      router.push(url);
+    };
+
     onMounted(() => {
       fetchUnfinished();
-      fetchAssignedtoYou();
+      // fetchAssignedtoYou();
       fetchUnassignedApplications();
       fetchRecentlyFinished();
     });
 
     return {
+      userId,
       unfinished,
       assignedToyou,
       unassigned,
       recentlyFinished,
-      hover
+      hover,
+      detail,
+      activeFilters
     };
   }
 };
@@ -294,6 +372,9 @@ img {
   width: 80px;
   border-color: steelblue;
   background-color: steelblue;
+}
+.container {
+  cursor: pointer;
 }
 .hoveredCard {
   background-color: white;
@@ -308,7 +389,6 @@ img {
   perspective: 1000px;
   cursor: pointer;
 }
-
 .flip-box-front,
 .flip-box-back {
   transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
