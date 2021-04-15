@@ -67,7 +67,7 @@
       <div class="flex pl-12 mt-medium">
         <Title message="Assigned to You" />
         <div class="flex ml-small" v-if="assignedToyou.length >= 5">
-          <router-link to="admin/assignedToyou">
+          <router-link to="/admin/assignedToyou">
             <button
               class="block mx-auto  bg-lightBlue-300 hover:bg-lightBlue-600 hover:shadow-lg"
             >
