@@ -3,7 +3,7 @@
     <Navigation tab="Home" />
     <div v-if="message.render" class="bg-lightBlueB-200 h-full">
       <div class="flex pl-12 pt-medium">
-        <Title message="New License" />
+        <Title message="New License Draft" />
       </div>
       <div class=" mt-medium rounded ml-large">
         <div class="flex " v-for="i in newlicense.length" v-bind:key="i">
@@ -69,7 +69,6 @@ export default {
     let renewal = ref([]);
     let verification = ref([]);
     let goodstanding = ref([]);
-    let itemsPerRow = 5;
     let message = ref({
       render: false,
     });
@@ -86,13 +85,6 @@ export default {
       });
     };
 
-    const rowCount = () => {
-      return Math.ceil(newlicense.length / itemsPerRow);
-    };
-
-    const itemCountInRow = (index) => {
-      return newlicense.slice((index - 1) * itemsPerRow, index * itemsPerRow);
-    };
 
     onMounted(() => {
       fetchLicensebyId();
@@ -104,8 +96,7 @@ export default {
       verification,
       goodstanding,
       hover,
-      itemsPerRow,
-      message,
+      message
     };
   },
 };

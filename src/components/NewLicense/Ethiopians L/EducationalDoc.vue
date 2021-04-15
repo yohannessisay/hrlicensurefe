@@ -45,10 +45,6 @@
             <span v-if="!showCertificate1Upload && !isCertificate1">
               <img :src="certificate1Preview" alt="" class="preview" />
             </span>
-
-            <h6 style="margin-top: 15px !important;">
-              Your photo should be passport size
-            </h6>
           </div>
 
           <div class="ml-4" style="width:250px">
@@ -86,10 +82,6 @@
             <span v-if="!showCertificate2Upload && !isCertificate2">
               <img :src="certificate2Preview" alt="" class="preview" />
             </span>
-
-            <h6 style="margin-top: 15px !important;">
-              Your photo should be passport size
-            </h6>
           </div>
 
           <div class="ml-4" style="width:250px">
@@ -127,10 +119,6 @@
             <span v-if="!showCertificate3Upload && !isCertificate3">
               <img :src="certificate3Preview" alt="" class="preview" />
             </span>
-
-            <h6 style="margin-top: 15px !important;">
-              Your photo should be passport size
-            </h6>
           </div>
 
           <div class="ml-4" style="width:250px">
@@ -168,10 +156,6 @@
             <span v-if="!showCertificate4Upload && !isCertificate4">
               <img :src="certificate4Preview" alt="" class="preview" />
             </span>
-
-            <h6 style="margin-top: 15px !important;">
-              Your photo should be passport size
-            </h6>
           </div>
 
           <div class="ml-4" style="width:250px">
@@ -209,10 +193,6 @@
             <span v-if="!showCertificate5Upload && !isCertificate5">
               <img :src="certificate5Preview" alt="" class="preview" />
             </span>
-
-            <h6 style="margin-top: 15px !important;">
-              Your photo should be passport size
-            </h6>
           </div>
         </div>
 
@@ -222,6 +202,13 @@
           </button>
           <button @click="draft(this.buttons[0].action)" variant="outline">
             {{ this.buttons[0]["name"] }}
+          </button>
+          <button
+            v-if="this.buttons.length > 2"
+            @click="withdraw(this.buttons[2].action)"
+            variant="outline"
+          >
+            {{ this.buttons[2]["name"] }}
           </button>
         </div>
       </div>
@@ -238,6 +225,8 @@ export default {
   props: ["activeState"],
   data() {
     return {
+      basePath: "https://hrlicensurebe.dev.k8s.sandboxaddis.com/",
+
       certificateFile1: "",
       showCertificate1Preview: false,
       certificate1Preview: "",
@@ -283,6 +272,9 @@ export default {
       coc: "",
       supportLetter: "",
       serviceFee: "",
+
+      draftId: "",
+      draftData: "",
     };
   },
   computed: {
@@ -302,9 +294,57 @@ export default {
       getProfessionalDoc: "newlicense/getProfessionalDocuments",
       getWorkExperience: "newlicense/getWorkExperience",
       getServiceFee: "newlicense/getServiceFee",
+      getDraftData: "newlicense/getDraft",
     }),
   },
   created() {
+    this.draftId = this.$route.params.id;
+    if (this.draftId != undefined) {
+      this.draftData = this.getDraftData;
+      for (let i = 0; i < this.draftData.documents.length; i++) {
+        if (this.draftData.documents[i].documentTypeCode == "EDEGC") {
+          this.showCertificate1Upload = false;
+          this.isCertificate1 = true;
+          this.certificateFile1 = this.draftData.documents[i];
+          this.showCertificate1Preview = true;
+          this.certificate1Preview =
+            this.basePath + this.draftData.documents[i].filePath;
+          console.log(this.certificate1Preview);
+        }
+        if (this.draftData.documents[i].documentTypeCode == "EDTGC") {
+          this.showCertificate2Upload = false;
+          this.isCertificate2 = true;
+          this.certificateFile2 = this.draftData.documents[i];
+          this.showCertificate2Preview = true;
+          this.certificate2Preview =
+            this.basePath + this.draftData.documents[i].filePath;
+        }
+        if (this.draftData.documents[i].documentTypeCode == "EDTWGC") {
+          this.showCertificate3Upload = false;
+          this.isCertificate3 = true;
+          this.certificateFile3 = this.draftData.documents[i];
+          this.showCertificate3Preview = true;
+          this.certificate3Preview =
+            this.basePath + this.draftData.documents[i].filePath;
+        }
+        if (this.draftData.documents[i].documentTypeCode == "EDHT") {
+          this.showCertificate4Upload = false;
+          this.isCertificate4 = true;
+          this.certificateFile4 = this.draftData.documents[i];
+          this.showCertificate4Preview = true;
+          this.certificate4Preview =
+            this.basePath + this.draftData.documents[i].filePath;
+        }
+        if (this.draftData.documents[i].documentTypeCode == "EDPT") {
+          this.showCertificate5Upload = false;
+          this.isCertificate5 = true;
+          this.certificateFile5 = this.draftData.documents[i];
+          this.showCertificate5Preview = true;
+          this.certificate5Preview =
+            this.basePath + this.draftData.documents[i].filePath;
+        }
+      }
+    }
     this.license = this.getLicense;
     this.buttons = this.getButtons;
     this.documentSpec = this.getDocumentSpec;
@@ -490,93 +530,128 @@ export default {
         this.certificateFile5,
       ];
 
-      this.$store.dispatch("newlicense/setProfessionalDoc", file);
+      this.$store.dispatch("newlicense/setEducationalDocument", file);
     },
     draft(action) {
-      let license = {
-        action: action,
-        data: {
-          applicantId: this.userId,
-          applicantTypeId: this.license.applicantTypeId,
-          education: {
-            institutionId: this.license.education.departmentId,
-            departmentId: this.license.education.institutionId,
-          },
-        },
-      };
-      this.$store.dispatch("newlicense/addNewLicense", license).then((res) => {
-        let licenseId = res.data.data.id;
-        let formData = new FormData();
-        formData.append(this.documentSpec[0].documentType.code, this.photo);
-        formData.append(this.documentSpec[1].documentType.code, this.passport);
-        formData.append(
-          this.documentSpec[2].documentType.code,
-          this.healthExamCert
-        );
-        formData.append(
-          this.documentSpec[3].documentType.code,
-          this.serviceFee
-        );
-        formData.append(
-          this.documentSpec[4].documentType.code,
-          this.workExperience
-        );
-        formData.append(
-          this.documentSpec[5].documentType.code,
-          this.englishLanguage
-        );
-        if (this.professionalDoc != undefined) {
-          formData.append(
-            this.documentSpec[6].documentType.code,
-            this.professionalDoc[0]
-          );
-          formData.append(
-            this.documentSpec[7].documentType.code,
-            this.professionalDoc[1]
-          );
-          formData.append(
-            this.documentSpec[8].documentType.code,
-            this.professionalDoc[2]
-          );
-        }
-
-        formData.append(this.documentSpec[9].documentType.code, this.coc);
-        formData.append(
-          this.documentSpec[10].documentType.code,
-          this.certificateFile1
-        );
-        formData.append(
-          this.documentSpec[11].documentType.code,
-          this.certificateFile2
-        );
-        formData.append(
-          this.documentSpec[12].documentType.code,
-          this.certificateFile3
-        );
-        formData.append(
-          this.documentSpec[13].documentType.code,
-          this.certificateFile4
-        );
-        formData.append(
-          this.documentSpec[14].documentType.code,
+      if (this.draftId) {
+        if (
+          this.certificateFile1 ||
+          this.certificateFile2 ||
+          this.certificateFile3 ||
+          this.certificateFile4 ||
           this.certificateFile5
-        );
-
-        formData.append(
-          this.documentSpec[15].documentType.code,
-          this.supportLetter
-        );
-        formData.append(this.documentSpec[16].documentType.code, this.herqa);
-
-        let payload = { document: formData, id: licenseId };
+        ) {
+          // modify the drafData before dispatching
+        } else {
+          // just send the draftData
+        }
+      } else {
+        let license = {
+          action: action,
+          data: {
+            applicantId: this.userId,
+            applicantTypeId: this.license.applicantTypeId,
+            education: {
+              institutionId: this.license.education.departmentId,
+              departmentId: this.license.education.institutionId,
+            },
+          },
+        };
         this.$store
-          .dispatch("newlicense/uploadDocuments", payload)
+          .dispatch("newlicense/addNewLicense", license)
           .then((res) => {
-            if (res.data.status == "Success") {
-              this.$router.push({ path: "/menu" });
+            let licenseId = res.data.data.id;
+            let formData = new FormData();
+            formData.append(this.documentSpec[0].documentType.code, this.photo);
+            formData.append(
+              this.documentSpec[1].documentType.code,
+              this.passport
+            );
+            formData.append(
+              this.documentSpec[2].documentType.code,
+              this.healthExamCert
+            );
+            formData.append(
+              this.documentSpec[3].documentType.code,
+              this.serviceFee
+            );
+            formData.append(
+              this.documentSpec[4].documentType.code,
+              this.workExperience
+            );
+            formData.append(
+              this.documentSpec[5].documentType.code,
+              this.englishLanguage
+            );
+            if (this.professionalDoc != undefined) {
+              formData.append(
+                this.documentSpec[6].documentType.code,
+                this.professionalDoc[0]
+              );
+              formData.append(
+                this.documentSpec[7].documentType.code,
+                this.professionalDoc[1]
+              );
+              formData.append(
+                this.documentSpec[8].documentType.code,
+                this.professionalDoc[2]
+              );
             }
-          })
-          .catch((err) => {});
+
+            formData.append(this.documentSpec[9].documentType.code, this.coc);
+            formData.append(
+              this.documentSpec[10].documentType.code,
+              this.certificateFile1
+            );
+            formData.append(
+              this.documentSpec[11].documentType.code,
+              this.certificateFile2
+            );
+            formData.append(
+              this.documentSpec[12].documentType.code,
+              this.certificateFile3
+            );
+            formData.append(
+              this.documentSpec[13].documentType.code,
+              this.certificateFile4
+            );
+            formData.append(
+              this.documentSpec[14].documentType.code,
+              this.certificateFile5
+            );
+
+            formData.append(
+              this.documentSpec[15].documentType.code,
+              this.supportLetter
+            );
+            formData.append(
+              this.documentSpec[16].documentType.code,
+              this.herqa
+            );
+
+            let payload = { document: formData, id: licenseId };
+            this.$store
+              .dispatch("newlicense/uploadDocuments", payload)
+              .then((res) => {
+                if (res.data.status == "Success") {
+                  this.$router.push({ path: "/menu" });
+                }
+              })
+              .catch((err) => {});
+          });
+      }
+    },
+    withdraw(action) {
+      let withdrawObj = {
+        action: action,
+        data: this.getDraftData,
+      };
+      let payload = {
+        licenseId: this.getDraftData.id,
+        withdrawData: withdrawObj,
+      };
+      this.$store.dispatch("newlicense/withdraw", payload).then((res) => {
+        this.$router.push({ path: "/menu" });
       });
     },
   },

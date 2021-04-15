@@ -110,7 +110,7 @@ export default {
   },
   data: () => ({
     licenseInfo: {
-      applicantId: localStorage.getItem('userId'),
+      applicantId: localStorage.getItem("userId"),
       applicantTypeId: "",
       education: {
         departmentId: "",
@@ -137,6 +137,19 @@ export default {
           },
         },
       };
+    },
+    withdraw(action) {
+      let withdrawObj = {
+        action: action,
+        data: this.getDraft,
+      };
+      let payload = {
+        licenseId: this.getDraft.id,
+        withdrawData: withdrawObj,
+      };
+      this.$store.dispatch("newlicense/withdraw", payload).then((res) => {
+        this.$router.push({ path: "/menu" });
+      });
     },
     submit() {
       this.$emit("changeActiveState");

@@ -3,7 +3,7 @@
     <Navigation tab="Home" />
     <div v-if="message.render" class="bg-lightBlueB-200 h-full">
       <div class="flex pl-12 pt-medium">
-        <Title message="New License" />
+        <Title message="New License Submitted Applications" />
       </div>
       <div class=" mt-medium rounded ml-large">
         <div class="flex " v-for="i in newlicense.length" v-bind:key="i">
@@ -13,37 +13,30 @@
             v-bind:key="item"
             v-bind:value="item"
           >
-            <router-link
-              :to="{
-                name: 'NewLicense',
-                params: { id: item.id },
-              }"
+            <div
+              class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
             >
-              <div
-                class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
-              >
-                <div class="p-4 w-48 h-64">
-                  <!-- <div class="flex content-center justify-center">
+              <div class="p-4 w-48 h-64">
+                <!-- <div class="flex content-center justify-center">
                 <img class="box-shadow-pop" />
               </div> -->
-                  <h4
-                    class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
-                  >
-                    {{ item.applicantType.name }}
-                  </h4>
-                  <h4
-                    class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
-                  >
-                    {{ item.applicationStatus.name }}
-                  </h4>
-                  <h4
-                    class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
-                  >
-                    Code: {{ item.newLicenseCode }}
-                  </h4>
-                </div>
+                <h4
+                  class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                >
+                  {{ item.applicantType.name }}
+                </h4>
+                <h4
+                  class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                >
+                  {{ item.applicationStatus.name }}
+                </h4>
+                <h4
+                  class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                >
+                  Code: {{ item.newLicenseCode }}
+                </h4>
               </div>
-            </router-link>
+            </div>
           </div>
         </div>
       </div>

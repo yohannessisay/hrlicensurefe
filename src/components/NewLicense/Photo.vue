@@ -60,6 +60,13 @@
           >
             {{ buttons[0].name }}
           </button>
+          <button
+            v-if="buttons.length > 2"
+            @click="withdraw(buttons[2].action)"
+            variant="outline"
+          >
+            {{ buttons[2]["name"] }}
+          </button>
         </div>
       </div>
     </div>
@@ -79,8 +86,7 @@ export default {
     const store = useStore();
     const route = useRoute();
 
-    const basePath =
-      "https://hrlicensurebe.dev.k8s.sandboxaddis.com/";
+    const basePath = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/";
 
     let photoFile = ref("");
     let photoFileP = ref("");
@@ -117,8 +123,7 @@ export default {
     const handleFileUpload = () => {
       showUpload.value = false;
       photoFile.value = photoFileP.value.files[0];
-      console.log(photoFile.value);
-
+      isImage.value = true;
       let reader = new FileReader();
 
       reader.addEventListener(
@@ -126,7 +131,6 @@ export default {
         function() {
           showPreview.value = true;
           filePreview.value = reader.result;
-          console.log(filePreview.value);
         },
         false
       );
@@ -161,74 +165,128 @@ export default {
       store.dispatch("newlicense/setPhoto", photoFile);
     };
     const draft = (action) => {
-      let license = {
-        action: action,
-        data: {
-          applicantId: userId,
-          applicantTypeId: licenseInfo.applicantTypeId,
-          education: {
-            departmentId: licenseInfo.education.departmentId,
-            institutionId: licenseInfo.education.institutionId,
+      if (route.params.id) {
+        if (photoFile) {
+          // modify the drafData before dispatching
+        } else {
+          // just send the draftData
+        }
+      } else {
+        let license = {
+          action: action,
+          data: {
+            applicantId: userId,
+            applicantTypeId: licenseInfo.applicantTypeId,
+            education: {
+              departmentId: licenseInfo.education.departmentId,
+              institutionId: licenseInfo.education.institutionId,
+            },
           },
-        },
+        };
+        store.dispatch("newlicense/addNewLicense", license).then((res) => {
+          let licenseId = res.data.data.id;
+          let formData = new FormData();
+          formData.append(documentSpecs[0].documentType.code, photoFile);
+          formData.append(documentSpecs[1].documentType.code, passport);
+          formData.append(documentSpecs[2].documentType.code, healthExamCert);
+          formData.append(documentSpecs[3].documentType.code, serviceFee);
+          formData.append(documentSpecs[4].documentType.code, workExperience);
+          formData.append(documentSpecs[5].documentType.code, englishLanguage);
+          if (professionalDoc != undefined) {
+            formData.append(
+              documentSpecs[6].documentType.code,
+              professionalDoc[0]
+            );
+            formData.append(
+              documentSpecs[7].documentType.code,
+              professionalDoc[1]
+            );
+            formData.append(
+              documentSpecs[8].documentType.code,
+              professionalDoc[2]
+            );
+          }
+          formData.append(documentSpecs[9].documentType.code, coc);
+          if (educationDoc != undefined) {
+            formData.append(
+              documentSpecs[10].documentType.code,
+              educationDoc[0]
+            );
+            const withdraw = (action) => {
+              let withdrawObj = {
+                action: action,
+                data: draftData,
+              };
+              let payload = {
+                licenseId: draftData.id,
+                withdrawData: withdrawObj,
+              };
+              store.dispatch("newlicense/withdraw", payload).then((res) => {
+                this.$router.push({ path: "/menu" });
+              });
+            };
+            formData.append(
+              documentSpecs[11].documentType.code,
+              educationDoc[1]
+            );
+            formData.append(
+              documentSpecs[12].documentType.code,
+              educationDoc[2]
+            );
+            formData.append(
+              documentSpecs[13].documentType.code,
+              educationDoc[3]
+            );
+            formData.append(
+              documentSpecs[14].documentType.code,
+              educationDoc[4]
+            );
+          }
+
+          formData.append(documentSpecs[15].documentType.code, supportLetter);
+          formData.append(documentSpecs[16].documentType.code, herqa);
+
+          let payload = { document: formData, id: licenseId };
+          store
+            .dispatch("newlicense/uploadDocuments", payload)
+            .then((res) => {
+              if (res.data.status == "Success") {
+                route.push({ path: "/menu" });
+              }
+            })
+            .catch((err) => {});
+        });
+      }
+    };
+    const withdraw = (action) => {
+      let withdrawObj = {
+        action: action,
+        data: draftData,
       };
-      store.dispatch("newlicense/addNewLicense", license).then((res) => {
-        let licenseId = res.data.data.id;
-        let formData = new FormData();
-        formData.append(documentSpecs[0].documentType.code, photoFile);
-        formData.append(documentSpecs[1].documentType.code, passport);
-        formData.append(documentSpecs[2].documentType.code, healthExamCert);
-        formData.append(documentSpecs[3].documentType.code, serviceFee);
-        formData.append(documentSpecs[4].documentType.code, workExperience);
-        formData.append(documentSpecs[5].documentType.code, englishLanguage);
-        if (professionalDoc != undefined) {
-          formData.append(
-            documentSpecs[6].documentType.code,
-            professionalDoc[0]
-          );
-          formData.append(
-            documentSpecs[7].documentType.code,
-            professionalDoc[1]
-          );
-          formData.append(
-            documentSpecs[8].documentType.code,
-            professionalDoc[2]
-          );
+      let payload = {
+        licenseId: draftData.id,
+        withdrawData: withdrawObj,
+      };
+      store.dispatch("newlicense/withdraw", payload).then((res) => {
+        if (res.status == "Success") {
+          this.$router.push({ path: "/menu" });
         }
-        formData.append(documentSpecs[9].documentType.code, coc);
-        if (educationDoc != undefined) {
-          formData.append(documentSpecs[10].documentType.code, educationDoc[0]);
-          formData.append(documentSpecs[11].documentType.code, educationDoc[1]);
-          formData.append(documentSpecs[12].documentType.code, educationDoc[2]);
-          formData.append(documentSpecs[13].documentType.code, educationDoc[3]);
-          formData.append(documentSpecs[14].documentType.code, educationDoc[4]);
-        }
-
-        formData.append(documentSpecs[15].documentType.code, supportLetter);
-        formData.append(documentSpecs[16].documentType.code, herqa);
-
-        let payload = { document: formData, id: licenseId };
-        store
-          .dispatch("newlicense/uploadDocuments", payload)
-          .then((res) => {
-            if (res.data.status == "Success") {
-              route.push({ path: "/menu" });
-            }
-          })
-          .catch((err) => {});
       });
     };
+
     onMounted(() => {
       buttons = store.getters["newlicense/getButtons"];
       draftData = store.getters["newlicense/getDraft"];
       if (route.params.id) {
-        showUpload.value = false;
-        // isImage.value = true;
-        photoFile.value = draftData.documents[5];
-        showPreview.value = true;
-        console.log(draftData.documents);
-        filePreview.value = basePath;
-        console.log(filePreview.value);
+        for (let i = 0; i < draftData.documents.length; i++) {
+          if (draftData.documents[i].documentTypeCode == "PSP") {
+            showUpload.value = false;
+            isImage.value = true;
+            photoFile.value = draftData.documents[i];
+            showPreview.value = true;
+            filePreview.value = basePath + draftData.documents[i].filePath;
+          }
+        }
       }
     });
     return {
@@ -242,6 +300,7 @@ export default {
       reset,
       submit,
       draft,
+      withdraw,
       buttons,
       draftData,
       basePath,
