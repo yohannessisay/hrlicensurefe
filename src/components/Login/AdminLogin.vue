@@ -55,11 +55,6 @@
         Forgot password?
       </a>
       <button click="submit()" class="mt-medium">Login</button>
-      <a
-        class="text-base text-primary-500 hover:underline cursor-pointer"
-        @click="redirectToSignup"
-        >Don't have an account? Sign Up
-      </a>
     </form>
   </div>
   <div class="mr-3xl" v-if="message.showFlash">
@@ -72,7 +67,7 @@
 <script>
 import Title from "@/sharedComponents/Title";
 import { useStore } from "vuex";
-import { ref, reactive } from "vue";
+import { ref } from "vue";
 import { useRouter } from "vue-router";
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
@@ -100,23 +95,13 @@ export default {
       let email = {
         emailAddress: credentials.value.emailAddress,
       };
-      store.dispatch("user/login", email).then((res) => {
+      store.dispatch("admin/login", email).then((res) => {
         if (res.data.status == "Success") {
-          const userId = res.data.data.id;
-          store.dispatch("profile/getProfileById", userId).then(res => {
-            const getProfiles = res.data ? res.data.data : null;
-            message.value.showFlash = !message.value.showFlash;
+          message.value.showFlash = !message.value.showFlash;
 
-            if (getProfiles) {
-              setTimeout(() => {
-                router.push({ path: "/menu" });
-              }, 3000);
-            } else {
-              setTimeout(() => {
-                router.push({ path: "/addProfile" });
-              }, 3000);
-            }
-          });
+          setTimeout(() => {
+            router.push({ path: "/admin/review" });
+          }, 3000);
         } else {
           message.value.showErrorFlash = !message.value.showErrorFlash;
           setTimeout(() => {}, 3000);
@@ -132,7 +117,6 @@ export default {
     const validateForm = (formData) => {
       const errors = {};
       if (!formData.emailAddress) errors.emailAddress = "Email Required";
-      if (!formData.phoneNumber) errors.phoneNumber = "Phone Number Required";
       if (formData.emailAddress && !this.isEmail(formData.emailAddress)) {
         errors.emailAddress = "Invalid Email";
       }

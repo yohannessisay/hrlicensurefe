@@ -43,6 +43,7 @@
             height="60"
             xmlns="http://www.w3.org/2000/svg"
             version="1.1"
+            @click="previous()"
           >
             <polyline
               points="30 10 10 30 30 50"
@@ -59,10 +60,31 @@
 
         <div class="flex flex-col justify-center items-center ml-large ">
           <div class="ml-medium">
-            <label class="ml-large text-grey-200 text-2xl"> Residence</label>
-            <h5 class="ml-8 text-black-100 text-3xl">
+            <label
+              class="justify-center items-center ml-large text-grey-200 text-2xl"
+            >
+              {{ documentTypeName }}
+            </label>
+            <!-- <h5 class="ml-8 text-black-100 text-3xl">
               Addis Ababa
-            </h5>
+            </h5> -->
+            <div class="flex justify-start flex-wrap">
+              <!-- <div v-for="file in docs" v-bind:key="file.name">
+                <Title class="" :message="file.name" />
+                <picture>
+                  <img :src="basePath + file.filePath" />
+                </picture>
+              </div> -->
+              <picture>
+                <img
+                  v-bind:src="
+                    'https://hrlicensurebe.dev.k8s.sandboxaddis.com/' +
+                      docs[index].filePath
+                  "
+                />
+              </picture>
+              <!-- {{docs[0].filePath}} -->
+            </div>
           </div>
           <div class="mt-medium">
             <button class="mr-medium">Accept</button>
@@ -73,7 +95,7 @@
               class="overflow-hidden h-2 mb-4 text-xs flex rounded bg-grey-100 w-screen max-w-2xl"
             >
               <div
-                style="width:30%"
+                :style="width"
                 class="shadow-none flex flex-col text-center whitespace-nowrap  justify-center bg-primary-400"
               ></div>
             </div>
@@ -97,6 +119,7 @@
             height="60"
             xmlns="http://www.w3.org/2000/svg"
             version="1.1"
+            @click="next()"
           >
             <polyline
               points="10 10 30 30 10 50"
@@ -121,8 +144,75 @@
 </template>
 
 <script>
+import { useStore } from "vuex";
+import { useRoute } from "vue-router";
+import { ref, onMounted } from "vue";
 export default {
-  setup() {},
+  setup() {
+    const route = useRoute();
+    const store = useStore();
+    const newLicense = ref({
+      documents: [{ filePath: "" }]
+    });
+    let documentTypes = ref([]);
+    let documentTypeName = ref("");
+    let docs = ref([{ filePath: "" }]);
+    let index = ref(0);
+    let amount = ref(1);
+    let width = ref("width:1.11111%");
+    const created = async () => {
+      store
+        .dispatch("reviewer/getApplication", route.params.applicationId)
+        .then(res => {
+          // newLicense.value = res.data.data;
+          docs.value = res.data.data.documents;
+          console.log(docs.value);
+        });
+    };
+    const fetchDocumentTypes = async () => {
+      store.dispatch("reviewer/getDocumentTypes").then(res => {
+        documentTypes.value = res.data.data;
+        console.log(documentTypes.value);
+      });
+    };
+    const next = () => {
+      index.value = index.value + 1;
+      amount.value = ((index.value + 1) / docs.value.length) * 100;
+      width.value = "width:" + amount.value + "%";
+      findDocumentType(documentTypes.value, docs.value[index.value]);
+    };
+    const previous = () => {
+      index.value = index.value - 1;
+      amount.value = ((index.value + 1) / docs.value.length) * 100;
+      width.value = "width:" + amount.value + "%";
+      findDocumentType(documentTypes.value, docs.value[index.value]);
+    };
+    const findDocumentType = (obj, ab) => {
+      for (var prop in obj) {
+        if (obj[prop].code == ab.documentTypeCode) {
+          documentTypeName.value = obj[prop].name;
+        }
+      }
+    };
+
+    onMounted(() => {
+      created();
+      fetchDocumentTypes();
+      findDocumentType(documentTypes.value, docs.value[0]);
+    });
+    return {
+      newLicense,
+      index,
+      docs,
+      next,
+      previous,
+      amount,
+      width,
+      documentTypes,
+      findDocumentType,
+      documentTypeName
+    };
+  }
 };
 </script>
 <style>

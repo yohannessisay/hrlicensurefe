@@ -23,9 +23,7 @@
               @mouseleave="hover = false"
             >
               <div class="flex content-center justify-center">
-                <router-link to="/newlicense">
-                  <img class="box-shadow-pop" v-bind:src="item.picture.large" />
-                </router-link>
+                <img class="box-shadow-pop" v-bind:src="item.picture.large" />
               </div>
               <h4
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
@@ -71,13 +69,11 @@
               <div
                 class="flex ml-small w-32 pt-small justify-center content-center"
               >
-                <router-link to="/newlicense">
-                  <button
-                    class="block mx-auto  bg-lightBlue-300 hover:bg-lightBlue-600 hover:shadow-lg"
-                  >
-                    Assign to Me
-                  </button>
-                </router-link>
+                <button
+                  class="block mx-auto  bg-lightBlue-300 hover:bg-lightBlue-600 hover:shadow-lg"
+                >
+                  Assign to Me
+                </button>
               </div>
             </div>
           </div>
@@ -118,13 +114,16 @@ export default {
   }
 };
 </script>
-<style>
+<style scoped>
 img {
   border-radius: 50%;
   margin-bottom: 1rem;
   width: 80px;
   border-color: steelblue;
   background-color: steelblue;
+}
+.container {
+  cursor: pointer;
 }
 .flip-box {
   transform-style: preserve-3d;

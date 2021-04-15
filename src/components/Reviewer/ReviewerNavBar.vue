@@ -45,7 +45,7 @@
 
         <div class="flex items-center space-x-5">
           <div>
-            <router-link to="/review">
+            <router-link to="/admin/review">
               <a v-if="tab != `Home`" class="text-primary-300 mr-small"> Home </a>
               <a
                 v-if="tab == `Home`"
@@ -161,6 +161,13 @@
                   role="menuitem"
                   >Profile
                 </a>
+                <router-link to="/admin/create" v-if="showAdminCreate">
+                  <a
+                    class="block px-4 py-2 text-sm text-blue-100  hover:bg-gray-100 hover:text-gray-900"
+                    role="menuitem"
+                    >Create Admin User
+                  </a>
+                </router-link>
                 <a
                   href="#"
                   class="block px-4 py-2 text-sm text-blue-100 hover:bg-gray-100 hover:text-gray-900"
@@ -194,6 +201,7 @@
 
 <script scoped>
 import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
 import Title from "@/sharedComponents/Title";
 import RenderIllustration from "@/sharedComponents/RenderIllustration";
 
@@ -207,14 +215,28 @@ export default {
     }
   },
   setup() {
+    const router = useRouter();
     let showDD = ref(false);
+    let showAdminCreate = false;
+    const loggedInAdminRole = localStorage.getItem("role");
+    loggedInAdminRole === "TL"
+      ? (showAdminCreate = true)
+      : (showAdminCreate = false);
 
     const showDropDown = () => {
       showDD.value = !showDD.value;
     };
+    const logout = () => {
+      localStorage.removeItem("token");
+      localStorage.removeItem("adminId");
+      localStorage.removeItem("role");
+      router.push({ path: "/admin" });
+    };
     return {
       showDD,
-      showDropDown
+      showDropDown,
+      logout,
+      showAdminCreate
     };
   }
 };
