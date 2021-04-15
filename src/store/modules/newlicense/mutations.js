@@ -15,9 +15,6 @@ import {
   SET_APPLICATION_ID,
   SET_DOCUMENT_SPEC,
   SET_DRAFT,
-  ADD_PROFILE_LOADING,
-  ADD_PROFILE_SUCCESS,
-  ADD_PROFILE_ERROR,
 } from "./mutation-types";
 
 export default {
@@ -68,22 +65,5 @@ export default {
   },
   [SET_DRAFT](state, draft) {
     state.draft = draft;
-  },
-  [ADD_PROFILE_LOADING](state) {
-    state.addProfileLoading = true;
-    state.addProfileSuccess = false;
-    state.addProfileError = false;
-  },
-
-  [ADD_PROFILE_SUCCESS](state) {
-    state.addProfileLoading = false;
-    state.addProfileSuccess = true;
-    state.addProfileError = false;
-  },
-
-  [ADD_PROFILE_ERROR](state) {
-    state.addProfileLoading = false;
-    state.addProfileSuccess = false;
-    state.addProfileError = true;
   },
 };

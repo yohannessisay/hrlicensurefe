@@ -51,6 +51,13 @@
           <button @click="draft(this.buttons[0].action)" variant="outline">
             {{ this.buttons[0]["name"] }}
           </button>
+          <button
+            v-if="this.buttons.length > 2"
+            @click="withdraw(this.buttons[2].action)"
+            variant="outline"
+          >
+            {{ this.buttons[2]["name"] }}
+          </button>
         </div>
       </div>
     </div>
@@ -66,6 +73,8 @@ export default {
   components: { TitleWithIllustration },
   data() {
     return {
+      basePath: "https://hrlicensurebe.dev.k8s.sandboxaddis.com/",
+
       serviceFeeFile: "",
       showPreview: false,
       filePreview: "",
@@ -73,8 +82,10 @@ export default {
       isImage: true,
       buttons: [],
       documentSpec: [],
-      userId: 2,
+      userId: localStorage.getItem("userId"),
       license: "",
+      draftId: "",
+      draftData: "",
 
       photo: "",
       passport: "",
@@ -89,6 +100,20 @@ export default {
     };
   },
   created() {
+    this.draftId = this.$route.params.id;
+    if (this.draftId != undefined) {
+      this.draftData = this.getDraftData;
+      for (let i = 0; i < this.draftData.documents.length; i++) {
+        if (this.draftData.documents[i].documentTypeCode == "SF") {
+          this.showUpload = false;
+          this.isImage = true;
+          this.serviceFeeFile = this.draftData.documents[i];
+          this.showPreview = true;
+          this.filePreview =
+            this.basePath + this.draftData.documents[i].filePath;
+        }
+      }
+    }
     this.license = this.getLicense;
     this.buttons = this.getButtons;
     this.documentSpec = this.getDocumentSpec;
@@ -119,6 +144,7 @@ export default {
       getCoc: "newlicense/getCoc",
       getEducationalDocuments: "newlicense/getEducationalDocuments",
       getWorkExperience: "newlicense/getWorkExperience",
+      getDraftData: "newlicense/getDraft",
     }),
   },
 
@@ -130,13 +156,13 @@ export default {
       this.showPreview = false;
       this.serviceFeeFile = "";
       this.filePreview = "";
-      this.isImage = true;
+      // this.isImage = true;
     },
     handleFileUpload() {
       this.showUpload = false;
       this.serviceFeeFile = this.$refs.serviceFeeFile.files[0];
       let reader = new FileReader();
-
+      this.isImage = true;
       reader.addEventListener(
         "load",
         function() {
@@ -157,94 +183,125 @@ export default {
       }
     },
     draft(action) {
-      let license = {
-        action: action,
-        data: {
-          applicantId: this.userId,
-          applicantTypeId: this.license.applicantTypeId,
-          education: {
-            institutionId: this.license.education.departmentId,
-            departmentId: this.license.education.institutionId,
+      if (this.draftId) {
+        if (this.serviceFeeFile) {
+          // modify the drafData before dispatching
+        } else {
+          // just send the draftData
+        }
+      } else {
+        let license = {
+          action: action,
+          data: {
+            applicantId: this.userId,
+            applicantTypeId: this.license.applicantTypeId,
+            education: {
+              institutionId: this.license.education.departmentId,
+              departmentId: this.license.education.institutionId,
+            },
           },
-        },
-      };
-      this.$store.dispatch("newlicense/addNewLicense", license).then((res) => {
-        let licenseId = res.data.data.id;
-        let formData = new FormData();
-        formData.append(this.documentSpec[0].documentType.code, this.photo);
-        formData.append(this.documentSpec[1].documentType.code, this.passport);
-        formData.append(
-          this.documentSpec[2].documentType.code,
-          this.healthExamCert
-        );
-        formData.append(
-          this.documentSpec[3].documentType.code,
-          this.serviceFeeFile
-        );
-        formData.append(
-          this.documentSpec[4].documentType.code,
-          this.workExperience
-        );
-        formData.append(
-          this.documentSpec[5].documentType.code,
-          this.englishLanguage
-        );
-
-        if (this.professionalDoc != undefined) {
-          formData.append(
-            this.documentSpec[6].documentType.code,
-            this.professionalDoc[0]
-          );
-          formData.append(
-            this.documentSpec[7].documentType.code,
-            this.professionalDoc[1]
-          );
-          formData.append(
-            this.documentSpec[8].documentType.code,
-            this.professionalDoc[2]
-          );
-        }
-
-        formData.append(this.documentSpec[9].documentType.code, this.coc);
-        if (this.educationalDocs != undefined) {
-          formData.append(
-            this.documentSpec[10].documentType.code,
-            this.educationalDocs[0]
-          );
-          formData.append(
-            this.documentSpec[11].documentType.code,
-            this.educationalDocs[1]
-          );
-          formData.append(
-            this.documentSpec[12].documentType.code,
-            this.educationalDocs[2]
-          );
-          formData.append(
-            this.documentSpec[13].documentType.code,
-            this.educationalDocs[3]
-          );
-          formData.append(
-            this.documentSpec[14].documentType.code,
-            this.educationalDocs[4]
-          );
-        }
-
-        formData.append(
-          this.documentSpec[15].documentType.code,
-          this.supportLetter
-        );
-        formData.append(documentSpecs[16].documentType.code, herqa);
-
-
-        let payload = { document: formData, id: licenseId };
+        };
         this.$store
-          .dispatch("newlicense/uploadDocuments", payload)
+          .dispatch("newlicense/addNewLicense", license)
           .then((res) => {
-            if (res.data.status == "Success") {
-              this.$router.push({ path: "/menu" });
+            let licenseId = res.data.data.id;
+            let formData = new FormData();
+            formData.append(this.documentSpec[0].documentType.code, this.photo);
+            formData.append(
+              this.documentSpec[1].documentType.code,
+              this.passport
+            );
+            formData.append(
+              this.documentSpec[2].documentType.code,
+              this.healthExamCert
+            );
+            formData.append(
+              this.documentSpec[3].documentType.code,
+              this.serviceFeeFile
+            );
+            formData.append(
+              this.documentSpec[4].documentType.code,
+              this.workExperience
+            );
+            formData.append(
+              this.documentSpec[5].documentType.code,
+              this.englishLanguage
+            );
+
+            if (this.professionalDoc != undefined) {
+              formData.append(
+                this.documentSpec[6].documentType.code,
+                this.professionalDoc[0]
+              );
+              formData.append(
+                this.documentSpec[7].documentType.code,
+                this.professionalDoc[1]
+              );
+              formData.append(
+                this.documentSpec[8].documentType.code,
+                this.professionalDoc[2]
+              );
             }
-          })
-          .catch((err) => {});
+
+            formData.append(this.documentSpec[9].documentType.code, this.coc);
+            if (this.educationalDocs != undefined) {
+              formData.append(
+                this.documentSpec[10].documentType.code,
+                this.educationalDocs[0]
+              );
+              formData.append(
+                this.documentSpec[11].documentType.code,
+                this.educationalDocs[1]
+              );
+              formData.append(
+                this.documentSpec[12].documentType.code,
+                this.educationalDocs[2]
+              );
+              formData.append(
+                this.documentSpec[13].documentType.code,
+                this.educationalDocs[3]
+              );
+              formData.append(
+                this.documentSpec[14].documentType.code,
+                this.educationalDocs[4]
+              );
+            }
+
+            formData.append(
+              this.documentSpec[15].documentType.code,
+              this.supportLetter
+            );
+            formData.append(
+              this.documentSpec[16].documentType.code,
+              this.herqa
+            );
+            for (var pair of formData.entries()) {
+              console.log(pair[0] + ", " + pair[1]);
+            }
+            let payload = { document: formData, id: licenseId };
+            this.$store
+              .dispatch("newlicense/uploadDocuments", payload)
+              .then((res) => {
+                console.log(res.data);
+                if (res.data.status == "Success") {
+                  this.$router.push({ path: "/menu" });
+                }
+              })
+              .catch((err) => {});
+          });
+      }
+    },
+    withdraw(action) {
+      let withdrawObj = {
+        action: action,
+        data: this.getDraftData,
+      };
+      let payload = {
+        licenseId: this.getDraftData.id,
+        withdrawData: withdrawObj,
+      };
+      this.$store.dispatch("newlicense/withdraw", payload).then((res) => {
+        this.$router.push({ path: "/menu" });
       });
     },
     nextStep() {
@@ -261,31 +318,10 @@ img {
 }
 
 #serviceFeeFile {
-  opacity: 0; /* invisible but it's there! */
+  opacity: 0;
   width: 100%;
   height: 200px;
   position: absolute;
   cursor: pointer;
-}
-
-.dropbox {
-  outline: 2px dashed grey; /* the dash box */
-  outline-offset: -10px;
-  background: lightcyan;
-  color: dimgray;
-  padding: 10px 10px;
-  min-height: 200px; /* minimum height */
-  position: relative;
-  cursor: pointer;
-}
-
-.dropbox:hover {
-  background: lightblue; /* when mouse over to the drop zone, change color */
-}
-
-.dropbox p {
-  font-size: 1.2em;
-  text-align: center;
-  padding: 50px 0;
 }
 </style>

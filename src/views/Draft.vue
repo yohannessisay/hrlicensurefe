@@ -1,22 +1,22 @@
 <template>
   <div>
     <Navigation tab="Home" />
-    <div class="bg-lightBlueB-200 h-full">
+    <div v-if="message.render" class="bg-lightBlueB-200 h-full">
       <div class="flex pl-12 pt-medium">
-        <Title message="New License" />
+        <Title message="New License Draft" />
       </div>
-      <div class="flex mt-medium rounded ml-large">
-        <div v-for="i in Math.ceil(newlicense.length / 3)" v-bind:key="i">
+      <div class=" mt-medium rounded ml-large">
+        <div class="flex " v-for="i in newlicense.length" v-bind:key="i">
           <div
             class="container mb-medium"
-            v-for="item in newlicense.slice((i - 1) * 3, i * 3)"
+            v-for="item in newlicense.slice((i - 1) * 5, i * 5)"
             v-bind:key="item"
             v-bind:value="item"
           >
             <router-link
               :to="{
                 name: 'NewLicense',
-                params: { id: item.id }
+                params: { id: item.id },
               }"
             >
               <div
@@ -69,17 +69,22 @@ export default {
     let renewal = ref([]);
     let verification = ref([]);
     let goodstanding = ref([]);
-
+    let message = ref({
+      render: false,
+    });
     let hover = ref(false);
 
     const fetchLicensebyId = () => {
       store.dispatch("newlicense/getNewLicense").then((res) => {
         license.value = res.data.data;
+        message.value.render = !message.value.render;
         newlicense.value = license.value.filter(function(e) {
           return e.applicationStatus.code == "DRA";
         });
+        console.log(newlicense.value);
       });
     };
+
 
     onMounted(() => {
       fetchLicensebyId();
@@ -91,6 +96,7 @@ export default {
       verification,
       goodstanding,
       hover,
+      message
     };
   },
 };
