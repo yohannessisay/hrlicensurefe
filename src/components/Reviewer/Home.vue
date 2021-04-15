@@ -31,6 +31,10 @@
             >
               <div class="flex content-center justify-center">
                 <!-- <img class="box-shadow-pop" v-bind:src="item.picture.large" /> -->
+                <img
+                  class="box-shadow-pop" 
+                  src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
+                />
               </div>
               <h4
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
@@ -85,6 +89,10 @@
               <div class="flex content-center justify-center">
                 <router-link to="/newlicense">
                   <!-- <img class="box-shadow-pop" v-bind:src="item.picture.large" /> -->
+                  <img
+                    class="box-shadow-pop"
+                    src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
+                  />
                 </router-link>
               </div>
               <h4
@@ -141,12 +149,14 @@
                 @mouseleave="hover = false"
               >
                 <div class="flex content-center justify-center">
-                  <router-link to="/newlicense">
-                    <!-- <img
+                  <!-- <img
                       class="box-shadow-pop"
                       v-bind:src="item.picture.large"
-                    /> -->
-                  </router-link>
+                  /> -->
+                  <img
+                    class="box-shadow-pop"
+                    src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
+                  />
                 </div>
                 <h4
                   class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
