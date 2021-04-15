@@ -343,12 +343,12 @@ export default {
     const created = async (applicationId, applicantId) => {
       console.log(applicationId);
       console.log(applicantId);
-      store.dispatch("reviewer/getProfile", 1).then((res) => {
+      store.dispatch("reviewer/getProfile", 1).then(res => {
         profileInfo.value = res.data.data;
         show.value = true;
         console.log(profileInfo.value);
       });
-      store.dispatch("reviewer/getLicense", applicationId).then((res) => {
+      store.dispatch("reviewer/getLicense", applicationId).then(res => {
         license.value = res.data.data;
         console.log(license.value);
         applicantId.value = license.value.applicantId;

@@ -97,7 +97,7 @@ const routes = [
     component: () => import("../components/Reviewer/Unfinished.vue")
   },
   {
-    path: "/assignedToYou",
+    path: "/admin/assignedToYou",
     name: "assignedToYou",
     component: () => import("../components/Reviewer/AssignedToYou.vue")
   },
