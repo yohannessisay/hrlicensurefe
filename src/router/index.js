@@ -161,6 +161,11 @@ const routes = [
     path: "/admin",
     name: "Admin",
     component: () => import("../components/Landing/AdminLanding.vue")
+  },
+  {
+    path: "/admin/create",
+    name: "CreateAdmin",
+    component: () => import("../components/Reviewer/CreateAdmin.vue")
   }
 ];
 
