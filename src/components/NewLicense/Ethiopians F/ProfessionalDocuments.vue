@@ -172,19 +172,28 @@
       </div>
     </div>
   </div>
+  <div v-if="showFlash">
+    <FlashMessage message="Operation Successful!" />
+  </div>
+  <div v-if="showErrorFlash">
+    <ErrorFlashMessage message="Operation Failed!" />
+  </div>
 </template>
 
 <script>
 import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
 import { mapGetters, mapActions } from "vuex";
+import FlashMessage from "@/sharedComponents/FlashMessage";
+import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 
 export default {
-  components: { TitleWithIllustration },
+  components: { TitleWithIllustration, FlashMessage, ErrorFlashMessage },
   props: ["activeState"],
   data() {
     return {
       basePath: "https://hrlicensurebe.dev.k8s.sandboxaddis.com/",
-
+      showFlash: false,
+      showErrorFlash: false,
       photoFile: "",
       showPreview: false,
       filePreview: "",
@@ -525,7 +534,12 @@ export default {
               .dispatch("newlicense/uploadDocuments", payload)
               .then((res) => {
                 if (res.data.status == "Success") {
-                  this.$router.push({ path: "/menu" });
+                  this.showFlash = true;
+                  setTimeout(() => {
+                    this.$router.push({ path: "/menu" });
+                  }, 3000);
+                }else{
+                  this.showErrorFlash = true;
                 }
               })
               .catch((err) => {});
@@ -542,7 +556,14 @@ export default {
         withdrawData: withdrawObj,
       };
       this.$store.dispatch("newlicense/withdraw", payload).then((res) => {
-        this.$router.push({ path: "/menu" });
+        if (res.data.status == "Success") {
+          this.showFlash = true;
+          setTimeout(() => {
+            this.$router.push({ path: "/menu" });
+          }, 3000);
+        } else {
+          this.showErrorFlash = true;
+        }
       });
     },
   },

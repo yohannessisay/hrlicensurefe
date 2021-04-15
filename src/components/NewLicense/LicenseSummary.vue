@@ -254,10 +254,10 @@
     </div>
   </div>
   <div v-if="showFlash">
-    <FlashMessage message="Your new license is applied successfully!" />
+    <FlashMessage message="Operation Successful!" />
   </div>
   <div v-if="showErrorFlash">
-    <ErrorFlashMessage message="Unable to apply your new license!" />
+    <ErrorFlashMessage message="Operation Failed!" />
   </div>
 </template>
 
@@ -281,7 +281,7 @@ export default {
       this.draftData = this.getDraftData;
     }
 
-    this.userId = 2;
+    this.userId = localStorage.getItem("userId");
     this.photo = this.getPhoto;
     this.passport = this.getPassport;
     this.healthExamCert = this.getHealthExamCert;
@@ -477,7 +477,11 @@ export default {
               .then((res) => {
                 if (res.data.status == "Success") {
                   this.showFlash = true;
-                  this.$router.push({ path: "/menu" });
+                  setTimeout(() => {
+                    this.$router.push({ path: "/menu" });
+                  }, 3000);
+                } else {
+                  this.showErrorFlash = true;
                 }
               })
               .catch((err) => {
@@ -579,7 +583,9 @@ export default {
               .then((res) => {
                 if (res.data.status == "Success") {
                   this.showFlash = true;
-                  this.$router.push({ path: "/menu" });
+                  setTimeout(() => {
+                    this.$router.push({ path: "/menu" });
+                  }, 3000);
                 }
               })
               .catch((err) => {
@@ -598,7 +604,14 @@ export default {
         withdrawData: withdrawObj,
       };
       this.$store.dispatch("newlicense/withdraw", payload).then((res) => {
-        this.$router.push({ path: "/menu" });
+        if (res.data.status == "Success") {
+          this.showFlash = true;
+          setTimeout(() => {
+            this.$router.push({ path: "/menu" });
+          }, 3000);
+        } else {
+          this.showErrorFlash = true;
+        }
       });
     },
   },

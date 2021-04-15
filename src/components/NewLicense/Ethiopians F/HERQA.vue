@@ -67,23 +67,33 @@
       </div>
     </div>
   </div>
+  <div v-if="showFlash">
+    <FlashMessage message="Operation Successful!" />
+  </div>
+  <div v-if="showErrorFlash">
+    <ErrorFlashMessage message="Operation Failed!" />
+  </div>
 </template>
 
 <script>
 import { ref, onMounted } from "vue";
 import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
 import { useStore } from "vuex";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
+import FlashMessage from "@/sharedComponents/FlashMessage";
+import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 
 export default {
-  components: { TitleWithIllustration },
+  components: { TitleWithIllustration, FlashMessage, ErrorFlashMessage },
   props: ["activeState"],
   setup(props, { emit }) {
     const store = useStore();
     const route = useRoute();
+    const router = useRouter();
 
     const basePath = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/";
-
+    let showFlash = ref(false);
+    let showErrorFlash = ref(false);
     let herqaFile = ref("");
     let herqaFileP = ref("");
     let showPreview = ref(false);
@@ -232,7 +242,12 @@ export default {
             .dispatch("newlicense/uploadDocuments", payload)
             .then((res) => {
               if (res.data.status == "Success") {
-                route.push({ path: "/menu" });
+                showFlash.value = !showFlash.value;
+                setTimeout(() => {
+                  router.push({ path: "/menu" });
+                }, 3000);
+              } else {
+                showErrorFlash.value = !showErrorFlash.value;
               }
             })
             .catch((err) => {});
@@ -249,8 +264,13 @@ export default {
         withdrawData: withdrawObj,
       };
       store.dispatch("newlicense/withdraw", payload).then((res) => {
-        if (res.status == "Success") {
-          this.$router.push({ path: "/menu" });
+        if (res.data.status == "Success") {
+          showFlash.value = !showFlash.value;
+          setTimeout(() => {
+            router.push({ path: "/menu" });
+          }, 3000);
+        } else {
+          showErrorFlash.value = !showErrorFlash.value;
         }
       });
     };
@@ -285,6 +305,8 @@ export default {
       buttons,
       draftData,
       basePath,
+      showFlash,
+      showErrorFlash,
     };
   },
 };
