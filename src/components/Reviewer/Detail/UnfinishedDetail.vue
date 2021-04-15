@@ -319,7 +319,7 @@ export default {
     };
 
     const evaluate = () => {
-      router.push("/evaluate");
+      router.push("/admin/evaluate");
     };
 
     onMounted(() => {

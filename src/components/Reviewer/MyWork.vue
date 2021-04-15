@@ -84,7 +84,7 @@ export default {
   }
 };
 </script>
-<style>
+<style scoped>
 img {
   border-radius: 50%;
   margin-bottom: 1rem;

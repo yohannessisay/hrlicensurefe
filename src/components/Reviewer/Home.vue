@@ -5,7 +5,7 @@
       <div class="flex pl-12 pt-medium">
         <Title message="Unfinished" />
         <div class="flex ml-small" v-if="unfinished.length >= 5">
-          <router-link to="/unfinished">
+          <router-link to="admin/unfinished">
             <button
               class="block mx-auto  bg-lightBlue-300 hover:bg-lightBlue-600 hover:shadow-lg"
             >
@@ -14,7 +14,12 @@
           </router-link>
         </div>
       </div>
-      <div class="flex  mt-medium rounded ">
+      <div class="flex ml-small mt-medium rounded ">
+        <div class="pl-large w-52 h-26" v-if="nothingToShow == true">
+          <div class="flex content-center justify-center">
+            <h2>Nothing To Show!!</h2>
+          </div>
+        </div>
         <div
           class="container"
           v-for="(item, index) in unfinished"
@@ -27,7 +32,7 @@
           >
             <div
               class="p-4 w-48 h-64"
-              @Click="detail(`/unfinishedDetail`, item.id, item.applicant.id)"
+              @Click="detail(`/admin/unfinishedDetail`, item.id, item.applicant.id)"
             >
               <div class="flex content-center justify-center">
                 <!-- <img class="box-shadow-pop" v-bind:src="item.picture.large" /> -->
@@ -62,7 +67,7 @@
       <div class="flex pl-12 mt-medium">
         <Title message="Assigned to You" />
         <div class="flex ml-small" v-if="assignedToyou.length >= 5">
-          <router-link to="/assignedToyou">
+          <router-link to="admin/assignedToyou">
             <button
               class="block mx-auto  bg-lightBlue-300 hover:bg-lightBlue-600 hover:shadow-lg"
             >
@@ -71,7 +76,12 @@
           </router-link>
         </div>
       </div>
-      <div class="flex mt-medium rounded ">
+      <div class="flex ml-small mt-medium rounded ">
+        <div class="pl-large w-52 h-26" v-if="nothingToShow == true">
+          <div class="flex content-center justify-center">
+            <h2>Nothing To Show!!</h2>
+          </div>
+        </div>
         <div
           class="container"
           v-for="(item, index) in assignedToyou"
@@ -83,8 +93,8 @@
             class="flex justify-center items-center ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
           >
             <div
-              class="p-4 w-48 h-64" 
-              @Click="detail(`/detail`, item.id, item.applicant.id)"
+              class="p-4 w-48 h-64"
+              @Click="detail(`/admin/detail`, item.id, item.applicant.id)"
             >
               <div class="flex content-center justify-center">
                 <router-link to="/newlicense">
@@ -132,7 +142,7 @@
       </div>
 
       <div class="box">
-        <div class="flex justify-center items-center mt-medium rounded">
+        <div class="flex ml-small mt-medium pb-large rounded">
           <div
             class="container flip-box"
             v-for="(item, index) in unassigned"
@@ -184,7 +194,7 @@
                 class="p-4 w-48 h-64"
                 @mouseover="hover = true"
                 @mouseleave="hover = false"
-                @Click="detail(`/unassignedDetail`, item.id, item.applicant.id)"
+                @Click="detail(`/admin/unassignedDetail`, item.id, item.applicant.id)"
               >
                 <h4
                   class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
@@ -204,13 +214,11 @@
                 <div
                   class="flex ml-small w-32 pt-small justify-center content-center"
                 >
-                  <router-link to="/newlicense">
-                    <button
-                      class="block mx-auto  bg-lightBlue-300 hover:bg-lightBlue-600 hover:shadow-lg"
-                    >
-                      Assign to
-                    </button>
-                  </router-link>
+                  <button
+                    class="block mx-auto  bg-lightBlue-300 hover:bg-lightBlue-600 hover:shadow-lg"
+                  >
+                    Assign to
+                  </button>
                 </div>
               </div>
             </div>
@@ -219,7 +227,7 @@
       </div>
       <!-- Flip Box End!-->
 
-      <div class="flex pl-12 mt-medium ">
+      <!-- <div class="flex pl-12 mt-medium ">
         <Title message="Recently Finished" />
         <div class="flex ml-small" v-if="recentlyFinished.length >= 5">
           <router-link to="/newlicense">
@@ -276,7 +284,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -303,26 +311,28 @@ export default {
     // let userId = 2;
     let x = ref([]);
     let activeFilters = ref([]);
+    let nothingToShow = ref(false);
 
     const fetchUnfinished = () => {
       store.dispatch("reviewer/getUnfinished", userId).then(res => {
-        // unfinished.value = res.data.results;
-        x.value = res.data.data;
+        console.log(res.status);
+        if (res.status != "Error") {
+          // unfinished.value = res.data.results;
+          x.value = res.data.data;
 
-        unfinished.value = x.value.filter(a => {
-          if (a.applicationStatus.code == "REVDRA") {
-            console.log(a);
-            return a;
-          }
-        });
-        assignedToyou.value = x.value.filter(a => {
-          if (a.applicationStatus.code == "IRV") {
-            console.log(a);
-            return a;
-          }
-        });
-        // console.log(x);
-        console.log(unfinished.value);
+          unfinished.value = x.value.filter(a => {
+            if (a.applicationStatus.code == "REVDRA") {
+              return a;
+            }
+          });
+          assignedToyou.value = x.value.filter(a => {
+            if (a.applicationStatus.code == "IRV") {
+              return a;
+            }
+          });
+        } else {
+          nothingToShow.value = true;
+        }
       });
     };
 
@@ -335,8 +345,6 @@ export default {
     const fetchUnassignedApplications = () => {
       store.dispatch("reviewer/getUnassigned").then(res => {
         unassigned.value = res.data.data;
-        console.log("====Unassigned====");
-        console.log(unassigned.value);
       });
     };
 
@@ -347,11 +355,7 @@ export default {
     };
 
     const detail = (data, applicationId, applicantId) => {
-      // router.push(data, id);
       const url = data + "/" + applicationId + "/" + applicantId;
-      console.log("=========Application ID and Applicant Id =========");
-      console.log(url);
-      console.log("=========Application ID and Applicant Id =========");
       router.push(url);
     };
 
@@ -369,13 +373,14 @@ export default {
       unassigned,
       recentlyFinished,
       hover,
+      nothingToShow,
       detail,
       activeFilters
     };
   }
 };
 </script>
-<style>
+<style scoped>
 img {
   border-radius: 50%;
   margin-bottom: 1rem;
