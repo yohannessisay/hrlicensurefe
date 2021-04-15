@@ -3,7 +3,7 @@ import Landing from "../components/Landing/Landing.vue";
 const routes = [
   {
     path: "/",
-    name: "Landing",
+    name: "Home",
     component: Landing,
   },
   {
@@ -83,7 +83,7 @@ const routes = [
   },
   {
     path: "/review",
-    name: "Home",
+    name: "ReviewerHome",
     component: () => import("../components/Reviewer/Home.vue")
   },
   {
