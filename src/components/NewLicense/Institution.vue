@@ -148,7 +148,14 @@ export default {
         withdrawData: withdrawObj,
       };
       this.$store.dispatch("newlicense/withdraw", payload).then((res) => {
-        this.$router.push({ path: "/menu" });
+         if (res.data.status == "Success") {
+          this.showFlash = true;
+          setTimeout(() => {
+            this.$router.push({ path: "/menu" });
+          }, 3000);
+        } else {
+          this.showErrorFlash = true;
+        }
       });
     },
     submit() {

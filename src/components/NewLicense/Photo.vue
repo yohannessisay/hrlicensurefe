@@ -83,7 +83,7 @@
 import { ref, onMounted } from "vue";
 import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
 import { useStore } from "vuex";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 
@@ -93,6 +93,7 @@ export default {
   setup(props, { emit }) {
     const store = useStore();
     const route = useRoute();
+    const router = useRouter();
 
     const basePath = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/";
 
@@ -249,9 +250,14 @@ export default {
           store
             .dispatch("newlicense/uploadDocuments", payload)
             .then((res) => {
-              if (res.data.status == "Success") {
-                route.push({ path: "/menu" });
+              if (res.status == "Success") {
+                showFlash.value = !showFlash.value;
+                setTimeout(() => {
+                  route.push({ path: "/menu" });
+                }, 3000);
+                router.push({ path: "/menu" });
               } else {
+                showErrorFlash.value = !showErrorFlash.value;
               }
             })
             .catch((err) => {});
@@ -268,16 +274,14 @@ export default {
         withdrawData: withdrawObj,
       };
       store.dispatch("newlicense/withdraw", payload).then((res) => {
-        if (!res.status) {
+        if (res.data.status == "Success") {
           showFlash.value = !showFlash.value;
-          console.log(showErrorFlash.value);
+          setTimeout(() => {
+            router.push({ path: "/menu" });
+          }, 3000);
+        } else {
+          showErrorFlash.value = !showErrorFlash.value;
         }
-        // if (res.status == "Success") {
-        //   message.value.showFlash = !message.value.showFlash;
-        //   this.$router.push({ path: "/menu" });
-        // } else {
-        //   message.value.showErrorFlash = !message.value.showErrorFlash;
-        // }
       });
     };
 

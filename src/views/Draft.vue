@@ -81,7 +81,6 @@ export default {
         newlicense.value = license.value.filter(function(e) {
           return e.applicationStatus.code == "DRA";
         });
-        console.log(newlicense.value);
       });
     };
 
