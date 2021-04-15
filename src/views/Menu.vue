@@ -10,87 +10,110 @@
           <h2 class="text-lightBlueB-400">Your Previous Requests</h2>
         </div>
         <div class="lg:flex lg:items-stretch lg:justify-end ml-auto mr-24">
-          <router-link to="/newlicense">
-            <button>New License Request</button>
-          </router-link>
+          <!-- <router-link to="/newlicense"> -->
+          <button @click="openModal()">New License Request</button>
+          <!-- </router-link> -->
         </div>
       </div>
 
       <div class="flex justify-center mt-8 rounded ">
-        <div
-          class="container mr-12 box-shadow-pop rounded-lg bg-lightGrey-100 "
-        >
-          <div class="flex justify-center items-center w-64 h-40">
-            <div class="p-1">
-              <div class="flex content-center justify-center">
-                <router-link to="/newlicense">
-                  <RenderIllustration illustration="SimpleCertificate" />
-                </router-link>
+        <transition name="slide-fade-to-left">
+          <div
+            class="container mr-12 box-shadow-pop rounded-lg bg-lightGrey-100 "
+          >
+            <div class="flex justify-center items-center w-64 h-40">
+              <div class="p-1">
+                <div class="flex content-center justify-center">
+                  <router-link to="/newlicense">
+                    <RenderIllustration illustration="SimpleCertificate" />
+                  </router-link>
+                </div>
+                <h4 class="text-lightBlueB-500 mt-tiny">Approved</h4>
               </div>
-              <h4 class="text-lightBlueB-500 mt-tiny">Approved</h4>
             </div>
           </div>
-        </div>
-
-        <div
-          class="container mr-12 box-shadow-pop rounded-lg bg-lightGrey-100 "
-        >
-          <div class="flex justify-center items-center w-64 h-40">
-            <div class="p-1">
-              <div class="my-auto flex justify-center">
-                <router-link to="/submitted">
-                  <RenderIllustration illustration="Renewal" />
-                </router-link>
+        </transition>
+        <transition name="slide-fade-to-left">
+          <div
+            class="container mr-12 box-shadow-pop rounded-lg bg-lightGrey-100 "
+          >
+            <div class="flex justify-center items-center w-64 h-40">
+              <div class="p-1">
+                <div class="my-auto flex justify-center">
+                  <router-link to="/submitted">
+                    <RenderIllustration illustration="Renewal" />
+                  </router-link>
+                </div>
+                <h4 class="text-lightBlueB-500 mt-tiny">Submitted</h4>
               </div>
-              <h4 class="text-lightBlueB-500 mt-tiny">Submitted</h4>
             </div>
           </div>
-        </div>
-
-        <div
-          class="container mr-12 box-shadow-pop rounded-lg bg-lightGrey-100 "
-        >
-          <div class="flex justify-center items-center w-64 h-40">
-            <div class="p-1">
-              <div class="flex">
-                <router-link to="/draft">
-                  <RenderIllustration illustration="Verification" />
-                </router-link>
+        </transition>
+        <transition name="slide-fade-to-left">
+          <div
+            class="container mr-12 box-shadow-pop rounded-lg bg-lightGrey-100 "
+          >
+            <div class="flex justify-center items-center w-64 h-40">
+              <div class="p-1">
+                <div class="flex">
+                  <router-link to="/draft">
+                    <RenderIllustration illustration="Verification" />
+                  </router-link>
+                </div>
+                <h4
+                  class="text-lightBlueB-500 justify-center items-center ml-2 mt-tiny"
+                >
+                  Draft
+                </h4>
               </div>
-              <h4
-                class="text-lightBlueB-500 justify-center items-center ml-2 mt-tiny"
-              >
-                Draft
-              </h4>
             </div>
           </div>
-        </div>
-
-        <div
-          class="container mr-12 box-shadow-pop rounded-lg bg-lightGrey-100 "
-        >
-          <div class="flex justify-center items-center w-64 h-40">
-            <div class="p-1">
-              <div class="my-auto flex justify-center">
-                <router-link to="/goodstanding">
-                  <RenderIllustration illustration="GoodStanding" />
-                </router-link>
+        </transition>
+        <transition name="slide-fade-to-left">
+          <div
+            class="container mr-12 box-shadow-pop rounded-lg bg-lightGrey-100 "
+          >
+            <div class="flex justify-center items-center w-64 h-40">
+              <div class="p-1">
+                <div class="my-auto flex justify-center">
+                  <router-link to="/goodstanding">
+                    <RenderIllustration illustration="GoodStanding" />
+                  </router-link>
+                </div>
+                <h4 class="text-lightBlueB-500 mt-tiny">On Review</h4>
               </div>
-              <h4 class="text-lightBlueB-500 mt-tiny">On Review</h4>
             </div>
           </div>
-        </div>
+        </transition>
       </div>
     </div>
+    <Modal v-if="showTermsOfAgreement">
+      <TermsOfAgreement @showTermsOfAgreement="showTermsOfAgreement = false" />
+    </Modal>
   </div>
 </template>
 
 <script>
 import Navigation from "@/views/Navigation";
 import RenderIllustration from "@/sharedComponents/RenderIllustration";
+import Modal from "@/sharedComponents/Modal";
+import TermsOfAgreement from "@/components/NewLicense/TermsOfAgreement";
+import { ref } from "vue";
 
 export default {
-  components: { RenderIllustration, Navigation },
+  components: { RenderIllustration, Navigation, Modal, TermsOfAgreement },
+  setup() {
+    const showTermsOfAgreement = ref(false);
+    const openModal = () => {
+      showTermsOfAgreement.value = true;
+    };
+    return {
+      showTermsOfAgreement,
+      openModal,
+    };
+  },
 };
 </script>
-<style></style>
+<style>
+
+</style>
