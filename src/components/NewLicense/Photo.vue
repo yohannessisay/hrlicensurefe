@@ -70,6 +70,12 @@
         </div>
       </div>
     </div>
+    <div v-if="showFlash">
+      <FlashMessage message="Operation Successful!" />
+    </div>
+    <div v-if="showErrorFlash">
+      <ErrorFlashMessage message="Operation Failed!" />
+    </div>
   </div>
 </template>
 
@@ -78,15 +84,20 @@ import { ref, onMounted } from "vue";
 import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
 import { useStore } from "vuex";
 import { useRoute } from "vue-router";
+import FlashMessage from "@/sharedComponents/FlashMessage";
+import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 
 export default {
-  components: { TitleWithIllustration },
+  components: { TitleWithIllustration, FlashMessage, ErrorFlashMessage },
   props: ["activeState"],
   setup(props, { emit }) {
     const store = useStore();
     const route = useRoute();
 
     const basePath = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/";
+
+    let showFlash = ref(false);
+    let showErrorFlash = ref(false);
 
     let photoFile = ref("");
     let photoFileP = ref("");
@@ -212,19 +223,7 @@ export default {
               documentSpecs[10].documentType.code,
               educationDoc[0]
             );
-            const withdraw = (action) => {
-              let withdrawObj = {
-                action: action,
-                data: draftData,
-              };
-              let payload = {
-                licenseId: draftData.id,
-                withdrawData: withdrawObj,
-              };
-              store.dispatch("newlicense/withdraw", payload).then((res) => {
-                this.$router.push({ path: "/menu" });
-              });
-            };
+
             formData.append(
               documentSpecs[11].documentType.code,
               educationDoc[1]
@@ -252,6 +251,7 @@ export default {
             .then((res) => {
               if (res.data.status == "Success") {
                 route.push({ path: "/menu" });
+              } else {
               }
             })
             .catch((err) => {});
@@ -268,9 +268,16 @@ export default {
         withdrawData: withdrawObj,
       };
       store.dispatch("newlicense/withdraw", payload).then((res) => {
-        if (res.status == "Success") {
-          this.$router.push({ path: "/menu" });
+        if (!res.status) {
+          showFlash.value = !showFlash.value;
+          console.log(showErrorFlash.value);
         }
+        // if (res.status == "Success") {
+        //   message.value.showFlash = !message.value.showFlash;
+        //   this.$router.push({ path: "/menu" });
+        // } else {
+        //   message.value.showErrorFlash = !message.value.showErrorFlash;
+        // }
       });
     };
 
@@ -304,6 +311,8 @@ export default {
       buttons,
       draftData,
       basePath,
+      showFlash,
+      showErrorFlash,
     };
   },
 };

@@ -16,9 +16,6 @@ import {
   SET_APPLICATION_ID,
   SET_DOCUMENT_SPEC,
   SET_DRAFT,
-  ADD_PROFILE_LOADING,
-  ADD_PROFILE_SUCCESS,
-  ADD_PROFILE_ERROR,
 } from "./mutation-types";
 
 const url = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api/";

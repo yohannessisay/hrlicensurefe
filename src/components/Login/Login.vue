@@ -101,10 +101,8 @@ export default {
         emailAddress: credentials.value.emailAddress,
       };
       store.dispatch("user/login", email).then((res) => {
-        console.log(res.data);
         if (res.data.status == "Success") {
           message.value.showFlash = !message.value.showFlash;
-
           setTimeout(() => {
             router.push({ path: "/menu" });
           }, 3000);
