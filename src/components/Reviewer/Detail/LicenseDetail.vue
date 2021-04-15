@@ -320,7 +320,7 @@ export default {
     };
 
     const evaluate = () => {
-      const url = "/evaluate" + "/" + licenseId.value;
+      const url = "/admin/evaluate" + "/" + licenseId.value;
       router.push(url);
     };
 
@@ -359,7 +359,7 @@ export default {
   // },
 };
 </script>
-<style>
+<style scoped>
 .text-danger > label,
 .text-danger > h5 {
   color: red;

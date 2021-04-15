@@ -10,7 +10,7 @@ export default {
       const resp = await ApiService.get(url);
       return resp;
     } catch (error) {
-      const resp = error;
+      const resp = { status: "Error" };
       return resp;
     }
   },
@@ -95,7 +95,7 @@ export default {
     try {
       const url = baseUrl + "/newLicenses/" + applicationId;
       // const urll = baseUrl + "/newLicenses/125";
-      const urll = baseUrl + "/newLicenses/177";
+      const urll = baseUrl + "/newLicenses/190";
       const resp = await ApiService.get(urll);
       return resp;
     } catch (error) {

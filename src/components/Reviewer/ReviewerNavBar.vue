@@ -45,7 +45,7 @@
 
         <div class="flex items-center space-x-5">
           <div>
-            <router-link to="/review">
+            <router-link to="/admin/review">
               <a v-if="tab != `Home`" class="text-primary-300 mr-small"> Home </a>
               <a
                 v-if="tab == `Home`"

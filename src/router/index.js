@@ -82,7 +82,7 @@ const routes = [
     component: () => import("../views/GoodStandingSubmitted.vue")
   },
   {
-    path: "/review",
+    path: "/admin/review",
     name: "ReviewerHome",
     component: () => import("../components/Reviewer/Home.vue")
   },
@@ -125,7 +125,7 @@ const routes = [
   },
 
   {
-    path: "/evaluate/:applicationId",
+    path: "/admin/evaluate/:applicationId",
     name: "evaluate",
     component: () => import("../components/Reviewer/Evaluate.vue")
   },
@@ -135,24 +135,24 @@ const routes = [
     component: () => import("../views/Draft.vue"),
   },
   {
-    path: "/detail/:applicationId/:applicantId",
+    path: "/admin/detail/:applicationId/:applicantId",
     name: "detail",
     component: () => import("../components/Reviewer/Detail/LicenseDetail.vue")
   },
   {
-    path: "/unfinishedDetail/:applicationId/:applicantId",
+    path: "/admin/unfinishedDetail/:applicationId/:applicantId",
     name: "unfinishedDetail",
     component: () =>
       import("../components/Reviewer/Detail/UnfinishedDetail.vue")
   },
   {
-    path: "/recentlyFinishedDetail",
+    path: "/admin/recentlyFinishedDetail",
     name: "recentlyFinishedDetail",
     component: () =>
       import("../components/Reviewer/Detail/RecentlyFinishedDetail.vue")
   },
   {
-    path: "/unassignedDetail/:applicationId/:applicantId",
+    path: "/admin/unassignedDetail/:applicationId/:applicantId",
     name: "unassignedDetail",
     component: () =>
       import("../components/Reviewer/Detail/UnassignedDetail.vue")

@@ -17,7 +17,7 @@
           >
             <div
               class="p-4 w-48 h-64"
-              @Click="detail(`/unfinishedDetail`, item.id, item.applicant.id)"
+              @Click="detail(`admin/unfinishedDetail`, item.id, item.applicant.id)"
             >
               <div class="flex content-center justify-center">
                 <!-- <img class="box-shadow-pop" v-bind:src="item.picture.large" /> -->
@@ -99,7 +99,7 @@ export default {
   }
 };
 </script>
-<style>
+<style scoped>
 img {
   border-radius: 50%;
   margin-bottom: 1rem;
