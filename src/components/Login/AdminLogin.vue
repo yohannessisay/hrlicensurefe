@@ -100,7 +100,7 @@ export default {
           message.value.showFlash = !message.value.showFlash;
 
           setTimeout(() => {
-            router.push({ path: "/review" });
+            router.push({ path: "/admin/review" });
           }, 3000);
         } else {
           message.value.showErrorFlash = !message.value.showErrorFlash;

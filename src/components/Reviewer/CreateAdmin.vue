@@ -76,7 +76,6 @@
                     v-for="role in state.roles"
                     v-bind:key="role.name"
                     v-bind:value="role.id"
-                    :disabled="role.code == 'APP'"
                   >
                     {{ role.name }}
                   </option>
@@ -144,7 +143,9 @@ export default {
 
     const fetchRole = () => {
       store.dispatch("admin/getRole").then((res) => {
-        const rolesResponse = res.data.data;
+        const rolesResponse = res.data.data.filter(data => {
+          return data.code !== "APP";
+        });
         state.value.roles = rolesResponse;
       });
     };
@@ -169,7 +170,7 @@ export default {
             message.value.showFlash = !message.value.showFlash;
 
             setTimeout(() => {
-              router.push({ path: "/review" });
+              router.push({ path: "/admin/review" });
             }, 3000);
           } else {
             message.value.showErrorFlash = !message.value.showErrorFlash;

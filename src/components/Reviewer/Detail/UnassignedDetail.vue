@@ -401,7 +401,7 @@ export default {
         .then(response => {
           if (response.statusText == "Created") {
             showFlash.value = true;
-            router.push("/review");
+            router.push("/admin/review");
           }
           console.log(response);
         });
