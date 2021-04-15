@@ -152,11 +152,11 @@ export default {
     const route = useRoute();
     const store = useStore();
     const newLicense = ref({
-      documents: []
+      documents: [{ filePath: "" }]
     });
     let documentTypes = ref([]);
     let documentTypeName = ref("");
-    let docs = ref([]);
+    let docs = ref([{ filePath: "" }]);
     let index = ref(0);
     let amount = ref(1);
     let width = ref("width:1.11111%");
