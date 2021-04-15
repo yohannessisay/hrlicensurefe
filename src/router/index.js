@@ -3,14 +3,14 @@ import Landing from "../components/Landing/Landing.vue";
 const routes = [
   {
     path: "/",
-    name: "Landing",
+    name: "Home",
     component: Landing,
   },
-  // {
-  //   path: "/landing",
-  //   name: "Landing",
-  //   component: () => import("../components/Landing/Landing.vue"),
-  // },
+  {
+    path: "/landing",
+    name: "Landing",
+    component: () => import("../components/Landing/Landing.vue"),
+  },
   {
     path: "/addProfile",
     name: "NewProfile",
@@ -83,7 +83,7 @@ const routes = [
   },
   {
     path: "/review",
-    name: "Home",
+    name: "ReviewerHome",
     component: () => import("../components/Reviewer/Home.vue")
   },
   {
@@ -156,6 +156,16 @@ const routes = [
     name: "unassignedDetail",
     component: () =>
       import("../components/Reviewer/Detail/UnassignedDetail.vue")
+  },
+  {
+    path: "/admin",
+    name: "Admin",
+    component: () => import("../components/Landing/AdminLanding.vue")
+  },
+  {
+    path: "/admin/create",
+    name: "CreateAdmin",
+    component: () => import("../components/Reviewer/CreateAdmin.vue")
   }
 ];
 
@@ -165,7 +175,7 @@ const router = createRouter({
 });
 router.beforeEach((to, from, next) => {
   const auth = localStorage.getItem("token");
-  if (!auth && to.path !== "/landing" && to.path !== "/") next("/landing");
+  if (!auth && to.path !== "/landing" && to.path !== "/" && to.path !== "/admin") next("/landing");
   else next();
 });
 

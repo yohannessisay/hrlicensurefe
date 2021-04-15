@@ -11,7 +11,7 @@ export default {
     commit(ADD_PROFILE_LOADING);
     try {
       const resp = await ApiService.post(url + "login", profile, {});
-      window.localStorage.setItem("token", resp.data["userToken"]);
+      window.localStorage.setItem("token", resp.data["token"]);
       window.localStorage.setItem("userId", resp.data.data["id"]);
       commit(SET_PROFILE, resp.data);
       commit(ADD_PROFILE_SUCCESS);
@@ -25,8 +25,6 @@ export default {
     commit(ADD_PROFILE_LOADING);
     try {
       const resp = await ApiService.post(url + "users/add", profile, {});
-      window.localStorage.setItem("token", resp.data["sldkfj"]);
-      window.localStorage.setItem("userId", resp.data.data["id"]);
       commit(ADD_PROFILE_SUCCESS);
       return resp;
     } catch (error) {
