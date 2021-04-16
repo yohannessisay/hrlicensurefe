@@ -5,7 +5,7 @@
       <div class="flex pl-12 pt-medium">
         <Title message="Unfinished" />
         <div class="flex ml-small" v-if="unfinished.length >= 5">
-          <router-link to="admin/unfinished">
+          <router-link to="/admin/unfinished">
             <button
               class="block mx-auto  bg-lightBlue-300 hover:bg-lightBlue-600 hover:shadow-lg"
             >
@@ -131,7 +131,7 @@
       <div class="flex pl-12 mt-medium">
         <Title message="Unassigned"/>
         <div class="flex ml-small" v-if="unassigned.length >= 5">
-          <router-link to="/unassigned">
+          <router-link to="/admin/unassigned">
             <button
               class="block mx-auto  bg-lightBlue-300 hover:bg-lightBlue-600 hover:shadow-lg"
             >

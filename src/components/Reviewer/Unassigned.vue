@@ -1,21 +1,20 @@
 <template>
   <div>
     <ReviewerNavBar tab="Unassigned" />
-    <div class="bg-lightBlueB-200 h-full">
-      <div class="flex pl-12 pt-tiny">
-        <Title message="unassigned" />
-      </div>
-      <div
-        class="flex flex-wrap justify-center items-center pb-medium rounded h-full"
-      >
+    <div class="flex pl-12 mt-medium">
+      <Title message="Unassigned"/>
+    </div>
+
+    <div class="box">
+      <div class="flex flex-wrap pb-medium rounded h-full">
         <div
           class="container flip-box"
           v-for="(item, index) in unassigned"
-          v-bind:key="item.name.first"
+          v-bind:key="item.applicationStatus.name"
           v-bind:value="item.id"
         >
           <div
-            class="flex justify-center items-center ml-8 mt-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100 flip-box-front"
+            class="flex justify-center items-center  ml-8 mt-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100 flip-box-front"
           >
             <div
               class="p-4 w-48 h-64"
@@ -23,22 +22,29 @@
               @mouseleave="hover = false"
             >
               <div class="flex content-center justify-center">
-                <img class="box-shadow-pop" v-bind:src="item.picture.large" />
+                <!-- <img
+                    class="box-shadow-pop"
+                    v-bind:src="item.picture.large"
+                /> -->
+                <img
+                  class="box-shadow-pop"
+                  src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
+                />
               </div>
               <h4
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
               >
-                {{ item.name.first + " " + item.name.last }}
+                <!-- {{ item.applicant.profile.name + " " + item.applicant.profile.fatherName }} -->
               </h4>
               <h6
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
               >
-                {{ item.registered.date }}
+                {{ item.createdAt }}
               </h6>
               <h6
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
               >
-                New Licence ID: {{ item.id.value }}
+                New Licence ID: {{ item.newLicenseCode }}
               </h6>
             </div>
           </div>
@@ -50,21 +56,22 @@
               class="p-4 w-48 h-64"
               @mouseover="hover = true"
               @mouseleave="hover = false"
+              @Click="detail(`/admin/unassignedDetail`, item.id, item.applicant.id)"
             >
               <h4
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
               >
-                {{ item.name.first + " " + item.name.last }}
+                <!-- {{ item.name.first + " " + item.name.last }} -->
               </h4>
               <h6
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
               >
-                {{ item.registered.date }}
+                {{ item.createdAt }}
               </h6>
               <h6
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
               >
-                New Licence ID: {{ item.id.value }}
+                New Licence ID: {{ item.newLicenseCode }}
               </h6>
               <div
                 class="flex ml-small w-32 pt-small justify-center content-center"
@@ -72,13 +79,12 @@
                 <button
                   class="block mx-auto  bg-lightBlue-300 hover:bg-lightBlue-600 hover:shadow-lg"
                 >
-                  Assign to Me
+                  Assign to
                 </button>
               </div>
             </div>
           </div>
         </div>
-        <!-- Second !-->
       </div>
     </div>
   </div>
@@ -90,18 +96,25 @@ import ReviewerNavBar from "@/components/Reviewer/ReviewerNavBar";
 import { useStore } from "vuex";
 
 import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
 
 export default {
   components: { ReviewerNavBar, Title },
   setup() {
     const store = useStore();
+    const router = useRouter();
 
     let unassigned = ref({});
 
     const fetchUnassignedApplications = () => {
       store.dispatch("reviewer/getUnassigned").then(res => {
-        unassigned.value = res.data.results;
+        unassigned.value = res.data.data;
       });
+    };
+
+    const detail = (data, applicationId, applicantId) => {
+      const url = data + "/" + applicationId + "/" + applicantId;
+      router.push(url);
     };
 
     onMounted(() => {
@@ -109,7 +122,8 @@ export default {
     });
 
     return {
-      unassigned
+      unassigned,
+      detail
     };
   }
 };
@@ -125,12 +139,19 @@ img {
 .container {
   cursor: pointer;
 }
+.hoveredCard {
+  background-color: white;
+}
+/* .b{
+  cursor: pointer;
+  position: absolute;
+  transform: translate(-50%, -50%);
+} */
 .flip-box {
   transform-style: preserve-3d;
   perspective: 1000px;
   cursor: pointer;
 }
-
 .flip-box-front,
 .flip-box-back {
   transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);

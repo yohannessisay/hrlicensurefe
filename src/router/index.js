@@ -92,7 +92,7 @@ const routes = [
     component: () => import("../components/Reviewer/MyWork.vue")
   },
   {
-    path: "/unfinished",
+    path: "/admin/unfinished",
     name: "unfinished",
     component: () => import("../components/Reviewer/Unfinished.vue")
   },
@@ -102,7 +102,7 @@ const routes = [
     component: () => import("../components/Reviewer/AssignedToYou.vue")
   },
   {
-    path: "/unassigned",
+    path: "/admin/unassigned",
     name: "unassigned",
     component: () => import("../components/Reviewer/Unassigned.vue")
   },

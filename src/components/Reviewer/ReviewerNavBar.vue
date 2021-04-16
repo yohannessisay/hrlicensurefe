@@ -3,7 +3,7 @@
     <nav class="">
       <main class="flex items-center justify-between">
         <div class="flex items-center">
-          <router-link to="/">
+          <router-link to="/admin/review">
             <RenderIllustration
               class=""
               illustration="Logo"
@@ -69,7 +69,7 @@
                 <hr class="yellow-gradient border-none" />
               </a>
             </router-link>
-            <router-link to="/unfinished">
+            <router-link to="/admin/unfinished">
               <a v-if="tab != `Unfinished`" class="text-primary-300 mr-small">
                 Unfinished
               </a>
@@ -83,7 +83,7 @@
                 <hr class="yellow-gradient border-none" />
               </a>
             </router-link>
-            <router-link to="/assignedToYou">
+            <router-link to="/admin/assignedToYou">
               <a
                 v-if="tab != `AssignedToYou`"
                 class="text-primary-300 mr-small"
@@ -100,7 +100,7 @@
                 <hr class="yellow-gradient border-none" />
               </a>
             </router-link>
-            <router-link to="/unassigned">
+            <router-link to="/admin/unassigned">
               <a v-if="tab != `Unassigned`" class="text-primary-300 mr-small">
                 Unassigned
               </a>
