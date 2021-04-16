@@ -42,10 +42,6 @@
               <span v-if="!showUpload && !isImage">
                 <img :src="filePreview" alt="" class="preview" />
               </span>
-
-              <h6 style="margin-top: 15px !important;">
-                Your photo should be passport size
-              </h6>
             </div>
           </div>
         </form>

@@ -21,8 +21,5 @@ export default {
     applicationId: 0,
     documentSpec: [],
     draft: "",
-    addProfileLoading: false,
-    addProfileSuccess: false,
-    addProfileError: false,
   },
 };

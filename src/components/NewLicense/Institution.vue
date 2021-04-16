@@ -110,7 +110,7 @@ export default {
   },
   data: () => ({
     licenseInfo: {
-      applicantId: 2,
+      applicantId: localStorage.getItem("userId"),
       applicantTypeId: "",
       education: {
         departmentId: "",
@@ -138,6 +138,26 @@ export default {
         },
       };
     },
+    withdraw(action) {
+      let withdrawObj = {
+        action: action,
+        data: this.getDraft,
+      };
+      let payload = {
+        licenseId: this.getDraft.id,
+        withdrawData: withdrawObj,
+      };
+      this.$store.dispatch("newlicense/withdraw", payload).then((res) => {
+         if (res.data.status == "Success") {
+          this.showFlash = true;
+          setTimeout(() => {
+            this.$router.push({ path: "/menu" });
+          }, 3000);
+        } else {
+          this.showErrorFlash = true;
+        }
+      });
+    },
     submit() {
       this.$emit("changeActiveState");
       let license = {
@@ -159,7 +179,6 @@ export default {
     },
     fetchInstitutions() {
       this.$store.dispatch("newlicense/getInstitution").then((res) => {
-        console.log(res.data);
         const results = res.data.data;
         this.institutions = results;
       });
