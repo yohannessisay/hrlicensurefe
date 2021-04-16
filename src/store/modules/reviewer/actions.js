@@ -95,7 +95,7 @@ export default {
     try {
       const url = baseUrl + "/newLicenses/" + applicationId;
       // const urll = baseUrl + "/newLicenses/125";
-      const urll = baseUrl + "/newLicenses/190";
+      const urll = baseUrl + "/newLicenses/211";
       const resp = await ApiService.get(urll);
       return resp;
     } catch (error) {

@@ -78,6 +78,19 @@ export default {
       return error;
     }
   },
+  async editNewLicense({ commit }, license) {
+    try {
+      console.log(license);
+      const resp = await ApiService.put(
+        url + "newLicenses/" + license.data.id,
+        license
+      );
+      // const resp = await ApiService.put(url + "newLicenses/" + license);
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
   async uploadDocuments({ commit }, documents) {
     try {
       const resp = await ApiService.post(
