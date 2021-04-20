@@ -1,49 +1,37 @@
 import {
-    SET_LICENSE,
-    ADD_PROFILE_LOADING,
-    ADD_PROFILE_SUCCESS,
-    ADD_PROFILE_ERROR,
-    SET_ACTIVE_STATE,
-    SET_PHOTO,
-    SET_PASSPORT,
-    SET_HEALTH_EXAM_CERT,
-    SET_DOCS
-  } from "./mutation-types";
-  
-  export default {
-    [SET_LICENSE](state, license) {
-      state.license = license;
-    },
-    [SET_PHOTO](state, photo) {
-      state.photo = photo;
-    },
-    [SET_PASSPORT](state, passport) {
-      state.passport = passport;
-    },
-    [SET_HEALTH_EXAM_CERT](state, healthExamCert) {
-      state.healthExamCert = healthExamCert;
-    },
-    [SET_DOCS](state, docs) {
-      state.docs = docs;
-    },
-    [SET_ACTIVE_STATE](state, activeState) {
-      state.activeState = activeState;
-    },
-    [ADD_PROFILE_LOADING](state) {
-      state.addProfileLoading = true;
-      state.addProfileSuccess = false;
-      state.addProfileError = false;
-    },
-  
-    [ADD_PROFILE_SUCCESS](state) {
-      state.addProfileLoading = false;
-      state.addProfileSuccess = true;
-      state.addProfileError = false;
-    },
-  
-    [ADD_PROFILE_ERROR](state) {
-      state.addProfileLoading = false;
-      state.addProfileSuccess = false;
-      state.addProfileError = true;
-    },
-  };
+  SET_LICENSE,
+  SET_LICENSE_COPY,
+  SET_SERVICE_FEE,
+  SET_VERIFICATION_LETTER,
+  SET_BUTTONS,
+  SET_APPLICATION_ID,
+  SET_DOCUMENT_SPEC,
+  SET_DRAFT,
+} from "./mutation-types";
+
+export default {
+  [SET_LICENSE](state, license) {
+    state.license = license;
+  },
+  [SET_LICENSE_COPY](state, licenseCopy) {
+    state.licenseCopy = licenseCopy;
+  },
+  [SET_SERVICE_FEE](state, serviceFee) {
+    state.serviceFee = serviceFee;
+  },
+  [SET_VERIFICATION_LETTER](state, verificationLetter) {
+    state.verificationLetter = verificationLetter;
+  },
+  [SET_BUTTONS](state, buttons) {
+    state.buttons = buttons;
+  },
+  [SET_APPLICATION_ID](state, id) {
+    state.applicationId = id;
+  },
+  [SET_DOCUMENT_SPEC](state, documentSpec) {
+    state.documentSpec = documentSpec;
+  },
+  [SET_DRAFT](state, draft) {
+    state.draft = draft;
+  },
+};
