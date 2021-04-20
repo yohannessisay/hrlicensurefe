@@ -90,7 +90,7 @@ import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 export default {
   components: { TitleWithIllustration, FlashMessage, ErrorFlashMessage },
   props: ["activeState"],
-  setup(props, { emit }) {
+  setup(props, { emit }) {  
     const store = useStore();
     const route = useRoute();
     const router = useRouter();

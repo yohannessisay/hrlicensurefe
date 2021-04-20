@@ -6,7 +6,7 @@
       >
         <TitleWithIllustration
           illustration="Certificate"
-          message="Work Experience(3 to 4 years)"
+          message="Previous License"
           class="mt-8"
         />
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
@@ -18,9 +18,9 @@
                   <div class="dropbox">
                     <input
                       type="file"
-                      id="workExperienceFile"
+                      id="previousLicenseFile"
                       class="photoFile"
-                      ref="workExperienceFileP"
+                      ref="previousLicenseFileP"
                       v-on:change="handleFileUpload()"
                       style="margin-bottom: 15px !important;"
                     />
@@ -90,41 +90,38 @@ export default {
     const store = useStore();
     const route = useRoute();
     const router = useRouter();
-    let showFlash = ref(false);
-    let showErrorFlash = ref(false);
+
     const basePath = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/";
 
-    let workExperienceFile = ref("");
-    let workExperienceFileP = ref("");
+    let showFlash = ref(false);
+    let showErrorFlash = ref(false);
+
+    let previousLicenseFile = ref("");
+    let previousLicenseFileP = ref("");
     let showPreview = ref(false);
     let filePreview = ref("");
     let showUpload = ref(true);
     let isImage = ref(true);
 
-    let buttons = [];
-    let documentSpecs = ref([]);
-    let userId = localStorage.getItem("userId");
-    let licenseInfo = ref("");
-    let draftData = ref("");
-
+    let workExperience = ref("");
     let renewalPhoto = ref("");
     let healthExamCert = ref("");
-    let renewalLetter = ref("");
     let serviceFee = ref("");
     let cpd = ref("");
-    let previousLicense = ref("");
+    let renewalLetter = ref("");
 
     const reset = () => {
       showUpload.value = true;
       showPreview.value = false;
-      workExperienceFile.value = "";
+      previousLicenseFile.value = "";
       filePreview.value = "";
       isImage.value = true;
     };
+
     const handleFileUpload = () => {
       showUpload.value = false;
-      workExperienceFile.value = workExperienceFileP.value.files[0];
-      console.log(workExperienceFile.value);
+      previousLicenseFile.value = previousLicenseFileP.value.files[0];
+      console.log(previousLicenseFile.value);
       let reader = new FileReader();
 
       reader.addEventListener(
@@ -136,47 +133,36 @@ export default {
         false
       );
 
-      if (workExperienceFile.value) {
-        if (/\.(jpe?g|png|gif)$/i.test(workExperienceFile.value.name)) {
+      if (previousLicenseFile.value) {
+        if (/\.(jpe?g|png|gif)$/i.test(previousLicenseFile.value.name)) {
           isImage.value = true;
-          reader.readAsDataURL(workExperienceFile.value);
-        } else if (/\.(pdf)$/i.test(workExperienceFile.value.name)) {
+          reader.readAsDataURL(previousLicenseFile.value);
+        } else if (/\.(pdf)$/i.test(previousLicenseFile.value.name)) {
           isImage.value = false;
-          reader.readAsText(workExperienceFile.value);
+          reader.readAsText(previousLicenseFile.value);
         }
       }
     };
-    buttons = store.getters["renewal/getButtons"];
-    documentSpecs = store.getters["renewal/getDocumentSpec"];
-    licenseInfo = store.getters["renewal/getLicense"];
-
-    healthExamCert = store.getters["renewal/getRenewalHealthExamCert"];
-    renewalPhoto = store.getters["renewal/getRenewalPhoto"];
-    serviceFee = store.getters["renewal/getRenewalServiceFee"];
-    renewalLetter = store.getters["renewal/getRenewalLicense"];
-    cpd = store.getters["renewal/getRenewalCpd"];
-    previousLicense = store.getters["renewal/getPreviousLicense"];
-
     const submit = () => {
       emit("changeActiveState");
-      store.dispatch("renewal/setRenewalWorkExperience", workExperienceFile);
+      store.dispatch("renewal/setPreviousLicense", previousLicenseFile);
     };
-
     onMounted(() => {
       buttons = store.getters["renewal/getButtons"];
       draftData = store.getters["renewal/getDraft"];
       if (route.params.id) {
         for (let i = 0; i < draftData.documents.length; i++) {
-          if (draftData.documents[i].documentTypeCode == "WE") {
+          if (draftData.documents[i].documentTypeCode == "PL") {
             showUpload.value = false;
             isImage.value = true;
-            workExperienceFile.value = draftData.documents[i];
+            photoFile.value = draftData.documents[i];
             showPreview.value = true;
             filePreview.value = basePath + draftData.documents[i].filePath;
           }
         }
       }
     });
+
     const draft = (action) => {
       if (route.params.id) {
         if (photoFile) {
@@ -196,7 +182,7 @@ export default {
             },
           },
         };
-        store.dispatch("renewal/addRenewalLicense", license).then((res) => {
+        store.dispatch("renewal/addNewLicense", license).then((res) => {
           let licenseId = res.data.data.id;
           let formData = new FormData();
           formData.append(documentSpecs[0].documentType.code, renewalPhoto);
@@ -204,11 +190,11 @@ export default {
           formData.append(documentSpecs[2].documentType.code, healthExamCert);
           formData.append(documentSpecs[3].documentType.code, serviceFee);
           formData.append(documentSpecs[4].documentType.code, cpd);
+          formData.append(documentSpecs[5].documentType.code, workExperience);
           formData.append(
             documentSpecs[5].documentType.code,
-            workExperienceFile
+            previousLicenseFile
           );
-          formData.append(documentSpecs[5].documentType.code, previousLicense);
 
           let payload = { document: formData, id: licenseId };
           store
@@ -250,8 +236,8 @@ export default {
     };
 
     return {
-      workExperienceFile,
-      workExperienceFileP,
+      previousLicenseFile,
+      previousLicenseFileP,
       showPreview,
       filePreview,
       showUpload,
@@ -271,7 +257,8 @@ export default {
 };
 </script>
 <style>
-@import "../../styles/document-upload.css";
+@import "../../../styles/document-upload.css";
+
 img {
   width: 250px;
   height: 250px;

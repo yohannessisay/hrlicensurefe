@@ -14,12 +14,9 @@
           <div class="flex">
             <div class="flex flex-col mb-medium w-1/2 mr-12">
               <label class="text-primary-700">Applicant Type</label>
-              <select
-                class="max-w-3xl"
-                v-model="renewalLicenseInfo.applicantTypeId"
-              >
+              <select class="max-w-3xl" v-model="licenseInfo.applicantTypeId">
                 <option
-                  v-for="applicant in lookUp.applicantTypes"
+                  v-for="applicant in applicantTypes"
                   v-bind:key="applicant.name"
                   v-bind:value="applicant.id"
                 >
@@ -31,10 +28,10 @@
               <label class="text-primary-700">Department</label>
               <select
                 class="max-w-3xl"
-                v-model="renewalLicenseInfo.education.departmentId"
+                v-model="licenseInfo.education.departmentId"
               >
                 <option
-                  v-for="department in lookUp.departments"
+                  v-for="department in departments"
                   v-bind:key="department.name"
                   v-bind:value="department.id"
                 >
@@ -43,122 +40,195 @@
               </select>
             </div>
           </div>
-          <div class="flex">
-            <div class="flex w-1/2 mb-medium  mr-12">
-              <div class="flex flex-col w-full">
-                <label class="text-primary-700">Institution Type</label>
-                <div class="flex w-full">
-                  <div
-                    class="flex flex-col mb-small w-1/3"
-                    v-for="institution in lookUp.institutions"
-                    v-bind:key="institution.name"
-                  >
-                    <div class="flex py-2">
-                      <input
-                        v-model="renewalLicenseInfo.education.institutionId"
-                        class="flex flex-col"
-                        type="radio"
-                        name="institution"
-                        :value="institution.id"
-                      />
-                      <label class="ml-tiny flex flex-col text-primary-700">
-                        {{ institution.name }}
-                      </label>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
 
-          <div class="flex justify-center mb-8">
-            <button click="submit()">
-              Next
-            </button>
-            <button variant="outline">
-              Finish Later
-            </button>
+          <div class="flex flex-col mb-medium w-1/2 mr-12">
+            <label class="text-primary-700">Institution</label>
+            <select
+              class="max-w-3xl"
+              v-model="licenseInfo.education.institutionId"
+            >
+              <option
+                v-for="institution in institutions"
+                v-bind:key="institution.name"
+                v-bind:value="institution.id"
+              >
+                {{ institution.name }}
+              </option>
+            </select>
           </div>
         </form>
+        <div v-if="this.showButtons" class="flex justify-center mb-8">
+          <button @click="submit">
+            Next
+          </button>
+          <button @click="draft(this.buttons[0].action)" variant="outline">
+            {{ this.buttons[0]["name"] }}
+          </button>
+          <button
+            v-if="this.buttons.length > 2"
+            @click="withdraw(this.buttons[2].action)"
+            variant="outline"
+          >
+            {{ this.buttons[2]["name"] }}
+          </button>
+        </div>
+        <div>
+          <Spinner v-if="showLoading" />
+        </div>
       </div>
     </div>
+  </div>
+  <div class="mr-3xl" v-if="showFlash">
+    <FlashMessage message="Login Successful!" />
+  </div>
+  <div v-if="showErrorFlash">
+    <ErrorFlashMessage message="Login Failed!" />
   </div>
 </template>
 
 <script>
-import { ref, onMounted } from "vue";
-import { useStore } from "vuex";
 import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
-import axios from "axios";
+import { mapGetters, mapActions } from "vuex";
+import FlashMessage from "@/sharedComponents/FlashMessage";
+import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
+import Spinner from "@/sharedComponents/Spinner";
+
 export default {
   props: ["activeState"],
-  components: { TitleWithIllustration },
-  setup(props, { emit }) {
-    const store = useStore();
 
-    let renewalLicenseInfo = ref({
-      applicantId: +localStorage.getItem("userId"),
+  components: {
+    TitleWithIllustration,
+    FlashMessage,
+    ErrorFlashMessage,
+    Spinner,
+  },
+
+  async created() {
+    this.fetchApplicantType();
+    this.fetchInstitutions();
+    this.fetchDepartments();
+    this.showLoading = true;
+    setTimeout(() => {
+      this.buttons = this.getButtons;
+      this.showButtons = true;
+      this.showLoading = false;
+    }, 5000);
+    this.draftId = this.$route.params.id;
+    if (this.draftId != undefined) {
+      setTimeout(() => {
+        this.fetchDraft();
+      }, 5000);
+    }
+  },
+
+  computed: {
+    ...mapGetters({
+      getButtons: "renewal/getButtons",
+      getDraft: "renewal/getDraft",
+    }),
+  },
+  data: () => ({
+    licenseInfo: {
+      applicantId: localStorage.getItem("userId"),
       applicantTypeId: "",
       education: {
         departmentId: "",
-        institutionId: ""
-      }
-    });
+        institutionId: "",
+      },
+    },
+    applicantTypes: [],
+    institutions: [],
+    departments: [],
+    buttons: [],
+    showButtons: false,
+    showFlash: false,
+    showErrorFlash: false,
+    showLoading: false,
+  }),
 
-    let lookUp = ref({
-      applicantTypes: [],
-      institutions: [],
-      departments: []
-    });
-
-    const fetchInstitutions = async () => {
-      store.dispatch("renewal/getInstitutions").then(res => {
-        const inResults = res.data;
-        lookUp.value.institutions = inResults.data;
-      });
-    };
-
-    const fetchDepartments = async () => {
-      store.dispatch("renewal/getDepartments").then(res => {
-        const inResults = res.data;
-        lookUp.value.departments = inResults.data;
-      });
-    };
-
-    const fetchApplicantType = async () => {
-      store.dispatch("renewal/getApplicantType").then(res => {
-        const inResults = res.data;
-        lookUp.value.applicantTypes = inResults.data;
-      });
-    };
-
-    const submit = () => {
-      emit("changeActiveState");
-      let renewalLicense = {
-        applicantId: renewalLicenseInfo.value.applicantId,
-        applicantTypeId: renewalLicenseInfo.value.applicantTypeId,
-        education: {
-          departmentId: renewalLicenseInfo.value.education.departmentId,
-          institutionId: renewalLicenseInfo.value.education.institutionId
-        }
+  methods: {
+    draft(action) {
+      let license = {
+        action: action,
+        data: {
+          applicantId: this.licenseInfo.applicantId,
+          applicantTypeId: this.licenseInfo.applicantTypeId,
+          education: {
+            departmentId: this.licenseInfo.education.departmentId,
+            institutionId: this.licenseInfo.education.institutionId,
+          },
+        },
       };
-      store.dispatch("renewal/setRenewal", renewalLicense);
-    };
-
-    onMounted(() => {
-      fetchInstitutions();
-      fetchDepartments();
-      fetchApplicantType();
-    });
-
-    return {
-      renewalLicenseInfo,
-      submit,
-      fetchInstitutions,
-      fetchDepartments,
-      fetchApplicantType,
-      lookUp
-    };
-  }
+    },
+    withdraw(action) {
+      let withdrawObj = {
+        action: action,
+        data: this.getDraft,
+      };
+      let payload = {
+        licenseId: this.getDraft.id,
+        withdrawData: withdrawObj,
+      };
+      this.$store.dispatch("renewal/withdraw", payload).then((res) => {
+        if (res.data.status == "Success") {
+          this.showFlash = true;
+          setTimeout(() => {
+            this.$router.push({ path: "/menu" });
+          }, 3000);
+        } else {
+          this.showErrorFlash = true;
+        }
+      });
+    },
+    submit() {
+      this.$emit("changeActiveState");
+      let license = {
+        applicantId: this.licenseInfo.applicantId,
+        applicantTypeId: this.licenseInfo.applicantTypeId,
+        education: {
+          departmentId: this.licenseInfo.education.departmentId,
+          institutionId: this.licenseInfo.education.institutionId,
+        },
+      };
+      this.$emit("applicantTypeValue", this.licenseInfo.applicantTypeId);
+      this.$store.dispatch("renewal/setLicense", license);
+    },
+    fetchApplicantType() {
+      this.$store.dispatch("renewal/getApplicantType").then((res) => {
+        if (res.data.status == "Success") {
+          const results = res.data.data;
+          this.applicantTypes = results;
+        } else {
+        }
+      });
+    },
+    fetchInstitutions() {
+      this.$store.dispatch("renewal/getInstitution").then((res) => {
+        if (res.data.status == "Success") {
+          const results = res.data.data;
+          this.institutions = results;
+        } else {
+        }
+      });
+    },
+    fetchDepartments() {
+      this.$store.dispatch("renewal/getDepartmentType").then((res) => {
+        if (res.data.status == "Success") {
+          const results = res.data.data;
+          this.departments = results;
+        } else {
+        }
+      });
+    },
+    fetchDraft() {
+      let draftData = this.getDraft;
+      this.licenseInfo.applicantId = draftData.applicantId;
+      this.licenseInfo.applicantTypeId = draftData.applicantTypeId;
+      this.licenseInfo.education.departmentId =
+        draftData.education.departmentId;
+      this.licenseInfo.education.institutionId =
+        draftData.education.institutionId;
+    },
+  },
 };
 </script>

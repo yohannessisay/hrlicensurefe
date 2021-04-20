@@ -48,34 +48,57 @@
               </h6>
             </div>
           </div>
-
-          <div class="flex justify-center mb-8 mt-medium">
-            <div>
-              <button>Next</button>
-            </div>
-            <div>
-              <button variant="outline">
-                Finish Later
-              </button>
-            </div>
-          </div>
         </form>
+        <div v-if="buttons" class="flex justify-center mb-8">
+          <button @click="submit">
+            Next
+          </button>
+          <button
+            class="buttons[0].class"
+            @click="draft(buttons[0].action)"
+            variant="outline"
+          >
+            {{ buttons[0].name }}
+          </button>
+          <button
+            v-if="buttons.length > 2"
+            @click="withdraw(buttons[2].action)"
+            variant="outline"
+          >
+            {{ buttons[2]["name"] }}
+          </button>
+        </div>
       </div>
+    </div>
+    <div v-if="showFlash">
+      <FlashMessage message="Operation Successful!" />
+    </div>
+    <div v-if="showErrorFlash">
+      <ErrorFlashMessage message="Operation Failed!" />
     </div>
   </div>
 </template>
 
 <script>
 import { ref, onMounted } from "vue";
-import { useStore } from "vuex";
 import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
-// import { mapGetters, mapActions } from "vuex";
+import { useStore } from "vuex";
+import { useRoute, useRouter } from "vue-router";
+import FlashMessage from "@/sharedComponents/FlashMessage";
+import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 
 export default {
-  components: { TitleWithIllustration },
+  components: { TitleWithIllustration, FlashMessage, ErrorFlashMessage },
   props: ["activeState"],
   setup(props, { emit }) {
     const store = useStore();
+    const route = useRoute();
+    const router = useRouter();
+
+    const basePath = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/";
+
+    let showFlash = ref(false);
+    let showErrorFlash = ref(false);
 
     let photoFile = ref("");
     let photoFileP = ref("");
@@ -83,6 +106,19 @@ export default {
     let filePreview = ref("");
     let showUpload = ref(true);
     let isImage = ref(true);
+
+    let buttons = ref([]);
+    let documentSpecs = ref([]);
+    let userId = localStorage.getItem("userId");
+    let licenseInfo = ref("");
+    let draftData = ref("");
+
+    let workExperience = ref("");
+    let healthExamCert = ref("");
+    let renewalLetter = ref("");
+    let serviceFee = ref("");
+    let cpd = ref("");
+    let previousLicense = ref("");
 
     const reset = () => {
       showUpload.value = true;
@@ -116,19 +152,105 @@ export default {
         }
       }
     };
+    buttons = store.getters["renewal/getButtons"];
+    documentSpecs = store.getters["renewal/getDocumentSpec"];
+    licenseInfo = store.getters["renewal/getLicense"];
+
+    healthExamCert = store.getters["renewal/getRenewalHealthExamCert"];
+    workExperience = store.getters["renewal/getRenewalWorkExperience"];
+    serviceFee = store.getters["renewal/getRenewalServiceFee"];
+    renewalLetter = store.getters["renewal/getRenewalLicense"];
+    cpd = store.getters["renewal/getRenewalCpd"];
+    previousLicense = store.getters["renewal/getPreviousLicense"];
+
     const submit = () => {
       emit("changeActiveState");
-      let file = {
-        profilePhoto: photoFile.value
-      };
-      console.log(photoFile.value);
-      store.dispatch("renewal/setRenewalPhoto", file);
+      store.dispatch("renewal/setRenewalPhoto", photoFile);
     };
 
     onMounted(() => {
-      const renewalLicense = store.getters["renewal/getRenewalLicense"];
-      console.log(renewalLicense);
+      buttons = store.getters["renewal/getButtons"];
+      draftData = store.getters["renewal/getDraft"];
+      if (route.params.id) {
+        for (let i = 0; i < draftData.documents.length; i++) {
+          if (draftData.documents[i].documentTypeCode == "PSP") {
+            showUpload.value = false;
+            isImage.value = true;
+            photoFile.value = draftData.documents[i];
+            showPreview.value = true;
+            filePreview.value = basePath + draftData.documents[i].filePath;
+          }
+        }
+      }
     });
+    const draft = (action) => {
+      if (route.params.id) {
+        if (photoFile) {
+          // modify the drafData before dispatching
+        } else {
+          // just send the draftData
+        }
+      } else {
+        let license = {
+          action: action,
+          data: {
+            applicantId: userId,
+            applicantTypeId: licenseInfo.applicantTypeId,
+            education: {
+              departmentId: licenseInfo.education.departmentId,
+              institutionId: licenseInfo.education.institutionId,
+            },
+          },
+        };
+        store.dispatch("renewal/addNewLicense", license).then((res) => {
+          let licenseId = res.data.data.id;
+          let formData = new FormData();
+          formData.append(documentSpecs[0].documentType.code, photoFile);
+          formData.append(documentSpecs[1].documentType.code, renewalLetter);
+          formData.append(documentSpecs[2].documentType.code, healthExamCert);
+          formData.append(documentSpecs[3].documentType.code, serviceFee);
+          formData.append(documentSpecs[4].documentType.code, cpd);
+          formData.append(documentSpecs[5].documentType.code, workExperience);
+          formData.append(documentSpecs[5].documentType.code, previousLicense);
+
+          let payload = { document: formData, id: licenseId };
+          store
+            .dispatch("renewal/uploadDocuments", payload)
+            .then((res) => {
+              if (res.status == "Success") {
+                showFlash.value = !showFlash.value;
+                setTimeout(() => {
+                  route.push({ path: "/menu" });
+                }, 3000);
+                router.push({ path: "/menu" });
+              } else {
+                showErrorFlash.value = !showErrorFlash.value;
+              }
+            })
+            .catch((err) => {});
+        });
+      }
+    };
+    const withdraw = (action) => {
+      let withdrawObj = {
+        action: action,
+        data: draftData,
+      };
+      let payload = {
+        licenseId: draftData.id,
+        withdrawData: withdrawObj,
+      };
+      store.dispatch("renewal/withdraw", payload).then((res) => {
+        if (res.data.status == "Success") {
+          showFlash.value = !showFlash.value;
+          setTimeout(() => {
+            router.push({ path: "/menu" });
+          }, 3000);
+        } else {
+          showErrorFlash.value = !showErrorFlash.value;
+        }
+      });
+    };
 
     return {
       photoFile,
@@ -139,9 +261,16 @@ export default {
       isImage,
       handleFileUpload,
       reset,
-      submit
+      submit,
+      draft,
+      withdraw,
+      buttons,
+      draftData,
+      basePath,
+      showFlash,
+      showErrorFlash,
     };
-  }
+  },
 };
 </script>
 <style>

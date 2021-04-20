@@ -97,11 +97,7 @@ export default {
     let filePreview = ref("");
     let showUpload = ref(true);
     let isImage = ref(false);
-    let buttons = [];
-    let documentSpecs = ref([]);
-    let userId = localStorage.getItem("userId");
-    let licenseInfo = ref("");
-    let draftData = ref("");
+ c
 
     let photo = ref("");
     let passport = ref("");

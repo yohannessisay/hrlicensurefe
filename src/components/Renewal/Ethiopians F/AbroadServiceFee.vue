@@ -6,7 +6,7 @@
       >
         <TitleWithIllustration
           illustration="Certificate"
-          message="Work Experience(3 to 4 years)"
+          message="Service Fee(optional)"
           class="mt-8"
         />
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
@@ -18,9 +18,9 @@
                   <div class="dropbox">
                     <input
                       type="file"
-                      id="workExperienceFile"
+                      id="serviceFeeFile"
                       class="photoFile"
-                      ref="workExperienceFileP"
+                      ref="serviceFeeFileP"
                       v-on:change="handleFileUpload()"
                       style="margin-bottom: 15px !important;"
                     />
@@ -86,45 +86,48 @@ import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 export default {
   props: ["activeState"],
   components: { TitleWithIllustration, FlashMessage, ErrorFlashMessage },
+
   setup(props, { emit }) {
     const store = useStore();
     const route = useRoute();
     const router = useRouter();
-    let showFlash = ref(false);
-    let showErrorFlash = ref(false);
+
     const basePath = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/";
 
-    let workExperienceFile = ref("");
-    let workExperienceFileP = ref("");
+    let showFlash = ref(false);
+    let showErrorFlash = ref(false);
+
+    let serviceFeeFile = ref("");
+    let serviceFeeFileP = ref("");
     let showPreview = ref(false);
     let filePreview = ref("");
     let showUpload = ref(true);
     let isImage = ref(true);
 
-    let buttons = [];
+    let buttons = ref([]);
     let documentSpecs = ref([]);
     let userId = localStorage.getItem("userId");
     let licenseInfo = ref("");
     let draftData = ref("");
 
-    let renewalPhoto = ref("");
+    let workExperience = ref("");
     let healthExamCert = ref("");
     let renewalLetter = ref("");
-    let serviceFee = ref("");
+    let renewalPhoto = ref("");
     let cpd = ref("");
     let previousLicense = ref("");
 
     const reset = () => {
       showUpload.value = true;
       showPreview.value = false;
-      workExperienceFile.value = "";
+      serviceFeeFile.value = "";
       filePreview.value = "";
       isImage.value = true;
     };
     const handleFileUpload = () => {
       showUpload.value = false;
-      workExperienceFile.value = workExperienceFileP.value.files[0];
-      console.log(workExperienceFile.value);
+      serviceFeeFile.value = serviceFeeFileP.value.files[0];
+      console.log(serviceFeeFile.value);
       let reader = new FileReader();
 
       reader.addEventListener(
@@ -136,13 +139,13 @@ export default {
         false
       );
 
-      if (workExperienceFile.value) {
-        if (/\.(jpe?g|png|gif)$/i.test(workExperienceFile.value.name)) {
+      if (serviceFeeFile.value) {
+        if (/\.(jpe?g|png|gif)$/i.test(serviceFeeFile.value.name)) {
           isImage.value = true;
-          reader.readAsDataURL(workExperienceFile.value);
-        } else if (/\.(pdf)$/i.test(workExperienceFile.value.name)) {
+          reader.readAsDataURL(serviceFeeFile.value);
+        } else if (/\.(pdf)$/i.test(serviceFeeFile.value.name)) {
           isImage.value = false;
-          reader.readAsText(workExperienceFile.value);
+          reader.readAsText(serviceFeeFile.value);
         }
       }
     };
@@ -151,26 +154,25 @@ export default {
     licenseInfo = store.getters["renewal/getLicense"];
 
     healthExamCert = store.getters["renewal/getRenewalHealthExamCert"];
+    workExperience = store.getters["renewal/getRenewalWorkExperience"];
     renewalPhoto = store.getters["renewal/getRenewalPhoto"];
-    serviceFee = store.getters["renewal/getRenewalServiceFee"];
     renewalLetter = store.getters["renewal/getRenewalLicense"];
     cpd = store.getters["renewal/getRenewalCpd"];
     previousLicense = store.getters["renewal/getPreviousLicense"];
 
     const submit = () => {
       emit("changeActiveState");
-      store.dispatch("renewal/setRenewalWorkExperience", workExperienceFile);
+      store.dispatch("renewal/setRenewalServiceFee", serviceFeeFile);
     };
-
     onMounted(() => {
       buttons = store.getters["renewal/getButtons"];
       draftData = store.getters["renewal/getDraft"];
       if (route.params.id) {
         for (let i = 0; i < draftData.documents.length; i++) {
-          if (draftData.documents[i].documentTypeCode == "WE") {
+          if (draftData.documents[i].documentTypeCode == "SF") {
             showUpload.value = false;
             isImage.value = true;
-            workExperienceFile.value = draftData.documents[i];
+            photoFile.value = draftData.documents[i];
             showPreview.value = true;
             filePreview.value = basePath + draftData.documents[i].filePath;
           }
@@ -196,18 +198,15 @@ export default {
             },
           },
         };
-        store.dispatch("renewal/addRenewalLicense", license).then((res) => {
+        store.dispatch("newlicense/addRenewalLicense", license).then((res) => {
           let licenseId = res.data.data.id;
           let formData = new FormData();
           formData.append(documentSpecs[0].documentType.code, renewalPhoto);
           formData.append(documentSpecs[1].documentType.code, renewalLetter);
           formData.append(documentSpecs[2].documentType.code, healthExamCert);
-          formData.append(documentSpecs[3].documentType.code, serviceFee);
+          formData.append(documentSpecs[3].documentType.code, serviceFeeFile);
           formData.append(documentSpecs[4].documentType.code, cpd);
-          formData.append(
-            documentSpecs[5].documentType.code,
-            workExperienceFile
-          );
+          formData.append(documentSpecs[5].documentType.code, workExperience);
           formData.append(documentSpecs[5].documentType.code, previousLicense);
 
           let payload = { document: formData, id: licenseId };
@@ -248,10 +247,9 @@ export default {
         }
       });
     };
-
     return {
-      workExperienceFile,
-      workExperienceFileP,
+      serviceFeeFile,
+      serviceFeeFileP,
       showPreview,
       filePreview,
       showUpload,
@@ -271,7 +269,8 @@ export default {
 };
 </script>
 <style>
-@import "../../styles/document-upload.css";
+@import "../../../styles/document-upload.css";
+
 img {
   width: 250px;
   height: 250px;
