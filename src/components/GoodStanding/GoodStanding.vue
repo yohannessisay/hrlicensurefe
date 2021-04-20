@@ -86,7 +86,7 @@ export default {
     },
     fetchApplicationStatuses() {
       this.$store
-        .dispatch("verification/getApplicationStatuses")
+        .dispatch("goodstanding/getApplicationStatuses")
         .then((res) => {
           const results = res.data.data;
           this.applicationStatuses = results;
@@ -101,12 +101,12 @@ export default {
             });
             this.buttons = status[0]["buttons"];
           }
-          this.$store.dispatch("verification/setButtons", this.buttons);
+          this.$store.dispatch("goodstanding/setButtons", this.buttons);
         });
     },
     fetchApplicationCategory() {
       this.$store
-        .dispatch("verification/getApplicationCategories")
+        .dispatch("goodstanding/getApplicationCategories")
         .then((res) => {
           const results = res.data.data;
           this.applicationCategories = results;
@@ -117,7 +117,7 @@ export default {
           );
           this.applicationId = newApplicationData[0]["id"];
           this.$store.dispatch(
-            "verification/setApplicationId",
+            "goodstanding/setApplicationId",
             this.applicationId
           );
           this.fetchDocumentSpec();
@@ -125,20 +125,20 @@ export default {
     },
     fetchDocumentSpec() {
       this.$store
-        .dispatch("verification/getDocumentSpecs", this.applicationId)
+        .dispatch("goodstanding/getDocumentSpecs", this.applicationId)
         .then((res) => {
           const results = res.data.data;
           this.documentSpecs = results;
           console.log(this.documentSpecs);
           this.$store
-            .dispatch("verification/setDocumentSpecs", this.documentSpecs)
+            .dispatch("goodstanding/setDocumentSpecs", this.documentSpecs)
             .then((res) => {});
         });
     },
     fetchDraft(id) {
-      this.$store.dispatch("verification/getDraft", id).then((res) => {
+      this.$store.dispatch("goodstanding/getDraft", id).then((res) => {
         const results = res.data.data;
-        this.$store.dispatch("verification/setDraft", results);
+        this.$store.dispatch("goodstanding/setDraft", results);
       });
     },
   },

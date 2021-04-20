@@ -147,21 +147,21 @@ export default {
         }
       }
     };
-    buttons = store.getters["verification/getButtons"];
-    documentSpecs = store.getters["verification/getDocumentSpec"];
-    licenseInfo = store.getters["verification/getLicense"];
+    buttons = store.getters["goodstanding/getButtons"];
+    documentSpecs = store.getters["goodstanding/getDocumentSpec"];
+    licenseInfo = store.getters["goodstanding/getLicense"];
 
-    verificationLetter = store.getters["verification/getVerificationLetter"];
-    serviceFee = store.getters["verification/getServiceFee"];
+    verificationLetter = store.getters["goodstanding/getVerificationLetter"];
+    serviceFee = store.getters["goodstanding/getServiceFee"];
 
     const submit = () => {
       emit("changeActiveState");
-      store.dispatch("verification/set_License_Copy", licenseFile);
+      store.dispatch("goodstanding/set_License_Copy", licenseFile);
     };
 
     onMounted(() => {
-      buttons = store.getters["verification/getButtons"];
-      draftData = store.getters["verification/getDraft"];
+      buttons = store.getters["goodstanding/getButtons"];
+      draftData = store.getters["goodstanding/getDraft"];
       if (route.params.id) {
         for (let i = 0; i < draftData.documents.length; i++) {
           if (draftData.documents[i].documentTypeCode == "PSP") {
@@ -193,7 +193,7 @@ export default {
             },
           },
         };
-        store.dispatch("verification/addNewLicense", license).then((res) => {
+        store.dispatch("goodstanding/addNewLicense", license).then((res) => {
           let licenseId = res.data.data.id;
           let formData = new FormData();
           formData.append(
@@ -205,7 +205,7 @@ export default {
 
           let payload = { document: formData, id: licenseId };
           store
-            .dispatch("verification/uploadDocuments", payload)
+            .dispatch("goodstanding/uploadDocuments", payload)
             .then((res) => {
               if (res.status == "Success") {
                 showFlash.value = !showFlash.value;
@@ -230,7 +230,7 @@ export default {
         licenseId: draftData.id,
         withdrawData: withdrawObj,
       };
-      store.dispatch("verification/withdraw", payload).then((res) => {
+      store.dispatch("goodstanding/withdraw", payload).then((res) => {
         if (res.data.status == "Success") {
           showFlash.value = !showFlash.value;
           setTimeout(() => {

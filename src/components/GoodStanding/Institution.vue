@@ -123,8 +123,8 @@ export default {
 
   computed: {
     ...mapGetters({
-      getButtons: "verification/getButtons",
-      getDraft: "verification/getDraft",
+      getButtons: "goodstanding/getButtons",
+      getDraft: "goodstanding/getDraft",
     }),
   },
   data: () => ({
@@ -169,7 +169,7 @@ export default {
         licenseId: this.getDraft.id,
         withdrawData: withdrawObj,
       };
-      this.$store.dispatch("verification/withdraw", payload).then((res) => {
+      this.$store.dispatch("goodstanding/withdraw", payload).then((res) => {
         if (res.data.status == "Success") {
           this.showFlash = true;
           setTimeout(() => {
@@ -191,10 +191,10 @@ export default {
         },
       };
       this.$emit("applicantTypeValue", this.licenseInfo.applicantTypeId);
-      this.$store.dispatch("verification/setLicense", license);
+      this.$store.dispatch("goodstanding/setLicense", license);
     },
     fetchApplicantType() {
-      this.$store.dispatch("verification/getApplicantType").then((res) => {
+      this.$store.dispatch("goodstanding/getApplicantType").then((res) => {
         if (res.data.status == "Success") {
           const results = res.data.data;
           this.applicantTypes = results;
@@ -203,7 +203,7 @@ export default {
       });
     },
     fetchInstitutions() {
-      this.$store.dispatch("verification/getInstitution").then((res) => {
+      this.$store.dispatch("goodstanding/getInstitution").then((res) => {
         if (res.data.status == "Success") {
           const results = res.data.data;
           this.institutions = results;
@@ -212,7 +212,7 @@ export default {
       });
     },
     fetchDepartments() {
-      this.$store.dispatch("verification/getDepartmentType").then((res) => {
+      this.$store.dispatch("goodstanding/getDepartmentType").then((res) => {
         if (res.data.status == "Success") {
           const results = res.data.data;
           this.departments = results;
