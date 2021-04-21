@@ -214,7 +214,7 @@
       </div>
     </div>
   </div>
-  <div v-if="showFlash">
+  <div class="mr-3xl" v-if="showFlash">
     <FlashMessage message="Operation Successful!" />
   </div>
   <div v-if="showErrorFlash">
@@ -227,9 +227,15 @@ import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
 import { mapGetters, mapActions } from "vuex";
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
+import Spinner from "@/sharedComponents/Spinner";
 
 export default {
-  components: { TitleWithIllustration, FlashMessage, ErrorFlashMessage },
+  components: {
+    TitleWithIllustration,
+    FlashMessage,
+    ErrorFlashMessage,
+    Spinner,
+  },
   props: ["activeState"],
   data() {
     return {
@@ -284,6 +290,10 @@ export default {
 
       draftId: "",
       draftData: "",
+
+      showFlash: false,
+      showErrorFlash: false,
+      showLoading: false,
     };
   },
   computed: {

@@ -62,7 +62,7 @@
       </div>
     </div>
   </div>
-  <div v-if="showFlash">
+  <div class="mr-3xl" v-if="showFlash">
     <FlashMessage message="Operation Successful!" />
   </div>
   <div v-if="showErrorFlash">
@@ -75,15 +75,22 @@ import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
 import { mapGetters, mapActions } from "vuex";
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
+import Spinner from "@/sharedComponents/Spinner";
 
 export default {
   props: ["activeState"],
-  components: { TitleWithIllustration, FlashMessage, ErrorFlashMessage },
+  components: {
+    TitleWithIllustration,
+    FlashMessage,
+    ErrorFlashMessage,
+    Spinner,
+  },
   data() {
     return {
       basePath: "https://hrlicensurebe.dev.k8s.sandboxaddis.com/",
       showFlash: false,
       showErrorFlash: false,
+      showLoading: false,
       serviceFeeFile: "",
       showPreview: false,
       filePreview: "",

@@ -12,7 +12,7 @@
         <label class="ml-8"> Full Name</label>
         <h5 class="ml-8">
           {{
-              profileInfo.name +
+            profileInfo.name +
               " " +
               profileInfo.fatherName +
               " " +
@@ -20,55 +20,39 @@
           }}
         </h5>
       </div>
-      <div
-        :class="[profileInfo.gender === null ? errorClass : activeClass]"
-      >
+      <div :class="[profileInfo.gender === null ? errorClass : activeClass]">
         <label class="ml-8"> Gender</label>
         <h5 class="ml-8">
           {{ profileInfo.gender ? profileInfo["gender"] : "-" }}
         </h5>
       </div>
       <div
-        :class="[
-          profileInfo.nationality === null ? errorClass : activeClass,
-        ]"
+        :class="[profileInfo.nationality === null ? errorClass : activeClass]"
       >
         <label class="ml-8"> Nationality</label>
         <h5 class="ml-8">
-          {{
-            profileInfo.nationality ? profileInfo.nationality : "-"
-          }}
+          {{ profileInfo.nationality ? profileInfo.nationality : "-" }}
         </h5>
       </div>
       <div
-        :class="[
-          profileInfo.placeOfBirth === null ? errorClass : activeClass,
-        ]"
+        :class="[profileInfo.placeOfBirth === null ? errorClass : activeClass]"
       >
         <label class="ml-8"> Place of Birth</label>
         <h5 class="ml-8">
-          {{
-            profileInfo.placeOfBirth ? profileInfo.placeOfBirth : "-"
-          }}
+          {{ profileInfo.placeOfBirth ? profileInfo.placeOfBirth : "-" }}
         </h5>
       </div>
       <div
-        :class="[
-          profileInfo.dateOfBirth === null ? errorClass : activeClass,
-        ]"
+        :class="[profileInfo.dateOfBirth === null ? errorClass : activeClass]"
       >
         <label class="ml-8"> Date of Birth</label>
         <h5 class="ml-8">
-          {{
-            profileInfo.dateOfBirth ? profileInfo.dateOfBirth : "-"
-          }}
+          {{ profileInfo.dateOfBirth ? profileInfo.dateOfBirth : "-" }}
         </h5>
       </div>
       <div
         :class="[
-          profileInfo.maritalStatus.name === null
-            ? errorClass
-            : activeClass,
+          profileInfo.maritalStatus.name === null ? errorClass : activeClass,
         ]"
       >
         <label class="ml-8"> Marital Status</label>
@@ -88,9 +72,7 @@
     <div class="flex flex-row">
       <div
         :class="[
-          profileInfo.woreda.zone.region === null
-            ? errorClass
-            : activeClass,
+          profileInfo.woreda.zone.region === null ? errorClass : activeClass,
         ]"
       >
         <label class="ml-8"> Region</label>
@@ -103,52 +85,34 @@
         </h5>
       </div>
       <div
-        :class="[
-          profileInfo.woreda.zone === null ? errorClass : activeClass,
-        ]"
+        :class="[profileInfo.woreda.zone === null ? errorClass : activeClass]"
       >
         <label class="ml-8"> Zone</label>
         <h5 class="ml-8">
-          {{
-            profileInfo.woreda.zone
-              ? profileInfo.woreda.zone.name
-              : "-"
-          }}
+          {{ profileInfo.woreda.zone ? profileInfo.woreda.zone.name : "-" }}
         </h5>
       </div>
-      <div
-        :class="[profileInfo.woreda === null ? errorClass : activeClass]"
-      >
+      <div :class="[profileInfo.woreda === null ? errorClass : activeClass]">
         <label class="ml-8"> Wereda</label>
         <h5 class="ml-8">
           {{ profileInfo.woreda ? profileInfo.woreda.name : "-" }}
         </h5>
       </div>
-      <div
-        :class="[profileInfo.kebele === null ? errorClass : activeClass]"
-      >
+      <div :class="[profileInfo.kebele === null ? errorClass : activeClass]">
         <label class="ml-8"> Kebele</label>
         <h5 class="ml-8">
           {{ profileInfo.kebele ? profileInfo.kebele : "-" }}
         </h5>
       </div>
       <div
-        :class="[
-          profileInfo.houseNumber === null ? errorClass : activeClass,
-        ]"
+        :class="[profileInfo.houseNumber === null ? errorClass : activeClass]"
       >
         <label class="ml-8"> House Number</label>
         <h5 class="ml-8">
-          {{
-            profileInfo.houseNumber ? profileInfo.houseNumber : "-"
-          }}
+          {{ profileInfo.houseNumber ? profileInfo.houseNumber : "-" }}
         </h5>
       </div>
-      <div
-        :class="[
-          profileInfo.residence === null ? errorClass : activeClass,
-        ]"
-      >
+      <div :class="[profileInfo.residence === null ? errorClass : activeClass]">
         <label class="ml-8"> Residence</label>
         <h5 class="ml-8">
           {{ profileInfo.residence ? profileInfo.residence : "-" }}
@@ -167,39 +131,29 @@
         <label class="ml-8"> Mobile Number</label>
         <h5 class="ml-8">
           {{
-            profileInfo.user.phoneNumber
-              ? profileInfo.user.phoneNumber
-              : "-"
+            profileInfo.user.phoneNumber ? profileInfo.user.phoneNumber : "-"
           }}
         </h5>
       </div>
 
       <div
         :class="[
-          profileInfo.user.emailAddress === null ? errorClass : activeClass
+          profileInfo.user.emailAddress === null ? errorClass : activeClass,
         ]"
       >
         <label class="ml-8"> Email</label>
         <h5 class="ml-8">
           {{
-            profileInfo.user.emailAddress
-              ? profileInfo.user.emailAddress
-              : "-"
+            profileInfo.user.emailAddress ? profileInfo.user.emailAddress : "-"
           }}
         </h5>
       </div>
       <div
-        :class="[
-          profileInfo.userType.name === null ? errorClass : activeClass,
-        ]"
+        :class="[profileInfo.userType.name === null ? errorClass : activeClass]"
       >
         <label class="ml-8"> User Type</label>
         <h5 class="ml-8">
-          {{
-            profileInfo.userType.name
-              ? profileInfo.userType.name
-              : "-"
-          }}
+          {{ profileInfo.userType.name ? profileInfo.userType.name : "-" }}
         </h5>
       </div>
     </div>
@@ -246,11 +200,11 @@
     </div>
   </div>
 
-  <div v-if="showFlash">
-    <FlashMessage message="Your renewal license is applied successfully!" />
+  <div class="mr-3xl" v-if="message.showFlash">
+    <FlashMessage message="Operation Successful!" />
   </div>
-  <div v-if="showErrorFlash">
-    <ErrorFlashMessage message="Unable to apply your renewal license!" />
+  <div v-if="message.showErrorFlash">
+    <ErrorFlashMessage message="Operation Failed!" />
   </div>
 </template>
 
@@ -261,15 +215,24 @@ import Title from "@/sharedComponents/Title";
 import axios from "axios";
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
+import Spinner from "@/sharedComponents/Spinner";
+
 export default {
   props: ["activeState"],
   components: {
     Title,
     FlashMessage,
-    ErrorFlashMessage
+    ErrorFlashMessage,
+    Spinner,
   },
   setup() {
     const store = useStore();
+
+    let message = ref({
+      showFlash: false,
+      showErrorFlash: false,
+      showLoading: false,
+    });
 
     let profileInfo = {
       name: "",
@@ -280,27 +243,27 @@ export default {
       placeOfBirth: "",
       dateOfBirth: "",
       maritalStatus: {
-        name: ""
+        name: "",
       },
       woreda: {
         name: "",
         zone: {
           name: "",
           region: {
-            name: ""
-          }
-        }
+            name: "",
+          },
+        },
       },
       kebele: "",
       houseNumber: "",
       residence: "",
       user: {
         phoneNumber: "",
-        emailAddress: ""
+        emailAddress: "",
       },
       userType: {
-        name: ""
-      }
+        name: "",
+      },
     };
 
     let renewalLicense = ref(null);
@@ -310,7 +273,7 @@ export default {
     let applicantTypeId = ref("");
     let education = {
       departmentId: "",
-      institutionId: ""
+      institutionId: "",
     };
     let basePath = ref("http://localhost:5000/");
     let activeClass = ref("active");
@@ -328,8 +291,8 @@ export default {
         applicantTypeId: applicantTypeId.value,
         education: {
           institutionId: education.departmentId,
-          departmentId: education.institutionId
-        }
+          departmentId: education.institutionId,
+        },
       };
 
       for (let index = 0; index < docs.value.length; index++) {
@@ -356,7 +319,7 @@ export default {
       try {
         await axios
           .post("http://localhost:5000/api/renewals/add", renewal)
-          .then(response => {
+          .then((response) => {
             if (response.statusText == "Created") {
               showFlash.value = true;
 
@@ -367,7 +330,7 @@ export default {
             // this.$router.push({ path: "/menu" });
             console.log(response);
           })
-          .catch(error => {
+          .catch((error) => {
             showErrorFlash.value = true;
             console.log(error);
           });
@@ -376,7 +339,7 @@ export default {
       }
     };
 
-    let setData = data => {
+    let setData = (data) => {
       if (data) {
         profileInfo = data;
       } else {
@@ -387,7 +350,7 @@ export default {
     let created = async () => {
       const url = `http://localhost:5000/api/profiles/` + this.userId;
       const getProfile = await axios.get(url, {
-        responseType: "json"
+        responseType: "json",
       });
       if (getProfile) {
         setData(getProfile.data.data);
@@ -421,8 +384,7 @@ export default {
       activeClass,
       errorClass,
       dataFetched,
-      showFlash,
-      showErrorFlash,
+      message,
       renewalLicense,
       docs,
       userId,
@@ -430,9 +392,9 @@ export default {
       Success,
       setData,
       created,
-      profileInfo
-    }
-  }
+      profileInfo,
+    };
+  },
 };
 </script>
 <style>

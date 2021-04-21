@@ -22,7 +22,7 @@
           </transition>
           <transition name="fade" mode="out-in">
             <div v-if="this.activeState == 3">
-              <VerificationLetter
+              <GoodStandingLetter
                 :activeState="3"
                 @changeActiveState="activeState++"
               />
@@ -35,7 +35,7 @@
           </transition>
           <transition name="fade" mode="out-in">
             <div v-if="this.activeState == 5">
-              <VerificationSummary
+              <GoodStandingSummary
                 :activeState="5"
                 @changeActiveState="activeState++"
               />
@@ -45,14 +45,23 @@
       </div>
     </div>
   </div>
+  <div class="mr-3xl" v-if="showFlash">
+    <FlashMessage message="Operation Successful!" />
+  </div>
+  <div v-if="showErrorFlash">
+    <ErrorFlashMessage message="Operation Failed!" />
+  </div>
 </template>
 <script>
 import Navigation from "@/views/Navigation";
 import Institution from "./Institution.vue";
-import VerificationSummary from "./VerificationSummary";
-import VerificationLetter from "./LetterFromOrg";
+import GoodStandingSummary from "./GoodStandingSummary";
+import GoodStandingLetter from "./LetterFromOrg";
 import LicenseCopy from "./LicenseCopy";
 import ServiceFee from "./ServiceFee";
+import FlashMessage from "@/sharedComponents/FlashMessage";
+import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
+import Spinner from "@/sharedComponents/Spinner";
 
 export default {
   created() {
@@ -71,14 +80,20 @@ export default {
     buttons: [],
     applicationId: "",
     draftId: "",
+    showFlash: false,
+    showErrorFlash: false,
+    showLoading: false,
   }),
   components: {
     Navigation,
     Institution,
-    VerificationSummary,
-    VerificationLetter,
+    GoodStandingSummary,
+    GoodStandingLetter,
     LicenseCopy,
     ServiceFee,
+    FlashMessage,
+    ErrorFlashMessage,
+    Spinner,
   },
   methods: {
     submit(n) {

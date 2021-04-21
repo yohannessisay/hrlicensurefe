@@ -266,6 +266,7 @@ import Title from "@/sharedComponents/Title";
 import { mapGetters } from "vuex";
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
+import Spinner from "@/sharedComponents/Spinner";
 
 export default {
   props: ["activeState"],
@@ -273,6 +274,7 @@ export default {
     Title,
     FlashMessage,
     ErrorFlashMessage,
+    Spinner,
   },
   async created() {
     // this.userId = +localStorage.getItem("userId");
@@ -321,6 +323,7 @@ export default {
     errorClass: "text-danger",
     showFlash: false,
     showErrorFlash: false,
+    showLoading: false,
     photo: "",
     passport: "",
     healthExamCert: "",

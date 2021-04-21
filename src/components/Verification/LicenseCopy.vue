@@ -70,12 +70,12 @@
         </div>
       </div>
     </div>
-    <div v-if="showFlash">
-      <FlashMessage message="Operation Successful!" />
-    </div>
-    <div v-if="showErrorFlash">
-      <ErrorFlashMessage message="Operation Failed!" />
-    </div>
+  </div>
+  <div class="mr-3xl" v-if="message.showFlash">
+    <FlashMessage message="Operation Successful!" />
+  </div>
+  <div v-if="message.showErrorFlash">
+    <ErrorFlashMessage message="Operation Failed!" />
   </div>
 </template>
 
@@ -86,9 +86,15 @@ import { useStore } from "vuex";
 import { useRoute, useRouter } from "vue-router";
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
+import Spinner from "@/sharedComponents/Spinner";
 
 export default {
-  components: { TitleWithIllustration, FlashMessage, ErrorFlashMessage },
+  components: {
+    TitleWithIllustration,
+    FlashMessage,
+    ErrorFlashMessage,
+    Spinner,
+  },
   props: ["activeState"],
   setup(props, { emit }) {
     const store = useStore();
@@ -97,8 +103,11 @@ export default {
 
     const basePath = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/";
 
-    let showFlash = ref(false);
-    let showErrorFlash = ref(false);
+    let message = ref({
+      showFlash: false,
+      showErrorFlash: false,
+      showLoading: false,
+    });
 
     let licenseFile = ref("");
     let licenseFileP = ref("");
@@ -257,8 +266,7 @@ export default {
       buttons,
       draftData,
       basePath,
-      showFlash,
-      showErrorFlash,
+      message,
     };
   },
 };

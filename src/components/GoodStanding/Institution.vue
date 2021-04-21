@@ -12,7 +12,7 @@
         </div>
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-10">
           <div class="flex">
-            <div class="flex flex-col mb-medium w-1/2 mr-12">
+            <div class="flex flex-col mb-medium w-2/5 mr-12">
               <label class="text-primary-700">Applicant Type</label>
               <select class="max-w-3xl" v-model="licenseInfo.applicantTypeId">
                 <option
@@ -24,7 +24,7 @@
                 </option>
               </select>
             </div>
-            <div class="flex flex-col mb-medium w-1/2 mr-12">
+            <div class="flex flex-col mb-medium w-2/5 mr-12">
               <label class="text-primary-700">Department</label>
               <select
                 class="max-w-3xl"
@@ -41,7 +41,7 @@
             </div>
           </div>
 
-          <div class="flex flex-col mb-medium w-1/2 mr-12">
+          <div class="flex flex-col mb-medium w-2/5 mr-12">
             <label class="text-primary-700">Institution</label>
             <select
               class="max-w-3xl"

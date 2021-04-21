@@ -63,10 +63,10 @@
       </div>
     </div>
   </div>
-  <div v-if="showFlash">
+  <div class="mr-3xl" v-if="message.showFlash">
     <FlashMessage message="Operation Successful!" />
   </div>
-  <div v-if="showErrorFlash">
+  <div v-if="message.showErrorFlash">
     <ErrorFlashMessage message="Operation Failed!" />
   </div>
 </template>
@@ -78,9 +78,15 @@ import { useStore } from "vuex";
 import { useRoute, useRouter } from "vue-router";
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
+import Spinner from "@/sharedComponents/Spinner";
 
 export default {
-  components: { TitleWithIllustration, FlashMessage, ErrorFlashMessage },
+  components: {
+    TitleWithIllustration,
+    FlashMessage,
+    ErrorFlashMessage,
+    Spinner,
+  },
   props: ["activeState"],
   setup(props, { emit }) {
     const store = useStore();
@@ -88,8 +94,12 @@ export default {
     const router = useRouter();
 
     const basePath = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/";
-    let showFlash = ref(false);
-    let showErrorFlash = ref(false);
+
+    let message = ref({
+      showFlash: false,
+      showErrorFlash: false,
+      showLoading: false,
+    });
 
     let healthExamFile = ref("");
     let healthExamFileP = ref("");
@@ -97,7 +107,6 @@ export default {
     let filePreview = ref("");
     let showUpload = ref(true);
     let isImage = ref(false);
- c
 
     let photo = ref("");
     let passport = ref("");
@@ -296,8 +305,7 @@ export default {
       buttons,
       draftData,
       basePath,
-      showFlash,
-      showErrorFlash,
+      message,
     };
   },
 };

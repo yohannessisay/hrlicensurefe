@@ -12,7 +12,7 @@
         </div>
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-10">
           <div class="flex">
-            <div class="flex flex-col mb-medium w-1/2 mr-12">
+            <div class="flex flex-col mb-medium w-2/5 mr-12">
               <label class="text-primary-700">Applicant Type</label>
               <select class="max-w-3xl" v-model="licenseInfo.applicantTypeId">
                 <option
@@ -24,7 +24,7 @@
                 </option>
               </select>
             </div>
-            <div class="flex flex-col mb-medium w-1/2 mr-12">
+            <div class="flex flex-col mb-medium w-2/5 mr-12">
               <label class="text-primary-700">Department</label>
               <select
                 class="max-w-3xl"
@@ -41,20 +41,19 @@
             </div>
           </div>
 
-          <div class="flex flex-col mb-medium w-1/2 mr-12">
-            <label class="text-primary-700">Institution</label>
-            <select
-              class="max-w-3xl"
-              v-model="licenseInfo.education.institutionId"
-            >
-              <option
-                v-for="institution in institutions"
-                v-bind:key="institution.name"
-                v-bind:value="institution.id"
-              >
-                {{ institution.name }}
-              </option>
-            </select>
+          <div class="flex">
+            <div class="flex flex-col mb-medium w-2/5 mr-12">
+              <label class="text-primary-700">Institution</label>
+              <select v-model="licenseInfo.education.institutionId">
+                <option
+                  v-for="institution in institutions"
+                  v-bind:key="institution.name"
+                  v-bind:value="institution.id"
+                >
+                  {{ institution.name }}
+                </option>
+              </select>
+            </div>
           </div>
         </form>
         <div v-if="this.showButtons" class="flex justify-center mb-8">
@@ -79,10 +78,10 @@
     </div>
   </div>
   <div class="mr-3xl" v-if="showFlash">
-    <FlashMessage message="Login Successful!" />
+    <FlashMessage message="Operation Successful!" />
   </div>
   <div v-if="showErrorFlash">
-    <ErrorFlashMessage message="Login Failed!" />
+    <ErrorFlashMessage message="Operation Failed!" />
   </div>
 </template>
 

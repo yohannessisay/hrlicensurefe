@@ -67,10 +67,10 @@
       </div>
     </div>
   </div>
-  <div v-if="showFlash">
+  <div class="mr-3xl" v-if="message.showFlash">
     <FlashMessage message="Operation Successful!" />
   </div>
-  <div v-if="showErrorFlash">
+  <div v-if="message.showErrorFlash">
     <ErrorFlashMessage message="Operation Failed!" />
   </div>
 </template>
@@ -79,19 +79,23 @@
 import { ref, onMounted } from "vue";
 import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
 import { useStore } from "vuex";
-import { useRoute , useRouter} from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
+import Spinner from "@/sharedComponents/Spinner";
 
 export default {
-  components: { TitleWithIllustration, FlashMessage, ErrorFlashMessage },
+  components: {
+    TitleWithIllustration,
+    FlashMessage,
+    ErrorFlashMessage,
+    Spinner,
+  },
   props: ["activeState"],
   setup(props, { emit }) {
     const store = useStore();
     const route = useRoute();
     const router = useRouter();
-    let showFlash = ref(false);
-    let showErrorFlash = ref(false);
 
     const basePath = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/";
 
@@ -118,6 +122,12 @@ export default {
     let educationDoc = ref([]);
     let workExperience = ref("");
     let serviceFee = ref("");
+
+    let message = ref({
+      showFlash: false,
+      showErrorFlash: false,
+      showLoading: false,
+    });
 
     const reset = () => {
       showUpload.value = true;
@@ -309,8 +319,7 @@ export default {
       buttons,
       draftData,
       basePath,
-      showFlash,
-      showErrorFlash,
+      message,
     };
   },
 };
