@@ -64,6 +64,9 @@
             {{ buttons[2]["name"] }}
           </button>
         </div>
+        <div v-if="message.showLoading">
+          <Spinner />
+        </div>
       </div>
     </div>
   </div>
@@ -99,6 +102,7 @@ export default {
 
     const basePath = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/";
 
+    let dataChanged = ref(false);
     let supportLetterFile = ref("");
     let supportLetterFileP = ref("");
     let showPreview = ref(false);
@@ -181,11 +185,93 @@ export default {
     serviceFee = store.getters["newlicense/getServiceFee"];
 
     const draft = (action) => {
+      message.value.showLoading = true;
       if (route.params.id) {
-        if (supportLetterFile) {
-          // modify the drafData before dispatching
+        if (dataChanged.value) {
+          let formData = new FormData();
+          formData.append(documentSpecs[0].documentType.code, photo);
+          formData.append(documentSpecs[1].documentType.code, passport);
+          formData.append(documentSpecs[2].documentType.code, healthExamCert);
+          formData.append(documentSpecs[3].documentType.code, serviceFee);
+          formData.append(documentSpecs[4].documentType.code, workExperience);
+          formData.append(documentSpecs[5].documentType.code, englishLanguage);
+          if (professionalDoc != undefined) {
+            formData.append(
+              documentSpecs[6].documentType.code,
+              professionalDoc[0]
+            );
+            formData.append(
+              documentSpecs[7].documentType.code,
+              professionalDoc[1]
+            );
+            formData.append(
+              documentSpecs[8].documentType.code,
+              professionalDoc[2]
+            );
+          }
+          formData.append(documentSpecs[9].documentType.code, coc);
+          if (educationDoc != undefined) {
+            formData.append(
+              documentSpecs[10].documentType.code,
+              educationDoc[0]
+            );
+            formData.append(
+              documentSpecs[11].documentType.code,
+              educationDoc[1]
+            );
+            formData.append(
+              documentSpecs[12].documentType.code,
+              educationDoc[2]
+            );
+            formData.append(
+              documentSpecs[13].documentType.code,
+              educationDoc[3]
+            );
+            formData.append(
+              documentSpecs[14].documentType.code,
+              educationDoc[4]
+            );
+          }
+          formData.append(
+            documentSpecs[15].documentType.code,
+            supportLetterFile
+          );
+          formData.append(documentSpecs[16].documentType.code, herqa);
+
+          let payload = { document: formData, id: draftData.id };
+          store
+            .dispatch("newlicense/uploadDocuments", payload)
+            .then((res) => {
+              if (res.status == 200) {
+                message.value.showFlash = !message.value.showFlash;
+                setTimeout(() => {}, 3000);
+                router.push({ path: "/menu" });
+                message.value.showLoading = false;
+              } else {
+                message.value.showErrorFlash = !message.value.showErrorFlash;
+              }
+            })
+            .catch((err) => {});
         } else {
-          // just send the draftData
+          let draftObj = {
+            action: action,
+            data: draftData,
+          };
+          let payload = {
+            licenseId: draftData.id,
+            draftData: draftObj,
+          };
+          message.value.showLoading = true;
+          store.dispatch("newlicense/updateDraft", payload).then((res) => {
+            if (res.data.status == "Success") {
+              message.value.showFlash = !message.value.showFlash;
+              setTimeout(() => {}, 2200);
+              router.push({ path: "/menu" });
+              message.value.showLoading = false;
+            } else {
+              message.value.showErrorFlash = !message.value.showErrorFlash;
+            }
+          });
         }
       } else {
         let license = {
@@ -255,13 +341,13 @@ export default {
           store
             .dispatch("newlicense/uploadDocuments", payload)
             .then((res) => {
-              if (res.data.status == "Success") {
-                showFlash.value = !showFlash.value;
-                setTimeout(() => {
-                  router.push({ path: "/menu" });
-                }, 3000);
+              if (res) {
+                message.value.showFlash = !message.value.showFlash;
+                setTimeout(() => {}, 2200);
+                router.push({ path: "/menu" });
+                message.value.showLoading = false;
               } else {
-                showErrorFlash.value = !showErrorFlash.value;
+                messsage.value.showErrorFlash = !message.value.showErrorFlash;
               }
             })
             .catch((err) => {});
@@ -277,18 +363,18 @@ export default {
         licenseId: draftData.id,
         withdrawData: withdrawObj,
       };
+      message.value.showLoading = true;
       store.dispatch("newlicense/withdraw", payload).then((res) => {
-        if (res.data.status == "Success") {
-          showFlash.value = !showFlash.value;
-          setTimeout(() => {
-            router.push({ path: "/menu" });
-          }, 3000);
+        if (res) {
+          message.value.showFlash = !message.value.showFlash;
+          message.value.showLoading = false;
+          setTimeout(() => {}, 1800);
+          router.push({ path: "/menu" });
         } else {
           showErrorFlash.value = !showErrorFlash.value;
         }
       });
     };
-
     onMounted(() => {
       buttons = store.getters["newlicense/getButtons"];
       draftData = store.getters["newlicense/getDraft"];
@@ -319,6 +405,7 @@ export default {
       buttons,
       draftData,
       basePath,
+      dataChanged,
       message,
     };
   },

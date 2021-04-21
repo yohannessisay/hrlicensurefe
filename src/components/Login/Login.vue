@@ -89,6 +89,7 @@ export default {
   setup() {
     const store = useStore();
     const router = useRouter();
+
     let message = ref({
       showFlash: false,
       showErrorFlash: false,

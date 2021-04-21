@@ -59,6 +59,9 @@
             {{ this.buttons[2]["name"] }}
           </button>
         </div>
+        <div v-if="showLoading">
+          <Spinner />
+        </div>
       </div>
     </div>
   </div>
@@ -88,6 +91,7 @@ export default {
   data() {
     return {
       basePath: "https://hrlicensurebe.dev.k8s.sandboxaddis.com/",
+      dataChanged: false,
       showFlash: false,
       showErrorFlash: false,
       showLoading: false,
@@ -175,6 +179,7 @@ export default {
       // this.isImage = true;
     },
     handleFileUpload() {
+      this.dataChanged = true;
       this.showUpload = false;
       this.serviceFeeFile = this.$refs.serviceFeeFile.files[0];
       let reader = new FileReader();
@@ -199,11 +204,112 @@ export default {
       }
     },
     draft(action) {
+      this.showLoading = true;
       if (this.draftId) {
-        if (this.serviceFeeFile) {
-          // modify the drafData before dispatching
+        if (this.dataChanged) {
+          let formData = new FormData();
+          formData.append(this.documentSpec[0].documentType.code, this.photo);
+          formData.append(
+            this.documentSpec[1].documentType.code,
+            this.passport
+          );
+          formData.append(
+            this.documentSpec[2].documentType.code,
+            this.healthExamCert
+          );
+          formData.append(
+            this.documentSpec[3].documentType.code,
+            this.serviceFeeFile
+          );
+          formData.append(
+            this.documentSpec[4].documentType.code,
+            this.workExperience
+          );
+          formData.append(
+            this.documentSpec[5].documentType.code,
+            this.englishLanguage
+          );
+
+          if (this.professionalDoc != undefined) {
+            formData.append(
+              this.documentSpec[6].documentType.code,
+              this.professionalDoc[0]
+            );
+            formData.append(
+              this.documentSpec[7].documentType.code,
+              this.professionalDoc[1]
+            );
+            formData.append(
+              this.documentSpec[8].documentType.code,
+              this.professionalDoc[2]
+            );
+          }
+
+          formData.append(this.documentSpec[9].documentType.code, this.coc);
+          if (this.educationalDocs != undefined) {
+            formData.append(
+              this.documentSpec[10].documentType.code,
+              this.educationalDocs[0]
+            );
+            formData.append(
+              this.documentSpec[11].documentType.code,
+              this.educationalDocs[1]
+            );
+            formData.append(
+              this.documentSpec[12].documentType.code,
+              this.educationalDocs[2]
+            );
+            formData.append(
+              this.documentSpec[13].documentType.code,
+              this.educationalDocs[3]
+            );
+            formData.append(
+              this.documentSpec[14].documentType.code,
+              this.educationalDocs[4]
+            );
+          }
+
+          formData.append(
+            this.documentSpec[15].documentType.code,
+            this.supportLetter
+          );
+          formData.append(this.documentSpec[16].documentType.code, this.herqa);
+
+          let payload = { document: formData, id: this.draftData.id };
+          this.$store
+            .dispatch("newlicense/uploadDocuments", payload)
+            .then((res) => {
+              if (res.status == 200) {
+                this.showFlash = true;
+                setTimeout(() => {}, 3000);
+                this.$router.push({ path: "/menu" });
+                this.showLoading = false;
+              } else {
+                this.showErrorFlash = true;
+              }
+            })
+            .catch((err) => {});
         } else {
-          // just send the draftData
+          let draftObj = {
+            action: action,
+            data: this.getDraftData,
+          };
+          let payload = {
+            licenseId: this.getDraftData.id,
+            draftData: draftObj,
+          };
+          this.$store
+            .dispatch("newlicense/updateDraft", payload)
+            .then((res) => {
+              if (res.data.status == "Success") {
+                this.showFlash = true;
+                setTimeout(() => {}, 3000);
+                this.$router.push({ path: "/menu" });
+                this.showLoading = false;
+              } else {
+                this.showErrorFlash = true;
+              }
+            });
         }
       } else {
         let license = {
@@ -298,12 +404,11 @@ export default {
             this.$store
               .dispatch("newlicense/uploadDocuments", payload)
               .then((res) => {
-                console.log(res.data);
-                if (res.data.status == "Success") {
+                if (res) {
                   this.showFlash = true;
-                  setTimeout(() => {
-                    this.$router.push({ path: "/menu" });
-                  }, 3000);
+                  this.showLoading = false;
+                  this.$router.push({ path: "/menu" });
+                  setTimeout(() => {}, 2000);
                 } else {
                   this.showErrorFlash = true;
                 }
@@ -313,6 +418,7 @@ export default {
       }
     },
     withdraw(action) {
+      this.showLoading = true;
       let withdrawObj = {
         action: action,
         data: this.getDraftData,
@@ -322,11 +428,11 @@ export default {
         withdrawData: withdrawObj,
       };
       this.$store.dispatch("newlicense/withdraw", payload).then((res) => {
-        if (res.data.status == "Success") {
+        if (res) {
           this.showFlash = true;
-          setTimeout(() => {
-            this.$router.push({ path: "/menu" });
-          }, 3000);
+          this.showLoading = false;
+          setTimeout(() => {}, 2000);
+          this.$router.push({ path: "/menu" });
         } else {
           this.showErrorFlash = true;
         }
