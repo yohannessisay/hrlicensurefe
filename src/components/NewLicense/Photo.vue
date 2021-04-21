@@ -111,7 +111,7 @@ export default {
       showErrorFlash: false,
       showLoading: false,
     });
-    let dataChanged = ref(false); 
+    let dataChanged = ref(false);
     let photoFile = ref("");
     let photoFileP = ref("");
     let showPreview = ref(false);

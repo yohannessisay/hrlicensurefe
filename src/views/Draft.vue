@@ -1,7 +1,10 @@
 <template>
   <div>
     <Navigation tab="Home" />
-    <div v-if="!message.showLoading" class="bg-lightBlueB-200 h-full">
+    <div
+      v-if="!message.showLoadingNewLicense && !message.showLoadingRenewal"
+      class="bg-lightBlueB-200 h-full"
+    >
       <div class="flex pl-12 pt-medium">
         <Title message="New License Draft" />
       </div>
@@ -48,7 +51,60 @@
         </div>
       </div>
     </div>
-    <div v-if="message.showLoading" class="flex justify-center justify-items-center mt-24">
+    <div
+      v-if="!message.showLoadingNewLicense && !message.showLoadingRenewal"
+      class="bg-lightBlueB-200 h-full"
+    >
+      <div class="flex pl-12 pt-medium">
+        <Title message="Renewal Draft" />
+      </div>
+      <div class=" mt-medium rounded ml-large">
+        <div class="flex " v-for="i in renewal.length" v-bind:key="i">
+          <div
+            class="container mb-medium"
+            v-for="item in renewal.slice((i - 1) * 5, i * 5)"
+            v-bind:key="item"
+            v-bind:value="item"
+          >
+            <router-link
+              :to="{
+                name: 'Renewal',
+                params: { id: item.id },
+              }"
+            >
+              <div
+                class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
+              >
+                <div class="p-4 w-48 h-64">
+                  <!-- <div class="flex content-center justify-center">
+                <img class="box-shadow-pop" />
+              </div> -->
+                  <h4
+                    class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                  >
+                    {{ item.applicantType.name }}
+                  </h4>
+                  <h4
+                    class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                  >
+                    {{ item.applicationStatus.name }}
+                  </h4>
+                  <h4
+                    class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                  >
+                    Code: {{ item.renewalCode }}
+                  </h4>
+                </div>
+              </div>
+            </router-link>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      v-if="message.showLoadingNewLicense || message.showLoadingRenewal"
+      class="flex justify-center justify-items-center mt-24"
+    >
       <Spinner />
     </div>
   </div>
@@ -76,21 +132,32 @@ export default {
     let verification = ref([]);
     let goodstanding = ref([]);
     let message = ref({
-      showLoading: false,
+      showLoadingNewLicense: false,
+      showLoadingRenewal: false,
       showError: false,
       showSuccess: false,
     });
 
     const fetchLicensebyId = () => {
-      message.value.showLoading = !message.value.showLoading;
+      message.value.showLoadingNewLicense = !message.value
+        .showLoadingNewLicense;
       store.dispatch("newlicense/getNewLicense").then((res) => {
-        message.value.showLoading = !message.value.showLoading;
+        message.value.showLoadingNewLicense = !message.value
+          .showLoadingNewLicense;
         license.value = res.data.data;
-        console.log(license.value);
         newlicense.value = license.value.filter(function(e) {
           return e.applicationStatus.code == "DRA";
         });
-        console.log(newlicense.value);
+      });
+      message.value.showLoadingRenewal = !message.value.showLoadingRenewal;
+      store.dispatch("renewal/getRenewalLicense").then((res) => {
+        message.value.showLoadingRenewal = !message.value.showLoadingRenewal;
+        console.log(res.data.data);
+        license.value = res.data.data;
+        console.log(license.value)
+        renewal.value = license.value.filter(function(e) {
+          return e.applicationStatus.code == "DRA";
+        });
       });
     };
 

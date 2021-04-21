@@ -60,6 +60,9 @@
             {{ buttons[2]["name"] }}
           </button>
         </div>
+        <div v-if="message.showLoading">
+          <Spinner />
+        </div>
       </div>
     </div>
   </div>
@@ -99,7 +102,7 @@ export default {
       showErrorFlash: false,
       showLoading: false,
     });
-
+    let dataChanged = ref(false);
     let healthExamCertFile = ref("");
     let healthExamCertFileP = ref("");
     let showPreview = ref(false);
@@ -128,9 +131,9 @@ export default {
       isImage.value = true;
     };
     const handleFileUpload = () => {
+      dataChanged.value = true;
       showUpload.value = false;
       healthExamCertFile.value = healthExamCertFileP.value.files[0];
-      console.log(healthExamCertFile.value);
       let reader = new FileReader();
 
       reader.addEventListener(
@@ -184,11 +187,55 @@ export default {
       }
     });
     const draft = (action) => {
+      message.value.showLoading = true;
       if (route.params.id) {
-        if (healthExamFile) {
-          // modify the drafData before dispatching
+        if (dataChanged.value) {
+          let formData = new FormData();
+          formData.append(documentSpecs[0].documentType.code, renewalPhoto);
+          formData.append(documentSpecs[1].documentType.code, renewalLetter);
+          formData.append(
+            documentSpecs[2].documentType.code,
+            healthExamCertFile
+          );
+          formData.append(documentSpecs[3].documentType.code, serviceFee);
+          formData.append(documentSpecs[4].documentType.code, cpd);
+          formData.append(documentSpecs[5].documentType.code, workExperience);
+          formData.append(documentSpecs[5].documentType.code, previousLicense);
+
+          let payload = { document: formData, id: draftData.id };
+          store
+            .dispatch("renewal/uploadDocuments", payload)
+            .then((res) => {
+              if (res.status == 200) {
+                message.value.showFlash = !message.value.showFlash;
+                message.value.showLoading = !message.value.showLoading;
+                setTimeout(() => {}, 3000);
+                router.push({ path: "/menu" });
+              } else {
+                message.value.showErrorFlash = !message.value.showErrorFlash;
+              }
+            })
+            .catch((err) => {});
         } else {
-          // just send the draftData
+          let draftObj = {
+            action: action,
+            data: draftData,
+          };
+          let payload = {
+            licenseId: draftData.id,
+            draftData: draftObj,
+          };
+          message.value.showLoading = true;
+          store.dispatch("renewal/updateDraft", payload).then((res) => {
+            if (res.data.status == "Success") {
+              message.value.showFlash = !message.value.showFlash;
+              setTimeout(() => {}, 2200);
+              router.push({ path: "/menu" });
+              message.value.showLoading = false;
+            } else {
+              message.value.showErrorFlash = !message.value.showErrorFlash;
+            }
+          });
         }
       } else {
         let license = {
@@ -215,17 +262,19 @@ export default {
           formData.append(documentSpecs[4].documentType.code, cpd);
           formData.append(documentSpecs[5].documentType.code, workExperience);
           formData.append(documentSpecs[5].documentType.code, previousLicense);
+
           let payload = { document: formData, id: licenseId };
           store
             .dispatch("renewal/uploadDocuments", payload)
             .then((res) => {
-              if (res.data.status == "Success") {
-                showFlash.value = !showFlash.value;
-                setTimeout(() => {
-                  router.push({ path: "/menu" });
-                }, 3000);
+              console.log(res);
+              if (res) {
+                message.value.showFlash = !message.value.showFlash;
+                setTimeout(() => {}, 2200);
+                router.push({ path: "/menu" });
+                message.value.showLoading = false;
               } else {
-                showErrorFlash.value = !showErrorFlash.value;
+                messsage.value.showErrorFlash = !message.value.showErrorFlash;
               }
             })
             .catch((err) => {});
@@ -252,7 +301,6 @@ export default {
         }
       });
     };
-
     return {
       healthExamCertFile,
       healthExamCertFileP,
@@ -269,6 +317,7 @@ export default {
       draftData,
       basePath,
       message,
+      dataChanged,
     };
   },
 };
