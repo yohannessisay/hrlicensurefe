@@ -205,7 +205,7 @@ export default {
           formData.append(documentSpecs[4].documentType.code, cpd);
           formData.append(documentSpecs[5].documentType.code, workExperience);
           formData.append(
-            documentSpecs[5].documentType.code,
+            documentSpecs[6].documentType.code,
             previousLicenseFile
           );
 
@@ -266,7 +266,7 @@ export default {
           formData.append(documentSpecs[4].documentType.code, cpd);
           formData.append(documentSpecs[5].documentType.code, workExperience);
           formData.append(
-            documentSpecs[5].documentType.code,
+            documentSpecs[6].documentType.code,
             previousLicenseFile
           );
 

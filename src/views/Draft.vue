@@ -152,9 +152,7 @@ export default {
       message.value.showLoadingRenewal = !message.value.showLoadingRenewal;
       store.dispatch("renewal/getRenewalLicense").then((res) => {
         message.value.showLoadingRenewal = !message.value.showLoadingRenewal;
-        console.log(res.data.data);
         license.value = res.data.data;
-        console.log(license.value)
         renewal.value = license.value.filter(function(e) {
           return e.applicationStatus.code == "DRA";
         });

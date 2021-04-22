@@ -1,7 +1,7 @@
 <template>
   <div>
     <Navigation tab="Home" />
-    <div v-if="message.render" class="bg-lightBlueB-200 h-full">
+    <div class="bg-lightBlueB-200 h-full">
       <div class="flex pl-12 pt-medium">
         <Title message="New License Submitted Applications" />
       </div>
@@ -41,6 +41,12 @@
         </div>
       </div>
     </div>
+    <div
+      v-if="message.showLoading"
+      class="flex justify-center justify-items-center mt-24"
+    >
+      <Spinner />
+    </div>
   </div>
 </template>
 
@@ -50,9 +56,10 @@ import Navigation from "@/views/Navigation";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import { ref, onMounted } from "vue";
+import Spinner from "@/sharedComponents/Spinner";
 
 export default {
-  components: { Navigation, Title },
+  components: { Navigation, Title, Spinner },
   setup() {
     const store = useStore();
     const router = useRouter();
@@ -62,28 +69,20 @@ export default {
     let renewal = ref([]);
     let verification = ref([]);
     let goodstanding = ref([]);
-    let itemsPerRow = 5;
     let message = ref({
-      render: false,
+      showLoading: false,
     });
-    let hover = ref(false);
 
     const fetchLicensebyId = () => {
+      message.value.showLoading = !message.value.showLoading;
       store.dispatch("newlicense/getNewLicense").then((res) => {
         license.value = res.data.data;
-        message.value.render = !message.value.render;
+        message.value.showLoading = !message.value.showLoading;
         newlicense.value = license.value.filter(function(e) {
           return e.applicationStatus.code == "SUB";
         });
+        console.log(newlicense.value);
       });
-    };
-
-    const rowCount = () => {
-      return Math.ceil(newlicense.length / itemsPerRow);
-    };
-
-    const itemCountInRow = (index) => {
-      return newlicense.slice((index - 1) * itemsPerRow, index * itemsPerRow);
     };
 
     onMounted(() => {
@@ -95,8 +94,6 @@ export default {
       renewal,
       verification,
       goodstanding,
-      hover,
-      itemsPerRow,
       message,
     };
   },

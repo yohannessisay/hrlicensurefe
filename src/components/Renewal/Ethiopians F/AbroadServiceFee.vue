@@ -204,7 +204,7 @@ export default {
           formData.append(documentSpecs[3].documentType.code, serviceFeeFile);
           formData.append(documentSpecs[4].documentType.code, cpd);
           formData.append(documentSpecs[5].documentType.code, workExperience);
-          formData.append(documentSpecs[5].documentType.code, previousLicense);
+          formData.append(documentSpecs[6].documentType.code, previousLicense);
 
           let payload = { document: formData, id: draftData.id };
           store
@@ -262,7 +262,7 @@ export default {
           formData.append(documentSpecs[3].documentType.code, serviceFeeFile);
           formData.append(documentSpecs[4].documentType.code, cpd);
           formData.append(documentSpecs[5].documentType.code, workExperience);
-          formData.append(documentSpecs[5].documentType.code, previousLicense);
+          formData.append(documentSpecs[6].documentType.code, previousLicense);
 
           let payload = { document: formData, id: licenseId };
           store
