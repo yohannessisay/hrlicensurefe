@@ -7,7 +7,7 @@
         <div class="w-64 h-40 container box-shadow-pop rounded-lg">
           <div class="mt-8">
             <div class="my-auto flex justify-center items-center">
-              <h2 class="text-lightBlueB-500 text-2xl">0</h2>
+              <h2 class="text-lightBlueB-500 text-2xl">{{ accepted.length }}</h2>
             </div>
             <div class="flex justify-center items-center">
               <h2 class=" text-lightBlueB-500 text-2xl">Accepted</h2>
@@ -28,7 +28,7 @@
         <div class="ml-12 w-64 h-40  container box-shadow-pop rounded-lg">
           <div class="mt-8">
             <div class="my-auto flex justify-center items-center">
-              <h2 class="text-red-200 text-2xl">0</h2>
+              <h2 class="text-red-200 text-2xl">{{rejected.length}}</h2>
             </div>
             <div class="flex justify-center items-center">
               <h2 class=" text-red-200 text-2xl">Rejected</h2>
@@ -44,6 +44,7 @@
             xmlns="http://www.w3.org/2000/svg"
             version="1.1"
             @click="previous()"
+            v-if="index != 0"
           >
             <polyline
               points="30 10 10 30 30 50"
@@ -87,8 +88,8 @@
             </div>
           </div>
           <div class="mt-medium">
-            <button class="mr-medium">Accept</button>
-            <button class="bg-red-500">Reject</button>
+            <button class="mr-medium" @click="accept(docs[index])">Accept</button>
+            <button class="decline" @click="reject(docs[index])">Reject</button>
           </div>
           <div class="relative pt-1 mt-medium">
             <div
@@ -120,6 +121,8 @@
             xmlns="http://www.w3.org/2000/svg"
             version="1.1"
             @click="next()"
+            v-if="index != docs.length - 1"
+            class="hover:text-primary-60"
           >
             <polyline
               points="10 10 30 30 10 50"
@@ -135,9 +138,9 @@
         </div>
       </div>
 
-      <div class="flex justify-center mb-medium">
-        <button variant="outline">I will finish Later</button>
-        <button class="outline display bg-red-200">Reject Application</button>
+      <div class="flex justify-center items-center mb-medium">
+        <button class="" variant="outline" @click="action(buttons[0].action)">{{buttons[0].name}}</button>
+        <button class="decline display bg-red-200" @click="action(buttons[1].name)">{{buttons[1].name}}</button>
       </div>
     </div>
   </div>
@@ -152,21 +155,35 @@ export default {
     const route = useRoute();
     const store = useStore();
     const newLicense = ref({
-      documents: [{ filePath: "" }]
+      declinedFields: "",
+      remark: "",
+      documents: [{ filePath: "" }],
+      applicationStatus: {
+        buttons: [{ action: "", name: "" }]
+      }
     });
+    let buttons = ref([
+      { action: "", name: "" },
+      { action: "", name: "" },
+      { action: "", name: "" },
+      { action: "", name: "" }
+    ]);
     let documentTypes = ref([]);
     let documentTypeName = ref("");
     let docs = ref([{ filePath: "" }]);
     let index = ref(0);
     let amount = ref(1);
-    let width = ref("width:1.11111%");
+    let width = ref("width:11.11111%");
+    let accepted = ref([]);
+    let rejected = ref([]);
     const created = async () => {
       store
         .dispatch("reviewer/getApplication", route.params.applicationId)
         .then(res => {
-          // newLicense.value = res.data.data;
+          newLicense.value = res.data.data;
+          buttons.value = res.data.data.applicationStatus.buttons;
           docs.value = res.data.data.documents;
-          console.log(docs.value);
+          console.log(buttons.value);
         });
     };
     const fetchDocumentTypes = async () => {
@@ -194,6 +211,28 @@ export default {
         }
       }
     };
+    const accept = (doc) => {
+      accepted.value.push(doc.documentTypeCode);
+      console.log(accepted.value);
+    };
+
+    const reject = (doc) => {
+      rejected.value.push(doc.documentTypeCode);
+      console.log(rejected.value);
+    };
+
+    const action = (actionValue) => {
+      newLicense.value.declinedFields = rejected.value;
+      let appId = newLicense.value.id;
+      let req = {
+        action: actionValue,
+        data: newLicense.value
+      };
+      console.log(req);
+      store.dispatch("newlicense/editNewLicense", req).then((res) => {
+        console.log(res.data.data);
+      });
+    };
 
     onMounted(() => {
       created();
@@ -210,7 +249,13 @@ export default {
       width,
       documentTypes,
       findDocumentType,
-      documentTypeName
+      documentTypeName,
+      accepted,
+      rejected,
+      accept,
+      reject,
+      buttons,
+      action
     };
   }
 };
@@ -218,5 +263,12 @@ export default {
 <style>
 #accepte {
   border-color: tomato;
+}
+svg:hover {
+  color: #000000;
+  cursor: pointer;
+}
+.decline {
+  background-image: linear-gradient(to right,#d63232, #e63636) !important;
 }
 </style>

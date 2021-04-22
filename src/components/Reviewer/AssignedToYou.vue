@@ -17,7 +17,7 @@
           >
             <div
               class="p-4 w-48 h-64"
-              @Click="detail(`/detail`, item.id, item.applicant.id)"
+              @Click="detail(`/admin/detail`, item.id, item.applicant.id)"
             >
               <div class="flex content-center justify-center">
                 <!-- <img class="box-shadow-pop" v-bind:src="item.picture.large" /> -->
