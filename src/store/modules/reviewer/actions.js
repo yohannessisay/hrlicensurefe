@@ -6,7 +6,8 @@ export default {
   async getUnfinished(context, id) {
     try {
       // const resp = await ApiService.get("https://randomuser.me/api/?results=10");
-      const url = baseUrl + "/newLicenses/user/" + id;
+      // const url = baseUrl + "/newLicenses/user/" + id;
+      const url = baseUrl + "/applications/unfinished/" + id;
       const resp = await ApiService.get(url);
       return resp;
     } catch (error) {
@@ -16,7 +17,7 @@ export default {
   },
   async getAssignedToYou() {
     try {
-      const resp = await ApiService.get("https://randomuser.me/api/?results=10");
+      const resp = await ApiService.get(baseUrl + "/applications/assignedToYou/1");
       return resp;
     } catch (error) {
       const resp = error;
@@ -26,7 +27,8 @@ export default {
   async getUnassigned() {
     try {
       // const resp = await ApiService.get("https://randomuser.me/api/?results=10");
-      const resp = await ApiService.get(baseUrl + "/newLicenses/status/3");
+      // const resp = await ApiService.get(baseUrl + "/newLicenses/status/3");
+      const resp = await ApiService.get(baseUrl + "/applications/unassigned");
       return resp;
     } catch (error) {
       const resp = error;
@@ -95,8 +97,8 @@ export default {
     try {
       const url = baseUrl + "/newLicenses/" + applicationId;
       // const urll = baseUrl + "/newLicenses/125";
-      const urll = baseUrl + "/newLicenses/211";
-      const resp = await ApiService.get(urll);
+      const urll = baseUrl + "/newLicenses/49";
+      const resp = await ApiService.get(url);
       return resp;
     } catch (error) {
       return error;
