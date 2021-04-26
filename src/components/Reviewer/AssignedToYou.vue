@@ -72,14 +72,10 @@ export default {
     let userId = +localStorage.getItem("userId");
 
     const fetchAssignedtoYou = () => {
-      store.dispatch("reviewer/getUnfinished", userId).then(res => {
-        x.value = res.data.data;
-        assignedToyou.value = x.value.filter(a => {
-          if (a.applicationStatus.code == "IRV") {
-            console.log(a);
-            return a;
-          }
-        });
+      store.dispatch("reviewer/getAssignedToYou").then(res => {
+        if (res.status != "Error") {
+          assignedToyou.value = res.data.data;
+        }
       });
     };
 

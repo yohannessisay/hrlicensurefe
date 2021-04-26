@@ -77,7 +77,7 @@
         </div>
       </div>
       <div class="flex ml-small mt-medium rounded ">
-        <div class="pl-large w-52 h-26" v-if="nothingToShow == true">
+        <div class="pl-large w-52 h-26" v-if="nothingToShowAssignedToYou == true">
           <div class="flex content-center justify-center">
             <h2>Nothing To Show!!</h2>
           </div>
@@ -118,11 +118,16 @@
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center">
                 {{ item.createdAt }}
               </h6>
-              <h6
+              <span
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
               >
-                New Licence ID: {{ item.newLicenseCode }}
-              </h6>
+                Application Type: {{ item.applicationType }}
+              </span>
+              <span
+                class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+              >
+                Application ID: {{ item.newLicenseCode }}
+              </span>
             </div>
           </div>
         </div>
@@ -181,7 +186,12 @@
                 <h6
                   class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
                 >
-                  New Licence ID: {{ item.newLicenseCode }}
+                  Application Type: {{ item.applicationType }}
+                </h6>
+                <h6
+                  class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                >
+                  Application ID: {{ item.newLicenseCode }}
                 </h6>
               </div>
             </div>
@@ -194,12 +204,12 @@
                 class="p-4 w-48 h-64"
                 @mouseover="hover = true"
                 @mouseleave="hover = false"
-                @Click="detail(`/admin/unassignedDetail`, item.id, item.applicant.id)"
+                @Click="detail(`/admin/unassignedDetail`, item.id, item.applicationType)"
               >
                 <h4
                   class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
                 >
-                  <!-- {{ item.name.first + " " + item.name.last }} -->
+                  <!-- {{ item.applicant.profile.name + " " + item.applicant.profile.fatherName }} -->
                 </h4>
                 <h6
                   class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
@@ -209,7 +219,12 @@
                 <h6
                   class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
                 >
-                  New Licence ID: {{ item.newLicenseCode }}
+                  Application Type: {{ item.applicationType }}
+                </h6>
+                <h6
+                  class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                >
+                  Application ID: {{ item.newLicenseCode }}
                 </h6>
                 <div
                   class="flex ml-small w-32 pt-small justify-center content-center"
@@ -315,32 +330,44 @@ export default {
 
     const fetchUnfinished = () => {
       store.dispatch("reviewer/getUnfinished", userId).then(res => {
-        console.log(res.status);
+        console.log("unfinished UserID= " + userId);
         if (res.status != "Error") {
-          // unfinished.value = res.data.results;
-          x.value = res.data.data;
+          unfinished.value = res.data.data;
+        } else {
+          nothingToShow.value = true;
+        }
+      });
+      // store.dispatch("reviewer/getUnfinished", userId).then(res => {
+      //   console.log(res.status);
+      //   if (res.status != "Error") {
+      //     // unfinished.value = res.data.results;
+      //     x.value = res.data.data;
 
-          unfinished.value = x.value.filter(a => {
-            if (a.applicationStatus.code == "REVDRA") {
-              return a;
-            }
-          });
-          assignedToyou.value = x.value.filter(a => {
-            if (a.applicationStatus.code == "IRV") {
-              return a;
-            }
-          });
+      //     unfinished.value = x.value.filter(a => {
+      //       if (a.applicationStatus.code == "REVDRA") {
+      //         return a;
+      //       }
+      //     });
+      //     // assignedToyou.value = x.value.filter(a => {
+      //     //   if (a.applicationStatus.code == "IRV") {
+      //     //     return a;
+      //     //   }
+      //     // });
+      //   } else {
+      //     nothingToShow.value = true;
+      //   }
+      // });
+    };
+
+    const fetchAssignedtoYou = () => {
+      store.dispatch("reviewer/getAssignedToYou").then(res => {
+        if (res.status != "Error") {
+          assignedToyou.value = res.data.data;
         } else {
           nothingToShow.value = true;
         }
       });
     };
-
-    // const fetchAssignedtoYou = () => {
-    //   store.dispatch("reviewer/getAssignedToYou").then(res => {
-    //     assignedToyou.value = res.data.results;
-    //   });
-    // };
 
     const fetchUnassignedApplications = () => {
       store.dispatch("reviewer/getUnassigned").then(res => {
@@ -364,6 +391,7 @@ export default {
       // fetchAssignedtoYou();
       fetchUnassignedApplications();
       fetchRecentlyFinished();
+      fetchAssignedtoYou();
     });
 
     return {
