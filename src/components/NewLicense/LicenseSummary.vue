@@ -1,225 +1,238 @@
 <template>
-  <div v-if="this.show">
-    <div class="flex justify-center"><Title message="Summary" /></div>
-    <div class="flex justify-start">
-      <Title message="Personal Info" />
+  <div>
+    <div
+      v-if="this.showLoading2"
+      class="flex justify-center justify-items-center mt-24"
+    >
+      <Spinner />
     </div>
-    <div class="flex flex-row">
-      <div :class="[this.profileInfo.name === null ? errorClass : activeClass]">
-        <label class="ml-8"> Full Name</label>
-        <h5 class="ml-8">
-          {{
-            this.profileInfo.name +
-              " " +
-              this.profileInfo.fatherName +
-              " " +
-              this.profileInfo.grandFatherName
-          }}
-        </h5>
+    <div v-if="this.show">
+      <div class="flex justify-center"><Title message="Summary" /></div>
+      <div class="flex justify-start">
+        <Title message="Personal Info" />
       </div>
-      <div
-        :class="[this.profileInfo.gender === null ? errorClass : activeClass]"
-      >
-        <label class="ml-8"> Gender</label>
-        <h5 class="ml-8">
-          {{ this.profileInfo.gender ? this.profileInfo["gender"] : "-" }}
-        </h5>
-      </div>
-      <div
-        :class="[
-          this.profileInfo.nationality === null ? errorClass : activeClass,
-        ]"
-      >
-        <label class="ml-8"> Nationality</label>
-        <h5 class="ml-8">
-          {{
-            this.profileInfo.nationality ? this.profileInfo.nationality : "-"
-          }}
-        </h5>
-      </div>
-      <div
-        :class="[
-          this.profileInfo.placeOfBirth === null ? errorClass : activeClass,
-        ]"
-      >
-        <label class="ml-8"> Place of Birth</label>
-        <h5 class="ml-8">
-          {{
-            this.profileInfo.placeOfBirth ? this.profileInfo.placeOfBirth : "-"
-          }}
-        </h5>
-      </div>
-      <div
-        :class="[
-          this.profileInfo.dateOfBirth === null ? errorClass : activeClass,
-        ]"
-      >
-        <label class="ml-8"> Date of Birth</label>
-        <h5 class="ml-8">
-          {{
-            this.profileInfo.dateOfBirth ? this.profileInfo.dateOfBirth : "-"
-          }}
-        </h5>
-      </div>
-      <div
-        :class="[
-          this.profileInfo.maritalStatus.name === null
-            ? errorClass
-            : activeClass,
-        ]"
-      >
-        <label class="ml-8"> Marital Status</label>
-        <h5 class="ml-8">
-          {{
-            this.profileInfo.maritalStatus.name
-              ? this.profileInfo.maritalStatus.name
-              : "-"
-          }}
-        </h5>
-      </div>
-    </div>
-
-    <div class="flex justify-start">
-      <Title message="Address" />
-    </div>
-    <div class="flex flex-row">
-      <div
-        :class="[
-          this.profileInfo.woreda.zone.region === null
-            ? errorClass
-            : activeClass,
-        ]"
-      >
-        <label class="ml-8"> Region</label>
-        <h5 class="ml-8">
-          {{
-            this.profileInfo.woreda.zone.region
-              ? this.profileInfo.woreda.zone.region.name
-              : "-"
-          }}
-        </h5>
-      </div>
-      <div
-        :class="[
-          this.profileInfo.woreda.zone === null ? errorClass : activeClass,
-        ]"
-      >
-        <label class="ml-8"> Zone</label>
-        <h5 class="ml-8">
-          {{
-            this.profileInfo.woreda.zone
-              ? this.profileInfo.woreda.zone.name
-              : "-"
-          }}
-        </h5>
-      </div>
-      <div
-        :class="[this.profileInfo.woreda === null ? errorClass : activeClass]"
-      >
-        <label class="ml-8"> Wereda</label>
-        <h5 class="ml-8">
-          {{ this.profileInfo.woreda ? this.profileInfo.woreda.name : "-" }}
-        </h5>
-      </div>
-      <div
-        :class="[this.profileInfo.kebele === null ? errorClass : activeClass]"
-      >
-        <label class="ml-8"> Kebele</label>
-        <h5 class="ml-8">
-          {{ this.profileInfo.kebele ? this.profileInfo.kebele : "-" }}
-        </h5>
-      </div>
-      <div
-        :class="[
-          this.profileInfo.houseNumber === null ? errorClass : activeClass,
-        ]"
-      >
-        <label class="ml-8"> House Number</label>
-        <h5 class="ml-8">
-          {{
-            this.profileInfo.houseNumber ? this.profileInfo.houseNumber : "-"
-          }}
-        </h5>
-      </div>
-      <div
-        :class="[
-          this.profileInfo.residence === null ? errorClass : activeClass,
-        ]"
-      >
-        <label class="ml-8"> Residence</label>
-        <h5 class="ml-8">
-          {{ this.profileInfo.residence ? this.profileInfo.residence : "-" }}
-        </h5>
-      </div>
-    </div>
-    <div class="flex justify-start">
-      <Title message="Contact" />
-    </div>
-    <div class="flex flex-row">
-      <div
-        :class="[
-          this.profileInfo.user.phoneNumber === null ? errorClass : activeClass,
-        ]"
-      >
-        <label class="ml-8"> Mobile Number</label>
-        <h5 class="ml-8">
-          {{
-            this.profileInfo.user.phoneNumber
-              ? this.profileInfo.user.phoneNumber
-              : "-"
-          }}
-        </h5>
+      <div class="flex flex-row">
+        <div
+          :class="[this.profileInfo.name === null ? errorClass : activeClass]"
+        >
+          <label class="ml-8"> Full Name</label>
+          <h5 class="ml-8">
+            {{
+              this.profileInfo.name +
+                " " +
+                this.profileInfo.fatherName +
+                " " +
+                this.profileInfo.grandFatherName
+            }}
+          </h5>
+        </div>
+        <div
+          :class="[this.profileInfo.gender === null ? errorClass : activeClass]"
+        >
+          <label class="ml-8"> Gender</label>
+          <h5 class="ml-8">
+            {{ this.profileInfo.gender ? this.profileInfo["gender"] : "-" }}
+          </h5>
+        </div>
+        <div
+          :class="[
+            this.profileInfo.nationality === null ? errorClass : activeClass,
+          ]"
+        >
+          <label class="ml-8"> Nationality</label>
+          <h5 class="ml-8">
+            {{
+              this.profileInfo.nationality ? this.profileInfo.nationality : "-"
+            }}
+          </h5>
+        </div>
+        <div
+          :class="[
+            this.profileInfo.placeOfBirth === null ? errorClass : activeClass,
+          ]"
+        >
+          <label class="ml-8"> Place of Birth</label>
+          <h5 class="ml-8">
+            {{
+              this.profileInfo.placeOfBirth
+                ? this.profileInfo.placeOfBirth
+                : "-"
+            }}
+          </h5>
+        </div>
+        <div
+          :class="[
+            this.profileInfo.dateOfBirth === null ? errorClass : activeClass,
+          ]"
+        >
+          <label class="ml-8"> Date of Birth</label>
+          <h5 class="ml-8">
+            {{
+              this.profileInfo.dateOfBirth ? this.profileInfo.dateOfBirth : "-"
+            }}
+          </h5>
+        </div>
+        <div
+          :class="[
+            this.profileInfo.maritalStatus.name === null
+              ? errorClass
+              : activeClass,
+          ]"
+        >
+          <label class="ml-8"> Marital Status</label>
+          <h5 class="ml-8">
+            {{
+              this.profileInfo.maritalStatus.name
+                ? this.profileInfo.maritalStatus.name
+                : "-"
+            }}
+          </h5>
+        </div>
       </div>
 
-      <div
-        :class="[
-          this.profileInfo.user.emailAddress === null
-            ? errorClass
-            : activeClass,
-        ]"
-      >
-        <label class="ml-8"> Email</label>
-        <h5 class="ml-8">
-          {{
-            this.profileInfo.user.emailAddress
-              ? this.profileInfo.user.emailAddress
-              : "-"
-          }}
-        </h5>
+      <div class="flex justify-start">
+        <Title message="Address" />
       </div>
-      <div
-        :class="[
-          this.profileInfo.userType.name === null ? errorClass : activeClass,
-        ]"
-      >
-        <label class="ml-8"> User Type</label>
-        <h5 class="ml-8">
-          {{
-            this.profileInfo.userType.name
-              ? this.profileInfo.userType.name
-              : "-"
-          }}
-        </h5>
+      <div class="flex flex-row">
+        <div
+          :class="[
+            this.profileInfo.woreda.zone.region === null
+              ? errorClass
+              : activeClass,
+          ]"
+        >
+          <label class="ml-8"> Region</label>
+          <h5 class="ml-8">
+            {{
+              this.profileInfo.woreda.zone.region
+                ? this.profileInfo.woreda.zone.region.name
+                : "-"
+            }}
+          </h5>
+        </div>
+        <div
+          :class="[
+            this.profileInfo.woreda.zone === null ? errorClass : activeClass,
+          ]"
+        >
+          <label class="ml-8"> Zone</label>
+          <h5 class="ml-8">
+            {{
+              this.profileInfo.woreda.zone
+                ? this.profileInfo.woreda.zone.name
+                : "-"
+            }}
+          </h5>
+        </div>
+        <div
+          :class="[this.profileInfo.woreda === null ? errorClass : activeClass]"
+        >
+          <label class="ml-8"> Wereda</label>
+          <h5 class="ml-8">
+            {{ this.profileInfo.woreda ? this.profileInfo.woreda.name : "-" }}
+          </h5>
+        </div>
+        <div
+          :class="[this.profileInfo.kebele === null ? errorClass : activeClass]"
+        >
+          <label class="ml-8"> Kebele</label>
+          <h5 class="ml-8">
+            {{ this.profileInfo.kebele ? this.profileInfo.kebele : "-" }}
+          </h5>
+        </div>
+        <div
+          :class="[
+            this.profileInfo.houseNumber === null ? errorClass : activeClass,
+          ]"
+        >
+          <label class="ml-8"> House Number</label>
+          <h5 class="ml-8">
+            {{
+              this.profileInfo.houseNumber ? this.profileInfo.houseNumber : "-"
+            }}
+          </h5>
+        </div>
+        <div
+          :class="[
+            this.profileInfo.residence === null ? errorClass : activeClass,
+          ]"
+        >
+          <label class="ml-8"> Residence</label>
+          <h5 class="ml-8">
+            {{ this.profileInfo.residence ? this.profileInfo.residence : "-" }}
+          </h5>
+        </div>
       </div>
-    </div>
-    <div class="flex justify-start">
-      <Title message="Institution" />
-    </div>
-    <div class="flex flex-row">
-      <div>
-        <label class="ml-8"> Institution Name</label>
-        <h5 class="ml-8">Hawassa University</h5>
+      <div class="flex justify-start">
+        <Title message="Contact" />
       </div>
-      <div>
-        <label class="ml-8"> Department</label>
-        <h5 class="ml-8">Electrical Engineering</h5>
+      <div class="flex flex-row">
+        <div
+          :class="[
+            this.profileInfo.user.phoneNumber === null
+              ? errorClass
+              : activeClass,
+          ]"
+        >
+          <label class="ml-8"> Mobile Number</label>
+          <h5 class="ml-8">
+            {{
+              this.profileInfo.user.phoneNumber
+                ? this.profileInfo.user.phoneNumber
+                : "-"
+            }}
+          </h5>
+        </div>
+
+        <div
+          :class="[
+            this.profileInfo.user.emailAddress === null
+              ? errorClass
+              : activeClass,
+          ]"
+        >
+          <label class="ml-8"> Email</label>
+          <h5 class="ml-8">
+            {{
+              this.profileInfo.user.emailAddress
+                ? this.profileInfo.user.emailAddress
+                : "-"
+            }}
+          </h5>
+        </div>
+        <div
+          :class="[
+            this.profileInfo.userType.name === null ? errorClass : activeClass,
+          ]"
+        >
+          <label class="ml-8"> User Type</label>
+          <h5 class="ml-8">
+            {{
+              this.profileInfo.userType.name
+                ? this.profileInfo.userType.name
+                : "-"
+            }}
+          </h5>
+        </div>
       </div>
-      <div>
-        <label class="ml-8"> Institution Type</label>
-        <h5 class="ml-8">Private</h5>
+      <div class="flex justify-start">
+        <Title message="Institution" />
       </div>
-    </div>
-    <!-- <div class="flex justify-start flex-wrap">
+      <div class="flex flex-row">
+        <div>
+          <label class="ml-8"> Institution Name</label>
+          <h5 class="ml-8">Hawassa University</h5>
+        </div>
+        <div>
+          <label class="ml-8"> Department</label>
+          <h5 class="ml-8">Electrical Engineering</h5>
+        </div>
+        <div>
+          <label class="ml-8"> Institution Type</label>
+          <h5 class="ml-8">Private</h5>
+        </div>
+      </div>
+      <!-- <div class="flex justify-start flex-wrap">
       <div v-for="file in docs" v-bind:key="file.name">
         <Title class="" :message="file.name" />
         <picture>
@@ -227,31 +240,38 @@
         </picture>
       </div>
     </div> -->
-    <div class="mt-12 flex justify-center">
-      <div>
-        <button @click="submitRequest(this.buttons[1].action)">
-          {{ this.buttons[1].name }}
+      <div class="mt-12 flex justify-center">
+        <div>
+          <button @click="submitRequest(this.buttons[1].action)">
+            {{ this.buttons[1].name }}
+          </button>
+        </div>
+      </div>
+      <div class="flex justify-center mt-8">
+        <h6>
+          If you don't have all the required informations you can come back and
+          finish later.
+        </h6>
+      </div>
+      <div class="flex justify-center mt-8 mb-8">
+        <button variant="outline" @click="saveDraft(this.buttons[0].action)">
+          {{ this.buttons[0].name }}
+        </button>
+        <button
+          v-if="this.buttons.length > 2"
+          @click="withdraw(this.buttons[2].action)"
+          variant="outline"
+        >
+          {{ this.buttons[2]["name"] }}
         </button>
       </div>
     </div>
-    <div class="flex justify-center mt-8">
-      <h6>
-        If you don't have all the required informations you can come back and
-        finish later.
-      </h6>
-    </div>
-    <div class="flex justify-center mt-8 mb-8">
-      <button variant="outline" @click="saveDraft(this.buttons[0].action)">
-        {{ this.buttons[0].name }}
-      </button>
-      <button
-        v-if="this.buttons.length > 2"
-        @click="withdraw(this.buttons[2].action)"
-        variant="outline"
-      >
-        {{ this.buttons[2]["name"] }}
-      </button>
-    </div>
+  </div>
+  <div
+    class="flex justify-center justify-items-center mt-8 mb-8"
+    v-if="showLoading"
+  >
+    <Spinner />
   </div>
   <div v-if="showFlash">
     <FlashMessage message="Operation Successful!" />
@@ -266,6 +286,7 @@ import Title from "@/sharedComponents/Title";
 import { mapGetters } from "vuex";
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
+import Spinner from "@/sharedComponents/Spinner";
 
 export default {
   props: ["activeState"],
@@ -273,6 +294,7 @@ export default {
     Title,
     FlashMessage,
     ErrorFlashMessage,
+    Spinner,
   },
   async created() {
     // this.userId = +localStorage.getItem("userId");
@@ -321,6 +343,8 @@ export default {
     errorClass: "text-danger",
     showFlash: false,
     showErrorFlash: false,
+    showLoading: false,
+    showLoading2: false,
     photo: "",
     passport: "",
     healthExamCert: "",
@@ -358,9 +382,13 @@ export default {
   },
   methods: {
     fetchProfileInfo() {
+      this.showLoading2 = true;
       this.$store.dispatch("newlicense/getProfile", this.userId).then((res) => {
-        this.profileInfo = res.data.data;
-        this.show = true;
+        setTimeout(() => {
+          this.profileInfo = res.data.data;
+          this.show = true;
+          this.showLoading2 = false;
+        }, 10000);
       });
     },
     setDocs() {
@@ -387,114 +415,131 @@ export default {
     },
 
     async submitRequest(act) {
-      if (this.draftId) {
-        // just send the draftdata with the action
-      } else {
-        let action = act;
-        this.showFlash = false;
-        this.showErrorFlash = false;
-        let formData = new FormData();
-        formData.append(this.documentTypes[0].documentType.code, this.photo);
-        formData.append(this.documentTypes[1].documentType.code, this.passport);
+      this.showLoading = true;
+      // if (this.draftId) {
+      // just send the draftdata with the action
+      // } else {
+      let action = act;
+      this.showFlash = false;
+      this.showErrorFlash = false;
+      let formData = new FormData();
+      formData.append(this.documentTypes[0].documentType.code, this.photo);
+      formData.append(this.documentTypes[1].documentType.code, this.passport);
+      formData.append(
+        this.documentTypes[2].documentType.code,
+        this.healthExamCert
+      );
+      formData.append(this.documentTypes[3].documentType.code, this.serviceFee);
+      formData.append(
+        this.documentTypes[4].documentType.code,
+        this.workExperience
+      );
+      formData.append(
+        this.documentTypes[5].documentType.code,
+        this.englishLanguage
+      );
+      if (this.professionalDoc != undefined) {
         formData.append(
-          this.documentTypes[2].documentType.code,
-          this.healthExamCert
+          this.documentTypes[6].documentType.code,
+          this.professionalDoc[0]
         );
         formData.append(
-          this.documentTypes[3].documentType.code,
-          this.serviceFee
+          this.documentTypes[7].documentType.code,
+          this.professionalDoc[1]
         );
         formData.append(
-          this.documentTypes[4].documentType.code,
-          this.workExperience
+          this.documentTypes[8].documentType.code,
+          this.professionalDoc[2]
         );
-        formData.append(
-          this.documentTypes[5].documentType.code,
-          this.englishLanguage
-        );
-        if (this.professionalDoc != undefined) {
-          formData.append(
-            this.documentTypes[6].documentType.code,
-            this.professionalDoc[0]
-          );
-          formData.append(
-            this.documentTypes[7].documentType.code,
-            this.professionalDoc[1]
-          );
-          formData.append(
-            this.documentTypes[8].documentType.code,
-            this.professionalDoc[2]
-          );
-        }
-
-        formData.append(this.documentTypes[9].documentType.code, this.coc);
-        if (this.educationalDocs != undefined) {
-          formData.append(
-            this.documentTypes[10].documentType.code,
-            this.educationalDocs[0]
-          );
-          formData.append(
-            this.documentTypes[11].documentType.code,
-            this.educationalDocs[1]
-          );
-          formData.append(
-            this.documentTypes[12].documentType.code,
-            this.educationalDocs[2]
-          );
-          formData.append(
-            this.documentTypes[13].documentType.code,
-            this.educationalDocs[3]
-          );
-          formData.append(
-            this.documentTypes[14].documentType.code,
-            this.educationalDocs[4]
-          );
-        }
-
-        formData.append(
-          this.documentTypes[15].documentType.code,
-          this.supportLetter
-        );
-
-        let license = {
-          action: action,
-          data: {
-            applicantId: this.userId,
-            applicantTypeId: this.applicantTypeId,
-            education: {
-              institutionId: this.education.departmentId,
-              departmentId: this.education.institutionId,
-            },
-          },
-        };
-        this.$store
-          .dispatch("newlicense/addNewLicense", license)
-          .then((res) => {
-            let licenseId = res.data.data.id;
-            let payload = { document: formData, id: licenseId };
-            this.$store
-              .dispatch("newlicense/uploadDocuments", payload)
-              .then((res) => {
-                if (res.data.status == "Success") {
-                  this.showFlash = true;
-                  setTimeout(() => {
-                    this.$router.push({ path: "/menu" });
-                  }, 3000);
-                } else {
-                  this.showErrorFlash = true;
-                }
-              })
-              .catch((err) => {
-                this.showErrorFlash = true;
-              });
-          });
       }
+
+      formData.append(this.documentTypes[9].documentType.code, this.coc);
+      if (this.educationalDocs != undefined) {
+        formData.append(
+          this.documentTypes[10].documentType.code,
+          this.educationalDocs[0]
+        );
+        formData.append(
+          this.documentTypes[11].documentType.code,
+          this.educationalDocs[1]
+        );
+        formData.append(
+          this.documentTypes[12].documentType.code,
+          this.educationalDocs[2]
+        );
+        formData.append(
+          this.documentTypes[13].documentType.code,
+          this.educationalDocs[3]
+        );
+        formData.append(
+          this.documentTypes[14].documentType.code,
+          this.educationalDocs[4]
+        );
+      }
+
+      formData.append(
+        this.documentTypes[15].documentType.code,
+        this.supportLetter
+      );
+
+      let license = {
+        action: action,
+        data: {
+          applicantId: this.userId,
+          applicantTypeId: this.applicantTypeId,
+          education: {
+            institutionId: this.education.departmentId,
+            departmentId: this.education.institutionId,
+          },
+        },
+      };
+      this.$store.dispatch("newlicense/addNewLicense", license).then((res) => {
+        let licenseId = res.data.data.id;
+        let payload = { document: formData, id: licenseId };
+        this.$store
+          .dispatch("newlicense/uploadDocuments", payload)
+          .then((res) => {
+            this.showLoading = false;
+            if (res.data.status == "Success") {
+              console.log(res);
+              console.log(res.data);
+              this.showFlash = true;
+              setTimeout(() => {
+                this.$router.push({ path: "/menu" });
+              }, 3000);
+            } else {
+              this.showErrorFlash = true;
+            }
+          })
+          .catch((err) => {
+            this.showErrorFlash = true;
+          });
+      });
+      // }
     },
 
     async saveDraft(act) {
+      this.showLoading = true;
       let action = act;
       if (this.draftId) {
-        //just send the draftdata with the incoming action
+        let draftObj = {
+          action: action,
+          data: this.getDraftData,
+        };
+        let payload = {
+          licenseId: this.getDraftData.id,
+          draftData: draftObj,
+        };
+        this.$store.dispatch("newlicense/updateDraft", payload).then((res) => {
+          if (res.data.status == "Success") {
+            this.showFlash = true;
+            setTimeout(() => {}, 3000);
+            this.$router.push({ path: "/menu" });
+            this.showLoading = false;
+          } else {
+            this.showErrorFlash = true;
+          }
+        });
       } else {
         this.showFlash = false;
         this.showErrorFlash = false;
@@ -581,11 +626,13 @@ export default {
             this.$store
               .dispatch("newlicense/uploadDocuments", payload)
               .then((res) => {
-                if (res.data.status == "Success") {
+                if (res) {
                   this.showFlash = true;
-                  setTimeout(() => {
-                    this.$router.push({ path: "/menu" });
-                  }, 3000);
+                  this.showLoading = false;
+                  this.$router.push({ path: "/menu" });
+                  setTimeout(() => {}, 2000);
+                } else {
+                  this.showErrorFlash = true;
                 }
               })
               .catch((err) => {
@@ -595,6 +642,7 @@ export default {
       }
     },
     withdraw(action) {
+      this.showLoading = true;
       let withdrawObj = {
         action: action,
         data: this.getDraft,
@@ -604,11 +652,11 @@ export default {
         withdrawData: withdrawObj,
       };
       this.$store.dispatch("newlicense/withdraw", payload).then((res) => {
-        if (res.data.status == "Success") {
+        if (res) {
           this.showFlash = true;
-          setTimeout(() => {
-            this.$router.push({ path: "/menu" });
-          }, 3000);
+          this.showLoading = false;
+          setTimeout(() => {}, 2000);
+          this.$router.push({ path: "/menu" });
         } else {
           this.showErrorFlash = true;
         }

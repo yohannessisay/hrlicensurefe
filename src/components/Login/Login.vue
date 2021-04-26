@@ -54,7 +54,14 @@
       >
         Forgot password?
       </a>
-      <button click="submit()" class="mt-medium">Login</button>
+      <button click="submit()" class="mt-medium">
+        Login
+      </button>
+      <Spinner
+        v-if="message.showLoading"
+        class="mt-4 mb-4"
+        style="width:20px; height:20px"
+      />
       <a
         class="text-base text-primary-500 hover:underline cursor-pointer"
         @click="redirectToSignup"
@@ -76,14 +83,17 @@ import { ref, reactive } from "vue";
 import { useRouter } from "vue-router";
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
+import Spinner from "@/sharedComponents/Spinner";
 export default {
-  components: { Title, FlashMessage, ErrorFlashMessage },
+  components: { Title, FlashMessage, ErrorFlashMessage, Spinner },
   setup() {
     const store = useStore();
     const router = useRouter();
+
     let message = ref({
       showFlash: false,
       showErrorFlash: false,
+      showLoading: false,
     });
 
     const credentials = ref({
@@ -100,25 +110,35 @@ export default {
       let email = {
         emailAddress: credentials.value.emailAddress,
       };
+      message.value.showLoading = true;
+      message.value.showFlash = false;
+      message.value.showErrorFlash = false;
       store.dispatch("user/login", email).then((res) => {
         if (res.data.status == "Success") {
           const userId = res.data.data.id;
-          store.dispatch("profile/getProfileById", userId).then(res => {
+          store.dispatch("profile/getProfileById", userId).then((res) => {
             const getProfiles = res.data ? res.data.data : null;
-            message.value.showFlash = !message.value.showFlash;
-
             if (getProfiles) {
+              message.value.showLoading = false;
+              message.value.showFlash = true;
+              message.value.showErrorFlash = false;
               setTimeout(() => {
                 router.push({ path: "/menu" });
               }, 3000);
             } else {
+              message.value.showLoading = false;
+              message.value.showFlash = true;
+              message.value.showErrorFlash = false;
               setTimeout(() => {
                 router.push({ path: "/addProfile" });
               }, 3000);
             }
           });
         } else {
-          message.value.showErrorFlash = !message.value.showErrorFlash;
+          message.value.showLoading = false;
+          message.value.showFlash = false;
+          message.value.showErrorFlash = true;
+
           setTimeout(() => {}, 3000);
         }
       });

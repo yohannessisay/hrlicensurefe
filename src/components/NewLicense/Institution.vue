@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-center">
+  <div class="flex justify-center items">
     <div class="w-screen max-w-4xl">
       <div
         class="flex flex-col pt-large w-full bg-white blue-box-shadow-light rounded"
@@ -12,7 +12,7 @@
         </div>
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-10">
           <div class="flex">
-            <div class="flex flex-col mb-medium w-1/2 mr-12">
+            <div class="flex flex-col mb-medium w-2/5 mr-12">
               <label class="text-primary-700">Applicant Type</label>
               <select class="max-w-3xl" v-model="licenseInfo.applicantTypeId">
                 <option
@@ -24,7 +24,7 @@
                 </option>
               </select>
             </div>
-            <div class="flex flex-col mb-medium w-1/2 mr-12">
+            <div class="flex flex-col mb-medium w-2/5 mr-12">
               <label class="text-primary-700">Department</label>
               <select
                 class="max-w-3xl"
@@ -41,20 +41,19 @@
             </div>
           </div>
 
-          <div class="flex flex-col mb-medium w-1/2 mr-12">
-            <label class="text-primary-700">Institution</label>
-            <select
-              class="max-w-3xl"
-              v-model="licenseInfo.education.institutionId"
-            >
-              <option
-                v-for="institution in institutions"
-                v-bind:key="institution.name"
-                v-bind:value="institution.id"
-              >
-                {{ institution.name }}
-              </option>
-            </select>
+          <div class="flex">
+            <div class="flex flex-col mb-medium w-2/5 mr-12">
+              <label class="text-primary-700">Institution</label>
+              <select v-model="licenseInfo.education.institutionId">
+                <option
+                  v-for="institution in institutions"
+                  v-bind:key="institution.name"
+                  v-bind:value="institution.id"
+                >
+                  {{ institution.name }}
+                </option>
+              </select>
+            </div>
           </div>
         </form>
         <div v-if="this.showButtons" class="flex justify-center mb-8">
@@ -72,27 +71,44 @@
             {{ this.buttons[2]["name"] }}
           </button>
         </div>
+        <div>
+          <Spinner v-if="showLoading" />
+        </div>
       </div>
     </div>
+  </div>
+  <div class="mr-3xl" v-if="showFlash">
+    <FlashMessage message="Login Successful!" />
+  </div>
+  <div v-if="showErrorFlash">
+    <ErrorFlashMessage message="Login Failed!" />
   </div>
 </template>
 
 <script>
 import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
 import { mapGetters, mapActions } from "vuex";
-
+import FlashMessage from "@/sharedComponents/FlashMessage";
+import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
+import Spinner from "@/sharedComponents/Spinner";
 export default {
   props: ["activeState"],
-
-  components: { TitleWithIllustration },
+  components: {
+    TitleWithIllustration,
+    FlashMessage,
+    ErrorFlashMessage,
+    Spinner,
+  },
 
   async created() {
     this.fetchApplicantType();
     this.fetchInstitutions();
     this.fetchDepartments();
+    this.showLoading = true;
     setTimeout(() => {
       this.buttons = this.getButtons;
       this.showButtons = true;
+      this.showLoading = false;
     }, 5000);
     this.draftId = this.$route.params.id;
     if (this.draftId != undefined) {
@@ -101,7 +117,6 @@ export default {
       }, 5000);
     }
   },
-
   computed: {
     ...mapGetters({
       getButtons: "newlicense/getButtons",
@@ -122,6 +137,9 @@ export default {
     departments: [],
     buttons: [],
     showButtons: false,
+    showFlash: false,
+    showErrorFlash: false,
+    showLoading: false,
   }),
 
   methods: {
@@ -148,7 +166,7 @@ export default {
         withdrawData: withdrawObj,
       };
       this.$store.dispatch("newlicense/withdraw", payload).then((res) => {
-         if (res.data.status == "Success") {
+        if (res.data.status == "Success") {
           this.showFlash = true;
           setTimeout(() => {
             this.$router.push({ path: "/menu" });

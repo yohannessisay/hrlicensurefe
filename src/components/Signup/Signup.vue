@@ -51,6 +51,11 @@
       <button click="submit()">
         Sign up
       </button>
+      <Spinner
+        v-if="message.showLoading"
+        class="mt-4 mb-4"
+        style="width:20px; height:20px"
+      />
       <a
         class="text-base text-primary-500 hover:underline cursor-pointer"
         @click="$emit('redirectToLogin')"
@@ -72,9 +77,10 @@ import Title from "@/sharedComponents/Title";
 import { useRouter } from "vue-router";
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
+import Spinner from "@/sharedComponents/Spinner";
 
 export default {
-  components: { Title, FlashMessage, ErrorFlashMessage },
+  components: { Title, FlashMessage, ErrorFlashMessage, Spinner },
 
   setup() {
     const store = useStore();
@@ -82,6 +88,7 @@ export default {
     let message = ref({
       showFlash: false,
       showErrorFlash: false,
+      showLoading: false,
     });
 
     const credentials = ref({
@@ -99,17 +106,23 @@ export default {
         emailAddress: credentials.value.emailAddress,
         phoneNumber: credentials.value.phoneNumber,
       };
+      message.value.showLoading = true;
+      message.value.showFlash = false;
+      message.value.showErrorFlash = false;
       store.dispatch("user/signUp", signup).then((res) => {
         if (res.data.status == "Success") {
-          message.value.showFlash = !message.value.showFlash;
+          message.value.showLoading = false;
+          message.value.showFlash = true;
+          message.value.showErrorFlash = false;
 
           setTimeout(() => {
             router.push({ path: "/landing" });
           }, 3000);
         } else {
-          message.value.showErrorFlash = !message.value.showErrorFlash;
-          setTimeout(() => {
-          }, 3000);
+          message.value.showLoading = false;
+          message.value.showFlash = false;
+          message.value.showErrorFlash = true;
+          setTimeout(() => {}, 3000);
         }
       });
     };

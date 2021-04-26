@@ -1,28 +1,35 @@
-import axios from "axios";
 import ApiService from "../../../services/api.service";
 import {
-  SET_RENEWAL,
+  SET_LICENSE,
   SET_RENEWAL_PHOTO,
-  SET_RENEWAL_PASSPORT,
   SET_RENEWAL_HEALTH_EXAM_CERT,
+  SET_RENEWAL_LETTER,
+  SET_RENEWAL_WORK_EXPERIENCE,
   SET_RENEWAL_SERVICE_FEE,
   SET_RENEWAL_CPD,
-  SET_RENEWAL_WORK_EXPERIENCE,
-  SET_DOCS
+  SET_PREVIOUS_LICEENSE,
+  SET_BUTTONS,
+  SET_APPLICATION_ID,
+  SET_DOCUMENT_SPEC,
+  SET_DRAFT,
 } from "./mutation-types";
 
+const url = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api/";
+const userId = localStorage.getItem("userId");
+
 export default {
-  setRenewal({ commit }, renewalLicense) {
-    commit(SET_RENEWAL, renewalLicense);
+  setLicense({ commit }, license) {
+    commit(SET_LICENSE, license);
   },
   setRenewalPhoto({ commit }, renewalPhoto) {
     commit(SET_RENEWAL_PHOTO, renewalPhoto);
   },
-  setRenewalPassport({ commit }, renewalPassport) {
-    commit(SET_RENEWAL_PASSPORT, renewalPassport);
-  },
+
   setRenewalHealthExamCert({ commit }, renewalHealthExamCert) {
     commit(SET_RENEWAL_HEALTH_EXAM_CERT, renewalHealthExamCert);
+  },
+  setRenewalLetter({ commit }, renewalLetter) {
+    commit(SET_RENEWAL_LETTER, renewalLetter);
   },
   setRenewalServiceFee({ commit }, renewalServiceFee) {
     commit(SET_RENEWAL_SERVICE_FEE, renewalServiceFee);
@@ -33,84 +40,143 @@ export default {
   setRenewalWorkExperience({ commit }, renewalWorkExperience) {
     commit(SET_RENEWAL_WORK_EXPERIENCE, renewalWorkExperience);
   },
-  setDocs({ commit }, docs) {
-    commit(SET_DOCS, docs);
+  setPreviousLicense({ commit }, license) {
+    commit(SET_PREVIOUS_LICEENSE, license);
   },
-  // async uploadRenewalDocs(docFormData) {
-  //   const resp = {};
-  //   try {
-  //     this.resp = await axios.post(
-  //       "http://localhost:5000/api/documentUploads/renewal/RA",
-  //       docFormData,
-  //       {
-  //         headers: {
-  //           "Content-Type": "multipart/form-data",
-  //         }
-  //       }
-  //     );
-  //   } catch (error) {
-  //     this.resp = error;
-  //   }
-  //   return resp;
-  // },
-  // setActiveState({ commit }, state) {
-  //   console.log(state);
-  //   commit(SET_ACTIVE_STATE, state);
-  // },
-  // async newLicense({ commit }, license) {
-  //   try {
-  //     const rep = await axios.post(
-  //       "https://ca9dee52bc55.ngrok.io/api/newLicenses/add",
-  //       license
-  //     );
-  //   } catch (error) {
-  //     const resp = error;
-  //   }
-  //   return resp;
-  // },
-  // async getUserType() {
-  //   try {
-  //     const resp = await ApiService.get("/api/lookups/userTypes");
-  //   } catch (error) {
-  //     const resp = error;
-  //   }
-  //   return resp;
-  // },
-  // async getInstitutionType() {
-  //   try {
-  //     const resp = await axios.post(
-  //       "https://ca9dee52bc55.ngrok.io/api/newLicenses/add",
-  //       profile
-  //     );
-  //   } catch (error) {
-  //     const resp = error;
-  //   }
-  // },
-  async getInstitutions() {
+  setButtons({ commit }, buttons) {
+    commit(SET_BUTTONS, buttons);
+  },
+  setApplicationId({ commit }, id) {
+    commit(SET_APPLICATION_ID, id);
+  },
+  setDocumentSpecs({ commit }, documentSpecs) {
+    commit(SET_DOCUMENT_SPEC, documentSpecs);
+  },
+  setDraft({ commit }, draft) {
+    commit(SET_DRAFT, draft);
+  },
+  async addRenewalLicense({ commit }, license) {
     try {
-      const resp = await ApiService.get("http://localhost:5000/api/lookups/institutionTypes");
+      const resp = await ApiService.post(url + "renewals/add", license);
       return resp;
     } catch (error) {
-      const resp = error;
-      return resp;
+      return error;
     }
   },
+  async uploadDocuments({ commit }, documents) {
+    try {
+      const resp = await ApiService.post(
+        url + "documentUploads/licenseDocument/" + documents.id,
+        documents.document,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+
   async getApplicantType() {
     try {
-      const resp = await ApiService.get("http://localhost:5000/api/lookups/applicantTypes");
+      const resp = await ApiService.get(url + "lookups/applicantTypes");
       return resp;
     } catch (error) {
-      const resp = error;
-      return resp;
+      return error;
     }
   },
-  async getDepartments() {
+  async getInstitution() {
     try {
-      const resp = await ApiService.get("http://localhost:5000/api/lookups/departments");
+      const resp = await ApiService.get(url + "lookups/institutions");
       return resp;
     } catch (error) {
-      const resp = error;
-      return resp;
+      return error;
     }
-  }
+  },
+  async getDepartmentType() {
+    try {
+      const resp = await ApiService.get(url + "lookups/departments");
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+  async getProfile(id) {
+    try {
+      const resp = await ApiService.get(url + "profiles/1");
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+  async getApplicationStatuses() {
+    try {
+      const resp = await ApiService.get(url + "applicationStatuses");
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+  async getApplicationCategories() {
+    try {
+      const resp = await ApiService.get(url + "applicationCategories");
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+  async getDocumentSpecs({ commit }, id) {
+    try {
+      const resp = await ApiService.get(url + "documentSpecs/" + id);
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+
+  async getRenewalLicense({ commit }) {
+    try {
+      // const resp = await ApiService.get(url + "newLicenses/user/" + userId);
+      const resp = await ApiService.get(
+        "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api/renewals/user/1"
+      );
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+  async getDraft({ commit }, id) {
+    try {
+      const resp = await ApiService.get(url + "renewals/" + id);
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+
+  async withdraw({ commit }, payload) {
+    try {
+      const resp = await ApiService.put(
+        url + "renewals/" + payload.licenseId,
+        payload.withdrawData
+      );
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+  async updateDraft({ commit }, payload) {
+    try {
+      const resp = await ApiService.put(
+        url + "renewals/" + payload.licenseId,
+        payload.draftData
+      );
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
 };

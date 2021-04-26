@@ -211,10 +211,13 @@
             {{ this.buttons[2]["name"] }}
           </button>
         </div>
+        <div v-if="showLoading">
+          <Spinner />
+        </div>
       </div>
     </div>
   </div>
-  <div v-if="showFlash">
+  <div class="mr-3xl" v-if="showFlash">
     <FlashMessage message="Operation Successful!" />
   </div>
   <div v-if="showErrorFlash">
@@ -227,13 +230,20 @@ import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
 import { mapGetters, mapActions } from "vuex";
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
+import Spinner from "@/sharedComponents/Spinner";
 
 export default {
-  components: { TitleWithIllustration, FlashMessage, ErrorFlashMessage },
+  components: {
+    TitleWithIllustration,
+    FlashMessage,
+    ErrorFlashMessage,
+    Spinner,
+  },
   props: ["activeState"],
   data() {
     return {
       basePath: "https://hrlicensurebe.dev.k8s.sandboxaddis.com/",
+      dataChanged: false,
       showFlash: false,
       showErrorFlash: false,
       certificateFile1: "",
@@ -284,6 +294,10 @@ export default {
 
       draftId: "",
       draftData: "",
+
+      showFlash: false,
+      showErrorFlash: false,
+      showLoading: false,
     };
   },
   computed: {
@@ -542,6 +556,7 @@ export default {
       this.$store.dispatch("newlicense/setEducationalDocument", file);
     },
     draft(action) {
+      this.showLoading = true;
       if (this.draftId) {
         if (
           this.certificateFile1 ||
@@ -552,7 +567,26 @@ export default {
         ) {
           // modify the drafData before dispatching
         } else {
-          // just send the draftData
+          let draftObj = {
+            action: action,
+            data: this.getDraftData,
+          };
+          let payload = {
+            licenseId: this.getDraftData.id,
+            draftData: draftObj,
+          };
+          this.$store
+            .dispatch("newlicense/updateDraft", payload)
+            .then((res) => {
+              if (res.data.status == "Success") {
+                this.showFlash = true;
+                setTimeout(() => {}, 3000);
+                this.$router.push({ path: "/menu" });
+                this.showLoading = false;
+              } else {
+                this.showErrorFlash = true;
+              }
+            });
         }
       } else {
         let license = {
@@ -642,11 +676,11 @@ export default {
             this.$store
               .dispatch("newlicense/uploadDocuments", payload)
               .then((res) => {
-                if (res.data.status == "Success") {
+                if (res) {
                   this.showFlash = true;
-                  setTimeout(() => {
-                    this.$router.push({ path: "/menu" });
-                  }, 3000);
+                  this.showLoading = false;
+                  this.$router.push({ path: "/menu" });
+                  setTimeout(() => {}, 2000);
                 } else {
                   this.showErrorFlash = true;
                 }
@@ -656,6 +690,7 @@ export default {
       }
     },
     withdraw(action) {
+      this.showLoading = true;
       let withdrawObj = {
         action: action,
         data: this.getDraftData,
@@ -665,11 +700,11 @@ export default {
         withdrawData: withdrawObj,
       };
       this.$store.dispatch("newlicense/withdraw", payload).then((res) => {
-        if (res.data.status == "Success") {
+        if (res) {
           this.showFlash = true;
-          setTimeout(() => {
-            this.$router.push({ path: "/menu" });
-          }, 3000);
+          this.showLoading = false;
+          setTimeout(() => {}, 2000);
+          this.$router.push({ path: "/menu" });
         } else {
           this.showErrorFlash = true;
         }

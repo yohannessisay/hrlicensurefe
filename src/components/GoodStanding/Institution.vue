@@ -41,22 +41,23 @@
             </div>
           </div>
 
-          <div class="flex">
-            <div class="flex flex-col mb-medium w-2/5 mr-12">
-              <label class="text-primary-700">Institution</label>
-              <select v-model="licenseInfo.education.institutionId">
-                <option
-                  v-for="institution in institutions"
-                  v-bind:key="institution.name"
-                  v-bind:value="institution.id"
-                >
-                  {{ institution.name }}
-                </option>
-              </select>
-            </div>
+          <div class="flex flex-col mb-medium w-2/5 mr-12">
+            <label class="text-primary-700">Institution</label>
+            <select
+              class="max-w-3xl"
+              v-model="licenseInfo.education.institutionId"
+            >
+              <option
+                v-for="institution in institutions"
+                v-bind:key="institution.name"
+                v-bind:value="institution.id"
+              >
+                {{ institution.name }}
+              </option>
+            </select>
           </div>
         </form>
-        <div v-if="this.showButtons" class="flex justify-center mb-8">
+        <div class="flex justify-center mb-8">
           <button @click="submit">
             Next
           </button>
@@ -78,10 +79,10 @@
     </div>
   </div>
   <div class="mr-3xl" v-if="showFlash">
-    <FlashMessage message="Operation Successful!" />
+    <FlashMessage message="Login Successful!" />
   </div>
   <div v-if="showErrorFlash">
-    <ErrorFlashMessage message="Operation Failed!" />
+    <ErrorFlashMessage message="Login Failed!" />
   </div>
 </template>
 
@@ -122,8 +123,8 @@ export default {
 
   computed: {
     ...mapGetters({
-      getButtons: "renewal/getButtons",
-      getDraft: "renewal/getDraft",
+      getButtons: "goodstanding/getButtons",
+      getDraft: "goodstanding/getDraft",
     }),
   },
   data: () => ({
@@ -168,7 +169,7 @@ export default {
         licenseId: this.getDraft.id,
         withdrawData: withdrawObj,
       };
-      this.$store.dispatch("renewal/withdraw", payload).then((res) => {
+      this.$store.dispatch("goodstanding/withdraw", payload).then((res) => {
         if (res.data.status == "Success") {
           this.showFlash = true;
           setTimeout(() => {
@@ -190,10 +191,10 @@ export default {
         },
       };
       this.$emit("applicantTypeValue", this.licenseInfo.applicantTypeId);
-      this.$store.dispatch("renewal/setLicense", license);
+      this.$store.dispatch("goodstanding/setLicense", license);
     },
     fetchApplicantType() {
-      this.$store.dispatch("renewal/getApplicantType").then((res) => {
+      this.$store.dispatch("goodstanding/getApplicantType").then((res) => {
         if (res.data.status == "Success") {
           const results = res.data.data;
           this.applicantTypes = results;
@@ -202,7 +203,7 @@ export default {
       });
     },
     fetchInstitutions() {
-      this.$store.dispatch("renewal/getInstitution").then((res) => {
+      this.$store.dispatch("goodstanding/getInstitution").then((res) => {
         if (res.data.status == "Success") {
           const results = res.data.data;
           this.institutions = results;
@@ -211,7 +212,7 @@ export default {
       });
     },
     fetchDepartments() {
-      this.$store.dispatch("renewal/getDepartmentType").then((res) => {
+      this.$store.dispatch("goodstanding/getDepartmentType").then((res) => {
         if (res.data.status == "Success") {
           const results = res.data.data;
           this.departments = results;

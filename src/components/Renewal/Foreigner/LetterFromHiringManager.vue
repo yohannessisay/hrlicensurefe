@@ -5,12 +5,12 @@
         class="flex flex-col pt-large w-full bg-white blue-box-shadow-light rounded "
       >
         <TitleWithIllustration
-          illustration="User"
-          message="English Language Proficiency Certificate"
+          illustration="Certificate"
+          message="Letter from Hiring Institution"
           class="mt-8"
         />
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
-          <div class="flex justify-center">
+          <div class="flex justify-center mb-10">
             <div>
               <span v-if="showUpload">
                 <label class="text-primary-700"
@@ -18,9 +18,9 @@
                   <div class="dropbox">
                     <input
                       type="file"
-                      id="languageFile"
+                      id="letterFile"
                       class="photoFile"
-                      ref="languageFileP"
+                      ref="letterFileP"
                       v-on:change="handleFileUpload()"
                       style="margin-bottom: 15px !important;"
                     />
@@ -88,17 +88,19 @@ import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import Spinner from "@/sharedComponents/Spinner";
 
 export default {
+  props: ["activeState"],
   components: {
     TitleWithIllustration,
     FlashMessage,
     ErrorFlashMessage,
     Spinner,
   },
-  props: ["activeState"],
+
   setup(props, { emit }) {
     const store = useStore();
     const route = useRoute();
     const router = useRouter();
+
     const basePath = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/";
 
     let message = ref({
@@ -107,43 +109,38 @@ export default {
       showLoading: false,
     });
     let dataChanged = ref(false);
-    let languageFile = ref("");
-    let languageFileP = ref("");
+    let letterFile = ref("");
+    let letterFileP = ref("");
     let showPreview = ref(false);
     let filePreview = ref("");
     let showUpload = ref(true);
-    let isImage = ref(false);
+    let isImage = ref(true);
+
     let buttons = [];
     let documentSpecs = ref([]);
     let userId = localStorage.getItem("userId");
     let licenseInfo = ref("");
     let draftData = ref("");
 
-    let photo = ref("");
-    let passport = ref("");
-    let healthExamCert = ref("");
-    let professionalDoc = ref([]);
-    let herqa = ref("");
-    let supportLetter = ref("");
-    let coc = ref("");
-    let educationDoc = ref([]);
     let workExperience = ref("");
+    let renewalPhoto = ref("");
+    let healthExamCert = ref("");
     let serviceFee = ref("");
+    let cpd = ref("");
+    let previousLicense = ref("");
 
     const reset = () => {
       showUpload.value = true;
       showPreview.value = false;
-      languageFile.value = "";
+      letterFile.value = "";
       filePreview.value = "";
       isImage.value = true;
     };
-
     const handleFileUpload = () => {
       dataChanged.value = true;
       showUpload.value = false;
-      languageFile.value = languageFileP.value.files[0];
+      letterFile.value = letterFileP.value.files[0];
       let reader = new FileReader();
-      isImage.value = true;
 
       reader.addEventListener(
         "load",
@@ -154,94 +151,69 @@ export default {
         false
       );
 
-      if (languageFile.value) {
-        if (/\.(jpe?g|png|gif)$/i.test(languageFile.value.name)) {
+      if (letterFile.value) {
+        if (/\.(jpe?g|png|gif)$/i.test(letterFile.value.name)) {
           isImage.value = true;
-          reader.readAsDataURL(languageFile.value);
-        } else if (/\.(pdf)$/i.test(languageFile.value.name)) {
+          reader.readAsDataURL(letterFile.value);
+        } else if (/\.(pdf)$/i.test(letterFile.value.name)) {
           isImage.value = false;
-          reader.readAsText(languageFile.value);
+          reader.readAsText(letterFile.value);
         }
       }
     };
+    buttons = store.getters["renewal/getButtons"];
+    documentSpecs = store.getters["renewal/getDocumentSpec"];
+    licenseInfo = store.getters["renewal/getLicense"];
+
+    renewalPhoto = store.getters["renewal/getRenewalPhoto"];
+    healthExamCert = store.getters["renewal/getRenewalHealthExamCert"];
+    workExperience = store.getters["renewal/getRenewalWorkExperience"];
+    serviceFee = store.getters["renewal/getRenewalServiceFee"];
+    cpd = store.getters["renewal/getRenewalCpd"];
+    previousLicense = store.getters["renewal/getPreviousLicense"];
+
     const submit = () => {
       emit("changeActiveState");
-      store.dispatch("newlicense/setLanguage", languageFile);
+      store.dispatch("renewal/setRenewalLetter", letterFile);
     };
-    buttons = store.getters["newlicense/getButtons"];
-    documentSpecs = store.getters["newlicense/getDocumentSpec"];
-    licenseInfo = store.getters["newlicense/getLicense"];
 
-    photo = store.getters["newlicense/getPhoto"];
-    passport = store.getters["newlicense/getPassport"];
-    healthExamCert = store.getters["newlicense/getHealthExamCert"];
-    professionalDoc = store.getters["newlicense/getProfessionalDocuments"];
-    herqa = store.getters["newlicense/getHerqa"];
-    supportLetter = store.getters["newlicense/getSupportLetter"];
-    coc = store.getters["newlicense/getCoc"];
-    educationDoc = store.getters["newlicense/getEducationalDocuments"];
-    workExperience = store.getters["newlicense/getWorkExperience"];
-    serviceFee = store.getters["newlicense/getServiceFee"];
-
+    onMounted(() => {
+      buttons = store.getters["renewal/getButtons"];
+      draftData = store.getters["renewal/getDraft"];
+      if (route.params.id) {
+        for (let i = 0; i < draftData.documents.length; i++) {
+          if (draftData.documents[i].documentTypeCode == "LHI") {
+            showUpload.value = false;
+            isImage.value = true;
+            healthExamFile.value = draftData.documents[i];
+            showPreview.value = true;
+            filePreview.value = basePath + draftData.documents[i].filePath;
+          }
+        }
+      }
+    });
     const draft = (action) => {
       message.value.showLoading = true;
       if (route.params.id) {
         if (dataChanged.value) {
-          formData.append(documentSpecs[0].documentType.code, photo);
-          formData.append(documentSpecs[1].documentType.code, passport);
+          let formData = new FormData();
+          formData.append(documentSpecs[0].documentType.code, renewalPhoto);
+          formData.append(documentSpecs[1].documentType.code, letterFile);
           formData.append(documentSpecs[2].documentType.code, healthExamCert);
           formData.append(documentSpecs[3].documentType.code, serviceFee);
-          formData.append(documentSpecs[4].documentType.code, workExperience);
-          formData.append(documentSpecs[5].documentType.code, languageFile);
-          if (professionalDoc != undefined) {
-            formData.append(
-              documentSpecs[6].documentType.code,
-              professionalDoc[0]
-            );
-            formData.append(
-              documentSpecs[7].documentType.code,
-              professionalDoc[1]
-            );
-            formData.append(
-              documentSpecs[8].documentType.code,
-              professionalDoc[2]
-            );
-          }
-          formData.append(documentSpecs[9].documentType.code, coc);
-          if (educationDoc != undefined) {
-            formData.append(
-              documentSpecs[10].documentType.code,
-              educationDoc[0]
-            );
-            formData.append(
-              documentSpecs[11].documentType.code,
-              educationDoc[1]
-            );
-            formData.append(
-              documentSpecs[12].documentType.code,
-              educationDoc[2]
-            );
-            formData.append(
-              documentSpecs[13].documentType.code,
-              educationDoc[3]
-            );
-            formData.append(
-              documentSpecs[14].documentType.code,
-              educationDoc[4]
-            );
-          }
-          formData.append(documentSpecs[15].documentType.code, supportLetter);
-          formData.append(documentSpecs[16].documentType.code, herqa);
+          formData.append(documentSpecs[4].documentType.code, cpd);
+          formData.append(documentSpecs[5].documentType.code, workExperience);
+          formData.append(documentSpecs[6].documentType.code, previousLicense);
 
           let payload = { document: formData, id: draftData.id };
           store
-            .dispatch("newlicense/uploadDocuments", payload)
+            .dispatch("renewal/uploadDocuments", payload)
             .then((res) => {
               if (res.status == 200) {
                 message.value.showFlash = !message.value.showFlash;
+                message.value.showLoading = !message.value.showLoading;
                 setTimeout(() => {}, 3000);
                 router.push({ path: "/menu" });
-                message.value.showLoading = false;
               } else {
                 message.value.showErrorFlash = !message.value.showErrorFlash;
               }
@@ -257,7 +229,7 @@ export default {
             draftData: draftObj,
           };
           message.value.showLoading = true;
-          store.dispatch("newlicense/updateDraft", payload).then((res) => {
+          store.dispatch("renewal/updateDraft", payload).then((res) => {
             if (res.data.status == "Success") {
               message.value.showFlash = !message.value.showFlash;
               setTimeout(() => {}, 2200);
@@ -280,58 +252,20 @@ export default {
             },
           },
         };
-        store.dispatch("newlicense/addNewLicense", license).then((res) => {
+        store.dispatch("renewal/addRenewalLicense", license).then((res) => {
           let licenseId = res.data.data.id;
           let formData = new FormData();
-          formData.append(documentSpecs[0].documentType.code, photo);
-          formData.append(documentSpecs[1].documentType.code, passport);
+          formData.append(documentSpecs[0].documentType.code, renewalPhoto);
+          formData.append(documentSpecs[1].documentType.code, letterFile);
           formData.append(documentSpecs[2].documentType.code, healthExamCert);
           formData.append(documentSpecs[3].documentType.code, serviceFee);
-          formData.append(documentSpecs[4].documentType.code, workExperience);
-          formData.append(documentSpecs[5].documentType.code, languageFile);
-          if (professionalDoc != undefined) {
-            formData.append(
-              documentSpecs[6].documentType.code,
-              professionalDoc[0]
-            );
-            formData.append(
-              documentSpecs[7].documentType.code,
-              professionalDoc[1]
-            );
-            formData.append(
-              documentSpecs[8].documentType.code,
-              professionalDoc[2]
-            );
-          }
-          formData.append(documentSpecs[9].documentType.code, coc);
-          if (educationDoc != undefined) {
-            formData.append(
-              documentSpecs[10].documentType.code,
-              educationDoc[0]
-            );
-            formData.append(
-              documentSpecs[11].documentType.code,
-              educationDoc[1]
-            );
-            formData.append(
-              documentSpecs[12].documentType.code,
-              educationDoc[2]
-            );
-            formData.append(
-              documentSpecs[13].documentType.code,
-              educationDoc[3]
-            );
-            formData.append(
-              documentSpecs[14].documentType.code,
-              educationDoc[4]
-            );
-          }
-          formData.append(documentSpecs[15].documentType.code, supportLetter);
-          formData.append(documentSpecs[16].documentType.code, herqa);
+          formData.append(documentSpecs[4].documentType.code, cpd);
+          formData.append(documentSpecs[5].documentType.code, workExperience);
+          formData.append(documentSpecs[6].documentType.code, previousLicense);
 
           let payload = { document: formData, id: licenseId };
           store
-            .dispatch("newlicense/uploadDocuments", payload)
+            .dispatch("renewal/uploadDocuments", payload)
             .then((res) => {
               if (res) {
                 message.value.showFlash = !message.value.showFlash;
@@ -355,37 +289,20 @@ export default {
         licenseId: draftData.id,
         withdrawData: withdrawObj,
       };
-      message.value.showLoading = true;
-      store.dispatch("newlicense/withdraw", payload).then((res) => {
-        if (res) {
-          message.value.showFlash = !message.value.showFlash;
-          message.value.showLoading = false;
-          setTimeout(() => {}, 1800);
-          router.push({ path: "/menu" });
+      store.dispatch("renewal/withdraw", payload).then((res) => {
+        if (res.data.status == "Success") {
+          showFlash.value = !showFlash.value;
+          setTimeout(() => {
+            router.push({ path: "/menu" });
+          }, 3000);
         } else {
           showErrorFlash.value = !showErrorFlash.value;
         }
       });
     };
-    onMounted(() => {
-      const languageFile = store.getters["newlicense/getEnglishLanguage"];
-      buttons = store.getters["newlicense/getButtons"];
-      draftData = store.getters["newlicense/getDraft"];
-      if (route.params.id) {
-        for (let i = 0; i < draftData.documents.length; i++) {
-          if (draftData.documents[i].documentTypeCode == "ELPC") {
-            showUpload.value = false;
-            isImage.value = true;
-            languageFile.value = draftData.documents[i];
-            showPreview.value = true;
-            filePreview.value = basePath + draftData.documents[i].filePath;
-          }
-        }
-      }
-    });
     return {
-      languageFile,
-      languageFileP,
+      letterFile,
+      letterFileP,
       showPreview,
       filePreview,
       showUpload,
@@ -406,6 +323,7 @@ export default {
 </script>
 <style>
 @import "../../../styles/document-upload.css";
+
 img {
   width: 250px;
   height: 250px;

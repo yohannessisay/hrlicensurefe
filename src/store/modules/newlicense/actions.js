@@ -169,7 +169,7 @@ export default {
     try {
       // const resp = await ApiService.get(url + "newLicenses/user/" + userId);
       const resp = await ApiService.get(
-        "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api/newLicenses/user/2"
+        "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api/newLicenses/user/1"
       );
       return resp;
     } catch (error) {
@@ -190,6 +190,18 @@ export default {
       const resp = await ApiService.put(
         url + "newLicenses/" + payload.licenseId,
         payload.withdrawData
+      );
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+
+  async updateDraft({ commit }, payload) {
+    try {
+      const resp = await ApiService.put(
+        url + "newLicenses/" + payload.licenseId,
+        payload.draftData
       );
       return resp;
     } catch (error) {

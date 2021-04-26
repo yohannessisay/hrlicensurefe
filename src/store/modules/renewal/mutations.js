@@ -1,57 +1,53 @@
 import {
-  SET_RENEWAL,
+  SET_LICENSE,
   SET_RENEWAL_PHOTO,
-  SET_RENEWAL_PASSPORT,
   SET_RENEWAL_HEALTH_EXAM_CERT,
+  SET_RENEWAL_LETTER,
+  SET_RENEWAL_WORK_EXPERIENCE,
   SET_RENEWAL_SERVICE_FEE,
   SET_RENEWAL_CPD,
-  SET_RENEWAL_WORK_EXPERIENCE,
-  SET_DOCS
+  SET_PREVIOUS_LICEENSE,
+  SET_BUTTONS,
+  SET_APPLICATION_ID,
+  SET_DOCUMENT_SPEC,
+  SET_DRAFT,
 } from "./mutation-types";
 
 export default {
-  [SET_RENEWAL](state, renewalLicense) {
-    state.renewal = renewalLicense;
+  [SET_LICENSE](state, license) {
+    state.license = license;
   },
   [SET_RENEWAL_PHOTO](state, renewalPhoto) {
-    state.renewalPhoto = renewalPhoto;
+    state.photo = renewalPhoto;
   },
-  [SET_RENEWAL_PASSPORT](state, renewalPassport) {
-    state.renewalPassport = renewalPassport;
+  [SET_RENEWAL_LETTER](state, renewalLetter) {
+    state.letterFromHiringInstitution = renewalLetter;
   },
   [SET_RENEWAL_HEALTH_EXAM_CERT](state, renewalHealthExamCert) {
-    state.renewalHealthExamCert = renewalHealthExamCert;
+    state.healthExamCert = renewalHealthExamCert;
+  },
+  [SET_PREVIOUS_LICEENSE](state, previousLicense) {
+    state.letterFromHiringInstitution = previousLicense;
   },
   [SET_RENEWAL_SERVICE_FEE](state, renewalServiceFee) {
-    state.renewalServiceFee = renewalServiceFee;
+    state.serviceFee = renewalServiceFee;
   },
   [SET_RENEWAL_CPD](state, renewalCpd) {
-    state.renewalCpd = renewalCpd;
+    state.cpd = renewalCpd;
   },
   [SET_RENEWAL_WORK_EXPERIENCE](state, renewalWorkExperience) {
-    state.renewalWorkExperience = renewalWorkExperience;
+    state.workExperience = renewalWorkExperience;
   },
-  [SET_DOCS](state, docs) {
-    state.docs = docs;
+  [SET_BUTTONS](state, buttons) {
+    state.buttons = buttons;
   },
-  // [SET_ACTIVE_STATE](state, activeState) {
-  //   state.activeState = activeState;
-  // },
-  // [ADD_PROFILE_LOADING](state) {
-  //   state.addProfileLoading = true;
-  //   state.addProfileSuccess = false;
-  //   state.addProfileError = false;
-  // },
-
-  // [ADD_PROFILE_SUCCESS](state) {
-  //   state.addProfileLoading = false;
-  //   state.addProfileSuccess = true;
-  //   state.addProfileError = false;
-  // },
-
-  // [ADD_PROFILE_ERROR](state) {
-  //   state.addProfileLoading = false;
-  //   state.addProfileSuccess = false;
-  //   state.addProfileError = true;
-  // },
+  [SET_APPLICATION_ID](state, id) {
+    state.applicationId = id;
+  },
+  [SET_DOCUMENT_SPEC](state, documentSpec) {
+    state.documentSpec = documentSpec;
+  },
+  [SET_DRAFT](state, draft) {
+    state.draft = draft;
+  },
 };

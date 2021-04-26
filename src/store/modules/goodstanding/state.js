@@ -6,20 +6,12 @@ export default {
       departmentId: "",
       institutionId: "",
     },
-
-    file: {
-      profilePhoto: "",
-    },
-    file2: {
-      passport: "",
-    },
-    file3: {
-      healthExamCert: "",
-    },
-    docs: {},
-    addProfileLoading: false,
-    addProfileSuccess: false,
-    addProfileError: false,
-    activeState: 0,
+    licenseCopy: "",
+    serviceFee: "",
+    goodStandingLetter: "",
+    buttons: [],
+    applicationId: 0,
+    documentSpec: [],
+    draft: "",
   },
 };

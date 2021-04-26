@@ -1,10 +1,14 @@
 export default {
-  getRenewalLicense: state => state.renewal,
-  getRenewalPhoto: state => state.renewalPhoto,
-  getRenewalPassport: state => state.renewalPassport,
-  getRenewalHealthExamCert: state => state.renewalHealthExamCert,
-  getRenewalServiceFee: state => state.renewalServiceFee,
-  getRenewalCpd: state => state.renewalCpd,
-  getRenewalWorkExperience: state => state.renewalWorkExperience,
-  getDocs: state => state.docs
+  getLicense: (state) => state.license,
+  getRenewalPhoto: (state) => state.photo,
+  getRenewalHealthExamCert: (state) => state.healthExamCert,
+  getRenewalServiceFee: (state) => state.serviceFee,
+  getRenewalCpd: (state) => state.cpd,
+  getRenewalWorkExperience: (state) => state.workExperience,
+  getRenewalLicense: (state) => state.letterFromHiringInstitution,
+  getPreviousLicense: (state) => state.previosLicense,
+  getButtons: (state) => state.buttons,
+  getApplicationId: (state) => state.applicationId,
+  getDocumentSpec: (state) => state.documentSpec,
+  getDraft: (state) => state.draft,
 };

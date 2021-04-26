@@ -78,10 +78,10 @@
     </div>
   </div>
   <div class="mr-3xl" v-if="showFlash">
-    <FlashMessage message="Operation Successful!" />
+    <FlashMessage message="Login Successful!" />
   </div>
   <div v-if="showErrorFlash">
-    <ErrorFlashMessage message="Operation Failed!" />
+    <ErrorFlashMessage message="Login Failed!" />
   </div>
 </template>
 
@@ -122,8 +122,8 @@ export default {
 
   computed: {
     ...mapGetters({
-      getButtons: "renewal/getButtons",
-      getDraft: "renewal/getDraft",
+      getButtons: "verification/getButtons",
+      getDraft: "verification/getDraft",
     }),
   },
   data: () => ({
@@ -168,7 +168,7 @@ export default {
         licenseId: this.getDraft.id,
         withdrawData: withdrawObj,
       };
-      this.$store.dispatch("renewal/withdraw", payload).then((res) => {
+      this.$store.dispatch("verification/withdraw", payload).then((res) => {
         if (res.data.status == "Success") {
           this.showFlash = true;
           setTimeout(() => {
@@ -190,10 +190,10 @@ export default {
         },
       };
       this.$emit("applicantTypeValue", this.licenseInfo.applicantTypeId);
-      this.$store.dispatch("renewal/setLicense", license);
+      this.$store.dispatch("verification/setLicense", license);
     },
     fetchApplicantType() {
-      this.$store.dispatch("renewal/getApplicantType").then((res) => {
+      this.$store.dispatch("verification/getApplicantType").then((res) => {
         if (res.data.status == "Success") {
           const results = res.data.data;
           this.applicantTypes = results;
@@ -202,7 +202,7 @@ export default {
       });
     },
     fetchInstitutions() {
-      this.$store.dispatch("renewal/getInstitution").then((res) => {
+      this.$store.dispatch("verification/getInstitution").then((res) => {
         if (res.data.status == "Success") {
           const results = res.data.data;
           this.institutions = results;
@@ -211,7 +211,7 @@ export default {
       });
     },
     fetchDepartments() {
-      this.$store.dispatch("renewal/getDepartmentType").then((res) => {
+      this.$store.dispatch("verification/getDepartmentType").then((res) => {
         if (res.data.status == "Success") {
           const results = res.data.data;
           this.departments = results;

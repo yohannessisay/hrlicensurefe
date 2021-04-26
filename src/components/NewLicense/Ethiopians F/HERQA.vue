@@ -64,13 +64,16 @@
             {{ buttons[2]["name"] }}
           </button>
         </div>
+        <div v-if="message.showLoading">
+          <Spinner />
+        </div>
       </div>
     </div>
   </div>
-  <div v-if="showFlash">
+  <div class="mr-3xl" v-if="message.showFlash">
     <FlashMessage message="Operation Successful!" />
   </div>
-  <div v-if="showErrorFlash">
+  <div v-if="message.showErrorFlash">
     <ErrorFlashMessage message="Operation Failed!" />
   </div>
 </template>
@@ -82,9 +85,15 @@ import { useStore } from "vuex";
 import { useRoute, useRouter } from "vue-router";
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
+import Spinner from "@/sharedComponents/Spinner";
 
 export default {
-  components: { TitleWithIllustration, FlashMessage, ErrorFlashMessage },
+  components: {
+    TitleWithIllustration,
+    FlashMessage,
+    ErrorFlashMessage,
+    Spinner,
+  },
   props: ["activeState"],
   setup(props, { emit }) {
     const store = useStore();
@@ -92,8 +101,13 @@ export default {
     const router = useRouter();
 
     const basePath = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/";
-    let showFlash = ref(false);
-    let showErrorFlash = ref(false);
+
+    let message = ref({
+      showFlash: false,
+      showErrorFlash: false,
+      showLoading: false,
+    });
+    let dataChanged = ref(false);
     let herqaFile = ref("");
     let herqaFileP = ref("");
     let showPreview = ref(false);
@@ -126,6 +140,7 @@ export default {
     };
 
     const handleFileUpload = () => {
+      dataChanged.value = true;
       showUpload.value = false;
       herqaFile.value = herqaFileP.value.files[0];
       let reader = new FileReader();
@@ -170,11 +185,90 @@ export default {
     serviceFee = store.getters["newlicense/getServiceFee"];
 
     const draft = (action) => {
+      message.value.showLoading = true;
       if (route.params.id) {
-        if (photoFile) {
-          // modify the drafData before dispatching
+        if (dataChanged.value) {
+          let formData = new FormData();
+          formData.append(documentSpecs[0].documentType.code, photo);
+          formData.append(documentSpecs[1].documentType.code, passport);
+          formData.append(documentSpecs[2].documentType.code, healthExamCert);
+          formData.append(documentSpecs[3].documentType.code, serviceFee);
+          formData.append(documentSpecs[4].documentType.code, workExperience);
+          formData.append(documentSpecs[5].documentType.code, englishLanguage);
+          if (professionalDoc != undefined) {
+            formData.append(
+              documentSpecs[6].documentType.code,
+              professionalDoc[0]
+            );
+            formData.append(
+              documentSpecs[7].documentType.code,
+              professionalDoc[1]
+            );
+            formData.append(
+              documentSpecs[8].documentType.code,
+              professionalDoc[2]
+            );
+          }
+          formData.append(documentSpecs[9].documentType.code, coc);
+          if (educationDoc != undefined) {
+            formData.append(
+              documentSpecs[10].documentType.code,
+              educationDoc[0]
+            );
+            formData.append(
+              documentSpecs[11].documentType.code,
+              educationDoc[1]
+            );
+            formData.append(
+              documentSpecs[12].documentType.code,
+              educationDoc[2]
+            );
+            formData.append(
+              documentSpecs[13].documentType.code,
+              educationDoc[3]
+            );
+            formData.append(
+              documentSpecs[14].documentType.code,
+              educationDoc[4]
+            );
+          }
+          formData.append(documentSpecs[15].documentType.code, supportLetter);
+          formData.append(documentSpecs[16].documentType.code, herqaFile);
+
+          let payload = { document: formData, id: licenseId };
+          store
+            .dispatch("newlicense/uploadDocuments", payload)
+            .then((res) => {
+              if (res.status == 200) {
+                message.value.showFlash = !message.value.showFlash;
+                setTimeout(() => {}, 3000);
+                router.push({ path: "/menu" });
+                message.value.showLoading = false;
+              } else {
+                message.value.showErrorFlash = !message.value.showErrorFlash;
+              }
+            })
+            .catch((err) => {});
         } else {
-          // just send the draftData
+          let draftObj = {
+            action: action,
+            data: draftData,
+          };
+          let payload = {
+            licenseId: draftData.id,
+            draftData: draftObj,
+          };
+          message.value.showLoading = true;
+          store.dispatch("newlicense/updateDraft", payload).then((res) => {
+            if (res.data.status == "Success") {
+              message.value.showFlash = !message.value.showFlash;
+              setTimeout(() => {}, 2200);
+              router.push({ path: "/menu" });
+              message.value.showLoading = false;
+            } else {
+              message.value.showErrorFlash = !message.value.showErrorFlash;
+            }
+          });
         }
       } else {
         let license = {
@@ -241,13 +335,13 @@ export default {
           store
             .dispatch("newlicense/uploadDocuments", payload)
             .then((res) => {
-              if (res.data.status == "Success") {
-                showFlash.value = !showFlash.value;
-                setTimeout(() => {
-                  router.push({ path: "/menu" });
-                }, 3000);
+              if (res) {
+                message.value.showFlash = !message.value.showFlash;
+                setTimeout(() => {}, 2200);
+                router.push({ path: "/menu" });
+                message.value.showLoading = false;
               } else {
-                showErrorFlash.value = !showErrorFlash.value;
+                messsage.value.showErrorFlash = !message.value.showErrorFlash;
               }
             })
             .catch((err) => {});
@@ -263,12 +357,13 @@ export default {
         licenseId: draftData.id,
         withdrawData: withdrawObj,
       };
+      message.value.showLoading = true;
       store.dispatch("newlicense/withdraw", payload).then((res) => {
-        if (res.data.status == "Success") {
-          showFlash.value = !showFlash.value;
-          setTimeout(() => {
-            router.push({ path: "/menu" });
-          }, 3000);
+        if (res) {
+          message.value.showFlash = !message.value.showFlash;
+          message.value.showLoading = false;
+          setTimeout(() => {}, 1800);
+          router.push({ path: "/menu" });
         } else {
           showErrorFlash.value = !showErrorFlash.value;
         }
@@ -305,8 +400,8 @@ export default {
       buttons,
       draftData,
       basePath,
-      showFlash,
-      showErrorFlash,
+      message,
+      dataChanged,
     };
   },
 };
