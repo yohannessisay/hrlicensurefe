@@ -173,7 +173,7 @@ export default {
       draftData = store.getters["verification/getDraft"];
       if (route.params.id) {
         for (let i = 0; i < draftData.documents.length; i++) {
-          if (draftData.documents[i].documentTypeCode == "PSP") {
+          if (draftData.documents[i].documentTypeCode == "SF") {
             showUpload.value = false;
             isImage.value = true;
             letterFile.value = draftData.documents[i];

@@ -173,7 +173,7 @@ export default {
       draftData = store.getters["verification/getDraft"];
       if (route.params.id) {
         for (let i = 0; i < draftData.documents.length; i++) {
-          if (draftData.documents[i].documentTypeCode == "PSP") {
+          if (draftData.documents[i].documentTypeCode == "LC") {
             showUpload.value = false;
             isImage.value = true;
             letterFile.value = draftData.documents[i];
@@ -205,11 +205,11 @@ export default {
         store.dispatch("verification/addNewLicense", license).then((res) => {
           let licenseId = res.data.data.id;
           let formData = new FormData();
+          formData.append(documentSpecs[1].documentType.code, serviceFee);
           formData.append(
             documentSpecs[0].documentType.code,
             verificationLetter
           );
-          formData.append(documentSpecs[1].documentType.code, serviceFee);
           formData.append(documentSpecs[2].documentType.code, licenseFile);
 
           let payload = { document: formData, id: licenseId };

@@ -125,9 +125,10 @@ export default {
         .then((res) => {
           const results = res.data.data;
           this.applicationCategories = results;
+          console.log(this.applicationCategories);
           const newApplicationData = this.applicationCategories.filter(
             (item) => {
-              return item.name == "Verification";
+              return item.name == "Good Standing Later";
             }
           );
           this.applicationId = newApplicationData[0]["id"];

@@ -57,7 +57,7 @@
             </select>
           </div>
         </form>
-        <div class="flex justify-center mb-8">
+        <div v-if="this.showButtons" class="flex justify-center mb-8">
           <button @click="submit">
             Next
           </button>
@@ -110,6 +110,7 @@ export default {
     this.showLoading = true;
     setTimeout(() => {
       this.buttons = this.getButtons;
+      console.log(this.buttons);
       this.showButtons = true;
       this.showLoading = false;
     }, 5000);

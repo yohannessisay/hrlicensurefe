@@ -124,7 +124,7 @@ export default {
     try {
       // const resp = await ApiService.get(url + "newLicenses/user/" + userId);
       const resp = await ApiService.get(
-        "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api/verifications/user/2"
+        "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api/verifications/user/1"
       );
       return resp;
     } catch (error) {

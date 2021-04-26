@@ -6,7 +6,7 @@
       >
         <TitleWithIllustration
           illustration="User"
-          message="Photo"
+          message="License Copy"
           class="mt-8"
         />
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
@@ -68,6 +68,9 @@
             {{ buttons[2]["name"] }}
           </button>
         </div>
+        <div v-if="message.showLoading">
+          <Spinner />
+        </div>
       </div>
     </div>
   </div>
@@ -116,13 +119,14 @@ export default {
     let showUpload = ref(true);
     let isImage = ref(true);
 
+    let dataChanged = ref(false);
     let buttons = ref([]);
     let documentSpecs = ref([]);
     let userId = localStorage.getItem("userId");
     let licenseInfo = ref("");
     let draftData = ref("");
 
-    let verificationLetter = ref("");
+    let goodStandingLetter = ref("");
     let serviceFee = ref("");
 
     const reset = () => {
@@ -133,6 +137,7 @@ export default {
       isImage.value = true;
     };
     const handleFileUpload = () => {
+      dataChanged.value = true;
       showUpload.value = false;
       licenseFile.value = licenseFileP.value.files[0];
       let reader = new FileReader();
@@ -160,7 +165,7 @@ export default {
     documentSpecs = store.getters["goodstanding/getDocumentSpec"];
     licenseInfo = store.getters["goodstanding/getLicense"];
 
-    verificationLetter = store.getters["goodstanding/getVerificationLetter"];
+    goodStandingLetter = store.getters["goodstanding/getGoodStandingLetter"];
     serviceFee = store.getters["goodstanding/getServiceFee"];
 
     const submit = () => {
@@ -173,7 +178,7 @@ export default {
       draftData = store.getters["goodstanding/getDraft"];
       if (route.params.id) {
         for (let i = 0; i < draftData.documents.length; i++) {
-          if (draftData.documents[i].documentTypeCode == "PSP") {
+          if (draftData.documents[i].documentTypeCode == "LC") {
             showUpload.value = false;
             isImage.value = true;
             letterFile.value = draftData.documents[i];
@@ -184,11 +189,52 @@ export default {
       }
     });
     const draft = (action) => {
+      message.value.showLoading = true;
       if (route.params.id) {
-        if (letterFile) {
-          // modify the drafData before dispatching
+        if (dataChanged.value) {
+          let formData = new FormData();
+
+          formData.append(documentSpecs[0].documentType.code, serviceFee);
+          formData.append(
+            documentSpecs[1].documentType.code,
+            goodStandingLetter
+          );
+          formData.append(documentSpecs[2].documentType.code, licenseFile);
+          console.log(draftData.id);
+          let payload = { document: formData, id: draftData.id };
+          store
+            .dispatch("goodstanding/uploadDocuments", payload)
+            .then((res) => {
+              if (res.status == 200) {
+                message.value.showFlash = !message.value.showFlash;
+                message.value.showLoading = false;
+                setTimeout(() => {}, 2200);
+                router.push({ path: "/menu" });
+              } else {
+                message.value.showErrorFlash = !message.value.showErrorFlash;
+              }
+            })
+            .catch((err) => {});
         } else {
-          // just send the draftData
+          let draftObj = {
+            action: action,
+            data: draftData,
+          };
+          let payload = {
+            licenseId: draftData.id,
+            draftData: draftObj,
+          };
+          message.value.showLoading = true;
+          store.dispatch("goodstanding/updateDraft", payload).then((res) => {
+            if (res.data.status == "Success") {
+              message.value.showFlash = !message.value.showFlash;
+              message.value.showLoading = false;
+              setTimeout(() => {}, 2200);
+              router.push({ path: "/menu" });
+            } else {
+              message.value.showErrorFlash = !message.value.showErrorFlash;
+            }
+          });
         }
       } else {
         let license = {
@@ -202,32 +248,34 @@ export default {
             },
           },
         };
-        store.dispatch("goodstanding/addNewLicense", license).then((res) => {
-          let licenseId = res.data.data.id;
-          let formData = new FormData();
-          formData.append(
-            documentSpecs[0].documentType.code,
-            verificationLetter
-          );
-          formData.append(documentSpecs[1].documentType.code, serviceFee);
-          formData.append(documentSpecs[2].documentType.code, licenseFile);
+        store
+          .dispatch("goodstanding/addGoodstandingLicense", license)
+          .then((res) => {
+            let licenseId = res.data.data.id;
+            let formData = new FormData();
 
-          let payload = { document: formData, id: licenseId };
-          store
-            .dispatch("goodstanding/uploadDocuments", payload)
-            .then((res) => {
-              if (res.status == "Success") {
-                showFlash.value = !showFlash.value;
-                setTimeout(() => {
-                  route.push({ path: "/menu" });
-                }, 3000);
-                router.push({ path: "/menu" });
-              } else {
-                showErrorFlash.value = !showErrorFlash.value;
-              }
-            })
-            .catch((err) => {});
-        });
+            formData.append(documentSpecs[0].documentType.code, serviceFee);
+            formData.append(
+              documentSpecs[1].documentType.code,
+              goodStandingLetter
+            );
+            formData.append(documentSpecs[2].documentType.code, licenseFile);
+
+            let payload = { document: formData, id: licenseId };
+            store
+              .dispatch("goodstanding/uploadDocuments", payload)
+              .then((res) => {
+                if (res.status == 200) {
+                  message.value.showFlash = !message.value.showFlash;
+                  message.value.showLoading = false;
+                  setTimeout(() => {}, 2200);
+                  router.push({ path: "/menu" });
+                } else {
+                  showErrorFlash.value = !showErrorFlash.value;
+                }
+              })
+              .catch((err) => {});
+          });
       }
     };
     const withdraw = (action) => {
@@ -239,14 +287,17 @@ export default {
         licenseId: draftData.id,
         withdrawData: withdrawObj,
       };
+      message.value.showLoading = !message.value.showLoading;
       store.dispatch("goodstanding/withdraw", payload).then((res) => {
         if (res.data.status == "Success") {
-          showFlash.value = !showFlash.value;
+          message.value.showLoading = !message.value.showLoading;
+          message.value.showFlash = !message.value.showFlash;
+
           setTimeout(() => {
             router.push({ path: "/menu" });
           }, 3000);
         } else {
-          showErrorFlash.value = !showErrorFlash.value;
+          message.value.showErrorFlash = !message.value.showErrorFlash;
         }
       });
     };
@@ -267,6 +318,9 @@ export default {
       draftData,
       basePath,
       message,
+      dataChanged,
+      goodStandingLetter,
+      serviceFee,
     };
   },
 };

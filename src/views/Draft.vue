@@ -2,12 +2,27 @@
   <div>
     <Navigation tab="Home" />
     <div
-      v-if="!message.showLoadingNewLicense && !message.showLoadingRenewal"
+      v-if="
+        message.showLoadingNewLicense ||
+          message.showLoadingRenewal ||
+          message.showLoadingGoodstanding
+      "
+      class="flex justify-center justify-items-center mt-24"
+    >
+      <Spinner />
+    </div>
+    <div
+      v-if="
+        !message.showLoadingNewLicense &&
+          !message.showLoadingRenewal &&
+          !message.showLoadingGoodstanding
+      "
       class="bg-lightBlueB-200 h-full"
     >
       <div class="flex pl-12 pt-medium">
         <Title message="New License Draft" />
       </div>
+
       <div class=" mt-medium rounded ml-large">
         <div class="flex " v-for="i in newlicense.length" v-bind:key="i">
           <div
@@ -52,12 +67,17 @@
       </div>
     </div>
     <div
-      v-if="!message.showLoadingNewLicense && !message.showLoadingRenewal"
+      v-if="
+        !message.showLoadingNewLicense &&
+          !message.showLoadingRenewal &&
+          !message.showLoadingGoodstanding
+      "
       class="bg-lightBlueB-200 h-full"
     >
       <div class="flex pl-12 pt-medium">
         <Title message="Renewal Draft" />
       </div>
+
       <div class=" mt-medium rounded ml-large">
         <div class="flex " v-for="i in renewal.length" v-bind:key="i">
           <div
@@ -102,10 +122,59 @@
       </div>
     </div>
     <div
-      v-if="message.showLoadingNewLicense || message.showLoadingRenewal"
-      class="flex justify-center justify-items-center mt-24"
+      v-if="
+        !message.showLoadingNewLicense &&
+          !message.showLoadingRenewal &&
+          !message.showLoadingGoodstanding
+      "
+      class="bg-lightBlueB-200 h-full"
     >
-      <Spinner />
+      <div class="flex pl-12 pt-medium">
+        <Title message="Good Standing Draft" />
+      </div>
+
+      <div class=" mt-medium rounded ml-large">
+        <div class="flex " v-for="i in goodstanding.length" v-bind:key="i">
+          <div
+            class="container mb-medium"
+            v-for="item in goodstanding.slice((i - 1) * 5, i * 5)"
+            v-bind:key="item"
+            v-bind:value="item"
+          >
+            <router-link
+              :to="{
+                name: 'GoodStanding',
+                params: { id: item.id },
+              }"
+            >
+              <div
+                class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
+              >
+                <div class="p-4 w-48 h-64">
+                  <!-- <div class="flex content-center justify-center">
+                <img class="box-shadow-pop" />
+              </div> -->
+                  <h4
+                    class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                  >
+                    {{ item.applicantType.name }}
+                  </h4>
+                  <h4
+                    class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                  >
+                    {{ item.applicationStatus.name }}
+                  </h4>
+                  <h4
+                    class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                  >
+                    Code: {{ item.newLicenseCode }}
+                  </h4>
+                </div>
+              </div>
+            </router-link>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -134,6 +203,7 @@ export default {
     let message = ref({
       showLoadingNewLicense: false,
       showLoadingRenewal: false,
+      showLoadingGoodstanding: false,
       showError: false,
       showSuccess: false,
     });
@@ -154,6 +224,16 @@ export default {
         message.value.showLoadingRenewal = !message.value.showLoadingRenewal;
         license.value = res.data.data;
         renewal.value = license.value.filter(function(e) {
+          return e.applicationStatus.code == "DRA";
+        });
+      });
+      message.value.showLoadingGoodstanding = !message.value
+        .showLoadingGoodstanding;
+      store.dispatch("goodstanding/getGoodStandingLicense").then((res) => {
+        message.value.showLoadingGoodstanding = !message.value
+          .showLoadingGoodstanding;
+        license.value = res.data.data;
+        goodstanding.value = license.value.filter(function(e) {
           return e.applicationStatus.code == "DRA";
         });
       });
