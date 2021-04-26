@@ -87,7 +87,7 @@
               <!-- {{docs[0].filePath}} -->
             </div>
           </div>
-          <div class="mt-medium">
+          <div class="mt-medium" v-if="!showButtons">
             <button class="mr-medium" @click="accept(docs[index])">Accept</button>
             <button class="decline" @click="reject(docs[index])">Reject</button>
           </div>
@@ -138,9 +138,9 @@
         </div>
       </div>
 
-      <div class="flex justify-center items-center mb-medium">
+      <div class="flex justify-center items-center mb-medium" v-if="showButtons">
         <button class="" variant="outline" @click="action(buttons[0].action)">{{buttons[0].name}}</button>
-        <button class="decline display bg-red-200" @click="action(buttons[1].name)">{{buttons[1].name}}</button>
+        <button class="decline display bg-red-200" @click="action(buttons[1].action)">{{buttons[1].name}}</button>
       </div>
     </div>
   </div>
@@ -176,6 +176,11 @@ export default {
     let width = ref("width:11.11111%");
     let accepted = ref([]);
     let rejected = ref([]);
+    let showButtons = ref(false);
+    let disableNext = ref(true);
+    let nextClickable = ref(false);
+    let foundInRejected = ref(false);
+    let foundInAcceptted = ref(false);
     const created = async () => {
       store
         .dispatch("reviewer/getApplication", route.params.applicationId)
@@ -193,16 +198,21 @@ export default {
       });
     };
     const next = () => {
-      index.value = index.value + 1;
-      amount.value = ((index.value + 1) / docs.value.length) * 100;
-      width.value = "width:" + amount.value + "%";
-      findDocumentType(documentTypes.value, docs.value[index.value]);
+      // alreadyIn.value == false;
+      if (nextClickable.value == true) {
+        index.value = index.value + 1;
+        amount.value = ((index.value + 1) / docs.value.length) * 100;
+        width.value = "width:" + amount.value + "%";
+        findDocumentType(documentTypes.value, docs.value[index.value]);
+        nextClickable.value = false;
+      }
     };
     const previous = () => {
       index.value = index.value - 1;
       amount.value = ((index.value + 1) / docs.value.length) * 100;
       width.value = "width:" + amount.value + "%";
       findDocumentType(documentTypes.value, docs.value[index.value]);
+      nextClickable.value = true;
     };
     const findDocumentType = (obj, ab) => {
       for (var prop in obj) {
@@ -211,14 +221,75 @@ export default {
         }
       }
     };
-    const accept = (doc) => {
-      accepted.value.push(doc.documentTypeCode);
-      console.log(accepted.value);
+    const accept = doc => {
+      nextClickable.value = true;
+      console.log(accepted.value.length);
+      if (accepted.value.length > 0) {
+        if (!accepted.value.includes(doc.documentTypeCode)) {
+          accepted.value.push(doc.documentTypeCode);
+          console.log(accepted.value);
+          if (index.value == docs.value.length - 1) {
+            showButtons.value = true;
+          }
+          console.log(rejected.value.includes(doc.documentTypeCode));
+          if (rejected.value.includes(doc.documentTypeCode)) {
+            console.log("Hehe");
+            rejected.value.splice(rejected.value.indexOf(doc.documentTypeCode), 1);
+          }
+        }
+      } else {
+        accepted.value.push(doc.documentTypeCode);
+        console.log(accepted.value);
+        if (index.value == docs.value.length - 1) {
+          showButtons.value = true;
+        }
+        console.log(rejected.value.includes(doc.documentTypeCode));
+        if (rejected.value.includes(doc.documentTypeCode)) {
+          console.log("Hehe");
+          rejected.value.splice(rejected.value.indexOf(doc.documentTypeCode), 1);
+        }
+      }
+      // accepted.value.push(doc.documentTypeCode);
+      // console.log(accepted.value);
+      // if (index.value == docs.value.length - 1) {
+      //   showButtons.value = true;
+      // }
     };
 
-    const reject = (doc) => {
-      rejected.value.push(doc.documentTypeCode);
-      console.log(rejected.value);
+    const reject = doc => {
+      nextClickable.value = true;
+      console.log(rejected.value.length);
+      if (rejected.value.length > 0) {
+        if (!rejected.value.includes(doc.documentTypeCode)) {
+          rejected.value.push(doc.documentTypeCode);
+          console.log(rejected.value);
+          if (index.value == docs.value.length - 1) {
+            showButtons.value = true;
+          }
+          console.log(accepted.value.includes(doc.documentTypeCode));
+          if (accepted.value.includes(doc.documentTypeCode)) {
+            console.log("Hehe");
+            accepted.value.splice(accepted.value.indexOf(doc.documentTypeCode), 1);
+          }
+        }
+      } else {
+        rejected.value.push(doc.documentTypeCode);
+        console.log(rejected.value);
+        if (index.value == docs.value.length - 1) {
+          showButtons.value = true;
+        }
+        console.log(accepted.value.includes(doc.documentTypeCode));
+        if (accepted.value.includes(doc.documentTypeCode)) {
+          console.log("Hehe");
+          accepted.value.splice(rejected.value.indexOf(doc.documentTypeCode), 1);
+        }
+      }
+      // nextClickable.value = true;
+      // rejected.value.push(doc.documentTypeCode);
+      // if (index.value == docs.value.length - 1) {
+      //   showButtons.value = true;
+      // }
+      // console.log(rejected.value);
     };
 
     const action = (actionValue) => {
@@ -255,7 +326,12 @@ export default {
       accept,
       reject,
       buttons,
-      action
+      action,
+      showButtons,
+      disableNext,
+      nextClickable,
+      foundInRejected,
+      foundInAcceptted
     };
   }
 };
