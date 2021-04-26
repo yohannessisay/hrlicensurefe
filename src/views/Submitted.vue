@@ -81,7 +81,6 @@ export default {
         newlicense.value = license.value.filter(function(e) {
           return e.applicationStatus.code == "SUB";
         });
-        console.log(newlicense.value);
       });
     };
 

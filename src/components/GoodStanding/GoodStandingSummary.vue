@@ -377,23 +377,13 @@ export default {
         });
     },
     setDocs() {
-      this.docs.push(this.photo);
-      this.docs.push(this.passport);
-      this.docs.push(this.healthExamCert);
-      this.docs.push(this.englishLanguage);
-      this.docs.push(this.professionalDoc);
-      this.docs.push(this.herqa);
-      this.docs.push(this.supportLetter);
-      this.docs.push(this.coc);
-      this.docs.push(this.educationalDoc);
-      this.docs.push(this.workExperience);
-      this.docs.push(this.serviceFeeFile);
+      
     },
 
     getDocumentSpecs() {
       const applicationId = this.getApplicationId;
       this.$store
-        .dispatch("renewal/getDocumentSpecs", applicationId)
+        .dispatch("goodstanding/getDocumentSpecs", applicationId)
         .then((res) => {
           this.documentTypes = res.data.data;
         });

@@ -118,6 +118,7 @@ export default {
           setTimeout(() => {
             router.push({ path: "/landing" });
           }, 3000);
+          emit("closeModal", false);
         } else {
           message.value.showLoading = false;
           message.value.showFlash = false;

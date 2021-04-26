@@ -179,7 +179,7 @@ export default {
           if (draftData.documents[i].documentTypeCode == "HEC") {
             showUpload.value = false;
             isImage.value = true;
-            healthExamFile.value = draftData.documents[i];
+            healthExamCertFile.value = draftData.documents[i];
             showPreview.value = true;
             filePreview.value = basePath + draftData.documents[i].filePath;
           }
@@ -267,7 +267,6 @@ export default {
           store
             .dispatch("renewal/uploadDocuments", payload)
             .then((res) => {
-              console.log(res);
               if (res) {
                 message.value.showFlash = !message.value.showFlash;
                 setTimeout(() => {}, 2200);
