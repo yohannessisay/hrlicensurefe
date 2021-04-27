@@ -116,15 +116,14 @@ export default {
           message.value.showErrorFlash = false;
 
           setTimeout(() => {
-            router.push({ path: "/landing" });
-          }, 3000);
-          // emit("closeModal", false);
-          vm.$forceUpdate();
+            location.reload();
+          }, 2000);
+
         } else {
           message.value.showLoading = false;
           message.value.showFlash = false;
           message.value.showErrorFlash = true;
-          setTimeout(() => {}, 3000);
+          setTimeout(() => {}, 2000);
         }
       });
     };
