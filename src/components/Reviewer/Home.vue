@@ -23,7 +23,7 @@
         <div
           class="container"
           v-for="(item, index) in unfinished"
-          v-bind:key="item.applicationStatus.name"
+          v-bind:key="item.id"
           v-bind:value="item.id"
         >
           <div
@@ -81,7 +81,7 @@
       <div class="flex ml-small mt-medium rounded ">
         <div
           class="pl-large w-52 h-26"
-          v-if="nothingToShowAssignedToYou == true"
+          v-if="nothingToShowUnfinished == true"
         >
           <div class="flex content-center justify-center">
             <h2>Nothing To Show!!</h2>
@@ -90,7 +90,7 @@
         <div
           class="container"
           v-for="(item, index) in assignedToyou"
-          v-bind:key="item.applicationStatus.name"
+          v-bind:key="item.id"
           v-bind:value="item.id"
         >
           <div
@@ -156,7 +156,7 @@
           <div
             class="container flip-box"
             v-for="(item, index) in unassigned"
-            v-bind:key="item.applicationStatus.name"
+            v-bind:key="item.id"
             v-bind:value="item.id"
           >
             <div
@@ -209,7 +209,7 @@
                 class="p-4 w-48 h-64"
                 @mouseover="hover = true"
                 @mouseleave="hover = false"
-                @Click="detail(`/admin/unassignedDetail`, item.id, item.applicationType)"
+                @Click="detail(`/admin/unassignedDetail`, item.applicationType, item.id, item.applicant.id)"
               >
                 <h4
                   class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
@@ -322,24 +322,25 @@ export default {
     const store = useStore();
     const router = useRouter();
 
-    let unfinished = ref({});
-    let assignedToyou = ref({});
-    let unassigned = ref({});
+    let unfinished = ref({ applicant: { profile:{ name:"" , fatherName: ""} } , applicationStatus: { name: "" }});
+    let assignedToyou = ref({ applicationStatus: { name: "" } });
+    let unassigned = ref({ applicationStatus: { name: "" }});
     let recentlyFinished = ref({});
     let hover = ref(false);
-    let userId = +localStorage.getItem("userId");
+    let userId = +localStorage.getItem("adminId");
     // let userId = 2;
     let x = ref([]);
     let activeFilters = ref([]);
     let nothingToShow = ref(false);
+    let nothingToShowUnfinished = ref(false);
 
     const fetchUnfinished = () => {
       store.dispatch("reviewer/getUnfinished", userId).then(res => {
-        console.log("unfinished UserID= " + userId);
         if (res.status != "Error") {
           unfinished.value = res.data.data;
+          console.log(unfinished.value);
         } else {
-          nothingToShow.value = true;
+          nothingToShowUnfinished.value = true;
         }
       });
       // store.dispatch("reviewer/getUnfinished", userId).then(res => {
@@ -393,6 +394,7 @@ export default {
     };
 
     onMounted(() => {
+      console.log(localStorage);
       fetchUnfinished();
       // fetchAssignedtoYou();
       fetchUnassignedApplications();
@@ -408,6 +410,7 @@ export default {
       recentlyFinished,
       hover,
       nothingToShow,
+      nothingToShowUnfinished,
       detail,
       activeFilters
     };

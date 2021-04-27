@@ -148,7 +148,7 @@ const routes = [
       import("../components/Reviewer/Detail/RecentlyFinishedDetail.vue")
   },
   {
-    path: "/admin/unassignedDetail/:applicationId/:applicantId",
+    path: "/admin/unassignedDetail/:applicationType/:applicationId/:applicantId",
     name: "unassignedDetail",
     component: () =>
       import("../components/Reviewer/Detail/UnassignedDetail.vue"),

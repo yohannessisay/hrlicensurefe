@@ -1,6 +1,7 @@
 import ApiService from "../../../services/api.service";
 
 const baseUrl = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api";
+const adminId = localStorage.getItem("adminId");
 
 export default {
   async getUnfinished(context, id) {
@@ -17,7 +18,7 @@ export default {
   },
   async getAssignedToYou() {
     try {
-      const resp = await ApiService.get(baseUrl + "/applications/assignedToYou/1");
+      const resp = await ApiService.get(baseUrl + "/applications/assignedToYou/" + adminId);
       return resp;
     } catch (error) {
       const resp = error;
