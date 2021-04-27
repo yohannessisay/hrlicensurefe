@@ -262,14 +262,15 @@
           {{ this.buttons[2]["name"] }}
         </button>
       </div>
+      <div
+        class="flex justify-center justify-items-center mt-8 mb-8"
+        v-if="showLoading"
+      >
+        <Spinner />
+      </div>
     </div>
   </div>
-  <div
-    class="flex justify-center justify-items-center mt-8 mb-8"
-    v-if="showLoading"
-  >
-    <Spinner />
-  </div>
+
   <div v-if="showFlash">
     <FlashMessage message="Operation Successful!" />
   </div>
@@ -414,7 +415,7 @@ export default {
         },
       };
       this.$store
-        .dispatch("verification/addGoodstandingLicense", license)
+        .dispatch("verification/addVerificationLicense", license)
         .then((res) => {
           let licenseId = res.data.data.id;
           let payload = { document: formData, id: licenseId };
@@ -490,7 +491,7 @@ export default {
           },
         };
         this.$store
-          .dispatch("verification/addGoodstandingLicense", license)
+          .dispatch("verification/addVerificationLicense", license)
           .then((res) => {
             let licenseId = res.data.data.id;
             let payload = { document: formData, id: licenseId };

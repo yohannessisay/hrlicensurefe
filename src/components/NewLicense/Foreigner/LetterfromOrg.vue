@@ -391,7 +391,7 @@ export default {
       draftData = store.getters["newlicense/getDraft"];
       if (route.params.id) {
         for (let i = 0; i < draftData.documents.length; i++) {
-          if (draftData.documents[i].documentTypeCode == "ELPC") {
+          if (draftData.documents[i].documentTypeCode == "LFO") {
             showUpload.value = false;
             isImage.value = true;
             letterFile.value = draftData.documents[i];

@@ -1,12 +1,9 @@
 <template>
-  <div>
-    <!-- <div
-      v-if="this.showLoading2"
-      class="flex justify-center justify-items-center mt-24"
-    >
-      <Spinner />
-    </div> -->
-    <div v-if="this.show">
+  <div v-if="this.showLoading2" class="h-screen max-h-4xl">
+    <Spinner class="bg-lightBlueB-200  " />
+  </div>
+  <div class="bg-white mb-large rounded ">
+    <div v-if="this.show && !this.showLoading2">
       <div class="flex justify-center"><Title message="Summary" /></div>
       <div class="flex justify-start">
         <Title message="Personal Info" />
@@ -265,14 +262,15 @@
           {{ this.buttons[2]["name"] }}
         </button>
       </div>
+      <div
+        class="flex justify-center justify-items-center mt-8 mb-12"
+        v-if="showLoading"
+      >
+        <Spinner />
+      </div>
     </div>
   </div>
-  <div
-    class="flex justify-center justify-items-center mt-8 mb-8"
-    v-if="showLoading"
-  >
-    <Spinner />
-  </div>
+
   <div v-if="showFlash">
     <FlashMessage message="Operation Successful!" />
   </div>
@@ -391,7 +389,7 @@ export default {
           this.profileInfo = res.data.data;
           this.show = true;
           this.showLoading2 = false;
-        }, 10000);
+        }, 3000);
       });
     },
     setDocs() {
@@ -484,17 +482,17 @@ export default {
         this.documentTypes[15].documentType.code,
         this.supportLetter
       );
-      formData.append(this.documentSpec[16].documentType.code, this.herqa);
+      formData.append(this.documentTypes[16].documentType.code, this.herqa);
       formData.append(
-        this.documentSpec[17].documentType.code,
+        this.documentTypes[17].documentType.code,
         this.letterfromOrg
       );
       formData.append(
-        this.documentSpec[18].documentType.code,
+        this.documentTypes[18].documentType.code,
         this.renewedLicense
       );
       formData.append(
-        this.documentSpec[19].documentType.code,
+        this.documentTypes[19].documentType.code,
         this.professionalLicense
       );
       let license = {

@@ -6,7 +6,7 @@
       >
         <TitleWithIllustration
           illustration="User"
-          message="Authenticated Professional License from Country of Origin"
+          message="Renewed License of the Organization"
           class="mt-8"
         />
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">

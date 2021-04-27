@@ -1,12 +1,9 @@
 <template>
-  <div>
-    <div
-      v-if="this.showLoading2"
-      class="flex justify-center justify-items-center mt-24"
-    >
-      <Spinner />
-    </div>
-    <div v-if="this.show">
+  <div v-if="this.showLoading2" class="h-screen max-h-4xl">
+    <Spinner class="bg-lightBlueB-200  " />
+  </div>
+  <div class="bg-white mb-large rounded ">
+    <div v-if="this.show && !this.showLoading2">
       <div class="flex justify-center"><Title message="Summary" /></div>
       <div class="flex justify-start">
         <Title message="Personal Info" />
@@ -265,14 +262,15 @@
           {{ this.buttons[2]["name"] }}
         </button>
       </div>
+      <div
+        class="flex justify-center justify-items-center mt-8 mb-8"
+        v-if="showLoading"
+      >
+        <Spinner />
+      </div>
     </div>
   </div>
-  <div
-    class="flex justify-center justify-items-center mt-8 mb-8"
-    v-if="showLoading"
-  >
-    <Spinner />
-  </div>
+
   <div v-if="showFlash">
     <FlashMessage message="Operation Successful!" />
   </div>
@@ -301,7 +299,6 @@ export default {
     this.draftId = this.$route.params.id;
     if (this.draftId != undefined) {
       this.draftData = this.getDraftData;
-     
     }
 
     this.userId = localStorage.getItem("userId");
@@ -356,7 +353,7 @@ export default {
 
       getLicenseCopy: "goodstanding/getLicenseCopy",
       getServiceFee: "goodstanding/getServiceFee",
-      getLetter: "goodstanding/getGoodStandingLetter",
+      getLetter: "goodstanding/getVerificationLetter",
 
       getButtons: "goodstanding/getButtons",
       getApplicationId: "goodstanding/getApplicationId",
@@ -376,9 +373,7 @@ export default {
           }, 10000);
         });
     },
-    setDocs() {
-      
-    },
+    setDocs() {},
 
     getDocumentSpecs() {
       const applicationId = this.getApplicationId;
@@ -528,7 +523,7 @@ export default {
         licenseId: this.draftData.id,
         withdrawData: withdrawObj,
       };
-    
+
       this.$store.dispatch("goodstanding/withdraw", payload).then((res) => {
         if (res) {
           this.showFlash = true;
