@@ -12,6 +12,9 @@ import {
   SET_COC,
   SET_EDUCATIONAL_DOCUMENT,
   SET_WORK_EXPERIENCE,
+  SET_LETTER_FROM_ORG,
+  SET_RENEWED_LICENSE,
+  SET_PROFESSIONAL_LICENSE,
   SET_BUTTONS,
   SET_APPLICATION_ID,
   SET_DOCUMENT_SPEC,
@@ -57,6 +60,15 @@ export default {
   },
   setServiceFee({ commit }, serviceFee) {
     commit(SET_SERVICE_FEE, serviceFee);
+  },
+  setLetterfromOrg({ commit }, letter) {
+    commit(SET_LETTER_FROM_ORG, letter);
+  },
+  setRenewedLicense({ commit }, license) {
+    commit(SET_RENEWED_LICENSE, license);
+  },
+  setProfessionalLicense({ commit }, license) {
+    commit(SET_PROFESSIONAL_LICENSE, license);
   },
   setButtons({ commit }, buttons) {
     commit(SET_BUTTONS, buttons);
