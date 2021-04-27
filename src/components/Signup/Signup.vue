@@ -81,8 +81,8 @@ import Spinner from "@/sharedComponents/Spinner";
 
 export default {
   components: { Title, FlashMessage, ErrorFlashMessage, Spinner },
-
-  setup() {
+  props: ["closeModal"],
+  setup({ emit }) {
     const store = useStore();
     const router = useRouter();
     let message = ref({
@@ -118,7 +118,8 @@ export default {
           setTimeout(() => {
             router.push({ path: "/landing" });
           }, 3000);
-          emit("closeModal", false);
+          // emit("closeModal", false);
+          vm.$forceUpdate();
         } else {
           message.value.showLoading = false;
           message.value.showFlash = false;

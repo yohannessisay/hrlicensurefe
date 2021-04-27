@@ -128,7 +128,7 @@ export default {
       maritalStatus: null,
       userTypeId: null,
       expertLevelId: null,
-      healthOfficeId: null
+      healthOfficeId: null,
     };
 
     let address = {
@@ -137,14 +137,14 @@ export default {
       zone: null,
       houseNumber: null,
       woreda: null,
-      residence: null
+      residence: null,
     };
 
     let contact = {
       mobileNumber: null,
       email: null,
       telephoneNumber: null,
-      poBox: null
+      poBox: null,
     };
 
     let success = ref(false);
@@ -154,6 +154,12 @@ export default {
     let getPersonalInfo = "profile/getPersonalInfo";
 
     const addProfile = () => {
+      if (
+        personalInfo.healthOfficeId != 1 ||
+        personalInfo.healthOfficeId != 2
+      ) {
+        personalInfo.healthOfficeId = null;
+      }
       store
         .dispatch("profile/addProfile", {
           name: personalInfo.name,
@@ -173,10 +179,10 @@ export default {
           residence: address.residence,
           city: address.city,
           poBox: contact.poBox,
-          userId: +localStorage.getItem("userId")
+          userId: +localStorage.getItem("userId"),
         })
 
-        .then(response => {
+        .then((response) => {
           if (response.statusText == "Created") {
             showFlash.value = true;
             router.push("/menu");
@@ -211,8 +217,8 @@ export default {
       response,
       showFlash,
       submit,
-      getPersonalInfo
+      getPersonalInfo,
     };
-  }
+  },
 };
 </script>
