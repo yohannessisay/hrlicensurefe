@@ -282,6 +282,8 @@ export default {
     let showRemark = ref(false);
     let applicationType = ref("");
     let showFlash = ref(false);
+    let sendDeclinedData = ref(true);
+    let fromModalSendDeclinedData = ref(false);
     const created = async () => {
       store
         .dispatch("reviewer/getApplication", route.params.applicationId)
@@ -397,6 +399,10 @@ export default {
     const action = actionValue => {
       if (actionValue == "DeclineEvent") {
         showRemark.value = true;
+        sendDeclinedData.value = false;
+        if (fromModalSendDeclinedData.value == true) {
+          sendDeclinedData.value = true;
+        }
       }
       newLicense.value.declinedFields = rejected.value;
       let appId = newLicense.value.id;
@@ -405,28 +411,44 @@ export default {
         data: newLicense.value
       };
       console.log(req);
-      if (applicationType.value == "New License") {
+      if (applicationType.value == "New License" && sendDeclinedData.value == true) {
         store.dispatch("newlicense/editNewLicense", req).then(res => {
           if (res.statusText == "Created") {
             showFlash.value = true;
-            router.push("/admin/review");
+            setTimeout(() => {
+              router.push("/admin/review");
+            }, 3000);
           }
-          console.log(res);
         });
       }
-      if (applicationType.value == "Verification") {
+      if (applicationType.value == "Verification" && sendDeclinedData.value == true) {
         store.dispatch("reviewer/editVerification", req).then(res => {
-          console.log(res.data.data);
+          if (res.statusText == "Created") {
+            showFlash.value = true;
+            setTimeout(() => {
+              router.push("/admin/review");
+            }, 3000);
+          }
         });
       }
-      if (applicationType.value == "Good Standing") {
+      if (applicationType.value == "Good Standing" && sendDeclinedData.value == true) {
         store.dispatch("reviewer/editGoodStanding", req).then(res => {
-          console.log(res.data.data);
+          if (res.statusText == "Created") {
+            showFlash.value = true;
+            setTimeout(() => {
+              router.push("/admin/review");
+            }, 3000);
+          }
         });
       }
-      if (applicationType.value == "Renewal") {
+      if (applicationType.value == "Renewal" && sendDeclinedData.value == true) {
         store.dispatch("reviewer/editRenewal", req).then(res => {
-          console.log(res.data.data);
+          if (res.statusText == "Created") {
+            showFlash.value = true;
+            setTimeout(() => {
+              router.push("/admin/review");
+            }, 3000);
+          }
         });
       }
       // store.dispatch("newlicense/editNewLicense", req).then((res) => {
@@ -437,6 +459,9 @@ export default {
     const submitRemark = () => {
       console.log(newLicense.value.remark);
       showRemark.value = !showRemark.value;
+      sendDeclinedData.value = true;
+      fromModalSendDeclinedData.value = true;
+      action("DeclineEvent");
     };
 
     const toggleModal = () =>{
@@ -474,7 +499,9 @@ export default {
       toggleModal,
       submitRemark,
       applicationType,
-      showFlash
+      showFlash,
+      sendDeclinedData,
+      fromModalSendDeclinedData
     };
   }
 };
