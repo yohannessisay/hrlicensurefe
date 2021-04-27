@@ -1,11 +1,11 @@
 <template>
   <div>
-    <div
+    <!-- <div
       v-if="this.showLoading2"
       class="flex justify-center justify-items-center mt-24"
     >
       <Spinner />
-    </div>
+    </div> -->
     <div v-if="this.show">
       <div class="flex justify-center"><Title message="Summary" /></div>
       <div class="flex justify-start">
@@ -378,6 +378,9 @@ export default {
       getButtons: "newlicense/getButtons",
       getApplicationId: "newlicense/getApplicationId",
       getDraftData: "newlicense/getDraft",
+      getLetterfromOrg: "newlicense/getLetterfromOrg",
+      getRenewedLicense: "newlicense/getRenewedLicense",
+      getProfessionalLicense: "newlicense/getProfessionalLicense",
     }),
   },
   methods: {
@@ -481,7 +484,19 @@ export default {
         this.documentTypes[15].documentType.code,
         this.supportLetter
       );
-
+      formData.append(this.documentSpec[16].documentType.code, this.herqa);
+      formData.append(
+        this.documentSpec[17].documentType.code,
+        this.letterfromOrg
+      );
+      formData.append(
+        this.documentSpec[18].documentType.code,
+        this.renewedLicense
+      );
+      formData.append(
+        this.documentSpec[19].documentType.code,
+        this.professionalLicense
+      );
       let license = {
         action: action,
         data: {
@@ -606,7 +621,19 @@ export default {
           this.documentTypes[15].documentType.code,
           this.supportLetter
         );
-
+        formData.append(this.documentSpec[16].documentType.code, this.herqa);
+        formData.append(
+          this.documentSpec[17].documentType.code,
+          this.letterfromOrg
+        );
+        formData.append(
+          this.documentSpec[18].documentType.code,
+          this.renewedLicense
+        );
+        formData.append(
+          this.documentSpec[19].documentType.code,
+          this.professionalLicense
+        );
         let license = {
           action: action,
           data: {
@@ -668,7 +695,7 @@ export default {
       window.setInterval(() => {
         this.showFlash = false;
         this.showErrorFlash = false;
-      }, 10000);
+      });
     });
   },
 };

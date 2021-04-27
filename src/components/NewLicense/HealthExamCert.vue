@@ -121,6 +121,9 @@ export default {
     let educationDoc = ref([]);
     let workExperience = ref("");
     let serviceFee = ref("");
+    let professionalLicense = ref("");
+    let letterfromOrg = ref("");
+    let renewedLicense = ref("");
 
     let buttons = ref([]);
     let documentSpecs = ref([]);
@@ -180,6 +183,9 @@ export default {
     educationDoc = store.getters["newlicense/getEducationalDocuments"];
     workExperience = store.getters["newlicense/getWorkExperience"];
     serviceFee = store.getters["newlicense/getServiceFee"];
+    renewedLicense = store.getters["newlicense/getRenewedLicense"];
+    professionalLicense = store.getters["newlicense/getProfessionalLicense"];
+    letterfromOrg = store.getters["newlicense/getLetterfromOrg"];
 
     const draft = (action) => {
       message.value.showLoading = true;
@@ -231,6 +237,13 @@ export default {
           }
           formData.append(documentSpecs[15].documentType.code, supportLetter);
           formData.append(documentSpecs[16].documentType.code, herqa);
+          formData.append(documentSpecs[17].documentType.code, letterfromOrg);
+          formData.append(documentSpecs[18].documentType.code, renewedLicense);
+          formData.append(
+            documentSpecs[19].documentType.code,
+            professionalLicense
+          );
+
           let payload = { document: formData, id: draftData.id };
           store
             .dispatch("newlicense/uploadDocuments", payload)
@@ -326,6 +339,13 @@ export default {
           }
           formData.append(documentSpecs[15].documentType.code, supportLetter);
           formData.append(documentSpecs[16].documentType.code, herqa);
+          formData.append(documentSpecs[17].documentType.code, letterfromOrg);
+          formData.append(documentSpecs[18].documentType.code, renewedLicense);
+          formData.append(
+            documentSpecs[19].documentType.code,
+            professionalLicense
+          );
+
           let payload = { document: formData, id: licenseId };
           store
             .dispatch("newlicense/uploadDocuments", payload)

@@ -117,6 +117,9 @@ export default {
       educationalDocs: [],
       coc: "",
       supportLetter: "",
+      letterfromOrg: "",
+      renewedLicense: "",
+      professionalLicense: "",
     };
   },
   created() {
@@ -147,6 +150,9 @@ export default {
     this.coc = this.getCoc;
     this.educationalDocs = this.getEducationalDocuments;
     this.workExperience = this.getWorkExperience;
+    this.letterfromOrg = this.getLetterfromOrg;
+    this.renewedLicense = this.getRenewedLicense;
+    this.professionalLicense = this.getProfessionalLicense;
   },
   computed: {
     ...mapGetters({
@@ -165,6 +171,9 @@ export default {
       getEducationalDocuments: "newlicense/getEducationalDocuments",
       getWorkExperience: "newlicense/getWorkExperience",
       getDraftData: "newlicense/getDraft",
+      getLetterfromOrg: "newlicense/getLetterfromOrg",
+      getRenewedLicense: "newlicense/getRenewedLicense",
+      getProfessionalLicense: "newlicense/getProfessionalLicense",
     }),
   },
 
@@ -274,6 +283,18 @@ export default {
             this.supportLetter
           );
           formData.append(this.documentSpec[16].documentType.code, this.herqa);
+          formData.append(
+            this.documentSpec[17].documentType.code,
+            this.letterfromOrg
+          );
+          formData.append(
+            this.documentSpec[18].documentType.code,
+            this.renewedLicense
+          );
+          formData.append(
+            this.documentSpec[19].documentType.code,
+            this.professionalLicense
+          );
 
           let payload = { document: formData, id: this.draftData.id };
           this.$store
@@ -397,9 +418,19 @@ export default {
               this.documentSpec[16].documentType.code,
               this.herqa
             );
-            for (var pair of formData.entries()) {
-              console.log(pair[0] + ", " + pair[1]);
-            }
+            formData.append(
+              this.documentSpec[17].documentType.code,
+              this.letterfromOrg
+            );
+            formData.append(
+              this.documentSpec[18].documentType.code,
+              this.renewedLicense
+            );
+            formData.append(
+              this.documentSpec[19].documentType.code,
+              this.professionalLicense
+            );
+
             let payload = { document: formData, id: licenseId };
             this.$store
               .dispatch("newlicense/uploadDocuments", payload)

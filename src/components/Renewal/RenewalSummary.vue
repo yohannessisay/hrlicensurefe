@@ -1,11 +1,11 @@
 <template>
   <div>
-    <div
+    <!-- <div
       v-if="this.showLoading2"
       class="flex justify-center justify-items-center mt-24"
     >
       <Spinner />
-    </div>
+    </div> -->
     <div v-if="this.show">
       <div class="flex justify-center"><Title message="Summary" /></div>
       <div class="flex justify-start">
@@ -573,7 +573,7 @@ export default {
       window.setInterval(() => {
         this.showFlash = false;
         this.showErrorFlash = false;
-      }, 10000);
+      });
     });
   },
 };

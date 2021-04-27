@@ -135,6 +135,9 @@ export default {
     let educationDoc = ref([]);
     let workExperience = ref("");
     let serviceFee = ref("");
+    let professionalLicense = ref("");
+    let letterfromOrg = ref("");
+    let renewedLicense = ref("");
 
     const reset = () => {
       showUpload.value = true;
@@ -184,6 +187,9 @@ export default {
     educationDoc = store.getters["newlicense/getEducationalDocuments"];
     workExperience = store.getters["newlicense/getWorkExperience"];
     serviceFee = store.getters["newlicense/getServiceFee"];
+    renewedLicense = store.getters["newlicense/getRenewedLicense"];
+    professionalLicense = store.getters["newlicense/getProfessionalLicense"];
+    letterfromOrg = store.getters["newlicense/getLetterfromOrg"];
 
     const submit = () => {
       emit("changeActiveState");
@@ -236,6 +242,15 @@ export default {
             formData.append(
               documentSpecs[14].documentType.code,
               educationDoc[4]
+            );
+            formData.append(documentSpecs[17].documentType.code, letterfromOrg);
+            formData.append(
+              documentSpecs[18].documentType.code,
+              renewedLicense
+            );
+            formData.append(
+              documentSpecs[19].documentType.code,
+              professionalLicense
             );
           }
 
@@ -335,6 +350,15 @@ export default {
             formData.append(
               documentSpecs[14].documentType.code,
               educationDoc[4]
+            );
+            formData.append(documentSpecs[17].documentType.code, letterfromOrg);
+            formData.append(
+              documentSpecs[18].documentType.code,
+              renewedLicense
+            );
+            formData.append(
+              documentSpecs[19].documentType.code,
+              professionalLicense
             );
           }
 

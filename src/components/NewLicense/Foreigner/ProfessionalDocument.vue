@@ -244,6 +244,9 @@ export default {
       coc: "",
       supportLetter: "",
       serviceFee: "",
+      letterfromOrg: "",
+      renewedLicense: "",
+      professionalLicense: "",
 
       draftId: "",
       draftData: "",
@@ -270,6 +273,9 @@ export default {
       getEducationalDocuments: "newlicense/getEducationalDocuments",
       getWorkExperience: "newlicense/getWorkExperience",
       getServiceFee: "newlicense/getServiceFee",
+      getLetterfromOrg: "newlicense/getLetterfromOrg",
+      getRenewedLicense: "newlicense/getRenewedLicense",
+      getProfessionalLicense: "newlicense/getProfessionalLicense",
       getDraftData: "newlicense/getDraft",
     }),
   },
@@ -319,6 +325,9 @@ export default {
     this.educationalDocs = this.getEducationalDocuments;
     this.workExperience = this.getWorkExperience;
     this.serviceFee = this.getServiceFee;
+    this.letterfromOrg = this.getLetterfromOrg;
+    this.renewedLicense = this.getRenewedLicense;
+    this.professionalLicense = this.getProfessionalLicense;
   },
   methods: {
     ...mapActions(["setProfessionalDoc"]),
@@ -561,6 +570,18 @@ export default {
             formData.append(
               this.documentSpec[16].documentType.code,
               this.herqa
+            );
+            formData.append(
+              this.documentSpec[17].documentType.code,
+              this.letterfromOrg
+            );
+            formData.append(
+              this.documentSpec[18].documentType.code,
+              this.renewedLicense
+            );
+            formData.append(
+              this.documentSpec[19].documentType.code,
+              this.professionalLicense
             );
 
             let payload = { document: formData, id: licenseId };
