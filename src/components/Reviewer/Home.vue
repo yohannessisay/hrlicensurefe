@@ -181,23 +181,23 @@
                 <h4
                   class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
                 >
-                  <!-- {{ item.applicant.profile.name + " " + item.applicant.profile.fatherName }} -->
+                  {{ item.applicant.profile.name + " " + item.applicant.profile.fatherName }}
                 </h4>
                 <h6
                   class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
                 >
                   {{ item.createdAt }}
                 </h6>
-                <h6
+                <span
                   class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
                 >
                   Application Type: {{ item.applicationType }}
-                </h6>
-                <h6
+                </span>
+                <span
                   class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
                 >
                   Application ID: {{ item.newLicenseCode }}
-                </h6>
+                </span>
               </div>
             </div>
 
@@ -214,23 +214,23 @@
                 <h4
                   class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
                 >
-                  <!-- {{ item.applicant.profile.name + " " + item.applicant.profile.fatherName }} -->
+                  {{ item.applicant.profile.name + " " + item.applicant.profile.fatherName }}
                 </h4>
                 <h6
                   class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
                 >
                   {{ item.createdAt }}
                 </h6>
-                <h6
+                <span
                   class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
                 >
                   Application Type: {{ item.applicationType }}
-                </h6>
-                <h6
+                </span>
+                <span
                   class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
                 >
                   Application ID: {{ item.newLicenseCode }}
-                </h6>
+                </span>
                 <div
                   class="flex ml-small w-32 pt-small justify-center content-center"
                 >

@@ -342,7 +342,11 @@ export default {
       console.log(assign.value.reviewerId);
     };
 
-    const created = async (applicationTypeParam, applicationId, applicantId) => {
+    const created = async (
+      applicationTypeParam,
+      applicationId,
+      applicantId
+    ) => {
       console.log(applicationId);
       console.log("Application Type = " + applicationTypeParam);
       applicationType.value = applicationTypeParam;
