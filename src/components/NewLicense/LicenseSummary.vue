@@ -256,6 +256,7 @@
         </button>
         <button
           v-if="this.buttons.length > 2"
+          class="withdraw"
           @click="withdraw(this.buttons[2].action)"
           variant="outline"
         >
@@ -702,5 +703,10 @@ export default {
 .text-danger > label,
 .text-danger > h5 {
   color: red;
+}
+.withdraw {
+  background-image: linear-gradient(to right, #d63232, #e63636) !important;
+  color: white;
+  border-color: tomato;
 }
 </style>

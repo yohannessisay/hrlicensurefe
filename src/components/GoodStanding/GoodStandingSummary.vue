@@ -256,6 +256,7 @@
         </button>
         <button
           v-if="this.buttons.length > 2"
+          class="withdraw"
           @click="withdraw(this.buttons[2].action)"
           variant="outline"
         >

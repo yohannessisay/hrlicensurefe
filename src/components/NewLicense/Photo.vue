@@ -62,6 +62,7 @@
           </button>
           <button
             v-if="buttons.length > 2"
+            class="withdraw"
             @click="withdraw(buttons[2].action)"
             variant="outline"
           >
@@ -447,4 +448,10 @@ img {
   width: 250px;
   height: 250px;
 }
+.withdraw {
+  background-image: linear-gradient(to right, #d63232, #e63636) !important;
+  color: white;
+  border-color: tomato;
+}
+
 </style>
