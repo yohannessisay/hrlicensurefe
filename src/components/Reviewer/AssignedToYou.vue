@@ -17,7 +17,7 @@
           >
             <div
               class="p-4 w-48 h-64"
-              @Click="detail(`/admin/detail`, item.id, item.applicant.id)"
+              @Click="detail(`/admin/detail`, item.applicationType, item.id, item.applicant.id)"
             >
               <div class="flex content-center justify-center">
                 <!-- <img class="box-shadow-pop" v-bind:src="item.picture.large" /> -->
@@ -79,8 +79,8 @@ export default {
       });
     };
 
-    const detail = (data, applicationId, applicantId) => {
-      const url = data + "/" + applicationId + "/" + applicantId;
+    const detail = (data, applicationType, applicationId, applicantId) => {
+      const url = data + "/" + applicationType + "/" + applicationId + "/" + applicantId;
       router.push(url);
     };
 

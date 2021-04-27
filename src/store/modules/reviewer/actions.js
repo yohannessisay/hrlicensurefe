@@ -112,5 +112,44 @@ export default {
     } catch (error) {
       return error;
     }
-  }
+  },
+  async editVerification({ commit }, license) {
+    try {
+      console.log(license);
+      const resp = await ApiService.put(
+        baseUrl + "verifications/" + license.data.id,
+        license
+      );
+      // const resp = await ApiService.put(url + "newLicenses/" + license);
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+  async editGoodStanding({ commit }, license) {
+    try {
+      console.log(license);
+      const resp = await ApiService.put(
+        baseUrl + "goodStandings/" + license.data.id,
+        license
+      );
+      // const resp = await ApiService.put(url + "newLicenses/" + license);
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+  async editRenewal({ commit }, license) {
+    try {
+      console.log(license);
+      const resp = await ApiService.put(
+        baseUrl + "renewals/" + license.data.id,
+        license
+      );
+      // const resp = await ApiService.put(url + "newLicenses/" + license);
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
 };
