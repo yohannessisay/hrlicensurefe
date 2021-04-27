@@ -16,13 +16,30 @@
         </div>
         <div class="flex justify-start flex-wrap ml-12">
           <div>
-            <picture>
+            <picture class="flex justify-center items-center mb-small">
               <img
-                style="border-radius: 50%"
-                src="https://placeimg.com/95/95"
+                style="border-radius: 100%"
+                v-bind:src="
+                  'https://hrlicensurebe.dev.k8s.sandboxaddis.com/' +
+                    docs[0].filePath
+                "
+                class="img"
               />
             </picture>
-            <h4 class="mt-2">Applicant Name</h4>
+            <div class="flex justify-center items-center">
+              <h4 class="mt-2 mr-small w-1/2">{{ "Name: " + newLicense.applicant.profile.name + " " + newLicense.applicant.profile.fatherName }}</h4>
+
+              <h4 class="mt-2 ml-small w-1/2">{{ "Applicant Type:  " + newLicense.applicantType.name }}</h4>
+            </div>
+            <div class="flex justify-center items-cente">
+              <h4 class="mt-2 mr-tiny w-1/2">{{ "Department:  " + newLicense.education.department.name }}</h4>
+              <h4 class="mt-2 ml-small w-1/2">{{ "Institution:  " + newLicense.education.institution.name }}</h4>
+              <!-- <h4 class="mt-2">{{ "Institution:  " + newLicense.education.institution.name }}</h4> -->
+            </div>
+            <div class="flex justify-center items-center">
+              <div class="mt-2 ml-small w-1/2"></div>
+              <h4 class="mt-2 ml-small w-1/2">{{ "Institution Type:  " + newLicense.education.institution.institutionType.name }}</h4>
+            </div>
           </div>
         </div>
         <div class="ml-12 w-64 h-40  container box-shadow-pop rounded-lg">
@@ -138,10 +155,71 @@
         </div>
       </div>
 
-      <div class="flex justify-center items-center mb-medium" v-if="showButtons">
-        <button class="" variant="outline" @click="action(buttons[0].action)">{{buttons[0].name}}</button>
-        <button class="decline display bg-red-200" @click="action(buttons[1].action)">{{buttons[1].name}}</button>
+      <div
+        class="flex justify-center items-center mb-medium"
+        v-if="showButtons"
+      >
+        <!-- <div class="flex">
+          <button  class="" variant="outline" @click="action(buttons[0].action)">{{buttons[0].name}}</button>
+          <button class="" variant="outline" @click="action(buttons[2].action)">{{buttons[2].name}}</button>
+          <div>
+            <div class="flex"> 
+              <button class="" @click="action(buttons[3].action)">{{buttons[3].name}}</button>
+              <button class="decline display bg-red-200" @click="action(buttons[1].action)">{{buttons[1].name}}</button>
+            </div>
+          </div>
+        </div> -->
+        <div
+          v-for="button in buttons"
+          v-bind:key="button.name"
+          v-bind:value="button.id"
+        >
+          <button
+            variant="outline"
+            v-bind:class="button.class"
+            @click="action(button.action)"
+          >
+            {{ button.name }}
+          </button>
+        </div>
       </div>
+      <Modal v-if="showRemark">
+         <div>
+
+    <div class="card-wrapper bg-white sm:rounded-lg w-full p-large flex flex-col justify-center items-center relative">
+      <div class="">
+        <!--content-->
+        <div class="">
+          <!--header-->
+          <div class="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
+            <h3 class="text-3xl font-semibold">
+              Remark
+            </h3>
+            <div class=" bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none" v-on:click="toggleModal()">
+              <span class="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
+                ×
+              </span>
+            </div>
+          </div>
+          <!--body-->
+          <div class="relative p-6 flex-auto">
+            <textarea class="resize-x tArea border rounded-md"></textarea>
+          </div>
+          <!--footer-->
+          <div class="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
+            <button class="md-danger" type="button" v-on:click="toggleModal()">
+              Close
+            </button>
+            <button class="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" v-on:click="toggleModal()">
+              Submit
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div v-if="showModal" class="opacity-25 fixed inset-0 z-40 bg-black"></div>
+  </div>
+      </Modal>
     </div>
   </div>
 </template>
@@ -150,11 +228,23 @@
 import { useStore } from "vuex";
 import { useRoute } from "vue-router";
 import { ref, onMounted } from "vue";
+
+import Modal from "@/sharedComponents/Modal";
+
 export default {
+  components: {
+    Modal
+  },
   setup() {
     const route = useRoute();
     const store = useStore();
     const newLicense = ref({
+      applicant: { profile: { name: "", fatherName: "" } },
+      applicantType: { name: "" },
+      education: {
+        department: { name: "" },
+        institution: { name: "" }
+      },
       declinedFields: "",
       remark: "",
       documents: [{ filePath: "" }],
@@ -181,6 +271,7 @@ export default {
     let nextClickable = ref(false);
     let foundInRejected = ref(false);
     let foundInAcceptted = ref(false);
+    let showRemark = ref(false);
     const created = async () => {
       store
         .dispatch("reviewer/getApplication", route.params.applicationId)
@@ -292,18 +383,24 @@ export default {
       // console.log(rejected.value);
     };
 
-    const action = (actionValue) => {
-      newLicense.value.declinedFields = rejected.value;
-      let appId = newLicense.value.id;
-      let req = {
-        action: actionValue,
-        data: newLicense.value
-      };
-      console.log(req);
-      store.dispatch("newlicense/editNewLicense", req).then((res) => {
-        console.log(res.data.data);
-      });
+    const action = actionValue => {
+      if (actionValue == "DeclineEvent") {
+        showRemark.value = true;
+      }
+      // newLicense.value.declinedFields = rejected.value;
+      // let appId = newLicense.value.id;
+      // let req = {
+      //   action: actionValue,
+      //   data: newLicense.value
+      // };
+      // console.log(req);
+      // store.dispatch("newlicense/editNewLicense", req).then((res) => {
+      //   console.log(res.data.data);
+      // });
     };
+    const toggleModal = () =>{
+      showRemark.value = !showRemark.value;
+    }
 
     onMounted(() => {
       created();
@@ -331,12 +428,35 @@ export default {
       disableNext,
       nextClickable,
       foundInRejected,
-      foundInAcceptted
+      foundInAcceptted,
+      showRemark,
+      toggleModal
     };
   }
 };
 </script>
 <style>
+.md-danger {
+  background-image: linear-gradient(to right,#d63232, #e63636) !important;  
+  color: white;
+}
+.card-wrapper {
+  max-width: 720px;
+  box-shadow: 0px -8px 6px rgb(30 64 175 / 51%);
+}
+.tArea {
+  max-width: 620px;
+  max-height: 300px;
+}
+
+.img {
+  border-radius: 50%;
+  margin-bottom: 1rem;
+  width: 120px;
+  border-color: steelblue;
+  background-color: steelblue;
+}
+
 #accepte {
   border-color: tomato;
 }
