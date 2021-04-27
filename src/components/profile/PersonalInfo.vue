@@ -250,7 +250,7 @@ export default {
       maritalStatus: "",
       userTypeId: "",
       expertLevelId: "",
-      healthOfficeId: ""
+      healthOfficeId: "",
     });
     let personalInfoErrors = ref({
       name: "",
@@ -261,25 +261,25 @@ export default {
       maritalStatusId: "",
       maritalStatus: "",
       userTypeId: "",
-      expertLevelId: ""
+      expertLevelId: "",
     });
 
     let state = ref({
       userTypes: {},
       expertLevel: {},
       healthOffices: {},
-      maritalStatuses: {}
+      maritalStatuses: {},
     });
 
     const fetchUserTypes = () => {
-      store.dispatch("profile/getUserTypes").then(res => {
+      store.dispatch("profile/getUserTypes").then((res) => {
         const utResults = res.data;
         state.value.userTypes = utResults.data;
       });
     };
 
     const fetchExpertLevel = () => {
-      store.dispatch("profile/getExpertLevels").then(res => {
+      store.dispatch("profile/getExpertLevels").then((res) => {
         const elResults = res.data;
         state.value.expertLevel = elResults.data;
       });
@@ -287,8 +287,9 @@ export default {
 
     const fetchHealthOffices = () => {
       if (personalInfo.value.expertLevelId == 4) {
-        store.dispatch("profile/getHealthOffice").then(res => {
+        store.dispatch("profile/getHealthOffice").then((res) => {
           const hoResults = res.data;
+          console.log(hoResults.data);
           state.value.healthOffices = hoResults.data;
         });
       }
@@ -318,7 +319,7 @@ export default {
       }
     };
 
-    const validateForm = formData => {
+    const validateForm = (formData) => {
       const errors = {};
 
       if (!formData.name) errors.name = "First Name Required";
@@ -335,7 +336,7 @@ export default {
 
       return errors;
     };
-    const isEmpty = obj => {
+    const isEmpty = (obj) => {
       for (var prop in obj) {
         if (obj.hasOwnProperty(prop)) {
           return false;
@@ -359,8 +360,8 @@ export default {
       fetchExpertLevel,
       fetchHealthOffices,
       nextStep,
-      genderChanged
+      genderChanged,
     };
-  }
+  },
 };
 </script>
