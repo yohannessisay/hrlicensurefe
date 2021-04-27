@@ -30,20 +30,29 @@
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
               >
                 {{
-                  item.applicant.profile.name +
-                    " " +
-                    item.applicant.profile.fatherName
+                  item.applicant.profile.name
+                    ? item.applicant.profile.name +
+                      " " +
+                      item.applicant.profile.fatherName
+                    : "-"
                 }}
               </h4>
               <h6
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center">
-                {{ item.createdAt }}
+                {{ item.createdAt ? item.createdAt : "-" }}
               </h6>
-              <h6
+              <span
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
               >
-                New Licence ID: {{ item.newLicenseCode }}
-              </h6>
+                Application Type:
+                {{ item.applicationType ? item.applicationType : "-" }}
+              </span>
+              <span
+                class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+              >
+                Application ID:
+                {{ item.newLicenseCode ? item.newLicenseCode : "-" }}
+              </span>
             </div>
           </div>
         </div>

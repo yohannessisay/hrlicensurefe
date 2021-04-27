@@ -6,10 +6,15 @@
         <Title message="Unfinished" />
       </div>
       <div class="flex flex-wrap pb-medium rounded h-full">
+        <div class="pl-large w-52 h-26" v-if="nothingToShowUnfinished == true">
+          <div class="flex content-center justify-center">
+            <h2>Nothing To Show!!</h2>
+          </div>
+        </div>
         <div
           class="container"
           v-for="item in unfinished"
-          v-bind:key="item.applicationStatus.name"
+          v-bind:key="item.id"
           v-bind:value="item.id"
         >
           <div
@@ -37,19 +42,22 @@
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
               >
                 {{
-                  item.applicant.profile.name +
-                    " " +
-                    item.applicant.profile.fatherName
+                  item.applicant.profile.name
+                    ? item.applicant.profile.name +
+                      " " +
+                      item.applicant.profile.fatherName
+                    : "-"
                 }}
               </h4>
               <h6
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center">
-                {{ item.createdAt }}
+                {{ item.createdAt ? item.createdAt : "-" }}
               </h6>
               <h6
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
               >
-                New Licence ID: {{ item.newLicenseCode }}
+                Application ID:
+                {{ item.newLicenseCode ? item.newLicenseCode : "-" }}
               </h6>
             </div>
           </div>
@@ -75,18 +83,16 @@ export default {
 
     let unfinished = ref({});
     let x = ref([]);
-    let userId = +localStorage.getItem("userId");
+    let userId = +localStorage.getItem("adminId");
+    let nothingToShowUnfinished = ref(false);
     const fetchUnfinished = () => {
       store.dispatch("reviewer/getUnfinished", userId).then(res => {
-        // unfinished.value = res.data.results;
-        x.value = res.data.data;
-
-        unfinished.value = x.value.filter(a => {
-          if (a.applicationStatus.code == "REVDRA") {
-            console.log(a);
-            return a;
-          }
-        });
+        if (res.status != "Error") {
+          unfinished.value = res.data.data;
+          console.log(unfinished.value);
+        } else {
+          nothingToShowUnfinished.value = true;
+        }
       });
     };
 
@@ -102,7 +108,8 @@ export default {
 
     return {
       unfinished,
-      detail
+      detail,
+      nothingToShowUnfinished
     };
   }
 };
