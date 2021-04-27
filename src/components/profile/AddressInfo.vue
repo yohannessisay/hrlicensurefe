@@ -74,6 +74,13 @@
             <span style="color: red">{{ addressErrors.residence }}</span>
           </div>
         </div>
+        <div class="flex">
+          <div class="flex flex-col mb-medium w-1/2 mr-12">
+            <label class="text-primary-700">PO Box(Optional)</label>
+            <input class="max-w-3xl" type="text" v-model="address.poBox" />
+          </div>
+          <div class="flex flex-col mb-medium w-1/2 m1-12"></div>
+        </div>
         <div class="flex mb-medium w-full mt-medium">
           <button
             class="mx-auto w-1/2 blue-with-light-blue-gradient"
@@ -103,7 +110,8 @@ export default {
       kebele: "",
       city: "",
       residence: "",
-      zone: ""
+      zone: "",
+      poBox: ""
     });
 
     let addressErrors = ref({
