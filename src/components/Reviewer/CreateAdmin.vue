@@ -127,7 +127,7 @@ export default {
       grandfatherName: null,
       email: null,
       phoneNumber: null,
-      roleId: null,
+      roleId: null
     };
 
     let state = ref({
