@@ -220,7 +220,7 @@
         </div>
       </Modal>
       <div v-if="showFlash">
-        <FlashMessage message="Your profile is successfully created" />
+        <FlashMessage message="Operation Successful!" />
       </div>
     </div>
   </div>
