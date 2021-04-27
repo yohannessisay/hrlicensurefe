@@ -1,6 +1,6 @@
 <template>
   <div class="bg-lightBlueB-200">
-    <ReviewerNavBar tab="Home" />
+    <ReviewerNavBar tab="Unassigned" />
     <div class="bg-lightBlueB-200 h-full">
       <div
         v-if="show"
