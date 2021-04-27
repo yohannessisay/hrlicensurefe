@@ -32,7 +32,9 @@
           >
             <div
               class="p-4 w-48 h-64"
-              @Click="detail(`/admin/unfinishedDetail`, item.id, item.applicant.id)"
+              @Click="
+                detail(`/admin/unfinishedDetail`, item.applicationType, item.id, item.applicant.id)
+              "
             >
               <div class="flex content-center justify-center">
                 <!-- <img class="box-shadow-pop" v-bind:src="item.picture.large" /> -->
@@ -77,7 +79,10 @@
         </div>
       </div>
       <div class="flex ml-small mt-medium rounded ">
-        <div class="pl-large w-52 h-26" v-if="nothingToShowAssignedToYou == true">
+        <div
+          class="pl-large w-52 h-26"
+          v-if="nothingToShowAssignedToYou == true"
+        >
           <div class="flex content-center justify-center">
             <h2>Nothing To Show!!</h2>
           </div>
@@ -94,7 +99,7 @@
           >
             <div
               class="p-4 w-48 h-64"
-              @Click="detail(`/admin/detail`, item.id, item.applicant.id)"
+              @Click="detail(`/admin/detail`, item.applicationType, item.id, item.applicant.id)"
             >
               <div class="flex content-center justify-center">
                 <router-link to="/newlicense">
@@ -381,8 +386,9 @@ export default {
       });
     };
 
-    const detail = (data, applicationId, applicantId) => {
-      const url = data + "/" + applicationId + "/" + applicantId;
+    const detail = (data, applicationType, applicationId, applicantId) => {
+      const url =
+        data + "/" + applicationType + "/" + applicationId + "/" + applicantId;
       router.push(url);
     };
 

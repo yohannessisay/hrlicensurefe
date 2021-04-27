@@ -184,42 +184,44 @@
         </div>
       </div>
       <Modal v-if="showRemark">
-         <div>
-
-    <div class="card-wrapper bg-white sm:rounded-lg w-full p-large flex flex-col justify-center items-center relative">
-      <div class="">
-        <!--content-->
-        <div class="">
-          <!--header-->
-          <div class="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
-            <h3 class="text-3xl font-semibold">
-              Remark
-            </h3>
-            <div class=" bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none" v-on:click="toggleModal()">
-              <span class="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
-                ×
-              </span>
+        <div>
+          <div class="card-wrapper bg-white sm:rounded-lg w-full p-large flex flex-col justify-center items-center relative">
+            <div class="">
+              <!--content-->
+              <div class="w-full">
+                <!--header-->
+                <div class="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
+                  <h3 class="text-3xl font-semibold">
+                    Remark
+                  </h3>
+                  <div class=" bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none" v-on:click="toggleModal()">
+                    <span class="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
+                      ×
+                    </span>
+                  </div>
+                </div>
+                <!--body-->
+                <div class="relative p-6 flex-auto w-full">
+                  <textarea v-model= "newLicense.remark" class="resize-none tArea border rounded-md"></textarea>
+                </div>
+                <!--footer-->
+                <div class="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
+                  <button class="md-danger" type="button" v-on:click="toggleModal()">
+                    Close
+                  </button>
+                  <button type="button" v-on:click="submitRemark()">
+                    Submit
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
-          <!--body-->
-          <div class="relative p-6 flex-auto">
-            <textarea class="resize-x tArea border rounded-md"></textarea>
-          </div>
-          <!--footer-->
-          <div class="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
-            <button class="md-danger" type="button" v-on:click="toggleModal()">
-              Close
-            </button>
-            <button class="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" v-on:click="toggleModal()">
-              Submit
-            </button>
-          </div>
+          <div v-if="showModal" class="opacity-25 fixed inset-0 z-40 bg-black"></div>
         </div>
-      </div>
-    </div>
-    <div v-if="showModal" class="opacity-25 fixed inset-0 z-40 bg-black"></div>
-  </div>
       </Modal>
+      <div v-if="showFlash">
+        <FlashMessage message="Your profile is successfully created" />
+      </div>
     </div>
   </div>
 </template>
@@ -229,21 +231,27 @@ import { useStore } from "vuex";
 import { useRoute } from "vue-router";
 import { ref, onMounted } from "vue";
 
+import { useRouter } from "vue-router";
+
 import Modal from "@/sharedComponents/Modal";
+import FlashMessage from "@/sharedComponents/FlashMessage";
 
 export default {
   components: {
-    Modal
+    Modal,
+    FlashMessage
   },
   setup() {
     const route = useRoute();
     const store = useStore();
+    const router = useRouter();
+
     const newLicense = ref({
       applicant: { profile: { name: "", fatherName: "" } },
       applicantType: { name: "" },
       education: {
         department: { name: "" },
-        institution: { name: "" }
+        institution: { institutionType: {}, name: "" }
       },
       declinedFields: "",
       remark: "",
@@ -272,6 +280,8 @@ export default {
     let foundInRejected = ref(false);
     let foundInAcceptted = ref(false);
     let showRemark = ref(false);
+    let applicationType = ref("");
+    let showFlash = ref(false);
     const created = async () => {
       store
         .dispatch("reviewer/getApplication", route.params.applicationId)
@@ -281,6 +291,7 @@ export default {
           docs.value = res.data.data.documents;
           console.log(buttons.value);
         });
+      applicationType.value = route.params.applicationType;
     };
     const fetchDocumentTypes = async () => {
       store.dispatch("reviewer/getDocumentTypes").then(res => {
@@ -387,20 +398,50 @@ export default {
       if (actionValue == "DeclineEvent") {
         showRemark.value = true;
       }
-      // newLicense.value.declinedFields = rejected.value;
-      // let appId = newLicense.value.id;
-      // let req = {
-      //   action: actionValue,
-      //   data: newLicense.value
-      // };
-      // console.log(req);
+      newLicense.value.declinedFields = rejected.value;
+      let appId = newLicense.value.id;
+      let req = {
+        action: actionValue,
+        data: newLicense.value
+      };
+      console.log(req);
+      if (applicationType.value == "New License") {
+        store.dispatch("newlicense/editNewLicense", req).then(res => {
+          if (res.statusText == "Created") {
+            showFlash.value = true;
+            router.push("/admin/review");
+          }
+          console.log(res);
+        });
+      }
+      if (applicationType.value == "Verification") {
+        store.dispatch("reviewer/editVerification", req).then(res => {
+          console.log(res.data.data);
+        });
+      }
+      if (applicationType.value == "Good Standing") {
+        store.dispatch("reviewer/editGoodStanding", req).then(res => {
+          console.log(res.data.data);
+        });
+      }
+      if (applicationType.value == "Renewal") {
+        store.dispatch("reviewer/editRenewal", req).then(res => {
+          console.log(res.data.data);
+        });
+      }
       // store.dispatch("newlicense/editNewLicense", req).then((res) => {
       //   console.log(res.data.data);
       // });
     };
+
+    const submitRemark = () => {
+      console.log(newLicense.value.remark);
+      showRemark.value = !showRemark.value;
+    };
+
     const toggleModal = () =>{
       showRemark.value = !showRemark.value;
-    }
+    };
 
     onMounted(() => {
       created();
@@ -430,7 +471,10 @@ export default {
       foundInRejected,
       foundInAcceptted,
       showRemark,
-      toggleModal
+      toggleModal,
+      submitRemark,
+      applicationType,
+      showFlash
     };
   }
 };
