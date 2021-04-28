@@ -2,10 +2,10 @@
   <div
     class="card-wrapper max-w-7xl bg-primary-200 sm:rounded-lg p-large flex flex-col justify-center items-center relative"
   >
-    <Title message="Required Documents for New License" />
+    <Title message="Required Documents for Renewal" />
     <button
       class="absolute top-0 right-0 mr-2 mt-2"
-      @click="$emit('showTermsOfAgreementNL', false)"
+      @click="$emit('showTermsOfAgreementR', false)"
       variant="rounded"
     >
       <svg
@@ -23,52 +23,35 @@
         <h2>Foreigner</h2>
         <ul>
           <li>Photo</li>
-          <li>Passport(Identification Card)</li>
           <li>Health Exam Certificate</li>
-          <li>Professional Document Certificate</li>
-          <li>Professional Document Diploma</li>
-          <li>Professional Document Transcript</li>
-          <li>English Language Certificate</li>
+          <li>Work Experience</li>
+          <li>Letter from Hiring Organization</li>
           <li>Service Fee</li>
-          <li>Letter from Organization</li>
-          <li>Renewed License of the Organization</li>
-          <li>Authenticated Professional License from Country of Origin</li>
         </ul>
       </div>
       <div class="ml-8">
         <h2>Local</h2>
         <ul>
           <li>Photo</li>
-          <li>Passport(Identification Card)</li>
           <li>Health Exam Certificate</li>
-          <li>COC</li>
-          <li>8<sup>th</sup> Grade Certificate</li>
-          <li>10<sup>th</sup> Grade Certificate</li>
-          <li>12<sup>th</sup> Grade Certificate</li>
-          <li>9<sup>th</sup> - 10<sup>th</sup> Transcript</li>
-          <li>11<sup>th</sup> - 12<sup>th</sup> Transcript</li>
-          <li>Support Letter</li>
-          <li>Work Experience Certificate</li>
-          <li>Service Fee</li>
+          <li>Work Experience</li>
+          <li>Previous License</li>
         </ul>
       </div>
       <div class="ml-8">
         <h2>Foreigner Ethiopian</h2>
         <ul>
           <li>Photo</li>
-          <li>Passport(Identification Card)</li>
           <li>Health Exam Certificate</li>
-          <li>Professional Document Certificate</li>
-          <li>Professional Document Diploma</li>
-          <li>Professional Document Transcript</li>
-          <li>HERQA</li>
-          <li>Support Letter</li>
+          <li>Work Experience</li>
           <li>Service Fee</li>
+          <li>CPD</li>
+          <li>Previous License</li>
         </ul>
       </div>
     </div>
 
-    <router-link to="/newLicense">
+    <router-link to="/renewal">
       <h2 class="mt-4">Continue</h2>
     </router-link>
   </div>
