@@ -177,6 +177,7 @@ export default {
     onMounted(() => {
       buttons = store.getters["verification/getButtons"];
       draftData = store.getters["verification/getDraft"];
+      console.log(draftData)
       if (route.params.id) {
         for (let i = 0; i < draftData.documents.length; i++) {
           if (draftData.documents[i].documentTypeCode == "LC") {

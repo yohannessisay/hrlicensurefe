@@ -118,6 +118,7 @@ export default {
           const userId = res.data.data.id;
           store.dispatch("profile/getProfileById", userId).then((res) => {
             const getProfiles = res.data ? res.data.data : null;
+            console.log(getProfiles);
             if (getProfiles) {
               message.value.showLoading = false;
               message.value.showFlash = true;

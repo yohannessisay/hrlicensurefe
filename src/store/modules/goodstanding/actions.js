@@ -162,4 +162,15 @@ export default {
       return error;
     }
   },
+  async updateDraft({ commit }, payload) {
+    try {
+      const resp = await ApiService.put(
+        url + "goodStandings/" + payload.licenseId,
+        payload.draftData
+      );
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
 };

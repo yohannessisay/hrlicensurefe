@@ -151,4 +151,15 @@ export default {
       return error;
     }
   },
+  async updateDraft({ commit }, payload) {
+    try {
+      const resp = await ApiService.put(
+        url + "verifications/" + payload.licenseId,
+        payload.draftData
+      );
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
 };
