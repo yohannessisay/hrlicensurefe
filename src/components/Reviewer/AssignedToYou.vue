@@ -17,12 +17,12 @@
           >
             <div
               class="p-4 w-48 h-64"
-              @Click="detail(`/admin/detail`, item.id, item.applicant.id)"
+              @Click="detail(`/admin/detail`, item.applicationType, item.id, item.applicant.id)"
             >
               <div class="flex content-center justify-center">
                 <!-- <img class="box-shadow-pop" v-bind:src="item.picture.large" /> -->
                 <img
-                  class="box-shadow-pop" 
+                  class="box-shadow-pop"
                   src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
                 />
               </div>
@@ -30,20 +30,29 @@
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
               >
                 {{
-                  item.applicant.profile.name +
-                    " " +
-                    item.applicant.profile.fatherName
+                  item.applicant.profile.name
+                    ? item.applicant.profile.name +
+                      " " +
+                      item.applicant.profile.fatherName
+                    : "-"
                 }}
               </h4>
               <h6
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center">
-                {{ item.createdAt }}
+                {{ item.createdAt ? item.createdAt : "-" }}
               </h6>
-              <h6
+              <span
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
               >
-                New Licence ID: {{ item.newLicenseCode }}
-              </h6>
+                Application Type:
+                {{ item.applicationType ? item.applicationType : "-" }}
+              </span>
+              <span
+                class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+              >
+                Application ID:
+                {{ item.newLicenseCode ? item.newLicenseCode : "-" }}
+              </span>
             </div>
           </div>
         </div>
@@ -79,8 +88,8 @@ export default {
       });
     };
 
-    const detail = (data, applicationId, applicantId) => {
-      const url = data + "/" + applicationId + "/" + applicantId;
+    const detail = (data, applicationType, applicationId, applicantId) => {
+      const url = data + "/" + applicationType + "/" + applicationId + "/" + applicantId;
       router.push(url);
     };
 

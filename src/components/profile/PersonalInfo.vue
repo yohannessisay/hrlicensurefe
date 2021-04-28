@@ -275,6 +275,7 @@ export default {
       store.dispatch("profile/getUserTypes").then((res) => {
         const utResults = res.data;
         state.value.userTypes = utResults.data;
+        state.value.userTypes.splice(state.value.userTypes.indexOf("Reviewer"), 1);
       });
     };
 

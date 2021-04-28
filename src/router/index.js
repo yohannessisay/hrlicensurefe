@@ -117,38 +117,38 @@ const routes = [
   {
     path: "/lang",
     name: "lang",
-    component: () => import("../components/NewLicense/Photo.vue"),
+    component: () => import("../components/NewLicense/Photo.vue")
   },
 
   {
-    path: "/admin/evaluate/:applicationId",
+    path: "/admin/evaluate/:applicationType/:applicationId",
     name: "evaluate",
-    component: () => import("../components/Reviewer/Evaluate.vue"),
+    component: () => import("../components/Reviewer/Evaluate.vue")
   },
   {
     path: "/draft",
     name: "draft",
-    component: () => import("../views/Draft.vue"),
+    component: () => import("../views/Draft.vue")
   },
   {
-    path: "/admin/detail/:applicationId/:applicantId",
+    path: "/admin/detail/:applicationType/:applicationId/:applicantId",
     name: "detail",
-    component: () => import("../components/Reviewer/Detail/LicenseDetail.vue"),
+    component: () => import("../components/Reviewer/Detail/LicenseDetail.vue")
   },
   {
-    path: "/admin/unfinishedDetail/:applicationId/:applicantId",
+    path: "/admin/unfinishedDetail/:applicationType/:applicationId/:applicantId",
     name: "unfinishedDetail",
     component: () =>
-      import("../components/Reviewer/Detail/UnfinishedDetail.vue"),
+      import("../components/Reviewer/Detail/UnfinishedDetail.vue")
   },
   {
     path: "/admin/recentlyFinishedDetail",
     name: "recentlyFinishedDetail",
     component: () =>
-      import("../components/Reviewer/Detail/RecentlyFinishedDetail.vue"),
+      import("../components/Reviewer/Detail/RecentlyFinishedDetail.vue")
   },
   {
-    path: "/admin/unassignedDetail/:applicationId/:applicantId",
+    path: "/admin/unassignedDetail/:applicationType/:applicationId/:applicantId",
     name: "unassignedDetail",
     component: () =>
       import("../components/Reviewer/Detail/UnassignedDetail.vue"),

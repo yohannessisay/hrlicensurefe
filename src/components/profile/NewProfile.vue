@@ -46,15 +46,15 @@
         </div>
       </transition>
 
-      <transition name="fade" mode="out-in">
+      <!-- <transition name="fade" mode="out-in">
         <div v-if="this.activeState == 3">
           <ContactInfo :activeState="3" @changeActiveState="activeState++" />
         </div>
-      </transition>
+      </transition> -->
 
       <transition name="fade" mode="out-in">
-        <div v-if="this.activeState == 4">
-          <Preview :activeState="4" @changeActiveState="activeState++" />
+        <div v-if="this.activeState == 3">
+          <Preview :activeState="3" @changeActiveState="activeState++" />
         </div>
       </transition>
     </div>

@@ -1,6 +1,6 @@
 <template>
   <div class="bg-lightBlueB-200">
-    <ReviewerNavBar tab="Home" />
+    <ReviewerNavBar tab="Unassigned" />
     <div class="bg-lightBlueB-200 h-full">
       <div
         v-if="show"
@@ -297,7 +297,7 @@ export default {
     const router = useRouter();
     const route = useRoute();
 
-    let userId = +localStorage.getItem("userId");
+    let adminId = +localStorage.getItem("adminId");
     let show = ref(false);
     let license = ref({
       applicant: {},
@@ -334,7 +334,7 @@ export default {
     let assign = ref({
       reviewerId: "",
       licenseId: "",
-      createdBy: ""
+      createdByAdminId: ""
     });
     let role = ref({});
 
@@ -342,7 +342,11 @@ export default {
       console.log(assign.value.reviewerId);
     };
 
-    const created = async (applicationId, applicationTypeParam) => {
+    const created = async (
+      applicationTypeParam,
+      applicationId,
+      applicantId
+    ) => {
       console.log(applicationId);
       console.log("Application Type = " + applicationTypeParam);
       applicationType.value = applicationTypeParam;
@@ -374,10 +378,10 @@ export default {
       });
     };
 
-    const fetchRole = userId => {
+    const fetchRole = id => {
       console.log("=====");
-      console.log(userId);
-      store.dispatch("reviewer/getRoles", userId).then(res => {
+      console.log(id);
+      store.dispatch("reviewer/getRoles", id).then(res => {
         role.value = res.data.data.role;
         console.log(role.value);
       });
@@ -391,28 +395,28 @@ export default {
           assign.value = {
             goodStandingId: route.params.applicationId,
             reviewerId: assign.value.reviewerId,
-            createdByAdminId: +localStorage.getItem("userId")
+            createdByAdminId: +localStorage.getItem("adminId")
           };
         }
         if (applicationType.value == "Verification") {
           assign.value = {
             verificationId: route.params.applicationId,
             reviewerId: assign.value.reviewerId,
-            createdByAdminId: +localStorage.getItem("userId")
+            createdByAdminId: +localStorage.getItem("adminId")
           };
         }
         if (applicationType.value == "Renewal") {
           assign.value = {
             renewalId: route.params.applicationId,
             reviewerId: assign.value.reviewerId,
-            createdByAdminId: +localStorage.getItem("userId")
+            createdByAdminId: +localStorage.getItem("adminId")
           };
         }
         if (applicationType.value == "New License") {
           assign.value = {
             licenseId: route.params.applicationId,
             reviewerId: assign.value.reviewerId,
-            createdByAdminId: +localStorage.getItem("userId")
+            createdByAdminId: +localStorage.getItem("adminId")
           };
         }
       }
@@ -421,29 +425,29 @@ export default {
         if (applicationType.value == "Good Standing") {
           assign.value = {
             goodStandingId: route.params.applicationId,
-            reviewerId: +localStorage.getItem("userId"),
-            createdByAdminId: +localStorage.getItem("userId")
+            reviewerId: +localStorage.getItem("adminId"),
+            createdByAdminId: +localStorage.getItem("adminId")
           };
         }
         if (applicationType.value == "Verification") {
           assign.value = {
             verificationId: route.params.applicationId,
-            reviewerId: +localStorage.getItem("userId"),
-            createdByAdminId: +localStorage.getItem("userId")
+            reviewerId: +localStorage.getItem("adminId"),
+            createdByAdminId: +localStorage.getItem("adminId")
           };
         }
         if (applicationType.value == "Renewal") {
           assign.value = {
             renewalId: route.params.applicationId,
-            reviewerId: +localStorage.getItem("userId"),
-            createdByAdminId: +localStorage.getItem("userId")
+            reviewerId: +localStorage.getItem("adminId"),
+            createdByAdminId: +localStorage.getItem("adminId")
           };
         }
         if (applicationType.value == "New License") {
           assign.value = {
             licenseId: route.params.applicationId,
-            reviewerId: +localStorage.getItem("userId"),
-            createdByAdminId: +localStorage.getItem("userId")
+            reviewerId: +localStorage.getItem("adminId"),
+            createdByAdminId: +localStorage.getItem("adminId")
           };
         }
       }
@@ -464,15 +468,19 @@ export default {
     };
 
     onMounted(() => {
-      userId = +localStorage.getItem("userId");
-      created(route.params.applicationId, route.params.applicantId);
+      adminId = +localStorage.getItem("adminId");
+      created(
+        route.params.applicationType,
+        route.params.applicationId,
+        route.params.applicantId
+      );
       fetchAdmins();
-      fetchRole(userId);
+      fetchRole(adminId);
       //fetchRole(2);
     });
 
     return {
-      userId,
+      adminId,
       license,
       role,
       profileInfo,

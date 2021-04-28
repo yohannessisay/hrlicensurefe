@@ -23,7 +23,7 @@
         <div
           class="container"
           v-for="(item, index) in unfinished"
-          v-bind:key="item.applicationStatus.name"
+          v-bind:key="item.id"
           v-bind:value="item.id"
         >
           <div
@@ -32,7 +32,9 @@
           >
             <div
               class="p-4 w-48 h-64"
-              @Click="detail(`/admin/unfinishedDetail`, item.id, item.applicant.id)"
+              @Click="
+                detail(`/admin/unfinishedDetail`, item.applicationType, item.id, item.applicant.id)
+              "
             >
               <div class="flex content-center justify-center">
                 <!-- <img class="box-shadow-pop" v-bind:src="item.picture.large" /> -->
@@ -45,19 +47,22 @@
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
               >
                 {{
-                  item.applicant.profile.name +
-                    " " +
-                    item.applicant.profile.fatherName
+                  item.applicant.profile.name
+                    ? item.applicant.profile.name +
+                      " " +
+                      item.applicant.profile.fatherName
+                    : "-"
                 }}
               </h4>
               <h6
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center">
-                {{ item.createdAt }}
+                {{ item.createdAt ? item.createdAt : "-" }}
               </h6>
               <h6
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
               >
-                New Licence ID: {{ item.newLicenseCode }}
+                Application ID:
+                {{ item.newLicenseCode ? item.newLicenseCode : "-" }}
               </h6>
             </div>
           </div>
@@ -77,7 +82,10 @@
         </div>
       </div>
       <div class="flex ml-small mt-medium rounded ">
-        <div class="pl-large w-52 h-26" v-if="nothingToShowAssignedToYou == true">
+        <div
+          class="pl-large w-52 h-26"
+          v-if="nothingToShowUnfinished == true"
+        >
           <div class="flex content-center justify-center">
             <h2>Nothing To Show!!</h2>
           </div>
@@ -85,7 +93,7 @@
         <div
           class="container"
           v-for="(item, index) in assignedToyou"
-          v-bind:key="item.applicationStatus.name"
+          v-bind:key="item.id"
           v-bind:value="item.id"
         >
           <div
@@ -94,7 +102,7 @@
           >
             <div
               class="p-4 w-48 h-64"
-              @Click="detail(`/admin/detail`, item.id, item.applicant.id)"
+              @Click="detail(`/admin/detail`, item.applicationType, item.id, item.applicant.id)"
             >
               <div class="flex content-center justify-center">
                 <router-link to="/newlicense">
@@ -109,24 +117,28 @@
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
               >
                 {{
-                  item.applicant.profile.name +
-                    " " +
-                    item.applicant.profile.fatherName
+                  item.applicant.profile.name
+                    ? item.applicant.profile.name +
+                      " " +
+                      item.applicant.profile.fatherName
+                    : "-"
                 }}
               </h4>
               <h6
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center">
-                {{ item.createdAt }}
+                {{ item.createdAt ? item.createdAt : "-" }}
               </h6>
               <span
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
               >
-                Application Type: {{ item.applicationType }}
+                Application Type:
+                {{ item.applicationType ? item.applicationType : "-" }}
               </span>
               <span
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
               >
-                Application ID: {{ item.newLicenseCode }}
+                Application ID:
+                {{ item.newLicenseCode ? item.newLicenseCode : "-" }}
               </span>
             </div>
           </div>
@@ -151,7 +163,7 @@
           <div
             class="container flip-box"
             v-for="(item, index) in unassigned"
-            v-bind:key="item.applicationStatus.name"
+            v-bind:key="item.id"
             v-bind:value="item.id"
           >
             <div
@@ -176,23 +188,31 @@
                 <h4
                   class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
                 >
-                  <!-- {{ item.applicant.profile.name + " " + item.applicant.profile.fatherName }} -->
+                  {{
+                    item.applicant.profile.name
+                      ? item.applicant.profile.name +
+                        " " +
+                        item.applicant.profile.fatherName
+                      : "-"
+                  }}
                 </h4>
                 <h6
                   class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
                 >
-                  {{ item.createdAt }}
+                  {{ item.createdAt ? item.createdAt : "-" }}
                 </h6>
-                <h6
+                <span
                   class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
                 >
-                  Application Type: {{ item.applicationType }}
-                </h6>
-                <h6
+                  Application Type:
+                  {{ item.applicationType ? item.applicationType : "-" }}
+                </span>
+                <span
                   class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
                 >
-                  Application ID: {{ item.newLicenseCode }}
-                </h6>
+                  Application ID:
+                  {{ item.newLicenseCode ? item.newLicenseCode : "-" }}
+                </span>
               </div>
             </div>
 
@@ -204,28 +224,36 @@
                 class="p-4 w-48 h-64"
                 @mouseover="hover = true"
                 @mouseleave="hover = false"
-                @Click="detail(`/admin/unassignedDetail`, item.id, item.applicationType)"
+                @Click="detail(`/admin/unassignedDetail`, item.applicationType, item.id, item.applicant.id)"
               >
                 <h4
                   class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
                 >
-                  <!-- {{ item.applicant.profile.name + " " + item.applicant.profile.fatherName }} -->
+                  {{
+                    item.applicant.profile.name
+                      ? item.applicant.profile.name +
+                        " " +
+                        item.applicant.profile.fatherName
+                      : "-"
+                  }}
                 </h4>
                 <h6
                   class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
                 >
-                  {{ item.createdAt }}
+                  {{ item.createdAt ? item.createdAt : "-" }}
                 </h6>
-                <h6
+                <span
                   class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
                 >
-                  Application Type: {{ item.applicationType }}
-                </h6>
-                <h6
+                  Application Type:
+                  {{ item.applicationType ? item.applicationType : "-" }}
+                </span>
+                <span
                   class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
                 >
-                  Application ID: {{ item.newLicenseCode }}
-                </h6>
+                  Application ID:
+                  {{ item.newLicenseCode ? item.newLicenseCode : "-" }}
+                </span>
                 <div
                   class="flex ml-small w-32 pt-small justify-center content-center"
                 >
@@ -317,24 +345,25 @@ export default {
     const store = useStore();
     const router = useRouter();
 
-    let unfinished = ref({});
-    let assignedToyou = ref({});
-    let unassigned = ref({});
+    let unfinished = ref({ applicant: { profile:{ name:"" , fatherName: ""} } , applicationStatus: { name: "" }});
+    let assignedToyou = ref({ applicationStatus: { name: "" } });
+    let unassigned = ref({ applicationStatus: { name: "" }});
     let recentlyFinished = ref({});
     let hover = ref(false);
-    let userId = +localStorage.getItem("userId");
+    let userId = +localStorage.getItem("adminId");
     // let userId = 2;
     let x = ref([]);
     let activeFilters = ref([]);
     let nothingToShow = ref(false);
+    let nothingToShowUnfinished = ref(false);
 
     const fetchUnfinished = () => {
       store.dispatch("reviewer/getUnfinished", userId).then(res => {
-        console.log("unfinished UserID= " + userId);
         if (res.status != "Error") {
           unfinished.value = res.data.data;
+          console.log(unfinished.value);
         } else {
-          nothingToShow.value = true;
+          nothingToShowUnfinished.value = true;
         }
       });
       // store.dispatch("reviewer/getUnfinished", userId).then(res => {
@@ -381,12 +410,14 @@ export default {
       });
     };
 
-    const detail = (data, applicationId, applicantId) => {
-      const url = data + "/" + applicationId + "/" + applicantId;
+    const detail = (data, applicationType, applicationId, applicantId) => {
+      const url =
+        data + "/" + applicationType + "/" + applicationId + "/" + applicantId;
       router.push(url);
     };
 
     onMounted(() => {
+      console.log(localStorage);
       fetchUnfinished();
       // fetchAssignedtoYou();
       fetchUnassignedApplications();
@@ -402,6 +433,7 @@ export default {
       recentlyFinished,
       hover,
       nothingToShow,
+      nothingToShowUnfinished,
       detail,
       activeFilters
     };

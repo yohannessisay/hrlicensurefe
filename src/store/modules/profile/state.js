@@ -21,7 +21,8 @@ export default {
       kebele: "",
       city: "",
       residence: "",
-      zone: ""
+      zone: "",
+      poBox: ""
     },
     contact: {
       mobileNumber: "",

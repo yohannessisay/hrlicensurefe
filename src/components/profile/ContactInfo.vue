@@ -89,8 +89,8 @@ export default {
 
       if (!formData.mobileNumber)
         errors.mobileNumber = "Mobile Number Required";
-      if (!formData.telephoneNumber)
-        errors.telephoneNumber = "Telephone Number Required";
+      // if (!formData.telephoneNumber)
+      //   errors.telephoneNumber = "Telephone Number Required";
       if (formData.email && !isEmail(formData.email)) {
         errors.email = "Invalid Email";
       }
@@ -144,10 +144,6 @@ export default {
       isEmail,
       nextStep
     };
-  },
-  created() {
-    console.log(this.getPersonalInfo);
-    console.log(this.getAddress);
   }
 };
 </script>

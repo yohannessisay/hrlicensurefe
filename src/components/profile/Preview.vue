@@ -14,7 +14,7 @@
             {{
               personalInfo.name +
                 " " +
-                personalInfo.lastName +
+                personalInfo.fatherName +
                 " " +
                 personalInfo.grandFatherName
             }}
@@ -75,21 +75,21 @@
         <Title message="Contact" />
       </div>
       <div class="flex flex-row">
-        <div>
+        <!-- <div>
           <label class="ml-8 text-primary-300"> Mobile Number</label>
           <h5 class="ml-8">{{ contact.mobileNumber }}</h5>
-        </div>
+        </div> -->
         <div>
-          <label class="ml-8 text-primary-300"> Telephone Number</label>
-          <h5 class="ml-8">{{ contact.telephoneNumber }}</h5>
+          <label class="ml-8 text-primary-300"> Mobile Number</label>
+          <h5 class="ml-8">{{ user.phoneNumber }}</h5>
         </div>
         <div>
           <label class="ml-8 text-primary-300"> PO Box</label>
-          <h5 class="ml-8">{{ contact.poBox }}</h5>
+          <h5 class="ml-8">{{ address.poBox }}</h5>
         </div>
         <div>
-          <label class="ml-8 text-primary-300"> Email</label>
-          <h5 class="ml-8">{{ contact.email }}</h5>
+          <label class="ml-8 text-primary-300"> Email Address</label>
+          <h5 class="ml-8">{{ user.emailAddress }}</h5>
         </div>
       </div>
       <div class="mt-12 flex justify-center mb-medium">
@@ -116,6 +116,12 @@ export default {
     const store = useStore();
     const router = useRouter();
 
+    let user = ref({
+      id: "",
+      emailAddress: "",
+      phoneNumber: ""
+    });
+
     let personalInfo = {
       name: null,
       grandFatherName: null,
@@ -128,7 +134,7 @@ export default {
       maritalStatus: null,
       userTypeId: null,
       expertLevelId: null,
-      healthOfficeId: null,
+      healthOfficeId: null
     };
 
     let address = {
@@ -138,13 +144,14 @@ export default {
       houseNumber: null,
       woreda: null,
       residence: null,
+      poBox: null
     };
 
     let contact = {
       mobileNumber: null,
       email: null,
       telephoneNumber: null,
-      poBox: null,
+      poBox: null
     };
 
     let success = ref(false);
@@ -178,16 +185,24 @@ export default {
           houseNumber: address.houseNumber,
           residence: address.residence,
           city: address.city,
-          poBox: contact.poBox,
+          poBox: address.poBox,
           userId: +localStorage.getItem("userId"),
         })
 
-        .then((response) => {
+        .then(response => {
           if (response.statusText == "Created") {
             showFlash.value = true;
             router.push("/menu");
           }
-          console.log(response);
+        });
+    };
+
+    const fetchUser = async () => {
+      store
+        .dispatch("profile/getUserById", +localStorage.getItem("userId"))
+        .then(res => {
+          user.value = res.data.data;
+          console.log(user.value);
         });
     };
 
@@ -199,8 +214,10 @@ export default {
     address = store.getters["profile/getAddress"];
     contact = store.getters["profile/getContact"];
     console.log(personalInfo.name);
+    console.log(user.value);
 
     onMounted(() => {
+      fetchUser();
       nextTick(function() {
         window.setInterval(() => {
           showFlash.value = false;
@@ -218,7 +235,9 @@ export default {
       showFlash,
       submit,
       getPersonalInfo,
+      user,
+      fetchUser
     };
-  },
+  }
 };
 </script>

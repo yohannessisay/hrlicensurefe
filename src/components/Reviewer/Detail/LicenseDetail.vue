@@ -1,6 +1,6 @@
 <template>
   <div class="bg-lightBlueB-200">
-    <ReviewerNavBar tab="Home" />
+    <ReviewerNavBar tab="AssignedToYou" />
     <div class="bg-lightBlueB-200 h-full">
       <div
         v-if="show"
@@ -295,10 +295,12 @@ export default {
     let showFlash = ref(false);
     let showErrorFlash = ref(false);
     let profile = ref({});
+    let applicationType = ref("");
 
-    const created = async (applicationId, applicantId) => {
-      console.log(applicantId);
+    const created = async (applicationTypeName, applicationId, applicantId) => {
       licenseId.value = applicationId;
+      applicationType.value = applicationTypeName;
+      console.log(applicationType.value);
       store.dispatch("reviewer/getProfile", applicantId).then((res) => {
         profileInfo.value = res.data.data;
         show.value = true;
@@ -320,14 +322,15 @@ export default {
     };
 
     const evaluate = () => {
-      const url = "/admin/evaluate" + "/" + licenseId.value;
+      const url =
+        "/admin/evaluate" + "/" + applicationType.value + "/" + licenseId.value;
       router.push(url);
     };
 
     onMounted(() => {
       //userId.value = +localStorage.getItem("userId");
       userId = 2;
-      created(route.params.applicationId, route.params.applicantId);
+      created(route.params.applicationType, route.params.applicationId, route.params.applicantId);
     });
 
     return {
@@ -346,7 +349,8 @@ export default {
       education,
       show,
       created,
-      evaluate
+      evaluate,
+      applicationType
     };
   }
 

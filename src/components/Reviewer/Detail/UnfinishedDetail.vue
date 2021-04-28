@@ -1,6 +1,6 @@
 <template>
   <div class="bg-lightBlueB-200">
-    <ReviewerNavBar tab="Home" />
+    <ReviewerNavBar tab="Unfinished" />
     <div class="bg-lightBlueB-200 h-full">
       <div
         v-if="show"
@@ -288,16 +288,20 @@ export default {
       departmentId: "",
       institutionId: ""
     });
+    let licenseId = ref("");
     let activeClass = ref("active");
     let errorClass = ref("text-danger");
     let dataFetched = ref(false);
     let showFlash = ref(false);
     let showErrorFlash = ref(false);
     let profile = ref({});
+    let applicationType = ref("");
 
-    const created = async (applicationId, applicantId) => {
+    const created = async (applicationTypeName, applicationId, applicantId) => {
       console.log(applicationId);
       console.log(applicantId);
+      licenseId.value = applicationId;
+      applicationType.value = applicationTypeName;
       store.dispatch("reviewer/getProfile", applicantId).then((res) => {
         profileInfo.value = res.data.data;
         show.value = true;
@@ -319,13 +323,13 @@ export default {
     };
 
     const evaluate = () => {
-      router.push("/admin/evaluate");
+      router.push("/admin/evaluate/" + applicationType.value + "/" + licenseId.value);
     };
 
     onMounted(() => {
       //userId.value = +localStorage.getItem("userId");
       // userId = 2;
-      created(route.params.applicationId, route.params.applicantId);
+      created(route.params.applicationType, route.params.applicationId, route.params.applicantId);
     });
 
     return {
@@ -343,7 +347,9 @@ export default {
       education,
       show,
       created,
-      evaluate
+      evaluate,
+      applicationType,
+      licenseId
     };
   }
 

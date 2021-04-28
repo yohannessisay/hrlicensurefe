@@ -1,6 +1,7 @@
 import ApiService from "../../../services/api.service";
 
 const baseUrl = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api";
+const adminId = localStorage.getItem("adminId");
 
 export default {
   async getUnfinished(context, id) {
@@ -17,7 +18,7 @@ export default {
   },
   async getAssignedToYou() {
     try {
-      const resp = await ApiService.get(baseUrl + "/applications/assignedToYou/1");
+      const resp = await ApiService.get(baseUrl + "/applications/assignedToYou/" + adminId);
       return resp;
     } catch (error) {
       const resp = error;
@@ -112,5 +113,44 @@ export default {
     } catch (error) {
       return error;
     }
-  }
+  },
+  async editVerification({ commit }, license) {
+    try {
+      console.log(license);
+      const resp = await ApiService.put(
+        baseUrl + "verifications/" + license.data.id,
+        license
+      );
+      // const resp = await ApiService.put(url + "newLicenses/" + license);
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+  async editGoodStanding({ commit }, license) {
+    try {
+      console.log(license);
+      const resp = await ApiService.put(
+        baseUrl + "goodStandings/" + license.data.id,
+        license
+      );
+      // const resp = await ApiService.put(url + "newLicenses/" + license);
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+  async editRenewal({ commit }, license) {
+    try {
+      console.log(license);
+      const resp = await ApiService.put(
+        baseUrl + "renewals/" + license.data.id,
+        license
+      );
+      // const resp = await ApiService.put(url + "newLicenses/" + license);
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
 };
