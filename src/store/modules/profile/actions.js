@@ -139,7 +139,7 @@ export default {
   async getProfileByUserId({ commit }, id) {
     commit(ADD_PROFILE_LOADING);
     try {
-      const resp = await ApiService.get(baseUrl + "/profiles/user" + id);
+      const resp = await ApiService.get(baseUrl + "/profiles/user/" + id);
       return resp;
     } catch (error) {
       return error;
