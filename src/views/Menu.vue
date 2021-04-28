@@ -96,7 +96,7 @@
             <div class="flex justify-center items-center w-64 h-40">
               <div class="p-1">
                 <div class="flex content-center justify-center">
-                  <router-link to="/newlicense">
+                  <router-link to="/approved">
                     <RenderIllustration illustration="SimpleCertificate" />
                   </router-link>
                 </div>
@@ -148,7 +148,7 @@
             <div class="flex justify-center items-center w-64 h-40">
               <div class="p-1">
                 <div class="my-auto flex justify-center">
-                  <router-link to="/goodstanding">
+                  <router-link to="/inReview">
                     <RenderIllustration illustration="GoodStanding" />
                   </router-link>
                 </div>
