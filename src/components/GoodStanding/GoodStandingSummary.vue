@@ -296,14 +296,11 @@ export default {
     Spinner,
   },
   async created() {
-    // this.userId = +localStorage.getItem("userId");
+    this.userId = localStorage.getItem("userId");
     this.draftId = this.$route.params.id;
     if (this.draftId != undefined) {
       this.draftData = this.getDraftData;
     }
-
-    this.userId = localStorage.getItem("userId");
-
     this.licenseCopy = this.getLicenseCopy;
     this.serviceFee = this.getServiceFee;
     this.goodstandingLetter = this.getLetter;
@@ -410,11 +407,12 @@ export default {
           applicantId: this.userId,
           applicantTypeId: this.applicantTypeId,
           education: {
-            institutionId: this.education.departmentId,
-            departmentId: this.education.institutionId,
+            institutionId: this.education.institutionId,
+            departmentId: this.education.departmentId,
           },
         },
       };
+      console.log(this.getLicense);
       this.$store
         .dispatch("goodstanding/addGoodstandingLicense", license)
         .then((res) => {
@@ -437,7 +435,6 @@ export default {
               this.showErrorFlash = true;
             });
         });
-      // }
     },
 
     async saveDraft(act) {
@@ -486,8 +483,8 @@ export default {
             applicantId: this.userId,
             applicantTypeId: this.applicantTypeId,
             education: {
-              institutionId: this.education.departmentId,
-              departmentId: this.education.institutionId,
+              institutionId: this.education.institutionId,
+              departmentId: this.education.departmentId,
             },
           },
         };

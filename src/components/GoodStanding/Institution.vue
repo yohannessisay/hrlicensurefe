@@ -192,6 +192,7 @@ export default {
           institutionId: this.licenseInfo.education.institutionId,
         },
       };
+      console.log(license.education.departmentId);
       this.$emit("applicantTypeValue", this.licenseInfo.applicantTypeId);
       this.$store.dispatch("goodstanding/setLicense", license);
     },

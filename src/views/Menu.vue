@@ -46,7 +46,7 @@
           >
             <div class="flex justify-center items-center w-64 h-40">
               <div class="p-1">
-                <div class="flex">
+                <div class="my-auto flex justify-center">
                   <router-link to="/verification">
                     <RenderIllustration illustration="Verification" />
                   </router-link>
@@ -152,7 +152,7 @@
                     <RenderIllustration illustration="GoodStanding" />
                   </router-link>
                 </div>
-                <h4 class="text-lightBlueB-500 mt-tiny">On Review</h4>
+                <h4 class="text-lightBlueB-500 mt-tiny">In Review</h4>
               </div>
             </div>
           </div>

@@ -502,8 +502,8 @@ export default {
           applicantId: this.userId,
           applicantTypeId: this.applicantTypeId,
           education: {
-            institutionId: this.education.departmentId,
-            departmentId: this.education.institutionId,
+            institutionId: this.education.institutionId,
+            departmentId: this.education.departmentId,
           },
         },
       };
@@ -639,8 +639,8 @@ export default {
             applicantId: this.userId,
             applicantTypeId: this.applicantTypeId,
             education: {
-              institutionId: this.education.departmentId,
-              departmentId: this.education.institutionId,
+              institutionId: this.education.institutionId,
+              departmentId: this.education.departmentId,
             },
           },
         };

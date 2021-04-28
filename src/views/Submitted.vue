@@ -1,11 +1,14 @@
 <template>
   <div>
     <Navigation tab="Home" />
-    <div class="bg-lightBlueB-200 h-full">
+    <div v-if="!message.showLoading" class="bg-lightBlueB-200 h-full">
       <div class="flex pl-12 pt-medium">
         <Title message="New License Submitted Applications" />
       </div>
-      <div class=" mt-medium rounded ml-large">
+      <div v-if="newlicense.length == 0" class="flex pl-12 ml-6">
+        <h4>Nothing to Show.</h4>
+      </div>
+      <div v-if="newlicense.length != 0" class=" mt-medium rounded ml-large">
         <div class="flex " v-for="i in newlicense.length" v-bind:key="i">
           <div
             class="container mb-medium"
@@ -23,17 +26,146 @@
                 <h4
                   class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
                 >
-                  {{ item.applicantType.name }}
+                  Applicant Type: {{ item.applicantType.name }}
                 </h4>
                 <h4
                   class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
                 >
-                  {{ item.applicationStatus.name }}
+                  Application Status: {{ item.applicationStatus.name }}
                 </h4>
                 <h4
                   class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
                 >
                   Code: {{ item.newLicenseCode }}
+                </h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div v-if="!message.showLoading" class="bg-lightBlueB-200 h-full">
+      <div class="flex pl-12 pt-medium">
+        <Title message="Renewal Submitted Applications" />
+      </div>
+      <div v-if="renewal.length == 0" class="flex pl-12 ml-6">
+        <h4>Nothing to Show.</h4>
+      </div>
+      <div v-if="renewal.length != 0" class=" mt-medium rounded ml-large">
+        <div class="flex " v-for="i in renewal.length" v-bind:key="i">
+          <div
+            class="container mb-medium"
+            v-for="item in renewal.slice((i - 1) * 5, i * 5)"
+            v-bind:key="item"
+            v-bind:value="item"
+          >
+            <div
+              class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
+            >
+              <div class="p-4 w-48 h-64">
+                <!-- <div class="flex content-center justify-center">
+                <img class="box-shadow-pop" />
+              </div> -->
+                <h4
+                  class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                >
+                  Applicant Type: {{ item.applicantType.name }}
+                </h4>
+                <h4
+                  class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                >
+                  Application Status: {{ item.applicationStatus.name }}
+                </h4>
+                <h4
+                  class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                >
+                  Code: {{ item.renewalCode }}
+                </h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div v-if="!message.showLoading" class="bg-lightBlueB-200 h-full">
+      <div class="flex pl-12 pt-medium">
+        <Title message="Verification Submitted Applications" />
+      </div>
+      <div v-if="verification.length == 0" class="flex pl-12 ml-6">
+        <h4>Nothing to Show.</h4>
+      </div>
+      <div v-if="verification.length != 0" class=" mt-medium rounded ml-large">
+        <div class="flex " v-for="i in verification.length" v-bind:key="i">
+          <div
+            class="container mb-medium"
+            v-for="item in verification.slice((i - 1) * 5, i * 5)"
+            v-bind:key="item"
+            v-bind:value="item"
+          >
+            <div
+              class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
+            >
+              <div class="p-4 w-48 h-64">
+                <!-- <div class="flex content-center justify-center">
+                <img class="box-shadow-pop" />
+              </div> -->
+                <h4
+                  class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                >
+                  Applicant Type: {{ item.applicantType.name }}
+                </h4>
+                <h4
+                  class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                >
+                  Application Status: {{ item.applicationStatus.name }}
+                </h4>
+                <h4
+                  class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                >
+                  Code: {{ item.verificationCode }}
+                </h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div v-if="!message.showLoading" class="bg-lightBlueB-200 h-full">
+      <div class="flex pl-12 pt-medium">
+        <Title message="Good Standing Submitted Applications" />
+      </div>
+      <div v-if="goodstanding.length == 0" class="flex pl-12 ml-6">
+        <h4>Nothing to Show.</h4>
+      </div>
+      <div v-if="goodstanding.length != 0" class=" mt-medium rounded ml-large">
+        <div class="flex " v-for="i in goodstanding.length" v-bind:key="i">
+          <div
+            class="container mb-medium"
+            v-for="item in goodstanding.slice((i - 1) * 5, i * 5)"
+            v-bind:key="item"
+            v-bind:value="item"
+          >
+            <div
+              class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
+            >
+              <div class="p-4 w-48 h-64">
+                <!-- <div class="flex content-center justify-center">
+                <img class="box-shadow-pop" />
+              </div> -->
+                <h4
+                  class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                >
+                  Applicant Type: {{ item.applicantType.name }}
+                </h4>
+                <h4
+                  class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                >
+                  Application Status: {{ item.applicationStatus.name }}
+                </h4>
+                <h4
+                  class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                >
+                  Code: {{ item.goodStandingCode }}
                 </h4>
               </div>
             </div>
@@ -77,8 +209,26 @@ export default {
       message.value.showLoading = !message.value.showLoading;
       store.dispatch("newlicense/getNewLicense").then((res) => {
         license.value = res.data.data;
-        message.value.showLoading = !message.value.showLoading;
         newlicense.value = license.value.filter(function(e) {
+          return e.applicationStatus.code == "SUB";
+        });
+      });
+      store.dispatch("renewal/getRenewalLicense").then((res) => {
+        license.value = res.data.data;
+        renewal.value = license.value.filter(function(e) {
+          return e.applicationStatus.code == "SUB";
+        });
+      });
+      store.dispatch("verification/getVerificationLicense").then((res) => {
+        license.value = res.data.data;
+        verification.value = license.value.filter(function(e) {
+          return e.applicationStatus.code == "SUB";
+        });
+      });
+      store.dispatch("goodstanding/getGoodStandingLicense").then((res) => {
+        license.value = res.data.data;
+        message.value.showLoading = !message.value.showLoading;
+        goodstanding.value = license.value.filter(function(e) {
           return e.applicationStatus.code == "SUB";
         });
       });
