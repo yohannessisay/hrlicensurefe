@@ -41,11 +41,15 @@ const routes = [
     name: "InReview",
     component: () => import("../views/InReview.vue"),
   },
-
   {
-    path: "/license",
-    name: "License",
-    component: () => import("../views/License.vue"),
+    path: "/undersupervision",
+    name: "UnderSupervision",
+    component: () => import("../views/UnderSupervision.vue"),
+  },
+  {
+    path: "/withdrawn",
+    name: "Withdraw",
+    component: () => import("../views/Withdraw.vue"),
   },
   {
     path: "/newlicense",
