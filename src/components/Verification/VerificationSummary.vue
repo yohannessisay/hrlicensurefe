@@ -256,20 +256,22 @@
         </button>
         <button
           v-if="this.buttons.length > 2"
+          class="withdraw"
           @click="withdraw(this.buttons[2].action)"
           variant="outline"
         >
           {{ this.buttons[2]["name"] }}
         </button>
       </div>
+      <div
+        class="flex justify-center justify-items-center mt-8 mb-8"
+        v-if="showLoading"
+      >
+        <Spinner />
+      </div>
     </div>
   </div>
-  <div
-    class="flex justify-center justify-items-center mt-8 mb-8"
-    v-if="showLoading"
-  >
-    <Spinner />
-  </div>
+
   <div v-if="showFlash">
     <FlashMessage message="Operation Successful!" />
   </div>
@@ -408,13 +410,13 @@ export default {
           applicantId: this.userId,
           applicantTypeId: this.applicantTypeId,
           education: {
-            institutionId: this.education.departmentId,
-            departmentId: this.education.institutionId,
+            institutionId: this.education.institutionId,
+            departmentId: this.education.departmentId,
           },
         },
       };
       this.$store
-        .dispatch("verification/addGoodstandingLicense", license)
+        .dispatch("verification/addVerificationLicense", license)
         .then((res) => {
           let licenseId = res.data.data.id;
           let payload = { document: formData, id: licenseId };
@@ -484,13 +486,13 @@ export default {
             applicantId: this.userId,
             applicantTypeId: this.applicantTypeId,
             education: {
-              institutionId: this.education.departmentId,
-              departmentId: this.education.institutionId,
+              institutionId: this.education.institutionId,
+              departmentId: this.education.departmentId,
             },
           },
         };
         this.$store
-          .dispatch("verification/addGoodstandingLicense", license)
+          .dispatch("verification/addVerificationLicense", license)
           .then((res) => {
             let licenseId = res.data.data.id;
             let payload = { document: formData, id: licenseId };
@@ -549,5 +551,10 @@ export default {
 .text-danger > label,
 .text-danger > h5 {
   color: red;
+}
+.withdraw {
+  background-image: linear-gradient(to right, #d63232, #e63636) !important;
+  color: white;
+  border-color: tomato;
 }
 </style>

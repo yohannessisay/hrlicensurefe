@@ -12,12 +12,15 @@
           <div
             class="container mr-12 box-shadow-pop rounded-lg bg-lightGrey-100 "
           >
-            <div class="flex justify-center items-center w-64 h-40">
+            <div
+              @click="openModalNL()"
+              class="flex justify-center items-center w-64 h-40"
+            >
               <div class="p-1">
                 <div class="flex content-center justify-center">
-                  <router-link to="/newlicense">
-                    <RenderIllustration illustration="SimpleCertificate" />
-                  </router-link>
+                  <!-- <router-link to="/newlicense"> -->
+                  <RenderIllustration illustration="SimpleCertificate" />
+                  <!-- </router-link> -->
                 </div>
                 <h4 class="text-lightBlueB-500 mt-tiny">New License</h4>
               </div>
@@ -28,12 +31,15 @@
           <div
             class="container mr-12 box-shadow-pop rounded-lg bg-lightGrey-100 "
           >
-            <div class="flex justify-center items-center w-64 h-40">
+            <div
+              @click="openModalR()"
+              class="flex justify-center items-center w-64 h-40"
+            >
               <div class="p-1">
                 <div class="my-auto flex justify-center">
-                  <router-link to="/renewal">
-                    <RenderIllustration illustration="Renewal" />
-                  </router-link>
+                  <!-- <router-link to="/renewal"> -->
+                  <RenderIllustration illustration="Renewal" />
+                  <!-- </router-link> -->
                 </div>
                 <h4 class="text-lightBlueB-500 mt-tiny">Renewal</h4>
               </div>
@@ -44,12 +50,15 @@
           <div
             class="container mr-12 box-shadow-pop rounded-lg bg-lightGrey-100 "
           >
-            <div class="flex justify-center items-center w-64 h-40">
+            <div
+              @click="openModalV()"
+              class=" flex justify-center items-center w-64 h-40"
+            >
               <div class="p-1">
-                <div class="flex">
-                  <router-link to="/verification">
-                    <RenderIllustration illustration="Verification" />
-                  </router-link>
+                <div class="my-auto flex justify-center">
+                  <!-- <router-link to="/verification"> -->
+                  <RenderIllustration illustration="Verification" />
+                  <!-- </router-link> -->
                 </div>
                 <h4
                   class="text-lightBlueB-500 justify-center items-center ml-2 mt-tiny"
@@ -64,12 +73,15 @@
           <div
             class="container mr-12 box-shadow-pop rounded-lg bg-lightGrey-100 "
           >
-            <div class="flex justify-center items-center w-64 h-40">
+            <div
+              @click="openModalGS()"
+              class="flex justify-center items-center w-64 h-40"
+            >
               <div class="p-1">
                 <div class="my-auto flex justify-center">
-                  <router-link to="/goodstanding">
-                    <RenderIllustration illustration="GoodStanding" />
-                  </router-link>
+                  <!-- <router-link to="/goodstanding"> -->
+                  <RenderIllustration illustration="GoodStanding" />
+                  <!-- </router-link> -->
                 </div>
                 <h4 class="text-lightBlueB-500 mt-tiny">Good Standing</h4>
               </div>
@@ -96,7 +108,7 @@
             <div class="flex justify-center items-center w-64 h-40">
               <div class="p-1">
                 <div class="flex content-center justify-center">
-                  <router-link to="/newlicense">
+                  <router-link to="/approved">
                     <RenderIllustration illustration="SimpleCertificate" />
                   </router-link>
                 </div>
@@ -148,19 +160,36 @@
             <div class="flex justify-center items-center w-64 h-40">
               <div class="p-1">
                 <div class="my-auto flex justify-center">
-                  <router-link to="/goodstanding">
+                  <router-link to="/inReview">
                     <RenderIllustration illustration="GoodStanding" />
                   </router-link>
                 </div>
-                <h4 class="text-lightBlueB-500 mt-tiny">On Review</h4>
+                <h4 class="text-lightBlueB-500 mt-tiny">In Review</h4>
               </div>
             </div>
           </div>
         </transition>
       </div>
     </div>
-    <Modal v-if="showTermsOfAgreement">
-      <TermsOfAgreement @showTermsOfAgreement="showTermsOfAgreement = false" />
+    <Modal v-if="showTermsOfAgreementNL">
+      <TermsOfAgreementNL
+        @showTermsOfAgreementNL="showTermsOfAgreementNL = false"
+      />
+    </Modal>
+    <Modal v-if="showTermsOfAgreementR">
+      <TermsOfAgreementR
+        @showTermsOfAgreementR="showTermsOfAgreementR = false"
+      />
+    </Modal>
+    <Modal v-if="showTermsOfAgreementV">
+      <TermsOfAgreementV
+        @showTermsOfAgreementV="showTermsOfAgreementV = false"
+      />
+    </Modal>
+    <Modal v-if="showTermsOfAgreementGS">
+      <TermsOfAgreementGS
+        @showTermsOfAgreementGS="showTermsOfAgreementGS = false"
+      />
     </Modal>
   </div>
 </template>
@@ -169,19 +198,49 @@
 import Navigation from "@/views/Navigation";
 import RenderIllustration from "@/sharedComponents/RenderIllustration";
 import Modal from "@/sharedComponents/Modal";
-import TermsOfAgreement from "@/components/NewLicense/TermsOfAgreement";
+import TermsOfAgreementNL from "@/components/NewLicense/TermsOfAgreement";
+import TermsOfAgreementR from "@/components/Renewal/TermsOfAgreement";
+import TermsOfAgreementV from "@/components/Verification/TermsOfAgreement";
+import TermsOfAgreementGS from "@/components/GoodStanding/TermsOfAgreement";
+
 import { ref } from "vue";
 
 export default {
-  components: { RenderIllustration, Navigation, Modal, TermsOfAgreement },
+  components: {
+    RenderIllustration,
+    Navigation,
+    Modal,
+    TermsOfAgreementNL,
+    TermsOfAgreementR,
+    TermsOfAgreementV,
+    TermsOfAgreementGS,
+  },
   setup() {
-    const showTermsOfAgreement = ref(false);
-    const openModal = () => {
-      showTermsOfAgreement.value = true;
+    const showTermsOfAgreementNL = ref(false);
+    const showTermsOfAgreementR = ref(false);
+    const showTermsOfAgreementV = ref(false);
+    const showTermsOfAgreementGS = ref(false);
+    const openModalNL = () => {
+      showTermsOfAgreementNL.value = true;
+    };
+    const openModalR = () => {
+      showTermsOfAgreementR.value = true;
+    };
+    const openModalV = () => {
+      showTermsOfAgreementV.value = true;
+    };
+    const openModalGS = () => {
+      showTermsOfAgreementGS.value = true;
     };
     return {
-      showTermsOfAgreement,
-      openModal,
+      showTermsOfAgreementNL,
+      showTermsOfAgreementR,
+      showTermsOfAgreementV,
+      showTermsOfAgreementGS,
+      openModalNL,
+      openModalR,
+      openModalV,
+      openModalGS,
     };
   },
 };

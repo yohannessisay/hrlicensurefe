@@ -3,7 +3,7 @@
     <Navigation />
     <div class="w-screen bg-lightBlueB-200 flex items-center justify-center">
       <div class="w-screen max-w-4xl mt-large">
-        <div class="flex flex-col w-full bg-white rounded mb-large">
+        <div class="flex flex-col w-full rounded mb-large">
           <transition name="fade" mode="out-in">
             <div v-if="this.activeState == 1">
               <Institution

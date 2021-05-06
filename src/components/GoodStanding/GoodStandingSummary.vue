@@ -1,12 +1,9 @@
 <template>
-  <div>
-    <div
-      v-if="this.showLoading2"
-      class="flex justify-center justify-items-center mt-24"
-    >
-      <Spinner />
-    </div>
-    <div v-if="this.show">
+  <div v-if="this.showLoading2" class="h-screen max-h-4xl">
+    <Spinner class="bg-lightBlueB-200  " />
+  </div>
+  <div class="bg-white mb-large rounded ">
+    <div v-if="this.show && !this.showLoading2">
       <div class="flex justify-center"><Title message="Summary" /></div>
       <div class="flex justify-start">
         <Title message="Personal Info" />
@@ -259,20 +256,22 @@
         </button>
         <button
           v-if="this.buttons.length > 2"
+          class="withdraw"
           @click="withdraw(this.buttons[2].action)"
           variant="outline"
         >
           {{ this.buttons[2]["name"] }}
         </button>
       </div>
+      <div
+        class="flex justify-center justify-items-center mt-8 mb-8"
+        v-if="showLoading"
+      >
+        <Spinner />
+      </div>
     </div>
   </div>
-  <div
-    class="flex justify-center justify-items-center mt-8 mb-8"
-    v-if="showLoading"
-  >
-    <Spinner />
-  </div>
+
   <div v-if="showFlash">
     <FlashMessage message="Operation Successful!" />
   </div>
@@ -297,15 +296,11 @@ export default {
     Spinner,
   },
   async created() {
-    // this.userId = +localStorage.getItem("userId");
+    this.userId = localStorage.getItem("userId");
     this.draftId = this.$route.params.id;
     if (this.draftId != undefined) {
       this.draftData = this.getDraftData;
-     
     }
-
-    this.userId = localStorage.getItem("userId");
-
     this.licenseCopy = this.getLicenseCopy;
     this.serviceFee = this.getServiceFee;
     this.goodstandingLetter = this.getLetter;
@@ -356,7 +351,7 @@ export default {
 
       getLicenseCopy: "goodstanding/getLicenseCopy",
       getServiceFee: "goodstanding/getServiceFee",
-      getLetter: "goodstanding/getGoodStandingLetter",
+      getLetter: "goodstanding/getVerificationLetter",
 
       getButtons: "goodstanding/getButtons",
       getApplicationId: "goodstanding/getApplicationId",
@@ -376,9 +371,7 @@ export default {
           }, 10000);
         });
     },
-    setDocs() {
-      
-    },
+    setDocs() {},
 
     getDocumentSpecs() {
       const applicationId = this.getApplicationId;
@@ -414,11 +407,12 @@ export default {
           applicantId: this.userId,
           applicantTypeId: this.applicantTypeId,
           education: {
-            institutionId: this.education.departmentId,
-            departmentId: this.education.institutionId,
+            institutionId: this.education.institutionId,
+            departmentId: this.education.departmentId,
           },
         },
       };
+      console.log(this.getLicense);
       this.$store
         .dispatch("goodstanding/addGoodstandingLicense", license)
         .then((res) => {
@@ -441,7 +435,6 @@ export default {
               this.showErrorFlash = true;
             });
         });
-      // }
     },
 
     async saveDraft(act) {
@@ -490,8 +483,8 @@ export default {
             applicantId: this.userId,
             applicantTypeId: this.applicantTypeId,
             education: {
-              institutionId: this.education.departmentId,
-              departmentId: this.education.institutionId,
+              institutionId: this.education.institutionId,
+              departmentId: this.education.departmentId,
             },
           },
         };
@@ -528,7 +521,7 @@ export default {
         licenseId: this.draftData.id,
         withdrawData: withdrawObj,
       };
-    
+
       this.$store.dispatch("goodstanding/withdraw", payload).then((res) => {
         if (res) {
           this.showFlash = true;

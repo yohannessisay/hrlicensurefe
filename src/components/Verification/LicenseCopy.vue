@@ -62,6 +62,7 @@
           </button>
           <button
             v-if="buttons.length > 2"
+            class="withdraw"
             @click="withdraw(buttons[2].action)"
             variant="outline"
           >
@@ -176,6 +177,7 @@ export default {
     onMounted(() => {
       buttons = store.getters["verification/getButtons"];
       draftData = store.getters["verification/getDraft"];
+      console.log(draftData)
       if (route.params.id) {
         for (let i = 0; i < draftData.documents.length; i++) {
           if (draftData.documents[i].documentTypeCode == "LC") {
@@ -329,5 +331,10 @@ export default {
 img {
   width: 250px;
   height: 250px;
+}
+.withdraw {
+  background-image: linear-gradient(to right, #d63232, #e63636) !important;
+  color: white;
+  border-color: tomato;
 }
 </style>

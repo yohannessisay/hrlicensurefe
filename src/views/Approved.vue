@@ -3,7 +3,7 @@
     <Navigation tab="Home" />
     <div v-if="!message.showLoading" class="bg-lightBlueB-200 h-full">
       <div class="flex pl-12 pt-medium">
-        <Title message="New License Submitted Applications" />
+        <Title message="New License Approved Applications" />
       </div>
       <div v-if="newlicense.length == 0" class="flex pl-12 ml-6">
         <h4>Nothing to Show.</h4>
@@ -46,7 +46,7 @@
     </div>
     <div v-if="!message.showLoading" class="bg-lightBlueB-200 h-full">
       <div class="flex pl-12 pt-medium">
-        <Title message="Renewal Submitted Applications" />
+        <Title message="Renewal Approved Applications" />
       </div>
       <div v-if="renewal.length == 0" class="flex pl-12 ml-6">
         <h4>Nothing to Show.</h4>
@@ -89,7 +89,7 @@
     </div>
     <div v-if="!message.showLoading" class="bg-lightBlueB-200 h-full">
       <div class="flex pl-12 pt-medium">
-        <Title message="Verification Submitted Applications" />
+        <Title message="Verification Approved Applications" />
       </div>
       <div v-if="verification.length == 0" class="flex pl-12 ml-6">
         <h4>Nothing to Show.</h4>
@@ -132,7 +132,7 @@
     </div>
     <div v-if="!message.showLoading" class="bg-lightBlueB-200 h-full">
       <div class="flex pl-12 pt-medium">
-        <Title message="Good Standing Submitted Applications" />
+        <Title message="Good Standing Approved Applications" />
       </div>
       <div v-if="goodstanding.length == 0" class="flex pl-12 ml-6">
         <h4>Nothing to Show.</h4>
@@ -208,28 +208,32 @@ export default {
     const fetchLicensebyId = () => {
       message.value.showLoading = !message.value.showLoading;
       store.dispatch("newlicense/getNewLicense").then((res) => {
+        console.log(res.data.data);
         license.value = res.data.data;
         newlicense.value = license.value.filter(function(e) {
-          return e.applicationStatus.code == "SUB";
+          return e.applicationStatus.code == "APP";
         });
       });
       store.dispatch("renewal/getRenewalLicense").then((res) => {
+        console.log(res.data.data);
         license.value = res.data.data;
         renewal.value = license.value.filter(function(e) {
-          return e.applicationStatus.code == "SUB";
+          return e.applicationStatus.code == "APP";
         });
       });
       store.dispatch("verification/getVerificationLicense").then((res) => {
+        console.log(res.data.data);
         license.value = res.data.data;
         verification.value = license.value.filter(function(e) {
-          return e.applicationStatus.code == "SUB";
+          return e.applicationStatus.code == "APP";
         });
       });
       store.dispatch("goodstanding/getGoodStandingLicense").then((res) => {
+        console.log(res.data.data);
         license.value = res.data.data;
         message.value.showLoading = !message.value.showLoading;
         goodstanding.value = license.value.filter(function(e) {
-          return e.applicationStatus.code == "SUB";
+          return e.applicationStatus.code == "APP";
         });
       });
     };

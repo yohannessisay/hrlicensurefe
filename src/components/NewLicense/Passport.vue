@@ -58,6 +58,7 @@
           </button>
           <button
             v-if="buttons.length > 2"
+            class="withdraw"
             @click="withdraw(buttons[2].action)"
             variant="outline"
           >
@@ -130,6 +131,9 @@ export default {
     let educationDoc = ref([]);
     let workExperience = ref("");
     let serviceFee = ref("");
+    let professionalLicense = ref("");
+    let letterfromOrg = ref("");
+    let renewedLicense = ref("");
 
     const reset = () => {
       showUpload.value = true;
@@ -182,6 +186,9 @@ export default {
     educationDoc = store.getters["newlicense/getEducationalDocuments"];
     workExperience = store.getters["newlicense/getWorkExperience"];
     serviceFee = store.getters["newlicense/getServiceFee"];
+    renewedLicense = store.getters["newlicense/getRenewedLicense"];
+    professionalLicense = store.getters["newlicense/getProfessionalLicense"];
+    letterfromOrg = store.getters["newlicense/getLetterfromOrg"];
 
     const draft = (action) => {
       message.value.showLoading = true;
@@ -233,6 +240,12 @@ export default {
           }
           formData.append(documentSpecs[15].documentType.code, supportLetter);
           formData.append(documentSpecs[16].documentType.code, herqa);
+          formData.append(documentSpecs[17].documentType.code, letterfromOrg);
+          formData.append(documentSpecs[18].documentType.code, renewedLicense);
+          formData.append(
+            documentSpecs[19].documentType.code,
+            professionalLicense
+          );
 
           let payload = { document: formData, id: draftData.id };
           store
@@ -329,6 +342,12 @@ export default {
           }
           formData.append(documentSpecs[15].documentType.code, supportLetter);
           formData.append(documentSpecs[16].documentType.code, herqa);
+          formData.append(documentSpecs[17].documentType.code, letterfromOrg);
+          formData.append(documentSpecs[18].documentType.code, renewedLicense);
+          formData.append(
+            documentSpecs[19].documentType.code,
+            professionalLicense
+          );
 
           let payload = { document: formData, id: licenseId };
           store
@@ -410,5 +429,10 @@ export default {
 img {
   width: 250px;
   height: 250px;
+}
+.withdraw {
+  background-image: linear-gradient(to right, #d63232, #e63636) !important;
+  color: white;
+  border-color: tomato;
 }
 </style>

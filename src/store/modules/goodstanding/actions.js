@@ -87,9 +87,9 @@ export default {
       return error;
     }
   },
-  async getProfile(id) {
+  async getProfile({commit}, id) {
     try {
-      const resp = await ApiService.get(url + "profiles/1");
+      const resp = await ApiService.get(url + "profiles/user/" + id);
       return resp;
     } catch (error) {
       return error;
@@ -122,10 +122,7 @@ export default {
 
   async getGoodStandingLicense({ commit }) {
     try {
-      // const resp = await ApiService.get(url + "newLicenses/user/" + userId);
-      const resp = await ApiService.get(
-        "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api/goodStandings/user/1"
-      );
+      const resp = await ApiService.get(url + "goodStandings/user/" + userId);
       return resp;
     } catch (error) {
       return error;

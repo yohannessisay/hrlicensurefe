@@ -205,6 +205,7 @@
           </button>
           <button
             v-if="this.buttons.length > 2"
+            class="withdraw"
             @click="withdraw(this.buttons[2].action)"
             variant="outline"
           >
@@ -291,6 +292,9 @@ export default {
       coc: "",
       supportLetter: "",
       serviceFee: "",
+      letterfromOrg: "",
+      renewedLicense: "",
+      professionalLicense: "",
 
       draftId: "",
       draftData: "",
@@ -317,6 +321,9 @@ export default {
       getProfessionalDoc: "newlicense/getProfessionalDocuments",
       getWorkExperience: "newlicense/getWorkExperience",
       getServiceFee: "newlicense/getServiceFee",
+      getLetterfromOrg: "newlicense/getLetterfromOrg",
+      getRenewedLicense: "newlicense/getRenewedLicense",
+      getProfessionalLicense: "newlicense/getProfessionalLicense",
       getDraftData: "newlicense/getDraft",
     }),
   },
@@ -382,6 +389,9 @@ export default {
     this.coc = this.getCoc;
     this.workExperience = this.getWorkExperience;
     this.serviceFee = this.getServiceFee;
+    this.letterfromOrg = this.getLetterfromOrg;
+    this.renewedLicense = this.getRenewedLicense;
+    this.professionalLicense = this.getProfessionalLicense;
   },
   methods: {
     ...mapActions(["setProfessionalDoc"]),
@@ -671,6 +681,18 @@ export default {
               this.documentSpec[16].documentType.code,
               this.herqa
             );
+            formData.append(
+              this.documentSpec[17].documentType.code,
+              this.letterfromOrg
+            );
+            formData.append(
+              this.documentSpec[18].documentType.code,
+              this.renewedLicense
+            );
+            formData.append(
+              this.documentSpec[19].documentType.code,
+              this.professionalLicense
+            );
 
             let payload = { document: formData, id: licenseId };
             this.$store
@@ -747,4 +769,10 @@ img {
   text-align: center;
   padding: 50px 0;
 }
+.withdraw {
+  background-image: linear-gradient(to right, #d63232, #e63636) !important;
+  color: white;
+  border-color: tomato;
+}
+
 </style>

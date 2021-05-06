@@ -64,6 +64,7 @@
             {{ this.buttons[0]["name"] }}
           </button>
           <button
+            class="withdraw"
             v-if="this.buttons.length > 2"
             @click="withdraw(this.buttons[2].action)"
             variant="outline"
@@ -78,10 +79,10 @@
     </div>
   </div>
   <div class="mr-3xl" v-if="showFlash">
-    <FlashMessage message="Login Successful!" />
+    <FlashMessage message="New license saved Successful!" />
   </div>
   <div v-if="showErrorFlash">
-    <ErrorFlashMessage message="Login Failed!" />
+    <ErrorFlashMessage message="Savning new license Failed!" />
   </div>
 </template>
 
@@ -219,3 +220,11 @@ export default {
   },
 };
 </script>
+
+<style>
+.withdraw {
+  background-image: linear-gradient(to right, #d63232, #e63636) !important;
+  color: white;
+  border-color: tomato;
+}
+</style>

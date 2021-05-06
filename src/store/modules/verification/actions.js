@@ -87,9 +87,9 @@ export default {
       return error;
     }
   },
-  async getProfile(id) {
+  async getProfile({commit}, id) {
     try {
-      const resp = await ApiService.get(url + "profiles/1");
+      const resp = await ApiService.get(url + "profiles/user/" + id);
       return resp;
     } catch (error) {
       return error;
@@ -122,10 +122,7 @@ export default {
 
   async getVerificationLicense({ commit }) {
     try {
-      // const resp = await ApiService.get(url + "newLicenses/user/" + userId);
-      const resp = await ApiService.get(
-        "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api/verifications/user/1"
-      );
+      const resp = await ApiService.get(url + "verifications/user/" + userId);
       return resp;
     } catch (error) {
       return error;
@@ -145,6 +142,17 @@ export default {
       const resp = await ApiService.put(
         url + "verifications/" + payload.licenseId,
         payload.withdrawData
+      );
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+  async updateDraft({ commit }, payload) {
+    try {
+      const resp = await ApiService.put(
+        url + "verifications/" + payload.licenseId,
+        payload.draftData
       );
       return resp;
     } catch (error) {

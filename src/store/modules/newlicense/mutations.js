@@ -11,6 +11,9 @@ import {
   SET_EDUCATIONAL_DOCUMENT,
   SET_WORK_EXPERIENCE,
   SET_SERVICE_FEE,
+  SET_LETTER_FROM_ORG,
+  SET_RENEWED_LICENSE,
+  SET_PROFESSIONAL_LICENSE,
   SET_BUTTONS,
   SET_APPLICATION_ID,
   SET_DOCUMENT_SPEC,
@@ -53,6 +56,15 @@ export default {
   },
   [SET_WORK_EXPERIENCE](state, workExperience) {
     state.workExperience = workExperience;
+  },
+  [SET_LETTER_FROM_ORG](state, letter) {
+    state.letterfromOrg = letter;
+  },
+  [SET_RENEWED_LICENSE](state, license) {
+    state.renewedLicense = license;
+  },
+  [SET_PROFESSIONAL_LICENSE](state, license) {
+    state.professionalLicense = license;
   },
   [SET_BUTTONS](state, buttons) {
     state.buttons = buttons;

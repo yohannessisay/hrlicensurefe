@@ -66,6 +66,7 @@
           </button>
           <button
             v-if="this.buttons.length > 2"
+            class="withdraw"
             @click="withdraw(this.buttons[2].action)"
             variant="outline"
           >
@@ -79,10 +80,10 @@
     </div>
   </div>
   <div class="mr-3xl" v-if="showFlash">
-    <FlashMessage message="Login Successful!" />
+    <FlashMessage message="Good standing saved Successful!" />
   </div>
   <div v-if="showErrorFlash">
-    <ErrorFlashMessage message="Login Failed!" />
+    <ErrorFlashMessage message="Saving good standing Failed!" />
   </div>
 </template>
 
@@ -191,6 +192,7 @@ export default {
           institutionId: this.licenseInfo.education.institutionId,
         },
       };
+      console.log(license.education.departmentId);
       this.$emit("applicantTypeValue", this.licenseInfo.applicantTypeId);
       this.$store.dispatch("goodstanding/setLicense", license);
     },
@@ -233,3 +235,10 @@ export default {
   },
 };
 </script>
+<style>
+.withdraw {
+  background-image: linear-gradient(to right, #d63232, #e63636) !important;
+  color: white;
+  border-color: tomato;
+}
+</style>

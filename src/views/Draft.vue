@@ -24,8 +24,10 @@
       <div class="flex pl-12 pt-medium">
         <Title message="New License Draft" />
       </div>
-
-      <div class=" mt-medium rounded ml-large">
+      <div v-if="newlicense.length == 0" class="flex pl-12 ml-6">
+        <h4>Nothing to Show.</h4>
+      </div>
+      <div v-if="newlicense.length != 0" class=" mt-medium rounded ml-large">
         <div class="flex " v-for="i in newlicense.length" v-bind:key="i">
           <div
             class="container mb-medium"
@@ -49,12 +51,12 @@
                   <h4
                     class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
                   >
-                    {{ item.applicantType.name }}
+                    Applicant Type: {{ item.applicantType.name }}
                   </h4>
                   <h4
                     class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
                   >
-                    {{ item.applicationStatus.name }}
+                    Application Status: {{ item.applicationStatus.name }}
                   </h4>
                   <h4
                     class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
@@ -80,8 +82,10 @@
       <div class="flex pl-12 pt-medium">
         <Title message="Renewal Draft" />
       </div>
-
-      <div class=" mt-medium rounded ml-large">
+      <div v-if="renewal.length == 0" class="flex pl-12 ml-6">
+        <h4>Nothing to Show.</h4>
+      </div>
+      <div v-if="renewal.length != 0" class=" mt-medium rounded ml-large">
         <div class="flex " v-for="i in renewal.length" v-bind:key="i">
           <div
             class="container mb-medium"
@@ -105,12 +109,12 @@
                   <h4
                     class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
                   >
-                    {{ item.applicantType.name }}
+                    Applicant Type: {{ item.applicantType.name }}
                   </h4>
                   <h4
                     class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
                   >
-                    {{ item.applicationStatus.name }}
+                    Application Status: {{ item.applicationStatus.name }}
                   </h4>
                   <h4
                     class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
@@ -136,8 +140,10 @@
       <div class="flex pl-12 pt-medium">
         <Title message="Good Standing Draft" />
       </div>
-
-      <div class=" mt-medium rounded ml-large">
+      <div v-if="goodstanding.length == 0" class="flex pl-12 ml-6">
+        <h4>Nothing to Show.</h4>
+      </div>
+      <div v-if="goodstanding.length != 0" class=" mt-medium rounded ml-large">
         <div class="flex " v-for="i in goodstanding.length" v-bind:key="i">
           <div
             class="container mb-medium"
@@ -161,17 +167,17 @@
                   <h4
                     class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
                   >
-                    {{ item.applicantType.name }}
+                    Applicant Type: {{ item.applicantType.name }}
                   </h4>
                   <h4
                     class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
                   >
-                    {{ item.applicationStatus.name }}
+                    Application Status: {{ item.applicationStatus.name }}
                   </h4>
                   <h4
                     class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
                   >
-                    Code: {{ item.newLicenseCode }}
+                    Code: {{ item.goodStandingCode }}
                   </h4>
                 </div>
               </div>
@@ -192,12 +198,14 @@
       <div class="flex pl-12 pt-medium">
         <Title message="Verification Draft" />
       </div>
-
-      <div class=" mt-medium rounded ml-large">
-        <div class="flex " v-for="i in goodstanding.length" v-bind:key="i">
+      <div v-if="verification.length == 0" class="flex pl-12 ml-6">
+        <h4>Nothing to Show.</h4>
+      </div>
+      <div v-if="verification.length != 0" class=" mt-medium rounded ml-large">
+        <div class="flex " v-for="i in verification.length" v-bind:key="i">
           <div
             class="container mb-medium"
-            v-for="item in goodstanding.slice((i - 1) * 5, i * 5)"
+            v-for="item in verification.slice((i - 1) * 5, i * 5)"
             v-bind:key="item"
             v-bind:value="item"
           >
@@ -217,17 +225,17 @@
                   <h4
                     class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
                   >
-                    {{ item.applicantType.name }}
+                    Applicanty Type: {{ item.applicantType.name }}
                   </h4>
                   <h4
                     class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
                   >
-                    {{ item.applicationStatus.name }}
+                    Application Status: {{ item.applicationStatus.name }}
                   </h4>
                   <h4
                     class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
                   >
-                    Code: {{ item.newLicenseCode }}
+                    Code: {{ item.verificationCode }}
                   </h4>
                 </div>
               </div>

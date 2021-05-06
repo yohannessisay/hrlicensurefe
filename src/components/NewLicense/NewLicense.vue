@@ -3,7 +3,7 @@
     <Navigation />
     <div class="w-screen bg-lightBlueB-200 flex items-center justify-center">
       <div class="w-screen max-w-4xl mt-medium">
-        <div class="flex flex-col w-full bg-white rounded mb-large">
+        <div class="flex flex-col w-full rounded mb-large">
           <transition name="fade" mode="out-in">
             <div v-if="this.activeState == 1">
               <Institution
@@ -119,18 +119,42 @@
                 />
               </div>
             </transition>
-            <transition name="fade" mode="out-in">
+             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 7">
-                <ServiceFee
+                <LetterfromOrg
                   :activeState="7"
                   @changeActiveState="activeState++"
                 />
               </div>
             </transition>
-            <transition name="fade" mode="out-in">
+             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 8">
-                <LicenseSummary
+                <ProfessionalLicense
                   :activeState="8"
+                  @changeActiveState="activeState++"
+                />
+              </div>
+            </transition>
+             <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 9">
+                <RenewedLicense
+                  :activeState="9"
+                  @changeActiveState="activeState++"
+                />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 10">
+                <ServiceFee
+                  :activeState="10"
+                  @changeActiveState="activeState++"
+                />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 11">
+                <LicenseSummary
+                  :activeState="11"
                   @changeActiveState="activeState++"
                 />
               </div>
@@ -158,14 +182,6 @@
               </div>
             </transition>
 
-            <!-- <transition name="fade" mode="out-in">
-              <div v-if="this.activeState == 5">
-                <EnglishLanguageEthiopian
-                  :activeState="5"
-                  @changeActiveState="activeState++"
-                />
-              </div>
-            </transition> -->
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 5">
                 <HERQA :activeState="6" @changeActiveState="activeState++" />
@@ -219,7 +235,6 @@ import HealthExamCert from "./HealthExamCert.vue";
 import LicenseSummary from "./LicenseSummary.vue";
 import ServiceFee from "./ServiceFee.vue";
 
-import EnglishLanguageEthiopian from "./Ethiopians F/EnglishLanguage";
 import HERQA from "./Ethiopians F/HERQA";
 import ProfessionalDocumentEthiopian from "./Ethiopians F/ProfessionalDocuments";
 import SupportLetterForeign from "./Ethiopians F/SupportLetter";
@@ -231,7 +246,9 @@ import SupportLetterEthiopian from "./Ethiopians L/SupportLetter";
 
 import EnglishLanguageForeigner from "./Foreigner/EnglishLanguage";
 import ProfessionalDocumentForeigner from "./Foreigner/ProfessionalDocument";
-
+import LetterfromOrg from "./Foreigner/LetterfromOrg";
+import ProfessionalLicense from "./Foreigner/ProfessionalLicense";
+import RenewedLicense from "./Foreigner/RenewedLicense";
 export default {
   created() {
     this.draftId = this.$route.params.id;
@@ -258,7 +275,6 @@ export default {
     HealthExamCert,
     LicenseSummary,
     ServiceFee,
-    EnglishLanguageEthiopian,
     HERQA,
     ProfessionalDocumentEthiopian,
     SupportLetterEthiopian,
@@ -268,6 +284,9 @@ export default {
     SupportLetterForeign,
     EnglishLanguageForeigner,
     ProfessionalDocumentForeigner,
+    LetterfromOrg,
+    ProfessionalLicense,
+    RenewedLicense,
     Navigation,
   },
 
@@ -325,6 +344,7 @@ export default {
         .then((res) => {
           const results = res.data.data;
           this.documentSpecs = results;
+          console.log(this.documentSpecs);
           this.$store
             .dispatch("newlicense/setDocumentSpecs", this.documentSpecs)
             .then((res) => {});

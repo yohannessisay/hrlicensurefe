@@ -1,12 +1,9 @@
 <template>
-  <div>
-    <div
-      v-if="this.showLoading2"
-      class="flex justify-center justify-items-center mt-24"
-    >
-      <Spinner />
-    </div>
-    <div v-if="this.show">
+  <div v-if="this.showLoading2" class="h-screen max-h-4xl">
+    <Spinner class="bg-lightBlueB-200  " />
+  </div>
+  <div class="bg-white mb-large rounded ">
+    <div v-if="this.show && !this.showLoading2">
       <div class="flex justify-center"><Title message="Summary" /></div>
       <div class="flex justify-start">
         <Title message="Personal Info" />
@@ -259,20 +256,22 @@
         </button>
         <button
           v-if="this.buttons.length > 2"
+          class="withdraw"
           @click="withdraw(this.buttons[2].action)"
           variant="outline"
         >
           {{ this.buttons[2]["name"] }}
         </button>
       </div>
+      <div
+        class="flex justify-center justify-items-center mt-8 mb-8"
+        v-if="showLoading"
+      >
+        <Spinner />
+      </div>
     </div>
   </div>
-  <div
-    class="flex justify-center justify-items-center mt-8 mb-8"
-    v-if="showLoading"
-  >
-    <Spinner />
-  </div>
+
   <div v-if="showFlash">
     <FlashMessage message="Operation Successful!" />
   </div>
@@ -382,7 +381,7 @@ export default {
           this.profileInfo = res.data.data;
           this.show = true;
           this.showLoading2 = false;
-        }, 10000);
+        }, 3000);
       });
     },
     setDocs() {
@@ -440,12 +439,12 @@ export default {
           applicantId: this.userId,
           applicantTypeId: this.applicantTypeId,
           education: {
-            institutionId: this.education.departmentId,
-            departmentId: this.education.institutionId,
+            institutionId: this.education.institutionId,
+            departmentId: this.education.departmentId,
           },
         },
       };
-      this.$store.dispatch("renewal/addNewLicense", license).then((res) => {
+      this.$store.dispatch("renewal/addRenewalLicense", license).then((res) => {
         let licenseId = res.data.data.id;
         let payload = { document: formData, id: licenseId };
         this.$store
@@ -520,30 +519,32 @@ export default {
             applicantId: this.userId,
             applicantTypeId: this.applicantTypeId,
             education: {
-              institutionId: this.education.departmentId,
-              departmentId: this.education.institutionId,
+              institutionId: this.education.institutionId,
+              departmentId: this.education.departmentId,
             },
           },
         };
-        this.$store.dispatch("renewal/addNewLicense", license).then((res) => {
-          let licenseId = res.data.data.id;
-          let payload = { document: formData, id: licenseId };
-          this.$store
-            .dispatch("renewal/uploadDocuments", payload)
-            .then((res) => {
-              if (res) {
-                this.showFlash = true;
-                this.showLoading = false;
-                this.$router.push({ path: "/menu" });
-                setTimeout(() => {}, 2000);
-              } else {
+        this.$store
+          .dispatch("renewal/addRenewalLicense", license)
+          .then((res) => {
+            let licenseId = res.data.data.id;
+            let payload = { document: formData, id: licenseId };
+            this.$store
+              .dispatch("renewal/uploadDocuments", payload)
+              .then((res) => {
+                if (res) {
+                  this.showFlash = true;
+                  this.showLoading = false;
+                  this.$router.push({ path: "/menu" });
+                  setTimeout(() => {}, 2000);
+                } else {
+                  this.showErrorFlash = true;
+                }
+              })
+              .catch((err) => {
                 this.showErrorFlash = true;
-              }
-            })
-            .catch((err) => {
-              this.showErrorFlash = true;
-            });
-        });
+              });
+          });
       }
     },
     withdraw(action) {
@@ -573,7 +574,7 @@ export default {
       window.setInterval(() => {
         this.showFlash = false;
         this.showErrorFlash = false;
-      }, 10000);
+      });
     });
   },
 };
@@ -582,5 +583,10 @@ export default {
 .text-danger > label,
 .text-danger > h5 {
   color: red;
+}
+.withdraw {
+  background-image: linear-gradient(to right, #d63232, #e63636) !important;
+  color: white;
+  border-color: tomato;
 }
 </style>
