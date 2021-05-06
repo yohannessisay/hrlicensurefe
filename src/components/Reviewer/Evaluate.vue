@@ -185,28 +185,128 @@
       </div>
       <Modal v-if="showRemark">
         <div>
-          <div class="card-wrapper bg-white sm:rounded-lg w-full p-large flex flex-col justify-center items-center relative">
+          <div
+            class="card-wrapper bg-white sm:rounded-lg w-full flex justify-center relative mb-xl mt-large"
+          >
             <div class="">
               <!--content-->
               <div class="w-full">
                 <!--header-->
-                <div class="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
+                <div
+                  class="flex items-start justify-between border-b border-solid border-blueGray-200 mt-medium rounded-t"
+                >
                   <h3 class="text-3xl font-semibold">
                     Remark
                   </h3>
-                  <div class=" bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none" v-on:click="toggleModal()">
-                    <span class="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
+                  <div
+                    class=" bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+                    v-on:click="toggleModal()"
+                  >
+                    <span
+                      class="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none"
+                    >
                       ×
                     </span>
                   </div>
                 </div>
                 <!--body-->
-                <div class="relative p-6 flex-auto w-full">
-                  <textarea v-model= "newLicense.remark" class="resize-none tArea border rounded-md"></textarea>
+                <div class="modalBody pb-xl">
+                  <div class="flex mt-medium justify-center"></div>
+                  <div class="relative p-6 flex-auto w-full">
+                    <div class="flex justify-center">
+                      <div class="">
+                        <svg
+                          width="40"
+                          height="60"
+                          xmlns="http://www.w3.org/2000/svg"
+                          version="1.1"
+                          @click="previousRemark()"
+                          v-if="ind != 0"
+                        >
+                          <polyline
+                            points="30 10 10 30 30 50"
+                            stroke="rgba(103,128,159,1)"
+                            stroke-width="3"
+                            stroke-linecap="butt"
+                            fill="none"
+                            stroke-linejoin="round"
+                          >
+                            &gt;
+                          </polyline>
+                        </svg>
+                      </div>
+
+                      <div
+                        class="flex flex-col justify-center items-center ml-large"
+                      >
+                        <div class="ml-medium">
+                          <label
+                            class="justify-center items-center ml-large text-grey-200 text-2xl"
+                          >
+                            {{ documentTypeName }}
+                          </label>
+                          <!-- <h5 class="ml-8 text-black-100 text-3xl">
+                            Addis Ababa
+                          </h5> -->
+                          <div class="flex justify-start flex-wrap max-w-sm rounded overflow-hidden">
+                            <!-- <div v-for="file in docs" v-bind:key="file.name">
+                              <Title class="" :message="file.name" />
+                              <picture>
+                                <img :src="basePath + file.filePath" />
+                              </picture>
+                            </div> -->
+                            <picture class="imageViewer">
+                              <img
+                                v-bind:src="
+                                  'https://hrlicensurebe.dev.k8s.sandboxaddis.com/' +
+                                    rejectedObj[ind].filePath
+                                "
+                              />
+                            </picture>
+                            <!-- {{docs[0].filePath}} -->
+
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="ml-large">
+                        <svg
+                          width="40"
+                          height="60"
+                          xmlns="http://www.w3.org/2000/svg"
+                          version="1.1"
+                          @click="nextRemark()"
+                          v-if="ind != rejectedObj.length - 1"
+                          class="hover:text-primary-60"
+                        >
+                          <polyline
+                            points="10 10 30 30 10 50"
+                            stroke="rgba(103,128,159,1)"
+                            stroke-width="3"
+                            stroke-linecap="butt"
+                            fill="none"
+                            stroke-linejoin="round"
+                          >
+                            &gt;
+                          </polyline>
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <!--footer-->
-                <div class="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
-                  <button class="md-danger" type="button" v-on:click="toggleModal()">
+                <textarea
+                  v-model="newLicense.remark"
+                  class="resize-none tArea border rounded-md flex mb-small"
+                ></textarea>
+                <div
+                  class="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b"
+                >
+                  <button
+                    class="md-danger"
+                    type="button"
+                    v-on:click="toggleModal()"
+                  >
                     Close
                   </button>
                   <button type="button" v-on:click="submitRemark()">
@@ -216,7 +316,10 @@
               </div>
             </div>
           </div>
-          <div v-if="showModal" class="opacity-25 fixed inset-0 z-40 bg-black"></div>
+          <!-- <div
+            v-if="showModal"
+            class="opacity-25 fixed inset-0 z-40 bg-black"
+          ></div> -->
         </div>
       </Modal>
       <div v-if="showFlash">
@@ -270,10 +373,12 @@ export default {
     let documentTypeName = ref("");
     let docs = ref([{ filePath: "" }]);
     let index = ref(0);
+    let ind = ref(0);
     let amount = ref(1);
     let width = ref("width:11.11111%");
     let accepted = ref([]);
     let rejected = ref([]);
+    let rejectedObj = ref([{ filePath: "" }]);
     let showButtons = ref(false);
     let disableNext = ref(true);
     let nextClickable = ref(false);
@@ -318,6 +423,18 @@ export default {
       findDocumentType(documentTypes.value, docs.value[index.value]);
       nextClickable.value = true;
     };
+    const nextRemark = () => {
+      if (nextClickable.value == true) {
+        ind.value = ind.value + 1;
+        findDocumentType(documentTypes.value, rejectedObj.value[index.value]);
+        nextClickable.value = false;
+      }
+    };
+    const previousRemark = () => {
+      ind.value = ind.value - 1;
+      findDocumentType(documentTypes.value, rejectedObj.value[ind.value]);
+      nextClickable.value = true;
+    };
     const findDocumentType = (obj, ab) => {
       for (var prop in obj) {
         if (obj[prop].code == ab.documentTypeCode) {
@@ -351,6 +468,8 @@ export default {
         if (rejected.value.includes(doc.documentTypeCode)) {
           console.log("Hehe");
           rejected.value.splice(rejected.value.indexOf(doc.documentTypeCode), 1);
+          rejectedObj.value.splice(rejectedObj.value.indexOf(doc.documentTypeCode), 1);
+          console.log(rejectedObj.value);
         }
       }
       // accepted.value.push(doc.documentTypeCode);
@@ -366,6 +485,8 @@ export default {
       if (rejected.value.length > 0) {
         if (!rejected.value.includes(doc.documentTypeCode)) {
           rejected.value.push(doc.documentTypeCode);
+          rejectedObj.value.push(doc);
+          console.log("Rejected Object when rejected ==>");
           console.log(rejected.value);
           if (index.value == docs.value.length - 1) {
             showButtons.value = true;
@@ -378,6 +499,8 @@ export default {
         }
       } else {
         rejected.value.push(doc.documentTypeCode);
+        rejectedObj.value.push(doc);
+        console.log(rejectedObj.value);
         console.log(rejected.value);
         if (index.value == docs.value.length - 1) {
           showButtons.value = true;
@@ -479,6 +602,8 @@ export default {
       docs,
       next,
       previous,
+      nextRemark,
+      previousRemark,
       amount,
       width,
       documentTypes,
@@ -501,7 +626,9 @@ export default {
       applicationType,
       showFlash,
       sendDeclinedData,
-      fromModalSendDeclinedData
+      fromModalSendDeclinedData,
+      rejectedObj,
+      ind
     };
   }
 };
@@ -512,12 +639,21 @@ export default {
   color: white;
 }
 .card-wrapper {
-  max-width: 720px;
+  width: 920px;
+  height: 680px;
   box-shadow: 0px -8px 6px rgb(30 64 175 / 51%);
 }
+.modalBody {
+  max-width: 620px !important;
+  max-height: 420px !important;
+}
+.imageViewer {
+  width: 320px;
+  height: 320px !important;
+}
 .tArea {
-  max-width: 620px;
-  max-height: 300px;
+  width: 620px;
+
 }
 
 .img {
