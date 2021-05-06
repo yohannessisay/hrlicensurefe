@@ -418,6 +418,9 @@ export default {
       }
     };
     const previous = () => {
+      if (index.value == docs.value.length - 1) {
+        showButtons.value = false;
+      }
       index.value = index.value - 1;
       amount.value = ((index.value + 1) / docs.value.length) * 100;
       width.value = "width:" + amount.value + "%";
