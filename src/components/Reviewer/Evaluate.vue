@@ -243,7 +243,7 @@
                           <label
                             class="justify-center items-center ml-large text-grey-200 text-2xl"
                           >
-                            {{ documentTypeName }}
+                            {{ modalDocumentTypeName }}
                           </label>
                           <!-- <h5 class="ml-8 text-black-100 text-3xl">
                             Addis Ababa
@@ -371,6 +371,7 @@ export default {
     ]);
     let documentTypes = ref([]);
     let documentTypeName = ref("");
+    let modalDocumentTypeName = ref("");
     let docs = ref([{ filePath: "" }]);
     let index = ref(0);
     let ind = ref(0);
@@ -426,19 +427,30 @@ export default {
     const nextRemark = () => {
       if (nextClickable.value == true) {
         ind.value = ind.value + 1;
-        findDocumentType(documentTypes.value, rejectedObj.value[index.value]);
+        modalFindDocumentType(
+          documentTypes.value,
+          rejectedObj.value[index.value]
+        );
         nextClickable.value = false;
       }
     };
     const previousRemark = () => {
       ind.value = ind.value - 1;
-      findDocumentType(documentTypes.value, rejectedObj.value[ind.value]);
+      modalFindDocumentType(documentTypes.value, rejectedObj.value[ind.value]);
       nextClickable.value = true;
     };
     const findDocumentType = (obj, ab) => {
       for (var prop in obj) {
         if (obj[prop].code == ab.documentTypeCode) {
           documentTypeName.value = obj[prop].name;
+        }
+      }
+    };
+
+    const modalFindDocumentType = (obj, ab) => {
+      for (var prop in obj) {
+        if (obj[prop].code == ab.documentTypeCode) {
+          modalDocumentTypeName.value = obj[prop].name;
         }
       }
     };
@@ -628,7 +640,9 @@ export default {
       sendDeclinedData,
       fromModalSendDeclinedData,
       rejectedObj,
-      ind
+      ind,
+      modalDocumentTypeName,
+      modalFindDocumentType
     };
   }
 };
