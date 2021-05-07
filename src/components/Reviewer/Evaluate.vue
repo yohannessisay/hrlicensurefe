@@ -326,10 +326,16 @@
           <div v-if="showDeclineFlash">
             <FlashMessage message="Operation Successful!" />
           </div>
+          <div v-if="showErrorFlash">
+            <ErrorFlashMessage message="Operation Failed!" />
+          </div>
         </div>
       </Modal>
       <div v-if="showFlash">
         <FlashMessage message="Operation Successful!" />
+      </div>
+      <div v-if="showErrorFlash">
+        <ErrorFlashMessage message="Operation Failed!" />
       </div>
     </div>
   </div>
@@ -344,11 +350,13 @@ import { useRouter } from "vue-router";
 
 import Modal from "@/sharedComponents/Modal";
 import FlashMessage from "@/sharedComponents/FlashMessage";
+import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 
 export default {
   components: {
     Modal,
-    FlashMessage
+    FlashMessage,
+    ErrorFlashMessage
   },
   setup() {
     const route = useRoute();
@@ -394,9 +402,16 @@ export default {
     let showRemark = ref(false);
     let applicationType = ref("");
     let showFlash = ref(false);
+    let showErrorFlash = ref(false);
     let showDeclineFlash = ref(false);
     let sendDeclinedData = ref(true);
     let fromModalSendDeclinedData = ref(false);
+    let evaluateRoute = ref(
+      "/admin/evaluate/" +
+        route.params.applicationType +
+        "/" +
+        route.params.applicationId
+    );
     const created = async () => {
       store
         .dispatch("reviewer/getApplication", route.params.applicationId)
@@ -414,7 +429,7 @@ export default {
         console.log(documentTypes.value);
       });
     };
-    const next = (doc) => {
+    const next = doc => {
       // alreadyIn.value == false;
       if (nextClickable.value == true) {
         index.value = index.value + 1;
@@ -429,7 +444,10 @@ export default {
       // ) {
       //   showButtons.value = true;
       // }
-      if (accepted.value.includes(doc.documentTypeCode) || rejected.value.includes(doc.documentTypeCode)) {
+      if (
+        accepted.value.includes(doc.documentTypeCode) ||
+        rejected.value.includes(doc.documentTypeCode)
+      ) {
         nextClickable.value = true;
       }
     };
@@ -486,7 +504,10 @@ export default {
           console.log(rejected.value.includes(doc.documentTypeCode));
           if (rejected.value.includes(doc.documentTypeCode)) {
             console.log("Hehe");
-            rejected.value.splice(rejected.value.indexOf(doc.documentTypeCode), 1);
+            rejected.value.splice(
+              rejected.value.indexOf(doc.documentTypeCode),
+              1
+            );
           }
         }
       } else {
@@ -498,8 +519,14 @@ export default {
         console.log(rejected.value.includes(doc.documentTypeCode));
         if (rejected.value.includes(doc.documentTypeCode)) {
           console.log("Hehe");
-          rejected.value.splice(rejected.value.indexOf(doc.documentTypeCode), 1);
-          rejectedObj.value.splice(rejectedObj.value.indexOf(doc.documentTypeCode), 1);
+          rejected.value.splice(
+            rejected.value.indexOf(doc.documentTypeCode),
+            1
+          );
+          rejectedObj.value.splice(
+            rejectedObj.value.indexOf(doc.documentTypeCode),
+            1
+          );
           console.log(rejectedObj.value);
         }
       }
@@ -525,7 +552,10 @@ export default {
           console.log(accepted.value.includes(doc.documentTypeCode));
           if (accepted.value.includes(doc.documentTypeCode)) {
             console.log("Hehe");
-            accepted.value.splice(accepted.value.indexOf(doc.documentTypeCode), 1);
+            accepted.value.splice(
+              accepted.value.indexOf(doc.documentTypeCode),
+              1
+            );
           }
         }
       } else {
@@ -539,7 +569,10 @@ export default {
         console.log(accepted.value.includes(doc.documentTypeCode));
         if (accepted.value.includes(doc.documentTypeCode)) {
           console.log("Hehe");
-          accepted.value.splice(rejected.value.indexOf(doc.documentTypeCode), 1);
+          accepted.value.splice(
+            rejected.value.indexOf(doc.documentTypeCode),
+            1
+          );
         }
       }
       // nextClickable.value = true;
@@ -565,7 +598,10 @@ export default {
         data: newLicense.value
       };
       console.log(req);
-      if (applicationType.value == "New License" && sendDeclinedData.value == true) {
+      if (
+        applicationType.value == "New License" &&
+        sendDeclinedData.value == true
+      ) {
         store.dispatch("newlicense/editNewLicense", req).then(res => {
           if (res.statusText == "Created") {
             showFlash.value = true;
@@ -573,35 +609,64 @@ export default {
             setTimeout(() => {
               router.push("/admin/review");
             }, 3000);
+          } else {
+            showErrorFlash.value = true;
+            setTimeout(() => {
+              router.go();
+            }, 3000);
           }
         });
       }
-      if (applicationType.value == "Verification" && sendDeclinedData.value == true) {
+      if (
+        applicationType.value == "Verification" &&
+        sendDeclinedData.value == true
+      ) {
         store.dispatch("reviewer/editVerification", req).then(res => {
           if (res.statusText == "Created") {
             showFlash.value = true;
             setTimeout(() => {
               router.push("/admin/review");
             }, 3000);
+          } else {
+            showErrorFlash.value = true;
+            setTimeout(() => {
+              router.go();
+            }, 3000);
           }
         });
       }
-      if (applicationType.value == "Good Standing" && sendDeclinedData.value == true) {
+      if (
+        applicationType.value == "Good Standing" &&
+        sendDeclinedData.value == true
+      ) {
         store.dispatch("reviewer/editGoodStanding", req).then(res => {
           if (res.statusText == "Created") {
             showFlash.value = true;
             setTimeout(() => {
               router.push("/admin/review");
             }, 3000);
+          } else {
+            showErrorFlash.value = true;
+            setTimeout(() => {
+              router.go();
+            }, 3000);
           }
         });
       }
-      if (applicationType.value == "Renewal" && sendDeclinedData.value == true) {
+      if (
+        applicationType.value == "Renewal" &&
+        sendDeclinedData.value == true
+      ) {
         store.dispatch("reviewer/editRenewal", req).then(res => {
           if (res.statusText == "Created") {
             showFlash.value = true;
             setTimeout(() => {
               router.push("/admin/review");
+            }, 3000);
+          } else {
+            showErrorFlash.value = true;
+            setTimeout(() => {
+              router.go();
             }, 3000);
           }
         });
@@ -627,6 +692,7 @@ export default {
       created();
       fetchDocumentTypes();
       findDocumentType(documentTypes.value, docs.value[0]);
+      console.log(evaluateRoute.value);
     });
     return {
       newLicense,
@@ -657,13 +723,15 @@ export default {
       submitRemark,
       applicationType,
       showFlash,
+      showErrorFlash,
       showDeclineFlash,
       sendDeclinedData,
       fromModalSendDeclinedData,
       rejectedObj,
       ind,
       modalDocumentTypeName,
-      modalFindDocumentType
+      modalFindDocumentType,
+      evaluateRoute
     };
   }
 };
