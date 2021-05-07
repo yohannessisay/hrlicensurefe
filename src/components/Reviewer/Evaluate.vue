@@ -140,7 +140,7 @@
             height="60"
             xmlns="http://www.w3.org/2000/svg"
             version="1.1"
-            @click="next()"
+            @click="next(docs[index + 1])"
             v-if="index != docs.length - 1"
             class="hover:text-primary-60"
           >
@@ -262,7 +262,7 @@
                               <img
                                 v-bind:src="
                                   'https://hrlicensurebe.dev.k8s.sandboxaddis.com/' +
-                                    rejectedObj[ind].filePath
+                                    rejectedObj[ind + 1].filePath
                                 "
                               />
                             </picture>
@@ -410,7 +410,7 @@ export default {
         console.log(documentTypes.value);
       });
     };
-    const next = () => {
+    const next = (doc) => {
       // alreadyIn.value == false;
       if (nextClickable.value == true) {
         index.value = index.value + 1;
@@ -419,11 +419,14 @@ export default {
         findDocumentType(documentTypes.value, docs.value[index.value]);
         nextClickable.value = false;
       }
-      if (
-        accepted.value.length + rejected.value.length == docs.value.length &&
-        index.value + 1 == docs.value.length
-      ) {
-        showButtons.value = true;
+      // if (
+      //   accepted.value.length + rejected.value.length == docs.value.length &&
+      //   index.value + 1 == docs.value.length
+      // ) {
+      //   showButtons.value = true;
+      // }
+      if (accepted.value.includes(doc.documentTypeCode) || rejected.value.includes(doc.documentTypeCode)) {
+        nextClickable.value = true;
       }
     };
     const previous = () => {
@@ -437,7 +440,7 @@ export default {
       nextClickable.value = true;
     };
     const nextRemark = () => {
-      if (nextClickable.value == true) {
+      if (ind.value != rejected.value.length) {
         ind.value = ind.value + 1;
         modalFindDocumentType(
           documentTypes.value,
