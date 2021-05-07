@@ -302,12 +302,12 @@ export default {
       console.log(applicantId);
       licenseId.value = applicationId;
       applicationType.value = applicationTypeName;
-      store.dispatch("reviewer/getProfile", applicantId).then((res) => {
+      store.dispatch("reviewer/getProfile", applicantId).then(res => {
         profileInfo.value = res.data.data;
         show.value = true;
         console.log(profileInfo.value);
       });
-      store.dispatch("reviewer/getLicense", applicationId).then((res) => {
+      store.dispatch("reviewer/getLicense", applicationId).then(res => {
         license.value = res.data.data;
         console.log(license.value);
         applicantId.value = license.value.applicantId;
@@ -323,13 +323,19 @@ export default {
     };
 
     const evaluate = () => {
-      router.push("/admin/evaluate/" + applicationType.value + "/" + licenseId.value);
+      router.push(
+        "/admin/evaluate/" + applicationType.value + "/" + licenseId.value
+      );
     };
 
     onMounted(() => {
       //userId.value = +localStorage.getItem("userId");
       // userId = 2;
-      created(route.params.applicationType, route.params.applicationId, route.params.applicantId);
+      created(
+        route.params.applicationType,
+        route.params.applicationId,
+        route.params.applicantId
+      );
     });
 
     return {
