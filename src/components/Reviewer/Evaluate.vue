@@ -107,6 +107,9 @@
           <div class="mt-medium" v-if="!showButtons">
             <button class="mr-medium" @click="accept(docs[index])">Accept</button>
             <button class="decline" @click="reject(docs[index])">Reject</button>
+            <button class="" variant="outline" @click="action('DraftEvent')">
+              save as Draft
+            </button>
           </div>
           <div class="relative pt-1 mt-medium">
             <div
@@ -415,6 +418,12 @@ export default {
         width.value = "width:" + amount.value + "%";
         findDocumentType(documentTypes.value, docs.value[index.value]);
         nextClickable.value = false;
+      }
+      if (
+        accepted.value.length + rejected.value.length == docs.value.length &&
+        index.value + 1 == docs.value.length
+      ) {
+        showButtons.value = true;
       }
     };
     const previous = () => {
