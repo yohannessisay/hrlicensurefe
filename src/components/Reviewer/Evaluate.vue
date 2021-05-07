@@ -251,7 +251,7 @@
                           <!-- <h5 class="ml-8 text-black-100 text-3xl">
                             Addis Ababa
                           </h5> -->
-                          <div class="flex justify-start flex-wrap max-w-sm rounded overflow-hidden">
+                          <div class="flex justify-center flex-wrap max-w-sm rounded overflow-hidden">
                             <!-- <div v-for="file in docs" v-bind:key="file.name">
                               <Title class="" :message="file.name" />
                               <picture>
@@ -300,10 +300,10 @@
                 <!--footer-->
                 <textarea
                   v-model="newLicense.remark"
-                  class="resize-none tArea border rounded-md flex mb-small"
+                  class="resize-none tArea border rounded-md flex mb-small w-full"
                 ></textarea>
                 <div
-                  class="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b"
+                  class="flex items-center justify-center p-6 border-t border-solid border-blueGray-200 rounded-b"
                 >
                   <button
                     class="md-danger"
@@ -323,6 +323,9 @@
             v-if="showModal"
             class="opacity-25 fixed inset-0 z-40 bg-black"
           ></div> -->
+          <div v-if="showDeclineFlash">
+            <FlashMessage message="Operation Successful!" />
+          </div>
         </div>
       </Modal>
       <div v-if="showFlash">
@@ -391,6 +394,7 @@ export default {
     let showRemark = ref(false);
     let applicationType = ref("");
     let showFlash = ref(false);
+    let showDeclineFlash = ref(false);
     let sendDeclinedData = ref(true);
     let fromModalSendDeclinedData = ref(false);
     const created = async () => {
@@ -565,6 +569,7 @@ export default {
         store.dispatch("newlicense/editNewLicense", req).then(res => {
           if (res.statusText == "Created") {
             showFlash.value = true;
+            showDeclineFlash.value = true;
             setTimeout(() => {
               router.push("/admin/review");
             }, 3000);
@@ -652,6 +657,7 @@ export default {
       submitRemark,
       applicationType,
       showFlash,
+      showDeclineFlash,
       sendDeclinedData,
       fromModalSendDeclinedData,
       rejectedObj,
@@ -682,7 +688,6 @@ export default {
 }
 .tArea {
   width: 620px;
-
 }
 
 .img {
@@ -702,5 +707,21 @@ svg:hover {
 }
 .decline {
   background-image: linear-gradient(to right,#d63232, #e63636) !important;
+}
+@media only screen and (max-height: 1081px) {
+  .card-wrapper {
+	  height: 640px;
+  }
+  .modalBody {
+    max-width: 820px !important;
+    max-height: 360px !important;
+  }
+  .imageViewer {
+    width: 220px;
+    height: 320px !important;
+  }
+  .tArea {
+    width: 620px;
+  }
 }
 </style>
