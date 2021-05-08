@@ -16,30 +16,34 @@
             v-bind:key="item"
             v-bind:value="item"
           >
-            <div
-              class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
+            <router-link
+              :to="{
+                name: 'NewLicense',
+                params: { id: item.id },
+              }"
             >
-              <div class="p-4 w-48 h-64">
-                <!-- <div class="flex content-center justify-center">
-                <img class="box-shadow-pop" />
-              </div> -->
-                <h4
-                  class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
-                >
-                  Applicant Type: {{ item.applicantType.name }}
-                </h4>
-                <h4
-                  class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
-                >
-                  Application Status: {{ item.applicationStatus.name }}
-                </h4>
-                <h4
-                  class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
-                >
-                  Code: {{ item.newLicenseCode }}
-                </h4>
+              <div
+                class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
+              >
+                <div class="p-4 w-48 h-64">
+                  <h4
+                    class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                  >
+                    Applicant Type: {{ item.applicantType.name }}
+                  </h4>
+                  <h4
+                    class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                  >
+                    Application Status: {{ item.applicationStatus.name }}
+                  </h4>
+                  <h4
+                    class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                  >
+                    Code: {{ item.newLicenseCode }}
+                  </h4>
+                </div>
               </div>
-            </div>
+            </router-link>
           </div>
         </div>
       </div>
@@ -59,30 +63,37 @@
             v-bind:key="item"
             v-bind:value="item"
           >
-            <div
-              class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
+            <router-link
+              :to="{
+                name: 'Renewal',
+                params: { id: item.id },
+              }"
             >
-              <div class="p-4 w-48 h-64">
-                <!-- <div class="flex content-center justify-center">
+              <div
+                class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
+              >
+                <div class="p-4 w-48 h-64">
+                  <!-- <div class="flex content-center justify-center">
                 <img class="box-shadow-pop" />
               </div> -->
-                <h4
-                  class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
-                >
-                  Applicant Type: {{ item.applicantType.name }}
-                </h4>
-                <h4
-                  class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
-                >
-                  Application Status: {{ item.applicationStatus.name }}
-                </h4>
-                <h4
-                  class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
-                >
-                  Code: {{ item.renewalCode }}
-                </h4>
+                  <h4
+                    class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                  >
+                    Applicant Type: {{ item.applicantType.name }}
+                  </h4>
+                  <h4
+                    class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                  >
+                    Application Status: {{ item.applicationStatus.name }}
+                  </h4>
+                  <h4
+                    class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                  >
+                    Code: {{ item.renewalCode }}
+                  </h4>
+                </div>
               </div>
-            </div>
+            </router-link>
           </div>
         </div>
       </div>
@@ -102,30 +113,37 @@
             v-bind:key="item"
             v-bind:value="item"
           >
-            <div
-              class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
+            <router-link
+              :to="{
+                name: 'Verification',
+                params: { id: item.id },
+              }"
             >
-              <div class="p-4 w-48 h-64">
-                <!-- <div class="flex content-center justify-center">
+              <div
+                class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
+              >
+                <div class="p-4 w-48 h-64">
+                  <!-- <div class="flex content-center justify-center">
                 <img class="box-shadow-pop" />
               </div> -->
-                <h4
-                  class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
-                >
-                  Applicant Type: {{ item.applicantType.name }}
-                </h4>
-                <h4
-                  class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
-                >
-                  Application Status: {{ item.applicationStatus.name }}
-                </h4>
-                <h4
-                  class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
-                >
-                  Code: {{ item.verificationCode }}
-                </h4>
+                  <h4
+                    class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                  >
+                    Applicant Type: {{ item.applicantType.name }}
+                  </h4>
+                  <h4
+                    class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                  >
+                    Application Status: {{ item.applicationStatus.name }}
+                  </h4>
+                  <h4
+                    class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                  >
+                    Code: {{ item.verificationCode }}
+                  </h4>
+                </div>
               </div>
-            </div>
+            </router-link>
           </div>
         </div>
       </div>
@@ -145,30 +163,37 @@
             v-bind:key="item"
             v-bind:value="item"
           >
-            <div
-              class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
+            <router-link
+              :to="{
+                name: 'GoodStanding',
+                params: { id: item.id },
+              }"
             >
-              <div class="p-4 w-48 h-64">
-                <!-- <div class="flex content-center justify-center">
+              <div
+                class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
+              >
+                <div class="p-4 w-48 h-64">
+                  <!-- <div class="flex content-center justify-center">
                 <img class="box-shadow-pop" />
               </div> -->
-                <h4
-                  class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
-                >
-                  Applicant Type: {{ item.applicantType.name }}
-                </h4>
-                <h4
-                  class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
-                >
-                  Application Status: {{ item.applicationStatus.name }}
-                </h4>
-                <h4
-                  class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
-                >
-                  Code: {{ item.goodStandingCode }}
-                </h4>
+                  <h4
+                    class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                  >
+                    Applicant Type: {{ item.applicantType.name }}
+                  </h4>
+                  <h4
+                    class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                  >
+                    Application Status: {{ item.applicationStatus.name }}
+                  </h4>
+                  <h4
+                    class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                  >
+                    Code: {{ item.goodStandingCode }}
+                  </h4>
+                </div>
               </div>
-            </div>
+            </router-link>
           </div>
         </div>
       </div>
@@ -208,28 +233,24 @@ export default {
     const fetchLicensebyId = () => {
       message.value.showLoading = !message.value.showLoading;
       store.dispatch("newlicense/getNewLicense").then((res) => {
-        console.log(res.data.data);
         license.value = res.data.data;
         newlicense.value = license.value.filter(function(e) {
           return e.applicationStatus.code == "USUP";
         });
       });
       store.dispatch("renewal/getRenewalLicense").then((res) => {
-        console.log(res.data.data);
         license.value = res.data.data;
         renewal.value = license.value.filter(function(e) {
           return e.applicationStatus.code == "USUP";
         });
       });
       store.dispatch("verification/getVerificationLicense").then((res) => {
-        console.log(res.data.data);
         license.value = res.data.data;
         verification.value = license.value.filter(function(e) {
           return e.applicationStatus.code == "USUP";
         });
       });
       store.dispatch("goodstanding/getGoodStandingLicense").then((res) => {
-        console.log(res.data.data);
         license.value = res.data.data;
         message.value.showLoading = !message.value.showLoading;
         goodstanding.value = license.value.filter(function(e) {
