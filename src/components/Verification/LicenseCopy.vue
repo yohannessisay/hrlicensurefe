@@ -42,10 +42,6 @@
               <span v-if="!showUpload && !isImage">
                 <img :src="filePreview" alt="" class="preview" />
               </span>
-
-              <h6 style="margin-top: 15px !important;">
-                Your photo should be passport size
-              </h6>
             </div>
           </div>
         </form>
@@ -177,7 +173,7 @@ export default {
     onMounted(() => {
       buttons = store.getters["verification/getButtons"];
       draftData = store.getters["verification/getDraft"];
-      console.log(draftData)
+      console.log(draftData);
       if (route.params.id) {
         for (let i = 0; i < draftData.documents.length; i++) {
           if (draftData.documents[i].documentTypeCode == "LC") {

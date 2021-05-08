@@ -1,7 +1,7 @@
 <template>
   <div>
     <Navigation />
-    <div class="bg-lightBlueB-200 h-screen">
+    <div class="bg-lightBlueB-200 h-max pb-24">
       <div class="flex pl-24 pt-8">
         <div class="mt-5">
           <h2 class="text-lightBlueB-400">New Requests</h2>
@@ -165,6 +165,40 @@
                   </router-link>
                 </div>
                 <h4 class="text-lightBlueB-500 mt-tiny">In Review</h4>
+              </div>
+            </div>
+          </div>
+        </transition>
+      </div>
+      <div class="flex justify-left mt-8 rounded ml-large">
+        <transition name="slide-fade-to-left">
+          <div
+            class="container mr-12 box-shadow-pop rounded-lg bg-lightGrey-100 "
+          >
+            <div class="flex justify-center items-center w-64 h-40">
+              <div class="p-1">
+                <div class="flex content-center justify-center">
+                  <router-link to="/undersupervision">
+                    <RenderIllustration illustration="SimpleCertificate" />
+                  </router-link>
+                </div>
+                <h4 class="text-lightBlueB-500 mt-tiny">Under Supervision</h4>
+              </div>
+            </div>
+          </div>
+        </transition>
+        <transition name="slide-fade-to-left">
+          <div
+            class="container mr-12 box-shadow-pop rounded-lg bg-lightGrey-100 "
+          >
+            <div class="flex justify-center items-center w-64 h-40">
+              <div class="p-1">
+                <div class="my-auto flex justify-center">
+                  <router-link to="/withdrawn">
+                    <RenderIllustration illustration="Renewal" />
+                  </router-link>
+                </div>
+                <h4 class="text-lightBlueB-500 mt-tiny">Withdrawn</h4>
               </div>
             </div>
           </div>

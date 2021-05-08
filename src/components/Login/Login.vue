@@ -140,7 +140,7 @@ export default {
           message.value.showFlash = false;
           message.value.showErrorFlash = true;
 
-          setTimeout(() => {}, 3000);
+          setTimeout(() => {}, 1800);
         }
       });
     };
