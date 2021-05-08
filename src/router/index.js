@@ -117,23 +117,6 @@ const routes = [
     name: "unassigned",
     component: () => import("../components/Reviewer/Unassigned.vue"),
   },
-  {
-    path: "/prodoc",
-    name: "professionalDocument",
-    component: () =>
-      import("../components/NewLicense/Foreigner/ProfessionalDocument.vue"),
-  },
-  {
-    path: "/educational",
-    name: "educational",
-    component: () =>
-      import("../components/NewLicense/Ethiopians L/EducationalDoc.vue"),
-  },
-  {
-    path: "/lang",
-    name: "lang",
-    component: () => import("../components/NewLicense/Photo.vue"),
-  },
 
   {
     path: "/admin/evaluate/:applicationType/:applicationId",
@@ -142,7 +125,7 @@ const routes = [
   },
   {
     path: "/draft",
-    name: "draft",
+    name: "Draft",
     component: () => import("../views/Draft.vue"),
   },
   {
