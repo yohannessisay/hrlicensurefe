@@ -6,7 +6,7 @@
       >
         <TitleWithIllustration
           illustration="User"
-          message="Passport"
+          message="Identification Card or Passport"
           class="mt-8"
         />
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
