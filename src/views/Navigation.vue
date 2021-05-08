@@ -17,7 +17,7 @@
             v-if="show"
             class="relative text-gray-600 focus-within:text-gray-400 ml-8"
           >
-            <span class="absolute inset-y-0 right-0 flex items-center">
+            <span class="absolute inset-y-0 right-0 flex items-center mr-8">
               <div class="p-1 focus:outline-none focus:shadow-outline">
                 <svg
                   fill="none"
@@ -35,7 +35,7 @@
             <input
               type="search"
               name="q"
-              class="py-2 text-sm text-white bg-gray-900 width-548 rounded-md pl-10 focus:outline-none focus:bg-white focus:text-gray-900"
+              class="py-2 text-sm text-black bg-gray-900 width-548 rounded-md pl-4 focus:outline-none focus:bg-white focus:text-gray-900"
               placeholder="Search requests by Name or Order ID"
               autocomplete="off"
             />
