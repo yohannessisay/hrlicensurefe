@@ -301,13 +301,15 @@ export default {
       licenseId.value = applicationId;
       applicationType.value = applicationTypeName;
       console.log(applicationType.value);
-      store.dispatch("reviewer/getProfile", applicantId).then((res) => {
-        profileInfo.value = res.data.data;
-        show.value = true;
-        console.log(profileInfo.value);
-      });
+      // store.dispatch("reviewer/getProfile", applicantId).then((res) => {
+      //   profileInfo.value = res.data.data;
+      //   show.value = true;
+      //   console.log(profileInfo.value);
+      // });
       store.dispatch("reviewer/getLicense", applicationId).then((res) => {
         license.value = res.data.data;
+        profileInfo.value = license.value.applicant.profile;
+        show.value = true;
         console.log(license.value);
         applicantId.value = license.value.applicantId;
         applicantTypeId.value = license.value.applicantTypeId;

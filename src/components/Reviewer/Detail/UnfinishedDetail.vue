@@ -302,13 +302,15 @@ export default {
       console.log(applicantId);
       licenseId.value = applicationId;
       applicationType.value = applicationTypeName;
-      store.dispatch("reviewer/getProfile", applicantId).then(res => {
-        profileInfo.value = res.data.data;
-        show.value = true;
-        console.log(profileInfo.value);
-      });
+      // store.dispatch("reviewer/getProfile", applicantId).then(res => {
+      //   profileInfo.value = res.data.data;
+      //   show.value = true;
+      //   console.log(profileInfo.value);
+      // });
       store.dispatch("reviewer/getLicense", applicationId).then(res => {
         license.value = res.data.data;
+        show.value = true;
+        profileInfo.value = license.value.applicant.profile;
         console.log(license.value);
         applicantId.value = license.value.applicantId;
         applicantTypeId.value = license.value.applicantTypeId;
