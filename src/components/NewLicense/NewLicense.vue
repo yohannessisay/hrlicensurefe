@@ -119,7 +119,7 @@
                 />
               </div>
             </transition>
-             <transition name="fade" mode="out-in">
+            <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 7">
                 <LetterfromOrg
                   :activeState="7"
@@ -127,7 +127,7 @@
                 />
               </div>
             </transition>
-             <transition name="fade" mode="out-in">
+            <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 8">
                 <ProfessionalLicense
                   :activeState="8"
@@ -135,7 +135,7 @@
                 />
               </div>
             </transition>
-             <transition name="fade" mode="out-in">
+            <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 9">
                 <RenewedLicense
                   :activeState="9"
@@ -304,6 +304,7 @@ export default {
     fetchApplicationStatuses() {
       this.$store.dispatch("newlicense/getApplicationStatuses").then((res) => {
         const results = res.data.data;
+        console.log(results);
         this.applicationStatuses = results;
         if (this.draftId != undefined) {
           let status = this.applicationStatuses.filter(function(e) {

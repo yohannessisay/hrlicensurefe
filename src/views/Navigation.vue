@@ -1,50 +1,4 @@
 <template>
-  <!-- <nav class="relative select-none lg:flex lg:items-stretch w-full mt-4 mb-4">
-    <div class="flex flex-no-shrink items-stretch h-12">
-      <h5
-        class="flex-no-grow flex-no-shrink relative py-2 px-4 leading-normal text-Black no-underline flex items-center hover:bg-grey-dark"
-      >
-        <router-link to="/">
-          <RenderIllustration
-            class=""
-            illustration="Logo"
-            message="Address"
-          />
-        </router-link>
-      </h5>
-
-      <h3 class="mt-5">HRIS License</h3>
-    </div>
-    <div
-      v-if="!this.auth"
-      class="lg:flex lg:items-stretch lg:flex-no-shrink lg:flex-grow"
-    >
-      <div class="lg:flex lg:items-stretch lg:justify-end ml-auto">
-        <router-link
-          to="/signup"
-          class="flex-no-grow flex-no-shrink relative py-2 px-4 leading-normal no-underline flex items-center hover:bg-grey-dark"
-          >Signup</router-link
-        >
-        <button variant="outline">
-          <router-link
-            to="/login"
-            class="flex-no-grow flex-no-shrink relative py-2 px-4 leading-normal no-underline flex items-center hover:bg-grey-dark"
-          >
-            <h5>Login</h5></router-link
-          >
-        </button>
-      </div>
-    </div>
-
-    <div
-      v-if="this.auth"
-      class="lg:flex lg:items-stretch lg:flex-no-shrink lg:flex-grow"
-    >
-      <div class="lg:flex lg:items-stretch lg:justify-end ml-auto mr-12">
-        <button @click="logout()" variant="outline">Logout</button>
-      </div>
-    </div>
-  </nav> -->
   <header class="px-10 py-3.5 inset-box-shadow bg-lightBlueB-100">
     <nav class="">
       <main class="flex items-center justify-between">
@@ -59,6 +13,33 @@
           <h2 class="text-md AtkinsonHyperlegibleBold text-primary-600 ml-2 ">
             HRIS - License
           </h2>
+          <div
+            v-if="show"
+            class="relative text-gray-600 focus-within:text-gray-400 ml-8"
+          >
+            <span class="absolute inset-y-0 right-0 flex items-center mr-8">
+              <div class="p-1 focus:outline-none focus:shadow-outline">
+                <svg
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="3"
+                  viewBox="0 0 24 24"
+                  class="width-8 height-8 text-primary-500"
+                >
+                  <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+              </div>
+            </span>
+            <input
+              type="search"
+              name="q"
+              class="py-2 text-sm text-black bg-gray-900 width-548 rounded-md pl-4 focus:outline-none focus:bg-white focus:text-gray-900"
+              placeholder="Search requests by Name or Order ID"
+              autocomplete="off"
+            />
+          </div>
         </div>
 
         <div class="flex items-center space-x-5">
@@ -156,11 +137,23 @@ export default {
       auth: false,
       token: "",
       showDD: false,
+      show: false,
     };
   },
   created() {
     this.token = localStorage.getItem("token");
     if (this.token != undefined) this.auth = true;
+    let routeName = this.$route.name;
+    if (
+      routeName == "Approved" ||
+      routeName == "InReview" ||
+      routeName == "UnderSupervision" ||
+      routeName == "Withdraw" ||
+      routeName == "Submitted" ||
+      routeName == "Draft"
+    ) {
+      this.show = true;
+    }
   },
   methods: {
     logout() {
@@ -182,8 +175,16 @@ export default {
 };
 </script>
 <style>
-
 #logout {
   cursor: pointer;
+}
+.width-548 {
+  width: 548px;
+}
+.width-8 {
+  width: 22px;
+}
+.width-small {
+  width: 8px;
 }
 </style>
