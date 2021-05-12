@@ -132,7 +132,7 @@
           <Title message="Search Result" />
         </div>
         <div v-if="this.searchResult.length == 0" class="flex pl-12 ml-6">
-          <h4>Nothing to Show.</h4>
+          <h4 class="h-64">Nothing to Show.</h4>
         </div>
         <div
           v-if="this.searchResult.length != 0"
@@ -435,21 +435,29 @@ export default {
       } else {
         this.searched = true;
         this.searchResult = this.newlicense.filter(function(e) {
-          return e.newLicenseCode.includes(searchKey);
+          return e.newLicenseCode
+            .toLowerCase()
+            .includes(searchKey.toLowerCase());
         });
         if (this.searchResult.length == 0) {
           this.searchResult = this.renewal.filter(function(e) {
-            return e.renewalCode.includes(searchKey);
+            return e.renewalCode
+              .toLowerCase()
+              .includes(searchKey.toLowerCase());
           });
         }
         if (this.searchResult.length == 0) {
           this.searchResult = this.verification.filter(function(e) {
-            return e.verificationCode.includes(searchKey);
+            return e.verificationCode
+              .toLowerCase()
+              .includes(searchKey.toLowerCase());
           });
         }
         if (this.searchResult.length == 0) {
           this.searchResult = this.goodstanding.filter(function(e) {
-            return e.goodStandingCode.includes(searchKey);
+            return e.goodStandingCode
+              .toLowerCase()
+              .includes(searchKey.toLowerCase());
           });
         }
       }
