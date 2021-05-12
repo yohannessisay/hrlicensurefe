@@ -89,6 +89,21 @@ export default {
       store.dispatch("reviewer/getUnfinished", userId).then(res => {
         if (res.status != "Error") {
           unfinished.value = res.data.data;
+          for (var prop in unfinished.value) {
+            console.log(unfinished.value[prop]);
+            if (unfinished.value[prop].applicationType == "Renewal") {
+              unfinished.value[prop].newLicenseCode =
+                unfinished.value[prop].renewalCode;
+            }
+            if (unfinished.value[prop].applicationType == "Good Standing") {
+              unfinished.value[prop].newLicenseCode =
+                unfinished.value[prop].goodStandingCode;
+            }
+            if (unfinished.value[prop].applicationType == "Verification") {
+              unfinished.value[prop].newLicenseCode =
+                unfinished.value[prop].verificationCode;
+            }
+          }
           console.log(unfinished.value);
         } else {
           nothingToShowUnfinished.value = true;

@@ -135,6 +135,21 @@ export default {
     const fetchUnassignedApplications = () => {
       store.dispatch("reviewer/getUnassigned").then(res => {
         unassigned.value = res.data.data;
+        for (var prop in unassigned.value) {
+          console.log(unassigned.value[prop]);
+          if (unassigned.value[prop].applicationType == "Renewal") {
+            unassigned.value[prop].newLicenseCode =
+              unassigned.value[prop].renewalCode;
+          }
+          if (unassigned.value[prop].applicationType == "Good Standing") {
+            unassigned.value[prop].newLicenseCode =
+              unassigned.value[prop].goodStandingCode;
+          }
+          if (unassigned.value[prop].applicationType == "Verification") {
+            unassigned.value[prop].newLicenseCode =
+              unassigned.value[prop].verificationCode;
+          }
+        }
       });
     };
 
