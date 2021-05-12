@@ -84,6 +84,21 @@ export default {
       store.dispatch("reviewer/getAssignedToYou").then(res => {
         if (res.status != "Error") {
           assignedToyou.value = res.data.data;
+          for (var prop in assignedToyou.value) {
+            console.log(assignedToyou.value[prop]);
+            if (assignedToyou.value[prop].applicationType == "Renewal") {
+              assignedToyou.value[prop].newLicenseCode =
+                assignedToyou.value[prop].renewalCode;
+            }
+            if (assignedToyou.value[prop].applicationType == "Good Standing") {
+              assignedToyou.value[prop].newLicenseCode =
+                assignedToyou.value[prop].goodStandingCode;
+            }
+            if (assignedToyou.value[prop].applicationType == "Verification") {
+              assignedToyou.value[prop].newLicenseCode =
+                assignedToyou.value[prop].verificationCode;
+            }
+          }
         }
       });
     };

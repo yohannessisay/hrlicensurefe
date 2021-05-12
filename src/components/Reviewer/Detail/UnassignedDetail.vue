@@ -357,22 +357,74 @@ export default {
       //   show.value = true;
       //   console.log(profileInfo.value);
       // });
-      store.dispatch("reviewer/getLicense", applicationId).then(res => {
-        license.value = res.data.data;
-        show.value = true;
-        profileInfo.value = license.value.applicant.profile;
-        console.log(license.value);
-        applicantId.value = license.value.applicantId;
-        // applicantTypeId.value = license.value.applicantTypeId;
-        // applicantId.value = 2;
-        education.value.departmentName =
-          license.value.education.department.name;
-        education.value.institutionName =
-          license.value.education.institution.name;
-        education.value.institutionTypeName =
-          license.value.education.institution.institutionType.name;
-        // docs.value = this.getDocs.data;
-      });
+      if (applicationType.value == "New License") {
+        store
+          .dispatch("reviewer/getNewLicenseApplication", applicationId)
+          .then(res => {
+            license.value = res.data.data;
+            show.value = true;
+            profileInfo.value = license.value.applicant.profile;
+            console.log(license.value);
+            applicantId.value = license.value.applicantId;
+            education.value.departmentName =
+              license.value.education.department.name;
+            education.value.institutionName =
+              license.value.education.institution.name;
+            education.value.institutionTypeName =
+              license.value.education.institution.institutionType.name;
+          });
+      }
+      if (applicationType.value == "Good Standing") {
+        store
+          .dispatch("reviewer/getGoodStandingApplication", applicationId)
+          .then(res => {
+            license.value = res.data.data;
+            show.value = true;
+            profileInfo.value = license.value.applicant.profile;
+            console.log(license.value);
+            applicantId.value = license.value.applicantId;
+            education.value.departmentName =
+              license.value.education.department.name;
+            education.value.institutionName =
+              license.value.education.institution.name;
+            education.value.institutionTypeName =
+              license.value.education.institution.institutionType.name;
+          });
+      }
+      if (applicationType.value == "Verification") {
+        store
+          .dispatch("reviewer/getVerificationApplication", applicationId)
+          .then(res => {
+            license.value = res.data.data;
+            show.value = true;
+            profileInfo.value = license.value.applicant.profile;
+            console.log(license.value);
+            applicantId.value = license.value.applicantId;
+            education.value.departmentName =
+              license.value.education.department.name;
+            education.value.institutionName =
+              license.value.education.institution.name;
+            education.value.institutionTypeName =
+              license.value.education.institution.institutionType.name;
+          });
+      }
+      if (applicationType.value == "Renewal") {
+        store
+          .dispatch("reviewer/getRenewalApplication", applicationId)
+          .then(res => {
+            license.value = res.data.data;
+            show.value = true;
+            profileInfo.value = license.value.applicant.profile;
+            console.log(license.value);
+            applicantId.value = license.value.applicantId;
+            education.value.departmentName =
+              license.value.education.department.name;
+            education.value.institutionName =
+              license.value.education.institution.name;
+            education.value.institutionTypeName =
+              license.value.education.institution.institutionType.name;
+          });
+      }
     };
 
     const fetchAdmins = () => {
@@ -455,16 +507,54 @@ export default {
           };
         }
       }
-      store
-        .dispatch("reviewer/assignReviewer", assign.value)
+      if (applicationType.value == "New License") {
+        store
+          .dispatch("reviewer/assignReviewer", assign.value)
 
-        .then(response => {
-          if (response.statusText == "Created") {
-            showFlash.value = true;
-            router.push("/admin/review");
-          }
-          console.log(response);
-        });
+          .then(response => {
+            if (response.statusText == "Created") {
+              showFlash.value = true;
+              router.push("/admin/review");
+            }
+            console.log(response);
+          });
+      }
+      if (applicationType.value == "Verification") {
+        store
+          .dispatch("reviewer/assignVerificationReviewer", assign.value)
+
+          .then(response => {
+            if (response.statusText == "Created") {
+              showFlash.value = true;
+              router.push("/admin/review");
+            }
+            console.log(response);
+          });
+      }
+      if (applicationType.value == "Renewal") {
+        store
+          .dispatch("reviewer/assignRenewalReviewer", assign.value)
+
+          .then(response => {
+            if (response.statusText == "Created") {
+              showFlash.value = true;
+              router.push("/admin/review");
+            }
+            console.log(response);
+          });
+      }
+      if (applicationType.value == "Good Standing") {
+        store
+          .dispatch("reviewer/assignGoodStandingReviewer", assign.value)
+
+          .then(response => {
+            if (response.statusText == "Created") {
+              showFlash.value = true;
+              router.push("/admin/review");
+            }
+            console.log(response);
+          });
+      } 
     };
 
     const evaluate = () => {

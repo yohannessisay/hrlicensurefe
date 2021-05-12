@@ -430,6 +430,7 @@ export default {
               rejected.value.includes(docs.value[index.value - 1].documentTypeCode)
             ) {
               findDocumentType(documentTypes.value, docs.value[index.value]);
+              console.log(documentTypeName.value);
             }
           }
         });

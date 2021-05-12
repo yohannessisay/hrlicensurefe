@@ -361,6 +361,21 @@ export default {
       store.dispatch("reviewer/getUnfinished", userId).then(res => {
         if (res.status != "Error") {
           unfinished.value = res.data.data;
+          for (var prop in unfinished.value) {
+            console.log(unfinished.value[prop]);
+            if (unfinished.value[prop].applicationType == "Renewal") {
+              unfinished.value[prop].newLicenseCode =
+                unfinished.value[prop].renewalCode;
+            }
+            if (unfinished.value[prop].applicationType == "Good Standing") {
+              unfinished.value[prop].newLicenseCode =
+                unfinished.value[prop].goodStandingCode;
+            }
+            if (unfinished.value[prop].applicationType == "Verification") {
+              unfinished.value[prop].newLicenseCode =
+                unfinished.value[prop].verificationCode;
+            }
+          }
           console.log(unfinished.value);
         } else {
           nothingToShowUnfinished.value = true;
@@ -392,6 +407,21 @@ export default {
       store.dispatch("reviewer/getAssignedToYou").then(res => {
         if (res.status != "Error") {
           assignedToyou.value = res.data.data;
+          for (var prop in assignedToyou.value) {
+            console.log(assignedToyou.value[prop]);
+            if (assignedToyou.value[prop].applicationType == "Renewal") {
+              assignedToyou.value[prop].newLicenseCode =
+                assignedToyou.value[prop].renewalCode;
+            }
+            if (assignedToyou.value[prop].applicationType == "Good Standing") {
+              assignedToyou.value[prop].newLicenseCode =
+                assignedToyou.value[prop].goodStandingCode;
+            }
+            if (assignedToyou.value[prop].applicationType == "Verification") {
+              assignedToyou.value[prop].newLicenseCode =
+                assignedToyou.value[prop].verificationCode;
+            }
+          }
         } else {
           nothingToShow.value = true;
         }
@@ -401,6 +431,23 @@ export default {
     const fetchUnassignedApplications = () => {
       store.dispatch("reviewer/getUnassigned").then(res => {
         unassigned.value = res.data.data;
+        for (var prop in unassigned.value) {
+          console.log(unassigned.value[prop]);
+          if (unassigned.value[prop].applicationType == "Renewal") {
+            unassigned.value[prop].newLicenseCode =
+              unassigned.value[prop].renewalCode;
+          }
+          if (unassigned.value[prop].applicationType == "Good Standing") {
+            unassigned.value[prop].newLicenseCode =
+              unassigned.value[prop].goodStandingCode;
+          }
+          if (unassigned.value[prop].applicationType == "Verification") {
+            unassigned.value[prop].newLicenseCode =
+              unassigned.value[prop].verificationCode;
+          }
+        }
+        console.log(unassigned.value[0].applicationId);
+        console.log(unassigned.value);
       });
     };
 

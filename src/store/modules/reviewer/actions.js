@@ -55,10 +55,40 @@ export default {
       return error;
     }
   },
-  async getLicense(context, id) {
+  async getNewLicenseApplication(context, id) {
     try {
       console.log(id);
       const url = baseUrl + "/newLicenses/" + id;
+      const resp = await ApiService.get(url);
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+  async getGoodStandingApplication(context, id) {
+    try {
+      console.log(id);
+      const url = baseUrl + "/goodStandings/" + id;
+      const resp = await ApiService.get(url);
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+  async getRenewalApplication(context, id) {
+    try {
+      console.log(id);
+      const url = baseUrl + "/renewals/" + id;
+      const resp = await ApiService.get(url);
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+  async getVerificationApplication(context, id) {
+    try {
+      console.log(id);
+      const url = baseUrl + "/verifications/" + id;
       const resp = await ApiService.get(url);
       return resp;
     } catch (error) {
@@ -87,6 +117,39 @@ export default {
     try {
       const resp = await ApiService.post(
         baseUrl + "/licenseReviewers/assign",
+        assign
+      );
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+  async assignRenewalReviewer({ commit }, assign) {
+    try {
+      const resp = await ApiService.post(
+        baseUrl + "/renewalReviewers/assign",
+        assign
+      );
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+  async assignVerificationReviewer({ commit }, assign) {
+    try {
+      const resp = await ApiService.post(
+        baseUrl + "/verificationReviewers/assign",
+        assign
+      );
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+  async assignGoodStandingReviewer({ commit }, assign) {
+    try {
+      const resp = await ApiService.post(
+        baseUrl + "/goodStandingReviewers/assign",
         assign
       );
       return resp;
