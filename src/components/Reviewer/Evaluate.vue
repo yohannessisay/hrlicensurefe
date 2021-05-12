@@ -107,7 +107,7 @@
           <div class="mt-medium" v-if="!showButtons">
             <button class="mr-medium" @click="accept(docs[index])">Accept</button>
             <button class="decline" @click="reject(docs[index])">Reject</button>
-            <button class="" variant="outline" @click="action('DraftEvent')">
+            <button class="" variant="outline" @click="action('ReviewerDraftEvent')">
               save as Draft
             </button>
           </div>
@@ -419,18 +419,30 @@ export default {
           newLicense.value = res.data.data;
           buttons.value = res.data.data.applicationStatus.buttons;
           docs.value = res.data.data.documents;
-          console.log(buttons.value);
+          if (newLicense.value.applicationStatus.code == "REVDRA") {
+            rejected.value = newLicense.value.declinedFields;
+            accepted.value = newLicense.value.acceptedFields;
+            index.value = rejected.value.length + accepted.value.length;
+            amount.value = ((index.value + 1) / docs.value.length) * 100;
+            width.value = "width:" + amount.value + "%";
+            if (
+              accepted.value.includes(docs.value[index.value - 1].documentTypeCode) ||
+              rejected.value.includes(docs.value[index.value - 1].documentTypeCode)
+            ) {
+              findDocumentType(documentTypes.value, docs.value[index.value]);
+            }
+          }
         });
       applicationType.value = route.params.applicationType;
     };
     const fetchDocumentTypes = async () => {
       store.dispatch("reviewer/getDocumentTypes").then(res => {
         documentTypes.value = res.data.data;
-        console.log(documentTypes.value);
       });
     };
     const next = doc => {
       // alreadyIn.value == false;
+
       if (nextClickable.value == true) {
         index.value = index.value + 1;
         amount.value = ((index.value + 1) / docs.value.length) * 100;
@@ -438,6 +450,7 @@ export default {
         findDocumentType(documentTypes.value, docs.value[index.value]);
         nextClickable.value = false;
       }
+
       // if (
       //   accepted.value.length + rejected.value.length == docs.value.length &&
       //   index.value + 1 == docs.value.length
@@ -493,17 +506,13 @@ export default {
     };
     const accept = doc => {
       nextClickable.value = true;
-      console.log(accepted.value.length);
       if (accepted.value.length > 0) {
         if (!accepted.value.includes(doc.documentTypeCode)) {
           accepted.value.push(doc.documentTypeCode);
-          console.log(accepted.value);
           if (index.value == docs.value.length - 1) {
             showButtons.value = true;
           }
-          console.log(rejected.value.includes(doc.documentTypeCode));
           if (rejected.value.includes(doc.documentTypeCode)) {
-            console.log("Hehe");
             rejected.value.splice(
               rejected.value.indexOf(doc.documentTypeCode),
               1
@@ -512,13 +521,10 @@ export default {
         }
       } else {
         accepted.value.push(doc.documentTypeCode);
-        console.log(accepted.value);
         if (index.value == docs.value.length - 1) {
           showButtons.value = true;
         }
-        console.log(rejected.value.includes(doc.documentTypeCode));
         if (rejected.value.includes(doc.documentTypeCode)) {
-          console.log("Hehe");
           rejected.value.splice(
             rejected.value.indexOf(doc.documentTypeCode),
             1
@@ -527,7 +533,6 @@ export default {
             rejectedObj.value.indexOf(doc.documentTypeCode),
             1
           );
-          console.log(rejectedObj.value);
         }
       }
       // accepted.value.push(doc.documentTypeCode);
@@ -539,19 +544,14 @@ export default {
 
     const reject = doc => {
       nextClickable.value = true;
-      console.log(rejected.value.length);
       if (rejected.value.length > 0) {
         if (!rejected.value.includes(doc.documentTypeCode)) {
           rejected.value.push(doc.documentTypeCode);
           rejectedObj.value.push(doc);
-          console.log("Rejected Object when rejected ==>");
-          console.log(rejected.value);
           if (index.value == docs.value.length - 1) {
             showButtons.value = true;
           }
-          console.log(accepted.value.includes(doc.documentTypeCode));
           if (accepted.value.includes(doc.documentTypeCode)) {
-            console.log("Hehe");
             accepted.value.splice(
               accepted.value.indexOf(doc.documentTypeCode),
               1
@@ -561,14 +561,10 @@ export default {
       } else {
         rejected.value.push(doc.documentTypeCode);
         rejectedObj.value.push(doc);
-        console.log(rejectedObj.value);
-        console.log(rejected.value);
         if (index.value == docs.value.length - 1) {
           showButtons.value = true;
         }
-        console.log(accepted.value.includes(doc.documentTypeCode));
         if (accepted.value.includes(doc.documentTypeCode)) {
-          console.log("Hehe");
           accepted.value.splice(
             rejected.value.indexOf(doc.documentTypeCode),
             1
@@ -592,12 +588,12 @@ export default {
         }
       }
       newLicense.value.declinedFields = rejected.value;
+      newLicense.value.acceptedFields = accepted.value;
       let appId = newLicense.value.id;
       let req = {
         action: actionValue,
         data: newLicense.value
       };
-      console.log(req);
       if (
         applicationType.value == "New License" &&
         sendDeclinedData.value == true
@@ -677,7 +673,6 @@ export default {
     };
 
     const submitRemark = () => {
-      console.log(newLicense.value.remark);
       showRemark.value = !showRemark.value;
       sendDeclinedData.value = true;
       fromModalSendDeclinedData.value = true;
@@ -692,7 +687,6 @@ export default {
       created();
       fetchDocumentTypes();
       findDocumentType(documentTypes.value, docs.value[0]);
-      console.log(evaluateRoute.value);
     });
     return {
       newLicense,
