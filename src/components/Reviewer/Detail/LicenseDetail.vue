@@ -300,7 +300,6 @@ export default {
     const created = async (applicationTypeName, applicationId, applicantId) => {
       licenseId.value = applicationId;
       applicationType.value = applicationTypeName;
-      console.log(applicationType.value);
       // store.dispatch("reviewer/getProfile", applicantId).then((res) => {
       //   profileInfo.value = res.data.data;
       //   show.value = true;
@@ -313,7 +312,6 @@ export default {
             license.value = res.data.data;
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
-            console.log(license.value);
             applicantId.value = license.value.applicantId;
             education.value.departmentName =
               license.value.education.department.name;
@@ -330,7 +328,6 @@ export default {
             license.value = res.data.data;
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
-            console.log(license.value);
             applicantId.value = license.value.applicantId;
             education.value.departmentName =
               license.value.education.department.name;
@@ -347,7 +344,6 @@ export default {
             license.value = res.data.data;
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
-            console.log(license.value);
             applicantId.value = license.value.applicantId;
             education.value.departmentName =
               license.value.education.department.name;
@@ -364,7 +360,6 @@ export default {
             license.value = res.data.data;
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
-            console.log(license.value);
             applicantId.value = license.value.applicantId;
             education.value.departmentName =
               license.value.education.department.name;
