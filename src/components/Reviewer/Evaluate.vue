@@ -412,28 +412,136 @@ export default {
         "/" +
         route.params.applicationId
     );
-    const created = async () => {
-      store
-        .dispatch("reviewer/getApplication", route.params.applicationId)
-        .then(res => {
-          newLicense.value = res.data.data;
-          buttons.value = res.data.data.applicationStatus.buttons;
-          docs.value = res.data.data.documents;
-          if (newLicense.value.applicationStatus.code == "REVDRA") {
-            rejected.value = newLicense.value.declinedFields;
-            accepted.value = newLicense.value.acceptedFields;
-            index.value = rejected.value.length + accepted.value.length;
-            amount.value = ((index.value + 1) / docs.value.length) * 100;
-            width.value = "width:" + amount.value + "%";
-            if (
-              accepted.value.includes(docs.value[index.value - 1].documentTypeCode) ||
-              rejected.value.includes(docs.value[index.value - 1].documentTypeCode)
-            ) {
-              findDocumentType(documentTypes.value, docs.value[index.value]);
-              console.log(documentTypeName.value);
+    const created = async (applicationTypeName, applicationId) => {
+      applicationType.value = applicationTypeName;
+      if (applicationType.value == "New License") {
+        store
+          .dispatch("reviewer/getNewLicenseApplication", applicationId)
+          .then(res => {
+            newLicense.value = res.data.data;
+            buttons.value = res.data.data.applicationStatus.buttons;
+            docs.value = res.data.data.documents;
+            if (newLicense.value.applicationStatus.code == "REVDRA") {
+              rejected.value = newLicense.value.declinedFields;
+              accepted.value = newLicense.value.acceptedFields;
+              index.value = rejected.value.length + accepted.value.length;
+              amount.value = ((index.value + 1) / docs.value.length) * 100;
+              width.value = "width:" + amount.value + "%";
+              if (
+                accepted.value.includes(
+                  docs.value[index.value - 1].documentTypeCode
+                ) ||
+                rejected.value.includes(
+                  docs.value[index.value - 1].documentTypeCode
+                )
+              ) {
+                findDocumentType(documentTypes.value, docs.value[index.value]);
+              }
             }
-          }
-        });
+          });
+      }
+      if (applicationType.value == "Good Standing") {
+        store
+          .dispatch("reviewer/getGoodStandingApplication", applicationId)
+          .then(res => {
+            newLicense.value = res.data.data;
+            buttons.value = res.data.data.applicationStatus.buttons;
+            docs.value = res.data.data.documents;
+            if (newLicense.value.applicationStatus.code == "REVDRA") {
+              rejected.value = newLicense.value.declinedFields;
+              accepted.value = newLicense.value.acceptedFields;
+              index.value = rejected.value.length + accepted.value.length;
+              amount.value = ((index.value + 1) / docs.value.length) * 100;
+              width.value = "width:" + amount.value + "%";
+              if (
+                accepted.value.includes(
+                  docs.value[index.value - 1].documentTypeCode
+                ) ||
+                rejected.value.includes(
+                  docs.value[index.value - 1].documentTypeCode
+                )
+              ) {
+                findDocumentType(documentTypes.value, docs.value[index.value]);
+              }
+            }
+          });
+      }
+      if (applicationType.value == "Verification") {
+        store
+          .dispatch("reviewer/getVerificationApplication", applicationId)
+          .then(res => {
+            newLicense.value = res.data.data;
+            buttons.value = res.data.data.applicationStatus.buttons;
+            docs.value = res.data.data.documents;
+            if (newLicense.value.applicationStatus.code == "REVDRA") {
+              rejected.value = newLicense.value.declinedFields;
+              accepted.value = newLicense.value.acceptedFields;
+              index.value = rejected.value.length + accepted.value.length;
+              amount.value = ((index.value + 1) / docs.value.length) * 100;
+              width.value = "width:" + amount.value + "%";
+              if (
+                accepted.value.includes(
+                  docs.value[index.value - 1].documentTypeCode
+                ) ||
+                rejected.value.includes(
+                  docs.value[index.value - 1].documentTypeCode
+                )
+              ) {
+                findDocumentType(documentTypes.value, docs.value[index.value]);
+              }
+            }
+          });
+      }
+      if (applicationType.value == "Renewal") {
+        store
+          .dispatch("reviewer/getRenewalApplication", applicationId)
+          .then(res => {
+            newLicense.value = res.data.data;
+            buttons.value = res.data.data.applicationStatus.buttons;
+            docs.value = res.data.data.documents;
+            if (newLicense.value.applicationStatus.code == "REVDRA") {
+              rejected.value = newLicense.value.declinedFields;
+              accepted.value = newLicense.value.acceptedFields;
+              index.value = rejected.value.length + accepted.value.length;
+              amount.value = ((index.value + 1) / docs.value.length) * 100;
+              width.value = "width:" + amount.value + "%";
+              if (
+                accepted.value.includes(
+                  docs.value[index.value - 1].documentTypeCode
+                ) ||
+                rejected.value.includes(
+                  docs.value[index.value - 1].documentTypeCode
+                )
+              ) {
+                findDocumentType(documentTypes.value, docs.value[index.value]);
+              }
+            }
+          });
+      }
+      // store
+      //   .dispatch("reviewer/getApplication", route.params.applicationId)
+      //   .then(res => {
+      //     newLicense.value = res.data.data;
+      //     buttons.value = res.data.data.applicationStatus.buttons;
+      //     docs.value = res.data.data.documents;
+      //     console.log(docs.value);
+      //     console.log(newLicense.value);
+      //     console.log(buttons.value);
+      //     if (newLicense.value.applicationStatus.code == "REVDRA") {
+      //       rejected.value = newLicense.value.declinedFields;
+      //       accepted.value = newLicense.value.acceptedFields;
+      //       index.value = rejected.value.length + accepted.value.length;
+      //       amount.value = ((index.value + 1) / docs.value.length) * 100;
+      //       width.value = "width:" + amount.value + "%";
+      //       if (
+      //         accepted.value.includes(docs.value[index.value - 1].documentTypeCode) ||
+      //         rejected.value.includes(docs.value[index.value - 1].documentTypeCode)
+      //       ) {
+      //         findDocumentType(documentTypes.value, docs.value[index.value]);
+      //         console.log(documentTypeName.value);
+      //       }
+      //     }
+      //   });
       applicationType.value = route.params.applicationType;
     };
     const fetchDocumentTypes = async () => {
@@ -685,7 +793,7 @@ export default {
     };
 
     onMounted(() => {
-      created();
+      created(route.params.applicationType, route.params.applicationId);
       fetchDocumentTypes();
       findDocumentType(documentTypes.value, docs.value[0]);
     });
