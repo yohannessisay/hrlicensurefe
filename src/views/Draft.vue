@@ -197,7 +197,7 @@
     <div v-if="!this.searched">
       <div v-if="!this.showLoading" class="bg-lightBlueB-200 h-full">
         <div class="flex pl-12 pt-medium">
-          <Title message="New License Withdrawn Applications" />
+          <Title message="New License Draft Applications" />
         </div>
         <div v-if="this.newlicense.length == 0" class="flex pl-12 ml-6">
           <h4>Nothing to Show.</h4>
@@ -213,34 +213,38 @@
               v-bind:key="item"
               v-bind:value="item"
             >
-              <div
-                class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
+              <router-link
+                :to="{ name: 'NewLicense', params: { id: item.id } }"
               >
-                <div class="p-4 w-48 h-64">
-                  <h4
-                    class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
-                  >
-                    Applicant Type: {{ item.applicantType.name }}
-                  </h4>
-                  <h4
-                    class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
-                  >
-                    Application Status: {{ item.applicationStatus.name }}
-                  </h4>
-                  <h4
-                    class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
-                  >
-                    Code: {{ item.newLicenseCode }}
-                  </h4>
+                <div
+                  class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
+                >
+                  <div class="p-4 w-48 h-64">
+                    <h4
+                      class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                    >
+                      Applicant Type: {{ item.applicantType.name }}
+                    </h4>
+                    <h4
+                      class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                    >
+                      Application Status: {{ item.applicationStatus.name }}
+                    </h4>
+                    <h4
+                      class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                    >
+                      Code: {{ item.newLicenseCode }}
+                    </h4>
+                  </div>
                 </div>
-              </div>
+              </router-link>
             </div>
           </div>
         </div>
       </div>
       <div v-if="!this.showLoading" class="bg-lightBlueB-200 h-full">
         <div class="flex pl-12 pt-medium">
-          <Title message="Renewal Withdrawn Applications" />
+          <Title message="Renewal Draft Applications" />
         </div>
         <div v-if="this.renewal.length == 0" class="flex pl-12 ml-6">
           <h4>Nothing to Show.</h4>
@@ -256,34 +260,36 @@
               v-bind:key="item"
               v-bind:value="item"
             >
-              <div
-                class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
-              >
-                <div class="p-4 w-48 h-64">
-                  <h4
-                    class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
-                  >
-                    Applicant Type: {{ item.applicantType.name }}
-                  </h4>
-                  <h4
-                    class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
-                  >
-                    Application Status: {{ item.applicationStatus.name }}
-                  </h4>
-                  <h4
-                    class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
-                  >
-                    Code: {{ item.renewalCode }}
-                  </h4>
+              <router-link :to="{ name: 'Renewal', params: { id: item.id } }">
+                <div
+                  class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
+                >
+                  <div class="p-4 w-48 h-64">
+                    <h4
+                      class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                    >
+                      Applicant Type: {{ item.applicantType.name }}
+                    </h4>
+                    <h4
+                      class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                    >
+                      Application Status: {{ item.applicationStatus.name }}
+                    </h4>
+                    <h4
+                      class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                    >
+                      Code: {{ item.renewalCode }}
+                    </h4>
+                  </div>
                 </div>
-              </div>
+              </router-link>
             </div>
           </div>
         </div>
       </div>
       <div v-if="!this.showLoading" class="bg-lightBlueB-200 h-full">
         <div class="flex pl-12 pt-medium">
-          <Title message="Verification Withdrawn Applications" />
+          <Title message="Verification Draft Applications" />
         </div>
         <div v-if="this.verification.length == 0" class="flex pl-12 ml-6">
           <h4>Nothing to Show.</h4>
@@ -303,34 +309,38 @@
               v-bind:key="item"
               v-bind:value="item"
             >
-              <div
-                class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
+              <router-link
+                :to="{ name: 'Verification', params: { id: item.id } }"
               >
-                <div class="p-4 w-48 h-64">
-                  <h4
-                    class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
-                  >
-                    Applicant Type: {{ item.applicantType.name }}
-                  </h4>
-                  <h4
-                    class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
-                  >
-                    Application Status: {{ item.applicationStatus.name }}
-                  </h4>
-                  <h4
-                    class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
-                  >
-                    Code: {{ item.verificationCode }}
-                  </h4>
+                <div
+                  class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
+                >
+                  <div class="p-4 w-48 h-64">
+                    <h4
+                      class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                    >
+                      Applicant Type: {{ item.applicantType.name }}
+                    </h4>
+                    <h4
+                      class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                    >
+                      Application Status: {{ item.applicationStatus.name }}
+                    </h4>
+                    <h4
+                      class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                    >
+                      Code: {{ item.verificationCode }}
+                    </h4>
+                  </div>
                 </div>
-              </div>
+              </router-link>
             </div>
           </div>
         </div>
       </div>
       <div v-if="!this.showLoading" class="bg-lightBlueB-200 h-full">
         <div class="flex pl-12 pt-medium">
-          <Title message="Good Standing Withdrawn Applications" />
+          <Title message="Good Standing Draft Applications" />
         </div>
         <div v-if="this.goodstanding.length == 0" class="flex pl-12 ml-6">
           <h4>Nothing to Show.</h4>
@@ -350,27 +360,31 @@
               v-bind:key="item"
               v-bind:value="item"
             >
-              <div
-                class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
+              <router-link
+                :to="{ name: 'GoodStanding', params: { id: item.id } }"
               >
-                <div class="p-4 w-48 h-64">
-                  <h4
-                    class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
-                  >
-                    Applicant Type: {{ item.applicantType.name }}
-                  </h4>
-                  <h4
-                    class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
-                  >
-                    Application Status: {{ item.applicationStatus.name }}
-                  </h4>
-                  <h4
-                    class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
-                  >
-                    Code: {{ item.goodStandingCode }}
-                  </h4>
+                <div
+                  class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
+                >
+                  <div class="p-4 w-48 h-64">
+                    <h4
+                      class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                    >
+                      Applicant Type: {{ item.applicantType.name }}
+                    </h4>
+                    <h4
+                      class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                    >
+                      Application Status: {{ item.applicationStatus.name }}
+                    </h4>
+                    <h4
+                      class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                    >
+                      Code: {{ item.goodStandingCode }}
+                    </h4>
+                  </div>
                 </div>
-              </div>
+              </router-link>
             </div>
           </div>
         </div>
