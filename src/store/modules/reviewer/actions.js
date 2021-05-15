@@ -1,5 +1,8 @@
 import ApiService from "../../../services/api.service";
-
+import {
+  SET_UNASSIGNED,
+  SET_UNASSIGNED_SEARCHED
+} from "./mutation-types";
 const baseUrl = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api";
 const adminId = localStorage.getItem("adminId");
 
@@ -25,16 +28,26 @@ export default {
       return resp;
     }
   },
-  async getUnassigned() {
+  async getUnassigned({commit}) {
     try {
       // const resp = await ApiService.get("https://randomuser.me/api/?results=10");
       // const resp = await ApiService.get(baseUrl + "/newLicenses/status/3");
       const resp = await ApiService.get(baseUrl + "/applications/unassigned");
+      commit(SET_UNASSIGNED, resp.data.data)
       return resp;
     } catch (error) {
       const resp = error;
       return resp;
     }
+  },
+  getUnassignedSearched({commit, getters}, searchKey) {
+    const searchedVal = getters.getUnassigned.filter(function(e) {
+      return e.newLicenseCode
+        .toLowerCase()
+        .includes(searchKey.toLowerCase())
+        
+    })
+    commit('SET_UNASSIGNED_SEARCHED', searchedVal)
   },
   async getRecentlyFinished() {
     try {

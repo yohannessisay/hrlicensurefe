@@ -34,10 +34,11 @@
               </span>
               <input
                 type="search"
-                name="q"
-                class="py-2 text-sm text-white bg-gray-900 width-548 rounded-md pl-10 focus:outline-none focus:bg-white focus:text-gray-900"
+                name="search"
+                class="py-2 text-sm text-black bg-gray-900 width-548 rounded-md pl-10 focus:outline-none focus:bg-white focus:text-gray-900"
                 placeholder="Search requests by Name or Order ID"
                 autocomplete="off"
+                v-model="search"
               />
             </div>
           </div>
@@ -200,8 +201,9 @@
 </template>
 
 <script scoped>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 import { useRouter } from "vue-router";
+import { useStore } from "vuex"
 import Title from "@/sharedComponents/Title";
 import RenderIllustration from "@/sharedComponents/RenderIllustration";
 
@@ -214,9 +216,16 @@ export default {
       default: "No title"
     }
   },
-  setup() {
+  setup(props) {
     const router = useRouter();
+    const store = useStore();
     let showDD = ref(false);
+    let search = ref("");
+    watch(search, () => {
+      if(props.tab === "Unassigned") {
+        store.dispatch("reviewer/getUnassignedSearched", search.value)
+      }
+    })
     let showAdminCreate = false;
     const loggedInAdminRole = localStorage.getItem("role");
     loggedInAdminRole === "TL"
@@ -235,8 +244,9 @@ export default {
     return {
       showDD,
       showDropDown,
+      search,
       logout,
-      showAdminCreate
+      showAdminCreate,
     };
   }
 };

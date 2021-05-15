@@ -1,5 +1,6 @@
 <template>
   <div>
+    
     <ReviewerNavBar tab="Home" />
     <div class="bg-lightBlueB-200 h-full">
       <div class="flex pl-12 pt-medium">
