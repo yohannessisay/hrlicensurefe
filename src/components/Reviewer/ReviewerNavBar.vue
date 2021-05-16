@@ -225,6 +225,20 @@ export default {
       if(props.tab === "Unassigned") {
         store.dispatch("reviewer/getUnassignedSearched", search.value)
       }
+      if(props.tab === "AssignedToYou") {
+        store.dispatch('reviewer/getAssignedToYouSearched', search.value)
+      }
+      if(props.tab === "Unfinished") {
+        store.dispatch('reviewer/getUnfinishedSearched', search.value)
+      }
+      if(props.tab === "MyWork") {
+        store.dispatch('reviewer/getRecentlyFinishedSearched', search.value)
+      }
+      if(props.tab === "Home") {
+        store.dispatch('reviewer/getAssignedToYouSearched', search.value)
+        store.dispatch('reviewer/getUnfinishedSearched', search.value)
+        store.dispatch("reviewer/getUnassignedSearched", search.value)
+      }
     })
     let showAdminCreate = false;
     const loggedInAdminRole = localStorage.getItem("role");

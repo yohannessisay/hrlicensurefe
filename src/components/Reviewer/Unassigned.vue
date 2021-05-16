@@ -142,17 +142,17 @@ export default {
       store.dispatch("reviewer/getUnassigned").then(res => {
         unassigned.value = store.getters['reviewer/getUnassignedSearched']
         for (var prop in store.getters['reviewer/getUnassignedSearched']) {
-          if (unassigned.value[prop].applicationType == "Renewal") {
-            unassigned.value[prop].newLicenseCode =
-              unassigned.value[prop].renewalCode;
+          if (store.getters['reviewer/getUnassignedSearched'][prop].applicationType == "Renewal") {
+            store.getters['reviewer/getUnassignedSearched'][prop].newLicenseCode =
+              store.getters['reviewer/getUnassignedSearched'][prop].renewalCode;
           }
-          if (unassigned.value[prop].applicationType == "Good Standing") {
-            unassigned.value[prop].newLicenseCode =
-              unassigned.value[prop].goodStandingCode;
+          if (store.getters['reviewer/getUnassignedSearched'][prop].applicationType == "Good Standing") {
+            store.getters['reviewer/getUnassignedSearched'][prop].newLicenseCode =
+              store.getters['reviewer/getUnassignedSearched'][prop].goodStandingCode;
           }
-          if (unassigned.value[prop].applicationType == "Verification") {
-            unassigned.value[prop].newLicenseCode =
-              unassigned.value[prop].verificationCode;
+          if (store.getters['reviewer/getUnassignedSearched'][prop].applicationType == "Verification") {
+            store.getters['reviewer/getUnassignedSearched'][prop].newLicenseCode =
+              store.getters['reviewer/getUnassignedSearched'][prop].verificationCode;
           }
         }
       });

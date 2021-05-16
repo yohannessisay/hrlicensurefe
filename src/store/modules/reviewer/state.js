@@ -2,6 +2,11 @@ export default {
     state: {
         unassigned: [],
         unassignedSearched: [],
-        isSearching: 0,
+        assgnedToYou: [],
+        assignedToYouSearched: [],
+        unfinished: [],
+        unfinishedSearched: [],
+        recentlyFinished: [],
+        recentlyFinishedSearched: [],
     }
 }
