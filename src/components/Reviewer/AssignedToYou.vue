@@ -8,7 +8,7 @@
       <div class="flex flex-wrap pb-medium rounded h-full">
         <div
           class="container"
-          v-for="item in assignedToyou"
+          v-for="item in getAssignedToYou"
           v-bind:key="item.applicationStatus.name"
           v-bind:value="item.id"
         >
@@ -69,9 +69,15 @@ import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 
 import { ref, onMounted } from "vue";
+import store from '../../store';
 
 export default {
   components: { ReviewerNavBar, Title },
+  computed: {
+    getAssignedToYou() {
+      return store.getters['reviewer/getAssignedToYouSearched'];
+    }
+  },
   setup() {
     const store = useStore();
     const router = useRouter();
@@ -82,24 +88,22 @@ export default {
 
     const fetchAssignedtoYou = () => {
       store.dispatch("reviewer/getAssignedToYou").then(res => {
-        if (res.status != "Error") {
-          assignedToyou.value = res.data.data;
-          for (var prop in assignedToyou.value) {
-            console.log(assignedToyou.value[prop]);
-            if (assignedToyou.value[prop].applicationType == "Renewal") {
-              assignedToyou.value[prop].newLicenseCode =
-                assignedToyou.value[prop].renewalCode;
+        // if (res.status != "Error") {
+          assignedToyou.value = store.getters['reviewer/getAssignedToYouSearched'];
+          for (var prop in store.getters['reviewer/getAssignedToYouSearched']) {
+            if (store.getters['reviewer/getAssignedToYouSearched'][prop].applicationType == "Renewal") {
+              store.getters['reviewer/getAssignedToYouSearched'][prop].newLicenseCode =
+                store.getters['reviewer/getAssignedToYouSearched'][prop].renewalCode;
             }
-            if (assignedToyou.value[prop].applicationType == "Good Standing") {
-              assignedToyou.value[prop].newLicenseCode =
-                assignedToyou.value[prop].goodStandingCode;
+            if (store.getters['reviewer/getAssignedToYouSearched'][prop].applicationType == "Good Standing") {
+              store.getters['reviewer/getAssignedToYouSearched'][prop].newLicenseCode =
+                store.getters['reviewer/getAssignedToYouSearched'][prop].goodStandingCode;
             }
-            if (assignedToyou.value[prop].applicationType == "Verification") {
-              assignedToyou.value[prop].newLicenseCode =
-                assignedToyou.value[prop].verificationCode;
+            if (store.getters['reviewer/getAssignedToYouSearched'][prop].applicationType == "Verification") {
+              store.getters['reviewer/getAssignedToYouSearched'][prop].newLicenseCode =
+                store.getters['reviewer/getAssignedToYouSearched'][prop].verificationCode;
             }
           }
-        }
       });
     };
 

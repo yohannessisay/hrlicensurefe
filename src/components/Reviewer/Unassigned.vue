@@ -9,7 +9,7 @@
       <div class="flex flex-wrap pb-medium rounded h-full">
         <div
           class="container flip-box"
-          v-for="(item, index) in unassigned"
+          v-for="(item) in unAssignedSearched"
           v-bind:key="item.applicationStatus.name"
           v-bind:value="item.id"
         >
@@ -121,33 +121,38 @@ import Title from "@/sharedComponents/TitleWithIllustration";
 import ReviewerNavBar from "@/components/Reviewer/ReviewerNavBar";
 import { useStore } from "vuex";
 
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 import { useRouter } from "vue-router";
+import store from '../../store';
 
 export default {
   components: { ReviewerNavBar, Title },
+  computed: {
+    unAssignedSearched() {
+      return store.getters['reviewer/getUnassignedSearched']
+    }
+  },
   setup() {
     const store = useStore();
     const router = useRouter();
 
     let unassigned = ref({});
-
+    
     const fetchUnassignedApplications = () => {
       store.dispatch("reviewer/getUnassigned").then(res => {
-        unassigned.value = res.data.data;
-        for (var prop in unassigned.value) {
-          console.log(unassigned.value[prop]);
-          if (unassigned.value[prop].applicationType == "Renewal") {
-            unassigned.value[prop].newLicenseCode =
-              unassigned.value[prop].renewalCode;
+        unassigned.value = store.getters['reviewer/getUnassignedSearched']
+        for (var prop in store.getters['reviewer/getUnassignedSearched']) {
+          if (store.getters['reviewer/getUnassignedSearched'][prop].applicationType == "Renewal") {
+            store.getters['reviewer/getUnassignedSearched'][prop].newLicenseCode =
+              store.getters['reviewer/getUnassignedSearched'][prop].renewalCode;
           }
-          if (unassigned.value[prop].applicationType == "Good Standing") {
-            unassigned.value[prop].newLicenseCode =
-              unassigned.value[prop].goodStandingCode;
+          if (store.getters['reviewer/getUnassignedSearched'][prop].applicationType == "Good Standing") {
+            store.getters['reviewer/getUnassignedSearched'][prop].newLicenseCode =
+              store.getters['reviewer/getUnassignedSearched'][prop].goodStandingCode;
           }
-          if (unassigned.value[prop].applicationType == "Verification") {
-            unassigned.value[prop].newLicenseCode =
-              unassigned.value[prop].verificationCode;
+          if (store.getters['reviewer/getUnassignedSearched'][prop].applicationType == "Verification") {
+            store.getters['reviewer/getUnassignedSearched'][prop].newLicenseCode =
+              store.getters['reviewer/getUnassignedSearched'][prop].verificationCode;
           }
         }
       });

@@ -1,5 +1,6 @@
 <template>
   <div>
+    
     <ReviewerNavBar tab="Home" />
     <div class="bg-lightBlueB-200 h-full">
       <div class="flex pl-12 pt-medium">
@@ -22,7 +23,7 @@
         </div>
         <div
           class="container"
-          v-for="(item, index) in unfinished"
+          v-for="(item, index) in unFinishedSearched"
           v-bind:key="item.id"
           v-bind:value="item.id"
         >
@@ -92,7 +93,7 @@
         </div>
         <div
           class="container"
-          v-for="(item, index) in assignedToyou"
+          v-for="(item, index) in assignedToYouSearched"
           v-bind:key="item.id"
           v-bind:value="item.id"
         >
@@ -161,8 +162,16 @@
       <div class="box">
         <div class="flex ml-small mt-medium pb-large rounded">
           <div
+          class="pl-large w-52 h-26"
+          v-if="nothingToShowUnassigned == true"
+        >
+          <div class="flex content-center justify-center">
+            <h2>Nothing To Show!!</h2>
+          </div>
+        </div>
+          <div
             class="container flip-box"
-            v-for="(item, index) in unassigned"
+            v-for="(item, index) in unAssignedSearched"
             v-bind:key="item.id"
             v-bind:value="item.id"
           >
@@ -337,10 +346,22 @@ import Title from "@/sharedComponents/TitleWithIllustration";
 import ReviewerNavBar from "@/components/Reviewer/ReviewerNavBar";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
+import store from '../../store';
 
 export default {
   components: { ReviewerNavBar, Title },
+  computed: {
+    unAssignedSearched() {
+      return store.getters['reviewer/getUnassignedSearched']
+    },
+    unFinishedSearched() {
+      return store.getters['reviewer/getUnfinishedSearched']
+    },
+    assignedToYouSearched() {
+      return store.getters['reviewer/getAssignedToYouSearched']
+    }
+  },
   setup() {
     const store = useStore();
     const router = useRouter();
@@ -351,32 +372,31 @@ export default {
     let recentlyFinished = ref({});
     let hover = ref(false);
     let userId = +localStorage.getItem("adminId");
-    // let userId = 2;
     let x = ref([]);
     let activeFilters = ref([]);
     let nothingToShow = ref(false);
+    let nothingToShowUnassigned = ref(false);
+    
     let nothingToShowUnfinished = ref(false);
 
     const fetchUnfinished = () => {
       store.dispatch("reviewer/getUnfinished", userId).then(res => {
-        if (res.status != "Error") {
-          unfinished.value = res.data.data;
-          for (var prop in unfinished.value) {
-            console.log(unfinished.value[prop]);
-            if (unfinished.value[prop].applicationType == "Renewal") {
-              unfinished.value[prop].newLicenseCode =
-                unfinished.value[prop].renewalCode;
+        if (store.getters['reviewer/getUnfinishedSearched'].length !== 0) {
+          unfinished.value = store.getters['reviewer/getUnfinishedSearched'];
+          for (var prop in store.getters['reviewer/getUnfinishedSearched']) {
+            if (store.getters['reviewer/getUnfinishedSearched'][prop].applicationType == "Renewal") {
+              store.getters['reviewer/getUnfinishedSearched'][prop].newLicenseCode =
+                store.getters['reviewer/getUnfinishedSearched'][prop].renewalCode;
             }
-            if (unfinished.value[prop].applicationType == "Good Standing") {
-              unfinished.value[prop].newLicenseCode =
-                unfinished.value[prop].goodStandingCode;
+            if (store.getters['reviewer/getUnfinishedSearched'][prop].applicationType == "Good Standing") {
+              store.getters['reviewer/getUnfinishedSearched'][prop].newLicenseCode =
+                store.getters['reviewer/getUnfinishedSearched'][prop].goodStandingCode;
             }
-            if (unfinished.value[prop].applicationType == "Verification") {
-              unfinished.value[prop].newLicenseCode =
-                unfinished.value[prop].verificationCode;
+            if (store.getters['reviewer/getUnfinishedSearched'][prop].applicationType == "Verification") {
+              store.getters['reviewer/getUnfinishedSearched'][prop].newLicenseCode =
+                store.getters['reviewer/getUnfinishedSearched'][prop].verificationCode;
             }
           }
-          console.log(unfinished.value);
         } else {
           nothingToShowUnfinished.value = true;
         }
@@ -405,10 +425,9 @@ export default {
 
     const fetchAssignedtoYou = () => {
       store.dispatch("reviewer/getAssignedToYou").then(res => {
-        if (res.status != "Error") {
-          assignedToyou.value = res.data.data;
+          if(store.getters['reviewer/getAssignedToYouSearched'].length !== 0) {
+          assignedToyou.value = store.getters['reviewer/getAssignedToYouSearched'];
           for (var prop in assignedToyou.value) {
-            console.log(assignedToyou.value[prop]);
             if (assignedToyou.value[prop].applicationType == "Renewal") {
               assignedToyou.value[prop].newLicenseCode =
                 assignedToyou.value[prop].renewalCode;
@@ -430,30 +449,31 @@ export default {
 
     const fetchUnassignedApplications = () => {
       store.dispatch("reviewer/getUnassigned").then(res => {
-        unassigned.value = res.data.data;
-        for (var prop in unassigned.value) {
-          console.log(unassigned.value[prop]);
-          if (unassigned.value[prop].applicationType == "Renewal") {
-            unassigned.value[prop].newLicenseCode =
-              unassigned.value[prop].renewalCode;
+        unassigned.value = store.getters['reviewer/getUnassignedSearched'];
+        if (store.getters['reviewer/getUnassignedSearched'].length !== 0) {
+          for (var prop in store.getters['reviewer/getUnassignedSearched']) {
+            if (store.getters['reviewer/getUnassignedSearched'][prop].applicationType == "Renewal") {
+              store.getters['reviewer/getUnassignedSearched'][prop].newLicenseCode =
+                store.getters['reviewer/getUnassignedSearched'][prop].renewalCode;
+            }
+            if (store.getters['reviewer/getUnassignedSearched'][prop].applicationType == "Good Standing") {
+              store.getters['reviewer/getUnassignedSearched'][prop].newLicenseCode =
+                store.getters['reviewer/getUnassignedSearched'][prop].goodStandingCode;
+            }
+            if (store.getters['reviewer/getUnassignedSearched'][prop].applicationType == "Verification") {
+              store.getters['reviewer/getUnassignedSearched'][prop].newLicenseCode =
+                store.getters['reviewer/getUnassignedSearched'][prop].verificationCode;
+            }
           }
-          if (unassigned.value[prop].applicationType == "Good Standing") {
-            unassigned.value[prop].newLicenseCode =
-              unassigned.value[prop].goodStandingCode;
-          }
-          if (unassigned.value[prop].applicationType == "Verification") {
-            unassigned.value[prop].newLicenseCode =
-              unassigned.value[prop].verificationCode;
-          }
+        } else {
+          nothingToShowUnassigned.value = true;
         }
-        console.log(unassigned.value[0].applicationId);
-        console.log(unassigned.value);
       });
     };
 
     const fetchRecentlyFinished = () => {
       store.dispatch("reviewer/getRecentlyFinished").then(res => {
-        recentlyFinished.value = res.data.results;
+        // recentlyFinished.value = res.data.results;
       });
     };
 
@@ -481,6 +501,7 @@ export default {
       hover,
       nothingToShow,
       nothingToShowUnfinished,
+      nothingToShowUnassigned,
       detail,
       activeFilters
     };
