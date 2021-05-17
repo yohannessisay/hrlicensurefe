@@ -126,6 +126,7 @@
         </main>
       </nav>
     </header>
+
     <div v-if="this.searched">
       <div class="bg-lightBlueB-200 h-full">
         <div class="flex pl-12 pt-medium">
@@ -150,6 +151,7 @@
               v-bind:value="item"
             >
               <div
+                @click="routeTo(item)"
                 class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
               >
                 <div class="p-4 w-48 h-64">
@@ -507,6 +509,17 @@ export default {
             return e.applicationStatus.code.includes("USUP");
           });
         });
+    },
+     routeTo(item) {
+      if (item.newLicenseCode) {
+        this.$router.push({ name: "NewLicense", params: { id: item.id } });
+      } else if (item.renewalCode) {
+        this.$router.push({ name: "Renewal", params: { id: item.id } });
+      } else if (item.verificationCode) {
+        this.$router.push({ name: "Verification", params: { id: item.id } });
+      } else {
+        this.$router.push({ name: "GoodStanding", params: { id: item.id } });
+      }
     },
   },
 };

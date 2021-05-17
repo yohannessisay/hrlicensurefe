@@ -304,7 +304,6 @@ export default {
     fetchApplicationStatuses() {
       this.$store.dispatch("newlicense/getApplicationStatuses").then((res) => {
         const results = res.data.data;
-        console.log(results);
         this.applicationStatuses = results;
         if (this.draftId != undefined) {
           let status = this.applicationStatuses.filter(function(e) {

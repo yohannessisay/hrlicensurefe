@@ -390,6 +390,7 @@ import Title from "@/sharedComponents/TitleWithIllustration";
 import RenderIllustration from "@/sharedComponents/RenderIllustration";
 import Navigation from "@/views/Navigation";
 import Spinner from "@/sharedComponents/Spinner";
+import goodStandingVue from "../sharedComponents/illustrations/goodStanding.vue";
 
 export default {
   components: { Navigation, Title, Spinner, RenderIllustration, Title },
