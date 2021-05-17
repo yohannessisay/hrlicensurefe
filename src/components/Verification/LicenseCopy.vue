@@ -177,6 +177,7 @@ export default {
       if (route.params.id) {
         for (let i = 0; i < draftData.documents.length; i++) {
           if (draftData.documents[i].documentTypeCode == "LC") {
+            console.log("true");
             showUpload.value = false;
             isImage.value = true;
             letterFile.value = draftData.documents[i];

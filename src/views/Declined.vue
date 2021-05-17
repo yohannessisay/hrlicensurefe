@@ -197,7 +197,7 @@
     <div v-if="!this.searched">
       <div v-if="!this.showLoading" class="bg-lightBlueB-200 h-full">
         <div class="flex pl-12 pt-medium">
-          <Title message="New License Withdrawn Applications" />
+          <Title message="New License Declined Applications" />
         </div>
         <div v-if="this.newlicense.length == 0" class="flex pl-12 ml-6">
           <h4>Nothing to Show.</h4>
@@ -244,7 +244,7 @@
       </div>
       <div v-if="!this.showLoading" class="bg-lightBlueB-200 h-full">
         <div class="flex pl-12 pt-medium">
-          <Title message="Renewal Withdrawn Applications" />
+          <Title message="Renewal Declined Applications" />
         </div>
         <div v-if="this.renewal.length == 0" class="flex pl-12 ml-6">
           <h4>Nothing to Show.</h4>
@@ -289,7 +289,7 @@
       </div>
       <div v-if="!this.showLoading" class="bg-lightBlueB-200 h-full">
         <div class="flex pl-12 pt-medium">
-          <Title message="Verification Withdrawn Applications" />
+          <Title message="Verification Declined Applications" />
         </div>
         <div v-if="this.verification.length == 0" class="flex pl-12 ml-6">
           <h4>Nothing to Show.</h4>
@@ -340,7 +340,7 @@
       </div>
       <div v-if="!this.showLoading" class="bg-lightBlueB-200 h-full">
         <div class="flex pl-12 pt-medium">
-          <Title message="Good Standing Withdrawn Applications" />
+          <Title message="Good Standing Declined Applications" />
         </div>
         <div v-if="this.goodstanding.length == 0" class="flex pl-12 ml-6">
           <h4>Nothing to Show.</h4>
@@ -481,13 +481,13 @@ export default {
       this.$store.dispatch("newlicense/getNewLicense").then((res) => {
         this.license = res.data.data;
         this.newlicense = this.license.filter(function(e) {
-          return e.applicationStatus.code.includes("SUB");
+          return e.applicationStatus.code.includes("DEC");
         });
       });
       this.$store.dispatch("renewal/getRenewalLicense").then((res) => {
         this.license = res.data.data;
         this.renewal = this.license.filter(function(e) {
-          return e.applicationStatus.code.includes("SUB");
+          return e.applicationStatus.code.includes("DEC");
         });
       });
       this.$store
@@ -495,7 +495,7 @@ export default {
         .then((res) => {
           this.license = res.data.data;
           this.verification = this.license.filter(function(e) {
-            return e.applicationStatus.code.includes("SUB");
+            return e.applicationStatus.code.includes("DEC");
           });
         });
       this.$store
@@ -504,7 +504,7 @@ export default {
           this.license = res.data.data;
           this.showLoading = !this.showLoading;
           this.goodstanding = this.license.filter(function(e) {
-            return e.applicationStatus.code.includes("SUB");
+            return e.applicationStatus.code.includes("DEC");
           });
         });
     },

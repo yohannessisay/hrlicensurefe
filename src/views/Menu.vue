@@ -203,6 +203,22 @@
             </div>
           </div>
         </transition>
+        <transition name="slide-fade-to-left">
+          <div
+            class="container mr-12 box-shadow-pop rounded-lg bg-lightGrey-100 "
+          >
+            <div class="flex justify-center items-center w-64 h-40">
+              <div class="p-1">
+                <div class="my-auto flex justify-center">
+                  <router-link to="/declined">
+                    <RenderIllustration illustration="Renewal" />
+                  </router-link>
+                </div>
+                <h4 class="text-lightBlueB-500 mt-tiny">Declined</h4>
+              </div>
+            </div>
+          </div>
+        </transition>
       </div>
     </div>
     <Modal v-if="showTermsOfAgreementNL">
