@@ -7,6 +7,10 @@ import {
     SET_UNFINISHED_SEARCHED,
     SET_RECENTLY_FINISHED,
     SET_RECENTLY_FINISHED_SEARCHED,
+    SET_ASSIGNED_FOR_EVERYONE,
+    SET_ASSIGNED_FOR_EVERYONE_SEARCHED,
+    SET_EVEYONE_UNFINISHED,
+    SET_EVEYONE_UNFINISHED_SEARCHED,
 } from "./mutation-types";
 
 export default {
@@ -37,5 +41,19 @@ export default {
     },
     [SET_RECENTLY_FINISHED_SEARCHED] (state, searchedVal) {
         state.recentlyFinishedSearched = searchedVal
+    },
+    [SET_ASSIGNED_FOR_EVERYONE] (state, data) {
+        state.assignedForEveryOne = data
+        state.assignedForEveryOneSearched = data
+    },
+    [SET_ASSIGNED_FOR_EVERYONE_SEARCHED] (state, searchedVal) {
+        state.assignedForEveryOneSearched = searchedVal
+    },
+    [SET_EVEYONE_UNFINISHED] (state, data) {
+        state.everyOneUnfinished = data
+        state.eveyOneUnfinishedSearched = data
+    },
+    [SET_EVEYONE_UNFINISHED_SEARCHED] (state, searchedVal) {
+        state.eveyOneUnfinishedSearched = searchedVal
     }
 }

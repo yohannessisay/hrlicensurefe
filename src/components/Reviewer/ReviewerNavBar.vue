@@ -238,6 +238,8 @@ export default {
         store.dispatch('reviewer/getAssignedToYouSearched', search.value)
         store.dispatch('reviewer/getUnfinishedSearched', search.value)
         store.dispatch("reviewer/getUnassignedSearched", search.value)
+        store.dispatch('reviewer/getAssignedToEveryOneSearched', search.value)
+        store.dispatch('reviewer/getEveryOneUnfinishedSearched', search.value)
       }
     })
     let showAdminCreate = false;

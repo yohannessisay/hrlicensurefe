@@ -7,6 +7,14 @@
       </div>
       <div class="flex flex-wrap pb-medium rounded h-full">
         <div
+          class="pl-large w-52 h-26"
+          v-if="nothingToShow == true"
+        >
+          <div class="flex content-center justify-center">
+            <h2>Nothing To Show!!</h2>
+          </div>
+        </div>
+        <div
           class="container"
           v-for="item in getAssignedToYou"
           v-bind:key="item.applicationStatus.name"
@@ -83,6 +91,7 @@ export default {
     const router = useRouter();
 
     let assignedToyou = ref({});
+    let nothingToShow = ref(false);
     let x = ref("");
     let userId = +localStorage.getItem("userId");
 
@@ -90,6 +99,7 @@ export default {
       store.dispatch("reviewer/getAssignedToYou").then(res => {
         // if (res.status != "Error") {
           assignedToyou.value = store.getters['reviewer/getAssignedToYouSearched'];
+        if(assignedToyou.value.length !== 0) {
           for (var prop in store.getters['reviewer/getAssignedToYouSearched']) {
             if (store.getters['reviewer/getAssignedToYouSearched'][prop].applicationType == "Renewal") {
               store.getters['reviewer/getAssignedToYouSearched'][prop].newLicenseCode =
@@ -104,6 +114,9 @@ export default {
                 store.getters['reviewer/getAssignedToYouSearched'][prop].verificationCode;
             }
           }
+        } else {
+          nothingToShow.value = true;
+        }
       });
     };
 
@@ -118,6 +131,7 @@ export default {
 
     return {
       assignedToyou,
+      nothingToShow,
       detail
     };
   }

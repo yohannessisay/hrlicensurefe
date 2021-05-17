@@ -8,9 +8,14 @@ import {
   SET_UNFINISHED_SEARCHED,
   SET_RECENTLY_FINISHED,
   SET_RECENTLY_FINISHED_SEARCHED,
+  SET_ASSIGNED_FOR_EVERYONE,
+  SET_ASSIGNED_FOR_EVERYONE_SEARCHED,
+  SET_EVEYONE_UNFINISHED,
+  SET_EVEYONE_UNFINISHED_SEARCHED,
 } from "./mutation-types";
 const baseUrl = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api";
 const adminId = localStorage.getItem("adminId");
+const adminRole = localStorage.getItem("role");
 
 export default {
   async getUnfinished({commit}, id) {
@@ -43,7 +48,43 @@ export default {
     })
     commit(SET_UNFINISHED_SEARCHED, searchedVal)
   },
-  async getAssignedToYou({commit}) {
+  async getEveryOneUnfinished({commit}) {
+    if(adminRole === "SA") {
+      try {
+        const respAll = await ApiService.get(baseUrl + "/applications/allUnfinished");
+        const resp = respAll.data.data.filter(function(e) {
+          return e.reviewerId === null ? '' : e.reviewerId !== adminId
+        })
+        commit(SET_EVEYONE_UNFINISHED, resp)
+      } catch(error) {
+        const resp = error
+      }
+    } else {
+      return;
+    }
+  },
+  getEveryOneUnfinishedSearched({commit, getters}, searchKey) {
+    if(getters.getEveryOneUnfinished === undefined) {
+      return;
+    }
+    const searchedVal = getters.getEveryOneUnfinished.filter(function(e) {
+      return e.newLicenseCode === undefined ? '': e.newLicenseCode
+        .toLowerCase()
+        .includes(searchKey.toLowerCase())
+        || e.applicant.profile.name
+        .toLowerCase()
+        .includes(searchKey.toLowerCase())
+        || e.applicant.profile.fatherName
+        .toLowerCase()
+        .includes(searchKey.toLowerCase())
+        || e.reviewer.name
+        .toLowerCase()
+        .includes(searchKey.toLowerCase())
+
+    })
+    commit(SET_EVEYONE_UNFINISHED_SEARCHED, searchedVal)
+  },
+  async getAssignedToYou({commit}) { 
     try {
       const resp = await ApiService.get(baseUrl + "/applications/assignedToYou/" + adminId);
       commit(SET_ASSIGNED_TO_YOU, resp.data.data)
@@ -69,6 +110,44 @@ export default {
 
     })
     commit(SET_ASSIGNED_TO_YOU_SEARCHED, searchedVal)
+  },
+  async getAssignedToEveryOne({commit}) {
+    if(adminRole === "SA") {
+      try {
+        const respAll = await ApiService.get(baseUrl + "/applications/assignedToAll")
+        // if(respAll.data.status === "error")
+        const resp = respAll.data.data.filter(function(e) {
+          return e.reviewerId === null ? '' : e.reviewerId !== adminId
+        })
+        commit(SET_ASSIGNED_FOR_EVERYONE, resp)
+      } catch(error) {
+        const resp = error;
+        return resp;
+      }
+    } else {
+      return;
+    }
+  },
+  getAssignedToEveryOneSearched({commit, getters}, searchKey) {
+    if(getters.getAssignedForEveryOne === undefined) {
+      return;
+    }
+    const searchedVal = getters.getAssignedForEveryOne.filter(function(e) {
+      return e.newLicenseCode === undefined ? '': e.newLicenseCode
+             .toLowerCase()
+             .includes(searchKey.toLowerCase())
+             || e.applicant.profile.name
+             .toLowerCase()
+             .includes(searchKey.toLowerCase())
+             || e.applicant.profile.fatherName
+             .toLowerCase()
+             .includes(searchKey.toLowerCase())
+             || e.reviewer.name
+             .toLowerCase()
+             .includes(searchKey.toLowerCase())
+
+    })
+    commit(SET_ASSIGNED_FOR_EVERYONE_SEARCHED, searchedVal)
   },
   async getUnassigned({commit}) {
     try {
