@@ -7,7 +7,7 @@
         style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);"
         class="ml-8  mr-8 mb-12"
       >
-        <div class="mt-large bg-white"> 
+        <div class="mt-large bg-white">
           <div class="flex justify-center"><Title message="Summary" /></div>
           <div class="flex justify-start">
             <Title message="Personal Info" />
@@ -204,15 +204,21 @@
           <div class="flex flex-row">
             <div>
               <label class="ml-8"> Institution Name</label>
-              <h5 class="ml-8">{{ education.institutionName }}</h5>
+              <h5 class="ml-8" v-if="education.institution">
+                {{ education.institution.name }}
+              </h5>
             </div>
             <div>
               <label class="ml-8"> Department</label>
-              <h5 class="ml-8">{{ education.departmentName }}</h5>
+              <h5 class="ml-8" v-if="education.department">
+                {{ education.department.name }}
+              </h5>
             </div>
             <div>
               <label class="ml-8"> Institution Type</label>
-              <h5 class="ml-8">{{ education.institutionTypeName }}</h5>
+              <h5 class="ml-8" v-if="education.institution.institutionType">
+                {{ education.institution.institutionType.name }}
+              </h5>
             </div>
           </div>
           <div class="flex justify-start flex-wrap">
@@ -261,18 +267,19 @@ export default {
     const router = useRouter();
     const route = useRoute();
 
+    let loading = ref(false);
+
     let userId = ref(null);
     let show = ref(false);
     let license = ref({
       applicant: {},
-      applicantType: {},
-      education: {
-        institution: {
-          institutionType: {}
-        },
-        department: {}
-      }
+      applicantType: {}
     });
+    let education = ref({
+      institution: { name: "", institutionType: { name: "" } },
+      department: { name: "" }
+    });
+    let department = ref({name: ""});
     let profileInfo = ref({
       maritalStatus: {},
       woreda: {
@@ -284,11 +291,11 @@ export default {
     let applicantId = ref("");
     let licenseId = ref("");
     let applicantTypeId = ref("");
-    let education = ref({
-      departmentId: "",
-      institutionId: "",
-      institutionTypeName: ""
-    });
+    // let education = ref({
+    //   departmentId: "",
+    //   institutionId: "",
+    //   institutionTypeName: ""
+    // });
     let activeClass = ref("active");
     let errorClass = ref("text-danger");
     let dataFetched = ref(false);
@@ -297,14 +304,14 @@ export default {
     let profile = ref({});
     let applicationType = ref("");
 
-    const created = async (applicationTypeName, applicationId, applicantId) => {
+    const created = async (
+      applicationTypeName,
+      applicationId,
+      applicanttId
+    ) => {
       licenseId.value = applicationId;
       applicationType.value = applicationTypeName;
-      // store.dispatch("reviewer/getProfile", applicantId).then((res) => {
-      //   profileInfo.value = res.data.data;
-      //   show.value = true;
-      //   console.log(profileInfo.value);
-      // });
+      applicantId.value = applicanttId;
       if (applicationType.value == "New License") {
         store
           .dispatch("reviewer/getNewLicenseApplication", applicationId)
@@ -312,13 +319,7 @@ export default {
             license.value = res.data.data;
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
-            applicantId.value = license.value.applicantId;
-            education.value.departmentName =
-              license.value.education.department.name;
-            education.value.institutionName =
-              license.value.education.institution.name;
-            education.value.institutionTypeName =
-              license.value.education.institution.institutionType.name;
+            education.value = license.value.education;
           });
       }
       if (applicationType.value == "Good Standing") {
@@ -328,13 +329,7 @@ export default {
             license.value = res.data.data;
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
-            applicantId.value = license.value.applicantId;
-            education.value.departmentName =
-              license.value.education.department.name;
-            education.value.institutionName =
-              license.value.education.institution.name;
-            education.value.institutionTypeName =
-              license.value.education.institution.institutionType.name;
+            education.value = license.value.education;
           });
       }
       if (applicationType.value == "Verification") {
@@ -344,29 +339,18 @@ export default {
             license.value = res.data.data;
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
-            applicantId.value = license.value.applicantId;
-            education.value.departmentName =
-              license.value.education.department.name;
-            education.value.institutionName =
-              license.value.education.institution.name;
-            education.value.institutionTypeName =
-              license.value.education.institution.institutionType.name;
+            education.value = license.value.education;
           });
       }
       if (applicationType.value == "Renewal") {
+        loading.value = true;
         store
           .dispatch("reviewer/getRenewalApplication", applicationId)
           .then(res => {
             license.value = res.data.data;
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
-            applicantId.value = license.value.applicantId;
-            education.value.departmentName =
-              license.value.education.department.name;
-            education.value.institutionName =
-              license.value.education.institution.name;
-            education.value.institutionTypeName =
-              license.value.education.institution.institutionType.name;
+            education.value = license.value.education;
           });
       }
     };
@@ -380,7 +364,11 @@ export default {
     onMounted(() => {
       //userId.value = +localStorage.getItem("userId");
       userId = 2;
-      created(route.params.applicationType, route.params.applicationId, route.params.applicantId);
+      created(
+        route.params.applicationType,
+        route.params.applicationId,
+        route.params.applicantId
+      );
     });
 
     return {
@@ -400,7 +388,9 @@ export default {
       show,
       created,
       evaluate,
-      applicationType
+      applicationType,
+      department,
+      loading
     };
   }
 

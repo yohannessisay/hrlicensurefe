@@ -1,6 +1,5 @@
 <template>
   <div>
-    
     <ReviewerNavBar tab="Home" />
     <div class="bg-lightBlueB-200 h-full">
       <div class="flex pl-12 pt-medium">
@@ -34,7 +33,12 @@
             <div
               class="p-4 w-48 h-64"
               @Click="
-                detail(`/admin/unfinishedDetail`, item.applicationType, item.id, item.applicant.id)
+                detail(
+                  `/admin/unfinishedDetail`,
+                  item.applicationType,
+                  item.id,
+                  item.applicant.id
+                )
               "
             >
               <div class="flex content-center justify-center">
@@ -83,10 +87,7 @@
         </div>
       </div>
       <div class="flex ml-small mt-medium rounded ">
-        <div
-          class="pl-large w-52 h-26"
-          v-if="nothingToShowUnfinished == true"
-        >
+        <div class="pl-large w-52 h-26" v-if="nothingToShowUnfinished == true">
           <div class="flex content-center justify-center">
             <h2>Nothing To Show!!</h2>
           </div>
@@ -162,13 +163,13 @@
       <div class="box">
         <div class="flex ml-small mt-medium pb-large rounded">
           <div
-          class="pl-large w-52 h-26"
-          v-if="nothingToShowUnassigned == true"
-        >
-          <div class="flex content-center justify-center">
-            <h2>Nothing To Show!!</h2>
+            class="pl-large w-52 h-26"
+            v-if="nothingToShowUnassigned == true"
+          >
+            <div class="flex content-center justify-center">
+              <h2>Nothing To Show!!</h2>
+            </div>
           </div>
-        </div>
           <div
             class="container flip-box"
             v-for="(item, index) in unAssignedSearched"
@@ -233,7 +234,15 @@
                 class="p-4 w-48 h-64"
                 @mouseover="hover = true"
                 @mouseleave="hover = false"
-                @Click="detail(`/admin/unassignedDetail`, item.applicationType, item.id, item.applicant.id)"
+                @Click="
+                  detail(
+                    `
+                  /admin/unassignedDetail`,
+                    item.applicationType,
+                    item.id,
+                    item.applicant.id
+                  )
+                "
               >
                 <h4
                   class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
@@ -347,26 +356,29 @@ import ReviewerNavBar from "@/components/Reviewer/ReviewerNavBar";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import { ref, onMounted, watch } from "vue";
-import store from '../../store';
+import store from "../../store";
 
 export default {
   components: { ReviewerNavBar, Title },
   computed: {
     unAssignedSearched() {
-      return store.getters['reviewer/getUnassignedSearched']
+      return store.getters["reviewer/getUnassignedSearched"]
     },
     unFinishedSearched() {
-      return store.getters['reviewer/getUnfinishedSearched']
+      return store.getters["reviewer/getUnfinishedSearched"]
     },
     assignedToYouSearched() {
-      return store.getters['reviewer/getAssignedToYouSearched']
+      return store.getters["reviewer/getAssignedToYouSearched"]
     }
   },
   setup() {
     const store = useStore();
     const router = useRouter();
 
-    let unfinished = ref({ applicant: { profile:{ name:"" , fatherName: ""} } , applicationStatus: { name: "" }});
+    let unfinished = ref({
+      applicant: { profile: { name: "", fatherName: "" } },
+      applicationStatus: { name: "" }
+    });
     let assignedToyou = ref({ applicationStatus: { name: "" } });
     let unassigned = ref({ applicationStatus: { name: "" }});
     let recentlyFinished = ref({});
@@ -376,25 +388,44 @@ export default {
     let activeFilters = ref([]);
     let nothingToShow = ref(false);
     let nothingToShowUnassigned = ref(false);
-    
     let nothingToShowUnfinished = ref(false);
 
     const fetchUnfinished = () => {
       store.dispatch("reviewer/getUnfinished", userId).then(res => {
-        if (store.getters['reviewer/getUnfinishedSearched'].length !== 0) {
-          unfinished.value = store.getters['reviewer/getUnfinishedSearched'];
-          for (var prop in store.getters['reviewer/getUnfinishedSearched']) {
-            if (store.getters['reviewer/getUnfinishedSearched'][prop].applicationType == "Renewal") {
-              store.getters['reviewer/getUnfinishedSearched'][prop].newLicenseCode =
-                store.getters['reviewer/getUnfinishedSearched'][prop].renewalCode;
+        if (store.getters["reviewer/getUnfinishedSearched"].length !== 0) {
+          unfinished.value = store.getters["reviewer/getUnfinishedSearched"];
+          for (var prop in store.getters["reviewer/getUnfinishedSearched"]) {
+            if (
+              store.getters["reviewer/getUnfinishedSearched"][prop]
+                .applicationType == "Renewal"
+            ) {
+              store.getters["reviewer/getUnfinishedSearched"][
+                prop
+              ].newLicenseCode =
+                store.getters["reviewer/getUnfinishedSearched"][
+                  prop
+                ].renewalCode;
             }
-            if (store.getters['reviewer/getUnfinishedSearched'][prop].applicationType == "Good Standing") {
-              store.getters['reviewer/getUnfinishedSearched'][prop].newLicenseCode =
-                store.getters['reviewer/getUnfinishedSearched'][prop].goodStandingCode;
+            if (
+              store.getters["reviewer/getUnfinishedSearched"][prop]
+                .applicationType == "Good Standing") {
+              store.getters["reviewer/getUnfinishedSearched"][
+                prop
+              ].newLicenseCode =
+                store.getters["reviewer/getUnfinishedSearched"][
+                  prop
+                ].goodStandingCode;
             }
-            if (store.getters['reviewer/getUnfinishedSearched'][prop].applicationType == "Verification") {
-              store.getters['reviewer/getUnfinishedSearched'][prop].newLicenseCode =
-                store.getters['reviewer/getUnfinishedSearched'][prop].verificationCode;
+            if (
+              store.getters["reviewer/getUnfinishedSearched"][prop]
+                .applicationType == "Verification"
+            ) {
+              store.getters["reviewer/getUnfinishedSearched"][
+                prop
+              ].newLicenseCode =
+                store.getters["reviewer/getUnfinishedSearched"][
+                  prop
+                ].verificationCode;
             }
           }
         } else {
@@ -425,8 +456,8 @@ export default {
 
     const fetchAssignedtoYou = () => {
       store.dispatch("reviewer/getAssignedToYou").then(res => {
-          if(store.getters['reviewer/getAssignedToYouSearched'].length !== 0) {
-          assignedToyou.value = store.getters['reviewer/getAssignedToYouSearched'];
+        if (store.getters["reviewer/getAssignedToYouSearched"].length !== 0) {
+          assignedToyou.value = store.getters["reviewer/getAssignedToYouSearched"];
           for (var prop in assignedToyou.value) {
             if (assignedToyou.value[prop].applicationType == "Renewal") {
               assignedToyou.value[prop].newLicenseCode =
@@ -449,20 +480,40 @@ export default {
 
     const fetchUnassignedApplications = () => {
       store.dispatch("reviewer/getUnassigned").then(res => {
-        unassigned.value = store.getters['reviewer/getUnassignedSearched'];
-        if (store.getters['reviewer/getUnassignedSearched'].length !== 0) {
-          for (var prop in store.getters['reviewer/getUnassignedSearched']) {
-            if (store.getters['reviewer/getUnassignedSearched'][prop].applicationType == "Renewal") {
-              store.getters['reviewer/getUnassignedSearched'][prop].newLicenseCode =
-                store.getters['reviewer/getUnassignedSearched'][prop].renewalCode;
+        unassigned.value = store.getters["reviewer/getUnassignedSearched"];
+        if (store.getters["reviewer/getUnassignedSearched"].length !== 0) {
+          for (var prop in store.getters["reviewer/getUnassignedSearched"]) {
+            if (
+              store.getters["reviewer/getUnassignedSearched"][prop]
+                .applicationType == "Renewal"
+            ) {
+              store.getters["reviewer/getUnassignedSearched"][
+                prop
+              ].newLicenseCode =
+                store.getters["reviewer/getUnassignedSearched"][
+                  prop
+                ].renewalCode;
             }
-            if (store.getters['reviewer/getUnassignedSearched'][prop].applicationType == "Good Standing") {
-              store.getters['reviewer/getUnassignedSearched'][prop].newLicenseCode =
-                store.getters['reviewer/getUnassignedSearched'][prop].goodStandingCode;
+            if (
+              store.getters["reviewer/getUnassignedSearched"][prop]
+                .applicationType == "Good Standing"
+            ) {
+              store.getters["reviewer/getUnassignedSearched"][
+                prop
+              ].newLicenseCode =
+                store.getters["reviewer/getUnassignedSearched"][
+                  prop
+                ].goodStandingCode;
             }
-            if (store.getters['reviewer/getUnassignedSearched'][prop].applicationType == "Verification") {
-              store.getters['reviewer/getUnassignedSearched'][prop].newLicenseCode =
-                store.getters['reviewer/getUnassignedSearched'][prop].verificationCode;
+            if (
+              store.getters["reviewer/getUnassignedSearched"][prop]
+                .applicationType == "Verification") {
+              store.getters["reviewer/getUnassignedSearched"][
+                prop
+              ].newLicenseCode =
+                store.getters["reviewer/getUnassignedSearched"][
+                  prop
+                ].verificationCode;
             }
           }
         } else {
@@ -484,7 +535,6 @@ export default {
     };
 
     onMounted(() => {
-      console.log(localStorage);
       fetchUnfinished();
       // fetchAssignedtoYou();
       fetchUnassignedApplications();
