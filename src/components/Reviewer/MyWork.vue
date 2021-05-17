@@ -10,8 +10,8 @@
       >
         <div
           class="container"
-          v-for="(item, index) in recentlyFinished"
-          v-bind:key="item.name.first"
+          v-for="(item, index) in getRecentlyFinishedSearched"
+          v-bind:key="index"
           v-bind:value="item.id"
         >
           <!-- <div
@@ -61,8 +61,15 @@ import { useStore } from "vuex";
 
 import { ref, onMounted } from "vue";
 
+import store from "../../store"
+
 export default {
   components: { ReviewerNavBar, Title },
+  computed: {
+    getRecentlyFinishedSearched() {
+      return store.getters['reviewer/getRecentlyFinishedSearched']
+    }
+  },
   setup() {
     const store = useStore();
 
@@ -70,7 +77,7 @@ export default {
 
     const fetchRecentlyFinished = () => {
       store.dispatch("reviewer/getRecentlyFinished").then(res => {
-        recentlyFinished.value = res.data.results;
+        recentlyFinished.value = store.getters['reviewer/getRecentlyFinishedSearched'];
       });
     };
 

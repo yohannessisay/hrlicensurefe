@@ -13,7 +13,7 @@
         </div>
         <div
           class="container"
-          v-for="item in unfinished"
+          v-for="item in getUnfinished"
           v-bind:key="item.id"
           v-bind:value="item.id"
         >
@@ -72,11 +72,18 @@ import Title from "@/sharedComponents/TitleWithIllustration";
 import ReviewerNavBar from "@/components/Reviewer/ReviewerNavBar";
 import { useStore } from "vuex";
 
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 import { useRouter } from "vue-router";
+
+import store from '../../store'
 
 export default {
   components: { ReviewerNavBar, Title },
+  computed: {
+    getUnfinished() {
+      return store.getters['reviewer/getUnfinishedSearched'];
+    }
+  },
   setup() {
     const store = useStore();
     const router = useRouter();
@@ -85,26 +92,25 @@ export default {
     let x = ref([]);
     let userId = +localStorage.getItem("adminId");
     let nothingToShowUnfinished = ref(false);
+
     const fetchUnfinished = () => {
       store.dispatch("reviewer/getUnfinished", userId).then(res => {
-        if (res.status != "Error") {
-          unfinished.value = res.data.data;
-          for (var prop in unfinished.value) {
-            console.log(unfinished.value[prop]);
-            if (unfinished.value[prop].applicationType == "Renewal") {
-              unfinished.value[prop].newLicenseCode =
-                unfinished.value[prop].renewalCode;
+          unfinished.value = store.getters['reviewer/getUnfinishedSearched'];
+        if(store.getters['reviewer/getUnfinished'].length !== 0) {
+          for (var prop in store.getters['reviewer/getUnfinishedSearched']) {
+            if (store.getters['reviewer/getUnfinishedSearched'][prop].applicationType == "Renewal") {
+              store.getters['reviewer/getUnfinishedSearched'][prop].newLicenseCode =
+                store.getters['reviewer/getUnfinishedSearched'][prop].renewalCode;
             }
-            if (unfinished.value[prop].applicationType == "Good Standing") {
-              unfinished.value[prop].newLicenseCode =
-                unfinished.value[prop].goodStandingCode;
+            if (store.getters['reviewer/getUnfinishedSearched'][prop].applicationType == "Good Standing") {
+              store.getters['reviewer/getUnfinishedSearched'][prop].newLicenseCode =
+                store.getters['reviewer/getUnfinishedSearched'][prop].goodStandingCode;
             }
-            if (unfinished.value[prop].applicationType == "Verification") {
-              unfinished.value[prop].newLicenseCode =
-                unfinished.value[prop].verificationCode;
+            if (store.getters['reviewer/getUnfinishedSearched'][prop].applicationType == "Verification") {
+              store.getters['reviewer/getUnfinishedSearched'][prop].newLicenseCode =
+                store.getters['reviewer/getUnfinishedSearched'][prop].verificationCode;
             }
           }
-          console.log(unfinished.value);
         } else {
           nothingToShowUnfinished.value = true;
         }
@@ -124,7 +130,7 @@ export default {
     return {
       unfinished,
       detail,
-      nothingToShowUnfinished
+      nothingToShowUnfinished,
     };
   }
 };

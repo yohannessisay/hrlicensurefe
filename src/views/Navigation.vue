@@ -13,33 +13,6 @@
           <h2 class="text-md AtkinsonHyperlegibleBold text-primary-600 ml-2 ">
             HRIS - License
           </h2>
-          <div
-            v-if="show"
-            class="relative text-gray-600 focus-within:text-gray-400 ml-8"
-          >
-            <span class="absolute inset-y-0 right-0 flex items-center mr-8">
-              <div class="p-1 focus:outline-none focus:shadow-outline">
-                <svg
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="3"
-                  viewBox="0 0 24 24"
-                  class="width-8 height-8 text-primary-500"
-                >
-                  <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                </svg>
-              </div>
-            </span>
-            <input
-              type="search"
-              name="q"
-              class="py-2 text-sm text-black bg-gray-900 width-548 rounded-md pl-4 focus:outline-none focus:bg-white focus:text-gray-900"
-              placeholder="Search requests by Name or Order ID"
-              autocomplete="off"
-            />
-          </div>
         </div>
 
         <div class="flex items-center space-x-5">
@@ -137,23 +110,11 @@ export default {
       auth: false,
       token: "",
       showDD: false,
-      show: false,
     };
   },
   created() {
     this.token = localStorage.getItem("token");
     if (this.token != undefined) this.auth = true;
-    let routeName = this.$route.name;
-    if (
-      routeName == "Approved" ||
-      routeName == "InReview" ||
-      routeName == "UnderSupervision" ||
-      routeName == "Withdraw" ||
-      routeName == "Submitted" ||
-      routeName == "Draft"
-    ) {
-      this.show = true;
-    }
   },
   methods: {
     logout() {
