@@ -205,15 +205,21 @@
           <div class="flex flex-row">
             <div>
               <label class="ml-8"> Institution Name</label>
-              <h5 class="ml-8">{{ education.institutionName }}</h5>
+              <h5 class="ml-8" v-if="education.institution">
+                {{ education.institution.name }}
+              </h5>
             </div>
             <div>
               <label class="ml-8"> Department</label>
-              <h5 class="ml-8">{{ education.departmentName }}</h5>
+              <h5 class="ml-8" v-if="education.department">
+                {{ education.department.name }}
+              </h5>
             </div>
             <div>
               <label class="ml-8"> Institution Type</label>
-              <h5 class="ml-8">{{ education.institutionTypeName }}</h5>
+              <h5 class="ml-8" v-if="education.institution.institutionType">
+                {{ education.institution.institutionType.name }}
+              </h5>
             </div>
           </div>
           <div class="flex justify-start flex-wrap">
@@ -285,8 +291,8 @@ export default {
     let applicantId = ref("");
     let applicantTypeId = ref("");
     let education = ref({
-      departmentId: "",
-      institutionId: ""
+      institution: { name: "", institutionType: { name: "" } },
+      department: { name: "" }
     });
     let licenseId = ref("");
     let activeClass = ref("active");
@@ -314,14 +320,7 @@ export default {
             license.value = res.data.data;
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
-            console.log(license.value);
-            applicantId.value = license.value.applicantId;
-            education.value.departmentName =
-              license.value.education.department.name;
-            education.value.institutionName =
-              license.value.education.institution.name;
-            education.value.institutionTypeName =
-              license.value.education.institution.institutionType.name;
+            education.value = license.value.education;
           });
       }
       if (applicationType.value == "Good Standing") {
@@ -331,14 +330,7 @@ export default {
             license.value = res.data.data;
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
-            console.log(license.value);
-            applicantId.value = license.value.applicantId;
-            education.value.departmentName =
-              license.value.education.department.name;
-            education.value.institutionName =
-              license.value.education.institution.name;
-            education.value.institutionTypeName =
-              license.value.education.institution.institutionType.name;
+            education.value = license.value.education;
           });
       }
       if (applicationType.value == "Verification") {
@@ -348,14 +340,7 @@ export default {
             license.value = res.data.data;
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
-            console.log(license.value);
-            applicantId.value = license.value.applicantId;
-            education.value.departmentName =
-              license.value.education.department.name;
-            education.value.institutionName =
-              license.value.education.institution.name;
-            education.value.institutionTypeName =
-              license.value.education.institution.institutionType.name;
+            education.value = license.value.education;
           });
       }
       if (applicationType.value == "Renewal") {
@@ -365,14 +350,7 @@ export default {
             license.value = res.data.data;
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
-            console.log(license.value);
-            applicantId.value = license.value.applicantId;
-            education.value.departmentName =
-              license.value.education.department.name;
-            education.value.institutionName =
-              license.value.education.institution.name;
-            education.value.institutionTypeName =
-              license.value.education.institution.institutionType.name;
+            education.value = license.value.education;
           });
       }
     };

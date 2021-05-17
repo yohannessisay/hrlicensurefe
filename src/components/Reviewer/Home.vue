@@ -362,7 +362,6 @@ export default {
         if (res.status != "Error") {
           unfinished.value = res.data.data;
           for (var prop in unfinished.value) {
-            console.log(unfinished.value[prop]);
             if (unfinished.value[prop].applicationType == "Renewal") {
               unfinished.value[prop].newLicenseCode =
                 unfinished.value[prop].renewalCode;
@@ -376,7 +375,6 @@ export default {
                 unfinished.value[prop].verificationCode;
             }
           }
-          console.log(unfinished.value);
         } else {
           nothingToShowUnfinished.value = true;
         }
@@ -408,7 +406,6 @@ export default {
         if (res.status != "Error") {
           assignedToyou.value = res.data.data;
           for (var prop in assignedToyou.value) {
-            console.log(assignedToyou.value[prop]);
             if (assignedToyou.value[prop].applicationType == "Renewal") {
               assignedToyou.value[prop].newLicenseCode =
                 assignedToyou.value[prop].renewalCode;
@@ -432,7 +429,6 @@ export default {
       store.dispatch("reviewer/getUnassigned").then(res => {
         unassigned.value = res.data.data;
         for (var prop in unassigned.value) {
-          console.log(unassigned.value[prop]);
           if (unassigned.value[prop].applicationType == "Renewal") {
             unassigned.value[prop].newLicenseCode =
               unassigned.value[prop].renewalCode;
@@ -446,8 +442,6 @@ export default {
               unassigned.value[prop].verificationCode;
           }
         }
-        console.log(unassigned.value[0].applicationId);
-        console.log(unassigned.value);
       });
     };
 
@@ -464,7 +458,6 @@ export default {
     };
 
     onMounted(() => {
-      console.log(localStorage);
       fetchUnfinished();
       // fetchAssignedtoYou();
       fetchUnassignedApplications();
