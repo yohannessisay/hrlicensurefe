@@ -7,4 +7,8 @@ export default {
     getUnfinishedSearched: state => state.unfinishedSearched,
     getRecentlyFinished: state => state.recentlyFinished,
     getRecentlyFinishedSearched: state => state.recentlyFinishedSearched,
+    getAssignedForEveryOne: state => state.assignedForEveryOne,
+    getAssignedForEveryOneSearched: state => state.assignedForEveryOneSearched,
+    getEveryOneUnfinished: state => state.everyOneUnfinished,
+    getEveryOneUnfinishedSearched: state => state.eveyOneUnfinishedSearched,
 };

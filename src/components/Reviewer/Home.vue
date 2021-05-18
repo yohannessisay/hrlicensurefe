@@ -3,7 +3,13 @@
     <ReviewerNavBar tab="Home" />
     <div class="bg-lightBlueB-200 h-full">
       <div class="flex pl-12 pt-medium">
-        <Title message="Unfinished" />
+        <div v-if="myTitleMessage">
+          <Title message="My Unfinished" />
+        </div>
+        <div v-else>
+          <Title message="Unfinished" />
+        </div>
+        
         <div class="flex ml-small" v-if="unfinished.length >= 5">
           <router-link to="/admin/unfinished">
             <button
@@ -15,7 +21,7 @@
         </div>
       </div>
       <div class="flex ml-small mt-medium rounded ">
-        <div class="pl-large w-52 h-26" v-if="nothingToShow == true">
+        <div class="pl-large w-52 h-26" v-if="nothingToShowUnfinished == true">
           <div class="flex content-center justify-center">
             <h2>Nothing To Show!!</h2>
           </div>
@@ -74,6 +80,87 @@
         </div>
       </div>
 
+      <div v-if="adminRole==='SA'">
+        <div class="flex pl-12 mt-medium">
+          <Title message="All Unfinished" />
+          <div class="flex ml-small" v-if="everyoneUnfinished.length >= 5">
+            <router-link to="/admin/assignedToyou">
+              <button
+                class="block mx-auto  bg-lightBlue-300 hover:bg-lightBlue-600 hover:shadow-lg"
+              >
+                View All
+              </button>
+            </router-link>
+          </div>
+        </div>
+        <div class="flex ml-small mt-medium rounded ">
+        <div class="pl-large w-52 h-26" v-if="nothingToShowAllUnfinished == true">
+          <div class="flex content-center justify-center">
+            <h2>Nothing To Show!!</h2>
+          </div>
+        </div>
+        <div
+          class="container"
+          v-for="(item, index) in unFinishedForEveryOneSearched"
+          v-bind:key="item.id"
+          v-bind:value="item.id"
+        >
+          <div
+            v-if="index < 5"
+            class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
+          >
+            <div
+              class="p-4 w-48 h-64"
+              @Click="
+                detail(`/admin/unfinishedDetail`, item.applicationType, item.id, item.applicant.id)
+              "
+            >
+              <div class="flex content-center justify-center">
+                <!-- <img class="box-shadow-pop" v-bind:src="item.picture.large" /> -->
+                <img
+                  class="box-shadow-pop" 
+                  src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
+                />
+              </div>
+              <h4
+                class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+              >
+                {{
+                  item.applicant.profile.name
+                    ? item.applicant.profile.name +
+                      " " +
+                      item.applicant.profile.fatherName
+                    : "-"
+                }}
+              </h4>
+              <h5
+                class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+              >
+                Started By:
+                {{
+                  item.reviewer.name
+                    ? item.reviewer.name
+                    : "-"
+                }}
+              </h5>
+              <!-- <h6
+                class="text-lightBlueB-500 mt-tiny flex justify-center content-center">
+                {{ item.createdAt ? item.createdAt : "-" }}
+              </h6> -->
+              <h6
+                class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+              >
+                Application ID:
+                {{ item.newLicenseCode ? item.newLicenseCode : "-" }}
+              </h6>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      </div>
+
+
       <div class="flex pl-12 mt-medium">
         <Title message="Assigned to You" />
         <div class="flex ml-small" v-if="assignedToyou.length >= 5">
@@ -87,7 +174,10 @@
         </div>
       </div>
       <div class="flex ml-small mt-medium rounded ">
-        <div class="pl-large w-52 h-26" v-if="nothingToShowUnfinished == true">
+        <div
+          class="pl-large w-52 h-26"
+          v-if="nothingToShow == true"
+        >
           <div class="flex content-center justify-center">
             <h2>Nothing To Show!!</h2>
           </div>
@@ -145,6 +235,95 @@
             </div>
           </div>
         </div>
+      </div>
+      <div v-if="adminRole==='SA'">
+        <div class="flex pl-12 mt-medium">
+          <Title message="Assigned to Everyone" />
+          <div class="flex ml-small" v-if="assignedToEveryone.length >= 5">
+            <router-link to="/admin/assignedToyou">
+              <button
+                class="block mx-auto  bg-lightBlue-300 hover:bg-lightBlue-600 hover:shadow-lg"
+              >
+                View All
+              </button>
+            </router-link>
+          </div>
+        </div>
+
+        <div class="flex ml-small mt-medium rounded ">
+        <div
+          class="pl-large w-52 h-26"
+          v-if="nothingToShowEveryoneAssigned == true"
+        >
+          <div class="flex content-center justify-center">
+            <h2>Nothing To Show!!</h2>
+          </div>
+        </div>
+        <div
+          class="container"
+          v-for="(item, index) in assignedToEveryOneSearched"
+          v-bind:key="item.id"
+          v-bind:value="item.id"
+        >
+          <div
+            v-if="index < 5"
+            class="flex justify-center items-center ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
+          >
+            <div
+              class="p-4 w-48 h-64"
+              @Click="detail(`/admin/detail`, item.applicationType, item.id, item.applicant.id)"
+            >
+              <div class="flex content-center justify-center">
+                <router-link to="/newlicense">
+                  <!-- <img class="box-shadow-pop" v-bind:src="item.picture.large" /> -->
+                  <img
+                    class="box-shadow-pop"
+                    src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
+                  />
+                </router-link>
+              </div>
+              <h4
+                class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+              >
+                {{
+                  item.applicant.profile.name
+                    ? item.applicant.profile.name +
+                      " " +
+                      item.applicant.profile.fatherName
+                    : "-"
+                }}
+              </h4>
+              <h5
+                class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+              >
+                Assigned To: 
+                {{
+                  item.reviewer.name
+                    ? item.reviewer.name
+                    : "-"
+                }}
+              </h5>
+              <!-- <h6
+                class="text-lightBlueB-500 mt-tiny flex justify-center content-center">
+                {{ item.createdAt ? item.createdAt : "-" }}
+              </h6> -->
+              <span
+                class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+              >
+                Application Type:
+                {{ item.applicationType ? item.applicationType : "-" }}
+              </span>
+              <span
+                class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+              >
+                Application ID:
+                {{ item.newLicenseCode ? item.newLicenseCode : "-" }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
       </div>
 
       <div class="flex pl-12 mt-medium">
@@ -368,7 +547,13 @@ export default {
       return store.getters["reviewer/getUnfinishedSearched"]
     },
     assignedToYouSearched() {
-      return store.getters["reviewer/getAssignedToYouSearched"]
+      return store.getters['reviewer/getAssignedToYouSearched']
+    },
+    unFinishedForEveryOneSearched() {
+      return store.getters['reviewer/getEveryOneUnfinishedSearched']
+    },
+    assignedToEveryOneSearched() {
+      return store.getters['reviewer/getAssignedForEveryOneSearched']
     }
   },
   setup() {
@@ -382,14 +567,21 @@ export default {
     let assignedToyou = ref({ applicationStatus: { name: "" } });
     let unassigned = ref({ applicationStatus: { name: "" }});
     let recentlyFinished = ref({});
+    let assignedToEveryone = ref({});
+    let everyoneUnfinished = ref({});
     let hover = ref(false);
     let userId = +localStorage.getItem("adminId");
+    let adminRole = localStorage.getItem("role");
     let x = ref([]);
     let activeFilters = ref([]);
     let nothingToShow = ref(false);
     let nothingToShowUnassigned = ref(false);
     let nothingToShowUnfinished = ref(false);
 
+    let myTitleMessage = ref(false)
+
+    adminRole === "SA" ? (myTitleMessage.value = true)
+                        : (myTitleMessage.value = false)
     const fetchUnfinished = () => {
       store.dispatch("reviewer/getUnfinished", userId).then(res => {
         if (store.getters["reviewer/getUnfinishedSearched"].length !== 0) {
@@ -478,6 +670,28 @@ export default {
       });
     };
 
+    const fetchAssignedToEveryone = () => {
+      store.dispatch('reviewer/getAssignedToEveryOne').then(res => {
+        assignedToEveryone.value = store.getters['reviewer/getAssignedForEveryOneSearched'];
+        if(assignedToEveryone.value.length !== 0) {
+            // do some logic to manipulate data
+        } else {
+          nothingToShowEveryoneAssigned.value = true
+        }
+      })
+    };
+
+    const fetchEveryOneUnfinished = () => {
+      store.dispatch('reviewer/getEveryOneUnfinished').then(res => {
+        everyoneUnfinished.value = store.getters['reviewer/getEveryOneUnfinishedSearched'];
+        if(everyoneUnfinished.value.length !== 0) {
+          // do some logic to manipulate data
+        } else {
+          nothingToShowAllUnfinished.value = true
+        }
+      })
+    }
+
     const fetchUnassignedApplications = () => {
       store.dispatch("reviewer/getUnassigned").then(res => {
         unassigned.value = store.getters["reviewer/getUnassignedSearched"];
@@ -540,20 +754,28 @@ export default {
       fetchUnassignedApplications();
       fetchRecentlyFinished();
       fetchAssignedtoYou();
+      fetchAssignedToEveryone();
+      fetchEveryOneUnfinished();
     });
 
     return {
       userId,
+      adminRole,
       unfinished,
       assignedToyou,
+      assignedToEveryone,
       unassigned,
       recentlyFinished,
+      everyoneUnfinished,
       hover,
       nothingToShow,
       nothingToShowUnfinished,
       nothingToShowUnassigned,
+      nothingToShowEveryoneAssigned,
+      nothingToShowAllUnfinished,
       detail,
-      activeFilters
+      activeFilters,
+      myTitleMessage
     };
   }
 };

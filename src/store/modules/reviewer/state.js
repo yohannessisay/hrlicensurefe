@@ -8,5 +8,9 @@ export default {
         unfinishedSearched: [],
         recentlyFinished: [],
         recentlyFinishedSearched: [],
+        assignedForEveryOne: [],
+        assignedForEveryOneSearched: [],
+        everyOneUnfinished: [],
+        eveyOneUnfinishedSearched: [],
     }
 }
