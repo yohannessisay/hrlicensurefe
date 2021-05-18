@@ -244,7 +244,7 @@ export default {
     })
     let showAdminCreate = false;
     const loggedInAdminRole = localStorage.getItem("role");
-    loggedInAdminRole === "TL"
+    loggedInAdminRole === "TL" || loggedInAdminRole === "SA"
       ? (showAdminCreate = true)
       : (showAdminCreate = false);
 

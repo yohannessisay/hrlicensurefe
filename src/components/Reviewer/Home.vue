@@ -4,7 +4,13 @@
     <ReviewerNavBar tab="Home" />
     <div class="bg-lightBlueB-200 h-full">
       <div class="flex pl-12 pt-medium">
-        <Title message="My Unfinished" />
+        <div v-if="myTitleMessage">
+          <Title message="My Unfinished" />
+        </div>
+        <div v-else>
+          <Title message="Unfinished" />
+        </div>
+        
         <div class="flex ml-small" v-if="unfinished.length >= 5">
           <router-link to="/admin/unfinished">
             <button
@@ -560,6 +566,10 @@ export default {
     
     let nothingToShowUnfinished = ref(false);
 
+    let myTitleMessage = ref(false)
+
+    adminRole === "SA" ? (myTitleMessage.value = true)
+                        : (myTitleMessage.value = false)
     const fetchUnfinished = () => {
       store.dispatch("reviewer/getUnfinished", userId).then(res => {
         if (store.getters['reviewer/getUnfinishedSearched'].length !== 0) {
@@ -713,7 +723,8 @@ export default {
       nothingToShowEveryoneAssigned,
       nothingToShowAllUnfinished,
       detail,
-      activeFilters
+      activeFilters,
+      myTitleMessage
     };
   }
 };
