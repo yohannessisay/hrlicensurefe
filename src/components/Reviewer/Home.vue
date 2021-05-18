@@ -576,6 +576,9 @@ export default {
     let activeFilters = ref([]);
     let nothingToShow = ref(false);
     let nothingToShowUnassigned = ref(false);
+    let nothingToShowEveryoneAssigned = ref(false);
+    let nothingToShowAllUnfinished = ref(false);
+    
     let nothingToShowUnfinished = ref(false);
 
     let myTitleMessage = ref(false)
