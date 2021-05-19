@@ -66,7 +66,7 @@ export default {
   async uploadDocuments({ commit }, documents) {
     try {
       const resp = await ApiService.post(
-        url + "documentUploads/licenseDocument/" + documents.id,
+        url + "documentUploads/renewalDocument/" + documents.id,
         documents.document,
         {
           headers: {

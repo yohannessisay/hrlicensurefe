@@ -125,7 +125,6 @@ export default {
         .then((res) => {
           const results = res.data.data;
           this.applicationCategories = results;
-          console.log(this.applicationCategories);
           const newApplicationData = this.applicationCategories.filter(
             (item) => {
               return item.name == "Good Standing Later";
@@ -145,7 +144,6 @@ export default {
         .then((res) => {
           const results = res.data.data;
           this.documentSpecs = results;
-          console.log(this.documentSpecs);
           this.$store
             .dispatch("goodstanding/setDocumentSpecs", this.documentSpecs)
             .then((res) => {});

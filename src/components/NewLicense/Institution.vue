@@ -210,6 +210,7 @@ export default {
     },
     fetchDraft() {
       let draftData = this.getDraft;
+      console.log(draftData);
       this.licenseInfo.applicantId = draftData.applicantId;
       this.licenseInfo.applicantTypeId = draftData.applicantTypeId;
       this.licenseInfo.education.departmentId =

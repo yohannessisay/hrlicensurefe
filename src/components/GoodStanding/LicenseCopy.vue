@@ -197,7 +197,6 @@ export default {
             goodStandingLetter
           );
           formData.append(documentSpecs[2].documentType.code, licenseFile);
-          console.log(draftData.id);
           let payload = { document: formData, id: draftData.id };
           store
             .dispatch("goodstanding/uploadDocuments", payload)

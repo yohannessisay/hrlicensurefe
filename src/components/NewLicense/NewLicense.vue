@@ -344,7 +344,6 @@ export default {
         .then((res) => {
           const results = res.data.data;
           this.documentSpecs = results;
-          console.log(this.documentSpecs);
           this.$store
             .dispatch("newlicense/setDocumentSpecs", this.documentSpecs)
             .then((res) => {});
@@ -352,7 +351,6 @@ export default {
     },
     fetchDraft(id) {
       this.$store.dispatch("newlicense/getDraft", id).then((res) => {
-        console.log(res.data);
         const results = res.data.data;
         this.$store.dispatch("newlicense/setDraft", results);
       });

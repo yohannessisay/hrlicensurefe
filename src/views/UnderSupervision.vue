@@ -510,7 +510,7 @@ export default {
           });
         });
     },
-     routeTo(item) {
+    routeTo(item) {
       if (item.newLicenseCode) {
         this.$router.push({ name: "NewLicense", params: { id: item.id } });
       } else if (item.renewalCode) {

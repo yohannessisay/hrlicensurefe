@@ -481,6 +481,7 @@ export default {
       this.showLoading = !this.showLoading;
       this.$store.dispatch("newlicense/getNewLicense").then((res) => {
         this.license = res.data.data;
+        console.log(this.license);
         this.newlicense = this.license.filter(function(e) {
           return e.applicationStatus.code.includes("DEC");
         });
