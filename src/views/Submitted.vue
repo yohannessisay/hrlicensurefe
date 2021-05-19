@@ -198,7 +198,7 @@
     <div v-if="!this.searched">
       <div v-if="!this.showLoading" class="bg-lightBlueB-200 h-full">
         <div class="flex pl-12 pt-medium">
-          <Title message="New License Withdrawn Applications" />
+          <Title message="New License Submitted Applications" />
         </div>
         <div v-if="this.newlicense.length == 0" class="flex pl-12 ml-6">
           <h4>Nothing to Show.</h4>
@@ -245,7 +245,7 @@
       </div>
       <div v-if="!this.showLoading" class="bg-lightBlueB-200 h-full">
         <div class="flex pl-12 pt-medium">
-          <Title message="Renewal Withdrawn Applications" />
+          <Title message="Renewal Submitted Applications" />
         </div>
         <div v-if="this.renewal.length == 0" class="flex pl-12 ml-6">
           <h4>Nothing to Show.</h4>
@@ -290,7 +290,7 @@
       </div>
       <div v-if="!this.showLoading" class="bg-lightBlueB-200 h-full">
         <div class="flex pl-12 pt-medium">
-          <Title message="Verification Withdrawn Applications" />
+          <Title message="Verification Submitted Applications" />
         </div>
         <div v-if="this.verification.length == 0" class="flex pl-12 ml-6">
           <h4>Nothing to Show.</h4>
@@ -341,7 +341,7 @@
       </div>
       <div v-if="!this.showLoading" class="bg-lightBlueB-200 h-full">
         <div class="flex pl-12 pt-medium">
-          <Title message="Good Standing Withdrawn Applications" />
+          <Title message="Good Standing Submitted Applications" />
         </div>
         <div v-if="this.goodstanding.length == 0" class="flex pl-12 ml-6">
           <h4>Nothing to Show.</h4>
