@@ -64,18 +64,11 @@
                 />
               </div>
             </transition>
+          
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 9">
-                <ServiceFee
-                  :activeState="9"
-                  @changeActiveState="activeState++"
-                />
-              </div>
-            </transition>
-            <transition name="fade" mode="out-in">
-              <div v-if="this.activeState == 10">
                 <LicenseSummary
-                  :activeState="10"
+                  :activeState="9"
                   @changeActiveState="activeState++"
                 />
               </div>
@@ -145,16 +138,8 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 10">
-                <ServiceFee
-                  :activeState="10"
-                  @changeActiveState="activeState++"
-                />
-              </div>
-            </transition>
-            <transition name="fade" mode="out-in">
-              <div v-if="this.activeState == 11">
                 <LicenseSummary
-                  :activeState="11"
+                  :activeState="10"
                   @changeActiveState="activeState++"
                 />
               </div>
@@ -184,13 +169,13 @@
 
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 5">
-                <HERQA :activeState="6" @changeActiveState="activeState++" />
+                <HERQA :activeState="5" @changeActiveState="activeState++" />
               </div>
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 6">
                 <ProfessionalDocumentEthiopian
-                  :activeState="7"
+                  :activeState="6"
                   @changeActiveState="activeState++"
                 />
               </div>
@@ -198,23 +183,15 @@
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 7">
                 <SupportLetterForeign
-                  :activeState="8"
+                  :activeState="7"
                   @changeActiveState="activeState++"
                 />
               </div>
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 8">
-                <ServiceFee
-                  :activeState="9"
-                  @changeActiveState="activeState++"
-                />
-              </div>
-            </transition>
-            <transition name="fade" mode="out-in">
-              <div v-if="this.activeState == 9">
                 <LicenseSummary
-                  :activeState="10"
+                  :activeState="8"
                   @changeActiveState="activeState++"
                 />
               </div>
@@ -233,7 +210,6 @@ import Photo from "./Photo.vue";
 import Passport from "./Passport.vue";
 import HealthExamCert from "./HealthExamCert.vue";
 import LicenseSummary from "./LicenseSummary.vue";
-import ServiceFee from "./ServiceFee.vue";
 
 import HERQA from "./Ethiopians F/HERQA";
 import ProfessionalDocumentEthiopian from "./Ethiopians F/ProfessionalDocuments";
@@ -274,7 +250,6 @@ export default {
     Passport,
     HealthExamCert,
     LicenseSummary,
-    ServiceFee,
     HERQA,
     ProfessionalDocumentEthiopian,
     SupportLetterEthiopian,
