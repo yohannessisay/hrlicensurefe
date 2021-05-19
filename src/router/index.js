@@ -103,9 +103,19 @@ const routes = [
     component: () => import("../components/Reviewer/MyWork.vue"),
   },
   {
+    path: "/allWork",
+    name: "allWork",
+    component: () => import("../components/Reviewer/AllWork.vue"),
+  },
+  {
     path: "/admin/unfinished",
     name: "unfinished",
     component: () => import("../components/Reviewer/Unfinished.vue"),
+  },
+  {
+    path: "/admin/unfinishedAll",
+    name: "allUnfinished",
+    component: () => import("../components/Reviewer/AllUnfinished.vue"),
   },
   {
     path: "/admin/assignedToYou",
@@ -113,11 +123,30 @@ const routes = [
     component: () => import("../components/Reviewer/AssignedToYou.vue"),
   },
   {
+    path: "/admin/assignedToAll",
+    name: "assignedToAll",
+    component: () => import("../components/Reviewer/AllAssigned.vue"),
+  },
+  {
     path: "/admin/unassigned",
     name: "unassigned",
     component: () => import("../components/Reviewer/Unassigned.vue"),
   },
-
+  {
+    path: "/admin/allCertifiedUsers",
+    name: "certifiedUsers",
+    component: () => import("../components/Reviewer/AllCertifiedUsers.vue"),
+  },
+  {
+    path: "/admin/certifiedUsers",
+    name: "allCertifiedusers",
+    component: () => import("../components/Reviewer/CertifiedUsers.vue"),
+  },
+  {
+    path: "/admin/certifiedUsersDetail/:certificateId/:applicantId",
+    name: "certifiedUsersDetail",
+    component: () => import ("../components/Reviewer/Detail/CertifiedUsersDetail.vue"),
+  },
   {
     path: "/admin/evaluate/:applicationType/:applicationId",
     name: "evaluate",

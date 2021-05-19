@@ -1,9 +1,9 @@
 <template>
   <div>
-    <ReviewerNavBar tab="Unfinished" />
+    <ReviewerNavBar tab="allCertifiedUsers" />
     <div class="bg-lightBlueB-200 h-full">
       <div class="flex pl-12 pt-tiny">
-        <Title message="Unfinished" />
+        <Title message="All Certified Users" />
       </div>
       <div class="flex flex-wrap pb-medium rounded h-full" v-if="!showLoading">
         <div class="pl-large w-52 h-26" v-if="nothingToShowUnfinished == true">
@@ -13,19 +13,18 @@
         </div>
         <div
           class="container"
-          v-for="item in getUnfinished"
+          v-for="item in getAllCertifiedUsers"
           v-bind:key="item.id"
           v-bind:value="item.id"
         >
           <div
-            class="flex justify-center items-center  ml-8 mt-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
+            class="flex justify-center items-center ml-8 mt-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
           >
             <div
               class="p-4 w-48 h-64"
               @Click="
                 detail(
-                  `/admin/unfinishedDetail`,
-                  item.applicationType,
+                  `/admin/certifiedUsersDetail`,
                   item.id,
                   item.applicant.id
                 )
@@ -41,6 +40,7 @@
               <h4
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
               >
+                Certified User:
                 {{
                   item.applicant.profile.name
                     ? item.applicant.profile.name +
@@ -49,8 +49,19 @@
                     : "-"
                 }}
               </h4>
+              <!-- <h5
+                class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+              >
+                Started By:
+                {{
+                  item.reviewer.name
+                    ? item.reviewer.name
+                    : "-"
+                }}
+              </h5> -->
               <h6
-                class="text-lightBlueB-500 mt-tiny flex justify-center content-center">
+                class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+              >
                 {{ item.createdAt ? item.createdAt : "-" }}
               </h6>
               <h6
@@ -81,15 +92,19 @@ import { useStore } from "vuex";
 import { ref, onMounted, watch } from "vue";
 import { useRouter } from "vue-router";
 
-import store from '../../store'
+import store from "../../store";
 import Spinner from "@/sharedComponents/Spinner";
 
 export default {
-  components: { ReviewerNavBar, Title, Spinner },
+  components: {
+    ReviewerNavBar,
+    Title,
+    Spinner,
+  },
   computed: {
-    getUnfinished() {
-      return store.getters['reviewer/getUnfinishedSearched'];
-    }
+    getAllCertifiedUsers() {
+      return store.getters["reviewer/getAllRecentlyFinishedSearched"];
+    },
   },
   setup() {
     const store = useStore();
@@ -102,34 +117,34 @@ export default {
     let showLoading = ref(false);
 
     const fetchUnfinished = () => {
-      showLoading.value = true
-      store.dispatch("reviewer/getUnfinished", userId).then(res => {
-        showLoading.value = false
-          unfinished.value = store.getters['reviewer/getUnfinishedSearched'];
-        if(store.getters['reviewer/getUnfinished'].length !== 0) {
-          for (var prop in store.getters['reviewer/getUnfinishedSearched']) {
-            if (store.getters['reviewer/getUnfinishedSearched'][prop].applicationType == "Renewal") {
-              store.getters['reviewer/getUnfinishedSearched'][prop].newLicenseCode =
-                store.getters['reviewer/getUnfinishedSearched'][prop].renewalCode;
-            }
-            if (store.getters['reviewer/getUnfinishedSearched'][prop].applicationType == "Good Standing") {
-              store.getters['reviewer/getUnfinishedSearched'][prop].newLicenseCode =
-                store.getters['reviewer/getUnfinishedSearched'][prop].goodStandingCode;
-            }
-            if (store.getters['reviewer/getUnfinishedSearched'][prop].applicationType == "Verification") {
-              store.getters['reviewer/getUnfinishedSearched'][prop].newLicenseCode =
-                store.getters['reviewer/getUnfinishedSearched'][prop].verificationCode;
-            }
-          }
-        } else {
-          nothingToShowUnfinished.value = true;
-        }
+      showLoading.value = true;
+      store.dispatch("reviewer/getAllRecentlyFinished").then((res) => {
+        showLoading.value = false;
+        unfinished.value =
+          store.getters["reviewer/getAllRecentlyFinishedSearched"];
+        // if(store.getters['reviewer/getEveryOneUnfinishedSearched'].length !== 0) {
+        //   for (var prop in store.getters['reviewer/getEveryOneUnfinishedSearched']) {
+        //     if (store.getters['reviewer/getEveryOneUnfinishedSearched'][prop].applicationType == "Renewal") {
+        //       store.getters['reviewer/getEveryOneUnfinishedSearched'][prop].newLicenseCode =
+        //         store.getters['reviewer/getEveryOneUnfinishedSearched'][prop].renewalCode;
+        //     }
+        //     if (store.getters['reviewer/getEveryOneUnfinishedSearched'][prop].applicationType == "Good Standing") {
+        //       store.getters['reviewer/getEveryOneUnfinishedSearched'][prop].newLicenseCode =
+        //         store.getters['reviewer/getEveryOneUnfinishedSearched'][prop].goodStandingCode;
+        //     }
+        //     if (store.getters['reviewer/getEveryOneUnfinishedSearched'][prop].applicationType == "Verification") {
+        //       store.getters['reviewer/getEveryOneUnfinishedSearched'][prop].newLicenseCode =
+        //         store.getters['reviewer/getEveryOneUnfinishedSearched'][prop].verificationCode;
+        //     }
+        //   }
+        // } else {
+        //   nothingToShowUnfinished.value = true;
+        // }
       });
     };
 
-    const detail = (data, applicationType, applicationId, applicantId) => {
-      const url =
-        data + "/" + applicationType + "/" + applicationId + "/" + applicantId;
+    const detail = (data, applicationId, applicantId) => {
+      const url = data + "/" + applicationId + "/" + applicantId;
       router.push(url);
     };
 
@@ -143,7 +158,7 @@ export default {
       nothingToShowUnfinished,
       showLoading,
     };
-  }
+  },
 };
 </script>
 <style scoped>

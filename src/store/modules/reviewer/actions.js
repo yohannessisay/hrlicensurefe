@@ -12,9 +12,11 @@ import {
   SET_ASSIGNED_FOR_EVERYONE_SEARCHED,
   SET_EVEYONE_UNFINISHED,
   SET_EVEYONE_UNFINISHED_SEARCHED,
+  SET_ALL_RECENTLY_FINISHED,
+  SET_ALL_RECENTLY_FINISHED_SEARCHED,
 } from "./mutation-types";
 const baseUrl = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api";
-const adminId = localStorage.getItem("adminId");
+const adminId = +localStorage.getItem("adminId");
 const adminRole = localStorage.getItem("role");
 
 export default {
@@ -84,9 +86,10 @@ export default {
     })
     commit(SET_EVEYONE_UNFINISHED_SEARCHED, searchedVal)
   },
-  async getAssignedToYou({commit}) { 
+  async getAssignedToYou({commit}, userId) { 
+    console.log("admin_id", userId)
     try {
-      const resp = await ApiService.get(baseUrl + "/applications/assignedToYou/" + adminId);
+      const resp = await ApiService.get(baseUrl + "/applications/assignedToYou/" + userId);
       commit(SET_ASSIGNED_TO_YOU, resp.data.data)
     } catch (error) {
       const resp = error;
@@ -177,10 +180,13 @@ export default {
     })
     commit(SET_UNASSIGNED_SEARCHED, searchedVal)
   },
-  async getRecentlyFinished({commit}) {
+  async getRecentlyFinished({commit}, adminId) {
     try {
-      const resp = await ApiService.get("https://randomuser.me/api/?results=10");
-      commit(SET_RECENTLY_FINISHED, resp.data.results)
+      const resp = await ApiService.get(baseUrl + "/applications/finished/"+adminId)
+      
+      console.log("ioio", resp.data.data)
+      // const resp = await ApiService.get("https://randomuser.me/api/?results=10");
+      commit(SET_RECENTLY_FINISHED, resp.data.data)
     } catch (error) {
       const resp = error;
       return resp;
@@ -191,19 +197,66 @@ export default {
       return;
     }
     const searchedVal = getters.getRecentlyFinished.filter(function(e) {
-      return  e.id.value === null ? '' : 
-              e.id.value.
-              toLowerCase().
-              includes(searchKey.toLowerCase()) 
-            || e.name.first
-             .toLowerCase()
-            .includes(searchKey.toLowerCase())
-            ||
-            e.name.last
-            .toLowerCase()
-            .includes(searchKey.toLowerCase())
+      return e.newLicenseCode
+              .toLowerCase()
+              .includes(searchKey.toLowerCase())
+              || e.applicant.profile.name
+              .toLowerCase()
+              .includes(searchKey.toLowerCase())
+              || e.applicant.profile.fatherName
+              .toLowerCase()
+              .includes(searchKey.toLowerCase())
     })
     commit(SET_RECENTLY_FINISHED_SEARCHED, searchedVal)
+  },
+
+  async getAllRecentlyFinished({commit}) {
+    try {
+      const resp = await ApiService.get(baseUrl + "/applications/allFinished")
+      console.log("all finished: ", resp.data.data)
+      const certifiedUsers = resp.data.data.filter(function(e) {
+        return e.certified == true;
+      })
+      console.log("all c: ", certifiedUsers)
+      commit(SET_ALL_RECENTLY_FINISHED, resp.data.data, certifiedUsers)
+    } catch(error) {
+      const resp = error;
+      return resp;
+    }
+  },
+  
+  async getAllCertifiedUsers({commit}) {
+    try {
+      const resp = await ApiService.get(baseUrl + "/applications/allFinished")
+      console.log("all finished: ", resp.data.data)
+      const certifiedUsers = resp.data.data.filter(function(e) {
+        return e.certified == true;
+      })
+      console.log("all c: ", certifiedUsers)
+      return certifiedUsers
+    } catch(error) {
+      const resp = error;
+      return resp;
+    }
+  },
+  getAllRecentlyFinishedSearched({commit, getters}, searchKey) {
+    console.log("key: ", getters.getAllRecentlyFinishedSearched)
+    if(getters.getAllRecentlyFinishedSearched === undefined) {
+      return;
+    }
+    const searchedVal = getters.getAllRecentlyFinishedSearched.filter(function(e) {
+      return e.newLicenseCode
+              .toLowerCase()
+              .includes(searchKey.toLowerCase())
+              || e.applicant.profile.name
+              .toLowerCase()
+              .includes(searchKey.toLowerCase())
+              || e.applicant.profile.fatherName
+              .toLowerCase()
+              .includes(searchKey.toLowerCase())
+    })
+    console.log("searched val: ", searchedVal)
+    commit(SET_ALL_RECENTLY_FINISHED_SEARCHED, searchedVal)
   },
   async getProfile(context, id) {
     try {

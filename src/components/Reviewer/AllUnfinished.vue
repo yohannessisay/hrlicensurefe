@@ -1,9 +1,9 @@
 <template>
   <div>
-    <ReviewerNavBar tab="Unfinished" />
+    <ReviewerNavBar tab="AllUnfinished" />
     <div class="bg-lightBlueB-200 h-full">
       <div class="flex pl-12 pt-tiny">
-        <Title message="Unfinished" />
+        <Title message="All Unfinished" />
       </div>
       <div class="flex flex-wrap pb-medium rounded h-full" v-if="!showLoading">
         <div class="pl-large w-52 h-26" v-if="nothingToShowUnfinished == true">
@@ -13,7 +13,7 @@
         </div>
         <div
           class="container"
-          v-for="item in getUnfinished"
+          v-for="item in getAllUnfinished"
           v-bind:key="item.id"
           v-bind:value="item.id"
         >
@@ -49,10 +49,20 @@
                     : "-"
                 }}
               </h4>
-              <h6
+              <h5
+                class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+              >
+                Started By:
+                {{
+                  item.reviewer.name
+                    ? item.reviewer.name
+                    : "-"
+                }}
+              </h5>
+              <!-- <h6
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center">
                 {{ item.createdAt ? item.createdAt : "-" }}
-              </h6>
+              </h6> -->
               <h6
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
               >
@@ -87,8 +97,8 @@ import Spinner from "@/sharedComponents/Spinner";
 export default {
   components: { ReviewerNavBar, Title, Spinner },
   computed: {
-    getUnfinished() {
-      return store.getters['reviewer/getUnfinishedSearched'];
+    getAllUnfinished() {
+      return store.getters['reviewer/getEveryOneUnfinishedSearched'];
     }
   },
   setup() {
@@ -102,23 +112,23 @@ export default {
     let showLoading = ref(false);
 
     const fetchUnfinished = () => {
-      showLoading.value = true
-      store.dispatch("reviewer/getUnfinished", userId).then(res => {
+      showLoading.value = true;
+      store.dispatch("reviewer/getEveryOneUnfinished", userId).then(res => {
         showLoading.value = false
-          unfinished.value = store.getters['reviewer/getUnfinishedSearched'];
-        if(store.getters['reviewer/getUnfinished'].length !== 0) {
-          for (var prop in store.getters['reviewer/getUnfinishedSearched']) {
-            if (store.getters['reviewer/getUnfinishedSearched'][prop].applicationType == "Renewal") {
-              store.getters['reviewer/getUnfinishedSearched'][prop].newLicenseCode =
-                store.getters['reviewer/getUnfinishedSearched'][prop].renewalCode;
+          unfinished.value = store.getters['reviewer/getEveryOneUnfinishedSearched'];
+        if(store.getters['reviewer/getEveryOneUnfinishedSearched'].length !== 0) {
+          for (var prop in store.getters['reviewer/getEveryOneUnfinishedSearched']) {
+            if (store.getters['reviewer/getEveryOneUnfinishedSearched'][prop].applicationType == "Renewal") {
+              store.getters['reviewer/getEveryOneUnfinishedSearched'][prop].newLicenseCode =
+                store.getters['reviewer/getEveryOneUnfinishedSearched'][prop].renewalCode;
             }
-            if (store.getters['reviewer/getUnfinishedSearched'][prop].applicationType == "Good Standing") {
-              store.getters['reviewer/getUnfinishedSearched'][prop].newLicenseCode =
-                store.getters['reviewer/getUnfinishedSearched'][prop].goodStandingCode;
+            if (store.getters['reviewer/getEveryOneUnfinishedSearched'][prop].applicationType == "Good Standing") {
+              store.getters['reviewer/getEveryOneUnfinishedSearched'][prop].newLicenseCode =
+                store.getters['reviewer/getEveryOneUnfinishedSearched'][prop].goodStandingCode;
             }
-            if (store.getters['reviewer/getUnfinishedSearched'][prop].applicationType == "Verification") {
-              store.getters['reviewer/getUnfinishedSearched'][prop].newLicenseCode =
-                store.getters['reviewer/getUnfinishedSearched'][prop].verificationCode;
+            if (store.getters['reviewer/getEveryOneUnfinishedSearched'][prop].applicationType == "Verification") {
+              store.getters['reviewer/getEveryOneUnfinishedSearched'][prop].newLicenseCode =
+                store.getters['reviewer/getEveryOneUnfinishedSearched'][prop].verificationCode;
             }
           }
         } else {

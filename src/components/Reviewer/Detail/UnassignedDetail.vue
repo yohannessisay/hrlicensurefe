@@ -8,7 +8,7 @@
         class="ml-8  mr-8 mb-12"
       >
         <div class="mt-large bg-white">
-          <div v-if="role.code == `TL`" class="flex">
+          <div v-if="role.code === `TL` || role.code === `SA`" class="flex">
             <div class="flex flex-col mb-medium w-2/3 ml-small mt-small"></div>
             <div class="flex flex-col mb-medium w-1/3 mr-small mt-small">
               <label class="text-primary-700">Assign To</label>
@@ -29,7 +29,7 @@
               </button>
             </div>
           </div>
-          <div v-if="role.code != `TL`" class="flex ">
+          <div v-else class="flex ">
             <div class="flex flex-col mb-medium w-2/3 ml-small mt-small"></div>
             <div class="flex flex-col  mb-medium w-1/3 mr-small mt-small">
               <button
@@ -276,6 +276,12 @@
         </div>
       </div>
     </div>
+    <div
+      v-if="showLoading"
+      class="flex justify-center justify-items-center mt-24"
+    >
+      <Spinner />
+    </div>
   </div>
 </template>
 
@@ -285,12 +291,14 @@ import { useRouter, useRoute } from "vue-router";
 import Title from "@/sharedComponents/Title";
 import ReviewerNavBar from "@/components/Reviewer/ReviewerNavBar";
 import { ref, onMounted } from "vue";
+import Spinner from "@/sharedComponents/Spinner";
 
 export default {
   props: ["activeState"],
   components: {
     Title,
-    ReviewerNavBar
+    ReviewerNavBar,
+    Spinner
   },
   setup() {
     const store = useStore();
@@ -340,6 +348,10 @@ export default {
     });
     let role = ref({});
 
+    let showLoading = ref(false)
+
+    let reviewerAdminId = ref(0);
+
     const gen = () => {
       console.log(assign.value.reviewerId);
     };
@@ -349,8 +361,7 @@ export default {
       applicationId,
       applicantId
     ) => {
-      console.log(applicationId);
-      console.log("Application Type = " + applicationTypeParam);
+      showLoading.value = true
       applicationType.value = applicationTypeParam;
       // store.dispatch("reviewer/getProfile", 1).then(res => {
       //   // profileInfo.value = res.data.data;
@@ -361,11 +372,12 @@ export default {
         store
           .dispatch("reviewer/getNewLicenseApplication", applicationId)
           .then(res => {
+            showLoading.value = false
+            showLoading.value = false
             license.value = res.data.data;
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
-            console.log(license.value);
-            applicantId.value = license.value.applicantId;
+            // applicantId.value = license.value.applicantId;
             education.value.departmentName =
               license.value.education.department.name;
             education.value.institutionName =
@@ -378,11 +390,11 @@ export default {
         store
           .dispatch("reviewer/getGoodStandingApplication", applicationId)
           .then(res => {
+            showLoading.value = false
             license.value = res.data.data;
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
-            console.log(license.value);
-            applicantId.value = license.value.applicantId;
+            // applicantId.value = license.value.applicantId;
             education.value.departmentName =
               license.value.education.department.name;
             education.value.institutionName =
@@ -395,11 +407,11 @@ export default {
         store
           .dispatch("reviewer/getVerificationApplication", applicationId)
           .then(res => {
+            showLoading.value = false
             license.value = res.data.data;
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
-            console.log(license.value);
-            applicantId.value = license.value.applicantId;
+            // applicantId.value = license.value.applicantId;
             education.value.departmentName =
               license.value.education.department.name;
             education.value.institutionName =
@@ -412,11 +424,11 @@ export default {
         store
           .dispatch("reviewer/getRenewalApplication", applicationId)
           .then(res => {
+            showLoading.value = false
             license.value = res.data.data;
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
-            console.log(license.value);
-            applicantId.value = license.value.applicantId;
+            // applicantId.value = license.value.applicantId;
             education.value.departmentName =
               license.value.education.department.name;
             education.value.institutionName =
@@ -430,23 +442,17 @@ export default {
     const fetchAdmins = () => {
       store.dispatch("reviewer/getAdmins").then(res => {
         admins.value = res.data.data;
-        console.log(admins.value);
       });
     };
 
     const fetchRole = id => {
-      console.log("=====");
-      console.log(id);
       store.dispatch("reviewer/getRoles", id).then(res => {
         role.value = res.data.data.role;
-        console.log(role.value);
       });
     };
 
     const assignReviewer = () => {
-      console.log(assign.value.reviewerID);
-      console.log("Role Value: " + role.value.code);
-      if (role.value.code == "TL") {
+      if (role.value.code === "TL" || role.value.code === "SA") {
         if (applicationType.value == "Good Standing") {
           assign.value = {
             goodStandingId: route.params.applicationId,
@@ -575,6 +581,7 @@ export default {
 
     return {
       adminId,
+      reviewerAdminId,
       license,
       role,
       profileInfo,
@@ -595,7 +602,8 @@ export default {
       fetchAdmins,
       assignReviewer,
       gen,
-      applicationType
+      applicationType,
+      showLoading
     };
   }
 

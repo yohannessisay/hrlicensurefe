@@ -12,5 +12,12 @@ export default {
         assignedForEveryOneSearched: [],
         everyOneUnfinished: [],
         eveyOneUnfinishedSearched: [],
+        allRecentlyFinished: [],
+        allRecentlyFinishedSearched: [],
+        certifiedUsers: [],
+        certifiedUsersSearched: [],
+        allCertifiedUsers: [],
+        allCertifiedUsersSearched: [],
+        tempCertified: [],
     }
 }

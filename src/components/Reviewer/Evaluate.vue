@@ -1,8 +1,11 @@
 <template>
+  <ReviewerNavBar tab="Evaluation" />
   <div class="w-screen bg-white flex items-center justify-center">
+    
     <div
       class="w-screen max-w-6xl mt-medium mb-large box-shadow-pop bg-lightGrey-100"
     >
+    
       <div class="flex mb-large mt-medium justify-center">
         <div class="w-64 h-40 container box-shadow-pop rounded-lg">
           <div class="mt-8">
@@ -351,12 +354,14 @@ import { useRouter } from "vue-router";
 import Modal from "@/sharedComponents/Modal";
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
+import ReviewerNavBar from "@/components/Reviewer/ReviewerNavBar";
 
 export default {
   components: {
     Modal,
     FlashMessage,
-    ErrorFlashMessage
+    ErrorFlashMessage,
+    ReviewerNavBar
   },
   setup() {
     const route = useRoute();
@@ -698,11 +703,15 @@ export default {
       }
       newLicense.value.declinedFields = rejected.value;
       newLicense.value.acceptedFields = accepted.value;
+      newLicense.value.certified = true;
+      newLicense.value.certifiedDate = new Date();
+      
       let appId = newLicense.value.id;
       let req = {
         action: actionValue,
         data: newLicense.value
       };
+      console.log("approved data: ", req)
       if (
         applicationType.value == "New License" &&
         sendDeclinedData.value == true

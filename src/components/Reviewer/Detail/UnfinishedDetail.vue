@@ -224,19 +224,21 @@
               </picture>
             </div> -->
           </div>
-          <div class="mt-12 flex justify-center">
-            <div>
-              <button @click="evaluate()">Continue Evaluating</button>
+          <div v-if="getReviewId == loggedInAdminId">
+            <div class="mt-12 flex justify-center">
+              <div>
+                <button @click="evaluate()">Continue Evaluating</button>
+              </div>
             </div>
-          </div>
-          <div class="flex justify-center mt-8">
-            <h6>
-              If you don't have all the required informations you can come back
-              and finish later.
-            </h6>
-          </div>
-          <div class="flex justify-center mt-8 mb-8">
-            <button variant="outline">I will finish Later</button>
+            <div class="flex justify-center mt-8">
+              <h6>
+                If you don't have all the required informations you can come back
+                and finish later.
+              </h6>
+            </div>
+            <div class="flex justify-center mt-8 mb-8">
+              <button variant="outline">I will finish Later</button>
+            </div>
           </div>
         </div>
       </div>
@@ -297,9 +299,11 @@ export default {
     let profile = ref({});
     let applicationType = ref("");
 
+    let getReviewId = ref(0);
+
+    let loggedInAdminId = localStorage.getItem("adminId");
+
     const created = async (applicationTypeName, applicationId, applicantId) => {
-      console.log(applicationId);
-      console.log(applicantId);
       licenseId.value = applicationId;
       applicationType.value = applicationTypeName;
       // store.dispatch("reviewer/getProfile", applicantId).then(res => {
@@ -312,10 +316,10 @@ export default {
           .dispatch("reviewer/getNewLicenseApplication", applicationId)
           .then(res => {
             license.value = res.data.data;
+            getReviewId.value = license.value.reviewerId
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
-            console.log(license.value);
-            applicantId.value = license.value.applicantId;
+            // applicantId.value = license.value.applicantId;
             education.value.departmentName =
               license.value.education.department.name;
             education.value.institutionName =
@@ -329,10 +333,10 @@ export default {
           .dispatch("reviewer/getGoodStandingApplication", applicationId)
           .then(res => {
             license.value = res.data.data;
+            getReviewId.value = license.value.reviewerId
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
-            console.log(license.value);
-            applicantId.value = license.value.applicantId;
+            // applicantId.value = license.value.applicantId;
             education.value.departmentName =
               license.value.education.department.name;
             education.value.institutionName =
@@ -346,10 +350,10 @@ export default {
           .dispatch("reviewer/getVerificationApplication", applicationId)
           .then(res => {
             license.value = res.data.data;
+            getReviewId.value = license.value.reviewerId
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
-            console.log(license.value);
-            applicantId.value = license.value.applicantId;
+            // applicantId.value = license.value.applicantId;
             education.value.departmentName =
               license.value.education.department.name;
             education.value.institutionName =
@@ -363,10 +367,10 @@ export default {
           .dispatch("reviewer/getRenewalApplication", applicationId)
           .then(res => {
             license.value = res.data.data;
+            getReviewId.value = license.value.reviewerId
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
-            console.log(license.value);
-            applicantId.value = license.value.applicantId;
+            // applicantId.value = license.value.applicantId;
             education.value.departmentName =
               license.value.education.department.name;
             education.value.institutionName =
@@ -397,6 +401,8 @@ export default {
       userId,
       license,
       profileInfo,
+      getReviewId,
+      loggedInAdminId,
       activeClass,
       errorClass,
       dataFetched,

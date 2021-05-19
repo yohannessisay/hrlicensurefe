@@ -1,13 +1,13 @@
 <template>
   <div>
-    <ReviewerNavBar tab="MyWork" />
+    <ReviewerNavBar tab="AllWork" />
     <div class="bg-lightBlueB-200 h-full">
       <div class="flex pl-12 pt-tiny">
-        <Title message="I Finished" />
+        <Title message="Others Finished" />
       </div>
       <div
         class="flex flex-wrap justify-center items-center pb-medium rounded h-full"
-          v-if="!showLoading">
+      v-if="!showLoading">
         <div
           class="container"
           v-for="(item, index) in getRecentlyFinished"
@@ -31,15 +31,25 @@
               >
                 {{ item.applicant.profile.name + " " + item.applicant.profile.fatherName }}
               </h4>
-              <h6
+              <h5
+                class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+              >
+                Reviewed By:
+                {{
+                  item.reviewer.name
+                    ? item.reviewer.name
+                    : "-"
+                }}
+              </h5>
+              <!-- <h6
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
               >
                 {{ item.createdAt }}
-              </h6>
+              </h6> -->
               <h6
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
               >
-                New Licence ID: {{ item.newLicenseCode }}
+                Licence ID: {{ item.newLicenseCode }}
               </h6>
               <h6
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
@@ -75,7 +85,7 @@ export default {
   components: { ReviewerNavBar, Title, Spinner },
   computed: {
     getRecentlyFinished() {
-      return store.getters['reviewer/getRecentlyFinishedSearched']
+      return store.getters['reviewer/getAllRecentlyFinishedSearched']
     }
   },
   setup() {
@@ -84,14 +94,13 @@ export default {
     let recentlyFinished = ref({});
 
     let adminId = +localStorage.getItem("adminId");
-
-    let showLoading = ref(false);
+    let showLoading = ref(false)
 
     const fetchRecentlyFinished = () => {
       showLoading.value = true
-      store.dispatch("reviewer/getRecentlyFinished", adminId).then(res => {
+      store.dispatch("reviewer/getAllRecentlyFinished").then(res => {
         showLoading.value = false
-        recentlyFinished.value = store.getters['reviewer/getRecentlyFinishedSearched'];
+        recentlyFinished.value = store.getters['reviewer/getAllRecentlyFinishedSearched'];
       });
     };
 
