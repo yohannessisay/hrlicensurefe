@@ -422,7 +422,6 @@ export default {
       // just send the draftdata with the action
       // } else {
       let action = act;
-      console.log(action);
       this.showFlash = false;
       this.showErrorFlash = false;
       let formData = new FormData();
@@ -509,6 +508,7 @@ export default {
         },
       };
       this.$store.dispatch("newlicense/addNewLicense", license).then((res) => {
+        console.log(res);
         let licenseId = res.data.data.id;
         let payload = { document: formData, id: licenseId };
         this.$store

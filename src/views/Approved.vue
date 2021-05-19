@@ -197,7 +197,7 @@
     <div v-if="!this.searched">
       <div v-if="!this.showLoading" class="bg-lightBlueB-200 h-full">
         <div class="flex pl-12 pt-medium">
-          <Title message="New License Withdrawn Applications" />
+          <Title message="New License Approved Applications" />
         </div>
         <div v-if="this.newlicense.length == 0" class="flex pl-12 ml-6">
           <h4>Nothing to Show.</h4>
@@ -208,6 +208,7 @@
         >
           <div class="flex " v-for="i in this.newlicense.length" v-bind:key="i">
             <div
+              @click="openServiceFeeModal()"
               class="container mb-medium"
               v-for="item in this.newlicense.slice((i - 1) * 5, i * 5)"
               v-bind:key="item"
@@ -240,7 +241,7 @@
       </div>
       <div v-if="!this.showLoading" class="bg-lightBlueB-200 h-full">
         <div class="flex pl-12 pt-medium">
-          <Title message="Renewal Withdrawn Applications" />
+          <Title message="Renewal Approved Applications" />
         </div>
         <div v-if="this.renewal.length == 0" class="flex pl-12 ml-6">
           <h4>Nothing to Show.</h4>
@@ -283,7 +284,7 @@
       </div>
       <div v-if="!this.showLoading" class="bg-lightBlueB-200 h-full">
         <div class="flex pl-12 pt-medium">
-          <Title message="Verification Withdrawn Applications" />
+          <Title message="Verification Approved Applications" />
         </div>
         <div v-if="this.verification.length == 0" class="flex pl-12 ml-6">
           <h4>Nothing to Show.</h4>
@@ -330,7 +331,7 @@
       </div>
       <div v-if="!this.showLoading" class="bg-lightBlueB-200 h-full">
         <div class="flex pl-12 pt-medium">
-          <Title message="Good Standing Withdrawn Applications" />
+          <Title message="Good Standing Approved Applications" />
         </div>
         <div v-if="this.goodstanding.length == 0" class="flex pl-12 ml-6">
           <h4>Nothing to Show.</h4>
@@ -376,6 +377,9 @@
         </div>
       </div>
     </div>
+    <Modal v-if="this.serviceFeeModal">
+      <ServiceFee @serviceFeeModal="this.serviceFeeModal = false" />
+    </Modal>
     <div
       v-if="showLoading"
       class="flex justify-center justify-items-center mt-24"
@@ -390,10 +394,19 @@ import Title from "@/sharedComponents/TitleWithIllustration";
 import RenderIllustration from "@/sharedComponents/RenderIllustration";
 import Navigation from "@/views/Navigation";
 import Spinner from "@/sharedComponents/Spinner";
-import goodStandingVue from "../sharedComponents/illustrations/goodStanding.vue";
+import Modal from "@/sharedComponents/Modal";
+import ServiceFee from "@/views/ServiceFee.vue";
 
 export default {
-  components: { Navigation, Title, Spinner, RenderIllustration, Title },
+  components: {
+    Navigation,
+    Title,
+    Spinner,
+    RenderIllustration,
+    Title,
+    Modal,
+    ServiceFee,
+  },
   data: function() {
     return {
       license: [],
@@ -408,6 +421,7 @@ export default {
       showDD: false,
       auth: false,
       token: "",
+      serviceFeeModal: false,
     };
   },
   async created() {
@@ -421,6 +435,10 @@ export default {
     }
   },
   methods: {
+    openServiceFeeModal() {
+      this.serviceFeeModal = true;
+      console.log(this.serviceFeeModal);
+    },
     logout() {
       localStorage.removeItem("token");
       localStorage.removeItem("userId");

@@ -30,13 +30,8 @@
           </transition>
           <transition name="fade" mode="out-in">
             <div v-if="this.activeState == 4">
-              <ServiceFee :activeState="4" @changeActiveState="activeState++" />
-            </div>
-          </transition>
-          <transition name="fade" mode="out-in">
-            <div v-if="this.activeState == 5">
               <GoodStandingSummary
-                :activeState="5"
+                :activeState="4"
                 @changeActiveState="activeState++"
               />
             </div>
@@ -58,7 +53,6 @@ import Institution from "./Institution.vue";
 import GoodStandingSummary from "./GoodStandingSummary";
 import GoodStandingLetter from "./LetterFromOrg";
 import LicenseCopy from "./LicenseCopy";
-import ServiceFee from "./ServiceFee";
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import Spinner from "@/sharedComponents/Spinner";
@@ -90,7 +84,6 @@ export default {
     GoodStandingSummary,
     GoodStandingLetter,
     LicenseCopy,
-    ServiceFee,
     FlashMessage,
     ErrorFlashMessage,
     Spinner,

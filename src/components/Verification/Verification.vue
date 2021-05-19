@@ -30,13 +30,8 @@
           </transition>
           <transition name="fade" mode="out-in">
             <div v-if="this.activeState == 4">
-              <ServiceFee :activeState="4" @changeActiveState="activeState++" />
-            </div>
-          </transition>
-          <transition name="fade" mode="out-in">
-            <div v-if="this.activeState == 5">
               <VerificationSummary
-                :activeState="5"
+                :activeState="4"
                 @changeActiveState="activeState++"
               />
             </div>
@@ -52,7 +47,6 @@ import Institution from "./Institution.vue";
 import VerificationSummary from "./VerificationSummary";
 import VerificationLetter from "./LetterFromOrg";
 import LicenseCopy from "./LicenseCopy";
-import ServiceFee from "./ServiceFee";
 
 export default {
   created() {
@@ -78,7 +72,6 @@ export default {
     VerificationSummary,
     VerificationLetter,
     LicenseCopy,
-    ServiceFee,
   },
   methods: {
     submit(n) {

@@ -84,10 +84,10 @@
     </div>
   </div>
   <div class="mr-3xl" v-if="showFlash">
-    <FlashMessage message="Good standing saved Successful!" />
+    <FlashMessage message="Operation Successful!" />
   </div>
   <div v-if="showErrorFlash">
-    <ErrorFlashMessage message="Saving good standing Failed!" />
+    <ErrorFlashMessage message="Operation Failed!" />
   </div>
 </template>
 

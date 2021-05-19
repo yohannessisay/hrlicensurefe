@@ -124,7 +124,6 @@ export default {
     let draftData = ref("");
 
     let goodStandingLetter = ref("");
-    let serviceFee = ref("");
 
     const reset = () => {
       showUpload.value = true;
@@ -163,7 +162,6 @@ export default {
     licenseInfo = store.getters["goodstanding/getLicense"];
 
     goodStandingLetter = store.getters["goodstanding/getGoodStandingLetter"];
-    serviceFee = store.getters["goodstanding/getServiceFee"];
 
     const submit = () => {
       emit("changeActiveState");
@@ -175,10 +173,10 @@ export default {
       draftData = store.getters["goodstanding/getDraft"];
       if (route.params.id) {
         for (let i = 0; i < draftData.documents.length; i++) {
-          if (draftData.documents[i].documentTypeCode == "LC") {
+          if (draftData.documents[i].documentTypeCode == "LHI") {
             showUpload.value = false;
             isImage.value = true;
-            letterFile.value = draftData.documents[i];
+            licenseFile.value = draftData.documents[i];
             showPreview.value = true;
             filePreview.value = basePath + draftData.documents[i].filePath;
           }
@@ -191,7 +189,6 @@ export default {
         if (dataChanged.value) {
           let formData = new FormData();
 
-          formData.append(documentSpecs[0].documentType.code, serviceFee);
           formData.append(
             documentSpecs[1].documentType.code,
             goodStandingLetter
@@ -250,7 +247,6 @@ export default {
             let licenseId = res.data.data.id;
             let formData = new FormData();
 
-            formData.append(documentSpecs[0].documentType.code, serviceFee);
             formData.append(
               documentSpecs[1].documentType.code,
               goodStandingLetter
@@ -316,7 +312,6 @@ export default {
       message,
       dataChanged,
       goodStandingLetter,
-      serviceFee,
     };
   },
 };

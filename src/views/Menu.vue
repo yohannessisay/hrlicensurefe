@@ -214,7 +214,9 @@
                     <RenderIllustration illustration="Renewal" />
                   </router-link>
                 </div>
-                <h4 class="text-lightBlueB-500 mt-tiny">Declined</h4>
+                <h4 class="text-lightBlueB-500 mt-tiny">
+                  Declined
+                </h4>
               </div>
             </div>
           </div>

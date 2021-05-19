@@ -387,7 +387,7 @@ export default {
       });
     };
     onMounted(() => {
-      const letterFile = store.getters["newlicense/getEnglishLanguage"];
+      // const letterFile = store.getters["newlicense/getLetterfromOrg"];
       buttons = store.getters["newlicense/getButtons"];
       draftData = store.getters["newlicense/getDraft"];
       if (route.params.id) {
