@@ -109,7 +109,9 @@
               <div class="p-1">
                 <div class="flex content-center justify-center">
                   <router-link to="/approved">
-                    <RenderIllustration illustration="SimpleCertificate" />
+                    <span style="color: #648ea3;">
+                      <i class="far fa-thumbs-up fa-4x fa-light"></i>
+                    </span>
                   </router-link>
                 </div>
                 <h4 class="text-lightBlueB-500 mt-tiny">Approved</h4>
@@ -125,7 +127,7 @@
               <div class="p-1">
                 <div class="my-auto flex justify-center">
                   <router-link to="/submitted">
-                    <RenderIllustration illustration="Renewal" />
+                    <RenderIllustration illustration="Certificate" />
                   </router-link>
                 </div>
                 <h4 class="text-lightBlueB-500 mt-tiny">Submitted</h4>
@@ -141,7 +143,9 @@
               <div class="p-1">
                 <div class="flex">
                   <router-link to="/draft">
-                    <RenderIllustration illustration="Verification" />
+                    <span style="color: #648ea3;">
+                      <i class="fas fa-file-signature fa-4x"></i>
+                    </span>
                   </router-link>
                 </div>
                 <h4
@@ -161,7 +165,9 @@
               <div class="p-1">
                 <div class="my-auto flex justify-center">
                   <router-link to="/inReview">
-                    <RenderIllustration illustration="GoodStanding" />
+                    <span style="color: #648ea3;">
+                      <i class="far fa-id-card fa-4x"></i>
+                    </span>
                   </router-link>
                 </div>
                 <h4 class="text-lightBlueB-500 mt-tiny">In Review</h4>
@@ -179,7 +185,9 @@
               <div class="p-1">
                 <div class="flex content-center justify-center">
                   <router-link to="/undersupervision">
-                    <RenderIllustration illustration="SimpleCertificate" />
+                    <span style="color: #648ea3;">
+                      <i class="far fa-id-badge fa-4x"></i>
+                    </span>
                   </router-link>
                 </div>
                 <h4 class="text-lightBlueB-500 mt-tiny">Under Supervision</h4>
@@ -195,7 +203,9 @@
               <div class="p-1">
                 <div class="my-auto flex justify-center">
                   <router-link to="/withdrawn">
-                    <RenderIllustration illustration="Renewal" />
+                    <span style="color: #648ea3;">
+                      <i class="fas fa-exchange-alt fa-4x"></i>
+                    </span>
                   </router-link>
                 </div>
                 <h4 class="text-lightBlueB-500 mt-tiny">Withdrawn</h4>
@@ -211,7 +221,9 @@
               <div class="p-1">
                 <div class="my-auto flex justify-center">
                   <router-link to="/declined">
-                    <RenderIllustration illustration="Renewal" />
+                    <span style="color: #648ea3;">
+                      <i class="far fa-thumbs-down fa-4x"></i>
+                    </span>
                   </router-link>
                 </div>
                 <h4 class="text-lightBlueB-500 mt-tiny">
@@ -297,4 +309,8 @@ export default {
   },
 };
 </script>
-<style></style>
+<style>
+i {
+  color: lightBlueB-400;
+}
+</style>

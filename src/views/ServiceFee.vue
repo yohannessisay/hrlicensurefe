@@ -17,14 +17,9 @@
         />
       </svg>
     </button>
-    <div
-      id="holder"
-      class="flex justify-center rounded mb-large pb-12"
-    >
+    <div id="holder" class="flex justify-center rounded mb-medium pb-12">
       <div class="w-screen max-w-4xl">
-        <div
-          class="flex flex-col pt-large w-full rounded mb-large"
-        >
+        <div class="flex flex-col pt-large w-full rounded mb-medium">
           <TitleWithIllustration
             illustration="Certificate"
             message="Service Fee"
@@ -70,27 +65,13 @@
                 </span>
               </div>
             </div>
-          </form>
-          <div v-if="buttons" class="flex justify-center mb-8">
-            <button @click="submit">
-              Next
-            </button>
-            <button
-              class="buttons[0].class"
-              @click="draft(buttons[0].action)"
-              variant="outline"
-            >
-              {{ buttons[0].name }}
-            </button>
-            <button
-              v-if="buttons.length > 2"
-              class="withdraw"
-              @click="withdraw(buttons[2].action)"
-              variant="outline"
-            >
-              {{ buttons[2]["name"] }}
+             <div v-if="buttons" class="flex justify-center mb-16">
+            <button>
+              Save
             </button>
           </div>
+          </form>
+         
           <div v-if="message.showLoading">
             <Spinner />
           </div>
