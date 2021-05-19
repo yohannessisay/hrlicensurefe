@@ -244,7 +244,6 @@ export default {
       educationalDocs: [],
       coc: "",
       supportLetter: "",
-      serviceFee: "",
       letterfromOrg: "",
       renewedLicense: "",
       professionalLicense: "",
@@ -273,7 +272,6 @@ export default {
       getCoc: "newlicense/getCoc",
       getEducationalDocuments: "newlicense/getEducationalDocuments",
       getWorkExperience: "newlicense/getWorkExperience",
-      getServiceFee: "newlicense/getServiceFee",
       getLetterfromOrg: "newlicense/getLetterfromOrg",
       getRenewedLicense: "newlicense/getRenewedLicense",
       getProfessionalLicense: "newlicense/getProfessionalLicense",
@@ -325,7 +323,6 @@ export default {
     this.coc = this.getCoc;
     this.educationalDocs = this.getEducationalDocuments;
     this.workExperience = this.getWorkExperience;
-    this.serviceFee = this.getServiceFee;
     this.letterfromOrg = this.getLetterfromOrg;
     this.renewedLicense = this.getRenewedLicense;
     this.professionalLicense = this.getProfessionalLicense;
@@ -514,10 +511,7 @@ export default {
               this.documentSpec[2].documentType.code,
               this.healthExamCert
             );
-            formData.append(
-              this.documentSpec[3].documentType.code,
-              this.serviceFee
-            );
+           
             formData.append(
               this.documentSpec[4].documentType.code,
               this.workExperience

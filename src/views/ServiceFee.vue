@@ -1,76 +1,85 @@
 <template>
-  <div class="flex justify-center">
-    <div class="w-screen max-w-4xl">
-      <div
-        class="flex flex-col pt-large w-full bg-white blue-box-shadow-light rounded "
+  <div
+    class="card-wrapper max-w-7xl bg-white sm:rounded-lg p-large flex flex-col justify-center items-center relative"
+  >
+    <button
+      class="absolute top-0 right-0 mr-2 mt-2"
+      @click="$emit('serviceFeeModal', false)"
+      variant="rounded"
+    >
+      <svg
+        viewBox="0 0 329.269 329"
+        xmlns="http://www.w3.org/2000/svg"
+        class="close-svg fill-current text-primary-100 relative"
       >
-        <TitleWithIllustration
-          illustration="User"
-          message="Service Fee"
-          class="mt-8"
+        <path
+          d="M194.8 164.77L323.013 36.555c8.343-8.34 8.343-21.825 0-30.164-8.34-8.34-21.825-8.34-30.164 0L164.633 134.605 36.422 6.391c-8.344-8.34-21.824-8.34-30.164 0-8.344 8.34-8.344 21.824 0 30.164l128.21 128.215L6.259 292.984c-8.344 8.34-8.344 21.825 0 30.164a21.266 21.266 0 0015.082 6.25c5.46 0 10.922-2.09 15.082-6.25l128.21-128.214 128.216 128.214a21.273 21.273 0 0015.082 6.25c5.46 0 10.922-2.09 15.082-6.25 8.343-8.34 8.343-21.824 0-30.164zm0 0"
         />
-        <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
-          <div class="flex justify-center">
-            <div>
-              <span v-if="showUpload">
-                <label class="text-primary-700"
-                  >Upload image:
-                  <div class="dropbox">
-                    <input
-                      type="file"
-                      id="serviceFile"
-                      class="photoFile"
-                      ref="serviceFileP"
-                      v-on:change="handleFileUpload()"
-                      style="margin-bottom: 15px !important;"
-                    />
-                    <p>
-                      Drag your file(s) here to begin<br />
-                      or click to browse
-                    </p>
-                  </div>
-                </label>
-              </span>
+      </svg>
+    </button>
+    <div id="holder" class="flex justify-center rounded mb-medium pb-12">
+      <div class="w-screen max-w-4xl">
+        <div class="flex flex-col pt-large w-full rounded mb-medium">
+          <TitleWithIllustration
+            illustration="Certificate"
+            message="Service Fee"
+            class="mt-8"
+          />
+          <form
+            @submit.prevent="submit"
+            class="mx-auto max-w-3xl w-full mt-4 mb-large"
+          >
+            <div class="flex justify-center">
+              <div>
+                <span v-if="showUpload">
+                  <label class="text-primary-700"
+                    >Upload Service Fee:
+                    <div class="dropbox">
+                      <input
+                        type="file"
+                        id="serviceFile"
+                        class="photoFile"
+                        ref="serviceFileP"
+                        v-on:change="handleFileUpload()"
+                        style="margin-bottom: 15px !important;"
+                      />
+                      <p>
+                        Drag your file(s) here to begin<br />
+                        or click to browse
+                      </p>
+                    </div>
+                  </label>
+                </span>
 
-              <picture v-if="!showUpload && isImage">
-                <p>
-                  <a href="javascript:void(0)" @click="reset()">Upload again</a>
-                </p>
-                <img v-bind:src="filePreview" v-show="showPreview" />
-              </picture>
+                <picture v-if="!showUpload && isImage">
+                  <p>
+                    <a href="javascript:void(0)" @click="reset()"
+                      >Upload again</a
+                    >
+                  </p>
+                  <img v-bind:src="filePreview" v-show="showPreview" />
+                </picture>
 
-              <span v-if="!showUpload && !isImage">
-                <img :src="filePreview" alt="" class="preview" />
-              </span>
+                <span v-if="!showUpload && !isImage">
+                  <img :src="filePreview" alt="" class="preview" />
+                </span>
+              </div>
             </div>
+             <div v-if="buttons" class="flex justify-center mb-16">
+            <button>
+              Save
+            </button>
           </div>
-        </form>
-        <div v-if="buttons" class="flex justify-center mb-8">
-          <button @click="submit">
-            Next
-          </button>
-          <button
-            class="buttons[0].class"
-            @click="draft(buttons[0].action)"
-            variant="outline"
-          >
-            {{ buttons[0].name }}
-          </button>
-          <button
-            v-if="buttons.length > 2"
-            class="withdraw"
-            @click="withdraw(buttons[2].action)"
-            variant="outline"
-          >
-            {{ buttons[2]["name"] }}
-          </button>
-        </div>
-        <div v-if="message.showLoading">
-          <Spinner />
+          </form>
+         
+          <div v-if="message.showLoading">
+            <Spinner />
+          </div>
         </div>
       </div>
     </div>
   </div>
+
   <div class="mr-3xl" v-if="message.showFlash">
     <FlashMessage message="Operation Successful!" />
   </div>
@@ -123,7 +132,7 @@ export default {
     let licenseInfo = ref("");
     let draftData = ref("");
 
-    let goodStandingLetter = ref("");
+    let verificationLetter = ref("");
     let licenseCopy = ref("");
 
     const reset = () => {
@@ -158,27 +167,27 @@ export default {
         }
       }
     };
-    buttons = store.getters["goodstanding/getButtons"];
-    documentSpecs = store.getters["goodstanding/getDocumentSpec"];
-    licenseInfo = store.getters["goodstanding/getLicense"];
+    buttons = store.getters["verification/getButtons"];
+    documentSpecs = store.getters["verification/getDocumentSpec"];
+    licenseInfo = store.getters["verification/getLicense"];
 
-    goodStandingLetter = store.getters["goodstanding/getGoodStandingLetter"];
-    licenseCopy = store.getters["goodstanding/getLicenseCopy"];
+    verificationLetter = store.getters["verification/getVerificationLetter"];
+    licenseCopy = store.getters["verification/getLicenseCopy"];
 
     const submit = () => {
       emit("changeActiveState");
-      store.dispatch("goodstanding/set_Service_Fee", serviceFile);
+      store.dispatch("verification/set_Service_Fee", serviceFile);
     };
 
     onMounted(() => {
-      buttons = store.getters["goodstanding/getButtons"];
-      draftData = store.getters["goodstanding/getDraft"];
+      buttons = store.getters["verification/getButtons"];
+      draftData = store.getters["verification/getDraft"];
       if (route.params.id) {
         for (let i = 0; i < draftData.documents.length; i++) {
           if (draftData.documents[i].documentTypeCode == "SF") {
             showUpload.value = false;
             isImage.value = true;
-            letterFile.value = draftData.documents[i];
+            serviceFile.value = draftData.documents[i];
             showPreview.value = true;
             filePreview.value = basePath + draftData.documents[i].filePath;
           }
@@ -193,13 +202,13 @@ export default {
           formData.append(documentSpecs[0].documentType.code, serviceFile);
           formData.append(
             documentSpecs[1].documentType.code,
-            goodStandingLetter
+            verificationLetter
           );
           formData.append(documentSpecs[2].documentType.code, licenseCopy);
 
           let payload = { document: formData, id: draftData.id };
           store
-            .dispatch("goodstanding/uploadDocuments", payload)
+            .dispatch("verification/uploadDocuments", payload)
             .then((res) => {
               if (res.status == 200) {
                 message.value.showFlash = !message.value.showFlash;
@@ -221,7 +230,7 @@ export default {
             draftData: draftObj,
           };
           message.value.showLoading = true;
-          store.dispatch("goodstanding/updateDraft", payload).then((res) => {
+          store.dispatch("verification/updateDraft", payload).then((res) => {
             if (res.status == 200) {
               message.value.showFlash = !message.value.showFlash;
               message.value.showLoading = false;
@@ -245,19 +254,19 @@ export default {
           },
         };
         store
-          .dispatch("goodstanding/addGoodstandingLicense", license)
+          .dispatch("verification/addVerificationLicense", license)
           .then((res) => {
             let licenseId = res.data.data.id;
             let formData = new FormData();
             formData.append(documentSpecs[0].documentType.code, serviceFile);
             formData.append(
               documentSpecs[1].documentType.code,
-              goodStandingLetter
+              verificationLetter
             );
             formData.append(documentSpecs[2].documentType.code, licenseCopy);
             let payload = { document: formData, id: licenseId };
             store
-              .dispatch("goodstanding/uploadDocuments", payload)
+              .dispatch("verification/uploadDocuments", payload)
               .then((res) => {
                 if (res.status == 200) {
                   message.value.showFlash = !message.value.showFlash;
@@ -282,7 +291,7 @@ export default {
         withdrawData: withdrawObj,
       };
       message.value.showLoading = !message.value.showLoading;
-      store.dispatch("goodstanding/withdraw", payload).then((res) => {
+      store.dispatch("verification/withdraw", payload).then((res) => {
         if (res.data.status == "Success") {
           message.value.showLoading = !message.value.showLoading;
           message.value.showFlash = !message.value.showFlash;
@@ -312,14 +321,49 @@ export default {
       draftData,
       basePath,
       message,
-      goodStandingLetter,
+      verificationLetter,
       licenseCopy,
     };
   },
 };
 </script>
 <style>
-@import "../../styles/document-upload.css";
+.card-wrapper {
+  width: 600px;
+  height: 520px;
+}
+#holder {
+  width: 600px;
+  height: 520px;
+}
+.photoFile {
+  opacity: 0; /* invisible but it's there! */
+  width: 100%;
+  height: 300px;
+  position: absolute;
+  cursor: pointer;
+}
+
+.dropbox {
+  outline: 2px dashed grey; /* the dash box */
+  outline-offset: -10px;
+  background: lightcyan;
+  color: dimgray;
+  padding: 10px 10px;
+  min-height: 200px; /* minimum height */
+  position: relative;
+  cursor: pointer;
+}
+
+.dropbox:hover {
+  background: lightblue; /* when mouse over to the drop zone, change color */
+}
+
+.dropbox p {
+  font-size: 1.2em;
+  text-align: center;
+  padding: 50px 0;
+}
 img {
   width: 250px;
   height: 250px;
@@ -328,5 +372,8 @@ img {
   background-image: linear-gradient(to right, #d63232, #e63636) !important;
   color: white;
   border-color: tomato;
+}
+.close-svg {
+  width: 16px;
 }
 </style>

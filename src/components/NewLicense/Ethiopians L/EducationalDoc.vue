@@ -291,7 +291,6 @@ export default {
       professionalDoc: [],
       coc: "",
       supportLetter: "",
-      serviceFee: "",
       letterfromOrg: "",
       renewedLicense: "",
       professionalLicense: "",
@@ -320,7 +319,6 @@ export default {
       getCoc: "newlicense/getCoc",
       getProfessionalDoc: "newlicense/getProfessionalDocuments",
       getWorkExperience: "newlicense/getWorkExperience",
-      getServiceFee: "newlicense/getServiceFee",
       getLetterfromOrg: "newlicense/getLetterfromOrg",
       getRenewedLicense: "newlicense/getRenewedLicense",
       getProfessionalLicense: "newlicense/getProfessionalLicense",
@@ -339,7 +337,6 @@ export default {
           this.showCertificate1Preview = true;
           this.certificate1Preview =
             this.basePath + this.draftData.documents[i].filePath;
-          console.log(this.certificate1Preview);
         }
         if (this.draftData.documents[i].documentTypeCode == "EDTGC") {
           this.showCertificate2Upload = false;
@@ -388,7 +385,6 @@ export default {
     this.supportLetter = this.getSupportLetter;
     this.coc = this.getCoc;
     this.workExperience = this.getWorkExperience;
-    this.serviceFee = this.getServiceFee;
     this.letterfromOrg = this.getLetterfromOrg;
     this.renewedLicense = this.getRenewedLicense;
     this.professionalLicense = this.getProfessionalLicense;
@@ -624,10 +620,7 @@ export default {
               this.documentSpec[2].documentType.code,
               this.healthExamCert
             );
-            formData.append(
-              this.documentSpec[3].documentType.code,
-              this.serviceFee
-            );
+
             formData.append(
               this.documentSpec[4].documentType.code,
               this.workExperience
@@ -774,5 +767,4 @@ img {
   color: white;
   border-color: tomato;
 }
-
 </style>

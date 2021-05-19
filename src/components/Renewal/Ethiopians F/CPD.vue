@@ -187,7 +187,7 @@ export default {
           if (draftData.documents[i].documentTypeCode == "CPD") {
             showUpload.value = false;
             isImage.value = true;
-            healthExamFile.value = draftData.documents[i];
+            cpdFile.value = draftData.documents[i];
             showPreview.value = true;
             filePreview.value = basePath + draftData.documents[i].filePath;
           }

@@ -61,7 +61,11 @@
           <button @click="submit">
             Next
           </button>
-          <button @click="draft(this.buttons[0].action)" variant="outline">
+          <button
+            v-if="!submitStatus"
+            @click="draft(this.buttons[0].action)"
+            variant="outline"
+          >
             {{ this.buttons[0]["name"] }}
           </button>
           <button
@@ -80,10 +84,10 @@
     </div>
   </div>
   <div class="mr-3xl" v-if="showFlash">
-    <FlashMessage message="Good standing saved Successful!" />
+    <FlashMessage message="Operation Successful!" />
   </div>
   <div v-if="showErrorFlash">
-    <ErrorFlashMessage message="Saving good standing Failed!" />
+    <ErrorFlashMessage message="Operation Failed!" />
   </div>
 </template>
 
@@ -111,7 +115,6 @@ export default {
     this.showLoading = true;
     setTimeout(() => {
       this.buttons = this.getButtons;
-      console.log(this.buttons);
       this.showButtons = true;
       this.showLoading = false;
     }, 5000);
@@ -146,6 +149,7 @@ export default {
     showFlash: false,
     showErrorFlash: false,
     showLoading: false,
+    submitStatus: false,
   }),
 
   methods: {
@@ -192,7 +196,6 @@ export default {
           institutionId: this.licenseInfo.education.institutionId,
         },
       };
-      console.log(license.education.departmentId);
       this.$emit("applicantTypeValue", this.licenseInfo.applicantTypeId);
       this.$store.dispatch("goodstanding/setLicense", license);
     },
@@ -225,6 +228,10 @@ export default {
     },
     fetchDraft() {
       let draftData = this.getDraft;
+
+      // if (draftData.applicationStatus.name == "Submit") {
+      //   this.submitStatus = true;
+      // }
       this.licenseInfo.applicantId = draftData.applicantId;
       this.licenseInfo.applicantTypeId = draftData.applicantTypeId;
       this.licenseInfo.education.departmentId =

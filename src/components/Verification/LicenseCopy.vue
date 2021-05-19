@@ -124,7 +124,6 @@ export default {
     let draftData = ref("");
 
     let verificationLetter = ref("");
-    let serviceFee = ref("");
 
     const reset = () => {
       showUpload.value = true;
@@ -163,7 +162,6 @@ export default {
     licenseInfo = store.getters["verification/getLicense"];
 
     verificationLetter = store.getters["verification/getVerificationLetter"];
-    serviceFee = store.getters["verification/getServiceFee"];
 
     const submit = () => {
       emit("changeActiveState");
@@ -177,9 +175,10 @@ export default {
       if (route.params.id) {
         for (let i = 0; i < draftData.documents.length; i++) {
           if (draftData.documents[i].documentTypeCode == "LC") {
+            console.log("true");
             showUpload.value = false;
             isImage.value = true;
-            letterFile.value = draftData.documents[i];
+            licenseFile.value = draftData.documents[i];
             showPreview.value = true;
             filePreview.value = basePath + draftData.documents[i].filePath;
           }
@@ -192,7 +191,6 @@ export default {
         if (dataChanged.value) {
           let formData = new FormData();
 
-          formData.append(documentSpecs[0].documentType.code, serviceFee);
           formData.append(
             documentSpecs[1].documentType.code,
             verificationLetter
@@ -251,7 +249,6 @@ export default {
             let licenseId = res.data.data.id;
             let formData = new FormData();
 
-            formData.append(documentSpecs[0].documentType.code, serviceFee);
             formData.append(
               documentSpecs[1].documentType.code,
               verificationLetter
@@ -317,7 +314,6 @@ export default {
       message,
       dataChanged,
       verificationLetter,
-      serviceFee,
     };
   },
 };

@@ -47,6 +47,11 @@ const routes = [
     component: () => import("../views/UnderSupervision.vue"),
   },
   {
+    path: "/declined",
+    name: "Declined",
+    component: () => import("../views/Declined.vue"),
+  },
+  {
     path: "/withdrawn",
     name: "Withdraw",
     component: () => import("../views/Withdraw.vue"),
@@ -76,21 +81,6 @@ const routes = [
     path: "/submitted",
     name: "Submitted",
     component: () => import("../views/Submitted.vue"),
-  },
-  {
-    path: "/renewalSubmitted",
-    name: "renewalSubmitted",
-    component: () => import("../views/RenewalSubmitted.vue"),
-  },
-  {
-    path: "/verificationSubmitted",
-    name: "verificationSubmitted",
-    component: () => import("../views/VerificationSubmitted.vue"),
-  },
-  {
-    path: "/goodStandingSubmitted",
-    name: "goodStandingSubmitted",
-    component: () => import("../views/GoodStandingSubmitted.vue"),
   },
   {
     path: "/admin/review",
