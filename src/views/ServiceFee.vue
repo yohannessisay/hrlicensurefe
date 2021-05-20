@@ -65,7 +65,7 @@
                 </span>
               </div>
             </div>
-             <div v-if="buttons" class="flex justify-center mb-16">
+             <div class="flex justify-center mb-16">
             <button>
               Save
             </button>
