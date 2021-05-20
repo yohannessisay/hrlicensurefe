@@ -9,7 +9,22 @@
           message="Educational Documents"
           class="mt-8"
         />
+
         <div class="flex-row justify-center px-8 py-4">
+          <h2
+            class="flex justify-center"
+            v-if="this.declinedFieldsCheck1"
+            style="color: #e63636"
+          >
+            REJECTED
+          </h2>
+          <h2
+            class="flex justify-center"
+            v-if="this.acceptedFieldsCheck1"
+            style="color: Green"
+          >
+            ACCEPTED
+          </h2>
           <div class="ml-4" style="width:250px">
             <span v-if="showCertificate1Upload">
               <label class="text-primary-700 text-lg"
@@ -46,7 +61,20 @@
               <img :src="certificate1Preview" alt="" class="preview" />
             </span>
           </div>
-
+          <h2
+            class="flex justify-center"
+            v-if="this.declinedFieldsCheck2"
+            style="color: #e63636"
+          >
+            REJECTED
+          </h2>
+          <h2
+            class="flex justify-center"
+            v-if="this.acceptedFieldsCheck2"
+            style="color: Green"
+          >
+            ACCEPTED
+          </h2>
           <div class="ml-4" style="width:250px">
             <span v-if="showCertificate2Upload">
               <label class="text-primary-700 text-lg"
@@ -83,6 +111,20 @@
               <img :src="certificate2Preview" alt="" class="preview" />
             </span>
           </div>
+          <h2
+            class="flex justify-center"
+            v-if="this.declinedFieldsCheck3"
+            style="color: #e63636"
+          >
+            REJECTED
+          </h2>
+          <h2
+            class="flex justify-center"
+            v-if="this.acceptedFieldsCheck3"
+            style="color: Green"
+          >
+            ACCEPTED
+          </h2>
 
           <div class="ml-4" style="width:250px">
             <span v-if="showCertificate3Upload">
@@ -120,7 +162,20 @@
               <img :src="certificate3Preview" alt="" class="preview" />
             </span>
           </div>
-
+          <h2
+            class="flex justify-center"
+            v-if="this.declinedFieldsCheck4"
+            style="color: #e63636"
+          >
+            REJECTED
+          </h2>
+          <h2
+            class="flex justify-center"
+            v-if="this.acceptedFieldsCheck4"
+            style="color: Green"
+          >
+            ACCEPTED
+          </h2>
           <div class="ml-4" style="width:250px">
             <span v-if="showCertificate4Upload">
               <label class="text-primary-700 text-lg"
@@ -157,7 +212,20 @@
               <img :src="certificate4Preview" alt="" class="preview" />
             </span>
           </div>
-
+          <h2
+            class="flex justify-center"
+            v-if="this.declinedFieldsCheck5"
+            style="color: #e63636"
+          >
+            REJECTED
+          </h2>
+          <h2
+            class="flex justify-center"
+            v-if="this.acceptedFieldsCheck5"
+            style="color: Green"
+          >
+            ACCEPTED
+          </h2>
           <div class="ml-4" style="width:250px">
             <span v-if="showCertificate5Upload">
               <label class="text-primary-700 text-lg"
@@ -277,6 +345,25 @@ export default {
       showCertificate5Upload: true,
       isCertificate5: true,
 
+      declinedFields: [],
+      acceptedFields: [],
+      remark: "",
+
+      declinedFieldsCheck1: false,
+      acceptedFieldsCheck1: false,
+
+      declinedFieldsCheck2: false,
+      acceptedFieldsCheck2: false,
+
+      declinedFieldsCheck3: false,
+      acceptedFieldsCheck3: false,
+
+      declinedFieldsCheck4: false,
+      acceptedFieldsCheck4: false,
+
+      declinedFieldsCheck5: false,
+      acceptedFieldsCheck5: false,
+
       buttons: [],
       documentSpec: [],
       licenseInfo: "",
@@ -327,6 +414,39 @@ export default {
   },
   created() {
     this.draftId = this.$route.params.id;
+    this.declinedFields = this.getDeclinedFields;
+    this.remark = this.getRemarK;
+    this.acceptedFields = this.acceptedFields;
+    if (this.declinedFields.includes("EDEGC")) {
+      this.declinedFieldsCheck1 = true;
+    }
+    if (acceptedFields.includes("EDEGC")) {
+      this.acceptedFieldsCheck1 = true;
+    }
+    if (this.declinedFields.includes("EDTGC")) {
+      this.declinedFieldsCheck2 = true;
+    }
+    if (acceptedFields.includes("EDTGC")) {
+      this.acceptedFieldsCheck2 = true;
+    }
+    if (this.declinedFields.includes("EDTWGC")) {
+      this.declinedFieldsCheck3 = true;
+    }
+    if (acceptedFields.includes("EDTWGC")) {
+      this.acceptedFieldsCheck3 = true;
+    }
+    if (this.declinedFields.includes("EDHT")) {
+      this.declinedFieldsCheck4 = true;
+    }
+    if (acceptedFields.includes("EDHT")) {
+      this.acceptedFieldsCheck4 = true;
+    }
+    if (this.declinedFields.includes("EDPT")) {
+      this.declinedFieldsCheck5 = true;
+    }
+    if (acceptedFields.includes("EDPT")) {
+      this.acceptedFieldsCheck5 = true;
+    }
     if (this.draftId != undefined) {
       this.draftData = this.getDraftData;
       for (let i = 0; i < this.draftData.documents.length; i++) {

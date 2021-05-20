@@ -10,6 +10,20 @@
           class="mt-8"
         />
         <div class="flex-row justify-center px-8 py-4">
+          <h2
+            class="flex"
+            v-if="this.declinedFieldsCheck1"
+            style="color: #e63636"
+          >
+            REJECTED
+          </h2>
+          <h2
+            class="flex"
+            v-if="this.acceptedFieldsCheck1"
+            style="color: Green"
+          >
+            ACCEPTED
+          </h2>
           <div class="ml-4" style="width:250px">
             <span v-if="showUpload">
               <label class="text-primary-700 text-lg"
@@ -41,6 +55,20 @@
               <img :src="filePreview" alt="" class="preview" />
             </span>
           </div>
+          <h2
+            class="flex"
+            v-if="this.declinedFieldsCheck2"
+            style="color: #e63636"
+          >
+            REJECTED
+          </h2>
+          <h2
+            class="flex"
+            v-if="this.acceptedFieldsCheck2"
+            style="color: Green"
+          >
+            ACCEPTED
+          </h2>
 
           <div class="ml-4" style="width:250px">
             <span v-if="showDiplomaUpload">
@@ -75,7 +103,20 @@
               <img :src="diplomaPreview" alt="" class="preview" />
             </span>
           </div>
-
+          <h2
+            class="flex"
+            v-if="this.declinedFieldsCheck3"
+            style="color: #e63636"
+          >
+            REJECTED
+          </h2>
+          <h2
+            class="flex"
+            v-if="this.acceptedFieldsCheck3"
+            style="color: Green"
+          >
+            ACCEPTED
+          </h2>
           <div class="ml-4" style="width:250px">
             <span v-if="showTranscriptUpload">
               <label class="text-primary-700 text-lg"
@@ -248,6 +289,19 @@ export default {
       renewedLicense: "",
       professionalLicense: "",
 
+      declinedFields: [],
+      acceptedFields: [],
+      remark: "",
+
+      declinedFieldsCheck1: false,
+      acceptedFieldsCheck1: false,
+
+      declinedFieldsCheck2: false,
+      acceptedFieldsCheck2: false,
+
+      declinedFieldsCheck3: false,
+      acceptedFieldsCheck3: false,
+
       draftId: "",
       draftData: "",
 
@@ -276,10 +330,34 @@ export default {
       getRenewedLicense: "newlicense/getRenewedLicense",
       getProfessionalLicense: "newlicense/getProfessionalLicense",
       getDraftData: "newlicense/getDraft",
+      getDeclinedFields: "newlicense/getDeclinedFields",
+      getAcceptedFields: "newlicense/getAcceptedFields",
+      getRemarK: "newlicense/getRemark",
     }),
   },
   created() {
     this.draftId = this.$route.params.id;
+    this.declinedFields = this.getDeclinedFields;
+    this.remark = this.getRemarK;
+    this.acceptedFields = this.acceptedFields;
+    if (this.declinedFields.includes("PDC")) {
+      this.declinedFieldsCheck1 = true;
+    }
+    if (this.acceptedFields.includes("PDC")) {
+      this.acceptedFieldsCheck1 = true;
+    }
+    if (this.declinedFields.includes("PDD")) {
+      this.declinedFieldsCheck2 = true;
+    }
+    if (this.acceptedFields.includes("PDD")) {
+      this.acceptedFieldsCheck2 = true;
+    }
+    if (this.declinedFields.includes("PDT")) {
+      this.declinedFieldsCheck3 = true;
+    }
+    if (this.acceptedFields.includes("PDT")) {
+      this.acceptedFieldsCheck3 = true;
+    }
     if (this.draftId != undefined) {
       this.draftData = this.getDraftData;
       for (let i = 0; i < this.draftData.documents.length; i++) {

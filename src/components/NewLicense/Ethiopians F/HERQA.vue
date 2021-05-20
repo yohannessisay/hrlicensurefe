@@ -4,6 +4,20 @@
       <div
         class="flex flex-col pt-large w-full bg-white blue-box-shadow-light rounded "
       >
+        <h2
+          class="flex justify-center"
+          v-if="declinedFieldsCheck"
+          style="color: #e63636"
+        >
+          REJECTED
+        </h2>
+        <h2
+          class="flex justify-center"
+          v-if="acceptedFieldsCheck"
+          style="color: Green"
+        >
+          ACCEPTED
+        </h2>
         <TitleWithIllustration
           illustration="User"
           message="Higher Education Relevance and Quality Agency center(HERQA)"
@@ -120,6 +134,13 @@ export default {
     let userId = localStorage.getItem("userId");
     let licenseInfo = ref("");
     let draftData = ref("");
+
+    let declinedFields = ref([]);
+    let acceptedFields = ref([]);
+    let remark = ref("");
+
+    let declinedFieldsCheck = ref(false);
+    let acceptedFieldsCheck = ref(false);
 
     let photo = ref("");
     let passport = ref("");
@@ -386,6 +407,15 @@ export default {
     };
 
     onMounted(() => {
+      declinedFields = store.getters["newlicense/getDeclinedFields"];
+      acceptedFields = store.getters["newlicense/getAcceptedFields"];
+      remark = store.getters["newlicense/getRemark"];
+      if (declinedFields.includes("HERQA")) {
+        declinedFieldsCheck.value = true;
+      }
+      if (acceptedFields.includes("HERQA")) {
+        acceptedFieldsCheck.value = true;
+      }
       buttons = store.getters["newlicense/getButtons"];
       draftData = store.getters["newlicense/getDraft"];
       if (route.params.id) {
@@ -417,6 +447,11 @@ export default {
       basePath,
       message,
       dataChanged,
+      acceptedFields,
+      declinedFields,
+      remark,
+      declinedFieldsCheck,
+      acceptedFieldsCheck,
     };
   },
 };

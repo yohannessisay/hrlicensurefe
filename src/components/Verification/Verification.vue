@@ -130,6 +130,7 @@ export default {
     fetchDraft(id) {
       this.$store.dispatch("verification/getDraft", id).then((res) => {
         const results = res.data.data;
+        console.log(results);
         this.$store.dispatch("verification/setDraft", results);
       });
     },

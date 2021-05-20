@@ -64,7 +64,7 @@
                 />
               </div>
             </transition>
-          
+
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 9">
                 <LicenseSummary
@@ -241,6 +241,9 @@ export default {
     applicationCategories: "",
     documentSpecs: "",
     buttons: [],
+    declinedFields: [],
+    acceptedFields: [],
+    remark: "",
     applicationId: "",
     draftId: "",
   }),
@@ -327,7 +330,19 @@ export default {
     fetchDraft(id) {
       this.$store.dispatch("newlicense/getDraft", id).then((res) => {
         const results = res.data.data;
+        this.declinedFields = results.declinedFields;
+        this.acceptedFields = results.acceptedFields;
+        this.remark = results.remark;
         this.$store.dispatch("newlicense/setDraft", results);
+        this.$store.dispatch(
+          "newlicense/storeDeclinedFields",
+          this.declinedFields
+        );
+        this.$store.dispatch(
+          "newlicense/storeAcceptedFields",
+          this.acceptedFields
+        );
+        this.$store.dispatch("newlicense/storeRemark", this.remark);
       });
     },
   },

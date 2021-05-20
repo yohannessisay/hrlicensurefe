@@ -4,6 +4,20 @@
       <div
         class="flex flex-col pt-large w-full bg-white blue-box-shadow-light rounded "
       >
+        <h2
+          class="flex justify-center"
+          v-if="declinedFieldsCheck"
+          style="color: #e63636"
+        >
+          REJECTED
+        </h2>
+        <h2
+          class="flex justify-center"
+          v-if="acceptedFieldsCheck"
+          style="color: Green"
+        >
+          ACCEPTED
+        </h2>
         <TitleWithIllustration
           illustration="User"
           message="Authenticated Professional License from Country of Origin"
@@ -132,6 +146,13 @@ export default {
     let workExperience = ref("");
     let renewedLicense = ref("");
     let letterfromOrg = ref("");
+
+    let declinedFields = ref([]);
+    let acceptedFields = ref([]);
+    let remark = ref("");
+
+    let declinedFieldsCheck = ref(false);
+    let acceptedFieldsCheck = ref(false);
 
     const reset = () => {
       showUpload.value = true;
@@ -377,7 +398,15 @@ export default {
       });
     };
     onMounted(() => {
-      // const letterFile = store.getters["newlicense/getEnglishLanguage"];
+      declinedFields = store.getters["newlicense/getDeclinedFields"];
+      acceptedFields = store.getters["newlicense/getAcceptedFields"];
+      remark = store.getters["newlicense/getRemark"];
+      if (declinedFields.includes("APLFCO")) {
+        declinedFieldsCheck.value = true;
+      }
+      if (acceptedFields.includes("APLFCO")) {
+        acceptedFieldsCheck.value = true;
+      }
       buttons = store.getters["newlicense/getButtons"];
       draftData = store.getters["newlicense/getDraft"];
       if (route.params.id) {
@@ -409,6 +438,11 @@ export default {
       basePath,
       message,
       dataChanged,
+      acceptedFields,
+      declinedFields,
+      remark,
+      declinedFieldsCheck,
+      acceptedFieldsCheck,
     };
   },
 };

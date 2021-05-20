@@ -4,6 +4,20 @@
       <div
         class="flex flex-col pt-large w-full bg-white blue-box-shadow-light rounded "
       >
+        <h2
+          class="flex justify-center"
+          v-if="declinedFieldsCheck"
+          style="color: #e63636"
+        >
+          REJECTED
+        </h2>
+        <h2
+          class="flex justify-center"
+          v-if="acceptedFieldsCheck"
+          style="color: Green"
+        >
+          ACCEPTED
+        </h2>
         <TitleWithIllustration
           illustration="User"
           message="Support Letter"
@@ -129,6 +143,13 @@ export default {
     let professionalLicense = ref("");
     let letterfromOrg = ref("");
     let renewedLicense = ref("");
+
+    let declinedFields = ref([]);
+    let acceptedFields = ref([]);
+    let remark = ref("");
+
+    let declinedFieldsCheck = ref(false);
+    let acceptedFieldsCheck = ref(false);
 
     let message = ref({
       showFlash: false,
@@ -391,6 +412,15 @@ export default {
       });
     };
     onMounted(() => {
+      declinedFields = store.getters["newlicense/getDeclinedFields"];
+      acceptedFields = store.getters["newlicense/getAcceptedFields"];
+      remark = store.getters["newlicense/getRemark"];
+      if (declinedFields.includes("HERQA")) {
+        declinedFieldsCheck.value = true;
+      }
+      if (acceptedFields.includes("HERQA")) {
+        acceptedFieldsCheck.value = true;
+      }
       buttons = store.getters["newlicense/getButtons"];
       draftData = store.getters["newlicense/getDraft"];
       if (route.params.id) {
@@ -422,6 +452,11 @@ export default {
       basePath,
       dataChanged,
       message,
+      acceptedFields,
+      declinedFields,
+      remark,
+      declinedFieldsCheck,
+      acceptedFieldsCheck,
     };
   },
 };
@@ -437,5 +472,4 @@ img {
   color: white;
   border-color: tomato;
 }
-
 </style>
