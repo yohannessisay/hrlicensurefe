@@ -815,11 +815,11 @@ export default {
       });
     };
 
-    const fetchRecentlyFinished = () => {
-      store.dispatch("reviewer/getRecentlyFinished").then((res) => {
-        // recentlyFinished.value = res.data.results;
-      });
-    };
+    // const fetchRecentlyFinished = () => {
+    //   store.dispatch("reviewer/getRecentlyFinished").then((res) => {
+    //     // recentlyFinished.value = res.data.results;
+    //   });
+    // };
 
     const detail = (data, applicationType, applicationId, applicantId) => {
       const url =
@@ -832,7 +832,7 @@ export default {
       fetchUnfinished();
       // fetchAssignedtoYou();
       fetchUnassignedApplications();
-      fetchRecentlyFinished();
+      // fetchRecentlyFinished();
       fetchAssignedtoYou();
       if (adminRole === "SA") {
         fetchAssignedToEveryone();

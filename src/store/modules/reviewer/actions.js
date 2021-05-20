@@ -182,6 +182,7 @@ export default {
   },
   async getRecentlyFinished({commit}, adminId) {
     try {
+      console.log("admin -id", adminId)
       const resp = await ApiService.get(baseUrl + "/applications/finished/"+adminId)
       
       console.log("ioio", resp.data.data)

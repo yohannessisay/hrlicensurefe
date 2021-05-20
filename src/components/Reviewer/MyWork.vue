@@ -90,6 +90,7 @@ export default {
     const fetchRecentlyFinished = () => {
       showLoading.value = true
       store.dispatch("reviewer/getRecentlyFinished", adminId).then(res => {
+        console.log("id- admin", adminId)
         showLoading.value = false
         recentlyFinished.value = store.getters['reviewer/getRecentlyFinishedSearched'];
       });
