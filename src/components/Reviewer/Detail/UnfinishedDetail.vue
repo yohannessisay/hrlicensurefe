@@ -301,7 +301,7 @@ export default {
 
     let getReviewId = ref(0);
 
-    let loggedInAdminId = localStorage.getItem("adminId");
+    let loggedInAdminId = +localStorage.getItem("adminId");
 
     const created = async (applicationTypeName, applicationId, applicantId) => {
       licenseId.value = applicationId;

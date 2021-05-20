@@ -94,7 +94,7 @@
                       class="block px-4 py-2 text-sm text-blue-100 hover:bg-gray-100 hover:text-gray-900"
                       role="menuitem"
                     >
-                      All Work
+                      Others Work
                     </a>
                   </router-link>
                 </div>
@@ -440,21 +440,27 @@ export default {
       showDD.value = !showDD.value
       showUnfinishedDD.value = false
       showAssignedDD.value = false
+      showFinishedDD.value = false
     };
 
     const showUnfinishedDropDown = () => {
       showUnfinishedDD.value = !showUnfinishedDD.value;
       showDD.value = false;
       showAssignedDD.value = false;
+      showFinishedDD.value = false;
     };
     const showAssignedDropDown = () => {
       showAssignedDD.value = !showAssignedDD.value;
       showDD.value = false;
       showUnfinishedDD.value = false;
+      showFinishedDD.value = false;
     };
 
     const showFinishedDropDown = () => {
       showFinishedDD.value = !showFinishedDD.value
+      showAssignedDD.value = false;
+      showDD.value = false;
+      showUnfinishedDD.value = false;
     }
     const logout = () => {
       localStorage.removeItem("token");

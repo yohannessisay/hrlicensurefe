@@ -701,6 +701,7 @@ export default {
           sendDeclinedData.value = true;
         }
       }
+      console.log("action whaha", actionValue)
       newLicense.value.declinedFields = rejected.value;
       newLicense.value.acceptedFields = accepted.value;
       newLicense.value.certified = true;
@@ -744,7 +745,7 @@ export default {
           } else {
             showErrorFlash.value = true;
             setTimeout(() => {
-              router.go();
+              // router.go();
             }, 3000);
           }
         });
@@ -762,7 +763,7 @@ export default {
           } else {
             showErrorFlash.value = true;
             setTimeout(() => {
-              router.go();
+              // router.go();
             }, 3000);
           }
         });
@@ -780,7 +781,7 @@ export default {
           } else {
             showErrorFlash.value = true;
             setTimeout(() => {
-              router.go();
+              // router.go();
             }, 3000);
           }
         });

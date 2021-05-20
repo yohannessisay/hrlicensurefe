@@ -143,7 +143,7 @@ const routes = [
     component: () => import("../components/Reviewer/CertifiedUsers.vue"),
   },
   {
-    path: "/admin/certifiedUsersDetail/:certificateId/:applicantId",
+    path: "/admin/certifiedUsersDetail/:applicationId/:applicantId",
     name: "certifiedUsersDetail",
     component: () => import ("../components/Reviewer/Detail/CertifiedUsersDetail.vue"),
   },
@@ -170,7 +170,7 @@ const routes = [
       import("../components/Reviewer/Detail/UnfinishedDetail.vue"),
   },
   {
-    path: "/admin/recentlyFinishedDetail",
+    path: "/admin/finishedDetail/:applicationType/:applicationId",
     name: "recentlyFinishedDetail",
     component: () =>
       import("../components/Reviewer/Detail/RecentlyFinishedDetail.vue"),

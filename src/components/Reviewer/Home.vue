@@ -23,7 +23,7 @@
       <div class="flex ml-small mt-medium rounded">
         <div class="pl-large w-52 h-26" v-if="nothingToShowUnfinished == true">
           <div class="flex content-center justify-center">
-            <h2>Nothing To Show!!</h2>
+            <h2>Nothing To Show!</h2>
           </div>
         </div>
         <!-- <div v-if="nothingToShowUnfinished != true"> -->
@@ -50,34 +50,51 @@
               "
             >
               <div class="flex content-center justify-center">
-                <!-- <img class="box-shadow-pop" v-bind:src="item.picture.large" /> -->
-                <img
+                <span v-if="profilePic != ''">
+                  <img
                   class="box-shadow-pop"
                   src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
-                />
+                /> 
+                </span>
+                <span v-else>
+                   <img
+                  class="box-shadow-pop"
+                  src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
+                /> 
+                </span>
+                <!-- <img class="box-shadow-pop" v-bind:src="item.picture.large" /> -->
+                 
+                <!-- <img
+                  class="box-shadow-pop"
+                  src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
+                /> -->
               </div>
               <h4
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
               >
-                {{
+                <b>{{
                   item.applicant.profile.name
                     ? item.applicant.profile.name +
                       " " +
                       item.applicant.profile.fatherName
                     : "-"
-                }}
+                }}</b>
               </h4>
-              <h6
-                class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+              <br/>
+              <span
+                class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
               >
-                {{ item.createdAt ? item.createdAt : "-" }}
-              </h6>
-              <h6
-                class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                {{ item.applicationType ? item.applicationType : "-" }}
+              </span>
+              <span
+                class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
               >
-                Application ID:
                 {{ item.newLicenseCode ? item.newLicenseCode : "-" }}
-              </h6>
+              </span>
+              <span
+                class="text-lightBlueB-500 mt-tiny flex justify-end content-center">
+                  {{item.createdAt ? moment(item.createdAt).fromNow() : '-'}}
+              </span>
             </div>
           </div>
         </div>
@@ -92,7 +109,7 @@
 
       <div v-if="adminRole === 'SA'">
         <div class="flex pl-12 mt-medium">
-          <Title message="All Unfinished" />
+          <Title message="Others Unfinished" />
           <div class="flex ml-small" v-if="everyoneUnfinished.length >= 5">
             <router-link to="/admin/unfinishedAll">
               <button
@@ -109,7 +126,7 @@
             v-if="nothingToShowAllUnfinished == true"
           >
             <div class="flex content-center justify-center">
-              <h2>Nothing To Show!!</h2>
+              <h2>Nothing To Show!</h2>
             </div>
           </div>
           <!-- <div v-if="nothingToShowAllUnfinished != true"> -->
@@ -144,30 +161,38 @@
                 <h4
                   class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
                 >
-                  {{
+                  <b>{{
                     item.applicant.profile.name
                       ? item.applicant.profile.name +
                         " " +
                         item.applicant.profile.fatherName
                       : "-"
-                  }}
+                  }}</b>
                 </h4>
-                <h5
-                  class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                <span
+                  class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                 >
-                  Started By:
+                  Assigned Reviewer:
                   {{ item.reviewer.name ? item.reviewer.name : "-" }}
-                </h5>
+                </span>
                 <!-- <h6
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center">
                 {{ item.createdAt ? item.createdAt : "-" }}
               </h6> -->
-                <h6
-                  class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                <span
+                  class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                 >
-                  Application ID:
+                  {{ item.applicationType ? item.applicationType : "-" }}
+                </span>
+                <span
+                  class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                >
                   {{ item.newLicenseCode ? item.newLicenseCode : "-" }}
-                </h6>
+                </span>
+                <span
+                class="text-lightBlueB-500 mt-tiny flex justify-end content-center">
+                  {{item.createdAt ? moment(item.createdAt).fromNow() : '-'}}
+              </span>
               </div>
             </div>
           </div>
@@ -196,7 +221,7 @@
       <div class="flex ml-small mt-medium rounded">
         <div class="pl-large w-52 h-26" v-if="nothingToShow == true">
           <div class="flex content-center justify-center">
-            <h2>Nothing To Show!!</h2>
+            <h2>Nothing To Show!</h2>
           </div>
         </div>
         <div
@@ -232,42 +257,45 @@
               <h4
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
               >
-                {{
+                <b>{{
                   item.applicant.profile.name
                     ? item.applicant.profile.name +
                       " " +
                       item.applicant.profile.fatherName
                     : "-"
-                }}
+                }}</b>
               </h4>
-              <h6
-                class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+              <!-- <span
+                class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
               >
                 {{ item.createdAt ? item.createdAt : "-" }}
-              </h6>
+              </span> -->
+              <br />
               <span
-                class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
               >
-                Application Type:
                 {{ item.applicationType ? item.applicationType : "-" }}
               </span>
               <span
-                class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
               >
-                Application ID:
                 {{ item.newLicenseCode ? item.newLicenseCode : "-" }}
+              </span>
+              <!-- <br/> -->
+              <span
+                class="text-lightBlueB-500 mt-tiny flex justify-end content-center">
+                  {{item.createdAt ? moment(item.createdAt).fromNow() : '-'}}
               </span>
             </div>
           </div>
         </div>
       </div>
       <div
-      v-if="showAssignedToMeLoading"
-      class="flex content-center justify-center"
-    >
-    
-      <Spinner />
-    </div>
+        v-if="showAssignedToMeLoading"
+        class="flex content-center justify-center"
+      >
+        <Spinner />
+      </div>
       <div v-if="adminRole === 'SA'">
         <div class="flex pl-12 mt-medium">
           <Title message="Assigned to Everyone" />
@@ -288,7 +316,7 @@
             v-if="nothingToShowEveryoneAssigned == true"
           >
             <div class="flex content-center justify-center">
-              <h2>Nothing To Show!!</h2>
+              <h2>Nothing To Show!</h2>
             </div>
           </div>
           <div
@@ -324,35 +352,39 @@
                 <h4
                   class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
                 >
-                  {{
+                  <b>{{
                     item.applicant.profile.name
                       ? item.applicant.profile.name +
                         " " +
                         item.applicant.profile.fatherName
                       : "-"
-                  }}
+                  }}</b>
                 </h4>
-                <h5
-                  class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                <span
+                  class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                 >
-                  Assigned To:
+                  <!-- Assigned Reviewer: -->
+                  <!-- <i class="far fa-user-cog"></i> -->
+                  <i class="glyphicon glyphicon-user"></i>
                   {{ item.reviewer.name ? item.reviewer.name : "-" }}
-                </h5>
+                </span>
                 <!-- <h6
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center">
                 {{ item.createdAt ? item.createdAt : "-" }}
               </h6> -->
                 <span
-                  class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                  class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                 >
-                  Application Type:
                   {{ item.applicationType ? item.applicationType : "-" }}
                 </span>
                 <span
-                  class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                  class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                 >
-                  Application ID:
                   {{ item.newLicenseCode ? item.newLicenseCode : "-" }}
+                </span>
+                <span
+                class="text-lightBlueB-500 mt-tiny flex justify-end content-center">
+                  {{item.createdAt ? moment(item.createdAt).fromNow() : '-'}}
                 </span>
               </div>
             </div>
@@ -386,7 +418,7 @@
             v-if="nothingToShowUnassigned == true"
           >
             <div class="flex content-center justify-center">
-              <h2>Nothing To Show!!</h2>
+              <h2>Nothing To Show!</h2>
             </div>
           </div>
           <div
@@ -417,30 +449,33 @@
                 <h4
                   class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
                 >
-                  {{
+                  <b>{{
                     item.applicant.profile.name
                       ? item.applicant.profile.name +
                         " " +
                         item.applicant.profile.fatherName
                       : "-"
-                  }}
+                  }}</b>
                 </h4>
-                <h6
-                  class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
-                >
-                  {{ item.createdAt ? item.createdAt : "-" }}
-                </h6>
                 <span
-                  class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                  class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                 >
-                  Application Type:
+                  unassigned
+                </span>
+                <span
+                  class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                >
                   {{ item.applicationType ? item.applicationType : "-" }}
                 </span>
                 <span
-                  class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                  class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                 >
-                  Application ID:
                   {{ item.newLicenseCode ? item.newLicenseCode : "-" }}
+                </span>
+                <span class="text-lightBlueB-500 mt-tiny flex justify-end content-center">
+
+                  {{item.createdAt ? moment(item.createdAt).fromNow() : '-'}}
+
                 </span>
               </div>
             </div>
@@ -465,30 +500,27 @@
                 <h4
                   class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
                 >
-                  {{
+                  <b>{{
                     item.applicant.profile.name
                       ? item.applicant.profile.name +
                         " " +
                         item.applicant.profile.fatherName
                       : "-"
-                  }}
+                  }}</b>
                 </h4>
-                <h6
-                  class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
-                >
-                  {{ item.createdAt ? item.createdAt : "-" }}
-                </h6>
                 <span
-                  class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                  class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                 >
-                  Application Type:
                   {{ item.applicationType ? item.applicationType : "-" }}
                 </span>
                 <span
-                  class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                  class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                 >
-                  Application ID:
                   {{ item.newLicenseCode ? item.newLicenseCode : "-" }}
+                </span>
+                <span
+                class="text-lightBlueB-500 mt-tiny flex justify-end content-center">
+                  {{item.createdAt ? moment(item.createdAt).fromNow() : '-'}}
                 </span>
                 <div
                   class="flex ml-small w-32 pt-small justify-center content-center"
@@ -510,66 +542,6 @@
       >
         <Spinner />
       </div>
-      <!-- Flip Box End!-->
-
-      <!-- <div class="flex pl-12 mt-medium ">
-        <Title message="Recently Finished" />
-        <div class="flex ml-small" v-if="recentlyFinished.length >= 5">
-          <router-link to="/newlicense">
-            <button
-              class="block mx-auto  bg-lightBlue-300 hover:bg-lightBlue-600 hover:shadow-lg"
-            >
-              View All
-            </button>
-          </router-link>
-        </div>
-      </div>
-      <div
-        class="flex justify-center items-center mt-medium pb-medium rounded "
-      >
-        <div
-          class="container"
-          v-for="(item, index) in recentlyFinished"
-          v-bind:key="item.name.first"
-          v-bind:value="item.id"
-        >
-          <div
-            v-if="index < 5"
-            class="justify-center items-center ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
-          >
-            <div
-              class="p-4 w-48 h-64"
-              @Click="detail(`/recentlyFinishedDetail`)"
-            >
-              <div class="flex content-center justify-center">
-                <router-link to="/newlicense">
-                  <img class="box-shadow-pop" v-bind:src="item.picture.large" />
-                </router-link>
-              </div>
-              <h4
-                class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
-              >
-                {{ item.name.first + " " + item.name.last }}
-              </h4>
-              <h6
-                class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
-              >
-                {{ item.registered.date }}
-              </h6>
-              <h6
-                class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
-              >
-                New Licence ID: {{ item.id.value }}
-              </h6>
-              <h6
-                class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
-              >
-                Approved
-              </h6>
-            </div>
-          </div>
-        </div>
-      </div> -->
     </div>
   </div>
 </template>
@@ -582,10 +554,12 @@ import { useRouter } from "vue-router";
 import { ref, onMounted, watch } from "vue";
 import store from "../../store";
 import Spinner from "@/sharedComponents/Spinner";
+import moment from 'moment';
 
 export default {
   components: { ReviewerNavBar, Title, Spinner },
   computed: {
+    moment: () => moment,
     unAssignedSearched() {
       return store.getters["reviewer/getUnassignedSearched"];
     },
@@ -628,6 +602,8 @@ export default {
     let nothingToShowEveryoneAssigned = ref(false);
     let nothingToShowAllUnfinished = ref(false);
 
+    let profilePic = ref("");
+
     let nothingToShowUnfinished = ref(false);
 
     let myTitleMessage = ref(false);
@@ -648,6 +624,20 @@ export default {
         if (store.getters["reviewer/getUnfinishedSearched"].length !== 0) {
           unfinished.value = store.getters["reviewer/getUnfinishedSearched"];
           for (var prop in store.getters["reviewer/getUnfinishedSearched"]) {
+            // console.log('documentss', prop.documents)
+            console.log('documents', store.getters["reviewer/getUnfinishedSearched"][prop].documents)
+            if(store.getters["reviewer/getUnfinishedSearched"][prop].documents !== null) {
+              for(var psp in store.getters["reviewer/getUnfinishedSearched"][prop].documents) {
+                console.log("here it is",store.getters["reviewer/getUnfinishedSearched"][prop].documents[psp].fileName)
+                if(store.getters["reviewer/getUnfinishedSearched"][prop].documents[psp].documentTypeCode === "LHI") {
+                  store.getters["reviewer/getUnfinishedSearched"][prop].profilePic = store.getters["reviewer/getUnfinishedSearched"][prop].documents[psp].fileName
+                  // store.getters["reviewer/getUnfinishedSearched"]
+                  console.log("amazing grace", store.getters["reviewer/getUnfinishedSearched"][prop].profilePic)
+                  break;
+                }
+              }
+            }
+            
             if (
               store.getters["reviewer/getUnfinishedSearched"][prop]
                 .applicationType == "Renewal"
@@ -715,7 +705,7 @@ export default {
         if (store.getters["reviewer/getAssignedToYouSearched"].length !== 0) {
           assignedToyou.value =
             store.getters["reviewer/getAssignedToYouSearched"];
-          for (var prop in assignedToyou.value) {
+          for (var prop in store.getters["reviewer/getAssignedToYouSearched"]) {
             if (assignedToyou.value[prop].applicationType == "Renewal") {
               assignedToyou.value[prop].newLicenseCode =
                 assignedToyou.value[prop].renewalCode;
@@ -738,13 +728,49 @@ export default {
     const fetchAssignedToEveryone = () => {
       showAssignedToOthersLoading.value = true;
       store.dispatch("reviewer/getAssignedToEveryOne").then((res) => {
-        showAssignedToOthersLoading.value = false
+        showAssignedToOthersLoading.value = false;
         assignedToEveryone.value =
           store.getters["reviewer/getAssignedForEveryOneSearched"];
         if (
           store.getters["reviewer/getAssignedForEveryOneSearched"].length !== 0
         ) {
           // do some logic to manipulate data
+          for (var prop in store.getters["reviewer/getAssignedForEveryOneSearched"]) {
+            
+            if (
+              store.getters["reviewer/getAssignedForEveryOneSearched"][prop]
+                .applicationType == "Renewal"
+            ) {
+              store.getters["reviewer/getAssignedForEveryOneSearched"][
+                prop
+              ].newLicenseCode =
+                store.getters["reviewer/getAssignedForEveryOneSearched"][
+                  prop
+                ].renewalCode;
+            }
+            if (
+              store.getters["reviewer/getAssignedForEveryOneSearched"][prop]
+                .applicationType == "Good Standing"
+            ) {
+              store.getters["reviewer/getAssignedForEveryOneSearched"][
+                prop
+              ].newLicenseCode =
+                store.getters["reviewer/getAssignedForEveryOneSearched"][
+                  prop
+                ].goodStandingCode;
+            }
+            if (
+              store.getters["reviewer/getAssignedForEveryOneSearched"][prop]
+                .applicationType == "Verification"
+            ) {
+              store.getters["reviewer/getAssignedForEveryOneSearched"][
+                prop
+              ].newLicenseCode =
+                store.getters["reviewer/getAssignedForEveryOneSearched"][
+                  prop
+                ].verificationCode;
+            }
+          }
         } else {
           nothingToShowEveryoneAssigned.value = true;
         }
@@ -761,6 +787,42 @@ export default {
         if (
           store.getters["reviewer/getEveryOneUnfinishedSearched"].length !== 0
         ) {
+          for (var prop in store.getters["reviewer/getEveryOneUnfinishedSearched"]) {
+            
+            if (
+              store.getters["reviewer/getEveryOneUnfinishedSearched"][prop]
+                .applicationType == "Renewal"
+            ) {
+              store.getters["reviewer/getEveryOneUnfinishedSearched"][
+                prop
+              ].newLicenseCode =
+                store.getters["reviewer/getEveryOneUnfinishedSearched"][
+                  prop
+                ].renewalCode;
+            }
+            if (
+              store.getters["reviewer/getEveryOneUnfinishedSearched"][prop]
+                .applicationType == "Good Standing"
+            ) {
+              store.getters["reviewer/getEveryOneUnfinishedSearched"][
+                prop
+              ].newLicenseCode =
+                store.getters["reviewer/getEveryOneUnfinishedSearched"][
+                  prop
+                ].goodStandingCode;
+            }
+            if (
+              store.getters["reviewer/getEveryOneUnfinishedSearched"][prop]
+                .applicationType == "Verification"
+            ) {
+              store.getters["reviewer/getEveryOneUnfinishedSearched"][
+                prop
+              ].newLicenseCode =
+                store.getters["reviewer/getEveryOneUnfinishedSearched"][
+                  prop
+                ].verificationCode;
+            }
+          }
           // do some logic to manipulate data
         } else {
           nothingToShowAllUnfinished.value = true;
@@ -769,9 +831,9 @@ export default {
     };
 
     const fetchUnassignedApplications = () => {
-      showUnassignedLoading.value = true
+      showUnassignedLoading.value = true;
       store.dispatch("reviewer/getUnassigned").then((res) => {
-        showUnassignedLoading.value = false
+        showUnassignedLoading.value = false;
         unassigned.value = store.getters["reviewer/getUnassignedSearched"];
         if (store.getters["reviewer/getUnassignedSearched"].length !== 0) {
           for (var prop in store.getters["reviewer/getUnassignedSearched"]) {
@@ -863,6 +925,7 @@ export default {
       showAssignedToMeLoading,
       showAssignedToOthersLoading,
       showUnassignedLoading,
+      profilePic
     };
   },
 };

@@ -64,6 +64,7 @@ export default {
         state.allCertifiedUsers = certifiedUsers
         state.allCertifiedUsersSearched = certifiedUsers
         state.tempCertified = certifiedUsers
+        // state.approved = data;
     },
     [SET_ALL_RECENTLY_FINISHED_SEARCHED] (state, searchedVal) {
         state.allRecentlyFinishedSearched = searchedVal

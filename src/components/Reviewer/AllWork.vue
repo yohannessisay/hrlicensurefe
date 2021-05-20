@@ -19,43 +19,46 @@
           <div
             class="justify-center items-center mt-8 ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
           >
-            <div class="p-4 w-48 h-64">
+            <div class="p-4 w-48 h-64"
+              @click="detail('/admin/finishedDetail',
+                item.applicationType,
+                item.id
+                )"
+            >
               <div class="flex content-center justify-center">
-                <router-link to="/newlicense">
                   <img class="box-shadow-pop" 
                   src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp" />
-                </router-link>
               </div>
               <h4
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
               >
+               <b>
                 {{ item.applicant.profile.name + " " + item.applicant.profile.fatherName }}
+               </b>
               </h4>
-              <h5
-                class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+              <span
+                class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
               >
-                Reviewed By:
                 {{
                   item.reviewer.name
                     ? item.reviewer.name
                     : "-"
                 }}
-              </h5>
-              <!-- <h6
-                class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+              </span>
+              <span
+                class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
               >
-                {{ item.createdAt }}
-              </h6> -->
-              <h6
-                class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                {{item.applicationType}}
+              </span>
+              <span
+                class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
               >
-                Licence ID: {{ item.newLicenseCode }}
-              </h6>
-              <h6
-                class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
-              >
-                {{item.applicationStatus.name}}
-              </h6>
+                {{ item.newLicenseCode ? item.newLicenseCode : '-' }}
+              </span>
+              <span
+                class="text-lightBlueB-500 mt-tiny flex justify-end content-center">
+                  {{item.createdAt ? moment(item.createdAt).fromNow() : '-'}}
+              </span>
             </div>
           </div>
         </div>
@@ -75,21 +78,26 @@
 import Title from "@/sharedComponents/TitleWithIllustration";
 import ReviewerNavBar from "@/components/Reviewer/ReviewerNavBar";
 import { useStore } from "vuex";
+import { useRouter } from "vue-router"
 
 import { ref, onMounted } from "vue";
 
 import store from "../../store"
 import Spinner from "@/sharedComponents/Spinner";
 
+import moment from 'moment'
+
 export default {
   components: { ReviewerNavBar, Title, Spinner },
   computed: {
+    moment: () => moment,
     getRecentlyFinished() {
       return store.getters['reviewer/getAllRecentlyFinishedSearched']
     }
   },
   setup() {
     const store = useStore();
+    const router = useRouter()
 
     let recentlyFinished = ref({});
 
@@ -99,10 +107,17 @@ export default {
     const fetchRecentlyFinished = () => {
       showLoading.value = true
       store.dispatch("reviewer/getAllRecentlyFinished").then(res => {
+        console.log("------", store.getters['reviewer/getAllRecentlyFinishedSearched'])
         showLoading.value = false
         recentlyFinished.value = store.getters['reviewer/getAllRecentlyFinishedSearched'];
       });
     };
+
+    const detail = (data, appilcationType, appilcationId, applicantId) => {
+      const url = 
+        data + "/" + appilcationType + "/" + appilcationId;
+        router.push(url)
+    }
 
     onMounted(() => {
       fetchRecentlyFinished();
@@ -110,7 +125,8 @@ export default {
 
     return {
       recentlyFinished,
-      showLoading
+      showLoading,
+      detail
     };
   }
 };
@@ -122,5 +138,8 @@ img {
   width: 80px;
   border-color: steelblue;
   background-color: steelblue;
+}
+.container {
+  cursor: pointer;
 }
 </style>

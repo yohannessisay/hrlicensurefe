@@ -184,8 +184,6 @@ export default {
     try {
       console.log("admin -id", adminId)
       const resp = await ApiService.get(baseUrl + "/applications/finished/"+adminId)
-      
-      console.log("ioio", resp.data.data)
       // const resp = await ApiService.get("https://randomuser.me/api/?results=10");
       commit(SET_RECENTLY_FINISHED, resp.data.data)
     } catch (error) {
@@ -215,11 +213,14 @@ export default {
     try {
       const resp = await ApiService.get(baseUrl + "/applications/allFinished")
       console.log("all finished: ", resp.data.data)
+      // console.log("-+++++-", resp.data.data)
       const certifiedUsers = resp.data.data.filter(function(e) {
         return e.certified == true;
       })
       console.log("all c: ", certifiedUsers)
-      commit(SET_ALL_RECENTLY_FINISHED, resp.data.data, certifiedUsers)
+      console.log("mmmm")
+      const certifiedUsers1 = []
+      commit(SET_ALL_RECENTLY_FINISHED, resp.data.data, certifiedUsers1)
     } catch(error) {
       const resp = error;
       return resp;
@@ -395,7 +396,7 @@ export default {
     try {
       console.log(license);
       const resp = await ApiService.put(
-        baseUrl + "verifications/" + license.data.id,
+        baseUrl + "/verifications/" + license.data.id,
         license
       );
       // const resp = await ApiService.put(url + "newLicenses/" + license);
@@ -408,7 +409,7 @@ export default {
     try {
       console.log(license);
       const resp = await ApiService.put(
-        baseUrl + "goodStandings/" + license.data.id,
+        baseUrl + "/goodStandings/" + license.data.id,
         license
       );
       // const resp = await ApiService.put(url + "newLicenses/" + license);
@@ -421,7 +422,7 @@ export default {
     try {
       console.log(license);
       const resp = await ApiService.put(
-        baseUrl + "renewals/" + license.data.id,
+        baseUrl + "/renewals/" + license.data.id,
         license
       );
       // const resp = await ApiService.put(url + "newLicenses/" + license);

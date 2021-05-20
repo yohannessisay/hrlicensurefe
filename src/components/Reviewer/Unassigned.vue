@@ -50,7 +50,6 @@
               <span
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
               >
-                Application Type:
                 {{ item.applicationType ? item.applicationType : "-" }}
               </span>
               <span
@@ -97,7 +96,6 @@
               <span
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
               >
-                Application Type:
                 {{ item.applicationType ? item.applicationType : "-" }}
               </span>
               <span

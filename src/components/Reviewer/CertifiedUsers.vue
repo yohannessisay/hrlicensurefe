@@ -8,7 +8,7 @@
       <div class="flex flex-wrap pb-medium rounded h-full" v-if="!showLoading">
         <div class="pl-large w-52 h-26" v-if="nothingToShowUnfinished == true">
           <div class="flex content-center justify-center">
-            <h2>Nothing To Show!!</h2>
+            <h2>Nothing To Show!</h2>
           </div>
         </div>
         <div
@@ -25,7 +25,6 @@
               @Click="
                 detail(
                   `/admin/certifiedUsersDetail`,
-                  item.id,
                   item.applicant.id
                 )
               "
@@ -40,34 +39,23 @@
               <h4
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
               >
-                Certified User: {{
+               <b>{{
                   item.applicant.profile.name
                     ? item.applicant.profile.name +
                       " " +
                       item.applicant.profile.fatherName
                     : "-"
-                }}
+                }}</b>
               </h4>
-              <!-- <h5
+              <span
+                class="text-lightBlueB-500 mt-tiny flex justify-start content-center">
+                  On {{item.createdAt ? moment(item.certifiedDate).format("MMM DD, YY") : '-'}}
+              </span>
+              <span
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
               >
-                Started By:
-                {{
-                  item.reviewer.name
-                    ? item.reviewer.name
-                    : "-"
-                }}
-              </h5> -->
-              <h6
-                class="text-lightBlueB-500 mt-tiny flex justify-center content-center">
-                {{ item.createdAt ? item.createdAt : "-" }}
-              </h6>
-              <h6
-                class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
-              >
-                Application ID:
                 {{ item.newLicenseCode ? item.newLicenseCode : "-" }}
-              </h6>
+              </span>
             </div>
           </div>
         </div>
@@ -92,10 +80,12 @@ import { useRouter } from "vue-router";
 
 import store from '../../store'
 import Spinner from "@/sharedComponents/Spinner";
+import moment from 'moment'
 
 export default {
   components: { ReviewerNavBar, Title, Spinner },
   computed: {
+    moment: () => moment,
     // getCertifiedUsers() {
     //   return store.getters['reviewer/getTempCertified'];
     // }
@@ -137,9 +127,9 @@ export default {
       });
     };
 
-    const detail = (data, applicationId, applicantId) => {
+    const detail = (data, applicantId) => {
       const url =
-        data + "/" + applicationId + "/" + applicantId;
+        data + "/" + applicantId;
       router.push(url);
     };
 

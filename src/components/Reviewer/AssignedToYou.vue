@@ -11,7 +11,7 @@
           v-if="nothingToShow == true"
         >
           <div class="flex content-center justify-center">
-            <h2>Nothing To Show!!</h2>
+            <h2>Nothing To Show!</h2>
           </div>
         </div>
         <div
@@ -37,30 +37,31 @@
               <h4
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
               >
-                {{
+                <b>{{
                   item.applicant.profile.name
                     ? item.applicant.profile.name +
                       " " +
                       item.applicant.profile.fatherName
                     : "-"
-                }}
+                }}</b>
               </h4>
-              <h6
-                class="text-lightBlueB-500 mt-tiny flex justify-center content-center">
-                {{ item.createdAt ? item.createdAt : "-" }}
-              </h6>
+              <br />
+              
               <span
-                class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
               >
-                Application Type:
                 {{ item.applicationType ? item.applicationType : "-" }}
               </span>
               <span
-                class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
               >
-                Application ID:
                 {{ item.newLicenseCode ? item.newLicenseCode : "-" }}
               </span>
+              <span
+                class="text-lightBlueB-500 mt-tiny flex justify-end content-center">
+                  {{item.createdAt ? moment(item.createdAt).fromNow() : '-'}}
+              </span>
+
             </div>
           </div>
         </div>
@@ -85,10 +86,12 @@ import { useRouter } from "vue-router";
 import { ref, onMounted } from "vue";
 import store from '../../store';
 import Spinner from "@/sharedComponents/Spinner";
+import moment from 'moment';
 
 export default {
   components: { ReviewerNavBar, Title, Spinner, },
   computed: {
+    moment: () => moment,
     getAssignedToYou() {
       return store.getters['reviewer/getAssignedToYouSearched'];
     }

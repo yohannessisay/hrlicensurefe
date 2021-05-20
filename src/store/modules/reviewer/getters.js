@@ -17,4 +17,5 @@ export default {
     getCertifiedUsersSearched: state => state.certifiedUsersSearched,
     getAllCertifiedUsers: state => state.allCertifiedUsers,
     getAllCertifiedUsersSearched: state => state.allCertifiedUsersSearched,
+    getApproved: state => state.approved,
 };

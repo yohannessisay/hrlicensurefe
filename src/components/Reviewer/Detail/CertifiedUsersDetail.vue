@@ -57,7 +57,7 @@
                   ><b>with great distinction</b></span
                 >
                 <br /><br /><br /><br />
-                <span style="font-size: 25px"><i>On May 19, 2021</i></span
+                <span style="font-size: 25px"><i>on {{moment(certificateDetail.certifiedDate).format("MMM Do, YY")}}</i></span
                 ><br />
               </div>
             </div>
@@ -84,8 +84,11 @@ import Spinner from "@/sharedComponents/Spinner";
 
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+
+import moment from 'moment';
 export default {
   computed: {
+    moment: () => moment,
     // getCertifiedUser() {
     //   return store.getters['reviewer/getUnassigned'][0]
     // }
@@ -100,12 +103,13 @@ export default {
     let route = useRoute();
     let show = ref(false);
     let certifiedUser = ref({});
+    let certificateDetail = ref({});
     let showLoading = ref(false);
 
     const fetchCertifiedUser = () => {
       showLoading.value = true;
       store
-        .dispatch("profile/getProfileById", route.params.applicantId)
+        .dispatch("profile/getProfileByUserId", route.params.applicantId)
         .then((res) => {
           showLoading.value = false;
           certifiedUser.value = res.data.data;
@@ -115,6 +119,16 @@ export default {
           // console.log(profileInfo.value);
         });
     };
+    const fetchApplication = () => {
+      store
+        .dispatch("reviewer/getNewLicenseApplication", route.params.applicationId)
+          .then(res => {
+            
+            certificateDetail.value = res.data.data
+            console.log("hmmmm", res.data.data)
+            // console.log("value of res", res.data.data)
+          })
+    }
 
     const downloadPdf = () => {
       // var canvas  = document.getElementById("main");
@@ -135,12 +149,14 @@ export default {
     };
     onMounted(() => {
       fetchCertifiedUser();
+      fetchApplication();
     });
     return {
       show,
       downloadPdf,
       certifiedUser,
       showLoading,
+      certificateDetail,
     };
   },
 };

@@ -8,7 +8,7 @@
       <div class="flex flex-wrap pb-medium rounded h-full" v-if="!showLoading">
         <div class="pl-large w-52 h-26" v-if="nothingToShow == true">
           <div class="flex content-center justify-center">
-            <h2>Nothing To Show!!</h2>
+            <h2>Nothing To Show!</h2>
           </div>
         </div>
         <div
@@ -41,35 +41,36 @@
               <h4
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
               >
-                {{
+                <b>{{
                   item.applicant.profile.name
                     ? item.applicant.profile.name +
                       " " +
                       item.applicant.profile.fatherName
                     : "-"
-                }}
+                }}</b>
               </h4>
-              <h5
-                class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+              <span
+                class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
               >
-                Assigned To:
                 {{ item.reviewer.name ? item.reviewer.name : "-" }}
-              </h5>
+              </span>
               <!-- <h6
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center">
                 {{ item.createdAt ? item.createdAt : "-" }}
               </h6> -->
               <span
-                class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
               >
-                Application Type:
                 {{ item.applicationType ? item.applicationType : "-" }}
               </span>
               <span
-                class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
               >
-                Application ID:
                 {{ item.newLicenseCode ? item.newLicenseCode : "-" }}
+              </span>
+              <span
+                class="text-lightBlueB-500 mt-tiny flex justify-end content-center">
+                  {{item.createdAt ? moment(item.createdAt).fromNow() : '-'}}
               </span>
             </div>
           </div>
@@ -95,6 +96,7 @@ import { useRouter } from "vue-router";
 import { ref, onMounted } from "vue";
 import store from "../../store";
 import Spinner from "@/sharedComponents/Spinner";
+import moment from 'moment'
 
 export default {
   components: {
@@ -103,6 +105,7 @@ export default {
     Spinner,
   },
   computed: {
+    moment: () => moment,
     getAllAssignedToYou() {
       return store.getters["reviewer/getAssignedForEveryOneSearched"];
     },
