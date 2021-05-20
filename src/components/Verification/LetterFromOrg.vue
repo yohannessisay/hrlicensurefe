@@ -4,6 +4,20 @@
       <div
         class="flex flex-col pt-large w-full bg-white blue-box-shadow-light rounded "
       >
+        <h2
+          class="flex justify-center"
+          v-if="declinedFieldsCheck"
+          style="color: #e63636"
+        >
+          REJECTED
+        </h2>
+        <h2
+          class="flex justify-center"
+          v-if="acceptedFieldsCheck"
+          style="color: Green"
+        >
+          ACCEPTED
+        </h2>
         <TitleWithIllustration
           illustration="User"
           message="Letter from Hiring Institution"
@@ -125,6 +139,13 @@ export default {
 
     let licenseCopy = ref("");
 
+    let declinedFields = ref([]);
+    let acceptedFields = ref([]);
+    let remark = ref("");
+
+    let declinedFieldsCheck = ref(false);
+    let acceptedFieldsCheck = ref(false);
+
     const reset = () => {
       showUpload.value = true;
       showPreview.value = false;
@@ -169,6 +190,15 @@ export default {
     };
 
     onMounted(() => {
+      declinedFields = store.getters["goodstanding/getDeclinedFields"];
+      acceptedFields = store.getters["goodstanding/getAcceptedFields"];
+      remark = store.getters["goodstanding/getRemark"];
+      if (declinedFields.includes("LHI")) {
+        declinedFieldsCheck.value = true;
+      }
+      if (acceptedFields.includes("LHI")) {
+        acceptedFieldsCheck.value = true;
+      }
       buttons = store.getters["verification/getButtons"];
       draftData = store.getters["verification/getDraft"];
       if (route.params.id) {
@@ -305,6 +335,11 @@ export default {
       message,
       dataChanged,
       licenseCopy,
+      acceptedFields,
+      declinedFields,
+      remark,
+      declinedFieldsCheck,
+      acceptedFieldsCheck,
     };
   },
 };

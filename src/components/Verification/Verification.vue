@@ -40,6 +40,12 @@
       </div>
     </div>
   </div>
+  <div class="mr-3xl" v-if="showFlash">
+    <FlashMessage message="Operation Successful!" />
+  </div>
+  <div v-if="showErrorFlash">
+    <ErrorFlashMessage message="Operation Failed!" />
+  </div>
 </template>
 <script>
 import Navigation from "@/views/Navigation";
@@ -47,7 +53,9 @@ import Institution from "./Institution.vue";
 import VerificationSummary from "./VerificationSummary";
 import VerificationLetter from "./LetterFromOrg";
 import LicenseCopy from "./LicenseCopy";
-
+import FlashMessage from "@/sharedComponents/FlashMessage";
+import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
+import Spinner from "@/sharedComponents/Spinner";
 export default {
   created() {
     this.draftId = this.$route.params.id;
@@ -65,6 +73,9 @@ export default {
     buttons: [],
     applicationId: "",
     draftId: "",
+    declinedFields: [],
+    acceptedFields: [],
+    remark: "",
   }),
   components: {
     Navigation,
@@ -72,6 +83,9 @@ export default {
     VerificationSummary,
     VerificationLetter,
     LicenseCopy,
+    FlashMessage,
+    ErrorFlashMessage,
+    Spinner,
   },
   methods: {
     submit(n) {
@@ -130,8 +144,19 @@ export default {
     fetchDraft(id) {
       this.$store.dispatch("verification/getDraft", id).then((res) => {
         const results = res.data.data;
-        console.log(results);
+        this.declinedFields = results.declinedFields;
+        this.acceptedFields = results.acceptedFields;
+        this.remark = results.remark;
         this.$store.dispatch("verification/setDraft", results);
+        this.$store.dispatch(
+          "verification/storeDeclinedFields",
+          this.declinedFields
+        );
+        this.$store.dispatch(
+          "verification/storeAcceptedFields",
+          this.acceptedFields
+        );
+        this.$store.dispatch("verification/storeRemark", this.remark);
       });
     },
   },

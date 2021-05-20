@@ -4,6 +4,20 @@
       <div
         class="flex flex-col pt-large w-full bg-white blue-box-shadow-light rounded "
       >
+        <h2
+          class="flex justify-center"
+          v-if="declinedFieldsCheck"
+          style="color: #e63636"
+        >
+          REJECTED
+        </h2>
+        <h2
+          class="flex justify-center"
+          v-if="acceptedFieldsCheck"
+          style="color: Green"
+        >
+          ACCEPTED
+        </h2>
         <TitleWithIllustration
           illustration="User"
           message="License Copy"
@@ -123,6 +137,13 @@ export default {
     let licenseInfo = ref("");
     let draftData = ref("");
 
+    let declinedFields = ref([]);
+    let acceptedFields = ref([]);
+    let remark = ref("");
+
+    let declinedFieldsCheck = ref(false);
+    let acceptedFieldsCheck = ref(false);
+
     let goodStandingLetter = ref("");
 
     const reset = () => {
@@ -169,11 +190,20 @@ export default {
     };
 
     onMounted(() => {
+      declinedFields = store.getters["goodstanding/getDeclinedFields"];
+      acceptedFields = store.getters["goodstanding/getAcceptedFields"];
+      remark = store.getters["goodstanding/getRemark"];
+      if (declinedFields.includes("LC")) {
+        declinedFieldsCheck.value = true;
+      }
+      if (acceptedFields.includes("LC")) {
+        acceptedFieldsCheck.value = true;
+      }
       buttons = store.getters["goodstanding/getButtons"];
       draftData = store.getters["goodstanding/getDraft"];
       if (route.params.id) {
         for (let i = 0; i < draftData.documents.length; i++) {
-          if (draftData.documents[i].documentTypeCode == "LHI") {
+          if (draftData.documents[i].documentTypeCode == "LC") {
             showUpload.value = false;
             isImage.value = true;
             licenseFile.value = draftData.documents[i];
@@ -312,6 +342,11 @@ export default {
       message,
       dataChanged,
       goodStandingLetter,
+      acceptedFields,
+      declinedFields,
+      remark,
+      declinedFieldsCheck,
+      acceptedFieldsCheck,
     };
   },
 };
