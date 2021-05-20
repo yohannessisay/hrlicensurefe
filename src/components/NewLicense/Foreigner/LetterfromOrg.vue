@@ -146,7 +146,7 @@ export default {
     let workExperience = ref("");
     let renewedLicense = ref("");
     let professionalLicense = ref("");
-    
+
     let declinedFields = ref([]);
     let acceptedFields = ref([]);
     let remark = ref("");
@@ -407,10 +407,10 @@ export default {
       declinedFields = store.getters["newlicense/getDeclinedFields"];
       acceptedFields = store.getters["newlicense/getAcceptedFields"];
       remark = store.getters["newlicense/getRemark"];
-      if (declinedFields.includes("LFO")) {
+      if (declinedFields != null && declinedFields.includes("LFO")) {
         declinedFieldsCheck.value = true;
       }
-      if (acceptedFields.includes("LFO")) {
+      if (acceptedFields != null && acceptedFields.includes("LFO")) {
         acceptedFieldsCheck.value = true;
       }
       buttons = store.getters["newlicense/getButtons"];

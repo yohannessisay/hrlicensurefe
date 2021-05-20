@@ -4,6 +4,20 @@
       <div
         class="flex flex-col pt-large w-full bg-white blue-box-shadow-light rounded "
       >
+        <h2
+          class="flex justify-center"
+          v-if="declinedFieldsCheck"
+          style="color: #e63636"
+        >
+          REJECTED
+        </h2>
+        <h2
+          class="flex justify-center"
+          v-if="acceptedFieldsCheck"
+          style="color: Green"
+        >
+          ACCEPTED
+        </h2>
         <TitleWithIllustration
           illustration="Certificate"
           message="Service Fee(optional)"
@@ -124,6 +138,13 @@ export default {
     let licenseInfo = ref("");
     let draftData = ref("");
 
+    let declinedFields = ref([]);
+    let acceptedFields = ref([]);
+    let remark = ref("");
+
+    let declinedFieldsCheck = ref(false);
+    let acceptedFieldsCheck = ref(false);
+
     let workExperience = ref("");
     let healthExamCert = ref("");
     let renewalLetter = ref("");
@@ -142,7 +163,6 @@ export default {
       dataChanged.value = true;
       showUpload.value = false;
       serviceFeeFile.value = serviceFeeFileP.value.files[0];
-      console.log(serviceFeeFile.value);
       let reader = new FileReader();
 
       reader.addEventListener(
@@ -180,6 +200,15 @@ export default {
       store.dispatch("renewal/setRenewalServiceFee", serviceFeeFile);
     };
     onMounted(() => {
+      declinedFields = store.getters["renewal/getDeclinedFields"];
+      acceptedFields = store.getters["renewal/getAcceptedFields"];
+      remark = store.getters["renewal/getRemark"];
+      if (declinedFields != undefined && declinedFields.includes("SF")) {
+        declinedFieldsCheck.value = true;
+      }
+      if (acceptedFields != undefined && acceptedFields.includes("SF")) {
+        acceptedFieldsCheck.value = true;
+      }
       buttons = store.getters["renewal/getButtons"];
       draftData = store.getters["renewal/getDraft"];
       if (route.params.id) {
@@ -319,6 +348,11 @@ export default {
       basePath,
       message,
       dataChanged,
+      acceptedFields,
+      declinedFields,
+      remark,
+      declinedFieldsCheck,
+      acceptedFieldsCheck,
     };
   },
 };

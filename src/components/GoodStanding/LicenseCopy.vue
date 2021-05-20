@@ -193,10 +193,10 @@ export default {
       declinedFields = store.getters["goodstanding/getDeclinedFields"];
       acceptedFields = store.getters["goodstanding/getAcceptedFields"];
       remark = store.getters["goodstanding/getRemark"];
-      if (declinedFields.includes("LC")) {
+      if (declinedFields != undefined && declinedFields.includes("LC")) {
         declinedFieldsCheck.value = true;
       }
-      if (acceptedFields.includes("LC")) {
+      if (acceptedFields != undefined && acceptedFields.includes("LC")) {
         acceptedFieldsCheck.value = true;
       }
       buttons = store.getters["goodstanding/getButtons"];

@@ -190,15 +190,16 @@ export default {
     };
 
     onMounted(() => {
-      declinedFields = store.getters["goodstanding/getDeclinedFields"];
-      acceptedFields = store.getters["goodstanding/getAcceptedFields"];
-      remark = store.getters["goodstanding/getRemark"];
-      if (declinedFields.includes("LC")) {
+      declinedFields = store.getters["verification/getDeclinedFields"];
+      acceptedFields = store.getters["verification/getAcceptedFields"];
+      remark = store.getters["verification/getRemark"];
+      if (declinedFields != undefined && declinedFields.includes("LC")) {
         declinedFieldsCheck.value = true;
       }
-      if (acceptedFields.includes("LC")) {
+      if (acceptedFields != undefined && acceptedFields.includes("LC")) {
         acceptedFieldsCheck.value = true;
       }
+
       buttons = store.getters["verification/getButtons"];
       draftData = store.getters["verification/getDraft"];
       if (route.params.id) {

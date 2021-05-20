@@ -410,12 +410,13 @@ export default {
       declinedFields = store.getters["newlicense/getDeclinedFields"];
       acceptedFields = store.getters["newlicense/getAcceptedFields"];
       remark = store.getters["newlicense/getRemark"];
-      if (declinedFields.includes("HERQA")) {
+      if (declinedFields != undefined && declinedFields.includes("HERQA")) {
         declinedFieldsCheck.value = true;
       }
-      if (acceptedFields.includes("HERQA")) {
+      if (acceptedFields != undefined && acceptedFields.includes("HERQA")) {
         acceptedFieldsCheck.value = true;
       }
+
       buttons = store.getters["newlicense/getButtons"];
       draftData = store.getters["newlicense/getDraft"];
       if (route.params.id) {

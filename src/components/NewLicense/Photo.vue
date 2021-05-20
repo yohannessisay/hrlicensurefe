@@ -428,10 +428,10 @@ export default {
       declinedFields = store.getters["newlicense/getDeclinedFields"];
       acceptedFields = store.getters["newlicense/getAcceptedFields"];
       remark = store.getters["newlicense/getRemark"];
-      if (declinedFields.includes("PSP")) {
+      if (declinedFields != null && declinedFields.includes("PSP")) {
         declinedFieldsCheck.value = true;
       }
-      if (acceptedFields.includes("PSP")) {
+      if (acceptedFields != null && acceptedFields.includes("PSP")) {
         acceptedFieldsCheck.value = true;
       }
       buttons = store.getters["newlicense/getButtons"];

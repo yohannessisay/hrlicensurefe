@@ -556,6 +556,7 @@ export default {
         this.showFlash = false;
         this.showErrorFlash = false;
         let formData = new FormData();
+        console.log(this.documentTypes);
         formData.append(this.documentTypes[0].documentType.code, this.photo);
         formData.append(this.documentTypes[1].documentType.code, this.passport);
         formData.append(
@@ -615,17 +616,17 @@ export default {
           this.documentTypes[15].documentType.code,
           this.supportLetter
         );
-        formData.append(this.documentSpec[16].documentType.code, this.herqa);
+        formData.append(this.documentTypes[16].documentType.code, this.herqa);
         formData.append(
-          this.documentSpec[17].documentType.code,
+          this.documentTypes[17].documentType.code,
           this.letterfromOrg
         );
         formData.append(
-          this.documentSpec[18].documentType.code,
+          this.documentTypes[18].documentType.code,
           this.renewedLicense
         );
         formData.append(
-          this.documentSpec[19].documentType.code,
+          this.documentTypes[19].documentType.code,
           this.professionalLicense
         );
         let license = {

@@ -407,10 +407,10 @@ export default {
       declinedFields = store.getters["newlicense/getDeclinedFields"];
       acceptedFields = store.getters["newlicense/getAcceptedFields"];
       remark = store.getters["newlicense/getRemark"];
-      if (declinedFields.includes("COC")) {
+      if (declinedFields != undefined && declinedFields.includes("COC")) {
         declinedFieldsCheck.value = true;
       }
-      if (acceptedFields.includes("COC")) {
+      if (acceptedFields != undefined && acceptedFields.includes("COC")) {
         acceptedFieldsCheck.value = true;
       }
       buttons = store.getters["newlicense/getButtons"];

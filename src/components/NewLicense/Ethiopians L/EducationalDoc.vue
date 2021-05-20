@@ -417,34 +417,34 @@ export default {
     this.declinedFields = this.getDeclinedFields;
     this.remark = this.getRemarK;
     this.acceptedFields = this.acceptedFields;
-    if (this.declinedFields.includes("EDEGC")) {
+    if (this.declinedFields != null && this.declinedFields.includes("EDEGC")) {
       this.declinedFieldsCheck1 = true;
     }
-    if (acceptedFields.includes("EDEGC")) {
+    if (this.acceptedFields != null && this.acceptedFields.includes("EDEGC")) {
       this.acceptedFieldsCheck1 = true;
     }
-    if (this.declinedFields.includes("EDTGC")) {
+    if (this.declinedFields != null && this.declinedFields.includes("EDTGC")) {
       this.declinedFieldsCheck2 = true;
     }
-    if (acceptedFields.includes("EDTGC")) {
+    if (this.acceptedFields != null && this.acceptedFields.includes("EDTGC")) {
       this.acceptedFieldsCheck2 = true;
     }
-    if (this.declinedFields.includes("EDTWGC")) {
+    if (this.declinedFields != null && this.declinedFields.includes("EDTWGC")) {
       this.declinedFieldsCheck3 = true;
     }
-    if (acceptedFields.includes("EDTWGC")) {
+    if (this.acceptedFields != null && this.acceptedFields.includes("EDTWGC")) {
       this.acceptedFieldsCheck3 = true;
     }
-    if (this.declinedFields.includes("EDHT")) {
+    if (this.declinedFields != null && this.declinedFields.includes("EDHT")) {
       this.declinedFieldsCheck4 = true;
     }
-    if (acceptedFields.includes("EDHT")) {
+    if (this.acceptedFields != null && this.acceptedFields.includes("EDHT")) {
       this.acceptedFieldsCheck4 = true;
     }
-    if (this.declinedFields.includes("EDPT")) {
+    if (this.declinedFields != null && this.declinedFields.includes("EDPT")) {
       this.declinedFieldsCheck5 = true;
     }
-    if (acceptedFields.includes("EDPT")) {
+    if (this.acceptedFields != null && this.acceptedFields.includes("EDPT")) {
       this.acceptedFieldsCheck5 = true;
     }
     if (this.draftId != undefined) {

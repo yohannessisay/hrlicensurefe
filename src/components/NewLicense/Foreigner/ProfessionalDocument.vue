@@ -340,22 +340,23 @@ export default {
     this.declinedFields = this.getDeclinedFields;
     this.remark = this.getRemarK;
     this.acceptedFields = this.acceptedFields;
-    if (this.declinedFields.includes("PDC")) {
+
+    if (this.declinedFields != null && this.declinedFields.includes("PDC")) {
       this.declinedFieldsCheck1 = true;
     }
-    if (this.acceptedFields.includes("PDC")) {
+    if (this.acceptedFields != null && this.acceptedFields.includes("PDC")) {
       this.acceptedFieldsCheck1 = true;
     }
-    if (this.declinedFields.includes("PDD")) {
+    if (this.declinedFields != null && this.declinedFields.includes("PDD")) {
       this.declinedFieldsCheck2 = true;
     }
-    if (this.acceptedFields.includes("PDD")) {
+    if (this.acceptedFields != null && this.acceptedFields.includes("PDD")) {
       this.acceptedFieldsCheck2 = true;
     }
-    if (this.declinedFields.includes("PDT")) {
+    if (this.declinedFields != null && this.declinedFields.includes("PDT")) {
       this.declinedFieldsCheck3 = true;
     }
-    if (this.acceptedFields.includes("PDT")) {
+    if (this.acceptedFields != null && this.acceptedFields.includes("PDT")) {
       this.acceptedFieldsCheck3 = true;
     }
     if (this.draftId != undefined) {
