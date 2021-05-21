@@ -2,19 +2,19 @@
   <div>
     <ReviewerNavBar tab="Unassigned" />
     <div class="flex pl-12 mt-medium">
-      <Title message="Unassigned"/>
+      <Title message="Unassigned" />
     </div>
 
     <div class="box">
-      <div class="flex flex-wrap pb-medium rounded h-full">
+      <div class="flex flex-wrap pb-medium rounded h-full" v-if="!showLoading">
         <div
           class="container flip-box"
-          v-for="(item) in unAssignedSearched"
+          v-for="item in unAssignedSearched"
           v-bind:key="item.applicationStatus.name"
           v-bind:value="item.id"
         >
           <div
-            class="flex justify-center items-center  ml-8 mt-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100 flip-box-front"
+            class="flex justify-center items-center ml-8 mt-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100 flip-box-front"
           >
             <div
               class="p-4 w-48 h-64"
@@ -50,7 +50,6 @@
               <span
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
               >
-                Application Type:
                 {{ item.applicationType ? item.applicationType : "-" }}
               </span>
               <span
@@ -69,7 +68,14 @@
               class="p-4 w-48 h-64"
               @mouseover="hover = true"
               @mouseleave="hover = false"
-              @Click="detail(`/admin/unassignedDetail`, item.applicationType, item.id, item.applicant.id)"
+              @Click="
+                detail(
+                  `/admin/unassignedDetail`,
+                  item.applicationType,
+                  item.id,
+                  item.applicant.id
+                )
+              "
             >
               <h4
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
@@ -90,7 +96,6 @@
               <span
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
               >
-                Application Type:
                 {{ item.applicationType ? item.applicationType : "-" }}
               </span>
               <span
@@ -103,7 +108,7 @@
                 class="flex ml-small w-32 pt-small justify-center content-center"
               >
                 <button
-                  class="block mx-auto  bg-lightBlue-300 hover:bg-lightBlue-600 hover:shadow-lg"
+                  class="block mx-auto bg-lightBlue-300 hover:bg-lightBlue-600 hover:shadow-lg"
                 >
                   Assign to
                 </button>
@@ -112,6 +117,12 @@
           </div>
         </div>
       </div>
+    </div>
+    <div
+      v-if="showLoading"
+      class="flex justify-center justify-items-center mt-24"
+    >
+      <Spinner />
     </div>
   </div>
 </template>
@@ -123,43 +134,67 @@ import { useStore } from "vuex";
 
 import { ref, onMounted, watch } from "vue";
 import { useRouter } from "vue-router";
-import store from '../../store';
+import store from "../../store";
+import Spinner from "@/sharedComponents/Spinner";
 
 export default {
-  components: { ReviewerNavBar, Title },
+  components: { ReviewerNavBar, Title, Spinner },
   computed: {
     unAssignedSearched() {
-      return store.getters['reviewer/getUnassignedSearched']
-    }
+      return store.getters["reviewer/getUnassignedSearched"];
+    },
   },
   setup() {
     const store = useStore();
     const router = useRouter();
 
     let unassigned = ref({});
-    
+    let showLoading = ref(false);
+
     const fetchUnassignedApplications = () => {
-      store.dispatch("reviewer/getUnassigned").then(res => {
-        unassigned.value = store.getters['reviewer/getUnassignedSearched']
-        for (var prop in store.getters['reviewer/getUnassignedSearched']) {
-          if (store.getters['reviewer/getUnassignedSearched'][prop].applicationType == "Renewal") {
-            store.getters['reviewer/getUnassignedSearched'][prop].newLicenseCode =
-              store.getters['reviewer/getUnassignedSearched'][prop].renewalCode;
+      showLoading.value = true;
+      store.dispatch("reviewer/getUnassigned").then((res) => {
+        showLoading.value = false;
+        unassigned.value = store.getters["reviewer/getUnassignedSearched"];
+        for (var prop in store.getters["reviewer/getUnassignedSearched"]) {
+          if (
+            store.getters["reviewer/getUnassignedSearched"][prop]
+              .applicationType == "Renewal"
+          ) {
+            store.getters["reviewer/getUnassignedSearched"][
+              prop
+            ].newLicenseCode =
+              store.getters["reviewer/getUnassignedSearched"][prop].renewalCode;
           }
-          if (store.getters['reviewer/getUnassignedSearched'][prop].applicationType == "Good Standing") {
-            store.getters['reviewer/getUnassignedSearched'][prop].newLicenseCode =
-              store.getters['reviewer/getUnassignedSearched'][prop].goodStandingCode;
+          if (
+            store.getters["reviewer/getUnassignedSearched"][prop]
+              .applicationType == "Good Standing"
+          ) {
+            store.getters["reviewer/getUnassignedSearched"][
+              prop
+            ].newLicenseCode =
+              store.getters["reviewer/getUnassignedSearched"][
+                prop
+              ].goodStandingCode;
           }
-          if (store.getters['reviewer/getUnassignedSearched'][prop].applicationType == "Verification") {
-            store.getters['reviewer/getUnassignedSearched'][prop].newLicenseCode =
-              store.getters['reviewer/getUnassignedSearched'][prop].verificationCode;
+          if (
+            store.getters["reviewer/getUnassignedSearched"][prop]
+              .applicationType == "Verification"
+          ) {
+            store.getters["reviewer/getUnassignedSearched"][
+              prop
+            ].newLicenseCode =
+              store.getters["reviewer/getUnassignedSearched"][
+                prop
+              ].verificationCode;
           }
         }
       });
     };
 
     const detail = (data, applicationType, applicationId, applicantId) => {
-      const url = data + "/" + applicationType + "/" + applicationId + "/" + applicantId;
+      const url =
+        data + "/" + applicationType + "/" + applicationId + "/" + applicantId;
       router.push(url);
     };
 
@@ -169,9 +204,10 @@ export default {
 
     return {
       unassigned,
-      detail
+      detail,
+      showLoading,
     };
-  }
+  },
 };
 </script>
 <style scoped>

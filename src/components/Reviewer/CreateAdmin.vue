@@ -90,7 +90,7 @@
                 class="mx-auto w-1/2 blue-with-light-blue-gradient"
                 variant="block"
               >
-                Submit
+                Create User
               </button>
             </div>
           </form>

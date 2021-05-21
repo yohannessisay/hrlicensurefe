@@ -12,9 +12,16 @@ import {
   SET_ASSIGNED_FOR_EVERYONE_SEARCHED,
   SET_EVEYONE_UNFINISHED,
   SET_EVEYONE_UNFINISHED_SEARCHED,
+  SET_ALL_RECENTLY_FINISHED,
+  SET_ALL_RECENTLY_FINISHED_SEARCHED,
+  SET_ALL_PENDING_PAYMENTS,
+  SET_ALL_PENDING_PAYMENTS_SEARCHED,
+  SET_PENDING_PAYMENTS,
+  SET_PENDING_PAYMENTS_SEARCHED,
+
 } from "./mutation-types";
 const baseUrl = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api";
-const adminId = localStorage.getItem("adminId");
+const adminId = +localStorage.getItem("adminId");
 const adminRole = localStorage.getItem("role");
 
 export default {
@@ -37,6 +44,11 @@ export default {
     }
     const searchedVal = getters.getUnfinished.filter(function(e) {
       return e.newLicenseCode
+              .toLowerCase()
+              .includes(searchedKey.toLowerCase())
+              || (e.applicant.profile.name + 
+                " " +
+                 e.applicant.profile.fatherName)
               .toLowerCase()
               .includes(searchedKey.toLowerCase())
               || e.applicant.profile.name
@@ -71,6 +83,11 @@ export default {
       return e.newLicenseCode === undefined ? '': e.newLicenseCode
         .toLowerCase()
         .includes(searchKey.toLowerCase())
+        || (e.applicant.profile.name + 
+          " " +
+           e.applicant.profile.fatherName)
+        .toLowerCase()
+        .includes(searchKey.toLowerCase())
         || e.applicant.profile.name
         .toLowerCase()
         .includes(searchKey.toLowerCase())
@@ -84,9 +101,10 @@ export default {
     })
     commit(SET_EVEYONE_UNFINISHED_SEARCHED, searchedVal)
   },
-  async getAssignedToYou({commit}) { 
+  async getAssignedToYou({commit}, userId) { 
+    console.log("admin_id", userId)
     try {
-      const resp = await ApiService.get(baseUrl + "/applications/assignedToYou/" + adminId);
+      const resp = await ApiService.get(baseUrl + "/applications/assignedToYou/" + userId);
       commit(SET_ASSIGNED_TO_YOU, resp.data.data)
     } catch (error) {
       const resp = error;
@@ -99,6 +117,11 @@ export default {
     }
     const searchedVal = getters.getAssignedToYou.filter(function(e) {
       return e.newLicenseCode
+              .toLowerCase()
+              .includes(searchKey.toLowerCase())
+              || (e.applicant.profile.name + 
+                " " +
+                 e.applicant.profile.fatherName)
               .toLowerCase()
               .includes(searchKey.toLowerCase())
               || e.applicant.profile.name
@@ -136,6 +159,11 @@ export default {
       return e.newLicenseCode === undefined ? '': e.newLicenseCode
              .toLowerCase()
              .includes(searchKey.toLowerCase())
+             || (e.applicant.profile.name + 
+              " " +
+               e.applicant.profile.fatherName)
+            .toLowerCase()
+            .includes(searchKey.toLowerCase())
              || e.applicant.profile.name
              .toLowerCase()
              .includes(searchKey.toLowerCase())
@@ -168,6 +196,11 @@ export default {
       return e.newLicenseCode
         .toLowerCase()
         .includes(searchKey.toLowerCase())
+        || (e.applicant.profile.name + 
+          " " +
+           e.applicant.profile.fatherName)
+        .toLowerCase()
+        .includes(searchKey.toLowerCase())
         || e.applicant.profile.name
         .toLowerCase()
         .includes(searchKey.toLowerCase())
@@ -177,10 +210,12 @@ export default {
     })
     commit(SET_UNASSIGNED_SEARCHED, searchedVal)
   },
-  async getRecentlyFinished({commit}) {
+  async getRecentlyFinished({commit}, adminId) {
     try {
-      const resp = await ApiService.get("https://randomuser.me/api/?results=10");
-      commit(SET_RECENTLY_FINISHED, resp.data.results)
+      console.log("admin -id", adminId)
+      const resp = await ApiService.get(baseUrl + "/applications/finished/"+adminId)
+      // const resp = await ApiService.get("https://randomuser.me/api/?results=10");
+      commit(SET_RECENTLY_FINISHED, resp.data.data)
     } catch (error) {
       const resp = error;
       return resp;
@@ -191,20 +226,121 @@ export default {
       return;
     }
     const searchedVal = getters.getRecentlyFinished.filter(function(e) {
-      return  e.id.value === null ? '' : 
-              e.id.value.
-              toLowerCase().
-              includes(searchKey.toLowerCase()) 
-            || e.name.first
-             .toLowerCase()
-            .includes(searchKey.toLowerCase())
-            ||
-            e.name.last
-            .toLowerCase()
-            .includes(searchKey.toLowerCase())
+      return e.newLicenseCode
+              .toLowerCase()
+              .includes(searchKey.toLowerCase())
+              || (e.applicant.profile.name + 
+                " " +
+                 e.applicant.profile.fatherName)
+              .toLowerCase()
+              .includes(searchKey.toLowerCase())
+              || e.applicant.profile.name
+              .toLowerCase()
+              .includes(searchKey.toLowerCase())
+              || e.applicant.profile.fatherName
+              .toLowerCase()
+              .includes(searchKey.toLowerCase())
     })
     commit(SET_RECENTLY_FINISHED_SEARCHED, searchedVal)
   },
+
+  async getAllRecentlyFinished({commit}) {
+    try {
+      const resp = await ApiService.get(baseUrl + "/applications/allFinished")
+      console.log("all finished: ", resp.data.data)
+      // console.log("-+++++-", resp.data.data)
+      const certifiedUsers = resp.data.data.filter(function(e) {
+        return e.certified == true;
+      })
+      console.log("all c: ", certifiedUsers)
+      console.log("mmmm")
+      const certifiedUsers1 = []
+      commit(SET_ALL_RECENTLY_FINISHED, resp.data.data, certifiedUsers1)
+    } catch(error) {
+      const resp = error;
+      return resp;
+    }
+  },
+  
+  async getAllCertifiedUsers({commit}) {
+    try {
+      const resp = await ApiService.get(baseUrl + "/applications/allFinished")
+      console.log("all finished: ", resp.data.data)
+      const certifiedUsers = resp.data.data.filter(function(e) {
+        return e.certified == true;
+      })
+      console.log("all c: ", certifiedUsers)
+      return certifiedUsers
+    } catch(error) {
+      const resp = error;
+      return resp;
+    }
+  },
+  getAllRecentlyFinishedSearched({commit, getters}, searchKey) {
+    if(getters.getAllRecentlyFinishedSearched === undefined) {
+      return;
+    }
+    const searchedVal = getters.getAllRecentlyFinishedSearched.filter(function(e) {
+      return e.newLicenseCode
+              .toLowerCase()
+              .includes(searchKey.toLowerCase())
+              || (e.applicant.profile.name + 
+                " " +
+                 e.applicant.profile.fatherName)
+              .toLowerCase()
+              .includes(searchKey.toLowerCase())
+              || e.applicant.profile.name
+              .toLowerCase()
+              .includes(searchKey.toLowerCase())
+              || e.applicant.profile.fatherName
+              .toLowerCase()
+              .includes(searchKey.toLowerCase())
+    })
+    console.log("searched val: ", searchedVal)
+    commit(SET_ALL_RECENTLY_FINISHED_SEARCHED, searchedVal)
+  },
+  async getAllPendingPayments({commit}) {
+    const url = baseUrl + "/applications/allPendingPayments";
+    const resp = await ApiService.get(url);
+    console.log("pending paymentss",resp)
+    commit(SET_ALL_PENDING_PAYMENTS, resp.data.data)
+  },
+
+  getAllPendingPaymentSearched({commit, getters}, searchKey) {
+    if(getters.getAllPendingPayment === undefined) {
+      return;
+    }
+    const searchedVal = getters.getAllPendingPayment.filter(function(e) {
+      return e.newLicenseCode === undefined ? '': e.newLicenseCode
+        .toLowerCase()
+        .includes(searchKey.toLowerCase())
+        || (e.applicant.profile.name + 
+          " " +
+           e.applicant.profile.fatherName)
+        .toLowerCase()
+        .includes(searchKey.toLowerCase())
+        || e.applicant.profile.name
+        .toLowerCase()
+        .includes(searchKey.toLowerCase())
+        || e.applicant.profile.fatherName
+        .toLowerCase()
+        .includes(searchKey.toLowerCase())
+        || e.reviewer.name
+        .toLowerCase()
+        .includes(searchKey.toLowerCase())
+
+    })
+    console.log("key: ", searchedVal)
+    commit(SET_ALL_PENDING_PAYMENTS_SEARCHED, searchedVal)
+  },
+
+  async getPendingPayments({commit}, adminId) {
+    const url = baseUrl + "/applications/adminsPendingPayments/" + adminId
+    const resp = await ApiService.get(url);
+    console.log("my pendings", resp.data.data)
+    commit(SET_PENDING_PAYMENTS, resp.data.data)
+  },
+
   async getProfile(context, id) {
     try {
       console.log(id);
@@ -341,7 +477,7 @@ export default {
     try {
       console.log(license);
       const resp = await ApiService.put(
-        baseUrl + "verifications/" + license.data.id,
+        baseUrl + "/verifications/" + license.data.id,
         license
       );
       // const resp = await ApiService.put(url + "newLicenses/" + license);
@@ -354,7 +490,7 @@ export default {
     try {
       console.log(license);
       const resp = await ApiService.put(
-        baseUrl + "goodStandings/" + license.data.id,
+        baseUrl + "/goodStandings/" + license.data.id,
         license
       );
       // const resp = await ApiService.put(url + "newLicenses/" + license);
@@ -367,7 +503,7 @@ export default {
     try {
       console.log(license);
       const resp = await ApiService.put(
-        baseUrl + "renewals/" + license.data.id,
+        baseUrl + "/renewals/" + license.data.id,
         license
       );
       // const resp = await ApiService.put(url + "newLicenses/" + license);

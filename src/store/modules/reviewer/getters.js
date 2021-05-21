@@ -11,4 +11,18 @@ export default {
     getAssignedForEveryOneSearched: state => state.assignedForEveryOneSearched,
     getEveryOneUnfinished: state => state.everyOneUnfinished,
     getEveryOneUnfinishedSearched: state => state.eveyOneUnfinishedSearched,
+    getAllRecentlyFinished: state => state.allRecentlyFinished,
+    getAllRecentlyFinishedSearched: state => state.allRecentlyFinishedSearched,
+    getCertifiedUsers: state => state.certifiedUsers,
+    getCertifiedUsersSearched: state => state.certifiedUsersSearched,
+    getAllCertifiedUsers: state => state.allCertifiedUsers,
+    getAllCertifiedUsersSearched: state => state.allCertifiedUsersSearched,
+    getApproved: state => state.approved,
+    getAllPendingPayment: state => state.allPendingPayment,
+    getAllPendingPaymentSearched: state => state.allPendingPaymentSearched,
+    getPendingPayments: state => state.pendingPayments,
+    getPendingPaymentsSearched: state => state.pendingPaymentsSearched,
+
+    getApprovedPendingPayments: state => state.approvedPendingPayments,
+    getApprovedPendingPaymentsSearched: state => state.approvedPendingPaymentsSearched,
 };

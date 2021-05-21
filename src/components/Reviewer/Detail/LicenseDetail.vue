@@ -229,22 +229,30 @@
               </picture>
             </div> -->
           </div>
-          <div class="mt-12 flex justify-center">
-            <div>
-              <button @click="evaluate()">Start Evaluating</button>
+          <div v-if="reviewerId == loggedInAdminId">
+            <div class="mt-12 flex justify-center">
+              <div>
+                <button @click="evaluate()">Start Evaluating</button>
+              </div>
             </div>
-          </div>
-          <div class="flex justify-center mt-8">
-            <h6>
-              If you don't have all the required informations you can come back
-              and finish later.
-            </h6>
-          </div>
-          <div class="flex justify-center mt-8 mb-8">
-            <button variant="outline">I will finish Later</button>
+            <div class="flex justify-center mt-8">
+              <h6>
+                If you don't have all the required informations you can come back
+                and finish later.
+              </h6>
+            </div>
+            <div class="flex justify-center mt-8 mb-8">
+              <button variant="outline">I will finish Later</button>
+            </div>
           </div>
         </div>
       </div>
+    </div>
+    <div
+      v-if="showLoading"
+      class="flex justify-center justify-items-center mt-24"
+    >
+      <Spinner />
     </div>
   </div>
 </template>
@@ -255,12 +263,14 @@ import { useRouter, useRoute } from "vue-router";
 import Title from "@/sharedComponents/Title";
 import ReviewerNavBar from "@/components/Reviewer/ReviewerNavBar";
 import { ref, onMounted } from "vue";
+import Spinner from "@/sharedComponents/Spinner";
 
 export default {
   props: ["activeState"],
   components: {
     Title,
-    ReviewerNavBar
+    ReviewerNavBar,
+    Spinner
   },
   setup() {
     const store = useStore();
@@ -304,11 +314,13 @@ export default {
     let profile = ref({});
     let applicationType = ref("");
 
-    const created = async (
-      applicationTypeName,
-      applicationId,
-      applicanttId
-    ) => {
+    let loggedInAdminId = localStorage.getItem("adminId");
+    let reviewerId = ref(0);
+
+    let showLoading = ref(false)
+
+    const created = async (applicationTypeName, applicationId, applicantId) => {
+      showLoading.value = true
       licenseId.value = applicationId;
       applicationType.value = applicationTypeName;
       applicantId.value = applicanttId;
@@ -316,30 +328,54 @@ export default {
         store
           .dispatch("reviewer/getNewLicenseApplication", applicationId)
           .then(res => {
+            showLoading.value = false
             license.value = res.data.data;
+            reviewerId.value = license.value.reviewerId
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
-            education.value = license.value.education;
+            // applicantId.value = license.value.applicantId;
+            education.value.departmentName =
+              license.value.education.department.name;
+            education.value.institutionName =
+              license.value.education.institution.name;
+            education.value.institutionTypeName =
+              license.value.education.institution.institutionType.name;
           });
       }
       if (applicationType.value == "Good Standing") {
         store
           .dispatch("reviewer/getGoodStandingApplication", applicationId)
           .then(res => {
+            showLoading.value = false
             license.value = res.data.data;
+            reviewerId.value = license.value.reviewerId
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
-            education.value = license.value.education;
+            // applicantId.value = license.value.applicantId;
+            education.value.departmentName =
+              license.value.education.department.name;
+            education.value.institutionName =
+              license.value.education.institution.name;
+            education.value.institutionTypeName =
+              license.value.education.institution.institutionType.name;
           });
       }
       if (applicationType.value == "Verification") {
         store
           .dispatch("reviewer/getVerificationApplication", applicationId)
           .then(res => {
+            showLoading.value = false
             license.value = res.data.data;
+            reviewerId.value = license.value.reviewerId
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
-            education.value = license.value.education;
+            // applicantId.value = license.value.applicantId.toString();
+            education.value.departmentName =
+              license.value.education.department.name;
+            education.value.institutionName =
+              license.value.education.institution.name;
+            education.value.institutionTypeName =
+              license.value.education.institution.institutionType.name;
           });
       }
       if (applicationType.value == "Renewal") {
@@ -347,10 +383,18 @@ export default {
         store
           .dispatch("reviewer/getRenewalApplication", applicationId)
           .then(res => {
+            showLoading.value = false
             license.value = res.data.data;
+            reviewerId.value = license.value.reviewerId
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
-            education.value = license.value.education;
+            // applicantId.value = license.value.applicantId;
+            education.value.departmentName =
+              license.value.education.department.name;
+            education.value.institutionName =
+              license.value.education.institution.name;
+            education.value.institutionTypeName =
+              license.value.education.institution.institutionType.name;
           });
       }
     };
@@ -373,6 +417,8 @@ export default {
 
     return {
       userId,
+      reviewerId, 
+      loggedInAdminId,
       license,
       profileInfo,
       activeClass,
@@ -389,8 +435,7 @@ export default {
       created,
       evaluate,
       applicationType,
-      department,
-      loading
+      showLoading
     };
   }
 

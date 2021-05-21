@@ -1,13 +1,13 @@
 <template>
   <div>
-    <ReviewerNavBar tab="MyWork" />
+    <ReviewerNavBar tab="AllWork" />
     <div class="bg-lightBlueB-200 h-full">
       <div class="flex pl-12 pt-tiny">
         <Title message="Approved" />
       </div>
       <div
         class="flex flex-wrap justify-center items-center pb-medium rounded h-full"
-          v-if="!showLoadingApproved">
+      v-if="!showLoading">
         <div
           class="container"
           v-for="(item, index) in getRecentlyFinished"
@@ -32,9 +32,20 @@
               <h4
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
               >
-                <b>{{ item.applicant.profile.name + " " + item.applicant.profile.fatherName }}</b>
+               <b>
+                {{ item.applicant.profile.name + " " + item.applicant.profile.fatherName }}
+               </b>
               </h4>
-              <br />
+              <span
+                class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+              >
+              <i class="fas fa-user-cog"></i> &nbsp;
+                {{
+                  item.reviewer.name
+                    ? item.reviewer.name
+                    : "-"
+                }}
+              </span>
               <span
                 class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
               >
@@ -53,19 +64,13 @@
           </div>
         </div>
         <!-- Second !-->
-      </div>
-      <div
-      v-if="showLoadingApproved"
-        class="flex content-center justify-center"
-      >
-        <Spinner />
       </div>
       <div class="flex pl-12 pt-tiny">
         <Title message="Rejected" />
       </div>
       <div
         class="flex flex-wrap justify-center items-center pb-medium rounded h-full"
-          v-if="!showLoadingRejected">
+      v-if="!showLoading">
         <div
           class="container"
           v-for="(item, index) in getRecentlyFinished"
@@ -90,9 +95,20 @@
               <h4
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
               >
-                <b>{{ item.applicant.profile.name + " " + item.applicant.profile.fatherName }}</b>
+               <b>
+                {{ item.applicant.profile.name + " " + item.applicant.profile.fatherName }}
+               </b>
               </h4>
-              <br />
+              <span
+                class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+              >
+              <i class="fas fa-user-cog"></i> &nbsp;
+                {{
+                  item.reviewer.name
+                    ? item.reviewer.name
+                    : "-"
+                }}
+              </span>
               <span
                 class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
               >
@@ -112,17 +128,12 @@
         </div>
         <!-- Second !-->
       </div>
-      <div v-if="showLoadingRejected"
-          class="flex content-center justify-center"
-        >
-          <Spinner />
-        </div>
       <div class="flex pl-12 pt-tiny">
-        <Title message="Under SuperVision" />
+        <Title message="Under Supervision" />
       </div>
       <div
         class="flex flex-wrap justify-center items-center pb-medium rounded h-full"
-          v-if="!showLoadingSuperVision">
+      v-if="!showLoading">
         <div
           class="container"
           v-for="(item, index) in getRecentlyFinished"
@@ -147,11 +158,20 @@
               <h4
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
               >
-                <b>
-                  {{ item.applicant.profile.name + " " + item.applicant.profile.fatherName }} 
-                </b>
+               <b>
+                {{ item.applicant.profile.name + " " + item.applicant.profile.fatherName }}
+               </b>
               </h4>
-              <br/>
+              <span
+                class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+              >
+              <i class="fas fa-user-cog"></i> &nbsp;
+                {{
+                  item.reviewer.name
+                    ? item.reviewer.name
+                    : "-"
+                }}
+              </span>
               <span
                 class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
               >
@@ -171,14 +191,13 @@
         </div>
         <!-- Second !-->
       </div>
-      <div
-      v-if="showLoadingSuperVision"
-      class="flex content-center justify-center"
+    </div>
+    <div
+      v-if="showLoading"
+      class="flex justify-center justify-items-center mt-24"
     >
       <Spinner />
     </div>
-    </div>
-    
   </div>
 </template>
 
@@ -187,19 +206,20 @@ import Title from "@/sharedComponents/TitleWithIllustration";
 import ReviewerNavBar from "@/components/Reviewer/ReviewerNavBar";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router"
-import moment from 'moment'
 
 import { ref, onMounted } from "vue";
 
 import store from "../../store"
 import Spinner from "@/sharedComponents/Spinner";
 
+import moment from 'moment'
+
 export default {
   components: { ReviewerNavBar, Title, Spinner },
   computed: {
     moment: () => moment,
     getRecentlyFinished() {
-      return store.getters['reviewer/getRecentlyFinishedSearched']
+      return store.getters['reviewer/getAllRecentlyFinishedSearched']
     }
   },
   setup() {
@@ -209,21 +229,14 @@ export default {
     let recentlyFinished = ref({});
 
     let adminId = +localStorage.getItem("adminId");
-
-    let showLoadingApproved = ref(false);
-    let showLoadingRejected = ref(false);
-    let showLoadingSuperVision = ref(false);
+    let showLoading = ref(false)
 
     const fetchRecentlyFinished = () => {
-      showLoadingApproved.value = true
-      showLoadingRejected.value = true
-      showLoadingSuperVision.value = true
-      store.dispatch("reviewer/getRecentlyFinished", adminId).then(res => {
-        console.log("id- admin", adminId)
-        showLoadingApproved.value = false
-        showLoadingRejected.value = false
-        showLoadingSuperVision.value = false
-        recentlyFinished.value = store.getters['reviewer/getRecentlyFinishedSearched'];
+      showLoading.value = true
+      store.dispatch("reviewer/getAllRecentlyFinished").then(res => {
+        console.log("------", store.getters['reviewer/getAllRecentlyFinishedSearched'])
+        showLoading.value = false
+        recentlyFinished.value = store.getters['reviewer/getAllRecentlyFinishedSearched'];
       });
     };
 
@@ -239,10 +252,8 @@ export default {
 
     return {
       recentlyFinished,
-      detail,
-      showLoadingApproved,
-      showLoadingRejected,
-      showLoadingSuperVision
+      showLoading,
+      detail
     };
   }
 };

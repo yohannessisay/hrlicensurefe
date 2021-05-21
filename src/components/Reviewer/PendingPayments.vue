@@ -1,9 +1,9 @@
 <template>
   <div>
-    <ReviewerNavBar tab="Unfinished" />
+    <ReviewerNavBar tab="myPendings" />
     <div class="bg-lightBlueB-200 h-full">
       <div class="flex pl-12 pt-tiny">
-        <Title message="Unfinished" />
+        <Title message="Pending Payments" />
       </div>
       <div class="flex flex-wrap pb-medium rounded h-full" v-if="!showLoading">
         <div class="pl-large w-52 h-26" v-if="nothingToShowUnfinished == true">
@@ -95,7 +95,7 @@ export default {
   computed: {
     moment: () => moment,
     getUnfinished() {
-      return store.getters['reviewer/getUnfinishedSearched'];
+      return store.getters['reviewer/getPendingPayments'];
     }
   },
   setup() {
@@ -104,33 +104,33 @@ export default {
 
     let unfinished = ref({});
     let x = ref([]);
-    let userId = +localStorage.getItem("adminId");
+    let adminId = +localStorage.getItem("adminId");
     let nothingToShowUnfinished = ref(false);
     let showLoading = ref(false);
 
-    const fetchUnfinished = () => {
+    const fetchPendings = () => {
       showLoading.value = true
-      store.dispatch("reviewer/getUnfinished", userId).then(res => {
+      store.dispatch("reviewer/getPendingPayments", adminId).then(res => {
         showLoading.value = false
-          unfinished.value = store.getters['reviewer/getUnfinishedSearched'];
-        if(store.getters['reviewer/getUnfinished'].length !== 0) {
-          for (var prop in store.getters['reviewer/getUnfinishedSearched']) {
-            if (store.getters['reviewer/getUnfinishedSearched'][prop].applicationType == "Renewal") {
-              store.getters['reviewer/getUnfinishedSearched'][prop].newLicenseCode =
-                store.getters['reviewer/getUnfinishedSearched'][prop].renewalCode;
-            }
-            if (store.getters['reviewer/getUnfinishedSearched'][prop].applicationType == "Good Standing") {
-              store.getters['reviewer/getUnfinishedSearched'][prop].newLicenseCode =
-                store.getters['reviewer/getUnfinishedSearched'][prop].goodStandingCode;
-            }
-            if (store.getters['reviewer/getUnfinishedSearched'][prop].applicationType == "Verification") {
-              store.getters['reviewer/getUnfinishedSearched'][prop].newLicenseCode =
-                store.getters['reviewer/getUnfinishedSearched'][prop].verificationCode;
-            }
-          }
-        } else {
-          nothingToShowUnfinished.value = true;
-        }
+          unfinished.value = store.getters['reviewer/getPendingPayments'];
+        // if(store.getters['reviewer/getUnfinished'].length !== 0) {
+        //   for (var prop in store.getters['reviewer/getUnfinishedSearched']) {
+        //     if (store.getters['reviewer/getUnfinishedSearched'][prop].applicationType == "Renewal") {
+        //       store.getters['reviewer/getUnfinishedSearched'][prop].newLicenseCode =
+        //         store.getters['reviewer/getUnfinishedSearched'][prop].renewalCode;
+        //     }
+        //     if (store.getters['reviewer/getUnfinishedSearched'][prop].applicationType == "Good Standing") {
+        //       store.getters['reviewer/getUnfinishedSearched'][prop].newLicenseCode =
+        //         store.getters['reviewer/getUnfinishedSearched'][prop].goodStandingCode;
+        //     }
+        //     if (store.getters['reviewer/getUnfinishedSearched'][prop].applicationType == "Verification") {
+        //       store.getters['reviewer/getUnfinishedSearched'][prop].newLicenseCode =
+        //         store.getters['reviewer/getUnfinishedSearched'][prop].verificationCode;
+        //     }
+        //   }
+        // } else {
+        //   nothingToShowUnfinished.value = true;
+        // }
       });
     };
 
@@ -140,8 +140,9 @@ export default {
       router.push(url);
     };
 
+
     onMounted(() => {
-      fetchUnfinished();
+      fetchPendings();
     });
 
     return {
