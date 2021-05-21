@@ -13,6 +13,10 @@ import {
     SET_EVEYONE_UNFINISHED_SEARCHED,
     SET_ALL_RECENTLY_FINISHED,
     SET_ALL_RECENTLY_FINISHED_SEARCHED,
+    SET_ALL_PENDING_PAYMENTS,
+    SET_ALL_PENDING_PAYMENTS_SEARCHED,
+    SET_PENDING_PAYMENTS,
+    SET_PENDING_PAYMENTS_SEARCHED,
 } from "./mutation-types";
 
 export default {
@@ -63,10 +67,20 @@ export default {
         state.allRecentlyFinishedSearched = data
         state.allCertifiedUsers = certifiedUsers
         state.allCertifiedUsersSearched = certifiedUsers
-        state.tempCertified = certifiedUsers
         // state.approved = data;
     },
     [SET_ALL_RECENTLY_FINISHED_SEARCHED] (state, searchedVal) {
         state.allRecentlyFinishedSearched = searchedVal
+    },
+    [SET_ALL_PENDING_PAYMENTS] (state, data) {
+        state.allPendingPayment = data
+        state.allPendingPaymentSearched = data
+    },
+    [SET_ALL_PENDING_PAYMENTS_SEARCHED] (state, searchedVal) {
+        state.allPendingPaymentSearched = searchedVal
+    },
+    [SET_PENDING_PAYMENTS] (state, data) {
+        state.pendingPayments = data;
+        state.pendingPaymentsSearched = data
     }
 }

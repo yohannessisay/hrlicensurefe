@@ -14,6 +14,11 @@ import {
   SET_EVEYONE_UNFINISHED_SEARCHED,
   SET_ALL_RECENTLY_FINISHED,
   SET_ALL_RECENTLY_FINISHED_SEARCHED,
+  SET_ALL_PENDING_PAYMENTS,
+  SET_ALL_PENDING_PAYMENTS_SEARCHED,
+  SET_PENDING_PAYMENTS,
+  SET_PENDING_PAYMENTS_SEARCHED,
+
 } from "./mutation-types";
 const baseUrl = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api";
 const adminId = +localStorage.getItem("adminId");
@@ -39,6 +44,11 @@ export default {
     }
     const searchedVal = getters.getUnfinished.filter(function(e) {
       return e.newLicenseCode
+              .toLowerCase()
+              .includes(searchedKey.toLowerCase())
+              || (e.applicant.profile.name + 
+                " " +
+                 e.applicant.profile.fatherName)
               .toLowerCase()
               .includes(searchedKey.toLowerCase())
               || e.applicant.profile.name
@@ -73,6 +83,11 @@ export default {
       return e.newLicenseCode === undefined ? '': e.newLicenseCode
         .toLowerCase()
         .includes(searchKey.toLowerCase())
+        || (e.applicant.profile.name + 
+          " " +
+           e.applicant.profile.fatherName)
+        .toLowerCase()
+        .includes(searchKey.toLowerCase())
         || e.applicant.profile.name
         .toLowerCase()
         .includes(searchKey.toLowerCase())
@@ -102,6 +117,11 @@ export default {
     }
     const searchedVal = getters.getAssignedToYou.filter(function(e) {
       return e.newLicenseCode
+              .toLowerCase()
+              .includes(searchKey.toLowerCase())
+              || (e.applicant.profile.name + 
+                " " +
+                 e.applicant.profile.fatherName)
               .toLowerCase()
               .includes(searchKey.toLowerCase())
               || e.applicant.profile.name
@@ -139,6 +159,11 @@ export default {
       return e.newLicenseCode === undefined ? '': e.newLicenseCode
              .toLowerCase()
              .includes(searchKey.toLowerCase())
+             || (e.applicant.profile.name + 
+              " " +
+               e.applicant.profile.fatherName)
+            .toLowerCase()
+            .includes(searchKey.toLowerCase())
              || e.applicant.profile.name
              .toLowerCase()
              .includes(searchKey.toLowerCase())
@@ -171,6 +196,11 @@ export default {
       return e.newLicenseCode
         .toLowerCase()
         .includes(searchKey.toLowerCase())
+        || (e.applicant.profile.name + 
+          " " +
+           e.applicant.profile.fatherName)
+        .toLowerCase()
+        .includes(searchKey.toLowerCase())
         || e.applicant.profile.name
         .toLowerCase()
         .includes(searchKey.toLowerCase())
@@ -197,6 +227,11 @@ export default {
     }
     const searchedVal = getters.getRecentlyFinished.filter(function(e) {
       return e.newLicenseCode
+              .toLowerCase()
+              .includes(searchKey.toLowerCase())
+              || (e.applicant.profile.name + 
+                " " +
+                 e.applicant.profile.fatherName)
               .toLowerCase()
               .includes(searchKey.toLowerCase())
               || e.applicant.profile.name
@@ -242,12 +277,16 @@ export default {
     }
   },
   getAllRecentlyFinishedSearched({commit, getters}, searchKey) {
-    console.log("key: ", getters.getAllRecentlyFinishedSearched)
     if(getters.getAllRecentlyFinishedSearched === undefined) {
       return;
     }
     const searchedVal = getters.getAllRecentlyFinishedSearched.filter(function(e) {
       return e.newLicenseCode
+              .toLowerCase()
+              .includes(searchKey.toLowerCase())
+              || (e.applicant.profile.name + 
+                " " +
+                 e.applicant.profile.fatherName)
               .toLowerCase()
               .includes(searchKey.toLowerCase())
               || e.applicant.profile.name
@@ -260,6 +299,48 @@ export default {
     console.log("searched val: ", searchedVal)
     commit(SET_ALL_RECENTLY_FINISHED_SEARCHED, searchedVal)
   },
+  async getAllPendingPayments({commit}) {
+    const url = baseUrl + "/applications/allPendingPayments";
+    const resp = await ApiService.get(url);
+    console.log("pending paymentss",resp)
+    commit(SET_ALL_PENDING_PAYMENTS, resp.data.data)
+  },
+
+  getAllPendingPaymentSearched({commit, getters}, searchKey) {
+    if(getters.getAllPendingPayment === undefined) {
+      return;
+    }
+    const searchedVal = getters.getAllPendingPayment.filter(function(e) {
+      return e.newLicenseCode === undefined ? '': e.newLicenseCode
+        .toLowerCase()
+        .includes(searchKey.toLowerCase())
+        || (e.applicant.profile.name + 
+          " " +
+           e.applicant.profile.fatherName)
+        .toLowerCase()
+        .includes(searchKey.toLowerCase())
+        || e.applicant.profile.name
+        .toLowerCase()
+        .includes(searchKey.toLowerCase())
+        || e.applicant.profile.fatherName
+        .toLowerCase()
+        .includes(searchKey.toLowerCase())
+        || e.reviewer.name
+        .toLowerCase()
+        .includes(searchKey.toLowerCase())
+
+    })
+    console.log("key: ", searchedVal)
+    commit(SET_ALL_PENDING_PAYMENTS_SEARCHED, searchedVal)
+  },
+
+  async getPendingPayments({commit}, adminId) {
+    const url = baseUrl + "/applications/adminsPendingPayments/" + adminId
+    const resp = await ApiService.get(url);
+    console.log("my pendings", resp.data.data)
+    commit(SET_PENDING_PAYMENTS, resp.data.data)
+  },
+
   async getProfile(context, id) {
     try {
       console.log(id);

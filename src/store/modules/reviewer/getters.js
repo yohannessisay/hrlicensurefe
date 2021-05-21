@@ -18,4 +18,11 @@ export default {
     getAllCertifiedUsers: state => state.allCertifiedUsers,
     getAllCertifiedUsersSearched: state => state.allCertifiedUsersSearched,
     getApproved: state => state.approved,
+    getAllPendingPayment: state => state.allPendingPayment,
+    getAllPendingPaymentSearched: state => state.allPendingPaymentSearched,
+    getPendingPayments: state => state.pendingPayments,
+    getPendingPaymentsSearched: state => state.pendingPaymentsSearched,
+
+    getApprovedPendingPayments: state => state.approvedPendingPayments,
+    getApprovedPendingPaymentsSearched: state => state.approvedPendingPaymentsSearched,
 };

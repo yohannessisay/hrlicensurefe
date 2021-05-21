@@ -3,7 +3,7 @@
     <ReviewerNavBar tab="AssignedToAll" />
     <div class="bg-lightBlueB-200 h-full">
       <div class="flex pl-12 pt-tiny">
-        <Title message="Assigned To All" />
+        <Title message="Assigned To Others" />
       </div>
       <div class="flex flex-wrap pb-medium rounded h-full" v-if="!showLoading">
         <div class="pl-large w-52 h-26" v-if="nothingToShow == true">
@@ -52,6 +52,7 @@
               <span
                 class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
               >
+              <i class="fas fa-user-cog"></i> &nbsp;
                 {{ item.reviewer.name ? item.reviewer.name : "-" }}
               </span>
               <!-- <h6

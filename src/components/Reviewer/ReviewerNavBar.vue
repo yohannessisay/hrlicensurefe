@@ -47,7 +47,7 @@
         <div class="flex items-center space-x-5">
           <div>
             <router-link to="/admin/review">
-              <a v-if="tab != `Home`" class="text-primary-300 mr-small">
+              <a v-if="tab != `Home`" class="mr-small">
                 Home
               </a>
               <a
@@ -71,7 +71,8 @@
                   v-on:click="showFinishedDropDown()"
                 >
                   <div class="text-primary-300 mr-small">
-                    <p>Finished</p>
+                    <p>Finished <i class="fas fa-chevron-circle-down"></i></p>
+                    
                   </div>
                 </a>
                 <div
@@ -102,7 +103,7 @@
             </span>
             <span v-else>
               <router-link to="/myWork">
-                <a v-if="tab != `MyWork`" class="text-primary-300 mr-small">
+                <a v-if="tab != `MyWork`" class="mr-small">
                   My Work
                 </a>
                 <a
@@ -126,8 +127,8 @@
                   href="#"
                   v-on:click="showUnfinishedDropDown()"
                 >
-                  <div class="text-primary-300 mr-small">
-                    <p>Unfinished</p>
+                  <div class="mr-small">
+                    <p>Unfinished <i class="fas fa-chevron-circle-down"></i></p>
                   </div>
                 </a>
                 <div
@@ -158,7 +159,7 @@
             </span>
             <span v-else>
               <router-link to="/admin/unfinished">
-                <a v-if="tab != `Unfinished`" class="text-primary-300 mr-small">
+                <a v-if="tab != `Unfinished`" class="mr-small">
                   Unfinished
                 </a>
                 <a
@@ -182,8 +183,8 @@
                   href="#"
                   v-on:click="showAssignedDropDown()"
                 >
-                  <div class="text-primary-300 mr-small">
-                    <p>Assigned</p>
+                  <div class="mr-small">
+                    <p>Assigned <i class="fas fa-chevron-circle-down"></i></p>
                   </div>
                 </a>
                 <div
@@ -216,7 +217,7 @@
               <router-link to="/admin/assignedToYou">
                 <a
                   v-if="tab != `AssignedToYou`"
-                  class="text-primary-300 mr-small"
+                  class="mr-small"
                 >
                   Assigned to You
                 </a>
@@ -232,7 +233,7 @@
               </router-link>
             </span>
             <router-link to="/admin/unassigned">
-              <a v-if="tab != `Unassigned`" class="text-primary-300 mr-small">
+              <a v-if="tab != `Unassigned`" class="mr-small">
                 Unassigned
               </a>
               <a
@@ -249,16 +250,16 @@
               <router-link to="/admin/allCertifiedUsers">
                 <a
                   v-if="tab != `allCertifiedUsers`"
-                  class="text-primary-300 mr-small"
+                  class="mr-small"
                 >
-                  Certified Users
+                  Licensed Users
                 </a>
                 <a
                   v-if="tab == `allCertifiedUsers`"
                   class="text-primary-300 mr-small width-medium inline-block pr-tiny justify-center item-center"
                 >
                   <p class="text-primary-600 font-AtkinsonHyperlegibleBold">
-                    Certified Users
+                    Licensed Users
                   </p>
                   <hr class="yellow-gradient border-none" />
                 </a>
@@ -268,7 +269,7 @@
               <router-link to="/admin/certifiedUsers">
                 <a
                   v-if="tab != `certifiedUsers`"
-                  class="text-primary-300 mr-small"
+                  class="mr-small"
                 >
                   Certified Users
                 </a>
@@ -337,6 +338,20 @@
                     >Create Admin User
                   </a>
                 </router-link>
+                <router-link to="/admin/pendingPayments">
+                  <a
+                    class="block px-4 py-2 text-sm text-blue-100 hover:bg-gray-100 hover:text-gray-900"
+                    role="menuitem"
+                    >Pending
+                  </a>
+                </router-link>
+                <router-link to="/admin/allPendingPayments" v-if="isSuperAdmin">
+                  <a
+                    class="block px-4 py-2 text-sm text-blue-100 hover:bg-gray-100 hover:text-gray-900"
+                    role="menuitem"
+                    >Others Pending
+                  </a>
+                </router-link>
                 <a
                   href="#"
                   class="block px-4 py-2 text-sm text-blue-100 hover:bg-gray-100 hover:text-gray-900"
@@ -392,6 +407,7 @@ export default {
     let showAssignedDD = ref(false);
     let showFinishedDD = ref(false);
     let search = ref("");
+    let primaryText = ref("");
     watch(search, () => {
       if (props.tab === "Unassigned") {
         store.dispatch("reviewer/getUnassignedSearched", search.value);
@@ -417,6 +433,9 @@ export default {
       if (props.tab === "AllWork") {
         store.dispatch("reviewer/getAllRecentlyFinishedSearched", search.value)
       }
+      if (props.tab === "AllPendigs") {
+        store.dispatch("reviewer/getAllPendingPaymentSearched", search.value)
+      }
       if (props.tab === "Home") {
         store.dispatch("reviewer/getAssignedToYouSearched", search.value);
         store.dispatch("reviewer/getUnfinishedSearched", search.value);
@@ -436,6 +455,9 @@ export default {
       ? (isSuperAdmin.value = true)
       : (isSuperAdmin.value = false);
 
+    if(isSuperAdmin == false) {
+      primaryText.value = "text-primary-300"
+    }
     const showDropDown = () => {
       showDD.value = !showDD.value
       showUnfinishedDD.value = false
@@ -481,6 +503,7 @@ export default {
       logout,
       showAdminCreate,
       isSuperAdmin,
+      primaryText
     };
   },
 };

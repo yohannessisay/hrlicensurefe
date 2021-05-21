@@ -148,6 +148,16 @@ const routes = [
     component: () => import ("../components/Reviewer/Detail/CertifiedUsersDetail.vue"),
   },
   {
+    path: "/admin/pendingPayments",
+    name: "pendingPayments",
+    component: () => import("../components/Reviewer/PendingPayments.vue"),
+  },
+  {
+    path: "/admin/allPendingPayments",
+    name: "allPendingPayments",
+    component: () => import("../components/Reviewer/AllPendingPayments.vue"),
+  },
+  {
     path: "/admin/evaluate/:applicationType/:applicationId",
     name: "evaluate",
     component: () => import("../components/Reviewer/Evaluate.vue"),

@@ -1,19 +1,19 @@
 <template>
   <div>
-    <ReviewerNavBar tab="AllUnfinished" />
+    <ReviewerNavBar tab="AllPendigs" />
     <div class="bg-lightBlueB-200 h-full">
       <div class="flex pl-12 pt-tiny">
-        <Title message="Others Unfinished" />
+        <Title message="Others Penging Payments" />
       </div>
       <div class="flex flex-wrap pb-medium rounded h-full" v-if="!showLoading">
-        <div class="pl-large w-52 h-26" v-if="nothingToShowUnfinished == true">
+        <div class="pl-large w-52 h-26" v-if="nothingToShowAllPengings == true">
           <div class="flex content-center justify-center">
             <h2>Nothing To Show!</h2>
           </div>
         </div>
         <div
           class="container"
-          v-for="item in getAllUnfinished"
+          v-for="item in getAllPendingPayments"
           v-bind:key="item.id"
           v-bind:value="item.id"
         >
@@ -108,42 +108,42 @@ export default {
   components: { ReviewerNavBar, Title, Spinner },
   computed: {
     moment: () => moment,
-    getAllUnfinished() {
-      return store.getters['reviewer/getEveryOneUnfinishedSearched'];
+    getAllPendingPayments() {
+      return store.getters['reviewer/getAllPendingPaymentSearched'];
     }
   },
   setup() {
     const store = useStore();
     const router = useRouter();
 
-    let unfinished = ref({});
+    let allPendings = ref({});
     let x = ref([]);
     let userId = +localStorage.getItem("adminId");
-    let nothingToShowUnfinished = ref(false);
+    let nothingToShowAllPengings = ref(false);
     let showLoading = ref(false);
 
-    const fetchUnfinished = () => {
+    const fetchAllPendings = () => {
       showLoading.value = true;
-      store.dispatch("reviewer/getEveryOneUnfinished", userId).then(res => {
+      store.dispatch("reviewer/getAllPendingPayments", userId).then(res => {
         showLoading.value = false
-          unfinished.value = store.getters['reviewer/getEveryOneUnfinishedSearched'];
-        if(store.getters['reviewer/getEveryOneUnfinishedSearched'].length !== 0) {
-          for (var prop in store.getters['reviewer/getEveryOneUnfinishedSearched']) {
-            if (store.getters['reviewer/getEveryOneUnfinishedSearched'][prop].applicationType == "Renewal") {
-              store.getters['reviewer/getEveryOneUnfinishedSearched'][prop].newLicenseCode =
-                store.getters['reviewer/getEveryOneUnfinishedSearched'][prop].renewalCode;
+          allPendings.value = store.getters['reviewer/getAllPendingPaymentSearched'];
+        if(store.getters['reviewer/getAllPendingPaymentSearched'].length !== 0) {
+          for (var prop in store.getters['reviewer/getAllPendingPaymentSearched']) {
+            if (store.getters['reviewer/getAllPendingPaymentSearched'][prop].applicationType == "Renewal") {
+              store.getters['reviewer/getAllPendingPaymentSearched'][prop].newLicenseCode =
+                store.getters['reviewer/getAllPendingPaymentSearched'][prop].renewalCode;
             }
-            if (store.getters['reviewer/getEveryOneUnfinishedSearched'][prop].applicationType == "Good Standing") {
-              store.getters['reviewer/getEveryOneUnfinishedSearched'][prop].newLicenseCode =
-                store.getters['reviewer/getEveryOneUnfinishedSearched'][prop].goodStandingCode;
+            if (store.getters['reviewer/getAllPendingPaymentSearched'][prop].applicationType == "Good Standing") {
+              store.getters['reviewer/getAllPendingPaymentSearched'][prop].newLicenseCode =
+                store.getters['reviewer/getAllPendingPaymentSearched'][prop].goodStandingCode;
             }
-            if (store.getters['reviewer/getEveryOneUnfinishedSearched'][prop].applicationType == "Verification") {
-              store.getters['reviewer/getEveryOneUnfinishedSearched'][prop].newLicenseCode =
-                store.getters['reviewer/getEveryOneUnfinishedSearched'][prop].verificationCode;
+            if (store.getters['reviewer/getAllPendingPaymentSearched'][prop].applicationType == "Verification") {
+              store.getters['reviewer/getAllPendingPaymentSearched'][prop].newLicenseCode =
+                store.getters['reviewer/getAllPendingPaymentSearched'][prop].verificationCode;
             }
           }
         } else {
-          nothingToShowUnfinished.value = true;
+          nothingToShowAllPengings.value = true;
         }
       });
     };
@@ -155,13 +155,13 @@ export default {
     };
 
     onMounted(() => {
-      fetchUnfinished();
+      fetchAllPendings();
     });
 
     return {
-      unfinished,
+      allPendings,
       detail,
-      nothingToShowUnfinished,
+      nothingToShowAllPengings,
       showLoading,
     };
   }

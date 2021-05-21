@@ -2,7 +2,7 @@
   <div class="bg-lightBlueB-200">
     <ReviewerNavBar tab="certifiedUsers" />
     <span v-if="!showLoading">
-      <button @click="downloadPdf">Print</button>
+      <button @click="downloadPdf">Download PDF</button>
       <div class="bg-lightBlueB-200 h-full">
         <div
           v-if="show"

@@ -50,11 +50,15 @@
               "
             >
               <div class="flex content-center justify-center">
-                <span v-if="profilePic != ''">
+                <span v-if="item.profilePic != ''">
                   <img
                   class="box-shadow-pop"
                   src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
                 /> 
+                  <!-- <img
+                  class="box-shadow-pop"
+                  :src="'https://hrlicensurebe.dev.k8s.sandboxaddis.com/'+item.profilePic"
+                />  -->
                 </span>
                 <span v-else>
                    <img
@@ -62,12 +66,6 @@
                   src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
                 /> 
                 </span>
-                <!-- <img class="box-shadow-pop" v-bind:src="item.picture.large" /> -->
-                 
-                <!-- <img
-                  class="box-shadow-pop"
-                  src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
-                /> -->
               </div>
               <h4
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
@@ -152,11 +150,22 @@
                 "
               >
                 <div class="flex content-center justify-center">
-                  <!-- <img class="box-shadow-pop" v-bind:src="item.picture.large" /> -->
-                  <img
-                    class="box-shadow-pop"
-                    src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
-                  />
+                  <span v-if="item.profilePic != ''">
+                    <img
+                  class="box-shadow-pop"
+                  src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
+                /> 
+                  <!-- <img
+                  class="box-shadow-pop"
+                  :src="'https://hrlicensurebe.dev.k8s.sandboxaddis.com/'+item.profilePic"
+                />  -->
+                </span>
+                <span v-else>
+                   <img
+                  class="box-shadow-pop"
+                  src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
+                /> 
+                </span>
                 </div>
                 <h4
                   class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
@@ -172,7 +181,7 @@
                 <span
                   class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                 >
-                  Assigned Reviewer:
+                <i class="fas fa-user-cog"></i> &nbsp;
                   {{ item.reviewer.name ? item.reviewer.name : "-" }}
                 </span>
                 <!-- <h6
@@ -247,11 +256,22 @@
             >
               <div class="flex content-center justify-center">
                 <router-link to="/newlicense">
-                  <!-- <img class="box-shadow-pop" v-bind:src="item.picture.large" /> -->
-                  <img
-                    class="box-shadow-pop"
-                    src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
-                  />
+                  <span v-if="item.profilePic != ''">
+                    <img
+                  class="box-shadow-pop"
+                  src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
+                /> 
+                  <!-- <img
+                  class="box-shadow-pop"
+                  :src="'https://hrlicensurebe.dev.k8s.sandboxaddis.com/'+item.profilePic"
+                />  -->
+                </span>
+                <span v-else>
+                   <img
+                  class="box-shadow-pop"
+                  src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
+                /> 
+                </span>
                 </router-link>
               </div>
               <h4
@@ -298,7 +318,7 @@
       </div>
       <div v-if="adminRole === 'SA'">
         <div class="flex pl-12 mt-medium">
-          <Title message="Assigned to Everyone" />
+          <Title message="Assigned to Others" />
           <div class="flex ml-small" v-if="assignedToEveryone.length >= 5">
             <router-link to="/admin/assignedToyou">
               <button
@@ -342,11 +362,22 @@
               >
                 <div class="flex content-center justify-center">
                   <router-link to="/newlicense">
-                    <!-- <img class="box-shadow-pop" v-bind:src="item.picture.large" /> -->
-                    <img
-                      class="box-shadow-pop"
-                      src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
-                    />
+                    <span v-if="item.profilePic != ''">
+                      <img
+                  class="box-shadow-pop"
+                  src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
+                /> 
+                  <!-- <img
+                  class="box-shadow-pop"
+                  :src="'https://hrlicensurebe.dev.k8s.sandboxaddis.com/'+item.profilePic"
+                />  -->
+                </span>
+                <span v-else>
+                   <img
+                  class="box-shadow-pop"
+                  src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
+                /> 
+                </span>
                   </router-link>
                 </div>
                 <h4
@@ -365,8 +396,8 @@
                 >
                   <!-- Assigned Reviewer: -->
                   <!-- <i class="far fa-user-cog"></i> -->
-                  <i class="glyphicon glyphicon-user"></i>
-                  {{ item.reviewer.name ? item.reviewer.name : "-" }}
+                  <i class="fas fa-user-cog"></i> &nbsp;
+                   {{ item.reviewer.name ? item.reviewer.name : "-" }}
                 </span>
                 <!-- <h6
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center">
@@ -437,10 +468,6 @@
                 @mouseleave="hover = false"
               >
                 <div class="flex content-center justify-center">
-                  <!-- <img
-                      class="box-shadow-pop"
-                      v-bind:src="item.picture.large"
-                  /> -->
                   <img
                     class="box-shadow-pop"
                     src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
@@ -624,15 +651,11 @@ export default {
         if (store.getters["reviewer/getUnfinishedSearched"].length !== 0) {
           unfinished.value = store.getters["reviewer/getUnfinishedSearched"];
           for (var prop in store.getters["reviewer/getUnfinishedSearched"]) {
-            // console.log('documentss', prop.documents)
-            console.log('documents', store.getters["reviewer/getUnfinishedSearched"][prop].documents)
             if(store.getters["reviewer/getUnfinishedSearched"][prop].documents !== null) {
               for(var psp in store.getters["reviewer/getUnfinishedSearched"][prop].documents) {
-                console.log("here it is",store.getters["reviewer/getUnfinishedSearched"][prop].documents[psp].fileName)
                 if(store.getters["reviewer/getUnfinishedSearched"][prop].documents[psp].documentTypeCode === "LHI") {
                   store.getters["reviewer/getUnfinishedSearched"][prop].profilePic = store.getters["reviewer/getUnfinishedSearched"][prop].documents[psp].fileName
                   // store.getters["reviewer/getUnfinishedSearched"]
-                  console.log("amazing grace", store.getters["reviewer/getUnfinishedSearched"][prop].profilePic)
                   break;
                 }
               }
@@ -676,26 +699,6 @@ export default {
           nothingToShowUnfinished.value = true;
         }
       });
-      // store.dispatch("reviewer/getUnfinished", userId).then(res => {
-      //   console.log(res.status);
-      //   if (res.status != "Error") {
-      //     // unfinished.value = res.data.results;
-      //     x.value = res.data.data;
-
-      //     unfinished.value = x.value.filter(a => {
-      //       if (a.applicationStatus.code == "REVDRA") {
-      //         return a;
-      //       }
-      //     });
-      //     // assignedToyou.value = x.value.filter(a => {
-      //     //   if (a.applicationStatus.code == "IRV") {
-      //     //     return a;
-      //     //   }
-      //     // });
-      //   } else {
-      //     nothingToShow.value = true;
-      //   }
-      // });
     };
 
     const fetchAssignedtoYou = () => {
@@ -706,6 +709,17 @@ export default {
           assignedToyou.value =
             store.getters["reviewer/getAssignedToYouSearched"];
           for (var prop in store.getters["reviewer/getAssignedToYouSearched"]) {
+
+            if(store.getters["reviewer/getAssignedToYouSearched"][prop].documents !== null) {
+              for(var psp in store.getters["reviewer/getAssignedToYouSearched"][prop].documents) {
+                if(store.getters["reviewer/getAssignedToYouSearched"][prop].documents[psp].documentTypeCode === "PSP") {
+                  store.getters["reviewer/getAssignedToYouSearched"][prop].profilePic = store.getters["reviewer/getAssignedToYouSearched"][prop].documents[psp].fileName
+                  // store.getters["reviewer/getUnfinishedSearched"]
+                  break;
+                }
+              }
+            }
+
             if (assignedToyou.value[prop].applicationType == "Renewal") {
               assignedToyou.value[prop].newLicenseCode =
                 assignedToyou.value[prop].renewalCode;
@@ -736,7 +750,16 @@ export default {
         ) {
           // do some logic to manipulate data
           for (var prop in store.getters["reviewer/getAssignedForEveryOneSearched"]) {
-            
+            if(store.getters["reviewer/getAssignedForEveryOneSearched"][prop].documents !== null) {
+              for(var psp in store.getters["reviewer/getAssignedForEveryOneSearched"][prop].documents) {
+                if(store.getters["reviewer/getAssignedForEveryOneSearched"][prop].documents[psp].documentTypeCode === "PSP") {
+                  store.getters["reviewer/getAssignedForEveryOneSearched"][prop].profilePic = store.getters["reviewer/getAssignedForEveryOneSearched"][prop].documents[psp].fileName
+                  // store.getters["reviewer/getUnfinishedSearched"]
+                  break;
+                }
+              }
+            }
+
             if (
               store.getters["reviewer/getAssignedForEveryOneSearched"][prop]
                 .applicationType == "Renewal"
@@ -784,11 +807,20 @@ export default {
         everyoneUnfinished.value =
           store.getters["reviewer/getEveryOneUnfinishedSearched"];
         console.log("every one unfinished", everyoneUnfinished.value);
+        
         if (
           store.getters["reviewer/getEveryOneUnfinishedSearched"].length !== 0
         ) {
           for (var prop in store.getters["reviewer/getEveryOneUnfinishedSearched"]) {
-            
+            if(store.getters["reviewer/getEveryOneUnfinishedSearched"][prop].documents !== null) {
+              for(var psp in store.getters["reviewer/getEveryOneUnfinishedSearched"][prop].documents) {
+                if(store.getters["reviewer/getEveryOneUnfinishedSearched"][prop].documents[psp].documentTypeCode === "PSP") {
+                  store.getters["reviewer/getEveryOneUnfinishedSearched"][prop].profilePic = store.getters["reviewer/getEveryOneUnfinishedSearched"][prop].documents[psp].fileName
+                  // store.getters["reviewer/getUnfinishedSearched"]
+                  break;
+                }
+              }
+            }
             if (
               store.getters["reviewer/getEveryOneUnfinishedSearched"][prop]
                 .applicationType == "Renewal"
@@ -837,36 +869,46 @@ export default {
         unassigned.value = store.getters["reviewer/getUnassignedSearched"];
         if (store.getters["reviewer/getUnassignedSearched"].length !== 0) {
           for (var prop in store.getters["reviewer/getUnassignedSearched"]) {
+            if(unassigned.value[prop].documents !== null) {
+              for(var psp in unassigned.value[prop].documents) {
+                if(unassigned.value[prop].documents[psp].documentTypeCode === "PSP") {
+                  unassigned.value[prop].profilePic = unassigned.value[prop].documents[psp].fileName
+                  // store.getters["reviewer/getUnfinishedSearched"]
+                  break;
+                }
+              }
+            }
+
             if (
-              store.getters["reviewer/getUnassignedSearched"][prop]
+              unassigned.value[prop]
                 .applicationType == "Renewal"
             ) {
-              store.getters["reviewer/getUnassignedSearched"][
+              unassigned.value[
                 prop
               ].newLicenseCode =
-                store.getters["reviewer/getUnassignedSearched"][
+                unassigned.value[
                   prop
                 ].renewalCode;
             }
             if (
-              store.getters["reviewer/getUnassignedSearched"][prop]
+              unassigned.value[prop]
                 .applicationType == "Good Standing"
             ) {
-              store.getters["reviewer/getUnassignedSearched"][
+              unassigned.value[
                 prop
               ].newLicenseCode =
-                store.getters["reviewer/getUnassignedSearched"][
+                unassigned.value[
                   prop
                 ].goodStandingCode;
             }
             if (
-              store.getters["reviewer/getUnassignedSearched"][prop]
+              unassigned.value[prop]
                 .applicationType == "Verification"
             ) {
-              store.getters["reviewer/getUnassignedSearched"][
+              unassigned.value[
                 prop
               ].newLicenseCode =
-                store.getters["reviewer/getUnassignedSearched"][
+                unassigned.value[
                   prop
                 ].verificationCode;
             }

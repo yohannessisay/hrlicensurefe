@@ -34,15 +34,7 @@
               >
                 <b>{{ item.applicant.profile.name + " " + item.applicant.profile.fatherName }}</b>
               </h4>
-              <span
-                class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-              >
-                {{
-                  item.reviewer.name
-                    ? item.reviewer.name
-                    : "-"
-                }}
-              </span>
+              <br />
               <span
                 class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
               >
@@ -100,15 +92,7 @@
               >
                 <b>{{ item.applicant.profile.name + " " + item.applicant.profile.fatherName }}</b>
               </h4>
-              <span
-                class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-              >
-                {{
-                  item.reviewer.name
-                    ? item.reviewer.name
-                    : "-"
-                }}
-              </span>
+              <br />
               <span
                 class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
               >
@@ -167,15 +151,7 @@
                   {{ item.applicant.profile.name + " " + item.applicant.profile.fatherName }} 
                 </b>
               </h4>
-              <span
-                class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-              >
-                {{
-                  item.reviewer.name
-                    ? item.reviewer.name
-                    : "-"
-                }}
-              </span>
+              <br/>
               <span
                 class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
               >

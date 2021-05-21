@@ -87,7 +87,6 @@ export default {
   computed: {
     moment: () => moment,
     // getCertifiedUsers() {
-    //   return store.getters['reviewer/getTempCertified'];
     // }
   },
   setup() {

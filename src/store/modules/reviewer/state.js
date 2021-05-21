@@ -21,6 +21,14 @@ export default {
         certifiedUsersSearched: [],
         allCertifiedUsers: [],
         allCertifiedUsersSearched: [],
-        tempCertified: [],
+
+        pendingPayments: [],
+        pendingPaymentsSearched: [],
+        
+        approvedPendingPayments: [],
+        approvedPendingPaymentsSearched: [],
+
+        allPendingPayment: [],
+        allPendingPaymentSearched: [],
     }
 }
