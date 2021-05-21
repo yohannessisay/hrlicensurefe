@@ -14,6 +14,7 @@ export default {
       window.localStorage.setItem("token", resp.data["token"]);
       window.localStorage.setItem("adminId", resp.data.data["id"]);
       window.localStorage.setItem("role", resp.data.data["role"]["code"]);
+      console.log("super weird", localStorage.getItem("role"), "local saved",resp.data.data["role"]["code"])
       commit(SET_ADMIN, resp.data);
       commit(ADD_ADMIN_SUCCESS);
       return resp;

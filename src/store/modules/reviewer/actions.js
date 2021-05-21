@@ -60,13 +60,19 @@ export default {
     })
     commit(SET_UNFINISHED_SEARCHED, searchedVal)
   },
-  async getEveryOneUnfinished({commit}) {
+  async getEveryOneUnfinished({commit}, adminRole) {
+    console.log("try try", adminRole)
     if(adminRole === "SA") {
+      
       try {
+        
         const respAll = await ApiService.get(baseUrl + "/applications/allUnfinished");
+
         const resp = respAll.data.data.filter(function(e) {
           return e.reviewerId === null ? '' : e.reviewerId !== adminId
         })
+        console.log("here here")
+        console.log("resp resp", resp)
         commit(SET_EVEYONE_UNFINISHED, resp)
       } catch(error) {
         const resp = error

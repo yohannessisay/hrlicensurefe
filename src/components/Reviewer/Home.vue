@@ -615,10 +615,7 @@ export default {
     let unassigned = ref({ applicationStatus: { name: "" } });
     let recentlyFinished = ref({});
     let assignedToEveryone = ref({});
-    let everyoneUnfinished = ref({
-      applicant: { profile: { name: "", fatherName: "" } },
-      applicationStatus: { name: "" },
-    });
+    let everyoneUnfinished = ref({});
     let hover = ref(false);
     let userId = +localStorage.getItem("adminId");
     let adminRole = localStorage.getItem("role");
@@ -802,11 +799,12 @@ export default {
 
     const fetchEveryOneUnfinished = () => {
       showAllUnfinishedLoaing.value = true;
-      store.dispatch("reviewer/getEveryOneUnfinished").then((res) => {
+      store.dispatch("reviewer/getEveryOneUnfinished", adminRole).then((res) => {
         showAllUnfinishedLoaing.value = false;
         everyoneUnfinished.value =
           store.getters["reviewer/getEveryOneUnfinishedSearched"];
         console.log("every one unfinished", everyoneUnfinished.value);
+        console.log("store.log", store.getters["reviewer/getEveryOneUnfinishedSearched"])
         
         if (
           store.getters["reviewer/getEveryOneUnfinishedSearched"].length !== 0
