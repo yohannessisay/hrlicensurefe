@@ -157,6 +157,7 @@ img {
   border-radius: 50%;
   margin-bottom: 1rem;
   width: 80px;
+  height: 80px;
   border-color: steelblue;
   background-color: steelblue;
 }

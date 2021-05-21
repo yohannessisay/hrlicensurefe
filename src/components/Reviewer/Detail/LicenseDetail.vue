@@ -323,7 +323,7 @@ export default {
       showLoading.value = true
       licenseId.value = applicationId;
       applicationType.value = applicationTypeName;
-      applicantId.value = applicanttId;
+      // applicantId.value = applicanttId;
       if (applicationType.value == "New License") {
         store
           .dispatch("reviewer/getNewLicenseApplication", applicationId)

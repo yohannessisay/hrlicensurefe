@@ -704,11 +704,13 @@ export default {
           sendDeclinedData.value = true;
         }
       }
-      console.log("action whaha", actionValue)
+
+      // console.log("action value", actionValue)
       newLicense.value.declinedFields = rejected.value;
       newLicense.value.acceptedFields = accepted.value;
       newLicense.value.certified = true;
       newLicense.value.certifiedDate = new Date();
+      console.log("the value is ", newLicense.value)
       
       let appId = newLicense.value.id;
       let req = {
@@ -905,7 +907,14 @@ svg:hover {
     height: 320px !important;
   }
   .tArea {
-    width: 620px;
+    width: 720px;
+    height: 95px;
   }
+  /* .tArea:focus {
+    border-color: hsl(var(--input-focus-h), var(--input-focus-s), var(--input-focus-l));
+    box-shadow: 0 0 0 3px hsla(var(--input-focus-h), var(--input-focus-s), calc(var(--input-focus-l) +
+          40%), 0.8);
+    outline: 3px solid transparent;
+  } */
 }
 </style>

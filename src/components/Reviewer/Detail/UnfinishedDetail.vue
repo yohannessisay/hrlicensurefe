@@ -249,6 +249,12 @@
         </div>
       </div>
     </div>
+    <div
+      v-if="showLoading"
+      class="flex justify-center justify-items-center mt-24"
+    >
+      <Spinner />
+    </div>
   </div>
 </template>
 
@@ -258,12 +264,14 @@ import { useRouter, useRoute } from "vue-router";
 import Title from "@/sharedComponents/Title";
 import ReviewerNavBar from "@/components/Reviewer/ReviewerNavBar";
 import { ref, onMounted } from "vue";
+import Spinner from "@/sharedComponents/Spinner";
 
 export default {
   props: ["activeState"],
   components: {
     Title,
-    ReviewerNavBar
+    ReviewerNavBar,
+    Spinner,
   },
   setup() {
     const store = useStore();
@@ -272,6 +280,7 @@ export default {
 
     let userId = +localStorage.getItem("userId");
     let show = ref(false);
+    let showLoading = ref(false);
     let license = ref({
       applicant: {},
       applicantType: {},
@@ -312,15 +321,12 @@ export default {
     const created = async (applicationTypeName, applicationId, applicantId) => {
       licenseId.value = applicationId;
       applicationType.value = applicationTypeName;
-      // store.dispatch("reviewer/getProfile", applicantId).then(res => {
-      //   profileInfo.value = res.data.data;
-      //   show.value = true;
-      //   console.log(profileInfo.value);
-      // });
+      showLoading.value = true;
       if (applicationType.value == "New License") {
         store
           .dispatch("reviewer/getNewLicenseApplication", applicationId)
           .then(res => {
+            showLoading.value = false;
             license.value = res.data.data;
             getReviewId.value = license.value.reviewerId
             show.value = true;
@@ -338,6 +344,7 @@ export default {
         store
           .dispatch("reviewer/getGoodStandingApplication", applicationId)
           .then(res => {
+            showLoading.value = false;
             license.value = res.data.data;
             getReviewId.value = license.value.reviewerId
             show.value = true;
@@ -355,6 +362,7 @@ export default {
         store
           .dispatch("reviewer/getVerificationApplication", applicationId)
           .then(res => {
+            showLoading.value = false;
             license.value = res.data.data;
             getReviewId.value = license.value.reviewerId
             show.value = true;
@@ -372,6 +380,7 @@ export default {
         store
           .dispatch("reviewer/getRenewalApplication", applicationId)
           .then(res => {
+            showLoading.value = false;
             license.value = res.data.data;
             getReviewId.value = license.value.reviewerId
             show.value = true;
@@ -422,7 +431,8 @@ export default {
       created,
       evaluate,
       applicationType,
-      licenseId
+      licenseId,
+      showLoading,
     };
   }
 

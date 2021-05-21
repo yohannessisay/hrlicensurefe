@@ -41,9 +41,12 @@ export default {
     [SET_UNFINISHED_SEARCHED] (state, searchedVal) {
         state.unfinishedSearched = searchedVal
     },
-    [SET_RECENTLY_FINISHED] (state, data) {
-        state.recentlyFinished = data
-        state.recentlyFinishedSearched = data
+    [SET_RECENTLY_FINISHED] (state, datas) {
+        console.log("apppmmmm", datas[2])
+        state.recentlyFinished = datas[0]
+        state.recentlyFinishedSearched = datas[0]
+        state.approved = datas[2]
+        state.approvedSearched = datas[2]
     },
     [SET_RECENTLY_FINISHED_SEARCHED] (state, searchedVal) {
         state.recentlyFinishedSearched = searchedVal
@@ -62,12 +65,11 @@ export default {
     [SET_EVEYONE_UNFINISHED_SEARCHED] (state, searchedVal) {
         state.eveyOneUnfinishedSearched = searchedVal
     },
-    [SET_ALL_RECENTLY_FINISHED] (state, data, certifiedUsers) {
+    [SET_ALL_RECENTLY_FINISHED] (state, data, certifiedUsers, approvedUsers) {
         state.allRecentlyFinished = data
         state.allRecentlyFinishedSearched = data
         state.allCertifiedUsers = certifiedUsers
         state.allCertifiedUsersSearched = certifiedUsers
-        // state.approved = data;
     },
     [SET_ALL_RECENTLY_FINISHED_SEARCHED] (state, searchedVal) {
         state.allRecentlyFinishedSearched = searchedVal

@@ -8,17 +8,26 @@ export default {
         unfinishedSearched: [],
         recentlyFinished: [],
         recentlyFinishedSearched: [],
+
         approved: [],
+        approvedSearched: [],
         rejected: [],
+        rejectedSearched: [],
         underSuperVision: [],
+        underSuperVisionSearched: [],
+
         assignedForEveryOne: [],
         assignedForEveryOneSearched: [],
+
         everyOneUnfinished: [],
         eveyOneUnfinishedSearched: [],
+
         allRecentlyFinished: [],
         allRecentlyFinishedSearched: [],
+
         certifiedUsers: [],
         certifiedUsersSearched: [],
+
         allCertifiedUsers: [],
         allCertifiedUsersSearched: [],
 

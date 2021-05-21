@@ -61,13 +61,9 @@ export default {
     commit(SET_UNFINISHED_SEARCHED, searchedVal)
   },
   async getEveryOneUnfinished({commit}, adminRole) {
-    console.log("try try", adminRole)
     if(adminRole === "SA") {
-      
-      try {
-        
+      try {  
         const respAll = await ApiService.get(baseUrl + "/applications/allUnfinished");
-
         const resp = respAll.data.data.filter(function(e) {
           return e.reviewerId === null ? '' : e.reviewerId !== adminId
         })
@@ -140,7 +136,7 @@ export default {
     })
     commit(SET_ASSIGNED_TO_YOU_SEARCHED, searchedVal)
   },
-  async getAssignedToEveryOne({commit}) {
+  async getAssignedToEveryOne({commit}, adminRole) {
     if(adminRole === "SA") {
       try {
         const respAll = await ApiService.get(baseUrl + "/applications/assignedToAll")
@@ -220,8 +216,22 @@ export default {
     try {
       console.log("admin -id", adminId)
       const resp = await ApiService.get(baseUrl + "/applications/finished/"+adminId)
-      // const resp = await ApiService.get("https://randomuser.me/api/?results=10");
-      commit(SET_RECENTLY_FINISHED, resp.data.data)
+
+      const certifiedUsers = resp.data.data.filter(function(e) {
+        return e.certified == true;
+      })
+      // const approvedUsers = resp.data.data.filter(function(e) {
+      //   return 
+      // })
+      
+      const approvedUsers = resp.data.data.filter(function(e) {
+        return e.applicationStatus.name !== null 
+                ? e.applicationStatus.name == "Approve" : ''
+      })
+      console.log("all c: ", certifiedUsers)
+      console.log("mmmmhmm", approvedUsers)
+      const finishedDatas = [resp.data.data, certifiedUsers, approvedUsers]
+      commit(SET_RECENTLY_FINISHED, finishedDatas)
     } catch (error) {
       const resp = error;
       return resp;
@@ -252,16 +262,24 @@ export default {
 
   async getAllRecentlyFinished({commit}) {
     try {
+      console.log("\\\\\\\\\\\\")
       const resp = await ApiService.get(baseUrl + "/applications/allFinished")
       console.log("all finished: ", resp.data.data)
       // console.log("-+++++-", resp.data.data)
       const certifiedUsers = resp.data.data.filter(function(e) {
         return e.certified == true;
       })
+      // const approvedUsers = resp.data.data.filter(function(e) {
+      //   return 
+      // })
       console.log("all c: ", certifiedUsers)
-      console.log("mmmm")
-      const certifiedUsers1 = []
-      commit(SET_ALL_RECENTLY_FINISHED, resp.data.data, certifiedUsers1)
+      console.log("mmmmhmm", resp.data.data)
+      const approvedUsers = resp.data.data.filter(function(e) {
+        return e.applicationStatus.name !== null 
+                ? e.applicationStatus.name == "Approve" : ''
+      })
+      console.log("approved", approvedUsers)
+      commit(SET_ALL_RECENTLY_FINISHED, resp.data.data, certifiedUsers, approvedUsers)
     } catch(error) {
       const resp = error;
       return resp;

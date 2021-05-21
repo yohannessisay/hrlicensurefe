@@ -26,77 +26,7 @@
             <h2>Nothing To Show!</h2>
           </div>
         </div>
-        <!-- <div v-if="nothingToShowUnfinished != true"> -->
-        <!-- <div v-if="nothingToShowUnfinished != true"> -->
-        <div
-          class="container"
-          v-for="(item, index) in unFinishedSearched"
-          v-bind:key="item.id"
-          v-bind:value="item.id"
-        >
-          <div
-            v-if="index < 5"
-            class="flex justify-center items-center ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
-          >
-            <div
-              class="p-4 w-48 h-64"
-              @Click="
-                detail(
-                  `/admin/unfinishedDetail`,
-                  item.applicationType,
-                  item.id,
-                  item.applicant.id
-                )
-              "
-            >
-              <div class="flex content-center justify-center">
-                <span v-if="item.profilePic != ''">
-                  <img
-                  class="box-shadow-pop"
-                  src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
-                /> 
-                  <!-- <img
-                  class="box-shadow-pop"
-                  :src="'https://hrlicensurebe.dev.k8s.sandboxaddis.com/'+item.profilePic"
-                />  -->
-                </span>
-                <span v-else>
-                   <img
-                  class="box-shadow-pop"
-                  src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
-                /> 
-                </span>
-              </div>
-              <h4
-                class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
-              >
-                <b>{{
-                  item.applicant.profile.name
-                    ? item.applicant.profile.name +
-                      " " +
-                      item.applicant.profile.fatherName
-                    : "-"
-                }}</b>
-              </h4>
-              <br/>
-              <span
-                class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-              >
-                {{ item.applicationType ? item.applicationType : "-" }}
-              </span>
-              <span
-                class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-              >
-                {{ item.newLicenseCode ? item.newLicenseCode : "-" }}
-              </span>
-              <span
-                class="text-lightBlueB-500 mt-tiny flex justify-end content-center">
-                  {{item.createdAt ? moment(item.createdAt).fromNow() : '-'}}
-              </span>
-            </div>
-          </div>
-        </div>
-        <!-- </div> -->
+        <MyUnfinished :unFinishedSearched="unFinishedSearched"/>
       </div>
       <div
         v-if="showUnfinishedLoading"
@@ -582,9 +512,10 @@ import { ref, onMounted, watch } from "vue";
 import store from "../../store";
 import Spinner from "@/sharedComponents/Spinner";
 import moment from 'moment';
+import MyUnfinished from "./HomeComponents/MyUnfinished.vue"
 
 export default {
-  components: { ReviewerNavBar, Title, Spinner },
+  components: { ReviewerNavBar, Title, Spinner, MyUnfinished },
   computed: {
     moment: () => moment,
     unAssignedSearched() {
@@ -645,13 +576,14 @@ export default {
       showUnfinishedLoading.value = true;
       store.dispatch("reviewer/getUnfinished", userId).then((res) => {
         showUnfinishedLoading.value = false;
+
         if (store.getters["reviewer/getUnfinishedSearched"].length !== 0) {
           unfinished.value = store.getters["reviewer/getUnfinishedSearched"];
           for (var prop in store.getters["reviewer/getUnfinishedSearched"]) {
-            if(store.getters["reviewer/getUnfinishedSearched"][prop].documents !== null) {
-              for(var psp in store.getters["reviewer/getUnfinishedSearched"][prop].documents) {
-                if(store.getters["reviewer/getUnfinishedSearched"][prop].documents[psp].documentTypeCode === "LHI") {
-                  store.getters["reviewer/getUnfinishedSearched"][prop].profilePic = store.getters["reviewer/getUnfinishedSearched"][prop].documents[psp].fileName
+            if(unfinished.value[prop].documents !== null) {
+              for(var psp in unfinished.value[prop].documents) {
+                if(unfinished.value[prop].documents[psp].documentTypeCode === "LHI") {
+                  unfinished.value[prop].profilePic = unfinished.value[prop].documents[psp].fileName
                   // store.getters["reviewer/getUnfinishedSearched"]
                   break;
                 }
@@ -659,35 +591,35 @@ export default {
             }
             
             if (
-              store.getters["reviewer/getUnfinishedSearched"][prop]
+              unfinished.value[prop]
                 .applicationType == "Renewal"
             ) {
-              store.getters["reviewer/getUnfinishedSearched"][
+              unfinished.value[
                 prop
               ].newLicenseCode =
-                store.getters["reviewer/getUnfinishedSearched"][
+                unfinished.value[
                   prop
                 ].renewalCode;
             }
             if (
-              store.getters["reviewer/getUnfinishedSearched"][prop]
+              unfinished.value[prop]
                 .applicationType == "Good Standing"
             ) {
-              store.getters["reviewer/getUnfinishedSearched"][
+              unfinished.value[
                 prop
               ].newLicenseCode =
-                store.getters["reviewer/getUnfinishedSearched"][
+                unfinished.value[
                   prop
                 ].goodStandingCode;
             }
             if (
-              store.getters["reviewer/getUnfinishedSearched"][prop]
+              unfinished.value[prop]
                 .applicationType == "Verification"
             ) {
-              store.getters["reviewer/getUnfinishedSearched"][
+              unfinished.value[
                 prop
               ].newLicenseCode =
-                store.getters["reviewer/getUnfinishedSearched"][
+                unfinished.value[
                   prop
                 ].verificationCode;
             }
@@ -707,10 +639,10 @@ export default {
             store.getters["reviewer/getAssignedToYouSearched"];
           for (var prop in store.getters["reviewer/getAssignedToYouSearched"]) {
 
-            if(store.getters["reviewer/getAssignedToYouSearched"][prop].documents !== null) {
-              for(var psp in store.getters["reviewer/getAssignedToYouSearched"][prop].documents) {
-                if(store.getters["reviewer/getAssignedToYouSearched"][prop].documents[psp].documentTypeCode === "PSP") {
-                  store.getters["reviewer/getAssignedToYouSearched"][prop].profilePic = store.getters["reviewer/getAssignedToYouSearched"][prop].documents[psp].fileName
+            if(assignedToyou.value[prop].documents !== null) {
+              for(var psp in assignedToyou.value[prop].documents) {
+                if(assignedToyou.value[prop].documents[psp].documentTypeCode === "PSP") {
+                  assignedToyou.value[prop].profilePic = assignedToyou.value[prop].documents[psp].fileName
                   // store.getters["reviewer/getUnfinishedSearched"]
                   break;
                 }
@@ -738,7 +670,7 @@ export default {
 
     const fetchAssignedToEveryone = () => {
       showAssignedToOthersLoading.value = true;
-      store.dispatch("reviewer/getAssignedToEveryOne").then((res) => {
+      store.dispatch("reviewer/getAssignedToEveryOne", adminRole).then((res) => {
         showAssignedToOthersLoading.value = false;
         assignedToEveryone.value =
           store.getters["reviewer/getAssignedForEveryOneSearched"];
@@ -747,10 +679,10 @@ export default {
         ) {
           // do some logic to manipulate data
           for (var prop in store.getters["reviewer/getAssignedForEveryOneSearched"]) {
-            if(store.getters["reviewer/getAssignedForEveryOneSearched"][prop].documents !== null) {
-              for(var psp in store.getters["reviewer/getAssignedForEveryOneSearched"][prop].documents) {
-                if(store.getters["reviewer/getAssignedForEveryOneSearched"][prop].documents[psp].documentTypeCode === "PSP") {
-                  store.getters["reviewer/getAssignedForEveryOneSearched"][prop].profilePic = store.getters["reviewer/getAssignedForEveryOneSearched"][prop].documents[psp].fileName
+            if(assignedToEveryone.value[prop].documents !== null) {
+              for(var psp in assignedToEveryone.value[prop].documents) {
+                if(assignedToEveryone.value[prop].documents[psp].documentTypeCode === "PSP") {
+                  assignedToEveryone.value[prop].profilePic = assignedToEveryone.value[prop].documents[psp].fileName
                   // store.getters["reviewer/getUnfinishedSearched"]
                   break;
                 }
@@ -758,35 +690,35 @@ export default {
             }
 
             if (
-              store.getters["reviewer/getAssignedForEveryOneSearched"][prop]
+              assignedToEveryone.value[prop]
                 .applicationType == "Renewal"
             ) {
-              store.getters["reviewer/getAssignedForEveryOneSearched"][
+              assignedToEveryone.value[
                 prop
               ].newLicenseCode =
-                store.getters["reviewer/getAssignedForEveryOneSearched"][
+                assignedToEveryone.value[
                   prop
                 ].renewalCode;
             }
             if (
-              store.getters["reviewer/getAssignedForEveryOneSearched"][prop]
+              assignedToEveryone.value[prop]
                 .applicationType == "Good Standing"
             ) {
-              store.getters["reviewer/getAssignedForEveryOneSearched"][
+              assignedToEveryone.value[
                 prop
               ].newLicenseCode =
-                store.getters["reviewer/getAssignedForEveryOneSearched"][
+                assignedToEveryone.value[
                   prop
                 ].goodStandingCode;
             }
             if (
-              store.getters["reviewer/getAssignedForEveryOneSearched"][prop]
+              assignedToEveryone.value[prop]
                 .applicationType == "Verification"
             ) {
-              store.getters["reviewer/getAssignedForEveryOneSearched"][
+              assignedToEveryone.value[
                 prop
               ].newLicenseCode =
-                store.getters["reviewer/getAssignedForEveryOneSearched"][
+                assignedToEveryone.value[
                   prop
                 ].verificationCode;
             }
@@ -803,52 +735,50 @@ export default {
         showAllUnfinishedLoaing.value = false;
         everyoneUnfinished.value =
           store.getters["reviewer/getEveryOneUnfinishedSearched"];
-        console.log("every one unfinished", everyoneUnfinished.value);
-        console.log("store.log", store.getters["reviewer/getEveryOneUnfinishedSearched"])
         
         if (
           store.getters["reviewer/getEveryOneUnfinishedSearched"].length !== 0
         ) {
           for (var prop in store.getters["reviewer/getEveryOneUnfinishedSearched"]) {
-            if(store.getters["reviewer/getEveryOneUnfinishedSearched"][prop].documents !== null) {
-              for(var psp in store.getters["reviewer/getEveryOneUnfinishedSearched"][prop].documents) {
-                if(store.getters["reviewer/getEveryOneUnfinishedSearched"][prop].documents[psp].documentTypeCode === "PSP") {
-                  store.getters["reviewer/getEveryOneUnfinishedSearched"][prop].profilePic = store.getters["reviewer/getEveryOneUnfinishedSearched"][prop].documents[psp].fileName
+            if(everyoneUnfinished.value[prop].documents !== null) {
+              for(var psp in everyoneUnfinished.value[prop].documents) {
+                if(everyoneUnfinished.value[prop].documents[psp].documentTypeCode === "PSP") {
+                  everyoneUnfinished.value[prop].profilePic = everyoneUnfinished.value[prop].documents[psp].fileName
                   // store.getters["reviewer/getUnfinishedSearched"]
                   break;
                 }
               }
             }
             if (
-              store.getters["reviewer/getEveryOneUnfinishedSearched"][prop]
+              everyoneUnfinished.value[prop]
                 .applicationType == "Renewal"
             ) {
-              store.getters["reviewer/getEveryOneUnfinishedSearched"][
+              everyoneUnfinished.value[
                 prop
               ].newLicenseCode =
-                store.getters["reviewer/getEveryOneUnfinishedSearched"][
+                everyoneUnfinished.value[
                   prop
                 ].renewalCode;
             }
             if (
-              store.getters["reviewer/getEveryOneUnfinishedSearched"][prop]
+              everyoneUnfinished.value[prop]
                 .applicationType == "Good Standing"
             ) {
-              store.getters["reviewer/getEveryOneUnfinishedSearched"][
+              everyoneUnfinished.value[
                 prop
               ].newLicenseCode =
-                store.getters["reviewer/getEveryOneUnfinishedSearched"][
+                everyoneUnfinished.value[
                   prop
                 ].goodStandingCode;
             }
             if (
-              store.getters["reviewer/getEveryOneUnfinishedSearched"][prop]
+              everyoneUnfinished.value[prop]
                 .applicationType == "Verification"
             ) {
-              store.getters["reviewer/getEveryOneUnfinishedSearched"][
+              everyoneUnfinished.value[
                 prop
               ].newLicenseCode =
-                store.getters["reviewer/getEveryOneUnfinishedSearched"][
+                everyoneUnfinished.value[
                   prop
                 ].verificationCode;
             }
@@ -974,6 +904,7 @@ img {
   border-radius: 50%;
   margin-bottom: 1rem;
   width: 80px;
+  height: 80px;
   border-color: steelblue;
   background-color: steelblue;
 }

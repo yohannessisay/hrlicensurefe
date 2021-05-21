@@ -10,7 +10,7 @@
           v-if="!showLoadingApproved">
         <div
           class="container"
-          v-for="(item, index) in getRecentlyFinished"
+          v-for="(item, index) in getApproved"
           v-bind:key="index"
           v-bind:value="item.id"
         >
@@ -198,6 +198,9 @@ export default {
   components: { ReviewerNavBar, Title, Spinner },
   computed: {
     moment: () => moment,
+    getApproved() {
+      return store.getters['reviewer/getApprovedSearched']
+    },
     getRecentlyFinished() {
       return store.getters['reviewer/getRecentlyFinishedSearched']
     }
@@ -219,7 +222,7 @@ export default {
       showLoadingRejected.value = true
       showLoadingSuperVision.value = true
       store.dispatch("reviewer/getRecentlyFinished", adminId).then(res => {
-        console.log("id- admin", adminId)
+        console.log("approvedddd", store.getters['reviewer/getApprovedSearched'])
         showLoadingApproved.value = false
         showLoadingRejected.value = false
         showLoadingSuperVision.value = false
@@ -252,6 +255,7 @@ img {
   border-radius: 50%;
   margin-bottom: 1rem;
   width: 80px;
+  height: 80px;
   border-color: steelblue;
   background-color: steelblue;
 }

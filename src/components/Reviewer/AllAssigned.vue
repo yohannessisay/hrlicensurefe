@@ -120,10 +120,11 @@ export default {
     let showLoading = ref(false);
     let x = ref("");
     let userId = +localStorage.getItem("userId");
+    let adminRole = localStorage.getItem("role");
 
     const fetchAssignedtoYou = () => {
       showLoading.value = true;
-      store.dispatch("reviewer/getAssignedToEveryOne").then((res) => {
+      store.dispatch("reviewer/getAssignedToEveryOne", adminRole).then((res) => {
         showLoading.value = false;
         // if (res.status != "Error") {
         assignedToyou.value =
@@ -187,6 +188,7 @@ export default {
       nothingToShow,
       detail,
       showLoading,
+      adminRole,
     };
   },
 };
@@ -196,6 +198,7 @@ img {
   border-radius: 50%;
   margin-bottom: 1rem;
   width: 80px;
+  height: 80px;
   border-color: steelblue;
   background-color: steelblue;
 }
