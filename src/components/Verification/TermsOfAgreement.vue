@@ -24,7 +24,6 @@
         <ul>
           <li>Letter from Hiring Organization</li>
           <li>License Copy</li>
-          <li>Service</li>
         </ul>
       </div>
     </div>

@@ -79,10 +79,10 @@
     </div>
   </div>
   <div class="mr-3xl" v-if="showFlash">
-    <FlashMessage message="Verification saved Successful!" />
+    <FlashMessage message="Operation Successful!" />
   </div>
   <div v-if="showErrorFlash">
-    <ErrorFlashMessage message="Saving verification Failed!" />
+    <ErrorFlashMessage message="Operation Failed!" />
   </div>
 </template>
 

@@ -131,7 +131,6 @@ export default {
     let coc = ref("");
     let educationDoc = ref([]);
     let englishLanguage = ref("");
-    let serviceFee = ref("");
     let professionalLicense = ref("");
     let letterfromOrg = ref("");
     let renewedLicense = ref("");
@@ -187,7 +186,6 @@ export default {
     coc = store.getters["newlicense/getCoc"];
     educationDoc = store.getters["newlicense/getEducationalDocuments"];
     englishLanguage = store.getters["newlicense/getEnglishLanguage"];
-    serviceFee = store.getters["newlicense/getServiceFee"];
     renewedLicense = store.getters["newlicense/getRenewedLicense"];
     professionalLicense = store.getters["newlicense/getProfessionalLicense"];
     letterfromOrg = store.getters["newlicense/getLetterfromOrg"];
@@ -201,7 +199,6 @@ export default {
           formData.append(documentSpecs[0].documentType.code, photo);
           formData.append(documentSpecs[1].documentType.code, passport);
           formData.append(documentSpecs[2].documentType.code, healthExamCert);
-          formData.append(documentSpecs[3].documentType.code, serviceFee);
           formData.append(
             documentSpecs[4].documentType.code,
             workExperienceFile
@@ -305,7 +302,6 @@ export default {
           formData.append(documentSpecs[0].documentType.code, photo);
           formData.append(documentSpecs[1].documentType.code, passport);
           formData.append(documentSpecs[2].documentType.code, healthExamCert);
-          formData.append(documentSpecs[3].documentType.code, serviceFee);
           formData.append(
             documentSpecs[4].documentType.code,
             workExperienceFile

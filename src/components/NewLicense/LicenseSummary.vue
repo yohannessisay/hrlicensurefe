@@ -354,7 +354,6 @@ export default {
     coc: "",
     educationalDocs: [],
     workExperience: "",
-    serviceFee: "",
     applicationId: "",
     buttons: [],
     documentTypes: [],
@@ -373,7 +372,6 @@ export default {
       getCoc: "newlicense/getCoc",
       getEducationalDocuments: "newlicense/getEducationalDocuments",
       getWorkExperience: "newlicense/getWorkExperience",
-      getServiceFee: "newlicense/getServiceFee",
       getButtons: "newlicense/getButtons",
       getApplicationId: "newlicense/getApplicationId",
       getDraftData: "newlicense/getDraft",
@@ -431,7 +429,6 @@ export default {
         this.documentTypes[2].documentType.code,
         this.healthExamCert
       );
-      formData.append(this.documentTypes[3].documentType.code, this.serviceFee);
       formData.append(
         this.documentTypes[4].documentType.code,
         this.workExperience
@@ -508,6 +505,7 @@ export default {
         },
       };
       this.$store.dispatch("newlicense/addNewLicense", license).then((res) => {
+        console.log(res);
         let licenseId = res.data.data.id;
         let payload = { document: formData, id: licenseId };
         this.$store
@@ -564,10 +562,7 @@ export default {
           this.documentTypes[2].documentType.code,
           this.healthExamCert
         );
-        formData.append(
-          this.documentTypes[3].documentType.code,
-          this.serviceFee
-        );
+
         formData.append(
           this.documentTypes[4].documentType.code,
           this.workExperience

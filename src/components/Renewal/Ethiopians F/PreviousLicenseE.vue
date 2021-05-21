@@ -186,7 +186,7 @@ export default {
           if (draftData.documents[i].documentTypeCode == "PL") {
             showUpload.value = false;
             isImage.value = true;
-            photoFile.value = draftData.documents[i];
+            previousLicenseFile.value = draftData.documents[i];
             showPreview.value = true;
             filePreview.value = basePath + draftData.documents[i].filePath;
           }

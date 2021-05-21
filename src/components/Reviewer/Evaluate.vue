@@ -19,7 +19,7 @@
         </div>
         <div class="flex justify-start flex-wrap ml-12">
           <div>
-            <picture class="flex justify-center items-center mb-small">
+            <picture class="flex justify-center items-center mb-small" v-if="docs.length > 0">
               <img
                 style="border-radius: 100%"
                 v-bind:src="
@@ -96,7 +96,7 @@
                   <img :src="basePath + file.filePath" />
                 </picture>
               </div> -->
-              <picture>
+              <picture v-if="docs.length > 0">
                 <img
                   v-bind:src="
                     'https://hrlicensurebe.dev.k8s.sandboxaddis.com/' +
@@ -104,6 +104,9 @@
                   "
                 />
               </picture>
+              <div class="flex content-center justify-center pb-large" v-if=" docs.length == 0">
+                <h2>No Documents To Show!!</h2>
+              </div>
               <!-- {{docs[0].filePath}} -->
             </div>
           </div>
@@ -261,7 +264,7 @@
                                 <img :src="basePath + file.filePath" />
                               </picture>
                             </div> -->
-                            <picture class="imageViewer">
+                            <picture class="imageViewer" v-if="rejectedObj.length > 0">
                               <img
                                 v-bind:src="
                                   'https://hrlicensurebe.dev.k8s.sandboxaddis.com/' +
@@ -391,14 +394,14 @@ export default {
     let documentTypes = ref([]);
     let documentTypeName = ref("");
     let modalDocumentTypeName = ref("");
-    let docs = ref([{ filePath: "" }]);
+    let docs = ref([]);
     let index = ref(0);
     let ind = ref(0);
     let amount = ref(1);
     let width = ref("width:11.11111%");
     let accepted = ref([]);
     let rejected = ref([]);
-    let rejectedObj = ref([{ filePath: "" }]);
+    let rejectedObj = ref([]);
     let showButtons = ref(false);
     let disableNext = ref(true);
     let nextClickable = ref(false);

@@ -187,7 +187,7 @@ export default {
           if (draftData.documents[i].documentTypeCode == "SF") {
             showUpload.value = false;
             isImage.value = true;
-            photoFile.value = draftData.documents[i];
+            serviceFeeFile.value = draftData.documents[i];
             showPreview.value = true;
             filePreview.value = basePath + draftData.documents[i].filePath;
           }

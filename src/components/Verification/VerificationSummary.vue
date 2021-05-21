@@ -340,7 +340,6 @@ export default {
     showLoading2: false,
 
     licenseCopy: "",
-    serviceFee: "",
     goodstandingLetter: "",
 
     applicationId: "",
@@ -353,7 +352,6 @@ export default {
       getLicense: "verification/getLicense",
 
       getLicenseCopy: "verification/getLicenseCopy",
-      getServiceFee: "verification/getServiceFee",
       getLetter: "verification/getVerificationLetter",
 
       getButtons: "verification/getButtons",
@@ -394,7 +392,6 @@ export default {
       this.showFlash = false;
       this.showErrorFlash = false;
       let formData = new FormData();
-      formData.append(this.documentTypes[0].documentType.code, this.serviceFee);
       formData.append(
         this.documentTypes[1].documentType.code,
         this.licenseCopy
@@ -403,6 +400,9 @@ export default {
         this.documentTypes[2].documentType.code,
         this.goodstandingLetter
       );
+      for (var pair of formData.entries()) {
+        console.log(pair[0] + ", " + pair[1]);
+      }
 
       let license = {
         action: action,
@@ -468,10 +468,7 @@ export default {
         this.showFlash = false;
         this.showErrorFlash = false;
         let formData = new FormData();
-        formData.append(
-          this.documentTypes[0].documentType.code,
-          this.serviceFee
-        );
+
         formData.append(
           this.documentTypes[1].documentType.code,
           this.licenseCopy

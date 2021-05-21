@@ -30,13 +30,8 @@
           </transition>
           <transition name="fade" mode="out-in">
             <div v-if="this.activeState == 4">
-              <ServiceFee :activeState="4" @changeActiveState="activeState++" />
-            </div>
-          </transition>
-          <transition name="fade" mode="out-in">
-            <div v-if="this.activeState == 5">
               <GoodStandingSummary
-                :activeState="5"
+                :activeState="4"
                 @changeActiveState="activeState++"
               />
             </div>
@@ -58,7 +53,6 @@ import Institution from "./Institution.vue";
 import GoodStandingSummary from "./GoodStandingSummary";
 import GoodStandingLetter from "./LetterFromOrg";
 import LicenseCopy from "./LicenseCopy";
-import ServiceFee from "./ServiceFee";
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import Spinner from "@/sharedComponents/Spinner";
@@ -90,7 +84,6 @@ export default {
     GoodStandingSummary,
     GoodStandingLetter,
     LicenseCopy,
-    ServiceFee,
     FlashMessage,
     ErrorFlashMessage,
     Spinner,
@@ -125,7 +118,6 @@ export default {
         .then((res) => {
           const results = res.data.data;
           this.applicationCategories = results;
-          console.log(this.applicationCategories);
           const newApplicationData = this.applicationCategories.filter(
             (item) => {
               return item.name == "Good Standing Later";
@@ -145,7 +137,6 @@ export default {
         .then((res) => {
           const results = res.data.data;
           this.documentSpecs = results;
-          console.log(this.documentSpecs);
           this.$store
             .dispatch("goodstanding/setDocumentSpecs", this.documentSpecs)
             .then((res) => {});

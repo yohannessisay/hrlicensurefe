@@ -130,7 +130,6 @@ export default {
     let coc = ref("");
     let educationDoc = ref([]);
     let workExperience = ref("");
-    let serviceFee = ref("");
     let professionalLicense = ref("");
     let letterfromOrg = ref("");
 
@@ -186,7 +185,6 @@ export default {
     coc = store.getters["newlicense/getCoc"];
     educationDoc = store.getters["newlicense/getEducationalDocuments"];
     workExperience = store.getters["newlicense/getWorkExperience"];
-    serviceFee = store.getters["newlicense/getServiceFee"];
     professionalLicense = store.getters["newlicense/getProfessionalLicense"];
     letterfromOrg = store.getters["newlicense/getLetterfromOrg"];
 
@@ -197,7 +195,6 @@ export default {
           formData.append(documentSpecs[0].documentType.code, photo);
           formData.append(documentSpecs[1].documentType.code, passport);
           formData.append(documentSpecs[2].documentType.code, healthExamCert);
-          formData.append(documentSpecs[3].documentType.code, serviceFee);
           formData.append(documentSpecs[4].documentType.code, workExperience);
           formData.append(documentSpecs[5].documentType.code, englishLanguage);
           if (professionalDoc != undefined) {
@@ -299,7 +296,6 @@ export default {
           formData.append(documentSpecs[0].documentType.code, photo);
           formData.append(documentSpecs[1].documentType.code, passport);
           formData.append(documentSpecs[2].documentType.code, healthExamCert);
-          formData.append(documentSpecs[3].documentType.code, serviceFee);
           formData.append(documentSpecs[4].documentType.code, workExperience);
           formData.append(documentSpecs[5].documentType.code, englishLanguage);
           if (professionalDoc != undefined) {
@@ -387,7 +383,7 @@ export default {
       });
     };
     onMounted(() => {
-      const letterFile = store.getters["newlicense/getEnglishLanguage"];
+      // const letterFile = store.getters["newlicense/getEnglishLanguage"];
       buttons = store.getters["newlicense/getButtons"];
       draftData = store.getters["newlicense/getDraft"];
       if (route.params.id) {

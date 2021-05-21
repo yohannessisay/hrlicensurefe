@@ -124,7 +124,6 @@ export default {
     let draftData = ref("");
 
     let licenseCopy = ref("");
-    let serviceFee = ref("");
 
     const reset = () => {
       showUpload.value = true;
@@ -163,7 +162,6 @@ export default {
     licenseInfo = store.getters["verification/getLicense"];
 
     licenseCopy = store.getters["verification/getLicenseCopy"];
-    serviceFee = store.getters["verification/getServiceFee"];
 
     const submit = () => {
       emit("changeActiveState");
@@ -190,7 +188,6 @@ export default {
       if (route.params.id) {
         if (dataChanged.value) {
           let formData = new FormData();
-          formData.append(documentSpecs[0].documentType.code, serviceFee);
           formData.append(documentSpecs[1].documentType.code, letterFile);
           formData.append(documentSpecs[2].documentType.code, licenseCopy);
 
@@ -246,7 +243,6 @@ export default {
           .then((res) => {
             let licenseId = res.data.data.id;
             let formData = new FormData();
-            formData.append(documentSpecs[0].documentType.code, serviceFee);
             formData.append(documentSpecs[1].documentType.code, letterFile);
             formData.append(documentSpecs[2].documentType.code, licenseCopy);
 
@@ -309,7 +305,6 @@ export default {
       message,
       dataChanged,
       licenseCopy,
-      serviceFee,
     };
   },
 };

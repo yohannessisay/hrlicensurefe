@@ -29,7 +29,6 @@
           <li>Professional Document Diploma</li>
           <li>Professional Document Transcript</li>
           <li>English Language Certificate</li>
-          <li>Service Fee</li>
           <li>Letter from Organization</li>
           <li>Renewed License of the Organization</li>
           <li>Authenticated Professional License from Country of Origin</li>
@@ -49,7 +48,6 @@
           <li>11<sup>th</sup> - 12<sup>th</sup> Transcript</li>
           <li>Support Letter</li>
           <li>Work Experience Certificate</li>
-          <li>Service Fee</li>
         </ul>
       </div>
       <div class="ml-8">
@@ -63,7 +61,6 @@
           <li>Professional Document Transcript</li>
           <li>HERQA</li>
           <li>Support Letter</li>
-          <li>Service Fee</li>
         </ul>
       </div>
     </div>
