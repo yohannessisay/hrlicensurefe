@@ -6,14 +6,14 @@
         <Title message="Pending Payments" />
       </div>
       <div class="flex flex-wrap pb-medium rounded h-full" v-if="!showLoading">
-        <div class="pl-large w-52 h-26" v-if="nothingToShowUnfinished == true">
+        <div class="pl-large w-52 h-26" v-if="nothingToShowPending == true">
           <div class="flex content-center justify-center">
             <h2>Nothing To Show!</h2>
           </div>
         </div>
         <div
           class="container"
-          v-for="item in getUnfinished"
+          v-for="item in getPending"
           v-bind:key="item.id"
           v-bind:value="item.id"
         >
@@ -94,7 +94,7 @@ export default {
   components: { ReviewerNavBar, Title, Spinner },
   computed: {
     moment: () => moment,
-    getUnfinished() {
+    getPending() {
       return store.getters['reviewer/getPendingPayments'];
     }
   },
@@ -102,35 +102,35 @@ export default {
     const store = useStore();
     const router = useRouter();
 
-    let unfinished = ref({});
+    let pending = ref({});
     let x = ref([]);
     let adminId = +localStorage.getItem("adminId");
-    let nothingToShowUnfinished = ref(false);
+    let nothingToShowPending = ref(false);
     let showLoading = ref(false);
 
     const fetchPendings = () => {
       showLoading.value = true
       store.dispatch("reviewer/getPendingPayments", adminId).then(res => {
         showLoading.value = false
-          unfinished.value = store.getters['reviewer/getPendingPayments'];
-        // if(store.getters['reviewer/getUnfinished'].length !== 0) {
-        //   for (var prop in store.getters['reviewer/getUnfinishedSearched']) {
-        //     if (store.getters['reviewer/getUnfinishedSearched'][prop].applicationType == "Renewal") {
-        //       store.getters['reviewer/getUnfinishedSearched'][prop].newLicenseCode =
-        //         store.getters['reviewer/getUnfinishedSearched'][prop].renewalCode;
-        //     }
-        //     if (store.getters['reviewer/getUnfinishedSearched'][prop].applicationType == "Good Standing") {
-        //       store.getters['reviewer/getUnfinishedSearched'][prop].newLicenseCode =
-        //         store.getters['reviewer/getUnfinishedSearched'][prop].goodStandingCode;
-        //     }
-        //     if (store.getters['reviewer/getUnfinishedSearched'][prop].applicationType == "Verification") {
-        //       store.getters['reviewer/getUnfinishedSearched'][prop].newLicenseCode =
-        //         store.getters['reviewer/getUnfinishedSearched'][prop].verificationCode;
-        //     }
-        //   }
-        // } else {
-        //   nothingToShowUnfinished.value = true;
-        // }
+          pending.value = store.getters['reviewer/getPendingPayments'];
+        if(store.getters['reviewer/getPendingPayments'].length !== 0) {
+          for (var prop in store.getters['reviewer/getPendingPayments']) {
+            if (pending.value[prop].applicationType == "Renewal") {
+              pending.value[prop].newLicenseCode =
+                pending.value[prop].renewalCode;
+            }
+            if (pending.value[prop].applicationType == "Good Standing") {
+              pending.value[prop].newLicenseCode =
+                pending.value[prop].goodStandingCode;
+            }
+            if (pending.value[prop].applicationType == "Verification") {
+              pending.value[prop].newLicenseCode =
+                pending.value[prop].verificationCode;
+            }
+          }
+        } else {
+          nothingToShowPending.value = true;
+        }
       });
     };
 
@@ -146,9 +146,9 @@ export default {
     });
 
     return {
-      unfinished,
+      pending,
       detail,
-      nothingToShowUnfinished,
+      nothingToShowPending,
       showLoading,
     };
   }

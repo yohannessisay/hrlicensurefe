@@ -62,7 +62,7 @@
             >
               <label class="ml-8"> Date of Birth</label>
               <h5 class="ml-8">
-                {{ profileInfo.dateOfBirth ? profileInfo.dateOfBirth : "-" }}
+                {{ profileInfo.dateOfBirth ? moment(profileInfo.dateOfBirth).format("MMM D, YYYY") : "-" }}
               </h5>
             </div>
             <div
@@ -247,6 +247,7 @@ import ReviewerNavBar from "@/components/Reviewer/ReviewerNavBar";
 import { mapGetters } from "vuex";
 import { ref, onMounted } from "vue";
 import Spinner from "@/sharedComponents/Spinner";
+import moment from 'moment';
 
 export default {
   props: ["activeState"],
@@ -254,6 +255,9 @@ export default {
     Title,
     ReviewerNavBar,
     Spinner,
+  },
+  computed: {
+    moment: () => moment,
   },
   setup() {
     const store = useStore();

@@ -6,11 +6,16 @@
         <Title message="Approved" />
       </div>
       <div
-        class="flex flex-wrap justify-center items-center pb-medium rounded h-full"
-      v-if="!showLoading">
+        class="flex flex-wrap pb-medium rounded h-full"
+          v-if="!showLoadingApproved">
+        <div class="pl-large w-52 h-26" v-if="nothingToAllApproved == true">
+          <div class="flex content-center justify-center">
+            <h2>Nothing To Show!</h2>
+          </div>
+        </div>
         <div
           class="container"
-          v-for="(item, index) in getRecentlyFinished"
+          v-for="(item, index) in getAllApproved"
           v-bind:key="index"
           v-bind:value="item.id"
         >
@@ -32,9 +37,7 @@
               <h4
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
               >
-               <b>
-                {{ item.applicant.profile.name + " " + item.applicant.profile.fatherName }}
-               </b>
+                <b>{{ item.applicant.profile.name + " " + item.applicant.profile.fatherName }}</b>
               </h4>
               <span
                 class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
@@ -64,16 +67,27 @@
           </div>
         </div>
         <!-- Second !-->
+      </div>
+      <div
+      v-if="showLoadingApproved"
+        class="flex content-center justify-center"
+      >
+        <Spinner />
       </div>
       <div class="flex pl-12 pt-tiny">
         <Title message="Rejected" />
       </div>
       <div
-        class="flex flex-wrap justify-center items-center pb-medium rounded h-full"
-      v-if="!showLoading">
+        class="flex flex-wrap pb-medium rounded h-full"
+          v-if="!showLoadingRejected">
+          <div class="pl-large w-52 h-26" v-if="nothingToShowAllRejected == true">
+          <div class="flex content-center justify-center">
+            <h2>Nothing To Show!</h2>
+          </div>
+        </div>
         <div
           class="container"
-          v-for="(item, index) in getRecentlyFinished"
+          v-for="(item, index) in getAllRejected"
           v-bind:key="index"
           v-bind:value="item.id"
         >
@@ -95,9 +109,7 @@
               <h4
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
               >
-               <b>
-                {{ item.applicant.profile.name + " " + item.applicant.profile.fatherName }}
-               </b>
+                <b>{{ item.applicant.profile.name + " " + item.applicant.profile.fatherName }}</b>
               </h4>
               <span
                 class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
@@ -128,15 +140,25 @@
         </div>
         <!-- Second !-->
       </div>
+      <div v-if="showLoadingRejected"
+          class="flex content-center justify-center"
+        >
+          <Spinner />
+        </div>
       <div class="flex pl-12 pt-tiny">
-        <Title message="Under Supervision" />
+        <Title message="Under SuperVision" />
       </div>
       <div
-        class="flex flex-wrap justify-center items-center pb-medium rounded h-full"
-      v-if="!showLoading">
+        class="flex flex-wrap pb-medium rounded h-full"
+          v-if="!showLoadingSuperVision">
+          <div class="pl-large w-52 h-26" v-if="nothingToShowAllUnderSuperVision == true">
+          <div class="flex content-center justify-center">
+            <h2>Nothing To Show!</h2>
+          </div>
+        </div>
         <div
           class="container"
-          v-for="(item, index) in getRecentlyFinished"
+          v-for="(item, index) in getAllUnderSuperVision"
           v-bind:key="index"
           v-bind:value="item.id"
         >
@@ -158,9 +180,9 @@
               <h4
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
               >
-               <b>
-                {{ item.applicant.profile.name + " " + item.applicant.profile.fatherName }}
-               </b>
+                <b>
+                  {{ item.applicant.profile.name + " " + item.applicant.profile.fatherName }} 
+                </b>
               </h4>
               <span
                 class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
@@ -191,13 +213,14 @@
         </div>
         <!-- Second !-->
       </div>
-    </div>
-    <div
-      v-if="showLoading"
-      class="flex justify-center justify-items-center mt-24"
+      <div
+      v-if="showLoadingSuperVision"
+      class="flex content-center justify-center"
     >
       <Spinner />
     </div>
+    </div>
+    
   </div>
 </template>
 
@@ -206,37 +229,114 @@ import Title from "@/sharedComponents/TitleWithIllustration";
 import ReviewerNavBar from "@/components/Reviewer/ReviewerNavBar";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router"
+import moment from 'moment'
 
 import { ref, onMounted } from "vue";
 
 import store from "../../store"
 import Spinner from "@/sharedComponents/Spinner";
 
-import moment from 'moment'
-
 export default {
   components: { ReviewerNavBar, Title, Spinner },
   computed: {
     moment: () => moment,
+    getAllApproved() {
+      return store.getters['reviewer/getAllApprovedSearched']
+    },
     getRecentlyFinished() {
-      return store.getters['reviewer/getAllRecentlyFinishedSearched']
+      return store.getters['reviewer/getRecentlyFinishedSearched']
+    },
+    getAllRejected() {
+      return store.getters['reviewer/getAllRejectedSearched']
+    },
+    getAllUnderSuperVision() {
+      return store.getters['reviewer/getAllUnderSuperVisionSearched']
     }
   },
   setup() {
     const store = useStore();
     const router = useRouter()
 
-    let recentlyFinished = ref({});
 
     let adminId = +localStorage.getItem("adminId");
-    let showLoading = ref(false)
+    let adminRole = localStorage.getItem("role");
+    let nothingToAllApproved = ref(false);
+    let nothingToShowAllRejected = ref(false);
+    let nothingToShowAllUnderSuperVision = ref(false);
+
+    let showLoadingApproved = ref(false);
+    let showLoadingRejected = ref(false);
+    let showLoadingSuperVision = ref(false);
+
+    let allApproved = ref({});
+    let allRejected = ref({});
+    let allUnderSuperVision = ref({});
 
     const fetchRecentlyFinished = () => {
-      showLoading.value = true
-      store.dispatch("reviewer/getAllRecentlyFinished").then(res => {
-        console.log("------", store.getters['reviewer/getAllRecentlyFinishedSearched'])
-        showLoading.value = false
-        recentlyFinished.value = store.getters['reviewer/getAllRecentlyFinishedSearched'];
+      showLoadingApproved.value = true
+      showLoadingRejected.value = true
+      showLoadingSuperVision.value = true
+      store.dispatch("reviewer/getAllRecentlyFinished", adminRole).then(res => {
+        if(store.getters['reviewer/getAllApprovedSearched'].length == 0) {
+          nothingToAllApproved.value = true;
+        } else {
+          allApproved.value = store.getters['reviewer/getAllApprovedSearched']
+          for (var prop in store.getters['reviewer/getAllApprovedSearched']) {
+            if (allApproved.value[prop].applicationType == "Renewal") {
+              allApproved.value[prop].newLicenseCode =
+                allApproved.value[prop].renewalCode;
+            }
+            if (allApproved.value[prop].applicationType == "Good Standing") {
+              allApproved.value[prop].newLicenseCode =
+                allApproved.value[prop].goodStandingCode;
+            }
+            if (allApproved.value[prop].applicationType == "Verification") {
+              allApproved.value[prop].newLicenseCode =
+                allApproved.value[prop].verificationCode;
+            }
+          }
+        }
+        if(store.getters['reviewer/getAllRejectedSearched'].length == 0) {
+          nothingToShowAllRejected.value = true;
+        } else {
+          allRejected.value = store.getters['reviewer/getAllRejectedSearched']
+          for (var prop in store.getters['reviewer/getAllRejectedSearched']) {
+            if (allRejected.value[prop].applicationType == "Renewal") {
+              allRejected.value[prop].newLicenseCode =
+                allRejected.value[prop].renewalCode;
+            }
+            if (allRejected.value[prop].applicationType == "Good Standing") {
+              allRejected.value[prop].newLicenseCode =
+                allRejected.value[prop].goodStandingCode;
+            }
+            if (allRejected.value[prop].applicationType == "Verification") {
+              allRejected.value[prop].newLicenseCode =
+                allRejected.value[prop].verificationCode;
+            }
+          }
+        }
+        if (store.getters['reviewer/getAllUnderSuperVisionSearched'].length == 0) {
+          nothingToShowAllUnderSuperVision.value = true;
+        } else {
+          allUnderSuperVision.value = store.getters['reviewer/getAllUnderSuperVisionSearched']
+          for (var prop in store.getters['reviewer/getAllUnderSuperVisionSearched']) {
+            if (allUnderSuperVision.value[prop].applicationType == "Renewal") {
+              allUnderSuperVision.value[prop].newLicenseCode =
+                allUnderSuperVision.value[prop].renewalCode;
+            }
+            if (allUnderSuperVision.value[prop].applicationType == "Good Standing") {
+              allUnderSuperVision.value[prop].newLicenseCode =
+                allUnderSuperVision.value[prop].goodStandingCode;
+            }
+            if (allUnderSuperVision.value[prop].applicationType == "Verification") {
+              allUnderSuperVision.value[prop].newLicenseCode =
+                allUnderSuperVision.value[prop].verificationCode;
+            }
+          }
+        }
+        showLoadingApproved.value = false
+        showLoadingRejected.value = false
+        showLoadingSuperVision.value = false
       });
     };
 
@@ -251,9 +351,16 @@ export default {
     });
 
     return {
-      recentlyFinished,
-      showLoading,
-      detail
+      detail,
+      showLoadingApproved,
+      showLoadingRejected,
+      showLoadingSuperVision,
+      nothingToAllApproved,
+      nothingToShowAllRejected,
+      nothingToShowAllUnderSuperVision,
+      allApproved,
+      allRejected,
+      allUnderSuperVision
     };
   }
 };

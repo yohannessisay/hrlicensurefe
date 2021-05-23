@@ -6,8 +6,13 @@
         <Title message="Approved" />
       </div>
       <div
-        class="flex flex-wrap justify-center items-center pb-medium rounded h-full"
+        class="flex flex-wrap pb-medium rounded h-full"
           v-if="!showLoadingApproved">
+          <div class="pl-large w-52 h-26" v-if="nothingToShowApproved == true">
+          <div class="flex content-center justify-center">
+            <h2>Nothing To Show!</h2>
+          </div>
+        </div>
         <div
           class="container"
           v-for="(item, index) in getApproved"
@@ -64,11 +69,16 @@
         <Title message="Rejected" />
       </div>
       <div
-        class="flex flex-wrap justify-center items-center pb-medium rounded h-full"
+        class="flex flex-wrap pb-medium rounded h-full"
           v-if="!showLoadingRejected">
+          <div class="pl-large w-52 h-26" v-if="nothingToShowRejected == true">
+          <div class="flex content-center justify-center">
+            <h2>Nothing To Show!</h2>
+          </div>
+        </div>
         <div
           class="container"
-          v-for="(item, index) in getRecentlyFinished"
+          v-for="(item, index) in getRejected"
           v-bind:key="index"
           v-bind:value="item.id"
         >
@@ -121,11 +131,16 @@
         <Title message="Under SuperVision" />
       </div>
       <div
-        class="flex flex-wrap justify-center items-center pb-medium rounded h-full"
+        class="flex flex-wrap pb-medium rounded h-full"
           v-if="!showLoadingSuperVision">
+          <div class="pl-large w-52 h-26" v-if="nothingToShowUnderSuperVision == true">
+          <div class="flex content-center justify-center">
+            <h2>Nothing To Show!</h2>
+          </div>
+        </div>
         <div
           class="container"
-          v-for="(item, index) in getRecentlyFinished"
+          v-for="(item, index) in getUnderSuperVision"
           v-bind:key="index"
           v-bind:value="item.id"
         >
@@ -203,13 +218,17 @@ export default {
     },
     getRecentlyFinished() {
       return store.getters['reviewer/getRecentlyFinishedSearched']
+    },
+    getRejected() {
+      return store.getters['reviewer/getRejectedSearched']
+    },
+    getUnderSuperVision() {
+      return store.getters['reviewer/getUnderSuperVisionSearched']
     }
   },
   setup() {
     const store = useStore();
     const router = useRouter()
-
-    let recentlyFinished = ref({});
 
     let adminId = +localStorage.getItem("adminId");
 
@@ -217,16 +236,79 @@ export default {
     let showLoadingRejected = ref(false);
     let showLoadingSuperVision = ref(false);
 
+    let nothingToShowApproved = ref(false);
+    let nothingToShowRejected = ref(false);
+    let nothingToShowUnderSuperVision = ref(false);
+
+    let approved = ref({});
+    let rejected = ref({});
+    let underSuperVision = ref({});
+
     const fetchRecentlyFinished = () => {
       showLoadingApproved.value = true
       showLoadingRejected.value = true
       showLoadingSuperVision.value = true
       store.dispatch("reviewer/getRecentlyFinished", adminId).then(res => {
-        console.log("approvedddd", store.getters['reviewer/getApprovedSearched'])
         showLoadingApproved.value = false
         showLoadingRejected.value = false
         showLoadingSuperVision.value = false
-        recentlyFinished.value = store.getters['reviewer/getRecentlyFinishedSearched'];
+        if(store.getters['reviewer/getApprovedSearched'].length == 0) {
+          nothingToShowApproved.value = true;
+        } else {
+          approved.value = store.getters['reviewer/getApprovedSearched']
+          for (var prop in store.getters['reviewer/getApprovedSearched']) {
+            if (approved.value[prop].applicationType == "Renewal") {
+              approved.value[prop].newLicenseCode =
+                approved.value[prop].renewalCode;
+            }
+            if (approved.value[prop].applicationType == "Good Standing") {
+              approved.value[prop].newLicenseCode =
+                approved.value[prop].goodStandingCode;
+            }
+            if (approved.value[prop].applicationType == "Verification") {
+              approved.value[prop].newLicenseCode =
+                approved.value[prop].verificationCode;
+            }
+          }
+        }
+        if(store.getters['reviewer/getRejectedSearched'].length == 0) {
+          nothingToShowRejected.value = true;
+        } else {
+          rejected.value = store.getters['reviewer/getRejectedSearched']
+          for (var prop in store.getters['reviewer/getRejectedSearched']) {
+            if (rejected.value[prop].applicationType == "Renewal") {
+              rejected.value[prop].newLicenseCode =
+                rejected.value[prop].renewalCode;
+            }
+            if (rejected.value[prop].applicationType == "Good Standing") {
+              rejected.value[prop].newLicenseCode =
+                rejected.value[prop].goodStandingCode;
+            }
+            if (rejected.value[prop].applicationType == "Verification") {
+              rejected.value[prop].newLicenseCode =
+                rejected.value[prop].verificationCode;
+            }
+          }
+        }
+        if(store.getters['reviewer/getUnderSuperVisionSearched'].length == 0) {
+          nothingToShowUnderSuperVision.value = true;
+        } else {
+          underSuperVision.value = store.getters['reviewer/getUnderSuperVisionSearched']
+          for (var prop in store.getters['reviewer/getUnderSuperVisionSearched']) {
+            if (underSuperVision.value[prop].applicationType == "Renewal") {
+              underSuperVision.value[prop].newLicenseCode =
+                underSuperVision.value[prop].renewalCode;
+            }
+            if (underSuperVision.value[prop].applicationType == "Good Standing") {
+              underSuperVision.value[prop].newLicenseCode =
+                underSuperVision.value[prop].goodStandingCode;
+            }
+            if (underSuperVision.value[prop].applicationType == "Verification") {
+              underSuperVision.value[prop].newLicenseCode =
+                underSuperVision.value[prop].verificationCode;
+            }
+          }
+        }
       });
     };
 
@@ -241,11 +323,16 @@ export default {
     });
 
     return {
-      recentlyFinished,
       detail,
       showLoadingApproved,
       showLoadingRejected,
-      showLoadingSuperVision
+      showLoadingSuperVision,
+      nothingToShowApproved,
+      nothingToShowRejected,
+      nothingToShowUnderSuperVision,
+      approved,
+      rejected,
+      underSuperVision,
     };
   }
 };

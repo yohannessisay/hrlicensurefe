@@ -34,29 +34,34 @@
               <h4
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
               >
-                {{
+                <b>{{
                   item.applicant.profile.name
                     ? item.applicant.profile.name +
                       " " +
                       item.applicant.profile.fatherName
                     : "-"
-                }}
+                }}</b>
               </h4>
-              <h6
-                class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
-              >
-                {{ item.createdAt ? item.createdAt : "-" }}
-              </h6>
               <span
-                class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+              >
+                unassigned
+              </span>
+              
+              <span
+                class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
               >
                 {{ item.applicationType ? item.applicationType : "-" }}
               </span>
               <span
-                class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
               >
-                Application ID:
                 {{ item.newLicenseCode ? item.newLicenseCode : "-" }}
+              </span>
+              <span
+                class="text-lightBlueB-500 mt-tiny flex justify-end content-center"
+              >
+                {{ item.createdAt ? moment(item.createdAt).fromNow() : "-" }}
               </span>
             </div>
           </div>
@@ -80,29 +85,29 @@
               <h4
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
               >
-                {{
+                <b>{{
                   item.applicant.profile.name
                     ? item.applicant.profile.name +
                       " " +
                       item.applicant.profile.fatherName
                     : "-"
-                }}
+                }}</b>
               </h4>
-              <h6
-                class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
-              >
-                {{ item.createdAt ? item.createdAt : "-" }}
-              </h6>
+  
               <span
-                class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
               >
                 {{ item.applicationType ? item.applicationType : "-" }}
               </span>
               <span
-                class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
               >
-                Application ID:
                 {{ item.newLicenseCode ? item.newLicenseCode : "-" }}
+              </span>
+              <span
+                class="text-lightBlueB-500 mt-tiny flex justify-end content-center"
+              >
+                {{ item.createdAt ? moment(item.createdAt).fromNow() : "-" }}
               </span>
               <div
                 class="flex ml-small w-32 pt-small justify-center content-center"
@@ -136,10 +141,12 @@ import { ref, onMounted, watch } from "vue";
 import { useRouter } from "vue-router";
 import store from "../../store";
 import Spinner from "@/sharedComponents/Spinner";
+import moment from "moment";
 
 export default {
   components: { ReviewerNavBar, Title, Spinner },
   computed: {
+    moment: () => moment,
     unAssignedSearched() {
       return store.getters["reviewer/getUnassignedSearched"];
     },

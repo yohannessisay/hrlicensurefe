@@ -118,15 +118,16 @@ export default {
 
     let unfinished = ref({});
     let x = ref([]);
-    let userId = +localStorage.getItem("adminId");
+    let adminRole = localStorage.getItem("role");
     let nothingToShowUnfinished = ref(false);
     let showLoading = ref(false);
 
     const fetchUnfinished = () => {
       showLoading.value = true;
-      store.dispatch("reviewer/getEveryOneUnfinished", userId).then(res => {
+      store.dispatch("reviewer/getEveryOneUnfinished", adminRole).then(res => {
         showLoading.value = false
           unfinished.value = store.getters['reviewer/getEveryOneUnfinishedSearched'];
+          console.log("console.looog", store.getters['reviewer/getEveryOneUnfinishedSearched'])
         if(store.getters['reviewer/getEveryOneUnfinishedSearched'].length !== 0) {
           for (var prop in store.getters['reviewer/getEveryOneUnfinishedSearched']) {
             if (store.getters['reviewer/getEveryOneUnfinishedSearched'][prop].applicationType == "Renewal") {

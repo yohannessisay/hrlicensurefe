@@ -6,7 +6,7 @@
         <Title message="Licensed Users" />
       </div>
       <div class="flex flex-wrap pb-medium rounded h-full" v-if="!showLoading">
-        <div class="pl-large w-52 h-26" v-if="nothingToShowUnfinished == true">
+        <div class="pl-large w-52 h-26" v-if="nothingToShowAllCertified == true">
           <div class="flex content-center justify-center">
             <h2>Nothing To Show!</h2>
           </div>
@@ -97,43 +97,46 @@ export default {
   computed: {
     moment: () => moment,
     getAllCertifiedUsers() {
-      return store.getters["reviewer/getAllRecentlyFinishedSearched"];
+      return store.getters["reviewer/getAllCertifiedUsersSearched"];
     },
   },
   setup() {
     const store = useStore();
     const router = useRouter();
 
-    let unfinished = ref({});
+    let allCertified = ref({});
     let x = ref([]);
-    let userId = +localStorage.getItem("adminId");
-    let nothingToShowUnfinished = ref(false);
+    let adminId = +localStorage.getItem("adminId");
+    let adminRole = localStorage.getItem("role");
+    let nothingToShowAllCertified = ref(false);
     let showLoading = ref(false);
 
-    const fetchUnfinished = () => {
+    const fetchAllCertified = () => {
       showLoading.value = true;
-      store.dispatch("reviewer/getAllRecentlyFinished").then((res) => {
+      store.dispatch("reviewer/getAllCertifiedUsers").then((res) => {
         showLoading.value = false;
-        unfinished.value =
-          store.getters["reviewer/getAllRecentlyFinishedSearched"];
-        // if(store.getters['reviewer/getEveryOneUnfinishedSearched'].length !== 0) {
-        //   for (var prop in store.getters['reviewer/getEveryOneUnfinishedSearched']) {
-        //     if (store.getters['reviewer/getEveryOneUnfinishedSearched'][prop].applicationType == "Renewal") {
-        //       store.getters['reviewer/getEveryOneUnfinishedSearched'][prop].newLicenseCode =
-        //         store.getters['reviewer/getEveryOneUnfinishedSearched'][prop].renewalCode;
-        //     }
-        //     if (store.getters['reviewer/getEveryOneUnfinishedSearched'][prop].applicationType == "Good Standing") {
-        //       store.getters['reviewer/getEveryOneUnfinishedSearched'][prop].newLicenseCode =
-        //         store.getters['reviewer/getEveryOneUnfinishedSearched'][prop].goodStandingCode;
-        //     }
-        //     if (store.getters['reviewer/getEveryOneUnfinishedSearched'][prop].applicationType == "Verification") {
-        //       store.getters['reviewer/getEveryOneUnfinishedSearched'][prop].newLicenseCode =
-        //         store.getters['reviewer/getEveryOneUnfinishedSearched'][prop].verificationCode;
-        //     }
-        //   }
-        // } else {
-        //   nothingToShowUnfinished.value = true;
-        // }
+        allCertified.value =
+          store.getters["reviewer/getAllCertifiedUsersSearched"];
+          console.log("showw", store.getters["reviewer/getAllCertifiedUsersSearched"])
+        if(store.getters["reviewer/getAllCertifiedUsersSearched"].length !== 0) {
+          for (var prop in store.getters["reviewer/getAllCertifiedUsersSearched"]) {
+            if (allCertified.value[prop].applicationType == "Renewal") {
+              allCertified.value[prop].newLicenseCode =
+                allCertified.value[prop].renewalCode;
+            }
+            if (allCertified.value[prop].applicationType == "Good Standing") {
+              allCertified.value[prop].newLicenseCode =
+                allCertified.value[prop].goodStandingCode;
+            }
+            if (allCertified.value[prop].applicationType == "Verification") {
+              allCertified.value[prop].newLicenseCode =
+                allCertified.value[prop].verificationCode;
+            }
+          }
+        } else {
+          nothingToShowAllCertified.value = true;
+        }
+          
       });
     };
 
@@ -143,14 +146,15 @@ export default {
     };
 
     onMounted(() => {
-      fetchUnfinished();
+      fetchAllCertified();
     });
 
     return {
-      unfinished,
+      allCertified,
       detail,
-      nothingToShowUnfinished,
+      nothingToShowAllCertified,
       showLoading,
+      adminId
     };
   },
 };
