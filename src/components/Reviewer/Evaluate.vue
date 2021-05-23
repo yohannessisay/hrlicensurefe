@@ -707,11 +707,13 @@ export default {
         console.log(rejectedObj.value);
       }
 
-      // console.log("action value", actionValue)
+      console.log("action value, m", actionValue)
       newLicense.value.declinedFields = rejected.value;
       newLicense.value.acceptedFields = accepted.value;
-      newLicense.value.certified = true;
-      newLicense.value.certifiedDate = new Date();
+      if(actionValue == "ApproveEvent") {
+        newLicense.value.certified = true;
+        newLicense.value.certifiedDate = new Date();
+      }
       console.log("the value is ", newLicense.value)
       
       let appId = newLicense.value.id;
@@ -752,7 +754,7 @@ export default {
           } else {
             showErrorFlash.value = true;
             setTimeout(() => {
-              // router.go();
+              router.go();
             }, 3000);
           }
         });
@@ -770,7 +772,7 @@ export default {
           } else {
             showErrorFlash.value = true;
             setTimeout(() => {
-              // router.go();
+              router.go();
             }, 3000);
           }
         });
@@ -788,7 +790,7 @@ export default {
           } else {
             showErrorFlash.value = true;
             setTimeout(() => {
-              // router.go();
+              router.go();
             }, 3000);
           }
         });

@@ -266,19 +266,19 @@
               </router-link>
             </span>
             <span v-else>
-              <router-link to="/admin/certifiedUsers">
+              <router-link to="/admin/allCertifiedUsers">
                 <a
                   v-if="tab != `certifiedUsers`"
                   class="mr-small"
                 >
-                  Certified Users
+                  Licensed Users
                 </a>
                 <a
                   v-if="tab == `certifiedUsers`"
                   class="text-primary-300 mr-small width-medium inline-block pr-tiny justify-center item-center"
                 >
                   <p class="text-primary-600 font-AtkinsonHyperlegibleBold">
-                    Certified Users
+                    Licensed Users
                   </p>
                   <hr class="yellow-gradient border-none" />
                 </a>
@@ -418,9 +418,6 @@ export default {
       if (props.tab === "Unfinished") {
         store.dispatch("reviewer/getUnfinishedSearched", search.value);
       }
-      if (props.tab === "MyWork") {
-        store.dispatch("reviewer/getRecentlyFinishedSearched", search.value);
-      }
       if (props.tab === "AllUnfinished") {
         store.dispatch("reviewer/getEveryOneUnfinishedSearched", search.value);
       }
@@ -428,11 +425,17 @@ export default {
         store.dispatch("reviewer/getAssignedToEveryOneSearched", search.value);
       }
       if (props.tab === "MyWork") {
-        store.dispatch("reviewer/getRecentlyFinishedSearched", search.value);
+        store.dispatch("reviewer/searchRecentlyFinished", search.value);
       }
       if (props.tab === "AllWork") {
-        store.dispatch("reviewer/getAllRecentlyFinishedSearched", search.value)
+        store.dispatch("reviewer/searchAllFinished", search.value)
       }
+      if (props.tab === "allCertifiedUsers") {
+        store.dispatch("reviewer/searchCertifiedUsers", search.value)
+      }
+      // if (props.tab === "AllWork") {
+      //   store.dispatch("reviewer/getAllRecentlyFinishedSearched", search.value)
+      // }
       if (props.tab === "AllPendigs") {
         store.dispatch("reviewer/getAllPendingPaymentSearched", search.value)
       }
@@ -443,6 +446,7 @@ export default {
         store.dispatch("reviewer/getAssignedToEveryOneSearched", search.value);
         store.dispatch("reviewer/getEveryOneUnfinishedSearched", search.value);
       }
+      
     });
     let showAdminCreate = false;
     let isSuperAdmin = ref(false);

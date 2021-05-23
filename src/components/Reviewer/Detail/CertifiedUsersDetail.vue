@@ -3,7 +3,7 @@
     <ReviewerNavBar tab="certifiedUsers" />
     <span v-if="!showLoading">
       <button @click="downloadPdf">Download PDF</button>
-      <div class="bg-lightBlueB-200 h-full">
+      <div class="bg-lightBlueB-200 h-full"> 
         <div
           v-if="show"
           style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2)"
@@ -63,7 +63,14 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
+      <!-- <div class="container">
+        <img src="../../../assets/certeficate_background.jpeg" alt="Notebook" style="width:100%;">
+        <div class="content">
+          <h1>Heading</h1>
+          <p>Lorem ipsum dolor sit amet, an his etiam torquatos. Tollit soleat phaedrum te duo, eum cu recteque expetendis neglegentur. Cu mentitum maiestatis persequeris pro, pri ponderum tractatos ei.</p>
+        </div>
+      </div> -->
     </span>
     <span
       v-if="showLoading"
@@ -113,10 +120,7 @@ export default {
         .then((res) => {
           showLoading.value = false;
           certifiedUser.value = res.data.data;
-          console.log("certified-+ use", certifiedUser.value);
-          // profileInfo.value = res.data.data;
           show.value = true;
-          // console.log(profileInfo.value);
         });
     };
     const fetchApplication = () => {
@@ -125,8 +129,6 @@ export default {
           .then(res => {
             
             certificateDetail.value = res.data.data
-            console.log("hmmmm", res.data.data)
-            // console.log("value of res", res.data.data)
           })
     }
 
@@ -162,4 +164,30 @@ export default {
 };
 </script>
 <style scoped>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial;
+  font-size: 17px;
+}
+
+.container {
+  position: relative;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.container img {vertical-align: middle;}
+
+.container .content {
+  position: absolute;
+  bottom: 0;
+  background: rgb(0, 0, 0); /* Fallback color */
+  background: rgba(0, 0, 0, 0.5); /* Black background with 0.5 opacity */
+  color: #f1f1f1;
+  width: 100%;
+  padding: 20px;
+}
 </style>

@@ -11,10 +11,18 @@ export default {
 
         approved: [],
         approvedSearched: [],
+        allApproved: [],
+        allApprovedSearched: [],
+
         rejected: [],
         rejectedSearched: [],
+        allRejected: [],
+        allRejectedSearched: [],
+
         underSuperVision: [],
         underSuperVisionSearched: [],
+        allUnderSuperVision: [],
+        allUnderSuperVisionSearched: [],
 
         assignedForEveryOne: [],
         assignedForEveryOneSearched: [],

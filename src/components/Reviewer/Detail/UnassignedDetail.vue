@@ -93,7 +93,7 @@
             >
               <label class="ml-8"> Date of Birth</label>
               <h5 class="ml-8">
-                {{ profileInfo.dateOfBirth ? profileInfo.dateOfBirth : "-" }}
+                {{ profileInfo.dateOfBirth ? moment(profileInfo.dateOfBirth).format("MMM D, YYYY") : "-" }}
               </h5>
             </div>
             <div
@@ -237,20 +237,20 @@
           <div class="flex flex-row">
             <div>
               <label class="ml-8"> Institution Name</label>
-              <h5 class="ml-8" v-if="education.institution">
-                {{ education.institution.name }}
+              <h5 class="ml-8" v-if="education.institutionName">
+                {{ education.institutionName }}
               </h5>
             </div>
             <div>
               <label class="ml-8"> Department</label>
-              <h5 class="ml-8" v-if="education.department">
-                {{ education.department.name }}
+              <h5 class="ml-8" v-if="education.departmentName">
+                {{ education.departmentName }}
               </h5>
             </div>
             <div>
               <label class="ml-8"> Institution Type</label>
-              <h5 class="ml-8" v-if="education.institution.institutionType">
-                {{ education.institution.institutionType.name }}
+              <h5 class="ml-8" v-if="education.institutionTypeName">
+                {{ education.institutionTypeName }}
               </h5>
             </div>
           </div>
@@ -298,6 +298,7 @@ import Title from "@/sharedComponents/Title";
 import ReviewerNavBar from "@/components/Reviewer/ReviewerNavBar";
 import { ref, onMounted } from "vue";
 import Spinner from "@/sharedComponents/Spinner";
+import moment from "moment"
 
 export default {
   props: ["activeState"],
@@ -305,6 +306,9 @@ export default {
     Title,
     ReviewerNavBar,
     Spinner
+  },
+  computed: {
+    moment: () => moment,
   },
   setup() {
     const store = useStore();
@@ -359,7 +363,6 @@ export default {
     let reviewerAdminId = ref(0);
 
     const gen = () => {
-      console.log(assign.value.reviewerId);
     };
 
     const created = async (
@@ -370,11 +373,6 @@ export default {
       showLoading.value = true
       applicationType.value = applicationTypeParam;
       applicantId.value = applicanttId;
-      // store.dispatch("reviewer/getProfile", 1).then(res => {
-      //   // profileInfo.value = res.data.data;
-      //   show.value = true;
-      //   console.log(profileInfo.value);
-      // });
       if (applicationType.value == "New License") {
         store
           .dispatch("reviewer/getNewLicenseApplication", applicationId)
@@ -397,6 +395,7 @@ export default {
         store
           .dispatch("reviewer/getGoodStandingApplication", applicationId)
           .then(res => {
+            console.log("all unass", res.data.data)
             showLoading.value = false
             license.value = res.data.data;
             show.value = true;
@@ -529,7 +528,6 @@ export default {
               showFlash.value = true;
               router.push("/admin/review");
             }
-            console.log(response);
           });
       }
       if (applicationType.value == "Verification") {
@@ -541,7 +539,6 @@ export default {
               showFlash.value = true;
               router.push("/admin/review");
             }
-            console.log(response);
           });
       }
       if (applicationType.value == "Renewal") {
@@ -553,7 +550,6 @@ export default {
               showFlash.value = true;
               router.push("/admin/review");
             }
-            console.log(response);
           });
       }
       if (applicationType.value == "Good Standing") {
@@ -565,7 +561,6 @@ export default {
               showFlash.value = true;
               router.push("/admin/review");
             }
-            console.log(response);
           });
       } 
     };

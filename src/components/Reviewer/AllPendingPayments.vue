@@ -5,7 +5,9 @@
       <div class="flex pl-12 pt-tiny">
         <Title message="Others Penging Payments" />
       </div>
-      <div class="flex flex-wrap pb-medium rounded h-full" v-if="!showLoading">
+      <div 
+      class="flex flex-wrap pb-medium rounded h-full" 
+      v-if="!showLoading">
         <div class="pl-large w-52 h-26" v-if="nothingToShowAllPengings == true">
           <div class="flex content-center justify-center">
             <h2>Nothing To Show!</h2>

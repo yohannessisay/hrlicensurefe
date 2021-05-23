@@ -61,7 +61,7 @@
             >
               <label class="ml-8"> Date of Birth</label>
               <h5 class="ml-8">
-                {{ profileInfo.dateOfBirth ? profileInfo.dateOfBirth : "-" }}
+                {{ profileInfo.dateOfBirth ? moment(profileInfo.dateOfBirth).format("MMM D, YYYY") : "-" }}
               </h5>
             </div>
             <div
@@ -204,20 +204,20 @@
           <div class="flex flex-row">
             <div>
               <label class="ml-8"> Institution Name</label>
-              <h5 class="ml-8" v-if="education.institution">
-                {{ education.institution.name }}
+              <h5 class="ml-8" v-if="education.institutionName">
+                {{ education.institutionName }}
               </h5>
             </div>
             <div>
               <label class="ml-8"> Department</label>
-              <h5 class="ml-8" v-if="education.department">
-                {{ education.department.name }}
+              <h5 class="ml-8" v-if="education.departmentName">
+                {{ education.departmentName }}
               </h5>
             </div>
             <div>
               <label class="ml-8"> Institution Type</label>
-              <h5 class="ml-8" v-if="education.institution.institutionType">
-                {{ education.institution.institutionType.name }}
+              <h5 class="ml-8" v-if="education.institutionTypeName">
+                {{ education.institutionTypeName }}
               </h5>
             </div>
           </div>
@@ -264,6 +264,7 @@ import Title from "@/sharedComponents/Title";
 import ReviewerNavBar from "@/components/Reviewer/ReviewerNavBar";
 import { ref, onMounted } from "vue";
 import Spinner from "@/sharedComponents/Spinner";
+import moment from "moment";
 
 export default {
   props: ["activeState"],
@@ -271,6 +272,9 @@ export default {
     Title,
     ReviewerNavBar,
     Spinner
+  },
+  computed: {
+    moment: () => moment,
   },
   setup() {
     const store = useStore();

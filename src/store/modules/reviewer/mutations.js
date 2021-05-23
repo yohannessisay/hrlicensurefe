@@ -11,12 +11,15 @@ import {
     SET_ASSIGNED_FOR_EVERYONE_SEARCHED,
     SET_EVEYONE_UNFINISHED,
     SET_EVEYONE_UNFINISHED_SEARCHED,
-    SET_ALL_RECENTLY_FINISHED,
     SET_ALL_RECENTLY_FINISHED_SEARCHED,
     SET_ALL_PENDING_PAYMENTS,
     SET_ALL_PENDING_PAYMENTS_SEARCHED,
     SET_PENDING_PAYMENTS,
+    SET_ALLRECENTLY_FINISHED,
     SET_PENDING_PAYMENTS_SEARCHED,
+    SET_ALL_FINISHED_SEARCHED,
+    SET_CERTIFIED_USERS,
+    SET_CERTIFIED_USERS_SEARCHED,
 } from "./mutation-types";
 
 export default {
@@ -42,14 +45,41 @@ export default {
         state.unfinishedSearched = searchedVal
     },
     [SET_RECENTLY_FINISHED] (state, datas) {
-        console.log("apppmmmm", datas[2])
         state.recentlyFinished = datas[0]
         state.recentlyFinishedSearched = datas[0]
         state.approved = datas[2]
         state.approvedSearched = datas[2]
+        state.rejected = datas[3]
+        state.rejectedSearched = datas[3]
+        state.underSuperVision = datas[4]
+        state.underSuperVisionSearched = datas[4]
     },
-    [SET_RECENTLY_FINISHED_SEARCHED] (state, searchedVal) {
-        state.recentlyFinishedSearched = searchedVal
+    [SET_ALLRECENTLY_FINISHED] (state, datas) {
+        state.allRecentlyFinished = datas[0]
+        state.allRecentlyFinishedSearched = datas[0]
+        state.allApproved = datas[2]
+        state.allApprovedSearched = datas[2]
+        state.allRejected = datas[3]
+        state.allRejectedSearched = datas[3]
+        state.allUnderSuperVision = datas[4]
+        state.allUnderSuperVisionSearched = datas[4]
+    },
+    [SET_CERTIFIED_USERS] (state, data) {
+        state.allCertifiedUsers = data
+        state.allCertifiedUsersSearched = data
+    },
+    [SET_CERTIFIED_USERS_SEARCHED] (state, searchedVal) {
+        state.allCertifiedUsersSearched = searchedVal
+    },
+    [SET_ALL_FINISHED_SEARCHED] (state, datas) {
+        state.allApprovedSearched = datas[0]
+        state.allRejectedSearched = datas[1]
+        state.allUnderSuperVisionSearched = datas[2]
+    },
+    [SET_RECENTLY_FINISHED_SEARCHED] (state, datas) {
+        state.approvedSearched = datas[0]
+        state.rejectedSearched = datas[0]
+        state.underSuperVisionSearched = datas[0]
     },
     [SET_ASSIGNED_FOR_EVERYONE] (state, data) {
         state.assignedForEveryOne = data
@@ -64,12 +94,6 @@ export default {
     },
     [SET_EVEYONE_UNFINISHED_SEARCHED] (state, searchedVal) {
         state.eveyOneUnfinishedSearched = searchedVal
-    },
-    [SET_ALL_RECENTLY_FINISHED] (state, data, certifiedUsers, approvedUsers) {
-        state.allRecentlyFinished = data
-        state.allRecentlyFinishedSearched = data
-        state.allCertifiedUsers = certifiedUsers
-        state.allCertifiedUsersSearched = certifiedUsers
     },
     [SET_ALL_RECENTLY_FINISHED_SEARCHED] (state, searchedVal) {
         state.allRecentlyFinishedSearched = searchedVal
