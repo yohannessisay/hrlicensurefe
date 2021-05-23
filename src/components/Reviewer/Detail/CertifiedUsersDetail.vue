@@ -57,7 +57,7 @@
                   ><b>with great distinction</b></span
                 >
                 <br /><br /><br /><br />
-                <span style="font-size: 25px"><i>on {{moment(certificateDetail.certifiedDate).format("MMM Do, YY")}}</i></span
+                <span style="font-size: 25px"><i>on {{moment(certificateDetail.certifiedDate).format("MMM D, YYYY")}}</i></span
                 ><br />
               </div>
             </div>
@@ -127,7 +127,7 @@ export default {
       store
         .dispatch("reviewer/getNewLicenseApplication", route.params.applicationId)
           .then(res => {
-            
+            console.log("value of res is ", res)
             certificateDetail.value = res.data.data
           })
     }
