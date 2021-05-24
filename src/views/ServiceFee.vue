@@ -160,7 +160,7 @@ export default {
 
       reader.addEventListener(
         "load",
-        function () {
+        function() {
           showPreview.value = true;
           filePreview.value = reader.result;
         },
@@ -212,12 +212,9 @@ export default {
           if (res.status == 200) {
             message.value.showFlash = !message.value.showFlash;
             message.value.showLoading = false;
-            // $emit("serviceFeeModal", false);
-            setTimeout(() => {}, 1500);
-            // location.reload();
             setTimeout(() => {
               document.getElementById("myCheck").click();
-            }, 3000);
+            }, 1500);
           } else {
             message.value.showErrorFlash = !message.value.showErrorFlash;
           }
@@ -257,6 +254,10 @@ export default {
   height: 300px;
   position: absolute;
   cursor: pointer;
+}
+picture {
+  width: 100%;
+  height: 300px;
 }
 
 .dropbox {
