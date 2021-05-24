@@ -25,6 +25,8 @@
               @Click="
                 detail(
                   `/admin/certifiedUsersDetail`,
+                  item.applicationType,
+                  item.id,
                   item.applicant.id
                 )
               "
@@ -126,9 +128,8 @@ export default {
       });
     };
 
-    const detail = (data, applicantId) => {
-      const url =
-        data + "/" + applicantId;
+    const detail = (data, applicationType,applicationId,applicantId) => {
+      const url = data + "/" + applicationType + "/" + applicationId + "/" + applicantId;
       router.push(url);
     };
 

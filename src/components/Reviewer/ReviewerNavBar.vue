@@ -445,6 +445,8 @@ export default {
         store.dispatch("reviewer/getUnassignedSearched", search.value);
         store.dispatch("reviewer/getAssignedToEveryOneSearched", search.value);
         store.dispatch("reviewer/getEveryOneUnfinishedSearched", search.value);
+        store.dispatch("reviewer/getAllPendingPaymentSearched", search.value);
+        store.dispatch("reviewer/getPendingPaymentSearched", search.value);
       }
       
     });
