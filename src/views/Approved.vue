@@ -11,11 +11,11 @@
                 message="Address"
               />
             </router-link>
-            <h2 class="text-md AtkinsonHyperlegibleBold text-primary-600 ml-2 ">
+            <h2 class="text-md AtkinsonHyperlegibleBold text-primary-600 ml-2">
               HRIS - License
             </h2>
             <div class="relative text-gray-600 focus-within:text-gray-400 ml-8">
-              <span class="absolute inset-y-0 right-0 flex items-center mr-8">
+              <h4 class="absolute inset-y-0 right-0 flex items-center mr-8">
                 <div class="p-1 focus:outline-none focus:shadow-outline">
                   <svg
                     fill="none"
@@ -31,12 +31,22 @@
                     ></path>
                   </svg>
                 </div>
-              </span>
+              </h4>
               <input
                 type="search"
                 name="search"
                 v-on:input="searchApplication()"
-                class="py-2 text-sm text-black bg-gray-900 width-548 rounded-md pl-4 focus:outline-none focus:bg-white focus:text-gray-900"
+                class="
+                  py-2
+                  text-sm text-black
+                  bg-gray-900
+                  width-548
+                  rounded-md
+                  pl-4
+                  focus:outline-none
+                  focus:bg-white
+                  focus:text-gray-900
+                "
                 placeholder="Search requests by Name or Order ID"
                 autocomplete="off"
                 v-model="search"
@@ -46,7 +56,18 @@
 
           <div class="flex items-center space-x-5">
             <a
-              class="focus:outline-none bg-lightBlueB-300 text-lightBlueB-400 hover:text-gray-800 w-7 h-7 rounded-full flex items-center justify-center"
+              class="
+                focus:outline-none
+                bg-lightBlueB-300
+                text-lightBlueB-400
+                hover:text-gray-800
+                w-7
+                h-7
+                rounded-full
+                flex
+                items-center
+                justify-center
+              "
               href="#"
             >
               <svg
@@ -65,7 +86,18 @@
             </a>
             <div class="relative inline-block text-left">
               <a
-                class="focus:outline-none bg-lightBlueB-300 text-lightBlueB-400 hover:text-gray-800 w-7 h-7 rounded-full flex items-center justify-center"
+                class="
+                  focus:outline-none
+                  bg-lightBlueB-300
+                  text-lightBlueB-400
+                  hover:text-gray-800
+                  w-7
+                  h-7
+                  rounded-full
+                  flex
+                  items-center
+                  justify-center
+                "
                 id="options-menu"
                 aria-expanded="true"
                 aria-haspopup="true"
@@ -85,7 +117,17 @@
               </a>
               <div
                 v-if="showDD == true"
-                class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white focus:outline-none"
+                class="
+                  origin-top-right
+                  absolute
+                  right-0
+                  mt-2
+                  w-56
+                  rounded-md
+                  shadow-lg
+                  bg-white
+                  focus:outline-none
+                "
                 role="menu"
                 aria-orientation="vertical"
                 aria-labelledby="options-menu"
@@ -93,13 +135,27 @@
                 <div class="py-1" role="none">
                   <a
                     href="#"
-                    class="block px-4 py-2 text-sm text-blue-100  hover:bg-gray-100 hover:text-gray-900"
+                    class="
+                      block
+                      px-4
+                      py-2
+                      text-sm text-blue-100
+                      hover:bg-gray-100
+                      hover:text-gray-900
+                    "
                     role="menuitem"
                     >Profile
                   </a>
                   <a
                     href="#"
-                    class="block px-4 py-2 text-sm text-blue-100 hover:bg-gray-100 hover:text-gray-900"
+                    class="
+                      block
+                      px-4
+                      py-2
+                      text-sm text-blue-100
+                      hover:bg-gray-100
+                      hover:text-gray-900
+                    "
                     role="menuitem"
                     >About
                   </a>
@@ -107,13 +163,27 @@
                 <div class="py-1" role="none">
                   <a
                     href="#"
-                    class="block px-4 py-2 text-sm text-blue-100 hover:bg-gray-100 hover:text-gray-900"
+                    class="
+                      block
+                      px-4
+                      py-2
+                      text-sm text-blue-100
+                      hover:bg-gray-100
+                      hover:text-gray-900
+                    "
                     role="menuitem"
                     >Display Settings
                   </a>
                   <a
                     @click="logout()"
-                    class="block px-4 py-2 text-sm text-blue-100 hover:bg-gray-100 hover:text-gray-900"
+                    class="
+                      block
+                      px-4
+                      py-2
+                      text-sm text-blue-100
+                      hover:bg-gray-100
+                      hover:text-gray-900
+                    "
                     role="menuitem"
                     id="logout"
                   >
@@ -136,10 +206,10 @@
         </div>
         <div
           v-if="this.searchResult.length != 0"
-          class=" mt-medium rounded ml-large"
+          class="mt-medium rounded ml-large"
         >
           <div
-            class="flex "
+            class="flex"
             v-for="i in this.searchResult.length"
             v-bind:key="i"
           >
@@ -151,40 +221,85 @@
               v-bind:value="item"
             >
               <div
-                class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
+                class="
+                  flex
+                  justify-center
+                  items-center
+                  ml-8
+                  mr-8
+                  box-shadow-pop
+                  rounded-lg
+                  bg-lightGrey-100
+                "
               >
                 <div class="p-4 w-48 h-64">
                   <h4
-                    class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                    class="
+                      text-lightBlueB-500
+                      mt-tiny
+                      flex
+                      justify-center
+                      content-center
+                    "
                   >
                     Applicant Type: {{ item.applicantType.name }}
                   </h4>
                   <h4
-                    class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                    class="
+                      text-lightBlueB-500
+                      mt-tiny
+                      flex
+                      justify-center
+                      content-center
+                    "
                   >
                     Application Status: {{ item.applicationStatus.name }}
                   </h4>
                   <h4
                     v-if="item.newLicenseCode"
-                    class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                    class="
+                      text-lightBlueB-500
+                      mt-tiny
+                      flex
+                      justify-center
+                      content-center
+                    "
                   >
                     Code: {{ item.newLicenseCode }}
                   </h4>
                   <h4
                     v-if="item.renewalCode"
-                    class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                    class="
+                      text-lightBlueB-500
+                      mt-tiny
+                      flex
+                      justify-center
+                      content-center
+                    "
                   >
                     Code: {{ item.renewalCode }}
                   </h4>
                   <h4
                     v-if="item.verificationCode"
-                    class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                    class="
+                      text-lightBlueB-500
+                      mt-tiny
+                      flex
+                      justify-center
+                      content-center
+                    "
                   >
                     Code: {{ item.verificationCode }}
                   </h4>
                   <h4
                     v-if="item.goodStandingCode"
-                    class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                    class="
+                      text-lightBlueB-500
+                      mt-tiny
+                      flex
+                      justify-center
+                      content-center
+                    "
                   >
                     Code: {{ item.goodStandingCode }}
                   </h4>
@@ -205,9 +320,9 @@
         </div>
         <div
           v-if="this.newlicense.length != 0"
-          class=" mt-medium rounded ml-large"
+          class="mt-medium rounded ml-large"
         >
-          <div class="flex " v-for="i in this.newlicense.length" v-bind:key="i">
+          <div class="flex" v-for="i in this.newlicense.length" v-bind:key="i">
             <div
               @click="openServiceFeeModal(item)"
               class="container mb-medium"
@@ -216,23 +331,63 @@
               v-bind:value="item"
             >
               <div
-                class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
+                class="
+                  flex
+                  justify-center
+                  items-center
+                  ml-8
+                  mr-8
+                  box-shadow-pop
+                  rounded-lg
+                  bg-lightGrey-100
+                "
               >
                 <div class="p-4 w-48 h-64">
                   <h4
-                    class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                    class="
+                      text-lightBlueB-500
+                      mt-tiny
+                      flex
+                      justify-center
+                      content-center
+                    "
                   >
                     Applicant Type: {{ item.applicantType.name }}
                   </h4>
                   <h4
-                    class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                    class="
+                      text-lightBlueB-500
+                      mt-tiny
+                      flex
+                      justify-center
+                      content-center
+                    "
                   >
                     Application Status: {{ item.applicationStatus.name }}
                   </h4>
                   <h4
-                    class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                    class="
+                      text-lightBlueB-500
+                      mt-tiny
+                      flex
+                      justify-center
+                      content-center
+                    "
                   >
                     Code: {{ item.newLicenseCode }}
+                  </h4>
+                  <h4
+                    class="
+                      text-lightBlueB-500
+                      mt-tiny
+                      flex
+                      justify-end
+                      content-center
+                    "
+                  >
+                    {{
+                      item.createdAt ? moment(item.createdAt).fromNow() : "-"
+                    }}
                   </h4>
                 </div>
               </div>
@@ -247,11 +402,8 @@
         <div v-if="this.renewal.length == 0" class="flex pl-12 ml-6">
           <h4>Nothing to Show.</h4>
         </div>
-        <div
-          v-if="this.renewal.length != 0"
-          class=" mt-medium rounded ml-large"
-        >
-          <div class="flex " v-for="i in this.renewal.length" v-bind:key="i">
+        <div v-if="this.renewal.length != 0" class="mt-medium rounded ml-large">
+          <div class="flex" v-for="i in this.renewal.length" v-bind:key="i">
             <div
               @click="openServiceFeeModal(item)"
               class="container mb-medium"
@@ -260,23 +412,63 @@
               v-bind:value="item"
             >
               <div
-                class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
+                class="
+                  flex
+                  justify-center
+                  items-center
+                  ml-8
+                  mr-8
+                  box-shadow-pop
+                  rounded-lg
+                  bg-lightGrey-100
+                "
               >
                 <div class="p-4 w-48 h-64">
                   <h4
-                    class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                    class="
+                      text-lightBlueB-500
+                      mt-tiny
+                      flex
+                      justify-center
+                      content-center
+                    "
                   >
                     Applicant Type: {{ item.applicantType.name }}
                   </h4>
                   <h4
-                    class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                    class="
+                      text-lightBlueB-500
+                      mt-tiny
+                      flex
+                      justify-center
+                      content-center
+                    "
                   >
                     Application Status: {{ item.applicationStatus.name }}
                   </h4>
                   <h4
-                    class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                    class="
+                      text-lightBlueB-500
+                      mt-tiny
+                      flex
+                      justify-center
+                      content-center
+                    "
                   >
                     Code: {{ item.renewalCode }}
+                  </h4>
+                    <h4
+                    class="
+                      text-lightBlueB-500
+                      mt-tiny
+                      flex
+                      justify-end
+                      content-center
+                    "
+                  >
+                    {{
+                      item.createdAt ? moment(item.createdAt).fromNow() : "-"
+                    }}
                   </h4>
                 </div>
               </div>
@@ -293,10 +485,10 @@
         </div>
         <div
           v-if="this.verification.length != 0"
-          class=" mt-medium rounded ml-large"
+          class="mt-medium rounded ml-large"
         >
           <div
-            class="flex "
+            class="flex"
             v-for="i in this.verification.length"
             v-bind:key="i"
           >
@@ -308,23 +500,63 @@
               v-bind:value="item"
             >
               <div
-                class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
+                class="
+                  flex
+                  justify-center
+                  items-center
+                  ml-8
+                  mr-8
+                  box-shadow-pop
+                  rounded-lg
+                  bg-lightGrey-100
+                "
               >
                 <div class="p-4 w-48 h-64">
                   <h4
-                    class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                    class="
+                      text-lightBlueB-500
+                      mt-tiny
+                      flex
+                      justify-center
+                      content-center
+                    "
                   >
                     Applicant Type: {{ item.applicantType.name }}
                   </h4>
                   <h4
-                    class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                    class="
+                      text-lightBlueB-500
+                      mt-tiny
+                      flex
+                      justify-center
+                      content-center
+                    "
                   >
                     Application Status: {{ item.applicationStatus.name }}
                   </h4>
                   <h4
-                    class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                    class="
+                      text-lightBlueB-500
+                      mt-tiny
+                      flex
+                      justify-center
+                      content-center
+                    "
                   >
                     Code: {{ item.verificationCode }}
+                  </h4>
+                  <h4
+                    class="
+                      text-lightBlueB-500
+                      mt-tiny
+                      flex
+                      justify-end
+                      content-center
+                    "
+                  >
+                    {{
+                      item.createdAt ? moment(item.createdAt).fromNow() : "-"
+                    }}
                   </h4>
                 </div>
               </div>
@@ -341,10 +573,10 @@
         </div>
         <div
           v-if="this.goodstanding.length != 0"
-          class=" mt-medium rounded ml-large"
+          class="mt-medium rounded ml-large"
         >
           <div
-            class="flex "
+            class="flex"
             v-for="i in this.goodstanding.length"
             v-bind:key="i"
           >
@@ -356,21 +588,48 @@
               v-bind:value="item"
             >
               <div
-                class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
+                class="
+                  flex
+                  justify-center
+                  items-center
+                  ml-8
+                  mr-8
+                  box-shadow-pop
+                  rounded-lg
+                  bg-lightGrey-100
+                "
               >
                 <div class="p-4 w-48 h-64">
                   <h4
-                    class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                    class="
+                      text-lightBlueB-500
+                      mt-tiny
+                      flex
+                      justify-center
+                      content-center
+                    "
                   >
                     Applicant Type: {{ item.applicantType.name }}
                   </h4>
                   <h4
-                    class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                    class="
+                      text-lightBlueB-500
+                      mt-tiny
+                      flex
+                      justify-center
+                      content-center
+                    "
                   >
                     Application Status: {{ item.applicationStatus.name }}
                   </h4>
                   <h4
-                    class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                    class="
+                      text-lightBlueB-500
+                      mt-tiny
+                      flex
+                      justify-center
+                      content-center
+                    "
                   >
                     Code: {{ item.goodStandingCode }}
                   </h4>
@@ -400,6 +659,7 @@ import Navigation from "@/views/Navigation";
 import Spinner from "@/sharedComponents/Spinner";
 import Modal from "@/sharedComponents/Modal";
 import ServiceFee from "@/views/ServiceFee.vue";
+import moment from "moment";
 
 export default {
   components: {
@@ -411,7 +671,7 @@ export default {
     Modal,
     ServiceFee,
   },
-  data: function() {
+  data: function () {
     return {
       license: [],
       newlicense: [],
@@ -441,6 +701,9 @@ export default {
     }
   },
   methods: {
+    moment: function () {
+      return moment();
+    },
     openServiceFeeModal(item) {
       this.serviceFeeModal = true;
       this.itemId = item.id;
@@ -473,27 +736,27 @@ export default {
         this.searched = false;
       } else {
         this.searched = true;
-        this.searchResult = this.newlicense.filter(function(e) {
+        this.searchResult = this.newlicense.filter(function (e) {
           return e.newLicenseCode
             .toLowerCase()
             .includes(searchKey.toLowerCase());
         });
         if (this.searchResult.length == 0) {
-          this.searchResult = this.renewal.filter(function(e) {
+          this.searchResult = this.renewal.filter(function (e) {
             return e.renewalCode
               .toLowerCase()
               .includes(searchKey.toLowerCase());
           });
         }
         if (this.searchResult.length == 0) {
-          this.searchResult = this.verification.filter(function(e) {
+          this.searchResult = this.verification.filter(function (e) {
             return e.verificationCode
               .toLowerCase()
               .includes(searchKey.toLowerCase());
           });
         }
         if (this.searchResult.length == 0) {
-          this.searchResult = this.goodstanding.filter(function(e) {
+          this.searchResult = this.goodstanding.filter(function (e) {
             return e.goodStandingCode
               .toLowerCase()
               .includes(searchKey.toLowerCase());
@@ -505,13 +768,15 @@ export default {
       this.showLoading = !this.showLoading;
       this.$store.dispatch("newlicense/getNewLicense").then((res) => {
         this.license = res.data.data;
-        this.newlicense = this.license.filter(function(e) {
+        this.newlicense = this.license.filter(function (e) {
+          console.log(e);
           return e.applicationStatus.code.includes("APP");
         });
       });
       this.$store.dispatch("renewal/getRenewalLicense").then((res) => {
         this.license = res.data.data;
-        this.renewal = this.license.filter(function(e) {
+        this.renewal = this.license.filter(function (e) {
+          console.log(e);
           return e.applicationStatus.code.includes("APP");
         });
       });
@@ -519,7 +784,8 @@ export default {
         .dispatch("verification/getVerificationLicense")
         .then((res) => {
           this.license = res.data.data;
-          this.verification = this.license.filter(function(e) {
+          this.verification = this.license.filter(function (e) {
+            console.log(e);
             return e.applicationStatus.code.includes("APP");
           });
         });
@@ -528,7 +794,8 @@ export default {
         .then((res) => {
           this.license = res.data.data;
           this.showLoading = !this.showLoading;
-          this.goodstanding = this.license.filter(function(e) {
+          this.goodstanding = this.license.filter(function (e) {
+            console.log(e);
             return e.applicationStatus.code.includes("APP");
           });
         });

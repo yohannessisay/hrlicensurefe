@@ -1,8 +1,19 @@
 <template>
   <div
-    class="card-wrapper max-w-7xl bg-white sm:rounded-lg p-large flex flex-col justify-center items-center relative"
+    class="
+      card-wrapper
+      max-w-7xl
+      bg-white
+      sm:rounded-lg
+      p-large
+      flex flex-col
+      justify-center
+      items-center
+      relative
+    "
   >
     <button
+      id="myCheck"
       class="absolute top-0 right-0 mr-2 mt-2"
       @click="$emit('serviceFeeModal', false)"
       variant="rounded"
@@ -41,7 +52,7 @@
                         class="photoFile"
                         ref="serviceFileP"
                         v-on:change="handleFileUpload()"
-                        style="margin-bottom: 15px !important;"
+                        style="margin-bottom: 15px !important"
                       />
                       <p>
                         Drag your file(s) here to begin<br />
@@ -70,9 +81,7 @@
               @click="save()"
               class="flex justify-center mb-16"
             >
-              <button>
-                Save
-              </button>
+              <button>Save</button>
             </div>
           </form>
 
@@ -151,7 +160,7 @@ export default {
 
       reader.addEventListener(
         "load",
-        function() {
+        function () {
           showPreview.value = true;
           filePreview.value = reader.result;
         },
@@ -203,9 +212,12 @@ export default {
           if (res.status == 200) {
             message.value.showFlash = !message.value.showFlash;
             message.value.showLoading = false;
-            $emit("serviceFeeModal", false);
-            setTimeout(() => {}, 2200);
-            location.reload();
+            // $emit("serviceFeeModal", false);
+            setTimeout(() => {}, 1500);
+            // location.reload();
+            setTimeout(() => {
+              document.getElementById("myCheck").click();
+            }, 3000);
           } else {
             message.value.showErrorFlash = !message.value.showErrorFlash;
           }
