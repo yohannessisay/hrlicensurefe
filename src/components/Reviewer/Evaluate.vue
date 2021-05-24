@@ -268,7 +268,7 @@
                               <img
                                 v-bind:src="
                                   'https://hrlicensurebe.dev.k8s.sandboxaddis.com/' +
-                                    rejectedObj[ind + 1].filePath
+                                    rejectedObj[ind].filePath
                                 "
                               />
                             </picture>
@@ -285,7 +285,7 @@
                           xmlns="http://www.w3.org/2000/svg"
                           version="1.1"
                           @click="nextRemark()"
-                          v-if="ind != rejectedObj.length - 1"
+                          v-if="ind != rejected.length - 1"
                           class="hover:text-primary-60"
                         >
                           <polyline
@@ -592,11 +592,11 @@ export default {
       nextClickable.value = true;
     };
     const nextRemark = () => {
-      if (ind.value != rejected.value.length) {
+      if (ind.value != rejected.value.length - 1) {
         ind.value = ind.value + 1;
         modalFindDocumentType(
           documentTypes.value,
-          rejectedObj.value[index.value]
+          rejectedObj.value[ind.value]
         );
         nextClickable.value = false;
       }
@@ -703,6 +703,8 @@ export default {
         if (fromModalSendDeclinedData.value == true) {
           sendDeclinedData.value = true;
         }
+        console.log(rejected.value);
+        console.log(rejectedObj.value);
       }
 
       console.log("action value, m", actionValue)

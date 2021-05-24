@@ -77,6 +77,9 @@ export default {
     showFlash: false,
     showErrorFlash: false,
     showLoading: false,
+    declinedFields: [],
+    acceptedFields: [],
+    remark: "",
   }),
   components: {
     Navigation,
@@ -145,7 +148,19 @@ export default {
     fetchDraft(id) {
       this.$store.dispatch("goodstanding/getDraft", id).then((res) => {
         const results = res.data.data;
+        this.declinedFields = results.declinedFields;
+        this.acceptedFields = results.acceptedFields;
+        this.remark = results.remark;
         this.$store.dispatch("goodstanding/setDraft", results);
+        this.$store.dispatch(
+          "goodstanding/storeDeclinedFields",
+          this.declinedFields
+        );
+        this.$store.dispatch(
+          "goodstanding/storeAcceptedFields",
+          this.acceptedFields
+        );
+        this.$store.dispatch("goodstanding/storeRemark", this.remark);
       });
     },
   },
