@@ -239,8 +239,8 @@
     </div> -->
       <div class="mt-12 flex justify-center">
         <div>
-          <button @click="submitRequest(this.buttons[1].action)">
-            {{ this.buttons[1].name }}
+          <button @click="submitRequest(this.buttons[0].action)">
+            {{ this.buttons[0].name }}
           </button>
         </div>
       </div>
@@ -251,8 +251,8 @@
         </h6>
       </div>
       <div class="flex justify-center mt-8 mb-8">
-        <button variant="outline" @click="saveDraft(this.buttons[0].action)">
-          {{ this.buttons[0].name }}
+        <button variant="outline" @click="saveDraft(this.buttons[1].action)">
+          {{ this.buttons[1].name }}
         </button>
         <button
           v-if="this.buttons.length > 2"

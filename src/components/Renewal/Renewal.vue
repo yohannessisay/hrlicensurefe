@@ -162,6 +162,9 @@ export default {
     buttons: [],
     applicationId: "",
     draftId: "",
+    declinedFields: [],
+    acceptedFields: [],
+    remark: "",
   }),
   components: {
     Institution,
@@ -224,7 +227,6 @@ export default {
         .then((res) => {
           const results = res.data.data;
           this.documentSpecs = results;
-          console.log(this.documentSpecs);
           this.$store
             .dispatch("renewal/setDocumentSpecs", this.documentSpecs)
             .then((res) => {});
@@ -233,7 +235,19 @@ export default {
     fetchDraft(id) {
       this.$store.dispatch("renewal/getDraft", id).then((res) => {
         const results = res.data.data;
+        this.declinedFields = results.declinedFields;
+        this.acceptedFields = results.acceptedFields;
+        this.remark = results.remark;
         this.$store.dispatch("renewal/setDraft", results);
+        this.$store.dispatch(
+          "renewal/storeDeclinedFields",
+          this.declinedFields
+        );
+        this.$store.dispatch(
+          "renewal/storeAcceptedFields",
+          this.acceptedFields
+        );
+        this.$store.dispatch("renewal/storeRemark", this.remark);
       });
     },
   },

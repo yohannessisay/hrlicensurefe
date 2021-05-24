@@ -157,6 +157,11 @@ const routes = [
     name: "Draft",
     component: () => import("../views/Draft.vue"),
   },
+  // {
+  //   path: "/servicefee",
+  //   name: "ServiceFee",
+  //   component: () => import("../views/ServiceFee.vue"),
+  // },
   {
     path: "/admin/detail/:applicationType/:applicationId/:applicantId",
     name: "detail",

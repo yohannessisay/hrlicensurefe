@@ -4,6 +4,20 @@
       <div
         class="flex flex-col pt-large w-full bg-white blue-box-shadow-light rounded "
       >
+        <h2
+          class="flex justify-center"
+          v-if="declinedFieldsCheck"
+          style="color: #e63636"
+        >
+          REJECTED
+        </h2>
+        <h2
+          class="flex justify-center"
+          v-if="acceptedFieldsCheck"
+          style="color: Green"
+        >
+          ACCEPTED
+        </h2>
         <TitleWithIllustration illustration="User" message="COC" class="mt-8" />
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
           <div class="flex justify-center">
@@ -46,11 +60,11 @@
             Next
           </button>
           <button
-            class="buttons[0].class"
-            @click="draft(buttons[0].action)"
+            class="buttons[1].class"
+            @click="draft(buttons[1].action)"
             variant="outline"
           >
-            {{ buttons[0].name }}
+            {{ buttons[1].name }}
           </button>
           <button
             v-if="buttons.length > 2"
@@ -118,6 +132,13 @@ export default {
     let userId = localStorage.getItem("userId");
     let licenseInfo = ref("");
     let draftData = ref("");
+
+    let declinedFields = ref([]);
+    let acceptedFields = ref([]);
+    let remark = ref("");
+
+    let declinedFieldsCheck = ref(false);
+    let acceptedFieldsCheck = ref(false);
 
     let photo = ref("");
     let passport = ref("");
@@ -383,6 +404,15 @@ export default {
     };
 
     onMounted(() => {
+      declinedFields = store.getters["newlicense/getDeclinedFields"];
+      acceptedFields = store.getters["newlicense/getAcceptedFields"];
+      remark = store.getters["newlicense/getRemark"];
+      if (declinedFields != undefined && declinedFields.includes("COC")) {
+        declinedFieldsCheck.value = true;
+      }
+      if (acceptedFields != undefined && acceptedFields.includes("COC")) {
+        acceptedFieldsCheck.value = true;
+      }
       buttons = store.getters["newlicense/getButtons"];
       draftData = store.getters["newlicense/getDraft"];
       if (route.params.id) {
@@ -414,6 +444,11 @@ export default {
       basePath,
       message,
       dataChanged,
+      acceptedFields,
+      declinedFields,
+      remark,
+      declinedFieldsCheck,
+      acceptedFieldsCheck,
     };
   },
 };
@@ -429,5 +464,4 @@ img {
   color: white;
   border-color: tomato;
 }
-
 </style>

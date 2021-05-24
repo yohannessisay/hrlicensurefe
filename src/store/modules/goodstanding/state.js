@@ -13,5 +13,8 @@ export default {
     applicationId: 0,
     documentSpec: [],
     draft: "",
+    declinedFields: [],
+    acceptedFields: [],
+    remark: "",
   },
 };

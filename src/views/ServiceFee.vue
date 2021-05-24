@@ -1,8 +1,19 @@
 <template>
   <div
-    class="card-wrapper max-w-7xl bg-white sm:rounded-lg p-large flex flex-col justify-center items-center relative"
+    class="
+      card-wrapper
+      max-w-7xl
+      bg-white
+      sm:rounded-lg
+      p-large
+      flex flex-col
+      justify-center
+      items-center
+      relative
+    "
   >
     <button
+      id="myCheck"
       class="absolute top-0 right-0 mr-2 mt-2"
       @click="$emit('serviceFeeModal', false)"
       variant="rounded"
@@ -41,7 +52,7 @@
                         class="photoFile"
                         ref="serviceFileP"
                         v-on:change="handleFileUpload()"
-                        style="margin-bottom: 15px !important;"
+                        style="margin-bottom: 15px !important"
                       />
                       <p>
                         Drag your file(s) here to begin<br />
@@ -65,13 +76,15 @@
                 </span>
               </div>
             </div>
-             <div v-if="buttons" class="flex justify-center mb-16">
-            <button>
-              Save
-            </button>
-          </div>
+            <div
+              v-if="!message.showLoading"
+              @click="save()"
+              class="flex justify-center mb-16"
+            >
+              <button>Save</button>
+            </div>
           </form>
-         
+
           <div v-if="message.showLoading">
             <Spinner />
           </div>
@@ -104,7 +117,7 @@ export default {
     ErrorFlashMessage,
     Spinner,
   },
-  props: ["activeState"],
+
   setup(props, { emit }) {
     const store = useStore();
     const route = useRoute();
@@ -125,15 +138,12 @@ export default {
     let showUpload = ref(true);
     let isImage = ref(true);
 
-    let dataChanged = ref(false);
-    let buttons = ref([]);
+    let documents = ref([]);
     let documentSpecs = ref([]);
-    let userId = localStorage.getItem("userId");
-    let licenseInfo = ref("");
-    let draftData = ref("");
 
-    let verificationLetter = ref("");
-    let licenseCopy = ref("");
+    let appID = ref("");
+
+    let dataChanged = ref(false);
 
     const reset = () => {
       showUpload.value = true;
@@ -167,142 +177,49 @@ export default {
         }
       }
     };
-    buttons = store.getters["verification/getButtons"];
-    documentSpecs = store.getters["verification/getDocumentSpec"];
-    licenseInfo = store.getters["verification/getLicense"];
-
-    verificationLetter = store.getters["verification/getVerificationLetter"];
-    licenseCopy = store.getters["verification/getLicenseCopy"];
-
-    const submit = () => {
-      emit("changeActiveState");
-      store.dispatch("verification/set_Service_Fee", serviceFile);
-    };
 
     onMounted(() => {
-      buttons = store.getters["verification/getButtons"];
-      draftData = store.getters["verification/getDraft"];
-      if (route.params.id) {
-        for (let i = 0; i < draftData.documents.length; i++) {
-          if (draftData.documents[i].documentTypeCode == "SF") {
+      message.value.showLoading = true;
+      let id = store.getters["service/getID"];
+      let appType = store.getters["service/getApplicationType"];
+      documentSpecs = store.getters[(appType + "/getDocumentSpecs", id)];
+      store.dispatch(appType + "/getDraft", id).then((res) => {
+        const results = res.data.data;
+        documents = results.documents;
+        appID = results.id;
+        message.value.showLoading = false;
+        for (let i = 0; i < documents.length; i++) {
+          if (documents[i].documentTypeCode == "SF") {
             showUpload.value = false;
             isImage.value = true;
-            serviceFile.value = draftData.documents[i];
+            serviceFile.value = documents[i];
             showPreview.value = true;
-            filePreview.value = basePath + draftData.documents[i].filePath;
+            filePreview.value = basePath + documents[i].filePath;
           }
         }
-      }
-    });
-    const draft = (action) => {
-      message.value.showLoading = true;
-      if (route.params.id) {
-        if (dataChanged.value) {
-          let formData = new FormData();
-          formData.append(documentSpecs[0].documentType.code, serviceFile);
-          formData.append(
-            documentSpecs[1].documentType.code,
-            verificationLetter
-          );
-          formData.append(documentSpecs[2].documentType.code, licenseCopy);
-
-          let payload = { document: formData, id: draftData.id };
-          store
-            .dispatch("verification/uploadDocuments", payload)
-            .then((res) => {
-              if (res.status == 200) {
-                message.value.showFlash = !message.value.showFlash;
-                message.value.showLoading = false;
-                setTimeout(() => {}, 2200);
-                router.push({ path: "/menu" });
-              } else {
-                message.value.showErrorFlash = !message.value.showErrorFlash;
-              }
-            })
-            .catch((err) => {});
-        } else {
-          let draftObj = {
-            action: action,
-            data: draftData,
-          };
-          let payload = {
-            licenseId: draftData.id,
-            draftData: draftObj,
-          };
-          message.value.showLoading = true;
-          store.dispatch("verification/updateDraft", payload).then((res) => {
-            if (res.status == 200) {
-              message.value.showFlash = !message.value.showFlash;
-              message.value.showLoading = false;
-              setTimeout(() => {}, 2200);
-              router.push({ path: "/menu" });
-            } else {
-              message.value.showErrorFlash = !message.value.showErrorFlash;
-            }
-          });
-        }
-      } else {
-        let license = {
-          action: action,
-          data: {
-            applicantId: userId,
-            applicantTypeId: licenseInfo.applicantTypeId,
-            education: {
-              departmentId: licenseInfo.education.departmentId,
-              institutionId: licenseInfo.education.institutionId,
-            },
-          },
-        };
-        store
-          .dispatch("verification/addVerificationLicense", license)
-          .then((res) => {
-            let licenseId = res.data.data.id;
-            let formData = new FormData();
-            formData.append(documentSpecs[0].documentType.code, serviceFile);
-            formData.append(
-              documentSpecs[1].documentType.code,
-              verificationLetter
-            );
-            formData.append(documentSpecs[2].documentType.code, licenseCopy);
-            let payload = { document: formData, id: licenseId };
-            store
-              .dispatch("verification/uploadDocuments", payload)
-              .then((res) => {
-                if (res.status == 200) {
-                  message.value.showFlash = !message.value.showFlash;
-                  message.value.showLoading = false;
-                  setTimeout(() => {}, 2200);
-                  router.push({ path: "/menu" });
-                } else {
-                  message.value.showErrorFlash = !message.value.showErrorFlash;
-                }
-              })
-              .catch((err) => {});
-          });
-      }
-    };
-    const withdraw = (action) => {
-      let withdrawObj = {
-        action: action,
-        data: draftData,
-      };
-      let payload = {
-        licenseId: draftData.id,
-        withdrawData: withdrawObj,
-      };
-      message.value.showLoading = !message.value.showLoading;
-      store.dispatch("verification/withdraw", payload).then((res) => {
-        if (res.data.status == "Success") {
-          message.value.showLoading = !message.value.showLoading;
-          message.value.showFlash = !message.value.showFlash;
-
-          setTimeout(() => {
-            router.push({ path: "/menu" });
-          }, 3000);
-        } else {
-          message.value.showErrorFlash = !message.value.showErrorFlash;
-        }
       });
+    });
+    const save = () => {
+      message.value.showLoading = true;
+      let id = store.getters["service/getID"];
+      let appType = store.getters["service/getApplicationType"];
+      let formData = new FormData();
+      formData.append("SF", serviceFile);
+      let payload = { document: formData, id: id };
+      store
+        .dispatch(appType + "/uploadDocuments", payload)
+        .then((res) => {
+          if (res.status == 200) {
+            message.value.showFlash = !message.value.showFlash;
+            message.value.showLoading = false;
+            setTimeout(() => {
+              document.getElementById("myCheck").click();
+            }, 1500);
+          } else {
+            message.value.showErrorFlash = !message.value.showErrorFlash;
+          }
+        })
+        .catch((err) => {});
     };
 
     return {
@@ -314,15 +231,10 @@ export default {
       isImage,
       handleFileUpload,
       reset,
-      submit,
-      draft,
-      withdraw,
-      buttons,
-      draftData,
+      documents,
+      save,
       basePath,
       message,
-      verificationLetter,
-      licenseCopy,
     };
   },
 };
@@ -342,6 +254,10 @@ export default {
   height: 300px;
   position: absolute;
   cursor: pointer;
+}
+picture {
+  width: 100%;
+  height: 300px;
 }
 
 .dropbox {

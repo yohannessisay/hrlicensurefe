@@ -18,4 +18,7 @@ export default {
   getApplicationId: (state) => state.applicationId,
   getDocumentSpec: (state) => state.documentSpec,
   getDraft: (state) => state.draft,
+  getRemark: (state) => state.remark,
+  getDeclinedFields: (state) => state.declinedFields,
+  getAcceptedFields: (state) => state.acceptedFields,
 };

@@ -4,6 +4,20 @@
       <div
         class="flex flex-col pt-large w-full bg-white blue-box-shadow-light rounded "
       >
+        <h2
+          class="flex justify-center"
+          v-if="declinedFieldsCheck"
+          style="color: #e63636"
+        >
+          REJECTED
+        </h2>
+        <h2
+          class="flex justify-center"
+          v-if="acceptedFieldsCheck"
+          style="color: Green"
+        >
+          ACCEPTED
+        </h2>
         <TitleWithIllustration
           illustration="User"
           message="Photo"
@@ -54,11 +68,11 @@
             Next
           </button>
           <button
-            class="buttons[0].class"
-            @click="draft(buttons[0].action)"
+            class="buttons[1].class"
+            @click="draft(buttons[1].action)"
             variant="outline"
           >
-            {{ buttons[0].name }}
+            {{ buttons[1].name }}
           </button>
           <button
             v-if="buttons.length > 2"
@@ -126,6 +140,13 @@ export default {
     let licenseInfo = ref("");
     let draftData = ref("");
 
+    let declinedFields = ref([]);
+    let acceptedFields = ref([]);
+    let remark = ref("");
+
+    let declinedFieldsCheck = ref(false);
+    let acceptedFieldsCheck = ref(false);
+
     let workExperience = ref("");
     let healthExamCert = ref("");
     let renewalLetter = ref("");
@@ -144,7 +165,6 @@ export default {
       dataChanged.value = true;
       showUpload.value = false;
       photoFile.value = photoFileP.value.files[0];
-      console.log(photoFile.value);
       let reader = new FileReader();
 
       reader.addEventListener(
@@ -183,9 +203,17 @@ export default {
     };
 
     onMounted(() => {
+      declinedFields = store.getters["renewal/getDeclinedFields"];
+      acceptedFields = store.getters["renewal/getAcceptedFields"];
+      remark = store.getters["renewal/getRemark"];
+      if (declinedFields != undefined && declinedFields.includes("PSP")) {
+        declinedFieldsCheck.value = true;
+      }
+      if (acceptedFields != undefined && acceptedFields.includes("PSP")) {
+        acceptedFieldsCheck.value = true;
+      }
       buttons = store.getters["renewal/getButtons"];
       draftData = store.getters["renewal/getDraft"];
-      console.log(draftData);
       if (route.params.id) {
         for (let i = 0; i < draftData.documents.length; i++) {
           if (draftData.documents[i].documentTypeCode == "PSP") {
@@ -273,7 +301,6 @@ export default {
           store
             .dispatch("renewal/uploadDocuments", payload)
             .then((res) => {
-              console.log(res);
               if (res) {
                 message.value.showFlash = !message.value.showFlash;
                 setTimeout(() => {}, 2200);
@@ -325,6 +352,11 @@ export default {
       basePath,
       message,
       dataChanged,
+      acceptedFields,
+      declinedFields,
+      remark,
+      declinedFieldsCheck,
+      acceptedFieldsCheck,
     };
   },
 };

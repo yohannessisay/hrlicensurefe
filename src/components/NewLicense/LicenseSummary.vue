@@ -239,8 +239,8 @@
     </div> -->
       <div class="mt-12 flex justify-center">
         <div>
-          <button @click="submitRequest(this.buttons[1].action)">
-            {{ this.buttons[1].name }}
+          <button @click="submitRequest(this.buttons[0].action)">
+            {{ this.buttons[0].name }}
           </button>
         </div>
       </div>
@@ -251,8 +251,8 @@
         </h6>
       </div>
       <div class="flex justify-center mt-8 mb-8">
-        <button variant="outline" @click="saveDraft(this.buttons[0].action)">
-          {{ this.buttons[0].name }}
+        <button variant="outline" @click="saveDraft(this.buttons[1].action)">
+          {{ this.buttons[1].name }}
         </button>
         <button
           v-if="this.buttons.length > 2"
@@ -556,6 +556,7 @@ export default {
         this.showFlash = false;
         this.showErrorFlash = false;
         let formData = new FormData();
+        console.log(this.documentTypes);
         formData.append(this.documentTypes[0].documentType.code, this.photo);
         formData.append(this.documentTypes[1].documentType.code, this.passport);
         formData.append(
@@ -615,17 +616,17 @@ export default {
           this.documentTypes[15].documentType.code,
           this.supportLetter
         );
-        formData.append(this.documentSpec[16].documentType.code, this.herqa);
+        formData.append(this.documentTypes[16].documentType.code, this.herqa);
         formData.append(
-          this.documentSpec[17].documentType.code,
+          this.documentTypes[17].documentType.code,
           this.letterfromOrg
         );
         formData.append(
-          this.documentSpec[18].documentType.code,
+          this.documentTypes[18].documentType.code,
           this.renewedLicense
         );
         formData.append(
-          this.documentSpec[19].documentType.code,
+          this.documentTypes[19].documentType.code,
           this.professionalLicense
         );
         let license = {

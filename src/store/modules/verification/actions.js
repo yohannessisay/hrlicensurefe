@@ -8,6 +8,9 @@ import {
   SET_APPLICATION_ID,
   SET_DOCUMENT_SPEC,
   SET_DRAFT,
+  SET_DECLINED_FIELDS,
+  SET_REMARK,
+  SET_ACCEPTED_FIELDS,
 } from "./mutation-types";
 
 const url = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api/";
@@ -158,5 +161,14 @@ export default {
     } catch (error) {
       return error;
     }
+  },
+  async storeDeclinedFields({ commit }, fields) {
+    commit(SET_DECLINED_FIELDS, fields);
+  },
+  async storeAcceptedFields({ commit }, fields) {
+    commit(SET_ACCEPTED_FIELDS, fields);
+  },
+  async storeRemark({ commit }, remark) {
+    commit(SET_REMARK, remark);
   },
 };

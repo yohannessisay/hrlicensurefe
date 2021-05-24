@@ -4,6 +4,20 @@
       <div
         class="flex flex-col pt-large w-full bg-white blue-box-shadow-light rounded "
       >
+        <h2
+          class="flex justify-center"
+          v-if="declinedFieldsCheck"
+          style="color: #e63636"
+        >
+          REJECTED
+        </h2>
+        <h2
+          class="flex justify-center"
+          v-if="acceptedFieldsCheck"
+          style="color: Green"
+        >
+          ACCEPTED
+        </h2>
         <TitleWithIllustration
           illustration="User"
           message="License Copy"
@@ -51,10 +65,10 @@
           </button>
           <button
             class="buttons[0].class"
-            @click="draft(buttons[0].action)"
+            @click="draft(buttons[1].action)"
             variant="outline"
           >
-            {{ buttons[0].name }}
+            {{ buttons[1].name }}
           </button>
           <button
             v-if="buttons.length > 2"
@@ -116,6 +130,13 @@ export default {
     let showUpload = ref(true);
     let isImage = ref(true);
 
+    let declinedFields = ref([]);
+    let acceptedFields = ref([]);
+    let remark = ref("");
+
+    let declinedFieldsCheck = ref(false);
+    let acceptedFieldsCheck = ref(false);
+
     let dataChanged = ref(false);
     let buttons = ref([]);
     let documentSpecs = ref([]);
@@ -169,9 +190,18 @@ export default {
     };
 
     onMounted(() => {
+      declinedFields = store.getters["verification/getDeclinedFields"];
+      acceptedFields = store.getters["verification/getAcceptedFields"];
+      remark = store.getters["verification/getRemark"];
+      if (declinedFields != undefined && declinedFields.includes("LC")) {
+        declinedFieldsCheck.value = true;
+      }
+      if (acceptedFields != undefined && acceptedFields.includes("LC")) {
+        acceptedFieldsCheck.value = true;
+      }
+
       buttons = store.getters["verification/getButtons"];
       draftData = store.getters["verification/getDraft"];
-      console.log(draftData);
       if (route.params.id) {
         for (let i = 0; i < draftData.documents.length; i++) {
           if (draftData.documents[i].documentTypeCode == "LC") {
@@ -314,6 +344,11 @@ export default {
       message,
       dataChanged,
       verificationLetter,
+      acceptedFields,
+      declinedFields,
+      remark,
+      declinedFieldsCheck,
+      acceptedFieldsCheck,
     };
   },
 };
