@@ -64,11 +64,11 @@
             Next
           </button>
           <button
-            class="buttons[0].class"
-            @click="draft(buttons[0].action)"
+            class="buttons[1].class"
+            @click="draft(buttons[1].action)"
             variant="outline"
           >
-            {{ buttons[0].name }}
+            {{ buttons[1].name }}
           </button>
           <button
             v-if="buttons.length > 2"
@@ -418,7 +418,7 @@ export default {
       if (declinedFields != undefined && declinedFields.includes("SL")) {
         declinedFieldsCheck.value = true;
       }
-      if (accpetedFields != undefined && acceptedFields.includes("SL")) {
+      if (acceptedFields != undefined && acceptedFields.includes("SL")) {
         acceptedFieldsCheck.value = true;
       }
       buttons = store.getters["newlicense/getButtons"];

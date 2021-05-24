@@ -60,8 +60,8 @@
           <button @click="submit">
             Next
           </button>
-          <button @click="draft(this.buttons[0].action)" variant="outline">
-            {{ this.buttons[0]["name"] }}
+          <button @click="draft(this.buttons[1].action)" variant="outline">
+            {{ this.buttons[1]["name"] }}
           </button>
           <button
             v-if="this.buttons.length > 2"
@@ -110,6 +110,7 @@ export default {
     this.showLoading = true;
     setTimeout(() => {
       this.buttons = this.getButtons;
+      console.log(this.buttons);
       this.showButtons = true;
       this.showLoading = false;
     }, 5000);

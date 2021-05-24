@@ -63,10 +63,10 @@
           </button>
           <button
             v-if="!submitStatus"
-            @click="draft(this.buttons[0].action)"
+            @click="draft(this.buttons[1].action)"
             variant="outline"
           >
-            {{ this.buttons[0]["name"] }}
+            {{ this.buttons[1]["name"] }}
           </button>
           <button
             v-if="this.buttons.length > 2"

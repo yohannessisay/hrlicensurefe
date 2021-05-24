@@ -65,10 +65,10 @@
           </button>
           <button
             class="buttons[0].class"
-            @click="draft(buttons[0].action)"
+            @click="draft(buttons[1].action)"
             variant="outline"
           >
-            {{ buttons[0].name }}
+            {{ buttons[1].name }}
           </button>
           <button
             v-if="buttons.length > 2"

@@ -64,8 +64,8 @@
             Next
           </button>
           <button
-            class="buttons[0].class"
-            @click="draft(buttons[0].action)"
+            class="buttons[1].class"
+            @click="draft(buttons[1].action)"
             variant="outline"
           >
             {{ buttons[0].name }}
@@ -415,10 +415,10 @@ export default {
       declinedFields = store.getters["newlicense/getDeclinedFields"];
       acceptedFields = store.getters["newlicense/getAcceptedFields"];
       remark = store.getters["newlicense/getRemark"];
-      if (declinedFields != undefined && declinedFields.includes("SL")) {
+      if (declinedFields != null && declinedFields.includes("SL")) {
         declinedFieldsCheck.value = true;
       }
-      if (acceptedFields != undefined && acceptedFields.includes("SL")) {
+      if (acceptedFields != null && acceptedFields.includes("SL")) {
         acceptedFieldsCheck.value = true;
       }
 

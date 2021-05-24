@@ -268,8 +268,8 @@
           <button @click="submit">
             Next
           </button>
-          <button @click="draft(this.buttons[0].action)" variant="outline">
-            {{ this.buttons[0]["name"] }}
+          <button @click="draft(this.buttons[1].action)" variant="outline">
+            {{ this.buttons[1]["name"] }}
           </button>
           <button
             v-if="this.buttons.length > 2"
