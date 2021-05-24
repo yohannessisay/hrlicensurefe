@@ -108,5 +108,8 @@ export default {
     [SET_PENDING_PAYMENTS] (state, data) {
         state.pendingPayments = data;
         state.pendingPaymentsSearched = data
-    }
+    },
+    [SET_PENDING_PAYMENTS_SEARCHED] (state, searchedVal) {
+        state.pendingPaymentsSearched = searchedVal
+    },
 }

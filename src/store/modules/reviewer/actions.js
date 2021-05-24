@@ -466,6 +466,7 @@ export default {
       const certifiedUsers = resp.data.data.filter(function(e) {
         return e.certified == true;
       })
+      console.log("al-ccc", certifiedUsers)
       commit(SET_CERTIFIED_USERS, certifiedUsers)
     } catch(error) {
       const resp = error;
@@ -524,13 +525,39 @@ export default {
         .includes(searchKey.toLowerCase())
 
     })
-    commit(SET_ALL_PENDING_PAYMENTS_SEARCHED, searchedVal)
+    commit(SET_ALL_PENDING_PAYMENTS_SEARCHED, searchKey)
   },
 
   async getPendingPayments({commit}, adminId) {
     const url = baseUrl + "/applications/adminsPendingPayments/" + adminId
     const resp = await ApiService.get(url);
     commit(SET_PENDING_PAYMENTS, resp.data.data)
+  },
+  getPendingPaymentSearched({commit, getters}, searchKey) {
+    if(getters.getPendingPayments === undefined) {
+      return;
+    }
+    const searchedVal = getters.getPendingPayments.filter(function(e) {
+      return e.newLicenseCode === undefined ? '': e.newLicenseCode
+        .toLowerCase()
+        .includes(searchKey.toLowerCase())
+        || (e.applicant.profile.name + 
+          " " +
+           e.applicant.profile.fatherName)
+        .toLowerCase()
+        .includes(searchKey.toLowerCase())
+        || e.applicant.profile.name
+        .toLowerCase()
+        .includes(searchKey.toLowerCase())
+        || e.applicant.profile.fatherName
+        .toLowerCase()
+        .includes(searchKey.toLowerCase())
+        || e.reviewer.name
+        .toLowerCase()
+        .includes(searchKey.toLowerCase())
+
+    })
+    commit(SET_PENDING_PAYMENTS_SEARCHED, searchedVal)
   },
 
   async getProfile(context, id) {

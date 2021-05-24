@@ -26,7 +26,7 @@
               class="p-4 w-48 h-64"
               @Click="
                 detail(
-                  `/admin/unfinishedDetail`,
+                  `/admin/pendingDetail`,
                   item.applicationType,
                   item.id,
                   item.applicant.id
@@ -131,17 +131,17 @@ export default {
           allPendings.value = store.getters['reviewer/getAllPendingPaymentSearched'];
         if(store.getters['reviewer/getAllPendingPaymentSearched'].length !== 0) {
           for (var prop in store.getters['reviewer/getAllPendingPaymentSearched']) {
-            if (store.getters['reviewer/getAllPendingPaymentSearched'][prop].applicationType == "Renewal") {
-              store.getters['reviewer/getAllPendingPaymentSearched'][prop].newLicenseCode =
-                store.getters['reviewer/getAllPendingPaymentSearched'][prop].renewalCode;
+            if (allPendings.value[prop].applicationType == "Renewal") {
+              allPendings.value[prop].newLicenseCode =
+                allPendings.value[prop].renewalCode;
             }
-            if (store.getters['reviewer/getAllPendingPaymentSearched'][prop].applicationType == "Good Standing") {
-              store.getters['reviewer/getAllPendingPaymentSearched'][prop].newLicenseCode =
-                store.getters['reviewer/getAllPendingPaymentSearched'][prop].goodStandingCode;
+            if (allPendings.value[prop].applicationType == "Good Standing") {
+              allPendings.value[prop].newLicenseCode =
+                allPendings.value[prop].goodStandingCode;
             }
-            if (store.getters['reviewer/getAllPendingPaymentSearched'][prop].applicationType == "Verification") {
-              store.getters['reviewer/getAllPendingPaymentSearched'][prop].newLicenseCode =
-                store.getters['reviewer/getAllPendingPaymentSearched'][prop].verificationCode;
+            if (allPendings.value[prop].applicationType == "Verification") {
+              allPendings.value[prop].newLicenseCode =
+                allPendings.value[prop].verificationCode;
             }
           }
         } else {

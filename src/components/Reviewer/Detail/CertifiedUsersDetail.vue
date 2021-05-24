@@ -3,7 +3,7 @@
     <ReviewerNavBar tab="certifiedUsers" />
     <span v-if="!showLoading">
       <button @click="downloadPdf">Download PDF</button>
-      <div class="bg-lightBlueB-200 h-full"> 
+      <div class="bg-lightBlueB-200 h-full">
         <div
           v-if="show"
           style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2)"
@@ -57,25 +57,95 @@
                   ><b>with great distinction</b></span
                 >
                 <br /><br /><br /><br />
-                <span style="font-size: 25px"><i>on {{moment(certificateDetail.certifiedDate).format("MMM Do, YY")}}</i></span
-                ><br />
+                <span style="font-size: 25px"
+                  ><i
+                    >on
+                    {{
+                        moment(certificateDetail.certifiedDate).format(
+                        "MMM D, YYYY"
+                      ) }}</i
+                  ></span
+                ><br>
               </div>
             </div>
           </div>
+
+          <!-- <div class="container">
+            <img
+              src="../../../assets/certeficate_Background_image.jpg"
+              alt="Notebook"
+              style="width: 100%"
+            /> -->
+            <!-- <div class="content"> -->
+            <!-- </div> -->
+            <!-- <span id="main">
+            <div class="flex-container">
+              <div><h4><b>No Photo<br/> Available</b></h4></div>
+              <div class="inner-flex">
+                <h2><b>በኢትዮፕያ ፌደራላዊ ዴሞክራሲያዊ ሪፐብሊክ</b></h2>
+                <h2><b>Federal Democratic Republic Ethiopia</b></h2>
+                 <br/> 
+                <div class="flex-center">
+                  <h2>የጤና ጥበቃ ሚኒስቴር</h2>
+                  <h2>Ministry of Health</h2>
+                </div>
+              </div>
+              <div>
+                <h6>የምዝገባ ቁጥር: {{certifiedUser.newLicenseCode}}</h6>
+              </div>
+            </div>
+            <div class="flex-second-container">
+              <div>
+                <h3 class="underline"><b>የጤና ባለሙያዎች የሙያ ምዝገባና ፈቃድ የምስከር ወረቀት</b></h3>
+                <br>
+                <h4>በኢትዮጵያ ፌዴራላዊ ዴሞክራሲያዊ ረፐብሊክ የጤና ጥበቃ ሚንስቴር </h4>
+                <h4>በአዋጅ ቁጥር 916/2008 አንቀጽ 33(13)በተሰጠው ስልጣን መሰረት</h4>
+                <br><br><br><br>
+                <h3 class="underline">
+                  <b>{{ certifiedUser.name }} {{ certifiedUser.fatherName }}
+                    {{
+                      certifiedUser.grandFatherName != null
+                        ? certifiedUser.grandFatherName
+                        : ""}}</b>
+                    </h3>
+                    <h4>ተገቢውን መስፈርት አሟልተው ስለተገኙ ሚኒስቴር መስሪያ ቤቱ</h4>
+                    <h4><b>ጁኒየር ጀነራልሜዲካል ፕራክቲሽነር</b></h4>
+                    <br>
+                    <h3>ሙያ መዝግቦ ይህን የሙያ ስራ ፈቃድ ሰጥቷል።</h3>
+                    <h3>ይህ የሙያ የስራ ፈቃድ የሚያገለግለው <b>17/08/2013-19/08/2018</b></h3>
+              </div>
+              <div>
+                <h3 class="underline"><b>HEALTH PROFFESSIONALS REGISTRATION AND</b></h3>
+                <h3 class="underline"><b>LICENSING CERTEFICATE</b></h3>
+                <br>
+                <h4>Under the Federal Democratic Republic of Ethiopiathe Minstry</h4>
+                <h4>of Health by Virtue of proclamation No. 916/2015 Article 33(13)</h4>
+                <h4>is given the authority to issue</h4>
+                <br>
+                <h3 class="underline">
+                  <b>{{ certifiedUser.name }} {{ certifiedUser.fatherName }}
+                    {{
+                      certifiedUser.grandFatherName != null
+                        ? certifiedUser.grandFatherName
+                        : ""}}</b>
+                    </h3>
+                    <h4>Having duly satisfied the requirements of the Ministry</h4>
+                    <h4>hereby registered and licensed as</h4>
+                    <h4><b>Junior General Medical Practitioner</b></h4>
+                    <br>
+                    <h3>The license is valid:<b>25/08/2021-27/08/2026</b></h3>
+              </div>
+
+            </div>
+            </span> 
+          </div> -->
         </div>
-      </div> -->
-      <!-- <div class="container">
-        <img src="../../../assets/certeficate_background.jpeg" alt="Notebook" style="width:100%;">
-        <div class="content">
-          <h1>Heading</h1>
-          <p>Lorem ipsum dolor sit amet, an his etiam torquatos. Tollit soleat phaedrum te duo, eum cu recteque expetendis neglegentur. Cu mentitum maiestatis persequeris pro, pri ponderum tractatos ei.</p>
-        </div>
-      </div> -->
+      </div>
     </span>
     <span
       v-if="showLoading"
-        class="flex justify-center justify-items-center mt-24"
-      >
+      class="flex justify-center justify-items-center mt-24"
+    >
       <Spinner />
     </span>
   </div>
@@ -92,7 +162,7 @@ import Spinner from "@/sharedComponents/Spinner";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 
-import moment from 'moment';
+import moment from "moment";
 export default {
   computed: {
     moment: () => moment,
@@ -123,14 +193,55 @@ export default {
           show.value = true;
         });
     };
+
+    
     const fetchApplication = () => {
-      store
-        .dispatch("reviewer/getNewLicenseApplication", route.params.applicationId)
-          .then(res => {
-            
-            certificateDetail.value = res.data.data
-          })
-    }
+      if(route.params.applicationType === "Verification") {
+        store
+        .dispatch(
+          "reviewer/getVerificationApplication",
+          route.params.applicationId
+        )
+        .then((res) => {
+          certificateDetail.value = res.data.data;
+          console.log("data is ", certificateDetail.value)
+        });
+      }
+      else if(route.params.applicationType === "Good Standing") {
+        store
+        .dispatch(
+          "reviewer/getGoodStandingApplication",
+          route.params.applicationId
+        )
+        .then((res) => {
+          certificateDetail.value = res.data.data;
+          console.log("data is ", certificateDetail.value)
+        });
+      }
+      else if(route.params.applicationType === "New License") {
+        store
+        .dispatch(
+          "reviewer/getNewLicenseApplication",
+          route.params.applicationId
+        )
+        .then((res) => {
+          certificateDetail.value = res.data.data;
+          console.log("data is ", certificateDetail.value)
+        });
+
+      } else if(route.params.applicationType === "Renewal") {
+        store
+        .dispatch(
+          "reviewer/getRenewalApplication",
+          route.params.applicationId
+        )
+        .then((res) => {
+          certificateDetail.value = res.data.data;
+          console.log("data is ", certificateDetail.value)
+        });
+      }
+      
+    };
 
     const downloadPdf = () => {
       // var canvas  = document.getElementById("main");
@@ -179,7 +290,10 @@ body {
   margin: 0 auto;
 }
 
-.container img {vertical-align: middle;}
+.container img {
+  vertical-align: middle;
+  opacity: 0.35;
+}
 
 .container .content {
   position: absolute;
@@ -189,5 +303,28 @@ body {
   color: #f1f1f1;
   width: 100%;
   padding: 20px;
+}
+ .flex-container {
+  /* margin-top: -500px; */
+  display: flex;
+  justify-content: center;
+  
+}
+.flex-container > div {
+  margin: 40px;
+  margin-top: -690px;
+  color: black
+}
+.flex-center {
+  padding-left: 25%;
+  justify-content: center;
+}
+.flex-second-container {
+  display: flex;
+  justify-content: center;
+}
+.flex-second-container > div {
+  margin: 40px;
+  margin-top: -550px;
 }
 </style>

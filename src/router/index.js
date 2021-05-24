@@ -133,7 +133,7 @@ const routes = [
     component: () => import("../components/Reviewer/CertifiedUsers.vue"),
   },
   {
-    path: "/admin/certifiedUsersDetail/:applicationId/:applicantId",
+    path: "/admin/certifiedUsersDetail/:applicationType/:applicationId/:applicantId",
     name: "certifiedUsersDetail",
     component: () => import ("../components/Reviewer/Detail/CertifiedUsersDetail.vue"),
   },
@@ -146,6 +146,13 @@ const routes = [
     path: "/admin/allPendingPayments",
     name: "allPendingPayments",
     component: () => import("../components/Reviewer/AllPendingPayments.vue"),
+  },
+  {
+    path:
+      "/admin/pendingDetail/:applicationType/:applicationId/:applicantId",
+    name: "pendingDetail",
+    component: () =>
+      import("../components/Reviewer/Detail/PendingDetail.vue"),
   },
   {
     path: "/admin/evaluate/:applicationType/:applicationId",
