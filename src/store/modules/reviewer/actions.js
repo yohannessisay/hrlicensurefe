@@ -502,9 +502,11 @@ export default {
   },
 
   getAllPendingPaymentSearched({commit, getters}, searchKey) {
+    console.log("search key", searchKey)
     if(getters.getAllPendingPayment === undefined) {
       return;
     }
+    console.log("comming here?", getters.getAllPendingPayment)
     const searchedVal = getters.getAllPendingPayment.filter(function(e) {
       return e.newLicenseCode === undefined ? '': e.newLicenseCode
         .toLowerCase()
@@ -525,7 +527,7 @@ export default {
         .includes(searchKey.toLowerCase())
 
     })
-    commit(SET_ALL_PENDING_PAYMENTS_SEARCHED, searchKey)
+    commit(SET_ALL_PENDING_PAYMENTS_SEARCHED, searchedVal)
   },
 
   async getPendingPayments({commit}, adminId) {
@@ -537,6 +539,7 @@ export default {
     if(getters.getPendingPayments === undefined) {
       return;
     }
+    console.log("mypending", getters.getPendingPayments)
     const searchedVal = getters.getPendingPayments.filter(function(e) {
       return e.newLicenseCode === undefined ? '': e.newLicenseCode
         .toLowerCase()
