@@ -7,7 +7,7 @@
         style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);"
         class="ml-8  mr-8 mb-12"
       >
-        <div class="mt-large bg-white"> 
+        <div class="mt-large bg-white">
           <div class="flex justify-center"><Title message="Summary" /></div>
           <div class="flex justify-start">
             <Title message="Personal Info" />
@@ -61,7 +61,7 @@
             >
               <label class="ml-8"> Date of Birth</label>
               <h5 class="ml-8">
-                {{ profileInfo.dateOfBirth ? profileInfo.dateOfBirth : "-" }}
+                {{ profileInfo.dateOfBirth ? moment(profileInfo.dateOfBirth).format("MMM D, YYYY") : "-" }}
               </h5>
             </div>
             <div
@@ -204,15 +204,21 @@
           <div class="flex flex-row">
             <div>
               <label class="ml-8"> Institution Name</label>
-              <h5 class="ml-8">{{ education.institutionName }}</h5>
+              <h5 class="ml-8" v-if="education.institutionName">
+                {{ education.institutionName }}
+              </h5>
             </div>
             <div>
               <label class="ml-8"> Department</label>
-              <h5 class="ml-8">{{ education.departmentName }}</h5>
+              <h5 class="ml-8" v-if="education.departmentName">
+                {{ education.departmentName }}
+              </h5>
             </div>
             <div>
               <label class="ml-8"> Institution Type</label>
-              <h5 class="ml-8">{{ education.institutionTypeName }}</h5>
+              <h5 class="ml-8" v-if="education.institutionTypeName">
+                {{ education.institutionTypeName }}
+              </h5>
             </div>
           </div>
           <div class="flex justify-start flex-wrap">
@@ -223,22 +229,30 @@
               </picture>
             </div> -->
           </div>
-          <div class="mt-12 flex justify-center">
-            <div>
-              <button @click="evaluate()">Start Evaluating</button>
+          <div v-if="reviewerId == loggedInAdminId">
+            <div class="mt-12 flex justify-center">
+              <div>
+                <button @click="evaluate()">Start Evaluating</button>
+              </div>
             </div>
-          </div>
-          <div class="flex justify-center mt-8">
-            <h6>
-              If you don't have all the required informations you can come back
-              and finish later.
-            </h6>
-          </div>
-          <div class="flex justify-center mt-8 mb-8">
-            <button variant="outline">I will finish Later</button>
+            <div class="flex justify-center mt-8">
+              <h6>
+                If you don't have all the required informations you can come back
+                and finish later.
+              </h6>
+            </div>
+            <div class="flex justify-center mt-8 mb-8">
+              <button variant="outline">I will finish Later</button>
+            </div>
           </div>
         </div>
       </div>
+    </div>
+    <div
+      v-if="showLoading"
+      class="flex justify-center justify-items-center mt-24"
+    >
+      <Spinner />
     </div>
   </div>
 </template>
@@ -249,30 +263,37 @@ import { useRouter, useRoute } from "vue-router";
 import Title from "@/sharedComponents/Title";
 import ReviewerNavBar from "@/components/Reviewer/ReviewerNavBar";
 import { ref, onMounted } from "vue";
+import Spinner from "@/sharedComponents/Spinner";
+import moment from "moment";
 
 export default {
   props: ["activeState"],
   components: {
     Title,
-    ReviewerNavBar
+    ReviewerNavBar,
+    Spinner
+  },
+  computed: {
+    moment: () => moment,
   },
   setup() {
     const store = useStore();
     const router = useRouter();
     const route = useRoute();
 
+    let loading = ref(false);
+
     let userId = ref(null);
     let show = ref(false);
     let license = ref({
       applicant: {},
-      applicantType: {},
-      education: {
-        institution: {
-          institutionType: {}
-        },
-        department: {}
-      }
+      applicantType: {}
     });
+    let education = ref({
+      institution: { name: "", institutionType: { name: "" } },
+      department: { name: "" }
+    });
+    let department = ref({name: ""});
     let profileInfo = ref({
       maritalStatus: {},
       woreda: {
@@ -284,11 +305,11 @@ export default {
     let applicantId = ref("");
     let licenseId = ref("");
     let applicantTypeId = ref("");
-    let education = ref({
-      departmentId: "",
-      institutionId: "",
-      institutionTypeName: ""
-    });
+    // let education = ref({
+    //   departmentId: "",
+    //   institutionId: "",
+    //   institutionTypeName: ""
+    // });
     let activeClass = ref("active");
     let errorClass = ref("text-danger");
     let dataFetched = ref(false);
@@ -297,22 +318,26 @@ export default {
     let profile = ref({});
     let applicationType = ref("");
 
+    let loggedInAdminId = localStorage.getItem("adminId");
+    let reviewerId = ref(0);
+
+    let showLoading = ref(false)
+
     const created = async (applicationTypeName, applicationId, applicantId) => {
+      showLoading.value = true
       licenseId.value = applicationId;
       applicationType.value = applicationTypeName;
-      // store.dispatch("reviewer/getProfile", applicantId).then((res) => {
-      //   profileInfo.value = res.data.data;
-      //   show.value = true;
-      //   console.log(profileInfo.value);
-      // });
+      // applicantId.value = applicanttId;
       if (applicationType.value == "New License") {
         store
           .dispatch("reviewer/getNewLicenseApplication", applicationId)
           .then(res => {
+            showLoading.value = false
             license.value = res.data.data;
+            reviewerId.value = license.value.reviewerId
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
-            applicantId.value = license.value.applicantId;
+            // applicantId.value = license.value.applicantId;
             education.value.departmentName =
               license.value.education.department.name;
             education.value.institutionName =
@@ -325,10 +350,12 @@ export default {
         store
           .dispatch("reviewer/getGoodStandingApplication", applicationId)
           .then(res => {
+            showLoading.value = false
             license.value = res.data.data;
+            reviewerId.value = license.value.reviewerId
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
-            applicantId.value = license.value.applicantId;
+            // applicantId.value = license.value.applicantId;
             education.value.departmentName =
               license.value.education.department.name;
             education.value.institutionName =
@@ -341,10 +368,12 @@ export default {
         store
           .dispatch("reviewer/getVerificationApplication", applicationId)
           .then(res => {
+            showLoading.value = false
             license.value = res.data.data;
+            reviewerId.value = license.value.reviewerId
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
-            applicantId.value = license.value.applicantId;
+            // applicantId.value = license.value.applicantId.toString();
             education.value.departmentName =
               license.value.education.department.name;
             education.value.institutionName =
@@ -354,13 +383,16 @@ export default {
           });
       }
       if (applicationType.value == "Renewal") {
+        loading.value = true;
         store
           .dispatch("reviewer/getRenewalApplication", applicationId)
           .then(res => {
+            showLoading.value = false
             license.value = res.data.data;
+            reviewerId.value = license.value.reviewerId
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
-            applicantId.value = license.value.applicantId;
+            // applicantId.value = license.value.applicantId;
             education.value.departmentName =
               license.value.education.department.name;
             education.value.institutionName =
@@ -380,11 +412,17 @@ export default {
     onMounted(() => {
       //userId.value = +localStorage.getItem("userId");
       userId = 2;
-      created(route.params.applicationType, route.params.applicationId, route.params.applicantId);
+      created(
+        route.params.applicationType,
+        route.params.applicationId,
+        route.params.applicantId
+      );
     });
 
     return {
       userId,
+      reviewerId, 
+      loggedInAdminId,
       license,
       profileInfo,
       activeClass,
@@ -400,7 +438,8 @@ export default {
       show,
       created,
       evaluate,
-      applicationType
+      applicationType,
+      showLoading
     };
   }
 

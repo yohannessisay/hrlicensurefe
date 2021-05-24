@@ -1,8 +1,11 @@
 <template>
+  <ReviewerNavBar tab="Evaluation" />
   <div class="w-screen bg-white flex items-center justify-center">
+    
     <div
       class="w-screen max-w-6xl mt-medium mb-large box-shadow-pop bg-lightGrey-100"
     >
+    
       <div class="flex mb-large mt-medium justify-center">
         <div class="w-64 h-40 container box-shadow-pop rounded-lg">
           <div class="mt-8">
@@ -16,7 +19,7 @@
         </div>
         <div class="flex justify-start flex-wrap ml-12">
           <div>
-            <picture class="flex justify-center items-center mb-small">
+            <picture class="flex justify-center items-center mb-small" v-if="docs.length > 0">
               <img
                 style="border-radius: 100%"
                 v-bind:src="
@@ -93,7 +96,7 @@
                   <img :src="basePath + file.filePath" />
                 </picture>
               </div> -->
-              <picture>
+              <picture v-if="docs.length > 0">
                 <img
                   v-bind:src="
                     'https://hrlicensurebe.dev.k8s.sandboxaddis.com/' +
@@ -101,6 +104,9 @@
                   "
                 />
               </picture>
+              <div class="flex content-center justify-center pb-large" v-if=" docs.length == 0">
+                <h2>No Documents To Show!!</h2>
+              </div>
               <!-- {{docs[0].filePath}} -->
             </div>
           </div>
@@ -258,11 +264,11 @@
                                 <img :src="basePath + file.filePath" />
                               </picture>
                             </div> -->
-                            <picture class="imageViewer">
+                            <picture class="imageViewer" v-if="rejectedObj.length > 0">
                               <img
                                 v-bind:src="
                                   'https://hrlicensurebe.dev.k8s.sandboxaddis.com/' +
-                                    rejectedObj[ind + 1].filePath
+                                    rejectedObj[ind].filePath
                                 "
                               />
                             </picture>
@@ -279,7 +285,7 @@
                           xmlns="http://www.w3.org/2000/svg"
                           version="1.1"
                           @click="nextRemark()"
-                          v-if="ind != rejectedObj.length - 1"
+                          v-if="ind != rejected.length - 1"
                           class="hover:text-primary-60"
                         >
                           <polyline
@@ -351,12 +357,14 @@ import { useRouter } from "vue-router";
 import Modal from "@/sharedComponents/Modal";
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
+import ReviewerNavBar from "@/components/Reviewer/ReviewerNavBar";
 
 export default {
   components: {
     Modal,
     FlashMessage,
-    ErrorFlashMessage
+    ErrorFlashMessage,
+    ReviewerNavBar
   },
   setup() {
     const route = useRoute();
@@ -386,14 +394,14 @@ export default {
     let documentTypes = ref([]);
     let documentTypeName = ref("");
     let modalDocumentTypeName = ref("");
-    let docs = ref([{ filePath: "" }]);
+    let docs = ref([]);
     let index = ref(0);
     let ind = ref(0);
     let amount = ref(1);
     let width = ref("width:11.11111%");
     let accepted = ref([]);
     let rejected = ref([]);
-    let rejectedObj = ref([{ filePath: "" }]);
+    let rejectedObj = ref([]);
     let showButtons = ref(false);
     let disableNext = ref(true);
     let nextClickable = ref(false);
@@ -584,11 +592,11 @@ export default {
       nextClickable.value = true;
     };
     const nextRemark = () => {
-      if (ind.value != rejected.value.length) {
+      if (ind.value != rejected.value.length - 1) {
         ind.value = ind.value + 1;
         modalFindDocumentType(
           documentTypes.value,
-          rejectedObj.value[index.value]
+          rejectedObj.value[ind.value]
         );
         nextClickable.value = false;
       }
@@ -695,14 +703,25 @@ export default {
         if (fromModalSendDeclinedData.value == true) {
           sendDeclinedData.value = true;
         }
+        console.log(rejected.value);
+        console.log(rejectedObj.value);
       }
+
+      console.log("action value, m", actionValue)
       newLicense.value.declinedFields = rejected.value;
       newLicense.value.acceptedFields = accepted.value;
+      if(actionValue == "ApproveEvent") {
+        newLicense.value.certified = true;
+        newLicense.value.certifiedDate = new Date();
+      }
+      console.log("the value is ", newLicense.value)
+      
       let appId = newLicense.value.id;
       let req = {
         action: actionValue,
         data: newLicense.value
       };
+      console.log("approved data: ", req)
       if (
         applicationType.value == "New License" &&
         sendDeclinedData.value == true
@@ -892,7 +911,14 @@ svg:hover {
     height: 320px !important;
   }
   .tArea {
-    width: 620px;
+    width: 720px;
+    height: 95px;
   }
+  /* .tArea:focus {
+    border-color: hsl(var(--input-focus-h), var(--input-focus-s), var(--input-focus-l));
+    box-shadow: 0 0 0 3px hsla(var(--input-focus-h), var(--input-focus-s), calc(var(--input-focus-l) +
+          40%), 0.8);
+    outline: 3px solid transparent;
+  } */
 }
 </style>

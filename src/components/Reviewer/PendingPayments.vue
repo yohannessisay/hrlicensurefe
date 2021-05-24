@@ -1,31 +1,35 @@
 <template>
   <div>
-    <ReviewerNavBar tab="AssignedToYou" />
+    <ReviewerNavBar tab="myPendings" />
     <div class="bg-lightBlueB-200 h-full">
       <div class="flex pl-12 pt-tiny">
-        <Title message="Assigned To You" />
+        <Title message="Pending Payments" />
       </div>
       <div class="flex flex-wrap pb-medium rounded h-full" v-if="!showLoading">
-        <div
-          class="pl-large w-52 h-26"
-          v-if="nothingToShow == true"
-        >
+        <div class="pl-large w-52 h-26" v-if="nothingToShowPending == true">
           <div class="flex content-center justify-center">
             <h2>Nothing To Show!</h2>
           </div>
         </div>
         <div
           class="container"
-          v-for="item in getAssignedToYou"
-          v-bind:key="item.applicationStatus.name"
+          v-for="item in getPending"
+          v-bind:key="item.id"
           v-bind:value="item.id"
         >
           <div
-            class="flex justify-center items-center ml-8 mt-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
+            class="flex justify-center items-center  ml-8 mt-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
           >
             <div
               class="p-4 w-48 h-64"
-              @Click="detail(`/admin/detail`, item.applicationType, item.id, item.applicant.id)"
+              @Click="
+                detail(
+                  `/admin/unfinishedDetail`,
+                  item.applicationType,
+                  item.id,
+                  item.applicant.id
+                )
+              "
             >
               <div class="flex content-center justify-center">
                 <!-- <img class="box-shadow-pop" v-bind:src="item.picture.large" /> -->
@@ -46,12 +50,11 @@
                 }}</b>
               </h4>
               <br />
-              
               <span
-                class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-              >
-                {{ item.applicationType ? item.applicationType : "-" }}
-              </span>
+                  class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                >
+                  {{ item.applicationType ? item.applicationType : "-" }}
+                </span>
               <span
                 class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
               >
@@ -61,11 +64,9 @@
                 class="text-lightBlueB-500 mt-tiny flex justify-end content-center">
                   {{item.createdAt ? moment(item.createdAt).fromNow() : '-'}}
               </span>
-
             </div>
           </div>
         </div>
-        <!-- Second !-->
       </div>
     </div>
     <div
@@ -81,74 +82,74 @@
 import Title from "@/sharedComponents/TitleWithIllustration";
 import ReviewerNavBar from "@/components/Reviewer/ReviewerNavBar";
 import { useStore } from "vuex";
+
+import { ref, onMounted, watch } from "vue";
 import { useRouter } from "vue-router";
 
-import { ref, onMounted } from "vue";
-import store from '../../store';
+import store from '../../store'
 import Spinner from "@/sharedComponents/Spinner";
-import moment from 'moment';
+import moment from 'moment'
 
 export default {
-  components: { ReviewerNavBar, Title, Spinner, },
+  components: { ReviewerNavBar, Title, Spinner },
   computed: {
     moment: () => moment,
-    getAssignedToYou() {
-      return store.getters['reviewer/getAssignedToYouSearched'];
+    getPending() {
+      return store.getters['reviewer/getPendingPayments'];
     }
   },
   setup() {
     const store = useStore();
     const router = useRouter();
 
-    let assignedToyou = ref({});
-    let nothingToShow = ref(false);
-    let x = ref("");
-    let userId = +localStorage.getItem("userId");
-    let adminId = +localStorage.getItem("adminId")
-    let showLoading = ref(false)
+    let pending = ref({});
+    let x = ref([]);
+    let adminId = +localStorage.getItem("adminId");
+    let nothingToShowPending = ref(false);
+    let showLoading = ref(false);
 
-    const fetchAssignedtoYou = () => {
-      showLoading.value = true;
-      store.dispatch("reviewer/getAssignedToYou", adminId).then(res => {
-        showLoading.value = false;
-        // if (res.status != "Error") {
-          console.log("assigned to you val::", store.getters['reviewer/getAssignedToYouSearched'])
-          assignedToyou.value = store.getters['reviewer/getAssignedToYouSearched'];
-        if(assignedToyou.value.length !== 0) {
-          for (var prop in store.getters['reviewer/getAssignedToYouSearched']) {
-            if (store.getters['reviewer/getAssignedToYouSearched'][prop].applicationType == "Renewal") {
-              store.getters['reviewer/getAssignedToYouSearched'][prop].newLicenseCode =
-                store.getters['reviewer/getAssignedToYouSearched'][prop].renewalCode;
+    const fetchPendings = () => {
+      showLoading.value = true
+      store.dispatch("reviewer/getPendingPayments", adminId).then(res => {
+        showLoading.value = false
+          pending.value = store.getters['reviewer/getPendingPayments'];
+        if(store.getters['reviewer/getPendingPayments'].length !== 0) {
+          for (var prop in store.getters['reviewer/getPendingPayments']) {
+            if (pending.value[prop].applicationType == "Renewal") {
+              pending.value[prop].newLicenseCode =
+                pending.value[prop].renewalCode;
             }
-            if (store.getters['reviewer/getAssignedToYouSearched'][prop].applicationType == "Good Standing") {
-              store.getters['reviewer/getAssignedToYouSearched'][prop].newLicenseCode =
-                store.getters['reviewer/getAssignedToYouSearched'][prop].goodStandingCode;
+            if (pending.value[prop].applicationType == "Good Standing") {
+              pending.value[prop].newLicenseCode =
+                pending.value[prop].goodStandingCode;
             }
-            if (store.getters['reviewer/getAssignedToYouSearched'][prop].applicationType == "Verification") {
-              store.getters['reviewer/getAssignedToYouSearched'][prop].newLicenseCode =
-                store.getters['reviewer/getAssignedToYouSearched'][prop].verificationCode;
+            if (pending.value[prop].applicationType == "Verification") {
+              pending.value[prop].newLicenseCode =
+                pending.value[prop].verificationCode;
             }
           }
         } else {
-          nothingToShow.value = true;
+          nothingToShowPending.value = true;
         }
       });
     };
 
     const detail = (data, applicationType, applicationId, applicantId) => {
-      const url = data + "/" + applicationType + "/" + applicationId + "/" + applicantId;
+      const url =
+        data + "/" + applicationType + "/" + applicationId + "/" + applicantId;
       router.push(url);
     };
 
+
     onMounted(() => {
-      fetchAssignedtoYou();
+      fetchPendings();
     });
 
     return {
-      assignedToyou,
-      nothingToShow,
+      pending,
       detail,
-      showLoading
+      nothingToShowPending,
+      showLoading,
     };
   }
 };

@@ -2,19 +2,19 @@
   <div>
     <ReviewerNavBar tab="Unassigned" />
     <div class="flex pl-12 mt-medium">
-      <Title message="Unassigned"/>
+      <Title message="Unassigned" />
     </div>
 
     <div class="box">
-      <div class="flex flex-wrap pb-medium rounded h-full">
+      <div class="flex flex-wrap pb-medium rounded h-full" v-if="!showLoading">
         <div
           class="container flip-box"
-          v-for="(item, index) in unassigned"
+          v-for="item in unAssignedSearched"
           v-bind:key="item.applicationStatus.name"
           v-bind:value="item.id"
         >
           <div
-            class="flex justify-center items-center  ml-8 mt-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100 flip-box-front"
+            class="flex justify-center items-center ml-8 mt-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100 flip-box-front"
           >
             <div
               class="p-4 w-48 h-64"
@@ -34,30 +34,34 @@
               <h4
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
               >
-                {{
+                <b>{{
                   item.applicant.profile.name
                     ? item.applicant.profile.name +
                       " " +
                       item.applicant.profile.fatherName
                     : "-"
-                }}
+                }}</b>
               </h4>
-              <h6
-                class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
-              >
-                {{ item.createdAt ? item.createdAt : "-" }}
-              </h6>
               <span
-                class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
               >
-                Application Type:
+                unassigned
+              </span>
+              
+              <span
+                class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+              >
                 {{ item.applicationType ? item.applicationType : "-" }}
               </span>
               <span
-                class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
               >
-                Application ID:
                 {{ item.newLicenseCode ? item.newLicenseCode : "-" }}
+              </span>
+              <span
+                class="text-lightBlueB-500 mt-tiny flex justify-end content-center"
+              >
+                {{ item.createdAt ? moment(item.createdAt).fromNow() : "-" }}
               </span>
             </div>
           </div>
@@ -69,41 +73,47 @@
               class="p-4 w-48 h-64"
               @mouseover="hover = true"
               @mouseleave="hover = false"
-              @Click="detail(`/admin/unassignedDetail`, item.applicationType, item.id, item.applicant.id)"
+              @Click="
+                detail(
+                  `/admin/unassignedDetail`,
+                  item.applicationType,
+                  item.id,
+                  item.applicant.id
+                )
+              "
             >
               <h4
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
               >
-                {{
+                <b>{{
                   item.applicant.profile.name
                     ? item.applicant.profile.name +
                       " " +
                       item.applicant.profile.fatherName
                     : "-"
-                }}
+                }}</b>
               </h4>
-              <h6
-                class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
-              >
-                {{ item.createdAt ? item.createdAt : "-" }}
-              </h6>
+  
               <span
-                class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
               >
-                Application Type:
                 {{ item.applicationType ? item.applicationType : "-" }}
               </span>
               <span
-                class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
               >
-                Application ID:
                 {{ item.newLicenseCode ? item.newLicenseCode : "-" }}
+              </span>
+              <span
+                class="text-lightBlueB-500 mt-tiny flex justify-end content-center"
+              >
+                {{ item.createdAt ? moment(item.createdAt).fromNow() : "-" }}
               </span>
               <div
                 class="flex ml-small w-32 pt-small justify-center content-center"
               >
                 <button
-                  class="block mx-auto  bg-lightBlue-300 hover:bg-lightBlue-600 hover:shadow-lg"
+                  class="block mx-auto bg-lightBlue-300 hover:bg-lightBlue-600 hover:shadow-lg"
                 >
                   Assign to
                 </button>
@@ -113,6 +123,12 @@
         </div>
       </div>
     </div>
+    <div
+      v-if="showLoading"
+      class="flex justify-center justify-items-center mt-24"
+    >
+      <Spinner />
+    </div>
   </div>
 </template>
 
@@ -121,40 +137,71 @@ import Title from "@/sharedComponents/TitleWithIllustration";
 import ReviewerNavBar from "@/components/Reviewer/ReviewerNavBar";
 import { useStore } from "vuex";
 
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 import { useRouter } from "vue-router";
+import store from "../../store";
+import Spinner from "@/sharedComponents/Spinner";
+import moment from "moment";
 
 export default {
-  components: { ReviewerNavBar, Title },
+  components: { ReviewerNavBar, Title, Spinner },
+  computed: {
+    moment: () => moment,
+    unAssignedSearched() {
+      return store.getters["reviewer/getUnassignedSearched"];
+    },
+  },
   setup() {
     const store = useStore();
     const router = useRouter();
 
     let unassigned = ref({});
+    let showLoading = ref(false);
 
     const fetchUnassignedApplications = () => {
-      store.dispatch("reviewer/getUnassigned").then(res => {
-        unassigned.value = res.data.data;
-        for (var prop in unassigned.value) {
-          console.log(unassigned.value[prop]);
-          if (unassigned.value[prop].applicationType == "Renewal") {
-            unassigned.value[prop].newLicenseCode =
-              unassigned.value[prop].renewalCode;
+      showLoading.value = true;
+      store.dispatch("reviewer/getUnassigned").then((res) => {
+        showLoading.value = false;
+        unassigned.value = store.getters["reviewer/getUnassignedSearched"];
+        for (var prop in store.getters["reviewer/getUnassignedSearched"]) {
+          if (
+            store.getters["reviewer/getUnassignedSearched"][prop]
+              .applicationType == "Renewal"
+          ) {
+            store.getters["reviewer/getUnassignedSearched"][
+              prop
+            ].newLicenseCode =
+              store.getters["reviewer/getUnassignedSearched"][prop].renewalCode;
           }
-          if (unassigned.value[prop].applicationType == "Good Standing") {
-            unassigned.value[prop].newLicenseCode =
-              unassigned.value[prop].goodStandingCode;
+          if (
+            store.getters["reviewer/getUnassignedSearched"][prop]
+              .applicationType == "Good Standing"
+          ) {
+            store.getters["reviewer/getUnassignedSearched"][
+              prop
+            ].newLicenseCode =
+              store.getters["reviewer/getUnassignedSearched"][
+                prop
+              ].goodStandingCode;
           }
-          if (unassigned.value[prop].applicationType == "Verification") {
-            unassigned.value[prop].newLicenseCode =
-              unassigned.value[prop].verificationCode;
+          if (
+            store.getters["reviewer/getUnassignedSearched"][prop]
+              .applicationType == "Verification"
+          ) {
+            store.getters["reviewer/getUnassignedSearched"][
+              prop
+            ].newLicenseCode =
+              store.getters["reviewer/getUnassignedSearched"][
+                prop
+              ].verificationCode;
           }
         }
       });
     };
 
     const detail = (data, applicationType, applicationId, applicantId) => {
-      const url = data + "/" + applicationType + "/" + applicationId + "/" + applicantId;
+      const url =
+        data + "/" + applicationType + "/" + applicationId + "/" + applicantId;
       router.push(url);
     };
 
@@ -164,9 +211,10 @@ export default {
 
     return {
       unassigned,
-      detail
+      detail,
+      showLoading,
     };
-  }
+  },
 };
 </script>
 <style scoped>
@@ -174,6 +222,7 @@ img {
   border-radius: 50%;
   margin-bottom: 1rem;
   width: 80px;
+  height: 80px;
   border-color: steelblue;
   background-color: steelblue;
 }

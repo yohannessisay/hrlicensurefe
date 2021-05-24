@@ -56,6 +56,11 @@
       </a>
       <button click="submit()" class="mt-medium">Login</button>
     </form>
+    <Spinner
+        v-if="showLoading"
+        class="mt-4 mb-4"
+        style="width:20px; height:20px"
+    />
   </div>
   <div class="mr-3xl" v-if="message.showFlash">
     <FlashMessage message="Login Successful!" />
@@ -71,11 +76,14 @@ import { ref } from "vue";
 import { useRouter } from "vue-router";
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
+import Spinner from "@/sharedComponents/Spinner";
 export default {
-  components: { Title, FlashMessage, ErrorFlashMessage },
+  components: { Title, FlashMessage, ErrorFlashMessage, Spinner },
   setup() {
     const store = useStore();
     const router = useRouter();
+
+    let showLoading = ref(false);
     let message = ref({
       showFlash: false,
       showErrorFlash: false,
@@ -92,10 +100,12 @@ export default {
     });
 
     const submit = () => {
+      showLoading.value = true
       let email = {
         emailAddress: credentials.value.emailAddress,
       };
       store.dispatch("admin/login", email).then((res) => {
+        showLoading.value = false
         if (res.data.status == "Success") {
           message.value.showFlash = !message.value.showFlash;
 
@@ -103,6 +113,7 @@ export default {
             router.push({ path: "/admin/review" });
           }, 3000);
         } else {
+          showLoading.value = false
           message.value.showErrorFlash = !message.value.showErrorFlash;
           setTimeout(() => {}, 3000);
         }
@@ -129,6 +140,7 @@ export default {
       isEmail,
       validateForm,
       message,
+      showLoading,
     };
   },
 };

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ReviewerNavBar tab="MyWork" />
+    <ReviewerNavBar tab="AllWork" />
     <div class="bg-lightBlueB-200 h-full">
       <div class="flex pl-12 pt-tiny">
         <Title message="Approved" />
@@ -8,14 +8,14 @@
       <div
         class="flex flex-wrap pb-medium rounded h-full"
           v-if="!showLoadingApproved">
-          <div class="pl-large w-52 h-26" v-if="nothingToShowApproved == true">
+        <div class="pl-large w-52 h-26" v-if="nothingToAllApproved == true">
           <div class="flex content-center justify-center">
             <h2>Nothing To Show!</h2>
           </div>
         </div>
         <div
           class="container"
-          v-for="(item, index) in getApproved"
+          v-for="(item, index) in getAllApproved"
           v-bind:key="index"
           v-bind:value="item.id"
         >
@@ -39,7 +39,16 @@
               >
                 <b>{{ item.applicant.profile.name + " " + item.applicant.profile.fatherName }}</b>
               </h4>
-              <br />
+              <span
+                class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+              >
+              <i class="fas fa-user-cog"></i> &nbsp;
+                {{
+                  item.reviewer.name
+                    ? item.reviewer.name
+                    : "-"
+                }}
+              </span>
               <span
                 class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
               >
@@ -71,14 +80,14 @@
       <div
         class="flex flex-wrap pb-medium rounded h-full"
           v-if="!showLoadingRejected">
-          <div class="pl-large w-52 h-26" v-if="nothingToShowRejected == true">
+          <div class="pl-large w-52 h-26" v-if="nothingToShowAllRejected == true">
           <div class="flex content-center justify-center">
             <h2>Nothing To Show!</h2>
           </div>
         </div>
         <div
           class="container"
-          v-for="(item, index) in getRejected"
+          v-for="(item, index) in getAllRejected"
           v-bind:key="index"
           v-bind:value="item.id"
         >
@@ -102,7 +111,16 @@
               >
                 <b>{{ item.applicant.profile.name + " " + item.applicant.profile.fatherName }}</b>
               </h4>
-              <br />
+              <span
+                class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+              >
+              <i class="fas fa-user-cog"></i> &nbsp;
+                {{
+                  item.reviewer.name
+                    ? item.reviewer.name
+                    : "-"
+                }}
+              </span>
               <span
                 class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
               >
@@ -133,14 +151,14 @@
       <div
         class="flex flex-wrap pb-medium rounded h-full"
           v-if="!showLoadingSuperVision">
-          <div class="pl-large w-52 h-26" v-if="nothingToShowUnderSuperVision == true">
+          <div class="pl-large w-52 h-26" v-if="nothingToShowAllUnderSuperVision == true">
           <div class="flex content-center justify-center">
             <h2>Nothing To Show!</h2>
           </div>
         </div>
         <div
           class="container"
-          v-for="(item, index) in getUnderSuperVision"
+          v-for="(item, index) in getAllUnderSuperVision"
           v-bind:key="index"
           v-bind:value="item.id"
         >
@@ -166,7 +184,16 @@
                   {{ item.applicant.profile.name + " " + item.applicant.profile.fatherName }} 
                 </b>
               </h4>
-              <br/>
+              <span
+                class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+              >
+              <i class="fas fa-user-cog"></i> &nbsp;
+                {{
+                  item.reviewer.name
+                    ? item.reviewer.name
+                    : "-"
+                }}
+              </span>
               <span
                 class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
               >
@@ -213,102 +240,103 @@ export default {
   components: { ReviewerNavBar, Title, Spinner },
   computed: {
     moment: () => moment,
-    getApproved() {
-      return store.getters['reviewer/getApprovedSearched']
+    getAllApproved() {
+      return store.getters['reviewer/getAllApprovedSearched']
     },
     getRecentlyFinished() {
       return store.getters['reviewer/getRecentlyFinishedSearched']
     },
-    getRejected() {
-      return store.getters['reviewer/getRejectedSearched']
+    getAllRejected() {
+      return store.getters['reviewer/getAllRejectedSearched']
     },
-    getUnderSuperVision() {
-      return store.getters['reviewer/getUnderSuperVisionSearched']
+    getAllUnderSuperVision() {
+      return store.getters['reviewer/getAllUnderSuperVisionSearched']
     }
   },
   setup() {
     const store = useStore();
     const router = useRouter()
 
+
     let adminId = +localStorage.getItem("adminId");
+    let adminRole = localStorage.getItem("role");
+    let nothingToAllApproved = ref(false);
+    let nothingToShowAllRejected = ref(false);
+    let nothingToShowAllUnderSuperVision = ref(false);
 
     let showLoadingApproved = ref(false);
     let showLoadingRejected = ref(false);
     let showLoadingSuperVision = ref(false);
 
-    let nothingToShowApproved = ref(false);
-    let nothingToShowRejected = ref(false);
-    let nothingToShowUnderSuperVision = ref(false);
-
-    let approved = ref({});
-    let rejected = ref({});
-    let underSuperVision = ref({});
+    let allApproved = ref({});
+    let allRejected = ref({});
+    let allUnderSuperVision = ref({});
 
     const fetchRecentlyFinished = () => {
       showLoadingApproved.value = true
       showLoadingRejected.value = true
       showLoadingSuperVision.value = true
-      store.dispatch("reviewer/getRecentlyFinished", adminId).then(res => {
+      store.dispatch("reviewer/getAllRecentlyFinished", adminRole).then(res => {
+        if(store.getters['reviewer/getAllApprovedSearched'].length == 0) {
+          nothingToAllApproved.value = true;
+        } else {
+          allApproved.value = store.getters['reviewer/getAllApprovedSearched']
+          for (var prop in store.getters['reviewer/getAllApprovedSearched']) {
+            if (allApproved.value[prop].applicationType == "Renewal") {
+              allApproved.value[prop].newLicenseCode =
+                allApproved.value[prop].renewalCode;
+            }
+            if (allApproved.value[prop].applicationType == "Good Standing") {
+              allApproved.value[prop].newLicenseCode =
+                allApproved.value[prop].goodStandingCode;
+            }
+            if (allApproved.value[prop].applicationType == "Verification") {
+              allApproved.value[prop].newLicenseCode =
+                allApproved.value[prop].verificationCode;
+            }
+          }
+        }
+        if(store.getters['reviewer/getAllRejectedSearched'].length == 0) {
+          nothingToShowAllRejected.value = true;
+        } else {
+          allRejected.value = store.getters['reviewer/getAllRejectedSearched']
+          for (var prop in store.getters['reviewer/getAllRejectedSearched']) {
+            if (allRejected.value[prop].applicationType == "Renewal") {
+              allRejected.value[prop].newLicenseCode =
+                allRejected.value[prop].renewalCode;
+            }
+            if (allRejected.value[prop].applicationType == "Good Standing") {
+              allRejected.value[prop].newLicenseCode =
+                allRejected.value[prop].goodStandingCode;
+            }
+            if (allRejected.value[prop].applicationType == "Verification") {
+              allRejected.value[prop].newLicenseCode =
+                allRejected.value[prop].verificationCode;
+            }
+          }
+        }
+        if (store.getters['reviewer/getAllUnderSuperVisionSearched'].length == 0) {
+          nothingToShowAllUnderSuperVision.value = true;
+        } else {
+          allUnderSuperVision.value = store.getters['reviewer/getAllUnderSuperVisionSearched']
+          for (var prop in store.getters['reviewer/getAllUnderSuperVisionSearched']) {
+            if (allUnderSuperVision.value[prop].applicationType == "Renewal") {
+              allUnderSuperVision.value[prop].newLicenseCode =
+                allUnderSuperVision.value[prop].renewalCode;
+            }
+            if (allUnderSuperVision.value[prop].applicationType == "Good Standing") {
+              allUnderSuperVision.value[prop].newLicenseCode =
+                allUnderSuperVision.value[prop].goodStandingCode;
+            }
+            if (allUnderSuperVision.value[prop].applicationType == "Verification") {
+              allUnderSuperVision.value[prop].newLicenseCode =
+                allUnderSuperVision.value[prop].verificationCode;
+            }
+          }
+        }
         showLoadingApproved.value = false
         showLoadingRejected.value = false
         showLoadingSuperVision.value = false
-        if(store.getters['reviewer/getApprovedSearched'].length == 0) {
-          nothingToShowApproved.value = true;
-        } else {
-          approved.value = store.getters['reviewer/getApprovedSearched']
-          for (var prop in store.getters['reviewer/getApprovedSearched']) {
-            if (approved.value[prop].applicationType == "Renewal") {
-              approved.value[prop].newLicenseCode =
-                approved.value[prop].renewalCode;
-            }
-            if (approved.value[prop].applicationType == "Good Standing") {
-              approved.value[prop].newLicenseCode =
-                approved.value[prop].goodStandingCode;
-            }
-            if (approved.value[prop].applicationType == "Verification") {
-              approved.value[prop].newLicenseCode =
-                approved.value[prop].verificationCode;
-            }
-          }
-        }
-        if(store.getters['reviewer/getRejectedSearched'].length == 0) {
-          nothingToShowRejected.value = true;
-        } else {
-          rejected.value = store.getters['reviewer/getRejectedSearched']
-          for (var prop in store.getters['reviewer/getRejectedSearched']) {
-            if (rejected.value[prop].applicationType == "Renewal") {
-              rejected.value[prop].newLicenseCode =
-                rejected.value[prop].renewalCode;
-            }
-            if (rejected.value[prop].applicationType == "Good Standing") {
-              rejected.value[prop].newLicenseCode =
-                rejected.value[prop].goodStandingCode;
-            }
-            if (rejected.value[prop].applicationType == "Verification") {
-              rejected.value[prop].newLicenseCode =
-                rejected.value[prop].verificationCode;
-            }
-          }
-        }
-        if(store.getters['reviewer/getUnderSuperVisionSearched'].length == 0) {
-          nothingToShowUnderSuperVision.value = true;
-        } else {
-          underSuperVision.value = store.getters['reviewer/getUnderSuperVisionSearched']
-          for (var prop in store.getters['reviewer/getUnderSuperVisionSearched']) {
-            if (underSuperVision.value[prop].applicationType == "Renewal") {
-              underSuperVision.value[prop].newLicenseCode =
-                underSuperVision.value[prop].renewalCode;
-            }
-            if (underSuperVision.value[prop].applicationType == "Good Standing") {
-              underSuperVision.value[prop].newLicenseCode =
-                underSuperVision.value[prop].goodStandingCode;
-            }
-            if (underSuperVision.value[prop].applicationType == "Verification") {
-              underSuperVision.value[prop].newLicenseCode =
-                underSuperVision.value[prop].verificationCode;
-            }
-          }
-        }
       });
     };
 
@@ -327,12 +355,12 @@ export default {
       showLoadingApproved,
       showLoadingRejected,
       showLoadingSuperVision,
-      nothingToShowApproved,
-      nothingToShowRejected,
-      nothingToShowUnderSuperVision,
-      approved,
-      rejected,
-      underSuperVision,
+      nothingToAllApproved,
+      nothingToShowAllRejected,
+      nothingToShowAllUnderSuperVision,
+      allApproved,
+      allRejected,
+      allUnderSuperVision
     };
   }
 };

@@ -1,9 +1,9 @@
 <template>
   <div>
-    <ReviewerNavBar tab="Unfinished" />
+    <ReviewerNavBar tab="certifiedUsers" />
     <div class="bg-lightBlueB-200 h-full">
       <div class="flex pl-12 pt-tiny">
-        <Title message="Unfinished" />
+        <Title message="Certified Users" />
       </div>
       <div class="flex flex-wrap pb-medium rounded h-full" v-if="!showLoading">
         <div class="pl-large w-52 h-26" v-if="nothingToShowUnfinished == true">
@@ -13,7 +13,7 @@
         </div>
         <div
           class="container"
-          v-for="item in getUnfinished"
+          v-for="item in certifiedUsers"
           v-bind:key="item.id"
           v-bind:value="item.id"
         >
@@ -24,9 +24,7 @@
               class="p-4 w-48 h-64"
               @Click="
                 detail(
-                  `/admin/unfinishedDetail`,
-                  item.applicationType,
-                  item.id,
+                  `/admin/certifiedUsersDetail`,
                   item.applicant.id
                 )
               "
@@ -41,7 +39,7 @@
               <h4
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
               >
-                <b>{{
+               <b>{{
                   item.applicant.profile.name
                     ? item.applicant.profile.name +
                       " " +
@@ -49,20 +47,14 @@
                     : "-"
                 }}</b>
               </h4>
-              <br />
               <span
-                  class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                >
-                  {{ item.applicationType ? item.applicationType : "-" }}
-                </span>
-              <span
-                class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-              >
-                {{ item.newLicenseCode ? item.newLicenseCode : "-" }}
+                class="text-lightBlueB-500 mt-tiny flex justify-start content-center">
+                  On {{item.createdAt ? moment(item.certifiedDate).format("MMM DD, YY") : '-'}}
               </span>
               <span
-                class="text-lightBlueB-500 mt-tiny flex justify-end content-center">
-                  {{item.createdAt ? moment(item.createdAt).fromNow() : '-'}}
+                class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+              >
+                {{ item.newLicenseCode ? item.newLicenseCode : "-" }}
               </span>
             </div>
           </div>
@@ -94,49 +86,49 @@ export default {
   components: { ReviewerNavBar, Title, Spinner },
   computed: {
     moment: () => moment,
-    getUnfinished() {
-      return store.getters['reviewer/getUnfinishedSearched'];
-    }
+    // getCertifiedUsers() {
+    // }
   },
   setup() {
     const store = useStore();
     const router = useRouter();
 
-    let unfinished = ref({});
+    let certifiedUsers = ref({});
     let x = ref([]);
     let userId = +localStorage.getItem("adminId");
     let nothingToShowUnfinished = ref(false);
     let showLoading = ref(false);
 
     const fetchUnfinished = () => {
-      showLoading.value = true
-      store.dispatch("reviewer/getUnfinished", userId).then(res => {
-        showLoading.value = false
-          unfinished.value = store.getters['reviewer/getUnfinishedSearched'];
-        if(store.getters['reviewer/getUnfinished'].length !== 0) {
-          for (var prop in store.getters['reviewer/getUnfinishedSearched']) {
-            if (store.getters['reviewer/getUnfinishedSearched'][prop].applicationType == "Renewal") {
-              store.getters['reviewer/getUnfinishedSearched'][prop].newLicenseCode =
-                store.getters['reviewer/getUnfinishedSearched'][prop].renewalCode;
-            }
-            if (store.getters['reviewer/getUnfinishedSearched'][prop].applicationType == "Good Standing") {
-              store.getters['reviewer/getUnfinishedSearched'][prop].newLicenseCode =
-                store.getters['reviewer/getUnfinishedSearched'][prop].goodStandingCode;
-            }
-            if (store.getters['reviewer/getUnfinishedSearched'][prop].applicationType == "Verification") {
-              store.getters['reviewer/getUnfinishedSearched'][prop].newLicenseCode =
-                store.getters['reviewer/getUnfinishedSearched'][prop].verificationCode;
-            }
-          }
-        } else {
-          nothingToShowUnfinished.value = true;
-        }
+      showLoading.value = true;
+      store.dispatch("reviewer/getAllCertifiedUsers").then(res => {
+        showLoading.value = false;
+          console.log("all certified users", res)
+          certifiedUsers.value = res;
+        // if(store.getters['reviewer/getUnfinishedSearched'].length !== 0) {
+        //   for (var prop in store.getters['reviewer/getUnfinishedSearched']) {
+        //     if (store.getters['reviewer/getUnfinishedSearched'][prop].applicationType == "Renewal") {
+        //       store.getters['reviewer/getUnfinishedSearched'][prop].newLicenseCode =
+        //         store.getters['reviewer/getUnfinishedSearched'][prop].renewalCode;
+        //     }
+        //     if (store.getters['reviewer/getUnfinishedSearched'][prop].applicationType == "Good Standing") {
+        //       store.getters['reviewer/getUnfinishedSearched'][prop].newLicenseCode =
+        //         store.getters['reviewer/getUnfinishedSearched'][prop].goodStandingCode;
+        //     }
+        //     if (store.getters['reviewer/getUnfinishedSearched'][prop].applicationType == "Verification") {
+        //       store.getters['reviewer/getUnfinishedSearched'][prop].newLicenseCode =
+        //         store.getters['reviewer/getUnfinishedSearched'][prop].verificationCode;
+        //     }
+        //   }
+        // } else {
+        //   nothingToShowUnfinished.value = true;
+        // }
       });
     };
 
-    const detail = (data, applicationType, applicationId, applicantId) => {
+    const detail = (data, applicantId) => {
       const url =
-        data + "/" + applicationType + "/" + applicationId + "/" + applicantId;
+        data + "/" + applicantId;
       router.push(url);
     };
 
@@ -145,7 +137,7 @@ export default {
     });
 
     return {
-      unfinished,
+      certifiedUsers,
       detail,
       nothingToShowUnfinished,
       showLoading,

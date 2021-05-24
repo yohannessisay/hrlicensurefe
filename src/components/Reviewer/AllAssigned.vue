@@ -1,22 +1,19 @@
 <template>
   <div>
-    <ReviewerNavBar tab="AssignedToYou" />
+    <ReviewerNavBar tab="AssignedToAll" />
     <div class="bg-lightBlueB-200 h-full">
       <div class="flex pl-12 pt-tiny">
-        <Title message="Assigned To You" />
+        <Title message="Assigned To Others" />
       </div>
       <div class="flex flex-wrap pb-medium rounded h-full" v-if="!showLoading">
-        <div
-          class="pl-large w-52 h-26"
-          v-if="nothingToShow == true"
-        >
+        <div class="pl-large w-52 h-26" v-if="nothingToShow == true">
           <div class="flex content-center justify-center">
             <h2>Nothing To Show!</h2>
           </div>
         </div>
         <div
           class="container"
-          v-for="item in getAssignedToYou"
+          v-for="item in getAllAssignedToYou"
           v-bind:key="item.applicationStatus.name"
           v-bind:value="item.id"
         >
@@ -25,7 +22,14 @@
           >
             <div
               class="p-4 w-48 h-64"
-              @Click="detail(`/admin/detail`, item.applicationType, item.id, item.applicant.id)"
+              @Click="
+                detail(
+                  `/admin/detail`,
+                  item.applicationType,
+                  item.id,
+                  item.applicant.id
+                )
+              "
             >
               <div class="flex content-center justify-center">
                 <!-- <img class="box-shadow-pop" v-bind:src="item.picture.large" /> -->
@@ -45,8 +49,16 @@
                     : "-"
                 }}</b>
               </h4>
-              <br />
-              
+              <span
+                class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+              >
+              <i class="fas fa-user-cog"></i> &nbsp;
+                {{ item.reviewer.name ? item.reviewer.name : "-" }}
+              </span>
+              <!-- <h6
+                class="text-lightBlueB-500 mt-tiny flex justify-center content-center">
+                {{ item.createdAt ? item.createdAt : "-" }}
+              </h6> -->
               <span
                 class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
               >
@@ -61,7 +73,6 @@
                 class="text-lightBlueB-500 mt-tiny flex justify-end content-center">
                   {{item.createdAt ? moment(item.createdAt).fromNow() : '-'}}
               </span>
-
             </div>
           </div>
         </div>
@@ -84,17 +95,21 @@ import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 
 import { ref, onMounted } from "vue";
-import store from '../../store';
+import store from "../../store";
 import Spinner from "@/sharedComponents/Spinner";
-import moment from 'moment';
+import moment from 'moment'
 
 export default {
-  components: { ReviewerNavBar, Title, Spinner, },
+  components: {
+    ReviewerNavBar,
+    Title,
+    Spinner,
+  },
   computed: {
     moment: () => moment,
-    getAssignedToYou() {
-      return store.getters['reviewer/getAssignedToYouSearched'];
-    }
+    getAllAssignedToYou() {
+      return store.getters["reviewer/getAssignedForEveryOneSearched"];
+    },
   },
   setup() {
     const store = useStore();
@@ -102,31 +117,54 @@ export default {
 
     let assignedToyou = ref({});
     let nothingToShow = ref(false);
+    let showLoading = ref(false);
     let x = ref("");
     let userId = +localStorage.getItem("userId");
-    let adminId = +localStorage.getItem("adminId")
-    let showLoading = ref(false)
+    let adminRole = localStorage.getItem("role");
 
     const fetchAssignedtoYou = () => {
       showLoading.value = true;
-      store.dispatch("reviewer/getAssignedToYou", adminId).then(res => {
+      store.dispatch("reviewer/getAssignedToEveryOne", adminRole).then((res) => {
         showLoading.value = false;
         // if (res.status != "Error") {
-          console.log("assigned to you val::", store.getters['reviewer/getAssignedToYouSearched'])
-          assignedToyou.value = store.getters['reviewer/getAssignedToYouSearched'];
-        if(assignedToyou.value.length !== 0) {
-          for (var prop in store.getters['reviewer/getAssignedToYouSearched']) {
-            if (store.getters['reviewer/getAssignedToYouSearched'][prop].applicationType == "Renewal") {
-              store.getters['reviewer/getAssignedToYouSearched'][prop].newLicenseCode =
-                store.getters['reviewer/getAssignedToYouSearched'][prop].renewalCode;
+        assignedToyou.value =
+          store.getters["reviewer/getAssignedForEveryOneSearched"];
+        if (assignedToyou.value.length !== 0) {
+          for (var prop in store.getters[
+            "reviewer/getAssignedForEveryOneSearched"
+          ]) {
+            if (
+              store.getters["reviewer/getAssignedForEveryOneSearched"][prop]
+                .applicationType == "Renewal"
+            ) {
+              store.getters["reviewer/getAssignedForEveryOneSearched"][
+                prop
+              ].newLicenseCode =
+                store.getters["reviewer/getAssignedForEveryOneSearched"][
+                  prop
+                ].renewalCode;
             }
-            if (store.getters['reviewer/getAssignedToYouSearched'][prop].applicationType == "Good Standing") {
-              store.getters['reviewer/getAssignedToYouSearched'][prop].newLicenseCode =
-                store.getters['reviewer/getAssignedToYouSearched'][prop].goodStandingCode;
+            if (
+              store.getters["reviewer/getAssignedForEveryOneSearched"][prop]
+                .applicationType == "Good Standing"
+            ) {
+              store.getters["reviewer/getAssignedForEveryOneSearched"][
+                prop
+              ].newLicenseCode =
+                store.getters["reviewer/getAssignedForEveryOneSearched"][
+                  prop
+                ].goodStandingCode;
             }
-            if (store.getters['reviewer/getAssignedToYouSearched'][prop].applicationType == "Verification") {
-              store.getters['reviewer/getAssignedToYouSearched'][prop].newLicenseCode =
-                store.getters['reviewer/getAssignedToYouSearched'][prop].verificationCode;
+            if (
+              store.getters["reviewer/getAssignedForEveryOneSearched"][prop]
+                .applicationType == "Verification"
+            ) {
+              store.getters["reviewer/getAssignedForEveryOneSearched"][
+                prop
+              ].newLicenseCode =
+                store.getters["reviewer/getAssignedForEveryOneSearched"][
+                  prop
+                ].verificationCode;
             }
           }
         } else {
@@ -136,7 +174,8 @@ export default {
     };
 
     const detail = (data, applicationType, applicationId, applicantId) => {
-      const url = data + "/" + applicationType + "/" + applicationId + "/" + applicantId;
+      const url =
+        data + "/" + applicationType + "/" + applicationId + "/" + applicantId;
       router.push(url);
     };
 
@@ -148,9 +187,10 @@ export default {
       assignedToyou,
       nothingToShow,
       detail,
-      showLoading
+      showLoading,
+      adminRole,
     };
-  }
+  },
 };
 </script>
 <style scoped>
