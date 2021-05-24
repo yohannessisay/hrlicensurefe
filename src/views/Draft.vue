@@ -197,7 +197,7 @@
 
                   <span
                     class="
-                      mt-large
+                      mt-medium
                       text-lightBlueB-500
                       flex
                       justify-end
@@ -265,7 +265,7 @@
 
                     <span
                       class="
-                      mt-large
+                      mt-medium
                       text-lightBlueB-500
                       flex
                       justify-end
@@ -330,7 +330,7 @@
 
                     <span
                       class="
-                      mt-large
+                      mt-medium
                       text-lightBlueB-500
                       flex
                       justify-end
@@ -401,7 +401,7 @@
 
                     <span
                       class="
-                      mt-large
+                      mt-medium
                       text-lightBlueB-500
                       flex
                       justify-end
@@ -472,7 +472,7 @@
 
                     <span
                       class="
-                      mt-large
+                      mt-medium
                       text-lightBlueB-500
                       flex
                       justify-end

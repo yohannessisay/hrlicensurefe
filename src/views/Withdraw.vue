@@ -153,40 +153,60 @@
                 class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
               >
                 <div class="p-4 w-48 h-64">
-                  <h4
-                    class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                  <span
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
-                    Applicant Type: {{ item.applicantType.name }}
-                  </h4>
-                  <h4
-                    class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                    <b>Applicant Type: &nbsp;</b>
+                    {{ item.applicantType.name }}
+                  </span>
+                  <span
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
-                    Application Status: {{ item.applicationStatus.name }}
-                  </h4>
-                  <h4
+                    <b>Status: &nbsp;</b>{{ item.applicationStatus.name }}
+                  </span>
+                  <span
                     v-if="item.newLicenseCode"
-                    class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
-                    Code: {{ item.newLicenseCode }}
-                  </h4>
-                  <h4
+                    <b>Code: &nbsp;</b>{{ item.newLicenseCode }}
+                  </span>
+                  <span
                     v-if="item.renewalCode"
-                    class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
-                    Code: {{ item.renewalCode }}
-                  </h4>
-                  <h4
+                    <b>Code: &nbsp;</b>{{ item.renewalCode }}
+                  </span>
+                  <span
                     v-if="item.verificationCode"
-                    class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
-                    Code: {{ item.verificationCode }}
-                  </h4>
-                  <h4
+                    <b>Code: &nbsp;</b>{{ item.verificationCode }}
+                  </span>
+                  <span
                     v-if="item.goodStandingCode"
-                    class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
-                    Code: {{ item.goodStandingCode }}
-                  </h4>
+                    <b>Code: &nbsp;</b>{{ item.goodStandingCode }}
+                  </span>
+                  <span
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                  >
+                    <b>Certified: &nbsp;</b>{{ item.certified }}
+                  </span>
+
+                  <span
+                    class="
+                      mt-medium
+                      text-lightBlueB-500
+                      flex
+                      justify-end
+                      content-center
+                    "
+                  >
+                    {{
+                      item.createdAt ? moment(item.createdAt).fromNow() : "-"
+                    }}
+                  </span>
                 </div>
               </div>
             </div>
@@ -217,21 +237,41 @@
                 class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
               >
                 <div class="p-4 w-48 h-64">
-                  <h4
-                    class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                  <span
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
-                    Applicant Type: {{ item.applicantType.name }}
-                  </h4>
-                  <h4
-                    class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                    <b>Applicant Type: &nbsp;</b>
+                    {{ item.applicantType.name }}
+                  </span>
+                  <span
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
-                    Application Status: {{ item.applicationStatus.name }}
-                  </h4>
-                  <h4
-                    class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                    <b>Status: &nbsp;</b>{{ item.applicationStatus.name }}
+                  </span>
+                  <span
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
-                    Code: {{ item.newLicenseCode }}
-                  </h4>
+                    <b>Code: &nbsp;</b>{{ item.newLicenseCode }}
+                  </span>
+                  <span
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                  >
+                    <b>Certified: &nbsp;</b>{{ item.certified }}
+                  </span>
+
+                  <span
+                    class="
+                      mt-medium
+                      text-lightBlueB-500
+                      flex
+                      justify-end
+                      content-center
+                    "
+                  >
+                    {{
+                      item.createdAt ? moment(item.createdAt).fromNow() : "-"
+                    }}
+                  </span>
                 </div>
               </div>
             </div>
@@ -260,21 +300,41 @@
                 class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
               >
                 <div class="p-4 w-48 h-64">
-                  <h4
-                    class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                  <span
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
-                    Applicant Type: {{ item.applicantType.name }}
-                  </h4>
-                  <h4
-                    class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                    <b>Applicant Type: &nbsp;</b>
+                    {{ item.applicantType.name }}
+                  </span>
+                  <span
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
-                    Application Status: {{ item.applicationStatus.name }}
-                  </h4>
-                  <h4
-                    class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                    <b>Status: &nbsp;</b>{{ item.applicationStatus.name }}
+                  </span>
+                  <span
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
-                    Code: {{ item.renewalCode }}
-                  </h4>
+                    <b>Code: &nbsp;</b>{{ item.renewalCode }}
+                  </span>
+                  <span
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                  >
+                    <b>Certified: &nbsp;</b>{{ item.certified }}
+                  </span>
+
+                  <span
+                    class="
+                      mt-medium
+                      text-lightBlueB-500
+                      flex
+                      justify-end
+                      content-center
+                    "
+                  >
+                    {{
+                      item.createdAt ? moment(item.createdAt).fromNow() : "-"
+                    }}
+                  </span>
                 </div>
               </div>
             </div>
@@ -307,21 +367,41 @@
                 class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
               >
                 <div class="p-4 w-48 h-64">
-                  <h4
-                    class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                  <span
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
-                    Applicant Type: {{ item.applicantType.name }}
-                  </h4>
-                  <h4
-                    class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                    <b>Applicant Type: &nbsp;</b>
+                    {{ item.applicantType.name }}
+                  </span>
+                  <span
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
-                    Application Status: {{ item.applicationStatus.name }}
-                  </h4>
-                  <h4
-                    class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                    <b>Status: &nbsp;</b>{{ item.applicationStatus.name }}
+                  </span>
+                  <span
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
-                    Code: {{ item.verificationCode }}
-                  </h4>
+                    <b>Code: &nbsp;</b>{{ item.verificationCode }}
+                  </span>
+                  <span
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                  >
+                    <b>Certified: &nbsp;</b>{{ item.certified }}
+                  </span>
+
+                  <span
+                    class="
+                      mt-medium
+                      text-lightBlueB-500
+                      flex
+                      justify-end
+                      content-center
+                    "
+                  >
+                    {{
+                      item.createdAt ? moment(item.createdAt).fromNow() : "-"
+                    }}
+                  </span>
                 </div>
               </div>
             </div>
@@ -354,21 +434,41 @@
                 class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
               >
                 <div class="p-4 w-48 h-64">
-                  <h4
-                    class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                  <span
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
-                    Applicant Type: {{ item.applicantType.name }}
-                  </h4>
-                  <h4
-                    class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                    <b>Applicant Type: &nbsp;</b>
+                    {{ item.applicantType.name }}
+                  </span>
+                  <span
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
-                    Application Status: {{ item.applicationStatus.name }}
-                  </h4>
-                  <h4
-                    class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
+                    <b>Status: &nbsp;</b>{{ item.applicationStatus.name }}
+                  </span>
+                  <span
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
-                    Code: {{ item.goodStandingCode }}
-                  </h4>
+                    <b>Code: &nbsp;</b>{{ item.goodStandingCode }}
+                  </span>
+                  <span
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                  >
+                    <b>Certified: &nbsp;</b>{{ item.certified }}
+                  </span>
+
+                  <span
+                    class="
+                      mt-medium
+                      text-lightBlueB-500
+                      flex
+                      justify-end
+                      content-center
+                    "
+                  >
+                    {{
+                      item.createdAt ? moment(item.createdAt).fromNow() : "-"
+                    }}
+                  </span>
                 </div>
               </div>
             </div>
@@ -390,6 +490,7 @@ import Title from "@/sharedComponents/TitleWithIllustration";
 import RenderIllustration from "@/sharedComponents/RenderIllustration";
 import Navigation from "@/views/Navigation";
 import Spinner from "@/sharedComponents/Spinner";
+import moment from "moment";
 
 export default {
   components: { Navigation, Title, Spinner, RenderIllustration, Title },
@@ -420,6 +521,9 @@ export default {
     }
   },
   methods: {
+    moment: function() {
+      return moment();
+    },
     logout() {
       localStorage.removeItem("token");
       localStorage.removeItem("userId");
@@ -498,6 +602,9 @@ export default {
 };
 </script>
 <style>
+span {
+  font-size: 15px;
+}
 img {
   border-radius: 50%;
   margin-bottom: 1rem;
