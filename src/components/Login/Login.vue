@@ -125,14 +125,14 @@ export default {
               message.value.showErrorFlash = false;
               setTimeout(() => {
                 router.push({ path: "/menu" });
-              }, 3000);
+              }, 1500);
             } else {
               message.value.showLoading = false;
               message.value.showFlash = true;
               message.value.showErrorFlash = false;
               setTimeout(() => {
                 router.push({ path: "/addProfile" });
-              }, 3000);
+              }, 1500);
             }
           });
         } else {

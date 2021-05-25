@@ -11,11 +11,11 @@
                 message="Address"
               />
             </router-link>
-            <h2 class="text-md AtkinsonHyperlegibleBold text-primary-600 ml-2">
+            <h2 class="text-md AtkinsonHyperlegibleBold text-primary-600 ml-2 ">
               HRIS - License
             </h2>
             <div class="relative text-gray-600 focus-within:text-gray-400 ml-8">
-              <h4 class="absolute inset-y-0 right-0 flex items-center mr-8">
+              <span class="absolute inset-y-0 right-0 flex items-center mr-8">
                 <div class="p-1 focus:outline-none focus:shadow-outline">
                   <svg
                     fill="none"
@@ -31,22 +31,12 @@
                     ></path>
                   </svg>
                 </div>
-              </h4>
+              </span>
               <input
                 type="search"
                 name="search"
                 v-on:input="searchApplication()"
-                class="
-                  py-2
-                  text-sm text-black
-                  bg-gray-900
-                  width-548
-                  rounded-md
-                  pl-4
-                  focus:outline-none
-                  focus:bg-white
-                  focus:text-gray-900
-                "
+                class="py-2 text-sm text-black bg-gray-900 width-548 rounded-md pl-4 focus:outline-none focus:bg-white focus:text-gray-900"
                 placeholder="Search requests by Name or Order ID"
                 autocomplete="off"
                 v-model="search"
@@ -56,18 +46,7 @@
 
           <div class="flex items-center space-x-5">
             <a
-              class="
-                focus:outline-none
-                bg-lightBlueB-300
-                text-lightBlueB-400
-                hover:text-gray-800
-                w-7
-                h-7
-                rounded-full
-                flex
-                items-center
-                justify-center
-              "
+              class="focus:outline-none bg-lightBlueB-300 text-lightBlueB-400 hover:text-gray-800 w-7 h-7 rounded-full flex items-center justify-center"
               href="#"
             >
               <svg
@@ -86,18 +65,7 @@
             </a>
             <div class="relative inline-block text-left">
               <a
-                class="
-                  focus:outline-none
-                  bg-lightBlueB-300
-                  text-lightBlueB-400
-                  hover:text-gray-800
-                  w-7
-                  h-7
-                  rounded-full
-                  flex
-                  items-center
-                  justify-center
-                "
+                class="focus:outline-none bg-lightBlueB-300 text-lightBlueB-400 hover:text-gray-800 w-7 h-7 rounded-full flex items-center justify-center"
                 id="options-menu"
                 aria-expanded="true"
                 aria-haspopup="true"
@@ -117,17 +85,7 @@
               </a>
               <div
                 v-if="showDD == true"
-                class="
-                  origin-top-right
-                  absolute
-                  right-0
-                  mt-2
-                  w-56
-                  rounded-md
-                  shadow-lg
-                  bg-white
-                  focus:outline-none
-                "
+                class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white focus:outline-none"
                 role="menu"
                 aria-orientation="vertical"
                 aria-labelledby="options-menu"
@@ -135,27 +93,13 @@
                 <div class="py-1" role="none">
                   <a
                     href="#"
-                    class="
-                      block
-                      px-4
-                      py-2
-                      text-sm text-blue-100
-                      hover:bg-gray-100
-                      hover:text-gray-900
-                    "
+                    class="block px-4 py-2 text-sm text-blue-100  hover:bg-gray-100 hover:text-gray-900"
                     role="menuitem"
                     >Profile
                   </a>
                   <a
                     href="#"
-                    class="
-                      block
-                      px-4
-                      py-2
-                      text-sm text-blue-100
-                      hover:bg-gray-100
-                      hover:text-gray-900
-                    "
+                    class="block px-4 py-2 text-sm text-blue-100 hover:bg-gray-100 hover:text-gray-900"
                     role="menuitem"
                     >About
                   </a>
@@ -163,27 +107,13 @@
                 <div class="py-1" role="none">
                   <a
                     href="#"
-                    class="
-                      block
-                      px-4
-                      py-2
-                      text-sm text-blue-100
-                      hover:bg-gray-100
-                      hover:text-gray-900
-                    "
+                    class="block px-4 py-2 text-sm text-blue-100 hover:bg-gray-100 hover:text-gray-900"
                     role="menuitem"
                     >Display Settings
                   </a>
                   <a
                     @click="logout()"
-                    class="
-                      block
-                      px-4
-                      py-2
-                      text-sm text-blue-100
-                      hover:bg-gray-100
-                      hover:text-gray-900
-                    "
+                    class="block px-4 py-2 text-sm text-blue-100 hover:bg-gray-100 hover:text-gray-900"
                     role="menuitem"
                     id="logout"
                   >
@@ -206,31 +136,21 @@
         </div>
         <div
           v-if="this.searchResult.length != 0"
-          class="mt-medium rounded ml-large"
+          class=" mt-medium rounded ml-large"
         >
           <div
-            class="flex"
+            class="flex "
             v-for="i in this.searchResult.length"
             v-bind:key="i"
           >
             <div
-              @click="openServiceFeeModal(item)"
               class="container mb-medium"
               v-for="item in this.searchResult.slice((i - 1) * 5, i * 5)"
               v-bind:key="item"
               v-bind:value="item"
             >
               <div
-                class="
-                  flex
-                  justify-center
-                  items-center
-                  ml-8
-                  mr-8
-                  box-shadow-pop
-                  rounded-lg
-                  bg-lightGrey-100
-                "
+                class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
               >
                 <div class="p-4 w-48 h-64">
                   <span
@@ -301,34 +221,24 @@
     <div v-if="!this.searched">
       <div v-if="!this.showLoading" class="bg-lightBlueB-200 h-full">
         <div class="flex pl-12 pt-medium">
-          <Title message="New License Approved Applications" />
+          <Title message="New License Pending Payment Applications" />
         </div>
         <div v-if="this.newlicense.length == 0" class="flex pl-12 ml-6">
           <h4>Nothing to Show.</h4>
         </div>
         <div
           v-if="this.newlicense.length != 0"
-          class="mt-medium rounded ml-large"
+          class=" mt-medium rounded ml-large"
         >
-          <div class="flex" v-for="i in this.newlicense.length" v-bind:key="i">
+          <div class="flex " v-for="i in this.newlicense.length" v-bind:key="i">
             <div
-              @click="openServiceFeeModal(item)"
               class="container mb-medium"
               v-for="item in this.newlicense.slice((i - 1) * 5, i * 5)"
               v-bind:key="item"
               v-bind:value="item"
             >
               <div
-                class="
-                  flex
-                  justify-center
-                  items-center
-                  ml-8
-                  mr-8
-                  box-shadow-pop
-                  rounded-lg
-                  bg-lightGrey-100
-                "
+                class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
               >
                 <div class="p-4 w-48 h-64">
                   <span
@@ -378,31 +288,24 @@
       </div>
       <div v-if="!this.showLoading" class="bg-lightBlueB-200 h-full">
         <div class="flex pl-12 pt-medium">
-          <Title message="Renewal Approved Applications" />
+          <Title message="Renewal Pending Payment Applications" />
         </div>
         <div v-if="this.renewal.length == 0" class="flex pl-12 ml-6">
           <h4>Nothing to Show.</h4>
         </div>
-        <div v-if="this.renewal.length != 0" class="mt-medium rounded ml-large">
-          <div class="flex" v-for="i in this.renewal.length" v-bind:key="i">
+        <div
+          v-if="this.renewal.length != 0"
+          class=" mt-medium rounded ml-large"
+        >
+          <div class="flex " v-for="i in this.renewal.length" v-bind:key="i">
             <div
-              @click="openServiceFeeModal(item)"
               class="container mb-medium"
               v-for="item in this.renewal.slice((i - 1) * 5, i * 5)"
               v-bind:key="item"
               v-bind:value="item"
             >
               <div
-                class="
-                  flex
-                  justify-center
-                  items-center
-                  ml-8
-                  mr-8
-                  box-shadow-pop
-                  rounded-lg
-                  bg-lightGrey-100
-                "
+                class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
               >
                 <div class="p-4 w-48 h-64">
                   <span
@@ -419,7 +322,7 @@
                   <span
                     class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
-                    <b>Code: &nbsp;</b>{{ item.newLicenseCode }}
+                    <b>Code: &nbsp;</b>{{ item.renewalCode }}
                   </span>
                   <span
                     class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
@@ -452,38 +355,28 @@
       </div>
       <div v-if="!this.showLoading" class="bg-lightBlueB-200 h-full">
         <div class="flex pl-12 pt-medium">
-          <Title message="Verification Approved Applications" />
+          <Title message="Verification Pending Payment Applications" />
         </div>
         <div v-if="this.verification.length == 0" class="flex pl-12 ml-6">
           <h4>Nothing to Show.</h4>
         </div>
         <div
           v-if="this.verification.length != 0"
-          class="mt-medium rounded ml-large"
+          class=" mt-medium rounded ml-large"
         >
           <div
-            class="flex"
+            class="flex "
             v-for="i in this.verification.length"
             v-bind:key="i"
           >
             <div
-              @click="openServiceFeeModal(item)"
               class="container mb-medium"
               v-for="item in this.verification.slice((i - 1) * 5, i * 5)"
               v-bind:key="item"
               v-bind:value="item"
             >
               <div
-                class="
-                  flex
-                  justify-center
-                  items-center
-                  ml-8
-                  mr-8
-                  box-shadow-pop
-                  rounded-lg
-                  bg-lightGrey-100
-                "
+                class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
               >
                 <div class="p-4 w-48 h-64">
                   <span
@@ -500,7 +393,7 @@
                   <span
                     class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
-                    <b>Code: &nbsp;</b>{{ item.newLicenseCode }}
+                    <b>Code: &nbsp;</b>{{ item.verificationCode }}
                   </span>
                   <span
                     class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
@@ -533,38 +426,28 @@
       </div>
       <div v-if="!this.showLoading" class="bg-lightBlueB-200 h-full">
         <div class="flex pl-12 pt-medium">
-          <Title message="Good Standing Approved Applications" />
+          <Title message="Good Standing Pending Payment Applications" />
         </div>
         <div v-if="this.goodstanding.length == 0" class="flex pl-12 ml-6">
           <h4>Nothing to Show.</h4>
         </div>
         <div
           v-if="this.goodstanding.length != 0"
-          class="mt-medium rounded ml-large"
+          class=" mt-medium rounded ml-large"
         >
           <div
-            class="flex"
+            class="flex "
             v-for="i in this.goodstanding.length"
             v-bind:key="i"
           >
             <div
-              @click="openServiceFeeModal(item)"
               class="container mb-medium"
               v-for="item in this.goodstanding.slice((i - 1) * 5, i * 5)"
               v-bind:key="item"
               v-bind:value="item"
             >
               <div
-                class="
-                  flex
-                  justify-center
-                  items-center
-                  ml-8
-                  mr-8
-                  box-shadow-pop
-                  rounded-lg
-                  bg-lightGrey-100
-                "
+                class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
               >
                 <div class="p-4 w-48 h-64">
                   <span
@@ -581,7 +464,7 @@
                   <span
                     class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
-                    <b>Code: &nbsp;</b>{{ item.newLicenseCode }}
+                    <b>Code: &nbsp;</b>{{ item.goodStandingCode }}
                   </span>
                   <span
                     class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
@@ -613,9 +496,6 @@
         </div>
       </div>
     </div>
-    <Modal v-if="this.serviceFeeModal">
-      <ServiceFee @serviceFeeModal="this.serviceFeeModal = false" />
-    </Modal>
     <div
       v-if="showLoading"
       class="flex justify-center justify-items-center mt-24"
@@ -630,20 +510,10 @@ import Title from "@/sharedComponents/TitleWithIllustration";
 import RenderIllustration from "@/sharedComponents/RenderIllustration";
 import Navigation from "@/views/Navigation";
 import Spinner from "@/sharedComponents/Spinner";
-import Modal from "@/sharedComponents/Modal";
-import ServiceFee from "@/views/ServiceFee.vue";
 import moment from "moment";
 
 export default {
-  components: {
-    Navigation,
-    Title,
-    Spinner,
-    RenderIllustration,
-    Title,
-    Modal,
-    ServiceFee,
-  },
+  components: { Navigation, Title, Spinner, RenderIllustration, Title },
   data: function() {
     return {
       license: [],
@@ -658,9 +528,6 @@ export default {
       showDD: false,
       auth: false,
       token: "",
-      serviceFeeModal: false,
-      itemId: "",
-      applicationType: "",
     };
   },
   async created() {
@@ -676,24 +543,6 @@ export default {
   methods: {
     moment: function() {
       return moment();
-    },
-    openServiceFeeModal(item) {
-      this.serviceFeeModal = true;
-      this.itemId = item.id;
-      if (item.newLicenseCode != undefined) {
-        this.applicationType = "newlicense";
-      }
-      if (item.renewalCode != undefined) {
-        this.applicationType = "renewal";
-      }
-      if (item.verificationCode != undefined) {
-        this.applicationType = "verification";
-      }
-      if (item.goodStandingCode != undefined) {
-        this.applicationType = "goodstanding";
-      }
-      this.$store.dispatch("service/setItemID", this.itemId);
-      this.$store.dispatch("service/setApplicationType", this.applicationType);
     },
     logout() {
       localStorage.removeItem("token");
@@ -742,13 +591,13 @@ export default {
       this.$store.dispatch("newlicense/getNewLicense").then((res) => {
         this.license = res.data.data;
         this.newlicense = this.license.filter(function(e) {
-          return e.applicationStatus.code.includes("APP");
+          return e.applicationStatus.code.includes("PP");
         });
       });
       this.$store.dispatch("renewal/getRenewalLicense").then((res) => {
         this.license = res.data.data;
         this.renewal = this.license.filter(function(e) {
-          return e.applicationStatus.code.includes("APP");
+          return e.applicationStatus.code.includes("PP");
         });
       });
       this.$store
@@ -756,7 +605,7 @@ export default {
         .then((res) => {
           this.license = res.data.data;
           this.verification = this.license.filter(function(e) {
-            return e.applicationStatus.code.includes("APP");
+            return e.applicationStatus.code.includes("PP");
           });
         });
       this.$store
@@ -765,7 +614,7 @@ export default {
           this.license = res.data.data;
           this.showLoading = !this.showLoading;
           this.goodstanding = this.license.filter(function(e) {
-            return e.applicationStatus.code.includes("APP");
+            return e.applicationStatus.code.includes("PP");
           });
         });
     },

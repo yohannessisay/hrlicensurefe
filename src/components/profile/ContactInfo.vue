@@ -1,5 +1,5 @@
 <template>
-  <div class="w-screen max-w-4xl">
+  <div class="w-screen max-w-4xl mt-small h-full">
     <div
       class="flex flex-col mt-large w-full bg-white blue-box-shadow-light rounded"
     >

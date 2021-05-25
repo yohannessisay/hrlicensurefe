@@ -57,6 +57,16 @@ const routes = [
     component: () => import("../views/Withdraw.vue"),
   },
   {
+    path: "/pendingPayment",
+    name: "PendingPayment",
+    component: () => import("../views/PendingPayment.vue"),
+  },
+  {
+    path: "/approvedPayment",
+    name: "ApprovedPayment",
+    component: () => import("../views/ApprovedPayment.vue"),
+  },
+  {
     path: "/newlicense",
     name: "NewLicense",
     component: () => import("../components/NewLicense/NewLicense.vue"),
@@ -135,7 +145,8 @@ const routes = [
   {
     path: "/admin/certifiedUsersDetail/:applicationId/:applicantId",
     name: "certifiedUsersDetail",
-    component: () => import ("../components/Reviewer/Detail/CertifiedUsersDetail.vue"),
+    component: () =>
+      import("../components/Reviewer/Detail/CertifiedUsersDetail.vue"),
   },
   {
     path: "/admin/pendingPayments",

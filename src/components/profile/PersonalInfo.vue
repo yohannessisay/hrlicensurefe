@@ -1,7 +1,7 @@
 <template>
-  <div class="w-screen max-w-4xl mt-xl h-screen">
+  <div class="w-screen max-w-4xl mt-small h-full">
     <div
-      class="flex flex-col mt-large w-full bg-white blue-box-shadow-light rounded mb-large"
+      class="flex flex-col mt-medium w-full bg-white blue-box-shadow-light rounded mb-large"
     >
       <div class="mt-large">
         <TitleWithIllustration
@@ -290,7 +290,6 @@ export default {
       if (personalInfo.value.expertLevelId == 4) {
         store.dispatch("profile/getHealthOffice").then((res) => {
           const hoResults = res.data;
-          console.log(hoResults.data);
           state.value.healthOffices = hoResults.data;
         });
       }

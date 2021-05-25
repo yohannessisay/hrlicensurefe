@@ -1,8 +1,9 @@
 <template>
-  <div class="w-screen max-w-4xl mt-xl h-screen">
-    <div
-      class="flex flex-col mt-large w-full bg-white blue-box-shadow-light rounded px-2"
-    >
+  <div v-if="message.showLoading2" class="h-screen max-h-4xl">
+    <Spinner class="bg-lightBlueB-200  " />
+  </div>
+  <div class="bg-white mb-large rounded pr-20 pl-20 pb-12 pt-12">
+    <div v-if="!message.showLoading2">
       <div class="flex justify-center"><Title message="Summary" /></div>
       <div class="flex justify-start">
         <Title message="Personal Info" />
@@ -97,9 +98,19 @@
           <button v-on:click="submit()">Submit Request</button>
         </div>
       </div>
+      <div
+        class="flex justify-center justify-items-center mt-8 mb-12"
+        v-if="message.showLoading"
+      >
+        <Spinner />
+      </div>
     </div>
-    <div v-if="showFlash">
-      <FlashMessage message="Your profile is successfully created" />
+
+    <div v-if="message.showFlash">
+      <FlashMessage message="Your profile is successfully created!!" />
+    </div>
+    <div v-if="message.showErrorFlash">
+      <FlashMessage message="Your profile is creation failed!!" />
     </div>
   </div>
 </template>
@@ -110,16 +121,23 @@ import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 import Title from "@/sharedComponents/TitleWithIllustration";
 import FlashMessage from "@/sharedComponents/FlashMessage";
+import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
+import Spinner from "@/sharedComponents/Spinner";
 export default {
-  components: { Title, FlashMessage },
+  components: { Title, FlashMessage, ErrorFlashMessage, Spinner },
   setup() {
     const store = useStore();
     const router = useRouter();
-
+    let message = ref({
+      showFlash: false,
+      showErrorFlash: false,
+      showLoading: false,
+      showLoading2: false,
+    });
     let user = ref({
       id: "",
       emailAddress: "",
-      phoneNumber: ""
+      phoneNumber: "",
     });
 
     let personalInfo = {
@@ -134,7 +152,7 @@ export default {
       maritalStatus: null,
       userTypeId: null,
       expertLevelId: null,
-      healthOfficeId: null
+      healthOfficeId: null,
     };
 
     let address = {
@@ -144,14 +162,14 @@ export default {
       houseNumber: null,
       woreda: null,
       residence: null,
-      poBox: null
+      poBox: null,
     };
 
     let contact = {
       mobileNumber: null,
       email: null,
       telephoneNumber: null,
-      poBox: null
+      poBox: null,
     };
 
     let success = ref(false);
@@ -167,6 +185,9 @@ export default {
       ) {
         personalInfo.healthOfficeId = null;
       }
+      message.value.showLoading = true;
+      message.value.showFlash = false;
+      message.value.showErrorFlash = false;
       store
         .dispatch("profile/addProfile", {
           name: personalInfo.name,
@@ -189,20 +210,29 @@ export default {
           userId: +localStorage.getItem("userId"),
         })
 
-        .then(response => {
+        .then((response) => {
           if (response.statusText == "Created") {
-            showFlash.value = true;
-            router.push("/menu");
+            message.value.showLoading = false;
+            message.value.showFlash = true;
+            message.value.showErrorFlash = false;
+            setTimeout(() => {
+              router.push({ path: "/menu" });
+            }, 1500);
+          } else {
+            message.value.showLoading = false;
+            message.value.showFlash = false;
+            message.value.showErrorFlash = true;
           }
         });
     };
 
     const fetchUser = async () => {
+      message.value.showLoading2 = true;
       store
-        .dispatch("profile/getUserById", +localStorage.getItem("userId"))
-        .then(res => {
+        .dispatch("profile/getUserById", localStorage.getItem("userId"))
+        .then((res) => {
           user.value = res.data.data;
-          console.log(user.value);
+          message.value.showLoading2 = false;
         });
     };
 
@@ -213,8 +243,6 @@ export default {
     personalInfo = store.getters["profile/getPersonalInfo"];
     address = store.getters["profile/getAddress"];
     contact = store.getters["profile/getContact"];
-    console.log(personalInfo.name);
-    console.log(user.value);
 
     onMounted(() => {
       fetchUser();
@@ -232,12 +260,12 @@ export default {
       success,
       a,
       response,
-      showFlash,
+      message,
       submit,
       getPersonalInfo,
       user,
-      fetchUser
+      fetchUser,
     };
-  }
+  },
 };
 </script>

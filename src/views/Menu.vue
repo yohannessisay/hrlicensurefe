@@ -18,9 +18,7 @@
             >
               <div class="p-1">
                 <div class="flex content-center justify-center">
-                  <!-- <router-link to="/newlicense"> -->
                   <RenderIllustration illustration="SimpleCertificate" />
-                  <!-- </router-link> -->
                 </div>
                 <h4 class="text-lightBlueB-500 mt-tiny">New License</h4>
               </div>
@@ -37,9 +35,7 @@
             >
               <div class="p-1">
                 <div class="my-auto flex justify-center">
-                  <!-- <router-link to="/renewal"> -->
                   <RenderIllustration illustration="Renewal" />
-                  <!-- </router-link> -->
                 </div>
                 <h4 class="text-lightBlueB-500 mt-tiny">Renewal</h4>
               </div>
@@ -56,9 +52,7 @@
             >
               <div class="p-1">
                 <div class="my-auto flex justify-center">
-                  <!-- <router-link to="/verification"> -->
                   <RenderIllustration illustration="Verification" />
-                  <!-- </router-link> -->
                 </div>
                 <h4
                   class="text-lightBlueB-500 justify-center items-center ml-2 mt-tiny"
@@ -79,9 +73,7 @@
             >
               <div class="p-1">
                 <div class="my-auto flex justify-center">
-                  <!-- <router-link to="/goodstanding"> -->
                   <RenderIllustration illustration="GoodStanding" />
-                  <!-- </router-link> -->
                 </div>
                 <h4 class="text-lightBlueB-500 mt-tiny">Good Standing</h4>
               </div>
@@ -93,11 +85,9 @@
         <div class="mt-5">
           <h2 class="text-lightBlueB-400">Your Previous Requests</h2>
         </div>
-        <div class="lg:flex lg:items-stretch lg:justify-end ml-auto mr-24">
-          <!-- <router-link to="/newlicense"> -->
-          <!-- <button @click="openModal()">New License Request</button> -->
-          <!-- </router-link> -->
-        </div>
+        <div
+          class="lg:flex lg:items-stretch lg:justify-end ml-auto mr-24"
+        ></div>
       </div>
 
       <div class="flex justify-center mt-8 rounded ">
@@ -229,6 +219,44 @@
                 <h4 class="text-lightBlueB-500 mt-tiny">
                   Declined
                 </h4>
+              </div>
+            </div>
+          </div>
+        </transition>
+        <transition name="slide-fade-to-left">
+          <div
+            class="container mr-12 box-shadow-pop rounded-lg bg-lightGrey-100 "
+          >
+            <div class="flex justify-center items-center w-64 h-40">
+              <div class="p-1">
+                <div class="flex content-center justify-center">
+                  <router-link to="/pendingPayment">
+                    <span style="color: #648ea3;">
+                      <i class="fas fa-comments-dollar fa-4x"></i>
+                    </span>
+                  </router-link>
+                </div>
+                <h4 class="text-lightBlueB-500 mt-tiny">Pending Payment</h4>
+              </div>
+            </div>
+          </div>
+        </transition>
+      </div>
+      <div class="flex justify-left mt-8 rounded ml-large">
+        <transition name="slide-fade-to-left">
+          <div
+            class="container mr-12 box-shadow-pop rounded-lg bg-lightGrey-100 "
+          >
+            <div class="flex justify-center items-center w-64 h-40">
+              <div class="p-1">
+                <div class="flex content-center justify-center">
+                  <router-link to="/approvedPayment">
+                    <span style="color: #648ea3;">
+                      <i class="far fa-money-bill-alt fa-4x"></i>
+                    </span>
+                  </router-link>
+                </div>
+                <h4 class="text-lightBlueB-500 mt-tiny">Approved Payment</h4>
               </div>
             </div>
           </div>
