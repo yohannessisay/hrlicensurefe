@@ -63,7 +63,9 @@ export default {
     })
     commit(SET_UNFINISHED_SEARCHED, searchedVal)
   },
-  async getEveryOneUnfinished({commit}, adminRole) {
+  async getEveryOneUnfinished({commit}, adminData) {
+    const adminRole = adminData[0];
+    const adminId = adminData[1];
     if(adminRole === "SA") {
       try {  
         const respAll = await ApiService.get(baseUrl + "/applications/allUnfinished");
@@ -136,7 +138,9 @@ export default {
     })
     commit(SET_ASSIGNED_TO_YOU_SEARCHED, searchedVal)
   },
-  async getAssignedToEveryOne({commit}, adminRole) {
+  async getAssignedToEveryOne({commit}, adminData) {
+    const adminRole = adminData[0];
+    const adminId = adminData[1]
     if(adminRole === "SA") {
       try {
         const respAll = await ApiService.get(baseUrl + "/applications/assignedToAll")
@@ -332,7 +336,9 @@ export default {
     // commit(SET_RECENTLY_FINISHED_SEARCHED, searchedVal)
   },
 
-  async getAllRecentlyFinished({commit}, adminRole) {
+  async getAllRecentlyFinished({commit}, adminData) {
+    const adminRole = adminData[0];
+    const adminId = adminData[1];
     if(adminRole == "SA") {
       try {
         const resp = await ApiService.get(baseUrl + "/applications/allFinished")
@@ -346,7 +352,7 @@ export default {
                   ? e.applicationStatus.name === "Approve" : ''
                   
         })
-
+        console.log("admin id is ", adminId)
         const allRejectedUsers = resp.data.data.filter(function(e) {
           return e.reviewerId === null 
                   ? '' : e.reviewerId == adminId 

@@ -276,7 +276,10 @@ export default {
       showLoadingApproved.value = true
       showLoadingRejected.value = true
       showLoadingSuperVision.value = true
-      store.dispatch("reviewer/getAllRecentlyFinished", adminRole).then(res => {
+      console.log("admin rrole", adminRole, "admin Id", adminId)
+      const adminData = [adminRole, adminId]
+      store.dispatch("reviewer/getAllRecentlyFinished", adminData).then(res => {
+        
         if(store.getters['reviewer/getAllApprovedSearched'].length == 0) {
           nothingToAllApproved.value = true;
         } else {

@@ -1,7 +1,7 @@
 <template>
     <div
           class="container"
-          v-for="(item, index) in otherPendings"
+          v-for="(item, index) in othersPendings"
           v-bind:key="item.id"
           v-bind:value="item.id"
         >
@@ -75,7 +75,7 @@ export default {
     computed: {
         moment: () => moment,
     },
-    props: ["otherPendings"],
+    props: ["othersPendings"],
     name: "OthersPendingPayments",
     setup(props) {
         console.log("props: ",props)

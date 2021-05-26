@@ -706,22 +706,18 @@ export default {
         console.log(rejected.value);
         console.log(rejectedObj.value);
       }
-
-      console.log("action value, m", actionValue)
       newLicense.value.declinedFields = rejected.value;
       newLicense.value.acceptedFields = accepted.value;
       if(actionValue == "ApproveEvent") {
         newLicense.value.certified = true;
         newLicense.value.certifiedDate = new Date();
       }
-      console.log("the value is ", newLicense.value)
       
       let appId = newLicense.value.id;
       let req = {
         action: actionValue,
         data: newLicense.value
       };
-      console.log("approved data: ", req)
       if (
         applicationType.value == "New License" &&
         sendDeclinedData.value == true

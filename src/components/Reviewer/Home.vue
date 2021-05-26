@@ -361,8 +361,7 @@
       >
         <Spinner />
       </div>
-
-      <!-- my pending payment-->
+      
       <div class="flex pl-12 pt-medium">
         <div v-if="myTitleMessage">
           <Title message="My Pending Payments" />
@@ -372,7 +371,7 @@
         </div>
 
         <div class="flex ml-small" v-if="pending.length >= 5">
-          <router-link to="/admin/unfinished">
+          <router-link to="/admin/pendingPayments">
             <button
               class="block mx-auto bg-lightBlue-300 hover:bg-lightBlue-600 hover:shadow-lg"
             >
@@ -387,7 +386,7 @@
             <h2>Nothing To Show!</h2>
           </div>
         </div>
-        <my-pending-payments :unFinishedSearched="myPendingPayment" />
+        <my-pending-payments :myPendings="myPendingPayment" />
       </div>
       <div
         v-if="showMyPendingLoading"
@@ -400,7 +399,7 @@
         <div class="flex pl-12 mt-medium">
           <Title message="Other Pending Payments" />
           <div class="flex ml-small" v-if="allPendings.length >= 5">
-            <router-link to="/admin/unfinished">
+            <router-link to="/admin/allPendingPayments">
               <button
                 class="block mx-auto bg-lightBlue-300 hover:bg-lightBlue-600 hover:shadow-lg"
               >
@@ -418,7 +417,7 @@
               <h2>Nothing To Show!</h2>
             </div>
           </div>
-          <others-pending-payments :otherPendings="othersPendingPayment" />
+          <others-pending-payments :othersPendings="othersPendingPayment" />
         </div>
         <div
           v-if="showAllPendingLoading"
@@ -798,9 +797,10 @@ export default {
     };
 
     const fetchAssignedToEveryone = () => {
+      const adminData = [adminRole, adminId]
       showAssignedToOthersLoading.value = true;
       store
-        .dispatch("reviewer/getAssignedToEveryOne", adminRole)
+        .dispatch("reviewer/getAssignedToEveryOne", adminData)
         .then((res) => {
           showAssignedToOthersLoading.value = false;
           assignedToEveryone.value =
@@ -852,9 +852,10 @@ export default {
     };
 
     const fetchEveryOneUnfinished = () => {
+      const adminData = [adminRole, adminId]
       showAllUnfinishedLoaing.value = true;
       store
-        .dispatch("reviewer/getEveryOneUnfinished", adminRole)
+        .dispatch("reviewer/getEveryOneUnfinished", adminData)
         .then((res) => {
           showAllUnfinishedLoaing.value = false;
           everyoneUnfinished.value =

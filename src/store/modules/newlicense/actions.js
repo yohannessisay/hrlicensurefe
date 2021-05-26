@@ -97,7 +97,7 @@ export default {
     try {
       console.log(license);
       const resp = await ApiService.put(
-        url + "/newLicenses/" + license.data.id,
+        url + "newLicenses/" + license.data.id,
         license
       );
       // const resp = await ApiService.put(url + "newLicenses/" + license);

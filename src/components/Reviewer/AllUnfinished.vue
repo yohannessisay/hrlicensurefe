@@ -119,12 +119,14 @@ export default {
     let unfinished = ref({});
     let x = ref([]);
     let adminRole = localStorage.getItem("role");
+    let adminId = +localStorage.getItem("adminId");
     let nothingToShowUnfinished = ref(false);
     let showLoading = ref(false);
 
     const fetchUnfinished = () => {
       showLoading.value = true;
-      store.dispatch("reviewer/getEveryOneUnfinished", adminRole).then(res => {
+      const adminData = [adminRole, adminId];
+      store.dispatch("reviewer/getEveryOneUnfinished", adminData).then(res => {
         showLoading.value = false
           unfinished.value = store.getters['reviewer/getEveryOneUnfinishedSearched'];
           console.log("console.looog", store.getters['reviewer/getEveryOneUnfinishedSearched'])

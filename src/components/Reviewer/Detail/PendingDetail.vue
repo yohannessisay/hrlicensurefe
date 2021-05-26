@@ -407,7 +407,9 @@ export default {
     };
 
     const evaluatePending = () => {
-        alert("To be done")
+        router.push(
+          "/admin/evaluatePayment/" + applicationType.value + "/" + licenseId.value
+        )
     }
 
     onMounted(() => {
