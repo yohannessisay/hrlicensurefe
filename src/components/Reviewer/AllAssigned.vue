@@ -120,11 +120,13 @@ export default {
     let showLoading = ref(false);
     let x = ref("");
     let userId = +localStorage.getItem("userId");
+    let adminId = +localStorage.getItem("adminId");
     let adminRole = localStorage.getItem("role");
 
     const fetchAssignedtoYou = () => {
+      const adminData = [adminRole, adminId]
       showLoading.value = true;
-      store.dispatch("reviewer/getAssignedToEveryOne", adminRole).then((res) => {
+      store.dispatch("reviewer/getAssignedToEveryOne", adminData).then((res) => {
         showLoading.value = false;
         // if (res.status != "Error") {
         assignedToyou.value =

@@ -160,6 +160,11 @@ const routes = [
     component: () => import("../components/Reviewer/Evaluate.vue"),
   },
   {
+    path: "/admin/evaluatePayment/:applicationType/:applicationId",
+    name: "evaluatePayment",
+    component: () => import("../components/Reviewer/EvaluatePayment.vue")
+  },
+  {
     path: "/draft",
     name: "Draft",
     component: () => import("../views/Draft.vue"),

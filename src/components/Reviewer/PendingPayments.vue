@@ -11,62 +11,9 @@
             <h2>Nothing To Show!</h2>
           </div>
         </div>
-        <div
-          class="container"
-          v-for="item in getPending"
-          v-bind:key="item.id"
-          v-bind:value="item.id"
-        >
-          <div
-            class="flex justify-center items-center  ml-8 mt-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
-          >
-            <div
-              class="p-4 w-48 h-64"
-              @Click="
-                detail(
-                  `/admin/pendingDetail`,
-                  item.applicationType,
-                  item.id,
-                  item.applicant.id
-                )
-              "
-            >
-              <div class="flex content-center justify-center">
-                <!-- <img class="box-shadow-pop" v-bind:src="item.picture.large" /> -->
-                <img
-                  class="box-shadow-pop"
-                  src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
-                />
-              </div>
-              <h4
-                class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
-              >
-                <b>{{
-                  item.applicant.profile.name
-                    ? item.applicant.profile.name +
-                      " " +
-                      item.applicant.profile.fatherName
-                    : "-"
-                }}</b>
-              </h4>
-              <br />
-              <span
-                  class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                >
-                  {{ item.applicationType ? item.applicationType : "-" }}
-                </span>
-              <span
-                class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-              >
-                {{ item.newLicenseCode ? item.newLicenseCode : "-" }}
-              </span>
-              <span
-                class="text-lightBlueB-500 mt-tiny flex justify-end content-center">
-                  {{item.createdAt ? moment(item.createdAt).fromNow() : '-'}}
-              </span>
-            </div>
-          </div>
-        </div>
+        <div class="pendingsMargin">
+          <my-pending-payments :myPendings="getPending" />
+        </div> 
       </div>
     </div>
     <div
@@ -88,10 +35,11 @@ import { useRouter } from "vue-router";
 
 import store from '../../store'
 import Spinner from "@/sharedComponents/Spinner";
+import MyPendingPayments from "./HomeComponents/MyPendingPayments.vue";
 import moment from 'moment'
 
 export default {
-  components: { ReviewerNavBar, Title, Spinner },
+  components: { ReviewerNavBar, Title, Spinner, MyPendingPayments },
   computed: {
     moment: () => moment,
     getPending() {
@@ -165,5 +113,8 @@ img {
 }
 .container {
   cursor: pointer;
+}
+.pendingsMargin {
+  margin-top: 2rem;
 }
 </style>
