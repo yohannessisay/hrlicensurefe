@@ -145,6 +145,7 @@ export default {
       try {
         const respAll = await ApiService.get(baseUrl + "/applications/assignedToAll")
         // if(respAll.data.status === "error")
+        console.log("all data is sss", respAll)
         const resp = respAll.data.data.filter(function(e) {
           return e.reviewerId === null ? '' : e.reviewerId !== adminId
         })

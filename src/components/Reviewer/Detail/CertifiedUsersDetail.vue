@@ -1,7 +1,15 @@
 <template>
   <div class="bg-lightBlueB-200">
     <ReviewerNavBar tab="certifiedUsers" />
-    <span v-if="!showLoading">
+    <span
+      v-if="showLoading || showApplicationLoading"
+      class="flex justify-center justify-items-center mt-24"
+    >
+      <Spinner />
+    </span>
+    <span v-else>
+      
+      <span v-if="isUserCertified">
       <button @click="downloadPdf">Download PDF</button>
       <div class="bg-lightBlueB-200 h-full">
         <div
@@ -141,13 +149,19 @@
           </div> -->
         </div>
       </div>
+      </span>
+      <span v-else-if="!isUserCertified && isUserFound">
+        <div class="flex justify-center content-center userNotFound">
+          <h1>User is not Certified</h1>
+        </div>
+      </span>
+      <span v-else-if="!isUserFound">
+        <div class="flex justify-center content-center userNotFound">
+          <h1>User is not Found</h1>
+        </div>
+      </span>
     </span>
-    <span
-      v-if="showLoading"
-      class="flex justify-center justify-items-center mt-24"
-    >
-      <Spinner />
-    </span>
+    
   </div>
 </template>
 <script>
@@ -182,6 +196,9 @@ export default {
     let certifiedUser = ref({});
     let certificateDetail = ref({});
     let showLoading = ref(false);
+    let showApplicationLoading = ref(false);
+    let isUserCertified = ref(true);
+    let isUserFound = ref(true);
 
     const fetchCertifiedUser = () => {
       showLoading.value = true;
@@ -191,11 +208,15 @@ export default {
           showLoading.value = false;
           certifiedUser.value = res.data.data;
           show.value = true;
+        }).catch(error => {
+          isUserFound.value = false;
+          console.log("error found", error)
         });
     };
 
     
     const fetchApplication = () => {
+      showApplicationLoading.value = true;
       if(route.params.applicationType === "Verification") {
         store
         .dispatch(
@@ -203,8 +224,14 @@ export default {
           route.params.applicationId
         )
         .then((res) => {
+          showApplicationLoading.value = false;
           certificateDetail.value = res.data.data;
+          if(route.params.applicantId != certificateDetail.value.applicantId) {
+            isUserCertified.value = false;
+          }
           console.log("data is ", certificateDetail.value)
+        }).catch(error => {
+          console.log("oops error found",error)
         });
       }
       else if(route.params.applicationType === "Good Standing") {
@@ -214,7 +241,11 @@ export default {
           route.params.applicationId
         )
         .then((res) => {
+          showApplicationLoading.value = false;
           certificateDetail.value = res.data.data;
+          if(route.params.applicantId != certificateDetail.value.applicantId) {
+            isUserCertified.value = false;
+          }
           console.log("data is ", certificateDetail.value)
         });
       }
@@ -225,7 +256,11 @@ export default {
           route.params.applicationId
         )
         .then((res) => {
+          showApplicationLoading.value = false
           certificateDetail.value = res.data.data;
+          if(route.params.applicantId != certificateDetail.value.applicantId) {
+            isUserCertified.value = false;
+          }
           console.log("data is ", certificateDetail.value)
         });
 
@@ -236,7 +271,11 @@ export default {
           route.params.applicationId
         )
         .then((res) => {
+          showApplicationLoading.value = false;
           certificateDetail.value = res.data.data;
+          if(route.params.applicantId != certificateDetail.value.applicantId) {
+            isUserCertified.value = false;
+          }
           console.log("data is ", certificateDetail.value)
         });
       }
@@ -270,6 +309,8 @@ export default {
       certifiedUser,
       showLoading,
       certificateDetail,
+      isUserCertified,
+      isUserFound,
     };
   },
 };
@@ -326,5 +367,8 @@ body {
 .flex-second-container > div {
   margin: 40px;
   margin-top: -550px;
+}
+.userNotFound {
+  margin-top: 10%;
 }
 </style>

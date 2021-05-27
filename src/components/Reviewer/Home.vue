@@ -81,14 +81,14 @@
               >
                 <div class="flex content-center justify-center">
                   <span v-if="item.profilePic != ''">
-                    <img
+                    <!-- <img
                       class="box-shadow-pop"
                       src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
-                    />
-                    <!-- <img
+                    /> -->
+                    <img
                   class="box-shadow-pop"
                   :src="'https://hrlicensurebe.dev.k8s.sandboxaddis.com/'+item.profilePic"
-                />  -->
+                /> 
                   </span>
                   <span v-else>
                     <img
@@ -188,14 +188,14 @@
               <div class="flex content-center justify-center">
                 <router-link to="/newlicense">
                   <span v-if="item.profilePic != ''">
-                    <img
+                    <!-- <img
                       class="box-shadow-pop"
                       src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
-                    />
-                    <!-- <img
+                    /> -->
+                    <img
                   class="box-shadow-pop"
                   :src="'https://hrlicensurebe.dev.k8s.sandboxaddis.com/'+item.profilePic"
-                />  -->
+                /> 
                   </span>
                   <span v-else>
                     <img
@@ -295,14 +295,14 @@
                 <div class="flex content-center justify-center">
                   <router-link to="/newlicense">
                     <span v-if="item.profilePic != ''">
-                      <img
+                      <!-- <img
                         class="box-shadow-pop"
                         src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
-                      />
-                      <!-- <img
+                      /> -->
+                      <img
                   class="box-shadow-pop"
                   :src="'https://hrlicensurebe.dev.k8s.sandboxaddis.com/'+item.profilePic"
-                />  -->
+                /> 
                     </span>
                     <span v-else>
                       <img
@@ -466,10 +466,18 @@
                 @mouseleave="hover = false"
               >
                 <div class="flex content-center justify-center">
+                  <span v-if="item.profilePic != ''">
                   <img
+                  class="box-shadow-pop"
+                  :src="'https://hrlicensurebe.dev.k8s.sandboxaddis.com/'+item.profilePic"
+                /> 
+                  </span>
+                  <span v-else>
+                    <img
                     class="box-shadow-pop"
                     src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
                   />
+                  </span>
                 </div>
                 <h4
                   class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
@@ -625,14 +633,15 @@ export default {
     let unfinished = ref({
       applicant: { profile: { name: "", fatherName: "" } },
       applicationStatus: { name: "" },
+      profilePic: ""
     });
-    let assignedToyou = ref({ applicationStatus: { name: "" } });
-    let unassigned = ref({ applicationStatus: { name: "" } });
+    let assignedToyou = ref({ applicationStatus: { name: "" }, profilePic: '' });
+    let unassigned = ref({ applicationStatus: { name: "" }, profilePic: '' });
     let pending = ref({});
     let allPendings = ref({});
     let recentlyFinished = ref({});
-    let assignedToEveryone = ref({});
-    let everyoneUnfinished = ref({});
+    let assignedToEveryone = ref({profilePic: ""});
+    let everyoneUnfinished = ref({profilePic: ""});
     let hover = ref(false);
     let adminId = +localStorage.getItem("adminId");
     let adminRole = localStorage.getItem("role");
@@ -644,8 +653,6 @@ export default {
     let nothingToShowAllUnfinished = ref(false);
     let nothingToShowPending = ref(false);
     let nothingToShowAllPengings = ref(false);
-
-    let profilePic = ref("");
 
     let nothingToShowUnfinished = ref(false);
 
@@ -666,6 +673,7 @@ export default {
       showUnfinishedLoading.value = true;
       store.dispatch("reviewer/getUnfinished", adminId).then((res) => {
         showUnfinishedLoading.value = false;
+        console.log("unfinished data is ", store.getters["reviewer/getUnfinishedSearched"])
 
         if (store.getters["reviewer/getUnfinishedSearched"].length !== 0) {
           unfinished.value = store.getters["reviewer/getUnfinishedSearched"];
@@ -677,7 +685,8 @@ export default {
                   "LHI"
                 ) {
                   unfinished.value[prop].profilePic =
-                    unfinished.value[prop].documents[psp].fileName;
+                    unfinished.value[prop].documents[psp].filePath;
+                    console.log("profile pic is", unfinished.value[prop].profilePic)
                   // store.getters["reviewer/getUnfinishedSearched"]
                   break;
                 }
@@ -770,7 +779,7 @@ export default {
                   "PSP"
                 ) {
                   assignedToyou.value[prop].profilePic =
-                    assignedToyou.value[prop].documents[psp].fileName;
+                    assignedToyou.value[prop].documents[psp].filePath;
                   // store.getters["reviewer/getUnfinishedSearched"]
                   break;
                 }
@@ -813,6 +822,7 @@ export default {
             for (var prop in store.getters[
               "reviewer/getAssignedForEveryOneSearched"
             ]) {
+              console.log("assigned document i s", assignedToEveryone.value[prop].documents)
               if (assignedToEveryone.value[prop].documents !== null) {
                 for (var psp in assignedToEveryone.value[prop].documents) {
                   if (
@@ -820,7 +830,8 @@ export default {
                       .documentTypeCode === "PSP"
                   ) {
                     assignedToEveryone.value[prop].profilePic =
-                      assignedToEveryone.value[prop].documents[psp].fileName;
+                      assignedToEveryone.value[prop].documents[psp].filePath;
+                      console.log("file path i s", assignedToEveryone.value[prop].profilePic)
                     // store.getters["reviewer/getUnfinishedSearched"]
                     break;
                   }
@@ -874,7 +885,7 @@ export default {
                       .documentTypeCode === "PSP"
                   ) {
                     everyoneUnfinished.value[prop].profilePic =
-                      everyoneUnfinished.value[prop].documents[psp].fileName;
+                      everyoneUnfinished.value[prop].documents[psp].filePath;
                     // store.getters["reviewer/getUnfinishedSearched"]
                     break;
                   }
@@ -919,7 +930,7 @@ export default {
                   "PSP"
                 ) {
                   unassigned.value[prop].profilePic =
-                    unassigned.value[prop].documents[psp].fileName;
+                    unassigned.value[prop].documents[psp].filePath;
                   // store.getters["reviewer/getUnfinishedSearched"]
                   break;
                 }
@@ -1000,8 +1011,6 @@ export default {
       showUnassignedLoading,
       showMyPendingLoading,
       showAllPendingLoading,
-
-      profilePic,
     };
   },
 };

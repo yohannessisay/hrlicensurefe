@@ -22,14 +22,14 @@
             >
               <div class="flex content-center justify-center">
                 <span v-if="item.profilePic != ''">
-                  <img
-                  class="box-shadow-pop"
-                  src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
-                /> 
                   <!-- <img
                   class="box-shadow-pop"
-                  :src="'https://hrlicensurebe.dev.k8s.sandboxaddis.com/'+item.profilePic"
+                  src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
                 />  -->
+                  <img
+                  class="box-shadow-pop"
+                  :src="'https://hrlicensurebe.dev.k8s.sandboxaddis.com/'+item.profilePic"
+                /> 
                 </span>
                 <span v-else>
                    <img
