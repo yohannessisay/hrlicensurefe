@@ -400,10 +400,6 @@ export default {
         this.documentTypes[2].documentType.code,
         this.goodstandingLetter
       );
-      for (var pair of formData.entries()) {
-        console.log(pair[0] + ", " + pair[1]);
-      }
-
       let license = {
         action: action,
         data: {
@@ -437,7 +433,6 @@ export default {
               this.showErrorFlash = true;
             });
         });
-      // }
     },
 
     async saveDraft(act) {

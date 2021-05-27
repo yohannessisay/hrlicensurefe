@@ -150,7 +150,6 @@
               v-bind:value="item"
             >
               <div
-                @click="routeTo(item)"
                 class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
               >
                 <div class="p-4 w-48 h-64">
@@ -197,11 +196,11 @@
                   <span
                     class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
-                    <b>Reviewer: &nbsp;</b>{{ item.reviewer }}
+                    <b>Reviewer: &nbsp;</b>{{ item.reviewer.name }}
                   </span>
                   <span
                     class="
-                      mt-medium
+                      mt-small
                       text-lightBlueB-500
                       flex
                       justify-end
@@ -222,7 +221,7 @@
     <div v-if="!this.searched">
       <div v-if="!this.showLoading" class="bg-lightBlueB-200 h-full">
         <div class="flex pl-12 pt-medium">
-          <Title message="New License Submitted Applications" />
+          <Title message="New License Pending Payment Applications" />
         </div>
         <div v-if="this.newlicense.length == 0" class="flex pl-12 ml-6">
           <h4>Nothing to Show.</h4>
@@ -238,62 +237,58 @@
               v-bind:key="item"
               v-bind:value="item"
             >
-              <router-link
-                :to="{ name: 'NewLicense', params: { id: item.id } }"
+              <div
+                class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
               >
-                <div
-                  class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
-                >
-                  <div class="p-4 w-48 h-64">
-                    <span
-                      class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                    >
-                      <b>Applicant Type: &nbsp;</b>
-                      {{ item.applicantType.name }}
-                    </span>
-                    <span
-                      class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                    >
-                      <b>Status: &nbsp;</b>{{ item.applicationStatus.name }}
-                    </span>
-                    <span
-                      class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                    >
-                      <b>Code: &nbsp;</b>{{ item.newLicenseCode }}
-                    </span>
-                    <span
-                      class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                    >
-                      <b>Certified: &nbsp;</b>{{ item.certified }}
-                    </span>
-                    <span
-                      class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                    >
-                      <b>Reviewer: &nbsp;</b>{{ item.reviewer }}
-                    </span>
-                    <span
-                      class="
-                      mt-medium
+                <div class="p-4 w-48 h-64">
+                  <span
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                  >
+                    <b>Applicant Type: &nbsp;</b>
+                    {{ item.applicantType.name }}
+                  </span>
+                  <span
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                  >
+                    <b>Status: &nbsp;</b>{{ item.applicationStatus.name }}
+                  </span>
+                  <span
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                  >
+                    <b>Code: &nbsp;</b>{{ item.newLicenseCode }}
+                  </span>
+                  <span
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                  >
+                    <b>Certified: &nbsp;</b>{{ item.certified }}
+                  </span>
+                  <span
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                  >
+                    <b>Reviewer: &nbsp;</b>{{ item.reviewer.name }}
+                  </span>
+                  <span
+                    class="
+                      mt-small
                       text-lightBlueB-500
                       flex
                       justify-end
                       content-center
                     "
-                    >
-                      {{
-                        item.createdAt ? moment(item.createdAt).fromNow() : "-"
-                      }}
-                    </span>
-                  </div>
+                  >
+                    {{
+                      item.createdAt ? moment(item.createdAt).fromNow() : "-"
+                    }}
+                  </span>
                 </div>
-              </router-link>
+              </div>
             </div>
           </div>
         </div>
       </div>
       <div v-if="!this.showLoading" class="bg-lightBlueB-200 h-full">
         <div class="flex pl-12 pt-medium">
-          <Title message="Renewal Submitted Applications" />
+          <Title message="Renewal Pending Payment Applications" />
         </div>
         <div v-if="this.renewal.length == 0" class="flex pl-12 ml-6">
           <h4>Nothing to Show.</h4>
@@ -309,60 +304,58 @@
               v-bind:key="item"
               v-bind:value="item"
             >
-              <router-link :to="{ name: 'Renewal', params: { id: item.id } }">
-                <div
-                  class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
-                >
-                  <div class="p-4 w-48 h-64">
-                    <span
-                      class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                    >
-                      <b>Applicant Type: &nbsp;</b>
-                      {{ item.applicantType.name }}
-                    </span>
-                    <span
-                      class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                    >
-                      <b>Status: &nbsp;</b>{{ item.applicationStatus.name }}
-                    </span>
-                    <span
-                      class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                    >
-                      <b>Code: &nbsp;</b>{{ item.renewalCode }}
-                    </span>
-                    <span
-                      class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                    >
-                      <b>Certified: &nbsp;</b>{{ item.certified }}
-                    </span>
-                    <span
-                      class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                    >
-                      <b>Reviewer: &nbsp;</b>{{ item.reviewer }}
-                    </span>
-                    <span
-                      class="
-                      mt-medium
+              <div
+                class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
+              >
+                <div class="p-4 w-48 h-64">
+                  <span
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                  >
+                    <b>Applicant Type: &nbsp;</b>
+                    {{ item.applicantType.name }}
+                  </span>
+                  <span
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                  >
+                    <b>Status: &nbsp;</b>{{ item.applicationStatus.name }}
+                  </span>
+                  <span
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                  >
+                    <b>Code: &nbsp;</b>{{ item.renewalCode }}
+                  </span>
+                  <span
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                  >
+                    <b>Certified: &nbsp;</b>{{ item.certified }}
+                  </span>
+                  <span
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                  >
+                    <b>Reviewer: &nbsp;</b>{{ item.reviewer.name }}
+                  </span>
+                  <span
+                    class="
+                      mt-small
                       text-lightBlueB-500
                       flex
                       justify-end
                       content-center
                     "
-                    >
-                      {{
-                        item.createdAt ? moment(item.createdAt).fromNow() : "-"
-                      }}
-                    </span>
-                  </div>
+                  >
+                    {{
+                      item.createdAt ? moment(item.createdAt).fromNow() : "-"
+                    }}
+                  </span>
                 </div>
-              </router-link>
+              </div>
             </div>
           </div>
         </div>
       </div>
       <div v-if="!this.showLoading" class="bg-lightBlueB-200 h-full">
         <div class="flex pl-12 pt-medium">
-          <Title message="Verification Submitted Applications" />
+          <Title message="Verification Pending Payment Applications" />
         </div>
         <div v-if="this.verification.length == 0" class="flex pl-12 ml-6">
           <h4>Nothing to Show.</h4>
@@ -382,62 +375,58 @@
               v-bind:key="item"
               v-bind:value="item"
             >
-              <router-link
-                :to="{ name: 'Verification', params: { id: item.id } }"
+              <div
+                class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
               >
-                <div
-                  class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
-                >
-                  <div class="p-4 w-48 h-64">
-                    <span
-                      class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                    >
-                      <b>Applicant Type: &nbsp;</b>
-                      {{ item.applicantType.name }}
-                    </span>
-                    <span
-                      class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                    >
-                      <b>Status: &nbsp;</b>{{ item.applicationStatus.name }}
-                    </span>
-                    <span
-                      class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                    >
-                      <b>Code: &nbsp;</b>{{ item.verificationCode }}
-                    </span>
-                    <span
-                      class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                    >
-                      <b>Certified: &nbsp;</b>{{ item.certified }}
-                    </span>
-                    <span
-                      class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                    >
-                      <b>Reviewer: &nbsp;</b>{{ item.reviewer }}
-                    </span>
-                    <span
-                      class="
-                      mt-medium
+                <div class="p-4 w-48 h-64">
+                  <span
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                  >
+                    <b>Applicant Type: &nbsp;</b>
+                    {{ item.applicantType.name }}
+                  </span>
+                  <span
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                  >
+                    <b>Status: &nbsp;</b>{{ item.applicationStatus.name }}
+                  </span>
+                  <span
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                  >
+                    <b>Code: &nbsp;</b>{{ item.verificationCode }}
+                  </span>
+                  <span
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                  >
+                    <b>Certified: &nbsp;</b>{{ item.certified }}
+                  </span>
+                  <span
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                  >
+                    <b>Reviewer: &nbsp;</b>{{ item.reviewer.name }}
+                  </span>
+                  <span
+                    class="
+                      mt-small
                       text-lightBlueB-500
                       flex
                       justify-end
                       content-center
                     "
-                    >
-                      {{
-                        item.createdAt ? moment(item.createdAt).fromNow() : "-"
-                      }}
-                    </span>
-                  </div>
+                  >
+                    {{
+                      item.createdAt ? moment(item.createdAt).fromNow() : "-"
+                    }}
+                  </span>
                 </div>
-              </router-link>
+              </div>
             </div>
           </div>
         </div>
       </div>
       <div v-if="!this.showLoading" class="bg-lightBlueB-200 h-full">
         <div class="flex pl-12 pt-medium">
-          <Title message="Good Standing Submitted Applications" />
+          <Title message="Good Standing Pending Payment Applications" />
         </div>
         <div v-if="this.goodstanding.length == 0" class="flex pl-12 ml-6">
           <h4>Nothing to Show.</h4>
@@ -457,55 +446,51 @@
               v-bind:key="item"
               v-bind:value="item"
             >
-              <router-link
-                :to="{ name: 'GoodStanding', params: { id: item.id } }"
+              <div
+                class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
               >
-                <div
-                  class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
-                >
-                  <div class="p-4 w-48 h-64">
-                    <span
-                      class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                    >
-                      <b>Applicant Type: &nbsp;</b>
-                      {{ item.applicantType.name }}
-                    </span>
-                    <span
-                      class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                    >
-                      <b>Status: &nbsp;</b>{{ item.applicationStatus.name }}
-                    </span>
-                    <span
-                      class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                    >
-                      <b>Code: &nbsp;</b>{{ item.goodStandingCode }}
-                    </span>
-                    <span
-                      class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                    >
-                      <b>Certified: &nbsp;</b>{{ item.certified }}
-                    </span>
-                    <span
-                      class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                    >
-                      <b>Reviewer: &nbsp;</b>{{ item.reviewer }}
-                    </span>
-                    <span
-                      class="
-                      mt-medium
+                <div class="p-4 w-48 h-64">
+                  <span
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                  >
+                    <b>Applicant Type: &nbsp;</b>
+                    {{ item.applicantType.name }}
+                  </span>
+                  <span
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                  >
+                    <b>Status: &nbsp;</b>{{ item.applicationStatus.name }}
+                  </span>
+                  <span
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                  >
+                    <b>Code: &nbsp;</b>{{ item.goodStandingCode }}
+                  </span>
+                  <span
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                  >
+                    <b>Certified: &nbsp;</b>{{ item.certified }}
+                  </span>
+                  <span
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                  >
+                    <b>Reviewer: &nbsp;</b>{{ item.reviewer.name }}
+                  </span>
+                  <span
+                    class="
+                      mt-small
                       text-lightBlueB-500
                       flex
                       justify-end
                       content-center
                     "
-                    >
-                      {{
-                        item.createdAt ? moment(item.createdAt).fromNow() : "-"
-                      }}
-                    </span>
-                  </div>
+                  >
+                    {{
+                      item.createdAt ? moment(item.createdAt).fromNow() : "-"
+                    }}
+                  </span>
                 </div>
-              </router-link>
+              </div>
             </div>
           </div>
         </div>
@@ -604,53 +589,34 @@ export default {
     fetchLicensebyId() {
       this.showLoading = !this.showLoading;
       this.$store.dispatch("newlicense/getNewLicense").then((res) => {
-        if (res.data != undefined) {
-          this.license = res.data.data;
-          this.newlicense = this.license.filter(function(e) {
-            return e.applicationStatus.code.includes("SUB");
-          });
-        }
+        this.license = res.data.data;
+        this.newlicense = this.license.filter(function(e) {
+          return e.applicationStatus.code.includes("PP");
+        });
       });
       this.$store.dispatch("renewal/getRenewalLicense").then((res) => {
-        if (res.data != undefined) {
-          this.license = res.data.data;
-          this.renewal = this.license.filter(function(e) {
-            return e.applicationStatus.code.includes("SUB");
-          });
-        }
+        this.license = res.data.data;
+        this.renewal = this.license.filter(function(e) {
+          return e.applicationStatus.code.includes("PP");
+        });
       });
       this.$store
         .dispatch("verification/getVerificationLicense")
         .then((res) => {
-          if (res.data != undefined) {
-            this.license = res.data.data;
-            this.verification = this.license.filter(function(e) {
-              return e.applicationStatus.code.includes("SUB");
-            });
-          }
+          this.license = res.data.data;
+          this.verification = this.license.filter(function(e) {
+            return e.applicationStatus.code.includes("PP");
+          });
         });
       this.$store
         .dispatch("goodstanding/getGoodStandingLicense")
         .then((res) => {
-          if (res.data != undefined) {
-            this.license = res.data.data;
-            this.showLoading = !this.showLoading;
-            this.goodstanding = this.license.filter(function(e) {
-              return e.applicationStatus.code.includes("SUB");
-            });
-          }
+          this.license = res.data.data;
+          this.showLoading = !this.showLoading;
+          this.goodstanding = this.license.filter(function(e) {
+            return e.applicationStatus.code.includes("PP");
+          });
         });
-    },
-    routeTo(item) {
-      if (item.newLicenseCode) {
-        this.$router.push({ name: "NewLicense", params: { id: item.id } });
-      } else if (item.renewalCode) {
-        this.$router.push({ name: "Renewal", params: { id: item.id } });
-      } else if (item.verificationCode) {
-        this.$router.push({ name: "Verification", params: { id: item.id } });
-      } else {
-        this.$router.push({ name: "GoodStanding", params: { id: item.id } });
-      }
     },
   },
 };

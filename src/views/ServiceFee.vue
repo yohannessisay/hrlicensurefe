@@ -28,9 +28,9 @@
         />
       </svg>
     </button>
-    <div id="holder" class="flex justify-center rounded mb-medium pb-12">
+    <div id="holder" class="flex justify-center rounded mb-medium pb-4">
       <div class="w-screen max-w-4xl">
-        <div class="flex flex-col pt-large w-full rounded mb-medium">
+        <div class="flex flex-col pt-medium w-full rounded mb-medium">
           <TitleWithIllustration
             illustration="Certificate"
             message="Service Fee"
@@ -38,7 +38,7 @@
           />
           <form
             @submit.prevent="submit"
-            class="mx-auto max-w-3xl w-full mt-4 mb-large"
+            class="mx-auto max-w-3xl w-full mt-4 mb-small"
           >
             <div class="flex justify-center">
               <div>
@@ -76,18 +76,20 @@
                 </span>
               </div>
             </div>
-            <div
-              v-if="!message.showLoading"
-              @click="save()"
-              class="flex justify-center mb-16"
-            >
-              <button>Save</button>
-            </div>
           </form>
+        </div>
 
-          <div v-if="message.showLoading">
-            <Spinner />
-          </div>
+        <div v-if="!message.showLoading" class="flex justify-center mb-10">
+          <button @click="update()" variant="outline">
+            Update Payment
+          </button>
+          <button @click="save()">
+            Upload Payment
+          </button>
+        </div>
+
+        <div v-if="message.showLoading">
+          <Spinner />
         </div>
       </div>
     </div>
@@ -137,13 +139,18 @@ export default {
     let filePreview = ref("");
     let showUpload = ref(true);
     let isImage = ref(true);
+    let documentSpecs = ref([]);
+    let buttons = ref([]);
+
+    let userId = localStorage.getItem("userId");
 
     let documents = ref([]);
-    let documentSpecs = ref([]);
-
-    let appID = ref("");
 
     let dataChanged = ref(false);
+
+    let id = ref("");
+    let appType = ref("");
+    let appID = ref("");
 
     const reset = () => {
       showUpload.value = true;
@@ -180,46 +187,78 @@ export default {
 
     onMounted(() => {
       message.value.showLoading = true;
-      let id = store.getters["service/getID"];
-      let appType = store.getters["service/getApplicationType"];
-      documentSpecs = store.getters[(appType + "/getDocumentSpecs", id)];
-      store.dispatch(appType + "/getDraft", id).then((res) => {
-        const results = res.data.data;
-        documents = results.documents;
-        appID = results.id;
+      id = store.getters["serviceFee/getID"];
+      appType = store.getters["serviceFee/getApplicationType"];
+      store.dispatch("serviceFee/getApplicationStatuses").then((res) => {
+        buttons.value = res.data.data[0].buttons;
         message.value.showLoading = false;
-        for (let i = 0; i < documents.length; i++) {
-          if (documents[i].documentTypeCode == "SF") {
-            showUpload.value = false;
-            isImage.value = true;
-            serviceFile.value = documents[i];
-            showPreview.value = true;
-            filePreview.value = basePath + documents[i].filePath;
-          }
-        }
       });
+      // documentSpecs = store.getters[(appType + "/getDocumentSpecs", id)];
+      // store.dispatch(appType + "/getDraft", id).then((res) => {
+      //   const results = res.data.data;
+      //   console.log(results);
+      //   documents = results.documents;
+      //   appID = results.id;
+      //   message.value.showLoading = false;
+      //   for (let i = 0; i < documents.length; i++) {
+      //     if (documents[i].documentTypeCode == "SF") {
+      //       showUpload.value = false;
+      //       isImage.value = true;
+      //       serviceFile.value = documents[i];
+      //       showPreview.value = true;
+      //       filePreview.value = basePath + documents[i].filePath;
+      //     }
+      //   }
+      // });
     });
+    const update = () => {};
     const save = () => {
       message.value.showLoading = true;
-      let id = store.getters["service/getID"];
-      let appType = store.getters["service/getApplicationType"];
-      let formData = new FormData();
-      formData.append("SF", serviceFile);
-      let payload = { document: formData, id: id };
-      store
-        .dispatch(appType + "/uploadDocuments", payload)
-        .then((res) => {
-          if (res.status == 200) {
-            message.value.showFlash = !message.value.showFlash;
-            message.value.showLoading = false;
-            setTimeout(() => {
-              document.getElementById("myCheck").click();
-            }, 1500);
-          } else {
-            message.value.showErrorFlash = !message.value.showErrorFlash;
+      id = store.getters["serviceFee/getID"];
+      appType = store.getters["serviceFee/getApplicationType"];
+      let sendStr = "";
+      if (appType == "newlicense") {
+        sendStr = "newlicense";
+      } else if (appType == "renewal") {
+        sendStr = "renewal";
+      } else if (appType == "goodstanding") {
+        sendStr = "goodstanding";
+      } else {
+        sendStr = "verification";
+      }
+      store.dispatch(sendStr + "/getDraft", id).then((res) => {
+        appType = store.getters["serviceFee/getApplicationType"];
+        const results = res.data.data;
+        appID = results.id;
+        let saveObject = {
+          save: {
+            action: "UploadPaymentEvent",
+            data: results,
+          },
+          appType: appType,
+          id: id,
+        };
+        store.dispatch("serviceFee/addLicense", saveObject).then((res) => {
+          if (res.data.status == "Success") {
+            let formData = new FormData();
+            formData.append("SF", serviceFile.value);
+            let payload = { document: formData, id: id, appT: appType };
+            store
+              .dispatch("serviceFee/uploadDocuments", payload)
+              .then((res) => {
+                if (res.status == 200) {
+                  message.value.showFlash = !message.value.showFlash;
+                  message.value.showLoading = false;
+                  setTimeout(() => {}, 1800);
+                  router.push({ path: "/menu" });
+                } else {
+                  showErrorFlash.value = !showErrorFlash.value;
+                }
+              })
+              .catch((err) => {});
           }
-        })
-        .catch((err) => {});
+        });
+      });
     };
 
     return {
@@ -232,7 +271,9 @@ export default {
       handleFileUpload,
       reset,
       documents,
+      buttons,
       save,
+      update,
       basePath,
       message,
     };

@@ -313,6 +313,7 @@ export default {
       };
       message.value.showLoading = !message.value.showLoading;
       store.dispatch("verification/withdraw", payload).then((res) => {
+        console.log(res.data);
         if (res.data.status == "Success") {
           message.value.showLoading = !message.value.showLoading;
           message.value.showFlash = !message.value.showFlash;

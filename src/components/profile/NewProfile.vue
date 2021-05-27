@@ -98,19 +98,19 @@ import Preview from "@/components/profile/Preview.vue";
 export default {
   name: "NewProfile",
   data: () => ({
-    activeState: 1
+    activeState: 1,
   }),
   components: {
     PersonalInfo,
     AddressInfo,
     ContactInfo,
     Preview,
-    Navigation
+    Navigation,
   },
   methods: {
     submit(n) {
       this.activeState = n;
-    }
-  }
+    },
+  },
 };
 </script>

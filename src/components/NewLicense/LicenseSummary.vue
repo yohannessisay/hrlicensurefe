@@ -2,7 +2,7 @@
   <div v-if="this.showLoading2" class="h-screen max-h-4xl">
     <Spinner class="bg-lightBlueB-200  " />
   </div>
-  <div class="bg-white mb-large rounded ">
+  <div class="bg-white mb-large rounded">
     <div v-if="this.show && !this.showLoading2">
       <div class="flex justify-center"><Title message="Summary" /></div>
       <div class="flex justify-start">

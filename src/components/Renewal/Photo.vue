@@ -325,12 +325,12 @@ export default {
       };
       store.dispatch("renewal/withdraw", payload).then((res) => {
         if (res.data.status == "Success") {
-          showFlash.value = !showFlash.value;
+          message.showFlash.value = !message.showFlash.value;
           setTimeout(() => {
             router.push({ path: "/menu" });
           }, 3000);
         } else {
-          showErrorFlash.value = !showErrorFlash.value;
+          message.showErrorFlash.value = !message.showErrorFlash.value;
         }
       });
     };

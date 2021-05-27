@@ -1,7 +1,7 @@
 <template>
-  <div class="w-screen max-w-4xl mt-xl h-screen">
+  <div class="w-screen max-w-4xl mt-small h-full">
     <div
-      class="flex flex-col mt-large w-full bg-white blue-box-shadow-light rounded"
+      class="flex flex-col mt-small mb-large w-full bg-white blue-box-shadow-light rounded"
     >
       <div class="mt-large">
         <TitleWithIllustration illustration="Address" message="Address Info" />
@@ -10,7 +10,11 @@
         <div class="flex">
           <div class="flex flex-col mb-medium w-1/2 mr-12">
             <label class="text-primary-700">Region</label>
-            <select class="max-w-3xl" v-model="state.cityObj" @change="fetchZones()">
+            <select
+              class="max-w-3xl"
+              v-model="state.cityObj"
+              @change="fetchZones()"
+            >
               <option
                 v-for="types in state.regions"
                 v-bind:key="types.name"
@@ -30,7 +34,11 @@
         <div class="flex">
           <div class="flex flex-col mb-medium w-1/2 mr-12">
             <label class="text-primary-700">Zone</label>
-            <select class="max-w-3xl" @change="fetchWoredas()" v-model="state.zoneId">
+            <select
+              class="max-w-3xl"
+              @change="fetchWoredas()"
+              v-model="state.zoneId"
+            >
               <option
                 v-for="types in state.zones"
                 v-bind:key="types.name"
@@ -111,7 +119,7 @@ export default {
       city: "",
       residence: "",
       zone: "",
-      poBox: ""
+      poBox: "",
     });
 
     let addressErrors = ref({
@@ -119,7 +127,7 @@ export default {
       kebele: "",
       city: "",
       residence: "",
-      zone: ""
+      zone: "",
     });
 
     let state = ref({
@@ -128,11 +136,11 @@ export default {
       zones: [],
       woredas: [],
       cityObj: {},
-      zoneId: ""
+      zoneId: "",
     });
 
     const fetchRegions = () => {
-      store.dispatch("profile/getRegions").then(res => {
+      store.dispatch("profile/getRegions").then((res) => {
         const regionsResult = res.data;
         state.value.regions = regionsResult.data;
       });
@@ -141,15 +149,14 @@ export default {
     const fetchZones = () => {
       address.value.city = state.value.cityObj.name;
       state.value.regionId = state.value.cityObj.id;
-      console.log(state.value.regionId);
-      store.dispatch("profile/getZones", state.value.regionId).then(res => {
+      store.dispatch("profile/getZones", state.value.regionId).then((res) => {
         const zonesResult = res.data;
         state.value.zones = zonesResult.data;
       });
     };
 
     const fetchWoredas = () => {
-      store.dispatch("profile/getWoredas", state.value.zoneId).then(res => {
+      store.dispatch("profile/getWoredas", state.value.zoneId).then((res) => {
         const woredasResult = res.data;
         state.value.woredas = woredasResult.data;
         for (const item of Object.entries(state.value.zones)) {
@@ -172,7 +179,6 @@ export default {
       addressErrors.value = validateForm(address.value);
       let empty = isEmpty(addressErrors.value);
       if (empty == false) {
-        console.log(addressErrors.value);
         return;
       }
       if (empty == true) {
@@ -181,7 +187,7 @@ export default {
       }
     };
 
-    const validateForm = formData => {
+    const validateForm = (formData) => {
       const errors = {};
 
       if (!state.value.cityObj.name) errors.city = "Region Required";
@@ -193,7 +199,7 @@ export default {
       return errors;
     };
 
-    const isEmpty = obj => {
+    const isEmpty = (obj) => {
       for (var prop in obj) {
         if (obj.hasOwnProperty(prop)) {
           return false;
@@ -216,8 +222,8 @@ export default {
       fetchZones,
       fetchWoredas,
       woredaChanged,
-      nextStep
+      nextStep,
     };
-  }
+  },
 };
 </script>

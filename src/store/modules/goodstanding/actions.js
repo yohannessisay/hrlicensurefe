@@ -11,7 +11,6 @@ import {
   SET_DECLINED_FIELDS,
   SET_REMARK,
   SET_ACCEPTED_FIELDS,
-  
 } from "./mutation-types";
 
 const url = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api/";
@@ -55,6 +54,22 @@ export default {
       const resp = await ApiService.post(
         url + "documentUploads/goodStandingDocument/" + documents.id,
         documents.document,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+  async updateDraft({ commit }, payload) {
+    try {
+      const resp = await ApiService.put(
+        url + "goodStandings/" + payload.licenseId,
+        payload.draftData,
         {
           headers: {
             "Content-Type": "multipart/form-data",
@@ -152,17 +167,7 @@ export default {
       return error;
     }
   },
-  async updateDraft({ commit }, payload) {
-    try {
-      const resp = await ApiService.put(
-        url + "goodStandings/" + payload.licenseId,
-        payload.draftData
-      );
-      return resp;
-    } catch (error) {
-      return error;
-    }
-  },
+
   async storeDeclinedFields({ commit }, fields) {
     commit(SET_DECLINED_FIELDS, fields);
   },

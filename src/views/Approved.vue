@@ -233,76 +233,64 @@
                 "
               >
                 <div class="p-4 w-48 h-64">
-                  <h4
-                    class="
-                      text-lightBlueB-500
-                      mt-tiny
-                      flex
-                      justify-center
-                      content-center
-                    "
+                  <span
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
-                    Applicant Type: {{ item.applicantType.name }}
-                  </h4>
-                  <h4
-                    class="
-                      text-lightBlueB-500
-                      mt-tiny
-                      flex
-                      justify-center
-                      content-center
-                    "
+                    <b>Applicant Type: &nbsp;</b>
+                    {{ item.applicantType.name }}
+                  </span>
+                  <span
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
-                    Application Status: {{ item.applicationStatus.name }}
-                  </h4>
-                  <h4
+                    <b>Status: &nbsp;</b>{{ item.applicationStatus.name }}
+                  </span>
+                  <span
                     v-if="item.newLicenseCode"
-                    class="
-                      text-lightBlueB-500
-                      mt-tiny
-                      flex
-                      justify-center
-                      content-center
-                    "
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
-                    Code: {{ item.newLicenseCode }}
-                  </h4>
-                  <h4
+                    <b>Code: &nbsp;</b>{{ item.newLicenseCode }}
+                  </span>
+                  <span
                     v-if="item.renewalCode"
-                    class="
-                      text-lightBlueB-500
-                      mt-tiny
-                      flex
-                      justify-center
-                      content-center
-                    "
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
-                    Code: {{ item.renewalCode }}
-                  </h4>
-                  <h4
+                    <b>Code: &nbsp;</b>{{ item.renewalCode }}
+                  </span>
+                  <span
                     v-if="item.verificationCode"
-                    class="
-                      text-lightBlueB-500
-                      mt-tiny
-                      flex
-                      justify-center
-                      content-center
-                    "
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
-                    Code: {{ item.verificationCode }}
-                  </h4>
-                  <h4
+                    <b>Code: &nbsp;</b>{{ item.verificationCode }}
+                  </span>
+                  <span
                     v-if="item.goodStandingCode"
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                  >
+                    <b>Code: &nbsp;</b>{{ item.goodStandingCode }}
+                  </span>
+                  <span
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                  >
+                    <b>Certified: &nbsp;</b>{{ item.certified }}
+                  </span>
+                  <span
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                  >
+                    <b>Reviewer: &nbsp;</b>{{ item.reviewer.name }}
+                  </span>
+                  <span
                     class="
+                      mt-medium
                       text-lightBlueB-500
-                      mt-tiny
                       flex
-                      justify-center
+                      justify-end
                       content-center
                     "
                   >
-                    Code: {{ item.goodStandingCode }}
-                  </h4>
+                    {{
+                      item.createdAt ? moment(item.createdAt).fromNow() : "-"
+                    }}
+                  </span>
                 </div>
               </div>
             </div>
@@ -343,43 +331,36 @@
                 "
               >
                 <div class="p-4 w-48 h-64">
-                  <h4
-                    class="
-                      text-lightBlueB-500
-                      mt-tiny
-                      flex
-                      justify-center
-                      content-center
-                    "
+                  <span
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
-                    Applicant Type: {{ item.applicantType.name }}
-                  </h4>
-                  <h4
-                    class="
-                      text-lightBlueB-500
-                      mt-tiny
-                      flex
-                      justify-center
-                      content-center
-                    "
+                    <b>Applicant Type: &nbsp;</b>
+                    {{ item.applicantType.name }}
+                  </span>
+                  <span
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
-                    Application Status: {{ item.applicationStatus.name }}
-                  </h4>
-                  <h4
-                    class="
-                      text-lightBlueB-500
-                      mt-tiny
-                      flex
-                      justify-center
-                      content-center
-                    "
+                    <b>Status: &nbsp;</b>{{ item.applicationStatus.name }}
+                  </span>
+                  <span
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
-                    Code: {{ item.newLicenseCode }}
-                  </h4>
-                  <h4
+                    <b>Code: &nbsp;</b>{{ item.newLicenseCode }}
+                  </span>
+                  <span
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                  >
+                    <b>Certified: &nbsp;</b>{{ item.certified }}
+                  </span>
+                  <span
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                  >
+                    <b>Reviewer: &nbsp;</b>{{ item.reviewer.name }}
+                  </span>
+                  <span
                     class="
+                      mt-medium
                       text-lightBlueB-500
-                      mt-tiny
                       flex
                       justify-end
                       content-center
@@ -388,7 +369,7 @@
                     {{
                       item.createdAt ? moment(item.createdAt).fromNow() : "-"
                     }}
-                  </h4>
+                  </span>
                 </div>
               </div>
             </div>
@@ -424,43 +405,36 @@
                 "
               >
                 <div class="p-4 w-48 h-64">
-                  <h4
-                    class="
-                      text-lightBlueB-500
-                      mt-tiny
-                      flex
-                      justify-center
-                      content-center
-                    "
+                  <span
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
-                    Applicant Type: {{ item.applicantType.name }}
-                  </h4>
-                  <h4
-                    class="
-                      text-lightBlueB-500
-                      mt-tiny
-                      flex
-                      justify-center
-                      content-center
-                    "
+                    <b>Applicant Type: &nbsp;</b>
+                    {{ item.applicantType.name }}
+                  </span>
+                  <span
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
-                    Application Status: {{ item.applicationStatus.name }}
-                  </h4>
-                  <h4
-                    class="
-                      text-lightBlueB-500
-                      mt-tiny
-                      flex
-                      justify-center
-                      content-center
-                    "
+                    <b>Status: &nbsp;</b>{{ item.applicationStatus.name }}
+                  </span>
+                  <span
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
-                    Code: {{ item.renewalCode }}
-                  </h4>
-                    <h4
+                    <b>Code: &nbsp;</b>{{ item.renewalCode }}
+                  </span>
+                  <span
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                  >
+                    <b>Certified: &nbsp;</b>{{ item.certified }}
+                  </span>
+                  <span
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                  >
+                    <b>Reviewer: &nbsp;</b>{{ item.reviewer.name }}
+                  </span>
+                  <span
                     class="
+                      mt-medium
                       text-lightBlueB-500
-                      mt-tiny
                       flex
                       justify-end
                       content-center
@@ -469,7 +443,7 @@
                     {{
                       item.createdAt ? moment(item.createdAt).fromNow() : "-"
                     }}
-                  </h4>
+                  </span>
                 </div>
               </div>
             </div>
@@ -512,43 +486,36 @@
                 "
               >
                 <div class="p-4 w-48 h-64">
-                  <h4
-                    class="
-                      text-lightBlueB-500
-                      mt-tiny
-                      flex
-                      justify-center
-                      content-center
-                    "
+                  <span
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
-                    Applicant Type: {{ item.applicantType.name }}
-                  </h4>
-                  <h4
-                    class="
-                      text-lightBlueB-500
-                      mt-tiny
-                      flex
-                      justify-center
-                      content-center
-                    "
+                    <b>Applicant Type: &nbsp;</b>
+                    {{ item.applicantType.name }}
+                  </span>
+                  <span
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
-                    Application Status: {{ item.applicationStatus.name }}
-                  </h4>
-                  <h4
-                    class="
-                      text-lightBlueB-500
-                      mt-tiny
-                      flex
-                      justify-center
-                      content-center
-                    "
+                    <b>Status: &nbsp;</b>{{ item.applicationStatus.name }}
+                  </span>
+                  <span
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
-                    Code: {{ item.verificationCode }}
-                  </h4>
-                  <h4
+                    <b>Code: &nbsp;</b>{{ item.verificationCode }}
+                  </span>
+                  <span
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                  >
+                    <b>Certified: &nbsp;</b>{{ item.certified }}
+                  </span>
+                  <span
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                  >
+                    <b>Reviewer: &nbsp;</b>{{ item.reviewer.name }}
+                  </span>
+                  <span
                     class="
+                      mt-medium
                       text-lightBlueB-500
-                      mt-tiny
                       flex
                       justify-end
                       content-center
@@ -557,7 +524,7 @@
                     {{
                       item.createdAt ? moment(item.createdAt).fromNow() : "-"
                     }}
-                  </h4>
+                  </span>
                 </div>
               </div>
             </div>
@@ -600,39 +567,45 @@
                 "
               >
                 <div class="p-4 w-48 h-64">
-                  <h4
+                  <span
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                  >
+                    <b>Applicant Type: &nbsp;</b>
+                    {{ item.applicantType.name }}
+                  </span>
+                  <span
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                  >
+                    <b>Status: &nbsp;</b>{{ item.applicationStatus.name }}
+                  </span>
+                  <span
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                  >
+                    <b>Code: &nbsp;</b>{{ item.goodStandingCode }}
+                  </span>
+                  <span
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                  >
+                    <b>Certified: &nbsp;</b>{{ item.certified }}
+                  </span>
+                  <span
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                  >
+                    <b>Reviewer: &nbsp;</b>{{ item.reviewer.name }}
+                  </span>
+                  <span
                     class="
+                      mt-medium
                       text-lightBlueB-500
-                      mt-tiny
                       flex
-                      justify-center
+                      justify-end
                       content-center
                     "
                   >
-                    Applicant Type: {{ item.applicantType.name }}
-                  </h4>
-                  <h4
-                    class="
-                      text-lightBlueB-500
-                      mt-tiny
-                      flex
-                      justify-center
-                      content-center
-                    "
-                  >
-                    Application Status: {{ item.applicationStatus.name }}
-                  </h4>
-                  <h4
-                    class="
-                      text-lightBlueB-500
-                      mt-tiny
-                      flex
-                      justify-center
-                      content-center
-                    "
-                  >
-                    Code: {{ item.goodStandingCode }}
-                  </h4>
+                    {{
+                      item.createdAt ? moment(item.createdAt).fromNow() : "-"
+                    }}
+                  </span>
                 </div>
               </div>
             </div>
@@ -671,7 +644,7 @@ export default {
     Modal,
     ServiceFee,
   },
-  data: function () {
+  data: function() {
     return {
       license: [],
       newlicense: [],
@@ -701,7 +674,7 @@ export default {
     }
   },
   methods: {
-    moment: function () {
+    moment: function() {
       return moment();
     },
     openServiceFeeModal(item) {
@@ -719,8 +692,11 @@ export default {
       if (item.goodStandingCode != undefined) {
         this.applicationType = "goodstanding";
       }
-      this.$store.dispatch("service/setItemID", this.itemId);
-      this.$store.dispatch("service/setApplicationType", this.applicationType);
+      this.$store.dispatch("serviceFee/setItemID", this.itemId);
+      this.$store.dispatch(
+        "serviceFee/setApplicationType",
+        this.applicationType
+      );
     },
     logout() {
       localStorage.removeItem("token");
@@ -736,27 +712,27 @@ export default {
         this.searched = false;
       } else {
         this.searched = true;
-        this.searchResult = this.newlicense.filter(function (e) {
+        this.searchResult = this.newlicense.filter(function(e) {
           return e.newLicenseCode
             .toLowerCase()
             .includes(searchKey.toLowerCase());
         });
         if (this.searchResult.length == 0) {
-          this.searchResult = this.renewal.filter(function (e) {
+          this.searchResult = this.renewal.filter(function(e) {
             return e.renewalCode
               .toLowerCase()
               .includes(searchKey.toLowerCase());
           });
         }
         if (this.searchResult.length == 0) {
-          this.searchResult = this.verification.filter(function (e) {
+          this.searchResult = this.verification.filter(function(e) {
             return e.verificationCode
               .toLowerCase()
               .includes(searchKey.toLowerCase());
           });
         }
         if (this.searchResult.length == 0) {
-          this.searchResult = this.goodstanding.filter(function (e) {
+          this.searchResult = this.goodstanding.filter(function(e) {
             return e.goodStandingCode
               .toLowerCase()
               .includes(searchKey.toLowerCase());
@@ -768,15 +744,13 @@ export default {
       this.showLoading = !this.showLoading;
       this.$store.dispatch("newlicense/getNewLicense").then((res) => {
         this.license = res.data.data;
-        this.newlicense = this.license.filter(function (e) {
-          console.log(e);
+        this.newlicense = this.license.filter(function(e) {
           return e.applicationStatus.code.includes("APP");
         });
       });
       this.$store.dispatch("renewal/getRenewalLicense").then((res) => {
         this.license = res.data.data;
-        this.renewal = this.license.filter(function (e) {
-          console.log(e);
+        this.renewal = this.license.filter(function(e) {
           return e.applicationStatus.code.includes("APP");
         });
       });
@@ -784,8 +758,7 @@ export default {
         .dispatch("verification/getVerificationLicense")
         .then((res) => {
           this.license = res.data.data;
-          this.verification = this.license.filter(function (e) {
-            console.log(e);
+          this.verification = this.license.filter(function(e) {
             return e.applicationStatus.code.includes("APP");
           });
         });
@@ -794,8 +767,7 @@ export default {
         .then((res) => {
           this.license = res.data.data;
           this.showLoading = !this.showLoading;
-          this.goodstanding = this.license.filter(function (e) {
-            console.log(e);
+          this.goodstanding = this.license.filter(function(e) {
             return e.applicationStatus.code.includes("APP");
           });
         });
@@ -804,6 +776,9 @@ export default {
 };
 </script>
 <style>
+span {
+  font-size: 15px;
+}
 img {
   border-radius: 50%;
   margin-bottom: 1rem;
