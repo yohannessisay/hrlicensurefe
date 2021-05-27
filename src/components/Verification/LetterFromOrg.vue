@@ -64,11 +64,18 @@
             Next
           </button>
           <button
-            class="buttons[0].class"
+            v-if="buttons.length < 3"
             @click="draft(buttons[1].action)"
             variant="outline"
           >
             {{ buttons[1].name }}
+          </button>
+          <button
+            v-if="buttons.length > 2"
+            @click="draft(buttons[0].action)"
+            variant="outline"
+          >
+            {{ buttons[0].name }}
           </button>
           <button
             v-if="buttons.length > 2"
@@ -217,43 +224,59 @@ export default {
       message.value.showLoading = true;
       if (route.params.id) {
         if (dataChanged.value) {
-          let formData = new FormData();
-          formData.append(documentSpecs[1].documentType.code, letterFile);
-          formData.append(documentSpecs[2].documentType.code, licenseCopy);
-          let payload = { document: formData, id: draftData.id };
+          let license = {
+            data: {
+              action: action,
+              data: draftData,
+            },
+            id: route.params.id,
+          };
           store
-            .dispatch("verification/uploadDocuments", payload)
+            .dispatch("verification/editVerificationLicense", license)
             .then((res) => {
-              if (res.status == 200) {
+              if (res.data.status == "Success") {
+                let licenseId = route.params.id;
+                let formData = new FormData();
+                formData.append(
+                  documentSpecs[1].documentType.code,
+                  letterFile.value
+                );
+                let payload = { document: formData, id: licenseId };
+                store
+                  .dispatch("verification/uploadDocuments", payload)
+                  .then((res) => {
+                    if (res.status == 200) {
+                      message.value.showFlash = !message.value.showFlash;
+                      message.value.showLoading = false;
+                      setTimeout(() => {}, 2200);
+                      router.push({ path: "/menu" });
+                    } else {
+                      showErrorFlash.value = !showErrorFlash.value;
+                    }
+                  })
+                  .catch((err) => {});
+              }
+            });
+        } else {
+          let license = {
+            data: {
+              action: action,
+              data: draftData,
+            },
+            id: route.params.id,
+          };
+          store
+            .dispatch("verification/editVerificationLicense", license)
+            .then((res) => {
+              if (res.data.status == "Success") {
                 message.value.showFlash = !message.value.showFlash;
                 message.value.showLoading = false;
                 setTimeout(() => {}, 2200);
                 router.push({ path: "/menu" });
               } else {
-                message.value.showErrorFlash = !message.value.showErrorFlash;
+                showErrorFlash.value = !showErrorFlash.value;
               }
-            })
-            .catch((err) => {});
-        } else {
-          let draftObj = {
-            action: action,
-            data: draftData,
-          };
-          let payload = {
-            licenseId: draftData.id,
-            draftData: draftObj,
-          };
-          message.value.showLoading = true;
-          store.dispatch("verification/updateDraft", payload).then((res) => {
-            if (res.status == 200) {
-              message.value.showFlash = !message.value.showFlash;
-              message.value.showLoading = false;
-              setTimeout(() => {}, 2200);
-              router.push({ path: "/menu" });
-            } else {
-              message.value.showErrorFlash = !message.value.showErrorFlash;
-            }
-          });
+            });
         }
       } else {
         let license = {
@@ -270,25 +293,31 @@ export default {
         store
           .dispatch("verification/addVerificationLicense", license)
           .then((res) => {
-            let licenseId = res.data.data.id;
-            let formData = new FormData();
-            formData.append(documentSpecs[1].documentType.code, letterFile);
-            formData.append(documentSpecs[2].documentType.code, licenseCopy);
+            if (res.data.status == "Success") {
+              let licenseId = res.data.data.id;
+              let formData = new FormData();
+              formData.append(
+                documentSpecs[1].documentType.code,
+                letterFile.value
+              );
 
-            let payload = { document: formData, id: licenseId };
-            store
-              .dispatch("verification/uploadDocuments", payload)
-              .then((res) => {
-                if (res.status == 200) {
-                  message.value.showFlash = !message.value.showFlash;
-                  message.value.showLoading = false;
-                  setTimeout(() => {}, 2200);
-                  router.push({ path: "/menu" });
-                } else {
-                  showErrorFlash.value = !showErrorFlash.value;
-                }
-              })
-              .catch((err) => {});
+              formData.append(documentSpecs[2].documentType.code, licenseCopy);
+
+              let payload = { document: formData, id: licenseId };
+              store
+                .dispatch("verification/uploadDocuments", payload)
+                .then((res) => {
+                  if (res.status == 200) {
+                    message.value.showFlash = !message.value.showFlash;
+                    message.value.showLoading = false;
+                    setTimeout(() => {}, 2200);
+                    router.push({ path: "/menu" });
+                  } else {
+                    showErrorFlash.value = !showErrorFlash.value;
+                  }
+                })
+                .catch((err) => {});
+            }
           });
       }
     };

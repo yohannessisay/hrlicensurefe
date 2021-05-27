@@ -51,12 +51,14 @@ export default {
   },
   async editGoodstandingLicense({ commit }, license) {
     try {
-      const resp = await ApiService.put(url + "goodStandings/" + license.id, license.data);
+      const resp = await ApiService.put(
+        url + "goodStandings/" + license.id,
+        license.data
+      );
       return resp;
     } catch (error) {
       return error;
     }
-   
   },
   async uploadDocuments({ commit }, documents) {
     try {

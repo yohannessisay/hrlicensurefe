@@ -49,6 +49,17 @@ export default {
       return error;
     }
   },
+  async editVerificationLicense({ commit }, license) {
+    try {
+      const resp = await ApiService.put(
+        url + "verifications/" + license.id,
+        license.data
+      );
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
   async uploadDocuments({ commit }, documents) {
     try {
       const resp = await ApiService.post(

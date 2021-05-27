@@ -204,6 +204,7 @@ export default {
       }
     },
     withdraw(action) {
+      this.showLoading = true;
       let withdrawObj = {
         action: action,
         data: this.getDraft,
@@ -215,6 +216,7 @@ export default {
       this.$store.dispatch("goodstanding/withdraw", payload).then((res) => {
         if (res.data.status == "Success") {
           this.showFlash = true;
+          this.showLoading = false;
           setTimeout(() => {
             this.$router.push({ path: "/menu" });
           }, 3000);
