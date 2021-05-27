@@ -49,6 +49,15 @@ export default {
       return error;
     }
   },
+  async editGoodstandingLicense({ commit }, license) {
+    try {
+      const resp = await ApiService.put(url + "goodStandings/" + license.id, license.data);
+      return resp;
+    } catch (error) {
+      return error;
+    }
+   
+  },
   async uploadDocuments({ commit }, documents) {
     try {
       const resp = await ApiService.post(

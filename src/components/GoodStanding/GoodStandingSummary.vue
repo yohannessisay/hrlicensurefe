@@ -239,28 +239,49 @@
     </div> -->
       <div class="mt-12 flex justify-center">
         <div>
-          <button @click="submitRequest(this.buttons[0].action)">
+          <button
+            v-if="this.buttons.length < 3"
+            @click="submitRequest(this.buttons[0].action)"
+          >
             {{ this.buttons[0].name }}
+          </button>
+          <button
+            v-if="this.buttons.length > 2"
+            @click="submitRequest(this.buttons[1].action)"
+          >
+            {{ this.buttons[1].name }}
           </button>
         </div>
       </div>
-      <div class="flex justify-center mt-8">
+      <div class="flex justify-center mt-4">
         <h6>
           If you don't have all the required informations you can come back and
           finish later.
         </h6>
       </div>
-      <div class="flex justify-center mt-8 mb-8">
-        <button variant="outline" @click="saveDraft(this.buttons[1].action)">
+      <div class="flex justify-center mt-4 mb-8">
+        <button
+          v-if="this.buttons.length < 3"
+          @click="draft(this.buttons[1].action)"
+          variant="outline"
+        >
           {{ this.buttons[1].name }}
         </button>
+        <button
+          v-if="this.buttons.length > 2"
+          @click="draft(this.buttons[0].action)"
+          variant="outline"
+        >
+          {{ this.buttons[0].name }}
+        </button>
+
         <button
           v-if="this.buttons.length > 2"
           class="withdraw"
           @click="withdraw(this.buttons[2].action)"
           variant="outline"
         >
-          {{ this.buttons[2]["name"] }}
+          {{ this.buttons[2].name }}
         </button>
       </div>
       <div
@@ -381,86 +402,47 @@ export default {
     },
 
     async submitRequest(act) {
-      this.showLoading = true;
-      // if (this.draftId) {
-      // just send the draftdata with the action
-      // } else {
       let action = act;
-      this.showFlash = false;
-      this.showErrorFlash = false;
-      let formData = new FormData();
-      formData.append(
-        this.documentTypes[1].documentType.code,
-        this.licenseCopy
-      );
-      formData.append(
-        this.documentTypes[2].documentType.code,
-        this.goodstandingLetter
-      );
-
-      let license = {
-        action: action,
-        data: {
-          applicantId: this.userId,
-          applicantTypeId: this.applicantTypeId,
-          education: {
-            institutionId: this.education.institutionId,
-            departmentId: this.education.departmentId,
+      this.showLoading = true;
+      if (this.draftId != null) {
+        let license = {
+          data: {
+            action: action,
+            data: this.draftData,
           },
-        },
-      };
-      console.log(this.getLicense);
-      this.$store
-        .dispatch("goodstanding/addGoodstandingLicense", license)
-        .then((res) => {
-          let licenseId = res.data.data.id;
-          let payload = { document: formData, id: licenseId };
-          this.$store
-            .dispatch("goodstanding/uploadDocuments", payload)
-            .then((res) => {
-              this.showLoading = false;
-              if (res.data.status == "Success") {
-                this.showFlash = true;
-                setTimeout(() => {
-                  this.$router.push({ path: "/menu" });
-                }, 3000);
-              } else {
-                this.showErrorFlash = true;
-              }
-            })
-            .catch((err) => {
-              this.showErrorFlash = true;
-            });
-        });
-    },
-
-    async saveDraft(act) {
-      this.showLoading = true;
-      let action = act;
-      if (this.draftId) {
-        let draftObj = {
-          action: action,
-          data: this.getDraftData,
-        };
-        let payload = {
-          licenseId: this.getDraftData.id,
-          draftData: draftObj,
+          id: this.draftId,
         };
         this.$store
-          .dispatch("goodstanding/updateDraft", payload)
+          .dispatch("goodstanding/editGoodstandingLicense", license)
           .then((res) => {
             if (res.data.status == "Success") {
-              this.showFlash = true;
-              setTimeout(() => {}, 3000);
-              this.$router.push({ path: "/menu" });
-              this.showLoading = false;
-            } else {
-              this.showErrorFlash = true;
+              let licenseId = this.draftId;
+              let formData = new FormData();
+              formData.append(
+                this.documentTypes[1].documentType.code,
+                this.licenseCopy
+              );
+              formData.append(
+                this.documentTypes[2].documentType.code,
+                this.goodstandingLetter
+              );
+              let payload = { document: formData, id: licenseId };
+              this.$store
+                .dispatch("goodstanding/uploadDocuments", payload)
+                .then((res) => {
+                  if (res.status == 200) {
+                    this.showFlash = true;
+                    this.showLoading = false;
+                    setTimeout(() => {}, 2200);
+                    this.$router.push({ path: "/menu" });
+                  } else {
+                    this.showErrorFlash = true;
+                  }
+                })
+                .catch((err) => {});
             }
           });
       } else {
-        this.showFlash = false;
-        this.showErrorFlash = false;
         let formData = new FormData();
         formData.append(
           this.documentTypes[1].documentType.code,
@@ -470,6 +452,7 @@ export default {
           this.documentTypes[2].documentType.code,
           this.goodstandingLetter
         );
+
         let license = {
           action: action,
           data: {
@@ -489,11 +472,100 @@ export default {
             this.$store
               .dispatch("goodstanding/uploadDocuments", payload)
               .then((res) => {
-                if (res) {
+                this.showLoading = false;
+                if (res.data.status == "Success") {
                   this.showFlash = true;
-                  this.showLoading = false;
-                  this.$router.push({ path: "/menu" });
-                  setTimeout(() => {}, 2000);
+                  setTimeout(() => {
+                    this.$router.push({ path: "/menu" });
+                  }, 3000);
+                } else {
+                  this.showErrorFlash = true;
+                }
+              })
+              .catch((err) => {
+                this.showErrorFlash = true;
+              });
+          });
+      }
+    },
+
+    async saveDraft(act) {
+      let action = act;
+      this.showLoading = true;
+      if (this.draftId != null) {
+        let license = {
+          data: {
+            action: action,
+            data: this.draftData,
+          },
+          id: this.draftId,
+        };
+        this.$store
+          .dispatch("goodstanding/editGoodstandingLicense", license)
+          .then((res) => {
+            if (res.data.status == "Success") {
+              let licenseId = this.draftId;
+              let formData = new FormData();
+              formData.append(
+                this.documentTypes[1].documentType.code,
+                this.licenseCopy
+              );
+              formData.append(
+                this.documentTypes[2].documentType.code,
+                this.goodstandingLetter
+              );
+              let payload = { document: formData, id: licenseId };
+              this.$store
+                .dispatch("goodstanding/uploadDocuments", payload)
+                .then((res) => {
+                  if (res.status == 200) {
+                    this.showFlash = true;
+                    this.showLoading = false;
+                    setTimeout(() => {}, 2200);
+                    this.$router.push({ path: "/menu" });
+                  } else {
+                    this.showErrorFlash = true;
+                  }
+                })
+                .catch((err) => {});
+            }
+          });
+      } else {
+        let formData = new FormData();
+        formData.append(
+          this.documentTypes[1].documentType.code,
+          this.licenseCopy
+        );
+        formData.append(
+          this.documentTypes[2].documentType.code,
+          this.goodstandingLetter
+        );
+
+        let license = {
+          action: action,
+          data: {
+            applicantId: this.userId,
+            applicantTypeId: this.applicantTypeId,
+            education: {
+              institutionId: this.education.institutionId,
+              departmentId: this.education.departmentId,
+            },
+          },
+        };
+        this.$store
+          .dispatch("goodstanding/addGoodstandingLicense", license)
+          .then((res) => {
+            let licenseId = res.data.data.id;
+            let payload = { document: formData, id: licenseId };
+            this.$store
+              .dispatch("goodstanding/uploadDocuments", payload)
+              .then((res) => {
+                this.showLoading = false;
+                if (res.data.status == "Success") {
+                  this.showFlash = true;
+                  setTimeout(() => {
+                    this.$router.push({ path: "/menu" });
+                  }, 3000);
                 } else {
                   this.showErrorFlash = true;
                 }

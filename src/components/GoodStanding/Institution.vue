@@ -62,7 +62,7 @@
             Next
           </button>
           <button
-            v-if="!submitStatus"
+            v-if="this.buttons.length < 3"
             @click="draft(this.buttons[1].action)"
             variant="outline"
           >
@@ -70,7 +70,14 @@
           </button>
           <button
             v-if="this.buttons.length > 2"
+            @click="draft(this.buttons[0].action)"
+            variant="outline"
+          >
+            {{ this.buttons[0]["name"] }}
+          </button>
+          <button
             class="withdraw"
+            v-if="this.buttons.length > 2"
             @click="withdraw(this.buttons[2].action)"
             variant="outline"
           >
@@ -154,17 +161,47 @@ export default {
 
   methods: {
     draft(action) {
+      this.showLoading = true;
       let license = {
-        action: action,
         data: {
-          applicantId: this.licenseInfo.applicantId,
-          applicantTypeId: this.licenseInfo.applicantTypeId,
-          education: {
-            departmentId: this.licenseInfo.education.departmentId,
-            institutionId: this.licenseInfo.education.institutionId,
+          action: action,
+          data: {
+            applicantId: this.licenseInfo.applicantId,
+            applicantTypeId: this.licenseInfo.applicantTypeId,
+            education: {
+              departmentId: this.licenseInfo.education.departmentId,
+              institutionId: this.licenseInfo.education.institutionId,
+            },
           },
         },
+        id: this.draftId,
       };
+
+      if (this.draftId != undefined) {
+        this.$store
+          .dispatch("goodstanding/editGoodstandingLicense", license)
+          .then((res) => {
+            if (res.data.status == "Success") {
+              this.showFlash = true;
+              this.showLoading = false;
+              setTimeout(() => {}, 2000);
+              this.$router.push({ path: "/menu" });
+            } else {
+              this.showErrorFlash = true;
+            }
+          });
+      } else {
+        this.$store
+          .dispatch("goodstanding/addGoodstandingLicense", license.data)
+          .then((res) => {
+            if (res.data.status == "Success") {
+              this.showFlash = true;
+              this.showLoading = false;
+              setTimeout(() => {}, 2000);
+              this.$router.push({ path: "/menu" });
+            }
+          });
+      }
     },
     withdraw(action) {
       let withdrawObj = {
@@ -228,10 +265,6 @@ export default {
     },
     fetchDraft() {
       let draftData = this.getDraft;
-
-      // if (draftData.applicationStatus.name == "Submit") {
-      //   this.submitStatus = true;
-      // }
       this.licenseInfo.applicantId = draftData.applicantId;
       this.licenseInfo.applicantTypeId = draftData.applicantTypeId;
       this.licenseInfo.education.departmentId =

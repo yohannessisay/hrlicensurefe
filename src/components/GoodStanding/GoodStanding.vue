@@ -101,6 +101,7 @@ export default {
         .then((res) => {
           const results = res.data.data;
           this.applicationStatuses = results;
+          console.log(results);
           if (this.draftId != undefined) {
             let status = this.applicationStatuses.filter(function(e) {
               return e.code == "DRA";
