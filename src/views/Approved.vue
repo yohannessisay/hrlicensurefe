@@ -419,7 +419,7 @@
                   <span
                     class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
-                    <b>Code: &nbsp;</b>{{ item.newLicenseCode }}
+                    <b>Code: &nbsp;</b>{{ item.renewalCode }}
                   </span>
                   <span
                     class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
@@ -500,7 +500,7 @@
                   <span
                     class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
-                    <b>Code: &nbsp;</b>{{ item.newLicenseCode }}
+                    <b>Code: &nbsp;</b>{{ item.verificationCode }}
                   </span>
                   <span
                     class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
@@ -581,7 +581,7 @@
                   <span
                     class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
-                    <b>Code: &nbsp;</b>{{ item.newLicenseCode }}
+                    <b>Code: &nbsp;</b>{{ item.goodStandingCode }}
                   </span>
                   <span
                     class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
@@ -692,8 +692,11 @@ export default {
       if (item.goodStandingCode != undefined) {
         this.applicationType = "goodstanding";
       }
-      this.$store.dispatch("service/setItemID", this.itemId);
-      this.$store.dispatch("service/setApplicationType", this.applicationType);
+      this.$store.dispatch("serviceFee/setItemID", this.itemId);
+      this.$store.dispatch(
+        "serviceFee/setApplicationType",
+        this.applicationType
+      );
     },
     logout() {
       localStorage.removeItem("token");
