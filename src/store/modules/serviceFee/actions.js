@@ -21,7 +21,7 @@ export default {
     }
   },
   async addLicense({ commit }, license) {
-    if (license.appType == "newLicense") {
+    if (license.appType == "newlicense") {
       try {
         const resp = await ApiService.put(
           url + "newLicenses/" + license.id,
@@ -64,7 +64,7 @@ export default {
     }
   },
   async uploadDocuments({ commit }, license) {
-    if (license.appT == "newLicense") {
+    if (license.appT == "newlicense") {
       try {
         const resp = await ApiService.post(
           url + "documentUploads/licenseDocument/" + license.id,
