@@ -253,7 +253,8 @@ export default {
                       setTimeout(() => {}, 2200);
                       router.push({ path: "/menu" });
                     } else {
-                      showErrorFlash.value = !showErrorFlash.value;
+                      message.value.showErrorFlash = !message.value
+                        .showErrorFlash;
                     }
                   })
                   .catch((err) => {});
@@ -276,7 +277,7 @@ export default {
                 setTimeout(() => {}, 2200);
                 router.push({ path: "/menu" });
               } else {
-                showErrorFlash.value = !showErrorFlash.value;
+                message.value.showErrorFlash = !message.value.showErrorFlash;
               }
             });
         }
@@ -317,7 +318,8 @@ export default {
                     setTimeout(() => {}, 2200);
                     router.push({ path: "/menu" });
                   } else {
-                    showErrorFlash.value = !showErrorFlash.value;
+                    message.value.showErrorFlash = !message.value
+                      .showErrorFlash;
                   }
                 })
                 .catch((err) => {});
@@ -326,6 +328,7 @@ export default {
       }
     };
     const withdraw = (action) => {
+      message.value.showLoading = !message.value.showLoading;
       let withdrawObj = {
         action: action,
         data: draftData,
@@ -334,19 +337,16 @@ export default {
         licenseId: draftData.id,
         withdrawData: withdrawObj,
       };
-      message.value.showLoading = !message.value.showLoading;
       store.dispatch("verification/withdraw", payload).then((res) => {
-        console.log(res.data);
-        // if (res.data.status == "Success") {
+        if (res.data.status == "Success") {
           message.value.showLoading = !message.value.showLoading;
           message.value.showFlash = !message.value.showFlash;
-
           setTimeout(() => {
             router.push({ path: "/menu" });
           }, 3000);
-        // } else {
-        //   message.value.showErrorFlash = !message.value.showErrorFlash;
-        // }
+        } else {
+          message.value.showErrorFlash = !message.value.showErrorFlash;
+        }
       });
     };
 
