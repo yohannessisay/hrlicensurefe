@@ -66,6 +66,17 @@ export default {
       return error;
     }
   },
+  async editRenewalLicense({ commit }, license) {
+    try {
+      const resp = await ApiService.put(
+        url + "renewals/" + license.id,
+        license.data
+      );
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
   async uploadDocuments({ commit }, documents) {
     try {
       const resp = await ApiService.post(
@@ -107,7 +118,7 @@ export default {
       return error;
     }
   },
-  async getProfile({commit}, id) {
+  async getProfile({ commit }, id) {
     try {
       const resp = await ApiService.get(url + "profiles/user/" + id);
       return resp;

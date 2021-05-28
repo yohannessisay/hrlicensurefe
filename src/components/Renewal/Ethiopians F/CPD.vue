@@ -64,11 +64,18 @@
             Next
           </button>
           <button
-            class="buttons[1].class"
+            v-if="buttons.length < 3"
             @click="draft(buttons[1].action)"
             variant="outline"
           >
             {{ buttons[1].name }}
+          </button>
+          <button
+            v-if="buttons.length > 2"
+            @click="draft(buttons[0].action)"
+            variant="outline"
+          >
+            {{ buttons[0].name }}
           </button>
           <button
             v-if="buttons.length > 2"
@@ -224,49 +231,57 @@ export default {
         }
       }
     });
+
     const draft = (action) => {
       message.value.showLoading = true;
       if (route.params.id) {
         if (dataChanged.value) {
-          let formData = new FormData();
-          formData.append(documentSpecs[0].documentType.code, renewalPhoto);
-          formData.append(documentSpecs[1].documentType.code, renewalLetter);
-          formData.append(documentSpecs[2].documentType.code, healthExamCert);
-          formData.append(documentSpecs[3].documentType.code, serviceFee);
-          formData.append(documentSpecs[4].documentType.code, cpdFile);
-          formData.append(documentSpecs[5].documentType.code, workExperience);
-          formData.append(documentSpecs[6].documentType.code, previousLicense);
-
-          let payload = { document: formData, id: draftData.id };
-          store
-            .dispatch("renewal/uploadDocuments", payload)
-            .then((res) => {
-              if (res.status == 200) {
-                message.value.showFlash = !message.value.showFlash;
-                message.value.showLoading = !message.value.showLoading;
-                setTimeout(() => {}, 3000);
-                router.push({ path: "/menu" });
-              } else {
-                message.value.showErrorFlash = !message.value.showErrorFlash;
-              }
-            })
-            .catch((err) => {});
+          let license = {
+            data: {
+              action: action,
+              data: draftData,
+            },
+            id: route.params.id,
+          };
+          store.dispatch("renewal/editRenewalLicense", license).then((res) => {
+            if (res.data.status == "Success") {
+              let licenseId = route.params.id;
+              let formData = new FormData();
+              formData.append(
+                documentSpecs[4].documentType.code,
+                cpdFile.value
+              );
+              let payload = { document: formData, id: licenseId };
+              store
+                .dispatch("renewal/uploadDocuments", payload)
+                .then((res) => {
+                  if (res.status == 200) {
+                    message.value.showFlash = !message.value.showFlash;
+                    message.value.showLoading = false;
+                    setTimeout(() => {}, 2200);
+                    router.push({ path: "/menu" });
+                  } else {
+                    message.value.showErrorFlash = !message.value
+                      .showErrorFlash;
+                  }
+                })
+                .catch((err) => {});
+            }
+          });
         } else {
-          let draftObj = {
-            action: action,
-            data: draftData,
+          let license = {
+            data: {
+              action: action,
+              data: draftData,
+            },
+            id: route.params.id,
           };
-          let payload = {
-            licenseId: draftData.id,
-            draftData: draftObj,
-          };
-          message.value.showLoading = true;
-          store.dispatch("renewal/updateDraft", payload).then((res) => {
+          store.dispatch("renewal/editRenewalLicense", license).then((res) => {
             if (res.data.status == "Success") {
               message.value.showFlash = !message.value.showFlash;
+              message.value.showLoading = false;
               setTimeout(() => {}, 2200);
               router.push({ path: "/menu" });
-              message.value.showLoading = false;
             } else {
               message.value.showErrorFlash = !message.value.showErrorFlash;
             }
@@ -285,34 +300,41 @@ export default {
           },
         };
         store.dispatch("renewal/addRenewalLicense", license).then((res) => {
-          let licenseId = res.data.data.id;
-          let formData = new FormData();
-          formData.append(documentSpecs[0].documentType.code, renewalPhoto);
-          formData.append(documentSpecs[1].documentType.code, renewalLetter);
-          formData.append(documentSpecs[2].documentType.code, healthExamCert);
-          formData.append(documentSpecs[3].documentType.code, serviceFee);
-          formData.append(documentSpecs[4].documentType.code, cpdFile);
-          formData.append(documentSpecs[5].documentType.code, workExperience);
-          formData.append(documentSpecs[6].documentType.code, previousLicense);
+          if (res.data.status == "Success") {
+            let licenseId = res.data.data.id;
+            let formData = new FormData();
 
-          let payload = { document: formData, id: licenseId };
-          store
-            .dispatch("renewal/uploadDocuments", payload)
-            .then((res) => {
-              if (res) {
-                message.value.showFlash = !message.value.showFlash;
-                setTimeout(() => {}, 2200);
-                router.push({ path: "/menu" });
-                message.value.showLoading = false;
-              } else {
-                messsage.value.showErrorFlash = !message.value.showErrorFlash;
-              }
-            })
-            .catch((err) => {});
+            formData.append(documentSpecs[0].documentType.code, renewalPhoto);
+            formData.append(documentSpecs[1].documentType.code, renewalLetter);
+            formData.append(documentSpecs[2].documentType.code, healthExamCert);
+            formData.append(documentSpecs[3].documentType.code, serviceFee);
+            formData.append(documentSpecs[4].documentType.code, cpdFile.value);
+            formData.append(documentSpecs[5].documentType.code, workExperience);
+            formData.append(
+              documentSpecs[6].documentType.code,
+              previousLicense
+            );
+            let payload = { document: formData, id: licenseId };
+            store
+              .dispatch("renewal/uploadDocuments", payload)
+              .then((res) => {
+                if (res.status == 200) {
+                  message.value.showFlash = !message.value.showFlash;
+                  message.value.showLoading = false;
+                  setTimeout(() => {}, 2200);
+                  router.push({ path: "/menu" });
+                } else {
+                  message.value.showErrorFlash = !message.value.showErrorFlash;
+                }
+              })
+              .catch((err) => {});
+          }
         });
       }
     };
+
     const withdraw = (action) => {
+      message.value.showLoading = !message.value.showLoading;
       let withdrawObj = {
         action: action,
         data: draftData,
@@ -323,12 +345,13 @@ export default {
       };
       store.dispatch("renewal/withdraw", payload).then((res) => {
         if (res.data.status == "Success") {
-          showFlash.value = !showFlash.value;
+          message.value.showLoading = !message.value.showLoading;
+          message.value.showFlash = !message.value.showFlash;
           setTimeout(() => {
             router.push({ path: "/menu" });
           }, 3000);
         } else {
-          showErrorFlash.value = !showErrorFlash.value;
+          message.value.showErrorFlash = !message.value.showErrorFlash;
         }
       });
     };
