@@ -257,7 +257,7 @@ export default {
                   if (res.status == 200) {
                     message.value.showFlash = !message.value.showFlash;
                     message.value.showLoading = false;
-                    setTimeout(() => {}, 2200);
+                    setTimeout(() => {}, 1500);
                     router.push({ path: "/menu" });
                   } else {
                     showErrorFlash.value = !showErrorFlash.value;
@@ -278,7 +278,7 @@ export default {
             if (res.data.status == "Success") {
               message.value.showFlash = !message.value.showFlash;
               message.value.showLoading = false;
-              setTimeout(() => {}, 2200);
+              setTimeout(() => {}, 1500);
               router.push({ path: "/menu" });
             } else {
               showErrorFlash.value = !showErrorFlash.value;
@@ -322,7 +322,7 @@ export default {
                 if (res.status == 200) {
                   message.value.showFlash = !message.value.showFlash;
                   message.value.showLoading = false;
-                  setTimeout(() => {}, 2200);
+                  setTimeout(() => {}, 1500);
                   router.push({ path: "/menu" });
                 } else {
                   showErrorFlash.value = !showErrorFlash.value;
@@ -350,7 +350,7 @@ export default {
           message.showLoading.value = !message.showLoading.value;
           setTimeout(() => {
             router.push({ path: "/menu" });
-          }, 3000);
+          }, 1500);
         } else {
           message.showErrorFlash.value = !message.showErrorFlash.value;
         }

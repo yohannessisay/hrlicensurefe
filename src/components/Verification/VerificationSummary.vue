@@ -436,7 +436,7 @@ export default {
                   if (res.status == 200) {
                     this.showFlash = true;
                     this.showLoading = false;
-                    setTimeout(() => {}, 2200);
+                    setTimeout(() => {}, 1500);
                     this.$router.push({ path: "/menu" });
                   } else {
                     this.showErrorFlash = true;
@@ -480,7 +480,7 @@ export default {
                   this.showFlash = true;
                   setTimeout(() => {
                     this.$router.push({ path: "/menu" });
-                  }, 3000);
+                  }, 1500);
                 } else {
                   this.showErrorFlash = true;
                 }
@@ -523,7 +523,7 @@ export default {
                   if (res.status == 200) {
                     this.showFlash = true;
                     this.showLoading = false;
-                    setTimeout(() => {}, 2200);
+                    setTimeout(() => {}, 1500);
                     this.$router.push({ path: "/menu" });
                   } else {
                     this.showErrorFlash = true;
@@ -567,7 +567,7 @@ export default {
                   this.showFlash = true;
                   setTimeout(() => {
                     this.$router.push({ path: "/menu" });
-                  }, 3000);
+                  }, 1500);
                 } else {
                   this.showErrorFlash = true;
                 }
@@ -593,7 +593,7 @@ export default {
         if (res) {
           this.showFlash = true;
           this.showLoading = false;
-          setTimeout(() => {}, 2000);
+          setTimeout(() => {}, 1500);
           this.$router.push({ path: "/menu" });
         } else {
           this.showErrorFlash = true;
