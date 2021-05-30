@@ -117,13 +117,13 @@ export default {
 
           setTimeout(() => {
             location.reload();
-          }, 2000);
+          }, 1500);
 
         } else {
           message.value.showLoading = false;
           message.value.showFlash = false;
           message.value.showErrorFlash = true;
-          setTimeout(() => {}, 2000);
+          setTimeout(() => {}, 1500);
         }
       });
     };

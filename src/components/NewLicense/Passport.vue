@@ -64,11 +64,18 @@
             Next
           </button>
           <button
-            class="buttons[1].class"
+            v-if="buttons.length < 3"
             @click="draft(buttons[1].action)"
             variant="outline"
           >
             {{ buttons[1].name }}
+          </button>
+          <button
+            v-if="buttons.length > 2"
+            @click="draft(buttons[0].action)"
+            variant="outline"
+          >
+            {{ buttons[0].name }}
           </button>
           <button
             v-if="buttons.length > 2"
@@ -213,88 +220,53 @@ export default {
       message.value.showLoading = true;
       if (route.params.id) {
         if (dataChanged.value) {
-          let formData = new FormData();
-          formData.append(documentSpecs[0].documentType.code, photo);
-          formData.append(documentSpecs[1].documentType.code, passportFile);
-          formData.append(documentSpecs[2].documentType.code, healthExamCert);
-          formData.append(documentSpecs[4].documentType.code, workExperience);
-          formData.append(documentSpecs[5].documentType.code, englishLanguage);
-          if (professionalDoc != undefined) {
-            formData.append(
-              documentSpecs[6].documentType.code,
-              professionalDoc[0]
-            );
-            formData.append(
-              documentSpecs[7].documentType.code,
-              professionalDoc[1]
-            );
-            formData.append(
-              documentSpecs[8].documentType.code,
-              professionalDoc[2]
-            );
-          }
-          formData.append(documentSpecs[9].documentType.code, coc);
-          if (educationDoc != undefined) {
-            formData.append(
-              documentSpecs[10].documentType.code,
-              educationDoc[0]
-            );
-            formData.append(
-              documentSpecs[11].documentType.code,
-              educationDoc[1]
-            );
-            formData.append(
-              documentSpecs[12].documentType.code,
-              educationDoc[2]
-            );
-            formData.append(
-              documentSpecs[13].documentType.code,
-              educationDoc[3]
-            );
-            formData.append(
-              documentSpecs[14].documentType.code,
-              educationDoc[4]
-            );
-          }
-          formData.append(documentSpecs[15].documentType.code, supportLetter);
-          formData.append(documentSpecs[16].documentType.code, herqa);
-          formData.append(documentSpecs[17].documentType.code, letterfromOrg);
-          formData.append(documentSpecs[18].documentType.code, renewedLicense);
-          formData.append(
-            documentSpecs[19].documentType.code,
-            professionalLicense
-          );
+          let license = {
+            data: {
+              action: action,
+              data: draftData,
+            },
+            id: route.params.id,
+          };
+          store.dispatch("newlicense/editNewLicense", license).then((res) => {
+            if (res.data.status == "Success") {
+              let licenseId = route.params.id;
+              let formData = new FormData();
+              formData.append(
+                documentSpecs[1].documentType.code,
+                passportFile.value
+              );
 
-          let payload = { document: formData, id: draftData.id };
-          store
-            .dispatch("newlicense/uploadDocuments", payload)
-            .then((res) => {
-              if (res.status == 200) {
-                message.value.showFlash = !message.value.showFlash;
-                setTimeout(() => {}, 3000);
-                router.push({ path: "/menu" });
-                message.value.showLoading = false;
-              } else {
-                message.value.showErrorFlash = !message.value.showErrorFlash;
-              }
-            })
-            .catch((err) => {});
+              let payload = { document: formData, id: licenseId };
+              store
+                .dispatch("newlicense/uploadDocuments", payload)
+                .then((res) => {
+                  if (res.status == 200) {
+                    message.value.showFlash = !message.value.showFlash;
+                    message.value.showLoading = false;
+                    setTimeout(() => {}, 1500);
+                    router.push({ path: "/menu" });
+                  } else {
+                    message.value.showErrorFlash = !message.value
+                      .showErrorFlash;
+                  }
+                })
+                .catch((err) => {});
+            }
+          });
         } else {
-          let draftObj = {
-            action: action,
-            data: draftData,
+          let license = {
+            data: {
+              action: action,
+              data: draftData,
+            },
+            id: route.params.id,
           };
-          let payload = {
-            licenseId: draftData.id,
-            draftData: draftObj,
-          };
-          message.value.showLoading = true;
-          store.dispatch("newlicense/updateDraft", payload).then((res) => {
+          store.dispatch("newlicense/editNewLicense", license).then((res) => {
             if (res.data.status == "Success") {
               message.value.showFlash = !message.value.showFlash;
-              setTimeout(() => {}, 2200);
-              router.push({ path: "/menu" });
               message.value.showLoading = false;
+              setTimeout(() => {}, 1500);
+              router.push({ path: "/menu" });
             } else {
               message.value.showErrorFlash = !message.value.showErrorFlash;
             }
@@ -313,77 +285,90 @@ export default {
           },
         };
         store.dispatch("newlicense/addNewLicense", license).then((res) => {
-          let licenseId = res.data.data.id;
-          let formData = new FormData();
-          formData.append(documentSpecs[0].documentType.code, photo);
-          formData.append(documentSpecs[1].documentType.code, passportFile);
-          formData.append(documentSpecs[2].documentType.code, healthExamCert);
-          formData.append(documentSpecs[4].documentType.code, workExperience);
-          formData.append(documentSpecs[5].documentType.code, englishLanguage);
-          if (professionalDoc != undefined) {
+          if (res.data.status == "Success") {
+            let licenseId = res.data.data.id;
+            let formData = new FormData();
+            formData.append(documentSpecs[0].documentType.code, photo);
             formData.append(
-              documentSpecs[6].documentType.code,
-              professionalDoc[0]
+              documentSpecs[1].documentType.code,
+              passportFile.value
+            );
+            formData.append(documentSpecs[2].documentType.code, healthExamCert);
+            formData.append(documentSpecs[4].documentType.code, workExperience);
+            formData.append(
+              documentSpecs[5].documentType.code,
+              englishLanguage
+            );
+            if (professionalDoc != undefined) {
+              formData.append(
+                documentSpecs[6].documentType.code,
+                professionalDoc[0]
+              );
+              formData.append(
+                documentSpecs[7].documentType.code,
+                professionalDoc[1]
+              );
+              formData.append(
+                documentSpecs[8].documentType.code,
+                professionalDoc[2]
+              );
+            }
+            formData.append(documentSpecs[9].documentType.code, coc);
+            if (educationDoc != undefined) {
+              formData.append(
+                documentSpecs[10].documentType.code,
+                educationDoc[0]
+              );
+              formData.append(
+                documentSpecs[11].documentType.code,
+                educationDoc[1]
+              );
+              formData.append(
+                documentSpecs[12].documentType.code,
+                educationDoc[2]
+              );
+              formData.append(
+                documentSpecs[13].documentType.code,
+                educationDoc[3]
+              );
+              formData.append(
+                documentSpecs[14].documentType.code,
+                educationDoc[4]
+              );
+            }
+            formData.append(documentSpecs[15].documentType.code, supportLetter);
+            formData.append(documentSpecs[16].documentType.code, herqa);
+            formData.append(documentSpecs[17].documentType.code, letterfromOrg);
+            formData.append(
+              documentSpecs[18].documentType.code,
+              renewedLicense
             );
             formData.append(
-              documentSpecs[7].documentType.code,
-              professionalDoc[1]
+              documentSpecs[19].documentType.code,
+              professionalLicense
             );
-            formData.append(
-              documentSpecs[8].documentType.code,
-              professionalDoc[2]
-            );
-          }
-          formData.append(documentSpecs[9].documentType.code, coc);
-          if (educationDoc != undefined) {
-            formData.append(
-              documentSpecs[10].documentType.code,
-              educationDoc[0]
-            );
-            formData.append(
-              documentSpecs[11].documentType.code,
-              educationDoc[1]
-            );
-            formData.append(
-              documentSpecs[12].documentType.code,
-              educationDoc[2]
-            );
-            formData.append(
-              documentSpecs[13].documentType.code,
-              educationDoc[3]
-            );
-            formData.append(
-              documentSpecs[14].documentType.code,
-              educationDoc[4]
-            );
-          }
-          formData.append(documentSpecs[15].documentType.code, supportLetter);
-          formData.append(documentSpecs[16].documentType.code, herqa);
-          formData.append(documentSpecs[17].documentType.code, letterfromOrg);
-          formData.append(documentSpecs[18].documentType.code, renewedLicense);
-          formData.append(
-            documentSpecs[19].documentType.code,
-            professionalLicense
-          );
 
-          let payload = { document: formData, id: licenseId };
-          store
-            .dispatch("newlicense/uploadDocuments", payload)
-            .then((res) => {
-              if (res) {
-                message.value.showFlash = !message.value.showFlash;
-                setTimeout(() => {}, 2200);
-                router.push({ path: "/menu" });
-                message.value.showLoading = false;
-              } else {
-                messsage.value.showErrorFlash = !message.value.showErrorFlash;
-              }
-            })
-            .catch((err) => {});
+            let payload = { document: formData, id: licenseId };
+            store
+              .dispatch("newlicense/uploadDocuments", payload)
+              .then((res) => {
+                if (res.status == 200) {
+                  message.value.showFlash = !message.value.showFlash;
+                  message.value.showLoading = false;
+                  setTimeout(() => {}, 1500);
+                  router.push({ path: "/menu" });
+                } else {
+                  message.value.showErrorFlash = !message.value.showErrorFlash;
+                }
+              })
+              .catch((err) => {});
+          }
         });
       }
     };
+
     const withdraw = (action) => {
+      message.value.showLoading = !message.value.showLoading;
       let withdrawObj = {
         action: action,
         data: draftData,
@@ -392,7 +377,6 @@ export default {
         licenseId: draftData.id,
         withdrawData: withdrawObj,
       };
-      message.value.showLoading = true;
       store.dispatch("newlicense/withdraw", payload).then((res) => {
         if (res) {
           message.value.showFlash = !message.value.showFlash;
@@ -400,7 +384,7 @@ export default {
           setTimeout(() => {}, 1800);
           router.push({ path: "/menu" });
         } else {
-          showErrorFlash.value = !showErrorFlash.value;
+          message.value.showErrorFlash = !message.value.showErrorFlash;
         }
       });
     };

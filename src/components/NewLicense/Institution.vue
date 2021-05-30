@@ -60,8 +60,19 @@
           <button @click="submit">
             Next
           </button>
-          <button @click="draft(this.buttons[1].action)" variant="outline">
+          <button
+            v-if="this.buttons.length < 3"
+            @click="draft(this.buttons[1].action)"
+            variant="outline"
+          >
             {{ this.buttons[1]["name"] }}
+          </button>
+          <button
+            v-if="this.buttons.length > 2"
+            @click="draft(this.buttons[0].action)"
+            variant="outline"
+          >
+            {{ this.buttons[0]["name"] }}
           </button>
           <button
             class="withdraw"
@@ -145,19 +156,50 @@ export default {
 
   methods: {
     draft(action) {
+      this.showLoading = true;
       let license = {
-        action: action,
         data: {
-          applicantId: this.licenseInfo.applicantId,
-          applicantTypeId: this.licenseInfo.applicantTypeId,
-          education: {
-            departmentId: this.licenseInfo.education.departmentId,
-            institutionId: this.licenseInfo.education.institutionId,
+          action: action,
+          data: {
+            applicantId: this.licenseInfo.applicantId,
+            applicantTypeId: this.licenseInfo.applicantTypeId,
+            education: {
+              departmentId: this.licenseInfo.education.departmentId,
+              institutionId: this.licenseInfo.education.institutionId,
+            },
           },
         },
+        id: this.draftId,
       };
+
+      if (this.draftId != undefined) {
+        this.$store
+          .dispatch("newlicense/editNewLicense", license)
+          .then((res) => {
+            if (res.data.status == "Success") {
+              this.showFlash = true;
+              this.showLoading = false;
+              setTimeout(() => {}, 1500);
+              this.$router.push({ path: "/menu" });
+            } else {
+              this.showErrorFlash = true;
+            }
+          });
+      } else {
+        this.$store
+          .dispatch("newlicense/addNewLicense", license.data)
+          .then((res) => {
+            if (res.data.status == "Success") {
+              this.showFlash = true;
+              this.showLoading = false;
+              setTimeout(() => {}, 1500);
+              this.$router.push({ path: "/menu" });
+            }
+          });
+      }
     },
     withdraw(action) {
+      this.showLoading = true;
       let withdrawObj = {
         action: action,
         data: this.getDraft,
@@ -169,9 +211,10 @@ export default {
       this.$store.dispatch("newlicense/withdraw", payload).then((res) => {
         if (res.data.status == "Success") {
           this.showFlash = true;
+          this.showLoading = false;
           setTimeout(() => {
             this.$router.push({ path: "/menu" });
-          }, 3000);
+          }, 1500);
         } else {
           this.showErrorFlash = true;
         }

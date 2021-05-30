@@ -118,7 +118,6 @@ export default {
           const userId = res.data.data.id;
           store.dispatch("profile/getProfileByUserId", userId).then((res) => {
             const getProfiles = res.data ? res.data.data : null;
-            console.log(getProfiles);
             if (getProfiles) {
               message.value.showLoading = false;
               message.value.showFlash = true;
@@ -140,7 +139,7 @@ export default {
           message.value.showFlash = false;
           message.value.showErrorFlash = true;
 
-          setTimeout(() => {}, 1800);
+          setTimeout(() => {}, 1500);
         }
       });
     };
