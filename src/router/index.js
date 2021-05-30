@@ -67,6 +67,11 @@ const routes = [
     component: () => import("../views/ApprovedPayment.vue"),
   },
   {
+    path: "/declinedPayment",
+    name: "DeclinedPayment",
+    component: () => import("../views/DeclinedPayment.vue"),
+  },
+  {
     path: "/newlicense",
     name: "NewLicense",
     component: () => import("../components/NewLicense/NewLicense.vue"),
@@ -143,7 +148,8 @@ const routes = [
     component: () => import("../components/Reviewer/CertifiedUsers.vue"),
   },
   {
-    path: "/admin/certifiedUsersDetail/:applicationType/:applicationId/:applicantId",
+    path:
+      "/admin/certifiedUsersDetail/:applicationType/:applicationId/:applicantId",
     name: "certifiedUsersDetail",
     component: () =>
       import("../components/Reviewer/Detail/CertifiedUsersDetail.vue"),
@@ -159,11 +165,9 @@ const routes = [
     component: () => import("../components/Reviewer/AllPendingPayments.vue"),
   },
   {
-    path:
-      "/admin/pendingDetail/:applicationType/:applicationId/:applicantId",
+    path: "/admin/pendingDetail/:applicationType/:applicationId/:applicantId",
     name: "pendingDetail",
-    component: () =>
-      import("../components/Reviewer/Detail/PendingDetail.vue"),
+    component: () => import("../components/Reviewer/Detail/PendingDetail.vue"),
   },
   {
     path: "/admin/evaluate/:applicationType/:applicationId",
@@ -173,18 +177,13 @@ const routes = [
   {
     path: "/admin/evaluatePayment/:applicationType/:applicationId",
     name: "evaluatePayment",
-    component: () => import("../components/Reviewer/EvaluatePayment.vue")
+    component: () => import("../components/Reviewer/EvaluatePayment.vue"),
   },
   {
     path: "/draft",
     name: "Draft",
     component: () => import("../views/Draft.vue"),
   },
-  // {
-  //   path: "/servicefee",
-  //   name: "ServiceFee",
-  //   component: () => import("../views/ServiceFee.vue"),
-  // },
   {
     path: "/admin/detail/:applicationType/:applicationId/:applicantId",
     name: "detail",

@@ -127,7 +127,7 @@
       </nav>
     </header>
     <div v-if="this.searched">
-      <div class="bg-lightBlueB-200 h-full">
+      <div class="bg-lightBlueB-200 h-screen">
         <div class="flex pl-12 pt-medium">
           <Title message="Search Result" />
         </div>
