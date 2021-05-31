@@ -37,16 +37,20 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 5">
+                <CPD :activeState="5" @changeActiveState="activeState++" /></div
+            ></transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 6">
                 <WorkExperience
-                  :activeState="5"
+                  :activeState="6"
                   @changeActiveState="activeState++"
                 />
               </div>
             </transition>
             <transition name="fade" mode="out-in">
-              <div v-if="this.activeState == 6">
+              <div v-if="this.activeState == 7">
                 <LicenseSummary
-                  :activeState="6"
+                  :activeState="7"
                   @changeActiveState="activeState++"
                 />
               </div>
@@ -71,16 +75,21 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 6">
+                <CPD :activeState="6" @changeActiveState="activeState++" />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 7">
                 <WorkExperience
-                  :activeState="6"
+                  :activeState="7"
                   @changeActiveState="activeState++"
                 />
               </div>
             </transition>
             <transition name="fade" mode="out-in">
-              <div v-if="this.activeState == 7">
+              <div v-if="this.activeState == 8">
                 <LicenseSummary
-                  :activeState="7"
+                  :activeState="8"
                   @changeActiveState="activeState++"
                 />
               </div>
