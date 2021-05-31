@@ -67,51 +67,7 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 5">
-                <ForeignerServiceFee
-                  :activeState="5"
-                  @changeActiveState="activeState++"
-                />
-              </div>
-            </transition>
-            <transition name="fade" mode="out-in">
-              <div v-if="this.activeState == 6">
                 <PreviousLicenseF
-                  :activeState="6"
-                  @changeActiveState="activeState++"
-                />
-              </div>
-            </transition>
-            <transition name="fade" mode="out-in">
-              <div v-if="this.activeState == 7">
-                <CPD :activeState="7" @changeActiveState="activeState++" />
-              </div>
-            </transition>
-            <transition name="fade" mode="out-in">
-              <div v-if="this.activeState == 8">
-                <WorkExperience
-                  :activeState="8"
-                  @changeActiveState="activeState++"
-                />
-              </div>
-            </transition>
-            <transition name="fade" mode="out-in">
-              <div v-if="this.activeState == 9">
-                <LicenseSummary
-                  :activeState="9"
-                  @changeActiveState="activeState++"
-                />
-              </div>
-            </transition>
-          </div>
-          <div v-if="this.applicantType == 3">
-            <transition name="fade" mode="out-in">
-              <div v-if="this.activeState == 4">
-                <CPD :activeState="4" @changeActiveState="activeState++" />
-              </div>
-            </transition>
-            <transition name="fade" mode="out-in">
-              <div v-if="this.activeState == 5">
-                <AbroadServiceFee
                   :activeState="5"
                   @changeActiveState="activeState++"
                 />
@@ -119,10 +75,7 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 6">
-                <PreviousLicenseE
-                  :activeState="6"
-                  @changeActiveState="activeState++"
-                />
+                <CPD :activeState="6" @changeActiveState="activeState++" />
               </div>
             </transition>
             <transition name="fade" mode="out-in">
@@ -142,6 +95,37 @@
               </div>
             </transition>
           </div>
+          <div v-if="this.applicantType == 3">
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 4">
+                <CPD :activeState="4" @changeActiveState="activeState++" />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 5">
+                <PreviousLicenseE
+                  :activeState="5"
+                  @changeActiveState="activeState++"
+                />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 6">
+                <WorkExperience
+                  :activeState="6"
+                  @changeActiveState="activeState++"
+                />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 7">
+                <LicenseSummary
+                  :activeState="7"
+                  @changeActiveState="activeState++"
+                />
+              </div>
+            </transition>
+          </div>
         </div>
       </div>
     </div>
@@ -154,8 +138,6 @@ import Photo from "./Photo.vue";
 import HealthExamCert from "./HealthExamCert.vue";
 import WorkExperience from "./WorkExperience.vue";
 import LicenseSummary from "./RenewalSummary.vue";
-import AbroadServiceFee from "./Ethiopians F/AbroadServiceFee.vue";
-import ForeignerServiceFee from "./Foreigner/ForeignerServiceFee";
 import LetterFromInstitution from "./Foreigner/LetterFromHiringManager";
 import CPD from "./Ethiopians F/CPD.vue";
 import PreviousLicenseE from "./Ethiopians F/PreviousLicenseE";

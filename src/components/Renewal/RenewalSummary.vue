@@ -334,7 +334,6 @@ export default {
     this.previousLicense = this.getPreviousLicense;
     this.workExperience = this.getWorkExperience;
     this.cpd = this.getCpd;
-    this.workExperience = this.getWorkExperience;
 
     this.buttons = this.getButtons;
     this.fetchProfileInfo();
@@ -422,7 +421,6 @@ export default {
       this.docs.push(this.coc);
       this.docs.push(this.educationalDoc);
       this.docs.push(this.workExperience);
-      this.docs.push(this.serviceFeeFile);
     },
 
     getDocumentSpecs() {
@@ -463,10 +461,7 @@ export default {
                 this.documentTypes[2].documentType.code,
                 this.healthExamCert
               );
-              formData.append(
-                this.documentTypes[3].documentType.code,
-                this.serviceFee
-              );
+
               formData.append(
                 this.documentTypes[4].documentType.code,
                 this.cpd
@@ -503,10 +498,7 @@ export default {
           this.documentTypes[2].documentType.code,
           this.healthExamCert
         );
-        formData.append(
-          this.documentTypes[3].documentType.code,
-          this.serviceFee
-        );
+
         formData.append(this.documentTypes[4].documentType.code, this.cpd);
         formData.append(
           this.documentTypes[5].documentType.code,
@@ -580,10 +572,7 @@ export default {
                 this.documentTypes[2].documentType.code,
                 this.healthExamCert
               );
-              formData.append(
-                this.documentTypes[3].documentType.code,
-                this.serviceFee
-              );
+
               formData.append(
                 this.documentTypes[4].documentType.code,
                 this.cpd
@@ -620,10 +609,7 @@ export default {
           this.documentTypes[2].documentType.code,
           this.healthExamCert
         );
-        formData.append(
-          this.documentTypes[3].documentType.code,
-          this.serviceFee
-        );
+
         formData.append(this.documentTypes[4].documentType.code, this.cpd);
         formData.append(
           this.documentTypes[5].documentType.code,
