@@ -49,7 +49,11 @@
                     : "-"
                 }}</b>
               </h4>
-              <br />
+              <span
+                  class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                >
+                  {{ item.applicationType ? item.applicationType : "-" }}
+              </span>
               <span
                 class="text-lightBlueB-500 mt-tiny flex justify-start content-center">
                   On {{item.createdAt ? moment(item.certifiedDate).format("MMM Do YY") : '-'}}

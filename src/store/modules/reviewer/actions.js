@@ -145,6 +145,7 @@ export default {
       try {
         const respAll = await ApiService.get(baseUrl + "/applications/assignedToAll")
         // if(respAll.data.status === "error")
+        console.log("all data is sss", respAll)
         const resp = respAll.data.data.filter(function(e) {
           return e.reviewerId === null ? '' : e.reviewerId !== adminId
         })
@@ -676,6 +677,62 @@ export default {
       return error;
     }
   },
+
+  async transferLicenseReview({commit}, transfer) {
+    try {
+      const resp = await ApiService.post(
+        baseUrl + "/licenseReviewers/transfer",
+        transfer
+      );
+      console.log("transfered license is ", resp)
+      return resp;
+    } catch(error) {
+      console.log("error found while transfering task", error)
+      return error;
+    }
+  },
+
+  async transferVerificationReview({commit}, transfer) {
+    try {
+      const resp = await ApiService.post(
+        baseUrl + "/verificationReviewers/transfer",
+        transfer
+      );
+      console.log("transfered verification is ", resp)
+      return resp;
+    } catch(error) {
+      console.log("error found while transfering task", error)
+      return error;
+    }
+  },
+
+  async transferGoodStandingReview({commit}, transfer) {
+    try {
+      const resp = await ApiService.post(
+        baseUrl + "/goodStandingReviewers/transfer",
+        transfer
+      );
+      console.log("transfered good standing is ", resp)
+      return resp;
+    } catch(error) {
+      console.log("error found while transfering task", error)
+      return error;
+    }
+  },
+  async transferRenewalReview({commit}, transfer) {
+    try {
+      const resp = await ApiService.post(
+        baseUrl + "/renewalReviewers/transfer",
+        transfer
+      );
+      console.log("transfered renewal is ", resp)
+      return resp;
+    } catch(error) {
+      console.log("error found while transfering task", error)
+      return error;
+    }
+  },
+
   async getApplication(context, applicationId) {
     try {
       const url = baseUrl + "/newLicenses/" + applicationId;

@@ -880,6 +880,7 @@ export default {
   border-radius: 50%;
   margin-bottom: 1rem;
   width: 120px;
+  height: 120px;
   border-color: steelblue;
   background-color: steelblue;
 }
