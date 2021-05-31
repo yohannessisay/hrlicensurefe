@@ -276,7 +276,6 @@ export default {
       showLoadingApproved.value = true
       showLoadingRejected.value = true
       showLoadingSuperVision.value = true
-      console.log("admin rrole", adminRole, "admin Id", adminId)
       const adminData = [adminRole, adminId]
       store.dispatch("reviewer/getAllRecentlyFinished", adminData).then(res => {
         

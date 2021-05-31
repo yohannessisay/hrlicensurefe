@@ -144,8 +144,6 @@ export default {
     if(adminRole === "SA") {
       try {
         const respAll = await ApiService.get(baseUrl + "/applications/assignedToAll")
-        // if(respAll.data.status === "error")
-        console.log("all data is sss", respAll)
         const resp = respAll.data.data.filter(function(e) {
           return e.reviewerId === null ? '' : e.reviewerId !== adminId
         })
@@ -353,7 +351,6 @@ export default {
                   ? e.applicationStatus.name === "Approve" : ''
                   
         })
-        console.log("admin id is ", adminId)
         const allRejectedUsers = resp.data.data.filter(function(e) {
           return e.reviewerId === null 
                   ? '' : e.reviewerId == adminId 
@@ -473,7 +470,6 @@ export default {
       const certifiedUsers = resp.data.data.filter(function(e) {
         return e.certified == true;
       })
-      console.log("al-ccc", certifiedUsers)
       commit(SET_CERTIFIED_USERS, certifiedUsers)
     } catch(error) {
       const resp = error;
@@ -509,11 +505,9 @@ export default {
   },
 
   getAllPendingPaymentSearched({commit, getters}, searchKey) {
-    console.log("search key", searchKey)
     if(getters.getAllPendingPayment === undefined) {
       return;
     }
-    console.log("comming here?", getters.getAllPendingPayment)
     const searchedVal = getters.getAllPendingPayment.filter(function(e) {
       return e.newLicenseCode === undefined ? '': e.newLicenseCode
         .toLowerCase()
@@ -546,7 +540,6 @@ export default {
     if(getters.getPendingPayments === undefined) {
       return;
     }
-    console.log("mypending", getters.getPendingPayments)
     const searchedVal = getters.getPendingPayments.filter(function(e) {
       return e.newLicenseCode === undefined ? '': e.newLicenseCode
         .toLowerCase()
@@ -684,10 +677,8 @@ export default {
         baseUrl + "/licenseReviewers/transfer",
         transfer
       );
-      console.log("transfered license is ", resp)
       return resp;
     } catch(error) {
-      console.log("error found while transfering task", error)
       return error;
     }
   },
@@ -698,10 +689,8 @@ export default {
         baseUrl + "/verificationReviewers/transfer",
         transfer
       );
-      console.log("transfered verification is ", resp)
       return resp;
     } catch(error) {
-      console.log("error found while transfering task", error)
       return error;
     }
   },
@@ -712,10 +701,8 @@ export default {
         baseUrl + "/goodStandingReviewers/transfer",
         transfer
       );
-      console.log("transfered good standing is ", resp)
       return resp;
     } catch(error) {
-      console.log("error found while transfering task", error)
       return error;
     }
   },
@@ -725,10 +712,8 @@ export default {
         baseUrl + "/renewalReviewers/transfer",
         transfer
       );
-      console.log("transfered renewal is ", resp)
       return resp;
     } catch(error) {
-      console.log("error found while transfering task", error)
       return error;
     }
   },

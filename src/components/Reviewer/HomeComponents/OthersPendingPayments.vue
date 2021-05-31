@@ -78,7 +78,6 @@ export default {
     props: ["othersPendings"],
     name: "OthersPendingPayments",
     setup(props) {
-        console.log("props: ",props)
         let router = useRouter();
 
         const detail = (data, applicationType, applicationId, applicantId) => {

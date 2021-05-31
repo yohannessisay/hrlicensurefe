@@ -532,9 +532,6 @@ export default {
       //     newLicense.value = res.data.data;
       //     buttons.value = res.data.data.applicationStatus.buttons;
       //     docs.value = res.data.data.documents;
-      //     console.log(docs.value);
-      //     console.log(newLicense.value);
-      //     console.log(buttons.value);
       //     if (newLicense.value.applicationStatus.code == "REVDRA") {
       //       rejected.value = newLicense.value.declinedFields;
       //       accepted.value = newLicense.value.acceptedFields;
@@ -546,7 +543,6 @@ export default {
       //         rejected.value.includes(docs.value[index.value - 1].documentTypeCode)
       //       ) {
       //         findDocumentType(documentTypes.value, docs.value[index.value]);
-      //         console.log(documentTypeName.value);
       //       }
       //     }
       //   });
@@ -653,7 +649,6 @@ export default {
         }
       }
       // accepted.value.push(doc.documentTypeCode);
-      // console.log(accepted.value);
       // if (index.value == docs.value.length - 1) {
       //   showButtons.value = true;
       // }
@@ -693,7 +688,6 @@ export default {
       // if (index.value == docs.value.length - 1) {
       //   showButtons.value = true;
       // }
-      // console.log(rejected.value);
     };
 
     const action = actionValue => {

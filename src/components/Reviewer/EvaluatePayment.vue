@@ -187,19 +187,15 @@ export default {
 
     const created = async (applicationType, applicationId) => {
       showLoading.value = true;
-      console.log("app", applicationType, "aid", applicationId);
       applicationTypeName.value = applicationType;
       if (applicationTypeName.value == "New License") {
-        console.log("comming here");
         store
           .dispatch("reviewer/getNewLicenseApplication", applicationId)
           .then((res) => {
             showLoading.value = false;
             responseDatas.value = res.data.data
-            console.log("new license application is ", res.data.data);
             buttons.value = res.data.data.applicationStatus.buttons
             documents.value = res.data.data.documents;
-            console.log("responseDatas",responseDatas.value)
             for (let doc in documents.value) {
               if (documents.value[doc].documentTypeCode == "SF") {
                 SFValue.value = documents.value[doc].documentTypeCode
@@ -214,7 +210,6 @@ export default {
           .then((res) => {
             showLoading.value = false;
             responseDatas.value = res.data.data
-            console.log("good standing application is ", res.data.data);
             buttons.value = res.data.data.applicationStatus.buttons
             documents.value = res.data.data.documents;
             for (let doc in documents.value) {
@@ -231,7 +226,6 @@ export default {
           .then((res) => {
             showLoading.value = false;
             responseDatas.value = res.data.data
-            console.log("verification application is ", res.data.data);
             buttons.value = res.data.data.applicationStatus.buttons
             documents.value = res.data.data.documents;
             for (let doc in documents.value) {
@@ -248,7 +242,6 @@ export default {
           .then((res) => {
             showLoading.value = false;
             responseDatas.value = res.data.data
-            console.log("renewal application is ", res.data.data);
             buttons.value = res.data.data.applicationStatus.buttons
             documents.value = res.data.data.documents;
             for (let doc in documents.value) {
@@ -262,7 +255,6 @@ export default {
     };
 
     const action = (actionValue) => {
-      console.log("action value is ", actionValue)
       
       if(actionValue == "ApprovePaymentEvent") {
         if(responseDatas.value.acceptedFields == null) {
@@ -272,17 +264,14 @@ export default {
         }
         responseDatas.value.certified = true;
         responseDatas.value.certifiedDate = new Date();
-        console.log("accpted field", responseDatas.value)
       } else if(actionValue == "DeclinePaymentEvent") {
         if(responseDatas.value.declinedFields == null) {
           responseDatas.value.declinedFields = [SFValue.value]
         } else {
           responseDatas.value.declinedFields.push(SFValue.value)
         }
-        console.log("declined field", responseDatas.value)
         responseDatas.value.certified = false;
         responseDatas.value.certifiedDate = null;
-        console.log("declined")
       }
 
       let req = {
@@ -295,14 +284,12 @@ export default {
         .then(res => {
           if(res.statusText == "Created") {
             alert("req updated successfully", res.statusText)
-            console.log("req updated successfully", req)
             setTimeout(() => {
               router.push("/admin/review")
             }, 3000)
           } else {
             setTimeout(() => {
               alert("something went wrong", res.statusText)
-              console.log("something went wrong", res)
               router.go();
             }, 3000)
           }

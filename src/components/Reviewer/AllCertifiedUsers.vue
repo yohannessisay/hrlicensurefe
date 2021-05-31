@@ -122,7 +122,6 @@ export default {
         showLoading.value = false;
         allCertified.value =
           store.getters["reviewer/getAllCertifiedUsersSearched"];
-          console.log("showw", store.getters["reviewer/getAllCertifiedUsersSearched"])
         if(store.getters["reviewer/getAllCertifiedUsersSearched"].length !== 0) {
           for (var prop in store.getters["reviewer/getAllCertifiedUsersSearched"]) {
             if (allCertified.value[prop].applicationType == "Renewal") {

@@ -217,11 +217,9 @@ export default {
         .then((res) => {
           showLoading.value = false;
           certifiedUser.value = res.data.data;
-          console.log("cerrr", certifiedUser.value)
           show.value = true;
         }).catch(error => {
           isUserFound.value = false;
-          console.log("error found", error)
         });
     };
 
@@ -240,9 +238,9 @@ export default {
           if(route.params.applicantId != certificateDetail.value.applicantId) {
             isUserCertified.value = false;
           }
-          console.log("data is ", certificateDetail.value)
+          licenseExpireDate.value = moment(certificateDetail.value.certifiedDate)._d;
+          licenseExpireDate.value.setFullYear(licenseExpireDate.value.getFullYear() + 5);
         }).catch(error => {
-          console.log("oops error found",error)
         });
       }
       else if(route.params.applicationType === "Good Standing") {
@@ -257,7 +255,8 @@ export default {
           if(route.params.applicantId != certificateDetail.value.applicantId) {
             isUserCertified.value = false;
           }
-          console.log("data is ", certificateDetail.value)
+          licenseExpireDate.value = moment(certificateDetail.value.certifiedDate)._d;
+          licenseExpireDate.value.setFullYear(licenseExpireDate.value.getFullYear() + 5);
         });
       }
       else if(route.params.applicationType === "New License") {
@@ -272,12 +271,8 @@ export default {
           if(route.params.applicantId != certificateDetail.value.applicantId) {
             isUserCertified.value = false;
           }
-          console.log("data is ", certificateDetail.value)
-          console.log("current date ", new Date())
           licenseExpireDate.value = moment(certificateDetail.value.certifiedDate)._d;
           licenseExpireDate.value.setFullYear(licenseExpireDate.value.getFullYear() + 5);
-          console.log("added date ", licenseExpireDate.value)
-          console.log("certified date ", moment(certificateDetail.value.certifiedDate)._d)
         });
 
       } else if(route.params.applicationType === "Renewal") {
@@ -292,15 +287,14 @@ export default {
           if(route.params.applicantId != certificateDetail.value.applicantId) {
             isUserCertified.value = false;
           }
-          console.log("data is ", certificateDetail.value)
+          licenseExpireDate.value = moment(certificateDetail.value.certifiedDate)._d;
+          licenseExpireDate.value.setFullYear(licenseExpireDate.value.getFullYear() + 5);
         });
       }
       
     };
 
     const downloadPdf = () => {
-      console.log("downloded date: ", moment(certificateDetail.value.certifiedDate).format("MMM D, YYYY"))
-
       const doc = new jsPDF({
         orientation: 'landscape',
         filters: ["ASCIIHexEncode"]

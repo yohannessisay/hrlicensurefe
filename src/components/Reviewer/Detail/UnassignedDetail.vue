@@ -405,7 +405,6 @@ export default {
         store
           .dispatch("reviewer/getGoodStandingApplication", applicationId)
           .then((res) => {
-            console.log("all unass", res.data.data);
             showLoading.value = false;
             license.value = res.data.data;
             show.value = true;

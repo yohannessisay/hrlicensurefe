@@ -111,8 +111,6 @@ export default {
       showLoading.value = true;
       store.dispatch("reviewer/getAssignedToYou", adminId).then(res => {
         showLoading.value = false;
-        // if (res.status != "Error") {
-          console.log("assigned to you val::", store.getters['reviewer/getAssignedToYouSearched'])
           assignedToyou.value = store.getters['reviewer/getAssignedToYouSearched'];
         if(assignedToyou.value.length !== 0) {
           for (var prop in store.getters['reviewer/getAssignedToYouSearched']) {

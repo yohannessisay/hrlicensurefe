@@ -673,7 +673,6 @@ export default {
       showUnfinishedLoading.value = true;
       store.dispatch("reviewer/getUnfinished", adminId).then((res) => {
         showUnfinishedLoading.value = false;
-        console.log("unfinished data is ", store.getters["reviewer/getUnfinishedSearched"])
 
         if (store.getters["reviewer/getUnfinishedSearched"].length !== 0) {
           unfinished.value = store.getters["reviewer/getUnfinishedSearched"];
@@ -686,8 +685,6 @@ export default {
                 ) {
                   unfinished.value[prop].profilePic =
                     unfinished.value[prop].documents[psp].filePath;
-                    console.log("profile pic is", unfinished.value[prop].profilePic)
-                  // store.getters["reviewer/getUnfinishedSearched"]
                   break;
                 }
               }
@@ -822,7 +819,6 @@ export default {
             for (var prop in store.getters[
               "reviewer/getAssignedForEveryOneSearched"
             ]) {
-              console.log("assigned document i s", assignedToEveryone.value[prop].documents)
               if (assignedToEveryone.value[prop].documents !== null) {
                 for (var psp in assignedToEveryone.value[prop].documents) {
                   if (
@@ -831,8 +827,6 @@ export default {
                   ) {
                     assignedToEveryone.value[prop].profilePic =
                       assignedToEveryone.value[prop].documents[psp].filePath;
-                      console.log("file path i s", assignedToEveryone.value[prop].profilePic)
-                    // store.getters["reviewer/getUnfinishedSearched"]
                     break;
                   }
                 }

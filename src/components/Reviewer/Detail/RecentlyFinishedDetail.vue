@@ -382,15 +382,12 @@ export default {
     };
 
     // const created = async id => {
-    //   console.log(id);
     //   store.dispatch("reviewer/getProfile", id).then(res => {
     //     profileInfo.value = res.data.data;
     //     show.value = true;
-    //     console.log(profileInfo.value);
     //   });
     //   store.dispatch("reviewer/getLicense", id).then(res => {
     //     license.value = res.data.data;
-    //     console.log(license.value);
     //     applicantId.value = license.value.applicantId;
     //     applicantTypeId.value = license.value.applicantTypeId;
     //     education.value.departmentName =
