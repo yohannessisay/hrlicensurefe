@@ -17,7 +17,7 @@
           style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2)"
           class="ml-8 mr-8 mb-12"
         >
-          <div class="flex justify-center">
+          <!-- <div class="flex justify-center">
             <div
               style="
                 width: 800px;
@@ -76,17 +76,17 @@
                 ><br>
               </div>
             </div>
-          </div>
+          </div> -->
 
-          <!-- <div class="container">
+          <div class="container">
             <img
               src="../../../assets/certeficate_Background_image.jpg"
               alt="Notebook"
               style="width: 100%"
-            /> -->
-            <!-- <div class="content"> -->
-            <!-- </div> -->
-            <!-- <span id="main">
+            />
+            <div class="content">
+            </div>
+            <span id="main">
             <div class="flex-container">
               <div><h4><b>No Photo<br/> Available</b></h4></div>
               <div class="inner-flex">
@@ -146,7 +146,7 @@
 
             </div>
             </span> 
-          </div> -->
+          </div>
         </div>
       </div>
       </span>
@@ -175,11 +175,15 @@ import Spinner from "@/sharedComponents/Spinner";
 
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+import backgroundImage from "../../../assets/certificate_background.jpg";
+import certifiedUserImage from "../../../assets/certified_user.jpg";
+import AmharicFont from "../Configurations/amharicFont.js";
 
 import moment from "moment";
 export default {
   computed: {
     moment: () => moment,
+    AmharicFont: () => AmharicFont,
     // getCertifiedUser() {
     //   return store.getters['reviewer/getUnassigned'][0]
     // }
@@ -207,6 +211,7 @@ export default {
         .then((res) => {
           showLoading.value = false;
           certifiedUser.value = res.data.data;
+          console.log("cerrr", certifiedUser.value)
           show.value = true;
         }).catch(error => {
           isUserFound.value = false;
@@ -290,14 +295,120 @@ export default {
       //   doc.addImage(imageData, 'PNG', 10, 10)
       //   doc.save('certi-1.pdf')
       // })
-      window.html2canvas = html2canvas;
-      var doc = new jsPDF("p", "pt", "a3");
-      doc.html(document.querySelector("#main"), {
-        callback: function (pdf) {
-          console.log("start downloading", pdf);
-          pdf.save("certeficate.pdf");
-        },
+      // window.html2canvas = html2canvas;
+      // var doc = new jsPDF("p", "pt", "a3");
+      // doc.html(document.querySelector("#main"), {
+      //   callback: function (pdf) {
+      //     console.log("start downloading", pdf);
+      //     pdf.save("certeficate.pdf");
+      //   },
+      // });
+
+
+    
+
+  
+
+      const doc = new jsPDF({
+        orientation: 'landscape',
+        filters: ["ASCIIHexEncode"]
       });
+      
+
+      
+      
+      doc.addImage(backgroundImage, 'JPG', 0, 0, 430, 220, undefined, 'FAST')
+      doc.addImage(certifiedUserImage, 'JPG', 5, 5, 20, 30)
+      doc.setFontSize(25)
+      // doc.addFileToVFS("Amiri-Regular.ttf", AmiriRegular);
+      doc.addFileToVFS("Tera-Regular-normal.ttf", AmharicFont);
+      
+      doc.addFont('Tera-Regular-normal.ttf', 'Tera-Regular', 'normal');
+
+      
+      // doc.text(100, 60, ["إذا لم تستح فاصنع ما شئت", "إذا لم تستح فاصنع ما شئت"], {lang: 'ar', align: 'right'});
+      // doc.text(100, 20, 'በኢትዮፕያ ፌደራላዊ ዴሞክራሲያዊ ሪፐብሊክ', {lang: 'amh', align: 'right'})
+      // doc.setFontStyle('bold')
+      doc.text(80, 22, 'Federal Democratic Republic Ethiopia')
+      doc.setFontSize(17)
+      // doc.setFontStyle('normal')
+      doc.text(110, 50, 'MINSTRY OF HEALTH')
+
+      doc.text(150, 60, 'HEALTH PROFFESSIONALS REGISTRATION AND')
+      doc.text(190, 70, 'LICENSING CERTIFICATE')
+
+      doc.setFontSize(15)
+      doc.text(150, 90, 'Under the Federal Democratic Republic of Ethiopia the Ministry')
+      doc.text(150, 100, 'of Health by virtue of Proclamation No.916/2015 Article 33(13)')
+      doc.text(190, 110, 'is given the authority to issue')
+
+      doc.setFontSize(17)
+      doc.text(190, 130, `${certifiedUser.value.name} ${certifiedUser.value.fatherName} ${certifiedUser.value.grandFatherName ? certifiedUser.value.grandFatherName : ''}`)
+      doc.text(60, 130, `${certifiedUser.value.name} ${certifiedUser.value.fatherName} ${certifiedUser.value.grandFatherName ? certifiedUser.value.grandFatherName : ''}`)
+      doc.setFontSize(15)
+      doc.text(155, 140, 'Having duly satisfied the requirements of the Ministry')
+      doc.text(180, 147, 'hereby registered and licensed as')
+      doc.setFontSize(17)
+      doc.text(200, 160, 'Junior')
+      doc.text(190, 170, 'DENTAL SURGON')
+      doc.text(160, 180, 'This license is valid: Mar 12, 2021 - Mar 11, 2026')
+      doc.setFontSize(7)
+      doc.text(150, 200, 'Signature of the Authorized Personel')
+      doc.text(150, 203, 'Date: ' + moment(new Date()).format("MMM DD, YYYY"))
+      doc.text(200, 200, 'NB:- This Certificate')
+      doc.text(200, 203, '1. Shall be renewed every five years.')
+      doc.text(200, 206, '2. Unlawful if it is found being used by another person.')
+      doc.text(200, 209, '3. The holder is required to notify as soon as the certificate is lost or missed.')
+
+      // doc.text(100, 30, 'የጤና ጥበቃ ሚኒስቴር')
+      // doc.setFontSize(15)
+      // doc.text(100, 35, 'Ministry of Health')
+      doc.setFont("Tera-Regular"); // set font
+      doc.setFontSize(25);
+      doc.text(90, 10, "በኢትዮፕያ ፌደራላዊ ዴሞክራሲያዊ ሪፐብሊክ")
+      doc.setFontSize(20)
+      doc.text(115, 40, "የጤና ጥበቃ ሚኒስቴር")
+      doc.setFontSize(17)
+      doc.text(20, 60, "የጤና ባለሙያዎች የሙያ ምዝገባና ፈቃድ የምስከር ወረቀት")
+
+      doc.setFontSize(15)
+      doc.text(20, 90, "በኢትዮጵያ ፌዴራላዊ ዴሞክራሲያዊ ረፐብሊክ የጤና ጥበቃ ሚንስቴር")
+      doc.text(20, 100, "በአዋጅ ቁጥር 916/2008 አንቀጽ 33(13)በተሰጠው ስልጣን መሰረት")
+
+      doc.setFontSize(17)
+      
+      doc.setFontSize(15)
+      doc.text(20, 140, "ተገቢውን መስፈርት አሟልተው ስለተገኙ ሚኒስቴር መስሪያ ቤቱ")
+      doc.setFontSize(17)
+      doc.text(65, 150, "ጁኒየር")
+      doc.text(55, 160, "ጀነራልሜዲካል ፕራክቲሽነር")
+      doc.text(40, 170, "ሙያ መዝግቦ ይህን የሙያ ስራ ፈቃድ ሰጥቷል።")
+      doc.text(15, 180, "ይህ የሙያ የስራ ፈቃድ የሚያገለግለው 17/08/2013-19/08/2018")
+      doc.setFontSize(10)
+      doc.text(10, 200, "የኃላፊ ፊርማ")
+      doc.text(10, 203, "ቀን: " + moment(new Date()).format("MMM DD, YYYY"))
+      doc.text(35, 200, "ማሳሰቢያ ይህ የምስክር ወረቀት")
+      doc.text(35, 203, "1. በየአምስት አመቱ መታደስ አለበት።")
+      doc.text(35, 206, "2. ሰምና ፎቶግራፍ ከተገለጸው ሰው በስተቀር ሌላ አካል ሊገለገልበት አይገባም።")
+      doc.text(35, 209, "3. በማንኛውም ምክንኛት ቢጠፋ የማሳወቅ ግዴታ አላብዎ።")
+
+
+      // add underline here
+      doc.setLineWidth(0.3)
+      doc.line(20, 63, 140, 63)
+      doc.line(150, 63, 290, 63)
+      doc.line(190, 73, 265, 73)
+      doc.line(50, 133, 120, 133)
+      doc.line(180, 133, 260, 133)
+
+      doc.line(5, 195, 100, 195)
+      doc.line(170, 195, 265, 195)
+      doc.line(35, 200, 45, 200)
+
+
+      
+      window.open(doc.output('bloburl'))
+
     };
     onMounted(() => {
       fetchCertifiedUser();
