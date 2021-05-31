@@ -75,21 +75,29 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 6">
-                <CPD :activeState="6" @changeActiveState="activeState++" />
-              </div>
-            </transition>
-            <transition name="fade" mode="out-in">
-              <div v-if="this.activeState == 7">
-                <WorkExperience
-                  :activeState="7"
+                <PreviousLicenseF
+                  :activeState="6"
                   @changeActiveState="activeState++"
                 />
               </div>
             </transition>
             <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 7">
+                <CPD :activeState="7" @changeActiveState="activeState++" />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 8">
-                <LicenseSummary
+                <WorkExperience
                   :activeState="8"
+                  @changeActiveState="activeState++"
+                />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 9">
+                <LicenseSummary
+                  :activeState="9"
                   @changeActiveState="activeState++"
                 />
               </div>
@@ -152,6 +160,7 @@ import LetterFromInstitution from "./Foreigner/LetterFromHiringManager";
 import CPD from "./Ethiopians F/CPD.vue";
 import PreviousLicenseE from "./Ethiopians F/PreviousLicenseE";
 import PreviousLicenseL from "./Ethiopians L/PreviousLicenseL";
+import PreviousLicenseF from "./Foreigner/PreviousLicenseF";
 
 export default {
   created() {
@@ -188,6 +197,7 @@ export default {
     WorkExperience,
     PreviousLicenseE,
     PreviousLicenseL,
+    PreviousLicenseF,
   },
   methods: {
     applicantTypeSet: function(params) {
