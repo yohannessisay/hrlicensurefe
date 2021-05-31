@@ -23,6 +23,9 @@
           message="Letter from Hiring Institution"
           class="mt-8"
         />
+        <span class="flex justify-center mt-2"
+          >Request Letter from Federal or Regional</span
+        >
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
           <div class="flex justify-center">
             <div>
@@ -251,7 +254,8 @@ export default {
                       setTimeout(() => {}, 1500);
                       router.push({ path: "/menu" });
                     } else {
-                      message.value.showErrorFlash = !message.value.showErrorFlash;
+                      message.value.showErrorFlash = !message.value
+                        .showErrorFlash;
                     }
                   })
                   .catch((err) => {});
@@ -313,7 +317,8 @@ export default {
                     setTimeout(() => {}, 1500);
                     router.push({ path: "/menu" });
                   } else {
-                    message.value.showErrorFlash = !message.value.showErrorFlash;
+                    message.value.showErrorFlash = !message.value
+                      .showErrorFlash;
                   }
                 })
                 .catch((err) => {});
