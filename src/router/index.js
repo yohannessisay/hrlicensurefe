@@ -14,7 +14,7 @@ const routes = [
   {
     path: "/addProfile",
     name: "NewProfile",
-    component: () => import("../components/profile/NewProfile.vue"),
+    component: () => import("../components/Profile/NewProfile.vue"),
   },
   {
     path: "/signup",

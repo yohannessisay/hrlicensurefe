@@ -102,7 +102,7 @@
       </div>
       <div class="mt-12 flex justify-center mb-medium">
         <div>
-          <button v-on:click="submit()">Submit Request</button>
+          <button v-on:click="submit()">Save Profile</button>
         </div>
       </div>
       <div

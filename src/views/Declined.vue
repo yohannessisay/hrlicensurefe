@@ -439,7 +439,7 @@
         <div class="flex pl-12 pt-medium">
           <Title message="Good Standing Declined Applications" />
         </div>
-        <div v-if="this.goodstanding.length == 0" class="flex pl-12 ml-6">
+        <div v-if="this.goodstanding.length == 0" class="flex pl-12 ml-6 h-screen">
           <h4>Nothing to Show.</h4>
         </div>
         <div
