@@ -65,7 +65,9 @@
           <label class="ml-8"> Date of Birth</label>
           <h5 class="ml-8">
             {{
-              this.profileInfo.dateOfBirth ? this.profileInfo.dateOfBirth : "-"
+              this.profileInfo.dateOfBirth
+                ? moment(this.profileInfo.dateOfBirth).format("MMM D, YYYY")
+                : "-"
             }}
           </h5>
         </div>
@@ -307,6 +309,7 @@ import { mapGetters } from "vuex";
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import Spinner from "@/sharedComponents/Spinner";
+import moment from "moment";
 
 export default {
   props: ["activeState"],
@@ -395,6 +398,9 @@ export default {
     }),
   },
   methods: {
+    moment: function(date) {
+      return moment(date);
+    },
     fetchProfileInfo() {
       this.showLoading2 = true;
       this.$store.dispatch("renewal/getProfile", this.userId).then((res) => {

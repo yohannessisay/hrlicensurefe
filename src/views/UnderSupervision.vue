@@ -209,7 +209,9 @@
                     "
                   >
                     {{
-                      item.createdAt ? moment(item.createdAt).fromNow() : "-"
+                      item.createdAt
+                        ? moment(item.createdAt).format("MMM D, YYYY")
+                        : "-"
                     }}
                   </span>
                 </div>
@@ -281,7 +283,9 @@
                     "
                     >
                       {{
-                        item.createdAt ? moment(item.createdAt).fromNow() : "-"
+                        item.createdAt
+                          ? moment(item.createdAt).format("MMM D, YYYY")
+                          : "-"
                       }}
                     </span>
                   </div>
@@ -350,7 +354,9 @@
                     "
                     >
                       {{
-                        item.createdAt ? moment(item.createdAt).fromNow() : "-"
+                        item.createdAt
+                          ? moment(item.createdAt).format("MMM D, YYYY")
+                          : "-"
                       }}
                     </span>
                   </div>
@@ -425,7 +431,9 @@
                     "
                     >
                       {{
-                        item.createdAt ? moment(item.createdAt).fromNow() : "-"
+                        item.createdAt
+                          ? moment(item.createdAt).format("MMM D, YYYY")
+                          : "-"
                       }}
                     </span>
                   </div>
@@ -500,7 +508,9 @@
                     "
                     >
                       {{
-                        item.createdAt ? moment(item.createdAt).fromNow() : "-"
+                        item.createdAt
+                          ? moment(item.createdAt).format("MMM D, YYYY")
+                          : "-"
                       }}
                     </span>
                   </div>
@@ -556,8 +566,8 @@ export default {
     }
   },
   methods: {
-    moment: function() {
-      return moment();
+    moment: function(date) {
+      return moment(date);
     },
     logout() {
       localStorage.removeItem("token");
