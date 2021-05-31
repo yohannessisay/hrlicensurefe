@@ -208,9 +208,7 @@
                     "
                   >
                     {{
-                      item.createdAt
-                        ? moment(item.createdAt).format("MMM D, YYYY")
-                        : "-"
+                      item.createdAt ? moment(item.createdAt).fromNow() : "-"
                     }}
                   </span>
                 </div>
@@ -279,9 +277,7 @@
                     "
                   >
                     {{
-                      item.createdAt
-                        ? moment(item.createdAt).format("MMM D, YYYY")
-                        : "-"
+                      item.createdAt ? moment(item.createdAt).fromNow() : "-"
                     }}
                   </span>
                 </div>
@@ -348,9 +344,7 @@
                     "
                   >
                     {{
-                      item.createdAt
-                        ? moment(item.createdAt).format("MMM D, YYYY")
-                        : "-"
+                      item.createdAt ? moment(item.createdAt).fromNow() : "-"
                     }}
                   </span>
                 </div>
@@ -421,9 +415,7 @@
                     "
                   >
                     {{
-                      item.createdAt
-                        ? moment(item.createdAt).format("MMM D, YYYY")
-                        : "-"
+                      item.createdAt ? moment(item.createdAt).fromNow() : "-"
                     }}
                   </span>
                 </div>
@@ -494,9 +486,7 @@
                     "
                   >
                     {{
-                      item.createdAt
-                        ? moment(item.createdAt).format("MMM D, YYYY")
-                        : "-"
+                      item.createdAt ? moment(item.createdAt).fromNow() : "-"
                     }}
                   </span>
                 </div>
