@@ -35,8 +35,15 @@
         </div>
         <div>
           <label class="ml-8 text-primary-300"> Date of Birth</label>
-          <h5 class="ml-8">{{ personalInfo.dateOfBirth }}</h5>
+          <h5 class="ml-8">
+            {{
+              profileInfo.dateOfBirth
+                ? moment(profileInfo.dateOfBirth).format("MMM D, YYYY")
+                : "-"
+            }}
+          </h5>
         </div>
+
         <div>
           <label class="ml-8 text-primary-300"> Marital Status</label>
           <h5 class="ml-8">{{ personalInfo.maritalStatus }}</h5>
@@ -95,7 +102,7 @@
       </div>
       <div class="mt-12 flex justify-center mb-medium">
         <div>
-          <button v-on:click="submit()">Submit Request</button>
+          <button v-on:click="submit()">Save Profile</button>
         </div>
       </div>
       <div
@@ -123,8 +130,13 @@ import Title from "@/sharedComponents/TitleWithIllustration";
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import Spinner from "@/sharedComponents/Spinner";
+import moment from "moment";
+
 export default {
   components: { Title, FlashMessage, ErrorFlashMessage, Spinner },
+  computed: {
+    moment: () => moment,
+  },
   setup() {
     const store = useStore();
     const router = useRouter();

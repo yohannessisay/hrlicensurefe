@@ -154,7 +154,6 @@ export default {
     let workExperience = ref("");
     let renewalPhoto = ref("");
     let healthExamCert = ref("");
-    let serviceFee = ref("");
     let cpd = ref("");
     let previousLicense = ref("");
 
@@ -197,7 +196,6 @@ export default {
     renewalPhoto = store.getters["renewal/getRenewalPhoto"];
     healthExamCert = store.getters["renewal/getRenewalHealthExamCert"];
     workExperience = store.getters["renewal/getRenewalWorkExperience"];
-    serviceFee = store.getters["renewal/getRenewalServiceFee"];
     cpd = store.getters["renewal/getRenewalCpd"];
     previousLicense = store.getters["renewal/getPreviousLicense"];
 
@@ -308,7 +306,6 @@ export default {
               letterFile.value
             );
             formData.append(documentSpecs[2].documentType.code, healthExamCert);
-            formData.append(documentSpecs[3].documentType.code, serviceFee);
             formData.append(documentSpecs[4].documentType.code, cpd);
             formData.append(documentSpecs[5].documentType.code, workExperience);
             formData.append(

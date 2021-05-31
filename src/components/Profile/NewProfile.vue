@@ -90,10 +90,10 @@
 <script>
 // @ is an alias to /src
 import Navigation from "@/views/Navigation";
-import PersonalInfo from "@/components/profile/PersonalInfo.vue";
-import AddressInfo from "@/components/profile/AddressInfo.vue";
-import ContactInfo from "@/components/profile/ContactInfo.vue";
-import Preview from "@/components/profile/Preview.vue";
+import PersonalInfo from "@/components/Profile/PersonalInfo.vue";
+import AddressInfo from "@/components/Profile/AddressInfo.vue";
+import ContactInfo from "@/components/Profile/ContactInfo.vue";
+import Preview from "@/components/Profile/Preview.vue";
 
 export default {
   name: "NewProfile",

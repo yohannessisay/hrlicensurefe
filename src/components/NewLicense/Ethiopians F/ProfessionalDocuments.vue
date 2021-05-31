@@ -6,7 +6,7 @@
       >
         <TitleWithIllustration
           illustration="User"
-          message="Professional Documents"
+          message="Authenticated Professional Documents"
           class="mt-8"
         />
 
@@ -153,47 +153,6 @@
               <img :src="transcriptPreview" alt="" class="preview" />
             </span>
           </div>
-          <!-- 
-            <div class="ml-4" style="width:220px">
-              <span v-if="showExperienceUpload">
-                <label class="text-primary-700"
-                  >Upload Work Experience:
-                  <div class="dropbox">
-                    <input
-                      type="file"
-                      id="experienceFile"
-                      ref="experienceFile"
-                      v-on:change="handleExperienceUpload()"
-                      style="margin-bottom: 15px !important;"
-                    />
-                    <p>
-                      Drag your file(s) here to begin<br />
-                      or click to browse
-                    </p>
-                  </div>
-                </label>
-              </span>
-
-              <picture v-if="!showExperienceUpload && isExperienceImage">
-                <p>
-                  <a href="javascript:void(0)" @click="resetExperience()"
-                    >Upload again</a
-                  >
-                </p>
-                <img
-                  v-bind:src="experiencePreview"
-                  v-show="showExperiencePreview"
-                />
-              </picture>
-
-              <span v-if="!showExperienceUpload && !isExperienceImage">
-                <img :src="experiencePreview" alt="" class="preview" />
-              </span>
-
-              <h6 style="margin-top: 15px !important;">
-                Your photo should be passport size
-              </h6>
-            </div> -->
         </div>
         <div class="flex justify-center mb-8">
           <button @click="submit">

@@ -65,7 +65,9 @@
           <label class="ml-8"> Date of Birth</label>
           <h5 class="ml-8">
             {{
-              this.profileInfo.dateOfBirth ? this.profileInfo.dateOfBirth : "-"
+              this.profileInfo.dateOfBirth
+                ? moment(this.profileInfo.dateOfBirth).format("MMM D, YYYY")
+                : "-"
             }}
           </h5>
         </div>
@@ -307,6 +309,7 @@ import { mapGetters } from "vuex";
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import Spinner from "@/sharedComponents/Spinner";
+import moment from "moment";
 
 export default {
   props: ["activeState"],
@@ -331,7 +334,6 @@ export default {
     this.previousLicense = this.getPreviousLicense;
     this.workExperience = this.getWorkExperience;
     this.cpd = this.getCpd;
-    this.workExperience = this.getWorkExperience;
 
     this.buttons = this.getButtons;
     this.fetchProfileInfo();
@@ -395,6 +397,9 @@ export default {
     }),
   },
   methods: {
+    moment: function(date) {
+      return moment(date);
+    },
     fetchProfileInfo() {
       this.showLoading2 = true;
       this.$store.dispatch("renewal/getProfile", this.userId).then((res) => {
@@ -416,7 +421,6 @@ export default {
       this.docs.push(this.coc);
       this.docs.push(this.educationalDoc);
       this.docs.push(this.workExperience);
-      this.docs.push(this.serviceFeeFile);
     },
 
     getDocumentSpecs() {
@@ -457,10 +461,7 @@ export default {
                 this.documentTypes[2].documentType.code,
                 this.healthExamCert
               );
-              formData.append(
-                this.documentTypes[3].documentType.code,
-                this.serviceFee
-              );
+
               formData.append(
                 this.documentTypes[4].documentType.code,
                 this.cpd
@@ -497,10 +498,7 @@ export default {
           this.documentTypes[2].documentType.code,
           this.healthExamCert
         );
-        formData.append(
-          this.documentTypes[3].documentType.code,
-          this.serviceFee
-        );
+
         formData.append(this.documentTypes[4].documentType.code, this.cpd);
         formData.append(
           this.documentTypes[5].documentType.code,
@@ -574,10 +572,7 @@ export default {
                 this.documentTypes[2].documentType.code,
                 this.healthExamCert
               );
-              formData.append(
-                this.documentTypes[3].documentType.code,
-                this.serviceFee
-              );
+
               formData.append(
                 this.documentTypes[4].documentType.code,
                 this.cpd
@@ -614,10 +609,7 @@ export default {
           this.documentTypes[2].documentType.code,
           this.healthExamCert
         );
-        formData.append(
-          this.documentTypes[3].documentType.code,
-          this.serviceFee
-        );
+
         formData.append(this.documentTypes[4].documentType.code, this.cpd);
         formData.append(
           this.documentTypes[5].documentType.code,

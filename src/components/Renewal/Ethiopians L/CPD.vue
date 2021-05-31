@@ -20,7 +20,7 @@
         </h2>
         <TitleWithIllustration
           illustration="Certificate"
-          message="Service Fee(optional)"
+          message="CPD(optional)"
           class="mt-8"
         />
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
@@ -32,9 +32,9 @@
                   <div class="dropbox">
                     <input
                       type="file"
-                      id="serviceFeeFile"
+                      id="cpdFile"
                       class="photoFile"
-                      ref="serviceFeeFileP"
+                      ref="cpdFileP"
                       v-on:change="handleFileUpload()"
                       style="margin-bottom: 15px !important;"
                     />
@@ -131,9 +131,8 @@ export default {
       showLoading: false,
     });
     let dataChanged = ref(false);
-
-    let serviceFeeFile = ref("");
-    let serviceFeeFileP = ref("");
+    let cpdFile = ref("");
+    let cpdFileP = ref("");
     let showPreview = ref(false);
     let filePreview = ref("");
     let showUpload = ref(true);
@@ -156,20 +155,20 @@ export default {
     let healthExamCert = ref("");
     let renewalLetter = ref("");
     let renewalPhoto = ref("");
-    let cpd = ref("");
     let previousLicense = ref("");
 
     const reset = () => {
       showUpload.value = true;
       showPreview.value = false;
-      serviceFeeFile.value = "";
+      cpdFile.value = "";
       filePreview.value = "";
       isImage.value = true;
     };
     const handleFileUpload = () => {
       dataChanged.value = true;
       showUpload.value = false;
-      serviceFeeFile.value = serviceFeeFileP.value.files[0];
+      cpdFile.value = cpdFileP.value.files[0];
+      console.log(cpdFile.value);
       let reader = new FileReader();
 
       reader.addEventListener(
@@ -181,13 +180,13 @@ export default {
         false
       );
 
-      if (serviceFeeFile.value) {
-        if (/\.(jpe?g|png|gif)$/i.test(serviceFeeFile.value.name)) {
+      if (cpdFile.value) {
+        if (/\.(jpe?g|png|gif)$/i.test(cpdFile.value.name)) {
           isImage.value = true;
-          reader.readAsDataURL(serviceFeeFile.value);
-        } else if (/\.(pdf)$/i.test(serviceFeeFile.value.name)) {
+          reader.readAsDataURL(cpdFile.value);
+        } else if (/\.(pdf)$/i.test(cpdFile.value.name)) {
           isImage.value = false;
-          reader.readAsText(serviceFeeFile.value);
+          reader.readAsText(cpdFile.value);
         }
       }
     };
@@ -197,39 +196,40 @@ export default {
 
     healthExamCert = store.getters["renewal/getRenewalHealthExamCert"];
     workExperience = store.getters["renewal/getRenewalWorkExperience"];
-    renewalPhoto = store.getters["renewal/getRenewalPhoto"];
     renewalLetter = store.getters["renewal/getRenewalLicense"];
-    cpd = store.getters["renewal/getRenewalCpd"];
+    renewalLetter = store.getters["renewal/getRenewalLicense"];
     previousLicense = store.getters["renewal/getPreviousLicense"];
 
     const submit = () => {
       emit("changeActiveState");
-      store.dispatch("renewal/setRenewalServiceFee", serviceFeeFile);
+      store.dispatch("renewal/setRenewalCpd", cpdFile);
     };
+
     onMounted(() => {
       declinedFields = store.getters["renewal/getDeclinedFields"];
       acceptedFields = store.getters["renewal/getAcceptedFields"];
       remark = store.getters["renewal/getRemark"];
-      if (declinedFields != undefined && declinedFields.includes("SF")) {
+      if (declinedFields != undefined && declinedFields.includes("CPD")) {
         declinedFieldsCheck.value = true;
       }
-      if (acceptedFields != undefined && acceptedFields.includes("SF")) {
+      if (acceptedFields != undefined && acceptedFields.includes("CPD")) {
         acceptedFieldsCheck.value = true;
       }
       buttons = store.getters["renewal/getButtons"];
       draftData = store.getters["renewal/getDraft"];
       if (route.params.id) {
         for (let i = 0; i < draftData.documents.length; i++) {
-          if (draftData.documents[i].documentTypeCode == "SF") {
+          if (draftData.documents[i].documentTypeCode == "CPD") {
             showUpload.value = false;
             isImage.value = true;
-            serviceFeeFile.value = draftData.documents[i];
+            cpdFile.value = draftData.documents[i];
             showPreview.value = true;
             filePreview.value = basePath + draftData.documents[i].filePath;
           }
         }
       }
     });
+
     const draft = (action) => {
       message.value.showLoading = true;
       if (route.params.id) {
@@ -246,10 +246,9 @@ export default {
               let licenseId = route.params.id;
               let formData = new FormData();
               formData.append(
-                documentSpecs[3].documentType.code,
-                serviceFeeFile.value
+                documentSpecs[4].documentType.code,
+                cpdFile.value
               );
-
               let payload = { document: formData, id: licenseId };
               store
                 .dispatch("renewal/uploadDocuments", payload)
@@ -260,7 +259,8 @@ export default {
                     setTimeout(() => {}, 1500);
                     router.push({ path: "/menu" });
                   } else {
-                    message.value.showErrorFlash = !message.value.showErrorFlash;
+                    message.value.showErrorFlash = !message.value
+                      .showErrorFlash;
                   }
                 })
                 .catch((err) => {});
@@ -301,14 +301,11 @@ export default {
           if (res.data.status == "Success") {
             let licenseId = res.data.data.id;
             let formData = new FormData();
+
             formData.append(documentSpecs[0].documentType.code, renewalPhoto);
             formData.append(documentSpecs[1].documentType.code, renewalLetter);
             formData.append(documentSpecs[2].documentType.code, healthExamCert);
-            formData.append(
-              documentSpecs[3].documentType.code,
-              serviceFeeFile.value
-            );
-            formData.append(documentSpecs[4].documentType.code, cpd);
+            formData.append(documentSpecs[4].documentType.code, cpdFile.value);
             formData.append(documentSpecs[5].documentType.code, workExperience);
             formData.append(
               documentSpecs[6].documentType.code,
@@ -346,7 +343,7 @@ export default {
       store.dispatch("renewal/withdraw", payload).then((res) => {
         if (res.data.status == "Success") {
           message.value.showLoading = !message.value.showLoading;
-          message.value.showFlash.value = !message.value.showFlash;
+          message.value.showFlash = !message.value.showFlash;
           setTimeout(() => {
             router.push({ path: "/menu" });
           }, 1500);
@@ -355,9 +352,10 @@ export default {
         }
       });
     };
+
     return {
-      serviceFeeFile,
-      serviceFeeFileP,
+      cpdFile,
+      cpdFileP,
       showPreview,
       filePreview,
       showUpload,

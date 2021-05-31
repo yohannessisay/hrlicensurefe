@@ -439,7 +439,7 @@
         <div class="flex pl-12 pt-medium">
           <Title message="Good Standing Submitted Applications" />
         </div>
-        <div v-if="this.goodstanding.length == 0" class="flex pl-12 ml-6">
+        <div v-if="this.goodstanding.length == 0" class="flex pl-12 ml-6 h-screen">
           <h4>Nothing to Show.</h4>
         </div>
         <div
@@ -529,6 +529,7 @@ import moment from "moment";
 
 export default {
   components: { Navigation, Title, Spinner, RenderIllustration, Title },
+
   data: function() {
     return {
       license: [],
@@ -556,8 +557,8 @@ export default {
     }
   },
   methods: {
-    moment: function() {
-      return moment();
+    moment: function(date) {
+      return moment(date);
     },
     logout() {
       localStorage.removeItem("token");
