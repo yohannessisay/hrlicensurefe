@@ -92,192 +92,192 @@
 
       <div class="flex justify-center mt-8 rounded ">
         <transition name="slide-fade-to-left">
-          <div
-            class="container mr-12 box-shadow-pop rounded-lg bg-lightGrey-100 "
-          >
-            <div class="flex justify-center items-center w-64 h-40">
-              <div class="p-1">
-                <div class="flex content-center justify-center">
-                  <router-link to="/approved">
+          <router-link to="/approved">
+            <div
+              class="container mr-12 box-shadow-pop rounded-lg bg-lightGrey-100 "
+            >
+              <div class="flex justify-center items-center w-64 h-40">
+                <div class="p-1">
+                  <div class="flex content-center justify-center">
                     <span style="color: #648ea3;">
                       <i class="far fa-thumbs-up fa-4x fa-light"></i>
                     </span>
-                  </router-link>
+                  </div>
+                  <h4 class="text-lightBlueB-500 mt-tiny">Approved</h4>
                 </div>
-                <h4 class="text-lightBlueB-500 mt-tiny">Approved</h4>
               </div>
             </div>
-          </div>
+          </router-link>
         </transition>
         <transition name="slide-fade-to-left">
-          <div
-            class="container mr-12 box-shadow-pop rounded-lg bg-lightGrey-100 "
-          >
-            <div class="flex justify-center items-center w-64 h-40">
-              <div class="p-1">
-                <div class="my-auto flex justify-center">
-                  <router-link to="/submitted">
+          <router-link to="/submitted">
+            <div
+              class="container mr-12 box-shadow-pop rounded-lg bg-lightGrey-100 "
+            >
+              <div class="flex justify-center items-center w-64 h-40">
+                <div class="p-1">
+                  <div class="my-auto flex justify-center">
                     <RenderIllustration illustration="Certificate" />
-                  </router-link>
+                  </div>
+                  <h4 class="text-lightBlueB-500 mt-tiny">Submitted</h4>
                 </div>
-                <h4 class="text-lightBlueB-500 mt-tiny">Submitted</h4>
               </div>
             </div>
-          </div>
+          </router-link>
         </transition>
         <transition name="slide-fade-to-left">
-          <div
-            class="container mr-12 box-shadow-pop rounded-lg bg-lightGrey-100 "
-          >
-            <div class="flex justify-center items-center w-64 h-40">
-              <div class="p-1">
-                <div class="flex">
-                  <router-link to="/draft">
+          <router-link to="/draft">
+            <div
+              class="container mr-12 box-shadow-pop rounded-lg bg-lightGrey-100 "
+            >
+              <div class="flex justify-center items-center w-64 h-40">
+                <div class="p-1">
+                  <div class="flex">
                     <span style="color: #648ea3;">
                       <i class="fas fa-file-signature fa-4x"></i>
                     </span>
-                  </router-link>
+                  </div>
+                  <h4
+                    class="text-lightBlueB-500 justify-center items-center ml-2 mt-tiny"
+                  >
+                    Draft
+                  </h4>
                 </div>
-                <h4
-                  class="text-lightBlueB-500 justify-center items-center ml-2 mt-tiny"
-                >
-                  Draft
-                </h4>
               </div>
             </div>
-          </div>
+          </router-link>
         </transition>
         <transition name="slide-fade-to-left">
-          <div
-            class="container mr-12 box-shadow-pop rounded-lg bg-lightGrey-100 "
-          >
-            <div class="flex justify-center items-center w-64 h-40">
-              <div class="p-1">
-                <div class="my-auto flex justify-center">
-                  <router-link to="/inReview">
+          <router-link to="/inReview">
+            <div
+              class="container mr-12 box-shadow-pop rounded-lg bg-lightGrey-100 "
+            >
+              <div class="flex justify-center items-center w-64 h-40">
+                <div class="p-1">
+                  <div class="my-auto flex justify-center">
                     <span style="color: #648ea3;">
                       <i class="far fa-id-card fa-4x"></i>
                     </span>
-                  </router-link>
+                  </div>
+                  <h4 class="text-lightBlueB-500 mt-tiny">In Review</h4>
                 </div>
-                <h4 class="text-lightBlueB-500 mt-tiny">In Review</h4>
               </div>
             </div>
-          </div>
+          </router-link>
         </transition>
       </div>
       <div class="flex justify-left mt-8 rounded ml-large">
         <transition name="slide-fade-to-left">
-          <div
-            class="container mr-12 box-shadow-pop rounded-lg bg-lightGrey-100 "
-          >
-            <div class="flex justify-center items-center w-64 h-40">
-              <div class="p-1">
-                <div class="flex content-center justify-center">
-                  <router-link to="/undersupervision">
+          <router-link to="/undersupervision">
+            <div
+              class="container mr-12 box-shadow-pop rounded-lg bg-lightGrey-100 "
+            >
+              <div class="flex justify-center items-center w-64 h-40">
+                <div class="p-1">
+                  <div class="flex content-center justify-center">
                     <span style="color: #648ea3;">
                       <i class="far fa-id-badge fa-4x"></i>
                     </span>
-                  </router-link>
+                  </div>
+                  <h4 class="text-lightBlueB-500 mt-tiny">Under Supervision</h4>
                 </div>
-                <h4 class="text-lightBlueB-500 mt-tiny">Under Supervision</h4>
               </div>
             </div>
-          </div>
+          </router-link>
         </transition>
         <transition name="slide-fade-to-left">
-          <div
-            class="container mr-12 box-shadow-pop rounded-lg bg-lightGrey-100 "
-          >
-            <div class="flex justify-center items-center w-64 h-40">
-              <div class="p-1">
-                <div class="my-auto flex justify-center">
-                  <router-link to="/withdrawn">
+          <router-link to="/withdrawn">
+            <div
+              class="container mr-12 box-shadow-pop rounded-lg bg-lightGrey-100 "
+            >
+              <div class="flex justify-center items-center w-64 h-40">
+                <div class="p-1">
+                  <div class="my-auto flex justify-center">
                     <span style="color: #648ea3;">
                       <i class="fas fa-exchange-alt fa-4x"></i>
                     </span>
-                  </router-link>
+                  </div>
+                  <h4 class="text-lightBlueB-500 mt-tiny">Withdrawn</h4>
                 </div>
-                <h4 class="text-lightBlueB-500 mt-tiny">Withdrawn</h4>
               </div>
             </div>
-          </div>
+          </router-link>
         </transition>
         <transition name="slide-fade-to-left">
-          <div
-            class="container mr-12 box-shadow-pop rounded-lg bg-lightGrey-100 "
-          >
-            <div class="flex justify-center items-center w-64 h-40">
-              <div class="p-1">
-                <div class="my-auto flex justify-center">
-                  <router-link to="/declined">
+          <router-link to="/declined">
+            <div
+              class="container mr-12 box-shadow-pop rounded-lg bg-lightGrey-100 "
+            >
+              <div class="flex justify-center items-center w-64 h-40">
+                <div class="p-1">
+                  <div class="my-auto flex justify-center">
                     <span style="color: #648ea3;">
                       <i class="far fa-thumbs-down fa-4x"></i>
                     </span>
-                  </router-link>
+                  </div>
+                  <h4 class="text-lightBlueB-500 mt-tiny">
+                    Declined
+                  </h4>
                 </div>
-                <h4 class="text-lightBlueB-500 mt-tiny">
-                  Declined
-                </h4>
               </div>
             </div>
-          </div>
+          </router-link>
         </transition>
         <transition name="slide-fade-to-left">
-          <div
-            class="container mr-12 box-shadow-pop rounded-lg bg-lightGrey-100 "
-          >
-            <div class="flex justify-center items-center w-64 h-40">
-              <div class="p-1">
-                <div class="flex content-center justify-center">
-                  <router-link to="/pendingPayment">
+          <router-link to="/pendingPayment">
+            <div
+              class="container mr-12 box-shadow-pop rounded-lg bg-lightGrey-100 "
+            >
+              <div class="flex justify-center items-center w-64 h-40">
+                <div class="p-1">
+                  <div class="flex content-center justify-center">
                     <span style="color: #648ea3;">
                       <i class="fas fa-comments-dollar fa-4x"></i>
                     </span>
-                  </router-link>
+                  </div>
+                  <h4 class="text-lightBlueB-500 mt-tiny">Pending Payment</h4>
                 </div>
-                <h4 class="text-lightBlueB-500 mt-tiny">Pending Payment</h4>
               </div>
             </div>
-          </div>
+          </router-link>
         </transition>
       </div>
       <div class="flex justify-left mt-8 rounded ml-large">
         <transition name="slide-fade-to-left">
-          <div
-            class="container mr-12 box-shadow-pop rounded-lg bg-lightGrey-100 "
-          >
-            <div class="flex justify-center items-center w-64 h-40">
-              <div class="p-1">
-                <div class="flex content-center justify-center">
-                  <router-link to="/approvedPayment">
+          <router-link to="/approvedPayment">
+            <div
+              class="container mr-12 box-shadow-pop rounded-lg bg-lightGrey-100 "
+            >
+              <div class="flex justify-center items-center w-64 h-40">
+                <div class="p-1">
+                  <div class="flex content-center justify-center">
                     <span style="color: #648ea3;">
                       <i class="far fa-money-bill-alt fa-4x"></i>
                     </span>
-                  </router-link>
+                  </div>
+                  <h4 class="text-lightBlueB-500 mt-tiny">Approved Payment</h4>
                 </div>
-                <h4 class="text-lightBlueB-500 mt-tiny">Approved Payment</h4>
               </div>
             </div>
-          </div>
+          </router-link>
         </transition>
         <transition name="slide-fade-to-left">
-          <div
-            class="container mr-12 box-shadow-pop rounded-lg bg-lightGrey-100 "
-          >
-            <div class="flex justify-center items-center w-64 h-40">
-              <div class="p-1">
-                <div class="flex content-center justify-center">
-                  <router-link to="/declinedPayment">
+          <router-link to="/declinedPayment">
+            <div
+              class="container mr-12 box-shadow-pop rounded-lg bg-lightGrey-100 "
+            >
+              <div class="flex justify-center items-center w-64 h-40">
+                <div class="p-1">
+                  <div class="flex content-center justify-center">
                     <span style="color: #648ea3;">
                       <i class="fa fa-credit-card-alt fa-4x"></i>
                     </span>
-                  </router-link>
+                  </div>
+                  <h4 class="text-lightBlueB-500 mt-tiny">Declined Payment</h4>
                 </div>
-                <h4 class="text-lightBlueB-500 mt-tiny">Declined Payment</h4>
               </div>
             </div>
-          </div>
+          </router-link>
         </transition>
       </div>
     </div>
