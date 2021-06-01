@@ -5,6 +5,13 @@
     <!-- </transition> -->
   </router-view>
 </template>
+<script>
+export default {
+  created() {
+    this.$router.push({ path: "/menu" });
+  },
+};
+</script>
 <style>
 @import "styles/tailwind.postcss";
 @import "styles/fonts.css";
