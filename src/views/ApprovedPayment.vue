@@ -189,9 +189,16 @@
                     <b>Code: &nbsp;</b>{{ item.goodStandingCode }}
                   </span>
                   <span
+                    v-if="item.certified == true"
                     class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
-                    <b>Certified: &nbsp;</b>{{ item.certified }}
+                    <b>Certified: &nbsp;</b>Yes
+                  </span>
+                  <span
+                    v-else
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                  >
+                    <b>Certified: &nbsp;</b>No
                   </span>
                   <span
                     class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
@@ -258,9 +265,16 @@
                     <b>Code: &nbsp;</b>{{ item.newLicenseCode }}
                   </span>
                   <span
+                    v-if="item.certified == true"
                     class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
-                    <b>Certified: &nbsp;</b>{{ item.certified }}
+                    <b>Certified: &nbsp;</b>Yes
+                  </span>
+                  <span
+                    v-else
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                  >
+                    <b>Certified: &nbsp;</b>No
                   </span>
                   <span
                     class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
@@ -325,9 +339,16 @@
                     <b>Code: &nbsp;</b>{{ item.renewalCode }}
                   </span>
                   <span
+                    v-if="item.certified == true"
                     class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
-                    <b>Certified: &nbsp;</b>{{ item.certified }}
+                    <b>Certified: &nbsp;</b>Yes
+                  </span>
+                  <span
+                    v-else
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                  >
+                    <b>Certified: &nbsp;</b>No
                   </span>
                   <span
                     class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
@@ -396,9 +417,16 @@
                     <b>Code: &nbsp;</b>{{ item.verificationCode }}
                   </span>
                   <span
+                    v-if="item.certified == true"
                     class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
-                    <b>Certified: &nbsp;</b>{{ item.certified }}
+                    <b>Certified: &nbsp;</b>Yes
+                  </span>
+                  <span
+                    v-else
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                  >
+                    <b>Certified: &nbsp;</b>No
                   </span>
                   <span
                     class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
@@ -470,9 +498,16 @@
                     <b>Code: &nbsp;</b>{{ item.goodStandingCode }}
                   </span>
                   <span
+                    v-if="item.certified == true"
                     class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
-                    <b>Certified: &nbsp;</b>{{ item.certified }}
+                    <b>Certified: &nbsp;</b>Yes
+                  </span>
+                  <span
+                    v-else
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                  >
+                    <b>Certified: &nbsp;</b>No
                   </span>
                   <span
                     class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
