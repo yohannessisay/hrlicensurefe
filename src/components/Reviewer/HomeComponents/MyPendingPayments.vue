@@ -91,6 +91,7 @@ export default {
     }
 }
 </script>
+
 <style scoped>
 img {
   border-radius: 50%;
@@ -157,3 +158,4 @@ img {
   /* position: absolute; */
 }
 </style>
+

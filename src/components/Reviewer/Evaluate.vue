@@ -453,7 +453,12 @@ export default {
           .dispatch("reviewer/getGoodStandingApplication", applicationId)
           .then(res => {
             newLicense.value = res.data.data;
-            buttons.value = res.data.data.applicationStatus.buttons;
+            buttons.value = res.data.data.applicationStatus.buttons.filter(allButtons => {
+              return allButtons.name != "Under supervision";
+            })
+            buttons.value.forEach(button => {
+              button.name === "Approve" ? button.name = "Verify" : button.name = button.name
+            })
             docs.value = res.data.data.documents;
             if (newLicense.value.applicationStatus.code == "REVDRA") {
               rejected.value = newLicense.value.declinedFields;
@@ -479,7 +484,14 @@ export default {
           .dispatch("reviewer/getVerificationApplication", applicationId)
           .then(res => {
             newLicense.value = res.data.data;
-            buttons.value = res.data.data.applicationStatus.buttons;
+            // buttons.value = res.data.data.applicationStatus.buttons;
+            buttons.value = res.data.data.applicationStatus.buttons.filter(allButtons => {
+              return allButtons.name != "Under supervision";
+            })
+            buttons.value.forEach(button => {
+              button.name === "Approve" ? button.name = "Verify" : button.name = button.name
+            })
+            console.log("bbuttons: ", buttons.value)
             docs.value = res.data.data.documents;
             if (newLicense.value.applicationStatus.code == "REVDRA") {
               rejected.value = newLicense.value.declinedFields;

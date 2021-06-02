@@ -49,7 +49,16 @@
                     : "-"
                 }}</b>
               </h4>
-              <br/>
+              <span
+                class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+              >
+              <i class="fas fa-user-cog"></i> &nbsp;
+                {{
+                  item.reviewer.name
+                    ? item.reviewer.name
+                    : "-"
+                }}
+              </span>
               <span
                 class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
               >
