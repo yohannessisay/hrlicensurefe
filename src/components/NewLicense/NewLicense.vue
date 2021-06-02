@@ -228,6 +228,7 @@ import RenewedLicense from "./Foreigner/RenewedLicense";
 export default {
   created() {
     this.draftId = this.$route.params.id;
+    this.draftStatus = this.$route.params.status;
     if (this.draftId != undefined) {
       this.fetchDraft(this.draftId);
     }
@@ -241,6 +242,7 @@ export default {
     applicationCategories: "",
     documentSpecs: "",
     buttons: [],
+    draftStatus: "",
     declinedFields: [],
     acceptedFields: [],
     remark: "",
@@ -284,10 +286,30 @@ export default {
         const results = res.data.data;
         this.applicationStatuses = results;
         if (this.draftId != undefined) {
-          let status = this.applicationStatuses.filter(function(e) {
-            return e.code == "DRA";
-          });
-          this.buttons = status[0]["buttons"];
+          if (this.draftStatus == "DRA") {
+            let status = this.applicationStatuses.filter(function(e) {
+              return e.code == "DRA";
+            });
+            this.buttons = status[0]["buttons"];
+          }
+          if (this.draftStatus == "SUB") {
+            let status = this.applicationStatuses.filter(function(e) {
+              return e.code == "SUB";
+            });
+            this.buttons = status[0]["buttons"];
+          }
+          if (this.draftStatus == "USUP") {
+            let status = this.applicationStatuses.filter(function(e) {
+              return e.code == "USUP";
+            });
+            this.buttons = status[0]["buttons"];
+          }
+          if (this.draftStatus == "DEC") {
+            let status = this.applicationStatuses.filter(function(e) {
+              return e.code == "DEC";
+            });
+            this.buttons = status[0]["buttons"];
+          }
         } else {
           let status = this.applicationStatuses.filter(function(e) {
             return e.code == "INIT";

@@ -356,7 +356,6 @@ export default {
     },
     fetchDraft() {
       this.draftStatus = this.$route.params.status;
-      console.log(this.draftStatus);
       let draftData = this.getDraft;
       this.licenseInfo.applicantId = draftData.applicantId;
       this.licenseInfo.applicantTypeId = draftData.applicantTypeId;

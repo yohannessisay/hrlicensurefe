@@ -37,7 +37,10 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 5">
-                <CPD :activeState="5" @changeActiveState="activeState++" /></div
+                <CPDF
+                  :activeState="5"
+                  @changeActiveState="activeState++"
+                /></div
             ></transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 6">
@@ -75,7 +78,7 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 6">
-                <CPD :activeState="6" @changeActiveState="activeState++" />
+                <CPDE :activeState="6" @changeActiveState="activeState++" />
               </div>
             </transition>
             <transition name="fade" mode="out-in">
@@ -98,7 +101,7 @@
           <div v-if="this.applicantType == 3">
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 4">
-                <CPD :activeState="4" @changeActiveState="activeState++" />
+                <CPDL :activeState="4" @changeActiveState="activeState++" />
               </div>
             </transition>
             <transition name="fade" mode="out-in">
@@ -130,19 +133,30 @@
       </div>
     </div>
   </div>
+  <div class="mr-3xl" v-if="showFlash">
+    <FlashMessage message="Operation Successful!" />
+  </div>
+  <div v-if="showErrorFlash">
+    <ErrorFlashMessage message="Operation Failed!" />
+  </div>
 </template>
 <script>
 import Navigation from "@/views/Navigation";
 import Institution from "./Institution.vue";
-import Photo from "./Photo.vue";
-import HealthExamCert from "./HealthExamCert.vue";
-import WorkExperience from "./WorkExperience.vue";
-import LicenseSummary from "./RenewalSummary.vue";
+import Photo from "./Photo";
+import HealthExamCert from "./HealthExamCert";
+import WorkExperience from "./WorkExperience";
+import LicenseSummary from "./RenewalSummary";
 import LetterFromInstitution from "./Foreigner/LetterFromHiringManager";
-import CPD from "./Ethiopians F/CPD.vue";
+import CPDE from "./Ethiopians F/CPD";
+import CPDL from "./Ethiopians L/CPD";
+import CPDF from "./Foreigner/CPD";
 import PreviousLicenseE from "./Ethiopians F/PreviousLicenseE";
 import PreviousLicenseL from "./Ethiopians L/PreviousLicenseL";
 import PreviousLicenseF from "./Foreigner/PreviousLicenseF";
+import FlashMessage from "@/sharedComponents/FlashMessage";
+import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
+import Spinner from "@/sharedComponents/Spinner";
 
 export default {
   created() {
@@ -175,11 +189,16 @@ export default {
     AbroadServiceFee,
     ForeignerServiceFee,
     LetterFromInstitution,
-    CPD,
+    CPDE,
+    CPDL,
+    CPDF,
     WorkExperience,
     PreviousLicenseE,
     PreviousLicenseL,
     PreviousLicenseF,
+    FlashMessage,
+    ErrorFlashMessage,
+    Spinner,
   },
   methods: {
     applicantTypeSet: function(params) {

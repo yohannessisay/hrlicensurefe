@@ -98,6 +98,11 @@ const routes = [
     component: () => import("../views/Submitted.vue"),
   },
   {
+    path: "/draft",
+    name: "Draft",
+    component: () => import("../views/Draft.vue"),
+  },
+  {
     path: "/admin/review",
     name: "ReviewerHome",
     component: () => import("../components/Reviewer/Home.vue"),
@@ -178,11 +183,6 @@ const routes = [
     path: "/admin/evaluatePayment/:applicationType/:applicationId",
     name: "evaluatePayment",
     component: () => import("../components/Reviewer/EvaluatePayment.vue"),
-  },
-  {
-    path: "/draft",
-    name: "Draft",
-    component: () => import("../views/Draft.vue"),
   },
   {
     path: "/admin/detail/:applicationType/:applicationId/:applicantId",

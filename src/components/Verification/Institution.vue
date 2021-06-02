@@ -56,31 +56,76 @@
             </div>
           </div>
         </form>
-        <div v-if="this.showButtons" class="flex justify-center mb-8">
+        <div
+          v-if="this.showButtons && !this.draftStatus"
+          class="flex justify-center mb-8"
+        >
           <button @click="submit">
             Next
           </button>
-          <button
-            v-if="this.buttons.length < 3"
-            @click="draft(this.buttons[1].action)"
-            variant="outline"
-          >
+          <button @click="draft(this.buttons[1].action)" variant="outline">
             {{ this.buttons[1]["name"] }}
           </button>
-          <button
-            v-if="this.buttons.length > 2"
-            @click="draft(this.buttons[0].action)"
-            variant="outline"
-          >
+        </div>
+        <div
+          v-if="this.showButtons && this.draftStatus == 'DRA'"
+          class="flex justify-center mb-8"
+        >
+          <button @click="submit">
+            Next
+          </button>
+          <button @click="draft(this.buttons[0].action)" variant="outline">
             {{ this.buttons[0]["name"] }}
           </button>
           <button
             class="withdraw"
-            v-if="this.buttons.length > 2"
             @click="withdraw(this.buttons[2].action)"
             variant="outline"
           >
             {{ this.buttons[2]["name"] }}
+          </button>
+        </div>
+        <div
+          v-if="this.showButtons && this.draftStatus == 'SUB'"
+          class="flex justify-center mb-8"
+        >
+          <button @click="submit">
+            Next
+          </button>
+          <button
+            class="withdraw"
+            @click="withdraw(this.buttons[1].action)"
+            variant="outline"
+          >
+            {{ this.buttons[1]["name"] }}
+          </button>
+        </div>
+        <div
+          v-if="this.showButtons && this.draftStatus == 'USUP'"
+          class="flex justify-center mb-8"
+        >
+          <button @click="submit">
+            Next
+          </button>
+          <button @click="draft(this.buttons[0].action)" variant="outline">
+            {{ this.buttons[0]["name"] }}
+          </button>
+          <button @click="update(this.buttons[1].action)" variant="outline">
+            {{ this.buttons[1]["name"] }}
+          </button>
+        </div>
+        <div
+          v-if="this.showButtons && this.draftStatus == 'DEC'"
+          class="flex justify-center mb-8"
+        >
+          <button @click="submit">
+            Next
+          </button>
+          <button @click="draft(this.buttons[0].action)" variant="outline">
+            {{ this.buttons[0]["name"] }}
+          </button>
+          <button @click="update(this.buttons[1].action)" variant="outline">
+            {{ this.buttons[1]["name"] }}
           </button>
         </div>
         <div>
@@ -147,6 +192,7 @@ export default {
         institutionId: "",
       },
     },
+    draftStatus: "",
     applicantTypes: [],
     institutions: [],
     departments: [],
@@ -191,6 +237,49 @@ export default {
       } else {
         this.$store
           .dispatch("verification/addVerificationLicense", license.data)
+          .then((res) => {
+            if (res.data.status == "Success") {
+              this.showFlash = true;
+              this.showLoading = false;
+              setTimeout(() => {}, 1500);
+              this.$router.push({ path: "/menu" });
+            }
+          });
+      }
+    },
+    update(action) {
+      this.showLoading = true;
+      let license = {
+        data: {
+          action: action,
+          data: {
+            applicantId: this.licenseInfo.applicantId,
+            applicantTypeId: this.licenseInfo.applicantTypeId,
+            education: {
+              departmentId: this.licenseInfo.education.departmentId,
+              institutionId: this.licenseInfo.education.institutionId,
+            },
+          },
+        },
+        id: this.draftId,
+      };
+
+      if (this.draftId != undefined) {
+        this.$store
+          .dispatch("goodstanding/editGoodstandingLicense", license)
+          .then((res) => {
+            if (res.data.status == "Success") {
+              this.showFlash = true;
+              this.showLoading = false;
+              setTimeout(() => {}, 1500);
+              this.$router.push({ path: "/menu" });
+            } else {
+              this.showErrorFlash = true;
+            }
+          });
+      } else {
+        this.$store
+          .dispatch("goodstanding/addGoodstandingLicense", license.data)
           .then((res) => {
             if (res.data.status == "Success") {
               this.showFlash = true;
@@ -264,6 +353,7 @@ export default {
       });
     },
     fetchDraft() {
+      this.draftStatus = this.$route.params.status;
       let draftData = this.getDraft;
       this.licenseInfo.applicantId = draftData.applicantId;
       this.licenseInfo.applicantTypeId = draftData.applicantTypeId;
