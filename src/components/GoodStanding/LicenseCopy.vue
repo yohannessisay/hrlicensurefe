@@ -59,7 +59,10 @@
             </div>
           </div>
         </form>
-        <div v-if="buttons && !draftStatus" class="flex justify-center mb-8">
+        <div
+          v-if="buttons && !draftStatus"
+          class="flex justify-center mb-8"
+        >
           <button @click="submit">
             Next
           </button>
@@ -68,7 +71,7 @@
           </button>
         </div>
         <div
-          v-if="buttons && draftStatus == 'DRA'"
+          v-if="draftStatus == 'DRA'"
           class="flex justify-center mb-8"
         >
           <button @click="submit">
@@ -252,7 +255,7 @@ export default {
       buttons = store.getters["goodstanding/getButtons"];
       draftData = store.getters["goodstanding/getDraft"];
       if (route.params.id) {
-        draftStatus = route.params.status;
+        draftStatus.value = route.params.status;
         for (let i = 0; i < draftData.documents.length; i++) {
           if (draftData.documents[i].documentTypeCode == "LC") {
             showUpload.value = false;

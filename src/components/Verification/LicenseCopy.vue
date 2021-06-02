@@ -253,7 +253,7 @@ export default {
       buttons = store.getters["verification/getButtons"];
       draftData = store.getters["verification/getDraft"];
       if (route.params.id) {
-        draftStatus = route.params.status;
+        draftStatus.value = route.params.status;
         for (let i = 0; i < draftData.documents.length; i++) {
           if (draftData.documents[i].documentTypeCode == "LC") {
             showUpload.value = false;

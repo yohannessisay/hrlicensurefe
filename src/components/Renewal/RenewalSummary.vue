@@ -239,51 +239,87 @@
         </picture>
       </div>
     </div> -->
-      <div class="mt-12 flex justify-center">
-        <div>
+      <div v-if="this.draftStatus == 'DRA' || !this.draftStatus">
+        <div class="mt-12 flex justify-center">
+          <div>
+            <button
+              v-if="this.buttons.length < 3"
+              @click="submitRequest(this.buttons[0].action)"
+            >
+              {{ this.buttons[0].name }}
+            </button>
+            <button
+              v-if="this.buttons.length > 2"
+              @click="submitRequest(this.buttons[1].action)"
+            >
+              {{ this.buttons[1].name }}
+            </button>
+          </div>
+        </div>
+        <div class="flex justify-center mt-4">
+          <h6>
+            If you don't have all the required informations you can come back
+            and finish later.
+          </h6>
+        </div>
+        <div class="flex justify-center mt-4 mb-8">
           <button
             v-if="this.buttons.length < 3"
-            @click="submitRequest(this.buttons[0].action)"
-          >
-            {{ this.buttons[0].name }}
-          </button>
-          <button
-            v-if="this.buttons.length > 2"
-            @click="submitRequest(this.buttons[1].action)"
+            @click="draft(this.buttons[1].action)"
+            variant="outline"
           >
             {{ this.buttons[1].name }}
           </button>
+          <button
+            v-if="this.buttons.length > 2"
+            @click="draft(this.buttons[0].action)"
+            variant="outline"
+          >
+            {{ this.buttons[0].name }}
+          </button>
+
+          <button
+            v-if="this.buttons.length > 2"
+            class="withdraw"
+            @click="withdraw(this.buttons[2].action)"
+            variant="outline"
+          >
+            {{ this.buttons[2].name }}
+          </button>
         </div>
       </div>
-      <div class="flex justify-center mt-4">
-        <h6>
-          If you don't have all the required informations you can come back and
-          finish later.
-        </h6>
-      </div>
-      <div class="flex justify-center mt-4 mb-8">
+      <div
+        v-if="this.draftStatus == 'SUB'"
+        class="flex justify-center mt-8 pb-12"
+      >
         <button
-          v-if="this.buttons.length < 3"
-          @click="draft(this.buttons[1].action)"
-          variant="outline"
-        >
-          {{ this.buttons[1].name }}
-        </button>
-        <button
-          v-if="this.buttons.length > 2"
-          @click="draft(this.buttons[0].action)"
-          variant="outline"
-        >
-          {{ this.buttons[0].name }}
-        </button>
-
-        <button
-          v-if="this.buttons.length > 2"
           class="withdraw"
-          @click="withdraw(this.buttons[2].action)"
+          @click="withdraw(this.buttons[1].action)"
           variant="outline"
         >
-          {{ this.buttons[2].name }}
+          {{ this.buttons[1]["name"] }}
+        </button>
+      </div>
+      <div
+        v-if="this.draftStatus == 'USUP'"
+        class="flex justify-center mt-8 pb-12"
+      >
+        <button @click="draft(this.buttons[0].action)" variant="outline">
+          {{ this.buttons[0]["name"] }}
+        </button>
+        <button @click="update(this.buttons[1].action)" variant="outline">
+          {{ this.buttons[1]["name"] }}
+        </button>
+      </div>
+      <div
+        v-if="this.draftStatus == 'DEC'"
+        class="flex justify-center mt-8 pb-12"
+      >
+        <button @click="draft(this.buttons[0].action)" variant="outline">
+          {{ this.buttons[0]["name"] }}
+        </button>
+        <button @click="update(this.buttons[1].action)" variant="outline">
+          {{ this.buttons[1]["name"] }}
         </button>
       </div>
       <div
@@ -322,6 +358,7 @@ export default {
   async created() {
     // this.userId = +localStorage.getItem("userId");
     this.draftId = this.$route.params.id;
+    this.draftStatus = this.$route.params.status;
     if (this.draftId != undefined) {
       this.draftData = this.getDraftData;
     }
@@ -359,6 +396,7 @@ export default {
     },
     draftId: "",
     draftData: "",
+    draftStatus: "",
     activeClass: "active",
     errorClass: "text-danger",
     showFlash: false,
@@ -543,6 +581,49 @@ export default {
           });
       }
     },
+    update(action) {
+      this.showLoading = true;
+      let license = {
+        data: {
+          action: action,
+          data: {
+            applicantId: this.licenseInfo.applicantId,
+            applicantTypeId: this.licenseInfo.applicantTypeId,
+            education: {
+              departmentId: this.licenseInfo.education.departmentId,
+              institutionId: this.licenseInfo.education.institutionId,
+            },
+          },
+        },
+        id: this.draftId,
+      };
+
+      if (this.draftId != undefined) {
+        this.$store
+          .dispatch("renewal/editRenewalLicense", license)
+          .then((res) => {
+            if (res.data.status == "Success") {
+              this.showFlash = true;
+              this.showLoading = false;
+              setTimeout(() => {}, 1500);
+              this.$router.push({ path: "/menu" });
+            } else {
+              this.showErrorFlash = true;
+            }
+          });
+      } else {
+        this.$store
+          .dispatch("renewal/addRenewalLicense", license.data)
+          .then((res) => {
+            if (res.data.status == "Success") {
+              this.showFlash = true;
+              this.showLoading = false;
+              setTimeout(() => {}, 1500);
+              this.$router.push({ path: "/menu" });
+            }
+          });
+      }
+    },
     async saveDraft(act) {
       let action = act;
       this.showLoading = true;
@@ -659,10 +740,10 @@ export default {
       this.showLoading = true;
       let withdrawObj = {
         action: action,
-        data: this.getDraft,
+        data: this.getDraftData,
       };
       let payload = {
-        licenseId: this.getDraft.id,
+        licenseId: this.getDraftData.id,
         withdrawData: withdrawObj,
       };
       this.$store.dispatch("renewal/withdraw", payload).then((res) => {

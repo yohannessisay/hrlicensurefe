@@ -539,7 +539,7 @@ export default {
       buttons = store.getters["newlicense/getButtons"];
       draftData = store.getters["newlicense/getDraft"];
       if (route.params.id) {
-        draftStatus = route.params.status;
+        draftStatus.value = route.params.status;
         for (let i = 0; i < draftData.documents.length; i++) {
           if (draftData.documents[i].documentTypeCode == "HERQA") {
             showUpload.value = false;

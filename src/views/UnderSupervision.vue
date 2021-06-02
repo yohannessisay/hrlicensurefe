@@ -246,7 +246,7 @@
               v-bind:value="item"
             >
               <router-link
-                :to="{ name: 'NewLicense', params: { id: item.id } }"
+                :to="{ name: 'NewLicense', params: { id: item.id , status: item.applicationStatus.code} }"
               >
                 <div
                   class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
@@ -323,7 +323,7 @@
               v-bind:key="item"
               v-bind:value="item"
             >
-              <router-link :to="{ name: 'Renewal', params: { id: item.id } }">
+              <router-link :to="{ name: 'Renewal', params: { id: item.id , status: item.applicationStatus.code} }">
                 <div
                   class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
                 >
@@ -404,7 +404,7 @@
               v-bind:value="item"
             >
               <router-link
-                :to="{ name: 'Verification', params: { id: item.id } }"
+                :to="{ name: 'Verification', params: { id: item.id , status: item.applicationStatus.code} }"
               >
                 <div
                   class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
@@ -489,7 +489,7 @@
               v-bind:value="item"
             >
               <router-link
-                :to="{ name: 'GoodStanding', params: { id: item.id } }"
+                :to="{ name: 'GoodStanding', params: { id: item.id , status: item.applicationStatus.code} }"
               >
                 <div
                   class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
@@ -671,15 +671,27 @@ export default {
           });
         });
     },
-    routeTo(item) {
+   routeTo(item) {
       if (item.newLicenseCode) {
-        this.$router.push({ name: "NewLicense", params: { id: item.id } });
+       this.$router.push({
+          name: "NewLicense",
+          params: { id: item.id, status: item.applicationStatus.code },
+        });
       } else if (item.renewalCode) {
-        this.$router.push({ name: "Renewal", params: { id: item.id } });
+        this.$router.push({
+          name: "Renewal",
+          params: { id: item.id, status: item.applicationStatus.code },
+        });
       } else if (item.verificationCode) {
-        this.$router.push({ name: "Verification", params: { id: item.id } });
+        this.$router.push({
+          name: "Verification",
+          params: { id: item.id, status: item.applicationStatus.code },
+        });
       } else {
-        this.$router.push({ name: "GoodStanding", params: { id: item.id } });
+        this.$router.push({
+          name: "GoodStanding",
+          params: { id: item.id, status: item.applicationStatus.code },
+        });
       }
     },
   },

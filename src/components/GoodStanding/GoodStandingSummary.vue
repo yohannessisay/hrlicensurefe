@@ -287,55 +287,11 @@
             {{ this.buttons[2].name }}
           </button>
         </div>
-        <div class="mt-12 flex justify-center">
-          <div>
-            <button
-              v-if="this.buttons.length < 3"
-              @click="submitRequest(this.buttons[0].action)"
-            >
-              {{ this.buttons[0].name }}
-            </button>
-            <button
-              v-if="this.buttons.length > 2"
-              @click="submitRequest(this.buttons[1].action)"
-            >
-              {{ this.buttons[1].name }}
-            </button>
-          </div>
-        </div>
-        <div class="flex justify-center mt-4">
-          <h6>
-            If you don't have all the required informations you can come back
-            and finish later.
-          </h6>
-        </div>
-        <div class="flex justify-center mt-4 mb-8">
-          <button
-            v-if="this.buttons.length < 3"
-            @click="draft(this.buttons[1].action)"
-            variant="outline"
-          >
-            {{ this.buttons[1].name }}
-          </button>
-          <button
-            v-if="this.buttons.length > 2"
-            @click="draft(this.buttons[0].action)"
-            variant="outline"
-          >
-            {{ this.buttons[0].name }}
-          </button>
-
-          <button
-            v-if="this.buttons.length > 2"
-            class="withdraw"
-            @click="withdraw(this.buttons[2].action)"
-            variant="outline"
-          >
-            {{ this.buttons[2].name }}
-          </button>
-        </div>
       </div>
-      <div v-if="this.draftStatus == 'SUB'" class="flex justify-center mt-8 pb-12">
+      <div
+        v-if="this.draftStatus == 'SUB'"
+        class="flex justify-center mt-8 pb-12"
+      >
         <button
           class="withdraw"
           @click="withdraw(this.buttons[1].action)"
@@ -344,7 +300,10 @@
           {{ this.buttons[1]["name"] }}
         </button>
       </div>
-      <div v-if="this.draftStatus == 'USUP'" class="flex justify-center mt-8 pb-12">
+      <div
+        v-if="this.draftStatus == 'USUP'"
+        class="flex justify-center mt-8 pb-12"
+      >
         <button @click="draft(this.buttons[0].action)" variant="outline">
           {{ this.buttons[0]["name"] }}
         </button>
@@ -352,7 +311,10 @@
           {{ this.buttons[1]["name"] }}
         </button>
       </div>
-      <div v-if="this.draftStatus == 'DEC'" class="flex justify-center mt-8 pb-12">
+      <div
+        v-if="this.draftStatus == 'DEC'"
+        class="flex justify-center mt-8 pb-12"
+      >
         <button @click="draft(this.buttons[0].action)" variant="outline">
           {{ this.buttons[0]["name"] }}
         </button>
@@ -706,13 +668,12 @@ export default {
       this.showLoading = true;
       let withdrawObj = {
         action: action,
-        data: this.getDraft,
+        data: this.getDraftData,
       };
       let payload = {
-        licenseId: this.draftData.id,
+        licenseId: this.getDraftData.id,
         withdrawData: withdrawObj,
       };
-
       this.$store.dispatch("goodstanding/withdraw", payload).then((res) => {
         if (res) {
           this.showFlash = true;
@@ -725,6 +686,7 @@ export default {
       });
     },
   },
+
   mounted() {
     this.$nextTick(function() {
       window.setInterval(() => {

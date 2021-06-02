@@ -59,31 +59,73 @@
             </div>
           </div>
         </form>
-        <div v-if="buttons" class="flex justify-center mb-8">
+        <div v-if="buttons && !draftStatus" class="flex justify-center mb-8">
           <button @click="submit">
             Next
           </button>
-          <button
-            v-if="buttons.length < 3"
-            @click="draft(buttons[1].action)"
-            variant="outline"
-          >
-            {{ buttons[1].name }}
+          <button @click="draft(buttons[1].action)" variant="outline">
+            {{ buttons[1]["name"] }}
+          </button>
+        </div>
+        <div
+          v-if="buttons && draftStatus == 'DRA'"
+          class="flex justify-center mb-8"
+        >
+          <button @click="submit">
+            Next
+          </button>
+          <button @click="draft(buttons[0].action)" variant="outline">
+            {{ buttons[0]["name"] }}
           </button>
           <button
-            v-if="buttons.length > 2"
-            @click="draft(buttons[0].action)"
-            variant="outline"
-          >
-            {{ buttons[0].name }}
-          </button>
-          <button
-            v-if="buttons.length > 2"
             class="withdraw"
             @click="withdraw(buttons[2].action)"
             variant="outline"
           >
             {{ buttons[2]["name"] }}
+          </button>
+        </div>
+        <div
+          v-if="buttons && draftStatus == 'SUB'"
+          class="flex justify-center mb-8"
+        >
+          <button @click="submit">
+            Next
+          </button>
+          <button
+            class="withdraw"
+            @click="withdraw(buttons[1].action)"
+            variant="outline"
+          >
+            {{ buttons[1]["name"] }}
+          </button>
+        </div>
+        <div
+          v-if="buttons && draftStatus == 'USUP'"
+          class="flex justify-center mb-8"
+        >
+          <button @click="submit">
+            Next
+          </button>
+          <button @click="draft(buttons[0].action)" variant="outline">
+            {{ buttons[0]["name"] }}
+          </button>
+          <button @click="update(buttons[1].action)" variant="outline">
+            {{ buttons[1]["name"] }}
+          </button>
+        </div>
+        <div
+          v-if="buttons && draftStatus == 'DEC'"
+          class="flex justify-center mb-8"
+        >
+          <button @click="submit">
+            Next
+          </button>
+          <button @click="draft(buttons[0].action)" variant="outline">
+            {{ buttons[0]["name"] }}
+          </button>
+          <button @click="update(buttons[1].action)" variant="outline">
+            {{ buttons[1]["name"] }}
           </button>
         </div>
         <div v-if="message.showLoading">
@@ -135,6 +177,7 @@ export default {
     let filePreview = ref("");
     let showUpload = ref(true);
     let isImage = ref(true);
+    let draftStatus = ref("");
 
     let buttons = [];
     let documentSpecs = ref([]);
@@ -215,6 +258,7 @@ export default {
       buttons = store.getters["renewal/getButtons"];
       draftData = store.getters["renewal/getDraft"];
       if (route.params.id) {
+        draftStatus.value = route.params.status;
         for (let i = 0; i < draftData.documents.length; i++) {
           if (draftData.documents[i].documentTypeCode == "HEC") {
             showUpload.value = false;
@@ -330,6 +374,100 @@ export default {
         });
       }
     };
+    const update = (action) => {
+      message.value.showLoading = true;
+      if (route.params.id) {
+        if (dataChanged.value) {
+          let license = {
+            data: {
+              action: action,
+              data: draftData,
+            },
+            id: route.params.id,
+          };
+          store.dispatch("renewal/editRenewalLicense", license).then((res) => {
+            if (res.data.status == "Success") {
+              let licenseId = route.params.id;
+              let formData = new FormData();
+              formData.append(
+                documentSpecs[1].documentType.code,
+                letterFile.value
+              );
+              let payload = { document: formData, id: licenseId };
+              store
+                .dispatch("renewal/uploadDocuments", payload)
+                .then((res) => {
+                  if (res.status == 200) {
+                    message.value.showFlash = !message.value.showFlash;
+                    message.value.showLoading = false;
+                    setTimeout(() => {}, 1500);
+                    router.push({ path: "/menu" });
+                  } else {
+                    message.value.showErrorFlash = !message.value
+                      .showErrorFlash;
+                  }
+                })
+                .catch((err) => {});
+            }
+          });
+        } else {
+          let license = {
+            data: {
+              action: action,
+              data: draftData,
+            },
+            id: route.params.id,
+          };
+          store.dispatch("renewal/editRenewalLicense", license).then((res) => {
+            if (res.data.status == "Success") {
+              message.value.showFlash = !message.value.showFlash;
+              message.value.showLoading = false;
+              setTimeout(() => {}, 1500);
+              router.push({ path: "/menu" });
+            } else {
+              message.value.showErrorFlash = !message.value.showErrorFlash;
+            }
+          });
+        }
+      } else {
+        let license = {
+          action: action,
+          data: {
+            applicantId: userId,
+            applicantTypeId: licenseInfo.applicantTypeId,
+            education: {
+              departmentId: licenseInfo.education.departmentId,
+              institutionId: licenseInfo.education.institutionId,
+            },
+          },
+        };
+        store.dispatch("renewal/addRenewalLicense", license).then((res) => {
+          if (res.data.status == "Success") {
+            let licenseId = res.data.data.id;
+            let formData = new FormData();
+            formData.append(
+              documentSpecs[1].documentType.code,
+              letterFile.value
+            );
+            formData.append(documentSpecs[2].documentType.code, licenseCopy);
+            let payload = { document: formData, id: licenseId };
+            store
+              .dispatch("renewal/uploadDocuments", payload)
+              .then((res) => {
+                if (res.status == 200) {
+                  message.value.showFlash = !message.value.showFlash;
+                  message.value.showLoading = false;
+                  setTimeout(() => {}, 1500);
+                  router.push({ path: "/menu" });
+                } else {
+                  message.value.showErrorFlash = !message.value.showErrorFlash;
+                }
+              })
+              .catch((err) => {});
+          }
+        });
+      }
+    };
 
     const withdraw = (action) => {
       message.value.showLoading = !message.value.showLoading;
@@ -368,6 +506,8 @@ export default {
       buttons,
       draftData,
       basePath,
+      draftStatus,
+      update,
       message,
       dataChanged,
       acceptedFields,
