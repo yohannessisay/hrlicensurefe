@@ -187,7 +187,7 @@ const routes = [
       import("../components/Reviewer/Detail/UnfinishedDetail.vue"),
   },
   {
-    path: "/admin/finishedDetail/:applicationType/:applicationId",
+    path: "/admin/finishedDetail/:applicationType/:applicationId/:status",
     name: "recentlyFinishedDetail",
     component: () =>
       import("../components/Reviewer/Detail/RecentlyFinishedDetail.vue"),

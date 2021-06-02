@@ -360,7 +360,6 @@ export default {
 
     const fetchRole = (id) => {
       store.dispatch("reviewer/getRoles", id).then(res => {
-        console.log("www", res.data.data.role)
         role.value = res.data.data.role;
       })
     }
@@ -377,7 +376,6 @@ export default {
     }
 
     const transferReview = () => {
-      console.log("transfered")
       if (role.value.code === "TL" || role.value.code === "SA") {
         if (applicationType.value == "Good Standing") {
           transfer.value = {

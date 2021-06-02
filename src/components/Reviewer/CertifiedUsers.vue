@@ -110,7 +110,6 @@ export default {
       showLoading.value = true;
       store.dispatch("reviewer/getAllCertifiedUsers").then(res => {
         showLoading.value = false;
-          console.log("all certified users", res)
           certifiedUsers.value = res;
         // if(store.getters['reviewer/getUnfinishedSearched'].length !== 0) {
         //   for (var prop in store.getters['reviewer/getUnfinishedSearched']) {

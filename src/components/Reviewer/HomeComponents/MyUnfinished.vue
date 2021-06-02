@@ -78,7 +78,6 @@ export default {
     props: ["unFinishedSearched"],
     name: "MyUnfinished",
     setup(props) {
-        console.log("props: ",props)
         let router = useRouter();
 
         const detail = (data, applicationType, applicationId, applicantId) => {

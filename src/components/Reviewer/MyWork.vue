@@ -27,7 +27,8 @@
             <div class="p-4 w-48 h-64"
               @click="detail('/admin/finishedDetail',
                 item.applicationType,
-                item.id
+                item.id,
+                'approved',
                 )"
             >
               <div class="flex content-center justify-center">
@@ -90,7 +91,8 @@
             <div class="p-4 w-48 h-64"
               @click="detail('/admin/finishedDetail',
                 item.applicationType,
-                item.id
+                item.id,
+                'rejected',
                 )"
             >
               <div class="flex content-center justify-center">
@@ -152,7 +154,8 @@
             <div class="p-4 w-48 h-64"
               @click="detail('/admin/finishedDetail',
                 item.applicationType,
-                item.id
+                item.id,
+                'underSuperVision',
                 )"
             >
               <div class="flex content-center justify-center">
@@ -312,9 +315,9 @@ export default {
       });
     };
 
-    const detail = (data, appilcationType, appilcationId, applicantId) => {
+    const detail = (data, appilcationType, appilcationId, status) => {
       const url = 
-        data + "/" + appilcationType + "/" + appilcationId;
+        data + "/" + appilcationType + "/" + appilcationId + "/" + status;
         router.push(url)
     }
 
