@@ -365,7 +365,6 @@ export default {
 
     this.userId = localStorage.getItem("userId");
 
-    this.photo = this.getPhoto;
     this.letter = this.getLetter;
     this.healthExamCert = this.getHealthExamCert;
     this.previousLicense = this.getPreviousLicense;
@@ -404,7 +403,6 @@ export default {
     showLoading: false,
     showLoading2: false,
 
-    photo: "",
     letter: "",
     healthExamCert: "",
     serviceFee: "",
@@ -449,7 +447,6 @@ export default {
       });
     },
     setDocs() {
-      this.docs.push(this.photo);
       this.docs.push(this.passport);
       this.docs.push(this.healthExamCert);
       this.docs.push(this.englishLanguage);
@@ -487,10 +484,7 @@ export default {
             if (res.data.status == "Success") {
               let licenseId = this.draftId;
               let formData = new FormData();
-              formData.append(
-                this.documentTypes[0].documentType.code,
-                this.photo
-              );
+           
               formData.append(
                 this.documentTypes[1].documentType.code,
                 this.letter
@@ -530,7 +524,6 @@ export default {
           });
       } else {
         let formData = new FormData();
-        formData.append(this.documentTypes[0].documentType.code, this.photo);
         formData.append(this.documentTypes[1].documentType.code, this.letter);
         formData.append(
           this.documentTypes[2].documentType.code,
@@ -641,10 +634,7 @@ export default {
             if (res.data.status == "Success") {
               let licenseId = this.draftId;
               let formData = new FormData();
-              formData.append(
-                this.documentTypes[0].documentType.code,
-                this.photo
-              );
+           
               formData.append(
                 this.documentTypes[1].documentType.code,
                 this.letter
@@ -684,7 +674,6 @@ export default {
           });
       } else {
         let formData = new FormData();
-        formData.append(this.documentTypes[0].documentType.code, this.photo);
         formData.append(this.documentTypes[1].documentType.code, this.letter);
         formData.append(
           this.documentTypes[2].documentType.code,

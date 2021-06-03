@@ -193,7 +193,6 @@ export default {
     let acceptedFieldsCheck = ref(false);
 
     let workExperience = ref("");
-    let renewalPhoto = ref("");
     let renewalLetter = ref("");
     let cpd = ref("");
     let previousLicense = ref("");
@@ -234,7 +233,6 @@ export default {
     documentSpecs = store.getters["renewal/getDocumentSpec"];
     licenseInfo = store.getters["renewal/getLicense"];
 
-    renewalPhoto = store.getters["renewal/getRenewalPhoto"];
     workExperience = store.getters["renewal/getRenewalWorkExperience"];
     renewalLetter = store.getters["renewal/getRenewalLicense"];
     cpd = store.getters["renewal/getRenewalCpd"];
@@ -343,7 +341,6 @@ export default {
             let licenseId = res.data.data.id;
             let formData = new FormData();
 
-            formData.append(documentSpecs[0].documentType.code, renewalPhoto);
             formData.append(documentSpecs[1].documentType.code, renewalLetter);
             formData.append(
               documentSpecs[2].documentType.code,

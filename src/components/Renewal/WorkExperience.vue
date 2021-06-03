@@ -186,7 +186,6 @@ export default {
     let declinedFieldsCheck = ref(false);
     let acceptedFieldsCheck = ref(false);
 
-    let renewalPhoto = ref("");
     let healthExamCert = ref("");
     let renewalLetter = ref("");
     let cpd = ref("");
@@ -230,7 +229,6 @@ export default {
     licenseInfo = store.getters["renewal/getLicense"];
 
     healthExamCert = store.getters["renewal/getRenewalHealthExamCert"];
-    renewalPhoto = store.getters["renewal/getRenewalPhoto"];
     renewalLetter = store.getters["renewal/getRenewalLicense"];
     cpd = store.getters["renewal/getRenewalCpd"];
     previousLicense = store.getters["renewal/getPreviousLicense"];
@@ -337,7 +335,6 @@ export default {
           if (res.data.status == "Success") {
             let licenseId = res.data.data.id;
             let formData = new FormData();
-            formData.append(documentSpecs[0].documentType.code, renewalPhoto);
             formData.append(documentSpecs[1].documentType.code, renewalLetter);
             formData.append(documentSpecs[2].documentType.code, healthExamCert);
             formData.append(documentSpecs[4].documentType.code, cpd);

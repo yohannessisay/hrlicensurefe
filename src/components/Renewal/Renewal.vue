@@ -15,45 +15,40 @@
           </transition>
           <transition name="fade" mode="out-in">
             <div v-if="this.activeState == 2">
-              <Photo :activeState="2" @changeActiveState="activeState++" />
-            </div>
-          </transition>
-          <transition name="fade" mode="out-in">
-            <div v-if="this.activeState == 3">
               <HealthExamCert
-                :activeState="3"
+                :activeState="2"
                 @changeActiveState="activeState++"
               />
             </div>
           </transition>
           <div v-if="this.applicantType == 1">
             <transition name="fade" mode="out-in">
-              <div v-if="this.activeState == 4">
+              <div v-if="this.activeState == 3">
                 <PreviousLicenseL
-                  :activeState="4"
+                  :activeState="3"
                   @changeActiveState="activeState++"
                 />
               </div>
             </transition>
             <transition name="fade" mode="out-in">
-              <div v-if="this.activeState == 5">
+              <div v-if="this.activeState == 4">
                 <CPDF
-                  :activeState="5"
+                  :activeState="4"
                   @changeActiveState="activeState++"
                 /></div
             ></transition>
             <transition name="fade" mode="out-in">
-              <div v-if="this.activeState == 6">
+              <div v-if="this.activeState == 5">
                 <WorkExperience
-                  :activeState="6"
+                  :activeState="5"
                   @changeActiveState="activeState++"
                 />
               </div>
             </transition>
             <transition name="fade" mode="out-in">
-              <div v-if="this.activeState == 7">
+              <div v-if="this.activeState == 6">
                 <LicenseSummary
-                  :activeState="7"
+                  :activeState="6"
                   @changeActiveState="activeState++"
                 />
               </div>
@@ -61,8 +56,16 @@
           </div>
           <div v-if="this.applicantType == 2">
             <transition name="fade" mode="out-in">
-              <div v-if="this.activeState == 4">
+              <div v-if="this.activeState == 3">
                 <LetterFromInstitution
+                  :activeState="3"
+                  @changeActiveState="activeState++"
+                />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 4">
+                <PreviousLicenseF
                   :activeState="4"
                   @changeActiveState="activeState++"
                 />
@@ -70,46 +73,7 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 5">
-                <PreviousLicenseF
-                  :activeState="5"
-                  @changeActiveState="activeState++"
-                />
-              </div>
-            </transition>
-            <transition name="fade" mode="out-in">
-              <div v-if="this.activeState == 6">
-                <CPDE :activeState="6" @changeActiveState="activeState++" />
-              </div>
-            </transition>
-            <transition name="fade" mode="out-in">
-              <div v-if="this.activeState == 7">
-                <WorkExperience
-                  :activeState="7"
-                  @changeActiveState="activeState++"
-                />
-              </div>
-            </transition>
-            <transition name="fade" mode="out-in">
-              <div v-if="this.activeState == 8">
-                <LicenseSummary
-                  :activeState="8"
-                  @changeActiveState="activeState++"
-                />
-              </div>
-            </transition>
-          </div>
-          <div v-if="this.applicantType == 3">
-            <transition name="fade" mode="out-in">
-              <div v-if="this.activeState == 4">
-                <CPDL :activeState="4" @changeActiveState="activeState++" />
-              </div>
-            </transition>
-            <transition name="fade" mode="out-in">
-              <div v-if="this.activeState == 5">
-                <PreviousLicenseE
-                  :activeState="5"
-                  @changeActiveState="activeState++"
-                />
+                <CPDE :activeState="5" @changeActiveState="activeState++" />
               </div>
             </transition>
             <transition name="fade" mode="out-in">
@@ -124,6 +88,37 @@
               <div v-if="this.activeState == 7">
                 <LicenseSummary
                   :activeState="7"
+                  @changeActiveState="activeState++"
+                />
+              </div>
+            </transition>
+          </div>
+          <div v-if="this.applicantType == 3">
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 3">
+                <CPDL :activeState="3" @changeActiveState="activeState++" />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 4">
+                <PreviousLicenseE
+                  :activeState="4"
+                  @changeActiveState="activeState++"
+                />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 5">
+                <WorkExperience
+                  :activeState="5"
+                  @changeActiveState="activeState++"
+                />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 6">
+                <LicenseSummary
+                  :activeState="6"
                   @changeActiveState="activeState++"
                 />
               </div>
@@ -143,7 +138,6 @@
 <script>
 import Navigation from "@/views/Navigation";
 import Institution from "./Institution.vue";
-import Photo from "./Photo";
 import HealthExamCert from "./HealthExamCert";
 import WorkExperience from "./WorkExperience";
 import LicenseSummary from "./RenewalSummary";
@@ -183,7 +177,6 @@ export default {
   }),
   components: {
     Institution,
-    Photo,
     HealthExamCert,
     LicenseSummary,
     Navigation,
