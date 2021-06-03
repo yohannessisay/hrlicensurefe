@@ -37,16 +37,28 @@
       </div>
 
       <div class="flex flex-col mb-medium w-full">
-        <label for="password">Phone Number</label>
+        <label>Password</label>
         <input
-          v-model="credentials.phoneNumber"
-          id="phone"
-          name="phone"
-          type="text"
-          autocomplete="current-number"
+          v-model="credentials.password"
+          type="password"
+          id="password"
+          name="password"
+          autocomplete="current-password"
           required
         />
-        <span style="color: red">{{ credentialsErrors.phoneNumber }}</span>
+        <span style="color: red">{{ credentialsErrors.password }}</span>
+      </div>
+      <div class="flex flex-col mb-medium w-full">
+        <label>Re-type Password</label>
+        <input
+          v-model="credentials.repassword"
+          type="password"
+          id="repassword"
+          name="password"
+          autocomplete="current-password"
+          required
+        />
+        <span style="color: red">{{ credentialsErrors.repassword }}</span>
       </div>
       <button click="submit()">
         Sign up
@@ -93,39 +105,45 @@ export default {
 
     const credentials = ref({
       emailAddress: "",
-      phoneNumber: "",
+      password: "",
+      repassword: "",
     });
 
     const credentialsErrors = ref({
       emailAddress: undefined,
-      phoneNumber: undefined,
+      password: undefined,
+      repassword: undefined,
     });
 
     const submit = () => {
       let signup = {
         emailAddress: credentials.value.emailAddress,
-        phoneNumber: credentials.value.phoneNumber,
+        password: credentials.value.password,
       };
-      message.value.showLoading = true;
-      message.value.showFlash = false;
-      message.value.showErrorFlash = false;
-      store.dispatch("user/signUp", signup).then((res) => {
-        if (res.data.status == "Success") {
-          message.value.showLoading = false;
-          message.value.showFlash = true;
-          message.value.showErrorFlash = false;
+      credentialsErrors.value = validateForm(credentials.value);
+      if (!credentialsErrors.value) {
+        message.value.showLoading = true;
+        message.value.showFlash = false;
+        message.value.showErrorFlash = false;
+        // store.dispatch("user/signUp", signup).then((res) => {
+        //   if (res.data.status == "Success") {
+        //     message.value.showLoading = false;
+        //     message.value.showFlash = true;
+        //     message.value.showErrorFlash = false;
 
-          setTimeout(() => {
-            location.reload();
-          }, 1500);
-
-        } else {
-          message.value.showLoading = false;
-          message.value.showFlash = false;
-          message.value.showErrorFlash = true;
-          setTimeout(() => {}, 1500);
-        }
-      });
+        //     setTimeout(() => {
+        //       location.reload();
+        //     }, 1500);
+        //   } else {
+        //     message.value.showLoading = false;
+        //     message.value.showFlash = false;
+        //     message.value.showErrorFlash = true;
+        //     setTimeout(() => {}, 1500);
+        //   }
+        // });
+      }
+      if (empty == true) {
+      }
     };
 
     const isEmail = (email) => {
@@ -136,9 +154,13 @@ export default {
     const validateForm = (formData) => {
       const errors = {};
       if (!formData.emailAddress) errors.emailAddress = "Email Required";
-      if (!formData.phoneNumber) errors.phoneNumber = "Phone Number Required";
-      if (formData.emailAddress && !this.isEmail(formData.emailAddress)) {
+      if (!formData.password) errors.phoneNumber = "Password Required";
+      if (!formData.repassword) errors.repassword = "Re-enter Password";
+      if (formData.emailAddress && !isEmail(formData.emailAddress)) {
         errors.emailAddress = "Invalid Email";
+      }
+      if (formData.password != formData.repassword) {
+        errors.repassword = "Passwords don't match";
       }
       return errors;
     };

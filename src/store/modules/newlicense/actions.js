@@ -1,7 +1,6 @@
 import ApiService from "../../../services/api.service";
 import {
   SET_LICENSE,
-  SET_PHOTO,
   SET_PASSPORT,
   SET_HEALTH_EXAM_CERT,
   SET_SERVICE_FEE,
@@ -30,9 +29,6 @@ const userId = localStorage.getItem("userId");
 export default {
   setLicense({ commit }, license) {
     commit(SET_LICENSE, license);
-  },
-  setPhoto({ commit }, photo) {
-    commit(SET_PHOTO, photo);
   },
   setPassport({ commit }, passport) {
     commit(SET_PASSPORT, passport);

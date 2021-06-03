@@ -3,24 +3,18 @@ import {
   SET_PROFILE,
   SET_PERSONAL_INFO,
   SET_ADDRESS,
-  SET_CONTACT,
-  SET_API_CALL,
-  ADD_PROFILE_LOADING,
-  ADD_PROFILE_SUCCESS,
-  ADD_PROFILE_ERROR
+  SET_PHOTO,
 } from "./mutation-types";
 
 const baseUrl = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api";
 
 export default {
   async setProfile({ commit }, profile) {
-    commit(ADD_PROFILE_LOADING);
     try {
       const resp = await ApiService.get("/profiles/1", { profile });
       commit(SET_PROFILE, resp.data);
-      commit(ADD_PROFILE_SUCCESS);
     } catch (error) {
-      commit(ADD_PROFILE_ERROR);
+      return error;
     }
   },
   setProfileInfo({ commit }, profileInfo) {
@@ -30,14 +24,10 @@ export default {
   setAddress({ commit }, address) {
     commit(SET_ADDRESS, address);
   },
-
-  setContact({ commit }, contact) {
-    commit(SET_CONTACT, contact);
+  setPhoto({ commit }, photo) {
+    commit(SET_PHOTO, photo);
   },
 
-  apiCall({ commit }, api) {
-    commit(SET_API_CALL, api);
-  },
   async getUserTypes() {
     try {
       const resp = await ApiService.get(baseUrl + "/lookups/userTypes");
@@ -85,7 +75,6 @@ export default {
   },
   async getWoredas(context, zoneId) {
     try {
-      console.log(zoneId);
       const url = baseUrl + "/lookups/woredas/" + zoneId;
       const resp = await ApiService.get(url);
       return resp;
@@ -96,7 +85,6 @@ export default {
   },
   async getZones(context, regionId) {
     try {
-      console.log(regionId);
       const url = baseUrl + "/lookups/zones/" + regionId;
       const resp = await ApiService.get(url);
       return resp;
@@ -106,12 +94,8 @@ export default {
     }
   },
   async addProfile({ commit }, profile) {
-    commit(ADD_PROFILE_LOADING);
     try {
-      const resp = await ApiService.post(
-        baseUrl + "/profiles/add",
-        profile
-      );
+      const resp = await ApiService.post(baseUrl + "/profiles/add", profile);
       commit(ADD_PROFILE_SUCCESS);
       return resp;
     } catch (error) {
@@ -128,7 +112,6 @@ export default {
     }
   },
   async getProfileById({ commit }, id) {
-    commit(ADD_PROFILE_LOADING);
     try {
       const resp = await ApiService.get(baseUrl + "/profiles/" + id);
       return resp;
@@ -137,7 +120,6 @@ export default {
     }
   },
   async getProfileByUserId({ commit }, id) {
-    commit(ADD_PROFILE_LOADING);
     try {
       const resp = await ApiService.get(baseUrl + "/profiles/user/" + id);
       return resp;
@@ -146,12 +128,11 @@ export default {
     }
   },
   async getUserById({ commit }, id) {
-    commit(ADD_PROFILE_LOADING);
     try {
       const resp = await ApiService.get(baseUrl + "/users/" + id);
       return resp;
     } catch (error) {
       return error;
     }
-  }
+  },
 };

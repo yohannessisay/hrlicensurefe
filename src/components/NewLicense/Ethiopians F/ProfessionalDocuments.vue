@@ -6,10 +6,9 @@
       >
         <TitleWithIllustration
           illustration="User"
-          message="Authenticated Professional Documents"
+          message="Professional Documents"
           class="mt-8"
         />
-
         <div class="flex-row justify-center px-8 py-4">
           <h2
             class="flex"
@@ -70,6 +69,7 @@
           >
             ACCEPTED
           </h2>
+
           <div class="ml-4" style="width:250px">
             <span v-if="showDiplomaUpload">
               <label class="text-primary-700 text-lg"
@@ -153,6 +153,47 @@
               <img :src="transcriptPreview" alt="" class="preview" />
             </span>
           </div>
+          <!-- 
+            <div class="ml-4" style="width:220px">
+              <span v-if="showExperienceUpload">
+                <label class="text-primary-700"
+                  >Upload Work Experience:
+                  <div class="dropbox">
+                    <input
+                      type="file"
+                      id="experienceFile"
+                      ref="experienceFile"
+                      v-on:change="handleExperienceUpload()"
+                      style="margin-bottom: 15px !important;"
+                    />
+                    <p>
+                      Drag your file(s) here to begin<br />
+                      or click to browse
+                    </p>
+                  </div>
+                </label>
+              </span>
+
+              <picture v-if="!showExperienceUpload && isExperienceImage">
+                <p>
+                  <a href="javascript:void(0)" @click="resetExperience()"
+                    >Upload again</a
+                  >
+                </p>
+                <img
+                  v-bind:src="experiencePreview"
+                  v-show="showExperiencePreview"
+                />
+              </picture>
+
+              <span v-if="!showExperienceUpload && !isExperienceImage">
+                <img :src="experiencePreview" alt="" class="preview" />
+              </span>
+
+              <h6 style="margin-top: 15px !important;">
+                Your photo should be passport size
+              </h6>
+            </div> -->
         </div>
         <div class="flex justify-center mb-8">
           <button @click="submit">
@@ -234,7 +275,6 @@ export default {
       documentSpec: [],
       licenseInfo: "",
       userId: localStorage.getItem("userId"),
-      photo: "",
       passport: "",
       healthExamCert: "",
       workExperience: "",
@@ -351,7 +391,6 @@ export default {
     this.buttons = this.getButtons;
     this.documentSpec = this.getDocumentSpec;
 
-    this.photo = this.getPhoto;
     this.passport = this.getPassport;
     this.healthExamCert = this.getHealthExamCert;
     this.englishLanguage = this.getEnglishLanguage;
@@ -540,7 +579,6 @@ export default {
           .then((res) => {
             let licenseId = res.data.data.id;
             let formData = new FormData();
-            formData.append(this.documentSpec[0].documentType.code, this.photo);
             formData.append(
               this.documentSpec[1].documentType.code,
               this.passport

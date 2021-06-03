@@ -109,6 +109,7 @@ export default {
     const submit = () => {
       let email = {
         emailAddress: credentials.value.emailAddress,
+        // password: credentials.value.password,
       };
       message.value.showLoading = true;
       message.value.showFlash = false;

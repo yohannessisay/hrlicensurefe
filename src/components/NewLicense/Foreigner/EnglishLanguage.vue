@@ -191,7 +191,6 @@ export default {
     let acceptedFieldsCheck = ref(false);
     let draftStatus = ref("");
 
-    let photo = ref("");
     let passport = ref("");
     let healthExamCert = ref("");
     let professionalDoc = ref([]);
@@ -246,7 +245,6 @@ export default {
     documentSpecs = store.getters["newlicense/getDocumentSpec"];
     licenseInfo = store.getters["newlicense/getLicense"];
 
-    photo = store.getters["newlicense/getPhoto"];
     passport = store.getters["newlicense/getPassport"];
     healthExamCert = store.getters["newlicense/getHealthExamCert"];
     professionalDoc = store.getters["newlicense/getProfessionalDocuments"];
@@ -330,7 +328,6 @@ export default {
           if (res.data.status == "Success") {
             let licenseId = res.data.data.id;
             let formData = new FormData();
-            formData.append(documentSpecs[0].documentType.code, photo);
             formData.append(documentSpecs[1].documentType.code, passport);
             formData.append(documentSpecs[2].documentType.code, healthExamCert);
             formData.append(documentSpecs[4].documentType.code, workExperience);

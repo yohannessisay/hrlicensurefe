@@ -27,7 +27,7 @@
           </div>
         </div>
         <div class="flex">
-          <div class="flex flex-col mb-medium w-1/2 mr-12">
+          <div class="flex flex-col mb-medium w-1/2 mr-6">
             <label class="text-primary-700">Grand Father Name</label>
             <input
               class="max-w-3xl"
@@ -38,7 +38,47 @@
               personalInfoErrors.grandFatherName
             }}</span>
           </div>
+          <div class="flex flex-col mb-medium w-1/2 ml-12">
+            <label class="text-primary-700">Alternative Name</label>
+            <input
+              class="max-w-3xl"
+              type="text"
+              v-model="personalInfo.alternativeName"
+            />
+            <span style="color: red">{{
+              personalInfoErrors.alternativeName
+            }}</span>
+          </div>
+        </div>
+        <div class="flex">
+          <div class="flex flex-col mb-medium w-1/2 mr-12">
+            <label class="text-primary-700">Alternative Father's Name</label>
+            <input
+              class="max-w-3xl"
+              type="text"
+              v-model="personalInfo.alternativeFatherName"
+            />
+            <span style="color: red">{{
+              personalInfoErrors.alternativeFatherName
+            }}</span>
+          </div>
           <div class="flex flex-col mb-medium w-1/2 m1-12">
+            <label class="text-primary-700"
+              >Alternative Grandfather's Name</label
+            >
+            <input
+              class="max-w-3xl"
+              type="text"
+              v-model="personalInfo.alternativeGrandFatherName"
+            />
+            <span style="color: red">{{
+              personalInfoErrors.alternativeGrandFatherName
+            }}</span>
+          </div>
+        </div>
+
+        <div class="flex">
+          <div class="flex flex-col mb-medium w-1/2 mr-6">
             <label class="text-primary-700">Nationality</label>
             <input
               class="max-w-3xl"
@@ -47,9 +87,8 @@
             />
             <span style="color: red">{{ personalInfoErrors.nationality }}</span>
           </div>
-        </div>
-        <div class="flex">
-          <div class="flex flex-col mb-medium w-1/2 mr-12">
+
+          <div class="flex flex-col mb-medium w-1/2 ml-12">
             <label class="text-primary-700">Place of birth(Optional)</label>
             <input
               class="max-w-3xl"
@@ -57,14 +96,14 @@
               v-model="personalInfo.placeOfBirth"
             />
           </div>
-          <div class="flex flex-col mb-medium w-1/2 m1-12">
-            <label class="text-primary-700">Date of birth(Optional)</label>
-            <input
-              class="max-w-3xl"
-              type="date"
-              v-model="personalInfo.dateOfBirth"
-            />
-          </div>
+        </div>
+        <div class="flex flex-col mb-medium w-1/2 m1-12">
+          <label class="text-primary-700">Date of birth(Optional)</label>
+          <input
+            class="max-w-3xl"
+            type="date"
+            v-model="personalInfo.dateOfBirth"
+          />
         </div>
         <div class="flex">
           <div class="flex w-1/2 mb-small  mr-12">
@@ -182,44 +221,11 @@
             </select>
             <span style="color: red">{{ personalInfoErrors.userTypeId }}</span>
           </div>
-          <div class="flex flex-col mb-medium w-1/2 m1-12">
-            <label class="text-primary-700">Expert Level</label>
-            <select
-              class="max-w-3xl"
-              v-model="personalInfo.expertLevelId"
-              @change="fetchHealthOffices()"
-            >
-              <option
-                v-for="types in state.expertLevel"
-                v-bind:key="types.name"
-                v-bind:value="types.id"
-              >
-                {{ types.name }}
-              </option>
-            </select>
-            <span style="color: red">{{
-              personalInfoErrors.expertLevelId
-            }}</span>
-          </div>
         </div>
-        <div class="flex" v-if="personalInfo.expertLevelId == 4">
-          <div class="flex flex-col mb-medium w-1/2 mr-14">
-            <label class="text-primary-700">Health Office</label>
-            <select class="max-w-3xl" v-model="personalInfo.healthOfficeId">
-              <option
-                v-for="types in state.healthOffices"
-                v-bind:key="types.name"
-                v-bind:value="types.id"
-              >
-                {{ types.name }}
-              </option>
-            </select>
-          </div>
-          <div class="flex flex-col mb-medium w-1/2 ml-12"></div>
-        </div>
+    
         <div class="flex mb-medium w-full mt-medium">
           <button
-            class="block mx-auto w-1/2  bg-lightBlue-500 hover:bg-lightBlue-600 hover:shadow-lg"
+            class="block mx-auto w-1/4  bg-lightBlue-500 hover:bg-lightBlue-600 hover:shadow-lg"
           >
             Next
           </button>
@@ -240,28 +246,29 @@ export default {
     const store = useStore();
     let personalInfo = ref({
       name: "",
-      grandFatherName: "",
       fatherName: "",
-      nationality: "",
-      placeOfBirth: "",
-      dateOfBirth: "",
+      grandFatherName: "",
+      alternativeName: "",
+      alternativeFatherName: "",
+      alternativeGrandFatherName: "",
       gender: "",
-      maritalStatusId: "",
-      maritalStatus: "",
+      dateOfBirth: "",
+      placeOfBirth: "",
+      nationality: "",
       userTypeId: "",
-      expertLevelId: "",
-      healthOfficeId: "",
+      maritalStatusId: "",
     });
     let personalInfoErrors = ref({
       name: "",
-      grandFatherName: "",
       fatherName: "",
+      grandFatherName: "",
+      alternativeName: "",
+      alternativeFatherName: "",
+      alternativeGrandFatherName: "",
       nationality: "",
       gender: "",
       maritalStatusId: "",
-      maritalStatus: "",
       userTypeId: "",
-      expertLevelId: "",
     });
 
     let state = ref({
@@ -275,7 +282,10 @@ export default {
       store.dispatch("profile/getUserTypes").then((res) => {
         const utResults = res.data;
         state.value.userTypes = utResults.data;
-        state.value.userTypes.splice(state.value.userTypes.indexOf("Reviewer"), 1);
+        state.value.userTypes.splice(
+          state.value.userTypes.indexOf("Reviewer"),
+          1
+        );
       });
     };
 
@@ -303,6 +313,7 @@ export default {
       }
       if (empty == true) {
         store.dispatch("profile/setProfileInfo", personalInfo);
+        console.log(store.getters["profile/getPersonalInfo"]);
         emit("changeActiveState");
       }
     };
@@ -323,16 +334,21 @@ export default {
       const errors = {};
 
       if (!formData.name) errors.name = "First Name Required";
-      if (!formData.fatherName) errors.fatherName = "Father Name Required";
+      if (!formData.fatherName) errors.fatherName = "Father's Name Required";
       if (!formData.grandFatherName)
-        errors.grandFatherName = "Grand Father Name Required";
+        errors.grandFatherName = "Grandfather's Name Required";
+      if (!formData.alternativeName)
+        errors.alternativeName = "Alternative Name Required";
+      if (!formData.alternativeFatherName)
+        errors.alternativeFatherName = "Alternative Father's Name Required";
+      if (!formData.alternativeGrandFatherName)
+        errors.alternativeGrandFatherName =
+          "Alternative Grandfather's Name Required";
       if (!formData.nationality) errors.nationality = "Nationality Required";
       if (!formData.gender) errors.gender = "Gender Required";
       if (!formData.maritalStatusId)
         errors.maritalStatusId = "Marital Status Required";
       if (!formData.userTypeId) errors.userTypeId = "User Type Required";
-      if (!formData.expertLevelId)
-        errors.expertLevelId = "Expert Level Required";
 
       return errors;
     };
@@ -347,6 +363,10 @@ export default {
     };
 
     onMounted(() => {
+      
+      if (store.getters["profile/getPersonalInfo"]) {
+        personalInfo.value = store.getters["profile/getPersonalInfo"];
+      }
       fetchUserTypes();
       fetchExpertLevel();
     });

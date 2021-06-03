@@ -2,36 +2,24 @@ export default {
   state: {
     personalInfo: {
       name: "",
-      grandFatherName: "",
       fatherName: "",
-      nationality: "",
-      placeOfBirth: "",
-      dateOfBirth: "",
+      grandFatherName: "",
+      alternativeName: "",
+      alternativeFatherName: "",
+      alternativeGrandFatherName: "",
       gender: "",
-      maritalStatusId: "",
-      maritalStatus: "",
+      dateOfBirth: "",
+      placeOfBirth: "",
+      nationality: "",
       userTypeId: "",
-      expertLevelId: "",
-      healthOfficeId: ""
+      maritalStatusId: "",
     },
     address: {
-      houseNumber: "",
-      woredaId: "",
-      woreda: "",
       kebele: "",
-      city: "",
+      houseNumber: "",
       residence: "",
-      zone: "",
-      poBox: ""
+      poBox: "",
     },
-    contact: {
-      mobileNumber: "",
-      email: "",
-      telephoneNumber: "",
-      poBox: ""
-    },
-    addProfileLoading: false,
-    addProfileSuccess: false,
-    addProfileError: false
-  }
+    photo: "",
+  },
 };
