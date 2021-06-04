@@ -335,6 +335,7 @@ export default {
               departmentId: licenseInfo.education.departmentId,
               institutionId: licenseInfo.education.institutionId,
             },
+            residenceWoredaId: licenseInfo.residenceWoredaId,
           },
         };
         store.dispatch("renewal/addRenewalLicense", license).then((res) => {
@@ -436,6 +437,7 @@ export default {
               departmentId: licenseInfo.education.departmentId,
               institutionId: licenseInfo.education.institutionId,
             },
+            residenceWoredaId: licenseInfo.residenceWoredaId,
           },
         };
         store.dispatch("renewal/addRenewalLicense", license).then((res) => {
