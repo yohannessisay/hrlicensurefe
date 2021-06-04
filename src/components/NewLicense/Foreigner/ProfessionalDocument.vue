@@ -572,6 +572,7 @@ export default {
               institutionId: this.license.education.departmentId,
               departmentId: this.license.education.institutionId,
             },
+            residenceWoredaId: this.license.residenceWoredaId,
           },
         };
         this.$store

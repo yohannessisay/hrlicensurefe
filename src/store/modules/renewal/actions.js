@@ -1,7 +1,6 @@
 import ApiService from "../../../services/api.service";
 import {
   SET_LICENSE,
-  SET_RENEWAL_PHOTO,
   SET_RENEWAL_HEALTH_EXAM_CERT,
   SET_RENEWAL_LETTER,
   SET_RENEWAL_WORK_EXPERIENCE,
@@ -24,10 +23,6 @@ export default {
   setLicense({ commit }, license) {
     commit(SET_LICENSE, license);
   },
-  setRenewalPhoto({ commit }, renewalPhoto) {
-    commit(SET_RENEWAL_PHOTO, renewalPhoto);
-  },
-
   setRenewalHealthExamCert({ commit }, renewalHealthExamCert) {
     commit(SET_RENEWAL_HEALTH_EXAM_CERT, renewalHealthExamCert);
   },
@@ -132,6 +127,7 @@ export default {
       return resp;
     } catch (error) {
       return error;
+      Test7;
     }
   },
   async getApplicationCategories() {

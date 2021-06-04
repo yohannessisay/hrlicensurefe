@@ -1,6 +1,5 @@
 import {
   SET_LICENSE,
-  SET_RENEWAL_PHOTO,
   SET_RENEWAL_HEALTH_EXAM_CERT,
   SET_RENEWAL_LETTER,
   SET_RENEWAL_WORK_EXPERIENCE,
@@ -19,9 +18,6 @@ import {
 export default {
   [SET_LICENSE](state, license) {
     state.license = license;
-  },
-  [SET_RENEWAL_PHOTO](state, renewalPhoto) {
-    state.photo = renewalPhoto;
   },
   [SET_RENEWAL_LETTER](state, renewalLetter) {
     state.letterFromHiringInstitution = renewalLetter;

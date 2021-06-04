@@ -6,7 +6,6 @@ export default {
       departmentId: "",
       institutionId: "",
     },
-    photo: "",
     healthExamCert: "",
     workExperience: "",
     letterFromHiringInstitution: "",
