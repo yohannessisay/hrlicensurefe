@@ -1,11 +1,14 @@
 export default {
   state: {
     applicantId: "",
-    applicantTypeId: "",
-    education: {
-      departmentId: "",
-      institutionId: "",
-    },
+    residenceWoredaId: "",
+    applicantTitle: "",
+    whomGoodStandingFor: "",
+    licenseIssuedDate: "",
+    whoIssued: "",
+    licenseRegistrationNumber: "",
+    applicantPositionId: "",
+   
     licenseCopy: "",
     serviceFee: "",
     goodStandingLetter: "",

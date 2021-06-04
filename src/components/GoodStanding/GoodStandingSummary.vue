@@ -501,12 +501,15 @@ export default {
         let license = {
           action: action,
           data: {
-            applicantId: this.userId,
-            applicantTypeId: this.applicantTypeId,
-            education: {
-              institutionId: this.education.institutionId,
-              departmentId: this.education.departmentId,
-            },
+            applicantId: this.licenseInfo.applicantId,
+            residenceWoredaId: this.licenseInfo.residenceWoredaId,
+            applicantTitle: this.licenseInfo.applicantTitle,
+            whomGoodStandingFor: this.licenseInfo.whomGoodStandingFor,
+            licenseIssuedDate: this.licenseInfo.licenseIssuedDate,
+            whoIssued: this.licenseInfo.whoIssued,
+            licenseRegistrationNumber: this.licenseInfo
+              .licenseRegistrationNumber,
+            applicantPositionId: this.licenseInfo.applicantPositionId,
           },
         };
         this.$store
@@ -589,12 +592,15 @@ export default {
         let license = {
           action: action,
           data: {
-            applicantId: this.userId,
-            applicantTypeId: this.applicantTypeId,
-            education: {
-              institutionId: this.education.institutionId,
-              departmentId: this.education.departmentId,
-            },
+            applicantId: this.licenseInfo.applicantId,
+            residenceWoredaId: this.licenseInfo.residenceWoredaId,
+            applicantTitle: this.licenseInfo.applicantTitle,
+            whomGoodStandingFor: this.licenseInfo.whomGoodStandingFor,
+            licenseIssuedDate: this.licenseInfo.licenseIssuedDate,
+            whoIssued: this.licenseInfo.whoIssued,
+            licenseRegistrationNumber: this.licenseInfo
+              .licenseRegistrationNumber,
+            applicantPositionId: this.licenseInfo.applicantPositionId,
           },
         };
         this.$store
@@ -628,11 +634,14 @@ export default {
           action: action,
           data: {
             applicantId: this.licenseInfo.applicantId,
-            applicantTypeId: this.licenseInfo.applicantTypeId,
-            education: {
-              departmentId: this.licenseInfo.education.departmentId,
-              institutionId: this.licenseInfo.education.institutionId,
-            },
+            residenceWoredaId: this.licenseInfo.residenceWoredaId,
+            applicantTitle: this.licenseInfo.applicantTitle,
+            whomGoodStandingFor: this.licenseInfo.whomGoodStandingFor,
+            licenseIssuedDate: this.licenseInfo.licenseIssuedDate,
+            whoIssued: this.licenseInfo.whoIssued,
+            licenseRegistrationNumber: this.licenseInfo
+              .licenseRegistrationNumber,
+            applicantPositionId: this.licenseInfo.applicantPositionId,
           },
         },
         id: this.draftId,
