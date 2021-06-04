@@ -1,7 +1,7 @@
 <template>
   <div
     class="container"
-    v-for="(item, index) in unFinishedSearched"
+    v-for="(item, index) in assidgnedToOthers"
     v-bind:key="item.id"
     v-bind:value="item.id"
   >
@@ -13,7 +13,7 @@
         class="p-4 w-48 h-64"
         @Click="
           detail(
-            `/admin/unfinishedDetail`,
+            `/admin/detail`,
             item.applicationType,
             item.id,
             item.applicant.id
@@ -49,7 +49,18 @@
               : "-"
           }}</b>
         </h4>
-        <br />
+        <span
+          class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+        >
+          <!-- Assigned Reviewer: -->
+          <!-- <i class="far fa-user-cog"></i> -->
+          <i class="fas fa-user-cog"></i> &nbsp;
+          {{ item.reviewer.name ? item.reviewer.name : "-" }}
+        </span>
+        <!-- <h6
+                class="text-lightBlueB-500 mt-tiny flex justify-center content-center">
+                {{ item.createdAt ? item.createdAt : "-" }}
+              </h6> -->
         <span
           class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
         >
@@ -76,22 +87,24 @@ export default {
   computed: {
     moment: () => moment,
   },
-  props: ["unFinishedSearched"],
-  name: "MyUnfinished",
-  setup(props) {
-    let router = useRouter();
+  name: "AssignedToOthers",
+  props: ["assidgnedToOthers"],
 
+  setup() {
+    const router = useRouter();
     const detail = (data, applicationType, applicationId, applicantId) => {
       const url =
         data + "/" + applicationType + "/" + applicationId + "/" + applicantId;
       router.push(url);
     };
+
     return {
-      detail,
-    };
+        detail,
+    }
   },
 };
 </script>
+
 <style scoped>
 img {
   border-radius: 50%;

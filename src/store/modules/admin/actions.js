@@ -42,4 +42,13 @@ export default {
       return error;
     }
   },
+  async changePassword({ commit }, adminId, newPassword) {
+    try {
+      // const resp = await ApiService.get(url+"/changePassword", adminId)
+      console.log(adminId);
+      return adminId;
+    } catch(error) {
+      return error;
+    }
+  }
 };

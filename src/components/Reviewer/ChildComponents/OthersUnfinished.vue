@@ -1,7 +1,7 @@
 <template>
   <div
     class="container"
-    v-for="(item, index) in unFinishedSearched"
+    v-for="(item, index) in othersUnfinished"
     v-bind:key="item.id"
     v-bind:value="item.id"
   >
@@ -26,10 +26,6 @@
               class="box-shadow-pop"
               src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
             />
-            <!-- <img
-                  class="box-shadow-pop"
-                  :src="'https://hrlicensurebe.dev.k8s.sandboxaddis.com/'+item.profilePic"
-                />  -->
           </span>
           <span v-else>
             <img
@@ -49,7 +45,16 @@
               : "-"
           }}</b>
         </h4>
-        <br />
+        <span
+          class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+        >
+          <i class="fas fa-user-cog"></i> &nbsp;
+          {{ item.reviewer.name ? item.reviewer.name : "-" }}
+        </span>
+        <!-- <h6
+                class="text-lightBlueB-500 mt-tiny flex justify-center content-center">
+                {{ item.createdAt ? item.createdAt : "-" }}
+              </h6> -->
         <span
           class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
         >
@@ -76,16 +81,17 @@ export default {
   computed: {
     moment: () => moment,
   },
-  props: ["unFinishedSearched"],
-  name: "MyUnfinished",
-  setup(props) {
-    let router = useRouter();
+  name: "OthersUnfinished",
+  props: ["othersUnfinished"],
+  setup() {
+    const router = useRouter();
 
     const detail = (data, applicationType, applicationId, applicantId) => {
       const url =
         data + "/" + applicationType + "/" + applicationId + "/" + applicantId;
       router.push(url);
     };
+
     return {
       detail,
     };

@@ -88,6 +88,11 @@ const routes = [
     component: () => import("../components/Reviewer/Home.vue"),
   },
   {
+    path: "/admin/changePassword",
+    name: "changeadminPassword",
+    component: () => import("../components/Reviewer/Configurations/ChangePassword/ChangePassword.vue"),
+  },
+  {
     path: "/myWork",
     name: "myWork",
     component: () => import("../components/Reviewer/MyWork.vue"),
@@ -106,6 +111,11 @@ const routes = [
     path: "/admin/unfinishedAll",
     name: "allUnfinished",
     component: () => import("../components/Reviewer/AllUnfinished.vue"),
+  },
+  {
+    path: "/admin/unconfirmed",
+    name: "unconfirmed",
+    component: () => import("../components/Reviewer/Unconfirmed.vue")
   },
   {
     path: "/admin/assignedToYou",

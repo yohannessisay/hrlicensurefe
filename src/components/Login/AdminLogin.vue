@@ -107,11 +107,21 @@ export default {
       store.dispatch("admin/login", email).then((res) => {
         showLoading.value = false
         if (res.data.status == "Success") {
-          message.value.showFlash = !message.value.showFlash;
+          console.log("logged in user", res.data.data)
+          const isFirstLoggin = res.data.data.id; // res.data.data.id is gonna be changed soon
+          if(isFirstLoggin != 1) {
+            message.value.showFlash = !message.value.showFlash;
 
-          setTimeout(() => {
-            router.push({ path: "/admin/review" });
-          }, 3000);
+            setTimeout(() => {
+              router.push({ path: "/admin/review" });
+            }, 3000);
+          } else {
+            message.value.showFlash = !message.value.showFlash;
+            setTimeout(() => {
+              router.push({ path: "/admin/changePassword" });
+            }, 3000);
+          }
+          
         } else {
           showLoading.value = false
           message.value.showErrorFlash = !message.value.showErrorFlash;

@@ -6,66 +6,8 @@
         <Title message="Assigned To You" />
       </div>
       <div class="flex flex-wrap pb-medium rounded h-full" v-if="!showLoading">
-        <div
-          class="pl-large w-52 h-26"
-          v-if="nothingToShow == true"
-        >
-          <div class="flex content-center justify-center">
-            <h2>Nothing To Show!</h2>
-          </div>
-        </div>
-        <div
-          class="container"
-          v-for="item in getAssignedToYou"
-          v-bind:key="item.applicationStatus.name"
-          v-bind:value="item.id"
-        >
-          <div
-            class="flex justify-center items-center ml-8 mt-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
-          >
-            <div
-              class="p-4 w-48 h-64"
-              @Click="detail(`/admin/detail`, item.applicationType, item.id, item.applicant.id)"
-            >
-              <div class="flex content-center justify-center">
-                <!-- <img class="box-shadow-pop" v-bind:src="item.picture.large" /> -->
-                <img
-                  class="box-shadow-pop"
-                  src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
-                />
-              </div>
-              <h4
-                class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
-              >
-                <b>{{
-                  item.applicant.profile.name
-                    ? item.applicant.profile.name +
-                      " " +
-                      item.applicant.profile.fatherName
-                    : "-"
-                }}</b>
-              </h4>
-              <br />
-              
-              <span
-                class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-              >
-                {{ item.applicationType ? item.applicationType : "-" }}
-              </span>
-              <span
-                class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-              >
-                {{ item.newLicenseCode ? item.newLicenseCode : "-" }}
-              </span>
-              <span
-                class="text-lightBlueB-500 mt-tiny flex justify-end content-center">
-                  {{item.createdAt ? moment(item.createdAt).fromNow() : '-'}}
-              </span>
-
-            </div>
-          </div>
-        </div>
-        <!-- Second !-->
+        <nothing-to-show :nothingToShow="nothingToShow" />
+        <my-assigned :assignedToMe = "getAssignedToYou" />
       </div>
     </div>
     <div
@@ -80,21 +22,26 @@
 <script>
 import Title from "@/sharedComponents/TitleWithIllustration";
 import ReviewerNavBar from "@/components/Reviewer/ReviewerNavBar";
+import NothingToShow from "@/components/Reviewer/ChildComponents/NothingToShow";
+import MyAssigned from "@/components/Reviewer/ChildComponents/MyAssigned";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 
 import { ref, onMounted } from "vue";
-import store from '../../store';
+import store from "../../store";
 import Spinner from "@/sharedComponents/Spinner";
-import moment from 'moment';
+import moment from "moment";
 
 export default {
-  components: { ReviewerNavBar, Title, Spinner, },
+  components: { ReviewerNavBar, 
+              Title, Spinner,
+              NothingToShow,
+              MyAssigned },
   computed: {
     moment: () => moment,
     getAssignedToYou() {
-      return store.getters['reviewer/getAssignedToYouSearched'];
-    }
+      return store.getters["reviewer/getAssignedToYouSearched"];
+    },
   },
   setup() {
     const store = useStore();
@@ -104,28 +51,50 @@ export default {
     let nothingToShow = ref(false);
     let x = ref("");
     let userId = +localStorage.getItem("userId");
-    let adminId = +localStorage.getItem("adminId")
-    let showLoading = ref(false)
+    let adminId = +localStorage.getItem("adminId");
+    let showLoading = ref(false);
 
     const fetchAssignedtoYou = () => {
       showLoading.value = true;
-      store.dispatch("reviewer/getAssignedToYou", adminId).then(res => {
+      store.dispatch("reviewer/getAssignedToYou", adminId).then((res) => {
         showLoading.value = false;
         // if (res.status != "Error") {
-          assignedToyou.value = store.getters['reviewer/getAssignedToYouSearched'];
-        if(assignedToyou.value.length !== 0) {
-          for (var prop in store.getters['reviewer/getAssignedToYouSearched']) {
-            if (store.getters['reviewer/getAssignedToYouSearched'][prop].applicationType == "Renewal") {
-              store.getters['reviewer/getAssignedToYouSearched'][prop].newLicenseCode =
-                store.getters['reviewer/getAssignedToYouSearched'][prop].renewalCode;
+        assignedToyou.value =
+          store.getters["reviewer/getAssignedToYouSearched"];
+        if (assignedToyou.value.length !== 0) {
+          for (var prop in store.getters["reviewer/getAssignedToYouSearched"]) {
+            if (
+              store.getters["reviewer/getAssignedToYouSearched"][prop]
+                .applicationType == "Renewal"
+            ) {
+              store.getters["reviewer/getAssignedToYouSearched"][
+                prop
+              ].newLicenseCode =
+                store.getters["reviewer/getAssignedToYouSearched"][
+                  prop
+                ].renewalCode;
             }
-            if (store.getters['reviewer/getAssignedToYouSearched'][prop].applicationType == "Good Standing") {
-              store.getters['reviewer/getAssignedToYouSearched'][prop].newLicenseCode =
-                store.getters['reviewer/getAssignedToYouSearched'][prop].goodStandingCode;
+            if (
+              store.getters["reviewer/getAssignedToYouSearched"][prop]
+                .applicationType == "Good Standing"
+            ) {
+              store.getters["reviewer/getAssignedToYouSearched"][
+                prop
+              ].newLicenseCode =
+                store.getters["reviewer/getAssignedToYouSearched"][
+                  prop
+                ].goodStandingCode;
             }
-            if (store.getters['reviewer/getAssignedToYouSearched'][prop].applicationType == "Verification") {
-              store.getters['reviewer/getAssignedToYouSearched'][prop].newLicenseCode =
-                store.getters['reviewer/getAssignedToYouSearched'][prop].verificationCode;
+            if (
+              store.getters["reviewer/getAssignedToYouSearched"][prop]
+                .applicationType == "Verification"
+            ) {
+              store.getters["reviewer/getAssignedToYouSearched"][
+                prop
+              ].newLicenseCode =
+                store.getters["reviewer/getAssignedToYouSearched"][
+                  prop
+                ].verificationCode;
             }
           }
         } else {
@@ -135,7 +104,8 @@ export default {
     };
 
     const detail = (data, applicationType, applicationId, applicantId) => {
-      const url = data + "/" + applicationType + "/" + applicationId + "/" + applicantId;
+      const url =
+        data + "/" + applicationType + "/" + applicationId + "/" + applicantId;
       router.push(url);
     };
 
@@ -147,9 +117,9 @@ export default {
       assignedToyou,
       nothingToShow,
       detail,
-      showLoading
+      showLoading,
     };
-  }
+  },
 };
 </script>
 <style scoped>
