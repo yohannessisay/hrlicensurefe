@@ -378,6 +378,7 @@ export default {
     this.applicantTypeId = this.license.applicantTypeId;
     this.education.departmentId = this.license.education.departmentId;
     this.education.institutionId = this.license.education.institutionId;
+    this.residenceWoredaId = this.license.residenceWoredaId;
     this.buttons = this.getButtons;
   },
   data: () => ({
@@ -391,6 +392,7 @@ export default {
       departmentId: "",
       institutionId: "",
     },
+    residenceWoredaId: "",
     draftId: "",
     draftData: "",
     draftStatus: "",
@@ -509,6 +511,7 @@ export default {
               institutionId: this.education.institutionId,
               departmentId: this.education.departmentId,
             },
+            residenceWoredaId: this.residenceWoredaId,
           },
         };
         this.$store
@@ -596,6 +599,7 @@ export default {
               institutionId: this.education.institutionId,
               departmentId: this.education.departmentId,
             },
+            residenceWoredaId: this.residenceWoredaId,
           },
         };
         this.$store
@@ -634,6 +638,7 @@ export default {
               departmentId: this.licenseInfo.education.departmentId,
               institutionId: this.licenseInfo.education.institutionId,
             },
+            residenceWoredaId: this.residenceWoredaId,
           },
         },
         id: this.draftId,

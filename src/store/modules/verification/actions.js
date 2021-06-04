@@ -173,6 +173,35 @@ export default {
       return error;
     }
   },
+  async getRegions() {
+    try {
+      const resp = await ApiService.get(url + "lookups/regions");
+      return resp;
+    } catch (error) {
+      const resp = error;
+      return resp;
+    }
+  },
+  async getWoredas(context, zoneId) {
+    try {
+      const baseUrl = url + "lookups/woredas/" + zoneId;
+      const resp = await ApiService.get(baseUrl);
+      return resp;
+    } catch (error) {
+      const resp = error;
+      return resp;
+    }
+  },
+  async getZones(context, regionId) {
+    try {
+      const baseUrl = url + "lookups/zones/" + regionId;
+      const resp = await ApiService.get(baseUrl);
+      return resp;
+    } catch (error) {
+      const resp = error;
+      return resp;
+    }
+  },
   async storeDeclinedFields({ commit }, fields) {
     commit(SET_DECLINED_FIELDS, fields);
   },

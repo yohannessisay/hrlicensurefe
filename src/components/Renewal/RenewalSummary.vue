@@ -380,6 +380,7 @@ export default {
     this.applicantTypeId = this.license.applicantTypeId;
     this.education.departmentId = this.license.education.departmentId;
     this.education.institutionId = this.license.education.institutionId;
+    this.residenceWoredaId = this.license.residenceWoredaId;
     this.buttons = this.getButtons;
   },
   data: () => ({
@@ -393,6 +394,7 @@ export default {
       departmentId: "",
       institutionId: "",
     },
+    residenceWoredaId: "",
     draftId: "",
     draftData: "",
     draftStatus: "",
@@ -484,7 +486,7 @@ export default {
             if (res.data.status == "Success") {
               let licenseId = this.draftId;
               let formData = new FormData();
-           
+
               formData.append(
                 this.documentTypes[1].documentType.code,
                 this.letter
@@ -548,6 +550,7 @@ export default {
               institutionId: this.education.institutionId,
               departmentId: this.education.departmentId,
             },
+            residenceWoredaId: this.residenceWoredaId,
           },
         };
         this.$store
@@ -586,6 +589,7 @@ export default {
               departmentId: this.licenseInfo.education.departmentId,
               institutionId: this.licenseInfo.education.institutionId,
             },
+            residenceWoredaId: this.residenceWoredaId,
           },
         },
         id: this.draftId,
@@ -634,7 +638,7 @@ export default {
             if (res.data.status == "Success") {
               let licenseId = this.draftId;
               let formData = new FormData();
-           
+
               formData.append(
                 this.documentTypes[1].documentType.code,
                 this.letter
@@ -699,6 +703,7 @@ export default {
               institutionId: this.education.institutionId,
               departmentId: this.education.departmentId,
             },
+            residenceWoredaId: this.residenceWoredaId,
           },
         };
         this.$store

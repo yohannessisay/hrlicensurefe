@@ -6,6 +6,7 @@ export default {
       departmentId: "",
       institutionId: "",
     },
+    residenceWoredaId: "",
     licenseCopy: "",
     serviceFee: "",
     verificationLetter: "",
