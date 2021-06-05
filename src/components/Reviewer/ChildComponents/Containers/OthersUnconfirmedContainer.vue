@@ -1,10 +1,10 @@
 <template>
   <div class="flex pl-12 pt-tiny">
-    <Title message="Returned To Me" />
+    <Title message="Others Unconfirmed" />
   </div>
   <div class="flex flex-wrap pb-medium rounded h-full" v-if="!showLoading">
     <nothing-to-show :nothingToShow="nothingToShowUnfinished" />
-    <returned-to-me :returnedToMe="getReturnedToMe" />
+    <others-unconfirmed :othersUnconfirmed="getUnfinished" />
   </div>
   <div v-if="showLoading" class="flex justify-center justify-items-center">
         <Spinner />
@@ -21,39 +21,42 @@ import Spinner from "@/sharedComponents/Spinner";
 
 import store from "../../../../store";
 import Title from "@/sharedComponents/TitleWithIllustration";
-import ReturnedToMe from "@/components/Reviewer/ChildComponents/ReturnedToMe";
+import OthersUnconfirmed from "@/components/Reviewer/ChildComponents/OthersUnconfirmed";
 import NothingToShow from "@/components/Reviewer/ChildComponents/NothingToShow";
 
 export default {
     computed: {
         moment: () => moment,
-        getReturnedToMe() {
-      return store.getters["reviewer/getReturnedToMeSearched"];
+        getUnfinished() {
+      return store.getters["reviewer/getOthersUnconfirmedSearched"];
     },
     },
   components: {
       Spinner,
       Title,
+    OthersUnconfirmed,
     NothingToShow,
-    ReturnedToMe,
   },
-  name: "ReturnedToMeContainer",
+  name: "OthersUnconfirmedContainer",
   setup() {
     const store = useStore();
     const router = useRouter();
 
     let unfinished = ref({});
+    let adminRole = localStorage.getItem("role");
     let adminId = +localStorage.getItem("adminId");
     let nothingToShowUnfinished = ref(false);
     let showLoading = ref(false);
 
     const fetchUnfinished = () => {
       showLoading.value = true;
-      store.dispatch("reviewer/getReturnedToMe", adminId).then((res) => {
+      const adminData = [adminRole, adminId];
+      store.dispatch("reviewer/getOthersUnconfirmed", adminData).then((res) => {
         showLoading.value = false;
-        unfinished.value = store.getters["reviewer/getReturnedToMeSearched"];
-        if (store.getters["reviewer/getReturnedToMe"].length !== 0) {
-          for (var prop in store.getters["reviewer/getReturnedToMeSearched"]) {
+        unfinished.value = store.getters["reviewer/getOthersUnconfirmedSearched"];
+        console.log("unfinished", unfinished.value);
+        if (store.getters["reviewer/getOthersUnconfirmed"].length !== 0) {
+          for (var prop in store.getters["reviewer/getOthersUnconfirmedSearched"]) {
             if (unfinished.value[prop].applicationType == "Renewal") {
               unfinished.value[prop].newLicenseCode =
                 unfinished.value[prop].renewalCode;

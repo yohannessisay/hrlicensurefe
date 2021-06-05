@@ -1,7 +1,7 @@
 <template>
   <div
     class="container"
-    v-for="item in myUnconfirmed"
+    v-for="item in returnedToOthers"
     v-bind:key="item.id"
     v-bind:value="item.id"
   >
@@ -12,7 +12,7 @@
         class="p-4 w-48 h-64"
         @Click="
           detail(
-            `/admin/unconfirmedDetail`,
+            `/admin/returnedToOthersDetail`,
             item.applicationType,
             item.id,
             item.applicant.id
@@ -65,8 +65,8 @@ export default {
   computed: {
     moment: () => moment,
   },
-  props: ["myUnconfirmed"],
-  name: "MyUnconfirmed",
+  props: ["returnedToOthers"],
+  name: "ReturnedToOthers",
 
   setup() {
     let router = useRouter();

@@ -1,7 +1,7 @@
 <template>
   <div
     class="container"
-    v-for="item in myUnconfirmed"
+    v-for="item in confirmReview"
     v-bind:key="item.id"
     v-bind:value="item.id"
   >
@@ -12,7 +12,7 @@
         class="p-4 w-48 h-64"
         @Click="
           detail(
-            `/admin/unconfirmedDetail`,
+            `/admin/unfinishedDetail`,
             item.applicationType,
             item.id,
             item.applicant.id
@@ -65,19 +65,11 @@ export default {
   computed: {
     moment: () => moment,
   },
-  props: ["myUnconfirmed"],
-  name: "MyUnconfirmed",
+  props: ["confirmReview"],
+  name: "ConfirmReview",
 
   setup() {
     let router = useRouter();
-    const detail = (data, applicationType, applicationId, applicantId) => {
-      const url =
-        data + "/" + applicationType + "/" + applicationId + "/" + applicantId;
-      router.push(url);
-    };
-    return {
-      detail,
-    };
   },
 };
 </script>

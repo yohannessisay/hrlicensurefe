@@ -4,7 +4,7 @@
   </div>
   <div class="flex flex-wrap pb-medium rounded h-full" v-if="!showLoading">
     <nothing-to-show :nothingToShow="nothingToShowUnfinished" />
-    <my-unconfirmed :myUnconfirmed="getUnfinished" />
+    <my-unconfirmed :myUnconfirmed="getUnconfirmed" />
   </div>
   <div v-if="showLoading" class="flex justify-center justify-items-center">
         <Spinner />
@@ -27,8 +27,8 @@ import NothingToShow from "@/components/Reviewer/ChildComponents/NothingToShow";
 export default {
     computed: {
         moment: () => moment,
-        getUnfinished() {
-      return store.getters["reviewer/getUnfinishedSearched"];
+        getUnconfirmed() {
+      return store.getters["reviewer/getUnconfirmedSearched"];
     },
     },
   components: {
@@ -50,12 +50,12 @@ export default {
 
     const fetchUnfinished = () => {
       showLoading.value = true;
-      store.dispatch("reviewer/getUnfinished", adminId).then((res) => {
+      store.dispatch("reviewer/getUnconfirmed", adminId).then((res) => {
         showLoading.value = false;
-        unfinished.value = store.getters["reviewer/getUnfinishedSearched"];
+        unfinished.value = store.getters["reviewer/getUnconfirmedSearched"];
         console.log("unfinished", unfinished.value);
-        if (store.getters["reviewer/getUnfinished"].length !== 0) {
-          for (var prop in store.getters["reviewer/getUnfinishedSearched"]) {
+        if (store.getters["reviewer/getUnconfirmed"].length !== 0) {
+          for (var prop in store.getters["reviewer/getUnconfirmedSearched"]) {
             if (unfinished.value[prop].applicationType == "Renewal") {
               unfinished.value[prop].newLicenseCode =
                 unfinished.value[prop].renewalCode;

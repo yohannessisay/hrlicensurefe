@@ -4,7 +4,7 @@
   </div>
   <div class="flex flex-wrap pb-medium rounded h-full" v-if="!showLoading">
     <nothing-to-show :nothingToShow="nothingToShowUnfinished" />
-    <my-unconfirmed :myUnconfirmed="getUnfinished" />
+    <confirm-review :confirmReview="getConfirmReview" />
   </div>
   <div v-if="showLoading" class="flex justify-center justify-items-center">
         <Spinner />
@@ -21,21 +21,21 @@ import Spinner from "@/sharedComponents/Spinner";
 
 import store from "../../../../store";
 import Title from "@/sharedComponents/TitleWithIllustration";
-import MyUnconfirmed from "@/components/Reviewer/ChildComponents/MyUnconfirmed";
+import ConfirmReview from "@/components/Reviewer/ChildComponents/ConfirmReview";
 import NothingToShow from "@/components/Reviewer/ChildComponents/NothingToShow";
 
 export default {
     computed: {
         moment: () => moment,
-        getUnfinished() {
-      return store.getters["reviewer/getUnfinishedSearched"];
+        getConfirmReview() {
+      return store.getters["reviewer/getConfirmReviewSearched"];
     },
     },
   components: {
       Spinner,
       Title,
-    MyUnconfirmed,
-    NothingToShow,
+    ConfirmReview,
+    NothingToShow
   },
   name: "ConfirmReviewContainer",
   setup() {
@@ -49,11 +49,11 @@ export default {
 
     const fetchUnfinished = () => {
       showLoading.value = true;
-      store.dispatch("reviewer/getUnfinished", adminId).then((res) => {
+      store.dispatch("reviewer/getConfirmReview", adminId).then((res) => {
         showLoading.value = false;
-        unfinished.value = store.getters["reviewer/getUnfinishedSearched"];
-        if (store.getters["reviewer/getUnfinished"].length !== 0) {
-          for (var prop in store.getters["reviewer/getUnfinishedSearched"]) {
+        unfinished.value = store.getters["reviewer/getConfirmReviewSearched"];
+        if (store.getters["reviewer/getConfirmReview"].length !== 0) {
+          for (var prop in store.getters["reviewer/getConfirmReviewSearched"]) {
             if (unfinished.value[prop].applicationType == "Renewal") {
               unfinished.value[prop].newLicenseCode =
                 unfinished.value[prop].renewalCode;

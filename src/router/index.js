@@ -210,6 +210,24 @@ const routes = [
       import("../components/Reviewer/Detail/UnassignedDetail.vue"),
   },
   {
+    path: "/admin/unconfirmedDetail/:applicationType/:applicationId/:applicantId",
+    name: "unconfirmedDetail",
+    component: () => 
+      import("../components/Reviewer/Detail/UnconfirmedDetail.vue"),
+  },
+  {
+    path: "/admin/othersUnconfirmedDetail/:applicationType/:applicationId/:applicantId",
+    name: "othersUnconfirmedDetail",
+    component: () => 
+      import("../components/Reviewer/Detail/OthersUnconfirmedDetail.vue")
+  },
+  {
+    path: "/admin/othersUnconfirmedDetail/:applicationType/:applicationId/:applicantId",
+    name: "othersUnconfirmedDetail",
+    component: () => 
+      import("../components/Reviewer/Detail/ReturnedToOthersDetail.vue")
+  },
+  {
     path: "/admin",
     name: "Admin",
     component: () => import("../components/Landing/AdminLanding.vue"),

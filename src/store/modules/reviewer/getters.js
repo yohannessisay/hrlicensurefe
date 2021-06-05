@@ -8,6 +8,21 @@ export default {
     getUnfinished: state => state.unfinished,
     getUnfinishedSearched: state => state.unfinishedSearched,
 
+    getUnconfirmed: state => state.unconfirmed,
+    getUnconfirmedSearched: state => state.unconfirmedSearched,
+    getOthersUnconfirmed: state => state.othersUnconfirmed,
+    getOthersUnconfirmedSearched: state => state.othersUnconfirmedSearched,
+
+    getReturnedToMe: state => state.returnedToMe,
+    getReturnedToMeSearched: state => state.returnedToMeSearched,
+    getReturnedToOthers: state => state.returnedToOthers,
+    getRetunedToOthersSearched: state => state.retunedToOthersSearched,
+
+    getConfirmReview: state => state.confirmReview,
+    getConfirmReviewSearched: state => state.confirmReviewSearched,
+    getOthersConfirmReview: state => state.othersConfirmReview,
+    getOthersConfirmReviewSearched: state => state.othersConfirmReviewSearched,
+
     getRecentlyFinished: state => state.recentlyFinished,
     getRecentlyFinishedSearched: state => state.recentlyFinishedSearched,
 
