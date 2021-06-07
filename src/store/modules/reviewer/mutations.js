@@ -21,6 +21,9 @@ import {
     SET_OTHERS_CONFIRM_REVIEW,
     SET_OTHERS_CONFIRM_REVIEW_SEARCHED,
 
+    SET_TEMPORARLY_FINISHED,
+    SET_TEMPORARLY_FINISHED_SEARCHED,
+
     SET_RECENTLY_FINISHED,
     SET_RECENTLY_FINISHED_SEARCHED,
     SET_ASSIGNED_FOR_EVERYONE,
@@ -106,6 +109,9 @@ export default {
     [SET_OTHERS_CONFIRM_REVIEW_SEARCHED] (state, searchedVal) {
         state.othersConfirmReviewSearched = searchedVal
     },
+
+    // SET_TEMPORARLY_FINISHED,
+    // SET_TEMPORARLY_FINISHED_SEARCHED,
 
     [SET_RECENTLY_FINISHED] (state, datas) {
         state.recentlyFinished = datas[0]

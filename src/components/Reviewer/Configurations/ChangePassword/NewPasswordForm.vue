@@ -53,7 +53,6 @@ export default {
             store.dispatch("admin/changePassword", adminId, passwordInfo)
             .then(res => {
                 showLoading.value = false;
-                console.log("admin status chenged", res, "password info ", passwordInfo.oldPassword, " => ", passwordInfo.newPassword, " -> ", passwordInfo.confirmPassword);
                 setTimeout(() => {
                     router.push("/admin/")
                 }, 3000)

@@ -538,30 +538,6 @@ export default {
             }
           });
       }
-      // store
-      //   .dispatch("reviewer/getApplication", route.params.applicationId)
-      //   .then(res => {
-      //     newLicense.value = res.data.data;
-      //     buttons.value = res.data.data.applicationStatus.buttons;
-      //     docs.value = res.data.data.documents;
-      //     console.log(docs.value);
-      //     console.log(newLicense.value);
-      //     console.log(buttons.value);
-      //     if (newLicense.value.applicationStatus.code == "REVDRA") {
-      //       rejected.value = newLicense.value.declinedFields;
-      //       accepted.value = newLicense.value.acceptedFields;
-      //       index.value = rejected.value.length + accepted.value.length;
-      //       amount.value = ((index.value + 1) / docs.value.length) * 100;
-      //       width.value = "width:" + amount.value + "%";
-      //       if (
-      //         accepted.value.includes(docs.value[index.value - 1].documentTypeCode) ||
-      //         rejected.value.includes(docs.value[index.value - 1].documentTypeCode)
-      //       ) {
-      //         findDocumentType(documentTypes.value, docs.value[index.value]);
-      //         console.log(documentTypeName.value);
-      //       }
-      //     }
-      //   });
       applicationType.value = route.params.applicationType;
     };
     const fetchDocumentTypes = async () => {
@@ -695,7 +671,7 @@ export default {
         }
         if (accepted.value.includes(doc.documentTypeCode)) {
           accepted.value.splice(
-            rejected.value.indexOf(doc.documentTypeCode),
+            accepted.value.indexOf(doc.documentTypeCode),
             1
           );
         }

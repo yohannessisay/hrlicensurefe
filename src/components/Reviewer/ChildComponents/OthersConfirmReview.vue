@@ -12,7 +12,7 @@
         class="p-4 w-48 h-64"
         @Click="
           detail(
-            `/admin/othersUnconfirmedDetail`,
+            `/admin/applicantDetail`,
             item.applicationType,
             item.id,
             item.applicant.id

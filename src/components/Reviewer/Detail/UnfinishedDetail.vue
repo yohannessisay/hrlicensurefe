@@ -539,7 +539,6 @@ export default {
       //userId.value = +localStorage.getItem("userId");
       loggedInAdminId = +localStorage.getItem("adminId");
       // userId = 2;
-      console.log("logged in admin is ", loggedInAdminId)
       created(
         route.params.applicationType,
         route.params.applicationId,

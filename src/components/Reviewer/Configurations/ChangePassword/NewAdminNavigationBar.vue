@@ -82,7 +82,6 @@ export default {
     let showDD = ref(false);
     const showDropDown = () => {
       showDD.value = !showDD.value;
-      console.log("drop down clicked");
     };
 
     const logout = () => {

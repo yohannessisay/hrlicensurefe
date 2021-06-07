@@ -12,7 +12,7 @@
         class="p-4 w-48 h-64"
         @Click="
           detail(
-            `/admin/unfinishedDetail`,
+            `/admin/returnedToMeDetail`,
             item.applicationType,
             item.id,
             item.applicant.id
@@ -70,6 +70,15 @@ export default {
 
   setup() {
     let router = useRouter();
+    const detail = (data, applicationType, applicationId, applicantId) => {
+      const url =
+        data + "/" + applicationType + "/" + applicationId + "/" + applicantId;
+      router.push(url);
+    };
+
+    return {
+      detail
+    }
   },
 };
 </script>

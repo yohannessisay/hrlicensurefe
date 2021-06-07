@@ -203,11 +203,36 @@ const routes = [
       import("../components/Reviewer/Detail/RecentlyFinishedDetail.vue"),
   },
   {
+    path: "/admin/confirmReview/:applicationType/:applicantId",
+    name: "confirmReview",
+    component: () =>
+      import("../components/Reviewer/ConfirmAdminReview.vue"),
+  },
+  {
+    path: "/admin/confirmReviewDetail/:applicationType/:applicationId/:status",
+    name: "confirmReviewDetail",
+    component: () =>
+      import("../components/Reviewer/Detail/ConfirmReviewDetail.vue"),
+  },
+
+  {
     path:
       "/admin/unassignedDetail/:applicationType/:applicationId/:applicantId",
     name: "unassignedDetail",
     component: () =>
       import("../components/Reviewer/Detail/UnassignedDetail.vue"),
+  },
+  {
+    path:
+      "/admin/returnedToMeDetail/:applicationType/:applicationId/:applicantId",
+    name: "returnedToMeDetail",
+    component: () =>
+      import("../components/Reviewer/Detail/ReturnedToMeDetail.vue"),
+  },
+  {
+    path: "/admin/reviewReturnedApplication/:applicationType/:applicationId",
+    name: "reviewReturnedApplication",
+    component: () => import("../components/Reviewer/ReviewReturnedApplication.vue"),
   },
   {
     path: "/admin/unconfirmedDetail/:applicationType/:applicationId/:applicantId",
@@ -222,10 +247,16 @@ const routes = [
       import("../components/Reviewer/Detail/OthersUnconfirmedDetail.vue")
   },
   {
-    path: "/admin/othersUnconfirmedDetail/:applicationType/:applicationId/:applicantId",
-    name: "othersUnconfirmedDetail",
+    path: "/admin/returnedToOthersDetail/:applicationType/:applicationId/:applicantId",
+    name: "returnedToOthersDetail",
     component: () => 
       import("../components/Reviewer/Detail/ReturnedToOthersDetail.vue")
+  },
+  {
+    path: "/admin/applicantDetail/:applicationType/:applicationId/:applicantId",
+    name: "applicantDetail",
+    component: () => 
+      import("../components/Reviewer/Detail/ApplicantDetail.vue")
   },
   {
     path: "/admin",

@@ -1,13 +1,13 @@
 <template>
   <div class="bg-lightBlueB-200">
-    <ReviewerNavBar tab="Unfinished" />
+    <ReviewerNavBar tab="applicantDetail" />
     <div class="bg-lightBlueB-200 h-full">
       <div
         v-if="show"
         style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);"
         class="ml-8  mr-8 mb-12"
       >
-        <div class="mt-large bg-white"> 
+        <div class="mt-large bg-white">
           <div class="flex justify-center"><Title message="Summary" /></div>
           <div class="flex justify-start">
             <Title message="Personal Info" />
@@ -37,7 +37,7 @@
             </div>
             <div
               :class="[
-                profileInfo.nationality === null ? errorClass : activeClass
+                profileInfo.nationality === null ? errorClass : activeClass,
               ]"
             >
               <label class="ml-8"> Nationality</label>
@@ -47,7 +47,8 @@
             </div>
             <div
               :class="[
-                profileInfo.placeOfBirth === null ? errorClass : activeClass]"
+                profileInfo.placeOfBirth === null ? errorClass : activeClass,
+              ]"
             >
               <label class="ml-8"> Place of Birth</label>
               <h5 class="ml-8">
@@ -56,19 +57,23 @@
             </div>
             <div
               :class="[
-                profileInfo.dateOfBirth === null ? errorClass : activeClass
+                profileInfo.dateOfBirth === null ? errorClass : activeClass,
               ]"
             >
               <label class="ml-8"> Date of Birth</label>
               <h5 class="ml-8">
-                {{ profileInfo.dateOfBirth ? moment(profileInfo.dateOfBirth).format("MMM D, YYYY") : "-" }}
+                {{
+                  profileInfo.dateOfBirth
+                    ? moment(profileInfo.dateOfBirth).format("MMM D, YYYY")
+                    : "-"
+                }}
               </h5>
             </div>
             <div
               :class="[
                 profileInfo.maritalStatus.name === null
                   ? errorClass
-                  : activeClass
+                  : activeClass,
               ]"
             >
               <label class="ml-8"> Marital Status</label>
@@ -90,7 +95,7 @@
               :class="[
                 profileInfo.woreda.zone.region === null
                   ? errorClass
-                  : activeClass
+                  : activeClass,
               ]"
             >
               <label class="ml-8"> Region</label>
@@ -104,7 +109,7 @@
             </div>
             <div
               :class="[
-                profileInfo.woreda.zone === null ? errorClass : activeClass
+                profileInfo.woreda.zone === null ? errorClass : activeClass,
               ]"
             >
               <label class="ml-8"> Zone</label>
@@ -132,7 +137,7 @@
             </div>
             <div
               :class="[
-                profileInfo.houseNumber === null ? errorClass : activeClass
+                profileInfo.houseNumber === null ? errorClass : activeClass,
               ]"
             >
               <label class="ml-8"> House Number</label>
@@ -142,7 +147,7 @@
             </div>
             <div
               :class="[
-                profileInfo.residence === null ? errorClass : activeClass
+                profileInfo.residence === null ? errorClass : activeClass,
               ]"
             >
               <label class="ml-8"> Residence</label>
@@ -157,7 +162,9 @@
           <div class="flex flex-row">
             <div
               :class="[
-                profileInfo.user.phoneNumber === null ? errorClass : activeClass,
+                profileInfo.user.phoneNumber === null
+                  ? errorClass
+                  : activeClass,
               ]"
             >
               <label class="ml-8"> Mobile Number</label>
@@ -174,7 +181,7 @@
               :class="[
                 profileInfo.user.emailAddress === null
                   ? errorClass
-                  : activeClass
+                  : activeClass,
               ]"
             >
               <label class="ml-8"> Email</label>
@@ -188,7 +195,7 @@
             </div>
             <div
               :class="[
-                profileInfo.userType.name === null ? errorClass : activeClass
+                profileInfo.userType.name === null ? errorClass : activeClass,
               ]"
             >
               <label class="ml-8"> User Type</label>
@@ -222,6 +229,7 @@
               </h5>
             </div>
           </div>
+          <div class="flex justify-start flex-wrap"></div>
         </div>
       </div>
     </div>
@@ -260,16 +268,11 @@ export default {
 
     let userId = +localStorage.getItem("userId");
 
-    let role = ref({});
-
-    let admins = ref({});
-
-    let transfer = ref({
-      reviewerId: "",
+    let assignConfirmAdmin = ref({
+      reviewersId: [],
       licenseId: "",
       createdByAdminId: "",
-    });
-
+    })
     let show = ref(false);
     let showLoading = ref(false);
     let license = ref({
@@ -277,24 +280,24 @@ export default {
       applicantType: {},
       education: {
         institution: {
-          institutionType: {}
+          institutionType: {},
         },
-        department: {}
-      }
+        department: {},
+      },
     });
     let profileInfo = ref({
       maritalStatus: {},
       woreda: {
-        zone: {}
+        zone: {},
       },
       user: {},
-      userType: {}
+      userType: {},
     });
     let applicantId = ref("");
     let applicantTypeId = ref("");
     let education = ref({
       institution: { name: "", institutionType: { name: "" } },
-      department: { name: "" }
+      department: { name: "" },
     });
     let licenseId = ref("");
     let activeClass = ref("active");
@@ -309,98 +312,6 @@ export default {
 
     let loggedInAdminId = +localStorage.getItem("adminId");
 
-    const fetchRole = (id) => {
-      store.dispatch("reviewer/getRoles", id).then(res => {
-        role.value = res.data.data.role;
-      })
-    }
-
-    const fetchAdmins = () => {
-      store.dispatch("reviewer/getAdmins").then(res => {
-        
-        admins.value = res.data.data
-      })
-    }
-
-    const gen = () => {
-    }
-
-    const transferReview = () => {
-      if (role.value.code === "TL" || role.value.code === "SA") {
-        if (applicationType.value == "Good Standing") {
-          transfer.value = {
-            goodStandingId: route.params.applicationId,
-            reviewerId: transfer.value.reviewerId,
-            createdByAdminId: +localStorage.getItem("adminId"),
-          };
-        }
-        if (applicationType.value == "Verification") {
-          transfer.value = {
-            verificationId: route.params.applicationId,
-            reviewerId: transfer.value.reviewerId,
-            createdByAdminId: +localStorage.getItem("adminId"),
-          };
-        }
-        if (applicationType.value == "Renewal") {
-          transfer.value = {
-            renewalId: route.params.applicationId,
-            reviewerId: transfer.value.reviewerId,
-            createdByAdminId: +localStorage.getItem("adminId"),
-          };
-        }
-        if (applicationType.value == "New License") {
-          transfer.value = {
-            licenseId: route.params.applicationId,
-            reviewerId: transfer.value.reviewerId,
-            createdByAdminId: +localStorage.getItem("adminId"),
-          };
-        }
-      }
-      if (applicationType.value == "New License") {
-        store
-          .dispatch("reviewer/transferLicenseReview", transfer.value)
-
-          .then((response) => {
-            if (response.statusText == "Created") {
-              showFlash.value = true;
-              router.push("/admin/review");
-            }
-          });
-      }
-      if (applicationType.value == "Verification") {
-        store
-          .dispatch("reviewer/transferVerificationReview", transfer.value)
-
-          .then((response) => {
-            if (response.statusText == "Created") {
-              showFlash.value = true;
-              router.push("/admin/review");
-            }
-          });
-      }
-      if (applicationType.value == "Renewal") {
-        store
-          .dispatch("reviewer/transferRenewalReview", transfer.value)
-
-          .then((response) => {
-            if (response.statusText == "Created") {
-              showFlash.value = true;
-              router.push("/admin/review");
-            }
-          });
-      }
-      if (applicationType.value == "Good Standing") {
-        store
-          .dispatch("reviewer/transferGoodStandingReview", transfer.value)
-
-          .then((response) => {
-            if (response.statusText == "Created") {
-              showFlash.value = true;
-              router.push("/admin/review");
-            }
-          });
-      }
-    }
 
     const created = async (applicationTypeName, applicationId, applicantId) => {
       licenseId.value = applicationId;
@@ -409,10 +320,10 @@ export default {
       if (applicationType.value == "New License") {
         store
           .dispatch("reviewer/getNewLicenseApplication", applicationId)
-          .then(res => {
+          .then((res) => {
             showLoading.value = false;
             license.value = res.data.data;
-            getReviewId.value = license.value.reviewerId
+            getReviewId.value = license.value.reviewerId;
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
             // applicantId.value = license.value.applicantId;
@@ -427,10 +338,10 @@ export default {
       if (applicationType.value == "Good Standing") {
         store
           .dispatch("reviewer/getGoodStandingApplication", applicationId)
-          .then(res => {
+          .then((res) => {
             showLoading.value = false;
             license.value = res.data.data;
-            getReviewId.value = license.value.reviewerId
+            getReviewId.value = license.value.reviewerId;
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
             // applicantId.value = license.value.applicantId;
@@ -445,10 +356,10 @@ export default {
       if (applicationType.value == "Verification") {
         store
           .dispatch("reviewer/getVerificationApplication", applicationId)
-          .then(res => {
+          .then((res) => {
             showLoading.value = false;
             license.value = res.data.data;
-            getReviewId.value = license.value.reviewerId
+            getReviewId.value = license.value.reviewerId;
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
             // applicantId.value = license.value.applicantId;
@@ -463,10 +374,10 @@ export default {
       if (applicationType.value == "Renewal") {
         store
           .dispatch("reviewer/getRenewalApplication", applicationId)
-          .then(res => {
+          .then((res) => {
             showLoading.value = false;
             license.value = res.data.data;
-            getReviewId.value = license.value.reviewerId
+            getReviewId.value = license.value.reviewerId;
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
             // applicantId.value = license.value.applicantId;
@@ -480,18 +391,12 @@ export default {
       }
     };
 
-
     onMounted(() => {
-      //userId.value = +localStorage.getItem("userId");
-      loggedInAdminId = +localStorage.getItem("adminId");
-      // userId = 2;
       created(
         route.params.applicationType,
         route.params.applicationId,
         route.params.applicantId
       );
-      fetchAdmins();
-      fetchRole(loggedInAdminId)
     });
 
     return {
@@ -514,13 +419,8 @@ export default {
       applicationType,
       licenseId,
       showLoading,
-      admins,
-      role,
-      transfer,
-      gen,
-      transferReview
     };
-  }
+  },
 
   //   this.license = this.getLicense;
   //   this.applicantId = this.license.applicantId;

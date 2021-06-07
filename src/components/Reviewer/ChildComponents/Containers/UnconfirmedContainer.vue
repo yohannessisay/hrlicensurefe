@@ -46,14 +46,12 @@ export default {
     let adminId = +localStorage.getItem("adminId");
     let nothingToShowUnfinished = ref(false);
     let showLoading = ref(false);
-    console.log("comming here yeah");
 
     const fetchUnfinished = () => {
       showLoading.value = true;
       store.dispatch("reviewer/getUnconfirmed", adminId).then((res) => {
         showLoading.value = false;
         unfinished.value = store.getters["reviewer/getUnconfirmedSearched"];
-        console.log("unfinished", unfinished.value);
         if (store.getters["reviewer/getUnconfirmed"].length !== 0) {
           for (var prop in store.getters["reviewer/getUnconfirmedSearched"]) {
             if (unfinished.value[prop].applicationType == "Renewal") {

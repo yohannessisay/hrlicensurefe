@@ -54,7 +54,6 @@ export default {
       store.dispatch("reviewer/getReturnedToOthers", adminData).then((res) => {
         showLoading.value = false;
         unfinished.value = store.getters["reviewer/getRetunedToOthersSearched"];
-        console.log("unfinished", unfinished.value);
         if (store.getters["reviewer/getReturnedToOthers"].length !== 0) {
           for (var prop in store.getters["reviewer/getRetunedToOthersSearched"]) {
             if (unfinished.value[prop].applicationType == "Renewal") {
