@@ -626,7 +626,7 @@ export default {
       nextClickable.value = true;
     };
     const nextRemark = () => {
-      if (ind.value != rejected.value.length - 1) {
+      if (ind.value != rejectedObj.value.length - 1) {
         ind.value = ind.value + 1;
         modalFindDocumentType(
           documentTypes.value,

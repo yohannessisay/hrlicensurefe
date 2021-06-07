@@ -9,15 +9,13 @@
       >
         <div class="mt-large bg-white">
           <div
-            v-if="
-              (role.code === `SA`) &&
-                getReviewId != loggedInAdminId
-            "
+            v-if="role.code === `SA` && getReviewId != loggedInAdminId"
             class="flex"
           >
             <div class="flex flex-col mb-medium w-2/3 ml-small mt-small"></div>
             <div class="flex flex-col mb-medium w-1/3 mr-small mt-small">
               <label class="text-primary-700">Admins To Confirm</label>
+              <label class="text-primary-500">*please select maximum 3, minimum 2 admins to confirm</label>
               <select
                 class="form-multiselect max-w-3xl"
                 v-model="assignConfirmAdmin.reviewersId"
@@ -32,10 +30,9 @@
                   {{ types.name }}
                 </option>
               </select>
-              <!-- <select class="form-multiselect block w-full mt-1" multiple>
-                <option>Option 1</option>
-                <option>Option 2</option>
-              </select> -->
+              <span v-show="showAdminCountError">
+              <label class="text-red-200">please select 2 or 3 admins</label>
+              </span>
               <button
                 class="block mx-auto bg-lightBlue-300 hover:bg-lightBlue-600 hover:shadow-lg mt-small"
                 @click="assignAdminToConfirm()"
@@ -308,11 +305,13 @@ export default {
 
     let admins = ref({});
 
+    let showAdminCountError = ref(false);
+
     let assignConfirmAdmin = ref({
       reviewersId: [],
       licenseId: "",
       createdByAdminId: "",
-    })
+    });
     let show = ref(false);
     let showLoading = ref(false);
     let license = ref({
@@ -365,11 +364,20 @@ export default {
     };
 
     const gen = () => {
-      console.log("selected val", assignConfirmAdmin.value.reviewersId)
+      console.log("selected val", assignConfirmAdmin.value.reviewersId);
     };
 
     const assignAdminToConfirm = () => {
-      if (role.value.code === "TL" || role.value.code === "SA") {
+      console.log("admin values are ", assignConfirmAdmin.value.reviewersId);
+      if (
+        assignConfirmAdmin.value.reviewersId.length > 3 ||
+        assignConfirmAdmin.value.reviewersId.length < 2
+      ) {
+        showAdminCountError.value = true;
+        return;
+      }
+      if (role.value.code === "SA") {
+        showAdminCountError.value = false;
         if (applicationType.value == "Good Standing") {
           assignConfirmAdmin.value = {
             goodStandingId: route.params.applicationId,
@@ -401,7 +409,10 @@ export default {
       }
       if (applicationType.value == "New License") {
         store
-          .dispatch("reviewer/confirmNewLicenseReview", assignConfirmAdmin.value)
+          .dispatch(
+            "reviewer/confirmNewLicenseReview",
+            assignConfirmAdmin.value
+          )
 
           .then((response) => {
             if (response.statusText == "Created") {
@@ -412,7 +423,10 @@ export default {
       }
       if (applicationType.value == "Verification") {
         store
-          .dispatch("reviewer/confirmVerificationReview", assignConfirmAdmin.value)
+          .dispatch(
+            "reviewer/confirmVerificationReview",
+            assignConfirmAdmin.value
+          )
 
           .then((response) => {
             if (response.statusText == "Created") {
@@ -434,7 +448,10 @@ export default {
       }
       if (applicationType.value == "Good Standing") {
         store
-          .dispatch("reviewer/confirmGoodStandingReview", assignConfirmAdmin.value)
+          .dispatch(
+            "reviewer/confirmGoodStandingReview",
+            assignConfirmAdmin.value
+          )
 
           .then((response) => {
             if (response.statusText == "Created") {
@@ -557,6 +574,7 @@ export default {
       admins,
       role,
       assignConfirmAdmin,
+      showAdminCountError,
       gen,
       assignAdminToConfirm,
     };

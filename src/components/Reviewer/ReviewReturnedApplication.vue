@@ -108,7 +108,7 @@
                     accepted[index]
                 "
               > -->
-              good license
+              {{ documentTypeName }}
               <!-- </div> -->
               <!-- <div
                 v-else-if="
@@ -284,18 +284,11 @@
                           <label
                             class="justify-center items-center ml-large text-grey-200 text-2xl"
                           >
-                            <!-- {{ modalDocumentTypeName }} -->
-                            -- modal document type --
+                            {{ modalDocumentTypeName }}
                           </label>
                           <div
                             class="flex justify-center flex-wrap max-w-sm rounded overflow-hidden"
                           >
-                            <!-- <div v-for="file in docs" v-bind:key="file.name">
-                              <Title class="" :message="file.name" />
-                              <picture>
-                                <img :src="basePath + file.filePath" />
-                              </picture>
-                            </div> -->
                             <picture
                               class="imageViewer"
                               v-if="rejectedObj.length > 0"
@@ -307,7 +300,6 @@
                                 "
                               />
                             </picture>
-                            <!-- {{docs[0].filePath}} -->
                           </div>
                         </div>
                       </div>
@@ -414,6 +406,9 @@ export default {
     let lastIndex = ref(false);
     let sendDeclinedData = ref(true);
     let fromModalSendDeclinedData = ref(false);
+    let documentTypes = ref([]);
+    let documentTypeName = ref("");
+    let modalDocumentTypeName = ref("");
     const newLicense = ref({
       applicant: { profile: { name: "", fatherName: "" } },
       applicantType: { name: "" },
@@ -442,32 +437,6 @@ export default {
 
       if (applicationType.value === "Verification") {
         createdApplication("getVerificationApplication", applicationId);
-        // store
-        //   .dispatch("reviewer/getVerificationApplication", applicationId)
-        //   .then((res) => {
-        //     newLicense.value = res.data.data;
-        //     console.log("new license", newLicense.value);
-        //     buttons.value = res.data.data.applicationStatus.buttons.filter(
-        //       (allButtons) => {
-        //         return allButtons.name != "Under supervision";
-        //       }
-        //     );
-        //     buttons.value.forEach((button) => {
-        //       button.name === "Approve"
-        //         ? (button.name = "Verify")
-        //         : (button.name = button.name);
-        //     });
-
-        //     docs.value = res.data.data.documents;
-        //     if ((newLicense.value.applicationStatus.code = "APP")) {
-        //       accepted.value = newLicense.value.acceptedFields;
-        //       rejected.value = newLicense.value.declinedFields;
-        //       filedsLength.value =
-        //         accepted.value.length + rejected.value.length;
-        //       amount.value = ((index.value + 1) / docs.value.length) * 100;
-        //       width.value = "width: " + amount.value + "%";
-        //     }
-        //   });
       }
       if (applicationType.value === "Good Standing") {
         createdApplication("getGoodStandingApplication", applicationId);
@@ -500,6 +469,7 @@ export default {
             });
           }
           docs.value = res.data.data.documents;
+          console.log("docs value ", docs.value)
           if ((newLicense.value.applicationStatus.code = "APP")) {
             accepted.value = newLicense.value.acceptedFields;
             rejected.value = newLicense.value.declinedFields;
@@ -507,8 +477,25 @@ export default {
             filedsLength.value = accepted.value.length + rejected.value.length;
             amount.value = ((index.value + 1) / docs.value.length) * 100;
             width.value = "width: " + amount.value + "%";
+            if (
+                accepted.value.includes(
+                  docs.value[index.value].documentTypeCode
+                ) ||
+                rejected.value.includes(
+                  docs.value[index.value].documentTypeCode
+                )
+              ) {
+                findDocumentType(documentTypes.value, docs.value[index.value]);
+              }
           }
         });
+    };
+
+    const fetchDocumentTypes = async () => {
+      store.dispatch("reviewer/getDocumentTypes").then((res) => {
+        documentTypes.value = res.data.data;
+        console.log("documents type is ", documentTypes.value);
+      });
     };
 
     const next = (doc) => {
@@ -519,7 +506,7 @@ export default {
         index.value = index.value + 1;
         amount.value = ((index.value + 1) / docs.value.length) * 100;
         width.value = "width:" + amount.value + "%";
-        console.log("index val", index.value, "docs val", docs.value.length);
+        findDocumentType(documentTypes.value, docs.value[index.value]);
       }
     };
 
@@ -527,6 +514,7 @@ export default {
       index.value = index.value - 1;
       amount.value = ((index.value - 1) / docs.value.length) * 100;
       width.value = "width:" + amount.value + "%";
+      findDocumentType(documentTypes.value, docs.value[index.value]);
       showButtons.value = false;
     };
 
@@ -608,6 +596,10 @@ export default {
 
     const action = (actionValue) => {
       if (actionValue == "UpdatePaymentEvent") {
+        modalFindDocumentType(
+          documentTypes.value,
+          rejectedObj.value[0]
+        );
         showRemark.value = true;
         sendDeclinedData.value = false;
         if (fromModalSendDeclinedData.value == true) {
@@ -674,20 +666,47 @@ export default {
     };
 
     const nextRemark = () => {
-      console.log("good job");
+      if(ind.value != rejectedObj.value.length - 1) {
+        ind.value = ind.value + 1
+        modalFindDocumentType(
+          documentTypes.value,
+          rejectedObj.value[ind.value]
+        );
+      }
     };
     const previousRemark = () => {
-      console.log("amazing grace");
+      ind.value = ind.value - 1;
+      modalFindDocumentType(documentTypes.value, rejectedObj.value[ind.value]);
+    };
+    const findDocumentType = (obj, ab) => {
+      for (var prop in obj) {
+        if (obj[prop].code == ab.documentTypeCode) {
+          documentTypeName.value = obj[prop].name;
+        }
+      }
+    };
+
+    const modalFindDocumentType = (obj, ab) => {
+      for (var prop in obj) {
+        if (obj[prop].code == ab) {
+          console.log("object name is ", obj[prop].name)
+          modalDocumentTypeName.value = obj[prop].name;
+        }
+      }
     };
 
     onMounted(() => {
       created(route.params.applicationType, route.params.applicationId);
+      fetchDocumentTypes();
+      findDocumentType(documentTypes.value, docs.value[0]);
     });
     return {
       accepted,
       rejected,
+      rejectedObj,
       newLicense,
       index,
+      ind,
       buttons,
       docs,
       amount,
@@ -698,6 +717,9 @@ export default {
       lastIndex,
       sendDeclinedData,
       fromModalSendDeclinedData,
+      documentTypes,
+      documentTypeName,
+      modalDocumentTypeName,
       next,
       previous,
       accept,
@@ -707,6 +729,8 @@ export default {
       submitRemark,
       nextRemark,
       previousRemark,
+      findDocumentType,
+      modalFindDocumentType,
     };
   },
 };

@@ -233,7 +233,7 @@
           <div v-if="getReviewId == loggedInAdminId">
             <div class="mt-12 flex justify-center">
               <div>
-                <button @click="evaluate()">Re Evaluating</button>
+                <button @click="evaluate()">Re Evaluate</button>
               </div>
             </div>
           </div>
