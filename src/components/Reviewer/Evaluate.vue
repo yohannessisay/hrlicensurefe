@@ -1,16 +1,16 @@
 <template>
   <ReviewerNavBar tab="Evaluation" />
   <div class="w-screen bg-white flex items-center justify-center">
-    
     <div
       class="w-screen max-w-6xl mt-medium mb-large box-shadow-pop bg-lightGrey-100"
     >
-    
       <div class="flex mb-large mt-medium justify-center">
         <div class="w-64 h-40 container box-shadow-pop rounded-lg">
           <div class="mt-8">
             <div class="my-auto flex justify-center items-center">
-              <h2 class="text-lightBlueB-500 text-2xl">{{ accepted.length }}</h2>
+              <h2 class="text-lightBlueB-500 text-2xl">
+                {{ accepted.length }}
+              </h2>
             </div>
             <div class="flex justify-center items-center">
               <h2 class=" text-lightBlueB-500 text-2xl">Accepted</h2>
@@ -19,7 +19,10 @@
         </div>
         <div class="flex justify-start flex-wrap ml-12">
           <div>
-            <picture class="flex justify-center items-center mb-small" v-if="docs.length > 0">
+            <picture
+              class="flex justify-center items-center mb-small"
+              v-if="docs.length > 0"
+            >
               <img
                 style="border-radius: 100%"
                 v-bind:src="
@@ -30,25 +33,43 @@
               />
             </picture>
             <div class="flex justify-center items-center">
-              <h4 class="mt-2 mr-small w-1/2">{{ "Name: " + newLicense.applicant.profile.name + " " + newLicense.applicant.profile.fatherName }}</h4>
+              <h4 class="mt-2 mr-small w-1/2">
+                {{
+                  "Name: " +
+                    newLicense.applicant.profile.name +
+                    " " +
+                    newLicense.applicant.profile.fatherName
+                }}
+              </h4>
 
-              <h4 class="mt-2 ml-small w-1/2">{{ "Applicant Type:  " + newLicense.applicantType.name }}</h4>
+              <h4 class="mt-2 ml-small w-1/2">
+                {{ "Applicant Type:  " + newLicense.applicantType.name }}
+              </h4>
             </div>
             <div class="flex justify-center items-cente">
-              <h4 class="mt-2 mr-tiny w-1/2">{{ "Department:  " + newLicense.education.department.name }}</h4>
-              <h4 class="mt-2 ml-small w-1/2">{{ "Institution:  " + newLicense.education.institution.name }}</h4>
+              <h4 class="mt-2 mr-tiny w-1/2">
+                {{ "Department:  " + newLicense.education.department.name }}
+              </h4>
+              <h4 class="mt-2 ml-small w-1/2">
+                {{ "Institution:  " + newLicense.education.institution.name }}
+              </h4>
               <!-- <h4 class="mt-2">{{ "Institution:  " + newLicense.education.institution.name }}</h4> -->
             </div>
             <div class="flex justify-center items-center">
               <div class="mt-2 ml-small w-1/2"></div>
-              <h4 class="mt-2 ml-small w-1/2">{{ "Institution Type:  " + newLicense.education.institution.institutionType.name }}</h4>
+              <h4 class="mt-2 ml-small w-1/2">
+                {{
+                  "Institution Type:  " +
+                    newLicense.education.institution.institutionType.name
+                }}
+              </h4>
             </div>
           </div>
         </div>
         <div class="ml-12 w-64 h-40  container box-shadow-pop rounded-lg">
           <div class="mt-8">
             <div class="my-auto flex justify-center items-center">
-              <h2 class="text-red-200 text-2xl">{{rejected.length}}</h2>
+              <h2 class="text-red-200 text-2xl">{{ rejected.length }}</h2>
             </div>
             <div class="flex justify-center items-center">
               <h2 class=" text-red-200 text-2xl">Rejected</h2>
@@ -104,16 +125,25 @@
                   "
                 />
               </picture>
-              <div class="flex content-center justify-center pb-large" v-if=" docs.length == 0">
+              <div
+                class="flex content-center justify-center pb-large"
+                v-if="docs.length == 0"
+              >
                 <h2>No Documents To Show!!</h2>
               </div>
               <!-- {{docs[0].filePath}} -->
             </div>
           </div>
           <div class="mt-medium" v-if="!showButtons">
-            <button class="mr-medium" @click="accept(docs[index])">Accept</button>
+            <button class="mr-medium" @click="accept(docs[index])">
+              Accept
+            </button>
             <button class="decline" @click="reject(docs[index])">Reject</button>
-            <button class="" variant="outline" @click="action('ReviewerDraftEvent')">
+            <button
+              class=""
+              variant="outline"
+              @click="action('ReviewerDraftEvent')"
+            >
               save as Draft
             </button>
           </div>
@@ -257,14 +287,19 @@
                           <!-- <h5 class="ml-8 text-black-100 text-3xl">
                             Addis Ababa
                           </h5> -->
-                          <div class="flex justify-center flex-wrap max-w-sm rounded overflow-hidden">
+                          <div
+                            class="flex justify-center flex-wrap max-w-sm rounded overflow-hidden"
+                          >
                             <!-- <div v-for="file in docs" v-bind:key="file.name">
                               <Title class="" :message="file.name" />
                               <picture>
                                 <img :src="basePath + file.filePath" />
                               </picture>
                             </div> -->
-                            <picture class="imageViewer" v-if="rejectedObj.length > 0">
+                            <picture
+                              class="imageViewer"
+                              v-if="rejectedObj.length > 0"
+                            >
                               <img
                                 v-bind:src="
                                   'https://hrlicensurebe.dev.k8s.sandboxaddis.com/' +
@@ -273,7 +308,6 @@
                               />
                             </picture>
                             <!-- {{docs[0].filePath}} -->
-
                           </div>
                         </div>
                       </div>
@@ -364,7 +398,7 @@ export default {
     Modal,
     FlashMessage,
     ErrorFlashMessage,
-    ReviewerNavBar
+    ReviewerNavBar,
   },
   setup() {
     const route = useRoute();
@@ -376,20 +410,20 @@ export default {
       applicantType: { name: "" },
       education: {
         department: { name: "" },
-        institution: { institutionType: {}, name: "" }
+        institution: { institutionType: {}, name: "" },
       },
       declinedFields: "",
       remark: "",
       documents: [{ filePath: "" }],
       applicationStatus: {
-        buttons: [{ action: "", name: "" }]
-      }
+        buttons: [{ action: "", name: "" }],
+      },
     });
     let buttons = ref([
       { action: "", name: "" },
       { action: "", name: "" },
       { action: "", name: "" },
-      { action: "", name: "" }
+      { action: "", name: "" },
     ]);
     let documentTypes = ref([]);
     let documentTypeName = ref("");
@@ -425,12 +459,13 @@ export default {
       if (applicationType.value == "New License") {
         store
           .dispatch("reviewer/getNewLicenseApplication", applicationId)
-          .then(res => {
+          .then((res) => {
             newLicense.value = res.data.data;
             buttons.value = res.data.data.applicationStatus.buttons;
             docs.value = res.data.data.documents;
             if (newLicense.value.applicationStatus.code == "REVDRA") {
               rejected.value = newLicense.value.declinedFields;
+              rejectedObj.value = newLicense.value.declinedFields;
               accepted.value = newLicense.value.acceptedFields;
               index.value = rejected.value.length + accepted.value.length;
               amount.value = ((index.value + 1) / docs.value.length) * 100;
@@ -451,17 +486,22 @@ export default {
       if (applicationType.value == "Good Standing") {
         store
           .dispatch("reviewer/getGoodStandingApplication", applicationId)
-          .then(res => {
+          .then((res) => {
             newLicense.value = res.data.data;
-            buttons.value = res.data.data.applicationStatus.buttons.filter(allButtons => {
-              return allButtons.name != "Under supervision";
-            })
-            buttons.value.forEach(button => {
-              button.name === "Approve" ? button.name = "Verify" : button.name = button.name
-            })
+            buttons.value = res.data.data.applicationStatus.buttons.filter(
+              (allButtons) => {
+                return allButtons.name != "Under supervision";
+              }
+            );
+            buttons.value.forEach((button) => {
+              button.name === "Approve"
+                ? (button.name = "Verify")
+                : (button.name = button.name);
+            });
             docs.value = res.data.data.documents;
             if (newLicense.value.applicationStatus.code == "REVDRA") {
               rejected.value = newLicense.value.declinedFields;
+              rejectedObj.value = newLicense.value.declinedFields;
               accepted.value = newLicense.value.acceptedFields;
               index.value = rejected.value.length + accepted.value.length;
               amount.value = ((index.value + 1) / docs.value.length) * 100;
@@ -482,19 +522,24 @@ export default {
       if (applicationType.value == "Verification") {
         store
           .dispatch("reviewer/getVerificationApplication", applicationId)
-          .then(res => {
+          .then((res) => {
             newLicense.value = res.data.data;
             // buttons.value = res.data.data.applicationStatus.buttons;
-            buttons.value = res.data.data.applicationStatus.buttons.filter(allButtons => {
-              return allButtons.name != "Under supervision";
-            })
-            buttons.value.forEach(button => {
-              button.name === "Approve" ? button.name = "Verify" : button.name = button.name
-            })
-            console.log("bbuttons: ", buttons.value)
+            buttons.value = res.data.data.applicationStatus.buttons.filter(
+              (allButtons) => {
+                return allButtons.name != "Under supervision";
+              }
+            );
+            buttons.value.forEach((button) => {
+              button.name === "Approve"
+                ? (button.name = "Verify")
+                : (button.name = button.name);
+            });
+            console.log("bbuttons: ", buttons.value);
             docs.value = res.data.data.documents;
             if (newLicense.value.applicationStatus.code == "REVDRA") {
               rejected.value = newLicense.value.declinedFields;
+              rejectedObj.value = newLicense.value.declinedFields;
               accepted.value = newLicense.value.acceptedFields;
               index.value = rejected.value.length + accepted.value.length;
               amount.value = ((index.value + 1) / docs.value.length) * 100;
@@ -515,12 +560,13 @@ export default {
       if (applicationType.value == "Renewal") {
         store
           .dispatch("reviewer/getRenewalApplication", applicationId)
-          .then(res => {
+          .then((res) => {
             newLicense.value = res.data.data;
             buttons.value = res.data.data.applicationStatus.buttons;
             docs.value = res.data.data.documents;
             if (newLicense.value.applicationStatus.code == "REVDRA") {
               rejected.value = newLicense.value.declinedFields;
+              rejectedObj.value = newLicense.value.declinedFields;
               accepted.value = newLicense.value.acceptedFields;
               index.value = rejected.value.length + accepted.value.length;
               amount.value = ((index.value + 1) / docs.value.length) * 100;
@@ -541,11 +587,11 @@ export default {
       applicationType.value = route.params.applicationType;
     };
     const fetchDocumentTypes = async () => {
-      store.dispatch("reviewer/getDocumentTypes").then(res => {
+      store.dispatch("reviewer/getDocumentTypes").then((res) => {
         documentTypes.value = res.data.data;
       });
     };
-    const next = doc => {
+    const next = (doc) => {
       // alreadyIn.value == false;
 
       if (nextClickable.value == true) {
@@ -609,7 +655,7 @@ export default {
         }
       }
     };
-    const accept = doc => {
+    const accept = (doc) => {
       nextClickable.value = true;
       if (accepted.value.length > 0) {
         if (!accepted.value.includes(doc.documentTypeCode)) {
@@ -620,6 +666,10 @@ export default {
           if (rejected.value.includes(doc.documentTypeCode)) {
             rejected.value.splice(
               rejected.value.indexOf(doc.documentTypeCode),
+              1
+            );
+            rejectedObj.value.splice(
+              rejectedObj.value.indexOf(doc.documentTypeCode),
               1
             );
           }
@@ -647,7 +697,7 @@ export default {
       // }
     };
 
-    const reject = doc => {
+    const reject = (doc) => {
       nextClickable.value = true;
       if (rejected.value.length > 0) {
         if (!rejected.value.includes(doc.documentTypeCode)) {
@@ -684,7 +734,7 @@ export default {
       // console.log(rejected.value);
     };
 
-    const action = actionValue => {
+    const action = (actionValue) => {
       if (actionValue == "DeclineEvent") {
         showRemark.value = true;
         sendDeclinedData.value = false;
@@ -696,21 +746,21 @@ export default {
       }
       newLicense.value.declinedFields = rejected.value;
       newLicense.value.acceptedFields = accepted.value;
-      if(actionValue == "ApproveEvent") {
+      if (actionValue == "ApproveEvent") {
         newLicense.value.certified = true;
         newLicense.value.certifiedDate = new Date();
       }
-      
+
       let appId = newLicense.value.id;
       let req = {
         action: actionValue,
-        data: newLicense.value
+        data: newLicense.value,
       };
       if (
         applicationType.value == "New License" &&
         sendDeclinedData.value == true
       ) {
-        store.dispatch("newlicense/editNewLicense", req).then(res => {
+        store.dispatch("newlicense/editNewLicense", req).then((res) => {
           if (res.statusText == "Created") {
             showFlash.value = true;
             showDeclineFlash.value = true;
@@ -729,7 +779,7 @@ export default {
         applicationType.value == "Verification" &&
         sendDeclinedData.value == true
       ) {
-        store.dispatch("reviewer/editVerification", req).then(res => {
+        store.dispatch("reviewer/editVerification", req).then((res) => {
           if (res.statusText == "Created") {
             showFlash.value = true;
             setTimeout(() => {
@@ -747,7 +797,7 @@ export default {
         applicationType.value == "Good Standing" &&
         sendDeclinedData.value == true
       ) {
-        store.dispatch("reviewer/editGoodStanding", req).then(res => {
+        store.dispatch("reviewer/editGoodStanding", req).then((res) => {
           if (res.statusText == "Created") {
             showFlash.value = true;
             setTimeout(() => {
@@ -765,7 +815,7 @@ export default {
         applicationType.value == "Renewal" &&
         sendDeclinedData.value == true
       ) {
-        store.dispatch("reviewer/editRenewal", req).then(res => {
+        store.dispatch("reviewer/editRenewal", req).then((res) => {
           if (res.statusText == "Created") {
             showFlash.value = true;
             setTimeout(() => {
@@ -791,7 +841,7 @@ export default {
       action("DeclineEvent");
     };
 
-    const toggleModal = () =>{
+    const toggleModal = () => {
       showRemark.value = !showRemark.value;
     };
 
@@ -837,14 +887,14 @@ export default {
       ind,
       modalDocumentTypeName,
       modalFindDocumentType,
-      evaluateRoute
+      evaluateRoute,
     };
-  }
+  },
 };
 </script>
 <style>
 .md-danger {
-  background-image: linear-gradient(to right,#d63232, #e63636) !important;  
+  background-image: linear-gradient(to right, #d63232, #e63636) !important;
   color: white;
 }
 .card-wrapper {
@@ -881,11 +931,11 @@ svg:hover {
   cursor: pointer;
 }
 .decline {
-  background-image: linear-gradient(to right,#d63232, #e63636) !important;
+  background-image: linear-gradient(to right, #d63232, #e63636) !important;
 }
 @media only screen and (max-height: 1081px) {
   .card-wrapper {
-	  height: 640px;
+    height: 640px;
   }
   .modalBody {
     max-width: 820px !important;

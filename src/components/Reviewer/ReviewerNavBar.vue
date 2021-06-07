@@ -447,6 +447,17 @@ export default {
       if (props.tab === "AllPendigs") {
         store.dispatch("reviewer/getAllPendingPaymentSearched", search.value)
       }
+
+      if (props.tab === "Unconfirmed") {
+        
+        store.dispatch("reviewer/getUnconfirmedSearched", search.value);
+        store.dispatch("reviewer/getOthersUnconfirmedSearched", search.value);
+        store.dispatch("reviewer/getConfirmReviewSearched", search.value);
+        store.dispatch("reviewer/getOthersConfirmReviewSearched", search.value);
+        store.dispatch("reviewer/getReturnedToMeSearched", search.value)
+        store.dispatch("reviewer/getReturnedToOthersSearched", search.value);
+
+      }
       if (props.tab === "Home") {
         store.dispatch("reviewer/getAssignedToYouSearched", search.value);
         store.dispatch("reviewer/getUnfinishedSearched", search.value);

@@ -178,7 +178,7 @@ import Spinner from "@/sharedComponents/Spinner";
 
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
-import backgroundImage from "../../../assets/certificate_background.jpg";
+import backgroundImage from "../../../assets/hrl_background_certificate.jpg";
 import certifiedUserImage from "../../../assets/certified_user.jpg";
 import AmharicFont from "../Configurations/amharicFont.js";
 import { toEthiopian } from "../Configurations/dateConvertor";
@@ -298,8 +298,8 @@ export default {
 
       
       
-      doc.addImage(backgroundImage, 'JPG', 0, 0, 430, 220, undefined, 'FAST')
-      doc.addImage(certifiedUserImage, 'JPG', 5, 5, 20, 30)
+      doc.addImage(backgroundImage, 'JPEG', 0, 0, 298, 213, undefined, 'FAST')
+      doc.addImage(certifiedUserImage, 'JPG', 10, 10, 20, 30)
       doc.setFontSize(25)
       // doc.addFileToVFS("Amiri-Regular.ttf", AmiriRegular);
       doc.addFileToVFS("Tera-Regular-normal.ttf", AmharicFont);
@@ -310,11 +310,12 @@ export default {
       // doc.text(100, 60, ["إذا لم تستح فاصنع ما شئت", "إذا لم تستح فاصنع ما شئت"], {lang: 'ar', align: 'right'});
       // doc.text(100, 20, 'በኢትዮፕያ ፌደራላዊ ዴሞክራሲያዊ ሪፐብሊክ', {lang: 'amh', align: 'right'})
       // doc.setFontStyle('bold')
-      doc.text(80, 22, 'Federal Democratic Republic Ethiopia')
+      doc.text(80, 25, 'Federal Democratic Republic Ethiopia')
       doc.setFontSize(17)
       // doc.setFontStyle('normal')
       doc.text(110, 50, 'MINSTRY OF HEALTH')
 
+      doc.setFontSize(14)
       doc.text(150, 60, 'HEALTH PROFFESSIONALS REGISTRATION AND')
       doc.text(190, 70, 'LICENSING CERTIFICATE')
 
@@ -346,7 +347,7 @@ export default {
       // doc.text(100, 35, 'Ministry of Health')
       doc.setFont("Tera-Regular"); // set font
       doc.setFontSize(25);
-      doc.text(90, 10, "በኢትዮፕያ ፌደራላዊ ዴሞክራሲያዊ ሪፐብሊክ")
+      doc.text(90, 15, "በኢትዮፕያ ፌደራላዊ ዴሞክራሲያዊ ሪፐብሊክ")
       doc.setFontSize(20)
       doc.text(115, 40, "የጤና ጥበቃ ሚኒስቴር")
       doc.setFontSize(17)
