@@ -5,6 +5,25 @@ import {
     SET_ASSIGNED_TO_YOU_SEARCHED,
     SET_UNFINISHED,
     SET_UNFINISHED_SEARCHED,
+
+    SET_UNCONFIRMED,
+    SET_UNCONFIRMED_SEARCHED,
+    SET_OTHERS_UNCONFIRMED,
+    SET_OTHERS_UNCONFIRMED_SEARCHED,
+
+    SET_RETURNED_TO_ME,
+    SET_RETURNED_TO_ME_SEARCHED,
+    SET_RETURNED_TO_OTHERS,
+    SET_RETURNED_TO_OTHERS_SEARCHED,
+
+    SET_CONFIRM_REVIEW,
+    SET_CONFIRM_REVIEW_SEARCHED,
+    SET_OTHERS_CONFIRM_REVIEW,
+    SET_OTHERS_CONFIRM_REVIEW_SEARCHED,
+
+    SET_TEMPORARLY_FINISHED,
+    SET_TEMPORARLY_FINISHED_SEARCHED,
+
     SET_RECENTLY_FINISHED,
     SET_RECENTLY_FINISHED_SEARCHED,
     SET_ASSIGNED_FOR_EVERYONE,
@@ -44,6 +63,56 @@ export default {
     [SET_UNFINISHED_SEARCHED] (state, searchedVal) {
         state.unfinishedSearched = searchedVal
     },
+
+    [SET_UNCONFIRMED] (state, data) {
+        state.unconfirmed = data
+        state.unconfirmedSearched = data
+    },
+    
+    [SET_UNCONFIRMED_SEARCHED] (state, searchedVal) {
+        state.unconfirmedSearched = searchedVal
+    },
+    [SET_OTHERS_UNCONFIRMED] (state, data) {
+        state.othersUnconfirmed = data
+        state.othersUnconfirmedSearched = data
+    },
+    [SET_OTHERS_UNCONFIRMED_SEARCHED] (state, data) {
+        state.othersUnconfirmedSearched = data
+    },
+
+    [SET_RETURNED_TO_ME] (state, data) {
+        state.returnedToMe = data
+        state.returnedToMeSearched = data
+    },
+    [SET_RETURNED_TO_ME_SEARCHED] (state, searchedVal) {
+        state.returnedToMeSearched = searchedVal
+    },
+    [SET_RETURNED_TO_OTHERS] (state, data) {
+        state.returnedToOthers = data
+        state.retunedToOthersSearched = data
+    },
+    [SET_RETURNED_TO_OTHERS_SEARCHED] (state, searchedVal) {
+        state.retunedToOthersSearched = searchedVal
+    },
+
+    [SET_CONFIRM_REVIEW] (state, data) {
+        state.confirmReview = data
+        state.confirmReviewSearched = data
+    },
+    [SET_CONFIRM_REVIEW_SEARCHED] (state, searchedVal) {
+        state.confirmReviewSearched = searchedVal
+    },
+    [SET_OTHERS_CONFIRM_REVIEW] (state, data) {
+        state.othersConfirmReview = data
+        state.othersConfirmReviewSearched = data
+    },
+    [SET_OTHERS_CONFIRM_REVIEW_SEARCHED] (state, searchedVal) {
+        state.othersConfirmReviewSearched = searchedVal
+    },
+
+    // SET_TEMPORARLY_FINISHED,
+    // SET_TEMPORARLY_FINISHED_SEARCHED,
+
     [SET_RECENTLY_FINISHED] (state, datas) {
         state.recentlyFinished = datas[0]
         state.recentlyFinishedSearched = datas[0]

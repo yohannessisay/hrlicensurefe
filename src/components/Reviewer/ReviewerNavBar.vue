@@ -154,6 +154,14 @@
                       Others Unfinished
                     </a>
                   </router-link>
+                  <router-link to="/admin/unconfirmed">
+                    <a
+                      class="block px-4 py-2 text-sm text-blue-100 hover:bg-gray-100 hover:text-gray-900"
+                      role="menuitem"
+                    >
+                      Un Confirmed
+                    </a>
+                  </router-link>
                 </div>
               </div>
             </span>
@@ -439,6 +447,17 @@ export default {
       if (props.tab === "AllPendigs") {
         store.dispatch("reviewer/getAllPendingPaymentSearched", search.value)
       }
+
+      if (props.tab === "Unconfirmed") {
+        
+        store.dispatch("reviewer/getUnconfirmedSearched", search.value);
+        store.dispatch("reviewer/getOthersUnconfirmedSearched", search.value);
+        store.dispatch("reviewer/getConfirmReviewSearched", search.value);
+        store.dispatch("reviewer/getOthersConfirmReviewSearched", search.value);
+        store.dispatch("reviewer/getReturnedToMeSearched", search.value)
+        store.dispatch("reviewer/getReturnedToOthersSearched", search.value);
+
+      }
       if (props.tab === "Home") {
         store.dispatch("reviewer/getAssignedToYouSearched", search.value);
         store.dispatch("reviewer/getUnfinishedSearched", search.value);
@@ -492,6 +511,8 @@ export default {
     }
     const logout = () => {
       localStorage.removeItem("token");
+      localStorage.removeItem("adminEmail")
+      localStorage.removeItem("allAdminData")
       localStorage.removeItem("adminId");
       localStorage.removeItem("role");
       router.push({ path: "/admin" });

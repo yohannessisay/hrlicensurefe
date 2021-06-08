@@ -166,7 +166,6 @@ export default {
     this.showLoading = true;
     setTimeout(() => {
       this.buttons = this.getButtons;
-      console.log(this.buttons);
       this.showButtons = true;
       this.showLoading = false;
     }, 5000);

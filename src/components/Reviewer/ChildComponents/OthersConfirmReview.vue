@@ -1,19 +1,18 @@
 <template>
   <div
     class="container"
-    v-for="(item, index) in unFinishedSearched"
+    v-for="item in othersConfirmReview"
     v-bind:key="item.id"
     v-bind:value="item.id"
   >
     <div
-      v-if="index < 5"
-      class="flex justify-center items-center ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
+      class="flex justify-center items-center  ml-8 mt-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
     >
       <div
         class="p-4 w-48 h-64"
         @Click="
           detail(
-            `/admin/unfinishedDetail`,
+            `/admin/applicantDetail`,
             item.applicationType,
             item.id,
             item.applicant.id
@@ -21,22 +20,11 @@
         "
       >
         <div class="flex content-center justify-center">
-          <span v-if="item.profilePic != ''">
-            <img
-              class="box-shadow-pop"
-              src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
-            />
-            <!-- <img
-                  class="box-shadow-pop"
-                  :src="'https://hrlicensurebe.dev.k8s.sandboxaddis.com/'+item.profilePic"
-                />  -->
-          </span>
-          <span v-else>
-            <img
-              class="box-shadow-pop"
-              src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
-            />
-          </span>
+          <!-- <img class="box-shadow-pop" v-bind:src="item.picture.large" /> -->
+          <img
+            class="box-shadow-pop"
+            src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
+          />
         </div>
         <h4
           class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
@@ -69,18 +57,19 @@
     </div>
   </div>
 </template>
+
 <script>
-import moment from "moment";
 import { useRouter } from "vue-router";
+import moment from "moment";
 export default {
   computed: {
     moment: () => moment,
   },
-  props: ["unFinishedSearched"],
-  name: "MyUnfinished",
-  setup(props) {
-    let router = useRouter();
+  props: ["othersConfirmReview"],
+  name: "OthersConfirmReview",
 
+  setup() {
+    let router = useRouter();
     const detail = (data, applicationType, applicationId, applicantId) => {
       const url =
         data + "/" + applicationType + "/" + applicationId + "/" + applicantId;

@@ -21,11 +21,7 @@
         </div>
       </div>
       <div class="flex ml-small mt-medium rounded">
-        <div class="pl-large w-52 h-26" v-if="nothingToShowUnfinished == true">
-          <div class="flex content-center justify-center">
-            <h2>Nothing To Show!</h2>
-          </div>
-        </div>
+        <nothing-to-show :nothingToShow="nothingToShowUnfinished" />
         <MyUnfinished :unFinishedSearched="unFinishedSearched" />
       </div>
       <div
@@ -49,94 +45,8 @@
           </div>
         </div>
         <div class="flex ml-small mt-medium rounded">
-          <div
-            class="pl-large w-52 h-26"
-            v-if="nothingToShowAllUnfinished == true"
-          >
-            <div class="flex content-center justify-center">
-              <h2>Nothing To Show!</h2>
-            </div>
-          </div>
-          <!-- <div v-if="nothingToShowAllUnfinished != true"> -->
-          <div
-            class="container"
-            v-for="(item, index) in unFinishedForEveryOneSearched"
-            v-bind:key="item.id"
-            v-bind:value="item.id"
-          >
-            <div
-              v-if="index < 5"
-              class="flex justify-center items-center ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
-            >
-              <div
-                class="p-4 w-48 h-64"
-                @Click="
-                  detail(
-                    `/admin/unfinishedDetail`,
-                    item.applicationType,
-                    item.id,
-                    item.applicant.id
-                  )
-                "
-              >
-                <div class="flex content-center justify-center">
-                  <span v-if="item.profilePic != ''">
-                    <!-- <img
-                      class="box-shadow-pop"
-                      src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
-                    /> -->
-                    <img
-                  class="box-shadow-pop"
-                  :src="'https://hrlicensurebe.dev.k8s.sandboxaddis.com/'+item.profilePic"
-                /> 
-                  </span>
-                  <span v-else>
-                    <img
-                      class="box-shadow-pop"
-                      src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
-                    />
-                  </span>
-                </div>
-                <h4
-                  class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
-                >
-                  <b>{{
-                    item.applicant.profile.name
-                      ? item.applicant.profile.name +
-                        " " +
-                        item.applicant.profile.fatherName
-                      : "-"
-                  }}</b>
-                </h4>
-                <span
-                  class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                >
-                  <i class="fas fa-user-cog"></i> &nbsp;
-                  {{ item.reviewer.name ? item.reviewer.name : "-" }}
-                </span>
-                <!-- <h6
-                class="text-lightBlueB-500 mt-tiny flex justify-center content-center">
-                {{ item.createdAt ? item.createdAt : "-" }}
-              </h6> -->
-                <span
-                  class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                >
-                  {{ item.applicationType ? item.applicationType : "-" }}
-                </span>
-                <span
-                  class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                >
-                  {{ item.newLicenseCode ? item.newLicenseCode : "-" }}
-                </span>
-                <span
-                  class="text-lightBlueB-500 mt-tiny flex justify-end content-center"
-                >
-                  {{ item.createdAt ? moment(item.createdAt).fromNow() : "-" }}
-                </span>
-              </div>
-            </div>
-          </div>
-          <!-- </div> -->
+          <nothing-to-show :nothingToShow="nothingToShowAllUnfinished" />
+          <others-unfinished :othersUnfinished="unFinishedForEveryOneSearched" />
         </div>
         <div
           v-if="showAllUnfinishedLoaing"
@@ -159,88 +69,8 @@
         </div>
       </div>
       <div class="flex ml-small mt-medium rounded">
-        <div class="pl-large w-52 h-26" v-if="nothingToShow == true">
-          <div class="flex content-center justify-center">
-            <h2>Nothing To Show!</h2>
-          </div>
-        </div>
-        <div
-          class="container"
-          v-for="(item, index) in assignedToYouSearched"
-          v-bind:key="item.id"
-          v-bind:value="item.id"
-        >
-          <div
-            v-if="index < 5"
-            class="flex justify-center items-center ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
-          >
-            <div
-              class="p-4 w-48 h-64"
-              @Click="
-                detail(
-                  `/admin/detail`,
-                  item.applicationType,
-                  item.id,
-                  item.applicant.id
-                )
-              "
-            >
-              <div class="flex content-center justify-center">
-                <router-link to="/newlicense">
-                  <span v-if="item.profilePic != ''">
-                    <!-- <img
-                      class="box-shadow-pop"
-                      src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
-                    /> -->
-                    <img
-                  class="box-shadow-pop"
-                  :src="'https://hrlicensurebe.dev.k8s.sandboxaddis.com/'+item.profilePic"
-                /> 
-                  </span>
-                  <span v-else>
-                    <img
-                      class="box-shadow-pop"
-                      src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
-                    />
-                  </span>
-                </router-link>
-              </div>
-              <h4
-                class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
-              >
-                <b>{{
-                  item.applicant.profile.name
-                    ? item.applicant.profile.name +
-                      " " +
-                      item.applicant.profile.fatherName
-                    : "-"
-                }}</b>
-              </h4>
-              <!-- <span
-                class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-              >
-                {{ item.createdAt ? item.createdAt : "-" }}
-              </span> -->
-              <br />
-              <span
-                class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-              >
-                {{ item.applicationType ? item.applicationType : "-" }}
-              </span>
-              <span
-                class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-              >
-                {{ item.newLicenseCode ? item.newLicenseCode : "-" }}
-              </span>
-              <!-- <br/> -->
-              <span
-                class="text-lightBlueB-500 mt-tiny flex justify-end content-center"
-              >
-                {{ item.createdAt ? moment(item.createdAt).fromNow() : "-" }}
-              </span>
-            </div>
-          </div>
-        </div>
+        <nothing-to-show :nothingToShow="nothingToShow" />
+        <my-assigned :assignedToMe="assignedToYouSearched" />
       </div>
       <div
         v-if="showAssignedToMeLoading"
@@ -252,7 +82,7 @@
         <div class="flex pl-12 mt-medium">
           <Title message="Assigned to Others" />
           <div class="flex ml-small" v-if="assignedToEveryone.length >= 5">
-            <router-link to="/admin/assignedToyou">
+            <router-link to="/admin/assignedToAll">
               <button
                 class="block mx-auto bg-lightBlue-300 hover:bg-lightBlue-600 hover:shadow-lg"
               >
@@ -263,96 +93,8 @@
         </div>
 
         <div class="flex ml-small mt-medium rounded">
-          <div
-            class="pl-large w-52 h-26"
-            v-if="nothingToShowEveryoneAssigned == true"
-          >
-            <div class="flex content-center justify-center">
-              <h2>Nothing To Show!</h2>
-            </div>
-          </div>
-          <div
-            class="container"
-            v-for="(item, index) in assignedToEveryOneSearched"
-            v-bind:key="item.id"
-            v-bind:value="item.id"
-          >
-            <div
-              v-if="index < 5"
-              class="flex justify-center items-center ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
-            >
-              <div
-                class="p-4 w-48 h-64"
-                @Click="
-                  detail(
-                    `/admin/detail`,
-                    item.applicationType,
-                    item.id,
-                    item.applicant.id
-                  )
-                "
-              >
-                <div class="flex content-center justify-center">
-                  <router-link to="/newlicense">
-                    <span v-if="item.profilePic != ''">
-                      <!-- <img
-                        class="box-shadow-pop"
-                        src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
-                      /> -->
-                      <img
-                  class="box-shadow-pop"
-                  :src="'https://hrlicensurebe.dev.k8s.sandboxaddis.com/'+item.profilePic"
-                /> 
-                    </span>
-                    <span v-else>
-                      <img
-                        class="box-shadow-pop"
-                        src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
-                      />
-                    </span>
-                  </router-link>
-                </div>
-                <h4
-                  class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
-                >
-                  <b>{{
-                    item.applicant.profile.name
-                      ? item.applicant.profile.name +
-                        " " +
-                        item.applicant.profile.fatherName
-                      : "-"
-                  }}</b>
-                </h4>
-                <span
-                  class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                >
-                  <!-- Assigned Reviewer: -->
-                  <!-- <i class="far fa-user-cog"></i> -->
-                  <i class="fas fa-user-cog"></i> &nbsp;
-                  {{ item.reviewer.name ? item.reviewer.name : "-" }}
-                </span>
-                <!-- <h6
-                class="text-lightBlueB-500 mt-tiny flex justify-center content-center">
-                {{ item.createdAt ? item.createdAt : "-" }}
-              </h6> -->
-                <span
-                  class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                >
-                  {{ item.applicationType ? item.applicationType : "-" }}
-                </span>
-                <span
-                  class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                >
-                  {{ item.newLicenseCode ? item.newLicenseCode : "-" }}
-                </span>
-                <span
-                  class="text-lightBlueB-500 mt-tiny flex justify-end content-center"
-                >
-                  {{ item.createdAt ? moment(item.createdAt).fromNow() : "-" }}
-                </span>
-              </div>
-            </div>
-          </div>
+          <nothing-to-show :nothingToShow="nothingToShowEveryoneAssigned" />
+          <assigned-to-others :assidgnedToOthers="assignedToEveryOneSearched" />
         </div>
       </div>
       <div
@@ -361,7 +103,7 @@
       >
         <Spinner />
       </div>
-      
+
       <div class="flex pl-12 pt-medium">
         <div v-if="myTitleMessage">
           <Title message="My Pending Payments" />
@@ -381,11 +123,8 @@
         </div>
       </div>
       <div class="flex ml-small mt-medium rounded">
-        <div class="pl-large w-52 h-26" v-if="nothingToShowPending == true">
-          <div class="flex content-center justify-center">
-            <h2>Nothing To Show!</h2>
-          </div>
-        </div>
+        <nothing-to-show :nothingToShow="nothingToShowPending" />
+
         <my-pending-payments :myPendings="myPendingPayment" />
       </div>
       <div
@@ -409,15 +148,10 @@
           </div>
         </div>
         <div class="flex ml-small mt-medium rounded">
-          <div
-            class="pl-large w-52 h-26"
-            v-if="nothingToShowAllPengings == true"
-          >
-            <div class="flex content-center justify-center">
-              <h2>Nothing To Show!</h2>
-            </div>
-          </div>
+
+          <nothing-to-show :nothingToShow="nothingToShowAllPengings" />
           <others-pending-payments :othersPendings="othersPendingPayment" />
+          
         </div>
         <div
           v-if="showAllPendingLoading"
@@ -441,133 +175,9 @@
       </div>
 
       <div class="box">
-        <div class="flex ml-small mt-medium pb-large rounded">
-          <div
-            class="pl-large w-52 h-26"
-            v-if="nothingToShowUnassigned == true"
-          >
-            <div class="flex content-center justify-center">
-              <h2>Nothing To Show!</h2>
-            </div>
-          </div>
-          <div
-            class="container flip-box"
-            v-for="(item, index) in unAssignedSearched"
-            v-bind:key="item.id"
-            v-bind:value="item.id"
-          >
-            <div
-              v-if="index < 5"
-              class="flex justify-center items-center ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100 flip-box-front"
-            >
-              <div
-                class="p-4 w-48 h-64"
-                @mouseover="hover = true"
-                @mouseleave="hover = false"
-              >
-                <div class="flex content-center justify-center">
-                  <span v-if="item.profilePic != ''">
-                  <img
-                  class="box-shadow-pop"
-                  :src="'https://hrlicensurebe.dev.k8s.sandboxaddis.com/'+item.profilePic"
-                /> 
-                  </span>
-                  <span v-else>
-                    <img
-                    class="box-shadow-pop"
-                    src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
-                  />
-                  </span>
-                </div>
-                <h4
-                  class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
-                >
-                  <b>{{
-                    item.applicant.profile.name
-                      ? item.applicant.profile.name +
-                        " " +
-                        item.applicant.profile.fatherName
-                      : "-"
-                  }}</b>
-                </h4>
-                <span
-                  class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                >
-                  unassigned
-                </span>
-                <span
-                  class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                >
-                  {{ item.applicationType ? item.applicationType : "-" }}
-                </span>
-                <span
-                  class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                >
-                  {{ item.newLicenseCode ? item.newLicenseCode : "-" }}
-                </span>
-                <span
-                  class="text-lightBlueB-500 mt-tiny flex justify-end content-center"
-                >
-                  {{ item.createdAt ? moment(item.createdAt).fromNow() : "-" }}
-                </span>
-              </div>
-            </div>
-
-            <div
-              v-if="index < 5"
-              class="absolute inset-0 flex justify-center items-center z-10 ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100 flip-box-back"
-            >
-              <div
-                class="p-4 w-48 h-64"
-                @mouseover="hover = true"
-                @mouseleave="hover = false"
-                @Click="
-                  detail(
-                    `/admin/unassignedDetail`,
-                    item.applicationType,
-                    item.id,
-                    item.applicant.id
-                  )
-                "
-              >
-                <h4
-                  class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
-                >
-                  <b>{{
-                    item.applicant.profile.name
-                      ? item.applicant.profile.name +
-                        " " +
-                        item.applicant.profile.fatherName
-                      : "-"
-                  }}</b>
-                </h4>
-                <span
-                  class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                >
-                  {{ item.applicationType ? item.applicationType : "-" }}
-                </span>
-                <span
-                  class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                >
-                  {{ item.newLicenseCode ? item.newLicenseCode : "-" }}
-                </span>
-                <span
-                  class="text-lightBlueB-500 mt-tiny flex justify-end content-center"
-                >
-                  {{ item.createdAt ? moment(item.createdAt).fromNow() : "-" }}
-                </span>
-                <div
-                  class="flex ml-small w-32 pt-small justify-center content-center"
-                >
-                  <button
-                    class="block mx-auto bg-lightBlue-300 hover:bg-lightBlue-600 hover:shadow-lg"
-                  >
-                    Assign to
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
+        <div class="flex ml-small mt-medium rounded">
+          <nothing-to-show :nothingToShow="nothingToShowUnassigned" />
+          <all-unassigned :allUnassigned="unAssignedSearched" />
         </div>
       </div>
       <div
@@ -590,8 +200,13 @@ import store from "../../store";
 import Spinner from "@/sharedComponents/Spinner";
 import moment from "moment";
 import MyUnfinished from "./HomeComponents/MyUnfinished.vue";
+import MyAssigned from "./ChildComponents/MyAssigned.vue";
+import NothingToShow from "./ChildComponents/NothingToShow.vue";
 import MyPendingPayments from "./HomeComponents/MyPendingPayments.vue";
 import OthersPendingPayments from "./HomeComponents/OthersPendingPayments.vue";
+import OthersUnfinished from './ChildComponents/OthersUnfinished.vue';
+import AssignedToOthers from "./ChildComponents/AssignedToOthers.vue";
+import AllUnassigned from "./ChildComponents/AllUnassigned.vue";
 
 export default {
   components: {
@@ -599,8 +214,13 @@ export default {
     Title,
     Spinner,
     MyUnfinished,
+    NothingToShow,
+    MyAssigned,
     MyPendingPayments,
     OthersPendingPayments,
+    OthersUnfinished,
+    AssignedToOthers,
+    AllUnassigned,
   },
   computed: {
     moment: () => moment,
@@ -620,10 +240,10 @@ export default {
       return store.getters["reviewer/getAssignedForEveryOneSearched"];
     },
     myPendingPayment() {
-      return store.getters['reviewer/getPendingPaymentsSearched'];
+      return store.getters["reviewer/getPendingPaymentsSearched"];
     },
     othersPendingPayment() {
-      return store.getters['reviewer/getAllPendingPaymentSearched'];
+      return store.getters["reviewer/getAllPendingPaymentSearched"];
     },
   },
   setup() {
@@ -633,15 +253,18 @@ export default {
     let unfinished = ref({
       applicant: { profile: { name: "", fatherName: "" } },
       applicationStatus: { name: "" },
-      profilePic: ""
+      profilePic: "",
     });
-    let assignedToyou = ref({ applicationStatus: { name: "" }, profilePic: '' });
-    let unassigned = ref({ applicationStatus: { name: "" }, profilePic: '' });
+    let assignedToyou = ref({
+      applicationStatus: { name: "" },
+      profilePic: "",
+    });
+    let unassigned = ref({ applicationStatus: { name: "" }, profilePic: "" });
     let pending = ref({});
     let allPendings = ref({});
     let recentlyFinished = ref({});
-    let assignedToEveryone = ref({profilePic: ""});
-    let everyoneUnfinished = ref({profilePic: ""});
+    let assignedToEveryone = ref({ profilePic: "" });
+    let everyoneUnfinished = ref({ profilePic: "" });
     let hover = ref(false);
     let adminId = +localStorage.getItem("adminId");
     let adminRole = localStorage.getItem("role");
@@ -685,6 +308,7 @@ export default {
                 ) {
                   unfinished.value[prop].profilePic =
                     unfinished.value[prop].documents[psp].filePath;
+                  // store.getters["reviewer/getUnfinishedSearched"]
                   break;
                 }
               }
@@ -710,12 +334,12 @@ export default {
     };
 
     const fetchMyPendingPayment = () => {
-      showMyPendingLoading.value = true
-      store.dispatch("reviewer/getPendingPayments", adminId).then(res => {
-        showMyPendingLoading.value = false
-          pending.value = store.getters['reviewer/getPendingPayments'];
-        if(store.getters['reviewer/getPendingPayments'].length !== 0) {
-          for (var prop in store.getters['reviewer/getPendingPayments']) {
+      showMyPendingLoading.value = true;
+      store.dispatch("reviewer/getPendingPayments", adminId).then((res) => {
+        showMyPendingLoading.value = false;
+        pending.value = store.getters["reviewer/getPendingPayments"];
+        if (store.getters["reviewer/getPendingPayments"].length !== 0) {
+          for (var prop in store.getters["reviewer/getPendingPayments"]) {
             if (pending.value[prop].applicationType == "Renewal") {
               pending.value[prop].newLicenseCode =
                 pending.value[prop].renewalCode;
@@ -733,15 +357,20 @@ export default {
           nothingToShowPending.value = true;
         }
       });
-    }
+    };
 
     const fetchOthersPendingPayment = () => {
       showAllPendingLoading.value = true;
-      store.dispatch("reviewer/getAllPendingPayments", adminId).then(res => {
-        showAllPendingLoading.value = false
-          allPendings.value = store.getters['reviewer/getAllPendingPaymentSearched'];
-        if(store.getters['reviewer/getAllPendingPaymentSearched'].length !== 0) {
-          for (var prop in store.getters['reviewer/getAllPendingPaymentSearched']) {
+      store.dispatch("reviewer/getAllPendingPayments", adminId).then((res) => {
+        showAllPendingLoading.value = false;
+        allPendings.value =
+          store.getters["reviewer/getAllPendingPaymentSearched"];
+        if (
+          store.getters["reviewer/getAllPendingPaymentSearched"].length !== 0
+        ) {
+          for (var prop in store.getters[
+            "reviewer/getAllPendingPaymentSearched"
+          ]) {
             if (allPendings.value[prop].applicationType == "Renewal") {
               allPendings.value[prop].newLicenseCode =
                 allPendings.value[prop].renewalCode;
@@ -759,7 +388,7 @@ export default {
           nothingToShowAllPengings.value = true;
         }
       });
-    }
+    };
 
     const fetchAssignedtoYou = () => {
       showAssignedToMeLoading.value = true;
@@ -803,7 +432,7 @@ export default {
     };
 
     const fetchAssignedToEveryone = () => {
-      const adminData = [adminRole, adminId]
+      const adminData = [adminRole, adminId];
       showAssignedToOthersLoading.value = true;
       store
         .dispatch("reviewer/getAssignedToEveryOne", adminData)
@@ -827,6 +456,7 @@ export default {
                   ) {
                     assignedToEveryone.value[prop].profilePic =
                       assignedToEveryone.value[prop].documents[psp].filePath;
+                    // store.getters["reviewer/getUnfinishedSearched"]
                     break;
                   }
                 }
@@ -857,7 +487,7 @@ export default {
     };
 
     const fetchEveryOneUnfinished = () => {
-      const adminData = [adminRole, adminId]
+      const adminData = [adminRole, adminId];
       showAllUnfinishedLoaing.value = true;
       store
         .dispatch("reviewer/getEveryOneUnfinished", adminData)

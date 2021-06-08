@@ -9,6 +9,21 @@ export default {
         recentlyFinished: [],
         recentlyFinishedSearched: [],
 
+        unconfirmed: [],
+        unconfirmedSearched: [],
+        othersUnconfirmed: [],
+        othersUnconfirmedSearched: [],
+
+        returnedToMe: [],
+        returnedToMeSearched: [],
+        returnedToOthers: [],
+        retunedToOthersSearched: [],
+
+        confirmReview: [],
+        confirmReviewSearched: [],
+        othersConfirmReview: [],
+        othersConfirmReviewSearched: [],
+
         approved: [],
         approvedSearched: [],
         allApproved: [],

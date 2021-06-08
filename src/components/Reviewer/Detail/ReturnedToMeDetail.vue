@@ -1,6 +1,6 @@
 <template>
   <div class="bg-lightBlueB-200">
-    <ReviewerNavBar tab="Unfinished" />
+    <ReviewerNavBar tab="returnedToMeDetail" />
     <div class="bg-lightBlueB-200 h-full">
       <div
         v-if="show"
@@ -8,31 +8,6 @@
         class="ml-8  mr-8 mb-12"
       >
         <div class="mt-large bg-white"> 
-          <div v-if="(role.code === `TL` || role.code === `SA`) && getReviewId == loggedInAdminId" class="flex">
-            <div class="flex flex-col mb-medium w-2/3 ml-small mt-small"></div>
-            <div class="flex flex-col mb-medium w-1/3 mr-small mt-small">
-              <label class="text-primary-700">Transfer Review</label>
-              <select
-                class="max-w-3xl"
-                v-model="transfer.reviewerId"
-                @change="gen()"
-              >
-                <option
-                  v-for="types in admins"
-                  v-bind:key="types.name"
-                  v-bind:value="types.id"
-                >
-                  {{ types.name }}
-                </option>
-              </select>
-              <button
-                class="block mx-auto bg-lightBlue-300 hover:bg-lightBlue-600 hover:shadow-lg mt-small"
-                @click="transferReview()"
-              >
-                Transfer To
-              </button>
-            </div>
-          </div>
           <div class="flex justify-center"><Title message="Summary" /></div>
           <div class="flex justify-start">
             <Title message="Personal Info" />
@@ -258,17 +233,8 @@
           <div v-if="getReviewId == loggedInAdminId">
             <div class="mt-12 flex justify-center">
               <div>
-                <button @click="evaluate()">Continue Evaluating</button>
+                <button @click="evaluate()">Re Evaluate</button>
               </div>
-            </div>
-            <div class="flex justify-center mt-8">
-              <h6>
-                If you don't have all the required informations you can come back
-                and finish later.
-              </h6>
-            </div>
-            <div class="flex justify-center mt-8 mb-8">
-              <button variant="outline">I will finish Later</button>
             </div>
           </div>
         </div>
@@ -309,15 +275,6 @@ export default {
 
     let userId = +localStorage.getItem("userId");
 
-    let role = ref({});
-
-    let admins = ref({});
-
-    let transfer = ref({
-      reviewerId: "",
-      licenseId: "",
-      createdByAdminId: "",
-    });
 
     let show = ref(false);
     let showLoading = ref(false);
@@ -358,98 +315,6 @@ export default {
 
     let loggedInAdminId = +localStorage.getItem("adminId");
 
-    const fetchRole = (id) => {
-      store.dispatch("reviewer/getRoles", id).then(res => {
-        role.value = res.data.data.role;
-      })
-    }
-
-    const fetchAdmins = () => {
-      store.dispatch("reviewer/getAdmins").then(res => {
-        
-        admins.value = res.data.data
-      })
-    }
-
-    const gen = () => {
-    }
-
-    const transferReview = () => {
-      if (role.value.code === "TL" || role.value.code === "SA") {
-        if (applicationType.value == "Good Standing") {
-          transfer.value = {
-            goodStandingId: route.params.applicationId,
-            reviewerId: transfer.value.reviewerId,
-            createdByAdminId: +localStorage.getItem("adminId"),
-          };
-        }
-        if (applicationType.value == "Verification") {
-          transfer.value = {
-            verificationId: route.params.applicationId,
-            reviewerId: transfer.value.reviewerId,
-            createdByAdminId: +localStorage.getItem("adminId"),
-          };
-        }
-        if (applicationType.value == "Renewal") {
-          transfer.value = {
-            renewalId: route.params.applicationId,
-            reviewerId: transfer.value.reviewerId,
-            createdByAdminId: +localStorage.getItem("adminId"),
-          };
-        }
-        if (applicationType.value == "New License") {
-          transfer.value = {
-            licenseId: route.params.applicationId,
-            reviewerId: transfer.value.reviewerId,
-            createdByAdminId: +localStorage.getItem("adminId"),
-          };
-        }
-      }
-      if (applicationType.value == "New License") {
-        store
-          .dispatch("reviewer/transferLicenseReview", transfer.value)
-
-          .then((response) => {
-            if (response.statusText == "Created") {
-              showFlash.value = true;
-              router.push("/admin/review");
-            }
-          });
-      }
-      if (applicationType.value == "Verification") {
-        store
-          .dispatch("reviewer/transferVerificationReview", transfer.value)
-
-          .then((response) => {
-            if (response.statusText == "Created") {
-              showFlash.value = true;
-              router.push("/admin/review");
-            }
-          });
-      }
-      if (applicationType.value == "Renewal") {
-        store
-          .dispatch("reviewer/transferRenewalReview", transfer.value)
-
-          .then((response) => {
-            if (response.statusText == "Created") {
-              showFlash.value = true;
-              router.push("/admin/review");
-            }
-          });
-      }
-      if (applicationType.value == "Good Standing") {
-        store
-          .dispatch("reviewer/transferGoodStandingReview", transfer.value)
-
-          .then((response) => {
-            if (response.statusText == "Created") {
-              showFlash.value = true;
-              router.push("/admin/review");
-            }
-          });
-      }
-    }
 
     const created = async (applicationTypeName, applicationId, applicantId) => {
       licenseId.value = applicationId;
@@ -530,22 +395,20 @@ export default {
     };
 
     const evaluate = () => {
-      router.push(
-        "/admin/evaluate/" + applicationType.value + "/" + licenseId.value
+    //   router.push(
+    //     "/admin/confirmReview/" + applicationType.value + "/" + licenseId.value
+    //   );
+    router.push(
+        "/admin/reviewReturnedApplication/" + applicationType.value + "/" + licenseId.value
       );
     };
 
     onMounted(() => {
-      //userId.value = +localStorage.getItem("userId");
-      loggedInAdminId = +localStorage.getItem("adminId");
-      // userId = 2;
       created(
         route.params.applicationType,
         route.params.applicationId,
         route.params.applicantId
       );
-      fetchAdmins();
-      fetchRole(loggedInAdminId)
     });
 
     return {
@@ -569,11 +432,6 @@ export default {
       applicationType,
       licenseId,
       showLoading,
-      admins,
-      role,
-      transfer,
-      gen,
-      transferReview
     };
   }
 

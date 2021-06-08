@@ -108,6 +108,11 @@ const routes = [
     component: () => import("../components/Reviewer/Home.vue"),
   },
   {
+    path: "/admin/changePassword",
+    name: "changeadminPassword",
+    component: () => import("../components/Reviewer/Configurations/ChangePassword/ChangePassword.vue"),
+  },
+  {
     path: "/myWork",
     name: "myWork",
     component: () => import("../components/Reviewer/MyWork.vue"),
@@ -126,6 +131,11 @@ const routes = [
     path: "/admin/unfinishedAll",
     name: "allUnfinished",
     component: () => import("../components/Reviewer/AllUnfinished.vue"),
+  },
+  {
+    path: "/admin/unconfirmed",
+    name: "unconfirmed",
+    component: () => import("../components/Reviewer/Unconfirmed.vue")
   },
   {
     path: "/admin/assignedToYou",
@@ -197,17 +207,71 @@ const routes = [
       import("../components/Reviewer/Detail/UnfinishedDetail.vue"),
   },
   {
-    path: "/admin/finishedDetail/:applicationType/:applicationId",
+    path: "/admin/finishedDetail/:applicationType/:applicationId/:status",
     name: "recentlyFinishedDetail",
     component: () =>
       import("../components/Reviewer/Detail/RecentlyFinishedDetail.vue"),
   },
+  {
+    path: "/admin/confirmReview/:applicationType/:applicantId",
+    name: "confirmReview",
+    component: () =>
+      import("../components/Reviewer/ConfirmAdminReview.vue"),
+  },
+  {
+    path: "/admin/confirmReviewDetail/:applicationType/:applicationId/:status",
+    name: "confirmReviewDetail",
+    component: () =>
+      import("../components/Reviewer/Detail/ConfirmReviewDetail.vue"),
+  },
+
   {
     path:
       "/admin/unassignedDetail/:applicationType/:applicationId/:applicantId",
     name: "unassignedDetail",
     component: () =>
       import("../components/Reviewer/Detail/UnassignedDetail.vue"),
+  },
+  {
+    path:
+      "/admin/returnedToMeDetail/:applicationType/:applicationId/:applicantId",
+    name: "returnedToMeDetail",
+    component: () =>
+      import("../components/Reviewer/Detail/ReturnedToMeDetail.vue"),
+  },
+  {
+    path: "/admin/reviewReturnedApplication/:applicationType/:applicationId",
+    name: "reviewReturnedApplication",
+    component: () => import("../components/Reviewer/ReviewReturnedApplication.vue"),
+  },
+  {
+    path: "/admin/confirmAssignedApplication/:applicationType/:applicationId",
+    name: "confirmAssignedApplication",
+    component: () => import("../components/Reviewer/ConfirmAssignedApplication.vue"),
+  },
+  {
+    path: "/admin/unconfirmedDetail/:applicationType/:applicationId/:applicantId",
+    name: "unconfirmedDetail",
+    component: () => 
+      import("../components/Reviewer/Detail/UnconfirmedDetail.vue"),
+  },
+  {
+    path: "/admin/othersUnconfirmedDetail/:applicationType/:applicationId/:applicantId",
+    name: "othersUnconfirmedDetail",
+    component: () => 
+      import("../components/Reviewer/Detail/OthersUnconfirmedDetail.vue")
+  },
+  {
+    path: "/admin/returnedToOthersDetail/:applicationType/:applicationId/:applicantId",
+    name: "returnedToOthersDetail",
+    component: () => 
+      import("../components/Reviewer/Detail/ReturnedToOthersDetail.vue")
+  },
+  {
+    path: "/admin/applicantDetail/:applicationType/:applicationId/:applicantId",
+    name: "applicantDetail",
+    component: () => 
+      import("../components/Reviewer/Detail/ApplicantDetail.vue")
   },
   {
     path: "/admin",

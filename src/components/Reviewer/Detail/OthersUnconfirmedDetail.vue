@@ -7,15 +7,20 @@
         style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);"
         class="ml-8  mr-8 mb-12"
       >
-        <div class="mt-large bg-white"> 
-          <div v-if="(role.code === `TL` || role.code === `SA`) && getReviewId == loggedInAdminId" class="flex">
+        <div class="mt-large bg-white">
+          <div
+            v-if="role.code === `SA` && getReviewId != loggedInAdminId"
+            class="flex"
+          >
             <div class="flex flex-col mb-medium w-2/3 ml-small mt-small"></div>
             <div class="flex flex-col mb-medium w-1/3 mr-small mt-small">
-              <label class="text-primary-700">Transfer Review</label>
+              <label class="text-primary-700">Admins To Confirm</label>
+              <label class="text-primary-500">*please select maximum 3, minimum 2 admins to confirm</label>
               <select
-                class="max-w-3xl"
-                v-model="transfer.reviewerId"
+                class="form-multiselect max-w-3xl"
+                v-model="assignConfirmAdmin.reviewersId"
                 @change="gen()"
+                multiple
               >
                 <option
                   v-for="types in admins"
@@ -25,11 +30,14 @@
                   {{ types.name }}
                 </option>
               </select>
+              <span v-show="showAdminCountError">
+              <label class="text-red-200">please select 2 or 3 admins</label>
+              </span>
               <button
                 class="block mx-auto bg-lightBlue-300 hover:bg-lightBlue-600 hover:shadow-lg mt-small"
-                @click="transferReview()"
+                @click="assignAdminToConfirm()"
               >
-                Transfer To
+                Confirmed By
               </button>
             </div>
           </div>
@@ -62,7 +70,7 @@
             </div>
             <div
               :class="[
-                profileInfo.nationality === null ? errorClass : activeClass
+                profileInfo.nationality === null ? errorClass : activeClass,
               ]"
             >
               <label class="ml-8"> Nationality</label>
@@ -72,7 +80,8 @@
             </div>
             <div
               :class="[
-                profileInfo.placeOfBirth === null ? errorClass : activeClass]"
+                profileInfo.placeOfBirth === null ? errorClass : activeClass,
+              ]"
             >
               <label class="ml-8"> Place of Birth</label>
               <h5 class="ml-8">
@@ -81,19 +90,23 @@
             </div>
             <div
               :class="[
-                profileInfo.dateOfBirth === null ? errorClass : activeClass
+                profileInfo.dateOfBirth === null ? errorClass : activeClass,
               ]"
             >
               <label class="ml-8"> Date of Birth</label>
               <h5 class="ml-8">
-                {{ profileInfo.dateOfBirth ? moment(profileInfo.dateOfBirth).format("MMM D, YYYY") : "-" }}
+                {{
+                  profileInfo.dateOfBirth
+                    ? moment(profileInfo.dateOfBirth).format("MMM D, YYYY")
+                    : "-"
+                }}
               </h5>
             </div>
             <div
               :class="[
                 profileInfo.maritalStatus.name === null
                   ? errorClass
-                  : activeClass
+                  : activeClass,
               ]"
             >
               <label class="ml-8"> Marital Status</label>
@@ -115,7 +128,7 @@
               :class="[
                 profileInfo.woreda.zone.region === null
                   ? errorClass
-                  : activeClass
+                  : activeClass,
               ]"
             >
               <label class="ml-8"> Region</label>
@@ -129,7 +142,7 @@
             </div>
             <div
               :class="[
-                profileInfo.woreda.zone === null ? errorClass : activeClass
+                profileInfo.woreda.zone === null ? errorClass : activeClass,
               ]"
             >
               <label class="ml-8"> Zone</label>
@@ -157,7 +170,7 @@
             </div>
             <div
               :class="[
-                profileInfo.houseNumber === null ? errorClass : activeClass
+                profileInfo.houseNumber === null ? errorClass : activeClass,
               ]"
             >
               <label class="ml-8"> House Number</label>
@@ -167,7 +180,7 @@
             </div>
             <div
               :class="[
-                profileInfo.residence === null ? errorClass : activeClass
+                profileInfo.residence === null ? errorClass : activeClass,
               ]"
             >
               <label class="ml-8"> Residence</label>
@@ -182,7 +195,9 @@
           <div class="flex flex-row">
             <div
               :class="[
-                profileInfo.user.phoneNumber === null ? errorClass : activeClass,
+                profileInfo.user.phoneNumber === null
+                  ? errorClass
+                  : activeClass,
               ]"
             >
               <label class="ml-8"> Mobile Number</label>
@@ -199,7 +214,7 @@
               :class="[
                 profileInfo.user.emailAddress === null
                   ? errorClass
-                  : activeClass
+                  : activeClass,
               ]"
             >
               <label class="ml-8"> Email</label>
@@ -213,7 +228,7 @@
             </div>
             <div
               :class="[
-                profileInfo.userType.name === null ? errorClass : activeClass
+                profileInfo.userType.name === null ? errorClass : activeClass,
               ]"
             >
               <label class="ml-8"> User Type</label>
@@ -247,30 +262,7 @@
               </h5>
             </div>
           </div>
-          <div class="flex justify-start flex-wrap">
-            <!-- <div v-for="file in docs" v-bind:key="file.id">
-              <Title class="" :message="file.fieldName" />
-              <picture>
-                <img :src="basePath + file.filePath" />
-              </picture>
-            </div> -->
-          </div>
-          <div v-if="getReviewId == loggedInAdminId">
-            <div class="mt-12 flex justify-center">
-              <div>
-                <button @click="evaluate()">Continue Evaluating</button>
-              </div>
-            </div>
-            <div class="flex justify-center mt-8">
-              <h6>
-                If you don't have all the required informations you can come back
-                and finish later.
-              </h6>
-            </div>
-            <div class="flex justify-center mt-8 mb-8">
-              <button variant="outline">I will finish Later</button>
-            </div>
-          </div>
+          <div class="flex justify-start flex-wrap"></div>
         </div>
       </div>
     </div>
@@ -313,12 +305,13 @@ export default {
 
     let admins = ref({});
 
-    let transfer = ref({
-      reviewerId: "",
+    let showAdminCountError = ref(false);
+
+    let assignConfirmAdmin = ref({
+      reviewersId: [],
       licenseId: "",
       createdByAdminId: "",
     });
-
     let show = ref(false);
     let showLoading = ref(false);
     let license = ref({
@@ -326,24 +319,24 @@ export default {
       applicantType: {},
       education: {
         institution: {
-          institutionType: {}
+          institutionType: {},
         },
-        department: {}
-      }
+        department: {},
+      },
     });
     let profileInfo = ref({
       maritalStatus: {},
       woreda: {
-        zone: {}
+        zone: {},
       },
       user: {},
-      userType: {}
+      userType: {},
     });
     let applicantId = ref("");
     let applicantTypeId = ref("");
     let education = ref({
       institution: { name: "", institutionType: { name: "" } },
-      department: { name: "" }
+      department: { name: "" },
     });
     let licenseId = ref("");
     let activeClass = ref("active");
@@ -359,55 +352,67 @@ export default {
     let loggedInAdminId = +localStorage.getItem("adminId");
 
     const fetchRole = (id) => {
-      store.dispatch("reviewer/getRoles", id).then(res => {
+      store.dispatch("reviewer/getRoles", id).then((res) => {
         role.value = res.data.data.role;
-      })
-    }
+      });
+    };
 
     const fetchAdmins = () => {
-      store.dispatch("reviewer/getAdmins").then(res => {
-        
-        admins.value = res.data.data
-      })
-    }
+      store.dispatch("reviewer/getAdmins").then((res) => {
+        admins.value = res.data.data;
+      });
+    };
 
     const gen = () => {
-    }
+      console.log("selected val", assignConfirmAdmin.value.reviewersId);
+    };
 
-    const transferReview = () => {
-      if (role.value.code === "TL" || role.value.code === "SA") {
+    const assignAdminToConfirm = () => {
+      console.log("admin values are ", assignConfirmAdmin.value.reviewersId);
+      if (
+        assignConfirmAdmin.value.reviewersId.length > 3 ||
+        assignConfirmAdmin.value.reviewersId.length < 2
+      ) {
+        showAdminCountError.value = true;
+        return;
+      }
+      if (role.value.code === "SA") {
+        showAdminCountError.value = false;
         if (applicationType.value == "Good Standing") {
-          transfer.value = {
+          assignConfirmAdmin.value = {
             goodStandingId: route.params.applicationId,
-            reviewerId: transfer.value.reviewerId,
+            reviewerId: assignConfirmAdmin.value.reviewersId,
             createdByAdminId: +localStorage.getItem("adminId"),
           };
         }
         if (applicationType.value == "Verification") {
-          transfer.value = {
+          assignConfirmAdmin.value = {
             verificationId: route.params.applicationId,
-            reviewerId: transfer.value.reviewerId,
+            reviewerId: assignConfirmAdmin.value.reviewersId,
             createdByAdminId: +localStorage.getItem("adminId"),
           };
         }
         if (applicationType.value == "Renewal") {
-          transfer.value = {
+          assignConfirmAdmin.value = {
             renewalId: route.params.applicationId,
-            reviewerId: transfer.value.reviewerId,
+            reviewerId: assignConfirmAdmin.value.reviewersId,
             createdByAdminId: +localStorage.getItem("adminId"),
           };
         }
         if (applicationType.value == "New License") {
-          transfer.value = {
+          assignConfirmAdmin.value = {
             licenseId: route.params.applicationId,
-            reviewerId: transfer.value.reviewerId,
+            reviewerId: assignConfirmAdmin.value.reviewersId,
             createdByAdminId: +localStorage.getItem("adminId"),
           };
         }
       }
       if (applicationType.value == "New License") {
         store
-          .dispatch("reviewer/transferLicenseReview", transfer.value)
+          .dispatch(
+            "reviewer/confirmNewLicenseReview",
+            assignConfirmAdmin.value
+          )
 
           .then((response) => {
             if (response.statusText == "Created") {
@@ -418,7 +423,10 @@ export default {
       }
       if (applicationType.value == "Verification") {
         store
-          .dispatch("reviewer/transferVerificationReview", transfer.value)
+          .dispatch(
+            "reviewer/confirmVerificationReview",
+            assignConfirmAdmin.value
+          )
 
           .then((response) => {
             if (response.statusText == "Created") {
@@ -429,7 +437,7 @@ export default {
       }
       if (applicationType.value == "Renewal") {
         store
-          .dispatch("reviewer/transferRenewalReview", transfer.value)
+          .dispatch("reviewer/confirmRenewalReview", assignConfirmAdmin.value)
 
           .then((response) => {
             if (response.statusText == "Created") {
@@ -440,7 +448,10 @@ export default {
       }
       if (applicationType.value == "Good Standing") {
         store
-          .dispatch("reviewer/transferGoodStandingReview", transfer.value)
+          .dispatch(
+            "reviewer/confirmGoodStandingReview",
+            assignConfirmAdmin.value
+          )
 
           .then((response) => {
             if (response.statusText == "Created") {
@@ -449,7 +460,7 @@ export default {
             }
           });
       }
-    }
+    };
 
     const created = async (applicationTypeName, applicationId, applicantId) => {
       licenseId.value = applicationId;
@@ -458,10 +469,10 @@ export default {
       if (applicationType.value == "New License") {
         store
           .dispatch("reviewer/getNewLicenseApplication", applicationId)
-          .then(res => {
+          .then((res) => {
             showLoading.value = false;
             license.value = res.data.data;
-            getReviewId.value = license.value.reviewerId
+            getReviewId.value = license.value.reviewerId;
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
             // applicantId.value = license.value.applicantId;
@@ -476,10 +487,10 @@ export default {
       if (applicationType.value == "Good Standing") {
         store
           .dispatch("reviewer/getGoodStandingApplication", applicationId)
-          .then(res => {
+          .then((res) => {
             showLoading.value = false;
             license.value = res.data.data;
-            getReviewId.value = license.value.reviewerId
+            getReviewId.value = license.value.reviewerId;
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
             // applicantId.value = license.value.applicantId;
@@ -494,10 +505,10 @@ export default {
       if (applicationType.value == "Verification") {
         store
           .dispatch("reviewer/getVerificationApplication", applicationId)
-          .then(res => {
+          .then((res) => {
             showLoading.value = false;
             license.value = res.data.data;
-            getReviewId.value = license.value.reviewerId
+            getReviewId.value = license.value.reviewerId;
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
             // applicantId.value = license.value.applicantId;
@@ -512,10 +523,10 @@ export default {
       if (applicationType.value == "Renewal") {
         store
           .dispatch("reviewer/getRenewalApplication", applicationId)
-          .then(res => {
+          .then((res) => {
             showLoading.value = false;
             license.value = res.data.data;
-            getReviewId.value = license.value.reviewerId
+            getReviewId.value = license.value.reviewerId;
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
             // applicantId.value = license.value.applicantId;
@@ -529,23 +540,15 @@ export default {
       }
     };
 
-    const evaluate = () => {
-      router.push(
-        "/admin/evaluate/" + applicationType.value + "/" + licenseId.value
-      );
-    };
-
     onMounted(() => {
-      //userId.value = +localStorage.getItem("userId");
       loggedInAdminId = +localStorage.getItem("adminId");
-      // userId = 2;
       created(
         route.params.applicationType,
         route.params.applicationId,
         route.params.applicantId
       );
       fetchAdmins();
-      fetchRole(loggedInAdminId)
+      fetchRole(loggedInAdminId);
     });
 
     return {
@@ -565,17 +568,17 @@ export default {
       education,
       show,
       created,
-      evaluate,
       applicationType,
       licenseId,
       showLoading,
       admins,
       role,
-      transfer,
+      assignConfirmAdmin,
+      showAdminCountError,
       gen,
-      transferReview
+      assignAdminToConfirm,
     };
-  }
+  },
 
   //   this.license = this.getLicense;
   //   this.applicantId = this.license.applicantId;

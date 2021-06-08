@@ -98,11 +98,11 @@ const ApiService = {
 };
 
 function authHeaders(needsAuth) {
-  const token = localStorage.getItem("user-token");
+  const token = localStorage.getItem("token");
   return needsAuth
-    ? {
-        Authorization: token ? `Bearer ${token}` : ""
-      }
+    ? 
+      {"Authorization" : token ? `Bearer ${token}` : ""}
+      
     : {};
 }
 

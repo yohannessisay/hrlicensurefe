@@ -2,7 +2,7 @@
   <div>
     <ReviewerNavBar tab="myPendings" />
     <div class="bg-lightBlueB-200 h-full">
-      <div class="flex pl-12 pt-tiny">
+      <div class="flex pl-12 pt-tiny pendingsMargin">
         <Title message="Pending Payments" />
       </div>
       <div class="flex flex-wrap pb-medium rounded h-full" v-if="!showLoading">
@@ -11,9 +11,7 @@
             <h2>Nothing To Show!</h2>
           </div>
         </div>
-        <div class="pendingsMargin">
           <my-pending-payments :myPendings="getPending" />
-        </div> 
       </div>
     </div>
     <div
@@ -115,6 +113,6 @@ img {
   cursor: pointer;
 }
 .pendingsMargin {
-  margin-top: 2rem;
+  margin-bottom: 2rem;
 }
 </style>

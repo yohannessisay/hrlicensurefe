@@ -8,7 +8,7 @@
         class="ml-8  mr-8 mb-12"
       >
         <div class="mt-large bg-white">
-          <div v-if="role.code === `TL` || role.code === `SA`" class="flex">
+          <div v-if="(role.code === `TL` || role.code === `SA`) && reviewerId == loggedInAdminId" class="flex">
             <div class="flex flex-col mb-medium w-2/3 ml-small mt-small"></div>
             <div class="flex flex-col mb-medium w-1/3 mr-small mt-small">
               <label class="text-primary-700">Transfer Review</label>
@@ -551,6 +551,7 @@ export default {
       //userId.value = +localStorage.getItem("userId");
       loggedInAdminId = +localStorage.getItem("adminId");
       userId = 2;
+      
 
       created(
         route.params.applicationType,

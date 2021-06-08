@@ -6,6 +6,25 @@ import {
   SET_ASSIGNED_TO_YOU_SEARCHED,
   SET_UNFINISHED,
   SET_UNFINISHED_SEARCHED,
+
+  SET_UNCONFIRMED,
+  SET_UNCONFIRMED_SEARCHED,
+  SET_OTHERS_UNCONFIRMED,
+  SET_OTHERS_UNCONFIRMED_SEARCHED,
+
+  SET_RETURNED_TO_ME,
+  SET_RETURNED_TO_ME_SEARCHED,
+  SET_RETURNED_TO_OTHERS,
+  SET_RETURNED_TO_OTHERS_SEARCHED,
+
+  SET_CONFIRM_REVIEW,
+  SET_CONFIRM_REVIEW_SEARCHED,
+  SET_OTHERS_CONFIRM_REVIEW,
+  SET_OTHERS_CONFIRM_REVIEW_SEARCHED,
+  
+  SET_TEMPORARLY_FINISHED,
+  SET_TEMPORARLY_FINISHED_SEARCHED,
+
   SET_RECENTLY_FINISHED,
   SET_RECENTLY_FINISHED_SEARCHED,
   SET_ASSIGNED_FOR_EVERYONE,
@@ -26,6 +45,7 @@ import {
 const baseUrl = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api";
 const adminId = +localStorage.getItem("adminId");
 const adminRole = localStorage.getItem("role");
+// let headers = new Headers({'Bearer Token': bearerToken});
 
 export default {
   async getUnfinished({commit}, id) {
@@ -68,7 +88,8 @@ export default {
     const adminId = adminData[1];
     if(adminRole === "SA") {
       try {  
-        const respAll = await ApiService.get(baseUrl + "/applications/allUnfinished");
+        const respAll = await ApiService.get(baseUrl + "/applications/allUnfinished", { 
+        });
         const resp = respAll.data.data.filter(function(e) {
           return e.reviewerId === null ? '' : e.reviewerId !== adminId
         })
@@ -106,6 +127,252 @@ export default {
     })
     commit(SET_EVEYONE_UNFINISHED_SEARCHED, searchedVal)
   },
+  // tobechanged
+  async getUnconfirmed({commit}, id) {
+    try {
+      // const resp = await ApiService.get("https://randomuser.me/api/?results=10");
+      // const url = baseUrl + "/newLicenses/user/" + id;
+      const url = baseUrl + "/applications/unfinished/" + id;
+      const resp = await ApiService.get(url);
+      commit(SET_UNCONFIRMED, resp.data.data)
+      // return resp;
+    } catch (error) {
+      const resp = { status: "Error" };
+      return resp;
+    }
+  },
+
+  getUnconfirmedSearched({commit, getters}, searchedKey) {
+    if(getters.getUnconfirmed === undefined) {
+      return;
+    }
+    const searchedVal = getters.getUnconfirmed.filter(function(e) {
+      return e.newLicenseCode
+              .toLowerCase()
+              .includes(searchedKey.toLowerCase())
+              || (e.applicant.profile.name + 
+                " " +
+                 e.applicant.profile.fatherName)
+              .toLowerCase()
+              .includes(searchedKey.toLowerCase())
+              || e.applicant.profile.name
+              .toLowerCase()
+              .includes(searchedKey.toLowerCase())
+              || e.applicant.profile.fatherName
+              .toLowerCase()
+              .includes(searchedKey.toLowerCase())
+    })
+    commit(SET_UNCONFIRMED_SEARCHED, searchedVal)
+  },
+
+  async getOthersUnconfirmed({commit}, adminData) {
+    const adminRole = adminData[0];
+    const adminId = adminData[1];
+    if(adminRole === "SA") {
+      try {  
+        const respAll = await ApiService.get(baseUrl + "/applications/allUnfinished");
+        const resp = respAll.data.data.filter(function(e) {
+          return e.reviewerId === null ? '' : e.reviewerId !== adminId
+        })
+        commit(SET_OTHERS_UNCONFIRMED, resp)
+      } catch(error) {
+        const resp = error
+      }
+    } else {
+      return;
+    }
+  },
+
+  getOthersUnconfirmedSearched({commit, getters}, searchKey) {
+    if(getters.getOthersUnconfirmed === undefined) {
+      return;
+    }
+    const searchedVal = getters.getOthersUnconfirmed.filter(function(e) {
+      return e.newLicenseCode === undefined ? '': e.newLicenseCode
+        .toLowerCase()
+        .includes(searchKey.toLowerCase())
+        || (e.applicant.profile.name + 
+          " " +
+           e.applicant.profile.fatherName)
+        .toLowerCase()
+        .includes(searchKey.toLowerCase())
+        || e.applicant.profile.name
+        .toLowerCase()
+        .includes(searchKey.toLowerCase())
+        || e.applicant.profile.fatherName
+        .toLowerCase()
+        .includes(searchKey.toLowerCase())
+        || e.reviewer.name
+        .toLowerCase()
+        .includes(searchKey.toLowerCase())
+
+    })
+    commit(SET_OTHERS_UNCONFIRMED_SEARCHED, searchedVal)
+  },
+
+  async getReturnedToMe({commit}, id) {
+    try {
+      // const resp = await ApiService.get("https://randomuser.me/api/?results=10");
+      // const url = baseUrl + "/newLicenses/user/" + id;
+      const url = baseUrl + "/applications/finished/" + id;
+      const resp = await ApiService.get(url);
+      commit(SET_RETURNED_TO_ME, resp.data.data)
+      // return resp;
+    } catch (error) {
+      const resp = { status: "Error" };
+      return resp;
+    }
+  },
+
+  getReturnedToMeSearched({commit, getters}, searchedKey) {
+    if(getters.getReturnedToMe === undefined) {
+      return;
+    }
+    const searchedVal = getters.getReturnedToMe.filter(function(e) {
+      return e.newLicenseCode
+              .toLowerCase()
+              .includes(searchedKey.toLowerCase())
+              || (e.applicant.profile.name + 
+                " " +
+                 e.applicant.profile.fatherName)
+              .toLowerCase()
+              .includes(searchedKey.toLowerCase())
+              || e.applicant.profile.name
+              .toLowerCase()
+              .includes(searchedKey.toLowerCase())
+              || e.applicant.profile.fatherName
+              .toLowerCase()
+              .includes(searchedKey.toLowerCase())
+    })
+    commit(SET_RETURNED_TO_ME_SEARCHED, searchedVal)
+  },
+
+  async getReturnedToOthers({commit}, adminData) {
+    const adminRole = adminData[0];
+    const adminId = adminData[1];
+    if(adminRole === "SA") {
+      try {  
+        const respAll = await ApiService.get(baseUrl + "/applications/allUnfinished");
+        const resp = respAll.data.data.filter(function(e) {
+          return e.reviewerId === null ? '' : e.reviewerId !== adminId
+        })
+        commit(SET_RETURNED_TO_OTHERS, resp)
+      } catch(error) {
+        const resp = error
+      }
+    } else {
+      return;
+    }
+  },
+
+  
+
+  getReturnedToOthersSearched({commit, getters}, searchKey) {
+    if(getters.getReturnedToOthers === undefined) {
+      return;
+    }
+    const searchedVal = getters.getReturnedToOthers.filter(function(e) {
+      return e.newLicenseCode === undefined ? '': e.newLicenseCode
+        .toLowerCase()
+        .includes(searchKey.toLowerCase())
+        || (e.applicant.profile.name + 
+          " " +
+           e.applicant.profile.fatherName)
+        .toLowerCase()
+        .includes(searchKey.toLowerCase())
+        || e.applicant.profile.name
+        .toLowerCase()
+        .includes(searchKey.toLowerCase())
+        || e.applicant.profile.fatherName
+        .toLowerCase()
+        .includes(searchKey.toLowerCase())
+        || e.reviewer.name
+        .toLowerCase()
+        .includes(searchKey.toLowerCase())
+
+    })
+    commit(SET_RETURNED_TO_OTHERS_SEARCHED, searchedVal)
+  },
+
+  async getConfirmReview({commit}, id) {
+    try {
+      // const resp = await ApiService.get("https://randomuser.me/api/?results=10");
+      // const url = baseUrl + "/newLicenses/user/" + id;
+      const url = baseUrl + "/applications/unfinished/" + id;
+      const resp = await ApiService.get(url);
+      commit(SET_CONFIRM_REVIEW, resp.data.data)
+      // return resp;
+    } catch (error) {
+      const resp = { status: "Error" };
+      return resp;
+    }
+  },
+
+  getConfirmReviewSearched({commit, getters}, searchedKey) {
+    if(getters.getConfirmReview === undefined) {
+      return;
+    }
+    const searchedVal = getters.getConfirmReview.filter(function(e) {
+      return e.newLicenseCode
+              .toLowerCase()
+              .includes(searchedKey.toLowerCase())
+              || (e.applicant.profile.name + 
+                " " +
+                 e.applicant.profile.fatherName)
+              .toLowerCase()
+              .includes(searchedKey.toLowerCase())
+              || e.applicant.profile.name
+              .toLowerCase()
+              .includes(searchedKey.toLowerCase())
+              || e.applicant.profile.fatherName
+              .toLowerCase()
+              .includes(searchedKey.toLowerCase())
+    })
+    commit(SET_CONFIRM_REVIEW_SEARCHED, searchedVal)
+  },
+
+  async getOthersConfirmReview({commit}, adminData) {
+    const adminRole = adminData[0];
+    const adminId = adminData[1];
+    if(adminRole === "SA") {
+      try {  
+        const respAll = await ApiService.get(baseUrl + "/applications/allUnfinished");
+        const resp = respAll.data.data.filter(function(e) {
+          return e.reviewerId === null ? '' : e.reviewerId !== adminId
+        })
+        commit(SET_OTHERS_CONFIRM_REVIEW, resp)
+      } catch(error) {
+        const resp = error
+      }
+    } else {
+      return;
+    }
+  },
+
+  getOthersConfirmReviewSearched({commit, getters}, searchedKey) {
+    if(getters.getOthersConfirmReview === undefined) {
+      return;
+    }
+    const searchedVal = getters.getOthersConfirmReview.filter(function(e) {
+      return e.newLicenseCode
+              .toLowerCase()
+              .includes(searchedKey.toLowerCase())
+              || (e.applicant.profile.name + 
+                " " +
+                 e.applicant.profile.fatherName)
+              .toLowerCase()
+              .includes(searchedKey.toLowerCase())
+              || e.applicant.profile.name
+              .toLowerCase()
+              .includes(searchedKey.toLowerCase())
+              || e.applicant.profile.fatherName
+              .toLowerCase()
+              .includes(searchedKey.toLowerCase())
+    })
+    commit(SET_OTHERS_CONFIRM_REVIEW_SEARCHED, searchedVal)
+  },
+
+
   async getAssignedToYou({commit}, adminId) {
     try {
       const resp = await ApiService.get(baseUrl + "/applications/assignedToYou/" + adminId);
@@ -215,6 +482,36 @@ export default {
     })
     commit(SET_UNASSIGNED_SEARCHED, searchedVal)
   },
+  // temporarly finished will come to here
+  // async getTemporarlyFinished({commit}, adminId) {
+  //   try {
+  //     const resp = await ApiService.get(baseUrl + "/applications/finished/"+adminId)
+
+  //     const certifiedUsers = resp.data.data.filter(function(e) {
+  //       return e.certified == true;
+  //     })
+      
+  //     const temporarlyApprovedUsers = resp.data.data.filter(function(e) {
+  //       return e.applicationStatus.name !== null 
+  //               ? e.applicationStatus.name == "Approve" : ''
+  //     })
+
+  //     const temporarlyRejectedusers = resp.data.data.filter(function(e) {
+  //       return e.applicationStatus.name !== null
+  //                 ? e.applicationStatus.name == "Decline" : ''
+  //     })
+      
+  //     const temporarlyUnderSupervionUsers = resp.data.data.filter(function(e) {
+  //       return e.applicationStatus.name !== null
+  //               ? e.applicationStatus.name == "Under Supervision" : ''
+  //     })
+  //     const finishedDatas = [resp.data.data, certifiedUsers, temporarlyApprovedUsers, temporarlyRejectedusers, temporarlyUnderSupervionUsers]
+  //     commit(SET_TEMPORARLY_FINISHED, finishedDatas)
+  //   } catch (error) {
+  //     const resp = error;
+  //     return resp;
+  //   }
+  // },
   async getRecentlyFinished({commit}, adminId) {
     try {
       const resp = await ApiService.get(baseUrl + "/applications/finished/"+adminId)
@@ -268,6 +565,10 @@ export default {
                 e.applicant.profile.fatherName
                   .toLowerCase()
                   .includes(searchKey.toLowerCase())
+                ||
+                e.applicationType
+                .toLowerCase()
+                .includes(searchKey.toLowerCase())
     })
     if(getters.getRejected === undefined) {
       return;
@@ -468,7 +769,8 @@ export default {
     try {
       const resp = await ApiService.get(baseUrl + "/applications/allFinished")
       const certifiedUsers = resp.data.data.filter(function(e) {
-        return e.certified == true;
+        return e.certified == true && 
+        e.applicationType != "Good Standing" && e.applicationType != "Verification";
       })
       commit(SET_CERTIFIED_USERS, certifiedUsers)
     } catch(error) {
@@ -710,6 +1012,60 @@ export default {
     try {
       const resp = await ApiService.post(
         baseUrl + "/renewalReviewers/transfer",
+        transfer
+      );
+      return resp;
+    } catch(error) {
+      return error;
+    }
+  },
+
+  async confirmNewLicenseReview({commit}, confirm) {
+    try {
+      console.log("new license confirm admin", confirm)
+      return;
+      const resp = await ApiService.post(
+        baseUrl + "/licenseReviewers/transfer",
+        transfer
+      );
+      return resp;
+    } catch(error) {
+      return error;
+    }
+  },
+  async confirmVerificationReview({commit}, confirm) {
+    try {
+      console.log("verification confirm admin", confirm)
+      return;
+      const resp = await ApiService.post(
+        baseUrl + "/licenseReviewers/transfer",
+        transfer
+      );
+      return resp;
+    } catch(error) {
+      return error;
+    }
+  },
+  async confirmRenewalReview({commit}, confirm) {
+    try {
+      console.log("renewal confirm admin", confirm)
+      return;
+      const resp = await ApiService.post(
+        baseUrl + "/licenseReviewers/transfer",
+        transfer
+      );
+      return resp;
+    } catch(error) {
+      return error;
+    }
+  },
+  
+  async confirmGoodStandingReview({commit}, confirm) {
+    try {
+      console.log("good standing confirm admin", confirm)
+      return;
+      const resp = await ApiService.post(
+        baseUrl + "/licenseReviewers/transfer",
         transfer
       );
       return resp;

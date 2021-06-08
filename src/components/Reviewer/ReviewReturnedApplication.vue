@@ -19,15 +19,12 @@
         </div>
         <div class="flex justify-start flex-wrap ml-12">
           <div>
-            <picture
-              class="flex justify-center items-center mb-small"
-              v-if="docs.length > 0"
-            >
+            <picture class="flex justify-center items-center mb-small">
               <img
                 style="border-radius: 100%"
                 v-bind:src="
                   'https://hrlicensurebe.dev.k8s.sandboxaddis.com/' +
-                    docs[0].filePath
+                    'docs[0].filePath'
                 "
                 class="img"
               />
@@ -105,18 +102,24 @@
             <label
               class="justify-center items-center ml-large text-grey-200 text-2xl"
             >
+              <!-- <div
+                v-if="
+                  newLicense.documents[index].documentTypeCode ===
+                    accepted[index]
+                "
+              > -->
               {{ documentTypeName }}
-            </label>
-            <!-- <h5 class="ml-8 text-black-100 text-3xl">
-              Addis Ababa
-            </h5> -->
-            <div class="flex justify-start flex-wrap">
-              <!-- <div v-for="file in docs" v-bind:key="file.name">
-                <Title class="" :message="file.name" />
-                <picture>
-                  <img :src="basePath + file.filePath" />
-                </picture>
+              <!-- </div> -->
+              <!-- <div
+                v-else-if="
+                  newLicense.documents[index].documentTypeCode ===
+                    rejected[index]
+                "
+              >
+                good license || Rejected
               </div> -->
+            </label>
+            <div class="flex justify-start flex-wrap">
               <picture v-if="docs.length > 0">
                 <img
                   v-bind:src="
@@ -177,7 +180,7 @@
             xmlns="http://www.w3.org/2000/svg"
             version="1.1"
             @click="next(docs[index + 1])"
-            v-if="index != docs.length - 1"
+            v-if="index != docs.length && !lastIndex"
             class="hover:text-primary-60"
           >
             <polyline
@@ -193,7 +196,6 @@
           </svg>
         </div>
       </div>
-
       <div
         class="flex justify-center items-center mb-medium"
         v-if="showButtons"
@@ -284,18 +286,9 @@
                           >
                             {{ modalDocumentTypeName }}
                           </label>
-                          <!-- <h5 class="ml-8 text-black-100 text-3xl">
-                            Addis Ababa
-                          </h5> -->
                           <div
                             class="flex justify-center flex-wrap max-w-sm rounded overflow-hidden"
                           >
-                            <!-- <div v-for="file in docs" v-bind:key="file.name">
-                              <Title class="" :message="file.name" />
-                              <picture>
-                                <img :src="basePath + file.filePath" />
-                              </picture>
-                            </div> -->
                             <picture
                               class="imageViewer"
                               v-if="rejectedObj.length > 0"
@@ -307,7 +300,6 @@
                                 "
                               />
                             </picture>
-                            <!-- {{docs[0].filePath}} -->
                           </div>
                         </div>
                       </div>
@@ -337,7 +329,7 @@
                     </div>
                   </div>
                 </div>
-                <!--footer-->
+                <!--footer -->
                 <textarea
                   v-model="newLicense.remark"
                   class="resize-none tArea border rounded-md flex mb-small w-full"
@@ -380,19 +372,15 @@
     </div>
   </div>
 </template>
-
 <script>
-import { useStore } from "vuex";
-import { useRoute } from "vue-router";
 import { ref, onMounted } from "vue";
-
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
+import { useStore } from "vuex";
 
 import Modal from "@/sharedComponents/Modal";
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import ReviewerNavBar from "@/components/Reviewer/ReviewerNavBar";
-
 export default {
   components: {
     Modal,
@@ -402,9 +390,25 @@ export default {
   },
   setup() {
     const route = useRoute();
-    const store = useStore();
     const router = useRouter();
+    const store = useStore();
 
+    let accepted = ref([]);
+    let rejected = ref([]);
+    let rejectedObj = ref([]);
+    let amount = ref(1);
+    let width = ref("width:11.11111%");
+    let showButtons = ref(false);
+    let isAccepted = ref(false);
+    let showRemark = ref(false);
+    let showFlash = ref(false);
+    let showErrorFlash = ref(false);
+    let lastIndex = ref(false);
+    let sendDeclinedData = ref(true);
+    let fromModalSendDeclinedData = ref(false);
+    let documentTypes = ref([]);
+    let documentTypeName = ref("");
+    let modalDocumentTypeName = ref("");
     const newLicense = ref({
       applicant: { profile: { name: "", fatherName: "" } },
       applicantType: { name: "" },
@@ -419,250 +423,110 @@ export default {
         buttons: [{ action: "", name: "" }],
       },
     });
-    let buttons = ref([
-      { action: "", name: "" },
-      { action: "", name: "" },
-      { action: "", name: "" },
-      { action: "", name: "" },
-    ]);
-    let documentTypes = ref([]);
-    let documentTypeName = ref("");
-    let modalDocumentTypeName = ref("");
+
+    let applicationType = ref("");
+
+    let buttons = ref([{ action: "", name: "" }]);
     let docs = ref([]);
     let index = ref(0);
     let ind = ref(0);
-    let amount = ref(1);
-    let width = ref("width:11.11111%");
-    let accepted = ref([]);
-    let rejected = ref([]);
-    let rejectedObj = ref([]);
-    let showButtons = ref(false);
-    let disableNext = ref(true);
-    let nextClickable = ref(false);
-    let foundInRejected = ref(false);
-    let foundInAcceptted = ref(false);
-    let showRemark = ref(false);
-    let applicationType = ref("");
-    let showFlash = ref(false);
-    let showErrorFlash = ref(false);
-    let showDeclineFlash = ref(false);
-    let sendDeclinedData = ref(true);
-    let fromModalSendDeclinedData = ref(false);
-    let evaluateRoute = ref(
-      "/admin/evaluate/" +
-        route.params.applicationType +
-        "/" +
-        route.params.applicationId
-    );
+    let filedsLength = ref(0);
+
     const created = async (applicationTypeName, applicationId) => {
       applicationType.value = applicationTypeName;
-      if (applicationType.value == "New License") {
-        store
-          .dispatch("reviewer/getNewLicenseApplication", applicationId)
-          .then((res) => {
-            newLicense.value = res.data.data;
-            buttons.value = res.data.data.applicationStatus.buttons;
-            docs.value = res.data.data.documents;
-            if (newLicense.value.applicationStatus.code == "REVDRA") {
-              rejected.value = newLicense.value.declinedFields;
-              rejectedObj.value = newLicense.value.declinedFields;
-              accepted.value = newLicense.value.acceptedFields;
-              index.value = rejected.value.length + accepted.value.length;
-              amount.value = ((index.value + 1) / docs.value.length) * 100;
-              width.value = "width:" + amount.value + "%";
-              if (
-                accepted.value.includes(
-                  docs.value[index.value - 1].documentTypeCode
-                ) ||
-                rejected.value.includes(
-                  docs.value[index.value - 1].documentTypeCode
-                )
-              ) {
-                findDocumentType(documentTypes.value, docs.value[index.value]);
-              }
-            }
-          });
+
+      if (applicationType.value === "Verification") {
+        createdApplication("getVerificationApplication", applicationId);
       }
-      if (applicationType.value == "Good Standing") {
-        store
-          .dispatch("reviewer/getGoodStandingApplication", applicationId)
-          .then((res) => {
-            newLicense.value = res.data.data;
-            buttons.value = res.data.data.applicationStatus.buttons.filter(
-              (allButtons) => {
-                return allButtons.name != "Under supervision";
-              }
-            );
-            buttons.value.forEach((button) => {
-              button.name === "Approve"
-                ? (button.name = "Verify")
-                : (button.name = button.name);
-            });
-            docs.value = res.data.data.documents;
-            if (newLicense.value.applicationStatus.code == "REVDRA") {
-              rejected.value = newLicense.value.declinedFields;
-              rejectedObj.value = newLicense.value.declinedFields;
-              accepted.value = newLicense.value.acceptedFields;
-              index.value = rejected.value.length + accepted.value.length;
-              amount.value = ((index.value + 1) / docs.value.length) * 100;
-              width.value = "width:" + amount.value + "%";
-              if (
-                accepted.value.includes(
-                  docs.value[index.value - 1].documentTypeCode
-                ) ||
-                rejected.value.includes(
-                  docs.value[index.value - 1].documentTypeCode
-                )
-              ) {
-                findDocumentType(documentTypes.value, docs.value[index.value]);
-              }
-            }
-          });
+      if (applicationType.value === "Good Standing") {
+        createdApplication("getGoodStandingApplication", applicationId);
       }
-      if (applicationType.value == "Verification") {
-        store
-          .dispatch("reviewer/getVerificationApplication", applicationId)
-          .then((res) => {
-            newLicense.value = res.data.data;
-            // buttons.value = res.data.data.applicationStatus.buttons;
-            buttons.value = res.data.data.applicationStatus.buttons.filter(
-              (allButtons) => {
-                return allButtons.name != "Under supervision";
-              }
-            );
-            buttons.value.forEach((button) => {
-              button.name === "Approve"
-                ? (button.name = "Verify")
-                : (button.name = button.name);
-            });
-            console.log("bbuttons: ", buttons.value);
-            docs.value = res.data.data.documents;
-            if (newLicense.value.applicationStatus.code == "REVDRA") {
-              rejected.value = newLicense.value.declinedFields;
-              rejectedObj.value = newLicense.value.declinedFields;
-              accepted.value = newLicense.value.acceptedFields;
-              index.value = rejected.value.length + accepted.value.length;
-              amount.value = ((index.value + 1) / docs.value.length) * 100;
-              width.value = "width:" + amount.value + "%";
-              if (
-                accepted.value.includes(
-                  docs.value[index.value - 1].documentTypeCode
-                ) ||
-                rejected.value.includes(
-                  docs.value[index.value - 1].documentTypeCode
-                )
-              ) {
-                findDocumentType(documentTypes.value, docs.value[index.value]);
-              }
-            }
-          });
+      if (applicationType.value === "New License") {
+        createdApplication("getNewLicenseApplication", applicationId);
       }
-      if (applicationType.value == "Renewal") {
-        store
-          .dispatch("reviewer/getRenewalApplication", applicationId)
-          .then((res) => {
-            newLicense.value = res.data.data;
-            buttons.value = res.data.data.applicationStatus.buttons;
-            docs.value = res.data.data.documents;
-            if (newLicense.value.applicationStatus.code == "REVDRA") {
-              rejected.value = newLicense.value.declinedFields;
-              rejectedObj.value = newLicense.value.declinedFields;
-              accepted.value = newLicense.value.acceptedFields;
-              index.value = rejected.value.length + accepted.value.length;
-              amount.value = ((index.value + 1) / docs.value.length) * 100;
-              width.value = "width:" + amount.value + "%";
-              if (
-                accepted.value.includes(
-                  docs.value[index.value - 1].documentTypeCode
-                ) ||
-                rejected.value.includes(
-                  docs.value[index.value - 1].documentTypeCode
-                )
-              ) {
-                findDocumentType(documentTypes.value, docs.value[index.value]);
-              }
-            }
-          });
+      if (applicationType.value === "Renewal") {
+        createdApplication("getRenewalApplication", applicationId);
       }
-      applicationType.value = route.params.applicationType;
     };
+
+    const createdApplication = (applicationType, applicationId) => {
+      store
+        .dispatch("reviewer/" + applicationType, applicationId)
+        .then((res) => {
+          newLicense.value = res.data.data;
+          console.log("new license", newLicense.value);
+          buttons.value = res.data.data.applicationStatus.buttons;
+          if (applicationType == "getVerificationApplication") {
+            buttons.value = res.data.data.applicationStatus.buttons.filter(
+              (allButtons) => {
+                return allButtons.name != "Under supervision";
+              }
+            );
+            buttons.value.forEach((button) => {
+              button.name === "Approve"
+                ? (button.name = "Verify")
+                : (button.name = button.name);
+            });
+          }
+          docs.value = res.data.data.documents;
+          console.log("docs value ", docs.value)
+          if ((newLicense.value.applicationStatus.code = "APP")) {
+            accepted.value = newLicense.value.acceptedFields;
+            rejected.value = newLicense.value.declinedFields;
+            rejectedObj.value = newLicense.value.declinedFields;
+            filedsLength.value = accepted.value.length + rejected.value.length;
+            amount.value = ((index.value + 1) / docs.value.length) * 100;
+            width.value = "width: " + amount.value + "%";
+            if (
+                accepted.value.includes(
+                  docs.value[index.value].documentTypeCode
+                ) ||
+                rejected.value.includes(
+                  docs.value[index.value].documentTypeCode
+                )
+              ) {
+                findDocumentType(documentTypes.value, docs.value[index.value]);
+              }
+          }
+        });
+    };
+
     const fetchDocumentTypes = async () => {
       store.dispatch("reviewer/getDocumentTypes").then((res) => {
         documentTypes.value = res.data.data;
+        console.log("documents type is ", documentTypes.value);
       });
     };
-    const next = (doc) => {
-      // alreadyIn.value == false;
 
-      if (nextClickable.value == true) {
+    const next = (doc) => {
+      if (index.value == docs.value.length - 1) {
+        showButtons.value = true;
+        lastIndex.value = true;
+      } else {
         index.value = index.value + 1;
         amount.value = ((index.value + 1) / docs.value.length) * 100;
         width.value = "width:" + amount.value + "%";
         findDocumentType(documentTypes.value, docs.value[index.value]);
-        nextClickable.value = false;
-      }
-
-      // if (
-      //   accepted.value.length + rejected.value.length == docs.value.length &&
-      //   index.value + 1 == docs.value.length
-      // ) {
-      //   showButtons.value = true;
-      // }
-      if (
-        accepted.value.includes(doc.documentTypeCode) ||
-        rejected.value.includes(doc.documentTypeCode)
-      ) {
-        nextClickable.value = true;
       }
     };
-    const previous = () => {
-      if (index.value == docs.value.length - 1) {
-        showButtons.value = false;
-      }
+
+    const previous = (doc) => {
       index.value = index.value - 1;
-      amount.value = ((index.value + 1) / docs.value.length) * 100;
+      amount.value = ((index.value - 1) / docs.value.length) * 100;
       width.value = "width:" + amount.value + "%";
       findDocumentType(documentTypes.value, docs.value[index.value]);
-      nextClickable.value = true;
-    };
-    const nextRemark = () => {
-      if (ind.value != rejectedObj.value.length - 1) {
-        ind.value = ind.value + 1;
-        modalFindDocumentType(
-          documentTypes.value,
-          rejectedObj.value[ind.value]
-        );
-        nextClickable.value = false;
-      }
-    };
-    const previousRemark = () => {
-      ind.value = ind.value - 1;
-      modalFindDocumentType(documentTypes.value, rejectedObj.value[ind.value]);
-      nextClickable.value = true;
-    };
-    const findDocumentType = (obj, ab) => {
-      for (var prop in obj) {
-        if (obj[prop].code == ab.documentTypeCode) {
-          documentTypeName.value = obj[prop].name;
-        }
-      }
+      showButtons.value = false;
     };
 
-    const modalFindDocumentType = (obj, ab) => {
-      for (var prop in obj) {
-        if (obj[prop].code == ab.documentTypeCode) {
-          modalDocumentTypeName.value = obj[prop].name;
-        }
-      }
-    };
     const accept = (doc) => {
-      nextClickable.value = true;
       if (accepted.value.length > 0) {
         if (!accepted.value.includes(doc.documentTypeCode)) {
           accepted.value.push(doc.documentTypeCode);
+
           if (index.value == docs.value.length - 1) {
             showButtons.value = true;
           }
+
           if (rejected.value.includes(doc.documentTypeCode)) {
             rejected.value.splice(
               rejected.value.indexOf(doc.documentTypeCode),
@@ -672,6 +536,10 @@ export default {
               rejectedObj.value.indexOf(doc.documentTypeCode),
               1
             );
+          }
+        } else {
+          if (index.value == docs.value.length - 1) {
+            showButtons.value = true;
           }
         }
       } else {
@@ -690,14 +558,9 @@ export default {
           );
         }
       }
-      // accepted.value.push(doc.documentTypeCode);
-      // if (index.value == docs.value.length - 1) {
-      //   showButtons.value = true;
-      // }
     };
 
     const reject = (doc) => {
-      nextClickable.value = true;
       if (rejected.value.length > 0) {
         if (!rejected.value.includes(doc.documentTypeCode)) {
           rejected.value.push(doc.documentTypeCode);
@@ -710,6 +573,10 @@ export default {
               accepted.value.indexOf(doc.documentTypeCode),
               1
             );
+          }
+        } else {
+          if (index.value == docs.value.length - 1) {
+            showButtons.value = true;
           }
         }
       } else {
@@ -725,122 +592,107 @@ export default {
           );
         }
       }
-      // nextClickable.value = true;
-      // rejected.value.push(doc.documentTypeCode);
-      // if (index.value == docs.value.length - 1) {
-      //   showButtons.value = true;
-      // }
     };
 
     const action = (actionValue) => {
-      if (actionValue == "DeclineEvent") {
+      if (actionValue == "UpdatePaymentEvent") {
+        modalFindDocumentType(
+          documentTypes.value,
+          rejectedObj.value[0]
+        );
         showRemark.value = true;
         sendDeclinedData.value = false;
         if (fromModalSendDeclinedData.value == true) {
           sendDeclinedData.value = true;
         }
-        console.log(rejected.value);
-        console.log(rejectedObj.value);
+        // return;
+        console.log("rejected val", rejected.value);
+        console.log("rejectedObj val", rejectedObj.value)
       }
       newLicense.value.declinedFields = rejected.value;
       newLicense.value.acceptedFields = accepted.value;
-      if (actionValue == "ApproveEvent") {
-        newLicense.value.certified = true;
-        newLicense.value.certifiedDate = new Date();
-      }
 
-      let appId = newLicense.value.id;
-      let req = {
+      const req = {
         action: actionValue,
         data: newLicense.value,
       };
-      if (
-        applicationType.value == "New License" &&
-        sendDeclinedData.value == true
-      ) {
-        store.dispatch("newlicense/editNewLicense", req).then((res) => {
-          if (res.statusText == "Created") {
-            showFlash.value = true;
-            showDeclineFlash.value = true;
-            setTimeout(() => {
-              router.push("/admin/review");
-            }, 3000);
-          } else {
-            showErrorFlash.value = true;
-            setTimeout(() => {
-              router.go();
-            }, 3000);
-          }
-        });
+      if (sendDeclinedData.value == true) {
+        if (applicationType.value == "Verification") {
+          editApplication("reviewer", "editVerification", req);
+        }
+        if (applicationType.value == "Renewal") {
+          editApplication("reviewer", "editRenewal", req);
+        }
+        if (applicationType.value == "Good Standing") {
+          editApplication("reviewer", "editGoodStanding", req);
+        }
+        if (applicationType.value == "New License") {
+          editApplication("newlicense", "editNewLicense", req);
+        }
       }
-      if (
-        applicationType.value == "Verification" &&
-        sendDeclinedData.value == true
-      ) {
-        store.dispatch("reviewer/editVerification", req).then((res) => {
-          if (res.statusText == "Created") {
-            showFlash.value = true;
-            setTimeout(() => {
-              router.push("/admin/review");
-            }, 3000);
-          } else {
-            showErrorFlash.value = true;
-            setTimeout(() => {
-              router.go();
-            }, 3000);
-          }
-        });
-      }
-      if (
-        applicationType.value == "Good Standing" &&
-        sendDeclinedData.value == true
-      ) {
-        store.dispatch("reviewer/editGoodStanding", req).then((res) => {
-          if (res.statusText == "Created") {
-            showFlash.value = true;
-            setTimeout(() => {
-              router.push("/admin/review");
-            }, 3000);
-          } else {
-            showErrorFlash.value = true;
-            setTimeout(() => {
-              router.go();
-            }, 3000);
-          }
-        });
-      }
-      if (
-        applicationType.value == "Renewal" &&
-        sendDeclinedData.value == true
-      ) {
-        store.dispatch("reviewer/editRenewal", req).then((res) => {
-          if (res.statusText == "Created") {
-            showFlash.value = true;
-            setTimeout(() => {
-              router.push("/admin/review");
-            }, 3000);
-          } else {
-            showErrorFlash.value = true;
-            setTimeout(() => {
-              router.go();
-            }, 3000);
-          }
-        });
-      }
-      // store.dispatch("newlicense/editNewLicense", req).then((res) => {
-      //   console.log(res.data.data);
-      // });
     };
 
-    const submitRemark = () => {
-      showRemark.value = !showRemark.value;
-      sendDeclinedData.value = true;
-      fromModalSendDeclinedData.value = true;
-      action("DeclineEvent");
+    const editApplication = (reviewType, applicationType, req) => {
+      store.dispatch(reviewType + "/" + applicationType, req).then((res) => {
+        console.log("ieie resp", res);
+        if (res.statusText == "Created") {
+          showFlash.value = true;
+          console.log("successful");
+          return;
+          setTimeout(() => {
+            router.push("/admin/unconfirmed");
+          }, 3000);
+        } else {
+          showErrorFlash.value = true;
+          console.log("something went wrong");
+          return;
+          setTimeout(() => {
+            router.go();
+          }, 3000);
+        }
+      });
     };
 
     const toggleModal = () => {
       showRemark.value = !showRemark.value;
+      console.log("toggle modal");
+    };
+    const submitRemark = () => {
+      showRemark.value = !showRemark.value;
+      fromModalSendDeclinedData.value = true;
+      action("UpdatePaymentEvent");
+
+      console.log("submit remark");
+    };
+
+    const nextRemark = () => {
+      if(ind.value != rejectedObj.value.length - 1) {
+        ind.value = ind.value + 1
+        modalFindDocumentType(
+          documentTypes.value,
+          rejectedObj.value[ind.value]
+        );
+      }
+    };
+    const previousRemark = () => {
+      ind.value = ind.value - 1;
+      modalFindDocumentType(documentTypes.value, rejectedObj.value[ind.value]);
+    };
+    const findDocumentType = (obj, ab) => {
+      for (var prop in obj) {
+        if (obj[prop].code == ab.documentTypeCode) {
+          documentTypeName.value = obj[prop].name;
+        }
+      }
+    };
+
+    const modalFindDocumentType = (obj, ab) => {
+      for (var prop in obj) {
+        if (obj[prop].code == ab) {
+          console.log("object name is ", obj[prop].name)
+          modalDocumentTypeName.value = obj[prop].name;
+        }
+      }
     };
 
     onMounted(() => {
@@ -849,47 +701,41 @@ export default {
       findDocumentType(documentTypes.value, docs.value[0]);
     });
     return {
-      newLicense,
-      index,
-      docs,
-      next,
-      previous,
-      nextRemark,
-      previousRemark,
-      amount,
-      width,
-      documentTypes,
-      findDocumentType,
-      documentTypeName,
       accepted,
       rejected,
-      accept,
-      reject,
+      rejectedObj,
+      newLicense,
+      index,
+      ind,
       buttons,
-      action,
+      docs,
+      amount,
+      width,
       showButtons,
-      disableNext,
-      nextClickable,
-      foundInRejected,
-      foundInAcceptted,
       showRemark,
-      toggleModal,
-      submitRemark,
-      applicationType,
-      showFlash,
-      showErrorFlash,
-      showDeclineFlash,
+      isAccepted,
+      lastIndex,
       sendDeclinedData,
       fromModalSendDeclinedData,
-      rejectedObj,
-      ind,
+      documentTypes,
+      documentTypeName,
       modalDocumentTypeName,
+      next,
+      previous,
+      accept,
+      reject,
+      action,
+      toggleModal,
+      submitRemark,
+      nextRemark,
+      previousRemark,
+      findDocumentType,
       modalFindDocumentType,
-      evaluateRoute,
     };
   },
 };
 </script>
+
 <style>
 .md-danger {
   background-image: linear-gradient(to right, #d63232, #e63636) !important;

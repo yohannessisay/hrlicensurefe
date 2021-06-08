@@ -8,31 +8,6 @@
         class="ml-8  mr-8 mb-12"
       >
         <div class="mt-large bg-white"> 
-          <div v-if="(role.code === `TL` || role.code === `SA`) && getReviewId == loggedInAdminId" class="flex">
-            <div class="flex flex-col mb-medium w-2/3 ml-small mt-small"></div>
-            <div class="flex flex-col mb-medium w-1/3 mr-small mt-small">
-              <label class="text-primary-700">Transfer Review</label>
-              <select
-                class="max-w-3xl"
-                v-model="transfer.reviewerId"
-                @change="gen()"
-              >
-                <option
-                  v-for="types in admins"
-                  v-bind:key="types.name"
-                  v-bind:value="types.id"
-                >
-                  {{ types.name }}
-                </option>
-              </select>
-              <button
-                class="block mx-auto bg-lightBlue-300 hover:bg-lightBlue-600 hover:shadow-lg mt-small"
-                @click="transferReview()"
-              >
-                Transfer To
-              </button>
-            </div>
-          </div>
           <div class="flex justify-center"><Title message="Summary" /></div>
           <div class="flex justify-start">
             <Title message="Personal Info" />
@@ -245,30 +220,6 @@
               <h5 class="ml-8" v-if="education.institutionTypeName">
                 {{ education.institutionTypeName }}
               </h5>
-            </div>
-          </div>
-          <div class="flex justify-start flex-wrap">
-            <!-- <div v-for="file in docs" v-bind:key="file.id">
-              <Title class="" :message="file.fieldName" />
-              <picture>
-                <img :src="basePath + file.filePath" />
-              </picture>
-            </div> -->
-          </div>
-          <div v-if="getReviewId == loggedInAdminId">
-            <div class="mt-12 flex justify-center">
-              <div>
-                <button @click="evaluate()">Continue Evaluating</button>
-              </div>
-            </div>
-            <div class="flex justify-center mt-8">
-              <h6>
-                If you don't have all the required informations you can come back
-                and finish later.
-              </h6>
-            </div>
-            <div class="flex justify-center mt-8 mb-8">
-              <button variant="outline">I will finish Later</button>
             </div>
           </div>
         </div>
@@ -529,11 +480,6 @@ export default {
       }
     };
 
-    const evaluate = () => {
-      router.push(
-        "/admin/evaluate/" + applicationType.value + "/" + licenseId.value
-      );
-    };
 
     onMounted(() => {
       //userId.value = +localStorage.getItem("userId");
@@ -565,7 +511,6 @@ export default {
       education,
       show,
       created,
-      evaluate,
       applicationType,
       licenseId,
       showLoading,

@@ -27,14 +27,14 @@
       <div class="flex flex-col mb-medium w-full">
         <label>Email</label>
         <input
-          v-model="credentials.emailAddress"
+          v-model="credentials.email"
           id="email-address"
           name="email"
           type="email"
           autocomplete="email"
           required
         />
-        <span style="color: red">{{ credentialsErrors.emailAddress }}</span>
+        <span style="color: red">{{ credentialsErrors.email }}</span>
       </div>
       <div class="flex flex-col mb-tiny w-full">
         <label>Password</label>
@@ -57,9 +57,9 @@
       <button click="submit()" class="mt-medium">Login</button>
     </form>
     <Spinner
-        v-if="showLoading"
-        class="mt-4 mb-4"
-        style="width:20px; height:20px"
+      v-if="showLoading"
+      class="mt-4 mb-4"
+      style="width:20px; height:20px"
     />
   </div>
   <div class="mr-3xl" v-if="message.showFlash">
@@ -79,7 +79,7 @@ import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import Spinner from "@/sharedComponents/Spinner";
 export default {
   components: { Title, FlashMessage, ErrorFlashMessage, Spinner },
-  setup() {
+  setup(props, context) {
     const store = useStore();
     const router = useRouter();
 
@@ -90,33 +90,71 @@ export default {
     });
 
     const credentials = ref({
-      emailAddress: "",
+      email: "",
       password: "",
     });
 
     const credentialsErrors = ref({
-      emailAddress: undefined,
+      email: undefined,
       password: undefined,
     });
 
-    const submit = () => {
-      showLoading.value = true
-      let email = {
-        emailAddress: credentials.value.emailAddress,
-      };
-      store.dispatch("admin/login", email).then((res) => {
-        showLoading.value = false
-        if (res.data.status == "Success") {
-          message.value.showFlash = !message.value.showFlash;
+    const loggedInData = ref({});
 
-          setTimeout(() => {
-            router.push({ path: "/admin/review" });
-          }, 3000);
+    const submit = () => {
+      showLoading.value = true;
+      let credentialData = {
+        email: credentials.value.email,
+        password: credentials.value.password,
+      };
+      store.dispatch("admin/login", credentialData).then((res) => {
+        loggedInData.value = store.getters["admin/getAdmin"];
+        showLoading.value = false;
+        if (loggedInData.value !== undefined) {
+          if (loggedInData.value.isFirstTime) {
+            message.value.showFlash = !message.value.showFlash;
+            setTimeout(() => {
+              router.push({ path: "/admin/changePassword" });
+            }, 3000);
+          } else {
+            message.value.showFlash = !message.value.showFlash;
+            setTimeout(() => {
+              router.push({ path: "/admin/review" });
+            }, 3000);
+          }
         } else {
-          showLoading.value = false
           message.value.showErrorFlash = !message.value.showErrorFlash;
-          setTimeout(() => {}, 3000);
+          setTimeout(() => {
+            context.emit("closeModal", true);
+            message.value.showErrorFlash = !message.value.showErrorFlash;
+          }, 3000);
         }
+
+        // console.log("status", res)
+        // if (res.data.status == "Success") {
+        //   console.log("logged in user", res.data.data)
+        //   router.push({ path: "/admin/review" });
+        // const isFirstLoggin = res.data.data.id; // res.data.data.id is gonna be changed soon
+        // if (isFirstLoggin != 1) {
+        //   message.value.showFlash = !message.value.showFlash;
+
+        //   setTimeout(() => {
+        //     router.push({ path: "/admin/review" });
+        //   }, 3000);
+        // } else {
+        //   message.value.showFlash = !message.value.showFlash;
+        //   setTimeout(() => {
+        //     router.push({ path: "/admin/changePassword" });
+        //   }, 3000);
+        // }
+
+        //   } else {
+        // showLoading.value = false
+        // message.value.showErrorFlash = !message.value.showErrorFlash;
+        // setTimeout(() => {}, 3000);
+        //   }
+        // }).catch(err => {
+        //   console.log("error found", err)
       });
     };
 
@@ -127,9 +165,9 @@ export default {
 
     const validateForm = (formData) => {
       const errors = {};
-      if (!formData.emailAddress) errors.emailAddress = "Email Required";
-      if (formData.emailAddress && !this.isEmail(formData.emailAddress)) {
-        errors.emailAddress = "Invalid Email";
+      if (!formData.email) errors.email = "Email Required";
+      if (formData.email && !this.isEmail(formData.email)) {
+        errors.email = "Invalid Email";
       }
       return errors;
     };
