@@ -1,9 +1,6 @@
 export default {
     state: {
-      adminInfo: {
-        email: "",
-        password: "",
-      },
+      adminInfo: {},
       addAdminLoading: false,
       addAdminSuccess: false,
       addAdminError: false

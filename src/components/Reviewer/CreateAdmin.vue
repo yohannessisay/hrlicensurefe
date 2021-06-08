@@ -172,6 +172,7 @@ export default {
       roleId: null,
       expertLevelId: null,
       regionId: null,
+      password: "password1"
     };
 
     let expertLevels = ref([{
@@ -211,7 +212,6 @@ export default {
     const fetchRegions = () => {
       store.dispatch("profile/getRegions").then(res => {
         regions.value = res.data.data;
-        console.log("regions are", res.data.data)
       })
     }
 
@@ -219,7 +219,6 @@ export default {
     const fetchExpertLevels = () => {
       store.dispatch("profile/getExpertLevels").then(res => {
         expertLevels.value = res.data.data;
-        console.log("expert levels are", expertLevels.value)
       })
     }
 

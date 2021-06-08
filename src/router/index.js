@@ -235,6 +235,11 @@ const routes = [
     component: () => import("../components/Reviewer/ReviewReturnedApplication.vue"),
   },
   {
+    path: "/admin/confirmAssignedApplication/:applicationType/:applicationId",
+    name: "confirmAssignedApplication",
+    component: () => import("../components/Reviewer/ConfirmAssignedApplication.vue"),
+  },
+  {
     path: "/admin/unconfirmedDetail/:applicationType/:applicationId/:applicantId",
     name: "unconfirmedDetail",
     component: () => 

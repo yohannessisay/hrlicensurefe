@@ -175,7 +175,7 @@
       </div>
 
       <div class="box">
-        <div class="flex ml-small mt-medium pb-large rounded">
+        <div class="flex ml-small mt-medium rounded">
           <nothing-to-show :nothingToShow="nothingToShowUnassigned" />
           <all-unassigned :allUnassigned="unAssignedSearched" />
         </div>

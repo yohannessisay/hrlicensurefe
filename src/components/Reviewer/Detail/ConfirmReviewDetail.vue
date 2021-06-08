@@ -399,7 +399,7 @@ export default {
     //     "/admin/confirmReview/" + applicationType.value + "/" + licenseId.value
     //   );
     router.push(
-        "/admin/evaluate/" + applicationType.value + "/" + licenseId.value
+        "/admin/confirmAssignedApplication/" + applicationType.value + "/" + licenseId.value
       );
     };
 

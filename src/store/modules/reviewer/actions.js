@@ -45,6 +45,7 @@ import {
 const baseUrl = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api";
 const adminId = +localStorage.getItem("adminId");
 const adminRole = localStorage.getItem("role");
+// let headers = new Headers({'Bearer Token': bearerToken});
 
 export default {
   async getUnfinished({commit}, id) {
@@ -87,7 +88,8 @@ export default {
     const adminId = adminData[1];
     if(adminRole === "SA") {
       try {  
-        const respAll = await ApiService.get(baseUrl + "/applications/allUnfinished");
+        const respAll = await ApiService.get(baseUrl + "/applications/allUnfinished", { 
+        });
         const resp = respAll.data.data.filter(function(e) {
           return e.reviewerId === null ? '' : e.reviewerId !== adminId
         })

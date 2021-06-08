@@ -11,10 +11,16 @@ export default {
     commit(ADD_ADMIN_LOADING);
     try {
       const resp = await ApiService.post(url + "admins/login", admin, {});
+      console.log("response is ", resp.data.data)
       window.localStorage.setItem("token", resp.data["token"]);
       window.localStorage.setItem("adminId", resp.data.data["id"]);
       window.localStorage.setItem("role", resp.data.data["role"]["code"]);
-      commit(SET_ADMIN, resp.data);
+      window.localStorage.setItem("adminEmail", resp.data.data["email"]);
+      window.localStorage.setItem("allAdminData", JSON.stringify(resp.data.data))
+
+      console.log("is first time", JSON.parse(localStorage.getItem("allAdminData")).isFirstTime)
+      // window.localStorage.setItem("role", "SA");
+      commit(SET_ADMIN, resp.data.data);
       commit(ADD_ADMIN_SUCCESS);
       return resp;
     } catch (error) {
@@ -42,11 +48,11 @@ export default {
       return error;
     }
   },
-  async changePassword({ commit }, adminId, newPassword) {
+  async changePassword({ commit }, newPassword) {
     try {
-      // const resp = await ApiService.get(url+"/changePassword", adminId)
-      console.log(adminId);
-      return adminId;
+      const resp = await ApiService.post(url+"admins/changePassword", newPassword)
+      // console.log(adminId);
+      return resp;
     } catch(error) {
       return error;
     }
