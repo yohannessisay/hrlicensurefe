@@ -67,22 +67,22 @@
             {{ buttons[1]["name"] }}
           </button>
         </div>
-        <div
+         <div
           v-if="buttons && draftStatus == 'DRA'"
           class="flex justify-center mb-8"
         >
           <button @click="submit">
             Next
           </button>
-          <button @click="draft(buttons[0].action)" variant="outline">
-            {{ buttons[0]["name"] }}
+          <button @click="draft(buttons[2].action)" variant="outline">
+            {{ buttons[2]["name"] }}
           </button>
           <button
             class="withdraw"
-            @click="withdraw(buttons[2].action)"
+            @click="withdraw(buttons[1].action)"
             variant="outline"
           >
-            {{ buttons[2]["name"] }}
+            {{ buttons[1]["name"] }}
           </button>
         </div>
         <div
@@ -94,10 +94,10 @@
           </button>
           <button
             class="withdraw"
-            @click="withdraw(buttons[1].action)"
+            @click="withdraw(buttons[0].action)"
             variant="outline"
           >
-            {{ buttons[1]["name"] }}
+            {{ buttons[0]["name"] }}
           </button>
         </div>
         <div
@@ -177,7 +177,7 @@ export default {
     let documentSpecs = ref([]);
     let userId = localStorage.getItem("userId");
     let licenseInfo = ref("");
-    let draftStatus= ref("");
+    let draftStatus = ref("");
 
     let declinedFields = ref([]);
     let acceptedFields = ref([]);

@@ -128,15 +128,15 @@
           <button @click="submit">
             Next
           </button>
-          <button @click="draft(this.buttons[0].action)" variant="outline">
-            {{ this.buttons[0]["name"] }}
+          <button @click="draft(this.buttons[2].action)" variant="outline">
+            {{ this.buttons[2]["name"] }}
           </button>
           <button
             class="withdraw"
-            @click="withdraw(this.buttons[2].action)"
+            @click="withdraw(this.buttons[1].action)"
             variant="outline"
           >
-            {{ this.buttons[2]["name"] }}
+            {{ this.buttons[1]["name"] }}
           </button>
         </div>
         <div
@@ -148,10 +148,10 @@
           </button>
           <button
             class="withdraw"
-            @click="withdraw(this.buttons[1].action)"
+            @click="withdraw(this.buttons[0].action)"
             variant="outline"
           >
-            {{ this.buttons[1]["name"] }}
+            {{ this.buttons[0]["name"] }}
           </button>
         </div>
         <div
@@ -212,6 +212,7 @@ export default {
   },
 
   async created() {
+    this.draftStatus = this.$route.params.status;
     this.fetchApplicantType();
     this.fetchInstitutions();
     this.fetchDepartments();
@@ -491,7 +492,9 @@ export default {
         draftData.education.departmentId;
       this.licenseInfo.education.institutionId =
         draftData.education.institutionId;
-      this.licenseInfo.residenceWoredaId = draftData.residenceWoredaId;
+      this.licenseInfo.residenceWoredaId = draftData.woreda.id;
+      this.state.cityObj = draftData.region;
+      this.state.zoneId = draftData.woreda.zone.id;
     },
   },
 };

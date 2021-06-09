@@ -164,8 +164,8 @@
           <button @click="submit">
             Next
           </button>
-          <button @click="draft(this.buttons[0].action)" variant="outline">
-            {{ this.buttons[0]["name"] }}
+          <button @click="draft(this.buttons[1].action)" variant="outline">
+            {{ this.buttons[1]["name"] }}
           </button>
           <button
             class="withdraw"
@@ -184,10 +184,10 @@
           </button>
           <button
             class="withdraw"
-            @click="withdraw(this.buttons[1].action)"
+            @click="withdraw(this.buttons[0].action)"
             variant="outline"
           >
-            {{ this.buttons[1]["name"] }}
+            {{ this.buttons[0]["name"] }}
           </button>
         </div>
         <div
@@ -554,14 +554,15 @@ export default {
     },
     fetchDraft() {
       let draftData = this.getDraft;
-      this.licenseInfo.applicantId = this.draftData.applicantId;
-      this.licenseInfo.residenceWoredaId = this.draftData.residenceWoredaId;
-      this.licenseInfo.applicantTitle = this.draftData.applicantTitle;
-      this.licenseInfo.whomGoodStandingFor = this.draftData.whomGoodStandingFor;
-      this.licenseInfo.licenseIssuedDate = this.draftData.licenseIssuedDate;
-      this.licenseInfo.whoIssued = this.draftData.whoIssued;
-      this.licenseInfo.licenseRegistrationNumber = this.draftData.licenseRegistrationNumber;
-      this.licenseInfo.applicantPositionId = this.draftData.applicantPositionId;
+      this.licenseInfo.applicantId = draftData.applicantId;
+      this.licenseInfo.residenceWoredaId = draftData.residenceWoredaId;
+      this.licenseInfo.applicantTitle = draftData.applicantTitle;
+      this.licenseInfo.whomGoodStandingFor = draftData.whomGoodStandingFor;
+      this.licenseInfo.licenseIssuedDate = draftData.licenseIssuedDate;
+      this.licenseInfo.whoIssued = draftData.whoIssued;
+      this.licenseInfo.licenseRegistrationNumber =
+        draftData.licenseRegistrationNumber;
+      this.licenseInfo.applicantPositionId = draftData.applicantPositionId;
     },
   },
 };

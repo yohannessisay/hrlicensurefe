@@ -77,8 +77,8 @@
           <button @click="submit">
             Next
           </button>
-          <button @click="draft(buttons[0].action)" variant="outline">
-            {{ buttons[0]["name"] }}
+          <button @click="draft(buttons[1].action)" variant="outline">
+            {{ buttons[1]["name"] }}
           </button>
           <button
             class="withdraw"
@@ -97,10 +97,10 @@
           </button>
           <button
             class="withdraw"
-            @click="withdraw(buttons[1].action)"
+            @click="withdraw(buttons[0].action)"
             variant="outline"
           >
-            {{ buttons[1]["name"] }}
+            {{ buttons[0]["name"] }}
           </button>
         </div>
         <div
@@ -334,8 +334,7 @@ export default {
             residenceWoredaId: licenseInfo.residenceWoredaId,
             applicantTitle: licenseInfo.applicantTitle,
             whomGoodStandingFor: licenseInfo.whomGoodStandingFor,
-            licenseIssuedDate:
-              licenseInfo.licenseIssuedDate + " 17:23:50.228+01",
+            licenseIssuedDate: licenseInfo.licenseIssuedDate,
             whoIssued: licenseInfo.whoIssued,
             licenseRegistrationNumber: licenseInfo.licenseRegistrationNumber,
             applicantPositionId: licenseInfo.applicantPositionId,
@@ -438,8 +437,7 @@ export default {
             residenceWoredaId: licenseInfo.residenceWoredaId,
             applicantTitle: licenseInfo.applicantTitle,
             whomGoodStandingFor: licenseInfo.whomGoodStandingFor,
-            licenseIssuedDate:
-              licenseInfo.licenseIssuedDate + " 17:23:50.228+01",
+            licenseIssuedDate: licenseInfo.licenseIssuedDate,
             whoIssued: licenseInfo.whoIssued,
             licenseRegistrationNumber: licenseInfo.licenseRegistrationNumber,
             applicantPositionId: licenseInfo.applicantPositionId,

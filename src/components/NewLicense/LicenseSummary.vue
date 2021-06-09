@@ -2,7 +2,7 @@
   <div v-if="this.showLoading2" class="h-screen max-h-4xl">
     <Spinner class="bg-lightBlueB-200  " />
   </div>
-  <div class="bg-white mb-large rounded">
+  <div class="bg-white mb-large rounded ">
     <div v-if="this.show && !this.showLoading2">
       <div class="flex justify-center"><Title message="Summary" /></div>
       <div class="flex justify-start">
@@ -94,44 +94,6 @@
       </div>
       <div class="flex flex-row">
         <div
-          :class="[
-            this.profileInfo.woreda.zone.region === null
-              ? errorClass
-              : activeClass,
-          ]"
-        >
-          <label class="ml-8"> Region</label>
-          <h5 class="ml-8">
-            {{
-              this.profileInfo.woreda.zone.region
-                ? this.profileInfo.woreda.zone.region.name
-                : "-"
-            }}
-          </h5>
-        </div>
-        <div
-          :class="[
-            this.profileInfo.woreda.zone === null ? errorClass : activeClass,
-          ]"
-        >
-          <label class="ml-8"> Zone</label>
-          <h5 class="ml-8">
-            {{
-              this.profileInfo.woreda.zone
-                ? this.profileInfo.woreda.zone.name
-                : "-"
-            }}
-          </h5>
-        </div>
-        <div
-          :class="[this.profileInfo.woreda === null ? errorClass : activeClass]"
-        >
-          <label class="ml-8"> Wereda</label>
-          <h5 class="ml-8">
-            {{ this.profileInfo.woreda ? this.profileInfo.woreda.name : "-" }}
-          </h5>
-        </div>
-        <div
           :class="[this.profileInfo.kebele === null ? errorClass : activeClass]"
         >
           <label class="ml-8"> Kebele</label>
@@ -149,16 +111,6 @@
             {{
               this.profileInfo.houseNumber ? this.profileInfo.houseNumber : "-"
             }}
-          </h5>
-        </div>
-        <div
-          :class="[
-            this.profileInfo.residence === null ? errorClass : activeClass,
-          ]"
-        >
-          <label class="ml-8"> Residence</label>
-          <h5 class="ml-8">
-            {{ this.profileInfo.residence ? this.profileInfo.residence : "-" }}
           </h5>
         </div>
       </div>
@@ -323,7 +275,7 @@
         </button>
       </div>
       <div
-        class="flex justify-center justify-items-center mt-8 mb-12"
+        class="flex justify-center justify-items-center mt-8 mb-8"
         v-if="showLoading"
       >
         <Spinner />

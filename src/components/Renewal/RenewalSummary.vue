@@ -94,44 +94,6 @@
       </div>
       <div class="flex flex-row">
         <div
-          :class="[
-            this.profileInfo.woreda.zone.region === null
-              ? errorClass
-              : activeClass,
-          ]"
-        >
-          <label class="ml-8"> Region</label>
-          <h5 class="ml-8">
-            {{
-              this.profileInfo.woreda.zone.region
-                ? this.profileInfo.woreda.zone.region.name
-                : "-"
-            }}
-          </h5>
-        </div>
-        <div
-          :class="[
-            this.profileInfo.woreda.zone === null ? errorClass : activeClass,
-          ]"
-        >
-          <label class="ml-8"> Zone</label>
-          <h5 class="ml-8">
-            {{
-              this.profileInfo.woreda.zone
-                ? this.profileInfo.woreda.zone.name
-                : "-"
-            }}
-          </h5>
-        </div>
-        <div
-          :class="[this.profileInfo.woreda === null ? errorClass : activeClass]"
-        >
-          <label class="ml-8"> Wereda</label>
-          <h5 class="ml-8">
-            {{ this.profileInfo.woreda ? this.profileInfo.woreda.name : "-" }}
-          </h5>
-        </div>
-        <div
           :class="[this.profileInfo.kebele === null ? errorClass : activeClass]"
         >
           <label class="ml-8"> Kebele</label>
@@ -149,16 +111,6 @@
             {{
               this.profileInfo.houseNumber ? this.profileInfo.houseNumber : "-"
             }}
-          </h5>
-        </div>
-        <div
-          :class="[
-            this.profileInfo.residence === null ? errorClass : activeClass,
-          ]"
-        >
-          <label class="ml-8"> Residence</label>
-          <h5 class="ml-8">
-            {{ this.profileInfo.residence ? this.profileInfo.residence : "-" }}
           </h5>
         </div>
       </div>
@@ -250,9 +202,9 @@
             </button>
             <button
               v-if="this.buttons.length > 2"
-              @click="submitRequest(this.buttons[1].action)"
+              @click="submitRequest(this.buttons[0].action)"
             >
-              {{ this.buttons[1].name }}
+              {{ this.buttons[0].name }}
             </button>
           </div>
         </div>
@@ -272,19 +224,19 @@
           </button>
           <button
             v-if="this.buttons.length > 2"
-            @click="draft(this.buttons[0].action)"
+            @click="draft(this.buttons[2].action)"
             variant="outline"
           >
-            {{ this.buttons[0].name }}
+            {{ this.buttons[2].name }}
           </button>
 
           <button
             v-if="this.buttons.length > 2"
             class="withdraw"
-            @click="withdraw(this.buttons[2].action)"
+            @click="withdraw(this.buttons[1].action)"
             variant="outline"
           >
-            {{ this.buttons[2].name }}
+            {{ this.buttons[1].name }}
           </button>
         </div>
       </div>
@@ -294,10 +246,10 @@
       >
         <button
           class="withdraw"
-          @click="withdraw(this.buttons[1].action)"
+          @click="withdraw(this.buttons[0].action)"
           variant="outline"
         >
-          {{ this.buttons[1]["name"] }}
+          {{ this.buttons[0]["name"] }}
         </button>
       </div>
       <div

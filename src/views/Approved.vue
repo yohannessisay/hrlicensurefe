@@ -234,12 +234,22 @@
               >
                 <div class="p-4 w-48 h-64">
                   <span
+                    v-if="item.applicantPosition"
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                  >
+                    <b>Applicant Position: &nbsp;</b>
+                    {{ item.applicantPosition.name }}
+                  </span>
+
+                  <span
+                    v-if="item.applicantType"
                     class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
                     <b>Applicant Type: &nbsp;</b>
                     {{ item.applicantType.name }}
                   </span>
                   <span
+                    v-if="item.applicationStatus"
                     class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
                     <b>Status: &nbsp;</b>{{ item.applicationStatus.name }}
@@ -281,11 +291,7 @@
                     <b>Certified: &nbsp;</b>No
                   </span>
                   <span
-                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                  >
-                    <b>Reviewer: &nbsp;</b>{{ item.reviewer.name }}
-                  </span>
-                  <span
+                    v-if="item.createdAt && !item.licenseIssuedDate"
                     class="
                       mt-medium
                       text-lightBlueB-500
@@ -296,6 +302,22 @@
                   >
                     {{
                       item.createdAt ? moment(item.createdAt).fromNow() : "-"
+                    }}
+                  </span>
+                  <span
+                    v-else
+                    class="
+                      mt-medium
+                      text-lightBlueB-500
+                      flex
+                      justify-end
+                      content-center
+                    "
+                  >
+                    {{
+                      item.licenseIssuedDate
+                        ? moment(item.licenseIssuedDate).fromNow()
+                        : "-"
                     }}
                   </span>
                 </div>
@@ -602,7 +624,7 @@
                     class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
                     <b>Applicant Type: &nbsp;</b>
-                    {{ item.applicantType.name }}
+                    {{ item.applicantPosition.name }}
                   </span>
                   <span
                     class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
@@ -626,11 +648,7 @@
                   >
                     <b>Certified: &nbsp;</b>No
                   </span>
-                  <span
-                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                  >
-                    <b>Reviewer: &nbsp;</b>{{ item.reviewer.name }}
-                  </span>
+
                   <span
                     class="
                       mt-medium
@@ -641,7 +659,9 @@
                     "
                   >
                     {{
-                      item.createdAt ? moment(item.createdAt).fromNow() : "-"
+                      item.licenseIssuedDate
+                        ? moment(item.licenseIssuedDate).fromNow()
+                        : "-"
                     }}
                   </span>
                 </div>

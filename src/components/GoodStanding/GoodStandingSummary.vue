@@ -261,10 +261,10 @@
           <button
             v-if="this.buttons.length > 2"
             class="withdraw"
-            @click="withdraw(this.buttons[2].action)"
+            @click="withdraw(this.buttons[1].action)"
             variant="outline"
           >
-            {{ this.buttons[2].name }}
+            {{ this.buttons[1].name }}
           </button>
         </div>
       </div>
@@ -274,10 +274,10 @@
       >
         <button
           class="withdraw"
-          @click="withdraw(this.buttons[1].action)"
+          @click="withdraw(this.buttons[0].action)"
           variant="outline"
         >
-          {{ this.buttons[1]["name"] }}
+          {{ this.buttons[0]["name"] }}
         </button>
       </div>
       <div
@@ -475,7 +475,7 @@ export default {
           this.documentTypes[2].documentType.code,
           this.goodstandingLetter
         );
-        this.licenseInfo = this.getLicenseCopy;
+        this.licenseInfo = this.getLicense;
         let license = {
           action: action,
           data: {
@@ -483,8 +483,7 @@ export default {
             residenceWoredaId: this.licenseInfo.residenceWoredaId,
             applicantTitle: this.licenseInfo.applicantTitle,
             whomGoodStandingFor: this.licenseInfo.whomGoodStandingFor,
-            licenseIssuedDate:
-              this.licenseInfo.licenseIssuedDate + " 17:23:50.228+01",
+            licenseIssuedDate: this.licenseInfo.licenseIssuedDate,
             whoIssued: this.licenseInfo.whoIssued,
             licenseRegistrationNumber: this.licenseInfo
               .licenseRegistrationNumber,
@@ -567,7 +566,7 @@ export default {
           this.documentTypes[2].documentType.code,
           this.goodstandingLetter
         );
-        this.licenseInfo = this.getLicenseCopy;
+        this.licenseInfo = this.getLicense;
         let license = {
           action: action,
           data: {
@@ -609,7 +608,7 @@ export default {
     },
     update(action) {
       this.showLoading = true;
-      this.licenseInfo = this.getLicenseCopy;
+      this.licenseInfo = this.getLicense;
       let license = {
         data: {
           action: action,

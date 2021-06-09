@@ -128,15 +128,15 @@
           <button @click="submit">
             Next
           </button>
-          <button @click="draft(this.buttons[1].action)" variant="outline">
-            {{ this.buttons[1]["name"] }}
+          <button @click="draft(this.buttons[2].action)" variant="outline">
+            {{ this.buttons[2]["name"] }}
           </button>
           <button
             class="withdraw"
-            @click="withdraw(this.buttons[2].action)"
+            @click="withdraw(this.buttons[1].action)"
             variant="outline"
           >
-            {{ this.buttons[2]["name"] }}
+            {{ this.buttons[1]["name"] }}
           </button>
         </div>
         <div
@@ -148,10 +148,10 @@
           </button>
           <button
             class="withdraw"
-            @click="withdraw(this.buttons[1].action)"
+            @click="withdraw(this.buttons[0].action)"
             variant="outline"
           >
-            {{ this.buttons[1]["name"] }}
+            {{ this.buttons[0]["name"] }}
           </button>
         </div>
         <div
@@ -486,7 +486,6 @@ export default {
     },
     fetchDraft() {
       let draftData = this.getDraft;
-      console.log(draftData);
       this.licenseInfo.applicantId = draftData.applicantId;
       this.licenseInfo.applicantTypeId = draftData.applicantTypeId;
       this.licenseInfo.education.departmentId =
