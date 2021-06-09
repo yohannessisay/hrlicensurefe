@@ -67,7 +67,7 @@
             {{ buttons[1]["name"] }}
           </button>
         </div>
-         <div
+        <div
           v-if="buttons && draftStatus == 'DRA'"
           class="flex justify-center mb-8"
         >

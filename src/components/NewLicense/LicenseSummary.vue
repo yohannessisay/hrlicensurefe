@@ -202,9 +202,9 @@
             </button>
             <button
               v-if="this.buttons.length > 2"
-              @click="submitRequest(this.buttons[1].action)"
+              @click="submitRequest(this.buttons[0].action)"
             >
-              {{ this.buttons[1].name }}
+              {{ this.buttons[0].name }}
             </button>
           </div>
         </div>
@@ -224,19 +224,19 @@
           </button>
           <button
             v-if="this.buttons.length > 2"
-            @click="draft(this.buttons[0].action)"
+            @click="draft(this.buttons[2].action)"
             variant="outline"
           >
-            {{ this.buttons[0].name }}
+            {{ this.buttons[2].name }}
           </button>
 
           <button
             v-if="this.buttons.length > 2"
             class="withdraw"
-            @click="withdraw(this.buttons[2].action)"
+            @click="withdraw(this.buttons[1].action)"
             variant="outline"
           >
-            {{ this.buttons[2].name }}
+            {{ this.buttons[1].name }}
           </button>
         </div>
       </div>
@@ -246,10 +246,10 @@
       >
         <button
           class="withdraw"
-          @click="withdraw(this.buttons[1].action)"
+          @click="withdraw(this.buttons[0].action)"
           variant="outline"
         >
-          {{ this.buttons[1]["name"] }}
+          {{ this.buttons[0]["name"] }}
         </button>
       </div>
       <div
