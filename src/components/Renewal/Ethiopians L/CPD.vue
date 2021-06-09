@@ -74,15 +74,15 @@
           <button @click="submit">
             Next
           </button>
-          <button @click="draft(buttons[0].action)" variant="outline">
-            {{ buttons[0]["name"] }}
+          <button @click="draft(buttons[2].action)" variant="outline">
+            {{ buttons[2]["name"] }}
           </button>
           <button
             class="withdraw"
-            @click="withdraw(buttons[2].action)"
+            @click="withdraw(buttons[1].action)"
             variant="outline"
           >
-            {{ buttons[2]["name"] }}
+            {{ buttons[1]["name"] }}
           </button>
         </div>
         <div
@@ -94,10 +94,10 @@
           </button>
           <button
             class="withdraw"
-            @click="withdraw(buttons[1].action)"
+            @click="withdraw(buttons[0].action)"
             variant="outline"
           >
-            {{ buttons[1]["name"] }}
+            {{ buttons[0]["name"] }}
           </button>
         </div>
         <div
@@ -197,7 +197,6 @@ export default {
     let workExperience = ref("");
     let healthExamCert = ref("");
     let renewalLetter = ref("");
-    let renewalPhoto = ref("");
     let previousLicense = ref("");
 
     const reset = () => {
@@ -339,6 +338,7 @@ export default {
               departmentId: licenseInfo.education.departmentId,
               institutionId: licenseInfo.education.institutionId,
             },
+            residenceWoredaId: licenseInfo.residenceWoredaId,
           },
         };
         store.dispatch("renewal/addRenewalLicense", license).then((res) => {
@@ -346,7 +346,6 @@ export default {
             let licenseId = res.data.data.id;
             let formData = new FormData();
 
-            formData.append(documentSpecs[0].documentType.code, renewalPhoto);
             formData.append(documentSpecs[1].documentType.code, renewalLetter);
             formData.append(documentSpecs[2].documentType.code, healthExamCert);
             formData.append(documentSpecs[4].documentType.code, cpdFile.value);
@@ -438,6 +437,7 @@ export default {
               departmentId: licenseInfo.education.departmentId,
               institutionId: licenseInfo.education.institutionId,
             },
+            residenceWoredaId: licenseInfo.residenceWoredaId,
           },
         };
         store.dispatch("renewal/addRenewalLicense", license).then((res) => {

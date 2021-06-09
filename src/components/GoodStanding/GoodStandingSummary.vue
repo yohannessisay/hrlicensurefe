@@ -24,6 +24,24 @@
           </h5>
         </div>
         <div
+          :class="[
+            this.profileInfo.alternativeName === null
+              ? errorClass
+              : activeClass,
+          ]"
+        >
+          <label class="ml-8"> Full Name</label>
+          <h5 class="ml-8">
+            {{
+              this.profileInfo.alternativeName +
+                " " +
+                this.profileInfo.alternativeFatherName +
+                " " +
+                this.profileInfo.alternativeGrandFatherName
+            }}
+          </h5>
+        </div>
+        <div
           :class="[this.profileInfo.gender === null ? errorClass : activeClass]"
         >
           <label class="ml-8"> Gender</label>
@@ -93,44 +111,6 @@
         <Title message="Address" />
       </div>
       <div class="flex flex-row">
-        <div
-          :class="[
-            this.profileInfo.woreda.zone.region === null
-              ? errorClass
-              : activeClass,
-          ]"
-        >
-          <label class="ml-8"> Region</label>
-          <h5 class="ml-8">
-            {{
-              this.profileInfo.woreda.zone.region
-                ? this.profileInfo.woreda.zone.region.name
-                : "-"
-            }}
-          </h5>
-        </div>
-        <div
-          :class="[
-            this.profileInfo.woreda.zone === null ? errorClass : activeClass,
-          ]"
-        >
-          <label class="ml-8"> Zone</label>
-          <h5 class="ml-8">
-            {{
-              this.profileInfo.woreda.zone
-                ? this.profileInfo.woreda.zone.name
-                : "-"
-            }}
-          </h5>
-        </div>
-        <div
-          :class="[this.profileInfo.woreda === null ? errorClass : activeClass]"
-        >
-          <label class="ml-8"> Wereda</label>
-          <h5 class="ml-8">
-            {{ this.profileInfo.woreda ? this.profileInfo.woreda.name : "-" }}
-          </h5>
-        </div>
         <div
           :class="[this.profileInfo.kebele === null ? errorClass : activeClass]"
         >
@@ -281,10 +261,10 @@
           <button
             v-if="this.buttons.length > 2"
             class="withdraw"
-            @click="withdraw(this.buttons[2].action)"
+            @click="withdraw(this.buttons[1].action)"
             variant="outline"
           >
-            {{ this.buttons[2].name }}
+            {{ this.buttons[1].name }}
           </button>
         </div>
       </div>
@@ -294,10 +274,10 @@
       >
         <button
           class="withdraw"
-          @click="withdraw(this.buttons[1].action)"
+          @click="withdraw(this.buttons[0].action)"
           variant="outline"
         >
-          {{ this.buttons[1]["name"] }}
+          {{ this.buttons[0]["name"] }}
         </button>
       </div>
       <div
@@ -374,8 +354,6 @@ export default {
     this.license = this.getLicense;
     this.applicantId = this.license.applicantId;
     this.applicantTypeId = this.license.applicantTypeId;
-    this.education.departmentId = this.license.education.departmentId;
-    this.education.institutionId = this.license.education.institutionId;
     this.buttons = this.getButtons;
   },
   data: () => ({
@@ -497,16 +475,19 @@ export default {
           this.documentTypes[2].documentType.code,
           this.goodstandingLetter
         );
-
+        this.licenseInfo = this.getLicense;
         let license = {
           action: action,
           data: {
-            applicantId: this.userId,
-            applicantTypeId: this.applicantTypeId,
-            education: {
-              institutionId: this.education.institutionId,
-              departmentId: this.education.departmentId,
-            },
+            applicantId: this.licenseInfo.applicantId,
+            residenceWoredaId: this.licenseInfo.residenceWoredaId,
+            applicantTitle: this.licenseInfo.applicantTitle,
+            whomGoodStandingFor: this.licenseInfo.whomGoodStandingFor,
+            licenseIssuedDate: this.licenseInfo.licenseIssuedDate,
+            whoIssued: this.licenseInfo.whoIssued,
+            licenseRegistrationNumber: this.licenseInfo
+              .licenseRegistrationNumber,
+            applicantPositionId: this.licenseInfo.applicantPositionId,
           },
         };
         this.$store
@@ -585,16 +566,20 @@ export default {
           this.documentTypes[2].documentType.code,
           this.goodstandingLetter
         );
-
+        this.licenseInfo = this.getLicense;
         let license = {
           action: action,
           data: {
-            applicantId: this.userId,
-            applicantTypeId: this.applicantTypeId,
-            education: {
-              institutionId: this.education.institutionId,
-              departmentId: this.education.departmentId,
-            },
+            applicantId: this.licenseInfo.applicantId,
+            residenceWoredaId: this.licenseInfo.residenceWoredaId,
+            applicantTitle: this.licenseInfo.applicantTitle,
+            whomGoodStandingFor: this.licenseInfo.whomGoodStandingFor,
+            licenseIssuedDate:
+              this.licenseInfo.licenseIssuedDate + " 17:23:50.228+01",
+            whoIssued: this.licenseInfo.whoIssued,
+            licenseRegistrationNumber: this.licenseInfo
+              .licenseRegistrationNumber,
+            applicantPositionId: this.licenseInfo.applicantPositionId,
           },
         };
         this.$store
@@ -623,16 +608,21 @@ export default {
     },
     update(action) {
       this.showLoading = true;
+      this.licenseInfo = this.getLicense;
       let license = {
         data: {
           action: action,
           data: {
             applicantId: this.licenseInfo.applicantId,
-            applicantTypeId: this.licenseInfo.applicantTypeId,
-            education: {
-              departmentId: this.licenseInfo.education.departmentId,
-              institutionId: this.licenseInfo.education.institutionId,
-            },
+            residenceWoredaId: this.licenseInfo.residenceWoredaId,
+            applicantTitle: this.licenseInfo.applicantTitle,
+            whomGoodStandingFor: this.licenseInfo.whomGoodStandingFor,
+            licenseIssuedDate:
+              this.licenseInfo.licenseIssuedDate + " 17:23:50.228+01",
+            whoIssued: this.licenseInfo.whoIssued,
+            licenseRegistrationNumber: this.licenseInfo
+              .licenseRegistrationNumber,
+            applicantPositionId: this.licenseInfo.applicantPositionId,
           },
         },
         id: this.draftId,

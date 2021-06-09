@@ -77,15 +77,15 @@
           <button @click="submit">
             Next
           </button>
-          <button @click="draft(buttons[0].action)" variant="outline">
-            {{ buttons[0]["name"] }}
+          <button @click="draft(buttons[2].action)" variant="outline">
+            {{ buttons[2]["name"] }}
           </button>
           <button
             class="withdraw"
-            @click="withdraw(buttons[2].action)"
+            @click="withdraw(buttons[1].action)"
             variant="outline"
           >
-            {{ buttons[2]["name"] }}
+            {{ buttons[1]["name"] }}
           </button>
         </div>
         <div
@@ -97,10 +97,10 @@
           </button>
           <button
             class="withdraw"
-            @click="withdraw(buttons[1].action)"
+            @click="withdraw(buttons[0].action)"
             variant="outline"
           >
-            {{ buttons[1]["name"] }}
+            {{ buttons[0]["name"] }}
           </button>
         </div>
         <div
@@ -331,11 +331,13 @@ export default {
           action: action,
           data: {
             applicantId: userId,
-            applicantTypeId: licenseInfo.applicantTypeId,
-            education: {
-              departmentId: licenseInfo.education.departmentId,
-              institutionId: licenseInfo.education.institutionId,
-            },
+            residenceWoredaId: licenseInfo.residenceWoredaId,
+            applicantTitle: licenseInfo.applicantTitle,
+            whomGoodStandingFor: licenseInfo.whomGoodStandingFor,
+            licenseIssuedDate: licenseInfo.licenseIssuedDate,
+            whoIssued: licenseInfo.whoIssued,
+            licenseRegistrationNumber: licenseInfo.licenseRegistrationNumber,
+            applicantPositionId: licenseInfo.applicantPositionId,
           },
         };
         store
@@ -432,11 +434,13 @@ export default {
           action: action,
           data: {
             applicantId: userId,
-            applicantTypeId: licenseInfo.applicantTypeId,
-            education: {
-              departmentId: licenseInfo.education.departmentId,
-              institutionId: licenseInfo.education.institutionId,
-            },
+            residenceWoredaId: licenseInfo.residenceWoredaId,
+            applicantTitle: licenseInfo.applicantTitle,
+            whomGoodStandingFor: licenseInfo.whomGoodStandingFor,
+            licenseIssuedDate: licenseInfo.licenseIssuedDate,
+            whoIssued: licenseInfo.whoIssued,
+            licenseRegistrationNumber: licenseInfo.licenseRegistrationNumber,
+            applicantPositionId: licenseInfo.applicantPositionId,
           },
         };
         store

@@ -155,12 +155,22 @@
               >
                 <div class="p-4 w-48 h-64">
                   <span
+                    v-if="item.applicantPosition"
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                  >
+                    <b>Applicant Position: &nbsp;</b>
+                    {{ item.applicantPosition.name }}
+                  </span>
+
+                  <span
+                    v-if="item.applicantType"
                     class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
                     <b>Applicant Type: &nbsp;</b>
                     {{ item.applicantType.name }}
                   </span>
                   <span
+                    v-if="item.applicationStatus"
                     class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
                     <b>Status: &nbsp;</b>{{ item.applicationStatus.name }}
@@ -202,11 +212,7 @@
                     <b>Certified: &nbsp;</b>No
                   </span>
                   <span
-                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                  >
-                    <b>Reviewer: &nbsp;</b>{{ item.reviewer.name }}
-                  </span>
-                  <span
+                    v-if="item.createdAt && !item.licenseIssuedDate"
                     class="
                       mt-medium
                       text-lightBlueB-500
@@ -217,6 +223,22 @@
                   >
                     {{
                       item.createdAt ? moment(item.createdAt).fromNow() : "-"
+                    }}
+                  </span>
+                  <span
+                    v-else
+                    class="
+                      mt-medium
+                      text-lightBlueB-500
+                      flex
+                      justify-end
+                      content-center
+                    "
+                  >
+                    {{
+                      item.licenseIssuedDate
+                        ? moment(item.licenseIssuedDate).fromNow()
+                        : "-"
                     }}
                   </span>
                 </div>
@@ -246,7 +268,10 @@
               v-bind:value="item"
             >
               <router-link
-                :to="{ name: 'NewLicense', params: { id: item.id , status: item.applicationStatus.code} }"
+                :to="{
+                  name: 'NewLicense',
+                  params: { id: item.id, status: item.applicationStatus.code },
+                }"
               >
                 <div
                   class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
@@ -323,7 +348,12 @@
               v-bind:key="item"
               v-bind:value="item"
             >
-              <router-link :to="{ name: 'Renewal', params: { id: item.id , status: item.applicationStatus.code} }">
+              <router-link
+                :to="{
+                  name: 'Renewal',
+                  params: { id: item.id, status: item.applicationStatus.code },
+                }"
+              >
                 <div
                   class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
                 >
@@ -404,7 +434,10 @@
               v-bind:value="item"
             >
               <router-link
-                :to="{ name: 'Verification', params: { id: item.id , status: item.applicationStatus.code} }"
+                :to="{
+                  name: 'Verification',
+                  params: { id: item.id, status: item.applicationStatus.code },
+                }"
               >
                 <div
                   class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
@@ -489,7 +522,10 @@
               v-bind:value="item"
             >
               <router-link
-                :to="{ name: 'GoodStanding', params: { id: item.id , status: item.applicationStatus.code} }"
+                :to="{
+                  name: 'GoodStanding',
+                  params: { id: item.id, status: item.applicationStatus.code },
+                }"
               >
                 <div
                   class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
@@ -499,7 +535,7 @@
                       class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                     >
                       <b>Applicant Type: &nbsp;</b>
-                      {{ item.applicantType.name }}
+                      {{ item.applicantPosition.name }}
                     </span>
                     <span
                       class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
@@ -509,7 +545,7 @@
                     <span
                       class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                     >
-                      <b>Code: &nbsp;</b>{{ item.newLicenseCode }}
+                      <b>Code: &nbsp;</b>{{ item.goodStandingCode }}
                     </span>
                     <span
                       v-if="item.certified == true"
@@ -523,11 +559,7 @@
                     >
                       <b>Certified: &nbsp;</b>No
                     </span>
-                    <span
-                      class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                    >
-                      <b>Reviewer: &nbsp;</b>{{ item.reviewer.name }}
-                    </span>
+
                     <span
                       class="
                       mt-medium
@@ -538,7 +570,9 @@
                     "
                     >
                       {{
-                        item.createdAt ? moment(item.createdAt).fromNow() : "-"
+                        item.licenseIssuedDate
+                          ? moment(item.licenseIssuedDate).fromNow()
+                          : "-"
                       }}
                     </span>
                   </div>
@@ -671,9 +705,9 @@ export default {
           });
         });
     },
-   routeTo(item) {
+    routeTo(item) {
       if (item.newLicenseCode) {
-       this.$router.push({
+        this.$router.push({
           name: "NewLicense",
           params: { id: item.id, status: item.applicationStatus.code },
         });

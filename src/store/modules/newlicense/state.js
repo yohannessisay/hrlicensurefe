@@ -6,7 +6,7 @@ export default {
       departmentId: "",
       institutionId: "",
     },
-    photo: "",
+    residenceWoredaId: "",
     passport: "",
     healthExamCert: "",
     englishLanguage: "",

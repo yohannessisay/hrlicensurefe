@@ -50,6 +50,13 @@
         </div>
         <div class="flex mb-medium w-full mt-medium">
           <button
+            @click="prevStep()"
+            class="mx-auto w-1/2 blue-with-light-blue-gradient"
+            variant="block"
+          >
+            Back
+          </button>
+          <button
             class="mx-auto w-1/2  bg-lightBlue-500 hover:bg-lightBlue-600 hover:shadow-lg"
             variant="block"
           >
@@ -75,16 +82,16 @@ export default {
       mobileNumber: "",
       email: "",
       telephoneNumber: "",
-      poBox: ""
+      poBox: "",
     });
 
     let contactErrors = ref({
       mobileNumber: "",
       email: "",
-      telephoneNumber: ""
+      telephoneNumber: "",
     });
 
-    const validateForm = formData => {
+    const validateForm = (formData) => {
       const errors = {};
 
       if (!formData.mobileNumber)
@@ -98,7 +105,7 @@ export default {
       return errors;
     };
 
-    const isEmpty = obj => {
+    const isEmpty = (obj) => {
       for (var prop in obj) {
         if (obj.hasOwnProperty(prop)) {
           return false;
@@ -108,17 +115,21 @@ export default {
       return true;
     };
 
-    const isNumber = evt => {
+    const isNumber = (evt) => {
       evt = evt ? evt : window.event;
       var charCode = evt.which ? evt.which : evt.keyCode;
-      if ((charCode > 31 && (charCode < 48 || charCode > 57)) && charCode !== 46 ) {
+      if (
+        charCode > 31 &&
+        (charCode < 48 || charCode > 57) &&
+        charCode !== 46
+      ) {
         evt.preventDefault();
       } else {
         return true;
       }
     };
 
-    const isEmail = email => {
+    const isEmail = (email) => {
       const re = /\S+@\S+\.\S+/;
       return re.test(email);
     };
@@ -142,8 +153,8 @@ export default {
       isNumber,
       isEmpty,
       isEmail,
-      nextStep
+      nextStep,
     };
-  }
+  },
 };
 </script>

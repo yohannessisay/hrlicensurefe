@@ -1,6 +1,5 @@
 export const SET_LICENSE = "SET_LICENSE";
 export const SET_ACTIVE_STATE = "SET_ACTIVE_STATE";
-export const SET_PHOTO = "SET_PHOTO";
 export const SET_PASSPORT = "SET_PASSPORT";
 export const SET_HEALTH_EXAM_CERT = "SET_HEALTH_EXAM_CERT";
 export const SET_LANGUAGE = "SET_LANGUAGE";
@@ -25,7 +24,6 @@ export const SET_REMARK = "SET_REMARK";
 export default {
   SET_LICENSE,
   SET_ACTIVE_STATE,
-  SET_PHOTO,
   SET_PASSPORT,
   SET_HEALTH_EXAM_CERT,
   SET_LANGUAGE,

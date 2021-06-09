@@ -10,6 +10,38 @@
         />
       </div>
       <form class="mx-auto max-w-3xl w-full mt-10" @submit.prevent="nextStep">
+        <div class="flex mb-4 justify-center">
+          <span v-if="showUpload">
+            <label class="text-primary-700 ml-4"
+              >Upload Profile Picture:
+              <div class="dropbox">
+                <input
+                  type="file"
+                  id="photoFile"
+                  class="photoFile"
+                  ref="photoFileP"
+                  v-on:change="handleFileUpload()"
+                  style="margin-bottom: 15px !important;"
+                />
+                <p>
+                  Drag your Profile Picture here to begin<br />
+                  or click to browse
+                </p>
+              </div>
+            </label>
+          </span>
+
+          <picture v-if="!showUpload && isImage">
+            <p class="ml-4">
+              <a href="javascript:void(0)" @click="reset()">Upload again</a>
+            </p>
+            <img v-bind:src="filePreview" v-show="showPreview" />
+          </picture>
+
+          <span v-if="!showUpload && !isImage">
+            <img :src="filePreview" alt="" class="preview" />
+          </span>
+        </div>
         <div class="flex">
           <div class="flex flex-col mb-medium w-1/2 mr-6">
             <label class="text-primary-700">First Name</label>
@@ -27,7 +59,7 @@
           </div>
         </div>
         <div class="flex">
-          <div class="flex flex-col mb-medium w-1/2 mr-12">
+          <div class="flex flex-col mb-medium w-1/2 mr-6">
             <label class="text-primary-700">Grand Father Name</label>
             <input
               class="max-w-3xl"
@@ -38,7 +70,47 @@
               personalInfoErrors.grandFatherName
             }}</span>
           </div>
+          <div class="flex flex-col mb-medium w-1/2 ml-12">
+            <label class="text-primary-700">Alternative Name</label>
+            <input
+              class="max-w-3xl"
+              type="text"
+              v-model="personalInfo.alternativeName"
+            />
+            <span style="color: red">{{
+              personalInfoErrors.alternativeName
+            }}</span>
+          </div>
+        </div>
+        <div class="flex">
+          <div class="flex flex-col mb-medium w-1/2 mr-12">
+            <label class="text-primary-700">Alternative Father's Name</label>
+            <input
+              class="max-w-3xl"
+              type="text"
+              v-model="personalInfo.alternativeFatherName"
+            />
+            <span style="color: red">{{
+              personalInfoErrors.alternativeFatherName
+            }}</span>
+          </div>
           <div class="flex flex-col mb-medium w-1/2 m1-12">
+            <label class="text-primary-700"
+              >Alternative Grandfather's Name</label
+            >
+            <input
+              class="max-w-3xl"
+              type="text"
+              v-model="personalInfo.alternativeGrandFatherName"
+            />
+            <span style="color: red">{{
+              personalInfoErrors.alternativeGrandFatherName
+            }}</span>
+          </div>
+        </div>
+
+        <div class="flex">
+          <div class="flex flex-col mb-medium w-1/2 mr-6">
             <label class="text-primary-700">Nationality</label>
             <input
               class="max-w-3xl"
@@ -47,9 +119,8 @@
             />
             <span style="color: red">{{ personalInfoErrors.nationality }}</span>
           </div>
-        </div>
-        <div class="flex">
-          <div class="flex flex-col mb-medium w-1/2 mr-12">
+
+          <div class="flex flex-col mb-medium w-1/2 ml-12">
             <label class="text-primary-700">Place of birth(Optional)</label>
             <input
               class="max-w-3xl"
@@ -57,14 +128,14 @@
               v-model="personalInfo.placeOfBirth"
             />
           </div>
-          <div class="flex flex-col mb-medium w-1/2 m1-12">
-            <label class="text-primary-700">Date of birth(Optional)</label>
-            <input
-              class="max-w-3xl"
-              type="date"
-              v-model="personalInfo.dateOfBirth"
-            />
-          </div>
+        </div>
+        <div class="flex flex-col mb-medium w-1/2 m1-12">
+          <label class="text-primary-700">Date of birth(Optional)</label>
+          <input
+            class="max-w-3xl"
+            type="date"
+            v-model="personalInfo.dateOfBirth"
+          />
         </div>
         <div class="flex">
           <div class="flex w-1/2 mb-small  mr-12">
@@ -182,44 +253,11 @@
             </select>
             <span style="color: red">{{ personalInfoErrors.userTypeId }}</span>
           </div>
-          <div class="flex flex-col mb-medium w-1/2 m1-12">
-            <label class="text-primary-700">Expert Level</label>
-            <select
-              class="max-w-3xl"
-              v-model="personalInfo.expertLevelId"
-              @change="fetchHealthOffices()"
-            >
-              <option
-                v-for="types in state.expertLevel"
-                v-bind:key="types.name"
-                v-bind:value="types.id"
-              >
-                {{ types.name }}
-              </option>
-            </select>
-            <span style="color: red">{{
-              personalInfoErrors.expertLevelId
-            }}</span>
-          </div>
         </div>
-        <div class="flex" v-if="personalInfo.expertLevelId == 4">
-          <div class="flex flex-col mb-medium w-1/2 mr-14">
-            <label class="text-primary-700">Health Office</label>
-            <select class="max-w-3xl" v-model="personalInfo.healthOfficeId">
-              <option
-                v-for="types in state.healthOffices"
-                v-bind:key="types.name"
-                v-bind:value="types.id"
-              >
-                {{ types.name }}
-              </option>
-            </select>
-          </div>
-          <div class="flex flex-col mb-medium w-1/2 ml-12"></div>
-        </div>
+
         <div class="flex mb-medium w-full mt-medium">
           <button
-            class="block mx-auto w-1/2  bg-lightBlue-500 hover:bg-lightBlue-600 hover:shadow-lg"
+            class="block mx-auto w-1/4  bg-lightBlue-500 hover:bg-lightBlue-600 hover:shadow-lg"
           >
             Next
           </button>
@@ -233,35 +271,45 @@
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
 import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
+
 export default {
   components: { TitleWithIllustration },
   props: ["activeState"],
   setup(props, { emit }) {
     const store = useStore();
+    let photoFile = ref("");
+    let photoFileP = ref("");
+    let showPreview = ref(false);
+    let filePreview = ref("");
+    let showUpload = ref(true);
+    let isImage = ref(true);
+
     let personalInfo = ref({
       name: "",
-      grandFatherName: "",
       fatherName: "",
-      nationality: "",
-      placeOfBirth: "",
-      dateOfBirth: "",
+      grandFatherName: "",
+      alternativeName: "",
+      alternativeFatherName: "",
+      alternativeGrandFatherName: "",
       gender: "",
-      maritalStatusId: "",
-      maritalStatus: "",
+      dateOfBirth: "",
+      placeOfBirth: "",
+      nationality: "",
       userTypeId: "",
-      expertLevelId: "",
-      healthOfficeId: "",
+      maritalStatusId: "",
+      photo: "",
     });
     let personalInfoErrors = ref({
       name: "",
-      grandFatherName: "",
       fatherName: "",
+      grandFatherName: "",
+      alternativeName: "",
+      alternativeFatherName: "",
+      alternativeGrandFatherName: "",
       nationality: "",
       gender: "",
       maritalStatusId: "",
-      maritalStatus: "",
       userTypeId: "",
-      expertLevelId: "",
     });
 
     let state = ref({
@@ -270,12 +318,50 @@ export default {
       healthOffices: {},
       maritalStatuses: {},
     });
+    const reset = () => {
+      showUpload.value = true;
+      showPreview.value = false;
+      photoFile.value = "";
+      filePreview.value = "";
+      isImage.value = true;
+    };
+    const handleFileUpload = () => {
+      showUpload.value = false;
+      photoFile.value = photoFileP.value.files[0];
+      let reader = new FileReader();
+
+      reader.addEventListener(
+        "load",
+        function() {
+          showPreview.value = true;
+          filePreview.value = reader.result;
+        },
+        false
+      );
+      if (photoFile.value) {
+        if (/\.(jpe?g|png|gif)$/i.test(photoFile.value.name)) {
+          isImage.value = true;
+          reader.readAsDataURL(photoFile.value);
+        } else if (/\.(pdf)$/i.test(photoFile.value.name)) {
+          isImage.value = false;
+          reader.readAsText(photoFile.value);
+        }
+      }
+      let contentType = photoFile.value.type;
+      let blob = new Blob([photoFile], {
+        type: contentType,
+      });
+      personalInfo.value.photo = blob;
+    };
 
     const fetchUserTypes = () => {
       store.dispatch("profile/getUserTypes").then((res) => {
         const utResults = res.data;
         state.value.userTypes = utResults.data;
-        state.value.userTypes.splice(state.value.userTypes.indexOf("Reviewer"), 1);
+        state.value.userTypes.splice(
+          state.value.userTypes.indexOf("Reviewer"),
+          1
+        );
       });
     };
 
@@ -303,6 +389,7 @@ export default {
       }
       if (empty == true) {
         store.dispatch("profile/setProfileInfo", personalInfo);
+        // console.log(personalInfo.value);
         emit("changeActiveState");
       }
     };
@@ -323,16 +410,21 @@ export default {
       const errors = {};
 
       if (!formData.name) errors.name = "First Name Required";
-      if (!formData.fatherName) errors.fatherName = "Father Name Required";
+      if (!formData.fatherName) errors.fatherName = "Father's Name Required";
       if (!formData.grandFatherName)
-        errors.grandFatherName = "Grand Father Name Required";
+        errors.grandFatherName = "Grandfather's Name Required";
+      if (!formData.alternativeName)
+        errors.alternativeName = "Alternative Name Required";
+      if (!formData.alternativeFatherName)
+        errors.alternativeFatherName = "Alternative Father's Name Required";
+      if (!formData.alternativeGrandFatherName)
+        errors.alternativeGrandFatherName =
+          "Alternative Grandfather's Name Required";
       if (!formData.nationality) errors.nationality = "Nationality Required";
       if (!formData.gender) errors.gender = "Gender Required";
       if (!formData.maritalStatusId)
         errors.maritalStatusId = "Marital Status Required";
       if (!formData.userTypeId) errors.userTypeId = "User Type Required";
-      if (!formData.expertLevelId)
-        errors.expertLevelId = "Expert Level Required";
 
       return errors;
     };
@@ -347,10 +439,21 @@ export default {
     };
 
     onMounted(() => {
+      if (store.getters["profile/getPersonalInfo"]) {
+        personalInfo.value = store.getters["profile/getPersonalInfo"];
+      }
       fetchUserTypes();
       fetchExpertLevel();
     });
     return {
+      photoFile,
+      photoFileP,
+      showPreview,
+      filePreview,
+      showUpload,
+      isImage,
+      handleFileUpload,
+      reset,
       personalInfo,
       personalInfoErrors,
       validateForm,
@@ -365,3 +468,39 @@ export default {
   },
 };
 </script>
+<style>
+@import "../../styles/document-upload.css";
+img {
+  width: 150px;
+  height: 150px;
+}
+.photoFile {
+  opacity: 0; /* invisible but it's there! */
+  width: 150px;
+  height: 150px;
+  position: absolute;
+  cursor: pointer;
+}
+
+.dropbox {
+  outline: 2px dashed grey; /* the dash box */
+  outline-offset: -10px;
+  background: lightcyan;
+  color: dimgray;
+  padding: 10px 10px;
+  height: 150px; /* minimum height */
+  width: 200px;
+  position: relative;
+  cursor: pointer;
+}
+
+.dropbox:hover {
+  background: lightblue; /* when mouse over to the drop zone, change color */
+}
+
+.dropbox p {
+  font-size: 1.2em;
+  text-align: center;
+  padding: 50px 0;
+}
+</style>

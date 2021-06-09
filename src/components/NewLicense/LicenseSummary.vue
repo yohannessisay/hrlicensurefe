@@ -2,7 +2,7 @@
   <div v-if="this.showLoading2" class="h-screen max-h-4xl">
     <Spinner class="bg-lightBlueB-200  " />
   </div>
-  <div class="bg-white mb-large rounded">
+  <div class="bg-white mb-large rounded ">
     <div v-if="this.show && !this.showLoading2">
       <div class="flex justify-center"><Title message="Summary" /></div>
       <div class="flex justify-start">
@@ -94,44 +94,6 @@
       </div>
       <div class="flex flex-row">
         <div
-          :class="[
-            this.profileInfo.woreda.zone.region === null
-              ? errorClass
-              : activeClass,
-          ]"
-        >
-          <label class="ml-8"> Region</label>
-          <h5 class="ml-8">
-            {{
-              this.profileInfo.woreda.zone.region
-                ? this.profileInfo.woreda.zone.region.name
-                : "-"
-            }}
-          </h5>
-        </div>
-        <div
-          :class="[
-            this.profileInfo.woreda.zone === null ? errorClass : activeClass,
-          ]"
-        >
-          <label class="ml-8"> Zone</label>
-          <h5 class="ml-8">
-            {{
-              this.profileInfo.woreda.zone
-                ? this.profileInfo.woreda.zone.name
-                : "-"
-            }}
-          </h5>
-        </div>
-        <div
-          :class="[this.profileInfo.woreda === null ? errorClass : activeClass]"
-        >
-          <label class="ml-8"> Wereda</label>
-          <h5 class="ml-8">
-            {{ this.profileInfo.woreda ? this.profileInfo.woreda.name : "-" }}
-          </h5>
-        </div>
-        <div
           :class="[this.profileInfo.kebele === null ? errorClass : activeClass]"
         >
           <label class="ml-8"> Kebele</label>
@@ -149,16 +111,6 @@
             {{
               this.profileInfo.houseNumber ? this.profileInfo.houseNumber : "-"
             }}
-          </h5>
-        </div>
-        <div
-          :class="[
-            this.profileInfo.residence === null ? errorClass : activeClass,
-          ]"
-        >
-          <label class="ml-8"> Residence</label>
-          <h5 class="ml-8">
-            {{ this.profileInfo.residence ? this.profileInfo.residence : "-" }}
           </h5>
         </div>
       </div>
@@ -250,9 +202,9 @@
             </button>
             <button
               v-if="this.buttons.length > 2"
-              @click="submitRequest(this.buttons[1].action)"
+              @click="submitRequest(this.buttons[0].action)"
             >
-              {{ this.buttons[1].name }}
+              {{ this.buttons[0].name }}
             </button>
           </div>
         </div>
@@ -272,19 +224,19 @@
           </button>
           <button
             v-if="this.buttons.length > 2"
-            @click="draft(this.buttons[0].action)"
+            @click="draft(this.buttons[2].action)"
             variant="outline"
           >
-            {{ this.buttons[0].name }}
+            {{ this.buttons[2].name }}
           </button>
 
           <button
             v-if="this.buttons.length > 2"
             class="withdraw"
-            @click="withdraw(this.buttons[2].action)"
+            @click="withdraw(this.buttons[1].action)"
             variant="outline"
           >
-            {{ this.buttons[2].name }}
+            {{ this.buttons[1].name }}
           </button>
         </div>
       </div>
@@ -294,10 +246,10 @@
       >
         <button
           class="withdraw"
-          @click="withdraw(this.buttons[1].action)"
+          @click="withdraw(this.buttons[0].action)"
           variant="outline"
         >
-          {{ this.buttons[1]["name"] }}
+          {{ this.buttons[0]["name"] }}
         </button>
       </div>
       <div
@@ -323,7 +275,7 @@
         </button>
       </div>
       <div
-        class="flex justify-center justify-items-center mt-8 mb-12"
+        class="flex justify-center justify-items-center mt-8 mb-8"
         v-if="showLoading"
       >
         <Spinner />
@@ -363,7 +315,6 @@ export default {
     }
 
     this.userId = localStorage.getItem("userId");
-    this.photo = this.getPhoto;
     this.passport = this.getPassport;
     this.healthExamCert = this.getHealthExamCert;
     this.englishLanguage = this.getEnglishLanguage;
@@ -383,6 +334,7 @@ export default {
     this.applicantTypeId = this.license.applicantTypeId;
     this.education.departmentId = this.license.education.departmentId;
     this.education.institutionId = this.license.education.institutionId;
+    this.residenceWoredaId = this.license.residenceWoredaId;
     this.buttons = this.getButtons;
   },
   data: () => ({
@@ -396,6 +348,7 @@ export default {
       departmentId: "",
       institutionId: "",
     },
+    residenceWoredaId: "",
     draftId: "",
     draftData: "",
     draftStatus: "",
@@ -405,7 +358,6 @@ export default {
     showErrorFlash: false,
     showLoading: false,
     showLoading2: false,
-    photo: "",
     passport: "",
     healthExamCert: "",
     englishLanguage: "",
@@ -423,7 +375,6 @@ export default {
   computed: {
     ...mapGetters({
       getLicense: "newlicense/getLicense",
-      getPhoto: "newlicense/getPhoto",
       getPassport: "newlicense/getPassport",
       getHealthExamCert: "newlicense/getHealthExamCert",
       getEnglishLanguage: "newlicense/getEnglishLanguage",
@@ -456,7 +407,6 @@ export default {
       });
     },
     setDocs() {
-      this.docs.push(this.photo);
       this.docs.push(this.passport);
       this.docs.push(this.healthExamCert);
       this.docs.push(this.englishLanguage);
@@ -494,10 +444,7 @@ export default {
             if (res.data.status == "Success") {
               let licenseId = this.draftId;
               let formData = new FormData();
-              formData.append(
-                this.documentTypes[0].documentType.code,
-                this.photo
-              );
+
               formData.append(
                 this.documentTypes[1].documentType.code,
                 this.passport
@@ -594,7 +541,6 @@ export default {
           });
       } else {
         let formData = new FormData();
-        formData.append(this.documentTypes[0].documentType.code, this.photo);
         formData.append(this.documentTypes[1].documentType.code, this.passport);
         formData.append(
           this.documentTypes[2].documentType.code,
@@ -673,6 +619,7 @@ export default {
               institutionId: this.education.institutionId,
               departmentId: this.education.departmentId,
             },
+            residenceWoredaId: this.residenceWoredaId,
           },
         };
         this.$store
@@ -716,10 +663,7 @@ export default {
             if (res.data.status == "Success") {
               let licenseId = this.draftId;
               let formData = new FormData();
-              formData.append(
-                this.documentTypes[0].documentType.code,
-                this.photo
-              );
+
               formData.append(
                 this.documentTypes[1].documentType.code,
                 this.passport
@@ -818,7 +762,6 @@ export default {
           });
       } else {
         let formData = new FormData();
-        formData.append(this.documentTypes[0].documentType.code, this.photo);
         formData.append(this.documentTypes[1].documentType.code, this.passport);
         formData.append(
           this.documentTypes[2].documentType.code,
@@ -899,6 +842,7 @@ export default {
               institutionId: this.education.institutionId,
               departmentId: this.education.departmentId,
             },
+            residenceWoredaId: this.residenceWoredaId,
           },
         };
         this.$store
@@ -937,6 +881,7 @@ export default {
               departmentId: this.licenseInfo.education.departmentId,
               institutionId: this.licenseInfo.education.institutionId,
             },
+            residenceWoredaId: this.residenceWoredaId,
           },
         },
         id: this.draftId,

@@ -74,15 +74,15 @@
           <button @click="submit">
             Next
           </button>
-          <button @click="draft(buttons[0].action)" variant="outline">
-            {{ buttons[0]["name"] }}
+          <button @click="draft(buttons[2].action)" variant="outline">
+            {{ buttons[2]["name"] }}
           </button>
           <button
             class="withdraw"
-            @click="withdraw(buttons[2].action)"
+            @click="withdraw(buttons[1].action)"
             variant="outline"
           >
-            {{ buttons[2]["name"] }}
+            {{ buttons[1]["name"] }}
           </button>
         </div>
         <div
@@ -94,10 +94,10 @@
           </button>
           <button
             class="withdraw"
-            @click="withdraw(buttons[1].action)"
+            @click="withdraw(buttons[0].action)"
             variant="outline"
           >
-            {{ buttons[1]["name"] }}
+            {{ buttons[0]["name"] }}
           </button>
         </div>
         <div
@@ -191,7 +191,6 @@ export default {
     let acceptedFieldsCheck = ref(false);
     let draftStatus = ref("");
 
-    let photo = ref("");
     let passport = ref("");
     let healthExamCert = ref("");
     let professionalDoc = ref([]);
@@ -246,7 +245,6 @@ export default {
     documentSpecs = store.getters["newlicense/getDocumentSpec"];
     licenseInfo = store.getters["newlicense/getLicense"];
 
-    photo = store.getters["newlicense/getPhoto"];
     passport = store.getters["newlicense/getPassport"];
     healthExamCert = store.getters["newlicense/getHealthExamCert"];
     professionalDoc = store.getters["newlicense/getProfessionalDocuments"];
@@ -258,7 +256,7 @@ export default {
     renewedLicense = store.getters["newlicense/getRenewedLicense"];
     professionalLicense = store.getters["newlicense/getProfessionalLicense"];
     letterfromOrg = store.getters["newlicense/getLetterfromOrg"];
-    
+
     const draft = (action) => {
       message.value.showLoading = true;
       if (route.params.id) {
@@ -324,13 +322,13 @@ export default {
               departmentId: licenseInfo.education.departmentId,
               institutionId: licenseInfo.education.institutionId,
             },
+            residenceWoredaId: licenseInfo.residenceWoredaId,
           },
         };
         store.dispatch("newlicense/addNewLicense", license).then((res) => {
           if (res.data.status == "Success") {
             let licenseId = res.data.data.id;
             let formData = new FormData();
-            formData.append(documentSpecs[0].documentType.code, photo);
             formData.append(documentSpecs[1].documentType.code, passport);
             formData.append(documentSpecs[2].documentType.code, healthExamCert);
             formData.append(documentSpecs[4].documentType.code, workExperience);
@@ -404,7 +402,7 @@ export default {
         });
       }
     };
-        const update = (action) => {
+    const update = (action) => {
       message.value.showLoading = true;
       if (route.params.id) {
         if (dataChanged.value) {
@@ -415,77 +413,14 @@ export default {
             },
             id: route.params.id,
           };
-          store
-            .dispatch("newlicense/editNewLicense", license)
-            .then((res) => {
-              if (res.data.status == "Success") {
-                let licenseId = route.params.id;
-                let formData = new FormData();
-                formData.append(
-                  documentSpecs[1].documentType.code,
-                  letterFile.value
-                );
-                let payload = { document: formData, id: licenseId };
-                store
-                  .dispatch("newlicense/uploadDocuments", payload)
-                  .then((res) => {
-                    if (res.status == 200) {
-                      message.value.showFlash = !message.value.showFlash;
-                      message.value.showLoading = false;
-                      setTimeout(() => {}, 1500);
-                      router.push({ path: "/menu" });
-                    } else {
-                      message.value.showErrorFlash = !message.value
-                        .showErrorFlash;
-                    }
-                  })
-                  .catch((err) => {});
-              }
-            });
-        } else {
-          let license = {
-            data: {
-              action: action,
-              data: draftData,
-            },
-            id: route.params.id,
-          };
-          store
-            .dispatch("newlicense/editNewLicense", license)
-            .then((res) => {
-              if (res.data.status == "Success") {
-                message.value.showFlash = !message.value.showFlash;
-                message.value.showLoading = false;
-                setTimeout(() => {}, 1500);
-                router.push({ path: "/menu" });
-              } else {
-                message.value.showErrorFlash = !message.value.showErrorFlash;
-              }
-            });
-        }
-      } else {
-        let license = {
-          action: action,
-          data: {
-            applicantId: userId,
-            applicantTypeId: licenseInfo.applicantTypeId,
-            education: {
-              departmentId: licenseInfo.education.departmentId,
-              institutionId: licenseInfo.education.institutionId,
-            },
-          },
-        };
-        store
-          .dispatch("newlicense/addNewLicense", license)
-          .then((res) => {
+          store.dispatch("newlicense/editNewLicense", license).then((res) => {
             if (res.data.status == "Success") {
-              let licenseId = res.data.data.id;
+              let licenseId = route.params.id;
               let formData = new FormData();
               formData.append(
                 documentSpecs[1].documentType.code,
                 letterFile.value
               );
-              formData.append(documentSpecs[2].documentType.code, licenseCopy);
               let payload = { document: formData, id: licenseId };
               store
                 .dispatch("newlicense/uploadDocuments", payload)
@@ -503,6 +438,63 @@ export default {
                 .catch((err) => {});
             }
           });
+        } else {
+          let license = {
+            data: {
+              action: action,
+              data: draftData,
+            },
+            id: route.params.id,
+          };
+          store.dispatch("newlicense/editNewLicense", license).then((res) => {
+            if (res.data.status == "Success") {
+              message.value.showFlash = !message.value.showFlash;
+              message.value.showLoading = false;
+              setTimeout(() => {}, 1500);
+              router.push({ path: "/menu" });
+            } else {
+              message.value.showErrorFlash = !message.value.showErrorFlash;
+            }
+          });
+        }
+      } else {
+        let license = {
+          action: action,
+          data: {
+            applicantId: userId,
+            applicantTypeId: licenseInfo.applicantTypeId,
+            education: {
+              departmentId: licenseInfo.education.departmentId,
+              institutionId: licenseInfo.education.institutionId,
+            },
+            residenceWoredaId: licenseInfo.residenceWoredaId,
+          },
+        };
+        store.dispatch("newlicense/addNewLicense", license).then((res) => {
+          if (res.data.status == "Success") {
+            let licenseId = res.data.data.id;
+            let formData = new FormData();
+            formData.append(
+              documentSpecs[1].documentType.code,
+              letterFile.value
+            );
+            formData.append(documentSpecs[2].documentType.code, licenseCopy);
+            let payload = { document: formData, id: licenseId };
+            store
+              .dispatch("newlicense/uploadDocuments", payload)
+              .then((res) => {
+                if (res.status == 200) {
+                  message.value.showFlash = !message.value.showFlash;
+                  message.value.showLoading = false;
+                  setTimeout(() => {}, 1500);
+                  router.push({ path: "/menu" });
+                } else {
+                  message.value.showErrorFlash = !message.value.showErrorFlash;
+                }
+              })
+              .catch((err) => {});
+          }
+        });
       }
     };
 

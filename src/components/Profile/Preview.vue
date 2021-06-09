@@ -1,8 +1,8 @@
 <template>
-  <div v-if="message.showLoading2" class="h-screen max-h-4xl">
+  <div v-if="message.showLoading2" class="h-screen max-h-4xl mt-large">
     <Spinner class="bg-lightBlueB-200  " />
   </div>
-  <div class="bg-white mb-large rounded pr-20 pl-20 pb-12 pt-12">
+  <div class="bg-white mb-large rounded pr-20 pl-20 pb-12">
     <div v-if="!message.showLoading2">
       <div class="flex justify-center"><Title message="Summary" /></div>
       <div class="flex justify-start">
@@ -22,6 +22,18 @@
           </h5>
         </div>
         <div>
+          <label class="ml-8 text-primary-300"> Full Alternative Name</label>
+          <h5 class="ml-8">
+            {{
+              personalInfo.alternativeName +
+                " " +
+                personalInfo.alternativeFatherName +
+                " " +
+                personalInfo.alternativeGrandFatherName
+            }}
+          </h5>
+        </div>
+        <div>
           <label class="ml-8 text-primary-300"> Gender</label>
           <h5 class="ml-8">{{ personalInfo.gender }}</h5>
         </div>
@@ -31,18 +43,20 @@
         </div>
         <div>
           <label class="ml-8 text-primary-300"> Place of Birth</label>
-          <h5 class="ml-8">{{ personalInfo.placeOfBirth }}</h5>
+          <h5 v-if="personalInfo.placeOfBirth != 'undefined'" class="ml-8">
+            {{ personalInfo.placeOfBirth }}
+          </h5>
         </div>
-        <div>
+        <!-- <div>
           <label class="ml-8 text-primary-300"> Date of Birth</label>
-          <h5 class="ml-8">
+          <h5 v-if="personalInfo.dateOfBirth != 'undefined'" class="ml-8">
             {{
               profileInfo.dateOfBirth
                 ? moment(profileInfo.dateOfBirth).format("MMM D, YYYY")
                 : "-"
             }}
           </h5>
-        </div>
+        </div> -->
 
         <div>
           <label class="ml-8 text-primary-300"> Marital Status</label>
@@ -54,18 +68,6 @@
         <Title message="Address" />
       </div>
       <div class="flex flex-row">
-        <div>
-          <label class="ml-8 text-primary-300"> Region</label>
-          <h5 class="ml-8">{{ address.city }}</h5>
-        </div>
-        <div>
-          <label class="ml-8 text-primary-300"> Zone</label>
-          <h5 class="ml-8">{{ address.zone }}</h5>
-        </div>
-        <div>
-          <label class="ml-8 text-primary-300"> Woreda</label>
-          <h5 class="ml-8">{{ address.woreda }}</h5>
-        </div>
         <div>
           <label class="ml-8 text-primary-300"> Kebele</label>
           <h5 class="ml-8">{{ address.kebele }}</h5>
@@ -83,14 +85,6 @@
         <Title message="Contact" />
       </div>
       <div class="flex flex-row">
-        <!-- <div>
-          <label class="ml-8 text-primary-300"> Mobile Number</label>
-          <h5 class="ml-8">{{ contact.mobileNumber }}</h5>
-        </div> -->
-        <div>
-          <label class="ml-8 text-primary-300"> Mobile Number</label>
-          <h5 class="ml-8">{{ user.phoneNumber }}</h5>
-        </div>
         <div>
           <label class="ml-8 text-primary-300"> PO Box</label>
           <h5 class="ml-8">{{ address.poBox }}</h5>
@@ -101,6 +95,11 @@
         </div>
       </div>
       <div class="mt-12 flex justify-center mb-medium">
+        <div>
+          <button @click="prevStep" class="mx-auto w-1/2" variant="outline">
+            Back
+          </button>
+        </div>
         <div>
           <button v-on:click="submit()">Save Profile</button>
         </div>
@@ -117,7 +116,7 @@
       <FlashMessage message="Your profile is successfully created!!" />
     </div>
     <div v-if="message.showErrorFlash">
-      <FlashMessage message="Your profile is creation failed!!" />
+      <ErrorFlashMessage message="Your profile creation failed!!" />
     </div>
   </div>
 </template>
@@ -137,7 +136,8 @@ export default {
   computed: {
     moment: () => moment,
   },
-  setup() {
+  props: ["activeState"],
+  setup(props, { emit }) {
     const store = useStore();
     const router = useRouter();
     let message = ref({
@@ -156,6 +156,9 @@ export default {
       name: null,
       grandFatherName: null,
       fatherName: null,
+      alternativeName: null,
+      alternativeFatherName: null,
+      alternativeGrandFatherName: null,
       nationality: null,
       placeOfBirth: null,
       dateOfBirth: null,
@@ -163,24 +166,17 @@ export default {
       maritalStatusId: null,
       maritalStatus: null,
       userTypeId: null,
-      expertLevelId: null,
-      healthOfficeId: null,
     };
 
     let address = {
-      city: null,
       kebele: null,
-      zone: null,
       houseNumber: null,
-      woreda: null,
       residence: null,
       poBox: null,
     };
 
     let contact = {
-      mobileNumber: null,
       email: null,
-      telephoneNumber: null,
       poBox: null,
     };
 
@@ -188,37 +184,32 @@ export default {
     let a = true;
     let response = {};
     let showFlash = ref(false);
-    let getPersonalInfo = "profile/getPersonalInfo";
 
     const addProfile = () => {
-      if (
-        personalInfo.healthOfficeId != 1 ||
-        personalInfo.healthOfficeId != 2
-      ) {
-        personalInfo.healthOfficeId = null;
-      }
       message.value.showLoading = true;
       message.value.showFlash = false;
       message.value.showErrorFlash = false;
+
       store
         .dispatch("profile/addProfile", {
           name: personalInfo.name,
           fatherName: personalInfo.fatherName,
           grandFatherName: personalInfo.grandFatherName,
+          alternativeName: personalInfo.alternativeName,
+          alternativeFatherName: personalInfo.alternativeFatherName,
+          alternativeGrandFatherName: personalInfo.alternativeGrandFatherName,
           gender: personalInfo.gender,
           dateOfBirth: personalInfo.dateOfBirth,
           placeOfBirth: personalInfo.placeOfBirth,
           nationality: personalInfo.nationality,
           userTypeId: personalInfo.userTypeId,
-          expertLevelId: personalInfo.expertLevelId,
-          healthOfficeId: personalInfo.healthOfficeId,
           maritalStatusId: personalInfo.maritalStatusId,
-          woredaId: address.woredaId,
           kebele: address.kebele,
           houseNumber: address.houseNumber,
           residence: address.residence,
-          city: address.city,
           poBox: address.poBox,
+          photo: "",
+          // photo: personalInfo.photo,
           userId: +localStorage.getItem("userId"),
         })
 
@@ -251,7 +242,9 @@ export default {
     const submit = () => {
       addProfile();
     };
-
+    const prevStep = () => {
+      emit("changeActiveStatePrevious");
+    };
     personalInfo = store.getters["profile/getPersonalInfo"];
     address = store.getters["profile/getAddress"];
     contact = store.getters["profile/getContact"];
@@ -274,10 +267,16 @@ export default {
       response,
       message,
       submit,
-      getPersonalInfo,
       user,
       fetchUser,
+      prevStep,
     };
   },
 };
 </script>
+<style>
+.text-danger > label,
+.text-danger > h5 {
+  color: red;
+}
+</style>

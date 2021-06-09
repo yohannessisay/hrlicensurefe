@@ -195,20 +195,77 @@
               </h6>
             </div> -->
         </div>
-        <div class="flex justify-center mb-8">
+        <div v-if="this.draftStatus == 'DRA' || !this.draftStatus">
+          <div class="flex justify-center mt-4 mb-8">
+            <button @click="submit">
+              Next
+            </button>
+            <button
+              v-if="this.buttons.length < 3"
+              @click="draft(this.buttons[1].action)"
+              variant="outline"
+            >
+              {{ this.buttons[1].name }}
+            </button>
+            <button
+              v-if="this.buttons.length > 2"
+              @click="draft(this.buttons[2].action)"
+              variant="outline"
+            >
+              {{ this.buttons[2].name }}
+            </button>
+
+            <button
+              v-if="this.buttons.length > 2"
+              class="withdraw"
+              @click="withdraw(this.buttons[1].action)"
+              variant="outline"
+            >
+              {{ this.buttons[1].name }}
+            </button>
+          </div>
+        </div>
+        <div
+          v-if="this.draftStatus == 'SUB'"
+          class="flex justify-center mt-8 pb-12"
+        >
           <button @click="submit">
             Next
           </button>
-          <button @click="draft(this.buttons[1].action)" variant="outline">
-            {{ this.buttons[1]["name"] }}
-          </button>
           <button
-            v-if="this.buttons.length > 2"
             class="withdraw"
-            @click="withdraw(this.buttons[2].action)"
+            @click="withdraw(this.buttons[0].action)"
             variant="outline"
           >
-            {{ this.buttons[2]["name"] }}
+            {{ this.buttons[0]["name"] }}
+          </button>
+        </div>
+        <div
+          v-if="this.draftStatus == 'USUP'"
+          class="flex justify-center mt-8 pb-12"
+        >
+          <button @click="submit">
+            Next
+          </button>
+          <button @click="draft(this.buttons[0].action)" variant="outline">
+            {{ this.buttons[0]["name"] }}
+          </button>
+          <button @click="update(this.buttons[1].action)" variant="outline">
+            {{ this.buttons[1]["name"] }}
+          </button>
+        </div>
+        <div
+          v-if="this.draftStatus == 'DEC'"
+          class="flex justify-center mt-8 pb-12"
+        >
+          <button @click="submit">
+            Next
+          </button>
+          <button @click="draft(this.buttons[0].action)" variant="outline">
+            {{ this.buttons[0]["name"] }}
+          </button>
+          <button @click="update(this.buttons[1].action)" variant="outline">
+            {{ this.buttons[1]["name"] }}
           </button>
         </div>
         <div v-if="showLoading">
@@ -275,7 +332,6 @@ export default {
       documentSpec: [],
       licenseInfo: "",
       userId: localStorage.getItem("userId"),
-      photo: "",
       passport: "",
       healthExamCert: "",
       workExperience: "",
@@ -303,6 +359,7 @@ export default {
       acceptedFieldsCheck3: false,
 
       draftId: "",
+      draftStatus: "",
       draftData: "",
 
       showFlash: false,
@@ -337,6 +394,7 @@ export default {
   },
   created() {
     this.draftId = this.$route.params.id;
+    this.draftStatus = this.$route.params.status;
     this.declinedFields = this.getDeclinedFields;
     this.remark = this.getRemarK;
     this.acceptedFields = this.acceptedFields;
@@ -392,7 +450,6 @@ export default {
     this.buttons = this.getButtons;
     this.documentSpec = this.getDocumentSpec;
 
-    this.photo = this.getPhoto;
     this.passport = this.getPassport;
     this.healthExamCert = this.getHealthExamCert;
     this.englishLanguage = this.getEnglishLanguage;
@@ -574,6 +631,7 @@ export default {
               institutionId: this.license.education.departmentId,
               departmentId: this.license.education.institutionId,
             },
+            residenceWoredaId: this.license.residenceWoredaId,
           },
         };
         this.$store
@@ -581,7 +639,6 @@ export default {
           .then((res) => {
             let licenseId = res.data.data.id;
             let formData = new FormData();
-            formData.append(this.documentSpec[0].documentType.code, this.photo);
             formData.append(
               this.documentSpec[1].documentType.code,
               this.passport

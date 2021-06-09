@@ -74,15 +74,15 @@
           <button @click="submit">
             Next
           </button>
-          <button @click="draft(buttons[0].action)" variant="outline">
-            {{ buttons[0]["name"] }}
+          <button @click="draft(buttons[2].action)" variant="outline">
+            {{ buttons[2]["name"] }}
           </button>
           <button
             class="withdraw"
-            @click="withdraw(buttons[2].action)"
+            @click="withdraw(buttons[1].action)"
             variant="outline"
           >
-            {{ buttons[2]["name"] }}
+            {{ buttons[1]["name"] }}
           </button>
         </div>
         <div
@@ -94,10 +94,10 @@
           </button>
           <button
             class="withdraw"
-            @click="withdraw(buttons[1].action)"
+            @click="withdraw(buttons[0].action)"
             variant="outline"
           >
-            {{ buttons[1]["name"] }}
+            {{ buttons[0]["name"] }}
           </button>
         </div>
         <div
@@ -177,7 +177,7 @@ export default {
     let documentSpecs = ref([]);
     let userId = localStorage.getItem("userId");
     let licenseInfo = ref("");
-    let draftStatus= ref("");
+    let draftStatus = ref("");
 
     let declinedFields = ref([]);
     let acceptedFields = ref([]);
@@ -186,7 +186,6 @@ export default {
     let declinedFieldsCheck = ref(false);
     let acceptedFieldsCheck = ref(false);
 
-    let renewalPhoto = ref("");
     let healthExamCert = ref("");
     let renewalLetter = ref("");
     let cpd = ref("");
@@ -230,7 +229,6 @@ export default {
     licenseInfo = store.getters["renewal/getLicense"];
 
     healthExamCert = store.getters["renewal/getRenewalHealthExamCert"];
-    renewalPhoto = store.getters["renewal/getRenewalPhoto"];
     renewalLetter = store.getters["renewal/getRenewalLicense"];
     cpd = store.getters["renewal/getRenewalCpd"];
     previousLicense = store.getters["renewal/getPreviousLicense"];
@@ -331,13 +329,13 @@ export default {
               departmentId: licenseInfo.education.departmentId,
               institutionId: licenseInfo.education.institutionId,
             },
+            residenceWoredaId: licenseInfo.residenceWoredaId,
           },
         };
         store.dispatch("renewal/addRenewalLicense", license).then((res) => {
           if (res.data.status == "Success") {
             let licenseId = res.data.data.id;
             let formData = new FormData();
-            formData.append(documentSpecs[0].documentType.code, renewalPhoto);
             formData.append(documentSpecs[1].documentType.code, renewalLetter);
             formData.append(documentSpecs[2].documentType.code, healthExamCert);
             formData.append(documentSpecs[4].documentType.code, cpd);
@@ -433,6 +431,7 @@ export default {
               departmentId: licenseInfo.education.departmentId,
               institutionId: licenseInfo.education.institutionId,
             },
+            residenceWoredaId: licenseInfo.residenceWoredaId,
           },
         };
         store.dispatch("renewal/addRenewalLicense", license).then((res) => {
