@@ -225,10 +225,10 @@
     </div>
   </div>
   <div class="mr-3xl" v-if="showFlash">
-    <FlashMessage message="New license saved Successful!" />
+    <FlashMessage message="Operation Successful!" />
   </div>
   <div v-if="showErrorFlash">
-    <ErrorFlashMessage message="Savning new license Failed!" />
+    <ErrorFlashMessage message="Operation Failed!" />
   </div>
 </template>
 
