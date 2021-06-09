@@ -1,6 +1,5 @@
 import {
   SET_LICENSE,
-  SET_PHOTO,
   SET_PASSPORT,
   SET_HEALTH_EXAM_CERT,
   SET_LANGUAGE,
@@ -26,9 +25,6 @@ import {
 export default {
   [SET_LICENSE](state, license) {
     state.license = license;
-  },
-  [SET_PHOTO](state, photo) {
-    state.photo = photo;
   },
   [SET_PASSPORT](state, passport) {
     state.passport = passport;

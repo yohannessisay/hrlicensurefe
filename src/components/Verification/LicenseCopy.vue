@@ -74,8 +74,8 @@
           <button @click="submit">
             Next
           </button>
-          <button @click="draft(buttons[0].action)" variant="outline">
-            {{ buttons[0]["name"] }}
+          <button @click="draft(buttons[1].action)" variant="outline">
+            {{ buttons[1]["name"] }}
           </button>
           <button
             class="withdraw"
@@ -334,6 +334,7 @@ export default {
               departmentId: licenseInfo.education.departmentId,
               institutionId: licenseInfo.education.institutionId,
             },
+            residenceWoredaId: licenseInfo.residenceWoredaId,
           },
         };
         store
@@ -439,6 +440,7 @@ export default {
               departmentId: licenseInfo.education.departmentId,
               institutionId: licenseInfo.education.institutionId,
             },
+            residenceWoredaId: licenseInfo.residenceWoredaId,
           },
         };
         store

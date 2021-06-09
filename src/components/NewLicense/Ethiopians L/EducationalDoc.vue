@@ -369,7 +369,6 @@ export default {
       licenseInfo: "",
       userId: localStorage.getItem("userId"),
 
-      photo: "",
       passport: "",
       healthExamCert: "",
       workExperience: "",
@@ -496,7 +495,6 @@ export default {
     this.buttons = this.getButtons;
     this.documentSpec = this.getDocumentSpec;
 
-    this.photo = this.getPhoto;
     this.passport = this.getPassport;
     this.healthExamCert = this.getHealthExamCert;
     this.englishLanguage = this.getEnglishLanguage;
@@ -724,6 +722,7 @@ export default {
               institutionId: this.license.education.departmentId,
               departmentId: this.license.education.institutionId,
             },
+            residenceWoredaId: this.license.residenceWoredaId,
           },
         };
         this.$store
@@ -731,7 +730,6 @@ export default {
           .then((res) => {
             let licenseId = res.data.data.id;
             let formData = new FormData();
-            formData.append(this.documentSpec[0].documentType.code, this.photo);
             formData.append(
               this.documentSpec[1].documentType.code,
               this.passport

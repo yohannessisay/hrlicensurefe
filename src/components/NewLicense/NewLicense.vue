@@ -17,32 +17,35 @@
           <div v-if="this.applicantType == 1">
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 2">
-                <Photo :activeState="2" @changeActiveState="activeState++" />
-              </div>
-            </transition>
-            <transition name="fade" mode="out-in">
-              <div v-if="this.activeState == 3">
-                <Passport :activeState="3" @changeActiveState="activeState++" />
+                <Passport :activeState="2" @changeActiveState="activeState++" />
               </div>
             </transition>
 
             <transition name="fade" mode="out-in">
-              <div v-if="this.activeState == 4">
+              <div v-if="this.activeState == 3">
                 <HealthExamCert
-                  :activeState="4"
+                  :activeState="3"
                   @changeActiveState="activeState++"
                 />
               </div>
             </transition>
 
             <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 4">
+                <COC :activeState="4" @changeActiveState="activeState++" />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 5">
-                <COC :activeState="5" @changeActiveState="activeState++" />
+                <EducationalDoc
+                  :activeState="5"
+                  @changeActiveState="activeState++"
+                />
               </div>
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 6">
-                <EducationalDoc
+                <WorkExperience
                   :activeState="6"
                   @changeActiveState="activeState++"
                 />
@@ -50,25 +53,17 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 7">
-                <WorkExperience
-                  :activeState="7"
-                  @changeActiveState="activeState++"
-                />
-              </div>
-            </transition>
-            <transition name="fade" mode="out-in">
-              <div v-if="this.activeState == 8">
                 <SupportLetterEthiopian
-                  :activeState="8"
+                  :activeState="7"
                   @changeActiveState="activeState++"
                 />
               </div>
             </transition>
 
             <transition name="fade" mode="out-in">
-              <div v-if="this.activeState == 9">
+              <div v-if="this.activeState == 8">
                 <LicenseSummary
-                  :activeState="9"
+                  :activeState="8"
                   @changeActiveState="activeState++"
                 />
               </div>
@@ -78,27 +73,30 @@
           <div v-if="this.applicantType == 2">
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 2">
-                <Photo :activeState="2" @changeActiveState="activeState++" />
-              </div>
-            </transition>
-            <transition name="fade" mode="out-in">
-              <div v-if="this.activeState == 3">
-                <Passport :activeState="3" @changeActiveState="activeState++" />
+                <Passport :activeState="2" @changeActiveState="activeState++" />
               </div>
             </transition>
 
             <transition name="fade" mode="out-in">
-              <div v-if="this.activeState == 4">
+              <div v-if="this.activeState == 3">
                 <HealthExamCert
-                  :activeState="4"
+                  :activeState="3"
                   @changeActiveState="activeState++"
                 />
               </div>
             </transition>
 
             <transition name="fade" mode="out-in">
-              <div v-if="this.activeState == 5">
+              <div v-if="this.activeState == 4">
                 <EnglishLanguageForeigner
+                  :activeState="4"
+                  @changeActiveState="activeState++"
+                />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 5">
+                <ProfessionalDocumentForeigner
                   :activeState="5"
                   @changeActiveState="activeState++"
                 />
@@ -106,7 +104,7 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 6">
-                <ProfessionalDocumentForeigner
+                <LetterfromOrg
                   :activeState="6"
                   @changeActiveState="activeState++"
                 />
@@ -114,7 +112,7 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 7">
-                <LetterfromOrg
+                <ProfessionalLicense
                   :activeState="7"
                   @changeActiveState="activeState++"
                 />
@@ -122,7 +120,7 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 8">
-                <ProfessionalLicense
+                <RenewedLicense
                   :activeState="8"
                   @changeActiveState="activeState++"
                 />
@@ -130,16 +128,8 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 9">
-                <RenewedLicense
-                  :activeState="9"
-                  @changeActiveState="activeState++"
-                />
-              </div>
-            </transition>
-            <transition name="fade" mode="out-in">
-              <div v-if="this.activeState == 10">
                 <LicenseSummary
-                  :activeState="10"
+                  :activeState="9"
                   @changeActiveState="activeState++"
                 />
               </div>
@@ -149,32 +139,35 @@
           <div v-if="this.applicantType == 3">
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 2">
-                <Photo :activeState="2" @changeActiveState="activeState++" />
-              </div>
-            </transition>
-            <transition name="fade" mode="out-in">
-              <div v-if="this.activeState == 3">
-                <Passport :activeState="3" @changeActiveState="activeState++" />
+                <Passport :activeState="2" @changeActiveState="activeState++" />
               </div>
             </transition>
 
             <transition name="fade" mode="out-in">
-              <div v-if="this.activeState == 4">
+              <div v-if="this.activeState == 3">
                 <HealthExamCert
-                  :activeState="4"
+                  :activeState="3"
                   @changeActiveState="activeState++"
                 />
               </div>
             </transition>
 
             <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 4">
+                <HERQA :activeState="4" @changeActiveState="activeState++" />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 5">
-                <HERQA :activeState="5" @changeActiveState="activeState++" />
+                <ProfessionalDocumentEthiopian
+                  :activeState="5"
+                  @changeActiveState="activeState++"
+                />
               </div>
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 6">
-                <ProfessionalDocumentEthiopian
+                <SupportLetterForeign
                   :activeState="6"
                   @changeActiveState="activeState++"
                 />
@@ -182,16 +175,8 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 7">
-                <SupportLetterForeign
-                  :activeState="7"
-                  @changeActiveState="activeState++"
-                />
-              </div>
-            </transition>
-            <transition name="fade" mode="out-in">
-              <div v-if="this.activeState == 8">
                 <LicenseSummary
-                  :activeState="8"
+                  :activeState="7"
                   @changeActiveState="activeState++"
                 />
               </div>
@@ -206,7 +191,6 @@
 <script>
 import Navigation from "@/views/Navigation";
 import Institution from "./Institution.vue";
-import Photo from "./Photo.vue";
 import Passport from "./Passport.vue";
 import HealthExamCert from "./HealthExamCert.vue";
 import LicenseSummary from "./LicenseSummary.vue";
@@ -251,7 +235,6 @@ export default {
   }),
   components: {
     Institution,
-    Photo,
     Passport,
     HealthExamCert,
     LicenseSummary,

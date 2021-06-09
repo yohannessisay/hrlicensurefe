@@ -4,7 +4,7 @@
       <div
         class="flex flex-col pt-large w-full bg-white blue-box-shadow-light rounded"
       >
-        <div class="mt-large">
+        <div class="mt-small">
           <TitleWithIllustration
             illustration="Institution"
             message="Institution"
@@ -12,7 +12,7 @@
         </div>
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-10">
           <div class="flex">
-            <div class="flex flex-col mb-medium w-2/5 mr-12">
+            <div class="flex flex-col mb-medium w-2/5 ml-medium mr-12">
               <label class="text-primary-700">Applicant Type</label>
               <select class="max-w-3xl" v-model="licenseInfo.applicantTypeId">
                 <option
@@ -42,7 +42,7 @@
           </div>
 
           <div class="flex">
-            <div class="flex flex-col mb-medium w-2/5 mr-12">
+            <div class="flex flex-col mb-medium w-2/5 mr-12 ml-medium">
               <label class="text-primary-700">Institution</label>
               <select v-model="licenseInfo.education.institutionId">
                 <option
@@ -53,6 +53,60 @@
                   {{ institution.name }}
                 </option>
               </select>
+            </div>
+            <div class="flex flex-col mb-medium w-2/5 mr-12">
+              <label class="text-primary-700">Region</label>
+              <select
+                class="max-w-3xl"
+                v-model="state.cityObj"
+                @change="fetchZones()"
+              >
+                <option
+                  v-for="types in state.regions"
+                  v-bind:key="types.name"
+                  v-bind:value="types"
+                >
+                  {{ types.name }}
+                </option>
+              </select>
+              <span style="color: red">{{ addressErrors.city }}</span>
+            </div>
+          </div>
+
+          <div class="flex">
+            <div class="flex flex-col mb-medium w-2/5 mr-12 ml-medium">
+              <label class="text-primary-700">Zone</label>
+              <select
+                class="max-w-3xl"
+                @change="fetchWoredas()"
+                v-model="state.zoneId"
+              >
+                <option
+                  v-for="types in state.zones"
+                  v-bind:key="types.name"
+                  v-bind:value="types.id"
+                >
+                  {{ types.name }}
+                </option>
+              </select>
+              <span style="color: red">{{ addressErrors.zone }}</span>
+            </div>
+            <div class="flex flex-col mb-medium w-2/5 mr-12">
+              <label class="text-primary-700">Woreda</label>
+              <select
+                class="max-w-3xl"
+                v-model="licenseInfo.residenceWoredaId"
+                @change="woredaChanged()"
+              >
+                <option
+                  v-for="types in state.woredas"
+                  v-bind:key="types.name"
+                  v-bind:value="types.id"
+                >
+                  {{ types.name }}
+                </option>
+              </select>
+              <span style="color: red">{{ addressErrors.woreda }}</span>
             </div>
           </div>
         </form>
@@ -161,6 +215,7 @@ export default {
     this.fetchApplicantType();
     this.fetchInstitutions();
     this.fetchDepartments();
+    this.fetchRegions();
     this.showLoading = true;
     setTimeout(() => {
       this.buttons = this.getButtons;
@@ -188,7 +243,33 @@ export default {
         departmentId: "",
         institutionId: "",
       },
+      residenceWoredaId: "",
     },
+
+    state: {
+      regionId: "",
+      regions: [],
+      zones: [],
+      woredas: [],
+      cityObj: {},
+      zoneId: "",
+    },
+    addressErrors: {
+      woreda: "",
+      kebele: "",
+      city: "",
+      residence: "",
+      zone: "",
+    },
+    address: {
+      woreda: "",
+      kebele: "",
+      city: "",
+      residence: "",
+      zone: "",
+      poBox: "",
+    },
+
     applicantTypes: [],
     institutions: [],
     departments: [],
@@ -212,6 +293,7 @@ export default {
               departmentId: this.licenseInfo.education.departmentId,
               institutionId: this.licenseInfo.education.institutionId,
             },
+            residenceWoredaId: this.licenseInfo.residenceWoredaId,
           },
         },
         id: this.draftId,
@@ -255,6 +337,7 @@ export default {
               departmentId: this.licenseInfo.education.departmentId,
               institutionId: this.licenseInfo.education.institutionId,
             },
+            residenceWoredaId: this.licenseInfo.residenceWoredaId,
           },
         },
         id: this.draftId,
@@ -317,6 +400,7 @@ export default {
           departmentId: this.licenseInfo.education.departmentId,
           institutionId: this.licenseInfo.education.institutionId,
         },
+        residenceWoredaId: this.licenseInfo.residenceWoredaId,
       };
       this.$emit("applicantTypeValue", this.licenseInfo.applicantTypeId);
       this.$store.dispatch("newlicense/setLicense", license);
@@ -339,6 +423,66 @@ export default {
         this.departments = results;
       });
     },
+    fetchRegions() {
+      this.$store.dispatch("newlicense/getRegions").then((res) => {
+        const regionsResult = res.data;
+        this.state.regions = regionsResult.data;
+      });
+    },
+
+    fetchZones() {
+      this.address.city = this.state.cityObj.name;
+      this.state.regionId = this.state.cityObj.id;
+      this.$store
+        .dispatch("newlicense/getZones", this.state.regionId)
+        .then((res) => {
+          const zonesResult = res.data;
+          this.state.zones = zonesResult.data;
+        });
+    },
+
+    fetchWoredas() {
+      this.$store
+        .dispatch("newlicense/getWoredas", this.state.zoneId)
+        .then((res) => {
+          const woredasResult = res.data;
+          this.state.woredas = woredasResult.data;
+          for (const item of Object.entries(this.state.zones)) {
+            if (item[1].id == this.state.zoneId) {
+              this.address.zone = item[1].name;
+            }
+          }
+        });
+    },
+
+    woredaChanged() {
+      for (const item of Object.entries(this.state.woredas)) {
+        if (item[1].id == this.address.woredaId) {
+          this.address.woreda = item[1].name;
+        }
+      }
+    },
+    validateForm(formData) {
+      const errors = {};
+
+      if (!this.state.cityObj.name) errors.city = "Region Required";
+      if (!formData.kebele) errors.kebele = "Kebele Required";
+      if (!this.state.zoneId) errors.zone = "Zone Required";
+      if (!formData.woredaId) errors.woreda = "Woreda Required";
+      if (!formData.residence) errors.residence = "Residence Required";
+
+      return errors;
+    },
+
+    isEmpty(obj) {
+      for (var prop in obj) {
+        if (obj.hasOwnProperty(prop)) {
+          return false;
+        }
+      }
+
+      return true;
+    },
     fetchDraft() {
       let draftData = this.getDraft;
       this.licenseInfo.applicantId = draftData.applicantId;
@@ -347,6 +491,7 @@ export default {
         draftData.education.departmentId;
       this.licenseInfo.education.institutionId =
         draftData.education.institutionId;
+      this.licenseInfo.residenceWoredaId = draftData.residenceWoredaId;
     },
   },
 };

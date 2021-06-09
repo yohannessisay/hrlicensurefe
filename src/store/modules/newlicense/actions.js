@@ -1,7 +1,6 @@
 import ApiService from "../../../services/api.service";
 import {
   SET_LICENSE,
-  SET_PHOTO,
   SET_PASSPORT,
   SET_HEALTH_EXAM_CERT,
   SET_SERVICE_FEE,
@@ -30,9 +29,6 @@ const userId = localStorage.getItem("userId");
 export default {
   setLicense({ commit }, license) {
     commit(SET_LICENSE, license);
-  },
-  setPhoto({ commit }, photo) {
-    commit(SET_PHOTO, photo);
   },
   setPassport({ commit }, passport) {
     commit(SET_PASSPORT, passport);
@@ -216,6 +212,35 @@ export default {
       return resp;
     } catch (error) {
       return error;
+    }
+  },
+  async getRegions() {
+    try {
+      const resp = await ApiService.get(url + "lookups/regions");
+      return resp;
+    } catch (error) {
+      const resp = error;
+      return resp;
+    }
+  },
+  async getWoredas(context, zoneId) {
+    try {
+      const baseUrl = url + "lookups/woredas/" + zoneId;
+      const resp = await ApiService.get(baseUrl);
+      return resp;
+    } catch (error) {
+      const resp = error;
+      return resp;
+    }
+  },
+  async getZones(context, regionId) {
+    try {
+      const baseUrl = url + "lookups/zones/" + regionId;
+      const resp = await ApiService.get(baseUrl);
+      return resp;
+    } catch (error) {
+      const resp = error;
+      return resp;
     }
   },
   async storeDeclinedFields({ commit }, fields) {

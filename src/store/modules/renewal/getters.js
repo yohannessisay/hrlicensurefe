@@ -1,6 +1,5 @@
 export default {
   getLicense: (state) => state.license,
-  getRenewalPhoto: (state) => state.photo,
   getRenewalHealthExamCert: (state) => state.healthExamCert,
   getRenewalServiceFee: (state) => state.serviceFee,
   getRenewalCpd: (state) => state.cpd,

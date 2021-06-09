@@ -59,10 +59,7 @@
             </div>
           </div>
         </form>
-        <div
-          v-if="buttons && !draftStatus"
-          class="flex justify-center mb-8"
-        >
+        <div v-if="buttons && !draftStatus" class="flex justify-center mb-8">
           <button @click="submit">
             Next
           </button>
@@ -70,10 +67,7 @@
             {{ buttons[1]["name"] }}
           </button>
         </div>
-        <div
-          v-if="draftStatus == 'DRA'"
-          class="flex justify-center mb-8"
-        >
+        <div v-if="draftStatus == 'DRA'" class="flex justify-center mb-8">
           <button @click="submit">
             Next
           </button>
@@ -331,11 +325,13 @@ export default {
           action: action,
           data: {
             applicantId: userId,
-            applicantTypeId: licenseInfo.applicantTypeId,
-            education: {
-              departmentId: licenseInfo.education.departmentId,
-              institutionId: licenseInfo.education.institutionId,
-            },
+            residenceWoredaId: licenseInfo.residenceWoredaId,
+            applicantTitle: licenseInfo.applicantTitle,
+            whomGoodStandingFor: licenseInfo.whomGoodStandingFor,
+            licenseIssuedDate: licenseInfo.licenseIssuedDate + " 17:23:50.228+01",
+            whoIssued: licenseInfo.whoIssued,
+            licenseRegistrationNumber: licenseInfo.licenseRegistrationNumber,
+            applicantPositionId: licenseInfo.applicantPositionId,
           },
         };
         store
@@ -436,11 +432,13 @@ export default {
           action: action,
           data: {
             applicantId: userId,
-            applicantTypeId: licenseInfo.applicantTypeId,
-            education: {
-              departmentId: licenseInfo.education.departmentId,
-              institutionId: licenseInfo.education.institutionId,
-            },
+            residenceWoredaId: licenseInfo.residenceWoredaId,
+            applicantTitle: licenseInfo.applicantTitle,
+            whomGoodStandingFor: licenseInfo.whomGoodStandingFor,
+            licenseIssuedDate: licenseInfo.licenseIssuedDate + " 17:23:50.228+01",
+            whoIssued: licenseInfo.whoIssued,
+            licenseRegistrationNumber: licenseInfo.licenseRegistrationNumber,
+            applicantPositionId: licenseInfo.applicantPositionId,
           },
         };
         store

@@ -195,7 +195,6 @@ export default {
     let acceptedFieldsCheck = ref(false);
 
     let workExperience = ref("");
-    let renewalPhoto = ref("");
     let healthExamCert = ref("");
     let cpd = ref("");
     let previousLicense = ref("");
@@ -236,7 +235,6 @@ export default {
     documentSpecs = store.getters["renewal/getDocumentSpec"];
     licenseInfo = store.getters["renewal/getLicense"];
 
-    renewalPhoto = store.getters["renewal/getRenewalPhoto"];
     healthExamCert = store.getters["renewal/getRenewalHealthExamCert"];
     workExperience = store.getters["renewal/getRenewalWorkExperience"];
     cpd = store.getters["renewal/getRenewalCpd"];
@@ -337,6 +335,7 @@ export default {
               departmentId: licenseInfo.education.departmentId,
               institutionId: licenseInfo.education.institutionId,
             },
+            residenceWoredaId: licenseInfo.residenceWoredaId,
           },
         };
         store.dispatch("renewal/addRenewalLicense", license).then((res) => {
@@ -344,7 +343,6 @@ export default {
             let licenseId = res.data.data.id;
             let formData = new FormData();
 
-            formData.append(documentSpecs[0].documentType.code, renewalPhoto);
             formData.append(
               documentSpecs[1].documentType.code,
               letterFile.value
@@ -439,6 +437,7 @@ export default {
               departmentId: licenseInfo.education.departmentId,
               institutionId: licenseInfo.education.institutionId,
             },
+            residenceWoredaId: licenseInfo.residenceWoredaId,
           },
         };
         store.dispatch("renewal/addRenewalLicense", license).then((res) => {
