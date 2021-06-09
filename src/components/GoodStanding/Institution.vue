@@ -330,7 +330,8 @@ export default {
             residenceWoredaId: this.licenseInfo.residenceWoredaId,
             applicantTitle: this.licenseInfo.applicantTitle,
             whomGoodStandingFor: this.licenseInfo.whomGoodStandingFor,
-            licenseIssuedDate: this.licenseInfo.licenseIssuedDate,
+            licenseIssuedDate:
+              this.licenseInfo.licenseIssuedDate + " 17:23:50.228+01",
             whoIssued: this.licenseInfo.whoIssued,
             licenseRegistrationNumber: this.licenseInfo
               .licenseRegistrationNumber,
@@ -376,7 +377,8 @@ export default {
             residenceWoredaId: this.licenseInfo.residenceWoredaId,
             applicantTitle: this.licenseInfo.applicantTitle,
             whomGoodStandingFor: this.licenseInfo.whomGoodStandingFor,
-            licenseIssuedDate: this.licenseInfo.licenseIssuedDate,
+            licenseIssuedDate:
+              this.licenseInfo.licenseIssuedDate + " 17:23:50.228+01",
             whoIssued: this.licenseInfo.whoIssued,
             licenseRegistrationNumber: this.licenseInfo
               .licenseRegistrationNumber,
@@ -440,7 +442,8 @@ export default {
         residenceWoredaId: this.licenseInfo.residenceWoredaId,
         applicantTitle: this.licenseInfo.applicantTitle,
         whomGoodStandingFor: this.licenseInfo.whomGoodStandingFor,
-        licenseIssuedDate: this.licenseInfo.licenseIssuedDate,
+        licenseIssuedDate:
+          this.licenseInfo.licenseIssuedDate + " 17:23:50.228+01",
         whoIssued: this.licenseInfo.whoIssued,
         licenseRegistrationNumber: this.licenseInfo.licenseRegistrationNumber,
         applicantPositionId: this.licenseInfo.applicantPositionId,
@@ -451,11 +454,9 @@ export default {
         return;
       }
       if (empty == true) {
-        // this.$emit("changeActiveState");
-
-        console.log(license);
-        // this.$emit("applicantTypeValue", this.licenseInfo.applicantTypeId);
-        // this.$store.dispatch("goodstanding/setLicense", license);
+        this.$emit("changeActiveState");
+        this.$emit("applicantTypeValue", this.licenseInfo.applicantTypeId);
+        this.$store.dispatch("goodstanding/setLicense", license);
       }
     },
     fetchApplicantType() {
@@ -483,11 +484,10 @@ export default {
       });
     },
     fetchApplicationPositions() {
-      // this.$store.dispatch("goodstanding/getApplicantPosition").then((res) => {
-      //   const applicationPositions = res.data;
-      //   this.applicationPositions = applicationPositions;
-      //   console.log(this.applicationPositions);
-      // });
+      this.$store.dispatch("goodstanding/getApplicantPosition").then((res) => {
+        const applicationPositions = res.data.data;
+        this.applicationPositions = applicationPositions;
+      });
     },
 
     fetchZones() {

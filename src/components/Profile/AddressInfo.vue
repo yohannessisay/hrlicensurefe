@@ -23,7 +23,7 @@
           </div>
         </div>
         <div class="flex">
-          <div class="flex flex-col mb-medium w-1/2 mr-12">
+          <div class="flex flex-col mb-medium w-1/2">
             <label class="text-primary-700">Residence</label>
             <input class="max-w-3xl" type="text" v-model="address.residence" />
             <span style="color: red">{{ addressErrors.residence }}</span>

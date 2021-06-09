@@ -2,6 +2,16 @@ import { createRouter, createWebHistory } from "vue-router";
 import Landing from "../components/Landing/Landing.vue";
 const routes = [
   {
+    // path: "*",
+    path: "/:catchAll(.*)",
+    name: "NotFound",
+    component: () => import("../views/404Page.vue"),
+
+    meta: {
+      requiresAuth: false,
+    },
+  },
+  {
     path: "/",
     name: "Home",
     component: Landing,

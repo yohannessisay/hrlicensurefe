@@ -116,7 +116,7 @@
       <FlashMessage message="Your profile is successfully created!!" />
     </div>
     <div v-if="message.showErrorFlash">
-      <FlashMessage message="Your profile is creation failed!!" />
+      <ErrorFlashMessage message="Your profile creation failed!!" />
     </div>
   </div>
 </template>
@@ -184,12 +184,12 @@ export default {
     let a = true;
     let response = {};
     let showFlash = ref(false);
-    let getPersonalInfo = "profile/getPersonalInfo";
 
     const addProfile = () => {
       message.value.showLoading = true;
       message.value.showFlash = false;
       message.value.showErrorFlash = false;
+
       store
         .dispatch("profile/addProfile", {
           name: personalInfo.name,
@@ -208,6 +208,8 @@ export default {
           houseNumber: address.houseNumber,
           residence: address.residence,
           poBox: address.poBox,
+          photo: "",
+          // photo: personalInfo.photo,
           userId: +localStorage.getItem("userId"),
         })
 
@@ -265,7 +267,6 @@ export default {
       response,
       message,
       submit,
-      getPersonalInfo,
       user,
       fetchUser,
       prevStep,

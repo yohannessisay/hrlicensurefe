@@ -128,8 +128,8 @@
           <button @click="submit">
             Next
           </button>
-          <button @click="draft(this.buttons[0].action)" variant="outline">
-            {{ this.buttons[0]["name"] }}
+          <button @click="draft(this.buttons[1].action)" variant="outline">
+            {{ this.buttons[1]["name"] }}
           </button>
           <button
             class="withdraw"
@@ -212,6 +212,7 @@ export default {
   },
 
   async created() {
+    this.draftStatus = this.$route.params.status;
     this.fetchApplicantType();
     this.fetchInstitutions();
     this.fetchDepartments();
@@ -485,13 +486,16 @@ export default {
     },
     fetchDraft() {
       let draftData = this.getDraft;
+      console.log(draftData);
       this.licenseInfo.applicantId = draftData.applicantId;
       this.licenseInfo.applicantTypeId = draftData.applicantTypeId;
       this.licenseInfo.education.departmentId =
         draftData.education.departmentId;
       this.licenseInfo.education.institutionId =
         draftData.education.institutionId;
-      this.licenseInfo.residenceWoredaId = draftData.residenceWoredaId;
+      this.licenseInfo.residenceWoredaId = draftData.woreda.id;
+      this.state.cityObj = draftData.region;
+      this.state.zoneId = draftData.woreda.zone.id;
     },
   },
 };

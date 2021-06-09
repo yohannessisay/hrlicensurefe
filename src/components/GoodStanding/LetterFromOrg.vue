@@ -334,7 +334,8 @@ export default {
             residenceWoredaId: licenseInfo.residenceWoredaId,
             applicantTitle: licenseInfo.applicantTitle,
             whomGoodStandingFor: licenseInfo.whomGoodStandingFor,
-            licenseIssuedDate: licenseInfo.licenseIssuedDate,
+            licenseIssuedDate:
+              licenseInfo.licenseIssuedDate + " 17:23:50.228+01",
             whoIssued: licenseInfo.whoIssued,
             licenseRegistrationNumber: licenseInfo.licenseRegistrationNumber,
             applicantPositionId: licenseInfo.applicantPositionId,
@@ -437,7 +438,8 @@ export default {
             residenceWoredaId: licenseInfo.residenceWoredaId,
             applicantTitle: licenseInfo.applicantTitle,
             whomGoodStandingFor: licenseInfo.whomGoodStandingFor,
-            licenseIssuedDate: licenseInfo.licenseIssuedDate,
+            licenseIssuedDate:
+              licenseInfo.licenseIssuedDate + " 17:23:50.228+01",
             whoIssued: licenseInfo.whoIssued,
             licenseRegistrationNumber: licenseInfo.licenseRegistrationNumber,
             applicantPositionId: licenseInfo.applicantPositionId,

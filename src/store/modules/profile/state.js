@@ -13,6 +13,7 @@ export default {
       nationality: "",
       userTypeId: "",
       maritalStatusId: "",
+      photo: "",
     },
     address: {
       kebele: "",
@@ -20,6 +21,5 @@ export default {
       residence: "",
       poBox: "",
     },
-    photo: "",
   },
 };

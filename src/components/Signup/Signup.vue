@@ -35,7 +35,18 @@
         />
         <span style="color: red">{{ credentialsErrors.email }}</span>
       </div>
-
+      <div class="flex flex-col mb-medium w-full">
+        <label for="password">Phone Number</label>
+        <input
+          v-model="credentials.phoneNumber"
+          id="phone"
+          name="phone"
+          type="text"
+          autocomplete="current-number"
+          required
+        />
+        <span style="color: red">{{ credentialsErrors.phoneNumber }}</span>
+      </div>
       <div class="flex flex-col mb-medium w-full">
         <label>Password</label>
         <input
@@ -105,12 +116,14 @@ export default {
 
     const credentials = ref({
       emailAddress: "",
+      phoneNumber: "",
       password: "",
       repassword: "",
     });
 
     const credentialsErrors = ref({
       emailAddress: undefined,
+      phoneNumber: undefined,
       password: undefined,
       repassword: undefined,
     });
@@ -118,31 +131,28 @@ export default {
     const submit = () => {
       let signup = {
         emailAddress: credentials.value.emailAddress,
+        phoneNumber: credentials.value.phoneNumber,
         password: credentials.value.password,
       };
-      credentialsErrors.value = validateForm(credentials.value);
-      if (!credentialsErrors.value) {
+      if (!validateForm(credentials.value)) {
         message.value.showLoading = true;
         message.value.showFlash = false;
         message.value.showErrorFlash = false;
-        // store.dispatch("user/signUp", signup).then((res) => {
-        //   if (res.data.status == "Success") {
-        //     message.value.showLoading = false;
-        //     message.value.showFlash = true;
-        //     message.value.showErrorFlash = false;
-
-        //     setTimeout(() => {
-        //       location.reload();
-        //     }, 1500);
-        //   } else {
-        //     message.value.showLoading = false;
-        //     message.value.showFlash = false;
-        //     message.value.showErrorFlash = true;
-        //     setTimeout(() => {}, 1500);
-        //   }
-        // });
-      }
-      if (empty == true) {
+        store.dispatch("user/signUp", signup).then((res) => {
+          if (res.data.status == "Success") {
+            message.value.showLoading = false;
+            message.value.showFlash = true;
+            message.value.showErrorFlash = false;
+            setTimeout(() => {
+              location.reload();
+            }, 1500);
+          } else {
+            message.value.showLoading = false;
+            message.value.showFlash = false;
+            message.value.showErrorFlash = true;
+            setTimeout(() => {}, 1500);
+          }
+        });
       }
     };
 
@@ -154,6 +164,7 @@ export default {
     const validateForm = (formData) => {
       const errors = {};
       if (!formData.emailAddress) errors.emailAddress = "Email Required";
+      if (!formData.phoneNumber) errors.phoneNumber = "Phone Number Required";
       if (!formData.password) errors.phoneNumber = "Password Required";
       if (!formData.repassword) errors.repassword = "Re-enter Password";
       if (formData.emailAddress && !isEmail(formData.emailAddress)) {
@@ -162,7 +173,8 @@ export default {
       if (formData.password != formData.repassword) {
         errors.repassword = "Passwords don't match";
       }
-      return errors;
+      if (Object.keys(errors).length === 0) return false;
+      return true;
     };
 
     return {

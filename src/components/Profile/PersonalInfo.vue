@@ -10,6 +10,38 @@
         />
       </div>
       <form class="mx-auto max-w-3xl w-full mt-10" @submit.prevent="nextStep">
+        <div class="flex mb-4 justify-center">
+          <span v-if="showUpload">
+            <label class="text-primary-700 ml-4"
+              >Upload Profile Picture:
+              <div class="dropbox">
+                <input
+                  type="file"
+                  id="photoFile"
+                  class="photoFile"
+                  ref="photoFileP"
+                  v-on:change="handleFileUpload()"
+                  style="margin-bottom: 15px !important;"
+                />
+                <p>
+                  Drag your Profile Picture here to begin<br />
+                  or click to browse
+                </p>
+              </div>
+            </label>
+          </span>
+
+          <picture v-if="!showUpload && isImage">
+            <p class="ml-4">
+              <a href="javascript:void(0)" @click="reset()">Upload again</a>
+            </p>
+            <img v-bind:src="filePreview" v-show="showPreview" />
+          </picture>
+
+          <span v-if="!showUpload && !isImage">
+            <img :src="filePreview" alt="" class="preview" />
+          </span>
+        </div>
         <div class="flex">
           <div class="flex flex-col mb-medium w-1/2 mr-6">
             <label class="text-primary-700">First Name</label>
@@ -222,7 +254,7 @@
             <span style="color: red">{{ personalInfoErrors.userTypeId }}</span>
           </div>
         </div>
-    
+
         <div class="flex mb-medium w-full mt-medium">
           <button
             class="block mx-auto w-1/4  bg-lightBlue-500 hover:bg-lightBlue-600 hover:shadow-lg"
@@ -239,11 +271,19 @@
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
 import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
+
 export default {
   components: { TitleWithIllustration },
   props: ["activeState"],
   setup(props, { emit }) {
     const store = useStore();
+    let photoFile = ref("");
+    let photoFileP = ref("");
+    let showPreview = ref(false);
+    let filePreview = ref("");
+    let showUpload = ref(true);
+    let isImage = ref(true);
+
     let personalInfo = ref({
       name: "",
       fatherName: "",
@@ -257,6 +297,7 @@ export default {
       nationality: "",
       userTypeId: "",
       maritalStatusId: "",
+      photo: "",
     });
     let personalInfoErrors = ref({
       name: "",
@@ -277,6 +318,41 @@ export default {
       healthOffices: {},
       maritalStatuses: {},
     });
+    const reset = () => {
+      showUpload.value = true;
+      showPreview.value = false;
+      photoFile.value = "";
+      filePreview.value = "";
+      isImage.value = true;
+    };
+    const handleFileUpload = () => {
+      showUpload.value = false;
+      photoFile.value = photoFileP.value.files[0];
+      let reader = new FileReader();
+
+      reader.addEventListener(
+        "load",
+        function() {
+          showPreview.value = true;
+          filePreview.value = reader.result;
+        },
+        false
+      );
+      if (photoFile.value) {
+        if (/\.(jpe?g|png|gif)$/i.test(photoFile.value.name)) {
+          isImage.value = true;
+          reader.readAsDataURL(photoFile.value);
+        } else if (/\.(pdf)$/i.test(photoFile.value.name)) {
+          isImage.value = false;
+          reader.readAsText(photoFile.value);
+        }
+      }
+      let contentType = photoFile.value.type;
+      let blob = new Blob([photoFile], {
+        type: contentType,
+      });
+      personalInfo.value.photo = blob;
+    };
 
     const fetchUserTypes = () => {
       store.dispatch("profile/getUserTypes").then((res) => {
@@ -313,7 +389,7 @@ export default {
       }
       if (empty == true) {
         store.dispatch("profile/setProfileInfo", personalInfo);
-        console.log(store.getters["profile/getPersonalInfo"]);
+        // console.log(personalInfo.value);
         emit("changeActiveState");
       }
     };
@@ -363,7 +439,6 @@ export default {
     };
 
     onMounted(() => {
-      
       if (store.getters["profile/getPersonalInfo"]) {
         personalInfo.value = store.getters["profile/getPersonalInfo"];
       }
@@ -371,6 +446,14 @@ export default {
       fetchExpertLevel();
     });
     return {
+      photoFile,
+      photoFileP,
+      showPreview,
+      filePreview,
+      showUpload,
+      isImage,
+      handleFileUpload,
+      reset,
       personalInfo,
       personalInfoErrors,
       validateForm,
@@ -385,3 +468,39 @@ export default {
   },
 };
 </script>
+<style>
+@import "../../styles/document-upload.css";
+img {
+  width: 150px;
+  height: 150px;
+}
+.photoFile {
+  opacity: 0; /* invisible but it's there! */
+  width: 150px;
+  height: 150px;
+  position: absolute;
+  cursor: pointer;
+}
+
+.dropbox {
+  outline: 2px dashed grey; /* the dash box */
+  outline-offset: -10px;
+  background: lightcyan;
+  color: dimgray;
+  padding: 10px 10px;
+  height: 150px; /* minimum height */
+  width: 200px;
+  position: relative;
+  cursor: pointer;
+}
+
+.dropbox:hover {
+  background: lightblue; /* when mouse over to the drop zone, change color */
+}
+
+.dropbox p {
+  font-size: 1.2em;
+  text-align: center;
+  padding: 50px 0;
+}
+</style>

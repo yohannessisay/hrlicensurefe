@@ -109,40 +109,42 @@ export default {
     const submit = () => {
       let email = {
         emailAddress: credentials.value.emailAddress,
-        // password: credentials.value.password,
+        password: credentials.value.password,
       };
-      message.value.showLoading = true;
-      message.value.showFlash = false;
-      message.value.showErrorFlash = false;
-      store.dispatch("user/login", email).then((res) => {
-        if (res.data.status == "Success") {
-          const userId = res.data.data.id;
-          store.dispatch("profile/getProfileByUserId", userId).then((res) => {
-            const getProfiles = res.data ? res.data.data : null;
-            if (getProfiles) {
-              message.value.showLoading = false;
-              message.value.showFlash = true;
-              message.value.showErrorFlash = false;
-              setTimeout(() => {
-                router.push({ path: "/menu" });
-              }, 1500);
-            } else {
-              message.value.showLoading = false;
-              message.value.showFlash = true;
-              message.value.showErrorFlash = false;
-              setTimeout(() => {
-                router.push({ path: "/addProfile" });
-              }, 1500);
-            }
-          });
-        } else {
-          message.value.showLoading = false;
-          message.value.showFlash = false;
-          message.value.showErrorFlash = true;
+      if (!validateForm(credentials.value)) {
+        message.value.showLoading = true;
+        message.value.showFlash = false;
+        message.value.showErrorFlash = false;
+        store.dispatch("user/login", email).then((res) => {
+          if (res.data.status == "Success") {
+            const userId = res.data.data.id;
+            store.dispatch("profile/getProfileByUserId", userId).then((res) => {
+              const getProfiles = res.data ? res.data.data : null;
+              if (getProfiles) {
+                message.value.showLoading = false;
+                message.value.showFlash = true;
+                message.value.showErrorFlash = false;
+                setTimeout(() => {
+                  router.push({ path: "/menu" });
+                }, 1500);
+              } else {
+                message.value.showLoading = false;
+                message.value.showFlash = true;
+                message.value.showErrorFlash = false;
+                setTimeout(() => {
+                  router.push({ path: "/addProfile" });
+                }, 1500);
+              }
+            });
+          } else {
+            message.value.showLoading = false;
+            message.value.showFlash = false;
+            message.value.showErrorFlash = true;
 
-          setTimeout(() => {}, 1500);
-        }
-      });
+            setTimeout(() => {}, 1500);
+          }
+        });
+      }
     };
 
     const isEmail = (email) => {
@@ -153,11 +155,11 @@ export default {
     const validateForm = (formData) => {
       const errors = {};
       if (!formData.emailAddress) errors.emailAddress = "Email Required";
-      if (!formData.phoneNumber) errors.phoneNumber = "Phone Number Required";
-      if (formData.emailAddress && !this.isEmail(formData.emailAddress)) {
+      if (formData.emailAddress && !isEmail(formData.emailAddress)) {
         errors.emailAddress = "Invalid Email";
       }
-      return errors;
+      if (Object.keys(errors).length === 0) return false;
+      return true;
     };
     return {
       credentials,

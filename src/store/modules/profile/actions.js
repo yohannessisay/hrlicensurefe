@@ -7,7 +7,6 @@ import {
 } from "./mutation-types";
 
 const baseUrl = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api";
-
 export default {
   async setProfile({ commit }, profile) {
     try {
@@ -96,10 +95,8 @@ export default {
   async addProfile({ commit }, profile) {
     try {
       const resp = await ApiService.post(baseUrl + "/profiles/add", profile);
-      commit(ADD_PROFILE_SUCCESS);
       return resp;
     } catch (error) {
-      commit(ADD_PROFILE_ERROR);
       return error;
     }
   },
