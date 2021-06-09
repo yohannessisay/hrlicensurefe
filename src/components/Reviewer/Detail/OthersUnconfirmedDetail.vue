@@ -9,7 +9,7 @@
       >
         <div class="mt-large bg-white">
           <div
-            v-if="role.code === `SA` && getReviewId != loggedInAdminId"
+            v-if="role.code === `SA`"
             class="flex"
           >
             <div class="flex flex-col mb-medium w-2/3 ml-small mt-small"></div>
@@ -18,7 +18,7 @@
               <label class="text-primary-500">*please select maximum 3, minimum 2 admins to confirm</label>
               <select
                 class="form-multiselect max-w-3xl"
-                v-model="assignConfirmAdmin.reviewersId"
+                v-model="assignConfirmAdmin.evaluatorIds"
                 @change="gen()"
                 multiple
               >
@@ -126,7 +126,7 @@
           <div class="flex flex-row">
             <div
               :class="[
-                profileInfo.woreda.zone.region === null
+                license.woreda.zone.region === null
                   ? errorClass
                   : activeClass,
               ]"
@@ -134,30 +134,30 @@
               <label class="ml-8"> Region</label>
               <h5 class="ml-8">
                 {{
-                  profileInfo.woreda.zone.region
-                    ? profileInfo.woreda.zone.region.name
+                  license.woreda.zone.region
+                    ? license.woreda.zone.region.name
                     : "-"
                 }}
               </h5>
             </div>
             <div
               :class="[
-                profileInfo.woreda.zone === null ? errorClass : activeClass,
+                license.woreda.zone === null ? errorClass : activeClass,
               ]"
             >
               <label class="ml-8"> Zone</label>
               <h5 class="ml-8">
                 {{
-                  profileInfo.woreda.zone ? profileInfo.woreda.zone.name : "-"
+                  license.woreda.zone ? license.woreda.zone.name : "-"
                 }}
               </h5>
             </div>
             <div
-              :class="[profileInfo.woreda === null ? errorClass : activeClass]"
+              :class="[license.woreda === null ? errorClass : activeClass]"
             >
               <label class="ml-8"> Wereda</label>
               <h5 class="ml-8">
-                {{ profileInfo.woreda ? profileInfo.woreda.name : "-" }}
+                {{ license.woreda ? license.woreda.name : "-" }}
               </h5>
             </div>
             <div
@@ -301,6 +301,8 @@ export default {
 
     let userId = +localStorage.getItem("userId");
 
+    let regionId = JSON.parse(localStorage.getItem("allAdminData")).regionId;
+
     let role = ref({});
 
     let admins = ref({});
@@ -308,7 +310,7 @@ export default {
     let showAdminCountError = ref(false);
 
     let assignConfirmAdmin = ref({
-      reviewersId: [],
+      evaluatorIds: [],
       licenseId: "",
       createdByAdminId: "",
     });
@@ -363,15 +365,23 @@ export default {
       });
     };
 
+    const fetchAdminsByRegion = (regionId) => {
+      store.dispatch("reviewer/getAdminsByRegion", regionId).then(res => {
+        admins.value = res.data.data.filter(admins => {
+          return admins.id != loggedInAdminId
+        });
+      })
+    }
+
     const gen = () => {
-      console.log("selected val", assignConfirmAdmin.value.reviewersId);
+      console.log("selected val", assignConfirmAdmin.value.evaluatorIds);
     };
 
     const assignAdminToConfirm = () => {
-      console.log("admin values are ", assignConfirmAdmin.value.reviewersId);
+      console.log("admin values are ", assignConfirmAdmin.value.evaluatorIds);
       if (
-        assignConfirmAdmin.value.reviewersId.length > 3 ||
-        assignConfirmAdmin.value.reviewersId.length < 2
+        assignConfirmAdmin.value.evaluatorIds.length > 3 ||
+        assignConfirmAdmin.value.evaluatorIds.length < 2
       ) {
         showAdminCountError.value = true;
         return;
@@ -381,28 +391,28 @@ export default {
         if (applicationType.value == "Good Standing") {
           assignConfirmAdmin.value = {
             goodStandingId: route.params.applicationId,
-            reviewerId: assignConfirmAdmin.value.reviewersId,
+            evaluatorIds: assignConfirmAdmin.value.evaluatorIds,
             createdByAdminId: +localStorage.getItem("adminId"),
           };
         }
         if (applicationType.value == "Verification") {
           assignConfirmAdmin.value = {
             verificationId: route.params.applicationId,
-            reviewerId: assignConfirmAdmin.value.reviewersId,
+            evaluatorIds: assignConfirmAdmin.value.evaluatorIds,
             createdByAdminId: +localStorage.getItem("adminId"),
           };
         }
         if (applicationType.value == "Renewal") {
           assignConfirmAdmin.value = {
             renewalId: route.params.applicationId,
-            reviewerId: assignConfirmAdmin.value.reviewersId,
+            evaluatorIds: assignConfirmAdmin.value.evaluatorIds,
             createdByAdminId: +localStorage.getItem("adminId"),
           };
         }
         if (applicationType.value == "New License") {
           assignConfirmAdmin.value = {
             licenseId: route.params.applicationId,
-            reviewerId: assignConfirmAdmin.value.reviewersId,
+            evaluatorIds: assignConfirmAdmin.value.evaluatorIds,
             createdByAdminId: +localStorage.getItem("adminId"),
           };
         }
@@ -417,7 +427,10 @@ export default {
           .then((response) => {
             if (response.statusText == "Created") {
               showFlash.value = true;
-              router.push("/admin/review");
+              setTimeout(() => {
+                router.push("/admin/unconfirmed");
+              }, 3000)
+              
             }
           });
       }
@@ -431,7 +444,9 @@ export default {
           .then((response) => {
             if (response.statusText == "Created") {
               showFlash.value = true;
-              router.push("/admin/review");
+              setTimeout(() => {
+                router.push("/admin/unconfirmed");
+              }, 3000)
             }
           });
       }
@@ -440,9 +455,12 @@ export default {
           .dispatch("reviewer/confirmRenewalReview", assignConfirmAdmin.value)
 
           .then((response) => {
+            console.log("responses", response)
             if (response.statusText == "Created") {
               showFlash.value = true;
-              router.push("/admin/review");
+              setTimeout(() => {
+                router.push("/admin/unconfirmed");
+              }, 3000)
             }
           });
       }
@@ -456,7 +474,9 @@ export default {
           .then((response) => {
             if (response.statusText == "Created") {
               showFlash.value = true;
-              router.push("/admin/review");
+              setTimeout(() => {
+                router.push("/admin/unconfirmed");
+              }, 3000)
             }
           });
       }
@@ -542,13 +562,18 @@ export default {
 
     onMounted(() => {
       loggedInAdminId = +localStorage.getItem("adminId");
+      regionId = JSON.parse(localStorage.getItem("allAdminData")).regionId;
       created(
         route.params.applicationType,
         route.params.applicationId,
         route.params.applicantId
       );
-      fetchAdmins();
       fetchRole(loggedInAdminId);
+      if(regionId !== null) {
+        fetchAdminsByRegion(regionId)
+      } else {
+        fetchAdmins();
+      }
     });
 
     return {

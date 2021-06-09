@@ -50,6 +50,7 @@ export default {
     const fetchUnfinished = () => {
       showLoading.value = true;
       store.dispatch("reviewer/getConfirmReview", adminId).then((res) => {
+        console.log("confirm valllue ", store.getters["reviewer/getConfirmReviewSearched"])
         showLoading.value = false;
         unfinished.value = store.getters["reviewer/getConfirmReviewSearched"];
         if (store.getters["reviewer/getConfirmReview"].length !== 0) {

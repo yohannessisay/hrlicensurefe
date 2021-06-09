@@ -93,38 +93,30 @@
           <div class="flex flex-row">
             <div
               :class="[
-                profileInfo.woreda.zone.region === null
-                  ? errorClass
-                  : activeClass,
+                license.woreda.zone.region === null ? errorClass : activeClass,
               ]"
             >
               <label class="ml-8"> Region</label>
               <h5 class="ml-8">
                 {{
-                  profileInfo.woreda.zone.region
-                    ? profileInfo.woreda.zone.region.name
+                  license.woreda.zone.region
+                    ? license.woreda.zone.region.name
                     : "-"
                 }}
               </h5>
             </div>
             <div
-              :class="[
-                profileInfo.woreda.zone === null ? errorClass : activeClass,
-              ]"
+              :class="[license.woreda.zone === null ? errorClass : activeClass]"
             >
               <label class="ml-8"> Zone</label>
               <h5 class="ml-8">
-                {{
-                  profileInfo.woreda.zone ? profileInfo.woreda.zone.name : "-"
-                }}
+                {{ license.woreda.zone ? license.woreda.zone.name : "-" }}
               </h5>
             </div>
-            <div
-              :class="[profileInfo.woreda === null ? errorClass : activeClass]"
-            >
+            <div :class="[license.woreda === null ? errorClass : activeClass]">
               <label class="ml-8"> Wereda</label>
               <h5 class="ml-8">
-                {{ profileInfo.woreda ? profileInfo.woreda.name : "-" }}
+                {{ license.woreda ? license.woreda.name : "-" }}
               </h5>
             </div>
             <div
@@ -229,16 +221,63 @@
               </h5>
             </div>
           </div>
-          <div class="flex justify-start flex-wrap">
-          </div>
-          <div v-if="isEvaluator">
-            <div v-if="getReviewId == loggedInAdminId">
-              <div class="mt-12 flex justify-center">
+          <div v-if="!isCurrentAdminEvaluator">
+            <div class="flex justify-start">
+              <Title message="Evaluators Info" />
+            </div>
+            <span
+               v-for="(evaluator, index) in evaluators" 
+              :key ="index">
+              <div class="flex flex-row">
                 <div>
-                  <button @click="evaluate()">Continue Evaluating</button>
+                  <h5 class="ml-8">
+                    {{ index + 1 }}.
+                  </h5>
+                </div>
+                <div>
+                  <h5 class="ml-8" v-if="evaluator.evaluator.name">
+                    {{ evaluator.evaluator.name }}
+                  </h5>
+                </div>
+                <div>
+                  <h5 class="ml-8" v-if="evaluator.actionEvent">
+                    {{ evaluator.actionEvent }}
+                  </h5>
+                  <h5 class="ml-8" v-else>
+                    Not Evaluated Yet
+                  </h5>
+                </div>
+                <div>
+                  <h5 class="ml-8" v-if="evaluator.remark">
+                    {{ evaluator.remark }}
+                  </h5>
                 </div>
               </div>
+            </span>
+          </div>
+          <div class="flex justify-start flex-wrap"></div>
+          <div v-if="!isCurrentAdminEvaluator">
+            <div class="flex justify-start">
+              <Title message="Application Status" />
             </div>
+            <div>
+              <label class="ml-8">
+                {{ license.previousApplicationStatus.name }}
+              </label>
+              <label
+                class="ml-8"
+                v-if="license.previousApplicationStatus.remark !== null"
+              >
+                {{ license.previousApplicationStatus.remark }}
+              </label>
+            </div>
+            <!-- <div v-if="getReviewId == loggedInAdminId"> -->
+            <div class="mt-4 flex justify-center">
+              <div>
+                <button @click="evaluate()">Continue Evaluating</button>
+              </div>
+            </div>
+            <!-- </div> -->
           </div>
         </div>
       </div>
@@ -277,8 +316,17 @@ export default {
     const route = useRoute();
 
     let userId = +localStorage.getItem("userId");
+    let loggedInAdminId = +localStorage.getItem("adminId");
 
-    let isEvaluator = ref(false);
+    let isCurrentAdminEvaluator = ref(false);
+
+    let evaluators = ref({
+      actionEvent: "",
+      remark: "",
+      evaluator: {
+        name: "",
+      },
+    });
 
     let show = ref(false);
     let showLoading = ref(false);
@@ -317,8 +365,6 @@ export default {
 
     let getReviewId = ref(0);
 
-    let loggedInAdminId = +localStorage.getItem("adminId");
-
     const created = async (applicationTypeName, applicationId, applicantId) => {
       licenseId.value = applicationId;
       applicationType.value = applicationTypeName;
@@ -327,8 +373,11 @@ export default {
         store
           .dispatch("reviewer/getNewLicenseApplication", applicationId)
           .then((res) => {
+            console.log("newlicense response", res);
+            isAdminEvaluator(res.data.data.evaluators);
             showLoading.value = false;
             license.value = res.data.data;
+            evaluators.value = license.value.evaluators;
             getReviewId.value = license.value.reviewerId;
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
@@ -345,8 +394,10 @@ export default {
         store
           .dispatch("reviewer/getGoodStandingApplication", applicationId)
           .then((res) => {
+            isAdminEvaluator(res.data.data.evaluators);
             showLoading.value = false;
             license.value = res.data.data;
+            evaluators.value = license.value.evaluators;
             getReviewId.value = license.value.reviewerId;
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
@@ -363,8 +414,10 @@ export default {
         store
           .dispatch("reviewer/getVerificationApplication", applicationId)
           .then((res) => {
+            isAdminEvaluator(res.data.data.evaluators);
             showLoading.value = false;
             license.value = res.data.data;
+            evaluators.value = license.value.evaluators;
             getReviewId.value = license.value.reviewerId;
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
@@ -381,8 +434,12 @@ export default {
         store
           .dispatch("reviewer/getRenewalApplication", applicationId)
           .then((res) => {
+            console.log("renewal response value ", res);
+            isAdminEvaluator(res.data.data.evaluators);
             showLoading.value = false;
             license.value = res.data.data;
+            evaluators.value = license.value.evaluators;
+            console.log("evaluators is ", evaluators.value);
             getReviewId.value = license.value.reviewerId;
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
@@ -395,6 +452,14 @@ export default {
               license.value.education.institution.institutionType.name;
           });
       }
+    };
+
+    const isAdminEvaluator = (evaluators) => {
+      evaluators.map((evaluator) => {
+        if (evaluator.evaluator.id == loggedInAdminId) {
+          isCurrentAdminEvaluator.value = true;
+        }
+      });
     };
 
     const evaluate = () => {
@@ -433,12 +498,13 @@ export default {
       applicantTypeId,
       education,
       show,
-      isEvaluator,
+      isCurrentAdminEvaluator,
       created,
       evaluate,
       applicationType,
       licenseId,
       showLoading,
+      evaluators,
     };
   },
 

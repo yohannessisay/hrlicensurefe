@@ -117,7 +117,7 @@
                 </a>
               </router-link>
             </span>
-            <span v-if="isSuperAdmin">
+            <span v-if="true">
               <div class="relative inline-block text-left text-primary-300">
                 <a
                   class="text-primary-300"
@@ -146,6 +146,7 @@
                       My Unfinished
                     </a>
                   </router-link>
+                  <div v-if="isSuperAdmin">
                   <router-link to="/admin/unfinishedAll">
                     <a
                       class="block px-4 py-2 text-sm text-blue-100 hover:bg-gray-100 hover:text-gray-900"
@@ -154,6 +155,7 @@
                       Others Unfinished
                     </a>
                   </router-link>
+                  </div>
                   <router-link to="/admin/unconfirmed">
                     <a
                       class="block px-4 py-2 text-sm text-blue-100 hover:bg-gray-100 hover:text-gray-900"

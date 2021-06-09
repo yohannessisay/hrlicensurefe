@@ -132,7 +132,7 @@ export default {
     try {
       // const resp = await ApiService.get("https://randomuser.me/api/?results=10");
       // const url = baseUrl + "/newLicenses/user/" + id;
-      const url = baseUrl + "/applications/unfinished/" + id;
+      const url = baseUrl + "/applications/unconfirmedApps/" + id;
       const resp = await ApiService.get(url);
       commit(SET_UNCONFIRMED, resp.data.data)
       // return resp;
@@ -298,7 +298,7 @@ export default {
     try {
       // const resp = await ApiService.get("https://randomuser.me/api/?results=10");
       // const url = baseUrl + "/newLicenses/user/" + id;
-      const url = baseUrl + "/applications/unfinished/" + id;
+      const url = baseUrl + "/applications/evaluatorAssignedApps/" + id;
       const resp = await ApiService.get(url);
       commit(SET_CONFIRM_REVIEW, resp.data.data)
       // return resp;
@@ -1032,11 +1032,9 @@ export default {
 
   async confirmNewLicenseReview({commit}, confirm) {
     try {
-      console.log("new license confirm admin", confirm)
-      return;
       const resp = await ApiService.post(
-        baseUrl + "/licenseReviewers/transfer",
-        transfer
+        baseUrl + "/licenseEvaluators/assign",
+        confirm
       );
       return resp;
     } catch(error) {
@@ -1045,11 +1043,9 @@ export default {
   },
   async confirmVerificationReview({commit}, confirm) {
     try {
-      console.log("verification confirm admin", confirm)
-      return;
       const resp = await ApiService.post(
-        baseUrl + "/licenseReviewers/transfer",
-        transfer
+        baseUrl + "/verificationEvaluators/assign",
+        confirm
       );
       return resp;
     } catch(error) {
@@ -1059,11 +1055,12 @@ export default {
   async confirmRenewalReview({commit}, confirm) {
     try {
       console.log("renewal confirm admin", confirm)
-      return;
       const resp = await ApiService.post(
-        baseUrl + "/licenseReviewers/transfer",
-        transfer
+        baseUrl + "/renewalEvaluators/assign",
+        confirm
       );
+      console.log("working ", resp)
+      // return;
       return resp;
     } catch(error) {
       return error;
@@ -1072,11 +1069,9 @@ export default {
   
   async confirmGoodStandingReview({commit}, confirm) {
     try {
-      console.log("good standing confirm admin", confirm)
-      return;
       const resp = await ApiService.post(
-        baseUrl + "/licenseReviewers/transfer",
-        transfer
+        baseUrl + "/goodStandingEvaluators/assign",
+        confirm
       );
       return resp;
     } catch(error) {

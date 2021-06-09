@@ -137,7 +137,7 @@
               <!-- {{docs[0].filePath}} -->
             </div>
           </div>
-          <div class="mt-medium" v-if="!showButtons">
+          <!-- <div class="mt-medium" v-if="!showButtons">
             <button class="mr-medium" @click="accept(docs[index])">
               Accept
             </button>
@@ -149,7 +149,7 @@
             >
               save as Draft
             </button>
-          </div>
+          </div> -->
           <div class="relative pt-1 mt-medium">
             <div
               class="overflow-hidden h-2 mb-4 text-xs flex rounded bg-grey-100 w-screen max-w-2xl"
@@ -512,87 +512,90 @@ export default {
 
     const previous = (doc) => {
       index.value = index.value - 1;
+      // if(index.value == 0) {
+
+      // }
       amount.value = ((index.value - 1) / docs.value.length) * 100;
       width.value = "width:" + amount.value + "%";
       findDocumentType(documentTypes.value, docs.value[index.value]);
       showButtons.value = false;
     };
 
-    const accept = (doc) => {
-      if (accepted.value.length > 0) {
-        if (!accepted.value.includes(doc.documentTypeCode)) {
-          accepted.value.push(doc.documentTypeCode);
+    // const accept = (doc) => {
+    //   if (accepted.value.length > 0) {
+    //     if (!accepted.value.includes(doc.documentTypeCode)) {
+    //       accepted.value.push(doc.documentTypeCode);
 
-          if (index.value == docs.value.length - 1) {
-            showButtons.value = true;
-          }
+    //       if (index.value == docs.value.length - 1) {
+    //         showButtons.value = true;
+    //       }
 
-          if (rejected.value.includes(doc.documentTypeCode)) {
-            rejected.value.splice(
-              rejected.value.indexOf(doc.documentTypeCode),
-              1
-            );
-            rejectedObj.value.splice(
-              rejectedObj.value.indexOf(doc.documentTypeCode),
-              1
-            );
-          }
-        } else {
-          if (index.value == docs.value.length - 1) {
-            showButtons.value = true;
-          }
-        }
-      } else {
-        accepted.value.push(doc.documentTypeCode);
-        if (index.value == docs.value.length - 1) {
-          showButtons.value = true;
-        }
-        if (rejected.value.includes(doc.documentTypeCode)) {
-          rejected.value.splice(
-            rejected.value.indexOf(doc.documentTypeCode),
-            1
-          );
-          rejectedObj.value.splice(
-            rejectedObj.value.indexOf(doc.documentTypeCode),
-            1
-          );
-        }
-      }
-    };
+    //       if (rejected.value.includes(doc.documentTypeCode)) {
+    //         rejected.value.splice(
+    //           rejected.value.indexOf(doc.documentTypeCode),
+    //           1
+    //         );
+    //         rejectedObj.value.splice(
+    //           rejectedObj.value.indexOf(doc.documentTypeCode),
+    //           1
+    //         );
+    //       }
+    //     } else {
+    //       if (index.value == docs.value.length - 1) {
+    //         showButtons.value = true;
+    //       }
+    //     }
+    //   } else {
+    //     accepted.value.push(doc.documentTypeCode);
+    //     if (index.value == docs.value.length - 1) {
+    //       showButtons.value = true;
+    //     }
+    //     if (rejected.value.includes(doc.documentTypeCode)) {
+    //       rejected.value.splice(
+    //         rejected.value.indexOf(doc.documentTypeCode),
+    //         1
+    //       );
+    //       rejectedObj.value.splice(
+    //         rejectedObj.value.indexOf(doc.documentTypeCode),
+    //         1
+    //       );
+    //     }
+    //   }
+    // };
 
-    const reject = (doc) => {
-      if (rejected.value.length > 0) {
-        if (!rejected.value.includes(doc.documentTypeCode)) {
-          rejected.value.push(doc.documentTypeCode);
-          rejectedObj.value.push(doc);
-          if (index.value == docs.value.length - 1) {
-            showButtons.value = true;
-          }
-          if (accepted.value.includes(doc.documentTypeCode)) {
-            accepted.value.splice(
-              accepted.value.indexOf(doc.documentTypeCode),
-              1
-            );
-          }
-        } else {
-          if (index.value == docs.value.length - 1) {
-            showButtons.value = true;
-          }
-        }
-      } else {
-        rejected.value.push(doc.documentTypeCode);
-        rejectedObj.value.push(doc);
-        if (index.value == docs.value.length - 1) {
-          showButtons.value = true;
-        }
-        if (accepted.value.includes(doc.documentTypeCode)) {
-          accepted.value.splice(
-            accepted.value.indexOf(doc.documentTypeCode),
-            1
-          );
-        }
-      }
-    };
+    // const reject = (doc) => {
+    //   if (rejected.value.length > 0) {
+    //     if (!rejected.value.includes(doc.documentTypeCode)) {
+    //       rejected.value.push(doc.documentTypeCode);
+    //       rejectedObj.value.push(doc);
+    //       if (index.value == docs.value.length - 1) {
+    //         showButtons.value = true;
+    //       }
+    //       if (accepted.value.includes(doc.documentTypeCode)) {
+    //         accepted.value.splice(
+    //           accepted.value.indexOf(doc.documentTypeCode),
+    //           1
+    //         );
+    //       }
+    //     } else {
+    //       if (index.value == docs.value.length - 1) {
+    //         showButtons.value = true;
+    //       }
+    //     }
+    //   } else {
+    //     rejected.value.push(doc.documentTypeCode);
+    //     rejectedObj.value.push(doc);
+    //     if (index.value == docs.value.length - 1) {
+    //       showButtons.value = true;
+    //     }
+    //     if (accepted.value.includes(doc.documentTypeCode)) {
+    //       accepted.value.splice(
+    //         accepted.value.indexOf(doc.documentTypeCode),
+    //         1
+    //       );
+    //     }
+    //   }
+    // };
 
     const action = (actionValue) => {
       if (actionValue == "UpdatePaymentEvent") {
@@ -722,8 +725,6 @@ export default {
       modalDocumentTypeName,
       next,
       previous,
-      accept,
-      reject,
       action,
       toggleModal,
       submitRemark,

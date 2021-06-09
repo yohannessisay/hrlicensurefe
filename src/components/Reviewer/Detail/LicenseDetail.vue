@@ -558,7 +558,7 @@ export default {
     onMounted(() => {
       //userId.value = +localStorage.getItem("userId");
       loggedInAdminId = +localStorage.getItem("adminId");
-      let regionId = JSON.parse(localStorage.getItem("allAdminData")).regionId;
+      regionId = JSON.parse(localStorage.getItem("allAdminData")).regionId;
       userId = 2;
       
 
