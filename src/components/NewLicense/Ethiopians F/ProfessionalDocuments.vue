@@ -196,29 +196,10 @@
             </div> -->
         </div>
         <div v-if="this.draftStatus == 'DRA' || !this.draftStatus">
-          <div class="mt-12 flex justify-center">
-            <div>
-              <button
-                v-if="this.buttons.length < 3"
-                @click="submitRequest(this.buttons[0].action)"
-              >
-                {{ this.buttons[0].name }}
-              </button>
-              <button
-                v-if="this.buttons.length > 2"
-                @click="submitRequest(this.buttons[0].action)"
-              >
-                {{ this.buttons[0].name }}
-              </button>
-            </div>
-          </div>
-          <div class="flex justify-center mt-4">
-            <h6>
-              If you don't have all the required informations you can come back
-              and finish later.
-            </h6>
-          </div>
           <div class="flex justify-center mt-4 mb-8">
+            <button @click="submit">
+              Next
+            </button>
             <button
               v-if="this.buttons.length < 3"
               @click="draft(this.buttons[1].action)"
@@ -248,6 +229,9 @@
           v-if="this.draftStatus == 'SUB'"
           class="flex justify-center mt-8 pb-12"
         >
+          <button @click="submit">
+            Next
+          </button>
           <button
             class="withdraw"
             @click="withdraw(this.buttons[0].action)"
@@ -260,6 +244,9 @@
           v-if="this.draftStatus == 'USUP'"
           class="flex justify-center mt-8 pb-12"
         >
+          <button @click="submit">
+            Next
+          </button>
           <button @click="draft(this.buttons[0].action)" variant="outline">
             {{ this.buttons[0]["name"] }}
           </button>
@@ -271,6 +258,9 @@
           v-if="this.draftStatus == 'DEC'"
           class="flex justify-center mt-8 pb-12"
         >
+          <button @click="submit">
+            Next
+          </button>
           <button @click="draft(this.buttons[0].action)" variant="outline">
             {{ this.buttons[0]["name"] }}
           </button>
