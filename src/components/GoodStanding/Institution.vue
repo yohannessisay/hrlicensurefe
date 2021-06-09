@@ -248,6 +248,7 @@ export default {
   },
 
   async created() {
+    this.draftStatus = this.$route.params.status;
     this.fetchApplicantType();
     this.fetchInstitutions();
     this.fetchDepartments();

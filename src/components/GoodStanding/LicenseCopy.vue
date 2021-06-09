@@ -59,7 +59,7 @@
             </div>
           </div>
         </form>
-        <div v-if="buttons && !draftStatus" class="flex justify-center mb-8">
+       <div v-if="buttons && !draftStatus" class="flex justify-center mb-8">
           <button @click="submit">
             Next
           </button>
@@ -74,15 +74,15 @@
           <button @click="submit">
             Next
           </button>
-          <button @click="draft(buttons[1].action)" variant="outline">
-            {{ buttons[1]["name"] }}
+          <button @click="draft(buttons[2].action)" variant="outline">
+            {{ buttons[2]["name"] }}
           </button>
           <button
             class="withdraw"
-            @click="withdraw(buttons[2].action)"
+            @click="withdraw(buttons[1].action)"
             variant="outline"
           >
-            {{ buttons[2]["name"] }}
+            {{ buttons[1]["name"] }}
           </button>
         </div>
         <div
