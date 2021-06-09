@@ -124,7 +124,7 @@
           <div class="flex flex-row">
             <div
               :class="[
-                profileInfo.woreda.zone.region === null
+                license.woreda.zone.region === null
                   ? errorClass
                   : activeClass
               ]"
@@ -132,30 +132,30 @@
               <label class="ml-8"> Region</label>
               <h5 class="ml-8">
                 {{
-                  profileInfo.woreda.zone.region
-                    ? profileInfo.woreda.zone.region.name
+                  license.woreda.zone.region
+                    ? license.woreda.zone.region.name
                     : "-"
                 }}
               </h5>
             </div>
             <div
               :class="[
-                profileInfo.woreda.zone === null ? errorClass : activeClass
+                license.woreda.zone === null ? errorClass : activeClass
               ]"
             >
               <label class="ml-8"> Zone</label>
               <h5 class="ml-8">
                 {{
-                  profileInfo.woreda.zone ? profileInfo.woreda.zone.name : "-"
+                  license.woreda.zone ? license.woreda.zone.name : "-"
                 }}
               </h5>
             </div>
             <div
-              :class="[profileInfo.woreda === null ? errorClass : activeClass]"
+              :class="[license.woreda === null ? errorClass : activeClass]"
             >
               <label class="ml-8"> Wereda</label>
               <h5 class="ml-8">
-                {{ profileInfo.woreda ? profileInfo.woreda.name : "-" }}
+                {{ license.woreda ? license.woreda.name : "-" }}
               </h5>
             </div>
             <div
@@ -271,15 +271,15 @@
                 <button @click="evaluate()">Start Evaluating</button>
               </div>
             </div>
-            <div class="flex justify-center mt-8">
+            <!-- <div class="flex justify-center mt-8">
               <h6>
                 If you don't have all the required informations you can come back
                 and finish later.
               </h6>
-            </div>
-            <div class="flex justify-center mt-8 mb-8">
+            </div> -->
+            <!-- <div class="flex justify-center mt-8 mb-8">
               <button variant="outline">I will finish Later</button>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
@@ -322,6 +322,8 @@ export default {
     let role = ref({});
 
     let admins = ref({});
+
+    let regionId = JSON.parse(localStorage.getItem("allAdminData")).regionId;
 
     let transfer = ref({
       reviewerId: "",
@@ -379,6 +381,12 @@ export default {
       store.dispatch("reviewer/getAdmins").then(res => {
         
         admins.value = res.data.data
+      })
+    }
+
+    const fetchAdminsByRegion = (regionId) => {
+      store.dispatch("reviewer/getAdminsByRegion", regionId).then(res => {
+        admins.value = res.data.data;
       })
     }
 
@@ -550,6 +558,7 @@ export default {
     onMounted(() => {
       //userId.value = +localStorage.getItem("userId");
       loggedInAdminId = +localStorage.getItem("adminId");
+      let regionId = JSON.parse(localStorage.getItem("allAdminData")).regionId;
       userId = 2;
       
 
@@ -558,8 +567,12 @@ export default {
         route.params.applicationId,
         route.params.applicantId
       );
-      fetchAdmins();
       fetchRole(loggedInAdminId)
+      if(regionId !== null) {
+        fetchAdminsByRegion(regionId)
+      } else {
+        fetchAdmins();
+      }
     });
 
 

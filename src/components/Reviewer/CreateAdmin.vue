@@ -88,7 +88,11 @@
             <div class="flex">
               <div class="flex flex-col mb-medium w-1/2 mr-12">
                 <label class="text-primary-700">Expert Level</label>
-                <select class="max-w-3xl" v-model="expertLevels.id" @change="selectedExpertLevel">
+                <select
+                  class="max-w-3xl"
+                  v-model="expertLevels.id"
+                  @change="selectedExpertLevel"
+                >
                   <option
                     v-for="expertLevel in expertLevels"
                     v-bind:key="expertLevel.name"
@@ -102,7 +106,7 @@
                 }}</span>
               </div>
               <span v-show="expertLevels.id == 4">
-              <!-- <div class="flex flex-col mb-medium w-1/2 mr-12">
+                <!-- <div class="flex flex-col mb-medium w-1/2 mr-12">
                 <label class="text-primary-700">Region</label>
                 <input class="max-w-3xl" type="text" v-model="admin.region" />
                 <span style="color: red" v-if="state.showErrorMessages">{{
@@ -110,22 +114,32 @@
                 }}</span>
               </div>
               </span> -->
-              <label class="text-primary-700">Region</label>
-              <div>
-              <select class="max-w-3xl" v-model="regions.id" @change="selectedRegion">
-                  <option
-                    v-for="region in regions"
-                    v-bind:key="region.name"
-                    v-bind:value="region.id"
+                <label class="text-primary-700">Region</label>
+                <div>
+                  <select
+                    class="max-w-3xl"
+                    v-model="regions.id"
+                    @change="selectedRegion"
                   >
-                    {{ region.name }}
-                  </option>
-                </select>
-              </div>
+                    <option
+                      v-for="region in regions"
+                      v-bind:key="region.name"
+                      v-bind:value="region.id"
+                    >
+                      {{ region.name }}
+                    </option>
+                  </select>
+                </div>
                 <span style="color: red" v-if="state.showErrorMessages">{{
                   state.validationErrors.region
                 }}</span>
-                </span>
+              </span>
+            </div>
+            <div
+              v-if="showLoading"
+              class="flex justify-center justify-items-center mt-0"
+            >
+              <Spinner />
             </div>
             <div class="flex mb-medium w-full mt-medium">
               <button
@@ -135,6 +149,7 @@
                 Create User
               </button>
             </div>
+            
           </form>
         </div>
       </div>
@@ -157,8 +172,16 @@ import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import { useRouter } from "vue-router";
 
+import Spinner from "@/sharedComponents/Spinner";
+
 export default {
-  components: { ReviewerNavBar, Title, FlashMessage, ErrorFlashMessage },
+  components: {
+    ReviewerNavBar,
+    Title,
+    FlashMessage,
+    ErrorFlashMessage,
+    Spinner,
+  },
   setup() {
     const store = useStore();
     const router = useRouter();
@@ -172,22 +195,25 @@ export default {
       roleId: null,
       expertLevelId: null,
       regionId: null,
-      password: "password1"
+      password: "password1",
     };
 
-    let expertLevels = ref([{
-      id: null,
-      name: null,
-      code: null,
-    }]);
+    let showLoading = ref(false);
+    let expertLevels = ref([
+      {
+        id: null,
+        name: null,
+        code: null,
+      },
+    ]);
 
     let regions = ref([
       {
         id: null,
         name: null,
         code: null,
-      }
-    ])
+      },
+    ]);
 
     let state = ref({
       roles: [],
@@ -202,7 +228,7 @@ export default {
 
     const fetchRole = () => {
       store.dispatch("admin/getRole").then((res) => {
-        const rolesResponse = res.data.data.filter(data => {
+        const rolesResponse = res.data.data.filter((data) => {
           return data.code !== "APP";
         });
         state.value.roles = rolesResponse;
@@ -210,29 +236,29 @@ export default {
     };
 
     const fetchRegions = () => {
-      store.dispatch("profile/getRegions").then(res => {
+      store.dispatch("profile/getRegions").then((res) => {
         regions.value = res.data.data;
-      })
-    }
+      });
+    };
 
-    
     const fetchExpertLevels = () => {
-      store.dispatch("profile/getExpertLevels").then(res => {
+      store.dispatch("profile/getExpertLevels").then((res) => {
         expertLevels.value = res.data.data;
-      })
-    }
+      });
+    };
 
     const selectedExpertLevel = () => {
       admin.expertLevelId = expertLevels.value.id;
-    }
+    };
 
     const selectedRegion = () => {
+      console.log("regison id", regions.value.id);
       admin.regionId = regions.value.id;
-    }
+    };
 
     const registerAdmin = () => {
       const isValidated = validateForm(admin);
-
+      showLoading.value = true;
       if (isValidated) {
         state.value.validationErrors = isValidated;
         state.value.showErrorMessages = true;
@@ -246,16 +272,23 @@ export default {
           admin.grandfatherName;
 
         store.dispatch("admin/registerAdmin", admin).then((res) => {
-          if (res.data.status == "Success") {
+          showLoading.value = false;
+          console.log("res ss", res)
+          if(res.data === undefined) {
+            message.value.showErrorFlash = !message.value.showErrorFlash;
+            setTimeout(() => {
+              message.value.showErrorFlash = !message.value.showErrorFlash;
+            }, 3000);
+          }
+          else if (res.data.status == "Success") {
             message.value.showFlash = !message.value.showFlash;
 
             setTimeout(() => {
               router.push({ path: "/admin/review" });
             }, 3000);
-          } else {
-            message.value.showErrorFlash = !message.value.showErrorFlash;
-            setTimeout(() => {}, 3000);
-          }
+          } 
+        }).catch(err => {
+          showLoading.value = false;
         });
       }
     };
@@ -269,11 +302,10 @@ export default {
         errors.email = "Invalid Email";
       }
 
-
       if (!formData.expertLevelId)
         errors.expertLevel = "Expert Level is required";
-      if (!formData.regionId)
-        errors.region = "Region is required"
+      if (!formData.regionId && formData.expertLevelId == 4)
+        errors.region = "Region is required";
       //   if (formData.phoneNumber && !isValidPhoneNumber(formData.phoneNumber)) {
       //     errors.phoneNumber = "Invalid Phone Number";
       //   };
@@ -316,6 +348,7 @@ export default {
       expertLevels,
       selectedExpertLevel,
       regions,
+      showLoading,
       selectedRegion,
     };
   },

@@ -333,12 +333,12 @@
               aria-labelledby="options-menu"
             >
               <div class="py-1" role="none">
-                <a
+                <!-- <a
                   href="#"
                   class="block px-4 py-2 text-sm text-blue-100 hover:bg-gray-100 hover:text-gray-900"
                   role="menuitem"
                   >Profile
-                </a>
+                </a> -->
                 <router-link to="/admin/create" v-if="showAdminCreate">
                   <a
                     class="block px-4 py-2 text-sm text-blue-100 hover:bg-gray-100 hover:text-gray-900"
@@ -360,20 +360,20 @@
                     >Others Pending
                   </a>
                 </router-link>
-                <a
+                <!-- <a
                   href="#"
                   class="block px-4 py-2 text-sm text-blue-100 hover:bg-gray-100 hover:text-gray-900"
                   role="menuitem"
                   >About
-                </a>
+                </a> -->
               </div>
               <div class="py-1" role="none">
-                <a
+                <!-- <a
                   href="#"
                   class="block px-4 py-2 text-sm text-blue-100 hover:bg-gray-100 hover:text-gray-900"
                   role="menuitem"
                   >Display Settings
-                </a>
+                </a> -->
                 <a
                   @click="logout()"
                   class="block px-4 py-2 text-sm text-blue-100 hover:bg-gray-100 hover:text-gray-900"

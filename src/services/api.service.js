@@ -78,9 +78,12 @@ const ApiService = {
     });
   },
 
-  put(resource, data) {
+  put(resource, data, needsAuth = true) {
     return axios.put(resource, data, {
-      headers: authHeaders(true)
+      headers: {
+        // "Access-Control-Allow-Origin": "*",
+        ...authHeaders(needsAuth)
+      }
     });
   },
 
@@ -101,7 +104,9 @@ function authHeaders(needsAuth) {
   const token = localStorage.getItem("token");
   return needsAuth
     ? 
-      {"Authorization" : token ? `Bearer ${token}` : ""}
+      {
+        "Authorization" : token ? `Bearer ${token}` : "",
+      }
       
     : {};
 }

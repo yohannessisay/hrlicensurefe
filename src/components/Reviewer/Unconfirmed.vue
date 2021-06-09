@@ -1,35 +1,38 @@
 <template>
   <div>
     <ReviewerNavBar tab="Unconfirmed" />
-    <div class="bg-lightBlueB-200 h-full">
+    <!-- <div class="bg-lightBlueB-200 h-full">
       <unconfirmed-container />
-    </div>
+    </div> -->
     <div class="bg-lightBlueB-200 h-full">
       <others-unconfirmed-container />
     </div>
-    <div class="bg-lightBlueB-200 h-full">
+    <!-- <div class="bg-lightBlueB-200 h-full">
       <returned-to-me-container />
     </div>
     <div class="bg-lightBlueB-200 h-full">
       <returned-to-others-container />
-    </div>
+    </div> -->
     <div class="bg-lightBlueB-200 h-full">
       <confirm-review-container />
     </div>
-    <div class="bg-lightBlueB-200 h-full">
-      <others-confirm-review-container />
+    <div v-if="isSuperAdmin">
+      <div class="bg-lightBlueB-200 h-full">
+        <others-confirm-review-container />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import {ref, onMounted} from "vue";
 import ReviewerNavBar from "@/components/Reviewer/ReviewerNavBar";
-import UnconfirmedContainer from './ChildComponents/Containers/UnconfirmedContainer.vue';
-import ReturnedToMeContainer from './ChildComponents/Containers/ReturnedToMeContainer.vue';
-import ReturnedToOthersContainer from "./ChildComponents/Containers/ReturnedToOthersContainer.vue"
-import ConfirmReviewContainer from './ChildComponents/Containers/ConfirmReviewContainer.vue';
-import OthersUnconfirmedContainer from './ChildComponents/Containers/OthersUnconfirmedContainer.vue';
-import OthersConfirmReviewContainer from './ChildComponents/Containers/OthersConfirmReviewContainer.vue';
+import UnconfirmedContainer from "./ChildComponents/Containers/UnconfirmedContainer.vue";
+import ReturnedToMeContainer from "./ChildComponents/Containers/ReturnedToMeContainer.vue";
+import ReturnedToOthersContainer from "./ChildComponents/Containers/ReturnedToOthersContainer.vue";
+import ConfirmReviewContainer from "./ChildComponents/Containers/ConfirmReviewContainer.vue";
+import OthersUnconfirmedContainer from "./ChildComponents/Containers/OthersUnconfirmedContainer.vue";
+import OthersConfirmReviewContainer from "./ChildComponents/Containers/OthersConfirmReviewContainer.vue";
 
 export default {
   components: {
@@ -48,6 +51,23 @@ export default {
     },
   },
   setup() {
+    const role = localStorage.getItem("role");
+
+    let isSuperAdmin = ref(false);
+    const superAdminStatus = () => {
+      if (role == "SA") {
+        isSuperAdmin.value = true;
+      }
+    };
+
+    onMounted(() => {
+      superAdminStatus();
+    })
+
+    return {
+      role,
+      isSuperAdmin,
+    };
   },
 };
 </script>

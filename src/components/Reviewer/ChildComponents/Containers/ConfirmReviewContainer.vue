@@ -1,6 +1,6 @@
 <template>
   <div class="flex pl-12 pt-tiny">
-    <Title message="Confirm Review" />
+    <Title message="Evaluate Review" />
   </div>
   <div class="flex flex-wrap pb-medium rounded h-full" v-if="!showLoading">
     <nothing-to-show :nothingToShow="nothingToShowUnfinished" />

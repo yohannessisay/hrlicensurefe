@@ -462,7 +462,9 @@ export default {
           .then((res) => {
             newLicense.value = res.data.data;
             buttons.value = res.data.data.applicationStatus.buttons;
+            console.log("buttons is ", buttons.value)
             docs.value = res.data.data.documents;
+            console.log("documents is ", docs.value)
             if (newLicense.value.applicationStatus.code == "REVDRA") {
               rejected.value = newLicense.value.declinedFields;
               rejectedObj.value = newLicense.value.declinedFields;
@@ -733,6 +735,7 @@ export default {
     };
 
     const action = (actionValue) => {
+      console.log("action clicked", actionValue)
       if (actionValue == "DeclineEvent") {
         showRemark.value = true;
         sendDeclinedData.value = false;
@@ -758,19 +761,26 @@ export default {
         applicationType.value == "New License" &&
         sendDeclinedData.value == true
       ) {
-        store.dispatch("newlicense/editNewLicense", req).then((res) => {
+        console.log("request is ", req)
+        store.dispatch("newlicense/editNewLicense", req.data).then((res) => {
+          console.log("new license edited value", res)
           if (res.statusText == "Created") {
             showFlash.value = true;
             showDeclineFlash.value = true;
+            
+            return;
             setTimeout(() => {
               router.push("/admin/review");
             }, 3000);
           } else {
+            return;
             showErrorFlash.value = true;
             setTimeout(() => {
               router.go();
             }, 3000);
           }
+        }).catch(err => {
+          console.log("error while evaluating", err)
         });
       }
       if (

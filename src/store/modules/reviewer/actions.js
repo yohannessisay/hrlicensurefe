@@ -919,6 +919,16 @@ export default {
       return error;
     }
   },
+  async getAdminsByRegion(context, id) {
+    try {
+      const url = baseUrl + "/admins/region/" + id;
+      const resp= await ApiService.get(url);
+     
+      return resp;
+    } catch(err) {
+      return err;
+    }
+  },
   async getRoles(context, userID) {
     try {
       const url = baseUrl + "/admins/" + userID;

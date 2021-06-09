@@ -129,7 +129,7 @@
           <div class="flex flex-row">
             <div
               :class="[
-                profileInfo.woreda.zone.region === null
+                license.woreda.zone.region === null
                   ? errorClass
                   : activeClass,
               ]"
@@ -137,30 +137,30 @@
               <label class="ml-8"> Region</label>
               <h5 class="ml-8">
                 {{
-                  profileInfo.woreda.zone.region
-                    ? profileInfo.woreda.zone.region.name
+                  license.woreda.zone.region
+                    ? license.woreda.zone.region.name
                     : "-"
                 }}
               </h5>
             </div>
             <div
               :class="[
-                profileInfo.woreda.zone === null ? errorClass : activeClass,
+                license.woreda.zone === null ? errorClass : activeClass,
               ]"
             >
               <label class="ml-8"> Zone</label>
               <h5 class="ml-8">
                 {{
-                  profileInfo.woreda.zone ? profileInfo.woreda.zone.name : "-"
+                  license.woreda.zone ? license.woreda.zone.name : "-"
                 }}
               </h5>
             </div>
             <div
-              :class="[profileInfo.woreda === null ? errorClass : activeClass]"
+              :class="[license.woreda === null ? errorClass : activeClass]"
             >
               <label class="ml-8"> Wereda</label>
               <h5 class="ml-8">
-                {{ profileInfo.woreda ? profileInfo.woreda.name : "-" }}
+                {{ license.woreda ? license.woreda.name : "-" }}
               </h5>
             </div>
             <div
@@ -266,27 +266,7 @@
             </div>
           </div>
           <div class="flex justify-start flex-wrap">
-            <!-- <div v-for="file in docs" v-bind:key="file.id">
-              <Title class="" :message="file.fieldName" />
-              <picture>
-                <img :src="basePath + file.filePath" />
-              </picture>
-            </div> -->
           </div>
-          <!-- <div class="mt-12 flex justify-center">
-            <div>
-              <button @click="evaluate()">Continue Evaluating</button>
-            </div>
-          </div>
-          <div class="flex justify-center mt-8">
-            <h6>
-              If you don't have all the required informations you can come back
-              and finish later.
-            </h6>
-          </div>
-          <div class="flex justify-center mt-8 mb-8">
-            <button variant="outline">I will finish Later</button>
-          </div> -->
           <div v-if="showFlash">
             <FlashMessage message="Your profile is successfully created" />
           </div>
@@ -327,6 +307,7 @@ export default {
     const route = useRoute();
 
     let adminId = +localStorage.getItem("adminId");
+    let regionId = JSON.parse(localStorage.getItem("allAdminData")).regionId;
     let show = ref(false);
     let license = ref({
       applicant: {},
@@ -387,11 +368,13 @@ export default {
         store
           .dispatch("reviewer/getNewLicenseApplication", applicationId)
           .then((res) => {
+            console.log("unassigned new license", res)
             showLoading.value = false;
             showLoading.value = false;
             license.value = res.data.data;
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
+            console.log("profile info new license", profileInfo.value)
             // applicantId.value = license.value.applicantId;
             education.value.departmentName =
               license.value.education.department.name;
@@ -426,7 +409,6 @@ export default {
             license.value = res.data.data;
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
-            // applicantId.value = license.value.applicantId;
             education.value.departmentName =
               license.value.education.department.name;
             education.value.institutionName =
@@ -443,7 +425,6 @@ export default {
             license.value = res.data.data;
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
-            // applicantId.value = license.value.applicantId;
             education.value.departmentName =
               license.value.education.department.name;
             education.value.institutionName =
@@ -457,8 +438,17 @@ export default {
     const fetchAdmins = () => {
       store.dispatch("reviewer/getAdmins").then((res) => {
         admins.value = res.data.data;
+        console.log("federal admin", admins.value)
       });
     };
+
+    const fetchAdminsByRegion = (regionId) => {
+      store.dispatch("reviewer/getAdminsByRegion", regionId)
+      .then(res => {
+        admins.value = res.data.data;
+        console.log("regional admin", admins.value)
+      })
+    }
 
     const fetchRole = (id) => {
       store.dispatch("reviewer/getRoles", id).then((res) => {
@@ -580,14 +570,18 @@ export default {
 
     onMounted(() => {
       adminId = +localStorage.getItem("adminId");
+      regionId = JSON.parse(localStorage.getItem("allAdminData")).regionId;
       created(
         route.params.applicationType,
         route.params.applicationId,
         route.params.applicantId
       );
-      fetchAdmins();
       fetchRole(adminId);
-      //fetchRole(2);
+      if(regionId !== null) {
+        fetchAdminsByRegion(regionId);
+      } else {
+        fetchAdmins();
+      }
     });
 
     return {

@@ -1,5 +1,5 @@
 <template>
-  <ReviewerNavBar tab="Evaluation" />
+  <ReviewerNavBar tab="ReEvaluate" />
   <div class="w-screen bg-white flex items-center justify-center">
     <div
       class="w-screen max-w-6xl mt-medium mb-large box-shadow-pop bg-lightGrey-100"

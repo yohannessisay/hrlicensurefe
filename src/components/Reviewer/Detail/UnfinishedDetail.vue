@@ -308,6 +308,7 @@ export default {
     const route = useRoute();
 
     let userId = +localStorage.getItem("userId");
+    let regionId = JSON.parse(localStorage.getItem("allAdminData")).regionId;
 
     let role = ref({});
 
@@ -368,6 +369,14 @@ export default {
       store.dispatch("reviewer/getAdmins").then(res => {
         
         admins.value = res.data.data
+      })
+    }
+
+    const fetchAdminsByRegion = (regionId) => {
+      store.dispatch("reviewer/getAdminsByRegion", regionId)
+      .then(res => {
+        admins.value = res.data.data;
+        console.log("regional admin", admins.value)
       })
     }
 
@@ -536,16 +545,20 @@ export default {
     };
 
     onMounted(() => {
-      //userId.value = +localStorage.getItem("userId");
       loggedInAdminId = +localStorage.getItem("adminId");
-      // userId = 2;
+      regionId = JSON.parse(localStorage.getItem("allAdminData")).regionId;
       created(
         route.params.applicationType,
         route.params.applicationId,
         route.params.applicantId
       );
-      fetchAdmins();
+      
       fetchRole(loggedInAdminId)
+      if(regionId !== null) {
+        fetchAdminsByRegion(regionId);
+      } else {
+        fetchAdmins();
+      }
     });
 
     return {
