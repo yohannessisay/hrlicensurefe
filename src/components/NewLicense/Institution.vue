@@ -23,6 +23,9 @@
                   {{ applicant.name }}
                 </option>
               </select>
+              <span style="color: red">{{
+                licenseInfoErrors.applicantTypeId
+              }}</span>
             </div>
             <div class="flex flex-col mb-medium w-2/5 mr-12">
               <label class="text-primary-700">Department</label>
@@ -38,6 +41,9 @@
                   {{ department.name }}
                 </option>
               </select>
+              <span style="color: red">{{
+                licenseInfoErrors.education.departmentId
+              }}</span>
             </div>
           </div>
 
@@ -53,23 +59,25 @@
                   {{ institution.name }}
                 </option>
               </select>
+              <span style="color: red">{{
+                licenseInfoErrors.education.institutionId
+              }}</span>
             </div>
             <div class="flex flex-col mb-medium w-2/5 mr-12">
               <label class="text-primary-700">Region</label>
               <select
                 class="max-w-3xl"
-                v-model="state.cityObj"
+                v-model="regionID"
                 @change="fetchZones()"
               >
                 <option
-                  v-for="types in state.regions"
+                  v-for="types in regionArray"
                   v-bind:key="types.name"
-                  v-bind:value="types"
+                  v-bind:value="types.id"
                 >
                   {{ types.name }}
                 </option>
               </select>
-              <span style="color: red">{{ addressErrors.city }}</span>
             </div>
           </div>
 
@@ -79,17 +87,16 @@
               <select
                 class="max-w-3xl"
                 @change="fetchWoredas()"
-                v-model="state.zoneId"
+                v-model="zoneID"
               >
                 <option
-                  v-for="types in state.zones"
+                  v-for="types in zoneArray"
                   v-bind:key="types.name"
                   v-bind:value="types.id"
                 >
                   {{ types.name }}
                 </option>
               </select>
-              <span style="color: red">{{ addressErrors.zone }}</span>
             </div>
             <div class="flex flex-col mb-medium w-2/5 mr-12">
               <label class="text-primary-700">Woreda</label>
@@ -99,14 +106,16 @@
                 @change="woredaChanged()"
               >
                 <option
-                  v-for="types in state.woredas"
+                  v-for="types in woredaArray"
                   v-bind:key="types.name"
                   v-bind:value="types.id"
                 >
                   {{ types.name }}
                 </option>
               </select>
-              <span style="color: red">{{ addressErrors.woreda }}</span>
+              <span style="color: red">{{
+                licenseInfoErrors.residenceWoredaId
+              }}</span>
             </div>
           </div>
         </form>
@@ -227,7 +236,7 @@ export default {
     if (this.draftId != undefined) {
       setTimeout(() => {
         this.fetchDraft();
-      }, 5000);
+      }, 6500);
     }
   },
   computed: {
@@ -246,30 +255,22 @@ export default {
       },
       residenceWoredaId: "",
     },
+    licenseInfoErrors: {
+      applicantTypeId: "",
+      education: {
+        departmentId: "",
+        institutionId: "",
+      },
+      residenceWoredaId: "",
+      regionID: "",
+      zoneID: "",
+    },
+    regionID: "",
+    zoneID: "",
 
-    state: {
-      regionId: "",
-      regions: [],
-      zones: [],
-      woredas: [],
-      cityObj: {},
-      zoneId: "",
-    },
-    addressErrors: {
-      woreda: "",
-      kebele: "",
-      city: "",
-      residence: "",
-      zone: "",
-    },
-    address: {
-      woreda: "",
-      kebele: "",
-      city: "",
-      residence: "",
-      zone: "",
-      poBox: "",
-    },
+    regionArray: [],
+    zoneArray: [],
+    woredaArray: [],
 
     applicantTypes: [],
     institutions: [],
@@ -393,7 +394,6 @@ export default {
       });
     },
     submit() {
-      this.$emit("changeActiveState");
       let license = {
         applicantId: this.licenseInfo.applicantId,
         applicantTypeId: this.licenseInfo.applicantTypeId,
@@ -403,6 +403,8 @@ export default {
         },
         residenceWoredaId: this.licenseInfo.residenceWoredaId,
       };
+
+      this.$emit("changeActiveState");
       this.$emit("applicantTypeValue", this.licenseInfo.applicantTypeId);
       this.$store.dispatch("newlicense/setLicense", license);
     },
@@ -427,51 +429,40 @@ export default {
     fetchRegions() {
       this.$store.dispatch("newlicense/getRegions").then((res) => {
         const regionsResult = res.data;
-        this.state.regions = regionsResult.data;
+        this.regionArray = regionsResult.data;
       });
     },
 
     fetchZones() {
-      this.address.city = this.state.cityObj.name;
-      this.state.regionId = this.state.cityObj.id;
       this.$store
-        .dispatch("newlicense/getZones", this.state.regionId)
+        .dispatch("newlicense/getZones", this.regionID)
         .then((res) => {
           const zonesResult = res.data;
-          this.state.zones = zonesResult.data;
+          this.zoneArray = zonesResult.data;
         });
     },
 
     fetchWoredas() {
       this.$store
-        .dispatch("newlicense/getWoredas", this.state.zoneId)
+        .dispatch("newlicense/getWoredas", this.zoneID)
         .then((res) => {
           const woredasResult = res.data;
-          this.state.woredas = woredasResult.data;
-          for (const item of Object.entries(this.state.zones)) {
-            if (item[1].id == this.state.zoneId) {
-              this.address.zone = item[1].name;
-            }
-          }
+          this.woredaArray = woredasResult.data;
         });
     },
 
-    woredaChanged() {
-      for (const item of Object.entries(this.state.woredas)) {
-        if (item[1].id == this.address.woredaId) {
-          this.address.woreda = item[1].name;
-        }
-      }
-    },
+    woredaChanged() {},
     validateForm(formData) {
       const errors = {};
 
-      if (!this.state.cityObj.name) errors.city = "Region Required";
-      if (!formData.kebele) errors.kebele = "Kebele Required";
-      if (!this.state.zoneId) errors.zone = "Zone Required";
-      if (!formData.woredaId) errors.woreda = "Woreda Required";
-      if (!formData.residence) errors.residence = "Residence Required";
-
+      if (!formData.applicantTypeId)
+        errors.applicantTypeId = "Applicant Type Required";
+      if (!formData.education.departmentId)
+        errors.education.departmentId = "Department Required";
+      if (!formData.education.institutionId)
+        errors.education.institutionId = "Institution Required";
+      if (!formData.residenceWoredaId)
+        errors.residenceWoredaId = "Woreda Required";
       return errors;
     },
 
@@ -493,8 +484,22 @@ export default {
       this.licenseInfo.education.institutionId =
         draftData.education.institutionId;
       this.licenseInfo.residenceWoredaId = draftData.woreda.id;
-      this.state.cityObj = draftData.region;
-      this.state.zoneId = draftData.woreda.zone.id;
+      this.regionID = draftData.woreda.zone.region.id;
+      this.zoneID = draftData.woreda.zone.id;
+      this.$store
+        .dispatch("newlicense/getZones", this.regionID)
+        .then((res) => {
+          const zonesResult = res.data;
+          this.zoneArray = zonesResult.data;
+        })
+        .then((res) => {
+          this.$store
+            .dispatch("newlicense/getWoredas", this.zoneID)
+            .then((res) => {
+              const woredasResult = res.data;
+              this.woredaArray = woredasResult.data;
+            });
+        });
     },
   },
 };

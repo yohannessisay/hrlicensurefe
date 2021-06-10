@@ -16,35 +16,33 @@
               <label class="text-primary-700">Region</label>
               <select
                 class="max-w-3xl"
-                v-model="state.cityObj"
+                v-model="regionID"
                 @change="fetchZones()"
               >
                 <option
-                  v-for="types in state.regions"
-                  v-bind:key="types.name"
-                  v-bind:value="types"
-                >
-                  {{ types.name }}
-                </option>
-              </select>
-              <span style="color: red">{{ addressErrors.city }}</span>
-            </div>
-            <div class="flex flex-col mb-medium w-2/5 mr-12 ml-medium">
-              <label class="text-primary-700">Zone</label>
-              <select
-                class="max-w-3xl"
-                @change="fetchWoredas()"
-                v-model="state.zoneId"
-              >
-                <option
-                  v-for="types in state.zones"
+                  v-for="types in regionArray"
                   v-bind:key="types.name"
                   v-bind:value="types.id"
                 >
                   {{ types.name }}
                 </option>
               </select>
-              <span style="color: red">{{ addressErrors.zone }}</span>
+            </div>
+            <div class="flex flex-col mb-medium w-2/5 mr-12 ml-medium">
+              <label class="text-primary-700">Zone</label>
+              <select
+                class="max-w-3xl"
+                @change="fetchWoredas()"
+                v-model="zoneID"
+              >
+                <option
+                  v-for="types in zoneArray"
+                  v-bind:key="types.name"
+                  v-bind:value="types.id"
+                >
+                  {{ types.name }}
+                </option>
+              </select>
             </div>
           </div>
 
@@ -57,14 +55,16 @@
                 @change="woredaChanged()"
               >
                 <option
-                  v-for="types in state.woredas"
+                  v-for="types in woredaArray"
                   v-bind:key="types.name"
                   v-bind:value="types.id"
                 >
                   {{ types.name }}
                 </option>
               </select>
-              <span style="color: red">{{ addressErrors.woreda }}</span>
+              <span style="color: red">{{
+                licenseInfoErrors.residenceWoredaId
+              }}</span>
             </div>
             <div class="flex flex-col mb-medium w-2/5 mr-12 ml-medium">
               <label class="text-primary-700">Applicant Title</label>
@@ -73,7 +73,9 @@
                 type="text"
                 v-model="licenseInfo.applicantTitle"
               />
-              <span style="color: red">{{ addressErrors.applicantTitle }}</span>
+              <span style="color: red">{{
+                licenseInfoErrors.applicantTitle
+              }}</span>
             </div>
           </div>
           <div class="flex">
@@ -85,7 +87,7 @@
                 v-model="licenseInfo.whomGoodStandingFor"
               />
               <span style="color: red">{{
-                addressErrors.whomGoodStandingFor
+                licenseInfoErrors.whomGoodStandingFor
               }}</span>
             </div>
             <div class="flex flex-col mb-medium w-2/5 mr-12 ml-medium">
@@ -96,7 +98,7 @@
                 v-model="licenseInfo.licenseIssuedDate"
               />
               <span style="color: red">{{
-                addressErrors.licenseIssuedDate
+                licenseInfoErrors.licenseIssuedDate
               }}</span>
             </div>
           </div>
@@ -109,7 +111,7 @@
                 type="text"
                 v-model="licenseInfo.whoIssued"
               />
-              <span style="color: red">{{ addressErrors.whoIssued }}</span>
+              <span style="color: red">{{ licenseInfoErrors.whoIssued }}</span>
             </div>
             <div class="flex flex-col mb-medium w-2/5 mr-12 ml-medium">
               <label class="text-primary-700"
@@ -117,11 +119,11 @@
               >
               <input
                 class="max-w-3xl"
-                type="text"
+                type="number"
                 v-model="licenseInfo.licenseRegistrationNumber"
               />
               <span style="color: red">{{
-                addressErrors.licenseRegistrationNumber
+                licenseInfoErrors.licenseRegistrationNumber
               }}</span>
             </div>
           </div>
@@ -141,7 +143,7 @@
                 </option>
               </select>
               <span style="color: red">{{
-                addressErrors.applicantPositionId
+                licenseInfoErrors.applicantPositionId
               }}</span>
             </div>
           </div>
@@ -264,7 +266,7 @@ export default {
     if (this.draftId != undefined) {
       setTimeout(() => {
         this.fetchDraft();
-      }, 5000);
+      }, 6500);
     }
   },
   computed: {
@@ -285,30 +287,25 @@ export default {
       applicantPositionId: "",
     },
 
-    state: {
-      regionId: "",
-      regions: [],
-      zones: [],
-      woredas: [],
-      cityObj: {},
-      zoneId: "",
-    },
-    addressErrors: {
-      woreda: "",
-      city: "",
-      zone: "",
+    licenseInfoErrors: {
+      applicantTypeId: "",
       applicantTitle: "",
       whomGoodStandingFor: "",
       licenseIssuedDate: "",
       whoIssued: "",
       licenseRegistrationNumber: "",
       applicantPositionId: "",
+      residenceWoredaId: "",
+      regionID: "",
+      zoneID: "",
     },
-    address: {
-      woreda: "",
-      residence: "",
-      zone: "",
-    },
+    regionID: "",
+    zoneID: "",
+
+    regionArray: [],
+    zoneArray: [],
+    woredaArray: [],
+
     applicationPositions: [],
     applicantTypes: [],
     institutions: [],
@@ -478,12 +475,7 @@ export default {
         this.departments = results;
       });
     },
-    fetchRegions() {
-      this.$store.dispatch("goodstanding/getRegions").then((res) => {
-        const regionsResult = res.data;
-        this.state.regions = regionsResult.data;
-      });
-    },
+
     fetchApplicationPositions() {
       this.$store.dispatch("goodstanding/getApplicantPosition").then((res) => {
         const applicationPositions = res.data.data;
@@ -491,42 +483,33 @@ export default {
       });
     },
 
+    fetchRegions() {
+      this.$store.dispatch("goodstanding/getRegions").then((res) => {
+        const regionsResult = res.data;
+        this.regionArray = regionsResult.data;
+      });
+    },
+
     fetchZones() {
-      this.address.city = this.state.cityObj.name;
-      this.state.regionId = this.state.cityObj.id;
       this.$store
-        .dispatch("goodstanding/getZones", this.state.regionId)
+        .dispatch("goodstanding/getZones", this.regionID)
         .then((res) => {
           const zonesResult = res.data;
-          this.state.zones = zonesResult.data;
+          this.zoneArray = zonesResult.data;
         });
     },
 
     fetchWoredas() {
       this.$store
-        .dispatch("goodstanding/getWoredas", this.state.zoneId)
+        .dispatch("goodstanding/getWoredas", this.zoneID)
         .then((res) => {
           const woredasResult = res.data;
-          this.state.woredas = woredasResult.data;
-          for (const item of Object.entries(this.state.zones)) {
-            if (item[1].id == this.state.zoneId) {
-              this.address.zone = item[1].name;
-            }
-          }
+          this.woredaArray = woredasResult.data;
         });
     },
 
-    woredaChanged() {
-      for (const item of Object.entries(this.state.woredas)) {
-        if (item[1].id == this.address.woredaId) {
-          this.address.woreda = item[1].name;
-        }
-      }
-    },
     validateForm(formData) {
       const errors = {};
-      if (!this.state.cityObj.name) errors.city = "Region Required";
-      if (!this.state.zoneId) errors.zone = "Zone Required";
       if (!formData.residenceWoredaId) errors.woreda = "Woreda Required";
       if (!formData.applicantTitle)
         errors.applicantTitle = "Applicant Title Required";
@@ -540,6 +523,8 @@ export default {
           "License Registration Number Required";
       if (!formData.applicantPositionId)
         errors.applicantPositionId = "Applicant Position Required";
+      if (!formData.residenceWoredaId)
+        errors.residenceWoredaId = "Woreda Required";
 
       return errors;
     },
@@ -556,7 +541,6 @@ export default {
     fetchDraft() {
       let draftData = this.getDraft;
       this.licenseInfo.applicantId = draftData.applicantId;
-      this.licenseInfo.residenceWoredaId = draftData.residenceWoredaId;
       this.licenseInfo.applicantTitle = draftData.applicantTitle;
       this.licenseInfo.whomGoodStandingFor = draftData.whomGoodStandingFor;
       this.licenseInfo.licenseIssuedDate = draftData.licenseIssuedDate;
@@ -564,6 +548,23 @@ export default {
       this.licenseInfo.licenseRegistrationNumber =
         draftData.licenseRegistrationNumber;
       this.licenseInfo.applicantPositionId = draftData.applicantPositionId;
+      this.licenseInfo.residenceWoredaId = draftData.woreda.id;
+      this.regionID = draftData.woreda.zone.region.id;
+      this.zoneID = draftData.woreda.zone.id;
+      this.$store
+        .dispatch("goodstanding/getZones", this.regionID)
+        .then((res) => {
+          const zonesResult = res.data;
+          this.zoneArray = zonesResult.data;
+        })
+        .then((res) => {
+          this.$store
+            .dispatch("goodstanding/getWoredas", this.zoneID)
+            .then((res) => {
+              const woredasResult = res.data;
+              this.woredaArray = woredasResult.data;
+            });
+        });
     },
   },
 };
