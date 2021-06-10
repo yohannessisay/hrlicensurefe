@@ -443,8 +443,6 @@ export default {
           )
 
           .then((response) => {
-            console.log("++++++++++++++++++", response)
-            return;
             showAssignLoading.value = false;
             if (response.statusText == "Created") {
               showFlash.value = true;

@@ -93,7 +93,7 @@ export default {
     try {
       console.log("admin value is+ ", license)
       const resp = await ApiService.put(
-        url + "newLicenses/" + license.id,
+        url + "newLicenses/" + license.data.id,
         license
       );
       console.log("response data is ", resp)

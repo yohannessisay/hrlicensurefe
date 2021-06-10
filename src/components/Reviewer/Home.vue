@@ -104,7 +104,7 @@
         <Spinner />
       </div>
 
-      <div class="flex pl-12 pt-medium">
+      <!-- <div class="flex pl-12 pt-medium">
         <div v-if="myTitleMessage">
           <Title message="My Pending Payments" />
         </div>
@@ -159,7 +159,7 @@
         >
           <Spinner />
         </div>
-      </div>
+      </div> -->
 
       <div class="flex pl-12 mt-medium">
         <Title message="Unassigned" />

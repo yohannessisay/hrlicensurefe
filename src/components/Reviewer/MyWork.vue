@@ -3,12 +3,13 @@
     <ReviewerNavBar tab="MyWork" />
     <div class="bg-lightBlueB-200 h-full">
       <div class="flex pl-12 pt-tiny">
-        <Title message="Approved" />
+        <Title message="Confirmed" />
       </div>
       <div
         class="flex flex-wrap pb-medium rounded h-full"
-          v-if="!showLoadingApproved">
-          <div class="pl-large w-52 h-26" v-if="nothingToShowApproved == true">
+        v-if="!showLoadingApproved"
+      >
+        <div class="pl-large w-52 h-26" v-if="nothingToShowApproved == true">
           <div class="flex content-center justify-center">
             <h2>Nothing To Show!</h2>
           </div>
@@ -19,60 +20,69 @@
           v-bind:key="index"
           v-bind:value="item.id"
         >
-          <!-- <div
-            v-if="index < 5" -->
           <div
             class="justify-center items-center mt-8 ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
           >
-            <div class="p-4 w-48 h-64"
-              @click="detail('/admin/finishedDetail',
-                item.applicationType,
-                item.id,
-                'approved',
-                )"
+            <div
+              class="p-4 w-48 h-64"
+              @click="
+                detail(
+                  '/admin/finishedDetail',
+                  item.applicationType,
+                  item.id,
+                  'approved'
+                )
+              "
             >
               <div class="flex content-center justify-center">
-                  <img class="box-shadow-pop" 
-                  src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp" />
+                <img
+                  class="box-shadow-pop"
+                  src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
+                />
               </div>
               <h4
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
               >
-                <b>{{ item.applicant.profile.name + " " + item.applicant.profile.fatherName }}</b>
+                <b>{{
+                  item.applicant.profile.name +
+                    " " +
+                    item.applicant.profile.fatherName
+                }}</b>
               </h4>
               <br />
               <span
                 class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
               >
-                {{item.applicationType}}
+                {{ item.applicationType }}
               </span>
               <span
                 class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
               >
-                {{ item.newLicenseCode ? item.newLicenseCode : '-' }}
+                {{ item.newLicenseCode ? item.newLicenseCode : "-" }}
               </span>
               <span
-                class="text-lightBlueB-500 mt-tiny flex justify-end content-center">
-                  {{item.createdAt ? moment(item.createdAt).fromNow() : '-'}}
+                class="text-lightBlueB-500 mt-tiny flex justify-end content-center"
+              >
+                {{ item.createdAt ? moment(item.createdAt).fromNow() : "-" }}
               </span>
             </div>
           </div>
         </div>
-        <!-- Second !-->
       </div>
       <div
-      v-if="showLoadingApproved"
+        v-if="showLoadingApproved"
         class="flex content-center justify-center"
       >
         <Spinner />
       </div>
-      <div class="flex pl-12 pt-tiny">
+      <!-- <div class="flex pl-12 pt-tiny">
         <Title message="Rejected" />
       </div>
       <div
         class="flex flex-wrap pb-medium rounded h-full"
-          v-if="!showLoadingRejected">
-          <div class="pl-large w-52 h-26" v-if="nothingToShowRejected == true">
+        v-if="!showLoadingRejected"
+      >
+        <div class="pl-large w-52 h-26" v-if="nothingToShowRejected == true">
           <div class="flex content-center justify-center">
             <h2>Nothing To Show!</h2>
           </div>
@@ -83,59 +93,72 @@
           v-bind:key="index"
           v-bind:value="item.id"
         >
-          <!-- <div
-            v-if="index < 5" -->
           <div
             class="justify-center items-center mt-8 ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
           >
-            <div class="p-4 w-48 h-64"
-              @click="detail('/admin/finishedDetail',
-                item.applicationType,
-                item.id,
-                'rejected',
-                )"
+            <div
+              class="p-4 w-48 h-64"
+              @click="
+                detail(
+                  '/admin/finishedDetail',
+                  item.applicationType,
+                  item.id,
+                  'rejected'
+                )
+              "
             >
               <div class="flex content-center justify-center">
-                  <img class="box-shadow-pop" 
-                  src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp" />
+                <img
+                  class="box-shadow-pop"
+                  src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
+                />
               </div>
               <h4
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
               >
-                <b>{{ item.applicant.profile.name + " " + item.applicant.profile.fatherName }}</b>
+                <b>{{
+                  item.applicant.profile.name +
+                    " " +
+                    item.applicant.profile.fatherName
+                }}</b>
               </h4>
               <br />
               <span
                 class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
               >
-                {{item.applicationType}}
+                {{ item.applicationType }}
               </span>
               <span
                 class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
               >
-                {{ item.newLicenseCode ? item.newLicenseCode : '-' }}
+                {{ item.newLicenseCode ? item.newLicenseCode : "-" }}
               </span>
               <span
-                class="text-lightBlueB-500 mt-tiny flex justify-end content-center">
-                  {{item.createdAt ? moment(item.createdAt).fromNow() : '-'}}
+                class="text-lightBlueB-500 mt-tiny flex justify-end content-center"
+              >
+                {{ item.createdAt ? moment(item.createdAt).fromNow() : "-" }}
               </span>
             </div>
           </div>
         </div>
-        <!-- Second !-->
       </div>
-      <div v-if="showLoadingRejected"
-          class="flex content-center justify-center"
-        >
-          <Spinner />
-        </div>
+      <div
+        v-if="showLoadingRejected"
+        class="flex content-center justify-center"
+      >
+        <Spinner />
+      </div>
       <div class="flex pl-12 pt-tiny">
         <Title message="Under SuperVision" />
       </div>
       <div
         class="flex flex-wrap pb-medium rounded h-full"
-          v-if="!showLoadingSuperVision">
-          <div class="pl-large w-52 h-26" v-if="nothingToShowUnderSuperVision == true">
+        v-if="!showLoadingSuperVision"
+      >
+        <div
+          class="pl-large w-52 h-26"
+          v-if="nothingToShowUnderSuperVision == true"
+        >
           <div class="flex content-center justify-center">
             <h2>Nothing To Show!</h2>
           </div>
@@ -146,57 +169,64 @@
           v-bind:key="index"
           v-bind:value="item.id"
         >
-          <!-- <div
-            v-if="index < 5" -->
           <div
             class="justify-center items-center mt-8 ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
           >
-            <div class="p-4 w-48 h-64"
-              @click="detail('/admin/finishedDetail',
-                item.applicationType,
-                item.id,
-                'underSuperVision',
-                )"
+            <div
+              class="p-4 w-48 h-64"
+              @click="
+                detail(
+                  '/admin/finishedDetail',
+                  item.applicationType,
+                  item.id,
+                  'underSuperVision'
+                )
+              "
             >
               <div class="flex content-center justify-center">
-                  <img class="box-shadow-pop" 
-                  src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp" />
+                <img
+                  class="box-shadow-pop"
+                  src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
+                />
               </div>
               <h4
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
               >
                 <b>
-                  {{ item.applicant.profile.name + " " + item.applicant.profile.fatherName }} 
+                  {{
+                    item.applicant.profile.name +
+                      " " +
+                      item.applicant.profile.fatherName
+                  }}
                 </b>
               </h4>
-              <br/>
+              <br />
               <span
                 class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
               >
-                {{item.applicationType}}
+                {{ item.applicationType }}
               </span>
               <span
                 class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
               >
-                {{ item.newLicenseCode ? item.newLicenseCode : '-' }}
+                {{ item.newLicenseCode ? item.newLicenseCode : "-" }}
               </span>
               <span
-                class="text-lightBlueB-500 mt-tiny flex justify-end content-center">
-                  {{item.createdAt ? moment(item.createdAt).fromNow() : '-'}}
+                class="text-lightBlueB-500 mt-tiny flex justify-end content-center"
+              >
+                {{ item.createdAt ? moment(item.createdAt).fromNow() : "-" }}
               </span>
             </div>
           </div>
         </div>
-        <!-- Second !-->
       </div>
       <div
-      v-if="showLoadingSuperVision"
-      class="flex content-center justify-center"
-    >
-      <Spinner />
+        v-if="showLoadingSuperVision"
+        class="flex content-center justify-center"
+      >
+        <Spinner />
+      </div> -->
     </div>
-    </div>
-    
   </div>
 </template>
 
@@ -204,12 +234,12 @@
 import Title from "@/sharedComponents/TitleWithIllustration";
 import ReviewerNavBar from "@/components/Reviewer/ReviewerNavBar";
 import { useStore } from "vuex";
-import { useRouter } from "vue-router"
-import moment from 'moment'
+import { useRouter } from "vue-router";
+import moment from "moment";
 
 import { ref, onMounted } from "vue";
 
-import store from "../../store"
+import store from "../../store";
 import Spinner from "@/sharedComponents/Spinner";
 
 export default {
@@ -217,21 +247,21 @@ export default {
   computed: {
     moment: () => moment,
     getApproved() {
-      return store.getters['reviewer/getApprovedSearched']
+      return store.getters["reviewer/getApprovedSearched"];
     },
     getRecentlyFinished() {
-      return store.getters['reviewer/getRecentlyFinishedSearched']
+      return store.getters["reviewer/getRecentlyFinishedSearched"];
     },
     getRejected() {
-      return store.getters['reviewer/getRejectedSearched']
+      return store.getters["reviewer/getRejectedSearched"];
     },
     getUnderSuperVision() {
-      return store.getters['reviewer/getUnderSuperVisionSearched']
-    }
+      return store.getters["reviewer/getUnderSuperVisionSearched"];
+    },
   },
   setup() {
     const store = useStore();
-    const router = useRouter()
+    const router = useRouter();
 
     let adminId = +localStorage.getItem("adminId");
 
@@ -248,18 +278,18 @@ export default {
     let underSuperVision = ref({});
 
     const fetchRecentlyFinished = () => {
-      showLoadingApproved.value = true
-      showLoadingRejected.value = true
-      showLoadingSuperVision.value = true
-      store.dispatch("reviewer/getRecentlyFinished", adminId).then(res => {
-        showLoadingApproved.value = false
-        showLoadingRejected.value = false
-        showLoadingSuperVision.value = false
-        if(store.getters['reviewer/getApprovedSearched'].length == 0) {
+      showLoadingApproved.value = true;
+      showLoadingRejected.value = true;
+      showLoadingSuperVision.value = true;
+      store.dispatch("reviewer/getRecentlyFinished", adminId).then((res) => {
+        showLoadingApproved.value = false;
+        showLoadingRejected.value = false;
+        showLoadingSuperVision.value = false;
+        if (store.getters["reviewer/getApprovedSearched"].length == 0) {
           nothingToShowApproved.value = true;
         } else {
-          approved.value = store.getters['reviewer/getApprovedSearched']
-          for (var prop in store.getters['reviewer/getApprovedSearched']) {
+          approved.value = store.getters["reviewer/getApprovedSearched"];
+          for (var prop in store.getters["reviewer/getApprovedSearched"]) {
             if (approved.value[prop].applicationType == "Renewal") {
               approved.value[prop].newLicenseCode =
                 approved.value[prop].renewalCode;
@@ -274,11 +304,11 @@ export default {
             }
           }
         }
-        if(store.getters['reviewer/getRejectedSearched'].length == 0) {
+        if (store.getters["reviewer/getRejectedSearched"].length == 0) {
           nothingToShowRejected.value = true;
         } else {
-          rejected.value = store.getters['reviewer/getRejectedSearched']
-          for (var prop in store.getters['reviewer/getRejectedSearched']) {
+          rejected.value = store.getters["reviewer/getRejectedSearched"];
+          for (var prop in store.getters["reviewer/getRejectedSearched"]) {
             if (rejected.value[prop].applicationType == "Renewal") {
               rejected.value[prop].newLicenseCode =
                 rejected.value[prop].renewalCode;
@@ -293,20 +323,27 @@ export default {
             }
           }
         }
-        if(store.getters['reviewer/getUnderSuperVisionSearched'].length == 0) {
+        if (store.getters["reviewer/getUnderSuperVisionSearched"].length == 0) {
           nothingToShowUnderSuperVision.value = true;
         } else {
-          underSuperVision.value = store.getters['reviewer/getUnderSuperVisionSearched']
-          for (var prop in store.getters['reviewer/getUnderSuperVisionSearched']) {
+          underSuperVision.value =
+            store.getters["reviewer/getUnderSuperVisionSearched"];
+          for (var prop in store.getters[
+            "reviewer/getUnderSuperVisionSearched"
+          ]) {
             if (underSuperVision.value[prop].applicationType == "Renewal") {
               underSuperVision.value[prop].newLicenseCode =
                 underSuperVision.value[prop].renewalCode;
             }
-            if (underSuperVision.value[prop].applicationType == "Good Standing") {
+            if (
+              underSuperVision.value[prop].applicationType == "Good Standing"
+            ) {
               underSuperVision.value[prop].newLicenseCode =
                 underSuperVision.value[prop].goodStandingCode;
             }
-            if (underSuperVision.value[prop].applicationType == "Verification") {
+            if (
+              underSuperVision.value[prop].applicationType == "Verification"
+            ) {
               underSuperVision.value[prop].newLicenseCode =
                 underSuperVision.value[prop].verificationCode;
             }
@@ -316,10 +353,10 @@ export default {
     };
 
     const detail = (data, appilcationType, appilcationId, status) => {
-      const url = 
+      const url =
         data + "/" + appilcationType + "/" + appilcationId + "/" + status;
-        router.push(url)
-    }
+      router.push(url);
+    };
 
     onMounted(() => {
       fetchRecentlyFinished();
@@ -337,7 +374,7 @@ export default {
       rejected,
       underSuperVision,
     };
-  }
+  },
 };
 </script>
 <style scoped>

@@ -531,6 +531,7 @@ export default {
   async getRecentlyFinished({commit}, adminId) {
     try {
       const resp = await ApiService.get(baseUrl + "/applications/finished/"+adminId)
+      console.log("************", resp, "((((((((((")
 
       const certifiedUsers = resp.data.data.filter(function(e) {
         return e.certified == true;
@@ -1120,7 +1121,6 @@ export default {
   async evaluatVerification({ commit }, license) {
     try {
       console.log("confirm verification detail", license)
-      return;
       const resp = await ApiService.put(
         baseUrl + "/verificationEvaluators/" + license.id,
         license

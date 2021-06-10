@@ -29,9 +29,9 @@
                 class="img"
               /> -->
               <img
-              class="box-shadow-pop avaterImage"
-              src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
-            />
+                class="box-shadow-pop avaterImage"
+                src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
+              />
             </picture>
             <div class="flex justify-center items-center">
               <h4 class="mt-2 mr-small w-1/2">
@@ -259,7 +259,7 @@
                   <div class="flex mt-medium justify-center"></div>
                   <div class="relative p-6 flex-auto w-full">
                     <div class="flex justify-center">
-                      <div class="">
+                      <!-- <div class="">
                         <svg
                           width="40"
                           height="60"
@@ -279,18 +279,18 @@
                             &gt;
                           </polyline>
                         </svg>
-                      </div>
+                      </div> -->
 
                       <div
                         class="flex flex-col justify-center items-center ml-large"
                       >
                         <div class="ml-medium">
-                          <label
+                          <!-- <label
                             class="justify-center items-center ml-large text-grey-200 text-2xl"
                           >
                             {{ modalDocumentTypeName }}
-                          </label>
-                          <div
+                          </label> -->
+                          <!-- <div
                             class="flex justify-center flex-wrap max-w-sm rounded overflow-hidden"
                           >
                             <picture
@@ -304,11 +304,11 @@
                                 "
                               />
                             </picture>
-                          </div>
+                          </div> -->
                         </div>
                       </div>
 
-                      <div class="ml-large">
+                      <!-- <div class="ml-large">
                         <svg
                           width="40"
                           height="60"
@@ -329,7 +329,7 @@
                             &gt;
                           </polyline>
                         </svg>
-                      </div>
+                      </div> -->
                     </div>
                   </div>
                 </div>
@@ -359,7 +359,7 @@
             v-if="showModal"
             class="opacity-25 fixed inset-0 z-40 bg-black"
           ></div> -->
-          <div v-if="showDeclineFlash">
+          <div class="mr-3xl" v-if="evaluationSuccess">
             <FlashMessage message="Operation Successful!" />
           </div>
           <div v-if="showErrorFlash">
@@ -399,6 +399,7 @@ export default {
 
     const adminId = +localStorage.getItem("adminId");
 
+    let evaluationSuccess = ref(false);
     let accepted = ref([]);
     let req = ref({});
     let rejected = ref([]);
@@ -478,7 +479,7 @@ export default {
             });
           }
           docs.value = res.data.data.documents;
-          console.log("docs value ", docs.value)
+          console.log("docs value ", docs.value);
           if ((newLicense.value.applicationStatus.code = "APP")) {
             accepted.value = newLicense.value.acceptedFields;
             rejected.value = newLicense.value.declinedFields;
@@ -487,15 +488,13 @@ export default {
             amount.value = ((index.value + 1) / docs.value.length) * 100;
             width.value = "width: " + amount.value + "%";
             if (
-                accepted.value.includes(
-                  docs.value[index.value].documentTypeCode
-                ) ||
-                rejected.value.includes(
-                  docs.value[index.value].documentTypeCode
-                )
-              ) {
-                findDocumentType(documentTypes.value, docs.value[index.value]);
-              }
+              accepted.value.includes(
+                docs.value[index.value].documentTypeCode
+              ) ||
+              rejected.value.includes(docs.value[index.value].documentTypeCode)
+            ) {
+              findDocumentType(documentTypes.value, docs.value[index.value]);
+            }
           }
         });
     };
@@ -533,68 +532,68 @@ export default {
         //   documentTypes.value,
         //   rejectedObj.value[0]
         // );
-        // showRemark.value = true;
-        // sendDeclinedData.value = false;
-        // if (fromModalSendDeclinedData.value == true) {
-        //   sendDeclinedData.value = true;
-        // }
+        showRemark.value = true;
+        sendDeclinedData.value = false;
+        if (fromModalSendDeclinedData.value == true) {
+          sendDeclinedData.value = true;
+        }
         // return;
-        console.log("return action is clicked successfully")
+        console.log("return action is clicked successfully");
         console.log("rejected val", rejected.value);
-        console.log("rejectedObj val", rejectedObj.value)
+        console.log("rejectedObj val", rejectedObj.value);
       }
+      console.log("is it comming here");
       newLicense.value.declinedFields = rejected.value;
       newLicense.value.acceptedFields = accepted.value;
       evaluateData.value = newLicense.value.evaluators;
-      evaluateData.value = evaluateData.value.filter(evaluate => {
-        return evaluate.evaluatorId == adminId
-      })
-      console.log("new evaluators value conf", evaluateData.value)
-      if(actionValue == "ConfirmEvent") {
-        console.log("confirm button is clicked", actionValue)
-        
-        
+      evaluateData.value = evaluateData.value.filter((evaluate) => {
+        return evaluate.evaluatorId == adminId;
+      });
+      console.log("new evaluators value conf", newLicense.value);
+      if (actionValue == "ConfirmEvent") {
+        console.log("confirm button is clicked", actionValue);
       }
       req.value = {
         ...evaluateData.value,
       };
       if (sendDeclinedData.value == true) {
+        console.log("----------------", evaluateData.value)
+        return;
         if (applicationType.value == "Verification") {
           evaluateApplication("evaluatVerification", req.value);
         }
         if (applicationType.value == "Renewal") {
-          evaluateApplication("evaluateRenewal",req.value);
+          evaluateApplication("evaluateRenewal", req.value);
         }
         if (applicationType.value == "Good Standing") {
           evaluateApplication("evaluateGoodStanding", req.value);
         }
         if (applicationType.value == "New License") {
-          evaluateApplication("evaluateNewLicense",req.value);
+          evaluateApplication("evaluateNewLicense", req.value);
         }
       }
     };
 
     const evaluateApplication = (applicationType, req) => {
-      console.log("request[00] value is ", req[0])
-      return;
-      store.dispatch(applicationType+"/", req).then((res) => {
-        console.log("ieie resp", res);
-        if (res.statusText == "Created") {
-          showFlash.value = true;
-          console.log("successful");
-          return;
-          setTimeout(() => {
-            router.push("/admin/unconfirmed");
-          }, 3000);
-        } else {
-          showErrorFlash.value = true;
-          console.log("something went wrong");
-          return;
-          setTimeout(() => {
-            router.go();
-          }, 3000);
-        }
-      });
+        console.log("passed")
+        console.log("request[00] value is ", req[0]);
+        store.dispatch("reviewer/" + applicationType, req[0]).then((res) => {
+          console.log("ieie resp", res);
+          if (res.statusText == "Created") {
+            showFlash.value = true;
+            console.log("successful");
+            evaluationSuccess.value = true;
+            setTimeout(() => {
+              router.push("/admin/unconfirmed");
+            }, 3000);
+          } else {
+            showErrorFlash.value = true;
+            console.log("something went wrong");
+            setTimeout(() => {
+              router.go();
+            }, 3000);
+          }
+        });
     };
 
     const toggleModal = () => {
@@ -604,14 +603,14 @@ export default {
     const submitRemark = () => {
       showRemark.value = !showRemark.value;
       fromModalSendDeclinedData.value = true;
-      action("UpdatePaymentEvent");
+      action("ReturnToReviewerEvent");
 
       console.log("submit remark");
     };
 
     const nextRemark = () => {
-      if(ind.value != rejectedObj.value.length - 1) {
-        ind.value = ind.value + 1
+      if (ind.value != rejectedObj.value.length - 1) {
+        ind.value = ind.value + 1;
         modalFindDocumentType(
           documentTypes.value,
           rejectedObj.value[ind.value]
@@ -633,7 +632,7 @@ export default {
     const modalFindDocumentType = (obj, ab) => {
       for (var prop in obj) {
         if (obj[prop].code == ab) {
-          console.log("object name is ", obj[prop].name)
+          console.log("object name is ", obj[prop].name);
           modalDocumentTypeName.value = obj[prop].name;
         }
       }
@@ -664,6 +663,7 @@ export default {
       documentTypes,
       documentTypeName,
       modalDocumentTypeName,
+      evaluationSuccess,
       next,
       previous,
       action,
