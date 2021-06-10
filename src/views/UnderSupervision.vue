@@ -212,7 +212,7 @@
                     <b>Certified: &nbsp;</b>No
                   </span>
                   <span
-                    v-if="item.createdAt && !item.licenseIssuedDate"
+                    v-if="item.createdAt"
                     class="
                       mt-medium
                       text-lightBlueB-500
@@ -225,22 +225,7 @@
                       item.createdAt ? moment(item.createdAt).fromNow() : "-"
                     }}
                   </span>
-                  <span
-                    v-else
-                    class="
-                      mt-medium
-                      text-lightBlueB-500
-                      flex
-                      justify-end
-                      content-center
-                    "
-                  >
-                    {{
-                      item.licenseIssuedDate
-                        ? moment(item.licenseIssuedDate).fromNow()
-                        : "-"
-                    }}
-                  </span>
+                 
                 </div>
               </div>
             </div>
@@ -570,8 +555,8 @@
                     "
                     >
                       {{
-                        item.licenseIssuedDate
-                          ? moment(item.licenseIssuedDate).fromNow()
+                        item.createdAt
+                          ? moment(item.createdAt).fromNow()
                           : "-"
                       }}
                     </span>
