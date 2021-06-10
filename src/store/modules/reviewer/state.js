@@ -24,6 +24,11 @@ export default {
         othersConfirmReview: [],
         othersConfirmReviewSearched: [],
 
+        evaluateReviewer: [],
+        evaluateReviewerSearched: [],
+        othresEvaluateReviewer: [],
+        othresEvaluateReviewerSearched: [],
+
         approved: [],
         approvedSearched: [],
         allApproved: [],

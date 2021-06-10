@@ -21,6 +21,11 @@ import {
   SET_CONFIRM_REVIEW_SEARCHED,
   SET_OTHERS_CONFIRM_REVIEW,
   SET_OTHERS_CONFIRM_REVIEW_SEARCHED,
+
+  SET_EVALUATE_REVIEW,
+  SET_EVALUATE_REVIEW_SEARCHED,
+  SET_OTHERS_EVALAUTE_REVIEW,
+  SET_OTHERS_EVALUATE_REVIEW_SEARCHED,
   
   SET_TEMPORARLY_FINISHED,
   SET_TEMPORARLY_FINISHED_SEARCHED,
@@ -165,16 +170,17 @@ export default {
     commit(SET_UNCONFIRMED_SEARCHED, searchedVal)
   },
 
-  async getOthersUnconfirmed({commit}, adminData) {
+  async getAllUnconfirmed({commit}, adminData) {
     const adminRole = adminData[0];
     const adminId = adminData[1];
     if(adminRole === "SA") {
       try {  
-        const respAll = await ApiService.get(baseUrl + "/applications/allUnfinished");
-        const resp = respAll.data.data.filter(function(e) {
-          return e.reviewerId === null ? '' : e.reviewerId !== adminId
-        })
-        commit(SET_OTHERS_UNCONFIRMED, resp)
+        const resp = await ApiService.get(baseUrl + "/applications/allUnconfirmedApps");
+        console.log("response is ", resp)
+        // const resp = respAll.data.data.filter(function(e) {
+        //   return e.reviewerId === null ? '' : e.reviewerId !== adminId
+        // })
+        commit(SET_OTHERS_UNCONFIRMED, resp.data.data)
       } catch(error) {
         const resp = error
       }
@@ -292,6 +298,18 @@ export default {
 
     })
     commit(SET_RETURNED_TO_OTHERS_SEARCHED, searchedVal)
+  },
+
+  async getEvaluateReviewer({commit}, id) {
+    try {
+    const url = baseUrl + "/applications/evaluatorsApplications/" + id;
+    const resp = await ApiService.get(url);
+    console.log("evaluateers apkdkd", resp)
+    commit(SET_EVALUATE_REVIEW, resp.data.data)
+    } catch(error) {
+      const resp = { status: "Error" };
+      return resp;
+    }
   },
 
   async getConfirmReview({commit}, id) {
@@ -1101,11 +1119,12 @@ export default {
   },
   async editVerification({ commit }, license) {
     try {
+      console.log("license detail", license)
       const resp = await ApiService.put(
         baseUrl + "/verifications/" + license.data.id,
         license
       );
-      // const resp = await ApiService.put(url + "newLicenses/" + license);
+      console.log("after response is")
       return resp;
     } catch (error) {
       return error;

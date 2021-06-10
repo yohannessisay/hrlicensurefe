@@ -762,18 +762,15 @@ export default {
         sendDeclinedData.value == true
       ) {
         console.log("request is ", req)
-        store.dispatch("newlicense/editNewLicense", req.data).then((res) => {
+        store.dispatch("newlicense/editNewLicense", req).then((res) => {
           console.log("new license edited value", res)
           if (res.statusText == "Created") {
             showFlash.value = true;
             showDeclineFlash.value = true;
-            
-            return;
             setTimeout(() => {
               router.push("/admin/review");
             }, 3000);
           } else {
-            return;
             showErrorFlash.value = true;
             setTimeout(() => {
               router.go();

@@ -8,14 +8,13 @@
         class="ml-8  mr-8 mb-12"
       >
         <div class="mt-large bg-white">
-          <div
-            v-if="role.code === `SA`"
-            class="flex"
-          >
+          <div v-if="role.code === `SA`" class="flex">
             <div class="flex flex-col mb-medium w-2/3 ml-small mt-small"></div>
             <div class="flex flex-col mb-medium w-1/3 mr-small mt-small">
               <label class="text-primary-700">Admins To Confirm</label>
-              <label class="text-primary-500">*please select maximum 3, minimum 2 admins to confirm</label>
+              <label class="text-primary-500"
+                >*please select maximum 3, minimum 2 admins to confirm</label
+              >
               <select
                 class="form-multiselect max-w-3xl"
                 v-model="assignConfirmAdmin.evaluatorIds"
@@ -31,7 +30,7 @@
                 </option>
               </select>
               <span v-show="showAdminCountError">
-              <label class="text-red-200">please select 2 or 3 admins</label>
+                <label class="text-red-200">please select 2 or 3 admins</label>
               </span>
               <button
                 class="block mx-auto bg-lightBlue-300 hover:bg-lightBlue-600 hover:shadow-lg mt-small"
@@ -39,6 +38,11 @@
               >
                 Confirmed By
               </button>
+              <div
+                v-if="showLoading"
+              >
+                <Spinner />
+              </div>
             </div>
           </div>
           <div class="flex justify-center"><Title message="Summary" /></div>
@@ -126,9 +130,7 @@
           <div class="flex flex-row">
             <div
               :class="[
-                license.woreda.zone.region === null
-                  ? errorClass
-                  : activeClass,
+                license.woreda.zone.region === null ? errorClass : activeClass,
               ]"
             >
               <label class="ml-8"> Region</label>
@@ -141,20 +143,14 @@
               </h5>
             </div>
             <div
-              :class="[
-                license.woreda.zone === null ? errorClass : activeClass,
-              ]"
+              :class="[license.woreda.zone === null ? errorClass : activeClass]"
             >
               <label class="ml-8"> Zone</label>
               <h5 class="ml-8">
-                {{
-                  license.woreda.zone ? license.woreda.zone.name : "-"
-                }}
+                {{ license.woreda.zone ? license.woreda.zone.name : "-" }}
               </h5>
             </div>
-            <div
-              :class="[license.woreda === null ? errorClass : activeClass]"
-            >
+            <div :class="[license.woreda === null ? errorClass : activeClass]">
               <label class="ml-8"> Wereda</label>
               <h5 class="ml-8">
                 {{ license.woreda ? license.woreda.name : "-" }}
@@ -316,6 +312,7 @@ export default {
     });
     let show = ref(false);
     let showLoading = ref(false);
+    let showAssignLoading = ref(false);
     let license = ref({
       applicant: {},
       applicantType: {},
@@ -366,19 +363,20 @@ export default {
     };
 
     const fetchAdminsByRegion = (regionId) => {
-      store.dispatch("reviewer/getAdminsByRegion", regionId).then(res => {
-        admins.value = res.data.data.filter(admins => {
-          return admins.id != loggedInAdminId
-        });
-      })
-    }
+      store.dispatch("reviewer/getAdminsByRegion", regionId).then((res) => {
+        admins.value = res.data.data
+        // admins.value = res.data.data.filter((admins) => {
+        //   return admins.id != loggedInAdminId;
+        // });
+      });
+    };
 
     const gen = () => {
       console.log("selected val", assignConfirmAdmin.value.evaluatorIds);
     };
 
     const assignAdminToConfirm = () => {
-      console.log("admin values are ", assignConfirmAdmin.value.evaluatorIds);
+      showAssignLoading.value = true;
       if (
         assignConfirmAdmin.value.evaluatorIds.length > 3 ||
         assignConfirmAdmin.value.evaluatorIds.length < 2
@@ -425,12 +423,12 @@ export default {
           )
 
           .then((response) => {
+            showAssignLoading.value = false;
             if (response.statusText == "Created") {
               showFlash.value = true;
               setTimeout(() => {
                 router.push("/admin/unconfirmed");
-              }, 3000)
-              
+              }, 3000);
             }
           });
       }
@@ -442,11 +440,12 @@ export default {
           )
 
           .then((response) => {
+            showAssignLoading.value = false;
             if (response.statusText == "Created") {
               showFlash.value = true;
               setTimeout(() => {
                 router.push("/admin/unconfirmed");
-              }, 3000)
+              }, 3000);
             }
           });
       }
@@ -455,12 +454,13 @@ export default {
           .dispatch("reviewer/confirmRenewalReview", assignConfirmAdmin.value)
 
           .then((response) => {
-            console.log("responses", response)
+            showAssignLoading.value = false;
+            console.log("responses", response);
             if (response.statusText == "Created") {
               showFlash.value = true;
               setTimeout(() => {
                 router.push("/admin/unconfirmed");
-              }, 3000)
+              }, 3000);
             }
           });
       }
@@ -472,11 +472,12 @@ export default {
           )
 
           .then((response) => {
+            showAssignLoading.value = false;
             if (response.statusText == "Created") {
               showFlash.value = true;
               setTimeout(() => {
                 router.push("/admin/unconfirmed");
-              }, 3000)
+              }, 3000);
             }
           });
       }
@@ -569,8 +570,8 @@ export default {
         route.params.applicantId
       );
       fetchRole(loggedInAdminId);
-      if(regionId !== null) {
-        fetchAdminsByRegion(regionId)
+      if (regionId !== null) {
+        fetchAdminsByRegion(regionId);
       } else {
         fetchAdmins();
       }

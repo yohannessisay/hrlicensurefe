@@ -1,12 +1,16 @@
 <template>
   <div>
     <ReviewerNavBar tab="Unconfirmed" />
-    <div class="bg-lightBlueB-200 h-full">
-      <unconfirmed-container />
+    <div v-if="isSuperAdmin">
+      <div class="bg-lightBlueB-200 h-full">
+        <others-unconfirmed-container />
+      </div>
     </div>
-    <!-- <div class="bg-lightBlueB-200 h-full">
-      <others-unconfirmed-container />
-    </div> -->
+    <div v-else>
+      <div class="bg-lightBlueB-200 h-full">
+        <unconfirmed-container />
+      </div>
+    </div>
     <!-- <div class="bg-lightBlueB-200 h-full">
       <returned-to-me-container />
     </div>
@@ -16,16 +20,19 @@
     <div class="bg-lightBlueB-200 h-full">
       <confirm-review-container />
     </div>
-    <div v-if="isSuperAdmin">
+    <!-- <div v-if="isSuperAdmin">
       <div class="bg-lightBlueB-200 h-full">
         <others-confirm-review-container />
       </div>
+    </div> -->
+    <div class="bg-lightBlueB-200 h-full">
+      <evaluate-application-container />
     </div>
   </div>
 </template>
 
 <script>
-import {ref, onMounted} from "vue";
+import { ref, onMounted } from "vue";
 import ReviewerNavBar from "@/components/Reviewer/ReviewerNavBar";
 import UnconfirmedContainer from "./ChildComponents/Containers/UnconfirmedContainer.vue";
 import ReturnedToMeContainer from "./ChildComponents/Containers/ReturnedToMeContainer.vue";
@@ -33,6 +40,7 @@ import ReturnedToOthersContainer from "./ChildComponents/Containers/ReturnedToOt
 import ConfirmReviewContainer from "./ChildComponents/Containers/ConfirmReviewContainer.vue";
 import OthersUnconfirmedContainer from "./ChildComponents/Containers/OthersUnconfirmedContainer.vue";
 import OthersConfirmReviewContainer from "./ChildComponents/Containers/OthersConfirmReviewContainer.vue";
+import EvaluateApplicationContainer from "./ChildComponents/Containers/EvaluateApplicationContainer.vue";
 
 export default {
   components: {
@@ -43,6 +51,7 @@ export default {
     OthersUnconfirmedContainer,
     OthersConfirmReviewContainer,
     ReturnedToOthersContainer,
+    EvaluateApplicationContainer,
   },
   computed: {
     moment: () => moment,
@@ -62,7 +71,7 @@ export default {
 
     onMounted(() => {
       superAdminStatus();
-    })
+    });
 
     return {
       role,

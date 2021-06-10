@@ -348,7 +348,7 @@
                     >Create Admin User
                   </a>
                 </router-link>
-                <router-link to="/admin/pendingPayments">
+                <!-- <router-link to="/admin/pendingPayments">
                   <a
                     class="block px-4 py-2 text-sm text-blue-100 hover:bg-gray-100 hover:text-gray-900"
                     role="menuitem"
@@ -361,7 +361,7 @@
                     role="menuitem"
                     >Others Pending
                   </a>
-                </router-link>
+                </router-link> -->
                 <!-- <a
                   href="#"
                   class="block px-4 py-2 text-sm text-blue-100 hover:bg-gray-100 hover:text-gray-900"

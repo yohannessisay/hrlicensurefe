@@ -234,6 +234,12 @@ const routes = [
     component: () =>
       import("../components/Reviewer/Detail/ConfirmReviewDetail.vue"),
   },
+  {
+    path: "/admin/evaluateApplicationDetail/:applicationType/:applicationId/:status",
+    name: "evaluateApplicationDetail",
+    component: () =>
+      import("../components/Reviewer/Detail/EvaluateApplicationDetail.vue"),
+  },
 
   {
     path:

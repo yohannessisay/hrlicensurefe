@@ -91,7 +91,7 @@ export default {
   },
   async editNewLicense({ commit }, license) {
     try {
-      console.log("founnnnnn", license)
+      console.log("admin value is+ ", license)
       const resp = await ApiService.put(
         url + "newLicenses/" + license.id,
         license

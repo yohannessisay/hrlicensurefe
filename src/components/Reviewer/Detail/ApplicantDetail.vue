@@ -93,7 +93,7 @@
           <div class="flex flex-row">
             <div
               :class="[
-                profileInfo.woreda.zone.region === null
+                license.woreda.zone.region === null
                   ? errorClass
                   : activeClass,
               ]"
@@ -101,30 +101,30 @@
               <label class="ml-8"> Region</label>
               <h5 class="ml-8">
                 {{
-                  profileInfo.woreda.zone.region
-                    ? profileInfo.woreda.zone.region.name
+                  license.woreda.zone.region
+                    ? license.woreda.zone.region.name
                     : "-"
                 }}
               </h5>
             </div>
             <div
               :class="[
-                profileInfo.woreda.zone === null ? errorClass : activeClass,
+                license.woreda.zone === null ? errorClass : activeClass,
               ]"
             >
               <label class="ml-8"> Zone</label>
               <h5 class="ml-8">
                 {{
-                  profileInfo.woreda.zone ? profileInfo.woreda.zone.name : "-"
+                  license.woreda.zone ? license.woreda.zone.name : "-"
                 }}
               </h5>
             </div>
             <div
-              :class="[profileInfo.woreda === null ? errorClass : activeClass]"
+              :class="[license.woreda === null ? errorClass : activeClass]"
             >
               <label class="ml-8"> Wereda</label>
               <h5 class="ml-8">
-                {{ profileInfo.woreda ? profileInfo.woreda.name : "-" }}
+                {{ license.woreda ? license.woreda.name : "-" }}
               </h5>
             </div>
             <div

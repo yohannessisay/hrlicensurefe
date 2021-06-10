@@ -21,6 +21,11 @@ import {
     SET_OTHERS_CONFIRM_REVIEW,
     SET_OTHERS_CONFIRM_REVIEW_SEARCHED,
 
+    SET_EVALUATE_REVIEW,
+    SET_EVALUATE_REVIEW_SEARCHED,
+    SET_OTHERS_EVALAUTE_REVIEW,
+    SET_OTHERS_EVALUATE_REVIEW_SEARCHED,
+
     SET_TEMPORARLY_FINISHED,
     SET_TEMPORARLY_FINISHED_SEARCHED,
 
@@ -108,6 +113,10 @@ export default {
     },
     [SET_OTHERS_CONFIRM_REVIEW_SEARCHED] (state, searchedVal) {
         state.othersConfirmReviewSearched = searchedVal
+    },
+    [SET_EVALUATE_REVIEW] (state, data) {
+        state.evaluateReviewer = data
+        state.evaluateReviewerSearched = data
     },
 
     // SET_TEMPORARLY_FINISHED,

@@ -23,6 +23,11 @@ export default {
     getOthersConfirmReview: state => state.othersConfirmReview,
     getOthersConfirmReviewSearched: state => state.othersConfirmReviewSearched,
 
+    getEvaluateReviewer: state => state.evaluateReviewer,
+    getEvaluateReviewerSearched: state => state.evaluateReviewerSearched,
+    getOthresEvaluateReviewer: state => state.othresEvaluateReviewer,
+    getOthresEvaluateReviewerSearched: state => state.othresEvaluateReviewerSearched,
+
     getRecentlyFinished: state => state.recentlyFinished,
     getRecentlyFinishedSearched: state => state.recentlyFinishedSearched,
 

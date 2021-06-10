@@ -221,6 +221,7 @@
               </h5>
             </div>
           </div>
+          <div v-if="!isCurrentAdminEvaluator">
             <div class="flex justify-start">
               <Title message="Evaluators Info" />
             </div>
@@ -253,6 +254,31 @@
                 </div>
               </div>
             </span>
+          </div>
+          <div class="flex justify-start flex-wrap"></div>
+          <div v-if="!isCurrentAdminEvaluator">
+            <div class="flex justify-start">
+              <Title message="Application Status" />
+            </div>
+            <div>
+              <label class="ml-8">
+                {{ license.previousApplicationStatus.name }}
+              </label>
+              <label
+                class="ml-8"
+                v-if="license.previousApplicationStatus.remark !== null"
+              >
+                {{ license.previousApplicationStatus.remark }}
+              </label>
+            </div>
+            <!-- <div v-if="getReviewId == loggedInAdminId"> -->
+            <div class="mt-4 flex justify-center">
+              <div>
+                <button @click="evaluate()">Continue Evaluating</button>
+              </div>
+            </div>
+            <!-- </div> -->
+          </div>
         </div>
       </div>
     </div>
@@ -291,6 +317,8 @@ export default {
 
     let userId = +localStorage.getItem("userId");
     let loggedInAdminId = +localStorage.getItem("adminId");
+
+    let isCurrentAdminEvaluator = ref(false);
 
     let evaluators = ref({
       actionEvent: "",
@@ -346,6 +374,7 @@ export default {
           .dispatch("reviewer/getNewLicenseApplication", applicationId)
           .then((res) => {
             console.log("newlicense response", res);
+            isAdminEvaluator(res.data.data.evaluators);
             showLoading.value = false;
             license.value = res.data.data;
             evaluators.value = license.value.evaluators;
@@ -365,6 +394,7 @@ export default {
         store
           .dispatch("reviewer/getGoodStandingApplication", applicationId)
           .then((res) => {
+            isAdminEvaluator(res.data.data.evaluators);
             showLoading.value = false;
             license.value = res.data.data;
             evaluators.value = license.value.evaluators;
@@ -384,6 +414,7 @@ export default {
         store
           .dispatch("reviewer/getVerificationApplication", applicationId)
           .then((res) => {
+            isAdminEvaluator(res.data.data.evaluators);
             showLoading.value = false;
             license.value = res.data.data;
             evaluators.value = license.value.evaluators;
@@ -404,6 +435,7 @@ export default {
           .dispatch("reviewer/getRenewalApplication", applicationId)
           .then((res) => {
             console.log("renewal response value ", res);
+            isAdminEvaluator(res.data.data.evaluators);
             showLoading.value = false;
             license.value = res.data.data;
             evaluators.value = license.value.evaluators;
@@ -420,6 +452,14 @@ export default {
               license.value.education.institution.institutionType.name;
           });
       }
+    };
+
+    const isAdminEvaluator = (evaluators) => {
+      evaluators.map((evaluator) => {
+        if (evaluator.evaluator.id == loggedInAdminId) {
+          isCurrentAdminEvaluator.value = true;
+        }
+      });
     };
 
     const evaluate = () => {
@@ -458,6 +498,7 @@ export default {
       applicantTypeId,
       education,
       show,
+      isCurrentAdminEvaluator,
       created,
       evaluate,
       applicationType,
