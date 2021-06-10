@@ -59,7 +59,7 @@
             </div>
           </div>
         </form>
-       <div v-if="buttons && !draftStatus" class="flex justify-center mb-8">
+        <div v-if="buttons && !draftStatus" class="flex justify-center mb-8">
           <button @click="submit">
             Next
           </button>

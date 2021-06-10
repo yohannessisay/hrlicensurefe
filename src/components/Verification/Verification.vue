@@ -133,7 +133,6 @@ export default {
             });
             this.buttons = status[0]["buttons"];
           }
-          console.log(this.buttons);
           this.$store.dispatch("verification/setButtons", this.buttons);
         });
     },
