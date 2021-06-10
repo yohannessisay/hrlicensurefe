@@ -176,7 +176,6 @@ export default {
     if(adminRole === "SA") {
       try {  
         const resp = await ApiService.get(baseUrl + "/applications/allUnconfirmedApps");
-        console.log("response is ", resp)
         // const resp = respAll.data.data.filter(function(e) {
         //   return e.reviewerId === null ? '' : e.reviewerId !== adminId
         // })
@@ -304,7 +303,6 @@ export default {
     try {
     const url = baseUrl + "/applications/evaluatorsApplications/" + id;
     const resp = await ApiService.get(url);
-    console.log("evaluateers apkdkd", resp)
     commit(SET_EVALUATE_REVIEW, resp.data.data)
     } catch(error) {
       const resp = { status: "Error" };
@@ -785,7 +783,7 @@ export default {
   
   async getAllCertifiedUsers({commit}) {
     try {
-      const resp = await ApiService.get(baseUrl + "/applications/allFinished")
+      const resp = await ApiService.get(baseUrl + "/applications/allUnconfirmedApps")
       const certifiedUsers = resp.data.data.filter(function(e) {
         return e.certified == true && 
         e.applicationType != "Good Standing" && e.applicationType != "Verification";
@@ -921,6 +919,7 @@ export default {
   },
   async getVerificationApplication(context, id) {
     try {
+      console.log("verification id is ", id)
       const url = baseUrl + "/verifications/" + id;
       const resp = await ApiService.get(url);
       return resp;
@@ -1117,6 +1116,64 @@ export default {
       return error;
     }
   },
+  
+  async evaluatVerification({ commit }, license) {
+    try {
+      console.log("confirm verification detail", license)
+      return;
+      const resp = await ApiService.put(
+        baseUrl + "/verificationEvaluators/" + license.id,
+        license
+      );
+      console.log("after response is", resp)
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+
+  async evaluateGoodStanding({ commit }, license) {
+    try {
+      console.log("confirm verification detail", license)
+      const resp = await ApiService.put(
+        baseUrl + "/goodStandingEvaluators/" + license.id,
+        license
+      );
+      console.log("after response is", resp)
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+
+  async evaluateRenewal({ commit }, license) {
+    try {
+      console.log("confirm verification detail", license)
+      const resp = await ApiService.put(
+        baseUrl + "/renewalEvaluators/" + license.id,
+        license
+      );
+      console.log("after response is", resp)
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+
+  async evaluateNewLicense({ commit }, license) {
+    try {
+      console.log("confirm verification detail", license)
+      const resp = await ApiService.put(
+        baseUrl + "/licenseEvaluators/" + license.id,
+        license
+      );
+      console.log("after response is", resp)
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+
   async editVerification({ commit }, license) {
     try {
       console.log("license detail", license)

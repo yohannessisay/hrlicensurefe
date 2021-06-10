@@ -20,14 +20,18 @@
         <div class="flex justify-start flex-wrap ml-12">
           <div>
             <picture class="flex justify-center items-center mb-small">
-              <img
+              <!-- <img
                 style="border-radius: 100%"
                 v-bind:src="
                   'https://hrlicensurebe.dev.k8s.sandboxaddis.com/' +
-                    'docs[0].filePath'
+                    'docs[1].filePath'
                 "
                 class="img"
-              />
+              /> -->
+              <img
+              class="box-shadow-pop avaterImage"
+              src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
+            />
             </picture>
             <div class="flex justify-center items-center">
               <h4 class="mt-2 mr-small w-1/2">
@@ -393,7 +397,10 @@ export default {
     const router = useRouter();
     const store = useStore();
 
+    const adminId = +localStorage.getItem("adminId");
+
     let accepted = ref([]);
+    let req = ref({});
     let rejected = ref([]);
     let rejectedObj = ref([]);
     let amount = ref(1);
@@ -409,6 +416,7 @@ export default {
     let documentTypes = ref([]);
     let documentTypeName = ref("");
     let modalDocumentTypeName = ref("");
+    let evaluateData = ref({});
     const newLicense = ref({
       applicant: { profile: { name: "", fatherName: "" } },
       applicantType: { name: "" },
@@ -419,6 +427,7 @@ export default {
       declinedFields: "",
       remark: "",
       documents: [{ filePath: "" }],
+      evaluators: [{}],
       applicationStatus: {
         buttons: [{ action: "", name: "" }],
       },
@@ -519,45 +528,56 @@ export default {
     };
 
     const action = (actionValue) => {
-      if (actionValue == "UpdatePaymentEvent") {
-        modalFindDocumentType(
-          documentTypes.value,
-          rejectedObj.value[0]
-        );
-        showRemark.value = true;
-        sendDeclinedData.value = false;
-        if (fromModalSendDeclinedData.value == true) {
-          sendDeclinedData.value = true;
-        }
+      if (actionValue == "ReturnToReviewerEvent") {
+        // modalFindDocumentType(
+        //   documentTypes.value,
+        //   rejectedObj.value[0]
+        // );
+        // showRemark.value = true;
+        // sendDeclinedData.value = false;
+        // if (fromModalSendDeclinedData.value == true) {
+        //   sendDeclinedData.value = true;
+        // }
         // return;
+        console.log("return action is clicked successfully")
         console.log("rejected val", rejected.value);
         console.log("rejectedObj val", rejectedObj.value)
       }
       newLicense.value.declinedFields = rejected.value;
       newLicense.value.acceptedFields = accepted.value;
-
-      const req = {
-        action: actionValue,
-        data: newLicense.value,
+      evaluateData.value = newLicense.value.evaluators;
+      evaluateData.value = evaluateData.value.filter(evaluate => {
+        return evaluate.evaluatorId == adminId
+      })
+      console.log("new evaluators value conf", evaluateData.value)
+      if(actionValue == "ConfirmEvent") {
+        console.log("confirm button is clicked", actionValue)
+        
+        
+      }
+      req.value = {
+        ...evaluateData.value,
       };
       if (sendDeclinedData.value == true) {
         if (applicationType.value == "Verification") {
-          editApplication("reviewer", "editVerification", req);
+          evaluateApplication("evaluatVerification", req.value);
         }
         if (applicationType.value == "Renewal") {
-          editApplication("reviewer", "editRenewal", req);
+          evaluateApplication("evaluateRenewal",req.value);
         }
         if (applicationType.value == "Good Standing") {
-          editApplication("reviewer", "editGoodStanding", req);
+          evaluateApplication("evaluateGoodStanding", req.value);
         }
         if (applicationType.value == "New License") {
-          editApplication("newlicense", "editNewLicense", req);
+          evaluateApplication("evaluateNewLicense",req.value);
         }
       }
     };
 
-    const editApplication = (reviewType, applicationType, req) => {
-      store.dispatch(reviewType + "/" + applicationType, req).then((res) => {
+    const evaluateApplication = (applicationType, req) => {
+      console.log("request[00] value is ", req[0])
+      return;
+      store.dispatch(applicationType+"/", req).then((res) => {
         console.log("ieie resp", res);
         if (res.statusText == "Created") {
           showFlash.value = true;
@@ -659,6 +679,14 @@ export default {
 </script>
 
 <style>
+.avaterImage {
+  border-radius: 50%;
+  margin-bottom: 1rem;
+  width: 80px;
+  height: 80px;
+  border-color: steelblue;
+  background-color: steelblue;
+}
 .md-danger {
   background-image: linear-gradient(to right, #d63232, #e63636) !important;
   color: white;

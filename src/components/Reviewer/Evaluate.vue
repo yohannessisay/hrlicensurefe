@@ -784,7 +784,9 @@ export default {
         applicationType.value == "Verification" &&
         sendDeclinedData.value == true
       ) {
+        console.log("//// before response")
         store.dispatch("reviewer/editVerification", req).then((res) => {
+          console.log("----------", res)
           if (res.statusText == "Created") {
             showFlash.value = true;
             setTimeout(() => {

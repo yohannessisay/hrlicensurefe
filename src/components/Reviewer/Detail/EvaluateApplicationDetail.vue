@@ -221,52 +221,19 @@
               </h5>
             </div>
           </div>
-          <div v-if="!isCurrentAdminEvaluator">
-            <div class="flex justify-start">
-              <Title message="Evaluators Info" />
-            </div>
-            <span
-               v-for="(evaluator, index) in evaluators" 
-              :key ="index">
-              <div class="flex flex-row">
-                <div>
-                  <h5 class="ml-8">
-                    {{ index + 1 }}.
-                  </h5>
-                </div>
-                <div>
-                  <h5 class="ml-8" v-if="evaluator.evaluator.name">
-                    {{ evaluator.evaluator.name }}
-                  </h5>
-                </div>
-                <div>
-                  <h5 class="ml-8" v-if="evaluator.actionEvent">
-                    {{ evaluator.actionEvent }}
-                  </h5>
-                  <h5 class="ml-8" v-else>
-                    Not Evaluated Yet
-                  </h5>
-                </div>
-                <div>
-                  <h5 class="ml-8" v-if="evaluator.remark">
-                    {{ evaluator.remark }}
-                  </h5>
-                </div>
-              </div>
-            </span>
-          </div>
           <div class="flex justify-start flex-wrap"></div>
-          <div v-if="!isCurrentAdminEvaluator">
+          <div v-if="isCurrentAdminEvaluator">
             <div class="flex justify-start">
               <Title message="Application Status" />
             </div>
             <div>
               <label class="ml-8">
-                {{ license.previousApplicationStatus.name }}
+                {{ license.previousApplicationStatus ?
+                 license.previousApplicationStatus.name : '-' }}
               </label>
               <label
                 class="ml-8"
-                v-if="license.previousApplicationStatus.remark !== null"
+                v-if="license.previousApplicationStatus && license.previousApplicationStatus.remark !== null"
               >
                 {{ license.previousApplicationStatus.remark }}
               </label>
@@ -414,6 +381,7 @@ export default {
         store
           .dispatch("reviewer/getVerificationApplication", applicationId)
           .then((res) => {
+            console.log("resssss", res)
             isAdminEvaluator(res.data.data.evaluators);
             showLoading.value = false;
             license.value = res.data.data;

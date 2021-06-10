@@ -1,7 +1,7 @@
 <template>
   <div
     class="container"
-    v-for="item in evaluationsList"
+    v-for="(item, index) in evaluationsList"
     v-bind:key="item.id"
     v-bind:value="item.id"
   >
@@ -12,9 +12,9 @@
         class="p-4 w-48 h-64"
         @Click="
           detail(
-            `/admin/confirmReviewDetail`,
+            `/admin/evaluateApplicationDetail`,
             item.applicantType,
-            item.id,
+            applicationId[index],
             item.applicant.id
           )
         "
@@ -29,16 +29,14 @@
         <h4
           class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
         >
-          <!-- <b>{{
-            item.applicant.profile.name
-              ? item.applicant.profile.name +
-                " " +
-                item.applicant.profile.fatherName
-              : "-"
-          }}</b> -->
-          <!-- <b>Endu Mathi</b> -->
+          <b>{{ profileName[index] ? profileName[index] : "-" }} </b>
         </h4>
-        <br />
+        <span
+          class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+        >
+          <i class="fas fa-user-cog"></i> &nbsp;
+          {{ item.createdByAdmin.name ? item.createdByAdmin.name : "-" }}
+        </span>
         <span
           class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
         >
@@ -73,35 +71,55 @@ export default {
   setup(props) {
     let router = useRouter();
 
-    console.log("props value", props.evaluateReview)
+    let profileName = ref([]);
+
+    let applicationId = ref([]);
+
     let evaluationsList = props.evaluateReview;
     // console.log("evaluations list", evaluationsList)
-    
-    const getProfileInfo = () => {
-      console.log("evaluations list,,", evaluationsList)
-      for(let evaluation in evaluationsList) {
-        console.log("evvvv", evaluationsList[evaluation].renewal === undefined)
-        if(evaluationsList[evaluation].renewal !== undefined) {
-          evaluationsList[evaluation].applicant = evaluationsList[evaluation].renewal;
-          evaluationsList[evaluation].newLicenseCode = evaluationsList[evaluation].renewal.renewalCode;
-          console.log("evaluation applicant", evaluationsList[evaluation].applicant)
-        } else if(evaluationsList[evaluation].verification !== undefined) {
-          evaluationsList[evaluation].applicant = evaluationsList[evaluation].verification;
-          evaluationsList[evaluation].newLicenseCode = evaluationsList[evaluation].verification.verificationCode;
-          console.log("evaluation verification", evaluationsList[evaluation].verification)
-        } else if(evaluationsList[evaluation].newLicense !== undefined) {
-          evaluationsList[evaluation].applicant = evaluationsList[evaluation].newLicense;
-          evaluationsList[evaluation].newLicenseCode = evaluationsList[evaluation].newLicense.newLicenseCode;
-          console.log("evaluation new license", evaluationsList[evaluation].newLicense)
-        }
-        else if(evaluationsList[evaluation].goodStanding !== undefined) {
-          evaluationsList[evaluation].applicant = evaluationsList[evaluation].goodStanding;
-          evaluationsList[evaluation].newLicenseCode = evaluationsList[evaluation].goodStanding.goodStandingCode;
-          console.log("evaluation good standing", evaluationsList[evaluation].goodStanding)
 
+    const getProfileInfo = () => {
+      console.log("evaluations list,,", evaluationsList);
+      for (let evaluation in evaluationsList) {
+        if (evaluationsList[evaluation].renewal !== undefined) {
+          evaluationsList[evaluation].applicant =
+            evaluationsList[evaluation].renewal;
+          let fullName = `${evaluationsList[evaluation].renewal.profile.name} 
+          ${evaluationsList[evaluation].renewal.profile.fatherName}`;
+          profileName.value.push(fullName);
+          applicationId.value.push(evaluationsList[evaluation].renewal.id);
+          evaluationsList[evaluation].newLicenseCode =
+            evaluationsList[evaluation].renewal.renewalCode;
+        } else if (evaluationsList[evaluation].verification !== undefined) {
+          evaluationsList[evaluation].applicant =
+            evaluationsList[evaluation].verification;
+          let fullName = `${evaluationsList[evaluation].verification.profile.name} 
+          ${evaluationsList[evaluation].verification.profile.fatherName}`;
+          profileName.value.push(fullName);
+          applicationId.value.push(evaluationsList[evaluation].verification.id);
+          evaluationsList[evaluation].newLicenseCode =
+            evaluationsList[evaluation].verification.verificationCode;
+        } else if (evaluationsList[evaluation].newLicense !== undefined) {
+          evaluationsList[evaluation].applicant =
+            evaluationsList[evaluation].newLicense;
+          let fullName = `${evaluationsList[evaluation].newLicense.profile.name} 
+          ${evaluationsList[evaluation].newLicense.profile.fatherName}`;
+          profileName.value.push(fullName);
+          applicationId.value.push(evaluationsList[evaluation].newLicense.id);
+          evaluationsList[evaluation].newLicenseCode =
+            evaluationsList[evaluation].newLicense.newLicenseCode;
+        } else if (evaluationsList[evaluation].goodStanding !== undefined) {
+          evaluationsList[evaluation].applicant =
+            evaluationsList[evaluation].goodStanding;
+          let fullName = `${evaluationsList[evaluation].goodStanding.profile.name} 
+          ${evaluationsList[evaluation].goodStanding.profile.fatherName}`;
+          profileName.value.push(fullName);
+          applicationId.value.push(evaluationsList[evaluation].goodStanding.id);
+          evaluationsList[evaluation].newLicenseCode =
+            evaluationsList[evaluation].goodStanding.goodStandingCode;
         }
       }
-    }
+    };
     const detail = (data, applicationType, applicationId, applicantId) => {
       const url =
         data + "/" + applicationType + "/" + applicationId + "/" + applicantId;
@@ -110,11 +128,13 @@ export default {
 
     onMounted(() => {
       getProfileInfo();
-    })
+    });
     return {
       evaluationsList,
-      detail
-    }
+      profileName,
+      applicationId,
+      detail,
+    };
   },
 };
 </script>

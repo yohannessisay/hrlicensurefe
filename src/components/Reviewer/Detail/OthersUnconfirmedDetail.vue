@@ -36,10 +36,11 @@
                 class="block mx-auto bg-lightBlue-300 hover:bg-lightBlue-600 hover:shadow-lg mt-small"
                 @click="assignAdminToConfirm()"
               >
-                Confirmed By
+                Assign
               </button>
               <div
-                v-if="showLoading"
+              class="flex justify-center justify-items-center mt-6"
+                v-if="showAssignLoading"
               >
                 <Spinner />
               </div>
@@ -377,6 +378,7 @@ export default {
 
     const assignAdminToConfirm = () => {
       showAssignLoading.value = true;
+      
       if (
         assignConfirmAdmin.value.evaluatorIds.length > 3 ||
         assignConfirmAdmin.value.evaluatorIds.length < 2
@@ -415,6 +417,7 @@ export default {
           };
         }
       }
+      console.log("assigned data is for admins is ", assignConfirmAdmin.value)
       if (applicationType.value == "New License") {
         store
           .dispatch(
@@ -440,6 +443,8 @@ export default {
           )
 
           .then((response) => {
+            console.log("++++++++++++++++++", response)
+            return;
             showAssignLoading.value = false;
             if (response.statusText == "Created") {
               showFlash.value = true;
@@ -491,6 +496,7 @@ export default {
         store
           .dispatch("reviewer/getNewLicenseApplication", applicationId)
           .then((res) => {
+            console.log("ffffound newlicense dddata", res);
             showLoading.value = false;
             license.value = res.data.data;
             getReviewId.value = license.value.reviewerId;
@@ -509,6 +515,7 @@ export default {
         store
           .dispatch("reviewer/getGoodStandingApplication", applicationId)
           .then((res) => {
+            console.log("ffffound good standing dddata", res);
             showLoading.value = false;
             license.value = res.data.data;
             getReviewId.value = license.value.reviewerId;
@@ -527,6 +534,7 @@ export default {
         store
           .dispatch("reviewer/getVerificationApplication", applicationId)
           .then((res) => {
+            console.log("ffffound verification dddata", res);
             showLoading.value = false;
             license.value = res.data.data;
             getReviewId.value = license.value.reviewerId;
@@ -545,6 +553,7 @@ export default {
         store
           .dispatch("reviewer/getRenewalApplication", applicationId)
           .then((res) => {
+            console.log("ffffound renewal dddata", res);
             showLoading.value = false;
             license.value = res.data.data;
             getReviewId.value = license.value.reviewerId;
@@ -597,6 +606,7 @@ export default {
       applicationType,
       licenseId,
       showLoading,
+      showAssignLoading,
       admins,
       role,
       assignConfirmAdmin,

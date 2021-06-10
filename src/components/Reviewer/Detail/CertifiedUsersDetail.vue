@@ -110,10 +110,10 @@
                 <h4>በአዋጅ ቁጥር 916/2008 አንቀጽ 33(13)በተሰጠው ስልጣን መሰረት</h4>
                 <br><br><br><br>
                 <h3 class="underline">
-                  <b>{{ certifiedUser.name }} {{ certifiedUser.fatherName }}
+                  <b>{{ certifiedUser.alternativeName }} {{ certifiedUser.alternativeFatherName }}
                     {{
-                      certifiedUser.grandFatherName != null
-                        ? certifiedUser.grandFatherName
+                      certifiedUser.alternativeGrandFatherName != null
+                        ? certifiedUser.alternativeGrandFatherName
                         : ""}}</b>
                     </h3>
                     <h4>ተገቢውን መስፈርት አሟልተው ስለተገኙ ሚኒስቴር መስሪያ ቤቱ</h4>
@@ -282,6 +282,7 @@ export default {
           route.params.applicationId
         )
         .then((res) => {
+          console.log("renewalal detail", res.data.data)
           showApplicationLoading.value = false;
           certificateDetail.value = res.data.data;
           if(route.params.applicantId != certificateDetail.value.applicantId) {
@@ -304,7 +305,7 @@ export default {
       
       
       doc.addImage(backgroundImage, 'JPEG', 0, 0, 298, 213, undefined, 'FAST')
-      doc.addImage(certifiedUserImage, 'JPG', 10, 10, 20, 30)
+      // doc.addImage(certifiedUserImage, 'JPG', 10, 10, 20, 30)
       doc.setFontSize(25)
       // doc.addFileToVFS("Amiri-Regular.ttf", AmiriRegular);
       doc.addFileToVFS("Tera-Regular-normal.ttf", AmharicFont);
@@ -324,14 +325,14 @@ export default {
       doc.text(150, 60, 'HEALTH PROFFESSIONALS REGISTRATION AND')
       doc.text(190, 70, 'LICENSING CERTIFICATE')
 
-      doc.setFontSize(15)
+      doc.setFontSize(13)
       doc.text(150, 90, 'Under the Federal Democratic Republic of Ethiopia the Ministry')
       doc.text(150, 100, 'of Health by virtue of Proclamation No.916/2015 Article 33(13)')
       doc.text(190, 110, 'is given the authority to issue')
 
       doc.setFontSize(17)
       doc.text(190, 130, `${certifiedUser.value.name} ${certifiedUser.value.fatherName} ${certifiedUser.value.grandFatherName ? certifiedUser.value.grandFatherName : ''}`)
-      doc.text(60, 130, `${certifiedUser.value.name} ${certifiedUser.value.fatherName} ${certifiedUser.value.grandFatherName ? certifiedUser.value.grandFatherName : ''}`)
+      doc.text(60, 130, `${certifiedUser.value.alternativeName ? certifiedUser.value.alternativeName : ''} ${certifiedUser.value.alternativeFatherName ? certifiedUser.value.alternativeFatherName : ''} ${certifiedUser.value.alternativeGrandFatherName ? certifiedUser.value.alternativeGrandFatherName : ''}`)
       doc.setFontSize(15)
       doc.text(155, 140, 'Having duly satisfied the requirements of the Ministry')
       doc.text(180, 147, 'hereby registered and licensed as')
@@ -358,12 +359,12 @@ export default {
       doc.setFontSize(17)
       doc.text(20, 60, "የጤና ባለሙያዎች የሙያ ምዝገባና ፈቃድ የምስከር ወረቀት")
 
-      doc.setFontSize(15)
+      doc.setFontSize(13)
       doc.text(20, 90, "በኢትዮጵያ ፌዴራላዊ ዴሞክራሲያዊ ረፐብሊክ የጤና ጥበቃ ሚንስቴር")
       doc.text(20, 100, "በአዋጅ ቁጥር 916/2008 አንቀጽ 33(13)በተሰጠው ስልጣን መሰረት")
 
       doc.setFontSize(17)
-      
+      doc.text(60, 130, `${certifiedUser.value.alternativeName ? certifiedUser.value.alternativeName : ''} ${certifiedUser.value.alternativeFatherName ? certifiedUser.value.alternativeFatherName : ''} ${certifiedUser.value.alternativeGrandFatherName ? certifiedUser.value.alternativeGrandFatherName : ''}`)
       doc.setFontSize(15)
       doc.text(20, 140, "ተገቢውን መስፈርት አሟልተው ስለተገኙ ሚኒስቴር መስሪያ ቤቱ")
       doc.setFontSize(17)

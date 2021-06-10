@@ -50,7 +50,6 @@ export default {
     const fetchevaluateApplication = () => {
       showLoading.value = true;
       store.dispatch("reviewer/getEvaluateReviewer", adminId).then((res) => {
-        console.log("evaluate rrr ", store.getters["reviewer/getEvaluateReviewerSearched"])
         showLoading.value = false;
         evaluateApplication.value = store.getters["reviewer/getEvaluateReviewerSearched"];
         if (store.getters["reviewer/getEvaluateReviewerSearched"].length !== 0) {

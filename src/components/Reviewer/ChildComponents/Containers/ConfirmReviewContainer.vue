@@ -1,6 +1,6 @@
 <template>
   <div class="flex pl-12 pt-tiny">
-    <Title message="On Evaluation" />
+    <Title message="On Review" />
   </div>
   <div class="flex flex-wrap pb-medium rounded h-full" v-if="!showLoading">
     <nothing-to-show :nothingToShow="nothingToShowUnfinished" />
@@ -50,7 +50,6 @@ export default {
     const fetchUnfinished = () => {
       showLoading.value = true;
       store.dispatch("reviewer/getConfirmReview", adminId).then((res) => {
-        console.log("confirm valllue ", store.getters["reviewer/getConfirmReviewSearched"])
         showLoading.value = false;
         unfinished.value = store.getters["reviewer/getConfirmReviewSearched"];
         if (store.getters["reviewer/getConfirmReview"].length !== 0) {
