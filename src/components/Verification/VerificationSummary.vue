@@ -275,7 +275,7 @@
         </button>
       </div>
       <div
-        class="flex justify-center justify-items-center mt-8 mb-8"
+        class="flex justify-center justify-items-center mt-8 pb-8"
         v-if="showLoading"
       >
         <Spinner />
