@@ -331,7 +331,7 @@ export default {
       showButtons: false,
       documentSpec: [],
       licenseInfo: "",
-      userId: localStorage.getItem("userId"),
+      userId: +localStorage.getItem("userId"),
       passport: "",
       healthExamCert: "",
       workExperience: "",

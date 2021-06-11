@@ -314,7 +314,7 @@ export default {
       this.draftData = this.getDraftData;
     }
 
-    this.userId = localStorage.getItem("userId");
+    this.userId = +localStorage.getItem("userId");
     this.passport = this.getPassport;
     this.healthExamCert = this.getHealthExamCert;
     this.englishLanguage = this.getEnglishLanguage;
