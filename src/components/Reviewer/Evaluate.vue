@@ -53,14 +53,15 @@
               <h4 class="mt-2 ml-small w-1/2">
                 {{ "Institution:  " + newLicense.education.institution.name }}
               </h4>
-              <!-- <h4 class="mt-2">{{ "Institution:  " + newLicense.education.institution.name }}</h4> -->
             </div>
             <div class="flex justify-center items-center">
               <div class="mt-2 ml-small w-1/2"></div>
               <h4 class="mt-2 ml-small w-1/2">
                 {{
                   "Institution Type:  " +
+                  newLicense.education.institution ?
                     newLicense.education.institution.institutionType.name
+                    : "-"
                 }}
               </h4>
             </div>
@@ -460,6 +461,7 @@ export default {
         store
           .dispatch("reviewer/getNewLicenseApplication", applicationId)
           .then((res) => {
+            console.log("new license detail", res)
             newLicense.value = res.data.data;
             buttons.value = res.data.data.applicationStatus.buttons;
             console.log("buttons is ", buttons.value)
@@ -489,7 +491,17 @@ export default {
         store
           .dispatch("reviewer/getGoodStandingApplication", applicationId)
           .then((res) => {
-            newLicense.value = res.data.data;
+            console.log("good standing befor aaa", newLicense.value)
+            // newLicense.value = res.data.data;
+            newLicense.value.applicantType.name = "-"
+            newLicense.value.education.department.name = "-"
+            newLicense.value.education.institution.name= "-"
+            newLicense.value.education.institution.institutionType.name = "-"
+            newLicense.value = {
+              ...newLicense.value,
+              ...res.data.data,
+            }
+            console.log("good standing after", newLicense.value)
             buttons.value = res.data.data.applicationStatus.buttons.filter(
               (allButtons) => {
                 return allButtons.name != "Under supervision";
@@ -501,6 +513,8 @@ export default {
                 : (button.name = button.name);
             });
             docs.value = res.data.data.documents;
+            console.log("bbuttons: ", buttons.value);
+            console.log("good standing docs", docs.value)
             if (newLicense.value.applicationStatus.code == "REVDRA") {
               rejected.value = newLicense.value.declinedFields;
               rejectedObj.value = newLicense.value.declinedFields;
@@ -784,7 +798,6 @@ export default {
         applicationType.value == "Verification" &&
         sendDeclinedData.value == true
       ) {
-        console.log("//// before response")
         store.dispatch("reviewer/editVerification", req).then((res) => {
           console.log("----------", res)
           if (res.statusText == "Created") {

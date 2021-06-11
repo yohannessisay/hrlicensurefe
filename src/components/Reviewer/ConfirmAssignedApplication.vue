@@ -227,6 +227,12 @@
             {{ button.name }}
           </button>
         </div>
+        <div
+        v-if="showLoadingconfirmed"
+        class="flex content-center justify-center"
+      >
+        <Spinner />
+      </div>
       </div>
       <Modal v-if="showRemark">
         <div>
@@ -385,12 +391,15 @@ import Modal from "@/sharedComponents/Modal";
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import ReviewerNavBar from "@/components/Reviewer/ReviewerNavBar";
+
+import Spinner from "@/sharedComponents/Spinner";
 export default {
   components: {
     Modal,
     FlashMessage,
     ErrorFlashMessage,
     ReviewerNavBar,
+    Spinner,
   },
   setup() {
     const route = useRoute();
@@ -400,6 +409,7 @@ export default {
     const adminId = +localStorage.getItem("adminId");
 
     let evaluationSuccess = ref(false);
+    let showLoadingconfirmed = ref(false);
     let accepted = ref([]);
     let req = ref({});
     let rejected = ref([]);
@@ -417,7 +427,8 @@ export default {
     let documentTypes = ref([]);
     let documentTypeName = ref("");
     let modalDocumentTypeName = ref("");
-    let evaluateData = ref({});
+    let evaluateData = ref({actionEvent: "", 
+            remark: ""});
     const newLicense = ref({
       applicant: { profile: { name: "", fatherName: "" } },
       applicantType: { name: "" },
@@ -527,38 +538,27 @@ export default {
     };
 
     const action = (actionValue) => {
-      if (actionValue == "ReturnToReviewerEvent") {
-        // modalFindDocumentType(
-        //   documentTypes.value,
-        //   rejectedObj.value[0]
-        // );
-        showRemark.value = true;
-        sendDeclinedData.value = false;
-        if (fromModalSendDeclinedData.value == true) {
-          sendDeclinedData.value = true;
-        }
-        // return;
-        console.log("return action is clicked successfully");
-        console.log("rejected val", rejected.value);
-        console.log("rejectedObj val", rejectedObj.value);
-      }
-      console.log("is it comming here");
       newLicense.value.declinedFields = rejected.value;
       newLicense.value.acceptedFields = accepted.value;
       evaluateData.value = newLicense.value.evaluators;
       evaluateData.value = evaluateData.value.filter((evaluate) => {
         return evaluate.evaluatorId == adminId;
       });
-      console.log("new evaluators value conf", newLicense.value);
-      if (actionValue == "ConfirmEvent") {
-        console.log("confirm button is clicked", actionValue);
+      evaluateData.value[0].actionEvent = actionValue;
+      if (actionValue == "ReturnToReviewerEvent") {
+        showRemark.value = true;
+        sendDeclinedData.value = false;
+        if (fromModalSendDeclinedData.value == true) {
+          sendDeclinedData.value = true;
+        }
+        console.log("new license remark is ", newLicense.value.remark)
+        evaluateData.value[0].remark = newLicense.value.remark;
       }
+      
       req.value = {
-        ...evaluateData.value,
+        ...evaluateData.value[0],
       };
       if (sendDeclinedData.value == true) {
-        console.log("----------------", evaluateData.value)
-        return;
         if (applicationType.value == "Verification") {
           evaluateApplication("evaluatVerification", req.value);
         }
@@ -575,10 +575,9 @@ export default {
     };
 
     const evaluateApplication = (applicationType, req) => {
-        console.log("passed")
-        console.log("request[00] value is ", req[0]);
-        store.dispatch("reviewer/" + applicationType, req[0]).then((res) => {
-          console.log("ieie resp", res);
+      showLoadingconfirmed.value = true;
+        store.dispatch("reviewer/" + applicationType, req).then((res) => {
+          showLoadingconfirmed.value = false;
           if (res.statusText == "Created") {
             showFlash.value = true;
             console.log("successful");
@@ -664,6 +663,9 @@ export default {
       documentTypeName,
       modalDocumentTypeName,
       evaluationSuccess,
+      showLoadingconfirmed,
+      showFlash,
+      showErrorFlash,
       next,
       previous,
       action,

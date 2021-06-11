@@ -8,7 +8,7 @@
         class="ml-8 mr-8 mb-12"
       >
         <div class="mt-large bg-white">
-          <span v-if="isUserApproved">
+          <span v-if="isGoodStanding">
           <button @click="GenerateLetter">Generate Letter</button>
           </span>
           <div class="flex justify-center"><Title message="Summary" /></div>
@@ -92,7 +92,7 @@
           <div class="flex flex-row">
             <div
               :class="[
-                profileInfo.woreda.zone.region === null
+                license.woreda.zone.region === null
                   ? errorClass
                   : activeClass,
               ]"
@@ -100,30 +100,30 @@
               <label class="ml-8"> Region</label>
               <h5 class="ml-8">
                 {{
-                  profileInfo.woreda.zone.region
-                    ? profileInfo.woreda.zone.region.name
+                  license.woreda.zone.region
+                    ? license.woreda.zone.region.name
                     : "-"
                 }}
               </h5>
             </div>
             <div
               :class="[
-                profileInfo.woreda.zone === null ? errorClass : activeClass,
+                license.woreda.zone === null ? errorClass : activeClass,
               ]"
             >
               <label class="ml-8"> Zone</label>
               <h5 class="ml-8">
                 {{
-                  profileInfo.woreda.zone ? profileInfo.woreda.zone.name : "-"
+                  license.woreda.zone ? license.woreda.zone.name : "-"
                 }}
               </h5>
             </div>
             <div
-              :class="[profileInfo.woreda === null ? errorClass : activeClass]"
+              :class="[license.woreda === null ? errorClass : activeClass]"
             >
               <label class="ml-8"> Wereda</label>
               <h5 class="ml-8">
-                {{ profileInfo.woreda ? profileInfo.woreda.name : "-" }}
+                {{ license.woreda ? license.woreda.name : "-" }}
               </h5>
             </div>
             <div
@@ -267,11 +267,14 @@ export default {
     const store = useStore();
     const router = useRouter();
     const route = useRoute();
+    
 
     let show = ref(false);
 
     let showLoading = ref(false);
     let isUserApproved = ref(false);
+
+    let isGoodStanding = ref(false);
 
     let goodStandingUser = ref({});
     let gender = ref("");
@@ -329,8 +332,8 @@ export default {
       
       doc.setFont('times', 'normal');
       doc.text(40, 90, "This letter of good standing and" + 
-                        "confirmation of registration is writter" +
-                        "up on request of " + goodStandingUser.value.applicant.profile.name
+                        "confirmation of registration is written" +
+                        " upon request of " + goodStandingUser.value.applicant.profile.name
                          + " " + goodStandingUser.value.applicant.profile.fatherName+ " " +
                           grandFatherName.value+".");
       doc.text(40, 100, goodStandingUser.value.applicant.profile.name + " " + 
@@ -341,8 +344,8 @@ export default {
       doc.text(40, 110, "The Food, Medicine & Health Care Administration and Control Authority of Ethiopia, which is the responsible");
       doc.text(40, 120, `organ for registration and licensing of health professinals and ${gender.value == "male"? "his": "her"} registration number is JGMP=3817/2009.`);
       doc.text(40, 130, `${gender.value == "male" ? "he" : "she"} has no any reported medico legal records and malpractices while ${gender.value == "male"? "he" : "she"} has practiced ${gender.value == "male" ? 'his': 'her'} medical profession`);
-      doc.text(40, 140, `in Ethiopia till June ${moment(new Date()).format("MMMM DD, YYYY")}.`);
-      doc.text(40, 165, `Hence we appreciate any assistance, while will be rendered to ${gender.value == "male" ? "him" : "her"}.`)
+      doc.text(40, 140, `in Ethiopia till ${moment(new Date()).format("MMMM DD, YYYY")}.`);
+      doc.text(40, 165, `Hence we appreciate any assistance, which will be rendered to ${gender.value == "male" ? "him" : "her"}.`)
       doc.text(40, 185, "With best regards")
       window.open(doc.output('bloburl'));
 
@@ -362,6 +365,8 @@ export default {
             showLoading.value = false;
             license.value = res.data.data;
             getReviewId.value = license.value.reviewerId;
+            goodStandingUser.value = res.data.data;
+            console.log("good stangind urser", goodStandingUser.value)
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
             // applicantId.value = license.value.applicantId;
@@ -374,6 +379,7 @@ export default {
           });
       }
       if (applicationType.value == "Good Standing") {
+        isGoodStanding.value = true;
         store
           .dispatch("reviewer/getGoodStandingApplication", applicationId)
           .then((res) => {
@@ -434,6 +440,7 @@ export default {
       }
     };
     onMounted(() => {
+      console.log("*************************************************************8")
       created(route.params.applicationType, route.params.applicationId, route.params.status);
     });
 
@@ -456,6 +463,7 @@ export default {
       applicationType,
       licenseId,
       isUserApproved,
+      isGoodStanding,
       GenerateLetter,
     };
   },

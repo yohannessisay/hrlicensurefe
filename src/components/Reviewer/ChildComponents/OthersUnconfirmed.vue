@@ -12,7 +12,7 @@
         class="p-4 w-48 h-64"
         @Click="
           detail(
-            `/admin/othersUnconfirmedDetail`,
+            `/admin`,
             item.applicationType,
             item.id,
             item.applicant.id
@@ -59,6 +59,7 @@
 </template>
 
 <script>
+import { ref } from "vue";
 import { useRouter } from "vue-router";
 import moment from "moment";
 export default {
@@ -70,9 +71,13 @@ export default {
 
   setup() {
     let router = useRouter();
+    let routeValue = ref("othersUnconfirmedDetail")
     const detail = (data, applicationType, applicationId, applicantId) => {
+      if(applicationType == "Good Standing" || applicationType == "Verification") {
+        routeValue.value = "finishedDetail"
+      }
       const url =
-        data + "/" + applicationType + "/" + applicationId + "/" + applicantId;
+        data + "/" + routeValue.value + "/" + applicationType + "/" + applicationId + "/" + applicantId;
       router.push(url);
     };
     return {

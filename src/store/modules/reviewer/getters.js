@@ -28,6 +28,9 @@ export default {
     getOthresEvaluateReviewer: state => state.othresEvaluateReviewer,
     getOthresEvaluateReviewerSearched: state => state.othresEvaluateReviewerSearched,
 
+    getConfirmed: state => state.confirmed,
+    getConfirmedSearched: state => state.confirmedSearched,
+
     getRecentlyFinished: state => state.recentlyFinished,
     getRecentlyFinishedSearched: state => state.recentlyFinishedSearched,
 

@@ -247,7 +247,7 @@ export default {
   computed: {
     moment: () => moment,
     getApproved() {
-      return store.getters["reviewer/getApprovedSearched"];
+      return store.getters["reviewer/getConfirmedSearched"];
     },
     getRecentlyFinished() {
       return store.getters["reviewer/getRecentlyFinishedSearched"];
@@ -281,15 +281,15 @@ export default {
       showLoadingApproved.value = true;
       showLoadingRejected.value = true;
       showLoadingSuperVision.value = true;
-      store.dispatch("reviewer/getRecentlyFinished", adminId).then((res) => {
+      store.dispatch("reviewer/getConfirmed", adminId).then((res) => {
         showLoadingApproved.value = false;
         showLoadingRejected.value = false;
         showLoadingSuperVision.value = false;
-        if (store.getters["reviewer/getApprovedSearched"].length == 0) {
+        if (store.getters["reviewer/getConfirmedSearched"].length == 0) {
           nothingToShowApproved.value = true;
         } else {
-          approved.value = store.getters["reviewer/getApprovedSearched"];
-          for (var prop in store.getters["reviewer/getApprovedSearched"]) {
+          approved.value = store.getters["reviewer/getConfirmedSearched"];
+          for (var prop in store.getters["reviewer/getConfirmedSearched"]) {
             if (approved.value[prop].applicationType == "Renewal") {
               approved.value[prop].newLicenseCode =
                 approved.value[prop].renewalCode;
@@ -304,51 +304,51 @@ export default {
             }
           }
         }
-        if (store.getters["reviewer/getRejectedSearched"].length == 0) {
-          nothingToShowRejected.value = true;
-        } else {
-          rejected.value = store.getters["reviewer/getRejectedSearched"];
-          for (var prop in store.getters["reviewer/getRejectedSearched"]) {
-            if (rejected.value[prop].applicationType == "Renewal") {
-              rejected.value[prop].newLicenseCode =
-                rejected.value[prop].renewalCode;
-            }
-            if (rejected.value[prop].applicationType == "Good Standing") {
-              rejected.value[prop].newLicenseCode =
-                rejected.value[prop].goodStandingCode;
-            }
-            if (rejected.value[prop].applicationType == "Verification") {
-              rejected.value[prop].newLicenseCode =
-                rejected.value[prop].verificationCode;
-            }
-          }
-        }
-        if (store.getters["reviewer/getUnderSuperVisionSearched"].length == 0) {
-          nothingToShowUnderSuperVision.value = true;
-        } else {
-          underSuperVision.value =
-            store.getters["reviewer/getUnderSuperVisionSearched"];
-          for (var prop in store.getters[
-            "reviewer/getUnderSuperVisionSearched"
-          ]) {
-            if (underSuperVision.value[prop].applicationType == "Renewal") {
-              underSuperVision.value[prop].newLicenseCode =
-                underSuperVision.value[prop].renewalCode;
-            }
-            if (
-              underSuperVision.value[prop].applicationType == "Good Standing"
-            ) {
-              underSuperVision.value[prop].newLicenseCode =
-                underSuperVision.value[prop].goodStandingCode;
-            }
-            if (
-              underSuperVision.value[prop].applicationType == "Verification"
-            ) {
-              underSuperVision.value[prop].newLicenseCode =
-                underSuperVision.value[prop].verificationCode;
-            }
-          }
-        }
+        // if (store.getters["reviewer/getRejectedSearched"].length == 0) {
+        //   nothingToShowRejected.value = true;
+        // } else {
+        //   rejected.value = store.getters["reviewer/getRejectedSearched"];
+        //   for (var prop in store.getters["reviewer/getRejectedSearched"]) {
+        //     if (rejected.value[prop].applicationType == "Renewal") {
+        //       rejected.value[prop].newLicenseCode =
+        //         rejected.value[prop].renewalCode;
+        //     }
+        //     if (rejected.value[prop].applicationType == "Good Standing") {
+        //       rejected.value[prop].newLicenseCode =
+        //         rejected.value[prop].goodStandingCode;
+        //     }
+        //     if (rejected.value[prop].applicationType == "Verification") {
+        //       rejected.value[prop].newLicenseCode =
+        //         rejected.value[prop].verificationCode;
+        //     }
+        //   }
+        // }
+        // if (store.getters["reviewer/getUnderSuperVisionSearched"].length == 0) {
+        //   nothingToShowUnderSuperVision.value = true;
+        // } else {
+        //   underSuperVision.value =
+        //     store.getters["reviewer/getUnderSuperVisionSearched"];
+        //   for (var prop in store.getters[
+        //     "reviewer/getUnderSuperVisionSearched"
+        //   ]) {
+        //     if (underSuperVision.value[prop].applicationType == "Renewal") {
+        //       underSuperVision.value[prop].newLicenseCode =
+        //         underSuperVision.value[prop].renewalCode;
+        //     }
+        //     if (
+        //       underSuperVision.value[prop].applicationType == "Good Standing"
+        //     ) {
+        //       underSuperVision.value[prop].newLicenseCode =
+        //         underSuperVision.value[prop].goodStandingCode;
+        //     }
+        //     if (
+        //       underSuperVision.value[prop].applicationType == "Verification"
+        //     ) {
+        //       underSuperVision.value[prop].newLicenseCode =
+        //         underSuperVision.value[prop].verificationCode;
+        //     }
+        //   }
+        // }
       });
     };
 

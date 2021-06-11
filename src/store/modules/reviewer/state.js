@@ -29,6 +29,9 @@ export default {
         othresEvaluateReviewer: [],
         othresEvaluateReviewerSearched: [],
 
+        confirmed: [],
+        confirmedSearched: [],
+
         approved: [],
         approvedSearched: [],
         allApproved: [],
