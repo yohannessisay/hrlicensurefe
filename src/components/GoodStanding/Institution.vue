@@ -277,7 +277,7 @@ export default {
   },
   data: () => ({
     licenseInfo: {
-      applicantId: localStorage.getItem("userId"),
+      applicantId: +localStorage.getItem("userId"),
       residenceWoredaId: "",
       applicantTitle: "",
       whomGoodStandingFor: "",

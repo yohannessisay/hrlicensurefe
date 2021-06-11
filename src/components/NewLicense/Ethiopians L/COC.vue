@@ -178,7 +178,7 @@ export default {
     let isImage = ref(false);
     let buttons = [];
     let documentSpecs = ref([]);
-    let userId = localStorage.getItem("userId");
+    let userId = +localStorage.getItem("userId");
     let licenseInfo = ref("");
     let draftData = ref("");
     let draftStatus = ref("");

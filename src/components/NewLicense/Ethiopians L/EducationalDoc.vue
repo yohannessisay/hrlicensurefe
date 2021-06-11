@@ -423,7 +423,7 @@ export default {
       buttons: [],
       documentSpec: [],
       licenseInfo: "",
-      userId: localStorage.getItem("userId"),
+      userId: +localStorage.getItem("userId"),
 
       passport: "",
       healthExamCert: "",
