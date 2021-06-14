@@ -80,7 +80,9 @@
           </div>
           <div class="flex">
             <div class="flex flex-col mb-medium w-2/5 mr-12">
-              <label class="text-primary-700">For Whom Goodstanding</label>
+              <label class="text-primary-700"
+                >Organization Letter is written for:
+              </label>
               <input
                 class="max-w-3xl"
                 type="text"
@@ -105,7 +107,9 @@
 
           <div class="flex">
             <div class="flex flex-col mb-medium w-2/5 mr-12">
-              <label class="text-primary-700">Who Issued</label>
+              <label class="text-primary-700"
+                >Who Issued Previous License</label
+              >
               <input
                 class="max-w-3xl"
                 type="text"
@@ -129,7 +133,7 @@
           </div>
           <div class="flex">
             <div class="flex flex-col mb-medium w-2/5 mr-12">
-              <label class="text-primary-700">Applicant Position</label>
+              <label class="text-primary-700">Applicant Position (Title)</label>
               <select
                 class="max-w-3xl"
                 v-model="licenseInfo.applicantPositionId"

@@ -20,7 +20,7 @@
         </h2>
         <TitleWithIllustration
           illustration="User"
-          message="Work Experience"
+          message="Authenticated Work Experience"
           class="mt-8"
         />
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">

@@ -4,6 +4,9 @@
     <div class="w-screen bg-lightBlueB-200 flex items-center justify-center">
       <div class="w-screen max-w-4xl mt-medium">
         <div class="flex flex-col w-full rounded mb-large">
+          <h2 class="flex justify-center pb-medium">
+            New License
+          </h2>
           <transition name="fade" mode="out-in">
             <div v-if="this.activeState == 1">
               <Institution
@@ -96,15 +99,16 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 5">
-                <ProfessionalDocumentForeigner
+                <HERQAF
                   :activeState="5"
                   @changeActiveState="activeState++"
+                  @applicantTypeValue="applicantTypeSet"
                 />
               </div>
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 6">
-                <LetterfromOrg
+                <ProfessionalDocumentForeigner
                   :activeState="6"
                   @changeActiveState="activeState++"
                 />
@@ -112,7 +116,7 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 7">
-                <ProfessionalLicense
+                <LetterfromOrg
                   :activeState="7"
                   @changeActiveState="activeState++"
                 />
@@ -120,7 +124,7 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 8">
-                <RenewedLicense
+                <ProfessionalLicense
                   :activeState="8"
                   @changeActiveState="activeState++"
                 />
@@ -128,8 +132,16 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 9">
-                <LicenseSummary
+                <RenewedLicense
                   :activeState="9"
+                  @changeActiveState="activeState++"
+                />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 10">
+                <LicenseSummary
+                  :activeState="10"
                   @changeActiveState="activeState++"
                 />
               </div>
@@ -196,6 +208,7 @@ import HealthExamCert from "./HealthExamCert.vue";
 import LicenseSummary from "./LicenseSummary.vue";
 
 import HERQA from "./Ethiopians F/HERQA";
+import HERQAF from "./Foreigner/HERQAF.vue";
 import ProfessionalDocumentEthiopian from "./Ethiopians F/ProfessionalDocuments";
 import SupportLetterForeign from "./Ethiopians F/SupportLetter";
 
@@ -239,6 +252,7 @@ export default {
     HealthExamCert,
     LicenseSummary,
     HERQA,
+    HERQAF,
     ProfessionalDocumentEthiopian,
     SupportLetterEthiopian,
     COC,
