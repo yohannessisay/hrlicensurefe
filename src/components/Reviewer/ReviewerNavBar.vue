@@ -256,7 +256,7 @@
                 <hr class="yellow-gradient border-none" />
               </a>
             </router-link>
-            <span v-if="isSuperAdmin">
+            <!-- <span v-if="isSuperAdmin">
               <router-link to="/admin/allCertifiedUsers">
                 <a
                   v-if="tab != `allCertifiedUsers`"
@@ -274,8 +274,47 @@
                   <hr class="yellow-gradient border-none" />
                 </a>
               </router-link>
-            </span>
-            <span v-else>
+            </span> -->
+            <div class="relative inline-block text-left text-primary-300">
+                <a
+                  class="text-primary-300"
+                  id="options-menu"
+                  aria-expanded="true"
+                  aria-haspopup="true"
+                  href="#"
+                  v-on:click="showLicensedDropDown()"
+                >
+                  <div class="text-primary-300 mr-small">
+                    <p>Licensed <i class="fas fa-chevron-circle-down"></i></p>
+                    
+                  </div>
+                </a>
+                <div
+                  v-if="showLicensedDD === true"
+                  class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white focus:outline-none"
+                  role="menu"
+                  aria-orientation="vertical"
+                  aria-labelledby="options-menu"
+                >
+                  <router-link to="/admin/allCertifiedUsers">
+                    <a
+                      class="block px-4 py-2 text-sm text-blue-100 hover:bg-gray-100 hover:text-gray-900"
+                      role="menuitem"
+                    >
+                      My Region Licensed
+                    </a>
+                  </router-link>
+                  <router-link to="/admin/allRegionCertifiedUsers">
+                    <a
+                      class="block px-4 py-2 text-sm text-blue-100 hover:bg-gray-100 hover:text-gray-900"
+                      role="menuitem"
+                    >
+                      All Region Licensed
+                    </a>
+                  </router-link>
+                </div>
+              </div>
+            <!-- <span v-else>
               <router-link to="/admin/allCertifiedUsers">
                 <a
                   v-if="tab != `certifiedUsers`"
@@ -293,7 +332,7 @@
                   <hr class="yellow-gradient border-none" />
                 </a>
               </router-link>
-            </span>
+            </span> -->
             <!-- <a v-if="tab != `Reviewers`" class="text-primary-300 mr-small">
               Reviewers
             </a>
@@ -416,6 +455,7 @@ export default {
     let showUnfinishedDD = ref(false);
     let showAssignedDD = ref(false);
     let showFinishedDD = ref(false);
+    let showLicensedDD = ref(false);
     let search = ref("");
     let primaryText = ref("");
     watch(search, () => {
@@ -442,6 +482,9 @@ export default {
       }
       if (props.tab === "allCertifiedUsers") {
         store.dispatch("reviewer/searchCertifiedUsers", search.value)
+      }
+      if (props.tab === "myRegionCertifiedUsers") {
+        store.dispatch("reviewer/searchMyRegionCertifiedUsers", search.value)
       }
       // if (props.tab === "AllWork") {
       //   store.dispatch("reviewer/getAllRecentlyFinishedSearched", search.value)
@@ -490,6 +533,7 @@ export default {
       showUnfinishedDD.value = false
       showAssignedDD.value = false
       showFinishedDD.value = false
+      showLicensedDD.value = false
     };
 
     const showUnfinishedDropDown = () => {
@@ -497,12 +541,14 @@ export default {
       showDD.value = false;
       showAssignedDD.value = false;
       showFinishedDD.value = false;
+      showLicensedDD.value = false;
     };
     const showAssignedDropDown = () => {
       showAssignedDD.value = !showAssignedDD.value;
       showDD.value = false;
       showUnfinishedDD.value = false;
       showFinishedDD.value = false;
+      showLicensedDD.value = false;
     };
 
     const showFinishedDropDown = () => {
@@ -510,6 +556,14 @@ export default {
       showAssignedDD.value = false;
       showDD.value = false;
       showUnfinishedDD.value = false;
+      showLicensedDD.value = false;
+    }
+    const showLicensedDropDown = () => {
+      showLicensedDD.value = !showLicensedDD.value
+      showAssignedDD.value = false;
+      showDD.value = false;
+      showUnfinishedDD.value = false;
+      showFinishedDD.value = false;
     }
     const logout = () => {
       localStorage.removeItem("token");
@@ -525,9 +579,11 @@ export default {
       showUnfinishedDD,
       showAssignedDD,
       showFinishedDD,
+      showLicensedDD,
       showUnfinishedDropDown,
       showAssignedDropDown,
       showFinishedDropDown,
+      showLicensedDropDown,
       search,
       logout,
       showAdminCreate,

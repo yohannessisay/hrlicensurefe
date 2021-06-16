@@ -46,8 +46,12 @@ import {
   SET_PENDING_PAYMENTS,
   SET_PENDING_PAYMENTS_SEARCHED,
   SET_ALL_FINISHED_SEARCHED,
+
   SET_CERTIFIED_USERS,
   SET_CERTIFIED_USERS_SEARCHED,
+
+  SET_MY_REGION_CERTIFIED_USERS,
+  SET_MY_REGION_CERTIFIED_USERS_SEARCHED,
 
 } from "./mutation-types";
 const baseUrl = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api";
@@ -813,6 +817,44 @@ export default {
       return resp;
     }
   },
+
+  async getMyRegionCertifiedUsers({commit}) {
+    try {
+      const resp = await ApiService.get(baseUrl + "/applications/allUnconfirmedApps")
+      const certifiedUsers = resp.data.data.filter(function(e) {
+        return e.certified == true && 
+        e.applicationType != "Good Standing" && e.applicationType != "Verification";
+      })
+      commit(SET_MY_REGION_CERTIFIED_USERS, certifiedUsers)
+    } catch(error) {
+      const resp = error;
+      return resp;
+    }
+  },
+
+  searchMyRegionCertifiedUsers({commit, getters}, searchKey) {
+    if(getters.getMyRegionCertifiedUsers === undefined) {
+      return;
+    }
+    const seachedVal = getters.getMyRegionCertifiedUsers.filter(function(e) {
+      return e.newLicenseCode
+              .toLowerCase()
+              .includes(searchKey.toLowerCase())
+              || (e.applicant.profile.name + 
+                " " +
+                 e.applicant.profile.fatherName)
+              .toLowerCase()
+              .includes(searchKey.toLowerCase())
+              || e.applicant.profile.name
+              .toLowerCase()
+              .includes(searchKey.toLowerCase())
+              || e.applicant.profile.fatherName
+              .toLowerCase()
+              .includes(searchKey.toLowerCase())
+    })
+    commit(SET_MY_REGION_CERTIFIED_USERS_SEARCHED, seachedVal)
+  },
+
   getAllRecentlyFinishedSearched({commit, getters}, searchKey) {
     if(getters.getAllRecentlyFinishedSearched === undefined) {
       return;

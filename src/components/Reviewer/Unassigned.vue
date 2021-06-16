@@ -1,7 +1,8 @@
 <template>
   <div>
     <ReviewerNavBar tab="Unassigned" />
-    <div class="flex pl-12 mt-medium">
+    <div class="bg-lightBlueB-200 h-full">
+    <div class="flex pl-12 pt-tiny">
       <Title message="Unassigned" />
     </div>
 
@@ -122,6 +123,7 @@
           </div>
         </div>
       </div>
+    </div>
     </div>
     <div
       v-if="showLoading"

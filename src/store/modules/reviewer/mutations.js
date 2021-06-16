@@ -47,6 +47,9 @@ import {
     SET_ALL_FINISHED_SEARCHED,
     SET_CERTIFIED_USERS,
     SET_CERTIFIED_USERS_SEARCHED,
+
+    SET_MY_REGION_CERTIFIED_USERS,
+    SET_MY_REGION_CERTIFIED_USERS_SEARCHED,
 } from "./mutation-types";
 
 export default {
@@ -158,6 +161,14 @@ export default {
     },
     [SET_CERTIFIED_USERS_SEARCHED] (state, searchedVal) {
         state.allCertifiedUsersSearched = searchedVal
+    },
+
+    [SET_MY_REGION_CERTIFIED_USERS] (state, data) {
+        state.myRegionCertifiedUsers = data
+        state.myRegionCertifiedUsersSearched = data
+    },
+    [SET_MY_REGION_CERTIFIED_USERS_SEARCHED] (state, searchedVal) {
+        state.myRegionCertifiedUsersSearched = searchedVal
     },
     [SET_ALL_FINISHED_SEARCHED] (state, datas) {
         state.allApprovedSearched = datas[0]

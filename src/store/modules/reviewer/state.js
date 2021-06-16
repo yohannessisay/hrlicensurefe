@@ -62,6 +62,9 @@ export default {
         allCertifiedUsers: [],
         allCertifiedUsersSearched: [],
 
+        myRegionCertifiedUsers: [],
+        myRegionCertifiedUsersSearched: [],
+
         pendingPayments: [],
         pendingPaymentsSearched: [],
         

@@ -87,7 +87,7 @@
             </div>
             <div class="flex">
               <div class="flex flex-col mb-medium w-1/2 mr-12">
-                <label class="text-primary-700">Expert Level</label>
+                <label class="text-primary-700">Expert Type</label>
                 <select
                   class="max-w-3xl"
                   v-model="expertLevels.id"

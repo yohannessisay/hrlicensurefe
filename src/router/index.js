@@ -164,12 +164,17 @@ const routes = [
   },
   {
     path: "/admin/allCertifiedUsers",
-    name: "certifiedUsers",
+    name: "allCertifiedUsers",
     component: () => import("../components/Reviewer/AllCertifiedUsers.vue"),
   },
   {
+    path: "/admin/allRegionCertifiedUsers",
+    name: "allRegionCertifiedUsers",
+    component: () => import("../components/Reviewer/AllRegionCertifiedUsers.vue"),
+  },
+  {
     path: "/admin/certifiedUsers",
-    name: "allCertifiedusers",
+    name: "certifiedusers",
     component: () => import("../components/Reviewer/CertifiedUsers.vue"),
   },
   {

@@ -171,7 +171,7 @@
           </div>
         </div>
 
-        <div class="ml-large">
+        <!-- <div class="ml-large">
           <svg
             width="40"
             height="60"
@@ -192,7 +192,7 @@
               &gt;
             </polyline>
           </svg>
-        </div>
+        </div> -->
       </div>
 
       <div
@@ -461,12 +461,9 @@ export default {
         store
           .dispatch("reviewer/getNewLicenseApplication", applicationId)
           .then((res) => {
-            console.log("new license detail", res)
             newLicense.value = res.data.data;
             buttons.value = res.data.data.applicationStatus.buttons;
-            console.log("buttons is ", buttons.value)
             docs.value = res.data.data.documents;
-            console.log("documents is ", docs.value)
             if (newLicense.value.applicationStatus.code == "REVDRA") {
               rejected.value = newLicense.value.declinedFields;
               rejectedObj.value = newLicense.value.declinedFields;
@@ -491,7 +488,6 @@ export default {
         store
           .dispatch("reviewer/getGoodStandingApplication", applicationId)
           .then((res) => {
-            console.log("good standing befor aaa", newLicense.value)
             // newLicense.value = res.data.data;
             newLicense.value.applicantType.name = "-"
             newLicense.value.education.department.name = "-"
@@ -501,7 +497,6 @@ export default {
               ...newLicense.value,
               ...res.data.data,
             }
-            console.log("good standing after", newLicense.value)
             buttons.value = res.data.data.applicationStatus.buttons.filter(
               (allButtons) => {
                 return allButtons.name != "Under supervision";
@@ -513,8 +508,6 @@ export default {
                 : (button.name = button.name);
             });
             docs.value = res.data.data.documents;
-            console.log("bbuttons: ", buttons.value);
-            console.log("good standing docs", docs.value)
             if (newLicense.value.applicationStatus.code == "REVDRA") {
               rejected.value = newLicense.value.declinedFields;
               rejectedObj.value = newLicense.value.declinedFields;
@@ -551,7 +544,6 @@ export default {
                 ? (button.name = "Verify")
                 : (button.name = button.name);
             });
-            console.log("bbuttons: ", buttons.value);
             docs.value = res.data.data.documents;
             if (newLicense.value.applicationStatus.code == "REVDRA") {
               rejected.value = newLicense.value.declinedFields;
@@ -608,8 +600,6 @@ export default {
       });
     };
     const next = (doc) => {
-      // alreadyIn.value == false;
-
       if (nextClickable.value == true) {
         index.value = index.value + 1;
         amount.value = ((index.value + 1) / docs.value.length) * 100;
@@ -617,13 +607,6 @@ export default {
         findDocumentType(documentTypes.value, docs.value[index.value]);
         nextClickable.value = false;
       }
-
-      // if (
-      //   accepted.value.length + rejected.value.length == docs.value.length &&
-      //   index.value + 1 == docs.value.length
-      // ) {
-      //   showButtons.value = true;
-      // }
       if (
         accepted.value.includes(doc.documentTypeCode) ||
         rejected.value.includes(doc.documentTypeCode)
@@ -678,6 +661,11 @@ export default {
           accepted.value.push(doc.documentTypeCode);
           if (index.value == docs.value.length - 1) {
             showButtons.value = true;
+          } else {
+            index.value = index.value + 1;
+            amount.value = ((index.value + 1) / docs.value.length) * 100;
+            width.value = "width:" + amount.value + "%";
+            findDocumentType(documentTypes.value, docs.value[index.value]);
           }
           if (rejected.value.includes(doc.documentTypeCode)) {
             rejected.value.splice(
@@ -694,6 +682,11 @@ export default {
         accepted.value.push(doc.documentTypeCode);
         if (index.value == docs.value.length - 1) {
           showButtons.value = true;
+        } else {
+            index.value = index.value + 1;
+            amount.value = ((index.value + 1) / docs.value.length) * 100;
+            width.value = "width:" + amount.value + "%";
+            findDocumentType(documentTypes.value, docs.value[index.value]);
         }
         if (rejected.value.includes(doc.documentTypeCode)) {
           rejected.value.splice(
@@ -720,7 +713,12 @@ export default {
           rejectedObj.value.push(doc);
           if (index.value == docs.value.length - 1) {
             showButtons.value = true;
-          }
+          } else {
+            index.value = index.value + 1;
+            amount.value = ((index.value + 1) / docs.value.length) * 100;
+            width.value = "width:" + amount.value + "%";
+            findDocumentType(documentTypes.value, docs.value[index.value]);
+        }
           if (accepted.value.includes(doc.documentTypeCode)) {
             accepted.value.splice(
               accepted.value.indexOf(doc.documentTypeCode),
@@ -733,6 +731,11 @@ export default {
         rejectedObj.value.push(doc);
         if (index.value == docs.value.length - 1) {
           showButtons.value = true;
+        } else {
+            index.value = index.value + 1;
+            amount.value = ((index.value + 1) / docs.value.length) * 100;
+            width.value = "width:" + amount.value + "%";
+            findDocumentType(documentTypes.value, docs.value[index.value]);
         }
         if (accepted.value.includes(doc.documentTypeCode)) {
           accepted.value.splice(
@@ -749,7 +752,6 @@ export default {
     };
 
     const action = (actionValue) => {
-      console.log("action clicked", actionValue)
       if (actionValue == "DeclineEvent") {
         showRemark.value = true;
         sendDeclinedData.value = false;
@@ -775,9 +777,7 @@ export default {
         applicationType.value == "New License" &&
         sendDeclinedData.value == true
       ) {
-        console.log("request is ", req)
         store.dispatch("newlicense/editNewLicense", req).then((res) => {
-          console.log("new license edited value", res)
           if (res.statusText == "Created") {
             showFlash.value = true;
             showDeclineFlash.value = true;
@@ -799,7 +799,6 @@ export default {
         sendDeclinedData.value == true
       ) {
         store.dispatch("reviewer/editVerification", req).then((res) => {
-          console.log("----------", res)
           if (res.statusText == "Created") {
             showFlash.value = true;
             setTimeout(() => {
@@ -849,9 +848,6 @@ export default {
           }
         });
       }
-      // store.dispatch("newlicense/editNewLicense", req).then((res) => {
-      //   console.log(res.data.data);
-      // });
     };
 
     const submitRemark = () => {

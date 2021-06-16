@@ -58,6 +58,7 @@ export default {
       showLoading.value = true;
       store.dispatch("reviewer/getAssignedToYou", adminId).then((res) => {
         showLoading.value = false;
+        console.log("assigned value", store.getters["reviewer/getAssignedToYouSearched"][0]);
         // if (res.status != "Error") {
         assignedToyou.value =
           store.getters["reviewer/getAssignedToYouSearched"];

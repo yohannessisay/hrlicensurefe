@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ReviewerNavBar tab="myRegionCertifiedUsers" />
+    <ReviewerNavBar tab="allCertifiedUsers" />
     <div class="bg-lightBlueB-200 h-full" v-if="!searchedByDate">
       <div class="pl-12">
         <div>Filter By Date Range</div>
@@ -19,7 +19,7 @@
         </button>
       </div>
       <div class="flex pl-12 pt-tiny">
-        <Title message="Licensed Users" />
+        <Title message="All Region Licensed Users" />
       </div>
       <div class="flex flex-wrap pb-medium rounded h-full" v-if="!showLoading">
         <div
@@ -32,7 +32,7 @@
         </div>
         <div
           class="container"
-          v-for="item in getMyRegionCertifiedUsers"
+          v-for="item in getAllCertifiedUsers"
           v-bind:key="item.id"
           v-bind:value="item.id"
         >
@@ -43,7 +43,7 @@
               class="p-4 w-48 h-64"
               @Click="
                 detail(
-                  `/admin/certifiedUsersDetail`,
+                  `/admin/applicantDetail`,
                   item.applicationType,
                   item.id,
                   item.applicant.id
@@ -108,12 +108,12 @@
       <div class="flex pl-12 pt-tiny">
       <Title
         :message="
-          'Licensed Applicants on Date Range ' + moment(searchCertifiedFrom).format('MMM D, YYYY') + ' To ' + moment(searchCertifiedTo).format('MMM D, YYYY')
+          'All Region Licensed Applicants on Date Range ' + moment(searchCertifiedFrom).format('MMM D, YYYY') + ' To ' + moment(searchCertifiedTo).format('MMM D, YYYY')
         "
       />
       <button @click="backClicked">back</button>
     </div>
-    <certified-users-by-date :licensedByDate="filteredByDate"/>
+    <all-region-certified-users-by-date :allRegionLicensedByDate="filteredByDate"/>
     </div>
   </div>
   <div v-if="message.showErrorFlash">
@@ -126,7 +126,7 @@
 <script>
 import Title from "@/sharedComponents/TitleWithIllustration";
 import ReviewerNavBar from "@/components/Reviewer/ReviewerNavBar";
-import CertifiedUsersByDate from "./ChildComponents/CertifiedUsersByDate.vue";
+import AllRegionCertifiedUsersByDate from "./ChildComponents/AllRegionCertifiedUsersByDate.vue";
 import { useStore } from "vuex";
 
 import { ref, onMounted, watch } from "vue";
@@ -140,15 +140,15 @@ import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 export default {
   components: {
     ReviewerNavBar,
-    CertifiedUsersByDate,
+    AllRegionCertifiedUsersByDate,
     Title,
     Spinner,
     ErrorFlashMessage,
   },
   computed: {
     moment: () => moment,
-    getMyRegionCertifiedUsers() {
-      return store.getters["reviewer/getMyRegionCertifiedUsersSearched"];
+    getAllCertifiedUsers() {
+      return store.getters["reviewer/getAllCertifiedUsersSearched"];
     },
   },
   setup() {
@@ -180,7 +180,6 @@ export default {
           message.value.showErrorFlash = false;
         }, 5000)
       } else if (moment(searchCertifiedFrom.value).isAfter(searchCertifiedTo.value)) {
-        console.log("the date format is not right");
         message.value.showErrorFlash = true;
         setTimeout(() => {
           message.value.showErrorFlash = false;
@@ -216,22 +215,25 @@ export default {
 
     const fetchAllCertified = () => {
       showLoading.value = true;
-      store.dispatch("reviewer/getMyRegionCertifiedUsers").then((res) => {
+      store.dispatch("reviewer/getAllCertifiedUsers").then((res) => {
         showLoading.value = false;
         allCertified.value =
-          store.getters["reviewer/getMyRegionCertifiedUsersSearched"];
+          store.getters["reviewer/getAllCertifiedUsersSearched"];
         assignAllCertified.value =
-          store.getters["reviewer/getMyRegionCertifiedUsersSearched"];
+          store.getters["reviewer/getAllCertifiedUsers"];
+        // assignAllCertified.value = assignAllCertified.value.map(certifiedUser => {
+        //   return certifiedUser.certifiedDate = moment(certifiedUser.certifiedDate).format("MMMM D, YYYY")
+        // })
         for (let certifiedUser in assignAllCertified.value) {
           assignAllCertified.value[certifiedUser].certifiedDate = moment(
             assignAllCertified.value[certifiedUser].certifiedDate
           ).format("MMMM D, YYYY");
         }
         if (
-          store.getters["reviewer/getMyRegionCertifiedUsersSearched"].length !== 0
+          store.getters["reviewer/getAllCertifiedUsersSearched"].length !== 0
         ) {
           for (var prop in store.getters[
-            "reviewer/getMyRegionCertifiedUsersSearched"
+            "reviewer/getAllCertifiedUsersSearched"
           ]) {
             if (allCertified.value[prop].applicationType == "Renewal") {
               allCertified.value[prop].newLicenseCode =
@@ -260,7 +262,6 @@ export default {
 
     onMounted(() => {
       fetchAllCertified();
-      console.log("value ff", assignAllCertified.value)
     });
 
     return {
