@@ -183,7 +183,7 @@ export default {
     let draftStatus = ref("");
     let buttons = [];
     let documentSpecs = ref([]);
-    let userId = localStorage.getItem("userId");
+    let userId = +localStorage.getItem("userId");
     let licenseInfo = ref("");
     let draftData = ref("");
 

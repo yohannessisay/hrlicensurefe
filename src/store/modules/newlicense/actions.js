@@ -24,7 +24,7 @@ import {
 } from "./mutation-types";
 
 const url = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api/";
-const userId = localStorage.getItem("userId");
+const userId = +localStorage.getItem("userId");
 
 export default {
   setLicense({ commit }, license) {

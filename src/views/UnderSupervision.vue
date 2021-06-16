@@ -97,12 +97,14 @@
                     role="menuitem"
                     >Profile
                   </a>
-                  <a
-                    href="#"
-                    class="block px-4 py-2 text-sm text-blue-100 hover:bg-gray-100 hover:text-gray-900"
-                    role="menuitem"
-                    >About
-                  </a>
+                  <router-link to="/about">
+                    <li
+                      class="block px-4 py-2 text-sm text-blue-100 hover:bg-gray-100 hover:text-gray-900"
+                      role="menuitem"
+                    >
+                      About
+                    </li>
+                  </router-link>
                 </div>
                 <div class="py-1" role="none">
                   <a
@@ -225,7 +227,6 @@
                       item.createdAt ? moment(item.createdAt).fromNow() : "-"
                     }}
                   </span>
-                 
                 </div>
               </div>
             </div>
@@ -555,9 +556,7 @@
                     "
                     >
                       {{
-                        item.createdAt
-                          ? moment(item.createdAt).fromNow()
-                          : "-"
+                        item.createdAt ? moment(item.createdAt).fromNow() : "-"
                       }}
                     </span>
                   </div>
