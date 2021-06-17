@@ -26,6 +26,10 @@
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
           <div class="flex justify-center">
             <div>
+              <span>
+                <h2>{{ licenseFile.name }}</h2>
+                <h2>{{ fileSize }}</h2>
+              </span>
               <span v-if="showUpload">
                 <label class="text-primary-700"
                   >Upload image:
@@ -172,6 +176,8 @@ export default {
       showLoading: false,
     });
 
+    let fileSize = ref("");
+
     let licenseFile = ref("");
     let licenseFileP = ref("");
     let showPreview = ref(false);
@@ -209,6 +215,14 @@ export default {
       licenseFile.value = licenseFileP.value.files[0];
       let reader = new FileReader();
 
+      let fileS = licenseFile.value.size;
+      if (fileS > 0 && fileS < 1000) {
+        fileSize.value += "B";
+      } else if (fileS > 1000 && fileS < 1000000) {
+        fileSize.value = fileS / 1000 + "kB";
+      } else {
+        fileSize.value = fileS / 1000000 + "MB";
+      }
       reader.addEventListener(
         "load",
         function() {
@@ -217,14 +231,14 @@ export default {
         },
         false
       );
-
       if (licenseFile.value) {
         if (/\.(jpe?g|png|gif)$/i.test(licenseFile.value.name)) {
           isImage.value = true;
           reader.readAsDataURL(licenseFile.value);
         } else if (/\.(pdf)$/i.test(licenseFile.value.name)) {
           isImage.value = false;
-          reader.readAsText(licenseFile.value);
+          reader.readAsDataURL(licenseFile.value);
+          viewFile();
         }
       }
     };
@@ -265,6 +279,22 @@ export default {
         }
       }
     });
+    const viewFile = () => {
+      var win = window.open();
+      win.document.write(
+        '<body style="margin:0px;"><object data="' +
+          licenseFile.value +
+          '" type="application/pdf" width="100%" height="100%"><iframe src="' +
+          licenseFile.value +
+          '" scrolling="no" width="100%" height="100%" frameborder="0" ></iframe></object></body>'
+      );
+      // win.document.write(
+      //   '<body style="margin:0px;"><iframe src="' +
+      //     this.fileData +
+      //     '" scrolling="no" width="100%" height="100%" frameborder="0" ></iframe></body>'
+      // );
+    };
+
     const draft = (action) => {
       message.value.showLoading = true;
       if (route.params.id) {
@@ -506,6 +536,7 @@ export default {
       handleFileUpload,
       reset,
       submit,
+      fileSize,
       draft,
       withdraw,
       buttons,
@@ -521,6 +552,7 @@ export default {
       remark,
       declinedFieldsCheck,
       acceptedFieldsCheck,
+      viewFile,
     };
   },
 };
