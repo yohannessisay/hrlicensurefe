@@ -26,6 +26,10 @@
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
           <div class="flex justify-center mb-10">
             <div>
+              <span>
+                <h2>{{ workExperienceFile.name }}</h2>
+                <h2>{{ fileSize }}</h2>
+              </span>
               <span v-if="showUpload">
                 <label class="text-primary-700"
                   >Upload image:
@@ -164,6 +168,8 @@ export default {
     });
     const basePath = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/";
 
+    let fileSize = ref("");
+
     let workExperienceFile = ref("");
     let workExperienceFileP = ref("");
     let showPreview = ref(false);
@@ -202,8 +208,16 @@ export default {
       dataChanged.value = true;
       showUpload.value = false;
       workExperienceFile.value = workExperienceFileP.value.files[0];
-      console.log(workExperienceFile.value);
       let reader = new FileReader();
+
+      let fileS = workExperienceFile.value.size;
+      if (fileS > 0 && fileS < 1000) {
+        fileSize.value += "B";
+      } else if (fileS > 1000 && fileS < 1000000) {
+        fileSize.value = fileS / 1000 + "kB";
+      } else {
+        fileSize.value = fileS / 1000000 + "MB";
+      }
 
       reader.addEventListener(
         "load",
@@ -493,6 +507,7 @@ export default {
       showUpload,
       isImage,
       handleFileUpload,
+      fileSize,
       reset,
       submit,
       draftStatus,
