@@ -19,7 +19,7 @@
           ACCEPTED
         </h2>
         <TitleWithIllustration
-          illustration="User"
+          illustration="Certificate"
           message="Letter from Hiring Institution"
           class="mt-8"
         />

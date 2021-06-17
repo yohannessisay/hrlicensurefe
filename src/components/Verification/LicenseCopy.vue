@@ -19,7 +19,7 @@
           ACCEPTED
         </h2>
         <TitleWithIllustration
-          illustration="User"
+          illustration="Certificate"
           message="License Copy"
           class="mt-8"
         />
