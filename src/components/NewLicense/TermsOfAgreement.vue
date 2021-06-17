@@ -22,22 +22,21 @@
       <div class="ml-8">
         <h2>Foreigner</h2>
         <ul>
-          <li>Photo</li>
           <li>Passport(Identification Card)</li>
           <li>Health Exam Certificate</li>
+          <li>English Language Certificate</li>
+          <li>Higher Education Relevance and Quality Agency center(HERQA)</li>
           <li>Professional Document Certificate</li>
           <li>Professional Document Diploma</li>
           <li>Professional Document Transcript</li>
-          <li>English Language Certificate</li>
           <li>Letter from Organization</li>
-          <li>Renewed License of the Organization</li>
           <li>Authenticated Professional License from Country of Origin</li>
+          <li>Renewed License of the Organization</li>
         </ul>
       </div>
       <div class="ml-8">
         <h2>Local</h2>
         <ul>
-          <li>Photo</li>
           <li>Passport(Identification Card)</li>
           <li>Health Exam Certificate</li>
           <li>COC</li>
@@ -46,20 +45,19 @@
           <li>12<sup>th</sup> Grade Certificate</li>
           <li>9<sup>th</sup> - 10<sup>th</sup> Transcript</li>
           <li>11<sup>th</sup> - 12<sup>th</sup> Transcript</li>
-          <li>Support Letter</li>
           <li>Work Experience Certificate</li>
+          <li>Support Letter</li>
         </ul>
       </div>
       <div class="ml-8">
         <h2>Foreigner Ethiopian</h2>
         <ul>
-          <li>Photo</li>
           <li>Passport(Identification Card)</li>
           <li>Health Exam Certificate</li>
+          <li>HERQA</li>
           <li>Professional Document Certificate</li>
           <li>Professional Document Diploma</li>
           <li>Professional Document Transcript</li>
-          <li>HERQA</li>
           <li>Support Letter</li>
         </ul>
       </div>

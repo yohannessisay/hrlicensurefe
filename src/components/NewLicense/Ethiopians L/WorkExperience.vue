@@ -177,6 +177,8 @@ export default {
     const basePath = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/";
     let dataChanged = ref(false);
 
+    let fileSize = ref("");
+
     let workExperienceFile = ref("");
     let workExperienceFileP = ref("");
     let showPreview = ref(false);
