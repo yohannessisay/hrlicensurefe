@@ -55,7 +55,7 @@
             >
               On
               {{
-                item.createdAt
+                item.certifiedDate
                   ? moment(item.certifiedDate).format("MMM Do YY")
                   : "-"
               }}

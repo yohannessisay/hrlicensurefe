@@ -78,7 +78,7 @@
               >
                 On
                 {{
-                  item.createdAt
+                  item.certifiedDate
                     ? moment(item.certifiedDate).format("MMM Do YY")
                     : "-"
                 }}
@@ -178,12 +178,12 @@ export default {
         message.value.showErrorFlash = true;
         setTimeout(() => {
           message.value.showErrorFlash = false;
-        }, 5000)
+        }, 4000)
       } else if (moment(searchCertifiedFrom.value).isAfter(searchCertifiedTo.value)) {
         message.value.showErrorFlash = true;
         setTimeout(() => {
           message.value.showErrorFlash = false;
-        }, 5000);
+        }, 4000);
       } 
        else {
         searchedByDate.value = true;

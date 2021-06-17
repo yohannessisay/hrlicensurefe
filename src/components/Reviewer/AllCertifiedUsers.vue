@@ -78,7 +78,7 @@
               >
                 On
                 {{
-                  item.createdAt
+                  item.certifiedDate
                     ? moment(item.certifiedDate).format("MMM Do YY")
                     : "-"
                 }}
@@ -178,13 +178,12 @@ export default {
         message.value.showErrorFlash = true;
         setTimeout(() => {
           message.value.showErrorFlash = false;
-        }, 5000)
+        }, 4000)
       } else if (moment(searchCertifiedFrom.value).isAfter(searchCertifiedTo.value)) {
-        console.log("the date format is not right");
         message.value.showErrorFlash = true;
         setTimeout(() => {
           message.value.showErrorFlash = false;
-        }, 5000);
+        }, 4000);
       } 
        else {
         searchedByDate.value = true;
@@ -193,7 +192,7 @@ export default {
             !moment(searchCertifiedFrom.value).isAfter(
               assignAllCertified.value[certifiedUser].certifiedDate
             ) &&
-            moment(searchCertifiedTo.value).isAfter(assignAllCertified.value[certifiedUser].certifiedDate)
+            moment(searchCertifiedTo.value).isSameOrAfter(assignAllCertified.value[certifiedUser].certifiedDate)
           ) {
             if(!alreadyPushed.value) {
               filteredByDate.value.push(assignAllCertified.value[certifiedUser])
@@ -202,7 +201,6 @@ export default {
            
         }
         alreadyPushed.value = true;
-         console.log("pfor assign", filteredByDate.value)
       }
     };
 
@@ -260,7 +258,6 @@ export default {
 
     onMounted(() => {
       fetchAllCertified();
-      console.log("value ff", assignAllCertified.value)
     });
 
     return {

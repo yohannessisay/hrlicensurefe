@@ -15,13 +15,9 @@
 <script>
 import { onMounted } from '@vue/runtime-core'
 import NewAdminNavigationBar from "@/components/Reviewer/Configurations/ChangePassword/NewAdminNavigationBar";
-import Title from "@/sharedComponents/Title";
-import RenderIllustration from "@/sharedComponents/RenderIllustration";
 import AdminPasswordInfo from "@/components/Reviewer/Configurations/ChangePassword/AdminPasswordInfo";
 export default {
     components: {
-        Title, 
-        RenderIllustration,
         NewAdminNavigationBar,
         AdminPasswordInfo
     },

@@ -9,7 +9,7 @@
       </div>
       <div
         class="container"
-        v-for="item in licensedByDate"
+        v-for="item in filteredData"
         v-bind:key="item.id"
         v-bind:value="item.id"
       >
@@ -20,7 +20,8 @@
             class="p-4 w-48 h-64"
             @Click="
               detail(
-                `/admin/certifiedUsersDetail`,
+                `/admin/`,
+                unassignedDetail,
                 item.applicationType,
                 item.id,
                 item.applicant.id
@@ -55,8 +56,8 @@
             >
               On
               {{
-                item.certifiedDate
-                  ? moment(item.certifiedDate).format("MMM Do YY")
+                item.createdAt
+                  ? moment(item.createdAt).format("MMM Do YY")
                   : "-"
               }}
             </span>
@@ -95,15 +96,16 @@ export default {
   computed: {
     moment: () => moment,
   },
-  props: ["licensedByDate"],
+  props: ["filteredData", "type"],
   setup(props) {
     const router = useRouter();
     
-    let searchedApplicantsLength = props.licensedByDate.length;
+    let searchedApplicantsLength = props.filteredData.length;
+    console.log("type is ", props.type)
 
-    const detail = (data, applicationType, applicationId, applicantId) => {
+    const detail = (data, type, applicationType, applicationId, applicantId) => {
       const url =
-        data + "/" + applicationType + "/" + applicationId + "/" + applicantId;
+        data + "" + props.type + "/" + applicationType + "/" + applicationId + "/" + applicantId;
       router.push(url);
     };
 
