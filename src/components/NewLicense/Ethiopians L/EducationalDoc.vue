@@ -367,7 +367,7 @@ export default {
   props: ["activeState"],
   data() {
     return {
-      basePath: "https://hrlicensurebe.dev.k8s.sandboxaddis.com/",
+      basePath: "https://ihris.moh.gov.et/hrl/",
       dataChanged: false,
       showFlash: false,
       showErrorFlash: false,

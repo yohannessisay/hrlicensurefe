@@ -165,7 +165,7 @@ export default {
     const route = useRoute();
     const router = useRouter();
 
-    const basePath = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/";
+    const basePath = "https://ihris.moh.gov.et/hrl/";
 
     let message = ref({
       showFlash: false,

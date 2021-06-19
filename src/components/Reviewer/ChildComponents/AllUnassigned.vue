@@ -22,7 +22,7 @@
             />
             <!-- <img
                   class="box-shadow-pop"
-                  :src="'https://hrlicensurebe.dev.k8s.sandboxaddis.com/'+item.profilePic"
+                  :src="'https://ihris.moh.gov.et/hrl/'+item.profilePic"
                 />  -->
           </span>
           <span v-else>

@@ -23,7 +23,7 @@
               <!-- <img
                 style="border-radius: 100%"
                 v-bind:src="
-                  'https://hrlicensurebe.dev.k8s.sandboxaddis.com/' +
+                  'https://ihris.moh.gov.et/hrl/' +
                     'docs[1].filePath'
                 "
                 class="img"
@@ -127,7 +127,7 @@
               <picture v-if="docs.length > 0">
                 <img
                   v-bind:src="
-                    'https://hrlicensurebe.dev.k8s.sandboxaddis.com/' +
+                    'https://ihris.moh.gov.et/hrl/' +
                       docs[index].filePath
                   "
                 />
@@ -305,7 +305,7 @@
                             >
                               <img
                                 v-bind:src="
-                                  'https://hrlicensurebe.dev.k8s.sandboxaddis.com/' +
+                                  'https://ihris.moh.gov.et/hrl/' +
                                     rejectedObj[ind].filePath
                                 "
                               />

@@ -5,7 +5,7 @@ import {
   ADD_PROFILE_SUCCESS,
   ADD_PROFILE_ERROR,
 } from "./mutation-types";
-const url = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api/";
+const url = "https://ihris.moh.gov.et/hrl/api/";
 export default {
   async login({ commit }, profile) {
     commit(ADD_PROFILE_LOADING);

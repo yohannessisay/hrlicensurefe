@@ -22,7 +22,7 @@
                 <img
                   style="border-radius: 100%"
                   v-bind:src="
-                    'https://hrlicensurebe.dev.k8s.sandboxaddis.com/' +
+                    'https://ihris.moh.gov.et/hrl/' +
                     paymentImage
                   "
                   class="img"
@@ -97,7 +97,7 @@
               <picture>
                 <img
                   v-bind:src="
-                    'https://hrlicensurebe.dev.k8s.sandboxaddis.com/' +
+                    'https://ihris.moh.gov.et/hrl/' +
                     paymentImage
                   "
                 />

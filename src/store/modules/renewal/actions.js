@@ -16,7 +16,7 @@ import {
   SET_ACCEPTED_FIELDS,
 } from "./mutation-types";
 
-const url = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api/";
+const url = "https://ihris.moh.gov.et/hrl/api/";
 const userId = +localStorage.getItem("userId");
 export default {
   setLicense({ commit }, license) {

@@ -333,7 +333,7 @@ export default {
     this.buttons = this.getButtons;
   },
   data: () => ({
-    basePath: "https://hrlicensurebe.dev.k8s.sandboxaddis.com/",
+    basePath: "https://ihris.moh.gov.et/hrl/",
 
     show: false,
     profileInfo: {},

@@ -6,7 +6,7 @@ import {
   SET_PHOTO,
 } from "./mutation-types";
 
-const baseUrl = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api";
+const baseUrl = "https://ihris.moh.gov.et/hrl/api";
 export default {
   async setProfile({ commit }, profile) {
     try {
