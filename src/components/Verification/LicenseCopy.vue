@@ -62,6 +62,9 @@
               </span>
             </div>
           </div>
+          <div v-if="pdfView">
+            <PDFJSViewer :path="`${path}`" :fileName="`${name}`" />
+          </div>
         </form>
         <div v-if="buttons && !draftStatus" class="flex justify-center mb-8">
           <button @click="submit">
@@ -154,13 +157,14 @@ import { useRoute, useRouter } from "vue-router";
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import Spinner from "@/sharedComponents/Spinner";
-
+import PDFJSViewer from "../../sharedComponents/pdfViewer.vue";
 export default {
   components: {
     TitleWithIllustration,
     FlashMessage,
     ErrorFlashMessage,
     Spinner,
+    PDFJSViewer,
   },
   props: ["activeState"],
   setup(props, { emit }) {
@@ -184,6 +188,10 @@ export default {
     let filePreview = ref("");
     let showUpload = ref(true);
     let isImage = ref(true);
+
+    let pdfView = ref(false);
+    let path = ref("");
+    let name = ref("");
 
     let declinedFields = ref([]);
     let acceptedFields = ref([]);
@@ -238,9 +246,15 @@ export default {
         } else if (/\.(pdf)$/i.test(licenseFile.value.name)) {
           isImage.value = false;
           reader.readAsDataURL(licenseFile.value);
-          viewFile();
+          pdfView.value = true;
+          console.log(licenseFile.value);
+          path.value = licenseFile.value.path;
+          name.value = licenseFile.value.name;
+          // viewFile();
         }
       }
+      console.log(licenseFile.value);
+      console.log(filePreview.value);
     };
     buttons = store.getters["verification/getButtons"];
     documentSpecs = store.getters["verification/getDocumentSpec"];
@@ -533,10 +547,13 @@ export default {
       filePreview,
       showUpload,
       isImage,
+      pdfView,
       handleFileUpload,
       reset,
       submit,
       fileSize,
+      path,
+      name,
       draft,
       withdraw,
       buttons,

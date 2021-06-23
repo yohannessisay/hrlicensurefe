@@ -11,6 +11,13 @@
       </div>
       <form class="mx-auto max-w-3xl w-full mt-10" @submit.prevent="nextStep">
         <div class="flex mb-4 justify-center">
+          <div>
+            <span>
+              <h2>{{ photoFile.name }}</h2>
+              <h2>{{ fileSize }}</h2>
+            </span>
+          </div>
+          <br />
           <span v-if="showUpload">
             <label class="text-primary-700 ml-4"
               >Upload Profile Picture:
@@ -130,7 +137,7 @@
           </div>
         </div>
         <div class="flex flex-col mb-medium w-1/2 m1-12">
-          <label class="text-primary-700">Date of birth</label>
+          <label class="text-primary-700">Date of birth </label>
           <input
             class="max-w-3xl"
             type="date"
@@ -285,6 +292,8 @@ export default {
     let showUpload = ref(true);
     let isImage = ref(true);
 
+    let fileSize = ref("");
+
     let personalInfo = ref({
       name: "",
       fatherName: "",
@@ -331,11 +340,26 @@ export default {
       photoFile.value = photoFileP.value.files[0];
       let reader = new FileReader();
 
+      let fileS = photoFile.value.size;
+      if (fileS > 0 && fileS < 1000) {
+        fileSize.value += "B";
+      } else if (fileS > 1000 && fileS < 1000000) {
+        fileSize.value = fileS / 1000 + "kB";
+      } else {
+        fileSize.value = fileS / 1000000 + "MB";
+      }
+
       reader.addEventListener(
         "load",
         function() {
           showPreview.value = true;
           filePreview.value = reader.result;
+          var temp = JSON.stringify(reader.result);
+          if (photoFile.value.type == "image/jpeg") {
+            personalInfo.value.photo = temp.substring(24);
+          } else {
+            personalInfo.value.photo = temp.substring(23);
+          }
         },
         false
       );
@@ -348,11 +372,6 @@ export default {
           reader.readAsText(photoFile.value);
         }
       }
-      let contentType = photoFile.value.type;
-      let blob = new Blob([photoFile], {
-        type: contentType,
-      });
-      personalInfo.value.photo = blob;
     };
 
     const fetchUserTypes = () => {
@@ -453,6 +472,7 @@ export default {
       filePreview,
       showUpload,
       isImage,
+      fileSize,
       handleFileUpload,
       reset,
       personalInfo,
