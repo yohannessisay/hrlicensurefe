@@ -10,14 +10,13 @@
         />
       </div>
       <form class="mx-auto max-w-3xl w-full mt-10" @submit.prevent="nextStep">
+        <div class="flex justify-center">
+          <span>
+            <h2>{{ photoFile.name }}</h2>
+            <h2>{{ fileSize }}</h2>
+          </span>
+        </div>
         <div class="flex mb-4 justify-center">
-          <div>
-            <span>
-              <h2>{{ photoFile.name }}</h2>
-              <h2>{{ fileSize }}</h2>
-            </span>
-          </div>
-          <br />
           <span v-if="showUpload">
             <label class="text-primary-700 ml-4"
               >Upload Profile Picture:
@@ -354,12 +353,13 @@ export default {
         function() {
           showPreview.value = true;
           filePreview.value = reader.result;
-          var temp = JSON.stringify(reader.result);
-          if (photoFile.value.type == "image/jpeg") {
-            personalInfo.value.photo = temp.substring(24);
-          } else {
-            personalInfo.value.photo = temp.substring(23);
-          }
+          personalInfo.value.photo = reader.result;
+          // var temp = JSON.stringify(reader.result);
+          // if (photoFile.value.type == "image/jpeg") {
+          //   personalInfo.value.photo = temp.substring(24);
+          // } else {
+          //   personalInfo.value.photo = temp.substring(23);
+          // }
         },
         false
       );
