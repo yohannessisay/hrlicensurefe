@@ -168,6 +168,7 @@ export default {
     let searchCertifiedTo = ref("");
     let x = ref([]);
     let adminId = +localStorage.getItem("adminId");
+    let regionId = JSON.parse(localStorage.getItem("allAdminData")).regionId;
     let adminRole = localStorage.getItem("role");
     let nothingToShowAllCertified = ref(false);
     let showLoading = ref(false);
@@ -214,7 +215,7 @@ export default {
 
     const fetchAllCertified = () => {
       showLoading.value = true;
-      store.dispatch("reviewer/getMyRegionCertifiedUsers").then((res) => {
+      store.dispatch("reviewer/getMyRegionCertifiedUsers", regionId).then((res) => {
         showLoading.value = false;
         allCertified.value =
           store.getters["reviewer/getMyRegionCertifiedUsersSearched"];

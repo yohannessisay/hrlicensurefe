@@ -159,7 +159,6 @@ export default {
 
         allInfo.value.assignApplication =
           store.getters["reviewer/getEvaluateReviewerSearched"];
-          // console.log("all value is ", allInfo.value.assignApplication)
         for (let applicant in allInfo.value.assignApplication) {
           allInfo.value.assignApplication[applicant].createdAt = moment(
             allInfo.value.assignApplication[applicant].createdAt

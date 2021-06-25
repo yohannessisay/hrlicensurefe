@@ -818,14 +818,17 @@ export default {
     }
   },
 
-  async getMyRegionCertifiedUsers({commit}) {
+  async getMyRegionCertifiedUsers({commit}, regionId) {
     try {
       const resp = await ApiService.get(baseUrl + "/applications/allUnconfirmedApps")
       const certifiedUsers = resp.data.data.filter(function(e) {
         return e.certified == true && 
         e.applicationType != "Good Standing" && e.applicationType != "Verification";
-      })
-      commit(SET_MY_REGION_CERTIFIED_USERS, certifiedUsers)
+      });
+      const myRegionCertifiedUsers = certifiedUsers.filter(function(e) {
+        return e.woreda.zone.regionId == regionId
+      });
+      commit(SET_MY_REGION_CERTIFIED_USERS, myRegionCertifiedUsers)
     } catch(error) {
       const resp = error;
       return resp;
