@@ -12,8 +12,8 @@ const filterApplication = (moment, allInfo) => {
         allInfo.app_type != ""
       ) {
         searchByInput(
-          searchFromDate,
-          searchUpToDate,
+          allInfo.searchFromDate,
+          allInfo.searchUpToDate,
           allInfo.app_type,
           allInfo,
           moment
@@ -66,7 +66,7 @@ const searchByInput = (startingFrom, upTo, app_type, allInfo, moment) => {
           }
         }
       }  else if (app_type != "notSearched") {
-          
+          console.log("application type only")
         if (
             allInfo.assignApplication[applicant].applicationType ==
           app_type

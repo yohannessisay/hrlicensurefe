@@ -156,6 +156,16 @@ const routes = [
     component: () => import("../components/Reviewer/Unconfirmed.vue"),
   },
   {
+    path: "/admin/onreview",
+    name: "onreview",
+    component: () => import("../components/Reviewer/OnReview.vue")
+  },
+  {
+    path: "/admin/evaluateReview",
+    name: "evaluateReview",
+    component: () => import("../components/Reviewer/EvaluateReview.vue")
+  },
+  {
     path: "/admin/assignedToYou",
     name: "assignedToYou",
     component: () => import("../components/Reviewer/AssignedToYou.vue"),

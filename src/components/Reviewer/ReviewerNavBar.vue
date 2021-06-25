@@ -164,6 +164,22 @@
                       Un Confirmed
                     </a>
                   </router-link>
+                  <router-link to="/admin/onreview">
+                    <a
+                      class="block px-4 py-2 text-sm text-blue-100 hover:bg-gray-100 hover:text-gray-900"
+                      role="menuitem"
+                    >
+                      On Review
+                    </a>
+                  </router-link>
+                  <router-link to="/admin/evaluateReview">
+                    <a
+                      class="block px-4 py-2 text-sm text-blue-100 hover:bg-gray-100 hover:text-gray-900"
+                      role="menuitem"
+                    >
+                      Evaluate Review
+                    </a>
+                  </router-link>
                 </div>
               </div>
             </span>

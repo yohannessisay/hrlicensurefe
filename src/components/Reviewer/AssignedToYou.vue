@@ -49,12 +49,12 @@
     </div>
     <div class="bg-lightBlueB-200 h-full" v-if="allInfo.searchByInput">
       <div class="flex pl-12 pt-tiny">
-        <Title :message="'Unassigned Applicants'" />
+        <Title :message="'Assigned To You Applicants'" />
         <button @click="backClicked">back</button>
       </div>
       <filtered-info
         :filteredData="allInfo.filteredByDate"
-        type="unassignedDetail"
+        type="detail"
       />
     </div>
   </div>
@@ -145,9 +145,7 @@ export default {
     ]);
 
     const filterAssignedApplication = () => {
-      console.log("before", allInfo.value);
       filterApplication(moment, allInfo.value);
-      console.log("after", allInfo.value);
     };
 
     const backClicked = () => {
@@ -163,18 +161,13 @@ export default {
       showLoading.value = true;
       store.dispatch("reviewer/getAssignedToYou", adminId).then((res) => {
         showLoading.value = false;
-        console.log("here");
-        console.log(
-          "assigned value",
-          store.getters["reviewer/getAssignedToYouSearched"][0]
-        );
         assignedToyou.value =
           store.getters["reviewer/getAssignedToYouSearched"];
         allInfo.value.assignApplication =
           store.getters["reviewer/getAssignedToYouSearched"];
-        for (let unassignedUser in allInfo.value.assignApplication) {
-          allInfo.value.assignApplication[unassignedUser].createdAt = moment(
-            allInfo.value.assignApplication[unassignedUser].createdAt
+        for (let applicant in allInfo.value.assignApplication) {
+          allInfo.value.assignApplication[applicant].createdAt = moment(
+            allInfo.value.assignApplication[applicant].createdAt
           ).format("MMMM D, YYYY");
         }
         if (assignedToyou.value.length !== 0) {

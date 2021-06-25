@@ -444,6 +444,7 @@ export default {
     let foundInAcceptted = ref(false);
     let showRemark = ref(false);
     let applicationType = ref("");
+    let applicantId = ref("");
     let showFlash = ref(false);
     let showErrorFlash = ref(false);
     let showDeclineFlash = ref(false);
@@ -489,6 +490,7 @@ export default {
           .dispatch("reviewer/getGoodStandingApplication", applicationId)
           .then((res) => {
             // newLicense.value = res.data.data;
+            applicantId.value = res.data.data.applicantId;
             newLicense.value.applicantType.name = "-"
             newLicense.value.education.department.name = "-"
             newLicense.value.education.institution.name= "-"
@@ -816,11 +818,17 @@ export default {
         applicationType.value == "Good Standing" &&
         sendDeclinedData.value == true
       ) {
+        
         store.dispatch("reviewer/editGoodStanding", req).then((res) => {
           if (res.statusText == "Created") {
             showFlash.value = true;
+            let redirectUrl = "/admin/review"
+        if(req.action == "ApproveEvent") {
+          redirectUrl = "/admin/finishedDetail/"+route.params.applicationType+"/"+route.params.applicationId + "/"+ applicantId.value
+        }
             setTimeout(() => {
-              router.push("/admin/review");
+              
+              router.push(`${redirectUrl}`);
             }, 3000);
           } else {
             showErrorFlash.value = true;

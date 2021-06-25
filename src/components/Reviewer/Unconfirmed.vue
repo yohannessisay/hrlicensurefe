@@ -17,17 +17,17 @@
     <div class="bg-lightBlueB-200 h-full">
       <returned-to-others-container />
     </div> -->
-    <div class="bg-lightBlueB-200 h-full">
+    <!-- <div class="bg-lightBlueB-200 h-full">
       <confirm-review-container />
-    </div>
+    </div> -->
     <!-- <div v-if="isSuperAdmin">
       <div class="bg-lightBlueB-200 h-full">
         <others-confirm-review-container />
       </div>
     </div> -->
-    <div class="bg-lightBlueB-200 h-full">
+    <!-- <div class="bg-lightBlueB-200 h-full">
       <evaluate-application-container />
-    </div>
+    </div> -->
   </div>
 </template>
 
