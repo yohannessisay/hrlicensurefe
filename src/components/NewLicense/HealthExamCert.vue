@@ -26,6 +26,10 @@
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
           <div class="flex justify-center">
             <div>
+              <span>
+                <h2>{{ healthExamFile.name }}</h2>
+                <h2>{{ fileSize }}</h2>
+              </span>
               <span v-if="showUpload">
                 <label class="text-primary-700"
                   >Upload image:
@@ -171,6 +175,9 @@ export default {
       showErrorFlash: false,
       showLoading: false,
     });
+
+    let fileSize = ref("");
+
     let dataChanged = ref(false);
     let healthExamFile = ref("");
     let healthExamFileP = ref("");
@@ -219,6 +226,15 @@ export default {
       healthExamFile.value = healthExamFileP.value.files[0];
       let reader = new FileReader();
       isImage.value = true;
+      let fileS = healthExamFile.value.size;
+      if (fileS > 0 && fileS < 1000) {
+        fileSize.value += "B";
+      } else if (fileS > 1000 && fileS < 1000000) {
+        fileSize.value = fileS / 1000 + "kB";
+      } else {
+        fileSize.value = fileS / 1000000 + "MB";
+      }
+
       reader.addEventListener(
         "load",
         function() {
@@ -563,6 +579,7 @@ export default {
       draft,
       withdraw,
       buttons,
+      fileSize,
       draftData,
       draftStatus,
       update,

@@ -674,7 +674,6 @@ export default {
           this.goodstanding = this.license.filter(function(e) {
             return e.applicationStatus.code.includes("DRA");
           });
-          console.log(this.goodstanding);
         });
     },
     routeTo(item) {

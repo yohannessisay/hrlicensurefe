@@ -26,6 +26,10 @@
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
           <div class="flex justify-center mb-10">
             <div>
+              <span>
+                <h2>{{ previousLicenseFile.name }}</h2>
+                <h2>{{ fileSize }}</h2>
+              </span>
               <span v-if="showUpload">
                 <label class="text-primary-700"
                   >Upload image:
@@ -171,6 +175,9 @@ export default {
       showErrorFlash: false,
       showLoading: false,
     });
+
+    let fileSize = ref("");
+
     let dataChanged = ref(false);
     let previousLicenseFile = ref("");
     let previousLicenseFileP = ref("");
@@ -211,7 +218,14 @@ export default {
       showUpload.value = false;
       previousLicenseFile.value = previousLicenseFileP.value.files[0];
       let reader = new FileReader();
-
+      let fileS = previousLicenseFile.value.size;
+      if (fileS > 0 && fileS < 1000) {
+        fileSize.value += "B";
+      } else if (fileS > 1000 && fileS < 1000000) {
+        fileSize.value = fileS / 1000 + "kB";
+      } else {
+        fileSize.value = fileS / 1000000 + "MB";
+      }
       reader.addEventListener(
         "load",
         function() {
@@ -503,6 +517,7 @@ export default {
       buttons,
       draftData,
       draftStatus,
+      fileSize,
       update,
       basePath,
       message,

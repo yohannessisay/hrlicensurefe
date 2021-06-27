@@ -4,6 +4,11 @@
     <div class="w-screen bg-lightBlueB-200 flex items-center justify-center">
       <div class="w-screen max-w-4xl mt-large">
         <div class="flex flex-col w-full rounded mb-large">
+          <h2
+            class="flex justify-center pb-medium"
+          >
+            Renewal
+          </h2>
           <transition name="fade" mode="out-in">
             <div v-if="this.activeState == 1">
               <Institution
