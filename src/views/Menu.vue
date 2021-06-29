@@ -1,362 +1,64 @@
 <template>
   <div>
-    <Navigation />
-    <div class="bg-lightBlueB-200 h-max pb-24">
-      <div class="flex pl-24 pt-8">
-        <div class="mt-5">
-          <h2 class="text-lightBlueB-400">New Requests</h2>
-        </div>
+    <Navigation :display="menu" @changeDisplay="displaySet" />
+    <div class="flex flex-row">
+      <div>
+        <SideNav :display="menu" @changeDisplay="displaySet" />
       </div>
-      <div class="flex justify-center mt-8 rounded ">
-        <transition name="slide-fade-to-left">
-          <div
-            class="container mr-12 box-shadow-pop rounded-lg bg-lightGrey-100 "
-          >
-            <div
-              @click="openModalNL()"
-              class="flex justify-center items-center w-64 h-40"
-            >
-              <div class="p-1">
-                <div class="flex content-center justify-center">
-                  <RenderIllustration illustration="SimpleCertificate" />
-                </div>
-                <h4 class="text-lightBlueB-500 mt-tiny">New License</h4>
-              </div>
-            </div>
-          </div>
-        </transition>
-        <transition name="slide-fade-to-left">
-          <div
-            class="container mr-12 box-shadow-pop rounded-lg bg-lightGrey-100 "
-          >
-            <div
-              @click="openModalR()"
-              class="flex justify-center items-center w-64 h-40"
-            >
-              <div class="p-1">
-                <div class="my-auto flex justify-center">
-                  <RenderIllustration illustration="Renewal" />
-                </div>
-                <h4 class="text-lightBlueB-500 mt-tiny">Renewal</h4>
-              </div>
-            </div>
-          </div>
-        </transition>
-        <transition name="slide-fade-to-left">
-          <div
-            class="container mr-12 box-shadow-pop rounded-lg bg-lightGrey-100 "
-          >
-            <div
-              @click="openModalV()"
-              class=" flex justify-center items-center w-64 h-40"
-            >
-              <div class="p-1">
-                <div class="my-auto flex justify-center">
-                  <RenderIllustration illustration="Verification" />
-                </div>
-                <h4
-                  class="text-lightBlueB-500 justify-center items-center ml-2 mt-tiny"
-                >
-                  Verification
-                </h4>
-              </div>
-            </div>
-          </div>
-        </transition>
-        <transition name="slide-fade-to-left">
-          <div
-            class="container mr-12 box-shadow-pop rounded-lg bg-lightGrey-100 "
-          >
-            <div
-              @click="openModalGS()"
-              class="flex justify-center items-center w-64 h-40"
-            >
-              <div class="p-1">
-                <div class="my-auto flex justify-center">
-                  <RenderIllustration illustration="GoodStanding" />
-                </div>
-                <h4 class="text-lightBlueB-500 mt-tiny">Good Standing</h4>
-              </div>
-            </div>
-          </div>
-        </transition>
+      <div v-if="this.display == 0" class="w-screen">
+        <LicenseRequests />
       </div>
-      <div class="flex pl-24 pt-8">
-        <div class="mt-5">
-          <h2 class="text-lightBlueB-400">Your Previous Requests</h2>
-        </div>
-        <div
-          class="lg:flex lg:items-stretch lg:justify-end ml-auto mr-24"
-        ></div>
+      <div v-if="this.display == 1" class="w-screen">
+        <Draft />
       </div>
-
-      <div class="flex justify-center mt-8 rounded ">
-        <transition name="slide-fade-to-left">
-          <router-link to="/approved">
-            <div
-              class="container mr-12 box-shadow-pop rounded-lg bg-lightGrey-100 "
-            >
-              <div class="flex justify-center items-center w-64 h-40">
-                <div class="p-1">
-                  <div class="flex content-center justify-center">
-                    <span style="color: #648ea3;">
-                      <i class="far fa-thumbs-up fa-4x fa-light"></i>
-                    </span>
-                  </div>
-                  <h4 class="text-lightBlueB-500 mt-tiny">Approved</h4>
-                </div>
-              </div>
-            </div>
-          </router-link>
-        </transition>
-        <transition name="slide-fade-to-left">
-          <router-link to="/submitted">
-            <div
-              class="container mr-12 box-shadow-pop rounded-lg bg-lightGrey-100 "
-            >
-              <div class="flex justify-center items-center w-64 h-40">
-                <div class="p-1">
-                  <div class="my-auto flex justify-center">
-                    <RenderIllustration illustration="Certificate" />
-                  </div>
-                  <h4 class="text-lightBlueB-500 mt-tiny">Submitted</h4>
-                </div>
-              </div>
-            </div>
-          </router-link>
-        </transition>
-        <transition name="slide-fade-to-left">
-          <router-link to="/draft">
-            <div
-              class="container mr-12 box-shadow-pop rounded-lg bg-lightGrey-100 "
-            >
-              <div class="flex justify-center items-center w-64 h-40">
-                <div class="p-1">
-                  <div class="flex">
-                    <span style="color: #648ea3;">
-                      <i class="fas fa-file-signature fa-4x"></i>
-                    </span>
-                  </div>
-                  <h4
-                    class="text-lightBlueB-500 justify-center items-center ml-2 mt-tiny"
-                  >
-                    Draft
-                  </h4>
-                </div>
-              </div>
-            </div>
-          </router-link>
-        </transition>
-        <transition name="slide-fade-to-left">
-          <router-link to="/inReview">
-            <div
-              class="container mr-12 box-shadow-pop rounded-lg bg-lightGrey-100 "
-            >
-              <div class="flex justify-center items-center w-64 h-40">
-                <div class="p-1">
-                  <div class="my-auto flex justify-center">
-                    <span style="color: #648ea3;">
-                      <i class="far fa-id-card fa-4x"></i>
-                    </span>
-                  </div>
-                  <h4 class="text-lightBlueB-500 mt-tiny">In Review</h4>
-                </div>
-              </div>
-            </div>
-          </router-link>
-        </transition>
+      <div v-if="this.display == 2" class="w-screen">
+        <Withdrawn />
       </div>
-      <div class="flex justify-left mt-8 rounded ml-large">
-        <transition name="slide-fade-to-left">
-          <router-link to="/undersupervision">
-            <div
-              class="container mr-12 box-shadow-pop rounded-lg bg-lightGrey-100 "
-            >
-              <div class="flex justify-center items-center w-64 h-40">
-                <div class="p-1">
-                  <div class="flex content-center justify-center">
-                    <span style="color: #648ea3;">
-                      <i class="far fa-id-badge fa-4x"></i>
-                    </span>
-                  </div>
-                  <h4 class="text-lightBlueB-500 mt-tiny">Under Supervision</h4>
-                </div>
-              </div>
-            </div>
-          </router-link>
-        </transition>
-        <transition name="slide-fade-to-left">
-          <router-link to="/withdrawn">
-            <div
-              class="container mr-12 box-shadow-pop rounded-lg bg-lightGrey-100 "
-            >
-              <div class="flex justify-center items-center w-64 h-40">
-                <div class="p-1">
-                  <div class="my-auto flex justify-center">
-                    <span style="color: #648ea3;">
-                      <i class="fas fa-exchange-alt fa-4x"></i>
-                    </span>
-                  </div>
-                  <h4 class="text-lightBlueB-500 mt-tiny">Withdrawn</h4>
-                </div>
-              </div>
-            </div>
-          </router-link>
-        </transition>
-        <transition name="slide-fade-to-left">
-          <router-link to="/declined">
-            <div
-              class="container mr-12 box-shadow-pop rounded-lg bg-lightGrey-100 "
-            >
-              <div class="flex justify-center items-center w-64 h-40">
-                <div class="p-1">
-                  <div class="my-auto flex justify-center">
-                    <span style="color: #648ea3;">
-                      <i class="far fa-thumbs-down fa-4x"></i>
-                    </span>
-                  </div>
-                  <h4 class="text-lightBlueB-500 mt-tiny">
-                    Declined
-                  </h4>
-                </div>
-              </div>
-            </div>
-          </router-link>
-        </transition>
-        <transition name="slide-fade-to-left">
-          <router-link to="/pendingPayment">
-            <div
-              class="container mr-12 box-shadow-pop rounded-lg bg-lightGrey-100 "
-            >
-              <div class="flex justify-center items-center w-64 h-40">
-                <div class="p-1">
-                  <div class="flex content-center justify-center">
-                    <span style="color: #648ea3;">
-                      <i class="fas fa-comments-dollar fa-4x"></i>
-                    </span>
-                  </div>
-                  <h4 class="text-lightBlueB-500 mt-tiny">Pending Payment</h4>
-                </div>
-              </div>
-            </div>
-          </router-link>
-        </transition>
+      <div v-if="this.display == 3" class="w-screen">
+        <Submitted />
       </div>
-      <div class="flex justify-left mt-8 rounded ml-large">
-        <transition name="slide-fade-to-left">
-          <router-link to="/approvedPayment">
-            <div
-              class="container mr-12 box-shadow-pop rounded-lg bg-lightGrey-100 "
-            >
-              <div class="flex justify-center items-center w-64 h-40">
-                <div class="p-1">
-                  <div class="flex content-center justify-center">
-                    <span style="color: #648ea3;">
-                      <i class="far fa-money-bill-alt fa-4x"></i>
-                    </span>
-                  </div>
-                  <h4 class="text-lightBlueB-500 mt-tiny">Approved Payment</h4>
-                </div>
-              </div>
-            </div>
-          </router-link>
-        </transition>
-        <transition name="slide-fade-to-left">
-          <router-link to="/declinedPayment">
-            <div
-              class="container mr-12 box-shadow-pop rounded-lg bg-lightGrey-100 "
-            >
-              <div class="flex justify-center items-center w-64 h-40">
-                <div class="p-1">
-                  <div class="flex content-center justify-center">
-                    <span style="color: #648ea3;">
-                      <i class="fa fa-credit-card-alt fa-4x"></i>
-                    </span>
-                  </div>
-                  <h4 class="text-lightBlueB-500 mt-tiny">Declined Payment</h4>
-                </div>
-              </div>
-            </div>
-          </router-link>
-        </transition>
+      <div v-if="this.display == 4" class="w-screen">
+        <Approved />
+      </div>
+      <div v-if="this.display == 5" class="w-screen">
+        <Declined />
+      </div>
+      <div v-if="this.display == 6" class="w-screen">
+        <UnderSupervision />
       </div>
     </div>
-    <Modal v-if="showTermsOfAgreementNL">
-      <TermsOfAgreementNL
-        @showTermsOfAgreementNL="showTermsOfAgreementNL = false"
-      />
-    </Modal>
-    <Modal v-if="showTermsOfAgreementR">
-      <TermsOfAgreementR
-        @showTermsOfAgreementR="showTermsOfAgreementR = false"
-      />
-    </Modal>
-    <Modal v-if="showTermsOfAgreementV">
-      <TermsOfAgreementV
-        @showTermsOfAgreementV="showTermsOfAgreementV = false"
-      />
-    </Modal>
-    <Modal v-if="showTermsOfAgreementGS">
-      <TermsOfAgreementGS
-        @showTermsOfAgreementGS="showTermsOfAgreementGS = false"
-      />
-    </Modal>
   </div>
 </template>
-
 <script>
 import Navigation from "@/views/Navigation";
-import RenderIllustration from "@/sharedComponents/RenderIllustration";
-import Modal from "@/sharedComponents/Modal";
-import TermsOfAgreementNL from "@/components/NewLicense/TermsOfAgreement";
-import TermsOfAgreementR from "@/components/Renewal/TermsOfAgreement";
-import TermsOfAgreementV from "@/components/Verification/TermsOfAgreement";
-import TermsOfAgreementGS from "@/components/GoodStanding/TermsOfAgreement";
-
-import { ref } from "vue";
+import SideNav from "@/views/SideNav.vue";
+import Draft from "@/views/Draft.vue";
+import Withdrawn from "@/views/Withdraw.vue";
+import Submitted from "@/views/Submitted";
+import Approved from "@/views/Approved";
+import Declined from "@/views/Declined";
+import UnderSupervision from "@/views/UnderSupervision";
+import LicenseRequests from "@/views/LicenseRequests";
 
 export default {
   components: {
-    RenderIllustration,
     Navigation,
-    Modal,
-    TermsOfAgreementNL,
-    TermsOfAgreementR,
-    TermsOfAgreementV,
-    TermsOfAgreementGS,
+    SideNav,
+    Draft,
+    Withdrawn,
+    Submitted,
+    Approved,
+    Declined,
+    UnderSupervision,
+    LicenseRequests,
   },
-  setup() {
-    const showTermsOfAgreementNL = ref(false);
-    const showTermsOfAgreementR = ref(false);
-    const showTermsOfAgreementV = ref(false);
-    const showTermsOfAgreementGS = ref(false);
-    const openModalNL = () => {
-      showTermsOfAgreementNL.value = true;
-    };
-    const openModalR = () => {
-      showTermsOfAgreementR.value = true;
-    };
-    const openModalV = () => {
-      showTermsOfAgreementV.value = true;
-    };
-    const openModalGS = () => {
-      showTermsOfAgreementGS.value = true;
-    };
-    return {
-      showTermsOfAgreementNL,
-      showTermsOfAgreementR,
-      showTermsOfAgreementV,
-      showTermsOfAgreementGS,
-      openModalNL,
-      openModalR,
-      openModalV,
-      openModalGS,
-    };
+  data: () => ({
+    display: 0,
+  }),
+  methods: {
+    displaySet: function(display) {
+      this.display = display;
+    },
   },
 };
 </script>
-<style>
-i {
-  color: lightBlueB-400;
-}
-</style>
