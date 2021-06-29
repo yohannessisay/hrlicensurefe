@@ -86,7 +86,7 @@
               </div>
             </div>
             <div class="flex">
-              <div class="flex flex-col mb-medium w-1/2 mr-12">
+              <div class="flex flex-col mb-medium w-1/2 mr-12" v-if="adminExpertId == 3">
                 <label class="text-primary-700">Expert Type</label>
                 <select
                   class="max-w-3xl"
@@ -186,6 +186,8 @@ export default {
     const store = useStore();
     const router = useRouter();
 
+    const adminExpertId = JSON.parse(localStorage.getItem('allAdminData')).expertLevelId;
+    console.log("expert level id is ", adminExpertId)
     let admin = {
       firstName: null,
       fatherName: null,
@@ -252,7 +254,6 @@ export default {
     };
 
     const selectedRegion = () => {
-      console.log("regison id", regions.value.id);
       admin.regionId = regions.value.id;
     };
 
@@ -302,7 +303,7 @@ export default {
         errors.email = "Invalid Email";
       }
 
-      if (!formData.expertLevelId)
+      if (!formData.expertLevelId && adminExpertId == 3)
         errors.expertLevel = "Expert Level is required";
       if (!formData.regionId && formData.expertLevelId == 4)
         errors.region = "Region is required";
@@ -339,16 +340,17 @@ export default {
 
     return {
       state,
-      fetchRole,
-      registerAdmin,
-      admin,
-      validateForm,
-      isValidEmail,
       message,
       expertLevels,
-      selectedExpertLevel,
       regions,
       showLoading,
+      admin,
+      adminExpertId,
+      fetchRole,
+      registerAdmin,
+      validateForm,
+      isValidEmail,
+      selectedExpertLevel,
       selectedRegion,
     };
   },

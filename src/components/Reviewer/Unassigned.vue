@@ -269,6 +269,7 @@ export default {
       store.dispatch("reviewer/getUnassigned").then((res) => {
         showLoading.value = false;
         unassigned.value = store.getters["reviewer/getUnassignedSearched"];
+        console.log("un assigned ", unassigned.value)
         allInfo.value.assignApplication =
           store.getters["reviewer/getUnassignedSearched"];
         for (let unassignedUser in allInfo.value.assignApplication) {
