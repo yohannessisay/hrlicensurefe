@@ -2,7 +2,7 @@
   <div v-if="this.showLoading2" class="h-screen max-h-4xl">
     <Spinner class="bg-lightBlueB-200  " />
   </div>
-  <div class="bg-white mb-large rounded ">
+  <div class="bg-white mb-large rounded pl-4 pt-4 pr-4 pb-4">
     <div v-if="this.show && !this.showLoading2">
       <div class="flex justify-center"><Title message="Summary" /></div>
       <div class="flex justify-start">
@@ -12,8 +12,8 @@
         <div
           :class="[this.profileInfo.name === null ? errorClass : activeClass]"
         >
-          <label class="ml-8"> Full Name</label>
-          <h5 class="ml-8">
+          <label class="ml-4"> Full Name</label>
+          <h5 class="ml-4">
             {{
               this.profileInfo.name +
                 " " +
@@ -30,8 +30,8 @@
               : activeClass,
           ]"
         >
-          <label class="ml-8"> Full Name</label>
-          <h5 class="ml-8">
+          <label class="ml-4"> Full Name</label>
+          <h5 class="ml-4">
             {{
               this.profileInfo.alternativeName +
                 " " +
@@ -44,8 +44,8 @@
         <div
           :class="[this.profileInfo.gender === null ? errorClass : activeClass]"
         >
-          <label class="ml-8"> Gender</label>
-          <h5 class="ml-8">
+          <label class="ml-4"> Gender</label>
+          <h5 class="ml-4">
             {{ this.profileInfo.gender ? this.profileInfo["gender"] : "-" }}
           </h5>
         </div>
@@ -54,8 +54,8 @@
             this.profileInfo.nationality === null ? errorClass : activeClass,
           ]"
         >
-          <label class="ml-8"> Nationality</label>
-          <h5 class="ml-8">
+          <label class="ml-4"> Nationality</label>
+          <h5 class="ml-4">
             {{
               this.profileInfo.nationality ? this.profileInfo.nationality : "-"
             }}
@@ -66,8 +66,8 @@
             this.profileInfo.placeOfBirth === null ? errorClass : activeClass,
           ]"
         >
-          <label class="ml-8"> Place of Birth</label>
-          <h5 class="ml-8">
+          <label class="ml-4"> Place of Birth</label>
+          <h5 class="ml-4">
             {{
               this.profileInfo.placeOfBirth
                 ? this.profileInfo.placeOfBirth
@@ -80,8 +80,8 @@
             this.profileInfo.dateOfBirth === null ? errorClass : activeClass,
           ]"
         >
-          <label class="ml-8"> Date of Birth</label>
-          <h5 class="ml-8">
+          <label class="ml-4"> Date of Birth</label>
+          <h5 class="ml-4">
             {{
               this.profileInfo.dateOfBirth
                 ? moment(this.profileInfo.dateOfBirth).format("MMM D, YYYY")
@@ -96,8 +96,8 @@
               : activeClass,
           ]"
         >
-          <label class="ml-8"> Marital Status</label>
-          <h5 class="ml-8">
+          <label class="ml-4"> Marital Status</label>
+          <h5 class="ml-4">
             {{
               this.profileInfo.maritalStatus.name
                 ? this.profileInfo.maritalStatus.name
@@ -114,8 +114,8 @@
         <div
           :class="[this.profileInfo.kebele === null ? errorClass : activeClass]"
         >
-          <label class="ml-8"> Kebele</label>
-          <h5 class="ml-8">
+          <label class="ml-4"> Kebele</label>
+          <h5 class="ml-4">
             {{ this.profileInfo.kebele ? this.profileInfo.kebele : "-" }}
           </h5>
         </div>
@@ -124,8 +124,8 @@
             this.profileInfo.houseNumber === null ? errorClass : activeClass,
           ]"
         >
-          <label class="ml-8"> House Number</label>
-          <h5 class="ml-8">
+          <label class="ml-4"> House Number</label>
+          <h5 class="ml-4">
             {{
               this.profileInfo.houseNumber ? this.profileInfo.houseNumber : "-"
             }}
@@ -136,8 +136,8 @@
             this.profileInfo.residence === null ? errorClass : activeClass,
           ]"
         >
-          <label class="ml-8"> Residence</label>
-          <h5 class="ml-8">
+          <label class="ml-4"> Residence</label>
+          <h5 class="ml-4">
             {{ this.profileInfo.residence ? this.profileInfo.residence : "-" }}
           </h5>
         </div>
@@ -153,8 +153,8 @@
               : activeClass,
           ]"
         >
-          <label class="ml-8"> Mobile Number</label>
-          <h5 class="ml-8">
+          <label class="ml-4"> Mobile Number</label>
+          <h5 class="ml-4">
             {{
               this.profileInfo.user.phoneNumber
                 ? this.profileInfo.user.phoneNumber
@@ -170,8 +170,8 @@
               : activeClass,
           ]"
         >
-          <label class="ml-8"> Email</label>
-          <h5 class="ml-8">
+          <label class="ml-4"> Email</label>
+          <h5 class="ml-4">
             {{
               this.profileInfo.user.emailAddress
                 ? this.profileInfo.user.emailAddress
@@ -184,8 +184,8 @@
             this.profileInfo.userType.name === null ? errorClass : activeClass,
           ]"
         >
-          <label class="ml-8"> User Type</label>
-          <h5 class="ml-8">
+          <label class="ml-4"> User Type</label>
+          <h5 class="ml-4">
             {{
               this.profileInfo.userType.name
                 ? this.profileInfo.userType.name
@@ -199,16 +199,16 @@
       </div>
       <div class="flex flex-row">
         <div>
-          <label class="ml-8"> Institution Name</label>
-          <h5 class="ml-8">Hawassa University</h5>
+          <label class="ml-4"> Institution Name</label>
+          <h5 class="ml-4">Hawassa University</h5>
         </div>
         <div>
-          <label class="ml-8"> Department</label>
-          <h5 class="ml-8">Electrical Engineering</h5>
+          <label class="ml-4"> Department</label>
+          <h5 class="ml-4">Electrical Engineering</h5>
         </div>
         <div>
-          <label class="ml-8"> Institution Type</label>
-          <h5 class="ml-8">Private</h5>
+          <label class="ml-4"> Institution Type</label>
+          <h5 class="ml-4">Private</h5>
         </div>
       </div>
       <!-- <div class="flex justify-start flex-wrap">
@@ -574,8 +574,7 @@ export default {
             residenceWoredaId: this.licenseInfo.residenceWoredaId,
             applicantTitle: this.licenseInfo.applicantTitle,
             whomGoodStandingFor: this.licenseInfo.whomGoodStandingFor,
-            licenseIssuedDate:
-              this.licenseInfo.licenseIssuedDate,
+            licenseIssuedDate: this.licenseInfo.licenseIssuedDate,
             whoIssued: this.licenseInfo.whoIssued,
             licenseRegistrationNumber: this.licenseInfo
               .licenseRegistrationNumber,
@@ -617,8 +616,7 @@ export default {
             residenceWoredaId: this.licenseInfo.residenceWoredaId,
             applicantTitle: this.licenseInfo.applicantTitle,
             whomGoodStandingFor: this.licenseInfo.whomGoodStandingFor,
-            licenseIssuedDate:
-              this.licenseInfo.licenseIssuedDate,
+            licenseIssuedDate: this.licenseInfo.licenseIssuedDate,
             whoIssued: this.licenseInfo.whoIssued,
             licenseRegistrationNumber: this.licenseInfo
               .licenseRegistrationNumber,
