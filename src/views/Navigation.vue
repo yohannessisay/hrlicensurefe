@@ -1,15 +1,9 @@
 <template>
   <header class="px-10 py-3.5 inset-box-shadow bg-lightBlueB-100">
-    <nav class="">
-      <main class="flex items-center justify-between">
-        <div class="flex items-center">
-          <router-link to="/menu">
-            <RenderIllustration
-              class=""
-              illustration="Logo"
-              message="Address"
-            />
-          </router-link>
+    <nav>
+      <main class="navigate flex items-center justify-between">
+        <div @click="selectMenu(0)" class="flex items-center">
+          <RenderIllustration class="" illustration="Logo" message="Address" />
           <h2 class="text-md AtkinsonHyperlegibleBold text-primary-600 ml-2 ">
             HRIS - License
           </h2>
@@ -72,7 +66,8 @@
                   <li
                     class="block px-4 py-2 text-sm text-blue-100 hover:bg-gray-100 hover:text-gray-900"
                     role="menuitem"
-                    >About
+                  >
+                    About
                   </li>
                 </router-link>
               </div>
@@ -126,6 +121,13 @@ export default {
     showDropDown() {
       this.showDD = !this.showDD;
     },
+    selectMenu(menu) {
+      if (this.$route.name != "Menu") {
+        this.$router.push({ path: "/menu" });
+      } else {
+        this.$emit("changeDisplay", menu);
+      }
+    },
   },
   computed() {
     if (this.token != undefined) {
@@ -137,6 +139,9 @@ export default {
 };
 </script>
 <style>
+.navigate {
+  cursor: pointer;
+}
 #logout {
   cursor: pointer;
 }
