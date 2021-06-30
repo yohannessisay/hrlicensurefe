@@ -18,12 +18,21 @@
         <Submitted />
       </div>
       <div v-if="this.display == 4" class="w-screen">
-        <Approved />
+        <InReview />
       </div>
       <div v-if="this.display == 5" class="w-screen">
-        <Declined />
+        <Approved />
       </div>
       <div v-if="this.display == 6" class="w-screen">
+        <ApprovedPayment />
+      </div>
+      <div v-if="this.display == 7" class="w-screen">
+        <Declined />
+      </div>
+      <div v-if="this.display == 8" class="w-screen">
+        <DeclinedPayment />
+      </div>
+      <div v-if="this.display == 9" class="w-screen">
         <UnderSupervision />
       </div>
     </div>
@@ -39,6 +48,9 @@ import Approved from "@/views/Approved";
 import Declined from "@/views/Declined";
 import UnderSupervision from "@/views/UnderSupervision";
 import LicenseRequests from "@/views/LicenseRequests";
+import InReview from "@/views/InReview";
+import ApprovedPayment from "@/views/ApprovedPayment";
+import DeclinedPayment from "@/views/DeclinedPayment";
 
 export default {
   components: {
@@ -51,6 +63,9 @@ export default {
     Declined,
     UnderSupervision,
     LicenseRequests,
+    InReview,
+    ApprovedPayment,
+    DeclinedPayment,
   },
   data: () => ({
     display: 0,
