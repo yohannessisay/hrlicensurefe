@@ -4,21 +4,6 @@
       v-if="!this.showLoading"
       class="relative text-gray-600 focus-within:text-gray-400 pt-10 pl-16 bg-lightBlueB-200"
     >
-      <h4 class="absolute inset-y-0 right-0 flex items-center mr-8">
-        <div class="p-1 focus:outline-none focus:shadow-outline">
-          <svg
-            fill="none"
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="3"
-            viewBox="0 0 24 24"
-            class="width-8 height-8 text-primary-500"
-          >
-            <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-          </svg>
-        </div>
-      </h4>
       <input
         type="search"
         name="search"
