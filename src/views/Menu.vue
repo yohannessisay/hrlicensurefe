@@ -1,30 +1,41 @@
 <template>
   <div>
     <Navigation :display="menu" @changeDisplay="displaySet" />
-    <div class="flex flex-row">
-      <div>
+    <div style="width:100%" class="flex flex-row">
+      <div class="sidenav">
         <SideNav :display="menu" @changeDisplay="displaySet" />
       </div>
-      <div v-if="this.display == 0" class="w-screen">
-        <LicenseRequests />
-      </div>
-      <div v-if="this.display == 1" class="w-screen">
-        <Draft />
-      </div>
-      <div v-if="this.display == 2" class="w-screen">
-        <Withdrawn />
-      </div>
-      <div v-if="this.display == 3" class="w-screen">
-        <Submitted />
-      </div>
-      <div v-if="this.display == 4" class="w-screen">
-        <Approved />
-      </div>
-      <div v-if="this.display == 5" class="w-screen">
-        <Declined />
-      </div>
-      <div v-if="this.display == 6" class="w-screen">
-        <UnderSupervision />
+      <div class="menu">
+        <div v-if="this.display == 0">
+          <LicenseRequests />
+        </div>
+        <div v-if="this.display == 1">
+          <Draft />
+        </div>
+        <div v-if="this.display == 2">
+          <Withdrawn />
+        </div>
+        <div v-if="this.display == 3">
+          <Submitted />
+        </div>
+        <div v-if="this.display == 4">
+          <InReview />
+        </div>
+        <div v-if="this.display == 5">
+          <Approved />
+        </div>
+        <div v-if="this.display == 6">
+          <ApprovedPayment />
+        </div>
+        <div v-if="this.display == 7">
+          <Declined />
+        </div>
+        <div v-if="this.display == 8">
+          <DeclinedPayment />
+        </div>
+        <div v-if="this.display == 9">
+          <UnderSupervision />
+        </div>
       </div>
     </div>
   </div>
@@ -39,6 +50,9 @@ import Approved from "@/views/Approved";
 import Declined from "@/views/Declined";
 import UnderSupervision from "@/views/UnderSupervision";
 import LicenseRequests from "@/views/LicenseRequests";
+import InReview from "@/views/InReview";
+import ApprovedPayment from "@/views/ApprovedPayment";
+import DeclinedPayment from "@/views/DeclinedPayment";
 
 export default {
   components: {
@@ -51,6 +65,9 @@ export default {
     Declined,
     UnderSupervision,
     LicenseRequests,
+    InReview,
+    ApprovedPayment,
+    DeclinedPayment,
   },
   data: () => ({
     display: 0,
@@ -62,3 +79,11 @@ export default {
   },
 };
 </script>
+<style>
+.menu {
+  width: 80%;
+}
+.sidenav {
+  width: 20%;
+}
+</style>
