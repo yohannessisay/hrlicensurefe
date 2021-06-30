@@ -331,6 +331,11 @@ const routes = [
     name: "CreateAdmin",
     component: () => import("../components/Reviewer/CreateAdmin.vue"),
   },
+  {
+    path: "/admin/newLicense/Unassigned",
+    name: "NewLicenseUnassigned",
+    component: () => import("../components/Reviewer/ApplicationTypes/NewLicense/newLicenseUnassigned.vue"),
+  }
 ];
 
 const router = createRouter({

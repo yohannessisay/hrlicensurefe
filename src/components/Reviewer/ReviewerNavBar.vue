@@ -528,6 +528,10 @@ export default {
         store.dispatch("reviewer/getAllPendingPaymentSearched", search.value);
         store.dispatch("reviewer/getPendingPaymentSearched", search.value);
       }
+
+      if (props.tab === "newLicenseUnassigned") {
+        store.dispatch("reviewer/getNewLicenseUnassignedSearched", search.value)
+      }
       
     });
     let showAdminCreate = false;

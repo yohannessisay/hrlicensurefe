@@ -75,4 +75,14 @@ export default {
 
     getApprovedPendingPayments: state => state.approvedPendingPayments,
     getApprovedPendingPaymentsSearched: state => state.approvedPendingPaymentsSearched,
+
+    getNewLicenseUnassigned: state => state.newLicenseUnassigned,
+    getNewLicenseUnassignedSearched: state => state.newLicenseUnassignedSearched,
+    getNewLicenseUnfinished: state => state.newLicenseUnfinished,
+    getNewLicenseUnfinishedSearched: state => state.newLicenseUnfinishedSearched,
+
+    getNewLicenseAssignedToYou: state => state.newLicenseAssignedToYou,
+    getNewLicenseAssignedToYouSearched: state => state.newLicenseAssignedToYouSearched,
+    getNewLicenseAssignedToOthers: state => state.newLicenseAssignedToOthers,
+    getNewLicenseAssignedToOthersSearched: state => state.newLicenseAssignedToOthersSearched,
 };
