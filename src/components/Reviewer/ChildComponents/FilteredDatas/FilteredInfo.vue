@@ -71,7 +71,25 @@
             <span
               class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
             >
-              {{ item.newLicenseCode ? item.newLicenseCode : "-" }}
+              {{
+                app_type == "New License"
+                  ? item.newLicenseCode
+                    ? item.newLicenseCode
+                    : "-"
+                  : app_type == "Verification"
+                  ? item.verificationCode
+                    ? item.verificationCode
+                    : "-"
+                  : app_type == "Good Standing"
+                  ? item.goodStandingCode
+                    ? item.goodStandingCode
+                    : "-"
+                  : app_type == "Renewal"
+                  ? item.renewalCode
+                    ? item.renewalCode
+                    : "-"
+                  : "-"
+              }}
             </span>
 
             <span
@@ -112,16 +130,20 @@ export default {
     let searchedApplicantsLength = props.filteredData.length;
     let detailType = props.type;
 
-    const detail = ( data,
-      applicationTypeName, applicationId, applicantId
-    ) => {
-      if(applicationType === undefined) {
-        applicationType = applicationTypeName
+    const detail = (data, applicationTypeName, applicationId, applicantId) => {
+      if (applicationType === undefined) {
+        applicationType = applicationTypeName;
       }
-      const url = data + "" + detailType +
-        "/" + applicationType +
-        "/" + applicationId +
-        "/" +  applicantId;
+      const url =
+        data +
+        "" +
+        detailType +
+        "/" +
+        applicationType +
+        "/" +
+        applicationId +
+        "/" +
+        applicantId;
       router.push(url);
     };
 

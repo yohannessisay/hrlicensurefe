@@ -51,14 +51,22 @@
           class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
         >
           On
-          {{
-              item.createdAt
-          }}
+          {{ item.createdAt }}
         </span>
         <span
           class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
         >
-          {{ item.newLicenseCode ? item.newLicenseCode : "-" }}
+          {{
+            app_type == "New License"
+              ? item.newLicenseCode ? item.newLicenseCode : "-"
+              : app_type == "Verification"
+              ? item.verificationCode ? item.verificationCode : "-"
+              : app_type == "Good Standing"
+              ? item.goodStandingCode ? item.goodStandingCode : "-"
+              : app_type == "Renewal"
+              ? item.renewalCode ? item.renewalCode : "-"
+              : "-"
+          }}
         </span>
         <span
           class="text-lightBlueB-500 mt-tiny flex justify-end content-center"

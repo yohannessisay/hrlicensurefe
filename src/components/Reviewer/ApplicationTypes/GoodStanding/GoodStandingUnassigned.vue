@@ -1,22 +1,11 @@
 <template>
   <div>
-    <reviewer-nav-bar tab="newLicenseUnassigned" />
+    <reviewer-nav-bar tab="goodStandingUnassigned" />
     <div class="bg-lightBlueB-200 h-full" v-if="!allInfo.searchByInput">
       <div class="pl-12">
         <div>Filter By</div>
       </div>
-
       <div class="flex flex-wrap mb-medium pl-12 pt-1">
-        <!-- <label class="text-primary-700">Type</label> -->
-        <!-- <select class="max-w-3xl mr-2" v-model="allInfo.app_type">
-          <option
-            v-for="item in applicationTypes"
-            v-bind:key="item.id"
-            v-bind:value="item.name"
-          >
-            {{ item.name }}
-          </option>
-        </select> -->
         <label class="text-primary-700 mr-2">From</label>
         <input
           class="max-w-3xl mr-5"
@@ -34,11 +23,11 @@
         </button>
       </div>
       <div class="flex pl-12 pt-tiny">
-        <Title message="New License Unassigned" />
+        <Title message="Good Standing Unassigned" />
       </div>
       <div class="flex flex-wrap pb-medium rounded h-full" v-if="!showLoading">
         <nothing-to-show :nothingToShow="nothingToShow" />
-        <unassigned-applications :unassignedApplication="getNewLicenseUnassigned" app_type="New License"/>
+        <unassigned-applications :unassignedApplication="getGoodStandingUnassigned" app_type="Good Standing"/>
       </div>
     </div>
     <div
@@ -59,7 +48,7 @@
       <filtered-info
         :filteredData="allInfo.filteredByDate"
         type="unassignedDetail"
-        app_type="New License"
+        app_type="Good Standing"
       />
     </div>
   </div>
@@ -69,29 +58,21 @@
     />
   </div>
 </template>
-
 <script>
+import store from "../../../../store";
+import { useStore } from "vuex";
 import { ref, onMounted } from "vue";
 import Title from "@/sharedComponents/TitleWithIllustration";
 import ReviewerNavBar from "../../ReviewerNavBar.vue";
-import UnassignedApplications from "../ChildApplicationTypes/UnassignedApplications.vue"
+import UnassignedApplications from "../ChildApplicationTypes/UnassignedApplications.vue";
 import NothingToShow from "../../ChildComponents/NothingToShow.vue";
-import { useStore } from "vuex";
-import store from "../../../../store";
 import Spinner from "@/sharedComponents/Spinner";
 import moment from "moment";
 import filterApplication from "../../ChildComponents/FilteredDatas/FilterApplication.js";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import FilteredInfo from "../../ChildComponents/FilteredDatas/FilteredInfo.vue";
-
-
 export default {
-  computed: {
-    moment: () => moment,
-    getNewLicenseUnassigned() {
-      return store.getters["reviewerNewLicense/getNewLicenseUnassignedSearched"];
-    },
-  },
+  name: "RenewalUnassigned",
   components: {
     ReviewerNavBar,
     ErrorFlashMessage,
@@ -101,9 +82,17 @@ export default {
     UnassignedApplications,
     Title,
   },
+  computed: {
+      moment: () => moment,
+    getGoodStandingUnassigned() {
+      return store.getters[
+        "reviewerGoodStanding/getGoodStandingUnassignedSearched"
+      ];
+    },
+  },
   setup() {
     const store = useStore();
-    let newLicenseUnassigned = ref([]);
+    let RenewalUnassigned = ref([]);
 
     let nothingToShow = ref(false);
     let showLoading = ref(false);
@@ -134,36 +123,41 @@ export default {
       allInfo.value.app_type = "";
     };
 
-    const fetchNewLicenseUnassigned = () => {
+    const fetchUnassignedGoodStanding = () => {
       showLoading.value = true;
-      store.dispatch("reviewerNewLicense/getNewLicenseUnassigned").then((res) => {
-        showLoading.value = false;
-        newLicenseUnassigned.value =
-          store.getters["reviewerNewLicense/getNewLicenseUnassignedSearched"];
-        allInfo.value.assignApplication =
-          store.getters["reviewerNewLicense/getNewLicenseUnassignedSearched"];
-
-        for (let applicant in allInfo.value.assignApplication) {
-          allInfo.value.assignApplication[applicant].createdAt = moment(
-            allInfo.value.assignApplication[applicant].createdAt
-          ).format("MMMM D, YYYY");
-          if (
-            allInfo.value.assignApplication[applicant].applicationType ===
-            undefined
-          ) {
-            allInfo.value.assignApplication[applicant].applicationType =
-              allInfo.value.assignApplication[applicant].applicantType;
+      store
+        .dispatch("reviewerGoodStanding/getUnassignedGoodStanding")
+        .then((res) => {
+          showLoading.value = false;
+          RenewalUnassigned.value =
+            store.getters[
+              "reviewerGoodStanding/getGoodStandingUnassignedSearched"
+            ];
+          allInfo.value.assignApplication =
+            store.getters[
+              "reviewerGoodStanding/getGoodStandingUnassignedSearched"
+            ];
+          for (let applicant in allInfo.value.assignApplication) {
+            allInfo.value.assignApplication[applicant].createdAt = moment(
+              allInfo.value.assignApplication[applicant].createdAt
+            ).format("MMMM D, YYYY");
+            if (
+              allInfo.value.assignApplication[applicant].applicationType ===
+              undefined
+            ) {
+              allInfo.value.assignApplication[applicant].applicationType =
+                allInfo.value.assignApplication[applicant].applicantType;
+            }
           }
-        }
-        if (store.getters["reviewerNewLicense/getNewLicenseUnassigned"].length === 0) {
-          nothingToShow.value = true;
-        }
-      });
+          if (RenewalUnassigned.value.length === 0) {
+            nothingToShow.value = true;
+          }
+        });
     };
-    onMounted(() => {
-      fetchNewLicenseUnassigned();
-    });
 
+    onMounted(() => {
+      fetchUnassignedGoodStanding();
+    });
     return {
       nothingToShow,
       allInfo,

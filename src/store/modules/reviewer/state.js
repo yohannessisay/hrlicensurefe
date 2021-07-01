@@ -74,15 +74,5 @@ export default {
         allPendingPayment: [],
         allPendingPaymentSearched: [],
 
-        newLicenseUnassigned: [],
-        newLicenseUnassignedSearched: [],
-        newLicenseUnfinished: [],
-        newLicenseUnfinishedSearched: [],
-
-        newLicenseAssignedToYou: [],
-        newLicenseAssignedToYouSearched: [],
-        newLicenseAssignedToOthers: [],
-        newLicenseAssignedToOthersSearched: [],
-
     }
 }

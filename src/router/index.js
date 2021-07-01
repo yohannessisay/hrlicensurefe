@@ -335,6 +335,21 @@ const routes = [
     path: "/admin/newLicense/Unassigned",
     name: "NewLicenseUnassigned",
     component: () => import("../components/Reviewer/ApplicationTypes/NewLicense/newLicenseUnassigned.vue"),
+  },
+  {
+    path: "/admin/verification/Unassigned",
+    name: "VerificationUnassigned",
+    component: () => import("../components/Reviewer/ApplicationTypes/Verification/VerificationUnassigned.vue"),
+  },
+  {
+    path: "/admin/renewal/Unassigned",
+    name: "RenewalUnassigned",
+    component: () => import("../components/Reviewer/ApplicationTypes/Renewal/RenewalUnassigned.vue"),
+  },
+  {
+    path: "/admin/goodstanding/Unassigned",
+    name: "GoodStandingUnassigned",
+    component: () => import("../components/Reviewer/ApplicationTypes/GoodStanding/GoodStandingUnassigned.vue"),
   }
 ];
 
