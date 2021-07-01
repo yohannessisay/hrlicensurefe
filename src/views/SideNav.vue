@@ -3,7 +3,7 @@
     class="overflow-y-scroll lg:overflow-y-auto shadow-xl bg-lightBlueB-300 fixed lg:sticky h-screen lg:h-auto z-40 top-0 bg-gray-900 pt-4 max-w-lg lg:w-96"
   >
     <div class="px-8">
-      <ul class="py-8 flex flex-wrap h-full">
+      <ul class="py-8 flex flex-wrap h-screen">
         <div>
           <li @click="selectMenu(1)" class="w-1/2 flex justify-start mb-6">
             <transition name="slide-fade-to-left">
