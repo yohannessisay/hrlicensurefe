@@ -51,46 +51,51 @@ const routes = [
     name: "LicenseRequests",
     component: () => import("../views/LicenseRequests.vue"),
   },
-  {
-    path: "/approved",
-    name: "Approved",
-    component: () => import("../views/Approved.vue"),
-  },
-  {
-    path: "/inReview",
-    name: "InReview",
-    component: () => import("../views/InReview.vue"),
-  },
-  {
-    path: "/undersupervision",
-    name: "UnderSupervision",
-    component: () => import("../views/UnderSupervision.vue"),
-  },
-  {
-    path: "/declined",
-    name: "Declined",
-    component: () => import("../views/Declined.vue"),
-  },
-  {
-    path: "/withdrawn",
-    name: "Withdraw",
-    component: () => import("../views/Withdraw.vue"),
-  },
-  {
-    path: "/pendingPayment",
-    name: "PendingPayment",
-    component: () => import("../views/PendingPayment.vue"),
-  },
-  {
-    path: "/approvedPayment",
-    name: "ApprovedPayment",
-    component: () => import("../views/ApprovedPayment.vue"),
-  },
-  {
-    path: "/declinedPayment",
-    name: "DeclinedPayment",
-    component: () => import("../views/DeclinedPayment.vue"),
-  },
+  // {
+  //   path: "/approved",
+  //   name: "Approved",
+  //   component: () => import("../views/Approved.vue"),
+  // },
+  // {
+  //   path: "/inReview",
+  //   name: "InReview",
+  //   component: () => import("../views/InReview.vue"),
+  // },
+  // {
+  //   path: "/undersupervision",
+  //   name: "UnderSupervision",
+  //   component: () => import("../views/UnderSupervision.vue"),
+  // },
+  // {
+  //   path: "/declined",
+  //   name: "Declined",
+  //   component: () => import("../views/Declined.vue"),
+  // },
+  // {
+  //   path: "/withdrawn",
+  //   name: "Withdraw",
+  //   component: () => import("../views/Withdraw.vue"),
+  // },
+  // {
+  //   path: "/pendingPayment",
+  //   name: "PendingPayment",
+  //   component: () => import("../views/PendingPayment.vue"),
+  // },
+  // {
+  //   path: "/approvedPayment",
+  //   name: "ApprovedPayment",
+  //   component: () => import("../views/ApprovedPayment.vue"),
+  // },
+  // {
+  //   path: "/declinedPayment",
+  //   name: "DeclinedPayment",
+  //   component: () => import("../views/DeclinedPayment.vue"),
+  // },
+  // {
+  //   path: "/draft",
+  //   name: "Draft",
+  //   component: () => import("../views/Draft.vue"),
+  // },
   {
     path: "/newlicense",
     name: "NewLicense",
@@ -116,11 +121,6 @@ const routes = [
     path: "/submitted",
     name: "Submitted",
     component: () => import("../views/Submitted.vue"),
-  },
-  {
-    path: "/draft",
-    name: "Draft",
-    component: () => import("../views/Draft.vue"),
   },
   {
     path: "/admin/review",
