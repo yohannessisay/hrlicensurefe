@@ -10,24 +10,7 @@
         </div>
 
         <div class="flex items-center space-x-5">
-          <a
-            class="focus:outline-none bg-lightBlueB-300 text-lightBlueB-400 hover:text-gray-800 w-7 h-7 rounded-full flex items-center justify-center"
-            href="#"
-          >
-            <svg
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              class="inline-block w-8 h-8 px-1 py-1"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="1"
-                d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
-              ></path>
-            </svg>
-          </a>
+          
           <p class="text-primary-600" v-text="name.fullName">  </p>
           <div class="relative inline-block text-left">
             <a
@@ -45,13 +28,15 @@
                 class="w-8 h-8 px-1 py-1"
                 aria-hidden="true"
               >
-              <clipPath id ="profilePic">
+             
                 <circle cx="12" cy="8" r="5" />
-              </clipPath>
-                <!-- <path d="M3,21 h18 C 21,12 3,12 3,21" /> -->
-                <image width="500" height="350" xlink:href="getImage()" clip-path="url(#profilePic)" />
+                
+                <path d="M3,21 h18 C 21,12 3,12 3,21" />
+               <!-- <img :src="pic" /> -->
               </svg>
+
             </a>
+             <image width="500" height="350" v-bind="pic"  /> 
             <div
               v-if="showDD == true"
               class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white focus:outline-none"
@@ -93,6 +78,24 @@
               </div>
             </div>
           </div>
+          <a
+            class="focus:outline-none bg-lightBlueB-300 text-lightBlueB-400 hover:text-gray-800 w-7 h-7 rounded-full flex items-center justify-center"
+            href="#"
+          >
+            <svg
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              class="inline-block w-8 h-8 px-1 py-1"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1"
+                d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
+              ></path>
+            </svg>
+          </a>
         </div>
       </main>
     </nav>
@@ -150,7 +153,7 @@ export default {
      let name=ref({
        fullName:""
      });
- 
+    let pic=ref();
   const getProfile =()=>
   {
     
@@ -167,7 +170,8 @@ export default {
   const getImage=(profile)=>
   {
     console.log("this is the profie",profile);
-   return profile.photo;
+    
+   pic= profile.photo.data;
   }
   const getName=(profile)=>
   {
@@ -181,7 +185,8 @@ export default {
 
     return {
      name,
-      getImage,
+      getImage, 
+      pic
       
     };
   }

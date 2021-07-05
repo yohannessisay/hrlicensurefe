@@ -1,12 +1,12 @@
 <template>
   <div
-    class=" overflow-y-auto overflow-x-hidden shadow-xl  fixed lg:sticky h-screen lg:h-auto z-40 top-0 bg-gray-900 pt-4"
+    class=" overflow-y-auto overflow-x-hidden shadow-xl  fixed lg:sticky h-screen lg:h-auto z-40 top-0 bg-gray-900 "
   style="max-width: 380px; background: #285180;"
   >
     <div class="px-8 h-screen" >
    <!--  -->
  <ul class="py-1 ">
-        <div class="mb-3">
+        <div class="mb-5">
           <li @click="selectMenu(1)" class=" justify-start ">
             <transition name="slide-fade-to-left">
               <div
@@ -17,7 +17,7 @@
                     <h3 class="text-lightBlueB-500 mt-tiny">
                       <span style="color: white;">
                         <i
-                          class="fas fa-file-signature fa-x fa-light"
+                          class="mr-2 fas fa-file-signature fa-x fa-light"
                         ></i> </span
                       >
                       <span style="color: white; ">Draft</span>
@@ -28,7 +28,7 @@
             </transition>
           </li>
         </div>
-         <div class="mb-3">
+         <div class="mb-5">
             <li @click="selectMenu(2)" class=" justify-start ">
             <transition name="slide-fade-to-left">
               <div
@@ -53,14 +53,14 @@
         </div>
      
 
-        <div class="mb-3">
+        <div class="mb-5">
             <li @click="submittedDD" class=" justify-start ">
-               <div v-if="dropdown.submitted" class="dropdown-menu absolute  shadow-md mt-10 ml-1 " style="color: #648ea3; width: 200px;">
+              <div v-if="dropdown.submitted" class="dropdown-menu absolute shadow-md mt-10 ml-5 mb-3" style="color: #648ea3; width: 200px;">
     
-            <ul class="block w-full bg-white shadow float-right ">
+            <ul class="block w-full  shadow float-right ">
                 <li @click="selectMenu(3)"> 
                       <!-- <span style="color: #648ea3;"> -->
-                        <p class=" text-sm" style="color: #648ea3; ">
+                        <p class=" text-sm" style="color: white; ">
                         <i
                           class="mr-2 far fa-address-book fa-x fa-light"
                         ></i>
@@ -68,7 +68,7 @@
                     </li>
                 <li @click="selectMenu(4)" > 
                       <!-- <span style="color: #648ea3;"> -->
-                       <p class=" text-sm" style="color: #648ea3; ">
+                       <p class=" text-sm" style="color: white; ">
                         <i
                           class="mr-2 far fa-address-book fa-x fa-light"
                         ></i>In Review</p></li>
@@ -86,11 +86,12 @@
                   <div class="p-1 ">
                    <h3 class="text-lightBlueB-500 mt-tiny">
                       <span style="color: white;">
+                         <i class="fas fa-chevron-circle-down mr-2"></i>
                        <i
                           class="mr-2 far fa-address-book fa-x fa-light"
                         ></i> </span
                       >
-                       <span style="color: white; ">submitted</span>
+                       <span style="color: white; ">Submitted</span>
                     </h3>
 
                   </div>
@@ -98,17 +99,18 @@
                        </div>
             </transition>
           </li>
+          
         </div>
+ 
 
-
- <div class="mb-3">
+ <div class="mb-5">
             <li @click="approvedDD" class=" justify-start ">
-               <div v-if="dropdown.approved" class="dropdown-menu absolute  shadow-md mt-10 ml-1 " style="color: #648ea3; width: 200px;">
+               <div v-if="dropdown.approved" class="dropdown-menu absolute  mt-10 ml-3 " style="color: #648ea3; width: 200px;">
     
-            <ul class="block w-full bg-white shadow float-right">
+            <ul class="block w-full shadow float-right" style="color: #648ea3;">
                 <li @click="selectMenu(5)"> 
                       <!-- <span style="color: #648ea3;"> -->
-                       <p  class=" text-sm" style="color: #648ea3; ">
+                       <p  class=" text-sm" style="color: white; ">
                         <i
                           class="mr-2 far fa-thumbs-up fa-x fa-light"
                         ></i>
@@ -116,7 +118,7 @@
                     </li>
                 <li @click="selectMenu(6)" > 
                       <!-- <span style="color: #648ea3;"> -->
-                        <p class=" text-sm" style="color: #648ea3; ">
+                        <p class=" text-sm" style="color: white; ">
                        <i
                           class="mr-2 far fa-thumbs-up fa-x fa-light"
                         ></i>Approved Payment</p></li>
@@ -133,6 +135,7 @@
                   <div class="p-1 ">
                    <h3 class="text-lightBlueB-500 mt-tiny">
                      <span style="color: white;">
+                       <i class="fas fa-chevron-circle-down mr-2"></i>
                         <i
                           class="mr-2 far fa-thumbs-up fa-x fa-light"
                         ></i> </span
@@ -176,24 +179,24 @@
           </li>
         </div> -->
         
-<div class="mb-3">
+<div class="mb-5">
             <li @click="declinedDD" class=" justify-start ">
-              <div v-if="dropdown.declined" class="dropdown-menu absolute  shadow-md mt-10 ml-1 " style="color: #648ea3; width: 200px;">
+              <div v-if="dropdown.declined" class="dropdown-menu absolute  shadow-md mt-10 ml-3 " style="color: #648ea3; width: 200px;">
     
-            <ul class="block w-full bg-white shadow float-right">
+            <ul class="block w-full  shadow float-right">
                 <li @click="selectMenu(7)" > 
                       <!-- <span style="color: #648ea3;"> -->
-                        <p class=" text-sm" style="color: #648ea3; ">
-                        <i
-                          class="mr-2 far fa-address-book fa-x fa-light"
+                        <p class=" text-sm" style="color: white; ">
+                       <i
+                          class="mr-2 far fa-thumbs-down fa-x fa-light"
                         ></i>
                     Declined</p>
                     </li>
                 <li  @click="selectMenu(8)" > 
                       <!-- <span style="color: #648ea3;"> -->
-                     <p class=" text-sm" style="color: #648ea3; ">
-                        <i
-                          class="mr-2 far fa-address-book fa-x fa-light"
+                     <p class=" text-sm" style="color: white; ">
+                       <i
+                          class="mr-2 far fa-thumbs-down fa-x fa-light"
                         ></i>Declined Payment</p></li>
                
             </ul>
@@ -208,6 +211,7 @@
                   <div class="p-1 ">
                    <h3 class="text-lightBlueB-500 mt-tiny">
                       <span style="color: white;">
+                         <i class="fas fa-chevron-circle-down mr-2"></i>
                         <i
                           class="mr-2 far fa-thumbs-down fa-x fa-light"
                         ></i> </span
