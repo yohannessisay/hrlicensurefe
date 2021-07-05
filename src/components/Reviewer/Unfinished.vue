@@ -39,7 +39,7 @@
       <div class="flex flex-wrap pb-medium rounded h-full" v-if="!showLoading">
         <nothing-to-show :nothingToShow="nothingToShowUnfinished" />
         <my-unfinished :unFinishedSearched="getUnfinished" />
-     </div>
+      </div>
     </div>
     <div
       v-if="showLoading"
@@ -75,24 +75,28 @@ import { useStore } from "vuex";
 import { ref, onMounted, watch } from "vue";
 import { useRouter } from "vue-router";
 
-import store from '../../store'
+import store from "../../store";
 import Spinner from "@/sharedComponents/Spinner";
-import moment from 'moment'
+import moment from "moment";
 import filterApplication from "./ChildComponents/FilteredDatas/FilterApplication.js";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import FilteredInfo from "./ChildComponents/FilteredDatas/FilteredInfo.vue";
 
 export default {
-  components: { ReviewerNavBar,
-             Title, Spinner,
-             MyUnfinished, NothingToShow,
-             FilteredInfo,
-             ErrorFlashMessage },
+  components: {
+    ReviewerNavBar,
+    Title,
+    Spinner,
+    MyUnfinished,
+    NothingToShow,
+    FilteredInfo,
+    ErrorFlashMessage,
+  },
   computed: {
     moment: () => moment,
     getUnfinished() {
-      return store.getters['reviewer/getUnfinishedSearched'];
-    }
+      return store.getters["reviewer/getUnfinishedSearched"];
+    },
   },
   setup() {
     const store = useStore();
@@ -154,30 +158,51 @@ export default {
     };
 
     const fetchUnfinished = () => {
-      showLoading.value = true
-      store.dispatch("reviewer/getUnfinished", userId).then(res => {
-        showLoading.value = false
-          unfinished.value = store.getters['reviewer/getUnfinishedSearched'];
-          allInfo.value.assignApplication =
+      showLoading.value = true;
+      store.dispatch("reviewer/getUnfinished", userId).then((res) => {
+        showLoading.value = false;
+        unfinished.value = store.getters["reviewer/getUnfinishedSearched"];
+        allInfo.value.assignApplication =
           store.getters["reviewer/getUnfinishedSearched"];
         for (let applicant in allInfo.value.assignApplication) {
           allInfo.value.assignApplication[applicant].createdAt = moment(
             allInfo.value.assignApplication[applicant].createdAt
           ).format("MMMM D, YYYY");
         }
-        if(store.getters['reviewer/getUnfinished'].length !== 0) {
-          for (var prop in store.getters['reviewer/getUnfinishedSearched']) {
-            if (store.getters['reviewer/getUnfinishedSearched'][prop].applicationType == "Renewal") {
-              store.getters['reviewer/getUnfinishedSearched'][prop].newLicenseCode =
-                store.getters['reviewer/getUnfinishedSearched'][prop].renewalCode;
+        if (store.getters["reviewer/getUnfinished"].length !== 0) {
+          for (var prop in store.getters["reviewer/getUnfinishedSearched"]) {
+            if (
+              store.getters["reviewer/getUnfinishedSearched"][prop]
+                .applicationType == "Renewal"
+            ) {
+              store.getters["reviewer/getUnfinishedSearched"][
+                prop
+              ].newLicenseCode =
+                store.getters["reviewer/getUnfinishedSearched"][
+                  prop
+                ].renewalCode;
             }
-            if (store.getters['reviewer/getUnfinishedSearched'][prop].applicationType == "Good Standing") {
-              store.getters['reviewer/getUnfinishedSearched'][prop].newLicenseCode =
-                store.getters['reviewer/getUnfinishedSearched'][prop].goodStandingCode;
+            if (
+              store.getters["reviewer/getUnfinishedSearched"][prop]
+                .applicationType == "Good Standing"
+            ) {
+              store.getters["reviewer/getUnfinishedSearched"][
+                prop
+              ].newLicenseCode =
+                store.getters["reviewer/getUnfinishedSearched"][
+                  prop
+                ].goodStandingCode;
             }
-            if (store.getters['reviewer/getUnfinishedSearched'][prop].applicationType == "Verification") {
-              store.getters['reviewer/getUnfinishedSearched'][prop].newLicenseCode =
-                store.getters['reviewer/getUnfinishedSearched'][prop].verificationCode;
+            if (
+              store.getters["reviewer/getUnfinishedSearched"][prop]
+                .applicationType == "Verification"
+            ) {
+              store.getters["reviewer/getUnfinishedSearched"][
+                prop
+              ].newLicenseCode =
+                store.getters["reviewer/getUnfinishedSearched"][
+                  prop
+                ].verificationCode;
             }
           }
         } else {
@@ -206,7 +231,7 @@ export default {
       detail,
       backClicked,
     };
-  }
+  },
 };
 </script>
 <style scoped>

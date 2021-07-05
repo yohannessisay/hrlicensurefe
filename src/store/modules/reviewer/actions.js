@@ -912,7 +912,7 @@ export default {
     })
     commit(SET_ALL_PENDING_PAYMENTS_SEARCHED, searchedVal)
   },
-
+  
   async getPendingPayments({commit}, adminId) {
     const url = baseUrl + "/applications/adminsPendingPayments/" + adminId
     const resp = await ApiService.get(url);

@@ -528,7 +528,19 @@ export default {
         store.dispatch("reviewer/getAllPendingPaymentSearched", search.value);
         store.dispatch("reviewer/getPendingPaymentSearched", search.value);
       }
-      
+
+      if (props.tab === "newLicenseUnassigned") {
+        store.dispatch("reviewerNewLicense/getNewLicenseUnassignedSearched", search.value)
+      }
+      if (props.tab === "verificationUnassigned") {
+        store.dispatch("reviewerVerification/getUnassignedVerificationSearched", search.value)
+      }
+      if (props.tab === "RenewalUnassigned") {
+        store.dispatch("reviewerRenewal/getUnassignedRenewalSearched", search.value)
+      }
+      if(props.tab === "goodStandingUnassigned") {
+        store.dispatch("reviewerGoodStanding/getUnassignedGoodStandingSearched", search.value)
+      }
     });
     let showAdminCreate = false;
     let isSuperAdmin = ref(false);

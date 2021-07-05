@@ -1,6 +1,5 @@
 <template>
   <div>
-    
     <div class="flex flex-wrap pb-medium rounded h-full">
       <div class="pl-large w-52 h-26" v-if="searchedApplicantsLength == 0">
         <div class="flex content-center justify-center">
@@ -21,7 +20,6 @@
             @Click="
               detail(
                 `/admin/`,
-                unassignedDetail,
                 item.applicationType,
                 item.id,
                 item.applicant.id
@@ -46,10 +44,18 @@
                   : "-"
               }}</b>
             </h4>
+            <span v-if="applicationType == ''">
+              <span
+                class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+              >
+                {{ item.applicationType ? item.applicationType : "-" }}
+              </span>
+            </span>
             <span
+              v-else
               class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
             >
-              {{ item.applicationType ? item.applicationType : "-" }}
+              {{ applicationType }}
             </span>
             <span
               class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
@@ -61,11 +67,31 @@
                   : "-"
               }}
             </span>
+
             <span
               class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
             >
-              {{ item.newLicenseCode ? item.newLicenseCode : "-" }}
+              {{
+                app_type == "New License"
+                  ? item.newLicenseCode
+                    ? item.newLicenseCode
+                    : "-"
+                  : app_type == "Verification"
+                  ? item.verificationCode
+                    ? item.verificationCode
+                    : "-"
+                  : app_type == "Good Standing"
+                  ? item.goodStandingCode
+                    ? item.goodStandingCode
+                    : "-"
+                  : app_type == "Renewal"
+                  ? item.renewalCode
+                    ? item.renewalCode
+                    : "-"
+                  : "-"
+              }}
             </span>
+
             <span
               class="text-lightBlueB-500 mt-tiny flex justify-end content-center"
             >
@@ -96,24 +122,36 @@ export default {
   computed: {
     moment: () => moment,
   },
-  props: ["filteredData", "type"],
+  props: ["filteredData", "type", "app_type"],
   setup(props) {
     const router = useRouter();
-    
-    let searchedApplicantsLength = props.filteredData.length;
-    console.log("type is ", props.type)
+    let applicationType = props.app_type;
 
-    const detail = (data, type, applicationType, applicationId, applicantId) => {
+    let searchedApplicantsLength = props.filteredData.length;
+    let detailType = props.type;
+
+    const detail = (data, applicationTypeName, applicationId, applicantId) => {
+      if (applicationType === undefined) {
+        applicationType = applicationTypeName;
+      }
       const url =
-        data + "" + props.type + "/" + applicationType + "/" + applicationId + "/" + applicantId;
+        data +
+        "" +
+        detailType +
+        "/" +
+        applicationType +
+        "/" +
+        applicationId +
+        "/" +
+        applicantId;
       router.push(url);
     };
 
-    onMounted(() => {
-    });
+    onMounted(() => {});
 
     return {
       searchedApplicantsLength,
+      applicationType,
       detail,
     };
   },

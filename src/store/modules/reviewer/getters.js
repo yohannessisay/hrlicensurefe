@@ -75,4 +75,5 @@ export default {
 
     getApprovedPendingPayments: state => state.approvedPendingPayments,
     getApprovedPendingPaymentsSearched: state => state.approvedPendingPaymentsSearched,
+
 };
