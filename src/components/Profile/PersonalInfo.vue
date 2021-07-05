@@ -353,13 +353,11 @@ export default {
         function() {
           showPreview.value = true;
           filePreview.value = reader.result;
-          personalInfo.value.photo = reader.result;
-          // var temp = JSON.stringify(reader.result);
-          // if (photoFile.value.type == "image/jpeg") {
-          //   personalInfo.value.photo = temp.substring(24);
-          // } else {
-          //   personalInfo.value.photo = temp.substring(23);
-          // }
+          var base64 = reader.result.replace(
+            /^data:image\/(png|jpg|jpeg);base64,/,
+            ""
+          );
+          personalInfo.value.photo = base64;
         },
         false
       );

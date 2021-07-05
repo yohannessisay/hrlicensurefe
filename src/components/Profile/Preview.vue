@@ -208,8 +208,7 @@ export default {
           houseNumber: address.houseNumber,
           residence: address.residence,
           poBox: address.poBox,
-          photo: "",
-          // photo: personalInfo.photo,
+          photo: personalInfo.photo,
           userId: +localStorage.getItem("userId"),
         })
 
@@ -256,6 +255,7 @@ export default {
           showFlash.value = false;
         }, 10000);
       });
+      console.log(store.getters["profile/getPersonalInfo"]);
     });
 
     return {
