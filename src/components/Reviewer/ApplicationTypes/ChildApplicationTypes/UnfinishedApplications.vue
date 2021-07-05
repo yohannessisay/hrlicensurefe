@@ -1,24 +1,16 @@
 <template>
   <div
     class="container"
-    v-for="(item, index) in assidgnedToOthers"
+    v-for="item in unfinishedApplication"
     v-bind:key="item.id"
     v-bind:value="item.id"
   >
     <div
-      v-if="index < 5"
-      class="flex justify-center items-center ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
+      class="flex justify-center items-center ml-8 mt-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
     >
       <div
         class="p-4 w-48 h-64"
-        @Click="
-          detail(
-            `/admin/detail`,
-            item.applicationType,
-            item.id,
-            item.applicant.id
-          )
-        "
+        @Click="detail(`/admin/unfinishedDetail`, item.id, item.applicant.id)"
       >
         <div class="flex content-center justify-center">
           <span v-if="item.profilePic != ''">
@@ -51,19 +43,35 @@
         </h4>
         <span
           class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-        >
+        v-if="others_unfinished == 'true'">
           <i class="fas fa-user-cog"></i> &nbsp;
           {{ item.reviewer.name ? item.reviewer.name : "-" }}
         </span>
         <span
           class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
         >
-          {{ item.applicationType ? item.applicationType : "-" }}
+          {{ app_type }}
         </span>
         <span
           class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
         >
-          {{ item.newLicenseCode ? item.newLicenseCode : "-" }}
+          On
+          {{ item.createdAt }}
+        </span>
+        <span
+          class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+        >
+          {{
+            app_type == "New License"
+              ? item.newLicenseCode ? item.newLicenseCode : "-"
+              : app_type == "Verification"
+              ? item.verificationCode ? item.verificationCode : "-"
+              : app_type == "Good Standing"
+              ? item.goodStandingCode ? item.goodStandingCode : "-"
+              : app_type == "Renewal"
+              ? item.renewalCode ? item.renewalCode : "-"
+              : "-"
+          }}
         </span>
         <span
           class="text-lightBlueB-500 mt-tiny flex justify-end content-center"
@@ -81,24 +89,21 @@ export default {
   computed: {
     moment: () => moment,
   },
-  name: "AssignedToOthers",
-  props: ["assidgnedToOthers"],
-
-  setup() {
-    const router = useRouter();
-    const detail = (data, applicationType, applicationId, applicantId) => {
+  props: ["unfinishedApplication", "app_type", "others_unfinished"],
+  name: "UnfinishedApplications",
+  setup(props) {
+    let router = useRouter();
+    const detail = (data, applicationId, applicantId) => {
       const url =
-        data + "/" + applicationType + "/" + applicationId + "/" + applicantId;
+        data + "/" + props.app_type + "/" + applicationId + "/" + applicantId;
       router.push(url);
     };
-
     return {
-        detail,
-    }
+      detail,
+    };
   },
 };
 </script>
-
 <style scoped>
 img {
   border-radius: 50%;

@@ -31,6 +31,9 @@ export default {
               || e.applicant.profile.name
                 .toLowerCase()
                 .includes(searchKey.toLowerCase())
+              || e.applicant.profile.fatherName
+              .toLowerCase()
+              .includes(searchKey.toLowerCase())
           });
           commit(SET_GOOD_STANDING_UNASSIGNED_SEARCHED, searchedVal)
       }

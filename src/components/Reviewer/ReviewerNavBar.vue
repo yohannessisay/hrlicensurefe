@@ -541,6 +541,18 @@ export default {
       if(props.tab === "goodStandingUnassigned") {
         store.dispatch("reviewerGoodStanding/getUnassignedGoodStandingSearched", search.value)
       }
+      if (props.tab === "newLicenseUnfinished") {
+        store.dispatch("reviewerNewLicense/getNewLicenseUnfinishedSearched", search.value)
+      }
+      if (props.tab === "newLicenseOthersUnfinished") {
+        store.dispatch("reviewerNewLicense/getNewLicenseOthersUnfinishedSearched", search.value)
+      }
+      if (props.tab === "verificationUnfinished") {
+        store.dispatch("reviewerVerification/getVerificationUnfinishedSearched", search.value)
+      }
+      if (props.tab === "verificationOthersUnfinished") {
+        store.dispatch("reviewerVerification/getVerificationOthersUnfinishedSearched", search.value)
+      }
     });
     let showAdminCreate = false;
     let isSuperAdmin = ref(false);
