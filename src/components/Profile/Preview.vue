@@ -255,6 +255,7 @@ export default {
           showFlash.value = false;
         }, 10000);
       });
+      console.log(store.getters["profile/getPersonalInfo"]);
     });
 
     return {
