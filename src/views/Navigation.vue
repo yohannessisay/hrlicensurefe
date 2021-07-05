@@ -28,6 +28,7 @@
               ></path>
             </svg>
           </a>
+          <p class="text-primary-600" v-text="name.fullName">  </p>
           <div class="relative inline-block text-left">
             <a
               class="focus:outline-none bg-lightBlueB-300 text-lightBlueB-400 hover:text-gray-800 w-7 h-7 rounded-full flex items-center justify-center"
@@ -44,8 +45,11 @@
                 class="w-8 h-8 px-1 py-1"
                 aria-hidden="true"
               >
+              <clipPath id ="profilePic">
                 <circle cx="12" cy="8" r="5" />
-                <path d="M3,21 h18 C 21,12 3,12 3,21" />
+              </clipPath>
+                <!-- <path d="M3,21 h18 C 21,12 3,12 3,21" /> -->
+                <image width="500" height="350" xlink:href="getImage()" clip-path="url(#profilePic)" />
               </svg>
             </a>
             <div
@@ -98,6 +102,10 @@
 <script>
 import Title from "@/sharedComponents/Title";
 import RenderIllustration from "@/sharedComponents/RenderIllustration";
+import { useStore } from "vuex";
+import { useRouter } from "vue-router";
+
+import { ref, onMounted } from "vue";
 
 export default {
   components: { Title, RenderIllustration },
@@ -136,6 +144,47 @@ export default {
       this.auth = false;
     }
   },
+  setup(){
+     const store = useStore();
+     const id=+localStorage.getItem("userId");
+     let name=ref({
+       fullName:""
+     });
+ 
+  const getProfile =()=>
+  {
+    
+    store.dispatch("profile/getProfileByUserId",id).then(res => {
+        // var profile= store.getters["profile/getPersonalInfo"];
+        
+      getImage(res.data.data);
+      getName(res.data.data);
+      });
+      
+      
+  };
+ 
+  const getImage=(profile)=>
+  {
+    console.log("this is the profie",profile);
+   return profile.photo;
+  }
+  const getName=(profile)=>
+  {
+    name.value.fullName= profile.name + " " +profile.fatherName;
+   
+  }
+   onMounted(() => {
+      console.log(" name is " , name)
+      getProfile();
+    });
+
+    return {
+     name,
+      getImage,
+      
+    };
+  }
 };
 </script>
 <style>
