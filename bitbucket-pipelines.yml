@@ -116,7 +116,8 @@ pipelines:
           name: Build & Deploy
           #runs-on: ihris.apps
           script:
-          - 'echo ''docker build -t hrl-fe:moh .'' > ihrisscript.sh'
+          - 'echo ''cd HRLicensureFE'' >  ihrisscript.sh'
+          - 'echo ''docker build -t hrl-fe:moh .'' >> ihrisscript.sh'
           - 'echo ''docker stop hrl-fe-moh || true && docker rm hrl-fe-moh || true'' >> ihrisscript.sh'
           - 'echo ''docker run -d --restart=always -p 1236:80 --name hrl-fe-moh hrl-fe:moh'' >> ihrisscript.sh'
           - pipe: atlassian/ssh-run:0.3.0
