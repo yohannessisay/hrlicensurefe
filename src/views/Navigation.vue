@@ -10,8 +10,7 @@
         </div>
 
         <div class="flex items-center space-x-5">
-          
-          <p class="text-primary-600" v-text="name.fullName">  </p>
+          <p class="text-primary-600" v-text="name.fullName"></p>
           <div class="relative inline-block text-left">
             <a
               class="focus:outline-none bg-lightBlueB-300 text-lightBlueB-400 hover:text-gray-800 w-7 h-7 rounded-full flex items-center justify-center"
@@ -34,9 +33,11 @@
                 <path d="M3,21 h18 C 21,12 3,12 3,21" />
                <!-- <img :src="pic" /> -->
               </svg>
-
+              <!-- <div style="height:100px; width:100px;">
+                <img v-bind:src="'data:image/jpg;base64,' + pic" />
+              </div> -->
             </a>
-             <image width="500" height="350" v-bind="pic"  /> 
+            <image width="500" height="350" v-bind="blob" />
             <div
               v-if="showDD == true"
               class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white focus:outline-none"
@@ -107,6 +108,7 @@ import Title from "@/sharedComponents/Title";
 import RenderIllustration from "@/sharedComponents/RenderIllustration";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
+import { base64StringToBlob } from 'blob-util';
 
 import { ref, onMounted } from "vue";
 
@@ -116,7 +118,7 @@ export default {
     return {
       auth: false,
       token: "",
-      showDD: false,
+      showDD: false
     };
   },
   created() {
@@ -138,7 +140,7 @@ export default {
       } else {
         this.$emit("changeDisplay", menu);
       }
-    },
+    }
   },
   computed() {
     if (this.token != undefined) {
@@ -147,47 +149,43 @@ export default {
       this.auth = false;
     }
   },
-  setup(){
-     const store = useStore();
-     const id=+localStorage.getItem("userId");
-     let name=ref({
-       fullName:""
-     });
-    let pic=ref();
-  const getProfile =()=>
-  {
-    
-    store.dispatch("profile/getProfileByUserId",id).then(res => {
+  setup() {
+    const store = useStore();
+    const id = +localStorage.getItem("userId");
+    let name = ref({
+      fullName: ""
+    });
+    let pic = ref();
+    let blob = ref();
+    const getProfile = () => {
+      store.dispatch("profile/getProfileByUserId", id).then(res => {
         // var profile= store.getters["profile/getPersonalInfo"];
-        
-      getImage(res.data.data);
-      getName(res.data.data);
+
+        getImage(res.data.data);
+        getName(res.data.data);
       });
+    };
+
+    const getImage = profile => {
+      console.log("this is the profie", profile);
+ console.log("this is the photo"+ profile.photo.data);
+      pic = profile.photo.data;
+      blob = base64StringToBlob(pic, "image/jpg");
       
-      
-  };
- 
-  const getImage=(profile)=>
-  {
-    console.log("this is the profie",profile);
-    
-   pic= profile.photo.data;
-  }
-  const getName=(profile)=>
-  {
-    name.value.fullName= profile.name + " " +profile.fatherName;
-   
-  }
-   onMounted(() => {
-      console.log(" name is " , name)
+    };
+    const getName = profile => {
+      name.value.fullName = profile.name + " " + profile.fatherName;
+    };
+    onMounted(() => {
+      console.log(" name is ", name);
       getProfile();
     });
 
     return {
-     name,
-      getImage, 
-      pic
-      
+      name,
+      getImage,
+      pic,
+      blob
     };
   }
 };

@@ -1,25 +1,21 @@
 <template>
   <div
     class=" overflow-y-auto overflow-x-hidden shadow-xl  fixed lg:sticky h-screen lg:h-auto z-40 top-0 bg-gray-900 "
-  style="max-width: 380px; background: #285180;"
+    style="max-width: 380px; background: #285180;"
   >
-    <div class="px-8 h-screen" >
-   <!--  -->
- <ul class="py-1 ">
+    <div class="px-8 h-screen">
+      <!--  -->
+      <ul class="py-1 ">
         <div class="mb-2">
           <li @click="selectMenu(1)" class=" justify-start ">
             <transition name="slide-fade-to-left">
-              <div
-                class="mr-12 "
-              >
+              <div class="mr-12 ">
                 <div class=" justify-center items-center ">
                   <div class="p-1 ">
                     <h3 class="text-lightBlueB-500 mt-tiny">
                       <span style="color: white;">
-                        <i
-                          class="mr-2 fas fa-file-signature fa-x fa-light"
-                        ></i> </span
-                      >
+                        <i class="mr-2 fas fa-file-signature fa-x fa-light"></i>
+                      </span>
                       <span style="color: white; ">Draft</span>
                     </h3>
                   </div>
@@ -28,139 +24,119 @@
             </transition>
           </li>
         </div>
-         <div class="mb-2">
-            <li @click="selectMenu(2)" class=" justify-start ">
+        <div class="mb-2">
+          <li @click="selectMenu(2)" class=" justify-start ">
             <transition name="slide-fade-to-left">
-              <div
-                class="mr-12 "
-              >
+              <div class="mr-12 ">
                 <div class=" justify-center items-center ">
                   <div class="p-1 ">
-                   <h3 class="text-lightBlueB-500 mt-tiny">
+                    <h3 class="text-lightBlueB-500 mt-tiny">
                       <span style="color: white;">
-                        <i
-                          class="mr-2 fas fa-exchange-alt fa-x fa-light"
-                        ></i> </span
-                      >
-                       <span style="color: white; ">Withdrawn</span>
+                        <i class="mr-2 fas fa-exchange-alt fa-x fa-light"></i>
+                      </span>
+                      <span style="color: white; ">Withdrawn</span>
                     </h3>
-
                   </div>
                 </div>
               </div>
             </transition>
           </li>
         </div>
-     
 
         <div class="mb-2">
-            <li @click="submittedDD" class=" justify-start ">
-             
-      
+          <li @click="submittedDD" class=" justify-start ">
             <transition name="slide-fade-to-left">
-              <div
-                class=""
-              >
+              <div class="">
                 <div class=" justify-center items-center ">
                   <div class="p-1 ">
-                   <h3 class="text-lightBlueB-500 mt-tiny">
+                    <h3 class="text-lightBlueB-500 mt-tiny">
                       <span style="color: white;">
-                          <i class="fas fa-chevron-circle-down float-right mt-1"></i> 
-                       
-                       <i
-                          class="mr-2 far fa-address-book fa-x fa-light"
-                        ></i> </span
-                      >
-                       <span style="color: white; ">Submitted</span>
-                    </h3>
+                        <i
+                          class="fas fa-chevron-circle-down float-right mt-2"
+                        ></i>
 
+                        <i class="mr-2 far fa-address-book fa-x fa-light"></i>
+                      </span>
+                      <span style="color: white; ">Submitted</span>
+                    </h3>
                   </div>
                 </div>
-                 <div v-if="dropdown.submitted" class="dropdown-menu relative  shadow-md mb-12 ml-4" style="color: #648ea3; width: 200px;">
-    
-            <ul class="block w-full  shadow float-right ">
-                <li @click="selectMenu(3)" class="mb-2"> 
+                <div
+                  v-if="dropdown.submitted"
+                  class="dropdown-menu relative  shadow-md mb-12 ml-4"
+                  style="color: #648ea3; width: 200px;"
+                >
+                  <ul class="block w-full  shadow float-right ">
+                    <li @click="selectMenu(3)" class="mb-2">
                       <!-- <span style="color: #648ea3;"> -->
-                        <p class=" text-sm" style="color: white; ">
-                        <i
-                          class="mr-2 far fa-address-book fa-x fa-light"
-                        ></i>
-                    Submitted</p>
+                      <p class=" text-sm" style="color: white; ">
+                        <i class="mr-2 far fa-address-book fa-x fa-light"></i>
+                        Submitted
+                      </p>
                     </li>
-                <li @click="selectMenu(4)" > 
+                    <li @click="selectMenu(4)">
                       <!-- <span style="color: #648ea3;"> -->
-                       <p class=" text-sm" style="color: white; ">
-                        <i
-                          class="mr-2 far fa-address-book fa-x fa-light"
-                        ></i>In Review</p></li>
-               
-            </ul>
-        
-    
-</div>
-                       </div>
-            </transition>
-          </li>
-          
-        </div>
-
-
- <div class="mb-2">
-
-            <li  @click="approvedDD" class=" justify-start static" >
-              
-              
-            <transition name="slide-fade-to-left">
-              <div
-                class=" "
-              >
-                <div class=" justify-center items-center ">
-                  <div class="p-1 ">
-                   <h3 class="text-lightBlueB-500 mt-tiny">
-                     <span style="color: white;">
-                         <i class="fas fa-chevron-circle-down float-right mt-1"></i> 
-                    
-                        <i
-                          class="mr-2 far fa-thumbs-up fa-x fa-light"
-                        ></i> </span
-                      >
-                       <span style="color: white; ">Approved</span>
-                    </h3>
-
-                  </div>
+                      <p class=" text-sm" style="color: white; ">
+                        <i class="mr-2 far fa-address-book fa-x fa-light"></i>In
+                        Review
+                      </p>
+                    </li>
+                  </ul>
                 </div>
-               
- <div v-if="dropdown.approved" class="dropdown-menu   mb-12 ml-4 " style="color: #648ea3; width: 200px;">
-    
-            <ul class="block w-full shadow float-right" style="color: #648ea3;">
-                <li @click="selectMenu(5)" class="mb-2"> 
-                      <!-- <span style="color: #648ea3;"> -->
-                       <p  class=" text-sm" style="color: white; ">
-                        <i
-                          class="mr-2 far fa-thumbs-up fa-x fa-light"
-                        ></i>
-                    Approved </p>
-                    </li>
-                <li @click="selectMenu(6)" > 
-                      <!-- <span style="color: #648ea3;"> -->
-                        <p class=" text-sm" style="color: white; ">
-                       <i
-                          class="mr-2 far fa-thumbs-up fa-x fa-light"
-                        ></i>Approved Payment</p></li>
-               
-            </ul>
-        
-    
-</div>
-
               </div>
             </transition>
-              </li>
-
+          </li>
         </div>
 
+        <div class="mb-2">
+          <li @click="approvedDD" class=" justify-start static">
+            <transition name="slide-fade-to-left">
+              <div class=" ">
+                <div class=" justify-center items-center ">
+                  <div class="p-1 ">
+                    <h3 class="text-lightBlueB-500 mt-tiny">
+                      <span style="color: white;">
+                        <i
+                          class="fas fa-chevron-circle-down float-right mt-2"
+                        ></i>
 
-     
+                        <i class="mr-2 far fa-thumbs-up fa-x fa-light"></i>
+                      </span>
+                      <span style="color: white; ">Approved</span>
+                    </h3>
+                  </div>
+                </div>
+
+                <div
+                  v-if="dropdown.approved"
+                  class="dropdown-menu   mb-12 ml-4 "
+                  style="color: #648ea3; width: 200px;"
+                >
+                  <ul
+                    class="block w-full shadow float-right"
+                    style="color: #648ea3;"
+                  >
+                    <li @click="selectMenu(5)" class="mb-2">
+                      <!-- <span style="color: #648ea3;"> -->
+                      <p class=" text-sm" style="color: white; ">
+                        <i class="mr-2 far fa-thumbs-up fa-x fa-light"></i>
+                        Approved
+                      </p>
+                    </li>
+                    <li @click="selectMenu(6)">
+                      <!-- <span style="color: #648ea3;"> -->
+                      <p class=" text-sm" style="color: white; ">
+                        <i class="mr-2 fa fa-money-bill fa-x fa-light"></i
+                        >Approved Payment
+                      </p>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </transition>
+          </li>
+        </div>
+
         <!-- <div>
           <li @click="selectMenu(4)" class="w-1/2 flex justify-start mb-6">
             <transition name="slide-fade-to-left">
@@ -184,58 +160,48 @@
             </transition>
           </li>
         </div> -->
-        
-<div class="mb-2">
-            <li @click="declinedDD" class=" justify-start ">
-             
+
+        <div class="mb-2">
+          <li @click="declinedDD" class=" justify-start ">
             <transition name="slide-fade-to-left">
-              <div
-                class=" "
-              >
+              <div class=" ">
                 <div class=" justify-center items-center ">
                   <div class="p-1 ">
-                   <h3 class="text-lightBlueB-500 mt-tiny">
+                    <h3 class="text-lightBlueB-500 mt-tiny">
                       <span style="color: white;">
-                        <i class="fas fa-chevron-circle-down float-right mt-1"></i> 
                         <i
-                          class="mr-2 far fa-thumbs-down fa-x fa-light"
+                          class="fas fa-chevron-circle-down float-right mt-2"
                         ></i>
-                        
-                        </span
-                      >
-                      
-                       <span style="color: white; ">Declined
-                          
-                       </span>
-                       
-                    </h3>
+                        <i class="mr-2 far fa-thumbs-down fa-x fa-light"></i>
+                      </span>
 
+                      <span style="color: white; ">Declined </span>
+                    </h3>
                   </div>
                 </div>
-                
- <div v-if="dropdown.declined" class="dropdown-menu relative shadow-md mb-12 ml-4 " style="color: #648ea3; width: 200px;">
-    
-            <ul class="block w-full  shadow float-right">
-                <li @click="selectMenu(7)" class="mb-2"> 
-                      <!-- <span style="color: #648ea3;"> -->
-                        <p class=" text-sm" style="color: white; ">
-                       <i
-                          class="mr-2 far fa-thumbs-down fa-x fa-light"
-                        ></i>
-                    Declined</p>
-                    </li>
-                <li  @click="selectMenu(8)" > 
-                      <!-- <span style="color: #648ea3;"> -->
-                     <p class=" text-sm" style="color: white; ">
-                       <i
-                          class="mr-2 far fa-thumbs-down fa-x fa-light"
-                        ></i>Declined Payment</p></li>
-               
-            </ul>
-        
-    
-</div>
 
+                <div
+                  v-if="dropdown.declined"
+                  class="dropdown-menu relative shadow-md mb-12 ml-4 "
+                  style="color: #648ea3; width: 200px;"
+                >
+                  <ul class="block w-full  shadow float-right">
+                    <li @click="selectMenu(7)" class="mb-2">
+                      <!-- <span style="color: #648ea3;"> -->
+                      <p class=" text-sm" style="color: white; ">
+                        <i class="mr-2 far fa-thumbs-down fa-x fa-light"></i>
+                        Declined
+                      </p>
+                    </li>
+                    <li @click="selectMenu(8)">
+                      <!-- <span style="color: #648ea3;"> -->
+                      <p class=" text-sm" style="color: white; ">
+                        <i class="mr-2 fa fa-credit-card-alt fa-x fa-light"></i
+                        >Declined Payment
+                      </p>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </transition>
           </li>
@@ -264,23 +230,18 @@
             </transition>
           </li>
         </div> -->
-   
 
-<div class="mb-2">
+        <div class="mb-2">
           <li @click="selectMenu(9)" class=" justify-start ">
             <transition name="slide-fade-to-left">
-              <div
-                class="mr-12 "
-              >
+              <div class="mr-12 ">
                 <div class=" justify-center items-center ">
                   <div class="p-1 ">
                     <h3 class="text-lightBlueB-500 mt-tiny">
-                     <span style="color: white;">
-                        <i
-                          class="mr-2 far fa-id-badge fa-x fa-light"
-                        ></i> </span
-                      >
-                       <span style="color: white; ">Under Supervision</span>
+                      <span style="color: white;">
+                        <i class="mr-2 far fa-id-badge fa-x fa-light"></i>
+                      </span>
+                      <span style="color: white; ">Under Supervision</span>
                     </h3>
                   </div>
                 </div>
@@ -288,7 +249,6 @@
             </transition>
           </li>
         </div>
-
 
         <!-- <div>
           <li @click="selectMenu(8)" class="w-1/2 flex justify-start mb-6">
@@ -313,9 +273,8 @@
             </transition>
           </li>
         </div> -->
-      
       </ul>
-<!--  -->
+      <!--  -->
     </div>
   </div>
 </template>
@@ -325,7 +284,7 @@ import { ref } from "vue";
 export default {
   props: ["display"],
   components: {
-    Navigation,
+    Navigation
   },
   data() {
     return {};
@@ -333,45 +292,38 @@ export default {
   methods: {
     selectMenu(menu) {
       this.$emit("changeDisplay", menu);
-    },
+    }
   },
-  setup()
-  {
-        let dropdown =ref({
-       submitted: false,
-       approved:false,
-       declined:false
-     });
+  setup() {
+    let dropdown = ref({
+      submitted: false,
+      approved: false,
+      declined: false
+    });
 
- const submittedDD =()=>
-  {
-    dropdown.value.submitted=!dropdown.value.submitted;
-dropdown.value.approved=false;
-dropdown.value.declined=false;
-  }
-   const approvedDD =()=>
-  {
-    dropdown.value.approved=!dropdown.value.approved;
-dropdown.value.submitted=false;
-dropdown.value.declined=false;
-  }
-   const declinedDD =()=>
-  {
-    console.log("declined clicked");
-    dropdown.value.declined=!dropdown.value.declined;
-dropdown.value.approved=false;
-dropdown.value.submitted=false;
-  }
+    const submittedDD = () => {
+      dropdown.value.submitted = !dropdown.value.submitted;
+      dropdown.value.approved = false;
+      dropdown.value.declined = false;
+    };
+    const approvedDD = () => {
+      dropdown.value.approved = !dropdown.value.approved;
+      dropdown.value.submitted = false;
+      dropdown.value.declined = false;
+    };
+    const declinedDD = () => {
+      console.log("declined clicked");
+      dropdown.value.declined = !dropdown.value.declined;
+      dropdown.value.approved = false;
+      dropdown.value.submitted = false;
+    };
 
-
-return {
+    return {
       dropdown,
       submittedDD,
       approvedDD,
       declinedDD
     };
-
   }
-
 };
 </script>
