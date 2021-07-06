@@ -126,8 +126,3 @@ pipelines:
               SSH_KEY: $MOH_IHRIS_APPS_SSH_KEY
               MODE: 'script'
               COMMAND: 'ihrisscript.sh' 
-              
-definitions:
-  services:
-    docker:
-      memory: 6104
