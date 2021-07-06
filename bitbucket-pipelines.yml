@@ -2,7 +2,7 @@ pipelines:
   branches:
     master:
         - step:
-            size: 2x
+           # size: 2x
             name: Build
             image: google/cloud-sdk:latest
             script:
@@ -16,7 +16,7 @@ pipelines:
             services:
               - docker
         - step:
-            size: 2x
+            #size: 2x
             name: Deploy
             image: google/cloud-sdk:latest
             script:
@@ -39,7 +39,7 @@ pipelines:
               - docker
     development:
         - step:
-            size: 2x
+            #size: 2x
             name: Build
             image: google/cloud-sdk:latest
             script:
@@ -52,7 +52,7 @@ pipelines:
             services:
               - docker
         - step:
-            size: 2x
+            #size: 2x
             name: Deploy
             image: google/cloud-sdk:latest
             script:
@@ -75,7 +75,7 @@ pipelines:
               - docker
     staging:
         - step:
-            size: 2x
+            #size: 2x
             name: Build
             image: google/cloud-sdk:latest
             script:
@@ -88,7 +88,7 @@ pipelines:
             services:
               - docker
         - step:
-            size: 2x
+            #size: 2x
             name: Deploy
             image: google/cloud-sdk:latest
             script:
@@ -112,7 +112,7 @@ pipelines:
               
     moh:
       - step:
-          size: 2x
+          #size: 2x
           name: Build & Deploy
           #runs-on: ihris.apps
           script:
