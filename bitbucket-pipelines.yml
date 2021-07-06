@@ -112,6 +112,7 @@ pipelines:
               
     moh:
       - step:
+          size: 2x
           name: Build & Deploy
           #runs-on: ihris.apps
           script:
