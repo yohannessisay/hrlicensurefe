@@ -1,11 +1,22 @@
 <template>
   <div>
-    <reviewer-nav-bar tab="goodStandingUnassigned" />
+    <reviewer-nav-bar tab="goodStandingUnfinished" />
     <div class="bg-lightBlueB-200 h-full" v-if="!allInfo.searchByInput">
       <div class="pl-12">
         <div>Filter By</div>
       </div>
+
       <div class="flex flex-wrap mb-medium pl-12 pt-1">
+        <!-- <label class="text-primary-700">Type</label> -->
+        <!-- <select class="max-w-3xl mr-2" v-model="allInfo.app_type">
+          <option
+            v-for="item in applicationTypes"
+            v-bind:key="item.id"
+            v-bind:value="item.name"
+          >
+            {{ item.name }}
+          </option>
+        </select> -->
         <label class="text-primary-700 mr-2">From</label>
         <input
           class="max-w-3xl mr-5"
@@ -23,11 +34,11 @@
         </button>
       </div>
       <div class="flex pl-12 pt-tiny">
-        <Title message="Good Standing Unassigned" />
+        <Title message="Good Standing Unfinished" />
       </div>
       <div class="flex flex-wrap pb-medium rounded h-full" v-if="!showLoading">
         <nothing-to-show :nothingToShow="nothingToShow" />
-        <unassigned-applications :unassignedApplication="getGoodStandingUnassigned" app_type="Good Standing"/>
+        <unfinished-applications :unfinishedApplication="getGoodStandingUnfinished" app_type="Good Standing" others_unfinished="false"/>
       </div>
     </div>
     <div
@@ -40,14 +51,14 @@
       <div class="flex pl-12 pt-tiny">
         <Title
         :message="
-          'Unassigned Applicants on Date Range ' + moment(allInfo.searchFromDate).format('MMM D, YYYY') + ' To ' + moment(allInfo.searchUpToDate).format('MMM D, YYYY')
+          'Unfinished Applicants on Date Range ' + moment(allInfo.searchFromDate).format('MMM D, YYYY') + ' To ' + moment(allInfo.searchUpToDate).format('MMM D, YYYY')
         "
       />
         <button @click="backClicked">back</button>
       </div>
       <filtered-info
         :filteredData="allInfo.filteredByDate"
-        type="unassignedDetail"
+        type="unfinishedDetail"
         app_type="Good Standing"
       />
     </div>
@@ -58,41 +69,43 @@
     />
   </div>
 </template>
+
 <script>
-import store from "../../../../store";
-import { useStore } from "vuex";
 import { ref, onMounted } from "vue";
 import Title from "@/sharedComponents/TitleWithIllustration";
 import ReviewerNavBar from "../../ReviewerNavBar.vue";
-import UnassignedApplications from "../ChildApplicationTypes/UnassignedApplications.vue";
+import UnfinishedApplications from "../ChildApplicationTypes/UnfinishedApplications.vue"
 import NothingToShow from "../../ChildComponents/NothingToShow.vue";
+import { useStore } from "vuex";
+import store from "../../../../store";
 import Spinner from "@/sharedComponents/Spinner";
 import moment from "moment";
 import filterApplication from "../../ChildComponents/FilteredDatas/FilterApplication.js";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import FilteredInfo from "../../ChildComponents/FilteredDatas/FilteredInfo.vue";
+
+
 export default {
-  name: "GoodStandingUnassigned",
+  computed: {
+    moment: () => moment,
+    getGoodStandingUnfinished() {
+      return store.getters["reviewerGoodStanding/getGoodStandingUnfinishedSearched"];
+    },
+  },
   components: {
     ReviewerNavBar,
     ErrorFlashMessage,
     FilteredInfo,
     Spinner,
     NothingToShow,
-    UnassignedApplications,
+    UnfinishedApplications,
     Title,
-  },
-  computed: {
-      moment: () => moment,
-    getGoodStandingUnassigned() {
-      return store.getters[
-        "reviewerGoodStanding/getGoodStandingUnassignedSearched"
-      ];
-    },
   },
   setup() {
     const store = useStore();
-    let RenewalUnassigned = ref([]);
+    let goodStandingUnfinished = ref([]);
+    
+    const adminId = +localStorage.getItem("adminId");
 
     let nothingToShow = ref(false);
     let showLoading = ref(false);
@@ -123,41 +136,36 @@ export default {
       allInfo.value.app_type = "";
     };
 
-    const fetchUnassignedGoodStanding = () => {
+    const fetchGoodStandingUnfinished = () => {
       showLoading.value = true;
-      store
-        .dispatch("reviewerGoodStanding/getUnassignedGoodStanding")
-        .then((res) => {
-          showLoading.value = false;
-          RenewalUnassigned.value =
-            store.getters[
-              "reviewerGoodStanding/getGoodStandingUnassignedSearched"
-            ];
-          allInfo.value.assignApplication =
-            store.getters[
-              "reviewerGoodStanding/getGoodStandingUnassignedSearched"
-            ];
-          for (let applicant in allInfo.value.assignApplication) {
-            allInfo.value.assignApplication[applicant].createdAt = moment(
-              allInfo.value.assignApplication[applicant].createdAt
-            ).format("MMMM D, YYYY");
-            if (
-              allInfo.value.assignApplication[applicant].applicationType ===
-              undefined
-            ) {
-              allInfo.value.assignApplication[applicant].applicationType =
-                allInfo.value.assignApplication[applicant].applicantType;
-            }
-          }
-          if (RenewalUnassigned.value.length === 0) {
-            nothingToShow.value = true;
-          }
-        });
-    };
+      store.dispatch("reviewerGoodStanding/getGoodStandingUnfinished", adminId).then((res) => {
+        showLoading.value = false;
+        goodStandingUnfinished.value =
+          store.getters["reviewerGoodStanding/getGoodStandingUnfinishedSearched"];
+        allInfo.value.assignApplication =
+          store.getters["reviewerGoodStanding/getGoodStandingUnfinishedSearched"];
 
+        for (let applicant in allInfo.value.assignApplication) {
+          allInfo.value.assignApplication[applicant].createdAt = moment(
+            allInfo.value.assignApplication[applicant].createdAt
+          ).format("MMMM D, YYYY");
+          if (
+            allInfo.value.assignApplication[applicant].applicationType ===
+            undefined
+          ) {
+            allInfo.value.assignApplication[applicant].applicationType =
+              allInfo.value.assignApplication[applicant].applicantType;
+          }
+        }
+        if (store.getters["reviewerGoodStanding/getGoodStandingUnfinished"].length === 0) {
+          nothingToShow.value = true;
+        }
+      });
+    };
     onMounted(() => {
-      fetchUnassignedGoodStanding();
+      fetchGoodStandingUnfinished();
     });
+
     return {
       nothingToShow,
       allInfo,

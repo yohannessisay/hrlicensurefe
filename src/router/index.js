@@ -367,9 +367,29 @@ const routes = [
     component: () => import("../components/Reviewer/ApplicationTypes/Renewal/RenewalUnassigned.vue"),
   },
   {
+    path: "/admin/renewal/unfinished",
+    name: "RenewalUnfinished",
+    component: () => import("../components/Reviewer/ApplicationTypes/Renewal/RenewalUnfinished.vue"),
+  },
+  {
+    path: "/admin/renewal/othersUnfinished",
+    name: "RenewalOthersUnfinished",
+    component: () => import("../components/Reviewer/ApplicationTypes/Renewal/RenewalOthersUnfinished.vue"),
+  },
+  {
     path: "/admin/goodstanding/unassigned",
     name: "GoodStandingUnassigned",
     component: () => import("../components/Reviewer/ApplicationTypes/GoodStanding/GoodStandingUnassigned.vue"),
+  },
+  {
+    path: "/admin/goodstanding/unfinished",
+    name: "GoodStandingUnfinished",
+    component: () => import("../components/Reviewer/ApplicationTypes/GoodStanding/GoodStandingUnfinished.vue"),
+  },
+  {
+    path: "/admin/goodstanding/othersUnfinished",
+    name: "GoodStandingOthersUnfinished",
+    component: () => import("../components/Reviewer/ApplicationTypes/GoodStanding/GoodStandingOthersUnfinished.vue"),
   },
   
   
