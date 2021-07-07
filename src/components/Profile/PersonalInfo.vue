@@ -278,6 +278,7 @@
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
 import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
+import { base64StringToBlob } from 'blob-util';
 
 export default {
   components: { TitleWithIllustration },
@@ -350,14 +351,28 @@ export default {
 
       reader.addEventListener(
         "load",
-        function() {
+       async function() {
           showPreview.value = true;
           filePreview.value = reader.result;
+          console.log(reader.result);
           var base64 = reader.result.replace(
             /^data:image\/(png|jpg|jpeg);base64,/,
             ""
           );
-          personalInfo.value.photo = base64;
+          let y;
+        //  fetch(reader.result)
+//          .then(res=>res.blob())
+//          .then(console.log)
+         const byteNumbers = new Array(base64.length);
+for (let i = 0; i < base64.length; i++) {
+  byteNumbers[i] = base64.charCodeAt(i);
+}
+const byteArray = new Uint8Array(byteNumbers);
+const blob = new Blob([byteArray], {type: 'image/jpeg'});
+//         let x= await base64toBlob(base64);
+//         console.log("blob file");
+//         console.log("",blob);
+          personalInfo.value.photo = blob;
         },
         false
       );
@@ -408,6 +423,7 @@ export default {
       if (empty == true) {
         store.dispatch("profile/setProfileInfo", personalInfo);
         emit("changeActiveState");
+       
       }
     };
 

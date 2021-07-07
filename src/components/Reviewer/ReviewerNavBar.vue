@@ -361,7 +361,33 @@
               </p>
               <hr class="yellow-gradient border-none" />
             </a> -->
+
+          
+          <!--  -->
+
+          <router-link to="/admin/report">
+              <a class="mr-small">
+                Report
+              </a>
+              <!-- <a
+                v-if="tab == `Unassigned`"
+                class="text-primary-300 mr-small width-medium inline-block pr-tiny justify-center item-center"
+              >
+                <p class="text-primary-600 font-AtkinsonHyperlegibleBold">
+                  Report
+                </p>
+                <hr class="yellow-gradient border-none" />
+              </a> -->
+            </router-link>
+
+
+
+
+            <!--  -->
+
           </div>
+
+
           <div class="relative inline-block text-left">
             <a
               class="focus:outline-none bg-lightBlueB-300 text-lightBlueB-400 hover:text-gray-800 w-7 h-7 rounded-full flex items-center justify-center"
