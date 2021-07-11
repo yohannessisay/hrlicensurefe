@@ -279,13 +279,9 @@
   </div>
 </template>
 <script>
-import Navigation from "@/views/Navigation";
 import { ref } from "vue";
 export default {
   props: ["display"],
-  components: {
-    Navigation
-  },
   data() {
     return {};
   },
@@ -327,3 +323,9 @@ export default {
   }
 };
 </script>
+<style>
+li{
+ cursor: pointer; 
+}
+
+</style>
