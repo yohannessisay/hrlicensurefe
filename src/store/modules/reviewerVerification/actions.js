@@ -22,6 +22,7 @@ export default {
   async getVerificationReport({ commit }) {
     try {
       const approved = await ApiService.get(
+        baseUrl + "/verifications/status/5"
       );
       const declined = await ApiService.get(
         baseUrl + "/verifications/status/6"
