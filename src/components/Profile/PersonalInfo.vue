@@ -278,6 +278,7 @@
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
 import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
+import { base64StringToBlob } from 'blob-util';
 
 export default {
   components: { TitleWithIllustration },
@@ -334,11 +335,12 @@ export default {
       filePreview.value = "";
       isImage.value = true;
     };
-    const handleFileUpload = () => {
+    const handleFileUpload = async () => {
       showUpload.value = false;
       photoFile.value = photoFileP.value.files[0];
+  
       let reader = new FileReader();
-
+ 
       let fileS = photoFile.value.size;
       if (fileS > 0 && fileS < 1000) {
         fileSize.value += "B";
@@ -347,17 +349,24 @@ export default {
       } else {
         fileSize.value = fileS / 1000000 + "MB";
       }
+      
 
       reader.addEventListener(
         "load",
-        function() {
+       async function() {
           showPreview.value = true;
           filePreview.value = reader.result;
-          var base64 = reader.result.replace(
-            /^data:image\/(png|jpg|jpeg);base64,/,
-            ""
-          );
-          personalInfo.value.photo = base64;
+          
+          console.log(photoFile.value);
+          var base64 = reader.result;
+         
+          // var blob= reader.readAsArrayBuffer( );;
+          // console.log("blob file");
+          // console.log(blob)
+     
+   personalInfo.value.photo =base64 ;
+
+          
         },
         false
       );
@@ -408,6 +417,7 @@ export default {
       if (empty == true) {
         store.dispatch("profile/setProfileInfo", personalInfo);
         emit("changeActiveState");
+       
       }
     };
 

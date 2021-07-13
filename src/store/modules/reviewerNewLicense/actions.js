@@ -10,6 +10,7 @@ import {
   SET_NEW_LICENSE_ASSIGNED_TO_YOU_SEARCHED,
   SET_NEW_LICENSE_ASSIGNED_TO_OTHERS,
   SET_NEW_LICENSE_ASSIGNED_TO_OTHERS_SEARCHED,
+  NEW_LICENSE_REPORT,
 } from "./mutation-types";
 
 const baseUrl = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api";
@@ -21,7 +22,17 @@ export default {
     console.log("new license un assigned response", resp.data.data);
     commit(SET_NEW_LICENSE_UNASSIGNED, resp.data.data);
   },
-
+  async getNewLicenseReport({ commit }) {
+    try {
+      const approved = await ApiService.get(baseUrl + "/newLicenses/status/5");
+      const declined = await ApiService.get(baseUrl + "/newLicenses/status/6");
+      const review = await ApiService.get(baseUrl + "/newLicenses/status/7");
+ return [approved, declined, review];
+    
+    } catch (err) {
+      return err;
+    }
+  },
   getNewLicenseUnassignedSearched({ commit, getters }, searchKey) {
     if (getters.getNewLicenseUnassigned === undefined) {
       return;

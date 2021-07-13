@@ -19,7 +19,18 @@ export default {
       return error;
     }
   },
+  async getRenewalReport({ commit }) {
+    try {
+      const approved = await ApiService.get(baseUrl + "/renewals/status/5");
+      const declined = await ApiService.get(baseUrl + "/renewals/status/6");
+      const review = await ApiService.get(baseUrl + "/renewals/status/7");
 
+                return [approved, declined, review];
+
+    } catch (err) {
+      return err;
+    }
+  },
   getUnassignedRenewalSearched({ commit, getters }, searchKey) {
     if (getters.getRenewalUnassigned === undefined) {
       return;

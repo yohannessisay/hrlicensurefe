@@ -20,6 +20,21 @@ export default {
       return error;
     }
   },
+  async getGoodstandingReport({ commit }) {
+    try {
+      const approved = await ApiService.get(
+        baseUrl + "/goodStandings/status/5"
+      );
+      const declined = await ApiService.get(
+        baseUrl + "/goodStandings/status/6"
+      );
+      const review = await ApiService.get(baseUrl + "/goodStandings/status/7");
+    
+   return [approved,declined,review];
+    } catch (err) {
+      return err;
+    }
+  },
 
   getUnassignedGoodStandingSearched({ commit, getters }, searchKey) {
     if (getters.getGoodStandingUnassigned === undefined) {
