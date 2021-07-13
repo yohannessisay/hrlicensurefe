@@ -1,6 +1,6 @@
 <template>
   <div
-    class="card-wrapper max-w-7xl bg-primary-200 sm:rounded-lg p-large flex flex-col justify-center items-center relative"
+    class="card-wrapper bg-primary-200 sm:rounded-lg p-large flex flex-col justify-center items-center relative"
   >
     <Title message="Required Documents for New License" />
     <button
@@ -83,7 +83,7 @@ export default {
 }
 
 .card-wrapper {
-  max-width: 750px;
+  width: auto;
   box-shadow: 0px -8px 6px rgb(30 64 175 / 51%);
 }
 
