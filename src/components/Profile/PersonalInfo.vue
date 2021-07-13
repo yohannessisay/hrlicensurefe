@@ -335,11 +335,12 @@ export default {
       filePreview.value = "";
       isImage.value = true;
     };
-    const handleFileUpload = () => {
+    const handleFileUpload = async () => {
       showUpload.value = false;
       photoFile.value = photoFileP.value.files[0];
+  
       let reader = new FileReader();
-
+ 
       let fileS = photoFile.value.size;
       if (fileS > 0 && fileS < 1000) {
         fileSize.value += "B";
@@ -348,31 +349,24 @@ export default {
       } else {
         fileSize.value = fileS / 1000000 + "MB";
       }
+      
 
       reader.addEventListener(
         "load",
        async function() {
           showPreview.value = true;
           filePreview.value = reader.result;
-          console.log(reader.result);
-          var base64 = reader.result.replace(
-            /^data:image\/(png|jpg|jpeg);base64,/,
-            ""
-          );
-          let y;
-        //  fetch(reader.result)
-//          .then(res=>res.blob())
-//          .then(console.log)
-         const byteNumbers = new Array(base64.length);
-for (let i = 0; i < base64.length; i++) {
-  byteNumbers[i] = base64.charCodeAt(i);
-}
-const byteArray = new Uint8Array(byteNumbers);
-const blob = new Blob([byteArray], {type: 'image/jpeg'});
-//         let x= await base64toBlob(base64);
-//         console.log("blob file");
-//         console.log("",blob);
-          personalInfo.value.photo = blob;
+          
+          console.log(photoFile.value);
+          var base64 = reader.result;
+         
+          // var blob= reader.readAsArrayBuffer( );;
+          // console.log("blob file");
+          // console.log(blob)
+     
+   personalInfo.value.photo =base64 ;
+
+          
         },
         false
       );
