@@ -104,7 +104,7 @@ export default {
 
     let unfinished = ref({});
     let x = ref([]);
-    let userId = +localStorage.getItem("adminId");
+    let adminId = +localStorage.getItem("adminId");
     let nothingToShowUnfinished = ref(false);
     let showLoading = ref(false);
 
@@ -159,7 +159,7 @@ export default {
 
     const fetchUnfinished = () => {
       showLoading.value = true;
-      store.dispatch("reviewer/getUnfinished", userId).then((res) => {
+      store.dispatch("reviewer/getUnfinished", adminId).then((res) => {
         showLoading.value = false;
         unfinished.value = store.getters["reviewer/getUnfinishedSearched"];
         allInfo.value.assignApplication =

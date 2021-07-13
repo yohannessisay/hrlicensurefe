@@ -554,19 +554,43 @@ export default {
         store.dispatch("reviewer/getAllPendingPaymentSearched", search.value);
         store.dispatch("reviewer/getPendingPaymentSearched", search.value);
       }
-
+      if (props.tab === "RenewalUnassigned") {
+        store.dispatch("reviewerRenewal/getUnassignedRenewalSearched", search.value)
+      }
+      if (props.tab === "renewalUnfinished") {
+        store.dispatch("reviewerRenewal/getRenewalUnfinishedSearched", search.value)
+      }
+      if (props.tab === "renewalUnfinished") {
+        store.dispatch("reviewerNewLicense/getRenewalOthersUnfinishedSearched", search.value)
+      }
       if (props.tab === "newLicenseUnassigned") {
         store.dispatch("reviewerNewLicense/getNewLicenseUnassignedSearched", search.value)
+      }
+      if (props.tab === "newLicenseUnfinished") {
+        store.dispatch("reviewerNewLicense/getNewLicenseUnfinishedSearched", search.value)
+      }
+      if (props.tab === "newLicenseOthersUnfinished") {
+        store.dispatch("reviewerNewLicense/getNewLicenseOthersUnfinishedSearched", search.value)
       }
       if (props.tab === "verificationUnassigned") {
         store.dispatch("reviewerVerification/getUnassignedVerificationSearched", search.value)
       }
-      if (props.tab === "RenewalUnassigned") {
-        store.dispatch("reviewerRenewal/getUnassignedRenewalSearched", search.value)
+      if (props.tab === "verificationUnfinished") {
+        store.dispatch("reviewerVerification/getVerificationUnfinishedSearched", search.value)
       }
+      if (props.tab === "verificationOthersUnfinished") {
+        store.dispatch("reviewerVerification/getVerificationOthersUnfinishedSearched", search.value)
+      } 
       if(props.tab === "goodStandingUnassigned") {
         store.dispatch("reviewerGoodStanding/getUnassignedGoodStandingSearched", search.value)
       }
+      if (props.tab === "goodStandingUnfinished") {
+        store.dispatch("reviewerGoodStanding/getGoodStandingUnfinishedSearched", search.value)
+      }
+      if (props.tab === "goodStandingOthersUnfinished") {
+        store.dispatch("reviewerGoodStanding/getGoodStandingOthersUnfinishedSearched", search.value)
+      }
+
     });
     let showAdminCreate = false;
     let isSuperAdmin = ref(false);

@@ -340,25 +340,68 @@ const routes = [
     component: () => import("../components/Reviewer/CreateAdmin.vue"),
   },
   {
-    path: "/admin/newLicense/Unassigned",
+    path: "/admin/newLicense/unassigned",
     name: "NewLicenseUnassigned",
     component: () => import("../components/Reviewer/ApplicationTypes/NewLicense/newLicenseUnassigned.vue"),
   },
   {
-    path: "/admin/verification/Unassigned",
+    path: "/admin/newlicense/unfinished",
+    name: "NewLicenseUnfinished",
+    component: () => import("../components/Reviewer/ApplicationTypes/NewLicense/NewLicenseUnfinished.vue"),
+  },
+  {
+    path: "/admin/newlicense/othersUnfinished",
+    name: "NewLicenseOthersUnfinished",
+    component: () => import("../components/Reviewer/ApplicationTypes/NewLicense/NewLicenseOthersUnfinished.vue"),
+  },
+  {
+    path: "/admin/verification/unassigned",
     name: "VerificationUnassigned",
     component: () => import("../components/Reviewer/ApplicationTypes/Verification/VerificationUnassigned.vue"),
   },
   {
-    path: "/admin/renewal/Unassigned",
+    path: "/admin/verification/unfinished",
+    name: "VerificationUnfinished",
+    component: () => import("../components/Reviewer/ApplicationTypes/Verification/VerificationUnfinished.vue"),
+  },
+  {
+    path: "/admin/verification/othersUnfinished",
+    name: "VerificationOthersUnfinished",
+    component: () => import("../components/Reviewer/ApplicationTypes/Verification/VerificationOthersUnfinished.vue"),
+  },
+  {
+    path: "/admin/renewal/unassigned",
     name: "RenewalUnassigned",
     component: () => import("../components/Reviewer/ApplicationTypes/Renewal/RenewalUnassigned.vue"),
   },
   {
-    path: "/admin/goodstanding/Unassigned",
+    path: "/admin/renewal/unfinished",
+    name: "RenewalUnfinished",
+    component: () => import("../components/Reviewer/ApplicationTypes/Renewal/RenewalUnfinished.vue"),
+  },
+  {
+    path: "/admin/renewal/othersUnfinished",
+    name: "RenewalOthersUnfinished",
+    component: () => import("../components/Reviewer/ApplicationTypes/Renewal/RenewalOthersUnfinished.vue"),
+  },
+  {
+    path: "/admin/goodstanding/unassigned",
     name: "GoodStandingUnassigned",
     component: () => import("../components/Reviewer/ApplicationTypes/GoodStanding/GoodStandingUnassigned.vue"),
-  }
+  },
+  {
+    path: "/admin/goodstanding/unfinished",
+    name: "GoodStandingUnfinished",
+    component: () => import("../components/Reviewer/ApplicationTypes/GoodStanding/GoodStandingUnfinished.vue"),
+  },
+  {
+    path: "/admin/goodstanding/othersUnfinished",
+    name: "GoodStandingOthersUnfinished",
+    component: () => import("../components/Reviewer/ApplicationTypes/GoodStanding/GoodStandingOthersUnfinished.vue"),
+  },
+  
+  
+
 ];
 
 const router = createRouter({
