@@ -23,6 +23,7 @@
           placeholder="Search requests by Name or Order ID"
           autocomplete="off"
           v-model="search"
+          hidden
         />
       </label>
     </div>

@@ -22,6 +22,7 @@
         placeholder="Search requests by Name or Order ID"
         autocomplete="off"
         v-model="search"
+        hiddden
       />
     </div>
     <div v-if="this.searched">

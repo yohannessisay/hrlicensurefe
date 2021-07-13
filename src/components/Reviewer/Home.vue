@@ -48,6 +48,7 @@
           <nothing-to-show :nothingToShow="nothingToShowAllUnfinished" />
           <others-unfinished :othersUnfinished="unFinishedForEveryOneSearched" />
         </div>
+        <!-- spelling error -->
         <div
           v-if="showAllUnfinishedLoaing"
           class="flex content-center justify-center"
@@ -545,6 +546,7 @@ export default {
       store.dispatch("reviewer/getUnassigned").then((res) => {
         showUnassignedLoading.value = false;
         unassigned.value = store.getters["reviewer/getUnassignedSearched"];
+        console.log("0000000", unassigned.value)
         if (store.getters["reviewer/getUnassignedSearched"].length !== 0) {
           for (var prop in store.getters["reviewer/getUnassignedSearched"]) {
             if (unassigned.value[prop].documents !== null) {
