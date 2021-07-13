@@ -1,0 +1,16 @@
+{
+    "vetur.underline.refValue": false,
+    "vetur.validation.template": false,
+    "eslint.validate": [
+    
+    ],
+    "eslint.trace.server": null,
+    "eslint.runtime": "",
+    "eslint.options": {
+    
+    },
+    "eslint.nodePath": "",
+    "eslint.codeAction.showDocumentation": {
+        "enable": false
+    }
+}
