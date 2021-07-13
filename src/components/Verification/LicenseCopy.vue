@@ -19,13 +19,17 @@
           ACCEPTED
         </h2>
         <TitleWithIllustration
-          illustration="User"
+          illustration="Certificate"
           message="License Copy"
           class="mt-8"
         />
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
           <div class="flex justify-center">
             <div>
+              <span>
+                <h2>{{ licenseFile.name }}</h2>
+                <h2>{{ fileSize }}</h2>
+              </span>
               <span v-if="showUpload">
                 <label class="text-primary-700"
                   >Upload image:
@@ -57,6 +61,9 @@
                 <img :src="filePreview" alt="" class="preview" />
               </span>
             </div>
+          </div>
+          <div v-if="pdfView">
+            <PDFJSViewer :path="`${path}`" :fileName="`${name}`" />
           </div>
         </form>
         <div v-if="buttons && !draftStatus" class="flex justify-center mb-8">
@@ -150,13 +157,14 @@ import { useRoute, useRouter } from "vue-router";
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import Spinner from "@/sharedComponents/Spinner";
-
+import PDFJSViewer from "../../sharedComponents/pdfViewer.vue";
 export default {
   components: {
     TitleWithIllustration,
     FlashMessage,
     ErrorFlashMessage,
     Spinner,
+    PDFJSViewer,
   },
   props: ["activeState"],
   setup(props, { emit }) {
@@ -172,12 +180,18 @@ export default {
       showLoading: false,
     });
 
+    let fileSize = ref("");
+
     let licenseFile = ref("");
     let licenseFileP = ref("");
     let showPreview = ref(false);
     let filePreview = ref("");
     let showUpload = ref(true);
     let isImage = ref(true);
+
+    let pdfView = ref(false);
+    let path = ref("");
+    let name = ref("");
 
     let declinedFields = ref([]);
     let acceptedFields = ref([]);
@@ -209,6 +223,14 @@ export default {
       licenseFile.value = licenseFileP.value.files[0];
       let reader = new FileReader();
 
+      let fileS = licenseFile.value.size;
+      if (fileS > 0 && fileS < 1000) {
+        fileSize.value += "B";
+      } else if (fileS > 1000 && fileS < 1000000) {
+        fileSize.value = fileS / 1000 + "kB";
+      } else {
+        fileSize.value = fileS / 1000000 + "MB";
+      }
       reader.addEventListener(
         "load",
         function() {
@@ -217,16 +239,22 @@ export default {
         },
         false
       );
-
       if (licenseFile.value) {
         if (/\.(jpe?g|png|gif)$/i.test(licenseFile.value.name)) {
           isImage.value = true;
           reader.readAsDataURL(licenseFile.value);
         } else if (/\.(pdf)$/i.test(licenseFile.value.name)) {
           isImage.value = false;
-          reader.readAsText(licenseFile.value);
+          reader.readAsDataURL(licenseFile.value);
+          pdfView.value = true;
+          console.log(licenseFile.value);
+          path.value = licenseFile.value.path;
+          name.value = licenseFile.value.name;
+          // viewFile();
         }
       }
+      console.log(licenseFile.value);
+      console.log(filePreview.value);
     };
     buttons = store.getters["verification/getButtons"];
     documentSpecs = store.getters["verification/getDocumentSpec"];
@@ -265,6 +293,22 @@ export default {
         }
       }
     });
+    const viewFile = () => {
+      var win = window.open();
+      win.document.write(
+        '<body style="margin:0px;"><object data="' +
+          licenseFile.value +
+          '" type="application/pdf" width="100%" height="100%"><iframe src="' +
+          licenseFile.value +
+          '" scrolling="no" width="100%" height="100%" frameborder="0" ></iframe></object></body>'
+      );
+      // win.document.write(
+      //   '<body style="margin:0px;"><iframe src="' +
+      //     this.fileData +
+      //     '" scrolling="no" width="100%" height="100%" frameborder="0" ></iframe></body>'
+      // );
+    };
+
     const draft = (action) => {
       message.value.showLoading = true;
       if (route.params.id) {
@@ -503,9 +547,13 @@ export default {
       filePreview,
       showUpload,
       isImage,
+      pdfView,
       handleFileUpload,
       reset,
       submit,
+      fileSize,
+      path,
+      name,
       draft,
       withdraw,
       buttons,
@@ -521,6 +569,7 @@ export default {
       remark,
       declinedFieldsCheck,
       acceptedFieldsCheck,
+      viewFile,
     };
   },
 };

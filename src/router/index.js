@@ -17,6 +17,11 @@ const routes = [
     component: Landing,
   },
   {
+    path: "/about",
+    name: "About",
+    component: () => import("../views/About.vue"),
+  },
+  {
     path: "/landing",
     name: "Landing",
     component: () => import("../components/Landing/Landing.vue"),
@@ -42,45 +47,55 @@ const routes = [
     component: () => import("../views/Menu.vue"),
   },
   {
-    path: "/approved",
-    name: "Approved",
-    component: () => import("../views/Approved.vue"),
+    path: "/licenseRequests",
+    name: "LicenseRequests",
+    component: () => import("../views/LicenseRequests.vue"),
   },
-  {
-    path: "/inReview",
-    name: "InReview",
-    component: () => import("../views/InReview.vue"),
-  },
-  {
-    path: "/undersupervision",
-    name: "UnderSupervision",
-    component: () => import("../views/UnderSupervision.vue"),
-  },
-  {
-    path: "/declined",
-    name: "Declined",
-    component: () => import("../views/Declined.vue"),
-  },
-  {
-    path: "/withdrawn",
-    name: "Withdraw",
-    component: () => import("../views/Withdraw.vue"),
-  },
-  {
-    path: "/pendingPayment",
-    name: "PendingPayment",
-    component: () => import("../views/PendingPayment.vue"),
-  },
-  {
-    path: "/approvedPayment",
-    name: "ApprovedPayment",
-    component: () => import("../views/ApprovedPayment.vue"),
-  },
-  {
-    path: "/declinedPayment",
-    name: "DeclinedPayment",
-    component: () => import("../views/DeclinedPayment.vue"),
-  },
+  // {
+  //   path: "/approved",
+  //   name: "Approved",
+  //   component: () => import("../views/Approved.vue"),
+  // },
+  // {
+  //   path: "/inReview",
+  //   name: "InReview",
+  //   component: () => import("../views/InReview.vue"),
+  // },
+  // {
+  //   path: "/undersupervision",
+  //   name: "UnderSupervision",
+  //   component: () => import("../views/UnderSupervision.vue"),
+  // },
+  // {
+  //   path: "/declined",
+  //   name: "Declined",
+  //   component: () => import("../views/Declined.vue"),
+  // },
+  // {
+  //   path: "/withdrawn",
+  //   name: "Withdraw",
+  //   component: () => import("../views/Withdraw.vue"),
+  // },
+  // {
+  //   path: "/pendingPayment",
+  //   name: "PendingPayment",
+  //   component: () => import("../views/PendingPayment.vue"),
+  // },
+  // {
+  //   path: "/approvedPayment",
+  //   name: "ApprovedPayment",
+  //   component: () => import("../views/ApprovedPayment.vue"),
+  // },
+  // {
+  //   path: "/declinedPayment",
+  //   name: "DeclinedPayment",
+  //   component: () => import("../views/DeclinedPayment.vue"),
+  // },
+  // {
+  //   path: "/draft",
+  //   name: "Draft",
+  //   component: () => import("../views/Draft.vue"),
+  // },
   {
     path: "/newlicense",
     name: "NewLicense",
@@ -108,11 +123,6 @@ const routes = [
     component: () => import("../views/Submitted.vue"),
   },
   {
-    path: "/draft",
-    name: "Draft",
-    component: () => import("../views/Draft.vue"),
-  },
-  {
     path: "/admin/review",
     name: "ReviewerHome",
     component: () => import("../components/Reviewer/Home.vue"),
@@ -120,7 +130,10 @@ const routes = [
   {
     path: "/admin/changePassword",
     name: "changeadminPassword",
-    component: () => import("../components/Reviewer/Configurations/ChangePassword/ChangePassword.vue"),
+    component: () =>
+      import(
+        "../components/Reviewer/Configurations/ChangePassword/ChangePassword.vue"
+      ),
   },
   {
     path: "/myWork",
@@ -145,7 +158,17 @@ const routes = [
   {
     path: "/admin/unconfirmed",
     name: "unconfirmed",
-    component: () => import("../components/Reviewer/Unconfirmed.vue")
+    component: () => import("../components/Reviewer/Unconfirmed.vue"),
+  },
+  {
+    path: "/admin/onreview",
+    name: "onreview",
+    component: () => import("../components/Reviewer/OnReview.vue")
+  },
+  {
+    path: "/admin/evaluateReview",
+    name: "evaluateReview",
+    component: () => import("../components/Reviewer/EvaluateReview.vue")
   },
   {
     path: "/admin/assignedToYou",
@@ -164,12 +187,17 @@ const routes = [
   },
   {
     path: "/admin/allCertifiedUsers",
-    name: "certifiedUsers",
+    name: "allCertifiedUsers",
     component: () => import("../components/Reviewer/AllCertifiedUsers.vue"),
   },
   {
+    path: "/admin/allRegionCertifiedUsers",
+    name: "allRegionCertifiedUsers",
+    component: () => import("../components/Reviewer/AllRegionCertifiedUsers.vue"),
+  },
+  {
     path: "/admin/certifiedUsers",
-    name: "allCertifiedusers",
+    name: "certifiedusers",
     component: () => import("../components/Reviewer/CertifiedUsers.vue"),
   },
   {
@@ -225,8 +253,7 @@ const routes = [
   {
     path: "/admin/confirmReview/:applicationType/:applicantId",
     name: "confirmReview",
-    component: () =>
-      import("../components/Reviewer/ConfirmAdminReview.vue"),
+    component: () => import("../components/Reviewer/ConfirmAdminReview.vue"),
   },
   {
     path: "/admin/confirmReviewDetail/:applicationType/:applicationId/:status",
@@ -258,36 +285,41 @@ const routes = [
   {
     path: "/admin/reviewReturnedApplication/:applicationType/:applicationId",
     name: "reviewReturnedApplication",
-    component: () => import("../components/Reviewer/ReviewReturnedApplication.vue"),
+    component: () =>
+      import("../components/Reviewer/ReviewReturnedApplication.vue"),
   },
   {
     path: "/admin/confirmAssignedApplication/:applicationType/:applicationId",
     name: "confirmAssignedApplication",
-    component: () => import("../components/Reviewer/ConfirmAssignedApplication.vue"),
+    component: () =>
+      import("../components/Reviewer/ConfirmAssignedApplication.vue"),
   },
   {
-    path: "/admin/unconfirmedDetail/:applicationType/:applicationId/:applicantId",
+    path:
+      "/admin/unconfirmedDetail/:applicationType/:applicationId/:applicantId",
     name: "unconfirmedDetail",
-    component: () => 
+    component: () =>
       import("../components/Reviewer/Detail/UnconfirmedDetail.vue"),
   },
   {
-    path: "/admin/othersUnconfirmedDetail/:applicationType/:applicationId/:applicantId",
+    path:
+      "/admin/othersUnconfirmedDetail/:applicationType/:applicationId/:applicantId",
     name: "othersUnconfirmedDetail",
-    component: () => 
-      import("../components/Reviewer/Detail/OthersUnconfirmedDetail.vue")
+    component: () =>
+      import("../components/Reviewer/Detail/OthersUnconfirmedDetail.vue"),
   },
   {
-    path: "/admin/returnedToOthersDetail/:applicationType/:applicationId/:applicantId",
+    path:
+      "/admin/returnedToOthersDetail/:applicationType/:applicationId/:applicantId",
     name: "returnedToOthersDetail",
-    component: () => 
-      import("../components/Reviewer/Detail/ReturnedToOthersDetail.vue")
+    component: () =>
+      import("../components/Reviewer/Detail/ReturnedToOthersDetail.vue"),
   },
   {
     path: "/admin/applicantDetail/:applicationType/:applicationId/:applicantId",
     name: "applicantDetail",
-    component: () => 
-      import("../components/Reviewer/Detail/ApplicantDetail.vue")
+    component: () =>
+      import("../components/Reviewer/Detail/ApplicantDetail.vue"),
   },
   {
     path: "/admin",
@@ -299,6 +331,69 @@ const routes = [
     name: "CreateAdmin",
     component: () => import("../components/Reviewer/CreateAdmin.vue"),
   },
+  {
+    path: "/admin/newLicense/unassigned",
+    name: "NewLicenseUnassigned",
+    component: () => import("../components/Reviewer/ApplicationTypes/NewLicense/newLicenseUnassigned.vue"),
+  },
+  {
+    path: "/admin/newlicense/unfinished",
+    name: "NewLicenseUnfinished",
+    component: () => import("../components/Reviewer/ApplicationTypes/NewLicense/NewLicenseUnfinished.vue"),
+  },
+  {
+    path: "/admin/newlicense/othersUnfinished",
+    name: "NewLicenseOthersUnfinished",
+    component: () => import("../components/Reviewer/ApplicationTypes/NewLicense/NewLicenseOthersUnfinished.vue"),
+  },
+  {
+    path: "/admin/verification/unassigned",
+    name: "VerificationUnassigned",
+    component: () => import("../components/Reviewer/ApplicationTypes/Verification/VerificationUnassigned.vue"),
+  },
+  {
+    path: "/admin/verification/unfinished",
+    name: "VerificationUnfinished",
+    component: () => import("../components/Reviewer/ApplicationTypes/Verification/VerificationUnfinished.vue"),
+  },
+  {
+    path: "/admin/verification/othersUnfinished",
+    name: "VerificationOthersUnfinished",
+    component: () => import("../components/Reviewer/ApplicationTypes/Verification/VerificationOthersUnfinished.vue"),
+  },
+  {
+    path: "/admin/renewal/unassigned",
+    name: "RenewalUnassigned",
+    component: () => import("../components/Reviewer/ApplicationTypes/Renewal/RenewalUnassigned.vue"),
+  },
+  {
+    path: "/admin/renewal/unfinished",
+    name: "RenewalUnfinished",
+    component: () => import("../components/Reviewer/ApplicationTypes/Renewal/RenewalUnfinished.vue"),
+  },
+  {
+    path: "/admin/renewal/othersUnfinished",
+    name: "RenewalOthersUnfinished",
+    component: () => import("../components/Reviewer/ApplicationTypes/Renewal/RenewalOthersUnfinished.vue"),
+  },
+  {
+    path: "/admin/goodstanding/unassigned",
+    name: "GoodStandingUnassigned",
+    component: () => import("../components/Reviewer/ApplicationTypes/GoodStanding/GoodStandingUnassigned.vue"),
+  },
+  {
+    path: "/admin/goodstanding/unfinished",
+    name: "GoodStandingUnfinished",
+    component: () => import("../components/Reviewer/ApplicationTypes/GoodStanding/GoodStandingUnfinished.vue"),
+  },
+  {
+    path: "/admin/goodstanding/othersUnfinished",
+    name: "GoodStandingOthersUnfinished",
+    component: () => import("../components/Reviewer/ApplicationTypes/GoodStanding/GoodStandingOthersUnfinished.vue"),
+  },
+  
+  
+
 ];
 
 const router = createRouter({

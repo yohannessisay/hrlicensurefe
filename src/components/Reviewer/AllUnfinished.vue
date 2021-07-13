@@ -1,7 +1,38 @@
 <template>
   <div>
     <ReviewerNavBar tab="AllUnfinished" />
-    <div class="bg-lightBlueB-200 h-full">
+    <div class="bg-lightBlueB-200 h-full" v-if="!allInfo.searchByInput">
+      <div class="pl-12">
+        <div>Filter By</div>
+      </div>
+
+      <div class="flex flex-wrap mb-medium pl-12 pt-1">
+        <label class="text-primary-700">Type</label>
+        <select class="max-w-3xl mr-2" v-model="allInfo.app_type">
+          <option
+            v-for="item in applicationTypes"
+            v-bind:key="item.id"
+            v-bind:value="item.name"
+          >
+            {{ item.name }}
+          </option>
+        </select>
+        <label class="text-primary-700 mr-2">From</label>
+        <input
+          class="max-w-3xl mr-5"
+          type="date"
+          v-model="allInfo.searchFromDate"
+        />
+        <label class="text-primary-700 mr-2">To</label>
+        <input
+          class="max-w-3xl mr-5"
+          type="date"
+          v-model="allInfo.searchUpToDate"
+        />
+        <button @click="filterAssignedApplication">
+          Filter
+        </button>
+      </div>
       <div class="flex pl-12 pt-tiny">
         <Title message="Others Unfinished" />
       </div>
@@ -52,30 +83,27 @@
               <span
                 class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
               >
-              <i class="fas fa-user-cog"></i> &nbsp;
-                {{
-                  item.reviewer.name
-                    ? item.reviewer.name
-                    : "-"
-                }}
+                <i class="fas fa-user-cog"></i> &nbsp;
+                {{ item.reviewer.name ? item.reviewer.name : "-" }}
               </span>
               <!-- <h6
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center">
                 {{ item.createdAt ? item.createdAt : "-" }}
               </h6> -->
               <span
-                  class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                >
-                  {{ item.applicationType ? item.applicationType : "-" }}
-                </span>
+                class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+              >
+                {{ item.applicationType ? item.applicationType : "-" }}
+              </span>
               <span
                 class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
               >
                 {{ item.newLicenseCode ? item.newLicenseCode : "-" }}
               </span>
               <span
-                class="text-lightBlueB-500 mt-tiny flex justify-end content-center">
-                  {{item.createdAt ? moment(item.createdAt).fromNow() : '-'}}
+                class="text-lightBlueB-500 mt-tiny flex justify-end content-center"
+              >
+                {{ item.createdAt ? moment(item.createdAt).fromNow() : "-" }}
               </span>
             </div>
           </div>
@@ -88,6 +116,21 @@
     >
       <Spinner />
     </div>
+    <div class="bg-lightBlueB-200 h-full" v-if="allInfo.searchByInput">
+      <div class="flex pl-12 pt-tiny">
+        <Title :message="'Unfinished Applicants'" />
+        <button @click="backClicked">back</button>
+      </div>
+      <filtered-info
+        :filteredData="allInfo.filteredByDate"
+        type="unfinishedDetail"
+      />
+    </div>
+  </div>
+  <div v-if="allInfo.message.showErrorFlash">
+    <ErrorFlashMessage
+      message="Date Range is not valid, Please Enter Valid Date"
+    />
   </div>
 </template>
 
@@ -99,18 +142,25 @@ import { useStore } from "vuex";
 import { ref, onMounted, watch } from "vue";
 import { useRouter } from "vue-router";
 
-import store from '../../store'
+import store from "../../store";
 import Spinner from "@/sharedComponents/Spinner";
 
-import moment from 'moment'
+import moment from "moment";
+import filterApplication from "./ChildComponents/FilteredDatas/FilterApplication.js";
+import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
+import FilteredInfo from "./ChildComponents/FilteredDatas/FilteredInfo.vue";
 
 export default {
-  components: { ReviewerNavBar, Title, Spinner },
+  components: { 
+    ReviewerNavBar, 
+    Title, Spinner,
+    FilteredInfo,
+    ErrorFlashMessage  },
   computed: {
     moment: () => moment,
     getAllUnfinished() {
-      return store.getters['reviewer/getEveryOneUnfinishedSearched'];
-    }
+      return store.getters["reviewer/getEveryOneUnfinishedSearched"];
+    },
   },
   setup() {
     const store = useStore();
@@ -123,31 +173,115 @@ export default {
     let nothingToShowUnfinished = ref(false);
     let showLoading = ref(false);
 
+    let allInfo = ref({
+      alreadyPushed: false,
+      searchByInput: false,
+      assignApplication: [],
+      message: {
+        showErrorFlash: false,
+      },
+      filteredByDate: [],
+      searchFromDate: "",
+      searchUpToDate: "",
+      app_type: "",
+    });
+
+    const applicationTypes = ref([
+      {
+        id: 1,
+        name: "",
+      },
+      {
+        id: 2,
+        name: "Verification",
+      },
+      {
+        id: 3,
+        name: "New License",
+      },
+      {
+        id: 4,
+        name: "Good Standing",
+      },
+      {
+        id: 5,
+        name: "Renewal",
+      },
+    ]);
+
+    const filterAssignedApplication = () => {
+      filterApplication(moment, allInfo.value);
+    };
+
+    const backClicked = () => {
+      allInfo.value.searchByInput = false;
+      allInfo.value.filteredByDate = [];
+      allInfo.value.alreadyPushed = false;
+      allInfo.value.searchFromDate = "";
+      allInfo.value.searchUpToDate = "";
+      allInfo.value.app_type = "";
+    };
+
     const fetchUnfinished = () => {
       showLoading.value = true;
       const adminData = [adminRole, adminId];
-      store.dispatch("reviewer/getEveryOneUnfinished", adminData).then(res => {
-        showLoading.value = false
-          unfinished.value = store.getters['reviewer/getEveryOneUnfinishedSearched'];
-        if(store.getters['reviewer/getEveryOneUnfinishedSearched'].length !== 0) {
-          for (var prop in store.getters['reviewer/getEveryOneUnfinishedSearched']) {
-            if (store.getters['reviewer/getEveryOneUnfinishedSearched'][prop].applicationType == "Renewal") {
-              store.getters['reviewer/getEveryOneUnfinishedSearched'][prop].newLicenseCode =
-                store.getters['reviewer/getEveryOneUnfinishedSearched'][prop].renewalCode;
-            }
-            if (store.getters['reviewer/getEveryOneUnfinishedSearched'][prop].applicationType == "Good Standing") {
-              store.getters['reviewer/getEveryOneUnfinishedSearched'][prop].newLicenseCode =
-                store.getters['reviewer/getEveryOneUnfinishedSearched'][prop].goodStandingCode;
-            }
-            if (store.getters['reviewer/getEveryOneUnfinishedSearched'][prop].applicationType == "Verification") {
-              store.getters['reviewer/getEveryOneUnfinishedSearched'][prop].newLicenseCode =
-                store.getters['reviewer/getEveryOneUnfinishedSearched'][prop].verificationCode;
-            }
-          }
-        } else {
-          nothingToShowUnfinished.value = true;
+      store
+        .dispatch("reviewer/getEveryOneUnfinished", adminData)
+        .then((res) => {
+          showLoading.value = false;
+          unfinished.value =
+            store.getters["reviewer/getEveryOneUnfinishedSearched"];
+            allInfo.value.assignApplication =
+          store.getters["reviewer/getEveryOneUnfinishedSearched"];
+        for (let applicant in allInfo.value.assignApplication) {
+          allInfo.value.assignApplication[applicant].createdAt = moment(
+            allInfo.value.assignApplication[applicant].createdAt
+          ).format("MMMM D, YYYY");
         }
-      });
+          if (
+            store.getters["reviewer/getEveryOneUnfinishedSearched"].length !== 0
+          ) {
+            for (var prop in store.getters[
+              "reviewer/getEveryOneUnfinishedSearched"
+            ]) {
+              if (
+                store.getters["reviewer/getEveryOneUnfinishedSearched"][prop]
+                  .applicationType == "Renewal"
+              ) {
+                store.getters["reviewer/getEveryOneUnfinishedSearched"][
+                  prop
+                ].newLicenseCode =
+                  store.getters["reviewer/getEveryOneUnfinishedSearched"][
+                    prop
+                  ].renewalCode;
+              }
+              if (
+                store.getters["reviewer/getEveryOneUnfinishedSearched"][prop]
+                  .applicationType == "Good Standing"
+              ) {
+                store.getters["reviewer/getEveryOneUnfinishedSearched"][
+                  prop
+                ].newLicenseCode =
+                  store.getters["reviewer/getEveryOneUnfinishedSearched"][
+                    prop
+                  ].goodStandingCode;
+              }
+              if (
+                store.getters["reviewer/getEveryOneUnfinishedSearched"][prop]
+                  .applicationType == "Verification"
+              ) {
+                store.getters["reviewer/getEveryOneUnfinishedSearched"][
+                  prop
+                ].newLicenseCode =
+                  store.getters["reviewer/getEveryOneUnfinishedSearched"][
+                    prop
+                  ].verificationCode;
+              }
+            }
+          } else {
+            nothingToShowUnfinished.value = true;
+          }
+        });
     };
 
     const detail = (data, applicationType, applicationId, applicantId) => {
@@ -162,11 +296,15 @@ export default {
 
     return {
       unfinished,
-      detail,
       nothingToShowUnfinished,
+      allInfo,
+      applicationTypes,
       showLoading,
+      filterAssignedApplication,
+      detail,
+      backClicked,
     };
-  }
+  },
 };
 </script>
 <style scoped>

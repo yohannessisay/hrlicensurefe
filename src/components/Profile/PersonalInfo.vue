@@ -10,6 +10,12 @@
         />
       </div>
       <form class="mx-auto max-w-3xl w-full mt-10" @submit.prevent="nextStep">
+        <div class="flex justify-center">
+          <span>
+            <h2>{{ photoFile.name }}</h2>
+            <h2>{{ fileSize }}</h2>
+          </span>
+        </div>
         <div class="flex mb-4 justify-center">
           <span v-if="showUpload">
             <label class="text-primary-700 ml-4"
@@ -71,7 +77,7 @@
             }}</span>
           </div>
           <div class="flex flex-col mb-medium w-1/2 ml-12">
-            <label class="text-primary-700">Alternative Name</label>
+            <label class="text-primary-700">Name in Amharic</label>
             <input
               class="max-w-3xl"
               type="text"
@@ -84,7 +90,7 @@
         </div>
         <div class="flex">
           <div class="flex flex-col mb-medium w-1/2 mr-12">
-            <label class="text-primary-700">Alternative Father's Name</label>
+            <label class="text-primary-700">Father's Name in Amharic</label>
             <input
               class="max-w-3xl"
               type="text"
@@ -96,7 +102,7 @@
           </div>
           <div class="flex flex-col mb-medium w-1/2 m1-12">
             <label class="text-primary-700"
-              >Alternative Grandfather's Name</label
+              >Grandfather's Name in Amharic</label
             >
             <input
               class="max-w-3xl"
@@ -130,12 +136,13 @@
           </div>
         </div>
         <div class="flex flex-col mb-medium w-1/2 m1-12">
-          <label class="text-primary-700">Date of birth(Optional)</label>
+          <label class="text-primary-700">Date of birth </label>
           <input
             class="max-w-3xl"
             type="date"
             v-model="personalInfo.dateOfBirth"
           />
+          <span style="color: red">{{ personalInfoErrors.dateOfBirth }}</span>
         </div>
         <div class="flex">
           <div class="flex w-1/2 mb-small  mr-12">
@@ -284,6 +291,8 @@ export default {
     let showUpload = ref(true);
     let isImage = ref(true);
 
+    let fileSize = ref("");
+
     let personalInfo = ref({
       name: "",
       fatherName: "",
@@ -330,11 +339,25 @@ export default {
       photoFile.value = photoFileP.value.files[0];
       let reader = new FileReader();
 
+      let fileS = photoFile.value.size;
+      if (fileS > 0 && fileS < 1000) {
+        fileSize.value += "B";
+      } else if (fileS > 1000 && fileS < 1000000) {
+        fileSize.value = fileS / 1000 + "kB";
+      } else {
+        fileSize.value = fileS / 1000000 + "MB";
+      }
+
       reader.addEventListener(
         "load",
         function() {
           showPreview.value = true;
           filePreview.value = reader.result;
+          var base64 = reader.result.replace(
+            /^data:image\/(png|jpg|jpeg);base64,/,
+            ""
+          );
+          personalInfo.value.photo = base64;
         },
         false
       );
@@ -347,11 +370,6 @@ export default {
           reader.readAsText(photoFile.value);
         }
       }
-      let contentType = photoFile.value.type;
-      let blob = new Blob([photoFile], {
-        type: contentType,
-      });
-      personalInfo.value.photo = blob;
     };
 
     const fetchUserTypes = () => {
@@ -389,7 +407,6 @@ export default {
       }
       if (empty == true) {
         store.dispatch("profile/setProfileInfo", personalInfo);
-        // console.log(personalInfo.value);
         emit("changeActiveState");
       }
     };
@@ -425,6 +442,7 @@ export default {
       if (!formData.maritalStatusId)
         errors.maritalStatusId = "Marital Status Required";
       if (!formData.userTypeId) errors.userTypeId = "User Type Required";
+      if (!formData.dateOfBirth) errors.dateOfBirth = "Date of Birth Required";
 
       return errors;
     };
@@ -452,6 +470,7 @@ export default {
       filePreview,
       showUpload,
       isImage,
+      fileSize,
       handleFileUpload,
       reset,
       personalInfo,

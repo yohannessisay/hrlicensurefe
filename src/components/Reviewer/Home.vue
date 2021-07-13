@@ -4,10 +4,10 @@
     <div class="bg-lightBlueB-200 h-full">
       <div class="flex pl-12 pt-medium">
         <div v-if="myTitleMessage">
-          <Title message="My Unfinished" />
+          <Title message="My Unfinished" illustration="My Unfinished"/>
         </div>
         <div v-else>
-          <Title message="Unfinished" />
+          <Title message="Unfinished" illustration="Unfinished" />
         </div>
 
         <div class="flex ml-small" v-if="unfinished.length >= 5">
@@ -33,7 +33,7 @@
 
       <div v-if="adminRole === 'SA'">
         <div class="flex pl-12 mt-medium">
-          <Title message="Others Unfinished" />
+          <Title message="Others Unfinished" illustration="Others Unfinished" />
           <div class="flex ml-small" v-if="everyoneUnfinished.length >= 5">
             <router-link to="/admin/unfinishedAll">
               <button
@@ -48,6 +48,7 @@
           <nothing-to-show :nothingToShow="nothingToShowAllUnfinished" />
           <others-unfinished :othersUnfinished="unFinishedForEveryOneSearched" />
         </div>
+        <!-- spelling error -->
         <div
           v-if="showAllUnfinishedLoaing"
           class="flex content-center justify-center"
@@ -57,7 +58,7 @@
       </div>
 
       <div class="flex pl-12 mt-medium">
-        <Title message="Assigned to You" />
+        <Title message="Assigned to You" illustration="Assigned to You"/>
         <div class="flex ml-small" v-if="assignedToyou.length >= 5">
           <router-link to="/admin/assignedToyou">
             <button
@@ -80,7 +81,7 @@
       </div>
       <div v-if="adminRole === 'SA'">
         <div class="flex pl-12 mt-medium">
-          <Title message="Assigned to Others" />
+          <Title message="Assigned to Others" illustration="Assigned to Others" />
           <div class="flex ml-small" v-if="assignedToEveryone.length >= 5">
             <router-link to="/admin/assignedToAll">
               <button
@@ -162,7 +163,7 @@
       </div> -->
 
       <div class="flex pl-12 mt-medium">
-        <Title message="Unassigned" />
+        <Title message="Unassigned" illustration="Unassigned" />
         <div class="flex ml-small" v-if="unassigned.length >= 5">
           <router-link to="/admin/unassigned">
             <button
@@ -545,6 +546,7 @@ export default {
       store.dispatch("reviewer/getUnassigned").then((res) => {
         showUnassignedLoading.value = false;
         unassigned.value = store.getters["reviewer/getUnassignedSearched"];
+        console.log("0000000", unassigned.value)
         if (store.getters["reviewer/getUnassignedSearched"].length !== 0) {
           for (var prop in store.getters["reviewer/getUnassignedSearched"]) {
             if (unassigned.value[prop].documents !== null) {
@@ -593,6 +595,7 @@ export default {
     };
 
     onMounted(() => {
+      console.log("illustration")
       fetchUnfinished();
       // fetchAssignedtoYou();
       fetchUnassignedApplications();

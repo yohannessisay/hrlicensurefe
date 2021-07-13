@@ -26,6 +26,10 @@
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
           <div class="flex justify-center">
             <div>
+              <span>
+                <h2>{{ supportLetterFile.name }}</h2>
+                <h2>{{ fileSize }}</h2>
+              </span>
               <span v-if="showUpload">
                 <label class="text-primary-700"
                   >Upload image:
@@ -174,6 +178,8 @@ export default {
     let showUpload = ref(true);
     let isImage = ref(false);
 
+    let fileSize = ref("");
+
     let buttons = [];
     let documentSpecs = ref([]);
     let userId = +localStorage.getItem("userId");
@@ -219,6 +225,14 @@ export default {
       supportLetterFile.value = supportLetterFileP.value.files[0];
       let reader = new FileReader();
       isImage.value = true;
+      let fileS = supportLetterFile.value.size;
+      if (fileS > 0 && fileS < 1000) {
+        fileSize.value += "B";
+      } else if (fileS > 1000 && fileS < 1000000) {
+        fileSize.value = fileS / 1000 + "kB";
+      } else {
+        fileSize.value = fileS / 1000000 + "MB";
+      }
       reader.addEventListener(
         "load",
         function() {
@@ -563,6 +577,7 @@ export default {
       withdraw,
       buttons,
       draftStatus,
+      fileSize,
       update,
       draftData,
       basePath,

@@ -48,6 +48,9 @@ export default {
 
     getAllCertifiedUsers: state => state.allCertifiedUsers,
     getAllCertifiedUsersSearched: state => state.allCertifiedUsersSearched,
+
+    getMyRegionCertifiedUsers: state => state.myRegionCertifiedUsers,
+    getMyRegionCertifiedUsersSearched: state => state.myRegionCertifiedUsersSearched,
     
     getApproved: state => state.approved,
     getApprovedSearched: state => state.approvedSearched,
@@ -72,4 +75,5 @@ export default {
 
     getApprovedPendingPayments: state => state.approvedPendingPayments,
     getApprovedPendingPaymentsSearched: state => state.approvedPendingPaymentsSearched,
+
 };

@@ -52,15 +52,9 @@
         <span
           class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
         >
-          <!-- Assigned Reviewer: -->
-          <!-- <i class="far fa-user-cog"></i> -->
           <i class="fas fa-user-cog"></i> &nbsp;
           {{ item.reviewer.name ? item.reviewer.name : "-" }}
         </span>
-        <!-- <h6
-                class="text-lightBlueB-500 mt-tiny flex justify-center content-center">
-                {{ item.createdAt ? item.createdAt : "-" }}
-              </h6> -->
         <span
           class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
         >

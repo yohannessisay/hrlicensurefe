@@ -9,7 +9,7 @@
     </span>
     <span v-else>
       
-      <span v-if="isUserCertified">
+      <span v-if="isUserCertified && myRegion">
       <button @click="downloadPdf">Download PDF</button>
       <div class="bg-lightBlueB-200 h-full">
         <div
@@ -163,6 +163,11 @@
           <h1>User is not Found</h1>
         </div>
       </span>
+      <span v-else-if="!myRegion">
+        <div class="flex justify-center content-center userNotFound">
+          <h1>You can't generate Certificate for other region</h1>
+        </div>
+      </span>
     </span>
     
   </div>
@@ -209,6 +214,10 @@ export default {
     let showApplicationLoading = ref(false);
     let isUserCertified = ref(true);
     let isUserFound = ref(true);
+    let myRegion = ref(true);
+
+    const adminRegionId = JSON.parse(localStorage.getItem("allAdminData")).regionId
+    console.log("adminREgion id", adminRegionId, "type", typeof adminRegionId)
 
     const fetchCertifiedUser = () => {
       showLoading.value = true;
@@ -238,6 +247,9 @@ export default {
           if(route.params.applicantId != certificateDetail.value.applicantId) {
             isUserCertified.value = false;
           }
+          if(adminRegionId != certificateDetail.value.woreda.zone.region.id) {
+            myRegion.value = false
+          } 
           licenseExpireDate.value = moment(certificateDetail.value.certifiedDate)._d;
           licenseExpireDate.value.setFullYear(licenseExpireDate.value.getFullYear() + 5);
         }).catch(error => {
@@ -255,6 +267,9 @@ export default {
           if(route.params.applicantId != certificateDetail.value.applicantId) {
             isUserCertified.value = false;
           }
+          if(adminRegionId != certificateDetail.value.woreda.zone.region.id) {
+            myRegion.value = false
+          }
           licenseExpireDate.value = moment(certificateDetail.value.certifiedDate)._d;
           licenseExpireDate.value.setFullYear(licenseExpireDate.value.getFullYear() + 5);
         });
@@ -270,6 +285,9 @@ export default {
           certificateDetail.value = res.data.data;
           if(route.params.applicantId != certificateDetail.value.applicantId) {
             isUserCertified.value = false;
+          }
+          if(adminRegionId != certificateDetail.value.woreda.zone.region.id) {
+            myRegion.value = false
           }
           licenseExpireDate.value = moment(certificateDetail.value.certifiedDate)._d;
           licenseExpireDate.value.setFullYear(licenseExpireDate.value.getFullYear() + 5);
@@ -288,8 +306,12 @@ export default {
           if(route.params.applicantId != certificateDetail.value.applicantId) {
             isUserCertified.value = false;
           }
+          if(adminRegionId != certificateDetail.value.woreda.zone.region.id) {
+            myRegion.value = false
+          }
           licenseExpireDate.value = moment(certificateDetail.value.certifiedDate)._d;
           licenseExpireDate.value.setFullYear(licenseExpireDate.value.getFullYear() + 5);
+          console.log("application ++++ ", certificateDetail.value)
         });
       }
       
@@ -332,7 +354,7 @@ export default {
 
       doc.setFontSize(17)
       doc.text(190, 123, `${certifiedUser.value.name} ${certifiedUser.value.fatherName} ${certifiedUser.value.grandFatherName ? certifiedUser.value.grandFatherName : ''}`)
-      doc.text(60, 123, `${certifiedUser.value.alternativeName ? certifiedUser.value.alternativeName : ''} ${certifiedUser.value.alternativeFatherName ? certifiedUser.value.alternativeFatherName : ''} ${certifiedUser.value.alternativeGrandFatherName ? certifiedUser.value.alternativeGrandFatherName : ''}`)
+      // doc.text(60, 123, `${certifiedUser.value.alternativeName ? certifiedUser.value.alternativeName : ''} ${certifiedUser.value.alternativeFatherName ? certifiedUser.value.alternativeFatherName : ''} ${certifiedUser.value.alternativeGrandFatherName ? certifiedUser.value.alternativeGrandFatherName : ''}`)
       doc.setFontSize(13)
       doc.text(155, 140, 'Having duly satisfied the requirements of the Ministry')
       doc.text(180, 147, 'hereby registered and licensed as')
@@ -412,6 +434,7 @@ export default {
       certificateDetail,
       isUserCertified,
       isUserFound,
+      myRegion,
       licenseExpireDate,
     };
   },

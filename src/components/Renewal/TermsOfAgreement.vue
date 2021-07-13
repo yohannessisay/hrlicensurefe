@@ -22,31 +22,29 @@
       <div class="ml-8">
         <h2>Foreigner</h2>
         <ul>
-          <li>Photo</li>
           <li>Health Exam Certificate</li>
-          <li>Work Experience</li>
           <li>Letter from Hiring Organization</li>
-          <li>Service Fee</li>
+          <li>Renewed License</li>
+          <li>CPD</li>
+          <li>Work Experience</li>
         </ul>
       </div>
       <div class="ml-8">
         <h2>Local</h2>
         <ul>
-          <li>Photo</li>
           <li>Health Exam Certificate</li>
-          <li>Work Experience</li>
           <li>Previous License</li>
+          <li>CPD</li>
+          <li>Work Experience</li>
         </ul>
       </div>
       <div class="ml-8">
         <h2>Foreigner Ethiopian</h2>
         <ul>
-          <li>Photo</li>
           <li>Health Exam Certificate</li>
-          <li>Work Experience</li>
-          <li>Service Fee</li>
           <li>CPD</li>
           <li>Previous License</li>
+          <li>Work Experience</li>
         </ul>
       </div>
     </div>

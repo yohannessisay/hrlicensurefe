@@ -1,7 +1,38 @@
 <template>
   <div>
     <ReviewerNavBar tab="AssignedToAll" />
-    <div class="bg-lightBlueB-200 h-full">
+    <div class="bg-lightBlueB-200 h-full" v-if="!allInfo.searchByInput">
+      <div class="pl-12">
+        <div>Filter By</div>
+      </div>
+
+      <div class="flex flex-wrap mb-medium pl-12 pt-1">
+        <label class="text-primary-700">Type</label>
+        <select class="max-w-3xl mr-2" v-model="allInfo.app_type">
+          <option
+            v-for="item in applicationTypes"
+            v-bind:key="item.id"
+            v-bind:value="item.name"
+          >
+            {{ item.name }}
+          </option>
+        </select>
+        <label class="text-primary-700 mr-2">From</label>
+        <input
+          class="max-w-3xl mr-5"
+          type="date"
+          v-model="allInfo.searchFromDate"
+        />
+        <label class="text-primary-700 mr-2">To</label>
+        <input
+          class="max-w-3xl mr-5"
+          type="date"
+          v-model="allInfo.searchUpToDate"
+        />
+        <button @click="filterAllAssignedApplication">
+          Filter
+        </button>
+      </div>
       <div class="flex pl-12 pt-tiny">
         <Title message="Assigned To Others" />
       </div>
@@ -13,7 +44,7 @@
         </div>
         <div
           class="container"
-          v-for="item in getAllAssignedToYou"
+          v-for="item in getAllassignedToOthers"
           v-bind:key="item.applicationStatus.name"
           v-bind:value="item.id"
         >
@@ -85,6 +116,21 @@
     >
       <Spinner />
     </div>
+    <div class="bg-lightBlueB-200 h-full" v-if="allInfo.searchByInput">
+      <div class="flex pl-12 pt-tiny">
+        <Title :message="'Assigned To Others Applicants'" />
+        <button @click="backClicked">back</button>
+      </div>
+      <filtered-info
+        :filteredData="allInfo.filteredByDate"
+        type="detail"
+      />
+    </div>
+  </div>
+  <div v-if="allInfo.message.showErrorFlash">
+    <ErrorFlashMessage
+      message="Date Range is not valid, Please Enter Valid Date"
+    />
   </div>
 </template>
 
@@ -98,16 +144,21 @@ import { ref, onMounted } from "vue";
 import store from "../../store";
 import Spinner from "@/sharedComponents/Spinner";
 import moment from 'moment'
+import filterApplication from "./ChildComponents/FilteredDatas/FilterApplication.js";
+import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
+import FilteredInfo from "./ChildComponents/FilteredDatas/FilteredInfo.vue";
 
 export default {
   components: {
     ReviewerNavBar,
     Title,
     Spinner,
+    FilteredInfo,
+    ErrorFlashMessage,
   },
   computed: {
     moment: () => moment,
-    getAllAssignedToYou() {
+    getAllassignedToOthers() {
       return store.getters["reviewer/getAssignedForEveryOneSearched"];
     },
   },
@@ -115,7 +166,7 @@ export default {
     const store = useStore();
     const router = useRouter();
 
-    let assignedToyou = ref({});
+    let assignedToOthers = ref({});
     let nothingToShow = ref(false);
     let showLoading = ref(false);
     let x = ref("");
@@ -123,15 +174,72 @@ export default {
     let adminId = +localStorage.getItem("adminId");
     let adminRole = localStorage.getItem("role");
 
-    const fetchAssignedtoYou = () => {
+
+    let allInfo = ref({
+      alreadyPushed: false,
+      searchByInput: false,
+      assignApplication: [],
+      message: {
+        showErrorFlash: false,
+      },
+      filteredByDate: [],
+      searchFromDate: "",
+      searchUpToDate: "",
+      app_type: "",
+    });
+
+    const applicationTypes = ref([
+      {
+        id: 1,
+        name: "",
+      },
+      {
+        id: 2,
+        name: "Verification",
+      },
+      {
+        id: 3,
+        name: "New License",
+      },
+      {
+        id: 4,
+        name: "Good Standing",
+      },
+      {
+        id: 5,
+        name: "Renewal",
+      },
+    ]);
+
+    const filterAllAssignedApplication = () => {
+      filterApplication(moment, allInfo.value);
+    };
+
+    const backClicked = () => {
+      allInfo.value.searchByInput = false;
+      allInfo.value.filteredByDate = [];
+      allInfo.value.alreadyPushed = false;
+      allInfo.value.searchFromDate = "";
+      allInfo.value.searchUpToDate = "";
+      allInfo.value.app_type = "";
+    };
+
+    const fetchassignedToOthers = () => {
       const adminData = [adminRole, adminId]
       showLoading.value = true;
       store.dispatch("reviewer/getAssignedToEveryOne", adminData).then((res) => {
         showLoading.value = false;
         // if (res.status != "Error") {
-        assignedToyou.value =
+        assignedToOthers.value =
           store.getters["reviewer/getAssignedForEveryOneSearched"];
-        if (assignedToyou.value.length !== 0) {
+        allInfo.value.assignApplication =
+          store.getters["reviewer/getAssignedForEveryOneSearched"];
+        for (let unassignedUser in allInfo.value.assignApplication) {
+          allInfo.value.assignApplication[unassignedUser].createdAt = moment(
+            allInfo.value.assignApplication[unassignedUser].createdAt
+          ).format("MMMM D, YYYY");
+        }
+        if (assignedToOthers.value.length !== 0) {
           for (var prop in store.getters[
             "reviewer/getAssignedForEveryOneSearched"
           ]) {
@@ -182,15 +290,19 @@ export default {
     };
 
     onMounted(() => {
-      fetchAssignedtoYou();
+      fetchassignedToOthers();
     });
 
     return {
-      assignedToyou,
+      assignedToOthers,
       nothingToShow,
-      detail,
       showLoading,
       adminRole,
+      applicationTypes,
+      allInfo,
+      detail,
+      filterAllAssignedApplication,
+      backClicked,
     };
   },
 };

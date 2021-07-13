@@ -1,19 +1,38 @@
 <template>
   <div>
-    <ReviewerNavBar tab="allCertifiedUsers" />
-    <div class="bg-lightBlueB-200 h-full">
+    <ReviewerNavBar tab="myRegionCertifiedUsers" />
+    <div class="bg-lightBlueB-200 h-full" v-if="!searchedByDate">
+      <div class="pl-12">
+        <div>Filter By Date Range</div>
+      </div>
+      <div class="flex mb-medium w-1/6 pl-12 pt-1">
+        <label class="text-primary-700 mr-2">From</label>
+        <input
+          class="max-w-3xl mr-5"
+          type="date"
+          v-model="searchCertifiedFrom"
+        />
+        <label class="text-primary-700 mr-2">To</label>
+        <input class="max-w-3xl mr-5" type="date" v-model="searchCertifiedTo" />
+        <button @click="filterCertifiedsByDateRange">
+          Filter
+        </button>
+      </div>
       <div class="flex pl-12 pt-tiny">
         <Title message="Licensed Users" />
       </div>
       <div class="flex flex-wrap pb-medium rounded h-full" v-if="!showLoading">
-        <div class="pl-large w-52 h-26" v-if="nothingToShowAllCertified == true">
+        <div
+          class="pl-large w-52 h-26"
+          v-if="nothingToShowAllCertified == true"
+        >
           <div class="flex content-center justify-center">
             <h2>Nothing To Show!</h2>
           </div>
         </div>
         <div
           class="container"
-          v-for="item in getAllCertifiedUsers"
+          v-for="item in getMyRegionCertifiedUsers"
           v-bind:key="item.id"
           v-bind:value="item.id"
         >
@@ -50,13 +69,19 @@
                 }}</b>
               </h4>
               <span
-                  class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                >
-                  {{ item.applicationType ? item.applicationType : "-" }}
+                class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+              >
+                {{ item.applicationType ? item.applicationType : "-" }}
               </span>
               <span
-                class="text-lightBlueB-500 mt-tiny flex justify-start content-center">
-                  On {{item.createdAt ? moment(item.certifiedDate).format("MMM Do YY") : '-'}}
+                class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+              >
+                On
+                {{
+                  item.certifiedDate
+                    ? moment(item.certifiedDate).format("MMM Do YY")
+                    : "-"
+                }}
               </span>
               <span
                 class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
@@ -64,8 +89,9 @@
                 {{ item.newLicenseCode ? item.newLicenseCode : "-" }}
               </span>
               <span
-                class="text-lightBlueB-500 mt-tiny flex justify-end content-center">
-                  {{item.createdAt ? moment(item.createdAt).fromNow() : '-'}}
+                class="text-lightBlueB-500 mt-tiny flex justify-end content-center"
+              >
+                {{ item.createdAt ? moment(item.createdAt).fromNow() : "-" }}
               </span>
             </div>
           </div>
@@ -78,12 +104,29 @@
     >
       <Spinner />
     </div>
+    <div class="bg-lightBlueB-200 h-full" v-if="searchedByDate">
+      <div class="flex pl-12 pt-tiny">
+      <Title
+        :message="
+          'Licensed Applicants on Date Range ' + moment(searchCertifiedFrom).format('MMM D, YYYY') + ' To ' + moment(searchCertifiedTo).format('MMM D, YYYY')
+        "
+      />
+      <button @click="backClicked">back</button>
+    </div>
+    <certified-users-by-date :licensedByDate="filteredByDate"/>
+    </div>
+  </div>
+  <div v-if="message.showErrorFlash">
+    <ErrorFlashMessage
+      message="Date Range is not valid, Please Enter Valid Date"
+    />
   </div>
 </template>
 
 <script>
 import Title from "@/sharedComponents/TitleWithIllustration";
 import ReviewerNavBar from "@/components/Reviewer/ReviewerNavBar";
+import CertifiedUsersByDate from "./ChildComponents/CertifiedUsersByDate.vue";
 import { useStore } from "vuex";
 
 import { ref, onMounted, watch } from "vue";
@@ -91,39 +134,104 @@ import { useRouter } from "vue-router";
 
 import store from "../../store";
 import Spinner from "@/sharedComponents/Spinner";
-import moment from "moment"
+import moment from "moment";
+import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 
 export default {
   components: {
     ReviewerNavBar,
+    CertifiedUsersByDate,
     Title,
     Spinner,
+    ErrorFlashMessage,
   },
   computed: {
     moment: () => moment,
-    getAllCertifiedUsers() {
-      return store.getters["reviewer/getAllCertifiedUsersSearched"];
+    getMyRegionCertifiedUsers() {
+      return store.getters["reviewer/getMyRegionCertifiedUsersSearched"];
     },
   },
   setup() {
     const store = useStore();
     const router = useRouter();
 
+    let message = ref({
+      showErrorFlash: false,
+    });
+
+    let searchedByDate = ref(false);
+
     let allCertified = ref({});
+    let filteredByDate = ref([]);
+    let assignAllCertified = ref([]);
+    let searchCertifiedFrom = ref("");
+    let searchCertifiedTo = ref("");
     let x = ref([]);
     let adminId = +localStorage.getItem("adminId");
+    let regionId = JSON.parse(localStorage.getItem("allAdminData")).regionId;
     let adminRole = localStorage.getItem("role");
     let nothingToShowAllCertified = ref(false);
     let showLoading = ref(false);
+    let alreadyPushed = ref(false);
+
+    const filterCertifiedsByDateRange = () => {
+      if(searchCertifiedFrom.value === "" || searchCertifiedTo.value === "") {
+        message.value.showErrorFlash = true;
+        setTimeout(() => {
+          message.value.showErrorFlash = false;
+        }, 4000)
+      } else if (moment(searchCertifiedFrom.value).isAfter(searchCertifiedTo.value)) {
+        message.value.showErrorFlash = true;
+        setTimeout(() => {
+          message.value.showErrorFlash = false;
+        }, 4000);
+      } 
+       else {
+        searchedByDate.value = true;
+        for (let certifiedUser in assignAllCertified.value) {
+          if (
+            !moment(searchCertifiedFrom.value).isAfter(
+              assignAllCertified.value[certifiedUser].certifiedDate
+            ) &&
+            moment(searchCertifiedTo.value).isSameOrAfter(assignAllCertified.value[certifiedUser].certifiedDate)
+          ) {
+            if(!alreadyPushed.value) {
+              filteredByDate.value.push(assignAllCertified.value[certifiedUser])
+            }
+          }
+           
+        }
+        alreadyPushed.value = true;
+      }
+    };
+
+    const backClicked = () => {
+      searchedByDate.value = false
+      filteredByDate.value = [];
+      alreadyPushed.value = false;
+      searchCertifiedFrom.value = "";
+      searchCertifiedTo.value = "";
+    }
 
     const fetchAllCertified = () => {
       showLoading.value = true;
-      store.dispatch("reviewer/getAllCertifiedUsers").then((res) => {
+      store.dispatch("reviewer/getMyRegionCertifiedUsers", regionId).then((res) => {
         showLoading.value = false;
         allCertified.value =
-          store.getters["reviewer/getAllCertifiedUsersSearched"];
-        if(store.getters["reviewer/getAllCertifiedUsersSearched"].length !== 0) {
-          for (var prop in store.getters["reviewer/getAllCertifiedUsersSearched"]) {
+          store.getters["reviewer/getMyRegionCertifiedUsersSearched"];
+        assignAllCertified.value =
+          store.getters["reviewer/getMyRegionCertifiedUsersSearched"];
+        for (let certifiedUser in assignAllCertified.value) {
+          assignAllCertified.value[certifiedUser].certifiedDate = moment(
+            assignAllCertified.value[certifiedUser].certifiedDate
+          ).format("MMMM D, YYYY");
+        }
+        if (
+          store.getters["reviewer/getMyRegionCertifiedUsersSearched"].length !== 0
+        ) {
+          for (var prop in store.getters[
+            "reviewer/getMyRegionCertifiedUsersSearched"
+          ]) {
             if (allCertified.value[prop].applicationType == "Renewal") {
               allCertified.value[prop].newLicenseCode =
                 allCertified.value[prop].renewalCode;
@@ -140,12 +248,12 @@ export default {
         } else {
           nothingToShowAllCertified.value = true;
         }
-          
       });
     };
 
-    const detail = (data, applicationType,applicationId,applicantId) => {
-      const url = data + "/" + applicationType + "/" + applicationId + "/" + applicantId;
+    const detail = (data, applicationType, applicationId, applicantId) => {
+      const url =
+        data + "/" + applicationType + "/" + applicationId + "/" + applicantId;
       router.push(url);
     };
 
@@ -155,10 +263,18 @@ export default {
 
     return {
       allCertified,
-      detail,
+      assignAllCertified,
+      searchCertifiedFrom,
+      searchCertifiedTo,
       nothingToShowAllCertified,
       showLoading,
-      adminId
+      adminId,
+      message,
+      filteredByDate,
+      searchedByDate,
+      detail,
+      filterCertifiedsByDateRange,
+      backClicked,
     };
   },
 };
