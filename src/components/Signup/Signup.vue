@@ -1,6 +1,6 @@
 <template>
   <div
-    class="card-wrapper bg-white sm:rounded-lg w-full p-large flex flex-col justify-center items-center relative"
+    class="card-wrapper bg-white sm:rounded-lg w-full p-large flex flex-col justify-center items-center relative pt-8 pb-8"
   >
     <button
       class="absolute top-0 right-0 mr-2 mt-2"
@@ -197,6 +197,7 @@ export default {
 .card-wrapper {
   max-width: 450px;
   box-shadow: 0px -8px 6px rgb(30 64 175 / 51%);
+  height: auto;
 }
 
 @screen md {

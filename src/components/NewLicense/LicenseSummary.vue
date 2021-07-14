@@ -166,7 +166,7 @@
           </h5>
         </div>
       </div>
-      <div class="flex justify-start">
+      <!-- <div class="flex justify-start">
         <Title message="Institution" />
       </div>
       <div class="flex flex-row">
@@ -182,7 +182,7 @@
           <label class="ml-4"> Institution Type</label>
           <h5 class="ml-4">Private</h5>
         </div>
-      </div>
+      </div> -->
       <!-- <div class="flex justify-start flex-wrap">
       <div v-for="file in docs" v-bind:key="file.name">
         <Title class="" :message="file.name" />

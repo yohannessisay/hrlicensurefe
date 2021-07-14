@@ -560,6 +560,7 @@ export default {
       this.$store.dispatch("newlicense/getNewLicense").then((res) => {
         if (res.data != undefined) {
           this.license = res.data.data;
+          console.log(this.license);
           this.newlicense = this.license.filter(function(e) {
             return e.applicationStatus.code.includes("SUB");
           });
@@ -572,7 +573,6 @@ export default {
             return e.applicationStatus.code.includes("SUB");
           });
         }
-        console.log(this.renewal);
       });
       this.$store
         .dispatch("verification/getVerificationLicense")
