@@ -276,17 +276,17 @@
       </div>
       <div
         class="flex justify-center justify-items-center mt-8 pb-8"
-        v-if="showLoading"
+        v-if="this.showLoading"
       >
         <Spinner />
       </div>
     </div>
   </div>
 
-  <div v-if="showFlash">
+  <div v-if="this.showFlash">
     <FlashMessage message="Operation Successful!" />
   </div>
-  <div v-if="showErrorFlash">
+  <div v-if="this.showErrorFlash">
     <ErrorFlashMessage message="Operation Failed!" />
   </div>
 </template>
@@ -466,8 +466,9 @@ export default {
                   if (res.status == 200) {
                     this.showFlash = true;
                     this.showLoading = false;
-                    setTimeout(() => {}, 1500);
-                    this.$router.push({ path: "/menu" });
+                    setTimeout(() => {
+                      this.$router.push({ path: "/menu" });
+                    }, 1500);
                   } else {
                     this.showErrorFlash = true;
                   }
@@ -553,8 +554,9 @@ export default {
             if (res.data.status == "Success") {
               this.showFlash = true;
               this.showLoading = false;
-              setTimeout(() => {}, 1500);
-              this.$router.push({ path: "/menu" });
+              setTimeout(() => {
+                this.$router.push({ path: "/menu" });
+              }, 1500);
             } else {
               this.showErrorFlash = true;
             }
@@ -566,8 +568,9 @@ export default {
             if (res.data.status == "Success") {
               this.showFlash = true;
               this.showLoading = false;
-              setTimeout(() => {}, 1500);
-              this.$router.push({ path: "/menu" });
+              setTimeout(() => {
+                this.$router.push({ path: "/menu" });
+              }, 1500);
             }
           });
       }
@@ -618,8 +621,9 @@ export default {
                   if (res.status == 200) {
                     this.showFlash = true;
                     this.showLoading = false;
-                    setTimeout(() => {}, 1500);
-                    this.$router.push({ path: "/menu" });
+                    setTimeout(() => {
+                      this.$router.push({ path: "/menu" });
+                    }, 1500);
                   } else {
                     this.showErrorFlash = true;
                   }
@@ -695,8 +699,9 @@ export default {
         if (res) {
           this.showFlash = true;
           this.showLoading = false;
-          setTimeout(() => {}, 1500);
-          this.$router.push({ path: "/menu" });
+          setTimeout(() => {
+            this.$router.push({ path: "/menu" });
+          }, 1500);
         } else {
           this.showErrorFlash = true;
         }

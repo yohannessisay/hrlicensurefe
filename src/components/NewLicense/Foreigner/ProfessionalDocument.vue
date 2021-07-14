@@ -613,8 +613,9 @@ export default {
             .then((res) => {
               if (res.data.status == "Success") {
                 this.showFlash = true;
-                setTimeout(() => {}, 3000);
-                this.$router.push({ path: "/menu" });
+                setTimeout(() => {
+                  this.$router.push({ path: "/menu" });
+                }, 1500);
                 this.showLoading = false;
               } else {
                 this.showErrorFlash = true;
@@ -722,8 +723,9 @@ export default {
                 if (res) {
                   this.showFlash = true;
                   this.showLoading = false;
-                  this.$router.push({ path: "/menu" });
-                  setTimeout(() => {}, 2000);
+                  setTimeout(() => {
+                    this.$router.push({ path: "/menu" });
+                  }, 1500);
                 } else {
                   this.showErrorFlash = true;
                 }
@@ -746,8 +748,9 @@ export default {
         if (res) {
           this.showFlash = true;
           this.showLoading = false;
-          setTimeout(() => {}, 2000);
-          this.$router.push({ path: "/menu" });
+          setTimeout(() => {
+            this.$router.push({ path: "/menu" });
+          }, 1500);
         } else {
           this.showErrorFlash = true;
         }

@@ -121,6 +121,7 @@ export default {
             store.dispatch("profile/getProfileByUserId", userId).then((res) => {
               const getProfiles = res.data ? res.data.data : null;
               if (getProfiles) {
+                console.log(res);
                 message.value.showLoading = false;
                 message.value.showFlash = true;
                 message.value.showErrorFlash = false;
@@ -140,7 +141,6 @@ export default {
             message.value.showLoading = false;
             message.value.showFlash = false;
             message.value.showErrorFlash = true;
-
             setTimeout(() => {}, 1500);
           }
         });
