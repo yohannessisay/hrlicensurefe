@@ -173,6 +173,7 @@ export default {
       if (formData.password != formData.repassword) {
         errors.repassword = "Passwords don't match";
       }
+      credentialsErrors.value = errors;
       if (Object.keys(errors).length === 0) return false;
       return true;
     };
