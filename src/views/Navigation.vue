@@ -165,20 +165,26 @@ export default {
     const getProfile = () => {
       store.dispatch("profile/getProfileByUserId", id).then(res => {
         // var profile= store.getters["profile/getPersonalInfo"];
+
         getImage(res.data.data);
         getName(res.data.data);
       });
     };
 
     const getImage = profile => {
-      pic = profile.photo.data;
-      blob = base64StringToBlob(pic, "image/jpg");
+      //let x= profile.photo.data.join('');
+      console.log("this is the profie", profile);
+//  console.log(x);
+      pic.value = profile.photo;
+      console.log("this is the profie", pic);
+      // blob = base64StringToBlob(pic, "image/jpg");
       
     };
     const getName = profile => {
       name.value.fullName = profile.name + " " + profile.fatherName;
     };
     onMounted(() => {
+     
       getProfile();
     });
 
@@ -208,3 +214,4 @@ export default {
   width: 8px;
 }
 </style>
+{"mode":"full","isActive":false}
