@@ -25,11 +25,21 @@ export default {
       return error;
     }
   },
-
-  getUnassignedVerificationSearched({ commit, getters }, searchKey) {
-    if (getters.getVerificationUnassigned === undefined) {
-      return;
+  async getVerificationReport({ commit }) {
+    try {
+      const approved = await ApiService.get(
+        baseUrl + "/verifications/status/5"
+      );
+      const declined = await ApiService.get(
+        baseUrl + "/verifications/status/6"
+      );
+      const review = await ApiService.get(baseUrl + "/verifications/status/7");
+ return [approved, declined, review];     
+    } catch (err) {
+      return err;
     }
+  },
+  getUnassignedVerificationSearched({ commit, getters }, searchKey) {
     const searchedVal = getters.getVerificationUnassigned.filter(function(e) {
       return e.verificationCode === undefined
         ? ""

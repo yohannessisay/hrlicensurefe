@@ -1,8 +1,10 @@
 <template>
-  <div>
+  <div class="bg-lightBlueB-200">
+  
     <div
       v-if="!this.showLoading"
       class="relative text-gray-600 focus-within:text-gray-400 pt-10 pl-16 bg-lightBlueB-200"
+      style="width:450px"
     >
       <label>
         <input
@@ -23,6 +25,7 @@
           placeholder="Search requests by Name or Order ID"
           autocomplete="off"
           v-model="search"
+          hidden
         />
       </label>
     </div>

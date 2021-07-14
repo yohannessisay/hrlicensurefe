@@ -135,6 +135,14 @@ const routes = [
         "../components/Reviewer/Configurations/ChangePassword/ChangePassword.vue"
       ),
   },
+   {
+    path: "/admin/report",
+    name: "report",
+    component: () =>
+      import(
+        "../components/Report/report.vue"
+      ),
+  },
   {
     path: "/myWork",
     name: "myWork",

@@ -62,11 +62,10 @@
                 />
               </div>
             </transition>
-
             <transition name="fade" mode="out-in">
-              <div v-if="this.activeState == 8">
+              <div v-if="this.activeState == 9">
                 <LicenseSummary
-                  :activeState="8"
+                  :activeState="9"
                   @changeActiveState="activeState++"
                 />
               </div>
@@ -138,10 +137,18 @@
                 />
               </div>
             </transition>
-            <transition name="fade" mode="out-in">
+              <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 10">
-                <LicenseSummary
+                <WorkExperienceF
                   :activeState="10"
+                  @changeActiveState="activeState++"
+                />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 11">
+                <LicenseSummary
+                  :activeState="11"
                   @changeActiveState="activeState++"
                 />
               </div>
@@ -185,10 +192,18 @@
                 />
               </div>
             </transition>
-            <transition name="fade" mode="out-in">
+              <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 7">
-                <LicenseSummary
+                <WorkExperienceFF
                   :activeState="7"
+                  @changeActiveState="activeState++"
+                />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 8">
+                <LicenseSummary
+                  :activeState="8"
                   @changeActiveState="activeState++"
                 />
               </div>
@@ -211,6 +226,7 @@ import HERQA from "./Ethiopians F/HERQA";
 import HERQAF from "./Foreigner/HERQAF.vue";
 import ProfessionalDocumentEthiopian from "./Ethiopians F/ProfessionalDocuments";
 import SupportLetterForeign from "./Ethiopians F/SupportLetter";
+import WorkExperienceF from "./Ethiopians F/WorkExperience.vue";
 
 import COC from "./Ethiopians L/COC";
 import EducationalDoc from "./Ethiopians L/EducationalDoc";
@@ -222,6 +238,8 @@ import ProfessionalDocumentForeigner from "./Foreigner/ProfessionalDocument";
 import LetterfromOrg from "./Foreigner/LetterfromOrg";
 import ProfessionalLicense from "./Foreigner/ProfessionalLicense";
 import RenewedLicense from "./Foreigner/RenewedLicense";
+import WorkExperienceFF from "./Foreigner/WorkExperience.vue";
+
 export default {
   created() {
     this.draftId = this.$route.params.id;
@@ -265,6 +283,8 @@ export default {
     ProfessionalLicense,
     RenewedLicense,
     Navigation,
+    WorkExperienceF,
+    WorkExperienceFF
   },
 
   methods: {

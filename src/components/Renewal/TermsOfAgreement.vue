@@ -69,7 +69,7 @@ export default {
 }
 
 .card-wrapper {
-  max-width: 750px;
+  width: auto;
   box-shadow: 0px -8px 6px rgb(30 64 175 / 51%);
 }
 
