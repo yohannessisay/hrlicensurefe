@@ -7,5 +7,10 @@ export default {
         renewalUnfinishedSearched: [],
         renewalOthersUnfinished: [],
         renewalOthersUnfinishedSearched: [],
+
+        renewalAssignedToYou: [],
+        renewalAssignedToYouSearched: [],
+        renewalAssignedToOthers: [],
+        renewalAssignedToOthersSearched: [],
     }
 }

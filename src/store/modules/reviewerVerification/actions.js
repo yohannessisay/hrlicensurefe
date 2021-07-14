@@ -2,10 +2,16 @@ import ApiService from "../../../services/api.service";
 import {
   SET_VERIFICATION_UNASSIGNED,
   SET_VERIFICATION_UNASSIGNED_SEARCHED,
+
   SET_VERIFICATION_UNFINISHED,
   SET_VERIFICATION_UNFINISHED_SEARCHED,
   SET_VERIFICATION_OTHERS_UNFINISHED,
   SET_VERIFICATION_OTHERS_UNFINISHED_SEARCHED,
+
+  SET_VERIFICATION_ASSIGNED_TO_YOU,
+  SET_VERIFICATION_ASSIGNED_TO_YOU_SEARCHED,
+  SET_VERIFICATION_ASSIGNED_TO_OTHERS,
+  SET_VERIFICATION_ASSIGNED_TO_OTHERS_SEARCHED,
 } from "./mutation-types";
 const baseUrl = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api";
 
@@ -102,5 +108,67 @@ export default {
             e.reviewer.name.toLowerCase().includes(searchKey.toLowerCase());
     });
     commit(SET_VERIFICATION_OTHERS_UNFINISHED_SEARCHED, searchedVal);
+  },
+
+  async getVerificationAssigned({ commit }, adminId) {
+    const url = baseUrl + "/verifications/status/4";
+    const resp = await ApiService.get(url);
+    const assignedToMe = resp.data.data.filter(function(e) {
+      return e.reviewerId === adminId;
+    });
+    commit(SET_VERIFICATION_ASSIGNED_TO_YOU, assignedToMe);
+  },
+
+  getVerificationAssignedSearched({ commit, getters }, searchKey) {
+    if (getters.getVerificationAssignedToYou === undefined) {
+      return;
+    }
+    const searchedVal = getters.getVerificationAssignedToYou.filter(function(e) {
+      return e.verificationCode === undefined
+        ? ""
+        : e.verificationCode.toLowerCase().includes(searchKey.toLowerCase()) ||
+            (e.applicant.profile.name + " " + e.applicant.profile.fatherName)
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.name
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.fatherName
+              .toLowerCase()
+              .includes(searchKey.toLowerCase());
+    });
+    commit(SET_VERIFICATION_ASSIGNED_TO_YOU_SEARCHED, searchedVal);
+  },
+
+  async getVerificationOthersAssigned({ commit }, adminId) {
+    const url = baseUrl + "/verifications/status/4";
+    const resp = await ApiService.get(url);
+    const othresUnfinished = resp.data.data.filter(function(e) {
+      return e.reviewerId !== adminId;
+    });
+    commit(SET_VERIFICATION_ASSIGNED_TO_OTHERS, othresUnfinished);
+  },
+  getVerificationOthersAssignedSearched({ commit, getters }, searchKey) {
+    if (getters.getVerificationAssignedToOthers === undefined) {
+      return;
+    }
+    const searchedVal = getters.getVerificationAssignedToOthers.filter(function(
+      e
+    ) {
+      return e.verificationCode === undefined
+        ? ""
+        : e.verificationCode.toLowerCase().includes(searchKey.toLowerCase()) ||
+            (e.applicant.profile.name + " " + e.applicant.profile.fatherName)
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.name
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.fatherName
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.reviewer.name.toLowerCase().includes(searchKey.toLowerCase());
+    });
+    commit(SET_VERIFICATION_ASSIGNED_TO_OTHERS_SEARCHED, searchedVal);
   },
 };

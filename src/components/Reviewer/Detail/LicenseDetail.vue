@@ -31,6 +31,12 @@
               >
                 Transfer To
               </button>
+              <div
+                v-if="showtransferLoading"
+                class="flex justify-center justify-items-center mt-24"
+              >
+                <Spinner />
+              </div>
             </div>
           </div>
           <!-- <div v-else class="flex">
@@ -73,7 +79,7 @@
             </div>
             <div
               :class="[
-                profileInfo.nationality === null ? errorClass : activeClass
+                profileInfo.nationality === null ? errorClass : activeClass,
               ]"
             >
               <label class="ml-8"> Nationality</label>
@@ -83,7 +89,8 @@
             </div>
             <div
               :class="[
-                profileInfo.placeOfBirth === null ? errorClass : activeClass]"
+                profileInfo.placeOfBirth === null ? errorClass : activeClass,
+              ]"
             >
               <label class="ml-8"> Place of Birth</label>
               <h5 class="ml-8">
@@ -92,19 +99,23 @@
             </div>
             <div
               :class="[
-                profileInfo.dateOfBirth === null ? errorClass : activeClass
+                profileInfo.dateOfBirth === null ? errorClass : activeClass,
               ]"
             >
               <label class="ml-8"> Date of Birth</label>
               <h5 class="ml-8">
-                {{ profileInfo.dateOfBirth ? moment(profileInfo.dateOfBirth).format("MMM D, YYYY") : "-" }}
+                {{
+                  profileInfo.dateOfBirth
+                    ? moment(profileInfo.dateOfBirth).format("MMM D, YYYY")
+                    : "-"
+                }}
               </h5>
             </div>
             <div
               :class="[
                 profileInfo.maritalStatus.name === null
                   ? errorClass
-                  : activeClass
+                  : activeClass,
               ]"
             >
               <label class="ml-8"> Marital Status</label>
@@ -124,9 +135,7 @@
           <div class="flex flex-row">
             <div
               :class="[
-                license.woreda.zone.region === null
-                  ? errorClass
-                  : activeClass
+                license.woreda.zone.region === null ? errorClass : activeClass,
               ]"
             >
               <label class="ml-8"> Region</label>
@@ -139,20 +148,14 @@
               </h5>
             </div>
             <div
-              :class="[
-                license.woreda.zone === null ? errorClass : activeClass
-              ]"
+              :class="[license.woreda.zone === null ? errorClass : activeClass]"
             >
               <label class="ml-8"> Zone</label>
               <h5 class="ml-8">
-                {{
-                  license.woreda.zone ? license.woreda.zone.name : "-"
-                }}
+                {{ license.woreda.zone ? license.woreda.zone.name : "-" }}
               </h5>
             </div>
-            <div
-              :class="[license.woreda === null ? errorClass : activeClass]"
-            >
+            <div :class="[license.woreda === null ? errorClass : activeClass]">
               <label class="ml-8"> Wereda</label>
               <h5 class="ml-8">
                 {{ license.woreda ? license.woreda.name : "-" }}
@@ -168,7 +171,7 @@
             </div>
             <div
               :class="[
-                profileInfo.houseNumber === null ? errorClass : activeClass
+                profileInfo.houseNumber === null ? errorClass : activeClass,
               ]"
             >
               <label class="ml-8"> House Number</label>
@@ -178,8 +181,9 @@
             </div>
             <div
               :class="[
-                profileInfo.residence === null ? errorClass : activeClass
-              ]">
+                profileInfo.residence === null ? errorClass : activeClass,
+              ]"
+            >
               <label class="ml-8"> Residence</label>
               <h5 class="ml-8">
                 {{ profileInfo.residence ? profileInfo.residence : "-" }}
@@ -192,7 +196,9 @@
           <div class="flex flex-row">
             <div
               :class="[
-                profileInfo.user.phoneNumber === null ? errorClass : activeClass,
+                profileInfo.user.phoneNumber === null
+                  ? errorClass
+                  : activeClass,
               ]"
             >
               <label class="ml-8"> Mobile Number</label>
@@ -209,7 +215,7 @@
               :class="[
                 profileInfo.user.emailAddress === null
                   ? errorClass
-                  : activeClass
+                  : activeClass,
               ]"
             >
               <label class="ml-8"> Email</label>
@@ -223,7 +229,7 @@
             </div>
             <div
               :class="[
-                profileInfo.userType.name === null ? errorClass : activeClass
+                profileInfo.userType.name === null ? errorClass : activeClass,
               ]"
             >
               <label class="ml-8"> User Type</label>
@@ -290,6 +296,12 @@
     >
       <Spinner />
     </div>
+    <div v-if="showFlash">
+      <FlashMessage message="Operation Successful!" />
+    </div>
+    <div v-if="showErrorFlash">
+      <ErrorFlashMessage message="Operation Failed!" />
+    </div>
   </div>
 </template>
 
@@ -298,6 +310,8 @@ import { useStore } from "vuex";
 import { useRouter, useRoute } from "vue-router";
 import Title from "@/sharedComponents/Title";
 import ReviewerNavBar from "@/components/Reviewer/ReviewerNavBar";
+import FlashMessage from "@/sharedComponents/FlashMessage";
+import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import { ref, onMounted } from "vue";
 import Spinner from "@/sharedComponents/Spinner";
 import moment from "moment";
@@ -307,7 +321,9 @@ export default {
   components: {
     Title,
     ReviewerNavBar,
-    Spinner
+    Spinner,
+    FlashMessage,
+    ErrorFlashMessage,
   },
   computed: {
     moment: () => moment,
@@ -318,6 +334,7 @@ export default {
     const route = useRoute();
 
     let loading = ref(false);
+    let showtransferLoading = ref(false);
 
     let role = ref({});
 
@@ -335,20 +352,20 @@ export default {
     let show = ref(false);
     let license = ref({
       applicant: {},
-      applicantType: {}
+      applicantType: {},
     });
     let education = ref({
       institution: { name: "", institutionType: { name: "" } },
-      department: { name: "" }
+      department: { name: "" },
     });
-    let department = ref({name: ""});
+    let department = ref({ name: "" });
     let profileInfo = ref({
       maritalStatus: {},
       woreda: {
-        zone: {}
+        zone: {},
       },
       user: {},
-      userType: {}
+      userType: {},
     });
     let applicantId = ref("");
     let licenseId = ref("");
@@ -369,70 +386,77 @@ export default {
     let loggedInAdminId = +localStorage.getItem("adminId");
     let reviewerId = ref(0);
 
-    let showLoading = ref(false)
+    let showLoading = ref(false);
 
     const fetchRole = (id) => {
-      store.dispatch("reviewer/getRoles", id).then(res => {
+      store.dispatch("reviewer/getRoles", id).then((res) => {
         role.value = res.data.data.role;
-      })
-    }
+      });
+    };
 
     const fetchAdmins = () => {
-      store.dispatch("reviewer/getAdmins").then(res => {
-        
-        admins.value = res.data.data
-      })
-    }
+      store.dispatch("reviewer/getAdmins").then((res) => {
+        admins.value = res.data.data;
+      });
+    };
 
     const fetchAdminsByRegion = (regionId) => {
-      store.dispatch("reviewer/getAdminsByRegion", regionId).then(res => {
+      store.dispatch("reviewer/getAdminsByRegion", regionId).then((res) => {
         admins.value = res.data.data;
-      })
-    }
+      });
+    };
 
-    const gen = () => {
-    }
-    
+    const gen = () => {};
+
     const transferReview = () => {
-      if (role.value.code === "TL" || role.value.code === "SA") {
-        if (applicationType.value == "Good Standing") {
-          transfer.value = {
-            goodStandingId: route.params.applicationId,
-            reviewerId: transfer.value.reviewerId,
-            createdByAdminId: +localStorage.getItem("adminId"),
-          };
-        }
-        if (applicationType.value == "Verification") {
-          transfer.value = {
-            verificationId: route.params.applicationId,
-            reviewerId: transfer.value.reviewerId,
-            createdByAdminId: +localStorage.getItem("adminId"),
-          };
-        }
-        if (applicationType.value == "Renewal") {
-          transfer.value = {
-            renewalId: route.params.applicationId,
-            reviewerId: transfer.value.reviewerId,
-            createdByAdminId: +localStorage.getItem("adminId"),
-          };
-        }
-        if (applicationType.value == "New License") {
-          transfer.value = {
-            licenseId: route.params.applicationId,
-            reviewerId: transfer.value.reviewerId,
-            createdByAdminId: +localStorage.getItem("adminId"),
-          };
-        }
+      showtransferLoading.value = true;
+      // if (role.value.code === "TL" || role.value.code === "SA") {
+      if (applicationType.value == "Good Standing") {
+        transfer.value = {
+          goodStandingId: route.params.applicationId,
+          reviewerId: transfer.value.reviewerId,
+          createdByAdminId: +localStorage.getItem("adminId"),
+        };
       }
+      if (applicationType.value == "Verification") {
+        transfer.value = {
+          verificationId: route.params.applicationId,
+          reviewerId: transfer.value.reviewerId,
+          createdByAdminId: +localStorage.getItem("adminId"),
+        };
+      }
+      if (applicationType.value == "Renewal") {
+        transfer.value = {
+          renewalId: route.params.applicationId,
+          reviewerId: transfer.value.reviewerId,
+          createdByAdminId: +localStorage.getItem("adminId"),
+        };
+      }
+      if (applicationType.value == "New License") {
+        transfer.value = {
+          licenseId: route.params.applicationId,
+          reviewerId: transfer.value.reviewerId,
+          createdByAdminId: +localStorage.getItem("adminId"),
+        };
+      }
+      // }
       if (applicationType.value == "New License") {
         store
           .dispatch("reviewer/transferLicenseReview", transfer.value)
 
           .then((response) => {
+            showtransferLoading.value = false;
             if (response.statusText == "Created") {
               showFlash.value = true;
-              router.push("/admin/review");
+              setTimeout(() => {
+                router.push("/admin/review");
+              }, 3000);
             }
+          })
+          .catch((err) => {
+            setTimeOut(() => {
+              showErrorFlash.value = false;
+            });
           });
       }
       if (applicationType.value == "Verification") {
@@ -467,20 +491,20 @@ export default {
             }
           });
       }
-    }
+    };
 
     const created = async (applicationTypeName, applicationId, applicantId) => {
-      showLoading.value = true
+      showLoading.value = true;
       licenseId.value = applicationId;
       applicationType.value = applicationTypeName;
       // applicantId.value = applicanttId;
       if (applicationType.value == "New License") {
         store
           .dispatch("reviewer/getNewLicenseApplication", applicationId)
-          .then(res => {
-            showLoading.value = false
+          .then((res) => {
+            showLoading.value = false;
             license.value = res.data.data;
-            reviewerId.value = license.value.reviewerId
+            reviewerId.value = license.value.reviewerId;
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
             // applicantId.value = license.value.applicantId;
@@ -495,10 +519,10 @@ export default {
       if (applicationType.value == "Good Standing") {
         store
           .dispatch("reviewer/getGoodStandingApplication", applicationId)
-          .then(res => {
-            showLoading.value = false
+          .then((res) => {
+            showLoading.value = false;
             license.value = res.data.data;
-            reviewerId.value = license.value.reviewerId
+            reviewerId.value = license.value.reviewerId;
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
             // applicantId.value = license.value.applicantId;
@@ -513,10 +537,10 @@ export default {
       if (applicationType.value == "Verification") {
         store
           .dispatch("reviewer/getVerificationApplication", applicationId)
-          .then(res => {
-            showLoading.value = false
+          .then((res) => {
+            showLoading.value = false;
             license.value = res.data.data;
-            reviewerId.value = license.value.reviewerId
+            reviewerId.value = license.value.reviewerId;
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
             // applicantId.value = license.value.applicantId.toString();
@@ -532,10 +556,10 @@ export default {
         loading.value = true;
         store
           .dispatch("reviewer/getRenewalApplication", applicationId)
-          .then(res => {
-            showLoading.value = false
+          .then((res) => {
+            showLoading.value = false;
             license.value = res.data.data;
-            reviewerId.value = license.value.reviewerId
+            reviewerId.value = license.value.reviewerId;
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
             // applicantId.value = license.value.applicantId;
@@ -560,25 +584,23 @@ export default {
       loggedInAdminId = +localStorage.getItem("adminId");
       regionId = JSON.parse(localStorage.getItem("allAdminData")).regionId;
       userId = 2;
-      
 
       created(
         route.params.applicationType,
         route.params.applicationId,
         route.params.applicantId
       );
-      fetchRole(loggedInAdminId)
-      if(regionId !== null) {
-        fetchAdminsByRegion(regionId)
+      fetchRole(loggedInAdminId);
+      if (regionId !== null) {
+        fetchAdminsByRegion(regionId);
       } else {
         fetchAdmins();
       }
     });
 
-
     return {
       userId,
-      reviewerId, 
+      reviewerId,
       loggedInAdminId,
       license,
       profileInfo,
@@ -593,17 +615,18 @@ export default {
       applicantTypeId,
       education,
       show,
-      created,
-      evaluate,
+      showtransferLoading,
       applicationType,
       showLoading,
       role,
       admins,
       transfer,
       gen,
-      transferReview
+      transferReview,
+      created,
+      evaluate,
     };
-  }
+  },
 };
 </script>
 <style scoped>

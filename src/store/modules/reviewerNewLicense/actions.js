@@ -18,7 +18,6 @@ export default {
   async getNewLicenseUnassigned({ commit }) {
     const url = baseUrl + "/newLicenses/status/3";
     const resp = await ApiService.get(url);
-    console.log("new license un assigned response", resp.data.data);
     commit(SET_NEW_LICENSE_UNASSIGNED, resp.data.data);
   },
 
@@ -46,7 +45,6 @@ export default {
   async getNewLicenseUnfinished({ commit }, adminId) {
     const url = baseUrl + "/newLicenses/status/10";
     const resp = await ApiService.get(url);
-    console.log("new license un assigned response", resp.data.data);
     const myUnfinished = resp.data.data.filter(function(e) {
       return e.reviewerId === adminId;
     });
@@ -77,7 +75,6 @@ export default {
   async getNewLicenseOthersUnfinished({ commit }, adminId) {
     const url = baseUrl + "/newLicenses/status/10";
     const resp = await ApiService.get(url);
-    console.log("new license un assigned response-------", resp.data.data);
     const othresUnfinished = resp.data.data.filter(function(e) {
       return e.reviewerId !== adminId;
     });
@@ -105,5 +102,67 @@ export default {
             e.reviewer.name.toLowerCase().includes(searchKey.toLowerCase());
     });
     commit(SET_NEW_LICENSE_OTHERS_UNFINISHED_SEARCHED, searchedVal);
+  },
+
+  async getNewLicenseAssigned({ commit }, adminId) {
+    const url = baseUrl + "/newLicenses/status/4";
+    const resp = await ApiService.get(url);
+    const assignedToMe = resp.data.data.filter(function(e) {
+      return e.reviewerId === adminId;
+    });
+    commit(SET_NEW_LICENSE_ASSIGNED_TO_YOU, assignedToMe);
+  },
+
+  getNewLicenseAssignedSearched({ commit, getters }, searchKey) {
+    if (getters.getNewLicenseAssignedToYou === undefined) {
+      return;
+    }
+    const searchedVal = getters.getNewLicenseAssignedToYou.filter(function(e) {
+      return e.newLicenseCode === undefined
+        ? ""
+        : e.newLicenseCode.toLowerCase().includes(searchKey.toLowerCase()) ||
+            (e.applicant.profile.name + " " + e.applicant.profile.fatherName)
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.name
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.fatherName
+              .toLowerCase()
+              .includes(searchKey.toLowerCase());
+    });
+    commit(SET_NEW_LICENSE_ASSIGNED_TO_YOU_SEARCHED, searchedVal);
+  },
+
+  async getNewLicenseOthersAssigned({ commit }, adminId) {
+    const url = baseUrl + "/newLicenses/status/4";
+    const resp = await ApiService.get(url);
+    const othresUnfinished = resp.data.data.filter(function(e) {
+      return e.reviewerId !== adminId;
+    });
+    commit(SET_NEW_LICENSE_ASSIGNED_TO_OTHERS, othresUnfinished);
+  },
+  getNewLicenseOthersAssignedSearched({ commit, getters }, searchKey) {
+    if (getters.getNewLicenseAssignedToOthers === undefined) {
+      return;
+    }
+    const searchedVal = getters.getNewLicenseAssignedToOthers.filter(function(
+      e
+    ) {
+      return e.newLicenseCode === undefined
+        ? ""
+        : e.newLicenseCode.toLowerCase().includes(searchKey.toLowerCase()) ||
+            (e.applicant.profile.name + " " + e.applicant.profile.fatherName)
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.name
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.fatherName
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.reviewer.name.toLowerCase().includes(searchKey.toLowerCase());
+    });
+    commit(SET_NEW_LICENSE_ASSIGNED_TO_OTHERS_SEARCHED, searchedVal);
   },
 };

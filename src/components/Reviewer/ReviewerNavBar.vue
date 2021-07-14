@@ -534,8 +534,14 @@ export default {
       if (props.tab === "renewalUnfinished") {
         store.dispatch("reviewerRenewal/getRenewalUnfinishedSearched", search.value)
       }
-      if (props.tab === "renewalUnfinished") {
-        store.dispatch("reviewerNewLicense/getRenewalOthersUnfinishedSearched", search.value)
+      if (props.tab === "renewalOthersUnfinished") {
+        store.dispatch("reviewerRenewal/getRenewalOthersUnfinishedSearched", search.value)
+      }
+      if (props.tab === "renewalAssigned") {
+        store.dispatch("reviewerRenewal/getRenewalAssignedSearched", search.value)
+      }
+      if (props.tab === "renewalAssignedToOthers") {
+        store.dispatch("reviewerRenewal/getRenewalOthersAssignedSearched", search.value)
       }
       if (props.tab === "newLicenseUnassigned") {
         store.dispatch("reviewerNewLicense/getNewLicenseUnassignedSearched", search.value)
@@ -546,6 +552,12 @@ export default {
       if (props.tab === "newLicenseOthersUnfinished") {
         store.dispatch("reviewerNewLicense/getNewLicenseOthersUnfinishedSearched", search.value)
       }
+      if (props.tab === "newLicenseAssigned") {
+        store.dispatch("reviewerNewLicense/getNewLicenseAssignedSearched", search.value)
+      }
+      if (props.tab === "newLicenseAssignedToOthers") {
+        store.dispatch("reviewerNewLicense/getNewLicenseOthersAssignedSearched", search.value)
+      }
       if (props.tab === "verificationUnassigned") {
         store.dispatch("reviewerVerification/getUnassignedVerificationSearched", search.value)
       }
@@ -555,6 +567,12 @@ export default {
       if (props.tab === "verificationOthersUnfinished") {
         store.dispatch("reviewerVerification/getVerificationOthersUnfinishedSearched", search.value)
       } 
+      if (props.tab === "verificationAssigned") {
+        store.dispatch("reviewerVerification/getVerificationAssignedSearched", search.value)
+      }
+      if (props.tab === "verificationAssignedToOthers") {
+        store.dispatch("reviewerVerification/getVerificationOthersAssignedSearched", search.value)
+      }
       if(props.tab === "goodStandingUnassigned") {
         store.dispatch("reviewerGoodStanding/getUnassignedGoodStandingSearched", search.value)
       }
@@ -564,6 +582,13 @@ export default {
       if (props.tab === "goodStandingOthersUnfinished") {
         store.dispatch("reviewerGoodStanding/getGoodStandingOthersUnfinishedSearched", search.value)
       }
+      if (props.tab === "goodStandingAssigned") {
+        store.dispatch("reviewerGoodStanding/getGoodStandingAssignedSearched", search.value)
+      }
+      if (props.tab === "goodStandingAssignedToOthers") {
+        store.dispatch("reviewerGoodStanding/getGoodStandingOthersAssignedSearched", search.value)
+      }
+      
 
     });
     let showAdminCreate = false;
