@@ -130,7 +130,7 @@ export default {
 
     const submit = () => {
       let signup = {
-        emailAddress: credentials.value.emailAddress,
+        emailAddress: credentials.value.emailAddress.toLowerCase(),
         phoneNumber: credentials.value.phoneNumber,
         password: credentials.value.password,
       };

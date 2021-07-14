@@ -108,7 +108,7 @@ export default {
 
     const submit = () => {
       let email = {
-        emailAddress: credentials.value.emailAddress,
+        emailAddress: credentials.value.emailAddress.toLowerCase(),
         password: credentials.value.password,
       };
       if (!validateForm(credentials.value)) {
