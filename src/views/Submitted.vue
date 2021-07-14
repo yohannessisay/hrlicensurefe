@@ -574,7 +574,6 @@ export default {
             return e.applicationStatus.code.includes("SUB");
           });
         }
-        console.log(this.renewal);
       });
       this.$store
         .dispatch("verification/getVerificationLicense")

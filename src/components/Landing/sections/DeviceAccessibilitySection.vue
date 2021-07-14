@@ -33,6 +33,7 @@
             />
           </pattern>
           <pattern id="e" width="1" height="1" viewBox="0 0 268 169">
+            <!-- Girums pic -->
             <image
               preserveAspectRatio="xMidYMid slice"
               width="268"

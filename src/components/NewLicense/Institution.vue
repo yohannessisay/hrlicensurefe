@@ -49,7 +49,7 @@
 
           <div class="flex">
             <div class="flex flex-col mb-medium w-2/5 mr-12 ml-medium">
-              <label class="text-primary-700">Institution</label>
+              <label class="text-primary-700">Educational Institution</label>
               <select v-model="licenseInfo.education.institutionId">
                 <option
                   v-for="institution in institutions"
