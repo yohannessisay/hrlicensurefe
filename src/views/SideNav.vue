@@ -308,7 +308,6 @@ export default {
       dropdown.value.declined = false;
     };
     const declinedDD = () => {
-      console.log("declined clicked");
       dropdown.value.declined = !dropdown.value.declined;
       dropdown.value.approved = false;
       dropdown.value.submitted = false;

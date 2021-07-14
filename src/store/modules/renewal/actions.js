@@ -63,8 +63,8 @@ export default {
   async editRenewalLicense({ commit }, license) {
     try {
       const resp = await ApiService.put(
-        url + "renewals/" + license.data.id,
-        license
+        url + "renewals/" + license.id,
+        license.data
       );
       return resp;
     } catch (error) {

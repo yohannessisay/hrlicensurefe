@@ -160,15 +160,12 @@ export default {
     const getProfile = () => {
       store.dispatch("profile/getProfileByUserId", id).then(res => {
         // var profile= store.getters["profile/getPersonalInfo"];
-
         getImage(res.data.data);
         getName(res.data.data);
       });
     };
 
     const getImage = profile => {
-      console.log("this is the profie", profile);
- console.log("this is the photo"+ profile.photo.data);
       pic = profile.photo.data;
       blob = base64StringToBlob(pic, "image/jpg");
       
@@ -177,7 +174,6 @@ export default {
       name.value.fullName = profile.name + " " + profile.fatherName;
     };
     onMounted(() => {
-      console.log(" name is ", name);
       getProfile();
     });
 
