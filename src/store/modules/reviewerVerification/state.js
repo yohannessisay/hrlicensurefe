@@ -7,5 +7,10 @@ export default {
         verificationUnfinishedSearched: [],
         verificationOthersUnfinished: [],
         verificationOthersUnfinishedSearched: [],
+
+        verificationAssignedToYou: [],
+        verificationAssignedToYouSearched: [],
+        verificationAssignedToOthers: [],
+        verificationAssignedToOthersSearched: [],
     }
 }

@@ -20,7 +20,7 @@
               href="#"
               v-on:click="showDropDown()"
             >
-              <svg
+              <!-- <svg
                 viewBox="0 0 24 24"
                 stroke="currentColor"
                 fill="none"
@@ -31,13 +31,18 @@
                 <circle cx="12" cy="8" r="5" />
                 
                 <path d="M3,21 h18 C 21,12 3,12 3,21" />
-               <!-- <img :src="pic" /> -->
-              </svg>
+          
+              </svg> -->
+              <div class="w-12 h-12 ">
+             
+            
+                <img  v-bind:src="pic" alt="image here"  class="w-20 h-12" />
+                 </div>
               <!-- <div style="height:100px; width:100px;">
                 <img v-bind:src="'data:image/jpg;base64,' + pic" />
               </div> -->
             </a>
-            <image width="500" height="350" v-bind="blob" />
+            
             <div
               v-if="showDD == true"
               class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white focus:outline-none"
@@ -160,15 +165,12 @@ export default {
     const getProfile = () => {
       store.dispatch("profile/getProfileByUserId", id).then(res => {
         // var profile= store.getters["profile/getPersonalInfo"];
-
         getImage(res.data.data);
         getName(res.data.data);
       });
     };
 
     const getImage = profile => {
-      console.log("this is the profie", profile);
- console.log("this is the photo"+ profile.photo.data);
       pic = profile.photo.data;
       blob = base64StringToBlob(pic, "image/jpg");
       
@@ -177,7 +179,6 @@ export default {
       name.value.fullName = profile.name + " " + profile.fatherName;
     };
     onMounted(() => {
-      console.log(" name is ", name);
       getProfile();
     });
 

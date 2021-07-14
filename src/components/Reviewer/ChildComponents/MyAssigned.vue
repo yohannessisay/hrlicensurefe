@@ -1,11 +1,12 @@
 <template>
   <div
     class="container"
-    v-for="item in assignedToMe"
+    v-for="(item, index) in assignedToMe"
     v-bind:key="item.applicationStatus.name"
     v-bind:value="item.id"
   >
     <div
+      v-if="index < 5"
       class="flex justify-center items-center ml-8 mt-0 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
     >
       <div
@@ -60,7 +61,7 @@
 
 <script>
 import moment from "moment";
-import { useRouter } from "vue-router"
+import { useRouter } from "vue-router";
 export default {
   computed: {
     moment: () => moment,
@@ -72,12 +73,12 @@ export default {
     const detail = (data, applicationType, applicationId, applicantId) => {
       const url =
         data + "/" + applicationType + "/" + applicationId + "/" + applicantId;
-        router.push(url);
+      router.push(url);
     };
 
     return {
-        detail,
-    }
+      detail,
+    };
   },
 };
 </script>

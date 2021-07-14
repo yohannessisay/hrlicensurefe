@@ -158,6 +158,7 @@ export default {
       if (formData.emailAddress && !isEmail(formData.emailAddress)) {
         errors.emailAddress = "Invalid Email";
       }
+      credentialsErrors.value = errors;
       if (Object.keys(errors).length === 0) return false;
       return true;
     };

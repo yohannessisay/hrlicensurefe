@@ -7,16 +7,6 @@
       </div>
 
       <div class="flex flex-wrap mb-medium pl-12 pt-1">
-        <!-- <label class="text-primary-700">Type</label> -->
-        <!-- <select class="max-w-3xl mr-2" v-model="allInfo.app_type">
-          <option
-            v-for="item in applicationTypes"
-            v-bind:key="item.id"
-            v-bind:value="item.name"
-          >
-            {{ item.name }}
-          </option>
-        </select> -->
         <label class="text-primary-700 mr-2">From</label>
         <input
           class="max-w-3xl mr-5"

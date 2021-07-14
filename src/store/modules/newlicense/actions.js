@@ -91,12 +91,10 @@ export default {
   },
   async editNewLicense({ commit }, license) {
     try {
-      console.log("admin value is+ ", license)
       const resp = await ApiService.put(
-        url + "newLicenses/" + license.data.id,
-        license
+        url + "newLicenses/" + license.id,
+        license.data
       );
-      console.log("response data is ", resp)
       return resp;
     } catch (error) {
       return error;

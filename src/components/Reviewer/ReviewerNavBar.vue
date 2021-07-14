@@ -361,7 +361,33 @@
               </p>
               <hr class="yellow-gradient border-none" />
             </a> -->
+
+          
+          <!--  -->
+
+          <router-link to="/admin/report">
+              <a class="mr-small">
+                Report
+              </a>
+              <!-- <a
+                v-if="tab == `Unassigned`"
+                class="text-primary-300 mr-small width-medium inline-block pr-tiny justify-center item-center"
+              >
+                <p class="text-primary-600 font-AtkinsonHyperlegibleBold">
+                  Report
+                </p>
+                <hr class="yellow-gradient border-none" />
+              </a> -->
+            </router-link>
+
+
+
+
+            <!--  -->
+
           </div>
+
+
           <div class="relative inline-block text-left">
             <a
               class="focus:outline-none bg-lightBlueB-300 text-lightBlueB-400 hover:text-gray-800 w-7 h-7 rounded-full flex items-center justify-center"
@@ -534,8 +560,14 @@ export default {
       if (props.tab === "renewalUnfinished") {
         store.dispatch("reviewerRenewal/getRenewalUnfinishedSearched", search.value)
       }
-      if (props.tab === "renewalUnfinished") {
-        store.dispatch("reviewerNewLicense/getRenewalOthersUnfinishedSearched", search.value)
+      if (props.tab === "renewalOthersUnfinished") {
+        store.dispatch("reviewerRenewal/getRenewalOthersUnfinishedSearched", search.value)
+      }
+      if (props.tab === "renewalAssigned") {
+        store.dispatch("reviewerRenewal/getRenewalAssignedSearched", search.value)
+      }
+      if (props.tab === "renewalAssignedToOthers") {
+        store.dispatch("reviewerRenewal/getRenewalOthersAssignedSearched", search.value)
       }
       if (props.tab === "newLicenseUnassigned") {
         store.dispatch("reviewerNewLicense/getNewLicenseUnassignedSearched", search.value)
@@ -546,6 +578,12 @@ export default {
       if (props.tab === "newLicenseOthersUnfinished") {
         store.dispatch("reviewerNewLicense/getNewLicenseOthersUnfinishedSearched", search.value)
       }
+      if (props.tab === "newLicenseAssigned") {
+        store.dispatch("reviewerNewLicense/getNewLicenseAssignedSearched", search.value)
+      }
+      if (props.tab === "newLicenseAssignedToOthers") {
+        store.dispatch("reviewerNewLicense/getNewLicenseOthersAssignedSearched", search.value)
+      }
       if (props.tab === "verificationUnassigned") {
         store.dispatch("reviewerVerification/getUnassignedVerificationSearched", search.value)
       }
@@ -555,6 +593,12 @@ export default {
       if (props.tab === "verificationOthersUnfinished") {
         store.dispatch("reviewerVerification/getVerificationOthersUnfinishedSearched", search.value)
       } 
+      if (props.tab === "verificationAssigned") {
+        store.dispatch("reviewerVerification/getVerificationAssignedSearched", search.value)
+      }
+      if (props.tab === "verificationAssignedToOthers") {
+        store.dispatch("reviewerVerification/getVerificationOthersAssignedSearched", search.value)
+      }
       if(props.tab === "goodStandingUnassigned") {
         store.dispatch("reviewerGoodStanding/getUnassignedGoodStandingSearched", search.value)
       }
@@ -564,6 +608,13 @@ export default {
       if (props.tab === "goodStandingOthersUnfinished") {
         store.dispatch("reviewerGoodStanding/getGoodStandingOthersUnfinishedSearched", search.value)
       }
+      if (props.tab === "goodStandingAssigned") {
+        store.dispatch("reviewerGoodStanding/getGoodStandingAssignedSearched", search.value)
+      }
+      if (props.tab === "goodStandingAssignedToOthers") {
+        store.dispatch("reviewerGoodStanding/getGoodStandingOthersAssignedSearched", search.value)
+      }
+      
 
     });
     let showAdminCreate = false;

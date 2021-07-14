@@ -6,4 +6,9 @@ export default {
     getGoodStandingUnfinishedSearched: state => state.goodStandingUnfinishedSearched,
     getGoodStandingOthersUnfinished: state => state.goodStandingOthersUnfinished,
     getGoodStandingOthersUnfinishedSearched: state => state.goodStandingOthersUnfinishedSearched,
+
+    getGoodStandingAssignedToYou: state => state.goodStandingAssignedToYou,
+    getGoodStandingAssignedToYouSearched: state => state.goodStandingAssignedToYouSearched,
+    getGoodStandingAssignedToOthers: state => state.goodStandingAssignedToOthers,
+    getGoodStandingAssignedToOthersSearched: state => state.goodStandingAssignedToOthersSearched,
 }

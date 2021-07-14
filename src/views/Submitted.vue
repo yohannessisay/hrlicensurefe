@@ -1,8 +1,10 @@
 <template>
-  <div>
+  <div class="bg-lightBlueB-200">
+ 
     <div
       v-if="!this.showLoading"
       class="relative text-gray-600 focus-within:text-gray-400 pt-10 pl-16 bg-lightBlueB-200"
+      style="width:450px"
     >
       <input
         type="search"
@@ -572,7 +574,6 @@ export default {
             return e.applicationStatus.code.includes("SUB");
           });
         }
-        console.log(this.renewal);
       });
       this.$store
         .dispatch("verification/getVerificationLicense")
