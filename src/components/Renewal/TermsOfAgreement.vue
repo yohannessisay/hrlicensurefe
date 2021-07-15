@@ -30,7 +30,7 @@
         </ul>
       </div>
       <div class="ml-8">
-        <h2>Local</h2>
+        <h2>Ethiopian</h2>
         <ul>
           <li>Health Exam Certificate</li>
           <li>Previous License</li>

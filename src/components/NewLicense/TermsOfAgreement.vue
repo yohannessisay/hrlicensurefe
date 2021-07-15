@@ -35,7 +35,7 @@
         </ul>
       </div>
       <div class="ml-8">
-        <h2>Local</h2>
+        <h2>Ethiopian</h2>
         <ul>
           <li>Passport(Identification Card)</li>
           <li>Health Exam Certificate</li>
