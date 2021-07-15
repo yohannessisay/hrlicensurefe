@@ -908,9 +908,10 @@ export default {
 };
 </script>
 <style>
-img {
+.preview {
   width: 250px;
   height: 250px;
+  border-radius: 0%;
 }
 
 #photoFile #diplomaFile #transcriptFile #experienceFile {

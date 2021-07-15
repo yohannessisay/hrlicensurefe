@@ -603,9 +603,10 @@ export default {
 </script>
 <style>
 @import "../../styles/document-upload.css";
-img {
+.preview {
   width: 250px;
   height: 250px;
+  border-radius: 0%;
 }
 .withdraw {
   background-image: linear-gradient(to right, #d63232, #e63636) !important;
