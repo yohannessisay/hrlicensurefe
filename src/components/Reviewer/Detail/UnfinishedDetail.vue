@@ -384,7 +384,7 @@ export default {
     }
 
     const transferReview = () => {
-      if (role.value.code === "TL" || role.value.code === "SA") {
+      // if (role.value.code === "TL" || role.value.code === "SA") {
         if (applicationType.value == "Good Standing") {
           transfer.value = {
             goodStandingId: route.params.applicationId,
@@ -413,7 +413,7 @@ export default {
             createdByAdminId: +localStorage.getItem("adminId"),
           };
         }
-      }
+      // }
       if (applicationType.value == "New License") {
         store
           .dispatch("reviewer/transferLicenseReview", transfer.value)

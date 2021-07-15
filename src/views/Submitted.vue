@@ -2,7 +2,7 @@
   <div>
     <div
       v-if="!this.showLoading"
-      class="relative text-gray-600 focus-within:text-gray-400 pt-10 pl-4 bg-lightBlueB-200"
+      class="relative text-gray-600 focus-within:text-gray-400 pt-10 pl-16 bg-lightBlueB-200"
     >
       <input
         type="search"
@@ -22,7 +22,6 @@
         placeholder="Search requests by Name or Order ID"
         autocomplete="off"
         v-model="search"
-        hidden
       />
     </div>
     <div v-if="this.searched">
@@ -702,3 +701,4 @@ img {
   width: 8px;
 }
 </style>
+{"mode":"full","isActive":false}

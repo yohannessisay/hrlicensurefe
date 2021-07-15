@@ -7,5 +7,10 @@ export default {
         goodStandingUnfinishedSearched: [],
         goodStandingOthersUnfinished: [],
         goodStandingOthersUnfinishedSearched: [],
+
+        goodStandingAssignedToYou: [],
+        goodStandingAssignedToYouSearched: [],
+        goodStandingAssignedToOthers: [],
+        goodStandingAssignedToOthersSearched: [],
     }
 }

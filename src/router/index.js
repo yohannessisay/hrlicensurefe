@@ -135,6 +135,14 @@ const routes = [
         "../components/Reviewer/Configurations/ChangePassword/ChangePassword.vue"
       ),
   },
+   {
+    path: "/admin/report",
+    name: "report",
+    component: () =>
+      import(
+        "../components/Report/report.vue"
+      ),
+  },
   {
     path: "/myWork",
     name: "myWork",
@@ -342,9 +350,19 @@ const routes = [
     component: () => import("../components/Reviewer/ApplicationTypes/NewLicense/NewLicenseUnfinished.vue"),
   },
   {
-    path: "/admin/newlicense/othersUnfinished",
+    path: "/admin/newlicense/others-unfinished",
     name: "NewLicenseOthersUnfinished",
     component: () => import("../components/Reviewer/ApplicationTypes/NewLicense/NewLicenseOthersUnfinished.vue"),
+  },
+  {
+    path: "/admin/newlicense/assigned-to-me",
+    name: "NewLicenseAssignedToMe",
+    component: () => import("../components/Reviewer/ApplicationTypes/NewLicense/NewLicenseAssigned.vue"),
+  },
+  {
+    path: "/admin/newlicense/assigned-to-others",
+    name: "NewLicenseAssignedToOthers",
+    component: () => import("../components/Reviewer/ApplicationTypes/NewLicense/NewLicenseAssignedToOthers.vue"),
   },
   {
     path: "/admin/verification/unassigned",
@@ -357,9 +375,19 @@ const routes = [
     component: () => import("../components/Reviewer/ApplicationTypes/Verification/VerificationUnfinished.vue"),
   },
   {
-    path: "/admin/verification/othersUnfinished",
+    path: "/admin/verification/others-unfinished",
     name: "VerificationOthersUnfinished",
     component: () => import("../components/Reviewer/ApplicationTypes/Verification/VerificationOthersUnfinished.vue"),
+  },
+  {
+    path: "/admin/verification/assigned-to-me",
+    name: "VerificationAssignedToMe",
+    component: () => import("../components/Reviewer/ApplicationTypes/Verification/VerificationAssigned.vue"),
+  },
+  {
+    path: "/admin/verification/assigned-to-others",
+    name: "VerificationAssignedToOthers",
+    component: () => import("../components/Reviewer/ApplicationTypes/Verification/VerificationAssignedToOthers.vue"),
   },
   {
     path: "/admin/renewal/unassigned",
@@ -372,9 +400,19 @@ const routes = [
     component: () => import("../components/Reviewer/ApplicationTypes/Renewal/RenewalUnfinished.vue"),
   },
   {
-    path: "/admin/renewal/othersUnfinished",
+    path: "/admin/renewal/others-unfinished",
     name: "RenewalOthersUnfinished",
     component: () => import("../components/Reviewer/ApplicationTypes/Renewal/RenewalOthersUnfinished.vue"),
+  },
+  {
+    path: "/admin/renewal/assigned-to-me",
+    name: "RenewalAssignedToMe",
+    component: () => import("../components/Reviewer/ApplicationTypes/Renewal/RenewalAssigned.vue"),
+  },
+  {
+    path: "/admin/renewal/assigned-to-others",
+    name: "RenewalAssignedToOthers",
+    component: () => import("../components/Reviewer/ApplicationTypes/Renewal/RenewalAssignedToOthers.vue"),
   },
   {
     path: "/admin/goodstanding/unassigned",
@@ -387,11 +425,20 @@ const routes = [
     component: () => import("../components/Reviewer/ApplicationTypes/GoodStanding/GoodStandingUnfinished.vue"),
   },
   {
-    path: "/admin/goodstanding/othersUnfinished",
+    path: "/admin/goodstanding/others-unfinished",
     name: "GoodStandingOthersUnfinished",
     component: () => import("../components/Reviewer/ApplicationTypes/GoodStanding/GoodStandingOthersUnfinished.vue"),
   },
-  
+  {
+    path: "/admin/goodstanding/assigned-to-me",
+    name: "GoodStandingAssignedToMe",
+    component: () => import("../components/Reviewer/ApplicationTypes/GoodStanding/GoodStandingAssigned.vue"),
+  },
+  {
+    path: "/admin/goodstanding/assigned-to-others",
+    name: "GoodStandingAssignedToOthers",
+    component: () => import("../components/Reviewer/ApplicationTypes/GoodStanding/GoodStandingAssignedToOthers.vue"),
+  },
   
 
 ];

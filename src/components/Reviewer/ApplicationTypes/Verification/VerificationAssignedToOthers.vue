@@ -1,6 +1,6 @@
 <template>
   <div>
-    <reviewer-nav-bar tab="renewalOthersUnfinished" />
+    <reviewer-nav-bar tab="verificationAssignedToOthers" />
     <div class="bg-lightBlueB-200 h-full" v-if="!allInfo.searchByInput">
       <div class="pl-12">
         <div>Filter By</div>
@@ -24,11 +24,11 @@
         </button>
       </div>
       <div class="flex pl-12 pt-tiny">
-        <Title message="Others Renewal Unfinished" />
+        <Title message="Verification Assigned To Others" />
       </div>
       <div class="flex flex-wrap pb-medium rounded h-full" v-if="!showLoading">
         <nothing-to-show :nothingToShow="nothingToShow" />
-        <unfinished-applications :unfinishedApplication="getOthersRenewalUnfinished" app_type="Renewal" others_unfinished="true"/>
+        <assigned-applications :assignedApplication="getVerificationAssigned" app_type="Verification" assigned_to_others="true"/>
       </div>
     </div>
     <div
@@ -41,15 +41,15 @@
       <div class="flex pl-12 pt-tiny">
         <Title
         :message="
-          'Unfinished Applicants on Date Range ' + moment(allInfo.searchFromDate).format('MMM D, YYYY') + ' To ' + moment(allInfo.searchUpToDate).format('MMM D, YYYY')
+          'Assigned Applicants on Date Range ' + moment(allInfo.searchFromDate).format('MMM D, YYYY') + ' To ' + moment(allInfo.searchUpToDate).format('MMM D, YYYY')
         "
       />
         <button @click="backClicked">back</button>
       </div>
       <filtered-info
         :filteredData="allInfo.filteredByDate"
-        type="unfinishedDetail"
-        app_type="Renewal"
+        type="detail"
+        app_type="Verification"
       />
     </div>
   </div>
@@ -64,7 +64,7 @@
 import { ref, onMounted } from "vue";
 import Title from "@/sharedComponents/TitleWithIllustration";
 import ReviewerNavBar from "../../ReviewerNavBar.vue";
-import UnfinishedApplications from "../ChildApplicationTypes/UnfinishedApplications.vue"
+import AssignedApplications from "../ChildApplicationTypes/AssignedApplications.vue"
 import NothingToShow from "../../ChildComponents/NothingToShow.vue";
 import { useStore } from "vuex";
 import store from "../../../../store";
@@ -78,8 +78,8 @@ import FilteredInfo from "../../ChildComponents/FilteredDatas/FilteredInfo.vue";
 export default {
   computed: {
     moment: () => moment,
-    getOthersRenewalUnfinished() {
-      return store.getters["reviewerRenewal/getRenewalOthersUnfinishedSearched"];
+    getVerificationAssigned() {
+      return store.getters["reviewerVerification/getVerificationAssignedToOthersSearched"];
     },
   },
   components: {
@@ -88,13 +88,13 @@ export default {
     FilteredInfo,
     Spinner,
     NothingToShow,
-    UnfinishedApplications,
+    AssignedApplications,
     Title,
   },
   setup() {
     const store = useStore();
-    let renewalUnfinished = ref([]);
-    
+    let verificationAssigned = ref([]);
+
     const adminId = +localStorage.getItem("adminId");
 
     let nothingToShow = ref(false);
@@ -126,14 +126,14 @@ export default {
       allInfo.value.app_type = "";
     };
 
-    const fetchRenewalUnfinished = () => {
+    const fetchVerificationAssigned = () => {
       showLoading.value = true;
-      store.dispatch("reviewerRenewal/getRenewalOthersUnfinished", adminId).then((res) => {
+      store.dispatch("reviewerVerification/getVerificationOthersAssigned", adminId).then((res) => {
         showLoading.value = false;
-        renewalUnfinished.value =
-          store.getters["reviewerRenewal/getRenewalOthersUnfinishedSearched"];
+        verificationAssigned.value =
+          store.getters["reviewerVerification/getVerificationAssignedToOthersSearched"];
         allInfo.value.assignApplication =
-          store.getters["reviewerRenewal/getRenewalOthersUnfinishedSearched"];
+          store.getters["reviewerVerification/getVerificationAssignedToOthersSearched"];
 
         for (let applicant in allInfo.value.assignApplication) {
           allInfo.value.assignApplication[applicant].createdAt = moment(
@@ -147,13 +147,13 @@ export default {
               allInfo.value.assignApplication[applicant].applicantType;
           }
         }
-        if (store.getters["reviewerRenewal/getRenewalOthersUnfinished"].length === 0) {
+        if (store.getters["reviewerVerification/getVerificationAssignedToOthers"].length === 0) {
           nothingToShow.value = true;
         }
       });
     };
     onMounted(() => {
-      fetchRenewalUnfinished();
+      fetchVerificationAssigned();
     });
 
     return {

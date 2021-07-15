@@ -21,6 +21,8 @@ export default {
   [SET_NEW_LICENSE_UNASSIGNED_SEARCHED](state, searchedVal) {
     state.newLicenseUnassignedSearched = searchedVal;
   },
+
+
   [SET_NEW_LICENSE_UNFINISHED](state, data) {
     state.newLicenseUnfinished = data;
     state.newLicenseUnfinishedSearched = data;
@@ -34,5 +36,20 @@ export default {
   },
   [SET_NEW_LICENSE_OTHERS_UNFINISHED_SEARCHED](state, searchedVal) {
     state.newLicenseOthersUnfinishedSearched = searchedVal;
+  },
+
+  [SET_NEW_LICENSE_ASSIGNED_TO_YOU](state, data) {
+    state.newLicenseAssignedToYou = data;
+    state.newLicenseAssignedToYouSearched = data;
+  },
+  [SET_NEW_LICENSE_ASSIGNED_TO_YOU_SEARCHED](state, searchedVal) {
+    state.newLicenseAssignedToYouSearched = searchedVal;
+  },
+  [SET_NEW_LICENSE_ASSIGNED_TO_OTHERS](state, data) {
+    state.newLicenseAssignedToOthers = data;
+    state.newLicenseAssignedToOthersSearched = data;
+  },
+  [SET_NEW_LICENSE_ASSIGNED_TO_OTHERS_SEARCHED](state, searchedVal) {
+    state.newLicenseAssignedToOthersSearched = searchedVal;
   },
 };

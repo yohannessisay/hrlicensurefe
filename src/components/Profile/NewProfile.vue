@@ -2,7 +2,7 @@
   <div>
     <Navigation />
     <div
-      class="w-screen h-full bg-lightBlueB-200 flex items-center justify-center"
+      class="w-screen h-screen bg-lightBlueB-200 flex items-center justify-center"
     >
       <div id="navg" class="flex flex-row justify-center mb-medium"></div>
       <transition name="fade" mode="out-in">
