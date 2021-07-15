@@ -908,7 +908,7 @@ export default {
 };
 </script>
 <style>
-.preview {
+img {
   width: 250px;
   height: 250px;
   border-radius: 0%;
