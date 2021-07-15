@@ -26,9 +26,9 @@
       </select>
       <input
         placeholder="Select date"
-        :value="date"
-        class="ml-5"
-        @click="displayDate()"
+       type="date"
+              class="ml-5"
+       
         
       />
     

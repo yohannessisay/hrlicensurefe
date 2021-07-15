@@ -90,7 +90,7 @@
     <FlashMessage message="Signup Successful!" />
   </div>
   <div v-if="message.showErrorFlash">
-    <ErrorFlashMessage message="Signup Failed!" />
+    <ErrorFlashMessage v-bind:message="message.errorMessage" />
   </div>
 </template>
 <script>
@@ -112,6 +112,7 @@ export default {
       showFlash: false,
       showErrorFlash: false,
       showLoading: false,
+      errorMessage:"",
     });
 
     const credentials = ref({
@@ -139,18 +140,31 @@ export default {
         message.value.showFlash = false;
         message.value.showErrorFlash = false;
         store.dispatch("user/signUp", signup).then((res) => {
-          if (res.data.status == "Success") {
-            message.value.showLoading = false;
+          console.log("this is the incoming data", res);
+
+          if (res.data.status=="Error") {
+ message.value.showLoading = false;
+            message.value.showFlash = false;
+            message.value.showErrorFlash = true;
+            message.value.errorMessage=res.data.message;
+            console.log("error ins the signup is ", res.data);
+            setTimeout(() => { message.value.showErrorFlash = false}, 3000);
+
+
+         
+          } else if(res.data.status=="Success")
+          {
+               message.value.showLoading = false;
             message.value.showFlash = true;
             message.value.showErrorFlash = false;
             setTimeout(() => {
               location.reload();
-            }, 1500);
-          } else {
-            message.value.showLoading = false;
-            message.value.showFlash = false;
+            }, 1500); 
+          } else{
+             message.value.showFlash = false;
             message.value.showErrorFlash = true;
-            setTimeout(() => {}, 1500);
+            message.value.erroMessage="Something went wrong please try again";
+            console.log("internal server error");
           }
         });
       }
