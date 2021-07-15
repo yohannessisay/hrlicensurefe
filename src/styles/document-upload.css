@@ -4,6 +4,7 @@
   height: 200px;
   position: absolute;
   cursor: pointer;
+  border-radius: 0%;
 }
 .dropbox {
   outline: 2px dashed grey; /* the dash box */
