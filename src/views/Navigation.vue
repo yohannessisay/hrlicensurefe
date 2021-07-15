@@ -27,11 +27,10 @@
                 class="w-8 h-8 px-1 py-1"
                 aria-hidden="true"
               >
-             
                 <circle cx="12" cy="8" r="5" />
-                
+
                 <path d="M3,21 h18 C 21,12 3,12 3,21" />
-               <!-- <img :src="pic" /> -->
+                <!-- <img :src="pic" /> -->
               </svg>
               <!-- <div style="height:100px; width:100px;">
                 <img v-bind:src="'data:image/jpg;base64,' + pic" />
@@ -108,7 +107,7 @@ import Title from "@/sharedComponents/Title";
 import RenderIllustration from "@/sharedComponents/RenderIllustration";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
-import { base64StringToBlob } from 'blob-util';
+import { base64StringToBlob } from "blob-util";
 
 import { ref, onMounted } from "vue";
 
@@ -118,7 +117,7 @@ export default {
     return {
       auth: false,
       token: "",
-      showDD: false
+      showDD: false,
     };
   },
   created() {
@@ -140,7 +139,7 @@ export default {
       } else {
         this.$emit("changeDisplay", menu);
       }
-    }
+    },
   },
   computed() {
     if (this.token != undefined) {
@@ -153,37 +152,40 @@ export default {
     const store = useStore();
     const id = +localStorage.getItem("userId");
     let name = ref({
-      fullName: ""
+      fullName: "",
     });
     let pic = ref();
     let blob = ref();
     const getProfile = () => {
-      store.dispatch("profile/getProfileByUserId", id).then(res => {
+      store.dispatch("profile/getProfileByUserId", id).then((res) => {
         // var profile= store.getters["profile/getPersonalInfo"];
         getImage(res.data.data);
         getName(res.data.data);
       });
     };
 
-    const getImage = profile => {
+    const getImage = (profile) => {
       pic = profile.photo.data;
       blob = base64StringToBlob(pic, "image/jpg");
-      
     };
-    const getName = profile => {
+    const getName = (profile) => {
       name.value.fullName = profile.name + " " + profile.fatherName;
     };
     onMounted(() => {
-      getProfile();
+      // if (this.$route.name != "NewProfile") {
+      //   getProfile();
+      // }
+        getProfile();
+
     });
 
     return {
       name,
       getImage,
       pic,
-      blob
+      blob,
     };
-  }
+  },
 };
 </script>
 <style>

@@ -2,9 +2,8 @@
   <div>
     <div
       v-if="!this.showLoading"
-      class="relative text-gray-600 focus-within:text-gray-400 pt-10 pl-16 bg-lightBlueB-200"
+      class="relative text-gray-600 focus-within:text-gray-400 pt-10 pl-4 bg-lightBlueB-200"
     >
-      <label>
         <input
           type="search"
           name="search"
@@ -25,7 +24,6 @@
           v-model="search"
           hidden
         />
-      </label>
     </div>
     <div v-if="this.searched">
       <div class="bg-lightBlueB-200 h-screen">

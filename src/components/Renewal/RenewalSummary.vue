@@ -283,10 +283,10 @@
     </div>
   </div>
 
-  <div v-if="this.showFlash">
+  <div v-if="showFlash">
     <FlashMessage message="Operation Successful!" />
   </div>
-  <div v-if="this.showErrorFlash">
+  <div v-if="showErrorFlash">
     <ErrorFlashMessage message="Operation Failed!" />
   </div>
 </template>
