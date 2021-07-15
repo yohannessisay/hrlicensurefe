@@ -32,7 +32,7 @@
 </template>
 <style>
 #holder {
-  height: auto;
+  /* height: max-content; */
 }
 #navg a {
   margin-left: 20px;
