@@ -249,8 +249,9 @@ export default {
                 if (res.status == 200) {
                   message.value.showFlash = !message.value.showFlash;
                   message.value.showLoading = false;
-                  setTimeout(() => {}, 1800);
-                  router.push({ path: "/menu" });
+                  setTimeout(() => {
+                    router.push({ path: "/menu" });
+                  }, 1500);
                 } else {
                   showErrorFlash.value = !showErrorFlash.value;
                 }
@@ -284,7 +285,6 @@ export default {
 .card-wrapper {
   width: 600px;
   height: 520px;
-  border-radius: 0%;
 }
 #holder {
   width: 600px;
@@ -302,7 +302,6 @@ picture {
   width: 100%;
   height: 300px;
   border-radius: 0%;
-
 }
 
 .dropbox {
