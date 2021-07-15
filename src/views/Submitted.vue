@@ -22,6 +22,7 @@
         placeholder="Search requests by Name or Order ID"
         autocomplete="off"
         v-model="search"
+        hidden
       />
     </div>
     <div v-if="this.searched">
@@ -43,7 +44,7 @@
           >
             <div
               class="container mb-medium"
-              v-for="item in this.searchResult.slice((i - 1) * 5, i * 5)"
+              v-for="item in this.searchResult.slice((i - 1) * 4, i * 4)"
               v-bind:key="item"
               v-bind:value="item"
             >
@@ -145,7 +146,7 @@
           <div class="flex " v-for="i in this.newlicense.length" v-bind:key="i">
             <div
               class="container mb-medium"
-              v-for="item in this.newlicense.slice((i - 1) * 5, i * 5)"
+              v-for="item in this.newlicense.slice((i - 1) * 4, i * 4)"
               v-bind:key="item"
               v-bind:value="item"
             >
@@ -226,7 +227,7 @@
           <div class="flex " v-for="i in this.renewal.length" v-bind:key="i">
             <div
               class="container mb-medium"
-              v-for="item in this.renewal.slice((i - 1) * 5, i * 5)"
+              v-for="item in this.renewal.slice((i - 1) * 4, i * 4)"
               v-bind:key="item"
               v-bind:value="item"
             >
@@ -311,7 +312,7 @@
           >
             <div
               class="container mb-medium"
-              v-for="item in this.verification.slice((i - 1) * 5, i * 5)"
+              v-for="item in this.verification.slice((i - 1) * 4, i * 4)"
               v-bind:key="item"
               v-bind:value="item"
             >
@@ -399,7 +400,7 @@
           >
             <div
               class="container mb-medium"
-              v-for="item in this.goodstanding.slice((i - 1) * 5, i * 5)"
+              v-for="item in this.goodstanding.slice((i - 1) * 4, i * 4)"
               v-bind:key="item"
               v-bind:value="item"
             >
@@ -622,6 +623,9 @@ export default {
 };
 </script>
 <style>
+/* .main {
+  width: screen;
+} */
 span {
   font-size: 15px;
 }
