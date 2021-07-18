@@ -569,6 +569,12 @@ export default {
       if (props.tab === "renewalAssignedToOthers") {
         store.dispatch("reviewerRenewal/getRenewalOthersAssignedSearched", search.value)
       }
+      if (props.tab === "renewalUnconfirmed") {
+        store.dispatch("reviewerRenewal/getRenewalApprovedSearched", search.value)
+      }
+      if (props.tab === "allRenewalUnconfirmed") {
+        store.dispatch("reviewerRenewal/getRenewalAllApprovedSearched", search.value)
+      }
       if (props.tab === "newLicenseUnassigned") {
         store.dispatch("reviewerNewLicense/getNewLicenseUnassignedSearched", search.value)
       }
@@ -583,6 +589,12 @@ export default {
       }
       if (props.tab === "newLicenseAssignedToOthers") {
         store.dispatch("reviewerNewLicense/getNewLicenseOthersAssignedSearched", search.value)
+      }
+      if (props.tab === "newLicenseUnconfirmed") {
+        store.dispatch("reviewerNewLicense/getNewLicenseApprovedSearched", search.value)
+      }
+      if (props.tab === "allNewLicenseUnconfirmed") {
+        store.dispatch("reviewerNewLicense/getNewLicenseAllApprovedSearched", search.value)
       }
       if (props.tab === "verificationUnassigned") {
         store.dispatch("reviewerVerification/getUnassignedVerificationSearched", search.value)
@@ -599,6 +611,12 @@ export default {
       if (props.tab === "verificationAssignedToOthers") {
         store.dispatch("reviewerVerification/getVerificationOthersAssignedSearched", search.value)
       }
+      if (props.tab === "verificationUnconfirmed") {
+        store.dispatch("reviewerVerification/getVerificationApprovedSearched", search.value)
+      }
+      if (props.tab === "allVerificationUnconfirmed") {
+        store.dispatch("reviewerVerification/getVerificationAllApprovedSearched", search.value)
+      }
       if(props.tab === "goodStandingUnassigned") {
         store.dispatch("reviewerGoodStanding/getUnassignedGoodStandingSearched", search.value)
       }
@@ -613,6 +631,12 @@ export default {
       }
       if (props.tab === "goodStandingAssignedToOthers") {
         store.dispatch("reviewerGoodStanding/getGoodStandingOthersAssignedSearched", search.value)
+      }
+      if (props.tab === "goodStandingUnconfirmed") {
+        store.dispatch("reviewerGoodStanding/getGoodStandingApprovedSearched", search.value)
+      }
+      if (props.tab === "allGoodStandingUnconfirmed") {
+        store.dispatch("reviewerGoodStanding/getGoodStandingAllApprovedSearched", search.value)
       }
       
 

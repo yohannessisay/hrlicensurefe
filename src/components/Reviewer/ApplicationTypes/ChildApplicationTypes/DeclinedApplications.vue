@@ -1,25 +1,34 @@
 <template>
   <div
     class="container"
-    v-for="item in othersUnconfirmed"
+    v-for="item in declinedApplication"
     v-bind:key="item.id"
     v-bind:value="item.id"
   >
     <div
-      class="flex justify-center items-center  ml-8 mt-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
+      class="flex justify-center items-center ml-8 mt-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
     >
       <div
         class="p-4 w-48 h-64"
-        @Click="
-          detail(`/admin`, item.applicationType, item.id, item.applicant.id)
-        "
+        @Click="detail(`/admin/declinedDetail`, item.id, item.applicant.id)"
       >
         <div class="flex content-center justify-center">
-          <!-- <img class="box-shadow-pop" v-bind:src="item.picture.large" /> -->
-          <img
-            class="box-shadow-pop"
-            src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
-          />
+          <span v-if="item.profilePic != ''">
+            <img
+              class="box-shadow-pop"
+              src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
+            />
+            <!-- <img
+                  class="box-shadow-pop"
+                  :src="'https://hrlicensurebe.dev.k8s.sandboxaddis.com/'+item.profilePic"
+                />  -->
+          </span>
+          <span v-else>
+            <img
+              class="box-shadow-pop"
+              src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
+            />
+          </span>
         </div>
         <h4
           class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
@@ -34,6 +43,7 @@
         </h4>
         <span
           class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+          v-if="all_declined == 'true'"
         >
           <i class="fas fa-user-cog"></i> &nbsp;
           {{ item.reviewer.name ? item.reviewer.name : "-" }}
@@ -41,12 +51,36 @@
         <span
           class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
         >
-          {{ item.applicationType ? item.applicationType : "-" }}
+          {{ app_type }}
         </span>
         <span
           class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
         >
-          {{ item.newLicenseCode ? item.newLicenseCode : "-" }}
+          On
+          {{ item.createdAt }}
+        </span>
+        <span
+          class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+        >
+          {{
+            app_type == "New License"
+              ? item.newLicenseCode
+                ? item.newLicenseCode
+                : "-"
+              : app_type == "Verification"
+              ? item.verificationCode
+                ? item.verificationCode
+                : "-"
+              : app_type == "Good Standing"
+              ? item.goodStandingCode
+                ? item.goodStandingCode
+                : "-"
+              : app_type == "Renewal"
+              ? item.renewalCode
+                ? item.renewalCode
+                : "-"
+              : "-"
+          }}
         </span>
         <span
           class="text-lightBlueB-500 mt-tiny flex justify-end content-center"
@@ -57,38 +91,21 @@
     </div>
   </div>
 </template>
-
 <script>
-import { ref } from "vue";
-import { useRouter } from "vue-router";
 import moment from "moment";
+import { useRouter } from "vue-router";
+import { ref } from 'vue';
 export default {
   computed: {
     moment: () => moment,
   },
-  props: ["othersUnconfirmed"],
-  name: "OthersUnconfirmed",
-
-  setup() {
+  props: ["declinedApplication", "app_type", "all_declined"],
+  name: "DeclinedApplications",
+  setup(props) {
     let router = useRouter();
-    let routeValue = ref("othersUnconfirmedDetail");
-    const detail = (data, applicationType, applicationId, applicantId) => {
-      if (
-        applicationType == "Good Standing" ||
-        applicationType == "Verification"
-      ) {
-        routeValue.value = "finishedDetail";
-      }
+    const detail = (data, applicationId, applicantId) => {
       const url =
-        data +
-        "/" +
-        routeValue.value +
-        "/" +
-        applicationType +
-        "/" +
-        applicationId +
-        "/" +
-        applicantId;
+        data + "/" + props.app_type + "/" + applicationId + "/" + applicantId;
       router.push(url);
     };
     return {

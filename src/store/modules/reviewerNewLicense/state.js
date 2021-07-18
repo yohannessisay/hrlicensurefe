@@ -1,17 +1,32 @@
 export default {
-    state: {
-        newLicenseUnassigned: [],
-        newLicenseUnassignedSearched: [],
+  state: {
+    newLicenseUnassigned: [],
+    newLicenseUnassignedSearched: [],
 
-        newLicenseUnfinished: [],
-        newLicenseUnfinishedSearched: [],
-        newLicenseOthersUnfinished: [],
-        newLicenseOthersUnfinishedSearched: [],
+    newLicenseUnfinished: [],
+    newLicenseUnfinishedSearched: [],
+    newLicenseOthersUnfinished: [],
+    newLicenseOthersUnfinishedSearched: [],
 
+    newLicenseAssignedToYou: [],
+    newLicenseAssignedToYouSearched: [],
+    newLicenseAssignedToOthers: [],
+    newLicenseAssignedToOthersSearched: [],
 
-        newLicenseAssignedToYou: [],
-        newLicenseAssignedToYouSearched: [],
-        newLicenseAssignedToOthers: [],
-        newLicenseAssignedToOthersSearched: [],
-    }
-}
+    newLicenseApproved: [],
+    newLicenseApprovedSearched: [],
+    newLicenseAllApproved: [],
+    newLicenseAllApprovedSearched: [],
+
+    newLicenseDeclined: [],
+    newLicenseDeclinedSearched: [],
+    newLicenseAllDeclined: [],
+    newLicenseAllDeclinedSearched: [],
+
+    newLicenseUnderSuperVision: [],
+    newLicenseUnderSuperVisionSearched: [],
+    newLicenseOthersUnderSuperVision: [],
+    newLicenseOthersUnderSuperVisionSearched: [],
+    
+  },
+};
