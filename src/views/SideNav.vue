@@ -77,8 +77,7 @@
                     <li @click="selectMenu(4)">
                       <!-- <span style="color: #648ea3;"> -->
                       <p class=" text-sm" style="color: white; ">
-                        <i class="mr-2 far fa-address-book fa-x fa-light"></i>In
-                        Review
+                        <i class="mr-2 far fa-id-card fa-x"></i>In Review
                       </p>
                     </li>
                   </ul>
@@ -239,7 +238,7 @@
                   <div class="p-1 ">
                     <h3 class="text-lightBlueB-500 mt-tiny">
                       <span style="color: white;">
-                        <i class="mr-2 far fa-id-badge fa-x fa-light"></i>
+                        <i class="mr-2 far fa-id-badge fa-x"></i>
                       </span>
                       <span style="color: white; ">Under Supervision</span>
                     </h3>
@@ -257,7 +256,7 @@
                   <div class="p-1 ">
                     <h3 class="text-lightBlueB-500 mt-tiny">
                       <span style="color: white;">
-                        <i class="mr-2 far fa-id-badge fa-x fa-light"></i>
+                           <i class="mr-2 fas fa-comments-dollar fa-x"></i>
                       </span>
                       <span style="color: white; ">Pending Payment</span>
                     </h3>

@@ -470,9 +470,6 @@
     >
       <Spinner />
     </div>
-    <div v-if="showError">
-      <ErrorFlashMessage message="Your profile creation failed!!" />
-    </div>
   </div>
 </template>
 
@@ -494,7 +491,6 @@ export default {
       verification: [],
       goodstanding: [],
       showLoading: false,
-      showError: false,
       search: "",
       searchResult: [],
       searched: false,
@@ -567,9 +563,6 @@ export default {
           this.newlicense = this.license.filter(function(e) {
             return e.applicationStatus.code.includes("SUB");
           });
-        } else {
-          this.showLoading = !this.showLoading;
-          this.showError = !this.showError;
         }
       });
       this.$store.dispatch("renewal/getRenewalLicense").then((res) => {
@@ -578,10 +571,8 @@ export default {
           this.renewal = this.license.filter(function(e) {
             return e.applicationStatus.code.includes("SUB");
           });
-        } else {
-          this.showLoading = !this.showLoading;
-          this.showError = !this.showError;
         }
+        console.log(this.renewal);
       });
       this.$store
         .dispatch("verification/getVerificationLicense")
@@ -591,9 +582,6 @@ export default {
             this.verification = this.license.filter(function(e) {
               return e.applicationStatus.code.includes("SUB");
             });
-          } else {
-            this.showLoading = !this.showLoading;
-            this.showError = !this.showError;
           }
         });
       this.$store
@@ -605,9 +593,6 @@ export default {
             this.goodstanding = this.license.filter(function(e) {
               return e.applicationStatus.code.includes("SUB");
             });
-          } else {
-            this.showLoading = !this.showLoading;
-            this.showError = !this.showError;
           }
         });
     },
