@@ -1,10 +1,8 @@
 <template>
-  <div class="bg-lightBlueB-200">
-  
+  <div>
     <div
       v-if="!this.showLoading"
       class="relative text-gray-600 focus-within:text-gray-400 pt-10 pl-16 bg-lightBlueB-200"
-      style="width:450px"
     >
       <input
         type="search"
@@ -46,7 +44,7 @@
           >
             <div
               class="container mb-medium"
-              v-for="item in this.searchResult.slice((i - 1) * 5, i * 5)"
+              v-for="item in this.searchResult.slice((i - 1) * 4, i * 4)"
               v-bind:key="item"
               v-bind:value="item"
             >
@@ -148,7 +146,7 @@
           <div class="flex " v-for="i in this.newlicense.length" v-bind:key="i">
             <div
               class="container mb-medium"
-              v-for="item in this.newlicense.slice((i - 1) * 5, i * 5)"
+              v-for="item in this.newlicense.slice((i - 1) * 4, i * 4)"
               v-bind:key="item"
               v-bind:value="item"
             >
@@ -229,7 +227,7 @@
           <div class="flex " v-for="i in this.renewal.length" v-bind:key="i">
             <div
               class="container mb-medium"
-              v-for="item in this.renewal.slice((i - 1) * 5, i * 5)"
+              v-for="item in this.renewal.slice((i - 1) * 4, i * 4)"
               v-bind:key="item"
               v-bind:value="item"
             >
@@ -314,7 +312,7 @@
           >
             <div
               class="container mb-medium"
-              v-for="item in this.verification.slice((i - 1) * 5, i * 5)"
+              v-for="item in this.verification.slice((i - 1) * 4, i * 4)"
               v-bind:key="item"
               v-bind:value="item"
             >
@@ -402,7 +400,7 @@
           >
             <div
               class="container mb-medium"
-              v-for="item in this.goodstanding.slice((i - 1) * 5, i * 5)"
+              v-for="item in this.goodstanding.slice((i - 1) * 4, i * 4)"
               v-bind:key="item"
               v-bind:value="item"
             >

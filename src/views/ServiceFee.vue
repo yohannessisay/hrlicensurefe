@@ -249,8 +249,9 @@ export default {
                 if (res.status == 200) {
                   message.value.showFlash = !message.value.showFlash;
                   message.value.showLoading = false;
-                  setTimeout(() => {}, 1800);
-                  router.push({ path: "/menu" });
+                  setTimeout(() => {
+                    router.push({ path: "/menu" });
+                  }, 1500);
                 } else {
                   showErrorFlash.value = !showErrorFlash.value;
                 }
@@ -288,6 +289,7 @@ export default {
 #holder {
   width: 600px;
   height: 520px;
+  border-radius: 0%;
 }
 .photoFile {
   opacity: 0; /* invisible but it's there! */
@@ -299,6 +301,7 @@ export default {
 picture {
   width: 100%;
   height: 300px;
+  border-radius: 0%;
 }
 
 .dropbox {
@@ -314,16 +317,19 @@ picture {
 
 .dropbox:hover {
   background: lightblue; /* when mouse over to the drop zone, change color */
+  border-radius: 0%;
 }
 
 .dropbox p {
   font-size: 1.2em;
   text-align: center;
   padding: 50px 0;
+  border-radius: 0%;
 }
 img {
   width: 250px;
   height: 250px;
+  border-radius: 0%;
 }
 .withdraw {
   background-image: linear-gradient(to right, #d63232, #e63636) !important;
