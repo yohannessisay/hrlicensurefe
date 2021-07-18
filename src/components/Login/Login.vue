@@ -73,7 +73,7 @@
     <FlashMessage message="Login Successful!" />
   </div>
   <div v-if="message.showErrorFlash">
-    <ErrorFlashMessage message="Login Failed!" />
+    <ErrorFlashMessage v-bind:message="message.errorMessage" />
   </div>
 </template>
 <script>
@@ -94,6 +94,7 @@ export default {
       showFlash: false,
       showErrorFlash: false,
       showLoading: false,
+      errorMessage:""
     });
 
     const credentials = ref({
@@ -115,43 +116,45 @@ export default {
         message.value.showLoading = true;
         message.value.showFlash = false;
         message.value.showErrorFlash = false;
-        store
-          .dispatch("user/login", email)
-          .then((res) => {
-            if (res.status == 200) {
-            }
-            if (res.data.status == "Success") {
-              const userId = res.data.data.id;
-              store
-                .dispatch("profile/getProfileByUserId", userId)
-                .then((res) => {
-                  const getProfiles = res.data ? res.data.data : null;
-                  if (getProfiles) {
-                    message.value.showLoading = false;
-                    message.value.showFlash = true;
-                    message.value.showErrorFlash = false;
-                    setTimeout(() => {
-                      router.push({ path: "/menu" });
-                    }, 1500);
-                  } else {
-                    message.value.showLoading = false;
-                    message.value.showFlash = true;
-                    message.value.showErrorFlash = false;
-                    setTimeout(() => {
-                      router.push({ path: "/addProfile" });
-                    }, 1500);
-                  }
-                });
-            } else {
-              message.value.showLoading = false;
-              message.value.showFlash = false;
-              message.value.showErrorFlash = true;
-              setTimeout(() => {}, 1500);
-            }
-          })
-          .catch((error) => {
-            console.log("error");
-          });
+        store.dispatch("user/login", email).then((res) => {
+            console.log("Login resources",res)
+            if(res)
+            {
+          // if (res.data.status == "Success") {
+           
+            const userId = res.data.data.id;
+            store.dispatch("profile/getProfileByUserId", userId).then((res) => {
+             
+              const getProfiles = res.data ? res.data.data : null;
+              if (getProfiles) {
+                console.log(res);
+                message.value.showLoading = false;
+                message.value.showFlash = true;
+                message.value.showErrorFlash = false;
+                setTimeout(() => {
+                  router.push({ path: "/menu" });
+                }, 1500);
+              } else {
+                message.value.showLoading = false;
+                message.value.showFlash = true;
+                message.value.showErrorFlash = false;
+                setTimeout(() => {
+                  router.push({ path: "/addProfile" });
+                }, 1500);
+              }
+            });
+          } else {
+            message.value.showLoading = false;
+            message.value.showFlash = false;
+            message.value.showErrorFlash = true;
+            message.value.errorMessage="Incorrect username and password";
+            setTimeout(() => {   message.value.showErrorFlash = false;
+            credentials.value.emailAddress="";
+            credentials.value.password="";
+              
+            }, 3000);
+          }
+        });
       }
     };
 
@@ -197,3 +200,4 @@ export default {
   }
 }
 </style>
+{"mode":"full","isActive":false}
