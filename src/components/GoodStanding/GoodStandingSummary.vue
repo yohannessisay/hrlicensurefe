@@ -515,7 +515,7 @@ export default {
       }
     },
 
-    async saveDraft(act) {
+    async draft(act) {
       let action = act;
       this.showLoading = true;
       if (this.draftId != null) {
