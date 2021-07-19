@@ -525,36 +525,55 @@ export default {
         }
       }
     },
-    fetchLicensebyId() {
+      fetchLicensebyId() {
       this.showLoading = !this.showLoading;
       this.$store.dispatch("newlicense/getNewLicense").then((res) => {
-        this.license = res.data.data;
-        this.newlicense = this.license.filter(function(e) {
-          return e.applicationStatus.code.includes("AP");
-        });
+        if (res.data != undefined) {
+          this.license = res.data.data;
+          this.newlicense = this.license.filter(function(e) {
+            return e.applicationStatus.code.includes("AP");
+          });
+        } else {
+          this.showLoading = !this.showLoading;
+          this.showError = !this.showError;
+        }
       });
       this.$store.dispatch("renewal/getRenewalLicense").then((res) => {
-        this.license = res.data.data;
-        this.renewal = this.license.filter(function(e) {
-          return e.applicationStatus.code.includes("AP");
-        });
+        if (res.data != undefined) {
+          this.license = res.data.data;
+          this.renewal = this.license.filter(function(e) {
+            return e.applicationStatus.code.includes("AP");
+          });
+        } else {
+          this.showLoading = !this.showLoading;
+          this.showError = !this.showError;
+        }
       });
       this.$store
         .dispatch("verification/getVerificationLicense")
         .then((res) => {
-          this.license = res.data.data;
-          this.verification = this.license.filter(function(e) {
-            return e.applicationStatus.code.includes("AP");
-          });
+          if (res.data != undefined) {
+            this.license = res.data.data;
+            this.verification = this.license.filter(function(e) {
+              return e.applicationStatus.code.includes("AP");
+            });
+          } else {
+            this.showLoading = !this.showLoading;
+            this.showError = !this.showError;
+          }
         });
       this.$store
         .dispatch("goodstanding/getGoodStandingLicense")
         .then((res) => {
-          this.license = res.data.data;
-          this.showLoading = !this.showLoading;
-          this.goodstanding = this.license.filter(function(e) {
-            return e.applicationStatus.code.includes("AP");
-          });
+          if (res.data != undefined) {
+            this.license = res.data.data;
+            this.goodstanding = this.license.filter(function(e) {
+              return e.applicationStatus.code.includes("AP");
+            });
+          } else {
+            this.showLoading = !this.showLoading;
+            this.showError = !this.showError;
+          }
         });
     },
   },
