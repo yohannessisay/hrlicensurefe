@@ -12,6 +12,16 @@ import {
   SET_RENEWAL_ASSIGNED_TO_YOU_SEARCHED,
   SET_RENEWAL_ASSIGNED_TO_OTHERS,
   SET_RENEWAL_ASSIGNED_TO_OTHERS_SEARCHED,
+
+  SET_RENEWAL_APPROVED,
+  SET_RENEWAL_APPROVED_SEARCHED,
+  SET_RENEWAL_ALL_APPROVED,
+  SET_RENEWAL_ALL_APPROVED_SEARCHED,
+
+  SET_RENEWAL_DECLINED,
+  SET_RENEWAL_DECLINED_SEARCHED,
+  SET_RENEWAL_ALL_DECLINED,
+  SET_RENEWAL_ALL_DECLINED_SEARCHED
 } from "./mutation-types";
 const baseUrl = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api";
 
@@ -180,5 +190,142 @@ export default {
             e.reviewer.name.toLowerCase().includes(searchKey.toLowerCase());
     });
     commit(SET_RENEWAL_ASSIGNED_TO_OTHERS_SEARCHED, searchedVal);
+  },
+
+
+  async getRenewalApproved({ commit }, adminId) {
+    const url = baseUrl + "/renewals/status/5";
+    const resp = await ApiService.get(url);
+    if(resp.data.data === undefined) {
+      const approved = []
+      commit(SET_RENEWAL_APPROVED, approved)
+      return;
+    }
+    const Approved = resp.data.data.filter(function(e) {
+      return e.reviewerId === adminId;
+    });
+    commit(SET_RENEWAL_APPROVED, Approved);
+  },
+
+  getRenewalApprovedSearched({ commit, getters }, searchKey) {
+    if (getters.getRenewalApproved === undefined) {
+      return;
+    }
+    const searchedVal = getters.getRenewalApproved.filter(function(e) {
+      return e.renewalCode === undefined
+        ? ""
+        : e.renewalCode.toLowerCase().includes(searchKey.toLowerCase()) ||
+            (e.applicant.profile.name + " " + e.applicant.profile.fatherName)
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.name
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.fatherName
+              .toLowerCase()
+              .includes(searchKey.toLowerCase());
+    });
+    commit(SET_RENEWAL_APPROVED_SEARCHED, searchedVal);
+  },
+
+  async getRenewalAllApproved({ commit }, adminId) {
+    const url = baseUrl + "/renewals/status/5";
+    const resp = await ApiService.get(url);
+    let allApproved = resp.data.data
+    if(allApproved === undefined) {
+      allApproved = [];
+    }
+    commit(SET_RENEWAL_ALL_APPROVED, allApproved);
+  },
+  getRenewalAllApprovedSearched({ commit, getters }, searchKey) {
+    if (getters.getRenewalAllApproved === undefined) {
+      return;
+    }
+    const searchedVal = getters.getRenewalAllApproved.filter(function(
+      e
+    ) {
+      return e.renewalCode === undefined
+        ? ""
+        : e.renewalCode.toLowerCase().includes(searchKey.toLowerCase()) ||
+            (e.applicant.profile.name + " " + e.applicant.profile.fatherName)
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.name
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.fatherName
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.reviewer.name.toLowerCase().includes(searchKey.toLowerCase());
+    });
+    commit(SET_RENEWAL_ALL_APPROVED_SEARCHED, searchedVal);
+  },
+
+  async getRenewalDeclined({ commit }, adminId) {
+    const url = baseUrl + "/renewals/status/6";
+    const resp = await ApiService.get(url);
+    if(resp.data.data === undefined) {
+      const declined = []
+      commit(SET_RENEWAL_DECLINED, declined)
+      return;
+    }
+    const declined = resp.data.data.filter(function(e) {
+      return e.reviewerId === adminId;
+    });
+    commit(SET_RENEWAL_DECLINED, declined);
+  },
+
+  getRenewalDeclinedSearched({ commit, getters }, searchKey) {
+    if (getters.getRenewalDeclined === undefined) {
+      return;
+    }
+    const searchedVal = getters.getRenewalDeclined.filter(function(e) {
+      return e.renewalCode === undefined
+        ? ""
+        : e.renewalCode.toLowerCase().includes(searchKey.toLowerCase()) ||
+            (e.applicant.profile.name + " " + e.applicant.profile.fatherName)
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.name
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.fatherName
+              .toLowerCase()
+              .includes(searchKey.toLowerCase());
+    });
+    commit(SET_RENEWAL_DECLINED_SEARCHED, searchedVal);
+  },
+
+  async getRenewalAllDeclined({ commit }, adminId) {
+    const url = baseUrl + "/renewals/status/6";
+    const resp = await ApiService.get(url);
+    let allDeclined = resp.data.data
+    if(allDeclined === undefined) {
+      allDeclined = [];
+    }
+    commit(SET_RENEWAL_ALL_DECLINED, allDeclined);
+  },
+  getRenewalAllDeclinedSearched({ commit, getters }, searchKey) {
+    if (getters.getRenewalAllDeclined === undefined) {
+      return;
+    }
+    const searchedVal = getters.getRenewalAllDeclined.filter(function(
+      e
+    ) {
+      return e.renewalCode === undefined
+        ? ""
+        : e.renewalCode.toLowerCase().includes(searchKey.toLowerCase()) ||
+            (e.applicant.profile.name + " " + e.applicant.profile.fatherName)
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.name
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.fatherName
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.reviewer.name.toLowerCase().includes(searchKey.toLowerCase());
+    });
+    commit(SET_RENEWAL_ALL_DECLINED_SEARCHED, searchedVal);
   },
 };

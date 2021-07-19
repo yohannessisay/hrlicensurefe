@@ -202,6 +202,7 @@ export default {
         // const resp = respAll.data.data.filter(function(e) {
         //   return e.reviewerId === null ? '' : e.reviewerId !== adminId
         // })
+        console.log("reeeeeeeeeeeeeeeeeessssssss", resp.data.data)
         commit(SET_OTHERS_UNCONFIRMED, resp.data.data)
       } catch(error) {
         const resp = error
@@ -493,6 +494,7 @@ export default {
       // const resp = await ApiService.get("https://randomuser.me/api/?results=10");
       // const resp = await ApiService.get(baseUrl + "/newLicenses/status/3");
       const resp = await ApiService.get(baseUrl + "/applications/unassigned");
+      console.log("unassigned _ is ", resp.data)
       commit(SET_UNASSIGNED, resp.data.data)
     } catch (error) {
       const resp = error;

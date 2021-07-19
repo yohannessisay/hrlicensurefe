@@ -11,6 +11,21 @@ import {
   SET_NEW_LICENSE_ASSIGNED_TO_YOU_SEARCHED,
   SET_NEW_LICENSE_ASSIGNED_TO_OTHERS,
   SET_NEW_LICENSE_ASSIGNED_TO_OTHERS_SEARCHED,
+
+  SET_NEW_LICENSE_APPROVED,
+  SET_NEW_LICENSE_APPROVED_SEARCHED,
+  SET_NEW_LICENSE_ALL_APPROVED,
+  SET_NEW_LICENSE_ALL_APPROVED_SEARCHED,
+
+  SET_NEW_LICENSE_DECLINED,
+  SET_NEW_LICENSE_DECLINED_SEARCHED,
+  SET_NEW_LICENSE_ALL_DECLINED,
+  SET_NEW_LICENSE_ALL_DECLINED_SEARCHED,
+
+  SET_NEW_LICENSE_UNDER_SUPERVISION,
+  SET_NEW_LICENSE_UNDER_SUPERVISION_SEARCHED,
+  SET_NEW_LICENSE_OTHERS_UNDER_SUPERVISION,
+  SET_NEW_LICENSE_OTHERS_UNDER_SUPERVISION_SEARCHED
 } from "./mutation-types";
 
 export default {
@@ -51,5 +66,50 @@ export default {
   },
   [SET_NEW_LICENSE_ASSIGNED_TO_OTHERS_SEARCHED](state, searchedVal) {
     state.newLicenseAssignedToOthersSearched = searchedVal;
+  },
+
+  [SET_NEW_LICENSE_APPROVED](state, data) {
+    state.newLicenseApproved = data;
+    state.newLicenseApprovedSearched = data;
+  },
+  [SET_NEW_LICENSE_APPROVED_SEARCHED](state, searchedVal) {
+    state.newLicenseApprovedSearched = searchedVal;
+  },
+  [SET_NEW_LICENSE_ALL_APPROVED](state, data) {
+    state.newLicenseAllApproved = data;
+    state.newLicenseAllApprovedSearched = data;
+  },
+  [SET_NEW_LICENSE_ALL_APPROVED_SEARCHED](state, searchedVal) {
+    state.newLicenseAllApprovedSearched = searchedVal;
+  },
+
+  [SET_NEW_LICENSE_DECLINED](state, data) {
+    state.newLicenseDeclined = data;
+    state.newLicenseDeclinedSearched = data;
+  },
+  [SET_NEW_LICENSE_DECLINED_SEARCHED](state, searchedVal) {
+    state.newLicenseDeclinedSearched = searchedVal;
+  },
+  [SET_NEW_LICENSE_ALL_DECLINED](state, data) {
+    state.newLicenseAllDeclined = data;
+    state.newLicenseAllDeclinedSearched = data;
+  },
+  [SET_NEW_LICENSE_ALL_DECLINED_SEARCHED](state, searchedVal) {
+    state.newLicenseAllDeclinedSearched = searchedVal;
+  },
+
+  [SET_NEW_LICENSE_UNDER_SUPERVISION](state, data) {
+    state.newLicenseUnderSuperVision = data;
+    state.newLicenseUnderSuperVisionSearched = data;
+  },
+  [SET_NEW_LICENSE_UNDER_SUPERVISION_SEARCHED](state, searchedVal) {
+    state.newLicenseUnderSuperVisionSearched = searchedVal;
+  },
+  [SET_NEW_LICENSE_OTHERS_UNDER_SUPERVISION](state, data) {
+    state.newLicenseOthersUnderSuperVision = data;
+    state.newLicenseOthersUnderSuperVisionSearched = data;
+  },
+  [SET_NEW_LICENSE_OTHERS_UNDER_SUPERVISION_SEARCHED](state, searchedVal) {
+    state.newLicenseOthersUnderSuperVisionSearched = searchedVal;
   },
 };

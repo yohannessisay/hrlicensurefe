@@ -365,6 +365,26 @@ const routes = [
     component: () => import("../components/Reviewer/ApplicationTypes/NewLicense/NewLicenseAssignedToOthers.vue"),
   },
   {
+    path: "/admin/newlicense/finished",
+    name: "NewLicenseFinished",
+    component: () => import("../components/Reviewer/ApplicationTypes/NewLicense/NewLicenseUnConfirmed.vue"),
+  },
+  {
+    path: "/admin/newlicense/all-finished",
+    name: "NewLicenseAllFinished",
+    component: () => import("../components/Reviewer/ApplicationTypes/NewLicense/NewLicenseAllUnConfirmed.vue"),
+  },
+  {
+    path: "/admin/newlicense/declined",
+    name: "NewLicenseDeclined",
+    component: () => import("../components/Reviewer/ApplicationTypes/NewLicense/NewLicenseDeclined.vue"),
+  },
+  {
+    path: "/admin/newlicense/all-declined",
+    name: "NewLicenseAllDeclined",
+    component: () => import("../components/Reviewer/ApplicationTypes/NewLicense/NewLicenseAllDeclined.vue"),
+  },
+  {
     path: "/admin/verification/unassigned",
     name: "VerificationUnassigned",
     component: () => import("../components/Reviewer/ApplicationTypes/Verification/VerificationUnassigned.vue"),
@@ -388,6 +408,26 @@ const routes = [
     path: "/admin/verification/assigned-to-others",
     name: "VerificationAssignedToOthers",
     component: () => import("../components/Reviewer/ApplicationTypes/Verification/VerificationAssignedToOthers.vue"),
+  },
+  {
+    path: "/admin/verification/finished",
+    name: "VerificationFinished",
+    component: () => import("../components/Reviewer/ApplicationTypes/Verification/VerificationUnconfirmed.vue"),
+  },
+  {
+    path: "/admin/verification/all-finished",
+    name: "VerificationAllFinished",
+    component: () => import("../components/Reviewer/ApplicationTypes/Verification/VerificationAllUnconfirmed.vue"),
+  },
+  {
+    path: "/admin/verification/declined",
+    name: "VerificationDeclined",
+    component: () => import("../components/Reviewer/ApplicationTypes/Verification/VerificationDeclined.vue"),
+  },
+  {
+    path: "/admin/verification/all-declined",
+    name: "VerificationAllDeclined",
+    component: () => import("../components/Reviewer/ApplicationTypes/Verification/VerificationAllDeclined.vue"),
   },
   {
     path: "/admin/renewal/unassigned",
@@ -415,6 +455,26 @@ const routes = [
     component: () => import("../components/Reviewer/ApplicationTypes/Renewal/RenewalAssignedToOthers.vue"),
   },
   {
+    path: "/admin/renewal/finished",
+    name: "RenewalFinished",
+    component: () => import("../components/Reviewer/ApplicationTypes/Renewal/RenewalUnconfirmed.vue"),
+  },
+  {
+    path: "/admin/renewal/all-finished",
+    name: "RenwalAllFinished",
+    component: () => import("../components/Reviewer/ApplicationTypes/Renewal/RenewalAllUnconfirmed.vue"),
+  },
+  {
+    path: "/admin/renewal/declined",
+    name: "RenewalDeclined",
+    component: () => import("../components/Reviewer/ApplicationTypes/Renewal/RenewalDeclined.vue"),
+  },
+  {
+    path: "/admin/renewal/all-declined",
+    name: "RenewalAllDeclined",
+    component: () => import("../components/Reviewer/ApplicationTypes/Renewal/RenewalAllDeclined.vue"),
+  },
+  {
     path: "/admin/goodstanding/unassigned",
     name: "GoodStandingUnassigned",
     component: () => import("../components/Reviewer/ApplicationTypes/GoodStanding/GoodStandingUnassigned.vue"),
@@ -438,6 +498,26 @@ const routes = [
     path: "/admin/goodstanding/assigned-to-others",
     name: "GoodStandingAssignedToOthers",
     component: () => import("../components/Reviewer/ApplicationTypes/GoodStanding/GoodStandingAssignedToOthers.vue"),
+  },
+  {
+    path: "/admin/goodstanding/finished",
+    name: "GoodStandingFinished",
+    component: () => import("../components/Reviewer/ApplicationTypes/GoodStanding/GoodStandingUnconfirmed.vue"),
+  },
+  {
+    path: "/admin/goodstanding/all-finished",
+    name: "GoodStandingAllFinished",
+    component: () => import("../components/Reviewer/ApplicationTypes/GoodStanding/GoodStandingAllUnconfirmed.vue"),
+  },
+  {
+    path: "/admin/goodstanding/declined",
+    name: "GoodStandingDeclined",
+    component: () => import("../components/Reviewer/ApplicationTypes/GoodStanding/GoodStandingDeclined.vue"),
+  },
+  {
+    path: "/admin/goodstanding/all-declined",
+    name: "GoodStandingAllDeclined",
+    component: () => import("../components/Reviewer/ApplicationTypes/GoodStanding/GoodStandingAllDeclined.vue"),
   },
   
 

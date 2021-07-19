@@ -12,5 +12,20 @@ export default {
         goodStandingAssignedToYouSearched: [],
         goodStandingAssignedToOthers: [],
         goodStandingAssignedToOthersSearched: [],
+
+        goodStandingApproved: [],
+        goodStandingApprovedSearched: [],
+        goodStandingAllApproved: [],
+        goodStandingAllApprovedSearched: [],
+
+        goodStandingDeclined: [],
+        goodStandingDeclinedSearched: [],
+        goodStandingAllDeclined: [],
+        goodStandingAllDeclinedSearched: [],
+
+        goodStandingUnderSuperVision: [],
+        goodStandingUnderSuperVisionSearched: [],
+        goodStandingOthersUnderSuperVision: [],
+        goodStandingOthersUnderSuperVisionSearched: [],
     }
 }

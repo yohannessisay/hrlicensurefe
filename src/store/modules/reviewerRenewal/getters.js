@@ -11,4 +11,19 @@ export default {
     getRenewalAssignedToYouSearched: state => state.renewalAssignedToYouSearched,
     getRenewalAssignedToOthers: state => state.renewalAssignedToOthers,
     getRenewalAssignedToOthersSearched: state => state.renewalAssignedToOthersSearched,
+
+    getRenewalApproved: (state) => state.renewalApproved,
+    getRenewalApprovedSearched: (state) => state.renewalApprovedSearched,
+    getRenewalAllApproved: (state) => state.renewalAllApproved,
+    getRenewalAllApprovedSearched: (state) => state.renewalAllApprovedSearched,
+
+    getRenewalDeclined: (state) => state.renewalDeclined,
+    getRenewalDeclinedSearched: (state) => state.renewalDeclinedSearched,
+    getRenewalAllDeclined: (state) => state.renewalAllDeclined,
+    getRenewalAllDeclinedSearched: (state) => state.renewalAllDeclinedSearched,
+
+    getRenewalUnderSuperVision: (state) => state.renewalUnderSuperVision,
+    getRenewalUnderSuperVisionSearched: (state) => state.renewalUnderSuperVisionSearched,
+    getRenewalOthersUnderSuperVision: (state) => state.renewalOthersUnderSuperVision,
+    getRenewalOthersUnderSuperVisionSearched: (state) => state.renewalOthersUnderSuperVisionSearched,
 }
