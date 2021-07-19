@@ -73,7 +73,7 @@
     <FlashMessage message="Login Successful!" />
   </div>
   <div v-if="message.showErrorFlash">
-    <ErrorFlashMessage message="Login Failed!" />
+    <ErrorFlashMessage v-bind:message="message.errorMessage" />
   </div>
 </template>
 <script>
@@ -94,6 +94,7 @@ export default {
       showFlash: false,
       showErrorFlash: false,
       showLoading: false,
+      errorMessage:""
     });
 
     const credentials = ref({
@@ -108,7 +109,7 @@ export default {
 
     const submit = () => {
       let email = {
-        emailAddress: credentials.value.emailAddress,
+        emailAddress: credentials.value.emailAddress.toLowerCase(),
         password: credentials.value.password,
       };
       if (!validateForm(credentials.value)) {
@@ -116,11 +117,17 @@ export default {
         message.value.showFlash = false;
         message.value.showErrorFlash = false;
         store.dispatch("user/login", email).then((res) => {
-          if (res.data.status == "Success") {
+            console.log("Login resources",res)
+            if(res)
+            {
+          // if (res.data.status == "Success") {
+           
             const userId = res.data.data.id;
             store.dispatch("profile/getProfileByUserId", userId).then((res) => {
+             
               const getProfiles = res.data ? res.data.data : null;
               if (getProfiles) {
+                console.log(res);
                 message.value.showLoading = false;
                 message.value.showFlash = true;
                 message.value.showErrorFlash = false;
@@ -140,8 +147,12 @@ export default {
             message.value.showLoading = false;
             message.value.showFlash = false;
             message.value.showErrorFlash = true;
-
-            setTimeout(() => {}, 1500);
+            message.value.errorMessage="Incorrect username and password";
+            setTimeout(() => {   message.value.showErrorFlash = false;
+            credentials.value.emailAddress="";
+            credentials.value.password="";
+              
+            }, 3000);
           }
         });
       }

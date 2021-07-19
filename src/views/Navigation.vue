@@ -34,8 +34,6 @@
           
               </svg> -->
               <div class="w-12 h-12 ">
-             
-            
                 <img  v-bind:src="pic" alt="image here"  class="w-20 h-12" />
                  </div>
               <!-- <div style="height:100px; width:100px;">
@@ -165,20 +163,26 @@ export default {
     const getProfile = () => {
       store.dispatch("profile/getProfileByUserId", id).then(res => {
         // var profile= store.getters["profile/getPersonalInfo"];
+
         getImage(res.data.data);
         getName(res.data.data);
       });
     };
 
     const getImage = profile => {
-      pic = profile.photo.data;
-      blob = base64StringToBlob(pic, "image/jpg");
+      //let x= profile.photo.data.join('');
+      console.log("this is the profie", profile);
+//  console.log(x);
+      pic.value = profile.photo;
+      console.log("this is the profie", pic);
+      // blob = base64StringToBlob(pic, "image/jpg");
       
     };
     const getName = profile => {
       name.value.fullName = profile.name + " " + profile.fatherName;
     };
     onMounted(() => {
+     
       getProfile();
     });
 

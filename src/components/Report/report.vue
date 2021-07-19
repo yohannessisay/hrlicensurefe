@@ -26,10 +26,12 @@
       </select>
       <input
         placeholder="Select date"
-        :value="date"
-        class="ml-5"
-        @click="displayDate()"
+       type="date"
+              class="ml-5"
+       
+        
       />
+    
       <month-picker
         @change="datePicker"
         v-if="showDate"
@@ -222,7 +224,7 @@ export default {
       chart: {
         id: "Status-report"
       },
-      // colors:["#0000FF","#FF0000","#FFA500"],
+      colors:["#002D62","#FF1818","#72A0C1"],
       xaxis: {
         categories: cat
       }
