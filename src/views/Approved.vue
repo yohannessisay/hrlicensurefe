@@ -613,32 +613,40 @@ export default {
       this.showLoading = !this.showLoading;
       this.$store.dispatch("newlicense/getNewLicense").then((res) => {
         this.license = res.data.data;
-        this.newlicense = this.license.filter(function(e) {
-          return e.applicationStatus.code.includes("APP");
-        });
+        if (this.license) {
+          this.newlicense = this.license.filter(function(e) {
+            return e.applicationStatus.code.includes("APP");
+          });
+        }
       });
       this.$store.dispatch("renewal/getRenewalLicense").then((res) => {
         this.license = res.data.data;
-        this.renewal = this.license.filter(function(e) {
-          return e.applicationStatus.code.includes("APP");
-        });
+        if (this.license) {
+          this.renewal = this.license.filter(function(e) {
+            return e.applicationStatus.code.includes("APP");
+          });
+        }
       });
       this.$store
         .dispatch("verification/getVerificationLicense")
         .then((res) => {
           this.license = res.data.data;
-          this.verification = this.license.filter(function(e) {
-            return e.applicationStatus.code.includes("APP");
-          });
+          if (this.license) {
+            this.verification = this.license.filter(function(e) {
+              return e.applicationStatus.code.includes("APP");
+            });
+          }
         });
       this.$store
         .dispatch("goodstanding/getGoodStandingLicense")
         .then((res) => {
           this.license = res.data.data;
           this.showLoading = !this.showLoading;
-          this.goodstanding = this.license.filter(function(e) {
-            return e.applicationStatus.code.includes("APP");
-          });
+          if (this.license) {
+            this.goodstanding = this.license.filter(function(e) {
+              return e.applicationStatus.code.includes("APP");
+            });
+          }
         });
     },
   },
