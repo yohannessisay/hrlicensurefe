@@ -196,7 +196,6 @@ export default {
       // documentSpecs = store.getters[(appType + "/getDocumentSpecs", id)];
       // store.dispatch(appType + "/getDraft", id).then((res) => {
       //   const results = res.data.data;
-      //   console.log(results);
       //   documents = results.documents;
       //   appID = results.id;
       //   message.value.showLoading = false;

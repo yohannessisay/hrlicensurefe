@@ -117,7 +117,6 @@ export default {
         message.value.showFlash = false;
         message.value.showErrorFlash = false;
         store.dispatch("user/login", email).then((res) => {
-            console.log("Login resources",res)
             if(res)
             {
           // if (res.data.status == "Success") {
@@ -127,7 +126,6 @@ export default {
              
               const getProfiles = res.data ? res.data.data : null;
               if (getProfiles) {
-                console.log(res);
                 message.value.showLoading = false;
                 message.value.showFlash = true;
                 message.value.showErrorFlash = false;

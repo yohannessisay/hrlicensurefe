@@ -1,6 +1,5 @@
 <template>
   <div>
-  
     <div
       v-if="!this.showLoading"
       class="relative text-gray-600 focus-within:text-gray-400 pt-10 pl-16 bg-lightBlueB-200"
@@ -530,32 +529,40 @@ export default {
       this.showLoading = !this.showLoading;
       this.$store.dispatch("newlicense/getNewLicense").then((res) => {
         this.license = res.data.data;
-        this.newlicense = this.license.filter(function(e) {
-          return e.applicationStatus.code.includes("DP");
-        });
+        if (this.license) {
+          this.newlicense = this.license.filter(function(e) {
+            return e.applicationStatus.code.includes("DP");
+          });
+        }
       });
       this.$store.dispatch("renewal/getRenewalLicense").then((res) => {
         this.license = res.data.data;
-        this.renewal = this.license.filter(function(e) {
-          return e.applicationStatus.code.includes("DP");
-        });
+        if (this.license) {
+          this.renewal = this.license.filter(function(e) {
+            return e.applicationStatus.code.includes("DP");
+          });
+        }
       });
       this.$store
         .dispatch("verification/getVerificationLicense")
         .then((res) => {
           this.license = res.data.data;
-          this.verification = this.license.filter(function(e) {
-            return e.applicationStatus.code.includes("DP");
-          });
+          if (this.license) {
+            this.verification = this.license.filter(function(e) {
+              return e.applicationStatus.code.includes("DP");
+            });
+          }
         });
       this.$store
         .dispatch("goodstanding/getGoodStandingLicense")
         .then((res) => {
           this.license = res.data.data;
           this.showLoading = !this.showLoading;
-          this.goodstanding = this.license.filter(function(e) {
-            return e.applicationStatus.code.includes("DP");
-          });
+          if (this.license) {
+            this.goodstanding = this.license.filter(function(e) {
+              return e.applicationStatus.code.includes("DP");
+            });
+          }
         });
     },
   },

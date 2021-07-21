@@ -558,27 +558,26 @@ export default {
     fetchLicensebyId() {
       this.showLoading = !this.showLoading;
       this.$store.dispatch("newlicense/getNewLicense").then((res) => {
-        if (res.data != undefined) {
-          this.license = res.data.data;
+        this.license = res.data.data;
+        if (this.license) {
           this.newlicense = this.license.filter(function(e) {
             return e.applicationStatus.code.includes("SUB");
           });
         }
       });
       this.$store.dispatch("renewal/getRenewalLicense").then((res) => {
-        if (res.data != undefined) {
-          this.license = res.data.data;
+        this.license = res.data.data;
+        if (this.license) {
           this.renewal = this.license.filter(function(e) {
             return e.applicationStatus.code.includes("SUB");
           });
         }
-        console.log(this.renewal);
       });
       this.$store
         .dispatch("verification/getVerificationLicense")
         .then((res) => {
-          if (res.data != undefined) {
-            this.license = res.data.data;
+          this.license = res.data.data;
+          if (this.license) {
             this.verification = this.license.filter(function(e) {
               return e.applicationStatus.code.includes("SUB");
             });
@@ -587,9 +586,9 @@ export default {
       this.$store
         .dispatch("goodstanding/getGoodStandingLicense")
         .then((res) => {
-          if (res.data != undefined) {
-            this.license = res.data.data;
-            this.showLoading = !this.showLoading;
+          this.license = res.data.data;
+          this.showLoading = !this.showLoading;
+          if (this.license) {
             this.goodstanding = this.license.filter(function(e) {
               return e.applicationStatus.code.includes("SUB");
             });
