@@ -21,7 +21,12 @@ import {
   SET_RENEWAL_DECLINED,
   SET_RENEWAL_DECLINED_SEARCHED,
   SET_RENEWAL_ALL_DECLINED,
-  SET_RENEWAL_ALL_DECLINED_SEARCHED
+  SET_RENEWAL_ALL_DECLINED_SEARCHED,
+
+  SET_RENEWAL_UNDER_SUPERVISION,
+  SET_RENEWAL_UNDER_SUPERVISION_SEARCHED,
+  SET_RENEWAL_OTHERS_UNDER_SUPERVISION,
+  SET_RENEWAL_OTHERS_UNDER_SUPERVISION_SEARCHED
 } from "./mutation-types";
 const baseUrl = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api";
 
@@ -327,5 +332,67 @@ export default {
             e.reviewer.name.toLowerCase().includes(searchKey.toLowerCase());
     });
     commit(SET_RENEWAL_ALL_DECLINED_SEARCHED, searchedVal);
+  },
+
+  async getRenewalUnderSuperVision({ commit }, adminId) {
+    const url = baseUrl + "/renewals/status/7";
+    const resp = await ApiService.get(url);
+    const underSuperVision = resp.data.data.filter(function(e) {
+      return e.reviewerId === adminId;
+    });
+    commit(SET_RENEWAL_UNDER_SUPERVISION, underSuperVision);
+  },
+
+  getRenewalUnderSuperVisionSearched({ commit, getters }, searchKey) {
+    if (getters.getRenewalUnderSuperVision === undefined) {
+      return;
+    }
+    const searchedVal = getters.getRenewalUnderSuperVision.filter(function(e) {
+      return e.renewalCode === undefined
+        ? ""
+        : e.renewalCode.toLowerCase().includes(searchKey.toLowerCase()) ||
+            (e.applicant.profile.name + " " + e.applicant.profile.fatherName)
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.name
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.fatherName
+              .toLowerCase()
+              .includes(searchKey.toLowerCase());
+    });
+    commit(SET_RENEWAL_UNDER_SUPERVISION_SEARCHED, searchedVal);
+  },
+
+  async getRenewalOthersUnderSuperVision({ commit }, adminId) {
+    const url = baseUrl + "/renewals/status/7";
+    const resp = await ApiService.get(url);
+    const othersUnderSuperVision = resp.data.data.filter(function(e) {
+      return e.reviewerId !== adminId
+    })
+    commit(SET_RENEWAL_OTHERS_UNDER_SUPERVISION, othersUnderSuperVision);
+  },
+  getRenewalOthersUnderSuperVisionSearched({ commit, getters }, searchKey) {
+    if (getters.getRenewalOthersUnderSuperVision === undefined) {
+      return;
+    }
+    const searchedVal = getters.getRenewalOthersUnderSuperVision.filter(function(
+      e
+    ) {
+      return e.renewalCode === undefined
+        ? ""
+        : e.renewalCode.toLowerCase().includes(searchKey.toLowerCase()) ||
+            (e.applicant.profile.name + " " + e.applicant.profile.fatherName)
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.name
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.fatherName
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.reviewer.name.toLowerCase().includes(searchKey.toLowerCase());
+    });
+    commit(SET_RENEWAL_OTHERS_UNDER_SUPERVISION_SEARCHED, searchedVal);
   },
 };

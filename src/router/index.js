@@ -259,6 +259,12 @@ const routes = [
       import("../components/Reviewer/Detail/RecentlyFinishedDetail.vue"),
   },
   {
+    path: "/admin/under-super-vision-detail/:applicationType/:applicationId/:applicantId",
+    name: "underSuperVisionDetail",
+    component: () =>
+      import("../components/Reviewer/Detail/UnderSuperVisionDetail.vue"),
+  },
+  {
     path: "/admin/confirmReview/:applicationType/:applicantId",
     name: "confirmReview",
     component: () => import("../components/Reviewer/ConfirmAdminReview.vue"),
@@ -473,6 +479,11 @@ const routes = [
     path: "/admin/renewal/all-declined",
     name: "RenewalAllDeclined",
     component: () => import("../components/Reviewer/ApplicationTypes/Renewal/RenewalAllDeclined.vue"),
+  },
+  {
+    path: "/admin/renewal/under-super-vision",
+    name: "RenewalUnderSuperVision",
+    component: () => import("../components/Reviewer/ApplicationTypes/Renewal/RenewalUnderSuperVision.vue"),
   },
   {
     path: "/admin/goodstanding/unassigned",

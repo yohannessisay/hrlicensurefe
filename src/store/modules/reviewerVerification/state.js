@@ -22,10 +22,5 @@ export default {
         verificationDeclinedSearched: [],
         verificationAllDeclined: [],
         verificationAllDeclinedSearched: [],
-
-        verificationUnderSuperVision: [],
-        verificationUnderSuperVisionSearched: [],
-        verificationOthersUnderSuperVision: [],
-        verificationOthersUnderSuperVisionSearched: [],
     }
 }

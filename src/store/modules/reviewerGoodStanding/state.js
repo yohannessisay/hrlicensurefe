@@ -22,10 +22,6 @@ export default {
         goodStandingDeclinedSearched: [],
         goodStandingAllDeclined: [],
         goodStandingAllDeclinedSearched: [],
-
-        goodStandingUnderSuperVision: [],
-        goodStandingUnderSuperVisionSearched: [],
-        goodStandingOthersUnderSuperVision: [],
-        goodStandingOthersUnderSuperVisionSearched: [],
+        
     }
 }

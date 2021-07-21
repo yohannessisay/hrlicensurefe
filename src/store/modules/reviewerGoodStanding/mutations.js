@@ -22,10 +22,6 @@ import {
   SET_GOOD_STANDING_ALL_DECLINED,
   SET_GOOD_STANDING_ALL_DECLINED_SEARCHED,
 
-  SET_GOOD_STANDING_UNDER_SUPERVISION,
-  SET_GOOD_STANDING_UNDER_SUPERVISION_SEARCHED,
-  SET_GOOD_STANDING_OTHERS_UNDER_SUPERVISION,
-  SET_GOOD_STANDING_OTHERS_UNDER_SUPERVISION_SEARCHED
 } from "./mutation-types";
 export default {
   [SET_GOOD_STANDING_UNASSIGNED](state, data) {
@@ -97,18 +93,4 @@ export default {
     state.goodStandingAllDeclinedSearched = searchedVal;
   },
 
-  [SET_GOOD_STANDING_UNDER_SUPERVISION](state, data) {
-    state.goodStandingUnderSuperVision = data;
-    state.goodStandingUnderSuperVisionSearched = data;
-  },
-  [SET_GOOD_STANDING_UNDER_SUPERVISION_SEARCHED](state, searchedVal) {
-    state.goodStandingUnderSuperVisionSearched = searchedVal;
-  },
-  [SET_GOOD_STANDING_OTHERS_UNDER_SUPERVISION](state, data) {
-    state.goodStandingOthersUnderSuperVision = data;
-    state.goodStandingOthersUnderSuperVisionSearched = data;
-  },
-  [SET_GOOD_STANDING_OTHERS_UNDER_SUPERVISION_SEARCHED](state, searchedVal) {
-    state.goodStandingOthersUnderSuperVisionSearched = searchedVal;
-  },
 };

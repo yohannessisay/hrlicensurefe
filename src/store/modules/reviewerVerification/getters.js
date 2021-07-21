@@ -22,8 +22,4 @@ export default {
     getVerificationAllDeclined: (state) => state.verificationAllDeclined,
     getVerificationAllDeclinedSearched: (state) => state.verificationAllDeclinedSearched,
 
-    getVerificationUnderSuperVision: (state) => state.verificationUnderSuperVision,
-    getVerificationUnderSuperVisionSearched: (state) => state.verificationUnderSuperVisionSearched,
-    getVerificationOthersUnderSuperVision: (state) => state.verificationOthersUnderSuperVision,
-    getVerificationOthersUnderSuperVisionSearched: (state) => state.verificationOthersUnderSuperVisionSearched,
 }

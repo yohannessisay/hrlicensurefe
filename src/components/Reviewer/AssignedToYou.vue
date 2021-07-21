@@ -163,6 +163,7 @@ export default {
         showLoading.value = false;
         assignedToyou.value =
           store.getters["reviewer/getAssignedToYouSearched"];
+          console.log("assigned to you", assignedToYou.value)
         allInfo.value.assignApplication =
           store.getters["reviewer/getAssignedToYouSearched"];
         for (let applicant in allInfo.value.assignApplication) {

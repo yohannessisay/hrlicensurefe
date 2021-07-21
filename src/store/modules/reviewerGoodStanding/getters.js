@@ -22,8 +22,4 @@ export default {
     getGoodStandingAllDeclined: (state) => state.goodStandingAllDeclined,
     getGoodStandingAllDeclinedSearched: (state) => state.goodStandingAllDeclinedSearched,
 
-    getGoodStandingUnderSuperVision: (state) => state.goodStandingUnderSuperVision,
-    getGoodStandingUnderSuperVisionSearched: (state) => state.goodStandingUnderSuperVisionSearched,
-    getGoodStandingOthersUnderSuperVision: (state) => state.goodStandingOthersUnderSuperVision,
-    getGoodStandingOthersUnderSuperVisionSearched: (state) => state.goodStandingOthersUnderSuperVisionSearched,
 }

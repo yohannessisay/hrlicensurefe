@@ -21,11 +21,6 @@ import {
   SET_VERIFICATION_DECLINED_SEARCHED,
   SET_VERIFICATION_ALL_DECLINED,
   SET_VERIFICATION_ALL_DECLINED_SEARCHED,
-
-  SET_VERIFICATION_UNDER_SUPERVISION,
-  SET_VERIFICATION_UNDER_SUPERVISION_SEARCHED,
-  SET_VERIFICATION_OTHERS_UNDER_SUPERVISION,
-  SET_VERIFICATION_OTHERS_UNDER_SUPERVISION_SEARCHED,
 } from "./mutation-types";
 export default {
   [SET_VERIFICATION_UNASSIGNED](state, data) {
@@ -97,18 +92,4 @@ export default {
     state.verificationAllDeclinedSearched = searchedVal;
   },
 
-  [SET_VERIFICATION_UNDER_SUPERVISION](state, data) {
-    state.verificationUnderSuperVision = data;
-    state.verificationUnderSuperVisionSearched = data;
-  },
-  [SET_VERIFICATION_UNDER_SUPERVISION_SEARCHED](state, searchedVal) {
-    state.verificationUnderSuperVisionSearched = searchedVal;
-  },
-  [SET_VERIFICATION_OTHERS_UNDER_SUPERVISION](state, data) {
-    state.verificationOthersUnderSuperVision = data;
-    state.verificationOthersUnderSuperVisionSearched = data;
-  },
-  [SET_VERIFICATION_OTHERS_UNDER_SUPERVISION_SEARCHED](state, searchedVal) {
-    state.verificationOthersUnderSuperVisionSearched = searchedVal;
-  },
 };
