@@ -23,11 +23,8 @@
           Filter
         </button>
       </div>
-      
-      <div class="flex pl-12 pt-tiny" v-if="expertLevel === 3">
-        <Title message="Renewal Finished" />
-      </div>
-      <div class="flex pl-12 pt-tiny" v-else>
+
+      <div class="flex pl-12 pt-tiny">
         <Title message="Renewal Under Super Vision" />
       </div>
       <div class="flex flex-wrap pb-medium rounded h-full" v-if="!showLoading">
@@ -59,7 +56,7 @@
       </div>
       <filtered-info
         :filteredData="allInfo.filteredByDate"
-        type="under-super-vision-detail"
+        type="applicant-detail"
         app_type="Renewal"
       />
     </div>
@@ -105,8 +102,6 @@ export default {
   },
   setup() {
     const store = useStore();
-
-    let expertLevel = JSON.parse(localStorage.getItem("allAdminData")).expertLevelId
 
     let renewalUnderSuperVision = ref([]);
 
@@ -180,7 +175,6 @@ export default {
     });
 
     return {
-      expertLevel,
       nothingToShow,
       allInfo,
       showLoading,

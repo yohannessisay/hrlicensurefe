@@ -25,7 +25,7 @@
       </div>
 
       <div class="flex pl-12 pt-tiny">
-        <Title message="Renewal Declined" />
+        <Title message="All Renewal Declined" />
       </div>
       <div class="flex flex-wrap pb-medium rounded h-full" v-if="!showLoading">
         <nothing-to-show :nothingToShow="nothingToShow" />
@@ -56,7 +56,7 @@
       </div>
       <filtered-info
         :filteredData="allInfo.filteredByDate"
-        type="declinedDetail"
+        type="applicant-detail"
         app_type="Renewal"
       />
     </div>

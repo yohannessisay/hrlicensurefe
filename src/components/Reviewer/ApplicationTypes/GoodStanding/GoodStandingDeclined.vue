@@ -55,7 +55,7 @@
       </div>
       <filtered-info
         :filteredData="allInfo.filteredByDate"
-        type="declinedDetail"
+        type="applicant-detail"
         app_type="Good Standing"
       />
     </div>

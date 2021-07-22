@@ -1,6 +1,6 @@
 <template>
   <div>
-    <reviewer-nav-bar tab="allGoodStandingDeclined" />
+    <reviewer-nav-bar tab="renewalOthersUnderSuperVision" />
     <div class="bg-lightBlueB-200 h-full" v-if="!allInfo.searchByInput">
       <div class="pl-12">
         <div>Filter By</div>
@@ -19,19 +19,19 @@
           type="date"
           v-model="allInfo.searchUpToDate"
         />
-        <button @click="filterDeclinedApplication">
+        <button @click="filterUnderSuperVisionApplication">
           Filter
         </button>
       </div>
       <div class="flex pl-12 pt-tiny">
-        <Title message="All Good Standing Declined" />
+        <Title message="Others Renewal Under Super Vision" />
       </div>
       <div class="flex flex-wrap pb-medium rounded h-full" v-if="!showLoading">
         <nothing-to-show :nothingToShow="nothingToShow" />
-        <declined-applications
-          :declinedApplication="getGoodStandingAllDeclined"
-          app_type="Good Standing"
-          all_declined="true"
+        <under-super-vision-applications
+          :underSuperVisionApplication="getRenewalUnderSuperVision"
+          app_type="Renewal"
+          all_underSuperVision="true"
         />
       </div>
     </div>
@@ -45,7 +45,7 @@
       <div class="flex pl-12 pt-tiny">
         <Title
           :message="
-            'Declined Applicants on Date Range ' +
+            'Under Super Vision Applicants on Date Range ' +
               moment(allInfo.searchFromDate).format('MMM D, YYYY') +
               ' To ' +
               moment(allInfo.searchUpToDate).format('MMM D, YYYY')
@@ -56,7 +56,7 @@
       <filtered-info
         :filteredData="allInfo.filteredByDate"
         type="applicant-detail"
-        app_type="Good Standing"
+        app_type="Renewal"
       />
     </div>
   </div>
@@ -71,7 +71,7 @@
 import { ref, onMounted } from "vue";
 import Title from "@/sharedComponents/TitleWithIllustration";
 import ReviewerNavBar from "../../ReviewerNavBar.vue";
-import DeclinedApplications from "../ChildApplicationTypes/DeclinedApplications.vue";
+import UnderSuperVisionApplications from "../ChildApplicationTypes/UnderSuperVisionApplications.vue";
 import NothingToShow from "../../ChildComponents/NothingToShow.vue";
 import { useStore } from "vuex";
 import store from "../../../../store";
@@ -84,9 +84,9 @@ import FilteredInfo from "../../ChildComponents/FilteredDatas/FilteredInfo.vue";
 export default {
   computed: {
     moment: () => moment,
-    getGoodStandingAllDeclined() {
+    getRenewalUnderSuperVision() {
       return store.getters[
-        "reviewerGoodStanding/getGoodStandingAllDeclinedSearched"
+        "reviewerRenewal/getRenewalOthersUnderSuperVisionSearched"
       ];
     },
   },
@@ -96,13 +96,13 @@ export default {
     FilteredInfo,
     Spinner,
     NothingToShow,
-    DeclinedApplications,
+    UnderSuperVisionApplications,
     Title,
   },
   setup() {
     const store = useStore();
 
-    let goodStandingDeclined = ref([]);
+    let renewalUnderSuperVision = ref([]);
 
     const adminId = +localStorage.getItem("adminId");
 
@@ -122,7 +122,7 @@ export default {
       app_type: "",
     });
 
-    const filterDeclinedApplication = () => {
+    const filterUnderSuperVisionApplication = () => {
       filterApplication(moment, allInfo.value);
     };
 
@@ -135,19 +135,19 @@ export default {
       allInfo.value.app_type = "";
     };
 
-    const fetchGoodStandingDeclined = () => {
+    const fetchRenewalUnderSuperVision = () => {
       showLoading.value = true;
       store
-        .dispatch("reviewerGoodStanding/getGoodStandingAllDeclined", adminId)
+        .dispatch("reviewerRenewal/getRenewalOthersUnderSuperVision", adminId)
         .then((res) => {
           showLoading.value = false;
-          goodStandingDeclined.value =
+          renewalUnderSuperVision.value =
             store.getters[
-              "reviewerGoodStanding/getGoodStandingAllDeclinedSearched"
+              "reviewerRenewal/getRenewalOthersUnderSuperVisionSearched"
             ];
           allInfo.value.assignApplication =
             store.getters[
-              "reviewerGoodStanding/getGoodStandingAllDeclinedSearched"
+              "reviewerRenewal/getRenewalOthersUnderSuperVisionSearched"
             ];
 
           for (let applicant in allInfo.value.assignApplication) {
@@ -163,22 +163,21 @@ export default {
             }
           }
           if (
-            store.getters["reviewerGoodStanding/getGoodStandingAllDeclined"]
-              .length === 0
+            renewalUnderSuperVision.value.length === 0
           ) {
             nothingToShow.value = true;
           }
         });
     };
     onMounted(() => {
-      fetchGoodStandingDeclined();
+      fetchRenewalUnderSuperVision();
     });
 
     return {
       nothingToShow,
       allInfo,
       showLoading,
-      filterDeclinedApplication,
+      filterUnderSuperVisionApplication,
       backClicked,
     };
   },

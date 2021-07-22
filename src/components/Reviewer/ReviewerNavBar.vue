@@ -575,6 +575,19 @@ export default {
       if (props.tab === "allRenewalUnconfirmed") {
         store.dispatch("reviewerRenewal/getRenewalAllApprovedSearched", search.value)
       }
+      if (props.tab === "renewalDeclined") {
+        store.dispatch("reviewerRenewal/getRenewalDeclinedSearched", search.value)
+      }
+      if (props.tab === "allRenewalDeclined") {
+        store.dispatch("reviewerRenewal/getRenewalAllDeclinedSearched", search.value)
+      }
+      if (props.tab === "renewalUnderSuperVision") {
+        store.dispatch("reviewerRenewal/getRenewalUnderSuperVisionSearched", search.value)
+      }
+      if (props.tab === "renewalOthersUnderSuperVision") {
+        store.dispatch("reviewerRenewal/getRenewalOthersUnderSuperVisionSearched", search.value)
+      }
+
       if (props.tab === "newLicenseUnassigned") {
         store.dispatch("reviewerNewLicense/getNewLicenseUnassignedSearched", search.value)
       }
@@ -595,6 +608,18 @@ export default {
       }
       if (props.tab === "allNewLicenseUnconfirmed") {
         store.dispatch("reviewerNewLicense/getNewLicenseAllApprovedSearched", search.value)
+      }
+      if (props.tab === "newLicenseDeclined") {
+        store.dispatch("reviewerNewLicense/getNewLicenseDeclinedSearched", search.value)
+      }
+      if (props.tab === "allNewLicenseDeclined") {
+        store.dispatch("reviewerNewLicense/getNewLicenseAllDeclinedSearched", search.value)
+      }
+      if (props.tab === "newLicenseUnderSuperVision") {
+        store.dispatch("reviewerNewLicense/getNewLicenseUnderSuperVisionSearched", search.value)
+      }
+      if (props.tab === "othersNewLicenseUnderSuperVision") {
+        store.dispatch("reviewerNewLicense/getNewLicenseOthersUnderSuperVisionSearched", search.value)
       }
       if (props.tab === "verificationUnassigned") {
         store.dispatch("reviewerVerification/getUnassignedVerificationSearched", search.value)
@@ -617,6 +642,12 @@ export default {
       if (props.tab === "allVerificationUnconfirmed") {
         store.dispatch("reviewerVerification/getVerificationAllApprovedSearched", search.value)
       }
+      if (props.tab === "verificationDeclined") {
+        store.dispatch("reviewerVerification/getVerificationDeclinedSearched", search.value)
+      }
+      if (props.tab === "allVerificationDeclined") {
+        store.dispatch("reviewerVerification/getVerificationAllDeclinedSearched", search.value)
+      }
       if(props.tab === "goodStandingUnassigned") {
         store.dispatch("reviewerGoodStanding/getUnassignedGoodStandingSearched", search.value)
       }
@@ -637,6 +668,12 @@ export default {
       }
       if (props.tab === "allGoodStandingUnconfirmed") {
         store.dispatch("reviewerGoodStanding/getGoodStandingAllApprovedSearched", search.value)
+      }
+      if (props.tab === "goodStandingDeclined") {
+        store.dispatch("reviewerGoodStanding/getGoodStandingDeclinedSearched", search.value)
+      }
+      if (props.tab === "allGoodStandingDeclined") {
+        store.dispatch("reviewerGoodStanding/getGoodStandingAllDeclinedSearched", search.value)
       }
       
 

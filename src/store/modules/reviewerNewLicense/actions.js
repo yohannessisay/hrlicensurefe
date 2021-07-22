@@ -21,6 +21,11 @@ import {
   SET_NEW_LICENSE_ALL_DECLINED,
   SET_NEW_LICENSE_ALL_DECLINED_SEARCHED,
 
+  SET_NEW_LICENSE_UNDER_SUPERVISION,
+  SET_NEW_LICENSE_UNDER_SUPERVISION_SEARCHED,
+  SET_NEW_LICENSE_OTHERS_UNDER_SUPERVISION,
+  SET_NEW_LICENSE_OTHERS_UNDER_SUPERVISION_SEARCHED,
+
   NEW_LICENSE_REPORT,
 } from "./mutation-types";
 
@@ -191,12 +196,6 @@ export default {
   async getNewLicenseApproved({ commit }, adminId) {
     const url = baseUrl + "/newLicenses/status/5";
     const resp = await ApiService.get(url);
-    console.log("new license approved response", resp.data)
-    // if(resp.data.data === undefined) {
-    //   const approved = []
-    //   commit(SET_NEW_LICENSE_APPROVED, approved)
-    //   return;
-    // }
     const Approved = resp.data.data.filter(function(e) {
       return e.reviewerId === adminId;
     });
@@ -324,5 +323,67 @@ export default {
             e.reviewer.name.toLowerCase().includes(searchKey.toLowerCase());
     });
     commit(SET_NEW_LICENSE_ALL_DECLINED_SEARCHED, searchedVal);
+  },
+
+  async getNewLicenseUnderSuperVision({ commit }, adminId) {
+    const url = baseUrl + "/newlicenses/status/7";
+    const resp = await ApiService.get(url);
+    const underSuperVision = resp.data.data.filter(function(e) {
+      return e.reviewerId === adminId;
+    });
+    commit(SET_NEW_LICENSE_UNDER_SUPERVISION, underSuperVision);
+  },
+
+  getNewLicenseUnderSuperVisionSearched({ commit, getters }, searchKey) {
+    if (getters.getNewLicenseUnderSuperVision === undefined) {
+      return;
+    }
+    const searchedVal = getters.getNewLicenseUnderSuperVision.filter(function(e) {
+      return e.newLicenseCode === undefined
+        ? ""
+        : e.newLicenseCode.toLowerCase().includes(searchKey.toLowerCase()) ||
+            (e.applicant.profile.name + " " + e.applicant.profile.fatherName)
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.name
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.fatherName
+              .toLowerCase()
+              .includes(searchKey.toLowerCase());
+    });
+    commit(SET_NEW_LICENSE_UNDER_SUPERVISION_SEARCHED, searchedVal);
+  },
+
+  async getNewLicenseOthersUnderSuperVision({ commit }, adminId) {
+    const url = baseUrl + "/newlicenses/status/7";
+    const resp = await ApiService.get(url);
+    const othersUnderSuperVision = resp.data.data.filter(function(e) {
+      return e.reviewerId !== adminId
+    })
+    commit(SET_NEW_LICENSE_OTHERS_UNDER_SUPERVISION, othersUnderSuperVision);
+  },
+  getNewLicenseOthersUnderSuperVisionSearched({ commit, getters }, searchKey) {
+    if (getters.getNewLicenseOthersUnderSuperVision === undefined) {
+      return;
+    }
+    const searchedVal = getters.getNewLicenseOthersUnderSuperVision.filter(function(
+      e
+    ) {
+      return e.newLicenseCode === undefined
+        ? ""
+        : e.newLicenseCode.toLowerCase().includes(searchKey.toLowerCase()) ||
+            (e.applicant.profile.name + " " + e.applicant.profile.fatherName)
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.name
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.fatherName
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.reviewer.name.toLowerCase().includes(searchKey.toLowerCase());
+    });
+    commit(SET_NEW_LICENSE_OTHERS_UNDER_SUPERVISION_SEARCHED, searchedVal);
   },
 };

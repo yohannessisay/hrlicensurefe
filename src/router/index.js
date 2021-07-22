@@ -259,12 +259,6 @@ const routes = [
       import("../components/Reviewer/Detail/RecentlyFinishedDetail.vue"),
   },
   {
-    path: "/admin/under-super-vision-detail/:applicationType/:applicationId/:applicantId",
-    name: "underSuperVisionDetail",
-    component: () =>
-      import("../components/Reviewer/Detail/UnderSuperVisionDetail.vue"),
-  },
-  {
     path: "/admin/confirmReview/:applicationType/:applicantId",
     name: "confirmReview",
     component: () => import("../components/Reviewer/ConfirmAdminReview.vue"),
@@ -330,7 +324,7 @@ const routes = [
       import("../components/Reviewer/Detail/ReturnedToOthersDetail.vue"),
   },
   {
-    path: "/admin/applicantDetail/:applicationType/:applicationId/:applicantId",
+    path: "/admin/applicant-detail/:applicationType/:applicationId/:applicantId",
     name: "applicantDetail",
     component: () =>
       import("../components/Reviewer/Detail/ApplicantDetail.vue"),
@@ -389,6 +383,16 @@ const routes = [
     path: "/admin/newlicense/all-declined",
     name: "NewLicenseAllDeclined",
     component: () => import("../components/Reviewer/ApplicationTypes/NewLicense/NewLicenseAllDeclined.vue"),
+  },
+  {
+    path: "/admin/newlicense/under-super-vision",
+    name: "NewLicenseUnderSuperVision",
+    component: () => import("../components/Reviewer/ApplicationTypes/NewLicense/NewLicenseUnderSuperVision.vue"),
+  },
+  {
+    path: "/admin/newlicense/others-under-super-vision",
+    name: "NewLicenseOthersUnderSuperVision",
+    component: () => import("../components/Reviewer/ApplicationTypes/NewLicense/NewLicenseOthersUnderSuperVision.vue"),
   },
   {
     path: "/admin/verification/unassigned",
@@ -484,6 +488,11 @@ const routes = [
     path: "/admin/renewal/under-super-vision",
     name: "RenewalUnderSuperVision",
     component: () => import("../components/Reviewer/ApplicationTypes/Renewal/RenewalUnderSuperVision.vue"),
+  },
+  {
+    path: "/admin/renewal/others-under-super-vision",
+    name: "RenewalOthersUnderSuperVision",
+    component: () => import("../components/Reviewer/ApplicationTypes/Renewal/RenewalOthersUnderSuperVision.vue"),
   },
   {
     path: "/admin/goodstanding/unassigned",
