@@ -26,7 +26,12 @@ import {
   SET_RENEWAL_UNDER_SUPERVISION,
   SET_RENEWAL_UNDER_SUPERVISION_SEARCHED,
   SET_RENEWAL_OTHERS_UNDER_SUPERVISION,
-  SET_RENEWAL_OTHERS_UNDER_SUPERVISION_SEARCHED
+  SET_RENEWAL_OTHERS_UNDER_SUPERVISION_SEARCHED,
+
+  SET_RENEWAL_APPROVED_PAYMENT,
+  SET_RENEWAL_APPROVED_PAYMENT_SEARCHED,
+  SET_RENEWAL_OTHERS_APPROVED_PAYMENT,
+  SET_RENEWAL_OTHERS_APPROVED_PAYMENT_SEARCHED
 } from "./mutation-types";
 const baseUrl = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api";
 
@@ -394,5 +399,73 @@ export default {
             e.reviewer.name.toLowerCase().includes(searchKey.toLowerCase());
     });
     commit(SET_RENEWAL_OTHERS_UNDER_SUPERVISION_SEARCHED, searchedVal);
+  },
+
+  /* 
+  /* approved payment status is wrong for the time (status/7) is placeholder
+  */
+  async getRenewalApprovedPayment({ commit }, adminId) {
+    const url = baseUrl + "/renewals/status/7";
+    const resp = await ApiService.get(url);
+    const approvedPayment = resp.data.data.filter(function(e) {
+      return e.reviewerId === adminId;
+    });
+    commit(SET_RENEWAL_APPROVED_PAYMENT, approvedPayment);
+  },
+
+  getRenewalApprovedPaymentSearched({ commit, getters }, searchKey) {
+    if (getters.getRenewalApprovedPayment === undefined) {
+      return;
+    }
+    const searchedVal = getters.getRenewalApprovedPayment.filter(function(e) {
+      return e.renewalCode === undefined
+        ? ""
+        : e.renewalCode.toLowerCase().includes(searchKey.toLowerCase()) ||
+            (e.applicant.profile.name + " " + e.applicant.profile.fatherName)
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.name
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.fatherName
+              .toLowerCase()
+              .includes(searchKey.toLowerCase());
+    });
+    commit(SET_RENEWAL_APPROVED_PAYMENT_SEARCHED, searchedVal);
+  },
+
+  /* 
+  /* others approved payment status is wrong for the time (status/7) is placeholder
+  */
+  async getRenewalOthersApprovedPayment({ commit }, adminId) {
+    const url = baseUrl + "/renewals/status/7";
+    const resp = await ApiService.get(url);
+    const othersApprovedPayments = resp.data.data.filter(function(e) {
+      return e.reviewerId !== adminId
+    })
+    commit(SET_RENEWAL_OTHERS_APPROVED_PAYMENT, othersApprovedPayments);
+  },
+  getRenewalOthersApprovedPaymentSearched({ commit, getters }, searchKey) {
+    if (getters.getRenewalOthersApprovedPayment === undefined) {
+      return;
+    }
+    const searchedVal = getters.getRenewalOthersApprovedPayment.filter(function(
+      e
+    ) {
+      return e.renewalCode === undefined
+        ? ""
+        : e.renewalCode.toLowerCase().includes(searchKey.toLowerCase()) ||
+            (e.applicant.profile.name + " " + e.applicant.profile.fatherName)
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.name
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.fatherName
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.reviewer.name.toLowerCase().includes(searchKey.toLowerCase());
+    });
+    commit(SET_RENEWAL_OTHERS_APPROVED_PAYMENT_SEARCHED, searchedVal);
   },
 };

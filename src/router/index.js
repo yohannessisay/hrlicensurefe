@@ -395,6 +395,17 @@ const routes = [
     component: () => import("../components/Reviewer/ApplicationTypes/NewLicense/NewLicenseOthersUnderSuperVision.vue"),
   },
   {
+    path: "/admin/newlicense/approved-payment",
+    name: "NewLicenseApprovedPayment",
+    component: () => import("../components/Reviewer/ApplicationTypes/NewLicense/NewLicenseApprovedPayment.vue"),
+  },
+  {
+    path: "/admin/newlicense/others-approved-payment",
+    name: "NewLicenseOthersApprovedPayment",
+    component: () => import("../components/Reviewer/ApplicationTypes/NewLicense/NewLicenseOthersApprovedPayment.vue"),
+  },
+
+  {
     path: "/admin/verification/unassigned",
     name: "VerificationUnassigned",
     component: () => import("../components/Reviewer/ApplicationTypes/Verification/VerificationUnassigned.vue"),
@@ -493,6 +504,16 @@ const routes = [
     path: "/admin/renewal/others-under-super-vision",
     name: "RenewalOthersUnderSuperVision",
     component: () => import("../components/Reviewer/ApplicationTypes/Renewal/RenewalOthersUnderSuperVision.vue"),
+  },
+  {
+    path: "/admin/renewal/approved-payment",
+    name: "RenewalApprovedPayment",
+    component: () => import("../components/Reviewer/ApplicationTypes/Renewal/RenewalApprovedPayment.vue"),
+  },
+  {
+    path: "/admin/renewal/others-approved-payment",
+    name: "RenewalOthersApprovedPayment",
+    component: () => import("../components/Reviewer/ApplicationTypes/Renewal/RenewalOthersApprovedPayment.vue"),
   },
   {
     path: "/admin/goodstanding/unassigned",

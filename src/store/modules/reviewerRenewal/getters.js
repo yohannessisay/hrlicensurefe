@@ -26,4 +26,9 @@ export default {
     getRenewalUnderSuperVisionSearched: (state) => state.renewalUnderSuperVisionSearched,
     getRenewalOthersUnderSuperVision: (state) => state.renewalOthersUnderSuperVision,
     getRenewalOthersUnderSuperVisionSearched: (state) => state.renewalOthersUnderSuperVisionSearched,
+
+    getRenewalApprovedPayment: (state) => state.renewalApprovedPayment,
+    getRenewalApprovedPaymentSearched: (state) => state.renewalApprovedPaymentSearched,
+    getRenewalOthersApprovedPayment: (state) => state.renewalOthersApprovedPayment,
+    getRenewalOthersApprovedPaymentSearched: (state) => state.renewalOthersApprovedPaymentSearched,
 }

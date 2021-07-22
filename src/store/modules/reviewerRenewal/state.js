@@ -27,5 +27,10 @@ export default {
     renewalUnderSuperVisionSearched: [],
     renewalOthersUnderSuperVision: [],
     renewalOthersUnderSuperVisionSearched: [],
+
+    renewalApprovedPayment: [],
+    renewalApprovedPaymentSearched: [],
+    renewalOthersApprovedPayment: [],
+    renewalOthersApprovedPaymentSearched: [],
   },
 };

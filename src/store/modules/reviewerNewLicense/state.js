@@ -27,6 +27,11 @@ export default {
     newLicenseUnderSuperVisionSearched: [],
     newLicenseOthersUnderSuperVision: [],
     newLicenseOthersUnderSuperVisionSearched: [],
+
+    newLicenseApprovedPayment: [],
+    newLicenseApprovedPaymentSearched: [],
+    newLicenseOthersApprovedPayment: [],
+    newLicenseOthersApprovedPaymentSearched: [],
     
   },
 };
