@@ -63,9 +63,9 @@
               </div>
             </transition>
             <transition name="fade" mode="out-in">
-              <div v-if="this.activeState == 9">
+              <div v-if="this.activeState == 8">
                 <LicenseSummary
-                  :activeState="9"
+                  :activeState="8"
                   @changeActiveState="activeState++"
                 />
               </div>

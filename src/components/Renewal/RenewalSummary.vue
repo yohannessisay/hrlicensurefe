@@ -283,9 +283,12 @@
     </div>
   </div>
 
-  <div v-if="showFlash">
+  <div v-if="this.showFlash">
     <FlashMessage message="Operation Successful!" />
   </div>
+  <!-- <div v-if="this.showSuccess">
+    <FlashMessage message="Operation Successful!" />
+  </div> -->
   <div v-if="showErrorFlash">
     <ErrorFlashMessage message="Operation Failed!" />
   </div>
@@ -355,6 +358,7 @@ export default {
     showErrorFlash: false,
     showLoading: false,
     showLoading2: false,
+    showSuccess: false,
 
     letter: "",
     healthExamCert: "",
@@ -575,7 +579,7 @@ export default {
           });
       }
     },
-    async saveDraft(act) {
+    async draft(act) {
       let action = act;
       this.showLoading = true;
       if (this.draftId != null) {

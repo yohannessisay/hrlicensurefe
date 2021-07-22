@@ -1,6 +1,6 @@
 <template>
   <div v-if="this.showLoading2" class="h-screen max-h-4xl">
-    <Spinner class="bg-lightBlueB-200  " />
+    <Spinner class="bg-lightBlueB-200" />
   </div>
   <div class="bg-white mb-large rounded pl-4 pt-4 pr-4 pb-4">
     <div v-if="this.show && !this.showLoading2">
@@ -530,8 +530,9 @@ export default {
                   if (res.status == 200) {
                     this.showFlash = true;
                     this.showLoading = false;
-                    setTimeout(() => {}, 1500);
-                    this.$router.push({ path: "/menu" });
+                    setTimeout(() => {
+                      this.$router.push({ path: "/menu" });
+                    }, 1500);
                   } else {
                     this.showErrorFlash = true;
                   }
@@ -646,7 +647,7 @@ export default {
           });
       }
     },
-    async saveDraft(act) {
+    async draft(act) {
       let action = act;
       this.showLoading = true;
       if (this.draftId != null) {
@@ -751,8 +752,9 @@ export default {
                   if (res.status == 200) {
                     this.showFlash = true;
                     this.showLoading = false;
-                    setTimeout(() => {}, 1500);
-                    this.$router.push({ path: "/menu" });
+                    setTimeout(() => {
+                      this.$router.push({ path: "/menu" });
+                    }, 1500);
                   } else {
                     this.showErrorFlash = true;
                   }
@@ -894,8 +896,9 @@ export default {
             if (res.data.status == "Success") {
               this.showFlash = true;
               this.showLoading = false;
-              setTimeout(() => {}, 1500);
-              this.$router.push({ path: "/menu" });
+              setTimeout(() => {
+                this.$router.push({ path: "/menu" });
+              }, 1500);
             } else {
               this.showErrorFlash = true;
             }
@@ -907,8 +910,9 @@ export default {
             if (res.data.status == "Success") {
               this.showFlash = true;
               this.showLoading = false;
-              setTimeout(() => {}, 1500);
-              this.$router.push({ path: "/menu" });
+              setTimeout(() => {
+                this.$router.push({ path: "/menu" });
+              }, 1500);
             }
           });
       }
@@ -927,8 +931,9 @@ export default {
         if (res) {
           this.showFlash = true;
           this.showLoading = false;
-          setTimeout(() => {}, 1500);
-          this.$router.push({ path: "/menu" });
+          setTimeout(() => {
+            this.$router.push({ path: "/menu" });
+          }, 1500);
         } else {
           this.showErrorFlash = true;
         }

@@ -1,10 +1,8 @@
 <template>
-  <div class="bg-lightBlueB-200">
-  
+  <div>
     <div
       v-if="!this.showLoading"
-      class="relative text-gray-600 focus-within:text-gray-400 pt-10 pl-16 bg-lightBlueB-200"
-      style="width:450px"
+      class="relative text-gray-600 focus-within:text-gray-400 pt-10 pl-4 bg-lightBlueB-200"
     >
       <input
         type="search"
@@ -46,11 +44,12 @@
           >
             <div
               class="container mb-medium"
-              v-for="item in this.searchResult.slice((i - 1) * 5, i * 5)"
+              v-for="item in this.searchResult.slice((i - 1) * 4, i * 4)"
               v-bind:key="item"
               v-bind:value="item"
             >
               <div
+                @click="routeTo(item)"
                 class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
               >
                 <div class="p-4 w-48 h-64">
@@ -147,58 +146,64 @@
           <div class="flex " v-for="i in this.newlicense.length" v-bind:key="i">
             <div
               class="container mb-medium"
-              v-for="item in this.newlicense.slice((i - 1) * 5, i * 5)"
+              v-for="item in this.newlicense.slice((i - 1) * 4, i * 4)"
               v-bind:key="item"
               v-bind:value="item"
             >
-              <div
-                class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
+              <router-link
+                :to="{
+                  name: 'NewLicense',
+                  params: { id: item.id, status: item.applicationStatus.code },
+                }"
               >
-                <div class="p-4 w-48 h-64">
-                  <span
-                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                  >
-                    <b>Applicant Type: &nbsp;</b>
-                    {{ item.applicantType.name }}
-                  </span>
-                  <span
-                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                  >
-                    <b>Status: &nbsp;</b>{{ item.applicationStatus.name }}
-                  </span>
-                  <span
-                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                  >
-                    <b>Code: &nbsp;</b>{{ item.newLicenseCode }}
-                  </span>
-                  <span
-                    v-if="item.certified == true"
-                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                  >
-                    <b>Certified: &nbsp;</b>Yes
-                  </span>
-                  <span
-                    v-else
-                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                  >
-                    <b>Certified: &nbsp;</b>No
-                  </span>
-
-                  <span
-                    class="
+                <div
+                  class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
+                >
+                  <div class="p-4 w-48 h-64">
+                    <span
+                      class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                    >
+                      <b>Applicant Type: &nbsp;</b>
+                      {{ item.applicantType.name }}
+                    </span>
+                    <span
+                      class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                    >
+                      <b>Status: &nbsp;</b>{{ item.applicationStatus.name }}
+                    </span>
+                    <span
+                      class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                    >
+                      <b>Code: &nbsp;</b>{{ item.newLicenseCode }}
+                    </span>
+                    <span
+                      v-if="item.certified == true"
+                      class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                    >
+                      <b>Certified: &nbsp;</b>Yes
+                    </span>
+                    <span
+                      v-else
+                      class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                    >
+                      <b>Certified: &nbsp;</b>No
+                    </span>
+                    <span
+                      class="
                       mt-medium
                       text-lightBlueB-500
                       flex
                       justify-end
                       content-center
                     "
-                  >
-                    {{
-                      item.createdAt ? moment(item.createdAt).fromNow() : "-"
-                    }}
-                  </span>
+                    >
+                      {{
+                        item.createdAt ? moment(item.createdAt).fromNow() : "-"
+                      }}
+                    </span>
+                  </div>
                 </div>
-              </div>
+              </router-link>
             </div>
           </div>
         </div>
@@ -217,57 +222,65 @@
           <div class="flex " v-for="i in this.renewal.length" v-bind:key="i">
             <div
               class="container mb-medium"
-              v-for="item in this.renewal.slice((i - 1) * 5, i * 5)"
+              v-for="item in this.renewal.slice((i - 1) * 4, i * 4)"
               v-bind:key="item"
               v-bind:value="item"
             >
-              <div
-                class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
+              <router-link
+                :to="{
+                  name: 'Renewal',
+                  params: { id: item.id, status: item.applicationStatus.code },
+                }"
               >
-                <div class="p-4 w-48 h-64">
-                  <span
-                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                  >
-                    <b>Applicant Type: &nbsp;</b>
-                    {{ item.applicantType.name }}
-                  </span>
-                  <span
-                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                  >
-                    <b>Status: &nbsp;</b>{{ item.applicationStatus.name }}
-                  </span>
-                  <span
-                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                  >
-                    <b>Code: &nbsp;</b>{{ item.renewalCode }}
-                  </span>
-                  <span
-                    v-if="item.certified == true"
-                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                  >
-                    <b>Certified: &nbsp;</b>Yes
-                  </span>
-                  <span
-                    v-else
-                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                  >
-                    <b>Certified: &nbsp;</b>No
-                  </span>
-                  <span
-                    class="
+                <div
+                  class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
+                >
+                  <div class="p-4 w-48 h-64">
+                    <span
+                      class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                    >
+                      <b>Applicant Type: &nbsp;</b>
+                      {{ item.applicantType.name }}
+                    </span>
+                    <span
+                      class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                    >
+                      <b>Status: &nbsp;</b>{{ item.applicationStatus.name }}
+                    </span>
+                    <span
+                      class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                    >
+                      <b>Code: &nbsp;</b>{{ item.renewalCode }}
+                    </span>
+                    <span
+                      v-if="item.certified == true"
+                      class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                    >
+                      <b>Certified: &nbsp;</b>Yes
+                    </span>
+                    <span
+                      v-else
+                      class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                    >
+                      <b>Certified: &nbsp;</b>No
+                    </span>
+
+                    <span
+                      class="
                       mt-medium
                       text-lightBlueB-500
                       flex
                       justify-end
                       content-center
                     "
-                  >
-                    {{
-                      item.createdAt ? moment(item.createdAt).fromNow() : "-"
-                    }}
-                  </span>
+                    >
+                      {{
+                        item.createdAt ? moment(item.createdAt).fromNow() : "-"
+                      }}
+                    </span>
+                  </div>
                 </div>
-              </div>
+              </router-link>
             </div>
           </div>
         </div>
@@ -290,57 +303,65 @@
           >
             <div
               class="container mb-medium"
-              v-for="item in this.verification.slice((i - 1) * 5, i * 5)"
+              v-for="item in this.verification.slice((i - 1) * 4, i * 4)"
               v-bind:key="item"
               v-bind:value="item"
             >
-              <div
-                class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
+              <router-link
+                :to="{
+                  name: 'Verification',
+                  params: { id: item.id, status: item.applicationStatus.code },
+                }"
               >
-                <div class="p-4 w-48 h-64">
-                  <span
-                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                  >
-                    <b>Applicant Type: &nbsp;</b>
-                    {{ item.applicantType.name }}
-                  </span>
-                  <span
-                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                  >
-                    <b>Status: &nbsp;</b>{{ item.applicationStatus.name }}
-                  </span>
-                  <span
-                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                  >
-                    <b>Code: &nbsp;</b>{{ item.verificationCode }}
-                  </span>
-                  <span
-                    v-if="item.certified == true"
-                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                  >
-                    <b>Certified: &nbsp;</b>Yes
-                  </span>
-                  <span
-                    v-else
-                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                  >
-                    <b>Certified: &nbsp;</b>No
-                  </span>
-                  <span
-                    class="
+                <div
+                  class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
+                >
+                  <div class="p-4 w-48 h-64">
+                    <span
+                      class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                    >
+                      <b>Applicant Type: &nbsp;</b>
+                      {{ item.applicantType.name }}
+                    </span>
+                    <span
+                      class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                    >
+                      <b>Status: &nbsp;</b>{{ item.applicationStatus.name }}
+                    </span>
+                    <span
+                      class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                    >
+                      <b>Code: &nbsp;</b>{{ item.verificationCode }}
+                    </span>
+                    <span
+                      v-if="item.certified == true"
+                      class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                    >
+                      <b>Certified: &nbsp;</b>Yes
+                    </span>
+                    <span
+                      v-else
+                      class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                    >
+                      <b>Certified: &nbsp;</b>No
+                    </span>
+
+                    <span
+                      class="
                       mt-medium
                       text-lightBlueB-500
                       flex
                       justify-end
                       content-center
                     "
-                  >
-                    {{
-                      item.createdAt ? moment(item.createdAt).fromNow() : "-"
-                    }}
-                  </span>
+                    >
+                      {{
+                        item.createdAt ? moment(item.createdAt).fromNow() : "-"
+                      }}
+                    </span>
+                  </div>
                 </div>
-              </div>
+              </router-link>
             </div>
           </div>
         </div>
@@ -366,58 +387,65 @@
           >
             <div
               class="container mb-medium"
-              v-for="item in this.goodstanding.slice((i - 1) * 5, i * 5)"
+              v-for="item in this.goodstanding.slice((i - 1) * 4, i * 4)"
               v-bind:key="item"
               v-bind:value="item"
             >
-              <div
-                class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
+              <router-link
+                :to="{
+                  name: 'GoodStanding',
+                  params: { id: item.id, status: item.applicationStatus.code },
+                }"
               >
-                <div class="p-4 w-48 h-64">
-                  <span
-                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                  >
-                    <b>Applicant Type: &nbsp;</b>
-                    {{ item.applicantPosition.name }}
-                  </span>
-                  <span
-                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                  >
-                    <b>Status: &nbsp;</b>{{ item.applicationStatus.name }}
-                  </span>
-                  <span
-                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                  >
-                    <b>Code: &nbsp;</b>{{ item.goodStandingCode }}
-                  </span>
-                  <span
-                    v-if="item.certified == true"
-                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                  >
-                    <b>Certified: &nbsp;</b>Yes
-                  </span>
-                  <span
-                    v-else
-                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                  >
-                    <b>Certified: &nbsp;</b>No
-                  </span>
+                <div
+                  class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
+                >
+                  <div class="p-4 w-48 h-64">
+                    <span
+                      class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                    >
+                      <b>Applicant Type: &nbsp;</b>
+                      {{ item.applicantPosition.name }}
+                    </span>
+                    <span
+                      class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                    >
+                      <b>Status: &nbsp;</b>{{ item.applicationStatus.name }}
+                    </span>
+                    <span
+                      class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                    >
+                      <b>Code: &nbsp;</b>{{ item.goodStandingCode }}
+                    </span>
+                    <span
+                      v-if="item.certified == true"
+                      class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                    >
+                      <b>Certified: &nbsp;</b>Yes
+                    </span>
+                    <span
+                      v-else
+                      class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                    >
+                      <b>Certified: &nbsp;</b>No
+                    </span>
 
-                  <span
-                    class="
+                    <span
+                      class="
                       mt-medium
                       text-lightBlueB-500
                       flex
                       justify-end
                       content-center
                     "
-                  >
-                    {{
-                      item.createdAt ? moment(item.createdAt).fromNow() : "-"
-                    }}
-                  </span>
+                    >
+                      {{
+                        item.createdAt ? moment(item.createdAt).fromNow() : "-"
+                      }}
+                    </span>
+                  </div>
                 </div>
-              </div>
+              </router-link>
             </div>
           </div>
         </div>
@@ -517,33 +545,64 @@ export default {
       this.showLoading = !this.showLoading;
       this.$store.dispatch("newlicense/getNewLicense").then((res) => {
         this.license = res.data.data;
-        this.newlicense = this.license.filter(function(e) {
-          return e.applicationStatus.code.includes("WD");
-        });
+        if (this.license) {
+          this.newlicense = this.license.filter(function(e) {
+            return e.applicationStatus.code.includes("WD");
+          });
+        }
       });
       this.$store.dispatch("renewal/getRenewalLicense").then((res) => {
         this.license = res.data.data;
-        this.renewal = this.license.filter(function(e) {
-          return e.applicationStatus.code.includes("WD");
-        });
+        if (this.license) {
+          this.renewal = this.license.filter(function(e) {
+            return e.applicationStatus.code.includes("WD");
+          });
+        }
       });
       this.$store
         .dispatch("verification/getVerificationLicense")
         .then((res) => {
           this.license = res.data.data;
-          this.verification = this.license.filter(function(e) {
-            return e.applicationStatus.code.includes("WD");
-          });
+          if (this.license) {
+            this.verification = this.license.filter(function(e) {
+              return e.applicationStatus.code.includes("WD");
+            });
+          }
         });
       this.$store
         .dispatch("goodstanding/getGoodStandingLicense")
         .then((res) => {
           this.license = res.data.data;
           this.showLoading = !this.showLoading;
-          this.goodstanding = this.license.filter(function(e) {
-            return e.applicationStatus.code.includes("WD");
-          });
+          if (this.license) {
+            this.goodstanding = this.license.filter(function(e) {
+              return e.applicationStatus.code.includes("WD");
+            });
+          }
         });
+    },
+    routeTo(item) {
+      if (item.newLicenseCode) {
+        this.$router.push({
+          name: "NewLicense",
+          params: { id: item.id, status: item.applicationStatus.code },
+        });
+      } else if (item.renewalCode) {
+        this.$router.push({
+          name: "Renewal",
+          params: { id: item.id, status: item.applicationStatus.code },
+        });
+      } else if (item.verificationCode) {
+        this.$router.push({
+          name: "Verification",
+          params: { id: item.id, status: item.applicationStatus.code },
+        });
+      } else {
+        this.$router.push({
+          name: "GoodStanding",
+          params: { id: item.id, status: item.applicationStatus.code },
+        });
+      }
     },
   },
 };
@@ -565,11 +624,7 @@ img {
 .hoveredCard {
   background-color: white;
 }
-/* .b{
-  cursor: pointer;
-  position: absolute;
-  transform: translate(-50%, -50%);
-} */
+
 .flip-box {
   transform-style: preserve-3d;
   perspective: 1000px;
@@ -592,7 +647,6 @@ img {
 }
 
 .flip-box-back {
-  /* position: absolute; */
   transform: rotateY(180deg);
   transform-style: preserve-3d;
 }
@@ -602,19 +656,6 @@ img {
   transform-style: preserve-3d;
 }
 
-.flip-box .inner {
-  /* position:absolute;
-  perspective: inherit;
-  z-index: 2;
-  transform: translateY(-50%)translateZ(60px) scale(.94); */
-}
-/* .box {
-  position: relative;
-} */
-
-.b {
-  /* position: absolute; */
-}
 #logout {
   cursor: pointer;
 }

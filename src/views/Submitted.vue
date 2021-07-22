@@ -44,7 +44,7 @@
           >
             <div
               class="container mb-medium"
-              v-for="item in this.searchResult.slice((i - 1) * 5, i * 5)"
+              v-for="item in this.searchResult.slice((i - 1) * 4, i * 4)"
               v-bind:key="item"
               v-bind:value="item"
             >
@@ -146,7 +146,7 @@
           <div class="flex " v-for="i in this.newlicense.length" v-bind:key="i">
             <div
               class="container mb-medium"
-              v-for="item in this.newlicense.slice((i - 1) * 5, i * 5)"
+              v-for="item in this.newlicense.slice((i - 1) * 4, i * 4)"
               v-bind:key="item"
               v-bind:value="item"
             >
@@ -227,7 +227,7 @@
           <div class="flex " v-for="i in this.renewal.length" v-bind:key="i">
             <div
               class="container mb-medium"
-              v-for="item in this.renewal.slice((i - 1) * 5, i * 5)"
+              v-for="item in this.renewal.slice((i - 1) * 4, i * 4)"
               v-bind:key="item"
               v-bind:value="item"
             >
@@ -312,7 +312,7 @@
           >
             <div
               class="container mb-medium"
-              v-for="item in this.verification.slice((i - 1) * 5, i * 5)"
+              v-for="item in this.verification.slice((i - 1) * 4, i * 4)"
               v-bind:key="item"
               v-bind:value="item"
             >
@@ -400,7 +400,7 @@
           >
             <div
               class="container mb-medium"
-              v-for="item in this.goodstanding.slice((i - 1) * 5, i * 5)"
+              v-for="item in this.goodstanding.slice((i - 1) * 4, i * 4)"
               v-bind:key="item"
               v-bind:value="item"
             >
@@ -558,27 +558,27 @@ export default {
     fetchLicensebyId() {
       this.showLoading = !this.showLoading;
       this.$store.dispatch("newlicense/getNewLicense").then((res) => {
-        if (res.data != undefined) {
-          this.license = res.data.data;
+        this.license = res.data.data;
+        if (this.license) {
           this.newlicense = this.license.filter(function(e) {
             return e.applicationStatus.code.includes("SUB");
           });
         }
       });
       this.$store.dispatch("renewal/getRenewalLicense").then((res) => {
-        if (res.data != undefined) {
-          this.license = res.data.data;
+        this.license = res.data.data;
+        console.log(this.license);
+        if (this.license) {
           this.renewal = this.license.filter(function(e) {
             return e.applicationStatus.code.includes("SUB");
           });
         }
-        console.log(this.renewal);
       });
       this.$store
         .dispatch("verification/getVerificationLicense")
         .then((res) => {
-          if (res.data != undefined) {
-            this.license = res.data.data;
+          this.license = res.data.data;
+          if (this.license) {
             this.verification = this.license.filter(function(e) {
               return e.applicationStatus.code.includes("SUB");
             });
@@ -587,9 +587,9 @@ export default {
       this.$store
         .dispatch("goodstanding/getGoodStandingLicense")
         .then((res) => {
-          if (res.data != undefined) {
-            this.license = res.data.data;
-            this.showLoading = !this.showLoading;
+          this.license = res.data.data;
+          this.showLoading = !this.showLoading;
+          if (this.license) {
             this.goodstanding = this.license.filter(function(e) {
               return e.applicationStatus.code.includes("SUB");
             });
@@ -623,6 +623,9 @@ export default {
 };
 </script>
 <style>
+/* .main {
+  width: screen;
+} */
 span {
   font-size: 15px;
 }
