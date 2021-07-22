@@ -1,6 +1,6 @@
 <template>
   <div v-if="this.showLoading2" class="h-screen max-h-4xl">
-    <Spinner class="bg-lightBlueB-200  " />
+    <Spinner class="bg-lightBlueB-200" />
   </div>
   <div class="bg-white mb-large rounded pl-4 pt-4 pr-4 pb-4">
     <div v-if="this.show && !this.showLoading2">

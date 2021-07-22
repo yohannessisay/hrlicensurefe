@@ -567,6 +567,7 @@ export default {
       });
       this.$store.dispatch("renewal/getRenewalLicense").then((res) => {
         this.license = res.data.data;
+        console.log(this.license);
         if (this.license) {
           this.renewal = this.license.filter(function(e) {
             return e.applicationStatus.code.includes("SUB");
