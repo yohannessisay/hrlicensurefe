@@ -281,6 +281,7 @@ export default {
 };
 </script>
 <style>
+
 .card-wrapper {
   width: 600px;
   height: 520px;
@@ -288,7 +289,6 @@ export default {
 #holder {
   width: 600px;
   height: 520px;
-  border-radius: 0%;
 }
 .photoFile {
   opacity: 0; /* invisible but it's there! */
@@ -296,11 +296,12 @@ export default {
   height: 300px;
   position: absolute;
   cursor: pointer;
+  border-radius: 0%;
+
 }
 picture {
   width: 100%;
   height: 300px;
-  border-radius: 0%;
 }
 
 .dropbox {
@@ -323,7 +324,6 @@ picture {
   font-size: 1.2em;
   text-align: center;
   padding: 50px 0;
-  border-radius: 0%;
 }
 img {
   width: 250px;
