@@ -136,7 +136,10 @@
         <div class="flex pl-12 pt-medium">
           <Title message="New License Submitted Applications" />
         </div>
-        <div v-if="this.newlicense.length == 0" class="flex pl-12 ml-6">
+        <div
+          v-if="this.newlicense && this.newlicense.length == 0"
+          class="flex pl-12 ml-6"
+        >
           <h4>Nothing to Show.</h4>
         </div>
         <div
@@ -217,7 +220,10 @@
         <div class="flex pl-12 pt-medium">
           <Title message="Renewal Submitted Applications" />
         </div>
-        <div v-if="this.renewal.length == 0" class="flex pl-12 ml-6">
+        <div
+          v-if="this.renewal && this.renewal.length == 0"
+          class="flex pl-12 ml-6"
+        >
           <h4>Nothing to Show.</h4>
         </div>
         <div
@@ -298,7 +304,10 @@
         <div class="flex pl-12 pt-medium">
           <Title message="Verification Submitted Applications" />
         </div>
-        <div v-if="this.verification.length == 0" class="flex pl-12 ml-6">
+        <div
+          v-if="this.verification && this.verification.length == 0"
+          class="flex pl-12 ml-6"
+        >
           <h4>Nothing to Show.</h4>
         </div>
         <div
@@ -384,7 +393,7 @@
           <Title message="Good Standing Draft Applications" />
         </div>
         <div
-          v-if="this.goodstanding.length == 0"
+          v-if="this.goodstanding && this.goodstanding.length == 0"
           class="flex pl-12 ml-6 h-screen"
         >
           <h4>Nothing to Show.</h4>
@@ -557,43 +566,50 @@ export default {
     },
     fetchLicensebyId() {
       this.showLoading = !this.showLoading;
-      this.$store.dispatch("newlicense/getNewLicense").then((res) => {
-        this.license = res.data.data;
-        if (this.license) {
-          this.newlicense = this.license.filter(function(e) {
-            return e.applicationStatus.code.includes("SUB");
-          });
-        }
-      });
-      this.$store.dispatch("renewal/getRenewalLicense").then((res) => {
-        this.license = res.data.data;
-        console.log(this.license);
-        if (this.license) {
-          this.renewal = this.license.filter(function(e) {
-            return e.applicationStatus.code.includes("SUB");
-          });
-        }
-      });
       this.$store
-        .dispatch("verification/getVerificationLicense")
+        .dispatch("newlicense/getNewLicense")
         .then((res) => {
           this.license = res.data.data;
           if (this.license) {
-            this.verification = this.license.filter(function(e) {
+            this.newlicense = this.license.filter(function(e) {
               return e.applicationStatus.code.includes("SUB");
             });
           }
-        });
-      this.$store
-        .dispatch("goodstanding/getGoodStandingLicense")
-        .then((res) => {
-          this.license = res.data.data;
-          this.showLoading = !this.showLoading;
-          if (this.license) {
-            this.goodstanding = this.license.filter(function(e) {
-              return e.applicationStatus.code.includes("SUB");
+        })
+        .then(() => {
+          this.$store.dispatch("renewal/getRenewalLicense").then((res) => {
+            this.license = res.data.data;
+            if (this.license) {
+              this.renewal = this.license.filter(function(e) {
+                return e.applicationStatus.code.includes("SUB");
+              });
+            }
+          });
+        })
+        .then(() => {
+          this.$store
+            .dispatch("verification/getVerificationLicense")
+            .then((res) => {
+              this.license = res.data.data;
+              if (this.license) {
+                this.verification = this.license.filter(function(e) {
+                  return e.applicationStatus.code.includes("SUB");
+                });
+              }
             });
-          }
+        })
+        .then(() => {
+          this.$store
+            .dispatch("goodstanding/getGoodStandingLicense")
+            .then((res) => {
+              this.license = res.data.data;
+              this.showLoading = !this.showLoading;
+              if (this.license) {
+                this.goodstanding = this.license.filter(function(e) {
+                  return e.applicationStatus.code.includes("SUB");
+                });
+              }
+            });
         });
     },
     routeTo(item) {
