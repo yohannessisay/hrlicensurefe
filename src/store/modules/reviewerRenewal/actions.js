@@ -37,6 +37,11 @@ import {
   SET_RENEWAL_DECLINED_PAYMENT_SEARCHED,
   SET_RENEWAL_OTHERS_DECLINED_PAYMENT,
   SET_RENEWAL_OTHERS_DECLINED_PAYMENT_SEARCHED,
+
+  SET_RENEWAL_ON_REVIEW,
+  SET_RENEWAL_ON_REVIEW_SEARCHED,
+  SET_RENEWAL_OTHERS_ON_REVIEW,
+  SET_RENEWAL_OTHERS_ON_REVIEW_SEARCHED,
 } from "./mutation-types";
 const baseUrl = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api";
 
@@ -540,5 +545,73 @@ export default {
             e.reviewer.name.toLowerCase().includes(searchKey.toLowerCase());
     });
     commit(SET_RENEWAL_OTHERS_DECLINED_PAYMENT_SEARCHED, searchedVal);
+  },
+
+  /* 
+  /* on review status is wrong for the time (status/7) is placeholder
+  */
+  async getRenewalOnReview({ commit }, adminId) {
+    const url = baseUrl + "/renewals/status/7";
+    const resp = await ApiService.get(url);
+    const onReview = resp.data.data.filter(function(e) {
+      return e.reviewerId === adminId;
+    });
+    commit(SET_RENEWAL_ON_REVIEW, onReview);
+  },
+
+  getRenewalOnReviewSearched({ commit, getters }, searchKey) {
+    if (getters.getRenewalOnReview === undefined) {
+      return;
+    }
+    const searchedVal = getters.getRenewalOnReview.filter(function(e) {
+      return e.renewalCode === undefined
+        ? ""
+        : e.renewalCode.toLowerCase().includes(searchKey.toLowerCase()) ||
+            (e.applicant.profile.name + " " + e.applicant.profile.fatherName)
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.name
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.fatherName
+              .toLowerCase()
+              .includes(searchKey.toLowerCase());
+    });
+    commit(SET_RENEWAL_ON_REVIEW_SEARCHED, searchedVal);
+  },
+
+  /* 
+  /* on review payment status is wrong for the time (status/7) is placeholder
+  */
+  async getRenewalOthersOnReview({ commit }, adminId) {
+    const url = baseUrl + "/renewals/status/7";
+    const resp = await ApiService.get(url);
+    const othersOnReview = resp.data.data.filter(function(e) {
+      return e.reviewerId !== adminId
+    })
+    commit(SET_RENEWAL_OTHERS_ON_REVIEW, othersOnReview);
+  },
+  getRenewalOthersOnReviewSearched({ commit, getters }, searchKey) {
+    if (getters.getRenewalOthersOnReview === undefined) {
+      return;
+    }
+    const searchedVal = getters.getRenewalOthersOnReview.filter(function(
+      e
+    ) {
+      return e.renewalCode === undefined
+        ? ""
+        : e.renewalCode.toLowerCase().includes(searchKey.toLowerCase()) ||
+            (e.applicant.profile.name + " " + e.applicant.profile.fatherName)
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.name
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.fatherName
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.reviewer.name.toLowerCase().includes(searchKey.toLowerCase());
+    });
+    commit(SET_RENEWAL_OTHERS_ON_REVIEW_SEARCHED, searchedVal);
   },
 };

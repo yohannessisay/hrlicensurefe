@@ -37,5 +37,10 @@ export default {
     renewalDeclinedPaymentSearched: [],
     renewalOthersDeclinedPayment: [],
     renewalOthersDeclinedPaymentSearched: [],
+
+    renewalOnReview: [],
+    renewalOnReviewSearched: [],
+    renewalOthersOnReview: [],
+    renewalOthersOnReviewSearched: [],
   },
 };

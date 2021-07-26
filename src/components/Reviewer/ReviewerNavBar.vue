@@ -599,6 +599,12 @@ export default {
       if (props.tab === "othersRenewalDeclinedPayment") {
         store.dispatch("reviewerRenewal/getRenewalOthersDeclinedPaymentSearched", search.value)
       }
+      if (props.tab === "renewalOnReview") {
+        store.dispatch("reviewerRenewal/getRenewalOnReviewSearched", search.value)
+      }
+      if (props.tab === "othersRenewalOnReview") {
+        store.dispatch("reviewerRenewal/getRenewalOthersOnReviewSearched", search.value)
+      }
 
       if (props.tab === "newLicenseUnassigned") {
         store.dispatch("reviewerNewLicense/getNewLicenseUnassignedSearched", search.value)

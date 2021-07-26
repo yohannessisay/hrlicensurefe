@@ -536,6 +536,16 @@ const routes = [
     component: () => import("../components/Reviewer/ApplicationTypes/Renewal/RenewalOthersDeclinedPayment.vue"),
   },
   {
+    path: "/admin/renewal/on-review",
+    name: "RenewalOnReview",
+    component: () => import("../components/Reviewer/ApplicationTypes/Renewal/RenewalOnReview.vue"),
+  },
+  {
+    path: "/admin/renewal/others-on-review",
+    name: "RenewalOthersOnReview",
+    component: () => import("../components/Reviewer/ApplicationTypes/Renewal/RenewalOthersOnReview.vue"),
+  },
+  {
     path: "/admin/goodstanding/unassigned",
     name: "GoodStandingUnassigned",
     component: () => import("../components/Reviewer/ApplicationTypes/GoodStanding/GoodStandingUnassigned.vue"),
