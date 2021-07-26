@@ -1,4 +1,4 @@
-<template>
+ <template>
   <div
     class="
       card-wrapper
@@ -24,7 +24,13 @@
         class="close-svg fill-current text-primary-100 relative"
       >
         <path
-          d="M194.8 164.77L323.013 36.555c8.343-8.34 8.343-21.825 0-30.164-8.34-8.34-21.825-8.34-30.164 0L164.633 134.605 36.422 6.391c-8.344-8.34-21.824-8.34-30.164 0-8.344 8.34-8.344 21.824 0 30.164l128.21 128.215L6.259 292.984c-8.344 8.34-8.344 21.825 0 30.164a21.266 21.266 0 0015.082 6.25c5.46 0 10.922-2.09 15.082-6.25l128.21-128.214 128.216 128.214a21.273 21.273 0 0015.082 6.25c5.46 0 10.922-2.09 15.082-6.25 8.343-8.34 8.343-21.824 0-30.164zm0 0"
+          d="M194.8 164.77L323.013 36.555c8.343-8.34 8.343-21.825 0-30.164-
+          8.34-8.34-21.825-8.34-30.164 0L164.633 134.605 36.422 6.391c-8.344-
+          8.34-21.824-8.34-30.164 0-8.344 8.34-8.344 21.824 0 30.164l128.21 1
+          28.215L6.259 292.984c-8.344 8.34-8.344 21.825 0 30.164a21.266 21.26
+          6 0 0015.082 6.25c5.46 0 10.922-2.09 15.082-6.25l128.21-128.214 128
+          .216 128.214a21.273 21.273 0 0015.082 6.25c5.46 0 10.922-2.09 15.08
+          2-6.25 8.343-8.34 8.343-21.824 0-30.164zm0 0"
         />
       </svg>
     </button>
@@ -42,6 +48,10 @@
           >
             <div class="flex justify-center">
               <div>
+                <span>
+                <h2>{{ serviceFeeName }}</h2>
+                <h2>{{ fileSize }}</h2>
+              </span>
                 <span v-if="showUpload">
                   <label class="text-primary-700"
                     >Upload Service Fee:
@@ -132,7 +142,8 @@ export default {
       showErrorFlash: false,
       showLoading: false,
     });
-
+    let serviceFeeName = ref("");
+  let fileSize = ref("");
     let serviceFile = ref("");
     let serviceFileP = ref("");
     let showPreview = ref(false);
@@ -164,7 +175,15 @@ export default {
       showUpload.value = false;
       serviceFile.value = serviceFileP.value.files[0];
       let reader = new FileReader();
-
+ let fileS = serviceFile.value.size;
+ serviceFeeName.value=serviceFile.value.name;
+      if (fileS > 0 && fileS < 1000) {
+        fileSize.value += "B";
+      } else if (fileS > 1000 && fileS < 1000000) {
+        fileSize.value = fileS / 1000 + "kB";
+      } else {
+        fileSize.value = fileS / 1000000 + "MB";
+      }
       reader.addEventListener(
         "load",
         function() {
@@ -276,6 +295,8 @@ export default {
       update,
       basePath,
       message,
+      fileSize,
+      serviceFeeName,
     };
   },
 };
