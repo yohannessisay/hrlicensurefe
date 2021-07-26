@@ -224,6 +224,9 @@ export default {
             message.value.showLoading = false;
             message.value.showFlash = false;
             message.value.showErrorFlash = true;
+            setTimeout(() => {
+              message.value.showErrorFlash = false;
+            }, 3000);
           }
         });
     };
