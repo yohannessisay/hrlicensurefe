@@ -213,7 +213,6 @@ export default {
       // documentSpecs = store.getters[(appType + "/getDocumentSpecs", id)];
       // store.dispatch(appType + "/getDraft", id).then((res) => {
       //   const results = res.data.data;
-      //   console.log(results);
       //   documents = results.documents;
       //   appID = results.id;
       //   message.value.showLoading = false;
@@ -266,8 +265,9 @@ export default {
                 if (res.status == 200) {
                   message.value.showFlash = !message.value.showFlash;
                   message.value.showLoading = false;
-                  setTimeout(() => {}, 1800);
-                  router.push({ path: "/menu" });
+                  setTimeout(() => {
+                    router.push({ path: "/menu" });
+                  }, 1500);
                 } else {
                   showErrorFlash.value = !showErrorFlash.value;
                 }
@@ -299,6 +299,7 @@ export default {
 };
 </script>
 <style>
+
 .card-wrapper {
   width: 600px;
   height: 520px;
@@ -313,6 +314,8 @@ export default {
   height: 300px;
   position: absolute;
   cursor: pointer;
+  border-radius: 0%;
+
 }
 picture {
   width: 100%;
@@ -332,6 +335,7 @@ picture {
 
 .dropbox:hover {
   background: lightblue; /* when mouse over to the drop zone, change color */
+  border-radius: 0%;
 }
 
 .dropbox p {
@@ -342,6 +346,7 @@ picture {
 img {
   width: 250px;
   height: 250px;
+  border-radius: 0%;
 }
 .withdraw {
   background-image: linear-gradient(to right, #d63232, #e63636) !important;

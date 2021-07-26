@@ -1,16 +1,41 @@
 export default {
-    state: {
-        renewalUnassigned: [],
-        renewalUnassignedSearched: [],
+  state: {
+    renewalUnassigned: [],
+    renewalUnassignedSearched: [],
 
-        renewalUnfinished: [],
-        renewalUnfinishedSearched: [],
-        renewalOthersUnfinished: [],
-        renewalOthersUnfinishedSearched: [],
+    renewalUnfinished: [],
+    renewalUnfinishedSearched: [],
+    renewalOthersUnfinished: [],
+    renewalOthersUnfinishedSearched: [],
 
-        renewalAssignedToYou: [],
-        renewalAssignedToYouSearched: [],
-        renewalAssignedToOthers: [],
-        renewalAssignedToOthersSearched: [],
-    }
-}
+    renewalAssignedToYou: [],
+    renewalAssignedToYouSearched: [],
+    renewalAssignedToOthers: [],
+    renewalAssignedToOthersSearched: [],
+
+    renewalApproved: [],
+    renewalApprovedSearched: [],
+    renewalAllApproved: [],
+    renewalAllApprovedSearched: [],
+
+    renewalDeclined: [],
+    renewalDeclinedSearched: [],
+    renewalAllDeclined: [],
+    renewalAllDeclinedSearched: [],
+
+    renewalUnderSuperVision: [],
+    renewalUnderSuperVisionSearched: [],
+    renewalOthersUnderSuperVision: [],
+    renewalOthersUnderSuperVisionSearched: [],
+
+    renewalApprovedPayment: [],
+    renewalApprovedPaymentSearched: [],
+    renewalOthersApprovedPayment: [],
+    renewalOthersApprovedPaymentSearched: [],
+
+    renewalDeclinedPayment: [],
+    renewalDeclinedPaymentSearched: [],
+    renewalOthersDeclinedPayment: [],
+    renewalOthersDeclinedPaymentSearched: [],
+  },
+};

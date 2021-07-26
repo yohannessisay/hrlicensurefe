@@ -43,7 +43,7 @@
               class="p-4 w-48 h-64"
               @Click="
                 detail(
-                  `/admin/applicantDetail`,
+                  `/admin/applicant-detail`,
                   item.applicationType,
                   item.id,
                   item.applicant.id

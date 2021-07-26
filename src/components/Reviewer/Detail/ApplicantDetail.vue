@@ -326,7 +326,6 @@ export default {
             getReviewId.value = license.value.reviewerId;
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
-            // applicantId.value = license.value.applicantId;
             education.value.departmentName =
               license.value.education.department.name;
             education.value.institutionName =
@@ -344,7 +343,6 @@ export default {
             getReviewId.value = license.value.reviewerId;
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
-            // applicantId.value = license.value.applicantId;
             education.value.departmentName =
               license.value.education.department.name;
             education.value.institutionName =
@@ -362,7 +360,6 @@ export default {
             getReviewId.value = license.value.reviewerId;
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
-            // applicantId.value = license.value.applicantId;
             education.value.departmentName =
               license.value.education.department.name;
             education.value.institutionName =
@@ -380,7 +377,6 @@ export default {
             getReviewId.value = license.value.reviewerId;
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
-            // applicantId.value = license.value.applicantId;
             education.value.departmentName =
               license.value.education.department.name;
             education.value.institutionName =

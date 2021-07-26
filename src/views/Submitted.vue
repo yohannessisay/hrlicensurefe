@@ -44,7 +44,7 @@
           >
             <div
               class="container mb-medium"
-              v-for="item in this.searchResult.slice((i - 1) * 5, i * 5)"
+              v-for="item in this.searchResult.slice((i - 1) * 4, i * 4)"
               v-bind:key="item"
               v-bind:value="item"
             >
@@ -136,7 +136,10 @@
         <div class="flex pl-12 pt-medium">
           <Title message="New License Submitted Applications" />
         </div>
-        <div v-if="this.newlicense.length == 0" class="flex pl-12 ml-6">
+        <div
+          v-if="this.newlicense && this.newlicense.length == 0"
+          class="flex pl-12 ml-6"
+        >
           <h4>Nothing to Show.</h4>
         </div>
         <div
@@ -146,7 +149,7 @@
           <div class="flex " v-for="i in this.newlicense.length" v-bind:key="i">
             <div
               class="container mb-medium"
-              v-for="item in this.newlicense.slice((i - 1) * 5, i * 5)"
+              v-for="item in this.newlicense.slice((i - 1) * 4, i * 4)"
               v-bind:key="item"
               v-bind:value="item"
             >
@@ -217,7 +220,10 @@
         <div class="flex pl-12 pt-medium">
           <Title message="Renewal Submitted Applications" />
         </div>
-        <div v-if="this.renewal.length == 0" class="flex pl-12 ml-6">
+        <div
+          v-if="this.renewal && this.renewal.length == 0"
+          class="flex pl-12 ml-6"
+        >
           <h4>Nothing to Show.</h4>
         </div>
         <div
@@ -227,7 +233,7 @@
           <div class="flex " v-for="i in this.renewal.length" v-bind:key="i">
             <div
               class="container mb-medium"
-              v-for="item in this.renewal.slice((i - 1) * 5, i * 5)"
+              v-for="item in this.renewal.slice((i - 1) * 4, i * 4)"
               v-bind:key="item"
               v-bind:value="item"
             >
@@ -298,7 +304,10 @@
         <div class="flex pl-12 pt-medium">
           <Title message="Verification Submitted Applications" />
         </div>
-        <div v-if="this.verification.length == 0" class="flex pl-12 ml-6">
+        <div
+          v-if="this.verification && this.verification.length == 0"
+          class="flex pl-12 ml-6"
+        >
           <h4>Nothing to Show.</h4>
         </div>
         <div
@@ -312,7 +321,7 @@
           >
             <div
               class="container mb-medium"
-              v-for="item in this.verification.slice((i - 1) * 5, i * 5)"
+              v-for="item in this.verification.slice((i - 1) * 4, i * 4)"
               v-bind:key="item"
               v-bind:value="item"
             >
@@ -384,7 +393,7 @@
           <Title message="Good Standing Draft Applications" />
         </div>
         <div
-          v-if="this.goodstanding.length == 0"
+          v-if="this.goodstanding && this.goodstanding.length == 0"
           class="flex pl-12 ml-6 h-screen"
         >
           <h4>Nothing to Show.</h4>
@@ -400,7 +409,7 @@
           >
             <div
               class="container mb-medium"
-              v-for="item in this.goodstanding.slice((i - 1) * 5, i * 5)"
+              v-for="item in this.goodstanding.slice((i - 1) * 4, i * 4)"
               v-bind:key="item"
               v-bind:value="item"
             >
@@ -557,43 +566,50 @@ export default {
     },
     fetchLicensebyId() {
       this.showLoading = !this.showLoading;
-      this.$store.dispatch("newlicense/getNewLicense").then((res) => {
-        if (res.data != undefined) {
-          this.license = res.data.data;
-          this.newlicense = this.license.filter(function(e) {
-            return e.applicationStatus.code.includes("SUB");
-          });
-        }
-      });
-      this.$store.dispatch("renewal/getRenewalLicense").then((res) => {
-        if (res.data != undefined) {
-          this.license = res.data.data;
-          this.renewal = this.license.filter(function(e) {
-            return e.applicationStatus.code.includes("SUB");
-          });
-        }
-        console.log(this.renewal);
-      });
       this.$store
-        .dispatch("verification/getVerificationLicense")
+        .dispatch("newlicense/getNewLicense")
         .then((res) => {
-          if (res.data != undefined) {
-            this.license = res.data.data;
-            this.verification = this.license.filter(function(e) {
+          this.license = res.data.data;
+          if (this.license) {
+            this.newlicense = this.license.filter(function(e) {
               return e.applicationStatus.code.includes("SUB");
             });
           }
-        });
-      this.$store
-        .dispatch("goodstanding/getGoodStandingLicense")
-        .then((res) => {
-          if (res.data != undefined) {
+        })
+        .then(() => {
+          this.$store.dispatch("renewal/getRenewalLicense").then((res) => {
             this.license = res.data.data;
-            this.showLoading = !this.showLoading;
-            this.goodstanding = this.license.filter(function(e) {
-              return e.applicationStatus.code.includes("SUB");
+            if (this.license) {
+              this.renewal = this.license.filter(function(e) {
+                return e.applicationStatus.code.includes("SUB");
+              });
+            }
+          });
+        })
+        .then(() => {
+          this.$store
+            .dispatch("verification/getVerificationLicense")
+            .then((res) => {
+              this.license = res.data.data;
+              if (this.license) {
+                this.verification = this.license.filter(function(e) {
+                  return e.applicationStatus.code.includes("SUB");
+                });
+              }
             });
-          }
+        })
+        .then(() => {
+          this.$store
+            .dispatch("goodstanding/getGoodStandingLicense")
+            .then((res) => {
+              this.license = res.data.data;
+              this.showLoading = !this.showLoading;
+              if (this.license) {
+                this.goodstanding = this.license.filter(function(e) {
+                  return e.applicationStatus.code.includes("SUB");
+                });
+              }
+            });
         });
     },
     routeTo(item) {
@@ -623,6 +639,9 @@ export default {
 };
 </script>
 <style>
+/* .main {
+  width: screen;
+} */
 span {
   font-size: 15px;
 }

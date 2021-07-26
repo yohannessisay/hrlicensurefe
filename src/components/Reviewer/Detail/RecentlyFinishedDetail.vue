@@ -366,10 +366,8 @@ export default {
             license.value = res.data.data;
             getReviewId.value = license.value.reviewerId;
             goodStandingUser.value = res.data.data;
-            console.log("good stangind urser", goodStandingUser.value)
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
-            // applicantId.value = license.value.applicantId;
             education.value.departmentName =
               license.value.education.department.name;
             education.value.institutionName =
@@ -393,7 +391,6 @@ export default {
             getReviewId.value = license.value.reviewerId;
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
-            // applicantId.value = license.value.applicantId;
             education.value.departmentName =
               license.value.education.department.name;
             education.value.institutionName =
@@ -411,7 +408,6 @@ export default {
             getReviewId.value = license.value.reviewerId;
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
-            // applicantId.value = license.value.applicantId;
             education.value.departmentName =
               license.value.education.department.name;
             education.value.institutionName =
@@ -429,7 +425,6 @@ export default {
             getReviewId.value = license.value.reviewerId;
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
-            // applicantId.value = license.value.applicantId;
             education.value.departmentName =
               license.value.education.department.name;
             education.value.institutionName =
@@ -440,7 +435,6 @@ export default {
       }
     };
     onMounted(() => {
-      console.log("*************************************************************8")
       created(route.params.applicationType, route.params.applicationId, route.params.status);
     });
 

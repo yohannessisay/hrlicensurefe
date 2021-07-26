@@ -1,10 +1,8 @@
 <template>
-  <div class="bg-lightBlueB-200">
-  
+  <div>
     <div
       v-if="!this.showLoading"
       class="relative text-gray-600 focus-within:text-gray-400 pt-10 pl-16 bg-lightBlueB-200"
-      style="width:450px"
     >
       <input
         type="search"
@@ -529,34 +527,50 @@ export default {
     },
     fetchLicensebyId() {
       this.showLoading = !this.showLoading;
-      this.$store.dispatch("newlicense/getNewLicense").then((res) => {
-        this.license = res.data.data;
-        this.newlicense = this.license.filter(function(e) {
-          return e.applicationStatus.code.includes("PP");
-        });
-      });
-      this.$store.dispatch("renewal/getRenewalLicense").then((res) => {
-        this.license = res.data.data;
-        this.renewal = this.license.filter(function(e) {
-          return e.applicationStatus.code.includes("PP");
-        });
-      });
       this.$store
-        .dispatch("verification/getVerificationLicense")
+        .dispatch("newlicense/getNewLicense")
         .then((res) => {
           this.license = res.data.data;
-          this.verification = this.license.filter(function(e) {
-            return e.applicationStatus.code.includes("PP");
+          if (this.license) {
+            this.newlicense = this.license.filter(function(e) {
+              return e.applicationStatus.code.includes("PP");
+            });
+          }
+        })
+        .then(() => {
+          this.$store.dispatch("renewal/getRenewalLicense").then((res) => {
+            this.license = res.data.data;
+            if (this.license) {
+              this.renewal = this.license.filter(function(e) {
+                return e.applicationStatus.code.includes("PP");
+              });
+            }
           });
-        });
-      this.$store
-        .dispatch("goodstanding/getGoodStandingLicense")
-        .then((res) => {
-          this.license = res.data.data;
-          this.showLoading = !this.showLoading;
-          this.goodstanding = this.license.filter(function(e) {
-            return e.applicationStatus.code.includes("PP");
-          });
+        })
+        .then(() => {
+          this.$store
+            .dispatch("verification/getVerificationLicense")
+            .then((res) => {
+              this.license = res.data.data;
+              if (this.license) {
+                this.verification = this.license.filter(function(e) {
+                  return e.applicationStatus.code.includes("PP");
+                });
+              }
+            });
+        })
+        .then(() => {
+          this.$store
+            .dispatch("goodstanding/getGoodStandingLicense")
+            .then((res) => {
+              this.license = res.data.data;
+              this.showLoading = !this.showLoading;
+              if (this.license) {
+                this.goodstanding = this.license.filter(function(e) {
+                  return e.applicationStatus.code.includes("PP");
+                });
+              }
+            });
         });
     },
   },

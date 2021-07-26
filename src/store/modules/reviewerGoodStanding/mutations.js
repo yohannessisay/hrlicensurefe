@@ -11,6 +11,17 @@ import {
   SET_GOOD_STANDING_ASSIGNED_TO_YOU_SEARCHED,
   SET_GOOD_STANDING_ASSIGNED_TO_OTHERS,
   SET_GOOD_STANDING_ASSIGNED_TO_OTHERS_SEARCHED,
+
+  SET_GOOD_STANDING_APPROVED,
+  SET_GOOD_STANDING_APPROVED_SEARCHED,
+  SET_GOOD_STANDING_ALL_APPROVED,
+  SET_GOOD_STANDING_ALL_APPROVED_SEARCHED,
+
+  SET_GOOD_STANDING_DECLINED,
+  SET_GOOD_STANDING_DECLINED_SEARCHED,
+  SET_GOOD_STANDING_ALL_DECLINED,
+  SET_GOOD_STANDING_ALL_DECLINED_SEARCHED,
+
 } from "./mutation-types";
 export default {
   [SET_GOOD_STANDING_UNASSIGNED](state, data) {
@@ -51,4 +62,35 @@ export default {
   [SET_GOOD_STANDING_ASSIGNED_TO_OTHERS_SEARCHED](state, searchedVal) {
     state.goodStandingAssignedToOthersSearched = searchedVal;
   },
+
+  [SET_GOOD_STANDING_APPROVED](state, data) {
+    state.goodStandingApproved = data;
+    state.goodStandingApprovedSearched = data;
+  },
+  [SET_GOOD_STANDING_APPROVED_SEARCHED](state, searchedVal) {
+    state.goodStandingApprovedSearched = searchedVal;
+  },
+  [SET_GOOD_STANDING_ALL_APPROVED](state, data) {
+    state.goodStandingAllApproved = data;
+    state.goodStandingAllApprovedSearched = data;
+  },
+  [SET_GOOD_STANDING_ALL_APPROVED_SEARCHED](state, searchedVal) {
+    state.goodStandingAllApprovedSearched = searchedVal;
+  },
+
+  [SET_GOOD_STANDING_DECLINED](state, data) {
+    state.goodStandingDeclined = data;
+    state.goodStandingDeclinedSearched = data;
+  },
+  [SET_GOOD_STANDING_DECLINED_SEARCHED](state, searchedVal) {
+    state.goodStandingDeclinedSearched = searchedVal;
+  },
+  [SET_GOOD_STANDING_ALL_DECLINED](state, data) {
+    state.goodStandingAllDeclined = data;
+    state.goodStandingAllDeclinedSearched = data;
+  },
+  [SET_GOOD_STANDING_ALL_DECLINED_SEARCHED](state, searchedVal) {
+    state.goodStandingAllDeclinedSearched = searchedVal;
+  },
+
 };

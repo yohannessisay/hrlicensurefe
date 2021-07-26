@@ -11,6 +11,16 @@ import {
   SET_VERIFICATION_ASSIGNED_TO_YOU_SEARCHED,
   SET_VERIFICATION_ASSIGNED_TO_OTHERS,
   SET_VERIFICATION_ASSIGNED_TO_OTHERS_SEARCHED,
+
+  SET_VERIFICATION_APPROVED,
+  SET_VERIFICATION_APPROVED_SEARCHED,
+  SET_VERIFICATION_ALL_APPROVED,
+  SET_VERIFICATION_ALL_APPROVED_SEARCHED,
+
+  SET_VERIFICATION_DECLINED,
+  SET_VERIFICATION_DECLINED_SEARCHED,
+  SET_VERIFICATION_ALL_DECLINED,
+  SET_VERIFICATION_ALL_DECLINED_SEARCHED,
 } from "./mutation-types";
 export default {
   [SET_VERIFICATION_UNASSIGNED](state, data) {
@@ -51,4 +61,35 @@ export default {
   [SET_VERIFICATION_ASSIGNED_TO_OTHERS_SEARCHED](state, searchedVal) {
     state.verificationAssignedToOthersSearched = searchedVal;
   },
+
+  [SET_VERIFICATION_APPROVED](state, data) {
+    state.verificationApproved = data;
+    state.verificationApprovedSearched = data;
+  },
+  [SET_VERIFICATION_APPROVED_SEARCHED](state, searchedVal) {
+    state.verificationApprovedSearched = searchedVal;
+  },
+  [SET_VERIFICATION_ALL_APPROVED](state, data) {
+    state.verificationAllApproved = data;
+    state.verificationAllApprovedSearched = data;
+  },
+  [SET_VERIFICATION_ALL_APPROVED_SEARCHED](state, searchedVal) {
+    state.verificationAllApprovedSearched = searchedVal;
+  },
+
+  [SET_VERIFICATION_DECLINED](state, data) {
+    state.verificationDeclined = data;
+    state.verificationDeclinedSearched = data;
+  },
+  [SET_VERIFICATION_DECLINED_SEARCHED](state, searchedVal) {
+    state.verificationDeclinedSearched = searchedVal;
+  },
+  [SET_VERIFICATION_ALL_DECLINED](state, data) {
+    state.verificationAllDeclined = data;
+    state.verificationAllDeclinedSearched = data;
+  },
+  [SET_VERIFICATION_ALL_DECLINED_SEARCHED](state, searchedVal) {
+    state.verificationAllDeclinedSearched = searchedVal;
+  },
+
 };

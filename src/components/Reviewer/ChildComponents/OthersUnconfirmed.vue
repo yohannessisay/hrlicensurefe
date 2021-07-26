@@ -11,12 +11,7 @@
       <div
         class="p-4 w-48 h-64"
         @Click="
-          detail(
-            `/admin`,
-            item.applicationType,
-            item.id,
-            item.applicant.id
-          )
+          detail(`/admin`, item.applicationType, item.id, item.applicant.id)
         "
       >
         <div class="flex content-center justify-center">
@@ -37,7 +32,12 @@
               : "-"
           }}</b>
         </h4>
-        <br />
+        <span
+          class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+        >
+          <i class="fas fa-user-cog"></i> &nbsp;
+          {{ item.reviewer.name ? item.reviewer.name : "-" }}
+        </span>
         <span
           class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
         >
@@ -71,13 +71,24 @@ export default {
 
   setup() {
     let router = useRouter();
-    let routeValue = ref("othersUnconfirmedDetail")
+    let routeValue = ref("othersUnconfirmedDetail");
     const detail = (data, applicationType, applicationId, applicantId) => {
-      if(applicationType == "Good Standing" || applicationType == "Verification") {
-        routeValue.value = "finishedDetail"
+      if (
+        applicationType == "Good Standing" ||
+        applicationType == "Verification"
+      ) {
+        routeValue.value = "finishedDetail";
       }
       const url =
-        data + "/" + routeValue.value + "/" + applicationType + "/" + applicationId + "/" + applicantId;
+        data +
+        "/" +
+        routeValue.value +
+        "/" +
+        applicationType +
+        "/" +
+        applicationId +
+        "/" +
+        applicantId;
       router.push(url);
     };
     return {

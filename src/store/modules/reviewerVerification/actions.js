@@ -12,6 +12,16 @@ import {
   SET_VERIFICATION_ASSIGNED_TO_YOU_SEARCHED,
   SET_VERIFICATION_ASSIGNED_TO_OTHERS,
   SET_VERIFICATION_ASSIGNED_TO_OTHERS_SEARCHED,
+
+  SET_VERIFICATION_APPROVED,
+  SET_VERIFICATION_APPROVED_SEARCHED,
+  SET_VERIFICATION_ALL_APPROVED,
+  SET_VERIFICATION_ALL_APPROVED_SEARCHED,
+
+  SET_VERIFICATION_DECLINED,
+  SET_VERIFICATION_DECLINED_SEARCHED,
+  SET_VERIFICATION_ALL_DECLINED,
+  SET_VERIFICATION_ALL_DECLINED_SEARCHED,
 } from "./mutation-types";
 const baseUrl = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api";
 
@@ -180,5 +190,141 @@ export default {
             e.reviewer.name.toLowerCase().includes(searchKey.toLowerCase());
     });
     commit(SET_VERIFICATION_ASSIGNED_TO_OTHERS_SEARCHED, searchedVal);
+  },
+
+  async getVerificationApproved({ commit }, adminId) {
+    const url = baseUrl + "/verifications/status/5";
+    const resp = await ApiService.get(url);
+    if(resp.data.data === undefined) {
+      const approved = []
+      commit(SET_VERIFICATION_APPROVED, approved)
+      return;
+    }
+    const Approved = resp.data.data.filter(function(e) {
+      return e.reviewerId === adminId;
+    });
+    commit(SET_VERIFICATION_APPROVED, Approved);
+  },
+
+  getVerificationApprovedSearched({ commit, getters }, searchKey) {
+    if (getters.getVerificationApproved === undefined) {
+      return;
+    }
+    const searchedVal = getters.getVerificationApproved.filter(function(e) {
+      return e.verificationCode === undefined
+        ? ""
+        : e.verificationCode.toLowerCase().includes(searchKey.toLowerCase()) ||
+            (e.applicant.profile.name + " " + e.applicant.profile.fatherName)
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.name
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.fatherName
+              .toLowerCase()
+              .includes(searchKey.toLowerCase());
+    });
+    commit(SET_VERIFICATION_APPROVED_SEARCHED, searchedVal);
+  },
+
+  async getVerificationAllApproved({ commit }, adminId) {
+    const url = baseUrl + "/verifications/status/5";
+    const resp = await ApiService.get(url);
+    let allApproved = resp.data.data
+    if(allApproved === undefined) {
+      allApproved = [];
+    }
+    commit(SET_VERIFICATION_ALL_APPROVED, allApproved);
+  },
+  getVerificationAllApprovedSearched({ commit, getters }, searchKey) {
+    if (getters.getVerificationAllApproved === undefined) {
+      return;
+    }
+    const searchedVal = getters.getVerificationAllApproved.filter(function(
+      e
+    ) {
+      return e.verificationCode === undefined
+        ? ""
+        : e.verificationCode.toLowerCase().includes(searchKey.toLowerCase()) ||
+            (e.applicant.profile.name + " " + e.applicant.profile.fatherName)
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.name
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.fatherName
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.reviewer.name.toLowerCase().includes(searchKey.toLowerCase());
+    });
+    commit(SET_VERIFICATION_ALL_APPROVED_SEARCHED, searchedVal);
+  },
+
+  async getVerificationDeclined({ commit }, adminId) {
+    const url = baseUrl + "/verifications/status/6";
+    const resp = await ApiService.get(url);
+    if(resp.data.data === undefined) {
+      const declined = []
+      commit(SET_VERIFICATION_DECLINED, declined)
+      return;
+    }
+    const declined = resp.data.data.filter(function(e) {
+      return e.reviewerId === adminId;
+    });
+    commit(SET_VERIFICATION_DECLINED, declined);
+  },
+
+  getVerificationDeclinedSearched({ commit, getters }, searchKey) {
+    if (getters.getVerificationDeclined === undefined) {
+      return;
+    }
+    const searchedVal = getters.getVerificationDeclined.filter(function(e) {
+      return e.verificationCode === undefined
+        ? ""
+        : e.verificationCode.toLowerCase().includes(searchKey.toLowerCase()) ||
+            (e.applicant.profile.name + " " + e.applicant.profile.fatherName)
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.name
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.fatherName
+              .toLowerCase()
+              .includes(searchKey.toLowerCase());
+    });
+    commit(SET_VERIFICATION_DECLINED_SEARCHED, searchedVal);
+  },
+
+  async getVerificationAllDeclined({ commit }, adminId) {
+    const url = baseUrl + "/verifications/status/6";
+    const resp = await ApiService.get(url);
+    let allDeclined = resp.data.data
+    if(allDeclined === undefined) {
+      allDeclined = [];
+    }
+    commit(SET_VERIFICATION_ALL_DECLINED, allDeclined);
+  },
+  getVerificationAllDeclinedSearched({ commit, getters }, searchKey) {
+    if (getters.getVerificationAllDeclined === undefined) {
+      return;
+    }
+    const searchedVal = getters.getVerificationAllDeclined.filter(function(
+      e
+    ) {
+      return e.verificationCode === undefined
+        ? ""
+        : e.verificationCode.toLowerCase().includes(searchKey.toLowerCase()) ||
+            (e.applicant.profile.name + " " + e.applicant.profile.fatherName)
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.name
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.fatherName
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.reviewer.name.toLowerCase().includes(searchKey.toLowerCase());
+    });
+    commit(SET_VERIFICATION_ALL_DECLINED_SEARCHED, searchedVal);
   },
 };

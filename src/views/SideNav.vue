@@ -77,8 +77,7 @@
                     <li @click="selectMenu(4)">
                       <!-- <span style="color: #648ea3;"> -->
                       <p class=" text-sm" style="color: white; ">
-                        <i class="mr-2 far fa-address-book fa-x fa-light"></i>In
-                        Review
+                        <i class="mr-2 far fa-id-card fa-x"></i>In Review
                       </p>
                     </li>
                   </ul>
@@ -239,7 +238,7 @@
                   <div class="p-1 ">
                     <h3 class="text-lightBlueB-500 mt-tiny">
                       <span style="color: white;">
-                        <i class="mr-2 far fa-id-badge fa-x fa-light"></i>
+                        <i class="mr-2 far fa-id-badge fa-x"></i>
                       </span>
                       <span style="color: white; ">Under Supervision</span>
                     </h3>
@@ -249,7 +248,24 @@
             </transition>
           </li>
         </div>
-
+        <div class="mb-2">
+          <li @click="selectMenu(10)" class=" justify-start ">
+            <transition name="slide-fade-to-left">
+              <div class="mr-12 ">
+                <div class=" justify-center items-center ">
+                  <div class="p-1 ">
+                    <h3 class="text-lightBlueB-500 mt-tiny">
+                      <span style="color: white;">
+                           <i class="mr-2 fas fa-comments-dollar fa-x"></i>
+                      </span>
+                      <span style="color: white; ">Pending Payment</span>
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </transition>
+          </li>
+        </div>
         <!-- <div>
           <li @click="selectMenu(8)" class="w-1/2 flex justify-start mb-6">
             <transition name="slide-fade-to-left">
@@ -288,13 +304,13 @@ export default {
   methods: {
     selectMenu(menu) {
       this.$emit("changeDisplay", menu);
-    }
+    },
   },
   setup() {
     let dropdown = ref({
       submitted: false,
       approved: false,
-      declined: false
+      declined: false,
     });
 
     const submittedDD = () => {
@@ -317,14 +333,13 @@ export default {
       dropdown,
       submittedDD,
       approvedDD,
-      declinedDD
+      declinedDD,
     };
-  }
+  },
 };
 </script>
 <style>
-li{
- cursor: pointer; 
+li {
+  cursor: pointer;
 }
-
 </style>

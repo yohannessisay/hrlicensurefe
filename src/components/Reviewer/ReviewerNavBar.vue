@@ -569,6 +569,37 @@ export default {
       if (props.tab === "renewalAssignedToOthers") {
         store.dispatch("reviewerRenewal/getRenewalOthersAssignedSearched", search.value)
       }
+      if (props.tab === "renewalUnconfirmed") {
+        store.dispatch("reviewerRenewal/getRenewalApprovedSearched", search.value)
+      }
+      if (props.tab === "allRenewalUnconfirmed") {
+        store.dispatch("reviewerRenewal/getRenewalAllApprovedSearched", search.value)
+      }
+      if (props.tab === "renewalDeclined") {
+        store.dispatch("reviewerRenewal/getRenewalDeclinedSearched", search.value)
+      }
+      if (props.tab === "allRenewalDeclined") {
+        store.dispatch("reviewerRenewal/getRenewalAllDeclinedSearched", search.value)
+      }
+      if (props.tab === "renewalUnderSuperVision") {
+        store.dispatch("reviewerRenewal/getRenewalUnderSuperVisionSearched", search.value)
+      }
+      if (props.tab === "renewalOthersUnderSuperVision") {
+        store.dispatch("reviewerRenewal/getRenewalOthersUnderSuperVisionSearched", search.value)
+      }
+      if (props.tab === "renewalApprovedPayment") {
+        store.dispatch("reviewerRenewal/getRenewalApprovedPaymentSearched", search.value)
+      }
+      if (props.tab === "othersRenewalApprovedPayment") {
+        store.dispatch("reviewerRenewal/getRenewalOthersApprovedPaymentSearched", search.value)
+      }
+      if (props.tab === "renewalDeclinedPayment") {
+        store.dispatch("reviewerRenewal/getRenewalDeclinedPaymentSearched", search.value)
+      }
+      if (props.tab === "othersRenewalDeclinedPayment") {
+        store.dispatch("reviewerRenewal/getRenewalOthersDeclinedPaymentSearched", search.value)
+      }
+
       if (props.tab === "newLicenseUnassigned") {
         store.dispatch("reviewerNewLicense/getNewLicenseUnassignedSearched", search.value)
       }
@@ -584,6 +615,37 @@ export default {
       if (props.tab === "newLicenseAssignedToOthers") {
         store.dispatch("reviewerNewLicense/getNewLicenseOthersAssignedSearched", search.value)
       }
+      if (props.tab === "newLicenseUnconfirmed") {
+        store.dispatch("reviewerNewLicense/getNewLicenseApprovedSearched", search.value)
+      }
+      if (props.tab === "allNewLicenseUnconfirmed") {
+        store.dispatch("reviewerNewLicense/getNewLicenseAllApprovedSearched", search.value)
+      }
+      if (props.tab === "newLicenseDeclined") {
+        store.dispatch("reviewerNewLicense/getNewLicenseDeclinedSearched", search.value)
+      }
+      if (props.tab === "allNewLicenseDeclined") {
+        store.dispatch("reviewerNewLicense/getNewLicenseAllDeclinedSearched", search.value)
+      }
+      if (props.tab === "newLicenseUnderSuperVision") {
+        store.dispatch("reviewerNewLicense/getNewLicenseUnderSuperVisionSearched", search.value)
+      }
+      if (props.tab === "othersNewLicenseUnderSuperVision") {
+        store.dispatch("reviewerNewLicense/getNewLicenseOthersUnderSuperVisionSearched", search.value)
+      }
+      if (props.tab === "newLicenseApprovedPayment") {
+        store.dispatch("reviewerNewLicense/getNewLicenseApprovedPaymentSearched", search.value)
+      }
+      if (props.tab === "othersNewLicenseApprovedPayment") {
+        store.dispatch("reviewerNewLicense/getNewLicenseOthersApprovedPaymentSearched", search.value)
+      }
+      if (props.tab === "newLicenseDeclinedPayment") {
+        store.dispatch("reviewerNewLicense/getNewLicenseDeclinedPaymentSearched", search.value)
+      }
+      if (props.tab === "othersNewLicenseDeclinedPayment") {
+        store.dispatch("reviewerNewLicense/getNewLicenseOthersDeclinedPaymentSearched", search.value)
+      }
+
       if (props.tab === "verificationUnassigned") {
         store.dispatch("reviewerVerification/getUnassignedVerificationSearched", search.value)
       }
@@ -599,6 +661,18 @@ export default {
       if (props.tab === "verificationAssignedToOthers") {
         store.dispatch("reviewerVerification/getVerificationOthersAssignedSearched", search.value)
       }
+      if (props.tab === "verificationUnconfirmed") {
+        store.dispatch("reviewerVerification/getVerificationApprovedSearched", search.value)
+      }
+      if (props.tab === "allVerificationUnconfirmed") {
+        store.dispatch("reviewerVerification/getVerificationAllApprovedSearched", search.value)
+      }
+      if (props.tab === "verificationDeclined") {
+        store.dispatch("reviewerVerification/getVerificationDeclinedSearched", search.value)
+      }
+      if (props.tab === "allVerificationDeclined") {
+        store.dispatch("reviewerVerification/getVerificationAllDeclinedSearched", search.value)
+      }
       if(props.tab === "goodStandingUnassigned") {
         store.dispatch("reviewerGoodStanding/getUnassignedGoodStandingSearched", search.value)
       }
@@ -613,6 +687,18 @@ export default {
       }
       if (props.tab === "goodStandingAssignedToOthers") {
         store.dispatch("reviewerGoodStanding/getGoodStandingOthersAssignedSearched", search.value)
+      }
+      if (props.tab === "goodStandingUnconfirmed") {
+        store.dispatch("reviewerGoodStanding/getGoodStandingApprovedSearched", search.value)
+      }
+      if (props.tab === "allGoodStandingUnconfirmed") {
+        store.dispatch("reviewerGoodStanding/getGoodStandingAllApprovedSearched", search.value)
+      }
+      if (props.tab === "goodStandingDeclined") {
+        store.dispatch("reviewerGoodStanding/getGoodStandingDeclinedSearched", search.value)
+      }
+      if (props.tab === "allGoodStandingDeclined") {
+        store.dispatch("reviewerGoodStanding/getGoodStandingAllDeclinedSearched", search.value)
       }
       
 

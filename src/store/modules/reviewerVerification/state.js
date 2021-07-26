@@ -12,5 +12,15 @@ export default {
         verificationAssignedToYouSearched: [],
         verificationAssignedToOthers: [],
         verificationAssignedToOthersSearched: [],
+
+        verificationApproved: [],
+        verificationApprovedSearched: [],
+        verificationAllApproved: [],
+        verificationAllApprovedSearched: [],
+
+        verificationDeclined: [],
+        verificationDeclinedSearched: [],
+        verificationAllDeclined: [],
+        verificationAllDeclinedSearched: [],
     }
 }

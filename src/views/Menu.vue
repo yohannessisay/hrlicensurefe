@@ -36,6 +36,9 @@
         <div v-if="this.display == 9">
           <UnderSupervision />
         </div>
+         <div v-if="this.display == 10">
+          <PendingPayment />
+        </div>
       </div>
     </div>
   </div>
@@ -53,6 +56,7 @@ import LicenseRequests from "@/views/LicenseRequests";
 import InReview from "@/views/InReview";
 import ApprovedPayment from "@/views/ApprovedPayment";
 import DeclinedPayment from "@/views/DeclinedPayment";
+import PendingPayment from "@/views/PendingPayment";
 
 export default {
   components: {
@@ -68,6 +72,7 @@ export default {
     InReview,
     ApprovedPayment,
     DeclinedPayment,
+    PendingPayment,
   },
   data: () => ({
     display: 0,

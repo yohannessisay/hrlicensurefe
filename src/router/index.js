@@ -324,7 +324,7 @@ const routes = [
       import("../components/Reviewer/Detail/ReturnedToOthersDetail.vue"),
   },
   {
-    path: "/admin/applicantDetail/:applicationType/:applicationId/:applicantId",
+    path: "/admin/applicant-detail/:applicationType/:applicationId/:applicantId",
     name: "applicantDetail",
     component: () =>
       import("../components/Reviewer/Detail/ApplicantDetail.vue"),
@@ -365,6 +365,57 @@ const routes = [
     component: () => import("../components/Reviewer/ApplicationTypes/NewLicense/NewLicenseAssignedToOthers.vue"),
   },
   {
+    path: "/admin/newlicense/finished",
+    name: "NewLicenseFinished",
+    component: () => import("../components/Reviewer/ApplicationTypes/NewLicense/NewLicenseUnConfirmed.vue"),
+  },
+  {
+    path: "/admin/newlicense/all-finished",
+    name: "NewLicenseAllFinished",
+    component: () => import("../components/Reviewer/ApplicationTypes/NewLicense/NewLicenseAllUnConfirmed.vue"),
+  },
+  {
+    path: "/admin/newlicense/declined",
+    name: "NewLicenseDeclined",
+    component: () => import("../components/Reviewer/ApplicationTypes/NewLicense/NewLicenseDeclined.vue"),
+  },
+  {
+    path: "/admin/newlicense/all-declined",
+    name: "NewLicenseAllDeclined",
+    component: () => import("../components/Reviewer/ApplicationTypes/NewLicense/NewLicenseAllDeclined.vue"),
+  },
+  {
+    path: "/admin/newlicense/under-super-vision",
+    name: "NewLicenseUnderSuperVision",
+    component: () => import("../components/Reviewer/ApplicationTypes/NewLicense/NewLicenseUnderSuperVision.vue"),
+  },
+  {
+    path: "/admin/newlicense/others-under-super-vision",
+    name: "NewLicenseOthersUnderSuperVision",
+    component: () => import("../components/Reviewer/ApplicationTypes/NewLicense/NewLicenseOthersUnderSuperVision.vue"),
+  },
+  {
+    path: "/admin/newlicense/approved-payment",
+    name: "NewLicenseApprovedPayment",
+    component: () => import("../components/Reviewer/ApplicationTypes/NewLicense/NewLicenseApprovedPayment.vue"),
+  },
+  {
+    path: "/admin/newlicense/others-approved-payment",
+    name: "NewLicenseOthersApprovedPayment",
+    component: () => import("../components/Reviewer/ApplicationTypes/NewLicense/NewLicenseOthersApprovedPayment.vue"),
+  },
+  {
+    path: "/admin/newlicense/declined-payment",
+    name: "NewLicenseDeclinedPayment",
+    component: () => import("../components/Reviewer/ApplicationTypes/NewLicense/NewLicenseDeclinedPayment.vue"),
+  },
+  {
+    path: "/admin/newlicense/others-declined-payment",
+    name: "NewLicenseOthersDeclinedPayment",
+    component: () => import("../components/Reviewer/ApplicationTypes/NewLicense/NewLicenseOthersDeclinedPayment.vue"),
+  },
+
+  {
     path: "/admin/verification/unassigned",
     name: "VerificationUnassigned",
     component: () => import("../components/Reviewer/ApplicationTypes/Verification/VerificationUnassigned.vue"),
@@ -388,6 +439,26 @@ const routes = [
     path: "/admin/verification/assigned-to-others",
     name: "VerificationAssignedToOthers",
     component: () => import("../components/Reviewer/ApplicationTypes/Verification/VerificationAssignedToOthers.vue"),
+  },
+  {
+    path: "/admin/verification/finished",
+    name: "VerificationFinished",
+    component: () => import("../components/Reviewer/ApplicationTypes/Verification/VerificationUnconfirmed.vue"),
+  },
+  {
+    path: "/admin/verification/all-finished",
+    name: "VerificationAllFinished",
+    component: () => import("../components/Reviewer/ApplicationTypes/Verification/VerificationAllUnconfirmed.vue"),
+  },
+  {
+    path: "/admin/verification/declined",
+    name: "VerificationDeclined",
+    component: () => import("../components/Reviewer/ApplicationTypes/Verification/VerificationDeclined.vue"),
+  },
+  {
+    path: "/admin/verification/all-declined",
+    name: "VerificationAllDeclined",
+    component: () => import("../components/Reviewer/ApplicationTypes/Verification/VerificationAllDeclined.vue"),
   },
   {
     path: "/admin/renewal/unassigned",
@@ -415,6 +486,56 @@ const routes = [
     component: () => import("../components/Reviewer/ApplicationTypes/Renewal/RenewalAssignedToOthers.vue"),
   },
   {
+    path: "/admin/renewal/finished",
+    name: "RenewalFinished",
+    component: () => import("../components/Reviewer/ApplicationTypes/Renewal/RenewalUnconfirmed.vue"),
+  },
+  {
+    path: "/admin/renewal/all-finished",
+    name: "RenwalAllFinished",
+    component: () => import("../components/Reviewer/ApplicationTypes/Renewal/RenewalAllUnconfirmed.vue"),
+  },
+  {
+    path: "/admin/renewal/declined",
+    name: "RenewalDeclined",
+    component: () => import("../components/Reviewer/ApplicationTypes/Renewal/RenewalDeclined.vue"),
+  },
+  {
+    path: "/admin/renewal/all-declined",
+    name: "RenewalAllDeclined",
+    component: () => import("../components/Reviewer/ApplicationTypes/Renewal/RenewalAllDeclined.vue"),
+  },
+  {
+    path: "/admin/renewal/under-super-vision",
+    name: "RenewalUnderSuperVision",
+    component: () => import("../components/Reviewer/ApplicationTypes/Renewal/RenewalUnderSuperVision.vue"),
+  },
+  {
+    path: "/admin/renewal/others-under-super-vision",
+    name: "RenewalOthersUnderSuperVision",
+    component: () => import("../components/Reviewer/ApplicationTypes/Renewal/RenewalOthersUnderSuperVision.vue"),
+  },
+  {
+    path: "/admin/renewal/approved-payment",
+    name: "RenewalApprovedPayment",
+    component: () => import("../components/Reviewer/ApplicationTypes/Renewal/RenewalApprovedPayment.vue"),
+  },
+  {
+    path: "/admin/renewal/others-approved-payment",
+    name: "RenewalOthersApprovedPayment",
+    component: () => import("../components/Reviewer/ApplicationTypes/Renewal/RenewalOthersApprovedPayment.vue"),
+  },
+  {
+    path: "/admin/renewal/declined-payment",
+    name: "RenewalDeclinedPayment",
+    component: () => import("../components/Reviewer/ApplicationTypes/Renewal/RenewalDeclinedPayment.vue"),
+  },
+  {
+    path: "/admin/renewal/others-declined-payment",
+    name: "RenewalOthersDeclinedPayment",
+    component: () => import("../components/Reviewer/ApplicationTypes/Renewal/RenewalOthersDeclinedPayment.vue"),
+  },
+  {
     path: "/admin/goodstanding/unassigned",
     name: "GoodStandingUnassigned",
     component: () => import("../components/Reviewer/ApplicationTypes/GoodStanding/GoodStandingUnassigned.vue"),
@@ -438,6 +559,26 @@ const routes = [
     path: "/admin/goodstanding/assigned-to-others",
     name: "GoodStandingAssignedToOthers",
     component: () => import("../components/Reviewer/ApplicationTypes/GoodStanding/GoodStandingAssignedToOthers.vue"),
+  },
+  {
+    path: "/admin/goodstanding/finished",
+    name: "GoodStandingFinished",
+    component: () => import("../components/Reviewer/ApplicationTypes/GoodStanding/GoodStandingUnconfirmed.vue"),
+  },
+  {
+    path: "/admin/goodstanding/all-finished",
+    name: "GoodStandingAllFinished",
+    component: () => import("../components/Reviewer/ApplicationTypes/GoodStanding/GoodStandingAllUnconfirmed.vue"),
+  },
+  {
+    path: "/admin/goodstanding/declined",
+    name: "GoodStandingDeclined",
+    component: () => import("../components/Reviewer/ApplicationTypes/GoodStanding/GoodStandingDeclined.vue"),
+  },
+  {
+    path: "/admin/goodstanding/all-declined",
+    name: "GoodStandingAllDeclined",
+    component: () => import("../components/Reviewer/ApplicationTypes/GoodStanding/GoodStandingAllDeclined.vue"),
   },
   
 

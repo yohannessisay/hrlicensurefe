@@ -11,4 +11,15 @@ export default {
     getVerificationAssignedToYouSearched: state => state.verificationAssignedToYouSearched,
     getVerificationAssignedToOthers: state => state.verificationAssignedToOthers,
     getVerificationAssignedToOthersSearched: state => state.verificationAssignedToOthersSearched,
+
+    getVerificationApproved: (state) => state.verificationApproved,
+    getVerificationApprovedSearched: (state) => state.verificationApprovedSearched,
+    getVerificationAllApproved: (state) => state.verificationAllApproved,
+    getVerificationAllApprovedSearched: (state) => state.verificationAllApprovedSearched,
+
+    getVerificationDeclined: (state) => state.verificationDeclined,
+    getVerificationDeclinedSearched: (state) => state.verificationDeclinedSearched,
+    getVerificationAllDeclined: (state) => state.verificationAllDeclined,
+    getVerificationAllDeclinedSearched: (state) => state.verificationAllDeclinedSearched,
+
 }
