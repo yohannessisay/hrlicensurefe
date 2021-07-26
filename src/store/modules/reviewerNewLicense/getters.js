@@ -31,4 +31,9 @@ export default {
   getNewLicenseApprovedPaymentSearched: (state) => state.newLicenseApprovedPaymentSearched,
   getNewLicenseOthersApprovedPayment: (state) => state.newLicenseOthersApprovedPayment,
   getNewLicenseOthersApprovedPaymentSearched: (state) => state.newLicenseOthersApprovedPaymentSearched,
+
+  getNewLicenseDeclinedPayment: (state) => state.newLicenseDeclinedPayment,
+  getNewLicenseDeclinedPaymentSearched: (state) => state.newLicenseDeclinedPaymentSearched,
+  getNewLicenseOthersDeclinedPayment: (state) => state.newLicenseOthersDeclinedPayment,
+  getNewLicenseOthersDeclinedPaymentSearched: (state) => state.newLicenseOthersDeclinedPaymentSearched,
 };
