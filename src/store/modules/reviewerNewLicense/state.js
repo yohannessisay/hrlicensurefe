@@ -32,6 +32,11 @@ export default {
     newLicenseApprovedPaymentSearched: [],
     newLicenseOthersApprovedPayment: [],
     newLicenseOthersApprovedPaymentSearched: [],
+
+    newLicenseDeclinedPayment: [],
+    newLicenseDeclinedPaymentSearched: [],
+    newLicenseOthersDeclinedPayment: [],
+    newLicenseOthersDeclinedPaymentSearched: [],
     
   },
 };

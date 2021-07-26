@@ -404,6 +404,16 @@ const routes = [
     name: "NewLicenseOthersApprovedPayment",
     component: () => import("../components/Reviewer/ApplicationTypes/NewLicense/NewLicenseOthersApprovedPayment.vue"),
   },
+  {
+    path: "/admin/newlicense/declined-payment",
+    name: "NewLicenseDeclinedPayment",
+    component: () => import("../components/Reviewer/ApplicationTypes/NewLicense/NewLicenseDeclinedPayment.vue"),
+  },
+  {
+    path: "/admin/newlicense/others-declined-payment",
+    name: "NewLicenseOthersDeclinedPayment",
+    component: () => import("../components/Reviewer/ApplicationTypes/NewLicense/NewLicenseOthersDeclinedPayment.vue"),
+  },
 
   {
     path: "/admin/verification/unassigned",
@@ -514,6 +524,16 @@ const routes = [
     path: "/admin/renewal/others-approved-payment",
     name: "RenewalOthersApprovedPayment",
     component: () => import("../components/Reviewer/ApplicationTypes/Renewal/RenewalOthersApprovedPayment.vue"),
+  },
+  {
+    path: "/admin/renewal/declined-payment",
+    name: "RenewalDeclinedPayment",
+    component: () => import("../components/Reviewer/ApplicationTypes/Renewal/RenewalDeclinedPayment.vue"),
+  },
+  {
+    path: "/admin/renewal/others-declined-payment",
+    name: "RenewalOthersDeclinedPayment",
+    component: () => import("../components/Reviewer/ApplicationTypes/Renewal/RenewalOthersDeclinedPayment.vue"),
   },
   {
     path: "/admin/goodstanding/unassigned",

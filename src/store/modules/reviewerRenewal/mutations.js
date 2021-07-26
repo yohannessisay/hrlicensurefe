@@ -30,7 +30,12 @@ import {
   SET_RENEWAL_APPROVED_PAYMENT,
   SET_RENEWAL_APPROVED_PAYMENT_SEARCHED,
   SET_RENEWAL_OTHERS_APPROVED_PAYMENT,
-  SET_RENEWAL_OTHERS_APPROVED_PAYMENT_SEARCHED
+  SET_RENEWAL_OTHERS_APPROVED_PAYMENT_SEARCHED,
+
+  SET_RENEWAL_DECLINED_PAYMENT,
+  SET_RENEWAL_DECLINED_PAYMENT_SEARCHED,
+  SET_RENEWAL_OTHERS_DECLINED_PAYMENT,
+  SET_RENEWAL_OTHERS_DECLINED_PAYMENT_SEARCHED,
 } from "./mutation-types";
 
 export default {
@@ -131,5 +136,20 @@ export default {
   },
   [SET_RENEWAL_OTHERS_APPROVED_PAYMENT_SEARCHED](state, searchedVal) {
     state.renewalOthersApprovedPaymentSearched = searchedVal;
+  },
+
+  [SET_RENEWAL_DECLINED_PAYMENT](state, data) {
+    state.renewalDeclinedPayment = data;
+    state.renewalDeclinedPaymentSearched = data;
+  },
+  [SET_RENEWAL_DECLINED_PAYMENT_SEARCHED](state, searchedVal) {
+    state.renewalDeclinedPaymentSearched = searchedVal;
+  },
+  [SET_RENEWAL_OTHERS_DECLINED_PAYMENT](state, data) {
+    state.renewalOthersDeclinedPayment = data;
+    state.renewalOthersDeclinedPaymentSearched = data;
+  },
+  [SET_RENEWAL_OTHERS_DECLINED_PAYMENT_SEARCHED](state, searchedVal) {
+    state.renewalOthersDeclinedPaymentSearched = searchedVal;
   },
 };

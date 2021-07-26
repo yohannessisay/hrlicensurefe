@@ -31,4 +31,9 @@ export default {
     getRenewalApprovedPaymentSearched: (state) => state.renewalApprovedPaymentSearched,
     getRenewalOthersApprovedPayment: (state) => state.renewalOthersApprovedPayment,
     getRenewalOthersApprovedPaymentSearched: (state) => state.renewalOthersApprovedPaymentSearched,
+
+    getRenewalDeclinedPayment: (state) => state.renewalDeclinedPayment,
+    getRenewalDeclinedPaymentSearched: (state) => state.renewalDeclinedPaymentSearched,
+    getRenewalOthersDeclinedPayment: (state) => state.renewalOthersDeclinedPayment,
+    getRenewalOthersDeclinedPaymentSearched: (state) => state.renewalOthersDeclinedPaymentSearched,
 }

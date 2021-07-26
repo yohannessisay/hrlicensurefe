@@ -31,6 +31,11 @@ import {
   SET_NEW_LICENSE_OTHERS_APPROVED_PAYMENT,
   SET_NEW_LICENSE_OTHERS_APPROVED_PAYMENT_SEARCHED,
 
+  SET_NEW_LICENSE_DECLINED_PAYMENT,
+  SET_NEW_LICENSE_DECLINED_PAYMENT_SEARCHED,
+  SET_NEW_LICENSE_OTHERS_DECLINED_PAYMENT,
+  SET_NEW_LICENSE_OTHERS_DECLINED_PAYMENT_SEARCHED,
+
   NEW_LICENSE_REPORT,
 } from "./mutation-types";
 
@@ -458,5 +463,71 @@ export default {
             e.reviewer.name.toLowerCase().includes(searchKey.toLowerCase());
     });
     commit(SET_NEW_LICENSE_OTHERS_APPROVED_PAYMENT_SEARCHED, searchedVal);
+  },
+
+  async getNewLicenseDeclinedPayment({ commit }, adminId) {
+    const url = baseUrl + "/newlicenses/status/7";
+    const resp = await ApiService.get(url);
+    const declinedPayment = resp.data.data.filter(function(e) {
+      return e.reviewerId === adminId;
+    });
+    commit(SET_NEW_LICENSE_DECLINED_PAYMENT, declinedPayment);
+  },
+
+  getNewLicenseDeclinedPaymentSearched({ commit, getters }, searchKey) {
+    if (getters.getNewLicenseDeclinedPayment === undefined) {
+      return;
+    }
+    const searchedVal = getters.getNewLicenseDeclinedPayment.filter(function(e) {
+      return e.newLicenseCode === undefined
+        ? ""
+        : e.newLicenseCode.toLowerCase().includes(searchKey.toLowerCase()) ||
+            (e.applicant.profile.name + " " + e.applicant.profile.fatherName)
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.name
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.fatherName
+              .toLowerCase()
+              .includes(searchKey.toLowerCase());
+    });
+    commit(SET_NEW_LICENSE_DECLINED_PAYMENT_SEARCHED, searchedVal);
+  },
+
+  /* 
+  /* others declined payment status is wrong for the time (status/7) is placeholder
+  */
+  async getNewLicenseOthersDeclinedPayment({ commit }, adminId) {
+    const url = baseUrl + "/newlicenses/status/7";
+    const resp = await ApiService.get(url);
+    const othersDeclinedPayments = resp.data.data.filter(function(e) {
+      return e.reviewerId !== adminId
+    })
+    commit(SET_NEW_LICENSE_OTHERS_DECLINED_PAYMENT, othersDeclinedPayments);
+  },
+  getNewLicenseOthersDeclinedPaymentSearched({ commit, getters }, searchKey) {
+    console.log("comming")
+    if (getters.getNewLicenseOthersDeclinedPayment === undefined) {
+      return;
+    }
+    const searchedVal = getters.getNewLicenseOthersDeclinedPayment.filter(function(
+      e
+    ) {
+      return e.newLicenseCode === undefined
+        ? ""
+        : e.newLicenseCode.toLowerCase().includes(searchKey.toLowerCase()) ||
+            (e.applicant.profile.name + " " + e.applicant.profile.fatherName)
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.name
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.fatherName
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.reviewer.name.toLowerCase().includes(searchKey.toLowerCase());
+    });
+    commit(SET_NEW_LICENSE_OTHERS_DECLINED_PAYMENT_SEARCHED, searchedVal);
   },
 };
