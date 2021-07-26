@@ -49,7 +49,7 @@
             <div class="flex justify-center">
               <div>
                 <span>
-                <h2>{{ serviceFee.name }}</h2>
+                <h2>{{ serviceFeeName }}</h2>
                 <h2>{{ fileSize }}</h2>
               </span>
                 <span v-if="showUpload">
@@ -142,6 +142,7 @@ export default {
       showErrorFlash: false,
       showLoading: false,
     });
+    let serviceFeeName = ref("");
   let fileSize = ref("");
     let serviceFile = ref("");
     let serviceFileP = ref("");
@@ -175,6 +176,7 @@ export default {
       serviceFile.value = serviceFileP.value.files[0];
       let reader = new FileReader();
  let fileS = serviceFile.value.size;
+ serviceFeeName.value=serviceFile.value.name;
       if (fileS > 0 && fileS < 1000) {
         fileSize.value += "B";
       } else if (fileS > 1000 && fileS < 1000000) {
@@ -294,6 +296,7 @@ export default {
       basePath,
       message,
       fileSize,
+      serviceFeeName,
     };
   },
 };
