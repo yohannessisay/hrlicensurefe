@@ -123,7 +123,7 @@
               >
               <input
                 class="max-w-3xl"
-                type="number"
+                type="text"
                 v-model="licenseInfo.licenseRegistrationNumber"
               />
               <span style="color: red">{{
