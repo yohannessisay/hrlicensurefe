@@ -7,6 +7,7 @@ export default {
       institutionId: "",
     },
     residenceWoredaId: "",
+    professionalTypeID: "",
     licenseCopy: "",
     serviceFee: "",
     verificationLetter: "",

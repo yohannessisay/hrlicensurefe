@@ -100,10 +100,7 @@
             </div>
             <div class="flex flex-col mb-medium w-2/5 mr-12">
               <label class="text-primary-700">Woreda</label>
-              <select
-                class="max-w-3xl"
-                v-model="licenseInfo.residenceWoredaId"
-              >
+              <select class="max-w-3xl" v-model="licenseInfo.residenceWoredaId">
                 <option
                   v-for="types in woredaArray"
                   v-bind:key="types.name"
@@ -114,6 +111,27 @@
               </select>
               <span style="color: red">{{
                 licenseInfoErrors.residenceWoredaId
+              }}</span>
+            </div>
+          </div>
+          <div class="flex">
+            <div class="flex flex-col mb-medium w-2/5 mr-12 ml-medium">
+              <label class="text-primary-700">Professional Type</label>
+              <select
+                class="max-w-3xl"
+                @change="fetchProfessionalType()"
+                v-model="licenseInfo.professionalTypeID"
+              >
+                <option
+                  v-for="types in professionalTypes"
+                  v-bind:key="types.name"
+                  v-bind:value="types.id"
+                >
+                  {{ types.name }}
+                </option>
+              </select>
+              <span style="color: red">{{
+                licenseInfoErrors.professionalTypeID
               }}</span>
             </div>
           </div>
@@ -225,6 +243,7 @@ export default {
     this.fetchInstitutions();
     this.fetchDepartments();
     this.fetchRegions();
+    this.fetchProfessionalType();
     this.showLoading = true;
     setTimeout(() => {
       this.buttons = this.getButtons;
@@ -242,6 +261,7 @@ export default {
     ...mapGetters({
       getButtons: "verification/getButtons",
       getDraft: "verification/getDraft",
+      getLicense: "verification/getLicense",
     }),
   },
   data: () => ({
@@ -253,6 +273,7 @@ export default {
         institutionId: "",
       },
       residenceWoredaId: "",
+      professionalTypeID: "",
     },
     licenseInfoErrors: {
       applicantTypeId: "",
@@ -263,6 +284,7 @@ export default {
       residenceWoredaId: "",
       regionID: "",
       zoneID: "",
+      professionalTypeID: "",
     },
     regionID: "",
     zoneID: "",
@@ -279,6 +301,8 @@ export default {
     showFlash: false,
     showErrorFlash: false,
     showLoading: false,
+
+    professionalTypes: [],
   }),
 
   methods: {
@@ -295,6 +319,7 @@ export default {
               institutionId: this.licenseInfo.education.institutionId,
             },
             residenceWoredaId: this.licenseInfo.residenceWoredaId,
+            professionalTypeId: this.licenseInfo.professionalTypeID,
           },
         },
         id: this.draftId,
@@ -339,6 +364,7 @@ export default {
               institutionId: this.licenseInfo.education.institutionId,
             },
             residenceWoredaId: this.licenseInfo.residenceWoredaId,
+            professionalTypeId: this.licenseInfo.professionalTypeID,
           },
         },
         id: this.draftId,
@@ -401,8 +427,8 @@ export default {
           institutionId: this.licenseInfo.education.institutionId,
         },
         residenceWoredaId: this.licenseInfo.residenceWoredaId,
+        professionalTypeId: this.licenseInfo.professionalTypeID,
       };
-
       this.$emit("changeActiveState");
       this.$emit("applicantTypeValue", this.licenseInfo.applicantTypeId);
       this.$store.dispatch("verification/setLicense", license);
@@ -449,6 +475,11 @@ export default {
           this.woredaArray = woredasResult.data;
         });
     },
+    fetchProfessionalType() {
+      this.$store.dispatch("verification/getProfessionalTypes").then((res) => {
+        this.professionalTypes = res.data.data;
+      });
+    },
 
     validateForm(formData) {
       const errors = {};
@@ -461,6 +492,8 @@ export default {
         errors.education.institutionId = "Institution Required";
       if (!formData.residenceWoredaId)
         errors.residenceWoredaId = "Woreda Required";
+      if (!formData.professionalTypeID)
+        errors.professionalTypeID = "Professional Type Required";
       return errors;
     },
 
@@ -484,6 +517,7 @@ export default {
       this.licenseInfo.residenceWoredaId = draftData.woreda.id;
       this.regionID = draftData.woreda.zone.region.id;
       this.zoneID = draftData.woreda.zone.id;
+      this.licenseInfo.professionalTypeID = draftData.professionalTypeId;
       this.$store
         .dispatch("verification/getZones", this.regionID)
         .then((res) => {

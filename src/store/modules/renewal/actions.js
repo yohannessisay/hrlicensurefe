@@ -214,6 +214,14 @@ export default {
       return resp;
     }
   },
+  async getProfessionalTypes() {
+    try {
+      const resp = await ApiService.get(url + "lookups/professionalTypes");
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
   async storeDeclinedFields({ commit }, fields) {
     commit(SET_DECLINED_FIELDS, fields);
   },
