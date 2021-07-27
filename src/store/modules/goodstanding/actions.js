@@ -207,6 +207,14 @@ export default {
       return resp;
     }
   },
+  async getProfessionalTypes() {
+    try {
+      const resp = await ApiService.get(url + "lookups/professionalTypes");
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
   async getApplicantPosition() {
     try {
       const baseUrl = url + "lookups/applicantPositions";

@@ -118,6 +118,27 @@
               }}</span>
             </div>
           </div>
+          <div class="flex">
+            <div class="flex flex-col mb-medium w-2/5 mr-12 ml-medium">
+              <label class="text-primary-700">Professional Type</label>
+              <select
+                class="max-w-3xl"
+                @change="fetchProfessionalType()"
+                v-model="licenseInfo.professionalTypeID"
+              >
+                <option
+                  v-for="types in professionalTypes"
+                  v-bind:key="types.name"
+                  v-bind:value="types.id"
+                >
+                  {{ types.name }}
+                </option>
+              </select>
+              <span style="color: red">{{
+                licenseInfoErrors.professionalTypeID
+              }}</span>
+            </div>
+          </div>
         </form>
         <div
           v-if="this.showButtons && !this.draftStatus"
@@ -226,6 +247,7 @@ export default {
     this.fetchInstitutions();
     this.fetchDepartments();
     this.fetchRegions();
+    this.fetchProfessionalType();
     this.showLoading = true;
     setTimeout(() => {
       this.buttons = this.getButtons;
@@ -254,6 +276,7 @@ export default {
         institutionId: "",
       },
       residenceWoredaId: "",
+      professionalTypeID: "",
     },
     licenseInfoErrors: {
       applicantTypeId: "",
@@ -264,6 +287,7 @@ export default {
       residenceWoredaId: "",
       regionID: "",
       zoneID: "",
+      professionalTypeID: "",
     },
     regionID: "",
     zoneID: "",
@@ -280,6 +304,8 @@ export default {
     showFlash: false,
     showErrorFlash: false,
     showLoading: false,
+
+    professionalTypes: [],
   }),
 
   methods: {
@@ -296,6 +322,7 @@ export default {
               institutionId: this.licenseInfo.education.institutionId,
             },
             residenceWoredaId: this.licenseInfo.residenceWoredaId,
+            professionalTypeId: this.licenseInfo.professionalTypeID,
           },
         },
         id: this.draftId,
@@ -340,6 +367,7 @@ export default {
               institutionId: this.licenseInfo.education.institutionId,
             },
             residenceWoredaId: this.licenseInfo.residenceWoredaId,
+            professionalTypeId: this.licenseInfo.professionalTypeID,
           },
         },
         id: this.draftId,
@@ -402,6 +430,7 @@ export default {
           institutionId: this.licenseInfo.education.institutionId,
         },
         residenceWoredaId: this.licenseInfo.residenceWoredaId,
+        professionalTypeId: this.licenseInfo.professionalTypeID,
       };
 
       this.$emit("changeActiveState");
@@ -434,21 +463,22 @@ export default {
     },
 
     fetchZones() {
-      this.$store
-        .dispatch("renewal/getZones", this.regionID)
-        .then((res) => {
-          const zonesResult = res.data;
-          this.zoneArray = zonesResult.data;
-        });
+      this.$store.dispatch("renewal/getZones", this.regionID).then((res) => {
+        const zonesResult = res.data;
+        this.zoneArray = zonesResult.data;
+      });
     },
 
     fetchWoredas() {
-      this.$store
-        .dispatch("renewal/getWoredas", this.zoneID)
-        .then((res) => {
-          const woredasResult = res.data;
-          this.woredaArray = woredasResult.data;
-        });
+      this.$store.dispatch("renewal/getWoredas", this.zoneID).then((res) => {
+        const woredasResult = res.data;
+        this.woredaArray = woredasResult.data;
+      });
+    },
+    fetchProfessionalType() {
+      this.$store.dispatch("renewal/getProfessionalTypes").then((res) => {
+        this.professionalTypes = res.data.data;
+      });
     },
 
     woredaChanged() {},
@@ -486,6 +516,7 @@ export default {
       this.licenseInfo.residenceWoredaId = draftData.woreda.id;
       this.regionID = draftData.woreda.zone.region.id;
       this.zoneID = draftData.woreda.zone.id;
+      this.licenseInfo.professionalTypeID = draftData.professionalTypeId;
       this.$store
         .dispatch("renewal/getZones", this.regionID)
         .then((res) => {

@@ -102,7 +102,7 @@ export default {
       return error;
     }
   },
-  async getProfile({commit}, id) {
+  async getProfile({ commit }, id) {
     try {
       const resp = await ApiService.get(url + "profiles/user/" + id);
       return resp;
@@ -201,6 +201,14 @@ export default {
     } catch (error) {
       const resp = error;
       return resp;
+    }
+  },
+  async getProfessionalTypes() {
+    try {
+      const resp = await ApiService.get(url + "lookups/professionalTypes");
+      return resp;
+    } catch (error) {
+      return error;
     }
   },
   async storeDeclinedFields({ commit }, fields) {
