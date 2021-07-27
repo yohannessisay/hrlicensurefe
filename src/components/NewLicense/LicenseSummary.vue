@@ -631,6 +631,7 @@ export default {
           .then((res) => {
             let licenseId = res.data.data.id;
             let payload = { document: formData, id: licenseId };
+            // here is the problrm
             this.$store
               .dispatch("newlicense/uploadDocuments", payload)
               .then((res) => {
