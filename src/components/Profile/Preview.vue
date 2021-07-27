@@ -218,8 +218,11 @@ export default {
             message.value.showFlash = true;
             message.value.showErrorFlash = false;
             setTimeout(() => {
-              router.push({ path: "/menu" });
+              location.reload(true);
             }, 1500);
+            setTimeout(() => {
+              router.push({ path: "/menu" });
+            }, 100);
           } else {
             message.value.showLoading = false;
             message.value.showFlash = false;
