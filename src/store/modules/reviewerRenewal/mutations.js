@@ -25,7 +25,17 @@ import {
   SET_RENEWAL_UNDER_SUPERVISION,
   SET_RENEWAL_UNDER_SUPERVISION_SEARCHED,
   SET_RENEWAL_OTHERS_UNDER_SUPERVISION,
-  SET_RENEWAL_OTHERS_UNDER_SUPERVISION_SEARCHED
+  SET_RENEWAL_OTHERS_UNDER_SUPERVISION_SEARCHED,
+
+  SET_RENEWAL_APPROVED_PAYMENT,
+  SET_RENEWAL_APPROVED_PAYMENT_SEARCHED,
+  SET_RENEWAL_OTHERS_APPROVED_PAYMENT,
+  SET_RENEWAL_OTHERS_APPROVED_PAYMENT_SEARCHED,
+
+  SET_RENEWAL_DECLINED_PAYMENT,
+  SET_RENEWAL_DECLINED_PAYMENT_SEARCHED,
+  SET_RENEWAL_OTHERS_DECLINED_PAYMENT,
+  SET_RENEWAL_OTHERS_DECLINED_PAYMENT_SEARCHED,
 } from "./mutation-types";
 
 export default {
@@ -111,5 +121,35 @@ export default {
   },
   [SET_RENEWAL_OTHERS_UNDER_SUPERVISION_SEARCHED](state, searchedVal) {
     state.renewalOthersUnderSuperVisionSearched = searchedVal;
+  },
+
+  [SET_RENEWAL_APPROVED_PAYMENT](state, data) {
+    state.renewalApprovedPayment = data;
+    state.renewalApprovedPaymentSearched = data;
+  },
+  [SET_RENEWAL_APPROVED_PAYMENT_SEARCHED](state, searchedVal) {
+    state.renewalApprovedPaymentSearched = searchedVal;
+  },
+  [SET_RENEWAL_OTHERS_APPROVED_PAYMENT](state, data) {
+    state.renewalOthersApprovedPayment = data;
+    state.renewalOthersApprovedPaymentSearched = data;
+  },
+  [SET_RENEWAL_OTHERS_APPROVED_PAYMENT_SEARCHED](state, searchedVal) {
+    state.renewalOthersApprovedPaymentSearched = searchedVal;
+  },
+
+  [SET_RENEWAL_DECLINED_PAYMENT](state, data) {
+    state.renewalDeclinedPayment = data;
+    state.renewalDeclinedPaymentSearched = data;
+  },
+  [SET_RENEWAL_DECLINED_PAYMENT_SEARCHED](state, searchedVal) {
+    state.renewalDeclinedPaymentSearched = searchedVal;
+  },
+  [SET_RENEWAL_OTHERS_DECLINED_PAYMENT](state, data) {
+    state.renewalOthersDeclinedPayment = data;
+    state.renewalOthersDeclinedPaymentSearched = data;
+  },
+  [SET_RENEWAL_OTHERS_DECLINED_PAYMENT_SEARCHED](state, searchedVal) {
+    state.renewalOthersDeclinedPaymentSearched = searchedVal;
   },
 };

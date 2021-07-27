@@ -31,6 +31,7 @@ export default {
       const url = baseUrl + "/goodStandings/status/5";
       const resp = await ApiService.get(url);
       commit(SET_GOOD_STANDING_UNASSIGNED, resp.data.data);
+      console.log("good standing unassigned is ", resp.data.data)
     } catch (err) {
       return error;
     }

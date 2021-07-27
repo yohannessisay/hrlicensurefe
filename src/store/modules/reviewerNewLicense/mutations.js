@@ -25,7 +25,17 @@ import {
   SET_NEW_LICENSE_UNDER_SUPERVISION,
   SET_NEW_LICENSE_UNDER_SUPERVISION_SEARCHED,
   SET_NEW_LICENSE_OTHERS_UNDER_SUPERVISION,
-  SET_NEW_LICENSE_OTHERS_UNDER_SUPERVISION_SEARCHED
+  SET_NEW_LICENSE_OTHERS_UNDER_SUPERVISION_SEARCHED,
+
+  SET_NEW_LICENSE_APPROVED_PAYMENT,
+  SET_NEW_LICENSE_APPROVED_PAYMENT_SEARCHED,
+  SET_NEW_LICENSE_OTHERS_APPROVED_PAYMENT,
+  SET_NEW_LICENSE_OTHERS_APPROVED_PAYMENT_SEARCHED,
+
+  SET_NEW_LICENSE_DECLINED_PAYMENT,
+  SET_NEW_LICENSE_DECLINED_PAYMENT_SEARCHED,
+  SET_NEW_LICENSE_OTHERS_DECLINED_PAYMENT,
+  SET_NEW_LICENSE_OTHERS_DECLINED_PAYMENT_SEARCHED,
 } from "./mutation-types";
 
 export default {
@@ -111,5 +121,35 @@ export default {
   },
   [SET_NEW_LICENSE_OTHERS_UNDER_SUPERVISION_SEARCHED](state, searchedVal) {
     state.newLicenseOthersUnderSuperVisionSearched = searchedVal;
+  },
+
+  [SET_NEW_LICENSE_APPROVED_PAYMENT](state, data) {
+    state.newLicenseApprovedPayment = data;
+    state.newLicenseApprovedPaymentSearched = data;
+  },
+  [SET_NEW_LICENSE_APPROVED_PAYMENT_SEARCHED](state, searchedVal) {
+    state.newLicenseApprovedPaymentSearched = searchedVal;
+  },
+  [SET_NEW_LICENSE_OTHERS_APPROVED_PAYMENT](state, data) {
+    state.newLicenseOthersApprovedPayment = data;
+    state.newLicenseOthersApprovedPaymentSearched = data;
+  },
+  [SET_NEW_LICENSE_OTHERS_APPROVED_PAYMENT_SEARCHED](state, searchedVal) {
+    state.newLicenseOthersApprovedPaymentSearched = searchedVal;
+  },
+
+  [SET_NEW_LICENSE_DECLINED_PAYMENT](state, data) {
+    state.newLicenseDeclinedPayment = data;
+    state.newLicenseDeclinedPaymentSearched = data;
+  },
+  [SET_NEW_LICENSE_DECLINED_PAYMENT_SEARCHED](state, searchedVal) {
+    state.newLicenseDeclinedPaymentSearched = searchedVal;
+  },
+  [SET_NEW_LICENSE_OTHERS_DECLINED_PAYMENT](state, data) {
+    state.newLicenseOthersDeclinedPayment = data;
+    state.newLicenseOthersDeclinedPaymentSearched = data;
+  },
+  [SET_NEW_LICENSE_OTHERS_DECLINED_PAYMENT_SEARCHED](state, searchedVal) {
+    state.newLicenseOthersDeclinedPaymentSearched = searchedVal;
   },
 };

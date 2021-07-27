@@ -26,4 +26,14 @@ export default {
   getNewLicenseUnderSuperVisionSearched: (state) => state.newLicenseUnderSuperVisionSearched,
   getNewLicenseOthersUnderSuperVision: (state) => state.newLicenseOthersUnderSuperVision,
   getNewLicenseOthersUnderSuperVisionSearched: (state) => state.newLicenseOthersUnderSuperVisionSearched,
+
+  getNewLicenseApprovedPayment: (state) => state.newLicenseApprovedPayment,
+  getNewLicenseApprovedPaymentSearched: (state) => state.newLicenseApprovedPaymentSearched,
+  getNewLicenseOthersApprovedPayment: (state) => state.newLicenseOthersApprovedPayment,
+  getNewLicenseOthersApprovedPaymentSearched: (state) => state.newLicenseOthersApprovedPaymentSearched,
+
+  getNewLicenseDeclinedPayment: (state) => state.newLicenseDeclinedPayment,
+  getNewLicenseDeclinedPaymentSearched: (state) => state.newLicenseDeclinedPaymentSearched,
+  getNewLicenseOthersDeclinedPayment: (state) => state.newLicenseOthersDeclinedPayment,
+  getNewLicenseOthersDeclinedPaymentSearched: (state) => state.newLicenseOthersDeclinedPaymentSearched,
 };

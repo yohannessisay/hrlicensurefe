@@ -738,6 +738,11 @@ export default {
         } else {
           if (index.value == docs.value.length - 1) {
             showButtons.value = true;
+          } else {
+            index.value = index.value + 1;
+            amount.value = ((index.value + 1) / docs.value.length) * 100;
+            width.value = "width:" + amount.value + "%";
+            findDocumentType(documentTypes.value, docs.value[index.value]);
           }
         }
       } else {
@@ -789,6 +794,11 @@ export default {
         } else {
           if (index.value == docs.value.length - 1) {
             showButtons.value = true;
+          } else {
+            index.value = index.value + 1;
+            amount.value = ((index.value + 1) / docs.value.length) * 100;
+            width.value = "width:" + amount.value + "%";
+            findDocumentType(documentTypes.value, docs.value[index.value]);
           }
         }
       } else {
