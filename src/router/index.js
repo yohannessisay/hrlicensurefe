@@ -414,6 +414,16 @@ const routes = [
     name: "NewLicenseOthersDeclinedPayment",
     component: () => import("../components/Reviewer/ApplicationTypes/NewLicense/NewLicenseOthersDeclinedPayment.vue"),
   },
+  {
+    path: "/admin/newlicense/on-review",
+    name: "NewLicenesOnReview",
+    component: () => import("../components/Reviewer/ApplicationTypes/NewLicense/NewLicenseOnReview.vue"),
+  },
+  {
+    path: "/admin/newlicense/others-on-review",
+    name: "NewLicenesOthersOnReview",
+    component: () => import("../components/Reviewer/ApplicationTypes/NewLicense/NewLicenseOthersOnReview.vue"),
+  },
 
   {
     path: "/admin/verification/unassigned",

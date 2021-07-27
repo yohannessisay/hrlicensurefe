@@ -36,6 +36,11 @@ import {
   SET_NEW_LICENSE_DECLINED_PAYMENT_SEARCHED,
   SET_NEW_LICENSE_OTHERS_DECLINED_PAYMENT,
   SET_NEW_LICENSE_OTHERS_DECLINED_PAYMENT_SEARCHED,
+
+  SET_NEW_LICENSE_ON_REVIEW,
+  SET_NEW_LICENSE_ON_REVIEW_SEARCHED,
+  SET_NEW_LICENSE_OTHERS_ON_REVIEW,
+  SET_NEW_LICENSE_OTHERS_ON_REVIEW_SEARCHED,
 } from "./mutation-types";
 
 export default {
@@ -151,5 +156,20 @@ export default {
   },
   [SET_NEW_LICENSE_OTHERS_DECLINED_PAYMENT_SEARCHED](state, searchedVal) {
     state.newLicenseOthersDeclinedPaymentSearched = searchedVal;
+  },
+
+  [SET_NEW_LICENSE_ON_REVIEW](state, data) {
+    state.newLicenseOnReview = data;
+    state.newLicenseOnReviewSearched = data;
+  },
+  [SET_NEW_LICENSE_ON_REVIEW_SEARCHED](state, searchedVal) {
+    state.newLicenseOnReviewSearched = searchedVal;
+  },
+  [SET_NEW_LICENSE_OTHERS_ON_REVIEW](state, data) {
+    state.newLicenseOthersOnReview = data;
+    state.newLicenseOthersOnReviewSearched = data;
+  },
+  [SET_NEW_LICENSE_OTHERS_ON_REVIEW_SEARCHED](state, searchedVal) {
+    state.newLicenseOthersOnReviewSearched = searchedVal;
   },
 };

@@ -36,6 +36,11 @@ import {
   SET_NEW_LICENSE_OTHERS_DECLINED_PAYMENT,
   SET_NEW_LICENSE_OTHERS_DECLINED_PAYMENT_SEARCHED,
 
+  SET_NEW_LICENSE_ON_REVIEW,
+  SET_NEW_LICENSE_ON_REVIEW_SEARCHED,
+  SET_NEW_LICENSE_OTHERS_ON_REVIEW,
+  SET_NEW_LICENSE_OTHERS_ON_REVIEW_SEARCHED,
+
   NEW_LICENSE_REPORT,
 } from "./mutation-types";
 
@@ -529,5 +534,73 @@ export default {
             e.reviewer.name.toLowerCase().includes(searchKey.toLowerCase());
     });
     commit(SET_NEW_LICENSE_OTHERS_DECLINED_PAYMENT_SEARCHED, searchedVal);
+  },
+
+  /* 
+  /* on review status is wrong for the time (status/7) is placeholder
+  */
+  async getNewLicenseOnReview({ commit }, adminId) {
+    const url = baseUrl + "/newlicenses/status/7";
+    const resp = await ApiService.get(url);
+    const onReview = resp.data.data.filter(function(e) {
+      return e.reviewerId === adminId;
+    });
+    commit(SET_NEW_LICENSE_ON_REVIEW, onReview);
+  },
+
+  getNewLicenseOnReviewSearched({ commit, getters }, searchKey) {
+    if (getters.getNewLicenseOnReview === undefined) {
+      return;
+    }
+    const searchedVal = getters.getNewLicenseOnReview.filter(function(e) {
+      return e.newLicenseCode === undefined
+        ? ""
+        : e.newLicenseCode.toLowerCase().includes(searchKey.toLowerCase()) ||
+            (e.applicant.profile.name + " " + e.applicant.profile.fatherName)
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.name
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.fatherName
+              .toLowerCase()
+              .includes(searchKey.toLowerCase());
+    });
+    commit(SET_NEW_LICENSE_ON_REVIEW_SEARCHED, searchedVal);
+  },
+
+  /* 
+  /* on review payment status is wrong for the time (status/7) is placeholder
+  */
+  async getNewLicenseOthersOnReview({ commit }, adminId) {
+    const url = baseUrl + "/newlicenses/status/7";
+    const resp = await ApiService.get(url);
+    const othersOnReview = resp.data.data.filter(function(e) {
+      return e.reviewerId !== adminId
+    })
+    commit(SET_NEW_LICENSE_OTHERS_ON_REVIEW, othersOnReview);
+  },
+  getNewLicenseOthersOnReviewSearched({ commit, getters }, searchKey) {
+    if (getters.getNewLicenseOthersOnReview === undefined) {
+      return;
+    }
+    const searchedVal = getters.getNewLicenseOthersOnReview.filter(function(
+      e
+    ) {
+      return e.newLicenseCode === undefined
+        ? ""
+        : e.newLicenseCode.toLowerCase().includes(searchKey.toLowerCase()) ||
+            (e.applicant.profile.name + " " + e.applicant.profile.fatherName)
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.name
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.fatherName
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.reviewer.name.toLowerCase().includes(searchKey.toLowerCase());
+    });
+    commit(SET_NEW_LICENSE_OTHERS_ON_REVIEW_SEARCHED, searchedVal);
   },
 };

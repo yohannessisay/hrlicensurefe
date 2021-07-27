@@ -651,6 +651,12 @@ export default {
       if (props.tab === "othersNewLicenseDeclinedPayment") {
         store.dispatch("reviewerNewLicense/getNewLicenseOthersDeclinedPaymentSearched", search.value)
       }
+      if (props.tab === "newLicenseOnReview") {
+        store.dispatch("reviewerNewLicense/getNewLicenseOnReviewSearched", search.value)
+      }
+      if (props.tab === "othersNewLicenseOnReview") {
+        store.dispatch("reviewerNewLicense/getNewLicenseOthersOnReviewSearched", search.value)
+      }
 
       if (props.tab === "verificationUnassigned") {
         store.dispatch("reviewerVerification/getUnassignedVerificationSearched", search.value)
