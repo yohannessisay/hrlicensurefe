@@ -42,6 +42,11 @@ import {
   SET_RENEWAL_ON_REVIEW_SEARCHED,
   SET_RENEWAL_OTHERS_ON_REVIEW,
   SET_RENEWAL_OTHERS_ON_REVIEW_SEARCHED,
+
+  SET_RENEWAL_RE_EVALUATE,
+  SET_RENEWAL_RE_EVALUATE_SEARCHED,
+  SET_RENEWAL_OTHERS_RE_EVALUATE,
+  SET_RENEWAL_OTHERS_RE_EVALUATE_SEARCHED,
 } from "./mutation-types";
 const baseUrl = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api";
 
@@ -581,7 +586,7 @@ export default {
   },
 
   /* 
-  /* on review payment status is wrong for the time (status/7) is placeholder
+  /* on review status is wrong for the time (status/7) is placeholder
   */
   async getRenewalOthersOnReview({ commit }, adminId) {
     const url = baseUrl + "/renewals/status/7";
@@ -613,5 +618,73 @@ export default {
             e.reviewer.name.toLowerCase().includes(searchKey.toLowerCase());
     });
     commit(SET_RENEWAL_OTHERS_ON_REVIEW_SEARCHED, searchedVal);
+  },
+
+  /* 
+  /* on re evaluate status is wrong for the time (status/7) is placeholder
+  */
+  async getRenewalReEvaluate({ commit }, adminId) {
+    const url = baseUrl + "/renewals/status/7";
+    const resp = await ApiService.get(url);
+    const reEvaluate = resp.data.data.filter(function(e) {
+      return e.reviewerId === adminId;
+    });
+    commit(SET_RENEWAL_RE_EVALUATE, reEvaluate);
+  },
+
+  getRenewalReEvaluateSearched({ commit, getters }, searchKey) {
+    if (getters.getRenewalReEvaluate === undefined) {
+      return;
+    }
+    const searchedVal = getters.getRenewalReEvaluate.filter(function(e) {
+      return e.renewalCode === undefined
+        ? ""
+        : e.renewalCode.toLowerCase().includes(searchKey.toLowerCase()) ||
+            (e.applicant.profile.name + " " + e.applicant.profile.fatherName)
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.name
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.fatherName
+              .toLowerCase()
+              .includes(searchKey.toLowerCase());
+    });
+    commit(SET_RENEWAL_RE_EVALUATE_SEARCHED, searchedVal);
+  },
+
+  /* 
+  /* on re evaluate status is wrong for the time (status/7) is placeholder
+  */
+  async getRenewalOthersReEvaluate({ commit }, adminId) {
+    const url = baseUrl + "/renewals/status/7";
+    const resp = await ApiService.get(url);
+    const othersReEvaluate = resp.data.data.filter(function(e) {
+      return e.reviewerId !== adminId
+    })
+    commit(SET_RENEWAL_OTHERS_RE_EVALUATE, othersReEvaluate);
+  },
+  getRenewalOthersReEvaluateSearched({ commit, getters }, searchKey) {
+    if (getters.getRenewalOthersReEvaluate === undefined) {
+      return;
+    }
+    const searchedVal = getters.getRenewalOthersReEvaluate.filter(function(
+      e
+    ) {
+      return e.renewalCode === undefined
+        ? ""
+        : e.renewalCode.toLowerCase().includes(searchKey.toLowerCase()) ||
+            (e.applicant.profile.name + " " + e.applicant.profile.fatherName)
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.name
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.fatherName
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.reviewer.name.toLowerCase().includes(searchKey.toLowerCase());
+    });
+    commit(SET_RENEWAL_OTHERS_RE_EVALUATE_SEARCHED, searchedVal);
   },
 };

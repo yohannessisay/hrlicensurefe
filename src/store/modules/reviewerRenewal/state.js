@@ -42,5 +42,10 @@ export default {
     renewalOnReviewSearched: [],
     renewalOthersOnReview: [],
     renewalOthersOnReviewSearched: [],
+
+    renewalReEvaluate: [],
+    renewalReEvaluateSearched: [],
+    renewalOthersReEvaluate: [],
+    renewalOthersReEvaluateSearched: [],
   },
 };

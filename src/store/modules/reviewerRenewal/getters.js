@@ -41,4 +41,9 @@ export default {
     getRenewalOnReviewSearched: (state) => state.renewalOnReviewSearched,
     getRenewalOthersOnReview: (state) => state.renewalOthersOnReview,
     getRenewalOthersOnReviewSearched: (state) => state.renewalOthersOnReviewSearched,
+    
+    getRenewalReEvaluate: (state) => state.renewalReEvaluate,
+    getRenewalReEvaluateSearched: (state) => state.renewalReEvaluateSearched,
+    getRenewalOthersReEvaluate: (state) => state.renewalOthersReEvaluate,
+    getRenewalOthersReEvaluateSearched: (state) => state.renewalOthersReEvaluateSearched,
 }

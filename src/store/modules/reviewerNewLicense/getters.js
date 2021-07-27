@@ -41,4 +41,9 @@ export default {
   getNewLicenseOnReviewSearched: (state) => state.newLicenseOnReviewSearched,
   getNewLicenseOthersOnReview: (state) => state.newLicenseOthersOnReview,
   getNewLicenseOthersOnReviewSearched: (state) => state.newLicenseOthersOnReviewSearched,
+
+  getNewLicenseReEvaluate: (state) => state.newLicenseReEvaluate,
+  getNewLicenseReEvaluateSearched: (state) => state.newLicenseReEvaluateSearched,
+  getNewLicenseOthersReEvaluate: (state) => state.newLicenseOthersReEvaluate,
+  getNewLicenseOthersReEvaluateSearched: (state) => state.newLicenseOthersReEvaluateSearched,
 };

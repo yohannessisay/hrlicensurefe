@@ -41,6 +41,11 @@ import {
   SET_NEW_LICENSE_ON_REVIEW_SEARCHED,
   SET_NEW_LICENSE_OTHERS_ON_REVIEW,
   SET_NEW_LICENSE_OTHERS_ON_REVIEW_SEARCHED,
+
+  SET_NEW_LICENSE_RE_EVALUATE,
+  SET_NEW_LICENSE_RE_EVALUATE_SEARCHED,
+  SET_NEW_LICENSE_OTHERS_RE_EVALUATE,
+  SET_NEW_LICENSE_OTHERS_RE_EVALUATE_SEARCHED,
 } from "./mutation-types";
 
 export default {
@@ -171,5 +176,20 @@ export default {
   },
   [SET_NEW_LICENSE_OTHERS_ON_REVIEW_SEARCHED](state, searchedVal) {
     state.newLicenseOthersOnReviewSearched = searchedVal;
+  },
+
+  [SET_NEW_LICENSE_RE_EVALUATE](state, data) {
+    state.newLicenseReEvaluate = data;
+    state.newLicenseReEvaluateSearched = data;
+  },
+  [SET_NEW_LICENSE_RE_EVALUATE_SEARCHED](state, searchedVal) {
+    state.newLicenseReEvaluateSearched = searchedVal;
+  },
+  [SET_NEW_LICENSE_OTHERS_RE_EVALUATE](state, data) {
+    state.newLicenseOthersReEvaluate = data;
+    state.newLicenseOthersReEvaluateSearched = data;
+  },
+  [SET_NEW_LICENSE_OTHERS_RE_EVALUATE_SEARCHED](state, searchedVal) {
+    state.newLicenseOthersReEvaluateSearched = searchedVal;
   },
 };

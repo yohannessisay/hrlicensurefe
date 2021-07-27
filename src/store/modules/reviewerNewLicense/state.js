@@ -42,5 +42,10 @@ export default {
     newLicenseOnReviewSearched: [],
     newLicenseOthersOnReview: [],
     newLicenseOthersOnReviewSearched: [],
+
+    newLicenseReEvaluate: [],
+    newLicenseReEvaluateSearched: [],
+    newLicenseOthersReEvaluate: [],
+    newLicenseOthersReEvaluateSearched: []
   },
 };

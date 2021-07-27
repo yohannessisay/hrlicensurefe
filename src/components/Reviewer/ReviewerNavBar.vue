@@ -605,6 +605,12 @@ export default {
       if (props.tab === "othersRenewalOnReview") {
         store.dispatch("reviewerRenewal/getRenewalOthersOnReviewSearched", search.value)
       }
+      if (props.tab === "renewalReEvaluate") {
+        store.dispatch("reviewerRenewal/getRenewalReEvaluateSearched", search.value)
+      }
+      if (props.tab === "othersRenewalReEvaluate") {
+        store.dispatch("reviewerRenewal/getRenewalOthersReEvaluateSearched", search.value)
+      }
 
       if (props.tab === "newLicenseUnassigned") {
         store.dispatch("reviewerNewLicense/getNewLicenseUnassignedSearched", search.value)
@@ -656,6 +662,12 @@ export default {
       }
       if (props.tab === "othersNewLicenseOnReview") {
         store.dispatch("reviewerNewLicense/getNewLicenseOthersOnReviewSearched", search.value)
+      }
+      if (props.tab === "newLicenseReEvaluate") {
+        store.dispatch("reviewerNewLicense/getNewLicenseReEvaluateSearched", search.value)
+      }
+      if (props.tab === "othersNewLicenseReEvaluate") {
+        store.dispatch("reviewerNewLicense/getNewLicenseOthersReEvaluateSearched", search.value)
       }
 
       if (props.tab === "verificationUnassigned") {

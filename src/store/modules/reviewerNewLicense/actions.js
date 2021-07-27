@@ -41,6 +41,11 @@ import {
   SET_NEW_LICENSE_OTHERS_ON_REVIEW,
   SET_NEW_LICENSE_OTHERS_ON_REVIEW_SEARCHED,
 
+  SET_NEW_LICENSE_RE_EVALUATE,
+  SET_NEW_LICENSE_RE_EVALUATE_SEARCHED,
+  SET_NEW_LICENSE_OTHERS_RE_EVALUATE,
+  SET_NEW_LICENSE_OTHERS_RE_EVALUATE_SEARCHED,
+
   NEW_LICENSE_REPORT,
 } from "./mutation-types";
 
@@ -602,5 +607,70 @@ export default {
             e.reviewer.name.toLowerCase().includes(searchKey.toLowerCase());
     });
     commit(SET_NEW_LICENSE_OTHERS_ON_REVIEW_SEARCHED, searchedVal);
+  },
+
+  async getNewLicenseReEvaluate({ commit }, adminId) {
+    const url = baseUrl + "/newlicenses/status/7";
+    const resp = await ApiService.get(url);
+    const reEvaluate = resp.data.data.filter(function(e) {
+      return e.reviewerId === adminId;
+    });
+    commit(SET_NEW_LICENSE_RE_EVALUATE, reEvaluate);
+  },
+
+  getNewLicenseReEvaluateSearched({ commit, getters }, searchKey) {
+    if (getters.getNewLicenseReEvaluate === undefined) {
+      return;
+    }
+    const searchedVal = getters.getNewLicenseReEvaluate.filter(function(e) {
+      return e.newLicenseCode === undefined
+        ? ""
+        : e.newLicenseCode.toLowerCase().includes(searchKey.toLowerCase()) ||
+            (e.applicant.profile.name + " " + e.applicant.profile.fatherName)
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.name
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.fatherName
+              .toLowerCase()
+              .includes(searchKey.toLowerCase());
+    });
+    commit(SET_NEW_LICENSE_RE_EVALUATE_SEARCHED, searchedVal);
+  },
+
+  /* 
+  /* on re evaluate status is wrong for the time (status/7) is placeholder
+  */
+  async getNewLicenseOthersReEvaluate({ commit }, adminId) {
+    const url = baseUrl + "/newlicenses/status/7";
+    const resp = await ApiService.get(url);
+    const othersReEvaluate = resp.data.data.filter(function(e) {
+      return e.reviewerId !== adminId
+    })
+    commit(SET_NEW_LICENSE_OTHERS_RE_EVALUATE, othersReEvaluate);
+  },
+  getNewLicenseOthersReEvaluateSearched({ commit, getters }, searchKey) {
+    if (getters.getNewLicenseOthersReEvaluate === undefined) {
+      return;
+    }
+    const searchedVal = getters.getNewLicenseOthersReEvaluate.filter(function(
+      e
+    ) {
+      return e.newLicenseCode === undefined
+        ? ""
+        : e.newLicenseCode.toLowerCase().includes(searchKey.toLowerCase()) ||
+            (e.applicant.profile.name + " " + e.applicant.profile.fatherName)
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.name
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.fatherName
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.reviewer.name.toLowerCase().includes(searchKey.toLowerCase());
+    });
+    commit(SET_NEW_LICENSE_OTHERS_RE_EVALUATE_SEARCHED, searchedVal);
   },
 };
