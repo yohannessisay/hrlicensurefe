@@ -351,6 +351,7 @@ export default {
             whoIssued: licenseInfo.whoIssued,
             licenseRegistrationNumber: licenseInfo.licenseRegistrationNumber,
             applicantPositionId: licenseInfo.applicantPositionId,
+            professionalTypeId: licenseInfo.professionalTypeId,
           },
         };
         store
@@ -461,6 +462,7 @@ export default {
             whoIssued: licenseInfo.whoIssued,
             licenseRegistrationNumber: licenseInfo.licenseRegistrationNumber,
             applicantPositionId: licenseInfo.applicantPositionId,
+            professionalTypeId: licenseInfo.professionalTypeId,
           },
         };
         store

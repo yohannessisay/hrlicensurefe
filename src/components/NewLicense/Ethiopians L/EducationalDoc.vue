@@ -782,6 +782,8 @@ export default {
               departmentId: this.license.education.institutionId,
             },
             residenceWoredaId: this.license.residenceWoredaId,
+            professionalTypeId: this.licenseInfo.professionalTypeId,
+
           },
         };
         this.$store

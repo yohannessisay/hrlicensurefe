@@ -353,6 +353,7 @@ export default {
               institutionId: licenseInfo.education.institutionId,
             },
             residenceWoredaId: licenseInfo.residenceWoredaId,
+            professionalTypeId: licenseInfo.professionalTypeId,
           },
         };
         store
@@ -460,6 +461,7 @@ export default {
               institutionId: licenseInfo.education.institutionId,
             },
             residenceWoredaId: licenseInfo.residenceWoredaId,
+            professionalTypeId: licenseInfo.professionalTypeId,
           },
         };
         store
