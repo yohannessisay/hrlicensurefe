@@ -243,12 +243,12 @@ export default {
 
   async created() {
     this.draftStatus = this.$route.params.status;
-    this.fetchApplicantType();
-    this.fetchInstitutions();
-    this.fetchDepartments();
-    this.fetchRegions();
-    this.fetchProfessionalType();
-    this.showLoading = true;
+    await this.fetchApplicantType();
+    await this.fetchInstitutions();
+    await this.fetchDepartments();
+    await this.fetchRegions();
+    await this.fetchProfessionalType();
+     this.showLoading = true;
     setTimeout(() => {
       this.buttons = this.getButtons;
       this.showButtons = true;
