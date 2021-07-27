@@ -123,7 +123,7 @@
               >
               <input
                 class="max-w-3xl"
-                type="number"
+                type="text"
                 v-model="licenseInfo.licenseRegistrationNumber"
               />
               <span style="color: red">{{
@@ -148,6 +148,25 @@
               </select>
               <span style="color: red">{{
                 licenseInfoErrors.applicantPositionId
+              }}</span>
+            </div>
+            <div class="flex flex-col mb-medium w-2/5 mr-12 ml-medium">
+              <label class="text-primary-700">Professional Type</label>
+              <select
+                class="max-w-3xl"
+                @change="fetchProfessionalType()"
+                v-model="licenseInfo.professionalTypeID"
+              >
+                <option
+                  v-for="types in professionalTypes"
+                  v-bind:key="types.name"
+                  v-bind:value="types.id"
+                >
+                  {{ types.name }}
+                </option>
+              </select>
+              <span style="color: red">{{
+                licenseInfoErrors.professionalTypeID
               }}</span>
             </div>
           </div>
@@ -260,6 +279,7 @@ export default {
     this.fetchDepartments();
     this.fetchRegions();
     this.fetchApplicationPositions();
+    this.fetchProfessionalType();
     this.showLoading = true;
     setTimeout(() => {
       this.buttons = this.getButtons;
@@ -289,6 +309,7 @@ export default {
       whoIssued: "",
       licenseRegistrationNumber: "",
       applicantPositionId: "",
+      professionalTypeID: "",
     },
 
     licenseInfoErrors: {
@@ -302,6 +323,7 @@ export default {
       residenceWoredaId: "",
       regionID: "",
       zoneID: "",
+      professionalTypeID: "",
     },
     regionID: "",
     zoneID: "",
@@ -338,6 +360,7 @@ export default {
             licenseRegistrationNumber: this.licenseInfo
               .licenseRegistrationNumber,
             applicantPositionId: this.licenseInfo.applicantPositionId,
+            professionalTypeId: this.licenseInfo.professionalTypeID,
           },
         },
         id: this.draftId,
@@ -385,6 +408,7 @@ export default {
             licenseRegistrationNumber: this.licenseInfo
               .licenseRegistrationNumber,
             applicantPositionId: this.licenseInfo.applicantPositionId,
+            professionalTypeId: this.licenseInfo.professionalTypeID,
           },
         },
         id: this.draftId,
@@ -449,7 +473,9 @@ export default {
         whoIssued: this.licenseInfo.whoIssued,
         licenseRegistrationNumber: this.licenseInfo.licenseRegistrationNumber,
         applicantPositionId: this.licenseInfo.applicantPositionId,
+        professionalTypeId: this.licenseInfo.professionalTypeID,
       };
+      console.log(license);
       this.addressErrors = this.validateForm(license);
       let empty = this.isEmpty(this.addressErrors);
       if (empty == false) {
@@ -511,6 +537,11 @@ export default {
           this.woredaArray = woredasResult.data;
         });
     },
+    fetchProfessionalType() {
+      this.$store.dispatch("goodstanding/getProfessionalTypes").then((res) => {
+        this.professionalTypes = res.data.data;
+      });
+    },
 
     validateForm(formData) {
       const errors = {};
@@ -555,6 +586,8 @@ export default {
       this.licenseInfo.residenceWoredaId = draftData.woreda.id;
       this.regionID = draftData.woreda.zone.region.id;
       this.zoneID = draftData.woreda.zone.id;
+      this.licenseInfo.professionalTypeID = draftData.professionalTypeId;
+
       this.$store
         .dispatch("goodstanding/getZones", this.regionID)
         .then((res) => {

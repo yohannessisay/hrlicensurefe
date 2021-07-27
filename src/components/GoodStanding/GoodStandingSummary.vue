@@ -354,6 +354,7 @@ export default {
     this.license = this.getLicense;
     this.applicantId = this.license.applicantId;
     this.applicantTypeId = this.license.applicantTypeId;
+    this.professionalTypeID = this.license.professionalTypeId;
     this.buttons = this.getButtons;
   },
   data: () => ({
@@ -367,6 +368,7 @@ export default {
       departmentId: "",
       institutionId: "",
     },
+    professionalTypeID: "",
     draftId: "",
     draftData: "",
     draftStatus: "",
@@ -488,6 +490,7 @@ export default {
             licenseRegistrationNumber: this.licenseInfo
               .licenseRegistrationNumber,
             applicantPositionId: this.licenseInfo.applicantPositionId,
+            professionalTypeId: this.professionalTypeID,
           },
         };
         this.$store
@@ -579,6 +582,7 @@ export default {
             licenseRegistrationNumber: this.licenseInfo
               .licenseRegistrationNumber,
             applicantPositionId: this.licenseInfo.applicantPositionId,
+            professionalTypeId: this.professionalTypeID,
           },
         };
         this.$store
@@ -621,6 +625,7 @@ export default {
             licenseRegistrationNumber: this.licenseInfo
               .licenseRegistrationNumber,
             applicantPositionId: this.licenseInfo.applicantPositionId,
+            professionalTypeId: this.professionalTypeID,
           },
         },
         id: this.draftId,

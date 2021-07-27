@@ -247,14 +247,11 @@ export default {
           isImage.value = false;
           reader.readAsDataURL(licenseFile.value);
           pdfView.value = true;
-          console.log(licenseFile.value);
           path.value = licenseFile.value.path;
           name.value = licenseFile.value.name;
           // viewFile();
         }
       }
-      console.log(licenseFile.value);
-      console.log(filePreview.value);
     };
     buttons = store.getters["verification/getButtons"];
     documentSpecs = store.getters["verification/getDocumentSpec"];
@@ -381,6 +378,7 @@ export default {
               institutionId: licenseInfo.education.institutionId,
             },
             residenceWoredaId: licenseInfo.residenceWoredaId,
+            professionalTypeId: licenseInfo.professionalTypeId,
           },
         };
         store
@@ -490,6 +488,7 @@ export default {
               institutionId: licenseInfo.education.institutionId,
             },
             residenceWoredaId: licenseInfo.residenceWoredaId,
+            professionalTypeId: licenseInfo.professionalTypeId,
           },
         };
         store

@@ -7,6 +7,7 @@ export default {
       institutionId: "",
     },
     residenceWoredaId: "",
+    professionalTypeId: "",
     passport: "",
     healthExamCert: "",
     englishLanguage: "",

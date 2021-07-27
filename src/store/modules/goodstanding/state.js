@@ -8,7 +8,7 @@ export default {
     whoIssued: "",
     licenseRegistrationNumber: "",
     applicantPositionId: "",
-   
+    professionalTypeId: "",
     licenseCopy: "",
     serviceFee: "",
     goodStandingLetter: "",
