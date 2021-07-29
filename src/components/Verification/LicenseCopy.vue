@@ -157,7 +157,6 @@ import { useRoute, useRouter } from "vue-router";
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import Spinner from "@/sharedComponents/Spinner";
-import PDFJSViewer from "../../sharedComponents/pdfViewer.vue";
 export default {
   components: {
     TitleWithIllustration,
@@ -249,7 +248,6 @@ export default {
           pdfView.value = true;
           path.value = licenseFile.value.path;
           name.value = licenseFile.value.name;
-          // viewFile();
         }
       }
     };
@@ -290,21 +288,7 @@ export default {
         }
       }
     });
-    const viewFile = () => {
-      var win = window.open();
-      win.document.write(
-        '<body style="margin:0px;"><object data="' +
-          licenseFile.value +
-          '" type="application/pdf" width="100%" height="100%"><iframe src="' +
-          licenseFile.value +
-          '" scrolling="no" width="100%" height="100%" frameborder="0" ></iframe></object></body>'
-      );
-      // win.document.write(
-      //   '<body style="margin:0px;"><iframe src="' +
-      //     this.fileData +
-      //     '" scrolling="no" width="100%" height="100%" frameborder="0" ></iframe></body>'
-      // );
-    };
+   
 
     const draft = (action) => {
       message.value.showLoading = true;
