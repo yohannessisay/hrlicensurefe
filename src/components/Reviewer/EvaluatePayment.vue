@@ -280,7 +280,7 @@ export default {
       }
       
       if(applicationTypeName.value == "New License") {
-        store.dispatch("newlicense/editNewLicense", req)
+        store.dispatch("reviewer/editNewLicense", req)
         .then(res => {
           if(res.statusText == "Created") {
             alert("req updated successfully", res.statusText)
