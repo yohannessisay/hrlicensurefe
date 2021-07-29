@@ -308,13 +308,14 @@ export default {
     Spinner,
   },
   async created() {
+    this.userId = +localStorage.getItem("userId");
     this.draftId = this.$route.params.id;
     this.draftStatus = this.$route.params.status;
     if (this.draftId != undefined) {
       this.draftData = this.getDraftData;
     }
 
-    this.userId = +localStorage.getItem("userId");
+    
     this.passport = this.getPassport;
     this.healthExamCert = this.getHealthExamCert;
     this.englishLanguage = this.getEnglishLanguage;
@@ -631,6 +632,7 @@ export default {
           .then((res) => {
             let licenseId = res.data.data.id;
             let payload = { document: formData, id: licenseId };
+            // here is the problrm
             this.$store
               .dispatch("newlicense/uploadDocuments", payload)
               .then((res) => {

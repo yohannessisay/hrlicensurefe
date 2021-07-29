@@ -390,7 +390,7 @@
       </div>
       <div v-if="!this.showLoading" class="bg-lightBlueB-200 h-full">
         <div class="flex pl-12 pt-medium">
-          <Title message="Good Standing Draft Applications" />
+          <Title message="Good Standing Submitted Applications" />
         </div>
         <div
           v-if="this.goodstanding && this.goodstanding.length == 0"
