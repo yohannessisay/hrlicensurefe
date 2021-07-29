@@ -46,4 +46,9 @@ export default {
   getNewLicenseReEvaluateSearched: (state) => state.newLicenseReEvaluateSearched,
   getNewLicenseOthersReEvaluate: (state) => state.newLicenseOthersReEvaluate,
   getNewLicenseOthersReEvaluateSearched: (state) => state.newLicenseOthersReEvaluateSearched,
+
+  getNewLicenseConfirmed: (state) => state.newLicenseConfirmed,
+  getNewLicenseConfirmedSearched: (state) => state.newLicenseConfirmedSearched,
+  getNewLicenseOthersConfirmed: (state) => state.newLicenseOthersConfirmed,
+  getNewLicenseOthersConfirmedSearched: (state) => state.newLicenseOthersConfirmedSearched,
 };

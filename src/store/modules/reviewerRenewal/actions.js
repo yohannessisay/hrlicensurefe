@@ -47,6 +47,11 @@ import {
   SET_RENEWAL_RE_EVALUATE_SEARCHED,
   SET_RENEWAL_OTHERS_RE_EVALUATE,
   SET_RENEWAL_OTHERS_RE_EVALUATE_SEARCHED,
+
+  SET_RENEWAL_CONFIRMED,
+  SET_RENEWAL_CONFIRMED_SEARCHED,
+  SET_RENEWAL_OTHERS_CONFIRMED,
+  SET_RENEWAL_OTHERS_CONFIRMED_SEARCHED,
 } from "./mutation-types";
 const baseUrl = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api";
 
@@ -686,5 +691,73 @@ export default {
             e.reviewer.name.toLowerCase().includes(searchKey.toLowerCase());
     });
     commit(SET_RENEWAL_OTHERS_RE_EVALUATE_SEARCHED, searchedVal);
+  },
+
+  /* 
+  /* confirmed status is wrong for the time (status/7) is placeholder
+  */
+  async getRenewalConfirmed({ commit }, adminId) {
+    const url = baseUrl + "/renewals/status/7";
+    const resp = await ApiService.get(url);
+    const confirmed = resp.data.data.filter(function(e) {
+      return e.reviewerId === adminId;
+    });
+    commit(SET_RENEWAL_CONFIRMED, confirmed);
+  },
+
+  getRenewalConfirmedSearched({ commit, getters }, searchKey) {
+    if (getters.getRenewalConfirmed === undefined) {
+      return;
+    }
+    const searchedVal = getters.getRenewalConfirmed.filter(function(e) {
+      return e.renewalCode === undefined
+        ? ""
+        : e.renewalCode.toLowerCase().includes(searchKey.toLowerCase()) ||
+            (e.applicant.profile.name + " " + e.applicant.profile.fatherName)
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.name
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.fatherName
+              .toLowerCase()
+              .includes(searchKey.toLowerCase());
+    });
+    commit(SET_RENEWAL_CONFIRMED_SEARCHED, searchedVal);
+  },
+
+  /* 
+  /* confirmed status is wrong for the time (status/7) is placeholder
+  */
+  async getRenewalOthersConfirmed({ commit }, adminId) {
+    const url = baseUrl + "/renewals/status/7";
+    const resp = await ApiService.get(url);
+    const confirmed = resp.data.data.filter(function(e) {
+      return e.reviewerId !== adminId
+    })
+    commit(SET_RENEWAL_OTHERS_CONFIRMED, confirmed);
+  },
+  getRenewalOthersConfirmedSearched({ commit, getters }, searchKey) {
+    if (getters.getRenewalOthersConfirmed === undefined) {
+      return;
+    }
+    const searchedVal = getters.getRenewalOthersConfirmed.filter(function(
+      e
+    ) {
+      return e.renewalCode === undefined
+        ? ""
+        : e.renewalCode.toLowerCase().includes(searchKey.toLowerCase()) ||
+            (e.applicant.profile.name + " " + e.applicant.profile.fatherName)
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.name
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.fatherName
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.reviewer.name.toLowerCase().includes(searchKey.toLowerCase());
+    });
+    commit(SET_RENEWAL_OTHERS_CONFIRMED_SEARCHED, searchedVal);
   },
 };

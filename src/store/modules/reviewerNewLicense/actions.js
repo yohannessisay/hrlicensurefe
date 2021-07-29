@@ -46,6 +46,11 @@ import {
   SET_NEW_LICENSE_OTHERS_RE_EVALUATE,
   SET_NEW_LICENSE_OTHERS_RE_EVALUATE_SEARCHED,
 
+  SET_NEW_LICENSE_CONFIRMED,
+  SET_NEW_LICENSE_CONFIRMED_SEARCHED,
+  SET_NEW_LICENSE_OTHERS_CONFIRMED,
+  SET_NEW_LICENSE_OTHERS_CONFIRMED_SEARCHED,
+
   NEW_LICENSE_REPORT,
 } from "./mutation-types";
 
@@ -609,6 +614,9 @@ export default {
     commit(SET_NEW_LICENSE_OTHERS_ON_REVIEW_SEARCHED, searchedVal);
   },
 
+  /* 
+  /* re evaluate status is wrong for the time (status/7) is placeholder
+  */
   async getNewLicenseReEvaluate({ commit }, adminId) {
     const url = baseUrl + "/newlicenses/status/7";
     const resp = await ApiService.get(url);
@@ -640,7 +648,7 @@ export default {
   },
 
   /* 
-  /* on re evaluate status is wrong for the time (status/7) is placeholder
+  /* re evaluate status is wrong for the time (status/7) is placeholder
   */
   async getNewLicenseOthersReEvaluate({ commit }, adminId) {
     const url = baseUrl + "/newlicenses/status/7";
@@ -672,5 +680,73 @@ export default {
             e.reviewer.name.toLowerCase().includes(searchKey.toLowerCase());
     });
     commit(SET_NEW_LICENSE_OTHERS_RE_EVALUATE_SEARCHED, searchedVal);
+  },
+
+  /* 
+  /* confirmed status is wrong for the time (status/7) is placeholder
+  */
+  async getNewLicenseConfirmed({ commit }, adminId) {
+    const url = baseUrl + "/newlicenses/status/7";
+    const resp = await ApiService.get(url);
+    const confirmed = resp.data.data.filter(function(e) {
+      return e.reviewerId === adminId;
+    });
+    commit(SET_NEW_LICENSE_CONFIRMED, confirmed);
+  },
+
+  getNewLicenseConfirmedSearched({ commit, getters }, searchKey) {
+    if (getters.getNewLicenseConfirmed === undefined) {
+      return;
+    }
+    const searchedVal = getters.getNewLicenseConfirmed.filter(function(e) {
+      return e.newLicenseCode === undefined
+        ? ""
+        : e.newLicenseCode.toLowerCase().includes(searchKey.toLowerCase()) ||
+            (e.applicant.profile.name + " " + e.applicant.profile.fatherName)
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.name
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.fatherName
+              .toLowerCase()
+              .includes(searchKey.toLowerCase());
+    });
+    commit(SET_NEW_LICENSE_CONFIRMED_SEARCHED, searchedVal);
+  },
+
+  /* 
+  /* confirmed status is wrong for the time (status/7) is placeholder
+  */
+  async getNewLicenseOthersConfirmed({ commit }, adminId) {
+    const url = baseUrl + "/newlicenses/status/7";
+    const resp = await ApiService.get(url);
+    const confirmed = resp.data.data.filter(function(e) {
+      return e.reviewerId !== adminId
+    })
+    commit(SET_NEW_LICENSE_OTHERS_CONFIRMED, confirmed);
+  },
+  getNewLicenseOthersConfirmedSearched({ commit, getters }, searchKey) {
+    if (getters.getNewLicenseOthersConfirmed === undefined) {
+      return;
+    }
+    const searchedVal = getters.getNewLicenseOthersConfirmed.filter(function(
+      e
+    ) {
+      return e.newLicenseCode === undefined
+        ? ""
+        : e.newLicenseCode.toLowerCase().includes(searchKey.toLowerCase()) ||
+            (e.applicant.profile.name + " " + e.applicant.profile.fatherName)
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.name
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.fatherName
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.reviewer.name.toLowerCase().includes(searchKey.toLowerCase());
+    });
+    commit(SET_NEW_LICENSE_OTHERS_CONFIRMED_SEARCHED, searchedVal);
   },
 };

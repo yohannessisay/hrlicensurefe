@@ -46,6 +46,11 @@ export default {
     newLicenseReEvaluate: [],
     newLicenseReEvaluateSearched: [],
     newLicenseOthersReEvaluate: [],
-    newLicenseOthersReEvaluateSearched: []
+    newLicenseOthersReEvaluateSearched: [],
+
+    newLicenseConfirmed: [],
+    newLicenseConfirmedSearched: [],
+    newLicenseOthersConfirmed: [],
+    newLicenseOthersConfirmedSearched: [],
   },
 };

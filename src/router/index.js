@@ -434,6 +434,16 @@ const routes = [
     name: "NewLicenseOthersReEvaluate",
     component: () => import("../components/Reviewer/ApplicationTypes/NewLicense/NewLicenseOthersReEvaluate.vue"),
   },
+  {
+    path: "/admin/newlicense/confirmed",
+    name: "NewLicenseReConfirmed",
+    component: () => import("../components/Reviewer/ApplicationTypes/NewLicense/NewLicenseConfirmed.vue"),
+  },
+  {
+    path: "/admin/newlicense/others-confirmed",
+    name: "NewLicenseOthersReConfirmed",
+    component: () => import("../components/Reviewer/ApplicationTypes/NewLicense/NewLicenseOthersConfirmed.vue"),
+  },
 
   {
     path: "/admin/verification/unassigned",
@@ -574,6 +584,16 @@ const routes = [
     path: "/admin/renewal/others-re-evaluate",
     name: "RenewalOthersReEvaluate",
     component: () => import("../components/Reviewer/ApplicationTypes/Renewal/RenewalOthersReEvaluate.vue"),
+  },
+  {
+    path: "/admin/renewal/confirmed",
+    name: "RenewalConfirmed",
+    component: () => import("../components/Reviewer/ApplicationTypes/Renewal/RenewalConfirmed.vue"),
+  },
+  {
+    path: "/admin/renewal/others-confirmed",
+    name: "RenewalOthersConfirmed",
+    component: () => import("../components/Reviewer/ApplicationTypes/Renewal/RenewalOthersConfirmed.vue"),
   },
 
   {

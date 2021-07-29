@@ -835,9 +835,6 @@ export default {
         if (fromModalSendDeclinedData.value == true) {
           sendDeclinedData.value = true;
         }
-        console.log("rejjj", rejected.value);
-        console.log("rejj obje", rejectedObj.value);
-        console.log("acc", accepted.value);
       }
       newLicense.value.declinedFields = rejected.value;
       newLicense.value.acceptedFields = accepted.value;
