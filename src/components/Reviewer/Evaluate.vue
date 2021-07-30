@@ -835,9 +835,6 @@ export default {
         if (fromModalSendDeclinedData.value == true) {
           sendDeclinedData.value = true;
         }
-        console.log("rejjj", rejected.value);
-        console.log("rejj obje", rejectedObj.value);
-        console.log("acc", accepted.value);
       }
       newLicense.value.declinedFields = rejected.value;
       newLicense.value.acceptedFields = accepted.value;
@@ -856,7 +853,7 @@ export default {
         sendDeclinedData.value == true
       ) {
         store
-          .dispatch("newlicense/editNewLicense", req)
+          .dispatch("reviewer/editNewLicense", req)
           .then((res) => {
             if (res.statusText == "Created") {
               showFlash.value = true;
@@ -882,6 +879,7 @@ export default {
         store.dispatch("reviewer/editVerification", req).then((res) => {
           if (res.statusText == "Created") {
             showFlash.value = true;
+            showDeclineFlash.value = true;
             setTimeout(() => {
               router.push("/admin/review");
             }, 3000);
@@ -900,6 +898,7 @@ export default {
         store.dispatch("reviewer/editGoodStanding", req).then((res) => {
           if (res.statusText == "Created") {
             showFlash.value = true;
+            showDeclineFlash.value = true;
             let redirectUrl = "/admin/review";
             if (req.action == "ApproveEvent") {
               redirectUrl =
@@ -929,6 +928,7 @@ export default {
         store.dispatch("reviewer/editRenewal", req).then((res) => {
           if (res.statusText == "Created") {
             showFlash.value = true;
+            showDeclineFlash.value = true;
             setTimeout(() => {
               router.push("/admin/review");
             }, 3000);

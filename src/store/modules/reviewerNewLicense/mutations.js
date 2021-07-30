@@ -36,6 +36,21 @@ import {
   SET_NEW_LICENSE_DECLINED_PAYMENT_SEARCHED,
   SET_NEW_LICENSE_OTHERS_DECLINED_PAYMENT,
   SET_NEW_LICENSE_OTHERS_DECLINED_PAYMENT_SEARCHED,
+
+  SET_NEW_LICENSE_ON_REVIEW,
+  SET_NEW_LICENSE_ON_REVIEW_SEARCHED,
+  SET_NEW_LICENSE_OTHERS_ON_REVIEW,
+  SET_NEW_LICENSE_OTHERS_ON_REVIEW_SEARCHED,
+
+  SET_NEW_LICENSE_RE_EVALUATE,
+  SET_NEW_LICENSE_RE_EVALUATE_SEARCHED,
+  SET_NEW_LICENSE_OTHERS_RE_EVALUATE,
+  SET_NEW_LICENSE_OTHERS_RE_EVALUATE_SEARCHED,
+
+  SET_NEW_LICENSE_CONFIRMED,
+  SET_NEW_LICENSE_CONFIRMED_SEARCHED,
+  SET_NEW_LICENSE_OTHERS_CONFIRMED,
+  SET_NEW_LICENSE_OTHERS_CONFIRMED_SEARCHED,
 } from "./mutation-types";
 
 export default {
@@ -151,5 +166,50 @@ export default {
   },
   [SET_NEW_LICENSE_OTHERS_DECLINED_PAYMENT_SEARCHED](state, searchedVal) {
     state.newLicenseOthersDeclinedPaymentSearched = searchedVal;
+  },
+
+  [SET_NEW_LICENSE_ON_REVIEW](state, data) {
+    state.newLicenseOnReview = data;
+    state.newLicenseOnReviewSearched = data;
+  },
+  [SET_NEW_LICENSE_ON_REVIEW_SEARCHED](state, searchedVal) {
+    state.newLicenseOnReviewSearched = searchedVal;
+  },
+  [SET_NEW_LICENSE_OTHERS_ON_REVIEW](state, data) {
+    state.newLicenseOthersOnReview = data;
+    state.newLicenseOthersOnReviewSearched = data;
+  },
+  [SET_NEW_LICENSE_OTHERS_ON_REVIEW_SEARCHED](state, searchedVal) {
+    state.newLicenseOthersOnReviewSearched = searchedVal;
+  },
+
+  [SET_NEW_LICENSE_RE_EVALUATE](state, data) {
+    state.newLicenseReEvaluate = data;
+    state.newLicenseReEvaluateSearched = data;
+  },
+  [SET_NEW_LICENSE_RE_EVALUATE_SEARCHED](state, searchedVal) {
+    state.newLicenseReEvaluateSearched = searchedVal;
+  },
+  [SET_NEW_LICENSE_OTHERS_RE_EVALUATE](state, data) {
+    state.newLicenseOthersReEvaluate = data;
+    state.newLicenseOthersReEvaluateSearched = data;
+  },
+  [SET_NEW_LICENSE_OTHERS_RE_EVALUATE_SEARCHED](state, searchedVal) {
+    state.newLicenseOthersReEvaluateSearched = searchedVal;
+  },
+
+  [SET_NEW_LICENSE_CONFIRMED](state, data) {
+    state.newLicenseConfirmed = data;
+    state.newLicenseConfirmedSearched = data;
+  },
+  [SET_NEW_LICENSE_CONFIRMED_SEARCHED](state, searchedVal) {
+    state.newLicenseConfirmedSearched = searchedVal;
+  },
+  [SET_NEW_LICENSE_OTHERS_CONFIRMED](state, data) {
+    state.newLicenseOthersConfirmed = data;
+    state.newLicenseOthersConfirmedSearched = data;
+  },
+  [SET_NEW_LICENSE_OTHERS_CONFIRMED_SEARCHED](state, searchedVal) {
+    state.newLicenseOthersConfirmedSearched = searchedVal;
   },
 };

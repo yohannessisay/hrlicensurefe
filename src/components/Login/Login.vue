@@ -94,7 +94,7 @@ export default {
       showFlash: false,
       showErrorFlash: false,
       showLoading: false,
-      errorMessage:""
+      errorMessage: "",
     });
 
     const credentials = ref({
@@ -117,21 +117,22 @@ export default {
         message.value.showFlash = false;
         message.value.showErrorFlash = false;
         store.dispatch("user/login", email).then((res) => {
-            if(res)
-            {
-          // if (res.data.status == "Success") {
-           
+          if (res) {
+            // if (res.data.status == "Success") {
+
             const userId = res.data.data.id;
             store.dispatch("profile/getProfileByUserId", userId).then((res) => {
-             
               const getProfiles = res.data ? res.data.data : null;
               if (getProfiles) {
                 message.value.showLoading = false;
                 message.value.showFlash = true;
                 message.value.showErrorFlash = false;
                 setTimeout(() => {
-                  router.push({ path: "/menu" });
+                  location.reload(true);
                 }, 1500);
+                setTimeout(() => {
+                  router.push({ path: "/menu" });
+                }, 10);
               } else {
                 message.value.showLoading = false;
                 message.value.showFlash = true;
@@ -145,11 +146,11 @@ export default {
             message.value.showLoading = false;
             message.value.showFlash = false;
             message.value.showErrorFlash = true;
-            message.value.errorMessage="Incorrect username and password";
-            setTimeout(() => {   message.value.showErrorFlash = false;
-            credentials.value.emailAddress="";
-            credentials.value.password="";
-              
+            message.value.errorMessage = "Incorrect username and password";
+            setTimeout(() => {
+              message.value.showErrorFlash = false;
+              credentials.value.emailAddress = "";
+              credentials.value.password = "";
             }, 3000);
           }
         });

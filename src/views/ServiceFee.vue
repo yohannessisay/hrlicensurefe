@@ -10,11 +10,13 @@
       justify-center
       items-center
       relative
+      pt-8
+      pb-8
     "
   >
     <button
       id="myCheck"
-      class="absolute top-0 right-0 mr-2 mt-2"
+      class="absolute top-0 right-0 mr-2 mt-24"
       @click="$emit('serviceFeeModal', false)"
       variant="rounded"
     >
@@ -81,6 +83,19 @@
               </div>
             </div>
           </form>
+          <div class="flex flex-col mt-4 ml-xl">
+            <div>
+              <label class="text-primary-700">Payment Slip</label>
+            </div>
+            <div>
+              <input
+                v-on:change="paymentSlipChange(paymentSlip)"
+                class="max-w-3xl"
+                type="text"
+                v-model="paymentSlip"
+              />
+            </div>
+          </div>
         </div>
 
         <div v-if="!message.showLoading" class="flex justify-center mb-10">
@@ -146,6 +161,7 @@ export default {
     let isImage = ref(true);
     let documentSpecs = ref([]);
     let buttons = ref([]);
+    let paymentSlip = ref("");
 
     let userId = localStorage.getItem("userId");
 
@@ -224,6 +240,9 @@ export default {
       // });
     });
     const update = () => {};
+    const paymentSlipChange = (paymentSlip) => {
+      console.log(paymentSlip);
+    };
     const save = () => {
       message.value.showLoading = true;
       id = store.getters["serviceFee/getID"];
@@ -291,6 +310,7 @@ export default {
       message,
       fileSize,
       serviceFeeName,
+      paymentSlipChange,
     };
   },
 };
@@ -301,13 +321,13 @@ export default {
   height: auto;
 }
 #holder {
-  width: 650px;
-  height: 520px;
+  width: 600px;
+  height: auto;
 }
 .photoFile {
   opacity: 0; /* invisible but it's there! */
   width: 100%;
-  height: 400px;
+  height: 260px;
   position: absolute;
   cursor: pointer;
   border-radius: 0%;

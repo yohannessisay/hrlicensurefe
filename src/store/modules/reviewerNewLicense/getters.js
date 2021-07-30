@@ -36,4 +36,19 @@ export default {
   getNewLicenseDeclinedPaymentSearched: (state) => state.newLicenseDeclinedPaymentSearched,
   getNewLicenseOthersDeclinedPayment: (state) => state.newLicenseOthersDeclinedPayment,
   getNewLicenseOthersDeclinedPaymentSearched: (state) => state.newLicenseOthersDeclinedPaymentSearched,
+
+  getNewLicenseOnReview: (state) => state.newLicenseOnReview,
+  getNewLicenseOnReviewSearched: (state) => state.newLicenseOnReviewSearched,
+  getNewLicenseOthersOnReview: (state) => state.newLicenseOthersOnReview,
+  getNewLicenseOthersOnReviewSearched: (state) => state.newLicenseOthersOnReviewSearched,
+
+  getNewLicenseReEvaluate: (state) => state.newLicenseReEvaluate,
+  getNewLicenseReEvaluateSearched: (state) => state.newLicenseReEvaluateSearched,
+  getNewLicenseOthersReEvaluate: (state) => state.newLicenseOthersReEvaluate,
+  getNewLicenseOthersReEvaluateSearched: (state) => state.newLicenseOthersReEvaluateSearched,
+
+  getNewLicenseConfirmed: (state) => state.newLicenseConfirmed,
+  getNewLicenseConfirmedSearched: (state) => state.newLicenseConfirmedSearched,
+  getNewLicenseOthersConfirmed: (state) => state.newLicenseOthersConfirmed,
+  getNewLicenseOthersConfirmedSearched: (state) => state.newLicenseOthersConfirmedSearched,
 };

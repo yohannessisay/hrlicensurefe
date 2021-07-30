@@ -414,6 +414,36 @@ const routes = [
     name: "NewLicenseOthersDeclinedPayment",
     component: () => import("../components/Reviewer/ApplicationTypes/NewLicense/NewLicenseOthersDeclinedPayment.vue"),
   },
+  {
+    path: "/admin/newlicense/on-review",
+    name: "NewLicenesOnReview",
+    component: () => import("../components/Reviewer/ApplicationTypes/NewLicense/NewLicenseOnReview.vue"),
+  },
+  {
+    path: "/admin/newlicense/others-on-review",
+    name: "NewLicenesOthersOnReview",
+    component: () => import("../components/Reviewer/ApplicationTypes/NewLicense/NewLicenseOthersOnReview.vue"),
+  },
+  {
+    path: "/admin/newlicense/re-evaluate",
+    name: "NewLicenseReEvaluate",
+    component: () => import("../components/Reviewer/ApplicationTypes/NewLicense/NewLicenseReEvaluate.vue"),
+  },
+  {
+    path: "/admin/newlicense/others-re-evaluate",
+    name: "NewLicenseOthersReEvaluate",
+    component: () => import("../components/Reviewer/ApplicationTypes/NewLicense/NewLicenseOthersReEvaluate.vue"),
+  },
+  {
+    path: "/admin/newlicense/confirmed",
+    name: "NewLicenseReConfirmed",
+    component: () => import("../components/Reviewer/ApplicationTypes/NewLicense/NewLicenseConfirmed.vue"),
+  },
+  {
+    path: "/admin/newlicense/others-confirmed",
+    name: "NewLicenseOthersReConfirmed",
+    component: () => import("../components/Reviewer/ApplicationTypes/NewLicense/NewLicenseOthersConfirmed.vue"),
+  },
 
   {
     path: "/admin/verification/unassigned",
@@ -535,6 +565,37 @@ const routes = [
     name: "RenewalOthersDeclinedPayment",
     component: () => import("../components/Reviewer/ApplicationTypes/Renewal/RenewalOthersDeclinedPayment.vue"),
   },
+  {
+    path: "/admin/renewal/on-review",
+    name: "RenewalOnReview",
+    component: () => import("../components/Reviewer/ApplicationTypes/Renewal/RenewalOnReview.vue"),
+  },
+  {
+    path: "/admin/renewal/others-on-review",
+    name: "RenewalOthersOnReview",
+    component: () => import("../components/Reviewer/ApplicationTypes/Renewal/RenewalOthersOnReview.vue"),
+  },
+  {
+    path: "/admin/renewal/re-evaluate",
+    name: "RenewalReEvaluate",
+    component: () => import("../components/Reviewer/ApplicationTypes/Renewal/RenewalReEvaluate.vue"),
+  },
+  {
+    path: "/admin/renewal/others-re-evaluate",
+    name: "RenewalOthersReEvaluate",
+    component: () => import("../components/Reviewer/ApplicationTypes/Renewal/RenewalOthersReEvaluate.vue"),
+  },
+  {
+    path: "/admin/renewal/confirmed",
+    name: "RenewalConfirmed",
+    component: () => import("../components/Reviewer/ApplicationTypes/Renewal/RenewalConfirmed.vue"),
+  },
+  {
+    path: "/admin/renewal/others-confirmed",
+    name: "RenewalOthersConfirmed",
+    component: () => import("../components/Reviewer/ApplicationTypes/Renewal/RenewalOthersConfirmed.vue"),
+  },
+
   {
     path: "/admin/goodstanding/unassigned",
     name: "GoodStandingUnassigned",

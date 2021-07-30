@@ -8,7 +8,7 @@
         class="ml-8 mr-8 mb-12"
       >
         <div class="mt-large bg-white">
-          <span v-if="isGoodStanding">
+          <span v-if="isGoodStanding && license.applicationStatus.name === 'Approve'">
           <button @click="GenerateLetter">Generate Letter</button>
           </span>
           <div class="flex justify-center"><Title message="Summary" /></div>
@@ -205,7 +205,7 @@
               </h5>
             </div>
           </div>
-          <div class="flex justify-start">
+          <!-- <div class="flex justify-start">
             <Title message="Institution" />
           </div>
           <div class="flex flex-row">
@@ -221,14 +221,8 @@
               <label class="ml-8"> Institution Type</label>
               <h5 class="ml-8">{{ education.institutionTypeName }}</h5>
             </div>
-          </div>
+          </div> -->
           <div class="flex justify-start flex-wrap">
-            <!-- <div v-for="file in docs" v-bind:key="file.id">
-              <Title class="" :message="file.fieldName" />
-              <picture>
-                <img :src="basePath + file.filePath" />
-              </picture>
-            </div> -->
           </div>
         </div>
       </div>
@@ -316,12 +310,16 @@ export default {
     let getReviewId = ref(0);
 
     const GenerateLetter = () => {
+      if(license.value.applicationStatus.name !== "Approve") {
+        // if user is not approved don't generate a good standing letter
+        return;
+      }
       
       const doc = new jsPDF({orientation: 'landscape'})
       const pageWidth = doc.internal.pageSize.width || doc.internal.pageSize.getWidth;
       doc.setFontSize(20);
       doc.setFont('times', 'bold');
-      doc.text(40, 58, "To: Education Commission for foreign medical graduates.")
+      doc.text(40, 58, "To: "+ license.value.whomGoodStandingFor+ ".")
       doc.setFontSize(14);
       
       const letter = "LETTER OF GOOD STANDING";
@@ -331,18 +329,18 @@ export default {
       doc.setFontSize(15);
       
       doc.setFont('times', 'normal');
-      doc.text(40, 90, "This letter of good standing and" + 
+      doc.text(40, 90, "This letter of good standing and " + 
                         "confirmation of registration is written" +
-                        " upon request of " + goodStandingUser.value.applicant.profile.name
+                        " upon request of " + license.value.applicantTitle + " " + goodStandingUser.value.applicant.profile.name
                          + " " + goodStandingUser.value.applicant.profile.fatherName+ " " +
                           grandFatherName.value+".");
       doc.text(40, 100, goodStandingUser.value.applicant.profile.name + " " + 
                         goodStandingUser.value.applicant.profile.fatherName + 
                         " " +  grandFatherName. value + " " + 
-                         "was registered as Junior General Medical Practitioner on " 
-                         + moment(new Date).format("MMMM D, YYYY") + " by");
-      doc.text(40, 110, "The Food, Medicine & Health Care Administration and Control Authority of Ethiopia, which is the responsible");
-      doc.text(40, 120, `organ for registration and licensing of health professinals and ${gender.value == "male"? "his": "her"} registration number is JGMP=3817/2009.`);
+                         "was registered as " + license.value.applicantPosition.name + " " +
+                         moment(license.value.licenseIssuedDate).format("MMMM D, YYYY") + " by");
+      doc.text(40, 110, license.value.whoIssued + ", which is the responsible");
+      doc.text(40, 120, `organ for registration and licensing of health professinals and ${gender.value == "male"? "his": "her"} registration number is ${license.value.licenseRegistrationNumber}.`);
       doc.text(40, 130, `${gender.value == "male" ? "he" : "she"} has no any reported medico legal records and malpractices while ${gender.value == "male"? "he" : "she"} has practiced ${gender.value == "male" ? 'his': 'her'} medical profession`);
       doc.text(40, 140, `in Ethiopia till ${moment(new Date()).format("MMMM DD, YYYY")}.`);
       doc.text(40, 165, `Hence we appreciate any assistance, which will be rendered to ${gender.value == "male" ? "him" : "her"}.`)
@@ -383,6 +381,7 @@ export default {
           .then((res) => {
             showLoading.value = false;
             license.value = res.data.data;
+            console.log("approved good standing", res.data.data)
             goodStandingUser.value = res.data.data;
             gender.value = res.data.data.applicant.profile.gender;
             if(res.data.data.applicant.profile.grandFatherName) {
@@ -391,12 +390,12 @@ export default {
             getReviewId.value = license.value.reviewerId;
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
-            education.value.departmentName =
-              license.value.education.department.name;
-            education.value.institutionName =
-              license.value.education.institution.name;
-            education.value.institutionTypeName =
-              license.value.education.institution.institutionType.name;
+            // education.value.departmentName =
+            //   license.value.education.department.name;
+            // education.value.institutionName =
+            //   license.value.education.institution.name;
+            // education.value.institutionTypeName =
+            //   license.value.education.institution.institutionType.name;
           });
       }
       if (applicationType.value == "Verification") {
