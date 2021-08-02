@@ -379,15 +379,7 @@
                 <hr class="yellow-gradient border-none" />
               </a> -->
             </router-link>
-
-
-
-
-            <!--  -->
-
           </div>
-
-
           <div class="relative inline-block text-left">
             <a
               class="focus:outline-none bg-lightBlueB-300 text-lightBlueB-400 hover:text-gray-800 w-7 h-7 rounded-full flex items-center justify-center"
