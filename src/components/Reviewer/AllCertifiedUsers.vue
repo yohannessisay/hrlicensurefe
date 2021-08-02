@@ -51,11 +51,24 @@
               "
             >
               <div class="flex content-center justify-center">
-                <!-- <img class="box-shadow-pop" v-bind:src="item.picture.large" /> -->
-                <img
-                  class="box-shadow-pop"
-                  src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
-                />
+                <span
+                  v-if="
+                    item.applicant.profile.photo !== '' &&
+                      item.applicant.profile.photo !== null
+                  "
+                >
+                  <img
+                    :src="item.applicant.profile.photo"
+                    alt="profile picture"
+                    class="w-20 h-12"
+                  />
+                </span>
+                <span v-else>
+                  <img
+                    class="box-shadow-pop"
+                    src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
+                  />
+                </span>
               </div>
               <h4
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
@@ -106,14 +119,17 @@
     </div>
     <div class="bg-lightBlueB-200 h-full" v-if="searchedByDate">
       <div class="flex pl-12 pt-tiny">
-      <Title
-        :message="
-          'Licensed Applicants on Date Range ' + moment(searchCertifiedFrom).format('MMM D, YYYY') + ' To ' + moment(searchCertifiedTo).format('MMM D, YYYY')
-        "
-      />
-      <button @click="backClicked">back</button>
-    </div>
-    <certified-users-by-date :licensedByDate="filteredByDate"/>
+        <Title
+          :message="
+            'Licensed Applicants on Date Range ' +
+              moment(searchCertifiedFrom).format('MMM D, YYYY') +
+              ' To ' +
+              moment(searchCertifiedTo).format('MMM D, YYYY')
+          "
+        />
+        <button @click="backClicked">back</button>
+      </div>
+      <certified-users-by-date :licensedByDate="filteredByDate" />
     </div>
   </div>
   <div v-if="message.showErrorFlash">
@@ -175,80 +191,87 @@ export default {
     let alreadyPushed = ref(false);
 
     const filterCertifiedsByDateRange = () => {
-      if(searchCertifiedFrom.value === "" || searchCertifiedTo.value === "") {
-        message.value.showErrorFlash = true;
-        setTimeout(() => {
-          message.value.showErrorFlash = false;
-        }, 4000)
-      } else if (moment(searchCertifiedFrom.value).isAfter(searchCertifiedTo.value)) {
+      if (searchCertifiedFrom.value === "" || searchCertifiedTo.value === "") {
         message.value.showErrorFlash = true;
         setTimeout(() => {
           message.value.showErrorFlash = false;
         }, 4000);
-      } 
-       else {
+      } else if (
+        moment(searchCertifiedFrom.value).isAfter(searchCertifiedTo.value)
+      ) {
+        message.value.showErrorFlash = true;
+        setTimeout(() => {
+          message.value.showErrorFlash = false;
+        }, 4000);
+      } else {
         searchedByDate.value = true;
         for (let certifiedUser in assignAllCertified.value) {
           if (
             !moment(searchCertifiedFrom.value).isAfter(
               assignAllCertified.value[certifiedUser].certifiedDate
             ) &&
-            moment(searchCertifiedTo.value).isSameOrAfter(assignAllCertified.value[certifiedUser].certifiedDate)
+            moment(searchCertifiedTo.value).isSameOrAfter(
+              assignAllCertified.value[certifiedUser].certifiedDate
+            )
           ) {
-            if(!alreadyPushed.value) {
-              filteredByDate.value.push(assignAllCertified.value[certifiedUser])
+            if (!alreadyPushed.value) {
+              filteredByDate.value.push(
+                assignAllCertified.value[certifiedUser]
+              );
             }
           }
-           
         }
         alreadyPushed.value = true;
       }
     };
 
     const backClicked = () => {
-      searchedByDate.value = false
+      searchedByDate.value = false;
       filteredByDate.value = [];
       alreadyPushed.value = false;
       searchCertifiedFrom.value = "";
       searchCertifiedTo.value = "";
-    }
+    };
 
     const fetchAllCertified = () => {
       showLoading.value = true;
-      store.dispatch("reviewer/getMyRegionCertifiedUsers", regionId).then((res) => {
-        showLoading.value = false;
-        allCertified.value =
-          store.getters["reviewer/getMyRegionCertifiedUsersSearched"];
-        assignAllCertified.value =
-          store.getters["reviewer/getMyRegionCertifiedUsersSearched"];
-        for (let certifiedUser in assignAllCertified.value) {
-          assignAllCertified.value[certifiedUser].certifiedDate = moment(
-            assignAllCertified.value[certifiedUser].certifiedDate
-          ).format("MMMM D, YYYY");
-        }
-        if (
-          store.getters["reviewer/getMyRegionCertifiedUsersSearched"].length !== 0
-        ) {
-          for (var prop in store.getters[
-            "reviewer/getMyRegionCertifiedUsersSearched"
-          ]) {
-            if (allCertified.value[prop].applicationType == "Renewal") {
-              allCertified.value[prop].newLicenseCode =
-                allCertified.value[prop].renewalCode;
-            }
-            if (allCertified.value[prop].applicationType == "Good Standing") {
-              allCertified.value[prop].newLicenseCode =
-                allCertified.value[prop].goodStandingCode;
-            }
-            if (allCertified.value[prop].applicationType == "Verification") {
-              allCertified.value[prop].newLicenseCode =
-                allCertified.value[prop].verificationCode;
-            }
+      store
+        .dispatch("reviewer/getMyRegionCertifiedUsers", regionId)
+        .then((res) => {
+          showLoading.value = false;
+          allCertified.value =
+            store.getters["reviewer/getMyRegionCertifiedUsersSearched"];
+          assignAllCertified.value =
+            store.getters["reviewer/getMyRegionCertifiedUsersSearched"];
+          for (let certifiedUser in assignAllCertified.value) {
+            assignAllCertified.value[certifiedUser].certifiedDate = moment(
+              assignAllCertified.value[certifiedUser].certifiedDate
+            ).format("MMMM D, YYYY");
           }
-        } else {
-          nothingToShowAllCertified.value = true;
-        }
-      });
+          if (
+            store.getters["reviewer/getMyRegionCertifiedUsersSearched"]
+              .length !== 0
+          ) {
+            for (var prop in store.getters[
+              "reviewer/getMyRegionCertifiedUsersSearched"
+            ]) {
+              if (allCertified.value[prop].applicationType == "Renewal") {
+                allCertified.value[prop].newLicenseCode =
+                  allCertified.value[prop].renewalCode;
+              }
+              if (allCertified.value[prop].applicationType == "Good Standing") {
+                allCertified.value[prop].newLicenseCode =
+                  allCertified.value[prop].goodStandingCode;
+              }
+              if (allCertified.value[prop].applicationType == "Verification") {
+                allCertified.value[prop].newLicenseCode =
+                  allCertified.value[prop].verificationCode;
+              }
+            }
+          } else {
+            nothingToShowAllCertified.value = true;
+          }
+        });
     };
 
     const detail = (data, applicationType, applicationId, applicantId) => {

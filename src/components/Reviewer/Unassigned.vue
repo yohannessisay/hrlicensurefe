@@ -57,14 +57,24 @@
                 @mouseleave="hover = false"
               >
                 <div class="flex content-center justify-center">
-                  <!-- <img
-                    class="box-shadow-pop"
-                    v-bind:src="item.picture.large"
-                /> -->
-                  <img
-                    class="box-shadow-pop"
-                    src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
-                  />
+                  <span
+                    v-if="
+                      item.applicant.profile.photo !== '' &&
+                        item.applicant.profile.photo !== null
+                    "
+                  >
+                    <img
+                      :src="item.applicant.profile.photo"
+                      alt="profile picture"
+                      class="w-20 h-12"
+                    />
+                  </span>
+                  <span v-else>
+                    <img
+                      class="box-shadow-pop"
+                      src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
+                    />
+                  </span>
                 </div>
                 <h4
                   class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
@@ -170,7 +180,10 @@
         <Title :message="'Unassigned Applicants'" />
         <button @click="backClicked">back</button>
       </div>
-      <filtered-info :filteredData="allInfo.filteredByDate" type="unassignedDetail"/>
+      <filtered-info
+        :filteredData="allInfo.filteredByDate"
+        type="unassignedDetail"
+      />
     </div>
   </div>
   <div v-if="allInfo.message.showErrorFlash">
@@ -217,17 +230,17 @@ export default {
     let showLoading = ref(false);
 
     let allInfo = ref({
-        alreadyPushed: false,
-        searchByInput: false,
-        assignApplication: [],
-        message: {
-            showErrorFlash: false
-        },
-        filteredByDate: [],
-        searchFromDate: "",
-        searchUpToDate: "",
-        app_type: "",
-      })
+      alreadyPushed: false,
+      searchByInput: false,
+      assignApplication: [],
+      message: {
+        showErrorFlash: false,
+      },
+      filteredByDate: [],
+      searchFromDate: "",
+      searchUpToDate: "",
+      app_type: "",
+    });
     const applicationTypes = ref([
       {
         id: 1,
@@ -249,7 +262,7 @@ export default {
         id: 5,
         name: "Renewal",
       },
-    ])
+    ]);
 
     const filterUnassignedApplication = () => {
       filterApplication(moment, allInfo.value);
@@ -269,7 +282,7 @@ export default {
       store.dispatch("reviewer/getUnassigned").then((res) => {
         showLoading.value = false;
         unassigned.value = store.getters["reviewer/getUnassignedSearched"];
-        console.log("un assigned ", unassigned.value)
+        console.log("un assigned ", unassigned.value);
         allInfo.value.assignApplication =
           store.getters["reviewer/getUnassignedSearched"];
         for (let unassignedUser in allInfo.value.assignApplication) {

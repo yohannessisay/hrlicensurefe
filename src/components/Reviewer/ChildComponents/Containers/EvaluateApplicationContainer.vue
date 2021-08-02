@@ -36,7 +36,7 @@
     </div>
     <div class="flex flex-wrap pb-medium rounded h-full" v-if="!showLoading">
       <nothing-to-show :nothingToShow="nothingToShowevaluateApplication" />
-      <evaluate-review :evaluateReview="getEvalauteReview" />
+      <evaluate-application :evaluateReview="getEvalauteReview" />
     </div>
   </div>
   <div v-if="showLoading" class="flex justify-center justify-items-center">
@@ -70,7 +70,7 @@ import Spinner from "@/sharedComponents/Spinner";
 
 import store from "../../../../store";
 import Title from "@/sharedComponents/TitleWithIllustration";
-import EvaluateReview from "@/components/Reviewer/ChildComponents/EvaluateApplication";
+import EvaluateApplication from "@/components/Reviewer/ChildComponents/EvaluateApplication";
 import NothingToShow from "@/components/Reviewer/ChildComponents/NothingToShow";
 import filterApplication from "../FilteredDatas/FilterApplication.js";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
@@ -86,7 +86,7 @@ export default {
   components: {
     Spinner,
     Title,
-    EvaluateReview,
+    EvaluateApplication,
     NothingToShow,
     FilteredInfo,
     ErrorFlashMessage,
