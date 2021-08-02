@@ -326,6 +326,9 @@ export default {
     this.educationalDocs = this.getEducationalDocuments;
     this.workExperience = this.getWorkExperience;
     this.serviceFee = this.getServiceFee;
+    this.letterfromOrg = this.getLetterfromOrg;
+    this.renewedLicense = this.getRenewedLicense;
+    this.professionalLicense = this.getProfessionalLicense;
     this.buttons = this.getButtons;
     this.fetchProfileInfo();
     this.setDocs();
@@ -370,6 +373,9 @@ export default {
     coc: "",
     educationalDocs: [],
     workExperience: "",
+    letterfromOrg: "",
+    renewedLicense: "",
+    professionalLicense: "",
     applicationId: "",
     buttons: [],
     documentTypes: [],
@@ -707,7 +713,6 @@ export default {
                 this.coc
               );
               if (this.educationalDocs != undefined) {
-                console.log(this.educationalDocs);
                 formData.append(
                   this.documentTypes[10].documentType.code,
                   this.educationalDocs[0]
@@ -800,7 +805,6 @@ export default {
 
         formData.append(this.documentTypes[9].documentType.code, this.coc);
         if (this.educationalDocs != undefined) {
-          console.log(this.educationalDocs);
           formData.append(
             this.documentTypes[10].documentType.code,
             this.educationalDocs[0]
@@ -853,6 +857,7 @@ export default {
             professionalTypeId: this.professionalTypeID,
           },
         };
+
         this.$store
           .dispatch("newlicense/addNewLicense", license)
           .then((res) => {

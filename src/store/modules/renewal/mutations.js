@@ -26,7 +26,7 @@ export default {
     state.healthExamCert = renewalHealthExamCert;
   },
   [SET_PREVIOUS_LICEENSE](state, previousLicense) {
-    state.letterFromHiringInstitution = previousLicense;
+    state.previosLicense = previousLicense;
   },
   [SET_RENEWAL_SERVICE_FEE](state, renewalServiceFee) {
     state.serviceFee = renewalServiceFee;
