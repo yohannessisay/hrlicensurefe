@@ -13,6 +13,7 @@ import {
   SET_REMARK,
   SET_DECLINED_FIELDS,
   SET_ACCEPTED_FIELDS,
+  SET_PROFESSIONAL_DOCUMENT,
 } from "./mutation-types";
 
 export default {
@@ -26,13 +27,16 @@ export default {
     state.healthExamCert = renewalHealthExamCert;
   },
   [SET_PREVIOUS_LICEENSE](state, previousLicense) {
-    state.letterFromHiringInstitution = previousLicense;
+    state.previosLicense = previousLicense;
   },
   [SET_RENEWAL_SERVICE_FEE](state, renewalServiceFee) {
     state.serviceFee = renewalServiceFee;
   },
   [SET_RENEWAL_CPD](state, renewalCpd) {
     state.cpd = renewalCpd;
+  },
+  [SET_PROFESSIONAL_DOCUMENT](state, professionalDocuments) {
+    state.professionalDocuments = professionalDocuments;
   },
   [SET_RENEWAL_WORK_EXPERIENCE](state, renewalWorkExperience) {
     state.workExperience = renewalWorkExperience;

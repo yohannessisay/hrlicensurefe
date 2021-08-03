@@ -21,10 +21,15 @@
         "
       >
         <div class="flex content-center justify-center">
-          <img
-            class="box-shadow-pop"
-            src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
-          />
+          <span v-if="item.applicant.profile.photo !== '' && item.applicant.profile.photo !== null">
+            <img :src="item.applicant.profile.photo" alt="profile picture"  class="w-20 h-12" />
+          </span>
+          <span v-else>
+            <img
+              class="box-shadow-pop"
+              src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
+            />
+          </span>
         </div>
         <h4
           class="text-lightBlueB-500 mt-tiny flex justify-center content-center"

@@ -36,6 +36,21 @@ import {
   SET_RENEWAL_DECLINED_PAYMENT_SEARCHED,
   SET_RENEWAL_OTHERS_DECLINED_PAYMENT,
   SET_RENEWAL_OTHERS_DECLINED_PAYMENT_SEARCHED,
+
+  SET_RENEWAL_ON_REVIEW,
+  SET_RENEWAL_ON_REVIEW_SEARCHED,
+  SET_RENEWAL_OTHERS_ON_REVIEW,
+  SET_RENEWAL_OTHERS_ON_REVIEW_SEARCHED,
+
+  SET_RENEWAL_RE_EVALUATE,
+  SET_RENEWAL_RE_EVALUATE_SEARCHED,
+  SET_RENEWAL_OTHERS_RE_EVALUATE,
+  SET_RENEWAL_OTHERS_RE_EVALUATE_SEARCHED,
+
+  SET_RENEWAL_CONFIRMED,
+  SET_RENEWAL_CONFIRMED_SEARCHED,
+  SET_RENEWAL_OTHERS_CONFIRMED,
+  SET_RENEWAL_OTHERS_CONFIRMED_SEARCHED,
 } from "./mutation-types";
 
 export default {
@@ -151,5 +166,50 @@ export default {
   },
   [SET_RENEWAL_OTHERS_DECLINED_PAYMENT_SEARCHED](state, searchedVal) {
     state.renewalOthersDeclinedPaymentSearched = searchedVal;
+  },
+
+  [SET_RENEWAL_ON_REVIEW](state, data) {
+    state.renewalOnReview = data;
+    state.renewalOnReviewSearched = data;
+  },
+  [SET_RENEWAL_ON_REVIEW_SEARCHED](state, searchedVal) {
+    state.renewalOnReviewSearched = searchedVal;
+  },
+  [SET_RENEWAL_OTHERS_ON_REVIEW](state, data) {
+    state.renewalOthersOnReview = data;
+    state.renewalOthersOnReviewSearched = data;
+  },
+  [SET_RENEWAL_OTHERS_ON_REVIEW_SEARCHED](state, searchedVal) {
+    state.renewalOthersOnReviewSearched = searchedVal;
+  },
+
+  [SET_RENEWAL_RE_EVALUATE](state, data) {
+    state.renewalReEvaluate = data;
+    state.renewalReEvaluateSearched = data;
+  },
+  [SET_RENEWAL_RE_EVALUATE_SEARCHED](state, searchedVal) {
+    state.renewalReEvaluateSearched = searchedVal;
+  },
+  [SET_RENEWAL_OTHERS_RE_EVALUATE](state, data) {
+    state.renewalOthersReEvaluate = data;
+    state.renewalOthersReEvaluateSearched = data;
+  },
+  [SET_RENEWAL_OTHERS_RE_EVALUATE_SEARCHED](state, searchedVal) {
+    state.renewalOthersReEvaluateSearched = searchedVal;
+  },
+
+  [SET_RENEWAL_CONFIRMED](state, data) {
+    state.renewalConfirmed = data;
+    state.renewalConfirmedSearched = data;
+  },
+  [SET_RENEWAL_CONFIRMED_SEARCHED](state, searchedVal) {
+    state.renewalConfirmedSearched = searchedVal;
+  },
+  [SET_RENEWAL_OTHERS_CONFIRMED](state, data) {
+    state.renewalOthersConfirmed = data;
+    state.renewalOthersConfirmedSearched = data;
+  },
+  [SET_RENEWAL_OTHERS_CONFIRMED_SEARCHED](state, searchedVal) {
+    state.renewalOthersConfirmedSearched = searchedVal;
   },
 };

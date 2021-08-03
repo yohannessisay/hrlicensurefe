@@ -36,4 +36,19 @@ export default {
     getRenewalDeclinedPaymentSearched: (state) => state.renewalDeclinedPaymentSearched,
     getRenewalOthersDeclinedPayment: (state) => state.renewalOthersDeclinedPayment,
     getRenewalOthersDeclinedPaymentSearched: (state) => state.renewalOthersDeclinedPaymentSearched,
+
+    getRenewalOnReview: (state) => state.renewalOnReview,
+    getRenewalOnReviewSearched: (state) => state.renewalOnReviewSearched,
+    getRenewalOthersOnReview: (state) => state.renewalOthersOnReview,
+    getRenewalOthersOnReviewSearched: (state) => state.renewalOthersOnReviewSearched,
+    
+    getRenewalReEvaluate: (state) => state.renewalReEvaluate,
+    getRenewalReEvaluateSearched: (state) => state.renewalReEvaluateSearched,
+    getRenewalOthersReEvaluate: (state) => state.renewalOthersReEvaluate,
+    getRenewalOthersReEvaluateSearched: (state) => state.renewalOthersReEvaluateSearched,
+
+    getRenewalConfirmed: (state) => state.renewalConfirmed,
+    getRenewalConfirmedSearched: (state) => state.renewalConfirmedSearched,
+    getRenewalOthersConfirmed: (state) => state.renewalOthersConfirmed,
+    getRenewalOthersConfirmedSearched: (state) => state.renewalOthersConfirmedSearched,
 }

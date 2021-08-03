@@ -1241,6 +1241,19 @@ export default {
     }
   },
 
+  async editNewLicense({ commit }, license) {
+    try {
+      console.log("data is - ", license);
+      const resp = await ApiService.put(
+        baseUrl + "/newlicenses/" + license.data.id,
+        license
+      );
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+
   async editVerification({ commit }, license) {
     try {
       console.log("license detail", license)

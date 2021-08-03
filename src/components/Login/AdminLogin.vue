@@ -66,7 +66,7 @@
     <FlashMessage message="Login Successful!" />
   </div>
   <div v-if="message.showErrorFlash">
-    <ErrorFlashMessage message="Login Failed!" />
+    <ErrorFlashMessage message="Incorrect username or password" />
   </div>
 </template>
 <script>
@@ -125,7 +125,9 @@ export default {
         } else {
           message.value.showErrorFlash = !message.value.showErrorFlash;
           setTimeout(() => {
-            context.emit("closeModal", true);
+            // context.emit("closeModal", true);
+            credentials.value.email = '';
+            credentials.value.password = '';
             message.value.showErrorFlash = !message.value.showErrorFlash;
           }, 3000);
         }

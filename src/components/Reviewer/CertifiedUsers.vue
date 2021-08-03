@@ -32,16 +32,29 @@
               "
             >
               <div class="flex content-center justify-center">
-                <!-- <img class="box-shadow-pop" v-bind:src="item.picture.large" /> -->
-                <img
-                  class="box-shadow-pop"
-                  src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
-                />
+                <span
+                  v-if="
+                    item.applicant.profile.photo !== '' &&
+                      item.applicant.profile.photo !== null
+                  "
+                >
+                  <img
+                    :src="item.applicant.profile.photo"
+                    alt="profile picture"
+                    class="w-20 h-12"
+                  />
+                </span>
+                <span v-else>
+                  <img
+                    class="box-shadow-pop"
+                    src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
+                  />
+                </span>
               </div>
               <h4
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
               >
-               <b>{{
+                <b>{{
                   item.applicant.profile.name
                     ? item.applicant.profile.name +
                       " " +
@@ -50,13 +63,19 @@
                 }}</b>
               </h4>
               <span
-                  class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                >
-                  {{ item.applicationType ? item.applicationType : "-" }}
-                </span>
+                class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+              >
+                {{ item.applicationType ? item.applicationType : "-" }}
+              </span>
               <span
-                class="text-lightBlueB-500 mt-tiny flex justify-start content-center">
-                  On {{item.createdAt ? moment(item.certifiedDate).format("MMM DD, YY") : '-'}}
+                class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+              >
+                On
+                {{
+                  item.createdAt
+                    ? moment(item.certifiedDate).format("MMM DD, YY")
+                    : "-"
+                }}
               </span>
               <span
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
@@ -85,9 +104,9 @@ import { useStore } from "vuex";
 import { ref, onMounted, watch } from "vue";
 import { useRouter } from "vue-router";
 
-import store from '../../store'
+import store from "../../store";
 import Spinner from "@/sharedComponents/Spinner";
-import moment from 'moment'
+import moment from "moment";
 
 export default {
   components: { ReviewerNavBar, Title, Spinner },
@@ -108,9 +127,9 @@ export default {
 
     const fetchUnfinished = () => {
       showLoading.value = true;
-      store.dispatch("reviewer/getAllCertifiedUsers").then(res => {
+      store.dispatch("reviewer/getAllCertifiedUsers").then((res) => {
         showLoading.value = false;
-          certifiedUsers.value = res;
+        certifiedUsers.value = res;
         // if(store.getters['reviewer/getUnfinishedSearched'].length !== 0) {
         //   for (var prop in store.getters['reviewer/getUnfinishedSearched']) {
         //     if (store.getters['reviewer/getUnfinishedSearched'][prop].applicationType == "Renewal") {
@@ -132,8 +151,9 @@ export default {
       });
     };
 
-    const detail = (data, applicationType,applicationId,applicantId) => {
-      const url = data + "/" + applicationType + "/" + applicationId + "/" + applicantId;
+    const detail = (data, applicationType, applicationId, applicantId) => {
+      const url =
+        data + "/" + applicationType + "/" + applicationId + "/" + applicantId;
       router.push(url);
     };
 
@@ -147,7 +167,7 @@ export default {
       nothingToShowUnfinished,
       showLoading,
     };
-  }
+  },
 };
 </script>
 <style scoped>

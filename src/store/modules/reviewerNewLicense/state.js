@@ -38,5 +38,19 @@ export default {
     newLicenseOthersDeclinedPayment: [],
     newLicenseOthersDeclinedPaymentSearched: [],
     
+    newLicenseOnReview: [],
+    newLicenseOnReviewSearched: [],
+    newLicenseOthersOnReview: [],
+    newLicenseOthersOnReviewSearched: [],
+
+    newLicenseReEvaluate: [],
+    newLicenseReEvaluateSearched: [],
+    newLicenseOthersReEvaluate: [],
+    newLicenseOthersReEvaluateSearched: [],
+
+    newLicenseConfirmed: [],
+    newLicenseConfirmedSearched: [],
+    newLicenseOthersConfirmed: [],
+    newLicenseOthersConfirmedSearched: [],
   },
 };

@@ -178,6 +178,7 @@ export default {
     let isImage = ref(true);
     let dataChanged = ref(false);
     let draftData = ref("");
+    let professionalDoc = ref([]);
 
     let buttons = [];
     let documentSpecs = ref([]);
@@ -241,6 +242,7 @@ export default {
     buttons = store.getters["renewal/getButtons"];
     documentSpecs = store.getters["renewal/getDocumentSpec"];
     licenseInfo = store.getters["renewal/getLicense"];
+    professionalDoc = store.getters["newlicense/getProfessionalDocuments"];
 
     healthExamCert = store.getters["renewal/getRenewalHealthExamCert"];
     renewalLetter = store.getters["renewal/getRenewalLicense"];
@@ -364,7 +366,20 @@ export default {
               documentSpecs[6].documentType.code,
               previousLicense
             );
-
+            if (professionalDoc != undefined) {
+              formData.append(
+                documentSpecs[6].documentType.code,
+                professionalDoc[0]
+              );
+              formData.append(
+                documentSpecs[7].documentType.code,
+                professionalDoc[1]
+              );
+              formData.append(
+                documentSpecs[8].documentType.code,
+                professionalDoc[2]
+              );
+            }
             let payload = { document: formData, id: licenseId };
             store
               .dispatch("renewal/uploadDocuments", payload)
