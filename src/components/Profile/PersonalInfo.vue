@@ -28,7 +28,9 @@
                   ref="photoFileP"
                   v-on:change="handleFileUpload()"
                   style="margin-bottom: 15px !important;"
+                  
                 />
+                <!-- we can restirct what type of file format it can use using accept=".jpeg,.jpg,.png,.pdf,...." -->
                 <p>
                   Drag your Profile Picture here to begin<br />
                   or click to browse
@@ -43,8 +45,8 @@
             </p>
             <img v-bind:src="filePreview" v-show="showPreview" />
           </picture>
-
-          <span v-if="!showUpload && !isImage">
+            <span v-if="photoSizeCheck" style="color: red">Image size to big, Upload again. Image must be less than 100 kB</span>
+          <span v-if="!showUpload && !isImage && !photoSizeCheck">
             <img :src="filePreview" alt="" class="preview" />
           </span>
         </div>
@@ -291,7 +293,7 @@ export default {
     let filePreview = ref("");
     let showUpload = ref(true);
     let isImage = ref(true);
-
+    let photoSizeCheck= ref(false);
     let fileSize = ref("");
 
     let personalInfo = ref({
@@ -334,13 +336,19 @@ export default {
       photoFile.value = "";
       filePreview.value = "";
       isImage.value = true;
+      photoSizeCheck.value=false;
     };
     const handleFileUpload = async () => {
       showUpload.value = false;
       photoFile.value = photoFileP.value.files[0];
   
       let reader = new FileReader();
- 
+ if(photoFile.value.size>100000)
+ {
+photoSizeCheck.value=true;
+ }
+ else
+ {
       let fileS = photoFile.value.size;
       if (fileS > 0 && fileS < 1000) {
         fileSize.value += "B";
@@ -369,6 +377,7 @@ export default {
           
         },
         false
+ 
       );
       if (photoFile.value) {
         if (/\.(jpe?g|png|gif)$/i.test(photoFile.value.name)) {
@@ -379,6 +388,7 @@ export default {
           reader.readAsText(photoFile.value);
         }
       }
+ }
     };
 
     const fetchUserTypes = () => {
@@ -485,6 +495,7 @@ export default {
       reset,
       personalInfo,
       personalInfoErrors,
+      photoSizeCheck,
       validateForm,
       isEmpty,
       state,
