@@ -2,7 +2,14 @@
   <div class="flex justify-center items">
     <div class="w-screen max-w-4xl">
       <div
-        class="flex flex-col pt-large w-full bg-white blue-box-shadow-light rounded"
+        class="
+          flex flex-col
+          pt-large
+          w-full
+          bg-white
+          blue-box-shadow-light
+          rounded
+        "
       >
         <div class="mt-small">
           <TitleWithIllustration
@@ -14,7 +21,11 @@
           <div class="flex">
             <div class="flex flex-col mb-medium w-2/5 ml-medium mr-12">
               <label class="text-primary-700">Applicant Type</label>
-              <select class="max-w-3xl" v-model="licenseInfo.applicantTypeId">
+              <select
+                class="max-w-3xl"
+                @change="checkApplicantType(licenseInfo.applicantTypeId)" 
+                v-model="licenseInfo.applicantTypeId"
+              >
                 <option
                   v-for="applicant in applicantTypes"
                   v-bind:key="applicant.name"
@@ -138,15 +149,51 @@
                 licenseInfoErrors.professionalTypeID
               }}</span>
             </div>
+            <div
+              v-if="this.displayEnglishLanguageOption"
+              class="flex flex-col mb-medium w-2/5 mr-12 mr-12"
+            >
+              <label class="text-primary-700">English Language</label>
+              <select
+                class="max-w-3xl"
+                @change="setEnglishLanguage()"
+                v-model="this.languageID"
+              >
+                <option
+                  v-for="types in this.englishData.data"
+                  v-bind:key="types.name"
+                  v-bind:value="types.id"
+                >
+                  {{ types.name }}
+                </option>
+              </select>
+            </div>
+            <div
+              v-if="this.displayPayrollDoc"
+              class="flex flex-col mb-medium w-2/5 mr-12 mr-12"
+            >
+              <label class="text-primary-700">Payroll</label>
+              <select
+                class="max-w-3xl"
+                @change="setPayrollDoc()"
+                v-model="this.payrollID"
+              >
+                <option
+                  v-for="types in this.payrollData.data"
+                  v-bind:key="types.name"
+                  v-bind:value="types.id"
+                >
+                  {{ types.name }}
+                </option>
+              </select>
+            </div>
           </div>
         </form>
         <div
           v-if="this.showButtons && !this.draftStatus"
           class="flex justify-center mb-8"
         >
-          <button @click="submit">
-            Next
-          </button>
+          <button @click="submit">Next</button>
           <button @click="draft(this.buttons[1].action)" variant="outline">
             {{ this.buttons[1]["name"] }}
           </button>
@@ -155,9 +202,7 @@
           v-if="this.showButtons && this.draftStatus == 'DRA'"
           class="flex justify-center mb-8"
         >
-          <button @click="submit">
-            Next
-          </button>
+          <button @click="submit">Next</button>
           <button @click="draft(this.buttons[2].action)" variant="outline">
             {{ this.buttons[2]["name"] }}
           </button>
@@ -173,9 +218,7 @@
           v-if="this.showButtons && this.draftStatus == 'SUB'"
           class="flex justify-center mb-8"
         >
-          <button @click="submit">
-            Next
-          </button>
+          <button @click="submit">Next</button>
           <button
             class="withdraw"
             @click="withdraw(this.buttons[0].action)"
@@ -188,9 +231,7 @@
           v-if="this.showButtons && this.draftStatus == 'USUP'"
           class="flex justify-center mb-8"
         >
-          <button @click="submit">
-            Next
-          </button>
+          <button @click="submit">Next</button>
           <button @click="draft(this.buttons[0].action)" variant="outline">
             {{ this.buttons[0]["name"] }}
           </button>
@@ -202,9 +243,7 @@
           v-if="this.showButtons && this.draftStatus == 'DEC'"
           class="flex justify-center mb-8"
         >
-          <button @click="submit">
-            Next
-          </button>
+          <button @click="submit">Next</button>
           <button @click="draft(this.buttons[0].action)" variant="outline">
             {{ this.buttons[0]["name"] }}
           </button>
@@ -248,7 +287,9 @@ export default {
     await this.fetchDepartments();
     await this.fetchRegions();
     await this.fetchProfessionalType();
-     this.showLoading = true;
+    await this.fetchEnglishSpeaker();
+    await this.fetchPayrollData();
+    this.showLoading = true;
     setTimeout(() => {
       this.buttons = this.getButtons;
       this.showButtons = true;
@@ -304,9 +345,92 @@ export default {
     showFlash: false,
     showErrorFlash: false,
     showLoading: false,
+
+    displayEnglishLanguageOption: false,
+    displayPayrollDoc: false,
+
+    nativeEnglishSpeaker: false,
+    payrollDocType: false,
+
+    languageID: 0,
+    payrollID: 0,
+
+    englishData: {
+      status: "Success",
+      message: "All applicant types retrieved successfully!",
+      data: [
+        {
+          id: 1,
+          name: "Native",
+          code: "NAT",
+          createdAt: "2021-04-12T21:48:37.743Z",
+          updatedAt: "2021-04-12T21:48:37.743Z",
+        },
+        {
+          id: 2,
+          name: "Non-Native",
+          code: "NNT",
+          createdAt: "2021-04-12T21:48:37.743Z",
+          updatedAt: "2021-04-12T21:48:37.743Z",
+        },
+      ],
+    },
+    payrollData: {
+      status: "Success",
+      message: "All applicant types retrieved successfully!",
+      data: [
+        {
+          id: 1,
+          name: "Governmental",
+          code: "GVO",
+          createdAt: "2021-04-12T21:48:37.743Z",
+          updatedAt: "2021-04-12T21:48:37.743Z",
+        },
+        {
+          id: 2,
+          name: "Non-Governmental",
+          code: "NGO",
+          createdAt: "2021-04-12T21:48:37.743Z",
+          updatedAt: "2021-04-12T21:48:37.743Z",
+        },
+      ],
+    },
   }),
 
   methods: {
+    fetchEnglishSpeaker() {
+      return this.englishData;
+    },
+    fetchPayrollData() {
+      return this.payrollData;
+    },
+    checkApplicantType(applicantType) {
+      if (applicantType == 1) {
+        this.displayPayrollDoc = true;
+      } else {
+        this.displayPayrollDoc = false;
+      }
+      if (applicantType == 2) {
+        this.displayEnglishLanguageOption = true;
+      } else {
+        this.displayEnglishLanguageOption = false;
+      }
+    },
+    setEnglishLanguage() {
+      if (this.languageID == 1) {
+        this.nativeEnglishSpeaker = true;
+      } else {
+        this.nativeEnglishSpeaker = false;
+      }
+    },
+    setPayrollDoc() {
+      if (this.payrollID == 1) {
+        this.payrollDocType = true;
+      } else {
+        this.payrollDocType = false;
+      }
+    },
+
     draft(action) {
       this.showLoading = true;
       let license = {
@@ -430,9 +554,10 @@ export default {
         residenceWoredaId: this.licenseInfo.residenceWoredaId,
         professionalTypeId: this.licenseInfo.professionalTypeID,
       };
-
       this.$emit("changeActiveState");
       this.$emit("applicantTypeValue", this.licenseInfo.applicantTypeId);
+      this.$emit("nativeLanguageSet", this.languageID);
+      this.$emit("payrollDocumentSet", this.payrollID);
       this.$store.dispatch("newlicense/setLicense", license);
     },
     fetchApplicantType() {
@@ -491,6 +616,7 @@ export default {
         errors.education.institutionId = "Institution Required";
       if (!formData.residenceWoredaId)
         errors.residenceWoredaId = "Woreda Required";
+
       return errors;
     },
 

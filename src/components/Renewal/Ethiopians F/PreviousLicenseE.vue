@@ -186,7 +186,6 @@ export default {
     let showUpload = ref(true);
     let isImage = ref(true);
     let draftStatus = ref("");
-    let professionalDoc = ref([]);
 
     let buttons = [];
     let documentSpecs = ref([]);
@@ -205,6 +204,8 @@ export default {
     let healthExamCert = ref("");
     let cpd = ref("");
     let renewalLetter = ref("");
+    let payroll = ref("");
+    let professionalDoc = ref([]);
 
     const reset = () => {
       showUpload.value = true;
@@ -249,12 +250,13 @@ export default {
     buttons = store.getters["renewal/getButtons"];
     documentSpecs = store.getters["renewal/getDocumentSpec"];
     licenseInfo = store.getters["renewal/getLicense"];
-    professionalDoc = store.getters["newlicense/getProfessionalDocuments"];
 
     healthExamCert = store.getters["renewal/getRenewalHealthExamCert"];
     workExperience = store.getters["renewal/getRenewalWorkExperience"];
     cpd = store.getters["renewal/getRenewalCpd"];
     renewalLetter = store.getters["renewal/getRenewalLicense"];
+    payroll = store.getters["renewal/getPayroll"];
+    professionalDoc = store.getters["newlicense/getProfessionalDocuments"];
 
     const submit = () => {
       emit("changeActiveState");
@@ -371,6 +373,7 @@ export default {
               documentSpecs[6].documentType.code,
               previousLicenseFile.value
             );
+            formData.append(documentSpecs[11].documentType, payroll);
             if (professionalDoc != undefined) {
               formData.append(
                 documentSpecs[6].documentType.code,
@@ -421,7 +424,7 @@ export default {
               let formData = new FormData();
               formData.append(
                 documentSpecs[1].documentType.code,
-                letterFile.value
+                previousLicenseFile.value
               );
               let payload = { document: formData, id: licenseId };
               store
@@ -481,7 +484,7 @@ export default {
             let formData = new FormData();
             formData.append(
               documentSpecs[1].documentType.code,
-              letterFile.value
+              previousLicenseFile.value
             );
             formData.append(documentSpecs[2].documentType.code, licenseCopy);
             let payload = { document: formData, id: licenseId };

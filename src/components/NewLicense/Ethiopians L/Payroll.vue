@@ -18,7 +18,7 @@
         >
           ACCEPTED
         </h2>
-        <TitleWithIllustration illustration="User" message="COC" class="mt-8" />
+        <TitleWithIllustration illustration="Certificate" message="Payroll Document" class="mt-8" />
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
           <div class="flex justify-center">
             <div>
@@ -436,7 +436,7 @@ export default {
               let formData = new FormData();
               formData.append(
                 documentSpecs[1].documentType.code,
-                COCFile.value
+                letterFile.value
               );
               let payload = { document: formData, id: licenseId };
               store
@@ -496,7 +496,7 @@ export default {
             let formData = new FormData();
             formData.append(
               documentSpecs[1].documentType.code,
-              COCFile.value
+              letterFile.value
             );
             formData.append(documentSpecs[2].documentType.code, licenseCopy);
             let payload = { document: formData, id: licenseId };

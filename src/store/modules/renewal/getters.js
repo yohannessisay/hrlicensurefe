@@ -1,3 +1,5 @@
+import state from "../admin/state";
+
 export default {
   getLicense: (state) => state.license,
   getRenewalHealthExamCert: (state) => state.healthExamCert,
@@ -7,6 +9,7 @@ export default {
   getRenewalLicense: (state) => state.letterFromHiringInstitution,
   getProfessionalDocuments: (state) => state.professionalDocuments,
   getPreviousLicense: (state) => state.previosLicense,
+  getPayroll: (state) => state.payroll,
   getButtons: (state) => state.buttons,
   getApplicationId: (state) => state.applicationId,
   getDocumentSpec: (state) => state.documentSpec,

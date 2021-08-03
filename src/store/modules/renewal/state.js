@@ -15,6 +15,7 @@ export default {
     serviceFee: "",
     previosLicense: "",
     cpd: "",
+    payroll: "",
     buttons: [],
     applicationId: 0,
     documentSpec: [],

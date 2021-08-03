@@ -2,7 +2,14 @@
   <div class="flex justify-center">
     <div class="w-screen max-w-4xl">
       <div
-        class="flex flex-col pt-large w-full bg-white blue-box-shadow-light rounded "
+        class="
+          flex flex-col
+          pt-large
+          w-full
+          bg-white
+          blue-box-shadow-light
+          rounded
+        "
       >
         <h2
           class="flex justify-center"
@@ -40,7 +47,7 @@
                       class="photoFile"
                       ref="letterFileP"
                       v-on:change="handleFileUpload()"
-                      style="margin-bottom: 15px !important;"
+                      style="margin-bottom: 15px !important"
                     />
                     <p>
                       Drag your file(s) here to begin<br />
@@ -64,9 +71,7 @@
           </div>
         </form>
         <div v-if="buttons && !draftStatus" class="flex justify-center mb-8">
-          <button @click="submit">
-            Next
-          </button>
+          <button @click="submit">Next</button>
           <button @click="draft(buttons[1].action)" variant="outline">
             {{ buttons[1]["name"] }}
           </button>
@@ -75,9 +80,7 @@
           v-if="buttons && draftStatus == 'DRA'"
           class="flex justify-center mb-8"
         >
-          <button @click="submit">
-            Next
-          </button>
+          <button @click="submit">Next</button>
           <button @click="draft(buttons[2].action)" variant="outline">
             {{ buttons[2]["name"] }}
           </button>
@@ -93,9 +96,7 @@
           v-if="buttons && draftStatus == 'SUB'"
           class="flex justify-center mb-8"
         >
-          <button @click="submit">
-            Next
-          </button>
+          <button @click="submit">Next</button>
           <button
             class="withdraw"
             @click="withdraw(buttons[0].action)"
@@ -108,9 +109,7 @@
           v-if="buttons && draftStatus == 'USUP'"
           class="flex justify-center mb-8"
         >
-          <button @click="submit">
-            Next
-          </button>
+          <button @click="submit">Next</button>
           <button @click="draft(buttons[0].action)" variant="outline">
             {{ buttons[0]["name"] }}
           </button>
@@ -122,9 +121,7 @@
           v-if="buttons && draftStatus == 'DEC'"
           class="flex justify-center mb-8"
         >
-          <button @click="submit">
-            Next
-          </button>
+          <button @click="submit">Next</button>
           <button @click="draft(buttons[0].action)" variant="outline">
             {{ buttons[0]["name"] }}
           </button>
@@ -186,7 +183,6 @@ export default {
     let filePreview = ref("");
     let showUpload = ref(true);
     let isImage = ref(true);
-    let professionalDoc = ref([]);
 
     let draftStatus = ref("");
     let buttons = [];
@@ -206,6 +202,8 @@ export default {
     let healthExamCert = ref("");
     let cpd = ref("");
     let previousLicense = ref("");
+    let professionalDoc = ref([]);
+    let payroll = ref("");
 
     const reset = () => {
       showUpload.value = true;
@@ -229,7 +227,7 @@ export default {
       }
       reader.addEventListener(
         "load",
-        function() {
+        function () {
           showPreview.value = true;
           filePreview.value = reader.result;
         },
@@ -249,12 +247,13 @@ export default {
     buttons = store.getters["renewal/getButtons"];
     documentSpecs = store.getters["renewal/getDocumentSpec"];
     licenseInfo = store.getters["renewal/getLicense"];
-    professionalDoc = store.getters["newlicense/getProfessionalDocuments"];
 
     healthExamCert = store.getters["renewal/getRenewalHealthExamCert"];
     workExperience = store.getters["renewal/getRenewalWorkExperience"];
     cpd = store.getters["renewal/getRenewalCpd"];
     previousLicense = store.getters["renewal/getPreviousLicense"];
+    payroll = store.getters["renewal/getPayroll"];
+    professionalDoc = store.getters["newlicense/getProfessionalDocuments"];
 
     const submit = () => {
       emit("changeActiveState");
@@ -387,6 +386,7 @@ export default {
                 professionalDoc[2]
               );
             }
+            formData.append(documentSpecs[11].documentType, payroll);
             let payload = { document: formData, id: licenseId };
             store
               .dispatch("renewal/uploadDocuments", payload)
@@ -436,8 +436,8 @@ export default {
                       router.push({ path: "/menu" });
                     }, 1500);
                   } else {
-                    message.value.showErrorFlash = !message.value
-                      .showErrorFlash;
+                    message.value.showErrorFlash =
+                      !message.value.showErrorFlash;
                   }
                 })
                 .catch((err) => {});
