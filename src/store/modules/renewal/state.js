@@ -11,6 +11,7 @@ export default {
     healthExamCert: "",
     workExperience: "",
     letterFromHiringInstitution: "",
+    professionalDocuments: [],
     serviceFee: "",
     previosLicense: "",
     cpd: "",

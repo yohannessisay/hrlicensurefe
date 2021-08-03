@@ -4,9 +4,7 @@
     <div class="w-screen bg-lightBlueB-200 flex items-center justify-center">
       <div class="w-screen max-w-4xl mt-large">
         <div class="flex flex-col w-full rounded mb-large">
-          <h2
-            class="flex justify-center pb-medium"
-          >
+          <h2 class="flex justify-center pb-medium">
             Renewal
           </h2>
           <transition name="fade" mode="out-in">
@@ -52,8 +50,16 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 6">
-                <LicenseSummary
+                <ProfessionalDocuments
                   :activeState="6"
+                  @changeActiveState="activeState++"
+                />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 7">
+                <LicenseSummary
+                  :activeState="7"
                   @changeActiveState="activeState++"
                 />
               </div>
@@ -91,8 +97,16 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 7">
-                <LicenseSummary
+                <ProfessionalDocuments
                   :activeState="7"
+                  @changeActiveState="activeState++"
+                />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 8">
+                <LicenseSummary
+                  :activeState="8"
                   @changeActiveState="activeState++"
                 />
               </div>
@@ -122,8 +136,16 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 6">
-                <LicenseSummary
+                <ProfessionalDocuments
                   :activeState="6"
+                  @changeActiveState="activeState++"
+                />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 7">
+                <LicenseSummary
+                  :activeState="7"
                   @changeActiveState="activeState++"
                 />
               </div>
@@ -153,6 +175,7 @@ import CPDF from "./Foreigner/CPD";
 import PreviousLicenseE from "./Ethiopians F/PreviousLicenseE";
 import PreviousLicenseL from "./Ethiopians L/PreviousLicenseL";
 import PreviousLicenseF from "./Foreigner/PreviousLicenseF";
+import ProfessionalDocuments from "./ProfessionalDocument";
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import Spinner from "@/sharedComponents/Spinner";
@@ -193,6 +216,7 @@ export default {
     PreviousLicenseE,
     PreviousLicenseL,
     PreviousLicenseF,
+    ProfessionalDocuments,
     FlashMessage,
     ErrorFlashMessage,
     Spinner,
@@ -264,6 +288,7 @@ export default {
         .then((res) => {
           const results = res.data.data;
           this.documentSpecs = results;
+          console.log(this.documentSpecs);
           this.$store
             .dispatch("renewal/setDocumentSpecs", this.documentSpecs)
             .then((res) => {});

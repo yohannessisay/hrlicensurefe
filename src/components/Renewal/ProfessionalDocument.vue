@@ -334,15 +334,15 @@ export default {
       showDiplomaUpload: true,
       isDiplomaImage: true,
 
+      photoFileSize: "",
+      transcriptFileSize: "",
+      diplomaFileSize: "",
+
       transcriptFile: "",
       showTranscriptPreview: false,
       transcriptPreview: "",
       showTranscriptUpload: true,
       isTranscriptImage: true,
-
-      photoFileSize: "",
-      transcriptFileSize: "",
-      diplomaFileSize: "",
 
       // experienceFile: "",
       // showExperiencePreview: false,
@@ -355,18 +355,13 @@ export default {
       documentSpec: [],
       licenseInfo: "",
       userId: +localStorage.getItem("userId"),
-      passport: "",
-      healthExamCert: "",
+
       workExperience: "",
-      englishLanguage: "",
+      renewalLetter: "",
+      cpd: "",
+      previousLicense: "",
       professionalDoc: [],
-      herqa: "",
-      educationalDocs: [],
-      coc: "",
-      supportLetter: "",
-      letterfromOrg: "",
-      renewedLicense: "",
-      professionalLicense: "",
+      healthExamCert: "",
 
       declinedFields: [],
       acceptedFields: [],
@@ -392,27 +387,21 @@ export default {
   },
   computed: {
     ...mapGetters({
-      getPersonalDoc: "newlicense/getProfessionalDocuments",
-      getButtons: "newlicense/getButtons",
-      getLicense: "newlicense/getLicense",
-      getDocumentSpec: "newlicense/getDocumentSpec",
+      getPersonalDoc: "renewal/getProfessionalDocuments",
+      getButtons: "renewal/getButtons",
+      getLicense: "renewal/getLicense",
+      getDocumentSpec: "renewal/getDocumentSpec",
 
-      getPhoto: "newlicense/getPhoto",
-      getPassport: "newlicense/getPassport",
-      getHealthExamCert: "newlicense/getHealthExamCert",
-      getEnglishLanguage: "newlicense/getEnglishLanguage",
-      getHerqa: "newlicense/getHerqa",
-      getSupportLetter: "newlicense/getSupportLetter",
-      getCoc: "newlicense/getCoc",
-      getEducationalDocuments: "newlicense/getEducationalDocuments",
-      getWorkExperience: "newlicense/getWorkExperience",
-      getLetterfromOrg: "newlicense/getLetterfromOrg",
-      getRenewedLicense: "newlicense/getRenewedLicense",
-      getProfessionalLicense: "newlicense/getProfessionalLicense",
-      getDraftData: "newlicense/getDraft",
-      getDeclinedFields: "newlicense/getDeclinedFields",
-      getAcceptedFields: "newlicense/getAcceptedFields",
-      getRemarK: "newlicense/getRemark",
+      getWorkExperience: "renewal/getRenewalWorkExperience",
+      getRenewalLetter: "renewal/getRenewalLicense",
+      getcpd: "renewal/getRenewalCpd",
+      getPreviousLicense: "renewal/getPreviousLicense",
+      getHealthExamCert: "renewal/getRenewalHealthExamCert",
+
+      getDraftData: "renewal/getDraft",
+      getDeclinedFields: "renewal/getDeclinedFields",
+      getAcceptedFields: "renewal/getAcceptedFields",
+      getRemarK: "renewal/getRemark",
     }),
   },
   created() {
@@ -472,19 +461,12 @@ export default {
     this.license = this.getLicense;
     this.buttons = this.getButtons;
     this.documentSpec = this.getDocumentSpec;
-
-    this.passport = this.getPassport;
-    this.healthExamCert = this.getHealthExamCert;
-    this.englishLanguage = this.getEnglishLanguage;
-    this.professionalDoc = this.getProfessionalDocuments;
-    this.herqa = this.getHerqa;
-    this.supportLetter = this.getSupportLetter;
-    this.coc = this.getCoc;
-    this.educationalDocs = this.getEducationalDocuments;
     this.workExperience = this.getWorkExperience;
-    this.letterfromOrg = this.getLetterfromOrg;
-    this.renewedLicense = this.getRenewedLicense;
-    this.professionalLicense = this.getProfessionalLicense;
+    this.cpd = this.getcpd;
+    this.healthExamCert = this.getHealthExamCert;
+    this.previousLicense = this.getPreviousLicense;
+    this.renewalLetter = this.getRenewalLetter;
+    this.professionalDoc = this.getProfessionalDocuments;
   },
   methods: {
     ...mapActions(["setProfessionalDoc"]),
@@ -521,7 +503,6 @@ export default {
       this.showUpload = false;
       this.photoFile = this.$refs.photoFile.files[0];
       let reader = new FileReader();
-
       let fileS = this.photoFile.size;
       if (fileS > 0 && fileS < 1000) {
         this.photoFileSize = fileS + " " + "B";
@@ -553,7 +534,6 @@ export default {
       this.showDiplomaUpload = false;
       this.diplomaFile = this.$refs.diplomaFile.files[0];
       let reader = new FileReader();
-
       let fileS = this.diplomaFile.size;
       if (fileS > 0 && fileS < 1000) {
         this.diplomaFileSize += "B";
@@ -586,7 +566,6 @@ export default {
       this.showTranscriptUpload = false;
       this.transcriptFile = this.$refs.transcriptFile.files[0];
       let reader = new FileReader();
-
       let fileS = this.transcriptFile.size;
       if (fileS > 0 && fileS < 1000) {
         this.transcriptFileSize += "B";
@@ -641,7 +620,7 @@ export default {
     submit() {
       this.$emit("changeActiveState");
       let file = [this.photoFile, this.diplomaFile, this.transcriptFile];
-      this.$store.dispatch("newlicense/setProfessionalDoc", file);
+      this.$store.dispatch("renewal/setProfessionalDoc", file);
     },
     draft(action) {
       this.showLoading = true;
@@ -657,19 +636,17 @@ export default {
             licenseId: this.getDraftData.id,
             draftData: draftObj,
           };
-          this.$store
-            .dispatch("newlicense/updateDraft", payload)
-            .then((res) => {
-              if (res.data.status == "Success") {
-                this.showFlash = true;
-                setTimeout(() => {
-                  this.$router.push({ path: "/menu" });
-                }, 1500);
-                this.showLoading = false;
-              } else {
-                this.showErrorFlash = true;
-              }
-            });
+          this.$store.dispatch("renewal/updateDraft", payload).then((res) => {
+            if (res.data.status == "Success") {
+              this.showFlash = true;
+              setTimeout(() => {
+                this.$router.push({ path: "/menu" });
+              }, 1500);
+              this.showLoading = false;
+            } else {
+              this.showErrorFlash = true;
+            }
+          });
         }
       } else {
         let license = {
@@ -686,89 +663,44 @@ export default {
           },
         };
         this.$store
-          .dispatch("newlicense/addNewLicense", license)
+          .dispatch("renewal/addRenewalLicense", license)
           .then((res) => {
             let licenseId = res.data.data.id;
             let formData = new FormData();
+
             formData.append(
               this.documentSpec[1].documentType.code,
-              this.passport
+              this.letter
             );
             formData.append(
               this.documentSpec[2].documentType.code,
               this.healthExamCert
             );
 
+            formData.append(this.documentSpec[4].documentType.code, this.cpd);
             formData.append(
-              this.documentSpec[4].documentType.code,
+              this.documentSpec[5].documentType.code,
               this.workExperience
             );
             formData.append(
-              this.documentSpec[5].documentType.code,
-              this.englishLanguage
-            );
-
-            formData.append(
               this.documentSpec[6].documentType.code,
-              this.photoFile
-            );
-            formData.append(
-              this.documentSpec[7].documentType.code,
-              this.diplomaFile
+              this.previousLicense
             );
             formData.append(
               this.documentSpec[8].documentType.code,
+              this.photoFile
+            );
+            formData.append(
+              this.documentSpec[9].documentType.code,
+              this.diplomaFile
+            );
+            formData.append(
+              this.documentSpec[10].documentType.code,
               this.transcriptFile
             );
-
-            formData.append(this.documentSpec[9].documentType.code, this.coc);
-            if (this.educationalDocs != undefined) {
-              formData.append(
-                this.documentSpec[10].documentType.code,
-                this.educationalDocs[0]
-              );
-              formData.append(
-                this.documentSpec[11].documentType.code,
-                this.educationalDocs[1]
-              );
-              formData.append(
-                this.documentSpec[12].documentType.code,
-                this.educationalDocs[2]
-              );
-              formData.append(
-                this.documentSpec[13].documentType.code,
-                this.educationalDocs[3]
-              );
-              formData.append(
-                this.documentSpec[14].documentType.code,
-                this.educationalDocs[4]
-              );
-            }
-
-            formData.append(
-              this.documentSpec[15].documentType.code,
-              this.supportLetter
-            );
-            formData.append(
-              this.documentSpec[16].documentType.code,
-              this.herqa
-            );
-            formData.append(
-              this.documentSpec[17].documentType.code,
-              this.letterfromOrg
-            );
-            formData.append(
-              this.documentSpec[18].documentType.code,
-              this.renewedLicense
-            );
-            formData.append(
-              this.documentSpec[19].documentType.code,
-              this.professionalLicense
-            );
-
             let payload = { document: formData, id: licenseId };
             this.$store
-              .dispatch("newlicense/uploadDocuments", payload)
+              .dispatch("renewal/uploadDocuments", payload)
               .then((res) => {
                 if (res) {
                   this.showFlash = true;
@@ -794,7 +726,7 @@ export default {
         licenseId: this.getDraftData.id,
         withdrawData: withdrawObj,
       };
-      this.$store.dispatch("newlicense/withdraw", payload).then((res) => {
+      this.$store.dispatch("renewal/withdraw", payload).then((res) => {
         if (res) {
           this.showFlash = true;
           this.showLoading = false;

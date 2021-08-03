@@ -1,6 +1,6 @@
 <template>
   <div class="flex justify-center">
-    <div class="w-screen max-w-full">
+    <div>
       <div
         class="flex flex-col pt-large w-full bg-white blue-box-shadow-light rounded "
       >
@@ -10,257 +10,288 @@
           class="mt-8"
         />
 
-        <div class="flex-row justify-center px-8 py-4">
-          <h2
-            class="flex justify-center"
-            v-if="this.declinedFieldsCheck1"
-            style="color: #e63636"
-          >
-            REJECTED
-          </h2>
-          <h2
-            class="flex justify-center"
-            v-if="this.acceptedFieldsCheck1"
-            style="color: Green"
-          >
-            ACCEPTED
-          </h2>
-          <div class="ml-4" style="width:250px">
-            <span v-if="showCertificate1Upload">
-              <label class="text-primary-700 text-lg"
-                >Upload 8th Grade Certificate:
-                <div class="dropbox">
-                  <input
-                    type="file"
-                    id="certificateFile1"
-                    ref="certificateFile1"
-                    v-on:change="handleCertificate1Upload()"
-                    style="margin-bottom: 15px !important;"
-                  />
-                  <p>
-                    Drag your file(s) here to begin<br />
-                    or click to browse
-                  </p>
-                </div>
-              </label>
-            </span>
+        <div class="flex flex-row justify-center px-8 py-4">
+          <div>
+            <h2
+              class="flex justify-center"
+              v-if="this.declinedFieldsCheck1"
+              style="color: #e63636"
+            >
+              REJECTED
+            </h2>
+            <h2
+              class="flex justify-center"
+              v-if="this.acceptedFieldsCheck1"
+              style="color: Green"
+            >
+              ACCEPTED
+            </h2>
+            <div class="ml-4" style="width:250px">
+              <span>
+                <h2>{{ this.certificateFile1.name }}</h2>
+                <h2>{{ this.certificate1Size }}</h2>
+              </span>
+              <span v-if="showCertificate1Upload">
+                <label class="text-primary-700 text-lg"
+                  >Upload 8th Grade Certificate:
+                  <div class="dropbox">
+                    <input
+                      type="file"
+                      id="certificateFile1"
+                      ref="certificateFile1"
+                      v-on:change="handleCertificate1Upload()"
+                      style="margin-bottom: 15px !important;"
+                    />
+                    <p>
+                      Drag your file(s) here to begin<br />
+                      or click to browse
+                    </p>
+                  </div>
+                </label>
+              </span>
 
-            <picture v-if="!showCertificate1Upload && isCertificate1">
-              <p>
-                <a href="javascript:void(0)" @click="resetCert1()"
-                  >Upload again</a
-                >
-              </p>
-              <img
-                v-bind:src="certificate1Preview"
-                v-show="showCertificate1Preview"
-              />
-            </picture>
+              <picture v-if="!showCertificate1Upload && isCertificate1">
+                <p>
+                  <a href="javascript:void(0)" @click="resetCert1()"
+                    >Upload again</a
+                  >
+                </p>
+                <img
+                  v-bind:src="certificate1Preview"
+                  v-show="showCertificate1Preview"
+                />
+              </picture>
 
-            <span v-if="!showCertificate1Upload && !isCertificate1">
-              <img :src="certificate1Preview" alt="" class="preview" />
-            </span>
+              <span v-if="!showCertificate1Upload && !isCertificate1">
+                <img :src="certificate1Preview" alt="" class="preview" />
+              </span>
+            </div>
           </div>
-          <h2
-            class="flex justify-center"
-            v-if="this.declinedFieldsCheck2"
-            style="color: #e63636"
-          >
-            REJECTED
-          </h2>
-          <h2
-            class="flex justify-center"
-            v-if="this.acceptedFieldsCheck2"
-            style="color: Green"
-          >
-            ACCEPTED
-          </h2>
-          <div class="ml-4" style="width:250px">
-            <span v-if="showCertificate2Upload">
-              <label class="text-primary-700 text-lg"
-                >Upload 10th Grade Certificate:
-                <div class="dropbox">
-                  <input
-                    type="file"
-                    id="certificateFile2"
-                    ref="certificateFile2"
-                    v-on:change="handleCertificate2Upload()"
-                    style="margin-bottom: 15px !important;"
-                  />
-                  <p>
-                    Drag your file(s) here to begin<br />
-                    or click to browse
-                  </p>
-                </div>
-              </label>
-            </span>
+          <div>
+            <h2
+              class="flex justify-center"
+              v-if="this.declinedFieldsCheck2"
+              style="color: #e63636"
+            >
+              REJECTED
+            </h2>
+            <h2
+              class="flex justify-center"
+              v-if="this.acceptedFieldsCheck2"
+              style="color: Green"
+            >
+              ACCEPTED
+            </h2>
+            <div class="ml-4" style="width:250px">
+              <span>
+                <h2>{{ this.certificateFile2.name }}</h2>
+                <h2>{{ this.certificate2Size }}</h2>
+              </span>
+              <span v-if="showCertificate2Upload">
+                <label class="text-primary-700 text-lg"
+                  >Upload 10th Grade Certificate:
+                  <div class="dropbox">
+                    <input
+                      type="file"
+                      id="certificateFile2"
+                      ref="certificateFile2"
+                      v-on:change="handleCertificate2Upload()"
+                      style="margin-bottom: 15px !important;"
+                    />
+                    <p>
+                      Drag your file(s) here to begin<br />
+                      or click to browse
+                    </p>
+                  </div>
+                </label>
+              </span>
 
-            <picture v-if="!showCertificate2Upload && isCertificate2">
-              <p>
-                <a href="javascript:void(0)" @click="resetCert2()"
-                  >Upload again</a
-                >
-              </p>
-              <img
-                v-bind:src="certificate2Preview"
-                v-show="showCertificate2Preview"
-              />
-            </picture>
+              <picture v-if="!showCertificate2Upload && isCertificate2">
+                <p>
+                  <a href="javascript:void(0)" @click="resetCert2()"
+                    >Upload again</a
+                  >
+                </p>
+                <img
+                  v-bind:src="certificate2Preview"
+                  v-show="showCertificate2Preview"
+                />
+              </picture>
 
-            <span v-if="!showCertificate2Upload && !isCertificate2">
-              <img :src="certificate2Preview" alt="" class="preview" />
-            </span>
+              <span v-if="!showCertificate2Upload && !isCertificate2">
+                <img :src="certificate2Preview" alt="" class="preview" />
+              </span>
+            </div>
           </div>
-          <h2
-            class="flex justify-center"
-            v-if="this.declinedFieldsCheck3"
-            style="color: #e63636"
-          >
-            REJECTED
-          </h2>
-          <h2
-            class="flex justify-center"
-            v-if="this.acceptedFieldsCheck3"
-            style="color: Green"
-          >
-            ACCEPTED
-          </h2>
+          <div>
+            <h2
+              class="flex justify-center"
+              v-if="this.declinedFieldsCheck3"
+              style="color: #e63636"
+            >
+              REJECTED
+            </h2>
+            <h2
+              class="flex justify-center"
+              v-if="this.acceptedFieldsCheck3"
+              style="color: Green"
+            >
+              ACCEPTED
+            </h2>
 
-          <div class="ml-4" style="width:250px">
-            <span v-if="showCertificate3Upload">
-              <label class="text-primary-700 text-lg"
-                >Upload 12th Grade Certificate:
-                <div class="dropbox">
-                  <input
-                    type="file"
-                    id="certificateFile3"
-                    ref="certificateFile3"
-                    v-on:change="handleCertificate3Upload()"
-                    style="margin-bottom: 15px !important;"
-                  />
-                  <p>
-                    Drag your file(s) here to begin<br />
-                    or click to browse
-                  </p>
-                </div>
-              </label>
-            </span>
+            <div class="ml-4" style="width:250px">
+              <span>
+                <h2>{{ this.certificateFile3.name }}</h2>
+                <h2>{{ this.certificate3Size }}</h2>
+              </span>
+              <span v-if="showCertificate3Upload">
+                <label class="text-primary-700 text-lg"
+                  >Upload 12th Grade Certificate:
+                  <div class="dropbox">
+                    <input
+                      type="file"
+                      id="certificateFile3"
+                      ref="certificateFile3"
+                      v-on:change="handleCertificate3Upload()"
+                      style="margin-bottom: 15px !important;"
+                    />
+                    <p>
+                      Drag your file(s) here to begin<br />
+                      or click to browse
+                    </p>
+                  </div>
+                </label>
+              </span>
 
-            <picture v-if="!showCertificate3Upload && isCertificate3">
-              <p>
-                <a href="javascript:void(0)" @click="resetCert3()"
-                  >Upload again</a
-                >
-              </p>
-              <img
-                v-bind:src="certificate3Preview"
-                v-show="showCertificate3Preview"
-              />
-            </picture>
+              <picture v-if="!showCertificate3Upload && isCertificate3">
+                <p>
+                  <a href="javascript:void(0)" @click="resetCert3()"
+                    >Upload again</a
+                  >
+                </p>
+                <img
+                  v-bind:src="certificate3Preview"
+                  v-show="showCertificate3Preview"
+                />
+              </picture>
 
-            <span v-if="!showCertificate3Upload && !isCertificate3">
-              <img :src="certificate3Preview" alt="" class="preview" />
-            </span>
+              <span v-if="!showCertificate3Upload && !isCertificate3">
+                <img :src="certificate3Preview" alt="" class="preview" />
+              </span>
+            </div>
           </div>
-          <h2
-            class="flex justify-center"
-            v-if="this.declinedFieldsCheck4"
-            style="color: #e63636"
-          >
-            REJECTED
-          </h2>
-          <h2
-            class="flex justify-center"
-            v-if="this.acceptedFieldsCheck4"
-            style="color: Green"
-          >
-            ACCEPTED
-          </h2>
-          <div class="ml-4" style="width:250px">
-            <span v-if="showCertificate4Upload">
-              <label class="text-primary-700 text-lg"
-                >Upload Transcript 9-10:
-                <div class="dropbox">
-                  <input
-                    type="file"
-                    id="certificateFile4"
-                    ref="certificateFile4"
-                    v-on:change="handleCertificate4Upload()"
-                    style="margin-bottom: 15px !important;"
-                  />
-                  <p>
-                    Drag your file(s) here to begin<br />
-                    or click to browse
-                  </p>
-                </div>
-              </label>
-            </span>
 
-            <picture v-if="!showCertificate4Upload && isCertificate4">
-              <p>
-                <a href="javascript:void(0)" @click="resetCert4()"
-                  >Upload again</a
-                >
-              </p>
-              <img
-                v-bind:src="certificate4Preview"
-                v-show="showCertificate4Preview"
-              />
-            </picture>
+          <div>
+            <h2
+              class="flex justify-center"
+              v-if="this.declinedFieldsCheck4"
+              style="color: #e63636"
+            >
+              REJECTED
+            </h2>
+            <h2
+              class="flex justify-center"
+              v-if="this.acceptedFieldsCheck4"
+              style="color: Green"
+            >
+              ACCEPTED
+            </h2>
+            <div class="ml-4" style="width:250px">
+              <span>
+                <h2>{{ this.certificateFile4.name }}</h2>
+                <h2>{{ this.certificate4Size }}</h2>
+              </span>
+              <span v-if="showCertificate4Upload">
+                <label class="text-primary-700 text-lg"
+                  >Upload Transcript 9-10:
+                  <div class="dropbox">
+                    <input
+                      type="file"
+                      id="certificateFile4"
+                      ref="certificateFile4"
+                      v-on:change="handleCertificate4Upload()"
+                      style="margin-bottom: 15px !important;"
+                    />
+                    <p>
+                      Drag your file(s) here to begin<br />
+                      or click to browse
+                    </p>
+                  </div>
+                </label>
+              </span>
 
-            <span v-if="!showCertificate4Upload && !isCertificate4">
-              <img :src="certificate4Preview" alt="" class="preview" />
-            </span>
+              <picture v-if="!showCertificate4Upload && isCertificate4">
+                <p>
+                  <a href="javascript:void(0)" @click="resetCert4()"
+                    >Upload again</a
+                  >
+                </p>
+                <img
+                  v-bind:src="certificate4Preview"
+                  v-show="showCertificate4Preview"
+                />
+              </picture>
+
+              <span v-if="!showCertificate4Upload && !isCertificate4">
+                <img :src="certificate4Preview" alt="" class="preview" />
+              </span>
+            </div>
           </div>
-          <h2
-            class="flex justify-center"
-            v-if="this.declinedFieldsCheck5"
-            style="color: #e63636"
-          >
-            REJECTED
-          </h2>
-          <h2
-            class="flex justify-center"
-            v-if="this.acceptedFieldsCheck5"
-            style="color: Green"
-          >
-            ACCEPTED
-          </h2>
-          <div class="ml-4" style="width:250px">
-            <span v-if="showCertificate5Upload">
-              <label class="text-primary-700 text-lg"
-                >Upload Transcript 11-12:
-                <div class="dropbox">
-                  <input
-                    type="file"
-                    id="certificateFile5"
-                    ref="certificateFile5"
-                    v-on:change="handleCertificate5Upload()"
-                    style="margin-bottom: 15px !important;"
-                  />
-                  <p>
-                    Drag your file(s) here to begin<br />
-                    or click to browse
-                  </p>
-                </div>
-              </label>
-            </span>
+          <div>
+            <h2
+              class="flex justify-center"
+              v-if="this.declinedFieldsCheck5"
+              style="color: #e63636"
+            >
+              REJECTED
+            </h2>
+            <h2
+              class="flex justify-center"
+              v-if="this.acceptedFieldsCheck5"
+              style="color: Green"
+            >
+              ACCEPTED
+            </h2>
+            <div class="ml-4" style="width:250px">
+              <span>
+                <h2>{{ this.certificateFile5.name }}</h2>
+                <h2>{{ this.certificate5Size }}</h2>
+              </span>
+              <span v-if="showCertificate5Upload">
+                <label class="text-primary-700 text-lg"
+                  >Upload Transcript 11-12:
+                  <div class="dropbox">
+                    <input
+                      type="file"
+                      id="certificateFile5"
+                      ref="certificateFile5"
+                      v-on:change="handleCertificate5Upload()"
+                      style="margin-bottom: 15px !important;"
+                    />
+                    <p>
+                      Drag your file(s) here to begin<br />
+                      or click to browse
+                    </p>
+                  </div>
+                </label>
+              </span>
 
-            <picture v-if="!showCertificate5Upload && isCertificate5">
-              <p>
-                <a href="javascript:void(0)" @click="resetCert5()"
-                  >Upload again</a
-                >
-              </p>
-              <img
-                v-bind:src="certificate5Preview"
-                v-show="showCertificate5Preview"
-              />
-            </picture>
+              <picture v-if="!showCertificate5Upload && isCertificate5">
+                <p>
+                  <a href="javascript:void(0)" @click="resetCert5()"
+                    >Upload again</a
+                  >
+                </p>
+                <img
+                  v-bind:src="certificate5Preview"
+                  v-show="showCertificate5Preview"
+                />
+              </picture>
 
-            <span v-if="!showCertificate5Upload && !isCertificate5">
-              <img :src="certificate5Preview" alt="" class="preview" />
-            </span>
+              <span v-if="!showCertificate5Upload && !isCertificate5">
+                <img :src="certificate5Preview" alt="" class="preview" />
+              </span>
+            </div>
           </div>
         </div>
         <div v-if="this.draftStatus == 'DRA' || !this.draftStatus">
@@ -444,6 +475,12 @@ export default {
       showFlash: false,
       showErrorFlash: false,
       showLoading: false,
+
+      certificate1Size: "",
+      certificate2Size: "",
+      certificate3Size: "",
+      certificate4Size: "",
+      certificate5Size: "",
     };
   },
   computed: {
@@ -607,6 +644,14 @@ export default {
       this.showCertificate1Upload = false;
       this.certificateFile1 = this.$refs.certificateFile1.files[0];
       let reader = new FileReader();
+      let fileS = this.certificateFile1.size;
+      if (fileS > 0 && fileS < 1000) {
+        this.certificate1Size = fileS + " " + "B";
+      } else if (fileS > 1000 && fileS < 1000000) {
+        this.certificate1Size = fileS / 1000 + "kB";
+      } else {
+        this.certificate1Size = fileS / 1000000 + "MB";
+      }
 
       reader.addEventListener(
         "load",
@@ -632,6 +677,14 @@ export default {
       this.showCertificate2Upload = false;
       this.certificateFile2 = this.$refs.certificateFile2.files[0];
       let reader = new FileReader();
+      let fileS = this.certificateFile2.size;
+      if (fileS > 0 && fileS < 1000) {
+        this.certificate2Size = fileS + " " + "B";
+      } else if (fileS > 1000 && fileS < 1000000) {
+        this.certificate2Size = fileS / 1000 + "kB";
+      } else {
+        this.certificate2Size = fileS / 1000000 + "MB";
+      }
 
       reader.addEventListener(
         "load",
@@ -657,7 +710,14 @@ export default {
       this.showCertificate3Upload = false;
       this.certificateFile3 = this.$refs.certificateFile3.files[0];
       let reader = new FileReader();
-
+      let fileS = this.certificateFile3.size;
+      if (fileS > 0 && fileS < 1000) {
+        this.certificate3Size = fileS + " " + "B";
+      } else if (fileS > 1000 && fileS < 1000000) {
+        this.certificate3Size = fileS / 1000 + "kB";
+      } else {
+        this.certificate3Size = fileS / 1000000 + "MB";
+      }
       reader.addEventListener(
         "load",
         function() {
@@ -682,7 +742,14 @@ export default {
       this.showCertificate4Upload = false;
       this.certificateFile4 = this.$refs.certificateFile4.files[0];
       let reader = new FileReader();
-
+      let fileS = this.certificateFile4.size;
+      if (fileS > 0 && fileS < 1000) {
+        this.certificate4Size = fileS + " " + "B";
+      } else if (fileS > 1000 && fileS < 1000000) {
+        this.certificate4Size = fileS / 1000 + "kB";
+      } else {
+        this.certificate4Size = fileS / 1000000 + "MB";
+      }
       reader.addEventListener(
         "load",
         function() {
@@ -706,7 +773,14 @@ export default {
       this.showCertificate5Upload = false;
       this.certificateFile5 = this.$refs.certificateFile5.files[0];
       let reader = new FileReader();
-
+      let fileS = this.certificateFile5.size;
+      if (fileS > 0 && fileS < 1000) {
+        this.certificate5Size = fileS + " " + "B";
+      } else if (fileS > 1000 && fileS < 1000000) {
+        this.certificate5Size = fileS / 1000 + "kB";
+      } else {
+        this.certificate5Size = fileS / 1000000 + "MB";
+      }
       reader.addEventListener(
         "load",
         function() {
@@ -783,7 +857,6 @@ export default {
             },
             residenceWoredaId: this.license.residenceWoredaId,
             professionalTypeId: this.licenseInfo.professionalTypeId,
-
           },
         };
         this.$store
@@ -910,6 +983,9 @@ export default {
 };
 </script>
 <style>
+#main {
+  width: auto;
+}
 img {
   width: 250px;
   height: 250px;
