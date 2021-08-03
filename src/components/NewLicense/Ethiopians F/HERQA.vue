@@ -50,14 +50,16 @@
                 </label>
               </span>
 
-              <picture v-if="!showUpload && isImage">
+              <!-- <picture v-if="!showUpload && isImage">
                 <p>
                   <a href="javascript:void(0)" @click="reset()">Upload again</a>
                 </p>
                 <img v-bind:src="filePreview" v-show="showPreview" />
-              </picture>
-
-              <span v-if="!showUpload && !isImage">
+              </picture> -->
+              <div v-if="isPdf  ">
+                <embed v-bind:src="filePreview" v-show="showPreview"  />
+              </div>
+              <span v-if="!showUpload && !isImage && !isPdf">
                 <img :src="filePreview" alt="" class="preview" />
               </span>
             </div>
@@ -168,7 +170,7 @@ export default {
     const route = useRoute();
     const router = useRouter();
 
-    const basePath = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/";
+    const basePath = "https://storage.googleapis.com/hris-lisence-dev/";
 
     let message = ref({
       showFlash: false,
@@ -185,6 +187,7 @@ export default {
     let filePreview = ref("");
     let showUpload = ref(true);
     let isImage = ref(false);
+    let isPdf = ref(false);
     let buttons = [];
     let documentSpecs = ref([]);
     let userId = +localStorage.getItem("userId");
@@ -223,6 +226,7 @@ export default {
       dataChanged.value = true;
       showUpload.value = false;
       herqaFile.value = herqaFileP.value.files[0];
+      console.log(herqaFile.value.type)
       let reader = new FileReader();
       isImage.value = true;
       let fileS = herqaFile.value.size;
@@ -248,7 +252,8 @@ export default {
           reader.readAsDataURL(herqaFile.value);
         } else if (/\.(pdf)$/i.test(herqaFile.value.name)) {
           isImage.value = false;
-          reader.readAsText(herqaFile.value);
+          isPdf.value=true;
+          reader.readAsDataURL(herqaFile.value);
         }
       }
     };
@@ -566,9 +571,11 @@ export default {
           if (draftData.documents[i].documentTypeCode == "HERQA") {
             showUpload.value = false;
             isImage.value = true;
+            isPdf.value=true;
             herqaFile.value = draftData.documents[i];
             showPreview.value = true;
             filePreview.value = basePath + draftData.documents[i].filePath;
+            console.log(filePreview.value);
           }
         }
       }
@@ -598,6 +605,7 @@ export default {
       remark,
       declinedFieldsCheck,
       acceptedFieldsCheck,
+      isPdf,
     };
   },
 };
