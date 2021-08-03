@@ -439,7 +439,7 @@ export default {
               let formData = new FormData();
               formData.append(
                 documentSpecs[1].documentType.code,
-                letterFile.value
+                languageFile.value
               );
               let payload = { document: formData, id: licenseId };
               store
@@ -499,7 +499,7 @@ export default {
             let formData = new FormData();
             formData.append(
               documentSpecs[1].documentType.code,
-              letterFile.value
+              languageFile.value
             );
             formData.append(documentSpecs[2].documentType.code, licenseCopy);
             let payload = { document: formData, id: licenseId };
