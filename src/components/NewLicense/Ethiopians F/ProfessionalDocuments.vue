@@ -9,162 +9,169 @@
           message="Professional Documents"
           class="mt-8"
         />
-        <div class="flex-row justify-center px-8 py-4">
-          <h2
-            class="flex"
-            v-if="this.declinedFieldsCheck1"
-            style="color: #e63636"
-          >
-            REJECTED
-          </h2>
-          <h2
-            class="flex"
-            v-if="this.acceptedFieldsCheck1"
-            style="color: Green"
-          >
-            ACCEPTED
-          </h2>
-          <div class="ml-4" style="width:250px">
-            <span>
-              <h2>{{ this.photoFile.name }}</h2>
-              <h2>{{ this.photoFileSize }}</h2>
-            </span>
-            <span v-if="showUpload">
-              <label class="text-primary-700 text-lg"
-                >Professional Document:
-                <div class="dropbox">
-                  <input
-                    type="file"
-                    id="photoFile"
-                    ref="photoFile"
-                    v-on:change="handleCertificateUpload()"
-                    style="margin-bottom: 15px !important;"
-                  />
-                  <p>
-                    Drag your file(s) here to begin<br />
-                    or click to browse
-                  </p>
-                </div>
-              </label>
-            </span>
+        <div class="flex flex-row justify-center px-8 py-4">
+          <div>
+            <h2
+              class="flex"
+              v-if="this.declinedFieldsCheck1"
+              style="color: #e63636"
+            >
+              REJECTED
+            </h2>
+            <h2
+              class="flex"
+              v-if="this.acceptedFieldsCheck1"
+              style="color: Green"
+            >
+              ACCEPTED
+            </h2>
+            <div class="ml-4" style="width:250px">
+              <span>
+                <h2>{{ this.photoFile.name }}</h2>
+                <h2>{{ this.photoFileSize }}</h2>
+              </span>
+              <span v-if="showUpload">
+                <label class="text-primary-700 text-lg"
+                  >Professional Document:
+                  <div class="dropbox">
+                    <input
+                      type="file"
+                      id="photoFile"
+                      ref="photoFile"
+                      v-on:change="handleCertificateUpload()"
+                      style="margin-bottom: 15px !important;"
+                    />
+                    <p>
+                      Drag your file(s) here to begin<br />
+                      or click to browse
+                    </p>
+                  </div>
+                </label>
+              </span>
 
-            <picture v-if="!showUpload && isImage">
-              <p>
-                <a href="javascript:void(0)" @click="reset()">Upload again</a>
-              </p>
-              <img v-bind:src="filePreview" v-show="showPreview" />
-            </picture>
+              <picture v-if="!showUpload && isImage">
+                <p>
+                  <a href="javascript:void(0)" @click="reset()">Upload again</a>
+                </p>
+                <img v-bind:src="filePreview" v-show="showPreview" />
+              </picture>
 
-            <span v-if="!showUpload && !isImage">
-              <img :src="filePreview" alt="" class="preview" />
-            </span>
+              <span v-if="!showUpload && !isImage">
+                <img :src="filePreview" alt="" class="preview" />
+              </span>
+            </div>
           </div>
-          <h2
-            class="flex"
-            v-if="this.declinedFieldsCheck2"
-            style="color: #e63636"
-          >
-            REJECTED
-          </h2>
-          <h2
-            class="flex"
-            v-if="this.acceptedFieldsCheck2"
-            style="color: Green"
-          >
-            ACCEPTED
-          </h2>
+          <div>
+            <h2
+              class="flex"
+              v-if="this.declinedFieldsCheck2"
+              style="color: #e63636"
+            >
+              REJECTED
+            </h2>
+            <h2
+              class="flex"
+              v-if="this.acceptedFieldsCheck2"
+              style="color: Green"
+            >
+              ACCEPTED
+            </h2>
 
-          <div class="ml-4" style="width:250px">
-            <span>
-              <h2>{{ this.diplomaFile.name }}</h2>
-              <h2>{{ this.diplomaFileSize }}</h2>
-            </span>
-            <span v-if="showDiplomaUpload">
-              <label class="text-primary-700 text-lg"
-                >Upload Diploma:
-                <div class="dropbox">
-                  <input
-                    type="file"
-                    id="diplomaFile"
-                    ref="diplomaFile"
-                    v-on:change="handleDiplomaUpload()"
-                    style="margin-bottom: 15px !important;"
-                  />
-                  <p>
-                    Drag your file(s) here to begin<br />
-                    or click to browse
-                  </p>
-                </div>
-              </label>
-            </span>
+            <div class="ml-4" style="width:250px">
+              <span>
+                <h2>{{ this.diplomaFile.name }}</h2>
+                <h2>{{ this.diplomaFileSize }}</h2>
+              </span>
+              <span v-if="showDiplomaUpload">
+                <label class="text-primary-700 text-lg"
+                  >Upload Diploma:
+                  <div class="dropbox">
+                    <input
+                      type="file"
+                      id="diplomaFile"
+                      ref="diplomaFile"
+                      v-on:change="handleDiplomaUpload()"
+                      style="margin-bottom: 15px !important;"
+                    />
+                    <p>
+                      Drag your file(s) here to begin<br />
+                      or click to browse
+                    </p>
+                  </div>
+                </label>
+              </span>
 
-            <picture v-if="!showDiplomaUpload && isDiplomaImage">
-              <p>
-                <a href="javascript:void(0)" @click="resetDiploma()"
-                  >Upload again</a
-                >
-              </p>
-              <img v-bind:src="diplomaPreview" v-show="showDiplomaPreview" />
-            </picture>
+              <picture v-if="!showDiplomaUpload && isDiplomaImage">
+                <p>
+                  <a href="javascript:void(0)" @click="resetDiploma()"
+                    >Upload again</a
+                  >
+                </p>
+                <img v-bind:src="diplomaPreview" v-show="showDiplomaPreview" />
+              </picture>
 
-            <span v-if="!showDiplomaUpload && !isDiplomaImage">
-              <img :src="diplomaPreview" alt="" class="preview" />
-            </span>
+              <span v-if="!showDiplomaUpload && !isDiplomaImage">
+                <img :src="diplomaPreview" alt="" class="preview" />
+              </span>
+            </div>
           </div>
-          <h2
-            class="flex"
-            v-if="this.declinedFieldsCheck3"
-            style="color: #e63636"
-          >
-            REJECTED
-          </h2>
-          <h2
-            class="flex"
-            v-if="this.acceptedFieldsCheck3"
-            style="color: Green"
-          >
-            ACCEPTED
-          </h2>
-          <div class="ml-4" style="width:250px">
-            <span>
-              <h2>{{ this.transcriptFile.name }}</h2>
-              <h2>{{ this.transcriptFileSize }}</h2>
-            </span>
-            <span v-if="showTranscriptUpload">
-              <label class="text-primary-700 text-lg"
-                >Upload Transcript:
-                <div class="dropbox">
-                  <input
-                    type="file"
-                    id="transcriptFile"
-                    ref="transcriptFile"
-                    v-on:change="handleTranscriptUpload()"
-                    style="margin-bottom: 15px !important;"
-                  />
-                  <p>
-                    Drag your file(s) here to begin<br />
-                    or click to browse
-                  </p>
-                </div>
-              </label>
-            </span>
+          <div>
+            <h2
+              class="flex"
+              v-if="this.declinedFieldsCheck3"
+              style="color: #e63636"
+            >
+              REJECTED
+            </h2>
+            <h2
+              class="flex"
+              v-if="this.acceptedFieldsCheck3"
+              style="color: Green"
+            >
+              ACCEPTED
+            </h2>
+            <div class="ml-4" style="width:250px">
+              <span>
+                <h2>{{ this.transcriptFile.name }}</h2>
+                <h2>{{ this.transcriptFileSize }}</h2>
+              </span>
+              <span v-if="showTranscriptUpload">
+                <label class="text-primary-700 text-lg"
+                  >Upload Transcript:
+                  <div class="dropbox">
+                    <input
+                      type="file"
+                      id="transcriptFile"
+                      ref="transcriptFile"
+                      v-on:change="handleTranscriptUpload()"
+                      style="margin-bottom: 15px !important;"
+                    />
+                    <p>
+                      Drag your file(s) here to begin<br />
+                      or click to browse
+                    </p>
+                  </div>
+                </label>
+              </span>
 
-            <picture v-if="!showTranscriptUpload && isTranscriptImage">
-              <p>
-                <a href="javascript:void(0)" @click="resetTranscript()"
-                  >Upload again</a
-                >
-              </p>
-              <img
-                v-bind:src="transcriptPreview"
-                v-show="showTranscriptPreview"
-              />
-            </picture>
+              <picture v-if="!showTranscriptUpload && isTranscriptImage">
+                <p>
+                  <a href="javascript:void(0)" @click="resetTranscript()"
+                    >Upload again</a
+                  >
+                </p>
+                <img
+                  v-bind:src="transcriptPreview"
+                  v-show="showTranscriptPreview"
+                />
+              </picture>
 
-            <span v-if="!showTranscriptUpload && !isTranscriptImage">
-              <img :src="transcriptPreview" alt="" class="preview" />
-            </span>
+              <span v-if="!showTranscriptUpload && !isTranscriptImage">
+                <img :src="transcriptPreview" alt="" class="preview" />
+              </span>
+            </div>
           </div>
+
           <!-- 
             <div class="ml-4" style="width:220px">
               <span v-if="showExperienceUpload">
