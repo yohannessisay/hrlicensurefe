@@ -372,6 +372,7 @@ export default {
     applicationId: "",
     buttons: [],
     documentTypes: [],
+    professionalDoc: [],
     docs: [],
   }),
   computed: {
@@ -385,6 +386,7 @@ export default {
       getWorkExperience: "renewal/getRenewalWorkExperience",
       getServiceFee: "renewal/getRenewalServiceFee",
       getPreviousLicense: "renewal/getPreviousLicense",
+      getProfessionalDocuments: "renewal/getProfessionalDocuments",
 
       getButtons: "renewal/getButtons",
       getApplicationId: "renewal/getApplicationId",
@@ -465,6 +467,20 @@ export default {
                 this.documentTypes[6].documentType.code,
                 this.previousLicense
               );
+              if (this.professionalDoc != undefined) {
+                formData.append(
+                  this.documentTypes[8].documentType.code,
+                  this.professionalDoc[0]
+                );
+                formData.append(
+                  this.documentTypes[9].documentType.code,
+                  this.professionalDoc[1]
+                );
+                formData.append(
+                  this.documentTypes[10].documentType.code,
+                  this.professionalDoc[2]
+                );
+              }
               let payload = { document: formData, id: licenseId };
               this.$store
                 .dispatch("renewal/uploadDocuments", payload)
@@ -499,6 +515,20 @@ export default {
           this.documentTypes[6].documentType.code,
           this.previousLicense
         );
+        if (this.professionalDoc != undefined) {
+          formData.append(
+            this.documentTypes[8].documentType.code,
+            this.professionalDoc[0]
+          );
+          formData.append(
+            this.documentTypes[9].documentType.code,
+            this.professionalDoc[1]
+          );
+          formData.append(
+            this.documentTypes[10].documentType.code,
+            this.professionalDoc[2]
+          );
+        }
         let license = {
           action: action,
           data: {
@@ -622,6 +652,21 @@ export default {
                 this.documentTypes[6].documentType.code,
                 this.previousLicense
               );
+              if (this.professionalDoc != undefined) {
+                formData.append(
+                  this.documentTypes[8].documentType.code,
+                  this.professionalDoc[0]
+                );
+                formData.append(
+                  this.documentTypes[9].documentType.code,
+                  this.professionalDoc[1]
+                );
+                formData.append(
+                  this.documentTypes[10].documentType.code,
+                  this.professionalDoc[2]
+                );
+              }
+
               let payload = { document: formData, id: licenseId };
               this.$store
                 .dispatch("renewal/uploadDocuments", payload)
@@ -656,7 +701,20 @@ export default {
           this.documentTypes[6].documentType.code,
           this.previousLicense
         );
-
+        if (this.professionalDoc != undefined) {
+          formData.append(
+            this.documentTypes[8].documentType.code,
+            this.professionalDoc[0]
+          );
+          formData.append(
+            this.documentTypes[9].documentType.code,
+            this.professionalDoc[1]
+          );
+          formData.append(
+            this.documentTypes[10].documentType.code,
+            this.professionalDoc[2]
+          );
+        }
         let license = {
           action: action,
           data: {
