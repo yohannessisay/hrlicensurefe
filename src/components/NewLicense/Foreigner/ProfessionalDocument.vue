@@ -25,6 +25,10 @@
             ACCEPTED
           </h2>
           <div class="ml-4" style="width:250px">
+            <span>
+              <h2>{{ this.photoFile.name }}</h2>
+              <h2>{{ this.photoFileSize }}</h2>
+            </span>
             <span v-if="showUpload">
               <label class="text-primary-700 text-lg"
                 >Professional Document:
@@ -71,6 +75,10 @@
           </h2>
 
           <div class="ml-4" style="width:250px">
+            <span>
+              <h2>{{ this.diplomaFile.name }}</h2>
+              <h2>{{ this.diplomaFileSize }}</h2>
+            </span>
             <span v-if="showDiplomaUpload">
               <label class="text-primary-700 text-lg"
                 >Upload Diploma:
@@ -118,6 +126,10 @@
             ACCEPTED
           </h2>
           <div class="ml-4" style="width:250px">
+            <span>
+              <h2>{{ this.transcriptFile.name }}</h2>
+              <h2>{{ this.transcriptFileSize }}</h2>
+            </span>
             <span v-if="showTranscriptUpload">
               <label class="text-primary-700 text-lg"
                 >Upload Transcript:
@@ -321,6 +333,10 @@ export default {
       showTranscriptUpload: true,
       isTranscriptImage: true,
 
+      photoFileSize: "",
+      transcriptFileSize: "",
+      diplomaFileSize: "",
+
       // experienceFile: "",
       // showExperiencePreview: false,
       // experiencePreview: "",
@@ -499,6 +515,14 @@ export default {
       this.photoFile = this.$refs.photoFile.files[0];
       let reader = new FileReader();
 
+      let fileS = this.photoFile.size;
+      if (fileS > 0 && fileS < 1000) {
+        this.photoFileSize = fileS + " " + "B";
+      } else if (fileS > 1000 && fileS < 1000000) {
+        this.photoFileSize = fileS / 1000 + "kB";
+      } else {
+        this.photoFileSize = fileS / 1000000 + "MB";
+      }
       reader.addEventListener(
         "load",
         function() {
@@ -523,6 +547,15 @@ export default {
       this.diplomaFile = this.$refs.diplomaFile.files[0];
       let reader = new FileReader();
 
+      let fileS = this.diplomaFile.size;
+      if (fileS > 0 && fileS < 1000) {
+        this.diplomaFileSize += "B";
+      } else if (fileS > 1000 && fileS < 1000000) {
+        this.diplomaFileSize = fileS / 1000 + "kB";
+      } else {
+        this.diplomaFileSize = fileS / 1000000 + "MB";
+      }
+
       reader.addEventListener(
         "load",
         function() {
@@ -546,6 +579,15 @@ export default {
       this.showTranscriptUpload = false;
       this.transcriptFile = this.$refs.transcriptFile.files[0];
       let reader = new FileReader();
+
+      let fileS = this.transcriptFile.size;
+      if (fileS > 0 && fileS < 1000) {
+        this.transcriptFileSize += "B";
+      } else if (fileS > 1000 && fileS < 1000000) {
+        this.transcriptFileSize = fileS / 1000 + "kB";
+      } else {
+        this.transcriptFileSize = fileS / 1000000 + "MB";
+      }
 
       reader.addEventListener(
         "load",
@@ -634,7 +676,6 @@ export default {
             },
             residenceWoredaId: this.license.residenceWoredaId,
             professionalTypeId: this.licenseInfo.professionalTypeId,
-
           },
         };
         this.$store

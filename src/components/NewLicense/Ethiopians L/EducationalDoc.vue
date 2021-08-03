@@ -26,6 +26,10 @@
             ACCEPTED
           </h2>
           <div class="ml-4" style="width:250px">
+            <span>
+              <h2>{{ this.certificateFile1.name }}</h2>
+              <h2>{{ this.certificate1Size }}</h2>
+            </span>
             <span v-if="showCertificate1Upload">
               <label class="text-primary-700 text-lg"
                 >Upload 8th Grade Certificate:
@@ -76,7 +80,11 @@
             ACCEPTED
           </h2>
           <div class="ml-4" style="width:250px">
-            <span v-if="showCertificate2Upload">
+            <span>
+              <h2>{{ this.certificateFile2.name }}</h2>
+              <h2>{{ this.certificate2Size }}</h2>
+            </span>
+            <span v-if="certificateFile2">
               <label class="text-primary-700 text-lg"
                 >Upload 10th Grade Certificate:
                 <div class="dropbox">
@@ -127,6 +135,10 @@
           </h2>
 
           <div class="ml-4" style="width:250px">
+            <span>
+              <h2>{{ this.certificateFile3.name }}</h2>
+              <h2>{{ this.certificate3Size }}</h2>
+            </span>
             <span v-if="showCertificate3Upload">
               <label class="text-primary-700 text-lg"
                 >Upload 12th Grade Certificate:
@@ -177,6 +189,10 @@
             ACCEPTED
           </h2>
           <div class="ml-4" style="width:250px">
+            <span>
+              <h2>{{ this.certificateFile4.name }}</h2>
+              <h2>{{ this.certificate4Size }}</h2>
+            </span>
             <span v-if="showCertificate4Upload">
               <label class="text-primary-700 text-lg"
                 >Upload Transcript 9-10:
@@ -227,6 +243,10 @@
             ACCEPTED
           </h2>
           <div class="ml-4" style="width:250px">
+            <span>
+              <h2>{{ this.certificateFile5.name }}</h2>
+              <h2>{{ this.certificate5Size }}</h2>
+            </span>
             <span v-if="showCertificate5Upload">
               <label class="text-primary-700 text-lg"
                 >Upload Transcript 11-12:
@@ -444,6 +464,12 @@ export default {
       showFlash: false,
       showErrorFlash: false,
       showLoading: false,
+
+      certificate1Size: "",
+      certificate2Size: "",
+      certificate3Size: "",
+      certificate4Size: "",
+      certificate5Size: "",
     };
   },
   computed: {
@@ -607,6 +633,14 @@ export default {
       this.showCertificate1Upload = false;
       this.certificateFile1 = this.$refs.certificateFile1.files[0];
       let reader = new FileReader();
+      let fileS = this.certificateFile1.size;
+      if (fileS > 0 && fileS < 1000) {
+        this.certificate1Size = fileS + " " + "B";
+      } else if (fileS > 1000 && fileS < 1000000) {
+        this.certificate1Size = fileS / 1000 + "kB";
+      } else {
+        this.certificate1Size = fileS / 1000000 + "MB";
+      }
 
       reader.addEventListener(
         "load",
@@ -632,6 +666,14 @@ export default {
       this.showCertificate2Upload = false;
       this.certificateFile2 = this.$refs.certificateFile2.files[0];
       let reader = new FileReader();
+      let fileS = this.certificateFile2.size;
+      if (fileS > 0 && fileS < 1000) {
+        this.certificate2Size = fileS + " " + "B";
+      } else if (fileS > 1000 && fileS < 1000000) {
+        this.certificate2Size = fileS / 1000 + "kB";
+      } else {
+        this.certificate2Size = fileS / 1000000 + "MB";
+      }
 
       reader.addEventListener(
         "load",
@@ -657,7 +699,14 @@ export default {
       this.showCertificate3Upload = false;
       this.certificateFile3 = this.$refs.certificateFile3.files[0];
       let reader = new FileReader();
-
+      let fileS = this.certificateFile3.size;
+      if (fileS > 0 && fileS < 1000) {
+        this.certificate3Size = fileS + " " + "B";
+      } else if (fileS > 1000 && fileS < 1000000) {
+        this.certificate3Size = fileS / 1000 + "kB";
+      } else {
+        this.certificate3Size = fileS / 1000000 + "MB";
+      }
       reader.addEventListener(
         "load",
         function() {
@@ -682,7 +731,14 @@ export default {
       this.showCertificate4Upload = false;
       this.certificateFile4 = this.$refs.certificateFile4.files[0];
       let reader = new FileReader();
-
+      let fileS = this.certificateFile4.size;
+      if (fileS > 0 && fileS < 1000) {
+        this.certificate4Size = fileS + " " + "B";
+      } else if (fileS > 1000 && fileS < 1000000) {
+        this.certificate4Size = fileS / 1000 + "kB";
+      } else {
+        this.certificate4Size = fileS / 1000000 + "MB";
+      }
       reader.addEventListener(
         "load",
         function() {
@@ -706,7 +762,14 @@ export default {
       this.showCertificate5Upload = false;
       this.certificateFile5 = this.$refs.certificateFile5.files[0];
       let reader = new FileReader();
-
+      let fileS = this.certificateFile5.size;
+      if (fileS > 0 && fileS < 1000) {
+        this.certificate5Size = fileS + " " + "B";
+      } else if (fileS > 1000 && fileS < 1000000) {
+        this.certificate5Size = fileS / 1000 + "kB";
+      } else {
+        this.certificate5Size = fileS / 1000000 + "MB";
+      }
       reader.addEventListener(
         "load",
         function() {
@@ -783,7 +846,6 @@ export default {
             },
             residenceWoredaId: this.license.residenceWoredaId,
             professionalTypeId: this.licenseInfo.professionalTypeId,
-
           },
         };
         this.$store

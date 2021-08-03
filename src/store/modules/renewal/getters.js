@@ -5,6 +5,7 @@ export default {
   getRenewalCpd: (state) => state.cpd,
   getRenewalWorkExperience: (state) => state.workExperience,
   getRenewalLicense: (state) => state.letterFromHiringInstitution,
+  getProfessionalDocuments: (state) => state.professionalDocuments,
   getPreviousLicense: (state) => state.previosLicense,
   getButtons: (state) => state.buttons,
   getApplicationId: (state) => state.applicationId,
