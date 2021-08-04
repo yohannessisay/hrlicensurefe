@@ -50,13 +50,17 @@
                 </label>
               </span>
 
-              <!-- <picture v-if="!showUpload && isImage">
+              <picture v-if="!showUpload && isImage">
                 <p>
                   <a href="javascript:void(0)" @click="reset()">Upload again</a>
                 </p>
                 <img v-bind:src="filePreview" v-show="showPreview" />
-              </picture> -->
-              <div v-if="isPdf  ">
+              </picture>
+              <!--  -->
+              <div v-if="!showUpload && isPdf  ">
+                <p>
+                  <a href="javascript:void(0)" @click="reset()">Upload again</a>
+                </p>
                 <embed v-bind:src="filePreview" v-show="showPreview"  />
               </div>
               <span v-if="!showUpload && !isImage && !isPdf">
@@ -170,7 +174,7 @@ export default {
     const route = useRoute();
     const router = useRouter();
 
-    const basePath = "https://storage.googleapis.com/hris-lisence-dev/";
+    const basePath = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/";
 
     let message = ref({
       showFlash: false,
@@ -220,6 +224,8 @@ export default {
       herqaFile.value = "";
       filePreview.value = "";
       isImage.value = true;
+      fileSize.value="";
+      isPdf.value=false;
     };
 
     const handleFileUpload = () => {
@@ -570,12 +576,21 @@ export default {
         for (let i = 0; i < draftData.documents.length; i++) {
           if (draftData.documents[i].documentTypeCode == "HERQA") {
             showUpload.value = false;
-            isImage.value = true;
-            isPdf.value=true;
+            if(draftData.documents[i].fileName.split(".")[1]=="pdf")
+            {
+               isPdf.value=true;
+            }
+            else
+            {
+              isImage.value = true;
+            }
+            
+           
+           
             herqaFile.value = draftData.documents[i];
             showPreview.value = true;
             filePreview.value = basePath + draftData.documents[i].filePath;
-            console.log(filePreview.value);
+            console.log(draftData.documents[i].fileName.split(".")[1]);
           }
         }
       }
