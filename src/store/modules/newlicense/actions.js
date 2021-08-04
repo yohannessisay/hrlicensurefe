@@ -191,23 +191,6 @@ export default {
       return error;
     }
   },
-  // async getNativeLanguage({ commit }, id) {
-  //   try {
-  //     const resp = await ApiService.get(url + "languageSpec");
-  //     return resp;
-  //   } catch (error) {
-  //     return error;
-  //   }
-  // },
-  // async getGovernment({ commit }, id) {
-  //   try {
-  //     const resp = await ApiService.get(url + "getGovernment");
-  //     return resp;
-  //   } catch (error) {
-  //     return error;
-  //   }
-  // },
-
   async getNewLicense({ commit }) {
     try {
       const resp = await ApiService.get(url + "newLicenses/user/" + userId);

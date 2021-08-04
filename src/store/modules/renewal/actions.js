@@ -230,22 +230,7 @@ export default {
       return error;
     }
   },
-  // async getNativeLanguage({ commit }, id) {
-  //   try {
-  //     const resp = await ApiService.get(url + "languageSpec");
-  //     return resp;
-  //   } catch (error) {
-  //     return error;
-  //   }
-  // },
-  // async getGovernment({ commit }, id) {
-  //   try {
-  //     const resp = await ApiService.get(url + "getGovernment");
-  //     return resp;
-  //   } catch (error) {
-  //     return error;
-  //   }
-  // },
+
   async storeDeclinedFields({ commit }, fields) {
     commit(SET_DECLINED_FIELDS, fields);
   },
