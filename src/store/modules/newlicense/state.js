@@ -19,6 +19,7 @@ export default {
     workExperience: "",
     serviceFee: "",
     letterfromOrg: "",
+    payroll: "",
     renewedLicense: "",
     professionalLicense: "",
     buttons: [],

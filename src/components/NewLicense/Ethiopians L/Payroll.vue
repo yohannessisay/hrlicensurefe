@@ -2,7 +2,14 @@
   <div class="flex justify-center">
     <div class="w-screen max-w-4xl">
       <div
-        class="flex flex-col pt-large w-full bg-white blue-box-shadow-light rounded "
+        class="
+          flex flex-col
+          pt-large
+          w-full
+          bg-white
+          blue-box-shadow-light
+          rounded
+        "
       >
         <h2
           class="flex justify-center"
@@ -18,12 +25,16 @@
         >
           ACCEPTED
         </h2>
-        <TitleWithIllustration illustration="Certificate" message="Payroll Document" class="mt-8" />
+        <TitleWithIllustration
+          illustration="Certificate"
+          message="Payroll Document"
+          class="mt-8"
+        />
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
           <div class="flex justify-center">
             <div>
               <span>
-                <h2>{{ COCFile.name }}</h2>
+                <h2>{{ payRollFile.name }}</h2>
                 <h2>{{ fileSize }}</h2>
               </span>
               <span v-if="showUpload">
@@ -32,11 +43,11 @@
                   <div class="dropbox">
                     <input
                       type="file"
-                      id="COCFile"
+                      id="payrollFile"
                       class="photoFile"
-                      ref="COCFileP"
+                      ref="payrollFileP"
                       v-on:change="handleFileUpload()"
-                      style="margin-bottom: 15px !important;"
+                      style="margin-bottom: 15px !important"
                     />
                     <p>
                       Drag your file(s) here to begin<br />
@@ -60,9 +71,7 @@
           </div>
         </form>
         <div v-if="buttons && !draftStatus" class="flex justify-center mb-8">
-          <button @click="submit">
-            Next
-          </button>
+          <button @click="submit">Next</button>
           <button @click="draft(buttons[1].action)" variant="outline">
             {{ buttons[1]["name"] }}
           </button>
@@ -71,9 +80,7 @@
           v-if="buttons && draftStatus == 'DRA'"
           class="flex justify-center mb-8"
         >
-          <button @click="submit">
-            Next
-          </button>
+          <button @click="submit">Next</button>
           <button @click="draft(buttons[2].action)" variant="outline">
             {{ buttons[2]["name"] }}
           </button>
@@ -89,9 +96,7 @@
           v-if="buttons && draftStatus == 'SUB'"
           class="flex justify-center mb-8"
         >
-          <button @click="submit">
-            Next
-          </button>
+          <button @click="submit">Next</button>
           <button
             class="withdraw"
             @click="withdraw(buttons[0].action)"
@@ -104,9 +109,7 @@
           v-if="buttons && draftStatus == 'USUP'"
           class="flex justify-center mb-8"
         >
-          <button @click="submit">
-            Next
-          </button>
+          <button @click="submit">Next</button>
           <button @click="draft(buttons[0].action)" variant="outline">
             {{ buttons[0]["name"] }}
           </button>
@@ -118,9 +121,7 @@
           v-if="buttons && draftStatus == 'DEC'"
           class="flex justify-center mb-8"
         >
-          <button @click="submit">
-            Next
-          </button>
+          <button @click="submit">Next</button>
           <button @click="draft(buttons[0].action)" variant="outline">
             {{ buttons[0]["name"] }}
           </button>
@@ -176,8 +177,8 @@ export default {
 
     let dataChanged = ref(false);
 
-    let COCFile = ref("");
-    let COCFileP = ref("");
+    let payrollFile = ref("");
+    let payrollFileP = ref("");
     let showPreview = ref(false);
     let filePreview = ref("");
     let showUpload = ref(true);
@@ -207,11 +208,12 @@ export default {
     let professionalLicense = ref("");
     let letterfromOrg = ref("");
     let renewedLicense = ref("");
+    let coc = ref("");
 
     const reset = () => {
       showUpload.value = true;
       showPreview.value = false;
-      COCFile.value = "";
+      payrollFile.value = "";
       filePreview.value = "";
       isImage.value = true;
     };
@@ -219,10 +221,10 @@ export default {
     const handleFileUpload = () => {
       dataChanged.value = true;
       showUpload.value = false;
-      COCFile.value = COCFileP.value.files[0];
+      payrollFile.value = payrollFileP.value.files[0];
       let reader = new FileReader();
       isImage.value = true;
-      let fileS = COCFile.value.size;
+      let fileS = payrollFile.value.size;
       if (fileS > 0 && fileS < 1000) {
         fileSize.value += "B";
       } else if (fileS > 1000 && fileS < 1000000) {
@@ -232,26 +234,26 @@ export default {
       }
       reader.addEventListener(
         "load",
-        function() {
+        function () {
           showPreview.value = true;
           filePreview.value = reader.result;
         },
         false
       );
 
-      if (COCFile.value) {
-        if (/\.(jpe?g|png|gif)$/i.test(COCFile.value.name)) {
+      if (payrollFile.value) {
+        if (/\.(jpe?g|png|gif)$/i.test(payrollFile.value.name)) {
           isImage.value = true;
-          reader.readAsDataURL(COCFile.value);
-        } else if (/\.(pdf)$/i.test(COCFile.value.name)) {
+          reader.readAsDataURL(payrollFile.value);
+        } else if (/\.(pdf)$/i.test(payrollFile.value.name)) {
           isImage.value = false;
-          reader.readAsText(COCFile.value);
+          reader.readAsText(payrollFile.value);
         }
       }
     };
     const submit = () => {
       emit("changeActiveState");
-      store.dispatch("newlicense/setCOC", COCFile);
+      store.dispatch("newlicense/setPayroll", payrollFile);
     };
     buttons = store.getters["newlicense/getButtons"];
     documentSpecs = store.getters["newlicense/getDocumentSpec"];
@@ -268,6 +270,7 @@ export default {
     renewedLicense = store.getters["newlicense/getRenewedLicense"];
     professionalLicense = store.getters["newlicense/getProfessionalLicense"];
     letterfromOrg = store.getters["newlicense/getLetterfromOrg"];
+    coc = store.getters["newlicense/getCoc"];
 
     const draft = (action) => {
       message.value.showLoading = true;
@@ -285,8 +288,8 @@ export default {
               let licenseId = route.params.id;
               let formData = new FormData();
               formData.append(
-                documentSpecs[9].documentType.code,
-                COCFile.value
+                documentSpecs[11].documentType.code,
+                payrollFile.value
               );
               let payload = { document: formData, id: licenseId };
               store
@@ -299,8 +302,8 @@ export default {
                       router.push({ path: "/menu" });
                     }, 1500);
                   } else {
-                    message.value.showErrorFlash = !message.value
-                      .showErrorFlash;
+                    message.value.showErrorFlash =
+                      !message.value.showErrorFlash;
                   }
                 })
                 .catch((err) => {});
@@ -365,7 +368,7 @@ export default {
                 professionalDoc[2]
               );
             }
-            formData.append(documentSpecs[9].documentType.code, COCFile.value);
+            formData.append(documentSpecs[9].documentType.code, coc);
             if (educationDoc != undefined) {
               formData.append(
                 documentSpecs[10].documentType.code,
@@ -399,7 +402,10 @@ export default {
               documentSpecs[19].documentType.code,
               professionalLicense
             );
-
+            formData.append(
+              documentSpecs[11].documentType.code,
+              payrollFile.value
+            );
             let payload = { document: formData, id: licenseId };
             store
               .dispatch("newlicense/uploadDocuments", payload)
@@ -434,9 +440,10 @@ export default {
             if (res.data.status == "Success") {
               let licenseId = route.params.id;
               let formData = new FormData();
+
               formData.append(
-                documentSpecs[1].documentType.code,
-                letterFile.value
+                documentSpecs[11].documentType.code,
+                payrollFile.value
               );
               let payload = { document: formData, id: licenseId };
               store
@@ -449,8 +456,8 @@ export default {
                       router.push({ path: "/menu" });
                     }, 1500);
                   } else {
-                    message.value.showErrorFlash = !message.value
-                      .showErrorFlash;
+                    message.value.showErrorFlash =
+                      !message.value.showErrorFlash;
                   }
                 })
                 .catch((err) => {});
@@ -495,10 +502,9 @@ export default {
             let licenseId = res.data.data.id;
             let formData = new FormData();
             formData.append(
-              documentSpecs[1].documentType.code,
-              letterFile.value
+              documentSpecs[11].documentType.code,
+              payrollFile.value
             );
-            formData.append(documentSpecs[2].documentType.code, licenseCopy);
             let payload = { document: formData, id: licenseId };
             store
               .dispatch("newlicense/uploadDocuments", payload)
@@ -545,10 +551,10 @@ export default {
       declinedFields = store.getters["newlicense/getDeclinedFields"];
       acceptedFields = store.getters["newlicense/getAcceptedFields"];
       remark = store.getters["newlicense/getRemark"];
-      if (declinedFields != undefined && declinedFields.includes("COC")) {
+      if (declinedFields != undefined && declinedFields.includes("PAYR")) {
         declinedFieldsCheck.value = true;
       }
-      if (acceptedFields != undefined && acceptedFields.includes("COC")) {
+      if (acceptedFields != undefined && acceptedFields.includes("PAYR")) {
         acceptedFieldsCheck.value = true;
       }
       buttons = store.getters["newlicense/getButtons"];
@@ -556,10 +562,10 @@ export default {
       if (route.params.id) {
         draftStatus.value = route.params.status;
         for (let i = 0; i < draftData.documents.length; i++) {
-          if (draftData.documents[i].documentTypeCode == "COC") {
+          if (draftData.documents[i].documentTypeCode == "PAYR") {
             showUpload.value = false;
             isImage.value = true;
-            COCFile.value = draftData.documents[i];
+            payrollFile.value = draftData.documents[i];
             showPreview.value = true;
             filePreview.value = basePath + draftData.documents[i].filePath;
           }
@@ -567,8 +573,8 @@ export default {
       }
     });
     return {
-      COCFile,
-      COCFileP,
+      payrollFile,
+      payrollFileP,
       showPreview,
       filePreview,
       showUpload,

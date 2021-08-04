@@ -14,6 +14,7 @@ import {
   SET_LETTER_FROM_ORG,
   SET_RENEWED_LICENSE,
   SET_PROFESSIONAL_LICENSE,
+  SET_PAYROLL,
   SET_BUTTONS,
   SET_APPLICATION_ID,
   SET_DOCUMENT_SPEC,
@@ -68,6 +69,9 @@ export default {
   },
   setProfessionalLicense({ commit }, license) {
     commit(SET_PROFESSIONAL_LICENSE, license);
+  },
+  setPayroll({ commit }, payroll) {
+    commit(SET_PAYROLL, payroll);
   },
   setButtons({ commit }, buttons) {
     commit(SET_BUTTONS, buttons);
@@ -183,7 +187,7 @@ export default {
   //     return error;
   //   }
   // },
-   // async getGovernment({ commit }, id) {
+  // async getGovernment({ commit }, id) {
   //   try {
   //     const resp = await ApiService.get(url + "getGovernment");
   //     return resp;

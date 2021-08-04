@@ -12,6 +12,7 @@ export default {
   getServiceFee: (state) => state.serviceFee,
   getLetterfromOrg: (state) => state.letterfromOrg,
   getRenewedLicense: (state) => state.renewedLicense,
+  getPayroll: (state) => state.payroll,
   getProfessionalLicense: (state) => state.professionalLicense,
   getButtons: (state) => state.buttons,
   getApplicationId: (state) => state.applicationId,

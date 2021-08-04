@@ -20,6 +20,7 @@ import {
   SET_REMARK,
   SET_DECLINED_FIELDS,
   SET_ACCEPTED_FIELDS,
+  SET_PAYROLL,
 } from "./mutation-types";
 
 export default {
@@ -55,6 +56,9 @@ export default {
   },
   [SET_WORK_EXPERIENCE](state, workExperience) {
     state.workExperience = workExperience;
+  },
+  [SET_PAYROLL](state, payroll) {
+    state.payroll = payroll;
   },
   [SET_LETTER_FROM_ORG](state, letter) {
     state.letterfromOrg = letter;
