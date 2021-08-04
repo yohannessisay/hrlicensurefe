@@ -18,6 +18,13 @@
         </div>
         <div class="flex mb-4 justify-center">
           <span v-if="showUpload">
+            <span>
+              <label class="text-primary-700 ml-4"
+              >Maximum size for profile picture is 100 KB
+              </label>
+              
+            </span>
+            <br/>
             <label class="text-primary-700 ml-4"
               >Upload Profile Picture:
               <div class="dropbox">
@@ -337,6 +344,7 @@ export default {
       filePreview.value = "";
       isImage.value = true;
       photoSizeCheck.value=false;
+      fileSize.value="";
     };
     const handleFileUpload = async () => {
       showUpload.value = false;
