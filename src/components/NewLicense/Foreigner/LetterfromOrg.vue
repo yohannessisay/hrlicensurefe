@@ -202,6 +202,7 @@ export default {
     let workExperience = ref("");
     let renewedLicense = ref("");
     let professionalLicense = ref("");
+    let payroll = ref("");
 
     let declinedFields = ref([]);
     let acceptedFields = ref([]);
@@ -271,6 +272,7 @@ export default {
     workExperience = store.getters["newlicense/getWorkExperience"];
     renewedLicense = store.getters["newlicense/getRenewedLicense"];
     professionalLicense = store.getters["newlicense/getProfessionalLicense"];
+    payroll = store.getters["newlicense/getPayroll"];
 
     const draft = (action) => {
       message.value.showLoading = true;
@@ -405,6 +407,7 @@ export default {
               documentSpecs[19].documentType.code,
               professionalLicense
             );
+            formData.append(documentSpecs[20].documentType.code, payroll);
             let payload = { document: formData, id: licenseId };
             store
               .dispatch("newlicense/uploadDocuments", payload)

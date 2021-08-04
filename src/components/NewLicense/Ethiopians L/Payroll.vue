@@ -288,7 +288,7 @@ export default {
               let licenseId = route.params.id;
               let formData = new FormData();
               formData.append(
-                documentSpecs[11].documentType.code,
+                documentSpecs[20].documentType.code,
                 payrollFile.value
               );
               let payload = { document: formData, id: licenseId };
@@ -403,7 +403,7 @@ export default {
               professionalLicense
             );
             formData.append(
-              documentSpecs[11].documentType.code,
+              documentSpecs[20].documentType.code,
               payrollFile.value
             );
             let payload = { document: formData, id: licenseId };
@@ -442,7 +442,7 @@ export default {
               let formData = new FormData();
 
               formData.append(
-                documentSpecs[11].documentType.code,
+                documentSpecs[20].documentType.code,
                 payrollFile.value
               );
               let payload = { document: formData, id: licenseId };
@@ -502,7 +502,7 @@ export default {
             let licenseId = res.data.data.id;
             let formData = new FormData();
             formData.append(
-              documentSpecs[11].documentType.code,
+              documentSpecs[20].documentType.code,
               payrollFile.value
             );
             let payload = { document: formData, id: licenseId };
