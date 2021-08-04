@@ -2,7 +2,14 @@
   <div class="flex justify-center">
     <div>
       <div
-        class="flex flex-col pt-large w-full bg-white blue-box-shadow-light rounded "
+        class="
+          flex flex-col
+          pt-large
+          w-full
+          bg-white
+          blue-box-shadow-light
+          rounded
+        "
       >
         <TitleWithIllustration
           illustration="User"
@@ -26,7 +33,7 @@
             >
               ACCEPTED
             </h2>
-            <div class="ml-4" style="width:250px">
+            <div class="ml-4" style="width: 250px">
               <span>
                 <h2>{{ this.certificateFile1.name }}</h2>
                 <h2>{{ this.certificate1Size }}</h2>
@@ -40,7 +47,7 @@
                       id="certificateFile1"
                       ref="certificateFile1"
                       v-on:change="handleCertificate1Upload()"
-                      style="margin-bottom: 15px !important;"
+                      style="margin-bottom: 15px !important"
                     />
                     <p>
                       Drag your file(s) here to begin<br />
@@ -82,7 +89,7 @@
             >
               ACCEPTED
             </h2>
-            <div class="ml-4" style="width:250px">
+            <div class="ml-4" style="width: 250px">
               <span>
                 <h2>{{ this.certificateFile2.name }}</h2>
                 <h2>{{ this.certificate2Size }}</h2>
@@ -96,7 +103,7 @@
                       id="certificateFile2"
                       ref="certificateFile2"
                       v-on:change="handleCertificate2Upload()"
-                      style="margin-bottom: 15px !important;"
+                      style="margin-bottom: 15px !important"
                     />
                     <p>
                       Drag your file(s) here to begin<br />
@@ -139,7 +146,7 @@
               ACCEPTED
             </h2>
 
-            <div class="ml-4" style="width:250px">
+            <div class="ml-4" style="width: 250px">
               <span>
                 <h2>{{ this.certificateFile3.name }}</h2>
                 <h2>{{ this.certificate3Size }}</h2>
@@ -153,7 +160,7 @@
                       id="certificateFile3"
                       ref="certificateFile3"
                       v-on:change="handleCertificate3Upload()"
-                      style="margin-bottom: 15px !important;"
+                      style="margin-bottom: 15px !important"
                     />
                     <p>
                       Drag your file(s) here to begin<br />
@@ -196,7 +203,7 @@
             >
               ACCEPTED
             </h2>
-            <div class="ml-4" style="width:250px">
+            <div class="ml-4" style="width: 250px">
               <span>
                 <h2>{{ this.certificateFile4.name }}</h2>
                 <h2>{{ this.certificate4Size }}</h2>
@@ -210,7 +217,7 @@
                       id="certificateFile4"
                       ref="certificateFile4"
                       v-on:change="handleCertificate4Upload()"
-                      style="margin-bottom: 15px !important;"
+                      style="margin-bottom: 15px !important"
                     />
                     <p>
                       Drag your file(s) here to begin<br />
@@ -252,7 +259,7 @@
             >
               ACCEPTED
             </h2>
-            <div class="ml-4" style="width:250px">
+            <div class="ml-4" style="width: 250px">
               <span>
                 <h2>{{ this.certificateFile5.name }}</h2>
                 <h2>{{ this.certificate5Size }}</h2>
@@ -266,7 +273,7 @@
                       id="certificateFile5"
                       ref="certificateFile5"
                       v-on:change="handleCertificate5Upload()"
-                      style="margin-bottom: 15px !important;"
+                      style="margin-bottom: 15px !important"
                     />
                     <p>
                       Drag your file(s) here to begin<br />
@@ -296,9 +303,7 @@
         </div>
         <div v-if="this.draftStatus == 'DRA' || !this.draftStatus">
           <div class="flex justify-center mt-4 mb-8">
-            <button @click="submit">
-              Next
-            </button>
+            <button @click="submit">Next</button>
             <button
               v-if="this.buttons.length < 3"
               @click="draft(this.buttons[1].action)"
@@ -328,9 +333,7 @@
           v-if="this.draftStatus == 'SUB'"
           class="flex justify-center mt-8 pb-12"
         >
-          <button @click="submit">
-            Next
-          </button>
+          <button @click="submit">Next</button>
           <button
             class="withdraw"
             @click="withdraw(this.buttons[0].action)"
@@ -343,9 +346,7 @@
           v-if="this.draftStatus == 'USUP'"
           class="flex justify-center mt-8 pb-12"
         >
-          <button @click="submit">
-            Next
-          </button>
+          <button @click="submit">Next</button>
           <button @click="draft(this.buttons[0].action)" variant="outline">
             {{ this.buttons[0]["name"] }}
           </button>
@@ -357,9 +358,7 @@
           v-if="this.draftStatus == 'DEC'"
           class="flex justify-center mt-8 pb-12"
         >
-          <button @click="submit">
-            Next
-          </button>
+          <button @click="submit">Next</button>
           <button @click="draft(this.buttons[0].action)" variant="outline">
             {{ this.buttons[0]["name"] }}
           </button>
@@ -467,6 +466,7 @@ export default {
       letterfromOrg: "",
       renewedLicense: "",
       professionalLicense: "",
+      payroll: "",
 
       draftId: "",
       draftData: "",
@@ -497,6 +497,7 @@ export default {
       getHerqa: "newlicense/getHerqa",
       getSupportLetter: "newlicense/getSupportLetter",
       getCoc: "newlicense/getCoc",
+      getPayroll: "renewal/getPayroll",
       getProfessionalDoc: "newlicense/getProfessionalDocuments",
       getWorkExperience: "newlicense/getWorkExperience",
       getLetterfromOrg: "newlicense/getLetterfromOrg",
@@ -601,6 +602,7 @@ export default {
     this.letterfromOrg = this.getLetterfromOrg;
     this.renewedLicense = this.getRenewedLicense;
     this.professionalLicense = this.getProfessionalLicense;
+    this.payroll = this.getPayroll;
   },
   methods: {
     ...mapActions(["setProfessionalDoc"]),
@@ -655,7 +657,7 @@ export default {
 
       reader.addEventListener(
         "load",
-        function() {
+        function () {
           this.showCertificate1Preview = true;
           this.certificate1Preview = reader.result;
         }.bind(this),
@@ -688,7 +690,7 @@ export default {
 
       reader.addEventListener(
         "load",
-        function() {
+        function () {
           this.showCertificate2Preview = true;
           this.certificate2Preview = reader.result;
         }.bind(this),
@@ -720,7 +722,7 @@ export default {
       }
       reader.addEventListener(
         "load",
-        function() {
+        function () {
           this.showCertificate3Preview = true;
           this.certificate3Preview = reader.result;
         }.bind(this),
@@ -752,7 +754,7 @@ export default {
       }
       reader.addEventListener(
         "load",
-        function() {
+        function () {
           this.showCertificate4Preview = true;
           this.certificate4Preview = reader.result;
         }.bind(this),
@@ -783,7 +785,7 @@ export default {
       }
       reader.addEventListener(
         "load",
-        function() {
+        function () {
           this.showCertificate5Preview = true;
           this.certificate5Preview = reader.result;
         }.bind(this),
@@ -938,7 +940,10 @@ export default {
               this.documentSpec[19].documentType.code,
               this.professionalLicense
             );
-
+            formData.append(
+              this.documentSpec[20].documentType.code,
+              this.payroll
+            );
             let payload = { document: formData, id: licenseId };
             this.$store
               .dispatch("newlicense/uploadDocuments", payload)
