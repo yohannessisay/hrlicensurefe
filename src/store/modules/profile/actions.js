@@ -132,4 +132,28 @@ export default {
       return error;
     }
   },
+  async resetPassword({commit},data)
+  {data
+    try{
+     
+  const resp = await ApiService.post(baseUrl + "/resetpassword/" + data.id,data.pass);
+ 
+  return resp;
+    }
+    catch(err)
+    {
+      return err;
+    }
+  },
+  async sendEmail({commit},email)
+  {
+    try{
+  const resp = await ApiService.post(baseUrl + "/forgotpassword" , email);
+  return resp;
+    }
+    catch(err)
+    {
+      return err;
+    }
+  }
 };

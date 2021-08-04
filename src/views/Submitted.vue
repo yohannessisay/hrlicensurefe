@@ -603,6 +603,7 @@ export default {
             .dispatch("goodstanding/getGoodStandingLicense")
             .then((res) => {
               this.license = res.data.data;
+              console.log(res.data.data);
               this.showLoading = !this.showLoading;
               if (this.license) {
                 this.goodstanding = this.license.filter(function(e) {
