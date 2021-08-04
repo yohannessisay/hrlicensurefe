@@ -15,6 +15,9 @@ import {
   SET_RENEWED_LICENSE,
   SET_PROFESSIONAL_LICENSE,
   SET_PAYROLL,
+  SET_DEGREE,
+  SET_TRANSCRIPT,
+  SET_DIPLOMA,
   SET_BUTTONS,
   SET_APPLICATION_ID,
   SET_DOCUMENT_SPEC,
@@ -72,6 +75,15 @@ export default {
   },
   setPayroll({ commit }, payroll) {
     commit(SET_PAYROLL, payroll);
+  },
+  setDegree({ commit }, degree) {
+    commit(SET_DEGREE, degree);
+  },
+  setTranscript({ commit }, transcript) {
+    commit(SET_TRANSCRIPT, transcript);
+  },
+  setDiploma({ commit }, diploma) {
+    commit(SET_DIPLOMA, diploma);
   },
   setButtons({ commit }, buttons) {
     commit(SET_BUTTONS, buttons);

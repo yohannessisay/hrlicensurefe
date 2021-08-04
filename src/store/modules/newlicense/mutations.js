@@ -21,6 +21,9 @@ import {
   SET_DECLINED_FIELDS,
   SET_ACCEPTED_FIELDS,
   SET_PAYROLL,
+  SET_DEGREE,
+  SET_TRANSCRIPT,
+  SET_DIPLOMA,
 } from "./mutation-types";
 
 export default {
@@ -77,6 +80,15 @@ export default {
   },
   [SET_DOCUMENT_SPEC](state, documentSpec) {
     state.documentSpec = documentSpec;
+  },
+  [SET_DEGREE](state, degree) {
+    state.degree = degree;
+  },
+  [SET_TRANSCRIPT](state, transcript) {
+    state.transcript = transcript;
+  },
+  [SET_DIPLOMA](state, diploma) {
+    state.diploma = diploma;
   },
   [SET_DRAFT](state, draft) {
     state.draft = draft;
