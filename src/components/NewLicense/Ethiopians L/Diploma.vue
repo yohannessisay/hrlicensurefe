@@ -288,7 +288,7 @@ export default {
               let licenseId = route.params.id;
               let formData = new FormData();
               formData.append(
-                documentSpecs[9].documentType.code,
+                documentSpecs[7].documentType.code,
                 DiplomaFile.value
               );
               let payload = { document: formData, id: licenseId };
@@ -369,7 +369,7 @@ export default {
               );
             }
             formData.append(
-              documentSpecs[9].documentType.code,
+              documentSpecs[7].documentType.code,
               DiplomaFile.value
             );
             if (educationDoc != undefined) {
@@ -552,10 +552,10 @@ export default {
       declinedFields = store.getters["newlicense/getDeclinedFields"];
       acceptedFields = store.getters["newlicense/getAcceptedFields"];
       remark = store.getters["newlicense/getRemark"];
-      if (declinedFields != undefined && declinedFields.includes("COC")) {
+      if (declinedFields != undefined && declinedFields.includes("PDD")) {
         declinedFieldsCheck.value = true;
       }
-      if (acceptedFields != undefined && acceptedFields.includes("COC")) {
+      if (acceptedFields != undefined && acceptedFields.includes("PDD")) {
         acceptedFieldsCheck.value = true;
       }
       buttons = store.getters["newlicense/getButtons"];
@@ -563,7 +563,7 @@ export default {
       if (route.params.id) {
         draftStatus.value = route.params.status;
         for (let i = 0; i < draftData.documents.length; i++) {
-          if (draftData.documents[i].documentTypeCode == "COC") {
+          if (draftData.documents[i].documentTypeCode == "PDD") {
             showUpload.value = false;
             isImage.value = true;
             DiplomaFile.value = draftData.documents[i];
