@@ -41,6 +41,7 @@
                       ref="previousLicenseFileP"
                       v-on:change="handleFileUpload()"
                       style="margin-bottom: 15px !important;"
+                        accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
                     />
                     <p>
                       Drag your file(s) here to begin<br />
@@ -56,8 +57,14 @@
                 </p>
                 <img v-bind:src="filePreview" v-show="showPreview" />
               </picture>
-
-              <span v-if="!showUpload && !isImage">
+              <!--  -->
+              <div v-if="!showUpload && isPdf  ">
+                <p>
+                  <a href="javascript:void(0)" @click="reset()">Upload again</a>
+                </p>
+                <embed v-bind:src="filePreview" v-show="showPreview"  />
+              </div>
+              <span v-if="!showUpload && !isImage && !isPdf">
                 <img :src="filePreview" alt="" class="preview" />
               </span>
             </div>
@@ -184,7 +191,8 @@ export default {
     let showPreview = ref(false);
     let filePreview = ref("");
     let showUpload = ref(true);
-    let isImage = ref(true);
+    let isImage = ref(false);
+    let isPdf = ref(false);
     let draftStatus = ref("");
 
     let buttons = [];
@@ -213,6 +221,8 @@ export default {
       previousLicenseFile.value = "";
       filePreview.value = "";
       isImage.value = true;
+        fileSize.value="";
+      isPdf.value=false;
     };
 
     const handleFileUpload = () => {
@@ -243,7 +253,8 @@ export default {
           reader.readAsDataURL(previousLicenseFile.value);
         } else if (/\.(pdf)$/i.test(previousLicenseFile.value.name)) {
           isImage.value = false;
-          reader.readAsText(previousLicenseFile.value);
+          isPdf.value=true;
+          reader.readAsDataURL(previousLicenseFile.value);
         }
       }
     };
@@ -279,7 +290,15 @@ export default {
         for (let i = 0; i < draftData.documents.length; i++) {
           if (draftData.documents[i].documentTypeCode == "PL") {
             showUpload.value = false;
-            isImage.value = true;
+             if(draftData.documents[i].fileName.split(".")[1]=="pdf")
+            {
+               isPdf.value=true;
+            }
+            else
+            {
+              isImage.value = true;
+            }
+            
             previousLicenseFile.value = draftData.documents[i];
             showPreview.value = true;
             filePreview.value = basePath + draftData.documents[i].filePath;
@@ -536,6 +555,7 @@ export default {
       filePreview,
       showUpload,
       isImage,
+      isPdf,
       handleFileUpload,
       reset,
       submit,
