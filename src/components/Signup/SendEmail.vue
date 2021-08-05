@@ -1,5 +1,5 @@
 <template>
-  <div
+  <div 
     class="
       card-wrapper
       bg-white
@@ -16,7 +16,7 @@
   >
     <button
       class="absolute top-0 right-0 mr-2 mt-2"
-      @click="$emit('closeModal', false)"
+      @click="$emit('closeModal' )"
       variant="rounded"
     >
       <svg
@@ -50,10 +50,10 @@
       <Spinner />
     </span>
     <div v-if="showFlash">
-      <FlashMessage message="Email sent!" />
+      <FlashMessage message="Email sent! Check Inbox or spam for the message" />
     </div>
     <div v-if="showFlashError">
-      <ErrorMessage message="Something Went wrong" />
+      <ErrorMessage message="Something Went wrong please try again later" />
     </div>
   </div>
 </template>
@@ -78,10 +78,12 @@ export default {
   },
   setup() {
     let email = ref("");
+    
     let showLoading = ref(false);
     let showFlash = ref(false);
     let showFlashError = ref(false);
     const store = useStore();
+     const router = useRouter();
     const sendEmails = () => {
       let emailToBeSent= 
       {
@@ -94,25 +96,27 @@ export default {
           showLoading.value = false;
           if (res.data.status === "Success") {
             showFlash.value = true;
+            
             setTimeout(() => {
-              router.push({ path: "/" });
+                  location.reload();
             }, 1500);
           }
           else{
           showLoading.value = false;
           showFlashError.value = true;
+          
           setTimeout(() => {
-            router.push({ path: "/" });
+               location.reload();
           }, 2500);
           }
-          // display that the email might be in spam
-          console.log("is the res",res);
+
         })
         .catch((err) => {
           showLoading.value = false;
           showFlashError.value = true;
+      
           setTimeout(() => {
-            router.push({ path: "/" });
+             location.reload();
           }, 2500);
           console.log("something went wrong ", err);
         });

@@ -41,6 +41,7 @@
                       ref="licenseFileP"
                       v-on:change="handleFileUpload()"
                       style="margin-bottom: 15px !important;"
+                      accept=".jpeg, .png, .gif, .jpg, .pdf, .tiff , .svg"
                     />
                     <p>
                       Drag your file(s) here to begin<br />
@@ -50,20 +51,23 @@
                 </label>
               </span>
 
-              <picture v-if="!showUpload && isImage">
+             <picture v-if="!showUpload && isImage">
                 <p>
                   <a href="javascript:void(0)" @click="reset()">Upload again</a>
                 </p>
                 <img v-bind:src="filePreview" v-show="showPreview" />
               </picture>
-
-              <span v-if="!showUpload && !isImage">
+              <!--  -->
+              <div v-if="!showUpload && isPdf  ">
+                <p>
+                  <a href="javascript:void(0)" @click="reset()">Upload again</a>
+                </p>
+                <embed v-bind:src="filePreview" v-show="showPreview"  />
+              </div>
+              <span v-if="!showUpload && !isImage && !isPdf">
                 <img :src="filePreview" alt="" class="preview" />
               </span>
             </div>
-          </div>
-          <div v-if="pdfView">
-            <PDFJSViewer :path="`${path}`" :fileName="`${name}`" />
           </div>
         </form>
         <div v-if="buttons && !draftStatus" class="flex justify-center mb-8">
@@ -163,7 +167,7 @@ export default {
     FlashMessage,
     ErrorFlashMessage,
     Spinner,
-    PDFJSViewer,
+    // PDFJSViewer,
   },
   props: ["activeState"],
   setup(props, { emit }) {
@@ -187,8 +191,8 @@ export default {
     let filePreview = ref("");
     let showUpload = ref(true);
     let isImage = ref(true);
-
-    let pdfView = ref(false);
+    let isPdf = ref(false);
+    // let pdfView = ref(false);
     let path = ref("");
     let name = ref("");
 
@@ -215,6 +219,8 @@ export default {
       licenseFile.value = "";
       filePreview.value = "";
       isImage.value = true;
+      fileSize.value="";
+      isPdf.value=false;
     };
     const handleFileUpload = () => {
       dataChanged.value = true;
@@ -244,10 +250,11 @@ export default {
           reader.readAsDataURL(licenseFile.value);
         } else if (/\.(pdf)$/i.test(licenseFile.value.name)) {
           isImage.value = false;
+          isPdf.value=true;
           reader.readAsDataURL(licenseFile.value);
-          pdfView.value = true;
-          path.value = licenseFile.value.path;
-          name.value = licenseFile.value.name;
+          // pdfView.value = true;
+          // path.value = licenseFile.value.path;
+          // name.value = licenseFile.value.name;
         }
       }
     };
@@ -280,7 +287,16 @@ export default {
         for (let i = 0; i < draftData.documents.length; i++) {
           if (draftData.documents[i].documentTypeCode == "LC") {
             showUpload.value = false;
-            isImage.value = true;
+             if(draftData.documents[i].fileName.split(".")[1]=="pdf")
+            {
+               isPdf.value=true;
+            }
+            else
+            {
+              isImage.value = true;
+            }
+            
+           
             licenseFile.value = draftData.documents[i];
             showPreview.value = true;
             filePreview.value = basePath + draftData.documents[i].filePath;
@@ -288,7 +304,6 @@ export default {
         }
       }
     });
-   
 
     const draft = (action) => {
       message.value.showLoading = true;
@@ -536,7 +551,8 @@ export default {
       filePreview,
       showUpload,
       isImage,
-      pdfView,
+      isPdf,
+      // pdfView,
       handleFileUpload,
       reset,
       submit,
