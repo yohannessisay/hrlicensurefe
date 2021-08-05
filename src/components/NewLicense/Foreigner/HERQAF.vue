@@ -63,8 +63,14 @@
                 </p>
                 <img v-bind:src="filePreview" v-show="showPreview" />
               </picture>
-
-              <span v-if="!showUpload && !isImage">
+              <!--  -->
+              <div v-if="!showUpload && isPdf">
+                <p>
+                  <a href="javascript:void(0)" @click="reset()">Upload again</a>
+                </p>
+                <embed v-bind:src="filePreview" v-show="showPreview" />
+              </div>
+              <span v-if="!showUpload && !isImage && !isPdf">
                 <img :src="filePreview" alt="" class="preview" />
               </span>
             </div>
@@ -182,6 +188,7 @@ export default {
     let filePreview = ref("");
     let showUpload = ref(true);
     let isImage = ref(false);
+    let isPdf = ref(false);
     let buttons = [];
     let documentSpecs = ref([]);
     let userId = +localStorage.getItem("userId");
@@ -208,6 +215,9 @@ export default {
     let letterfromOrg = ref("");
     let renewedLicense = ref("");
     let payroll = ref("");
+    let diploma = ref("");
+    let transcript = ref("");
+    let degree = ref("");
 
     const reset = () => {
       showUpload.value = true;
@@ -215,12 +225,15 @@ export default {
       herqaFile.value = "";
       filePreview.value = "";
       isImage.value = true;
+      fileSize.value = "";
+      isPdf.value = false;
     };
 
     const handleFileUpload = () => {
       dataChanged.value = true;
       showUpload.value = false;
       herqaFile.value = herqaFileP.value.files[0];
+      console.log(herqaFile.value.type);
       let reader = new FileReader();
       isImage.value = true;
       let fileS = herqaFile.value.size;
@@ -246,7 +259,8 @@ export default {
           reader.readAsDataURL(herqaFile.value);
         } else if (/\.(pdf)$/i.test(herqaFile.value.name)) {
           isImage.value = false;
-          reader.readAsText(herqaFile.value);
+          isPdf.value = true;
+          reader.readAsDataURL(herqaFile.value);
         }
       }
     };
@@ -270,6 +284,9 @@ export default {
     professionalLicense = store.getters["newlicense/getProfessionalLicense"];
     letterfromOrg = store.getters["newlicense/getLetterfromOrg"];
     payroll = store.getters["newlicense/getPayroll"];
+    diploma = store.getters["newlicense/getDiploma"];
+    degree = store.getters["newlicense/getDegree"];
+    transcript = store.getters["newlicense/getTranscript"];
 
     const draft = (action) => {
       message.value.showLoading = true;
@@ -353,6 +370,9 @@ export default {
               documentSpecs[5].documentType.code,
               englishLanguage
             );
+            formData.append(documentSpecs[7].documentType.code, diploma);
+            formData.append(documentSpecs[8].documentType.code, transcript);
+            formData.append(documentSpecs[21].documentType.code, degree);
             if (professionalDoc != undefined) {
               formData.append(
                 documentSpecs[6].documentType.code,
@@ -565,10 +585,16 @@ export default {
         for (let i = 0; i < draftData.documents.length; i++) {
           if (draftData.documents[i].documentTypeCode == "HERQA") {
             showUpload.value = false;
-            isImage.value = true;
+            if (draftData.documents[i].fileName.split(".")[1] == "pdf") {
+              isPdf.value = true;
+            } else {
+              isImage.value = true;
+            }
+
             herqaFile.value = draftData.documents[i];
             showPreview.value = true;
             filePreview.value = basePath + draftData.documents[i].filePath;
+            console.log(draftData.documents[i].fileName.split(".")[1]);
           }
         }
       }
@@ -598,6 +624,7 @@ export default {
       remark,
       declinedFieldsCheck,
       acceptedFieldsCheck,
+      isPdf,
     };
   },
 };

@@ -367,6 +367,9 @@ export default {
       renewedLicense: "",
       professionalLicense: "",
       payroll: "",
+      diploma: "",
+      transcript: "",
+      degree: "",
 
       declinedFields: [],
       acceptedFields: [],
@@ -410,6 +413,10 @@ export default {
       getRenewedLicense: "newlicense/getRenewedLicense",
       getPayroll: "renewal/getPayroll",
       getProfessionalLicense: "newlicense/getProfessionalLicense",
+      getDiploma: "newlicense/getDiploma",
+      getTranscript: "newlicense/getTranscript",
+      getDegree: "newlicense/getDegree",
+
       getDraftData: "newlicense/getDraft",
       getDeclinedFields: "newlicense/getDeclinedFields",
       getAcceptedFields: "newlicense/getAcceptedFields",
@@ -487,6 +494,9 @@ export default {
     this.renewedLicense = this.getRenewedLicense;
     this.professionalLicense = this.getProfessionalLicense;
     this.payroll = this.getPayroll;
+    this.diploma = this.getDiploma;
+    this.transcript = this.getTranscript;
+    this.degree = this.getDegree;
   },
   methods: {
     ...mapActions(["setProfessionalDoc"]),
