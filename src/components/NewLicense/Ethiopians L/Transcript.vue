@@ -209,6 +209,9 @@ export default {
     let letterfromOrg = ref("");
     let renewedLicense = ref("");
     let payroll = ref("");
+    let coc = ref("");
+    let degree = ref("");
+    let diploma = ref("");
 
     const reset = () => {
       showUpload.value = true;
@@ -271,6 +274,9 @@ export default {
     professionalLicense = store.getters["newlicense/getProfessionalLicense"];
     letterfromOrg = store.getters["newlicense/getLetterfromOrg"];
     payroll = store.getters["newlicense/getPayroll"];
+    diploma = store.getters["newlicense/getDiploma"];
+    degree = store.getters["newlicense/getDegree"];
+    coc = store.getters["newlicense/getCoc"];
 
     const draft = (action) => {
       message.value.showLoading = true;
@@ -288,7 +294,7 @@ export default {
               let licenseId = route.params.id;
               let formData = new FormData();
               formData.append(
-                documentSpecs[9].documentType.code,
+                documentSpecs[8].documentType.code,
                 TranscriptFile.value
               );
               let payload = { document: formData, id: licenseId };
@@ -354,6 +360,9 @@ export default {
               documentSpecs[5].documentType.code,
               englishLanguage
             );
+            formData.append(documentSpecs[21].documentType.code, degree);
+            formData.append(documentSpecs[7].documentType.code, diploma);
+            formData.append(documentSpecs[9].documentType.code, coc);
             if (professionalDoc != undefined) {
               formData.append(
                 documentSpecs[6].documentType.code,
@@ -369,7 +378,7 @@ export default {
               );
             }
             formData.append(
-              documentSpecs[9].documentType.code,
+              documentSpecs[8].documentType.code,
               TranscriptFile.value
             );
             if (educationDoc != undefined) {
@@ -442,7 +451,7 @@ export default {
               let licenseId = route.params.id;
               let formData = new FormData();
               formData.append(
-                documentSpecs[1].documentType.code,
+                documentSpecs[8].documentType.code,
                 TranscriptFile.value
               );
               let payload = { document: formData, id: licenseId };
@@ -552,10 +561,10 @@ export default {
       declinedFields = store.getters["newlicense/getDeclinedFields"];
       acceptedFields = store.getters["newlicense/getAcceptedFields"];
       remark = store.getters["newlicense/getRemark"];
-      if (declinedFields != undefined && declinedFields.includes("COC")) {
+      if (declinedFields != undefined && declinedFields.includes("PDT")) {
         declinedFieldsCheck.value = true;
       }
-      if (acceptedFields != undefined && acceptedFields.includes("COC")) {
+      if (acceptedFields != undefined && acceptedFields.includes("PDT")) {
         acceptedFieldsCheck.value = true;
       }
       buttons = store.getters["newlicense/getButtons"];
@@ -563,7 +572,7 @@ export default {
       if (route.params.id) {
         draftStatus.value = route.params.status;
         for (let i = 0; i < draftData.documents.length; i++) {
-          if (draftData.documents[i].documentTypeCode == "COC") {
+          if (draftData.documents[i].documentTypeCode == "PDT") {
             showUpload.value = false;
             isImage.value = true;
             TranscriptFile.value = draftData.documents[i];
