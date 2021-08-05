@@ -467,6 +467,9 @@ export default {
       renewedLicense: "",
       professionalLicense: "",
       payroll: "",
+      diploma: "",
+      transcript: "",
+      degree: "",
 
       draftId: "",
       draftData: "",
@@ -498,6 +501,10 @@ export default {
       getSupportLetter: "newlicense/getSupportLetter",
       getCoc: "newlicense/getCoc",
       getPayroll: "renewal/getPayroll",
+      getDiploma: "newlicense/getDiploma",
+      getTranscript: "newlicense/getTranscript",
+      getDegree: "newlicense/getDegree",
+
       getProfessionalDoc: "newlicense/getProfessionalDocuments",
       getWorkExperience: "newlicense/getWorkExperience",
       getLetterfromOrg: "newlicense/getLetterfromOrg",
@@ -603,6 +610,9 @@ export default {
     this.renewedLicense = this.getRenewedLicense;
     this.professionalLicense = this.getProfessionalLicense;
     this.payroll = this.getPayroll;
+    this.diploma = this.getDiploma;
+    this.transcript = this.getTranscript;
+    this.degree = this.getDegree;
   },
   methods: {
     ...mapActions(["setProfessionalDoc"]),
@@ -883,6 +893,20 @@ export default {
               this.documentSpec[5].documentType.code,
               this.englishLanguage
             );
+            formData.append(
+              this.documentSpec[7].documentType.code,
+              this.diploma
+            );
+
+            formData.append(
+              this.documentSpec[8].documentType.code,
+              this.transcript
+            );
+            formData.append(
+              this.documentSpec[21].documentType.code,
+              this.degree
+            );
+
             if (this.professionalDoc != undefined) {
               formData.append(
                 this.documentSpec[6].documentType.code,

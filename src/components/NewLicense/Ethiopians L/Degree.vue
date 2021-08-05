@@ -209,6 +209,9 @@ export default {
     let letterfromOrg = ref("");
     let renewedLicense = ref("");
     let payroll = ref("");
+    let coc = ref("");
+    let diploma = ref("");
+    let transcript = ref("");
 
     const reset = () => {
       showUpload.value = true;
@@ -271,6 +274,9 @@ export default {
     professionalLicense = store.getters["newlicense/getProfessionalLicense"];
     letterfromOrg = store.getters["newlicense/getLetterfromOrg"];
     payroll = store.getters["newlicense/getPayroll"];
+    transcript = store.getters["newlicense/getTranscript"];
+    diploma = store.getters["newlicense/getDiploma"];
+    coc = store.getters["newlicense/getCoc"];
 
     const draft = (action) => {
       message.value.showLoading = true;
@@ -354,6 +360,9 @@ export default {
               documentSpecs[5].documentType.code,
               englishLanguage
             );
+            formData.append(documentSpecs[7].documentType.code, diploma);
+            formData.append(documentSpecs[8].documentType.code, transcript);
+            formData.append(documentSpecs[9].documentType.code, coc);
             if (professionalDoc != undefined) {
               formData.append(
                 documentSpecs[6].documentType.code,
