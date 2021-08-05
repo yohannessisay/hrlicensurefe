@@ -26,15 +26,15 @@
           ACCEPTED
         </h2>
         <TitleWithIllustration
-          illustration="User"
-          message="Identification Card or Passport"
+          illustration="Certificate"
+          message="Transcript"
           class="mt-8"
         />
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
           <div class="flex justify-center">
             <div>
               <span>
-                <h2>{{ passportFile.name }}</h2>
+                <h2>{{ TranscriptFile.name }}</h2>
                 <h2>{{ fileSize }}</h2>
               </span>
               <span v-if="showUpload">
@@ -43,9 +43,9 @@
                   <div class="dropbox">
                     <input
                       type="file"
-                      id="passportFile"
+                      id="TranscriptFile"
                       class="photoFile"
-                      ref="passportFileP"
+                      ref="TranscriptFileP"
                       v-on:change="handleFileUpload()"
                       style="margin-bottom: 15px !important"
                     />
@@ -165,8 +165,6 @@ export default {
     const route = useRoute();
     const router = useRouter();
 
-    const basePath = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/";
-
     let message = ref({
       showFlash: false,
       showErrorFlash: false,
@@ -175,9 +173,12 @@ export default {
 
     let fileSize = ref("");
 
+    const basePath = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/";
+
     let dataChanged = ref(false);
-    let passportFile = ref("");
-    let passportFileP = ref("");
+
+    let TranscriptFile = ref("");
+    let TranscriptFileP = ref("");
     let showPreview = ref(false);
     let filePreview = ref("");
     let showUpload = ref(true);
@@ -196,12 +197,12 @@ export default {
     let declinedFieldsCheck = ref(false);
     let acceptedFieldsCheck = ref(false);
 
+    let passport = ref("");
     let healthExamCert = ref("");
-    let englishLanguage = ref("");
     let professionalDoc = ref([]);
     let herqa = ref("");
+    let englishLanguage = ref("");
     let supportLetter = ref("");
-    let coc = ref("");
     let educationDoc = ref([]);
     let workExperience = ref("");
     let professionalLicense = ref("");
@@ -212,7 +213,7 @@ export default {
     const reset = () => {
       showUpload.value = true;
       showPreview.value = false;
-      passportFile.value = "";
+      TranscriptFile.value = "";
       filePreview.value = "";
       isImage.value = true;
     };
@@ -220,10 +221,10 @@ export default {
     const handleFileUpload = () => {
       dataChanged.value = true;
       showUpload.value = false;
-      passportFile.value = passportFileP.value.files[0];
+      TranscriptFile.value = TranscriptFileP.value.files[0];
       let reader = new FileReader();
       isImage.value = true;
-      let fileS = passportFile.value.size;
+      let fileS = TranscriptFile.value.size;
       if (fileS > 0 && fileS < 1000) {
         fileSize.value += "B";
       } else if (fileS > 1000 && fileS < 1000000) {
@@ -240,30 +241,30 @@ export default {
         false
       );
 
-      if (passportFile.value) {
-        if (/\.(jpe?g|png|gif)$/i.test(passportFile.value.name)) {
+      if (TranscriptFile.value) {
+        if (/\.(jpe?g|png|gif)$/i.test(TranscriptFile.value.name)) {
           isImage.value = true;
-          reader.readAsDataURL(passportFile.value);
-        } else if (/\.(pdf)$/i.test(passportFile.value.name)) {
+          reader.readAsDataURL(TranscriptFile.value);
+        } else if (/\.(pdf)$/i.test(TranscriptFile.value.name)) {
           isImage.value = false;
-          reader.readAsText(passportFile.value);
+          reader.readAsText(TranscriptFile.value);
         }
       }
     };
     const submit = () => {
       emit("changeActiveState");
-      store.dispatch("newlicense/setPassport", passportFile);
+      store.dispatch("newlicense/setTranscript", TranscriptFile);
     };
     buttons = store.getters["newlicense/getButtons"];
     documentSpecs = store.getters["newlicense/getDocumentSpec"];
     licenseInfo = store.getters["newlicense/getLicense"];
 
-    healthExamCert = store.getters["newlicense/getHealthExamCert"];
+    passport = store.getters["newlicense/getPassport"];
     englishLanguage = store.getters["newlicense/getEnglishLanguage"];
     professionalDoc = store.getters["newlicense/getProfessionalDocuments"];
     herqa = store.getters["newlicense/getHerqa"];
+    healthExamCert = store.getters["newlicense/getHealthExamCert"];
     supportLetter = store.getters["newlicense/getSupportLetter"];
-    coc = store.getters["newlicense/getCoc"];
     educationDoc = store.getters["newlicense/getEducationalDocuments"];
     workExperience = store.getters["newlicense/getWorkExperience"];
     renewedLicense = store.getters["newlicense/getRenewedLicense"];
@@ -287,10 +288,9 @@ export default {
               let licenseId = route.params.id;
               let formData = new FormData();
               formData.append(
-                documentSpecs[1].documentType.code,
-                passportFile.value
+                documentSpecs[9].documentType.code,
+                TranscriptFile.value
               );
-
               let payload = { document: formData, id: licenseId };
               store
                 .dispatch("newlicense/uploadDocuments", payload)
@@ -347,10 +347,7 @@ export default {
           if (res.data.status == "Success") {
             let licenseId = res.data.data.id;
             let formData = new FormData();
-            formData.append(
-              documentSpecs[1].documentType.code,
-              passportFile.value
-            );
+            formData.append(documentSpecs[1].documentType.code, passport);
             formData.append(documentSpecs[2].documentType.code, healthExamCert);
             formData.append(documentSpecs[4].documentType.code, workExperience);
             formData.append(
@@ -371,7 +368,10 @@ export default {
                 professionalDoc[2]
               );
             }
-            formData.append(documentSpecs[9].documentType.code, coc);
+            formData.append(
+              documentSpecs[9].documentType.code,
+              TranscriptFile.value
+            );
             if (educationDoc != undefined) {
               formData.append(
                 documentSpecs[10].documentType.code,
@@ -406,6 +406,7 @@ export default {
               professionalLicense
             );
             formData.append(documentSpecs[20].documentType.code, payroll);
+
             let payload = { document: formData, id: licenseId };
             store
               .dispatch("newlicense/uploadDocuments", payload)
@@ -442,7 +443,7 @@ export default {
               let formData = new FormData();
               formData.append(
                 documentSpecs[1].documentType.code,
-                passportFile.value
+                TranscriptFile.value
               );
               let payload = { document: formData, id: licenseId };
               store
@@ -502,7 +503,7 @@ export default {
             let formData = new FormData();
             formData.append(
               documentSpecs[1].documentType.code,
-              passportFile.value
+              TranscriptFile.value
             );
             formData.append(documentSpecs[2].documentType.code, licenseCopy);
             let payload = { document: formData, id: licenseId };
@@ -524,7 +525,6 @@ export default {
         });
       }
     };
-
     const withdraw = (action) => {
       message.value.showLoading = !message.value.showLoading;
       let withdrawObj = {
@@ -552,10 +552,10 @@ export default {
       declinedFields = store.getters["newlicense/getDeclinedFields"];
       acceptedFields = store.getters["newlicense/getAcceptedFields"];
       remark = store.getters["newlicense/getRemark"];
-      if (declinedFields != null && declinedFields.includes("IC")) {
+      if (declinedFields != undefined && declinedFields.includes("COC")) {
         declinedFieldsCheck.value = true;
       }
-      if (acceptedFields != null && acceptedFields.includes("IC")) {
+      if (acceptedFields != undefined && acceptedFields.includes("COC")) {
         acceptedFieldsCheck.value = true;
       }
       buttons = store.getters["newlicense/getButtons"];
@@ -563,10 +563,10 @@ export default {
       if (route.params.id) {
         draftStatus.value = route.params.status;
         for (let i = 0; i < draftData.documents.length; i++) {
-          if (draftData.documents[i].documentTypeCode == "IC") {
+          if (draftData.documents[i].documentTypeCode == "COC") {
             showUpload.value = false;
             isImage.value = true;
-            passportFile.value = draftData.documents[i];
+            TranscriptFile.value = draftData.documents[i];
             showPreview.value = true;
             filePreview.value = basePath + draftData.documents[i].filePath;
           }
@@ -574,18 +574,18 @@ export default {
       }
     });
     return {
-      passportFile,
-      passportFileP,
+      TranscriptFile,
+      TranscriptFileP,
       showPreview,
       filePreview,
       showUpload,
       isImage,
       handleFileUpload,
       reset,
-      fileSize,
       submit,
       draft,
       withdraw,
+      fileSize,
       buttons,
       draftData,
       draftStatus,
@@ -603,7 +603,7 @@ export default {
 };
 </script>
 <style>
-@import "../../styles/document-upload.css";
+@import "../../../styles/document-upload.css";
 img {
   width: 250px;
   height: 250px;

@@ -14,6 +14,7 @@ import {
   SET_DECLINED_FIELDS,
   SET_ACCEPTED_FIELDS,
   SET_PROFESSIONAL_DOCUMENT,
+  SET_PAYROLL
 } from "./mutation-types";
 
 export default {
@@ -40,6 +41,9 @@ export default {
   },
   [SET_RENEWAL_WORK_EXPERIENCE](state, renewalWorkExperience) {
     state.workExperience = renewalWorkExperience;
+  },
+  [SET_PAYROLL](state, payroll) {
+    state.payroll = payroll;
   },
   [SET_BUTTONS](state, buttons) {
     state.buttons = buttons;

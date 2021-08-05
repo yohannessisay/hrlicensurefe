@@ -2,7 +2,14 @@
   <div class="flex justify-center">
     <div class="w-screen max-w-full">
       <div
-        class="flex flex-col pt-large w-full bg-white blue-box-shadow-light rounded "
+        class="
+          flex flex-col
+          pt-large
+          w-full
+          bg-white
+          blue-box-shadow-light
+          rounded
+        "
       >
         <TitleWithIllustration
           illustration="User"
@@ -25,7 +32,7 @@
             >
               ACCEPTED
             </h2>
-            <div class="ml-4" style="width:250px">
+            <div class="ml-4" style="width: 250px">
               <span>
                 <h2>{{ this.photoFile.name }}</h2>
                 <h2>{{ this.photoFileSize }}</h2>
@@ -84,7 +91,7 @@
               ACCEPTED
             </h2>
 
-            <div class="ml-4" style="width:250px">
+            <div class="ml-4" style="width: 250px">
               <span>
                 <h2>{{ this.diplomaFile.name }}</h2>
                 <h2>{{ this.diplomaFileSize }}</h2>
@@ -143,7 +150,7 @@
             >
               ACCEPTED
             </h2>
-            <div class="ml-4" style="width:250px">
+            <div class="ml-4" style="width: 250px">
               <span>
                 <h2>{{ this.transcriptFile.name }}</h2>
                 <h2>{{ this.transcriptFileSize }}</h2>
@@ -235,9 +242,7 @@
         </div>
         <div v-if="this.draftStatus == 'DRA' || !this.draftStatus">
           <div class="flex justify-center mt-4 mb-8">
-            <button @click="submit">
-              Next
-            </button>
+            <button @click="submit">Next</button>
             <button
               v-if="this.buttons.length < 3"
               @click="draft(this.buttons[1].action)"
@@ -267,9 +272,7 @@
           v-if="this.draftStatus == 'SUB'"
           class="flex justify-center mt-8 pb-12"
         >
-          <button @click="submit">
-            Next
-          </button>
+          <button @click="submit">Next</button>
           <button
             class="withdraw"
             @click="withdraw(this.buttons[0].action)"
@@ -282,9 +285,7 @@
           v-if="this.draftStatus == 'USUP'"
           class="flex justify-center mt-8 pb-12"
         >
-          <button @click="submit">
-            Next
-          </button>
+          <button @click="submit">Next</button>
           <button @click="draft(this.buttons[0].action)" variant="outline">
             {{ this.buttons[0]["name"] }}
           </button>
@@ -296,9 +297,7 @@
           v-if="this.draftStatus == 'DEC'"
           class="flex justify-center mt-8 pb-12"
         >
-          <button @click="submit">
-            Next
-          </button>
+          <button @click="submit">Next</button>
           <button @click="draft(this.buttons[0].action)" variant="outline">
             {{ this.buttons[0]["name"] }}
           </button>
@@ -383,6 +382,7 @@ export default {
       previousLicense: "",
       professionalDoc: [],
       healthExamCert: "",
+      payroll: "",
 
       declinedFields: [],
       acceptedFields: [],
@@ -418,7 +418,7 @@ export default {
       getcpd: "renewal/getRenewalCpd",
       getPreviousLicense: "renewal/getPreviousLicense",
       getHealthExamCert: "renewal/getRenewalHealthExamCert",
-
+      getPayroll: "renewal/getPayroll",
       getDraftData: "renewal/getDraft",
       getDeclinedFields: "renewal/getDeclinedFields",
       getAcceptedFields: "renewal/getAcceptedFields",
@@ -511,6 +511,7 @@ export default {
     this.previousLicense = this.getPreviousLicense;
     this.renewalLetter = this.getRenewalLetter;
     this.professionalDoc = this.getProfessionalDocuments;
+    this.payroll = this.getPayroll;
   },
   methods: {
     ...mapActions(["setProfessionalDoc"]),
@@ -563,7 +564,7 @@ export default {
       }
       reader.addEventListener(
         "load",
-        function() {
+        function () {
           this.showPreview = true;
           this.filePreview = reader.result;
         }.bind(this),
@@ -596,7 +597,7 @@ export default {
 
       reader.addEventListener(
         "load",
-        function() {
+        function () {
           this.showDiplomaPreview = true;
           this.diplomaPreview = reader.result;
         }.bind(this),
@@ -629,7 +630,7 @@ export default {
 
       reader.addEventListener(
         "load",
-        function() {
+        function () {
           this.showTranscriptPreview = true;
           this.transcriptPreview = reader.result;
         }.bind(this),
@@ -750,6 +751,10 @@ export default {
             formData.append(
               this.documentSpec[10].documentType.code,
               this.transcriptFile
+            );
+            formData.append(
+              this.documentSpec[11].documentType.code,
+              this.payroll
             );
             let payload = { document: formData, id: licenseId };
             this.$store

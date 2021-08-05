@@ -7,6 +7,7 @@ import {
   SET_RENEWAL_SERVICE_FEE,
   SET_RENEWAL_CPD,
   SET_PREVIOUS_LICEENSE,
+  SET_PAYROLL,
   SET_PROFESSIONAL_DOCUMENT,
   SET_BUTTONS,
   SET_APPLICATION_ID,
@@ -43,6 +44,9 @@ export default {
   },
   setPreviousLicense({ commit }, license) {
     commit(SET_PREVIOUS_LICEENSE, license);
+  },
+  setPayroll({ commit }, payroll) {
+    commit(SET_PAYROLL, payroll);
   },
   setButtons({ commit }, buttons) {
     commit(SET_BUTTONS, buttons);
@@ -226,6 +230,7 @@ export default {
       return error;
     }
   },
+
   async storeDeclinedFields({ commit }, fields) {
     commit(SET_DECLINED_FIELDS, fields);
   },
