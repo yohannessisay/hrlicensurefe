@@ -23,7 +23,7 @@
               <label class="text-primary-700">Applicant Type</label>
               <select
                 class="max-w-3xl"
-                @change="checkApplicantType(licenseInfo.applicantTypeId)" 
+                @change="checkApplicantType(licenseInfo.applicantTypeId)"
                 v-model="licenseInfo.applicantTypeId"
               >
                 <option
@@ -355,54 +355,26 @@ export default {
     languageID: 0,
     payrollID: 0,
 
-    englishData: {
-      status: "Success",
-      message: "All applicant types retrieved successfully!",
-      data: [
-        {
-          id: 1,
-          name: "Native",
-          code: "NAT",
-          createdAt: "2021-04-12T21:48:37.743Z",
-          updatedAt: "2021-04-12T21:48:37.743Z",
-        },
-        {
-          id: 2,
-          name: "Non-Native",
-          code: "NNT",
-          createdAt: "2021-04-12T21:48:37.743Z",
-          updatedAt: "2021-04-12T21:48:37.743Z",
-        },
-      ],
-    },
-    payrollData: {
-      status: "Success",
-      message: "All applicant types retrieved successfully!",
-      data: [
-        {
-          id: 1,
-          name: "Governmental",
-          code: "GVO",
-          createdAt: "2021-04-12T21:48:37.743Z",
-          updatedAt: "2021-04-12T21:48:37.743Z",
-        },
-        {
-          id: 2,
-          name: "Non-Governmental",
-          code: "NGO",
-          createdAt: "2021-04-12T21:48:37.743Z",
-          updatedAt: "2021-04-12T21:48:37.743Z",
-        },
-      ],
-    },
+    englishData: "",
+    payrollData: "",
   }),
 
   methods: {
     fetchEnglishSpeaker() {
-      return this.englishData;
+      this.$store.dispatch("lookups/getNativeLanguage").then((res) => {
+        if (res.data.status == "Success") {
+          this.englishData = res.data;
+        } else {
+        }
+      });
     },
     fetchPayrollData() {
-      return this.payrollData;
+      this.$store.dispatch("lookups/getGovernment").then((res) => {
+        if (res.data.status == "Success") {
+          this.payrollData = res.data;
+        } else {
+        }
+      });
     },
     checkApplicantType(applicantType) {
       if (applicantType == 1) {
