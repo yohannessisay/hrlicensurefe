@@ -191,7 +191,7 @@ export default {
     let showUpload = ref(true);
     let isImage = ref(false);
     let isPdf = ref(false);
-    let professionalDoc = ref([]);
+    
 
     let draftStatus = ref("");
     let buttons = [];
