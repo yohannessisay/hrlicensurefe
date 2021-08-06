@@ -34,7 +34,7 @@
           <div class="flex justify-center">
             <div>
               <span>
-                <h2>{{ payRollFile.name }}</h2>
+                <h2>{{ payrollFile.name }}</h2>
                 <h2>{{ fileSize }}</h2>
               </span>
               <span v-if="showUpload">
