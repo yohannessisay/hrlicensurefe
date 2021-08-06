@@ -315,7 +315,6 @@ export default {
       this.draftData = this.getDraftData;
     }
 
-    
     this.passport = this.getPassport;
     this.healthExamCert = this.getHealthExamCert;
     this.englishLanguage = this.getEnglishLanguage;
@@ -329,6 +328,10 @@ export default {
     this.letterfromOrg = this.getLetterfromOrg;
     this.renewedLicense = this.getRenewedLicense;
     this.professionalLicense = this.getProfessionalLicense;
+    this.diploma = this.getDiploma;
+    this.transcript = this.getTranscript;
+    this.degree = this.getDegree;
+
     this.buttons = this.getButtons;
     this.fetchProfileInfo();
     this.setDocs();
@@ -364,6 +367,7 @@ export default {
     showErrorFlash: false,
     showLoading: false,
     showLoading2: false,
+
     passport: "",
     healthExamCert: "",
     englishLanguage: "",
@@ -376,6 +380,10 @@ export default {
     letterfromOrg: "",
     renewedLicense: "",
     professionalLicense: "",
+    degree: "",
+    diploma: "",
+    transcript: "",
+
     applicationId: "",
     buttons: [],
     documentTypes: [],
@@ -399,6 +407,9 @@ export default {
       getLetterfromOrg: "newlicense/getLetterfromOrg",
       getRenewedLicense: "newlicense/getRenewedLicense",
       getProfessionalLicense: "newlicense/getProfessionalLicense",
+      getDiploma: "newlicense/getDiploma",
+      getTranscript: "newlicense/getTranscript",
+      getDegree: "newlicense/getDegree",
     }),
   },
   methods: {
@@ -469,6 +480,19 @@ export default {
               formData.append(
                 this.documentTypes[5].documentType.code,
                 this.englishLanguage
+              );
+              formData.append(
+                this.documentSpec[7].documentType.code,
+                this.diploma
+              );
+
+              formData.append(
+                this.documentSpec[8].documentType.code,
+                this.transcript
+              );
+              formData.append(
+                this.documentSpec[21].documentType.code,
+                this.degree
               );
               if (this.professionalDoc != undefined) {
                 formData.append(
@@ -564,6 +588,13 @@ export default {
           this.documentTypes[5].documentType.code,
           this.englishLanguage
         );
+        formData.append(this.documentSpec[7].documentType.code, this.diploma);
+
+        formData.append(
+          this.documentSpec[8].documentType.code,
+          this.transcript
+        );
+        formData.append(this.documentSpec[21].documentType.code, this.degree);
         if (this.professionalDoc != undefined) {
           formData.append(
             this.documentTypes[6].documentType.code,
@@ -693,6 +724,19 @@ export default {
                 this.documentTypes[5].documentType.code,
                 this.englishLanguage
               );
+              formData.append(
+                this.documentSpec[7].documentType.code,
+                this.diploma
+              );
+
+              formData.append(
+                this.documentSpec[8].documentType.code,
+                this.transcript
+              );
+              formData.append(
+                this.documentSpec[21].documentType.code,
+                this.degree
+              );
               if (this.professionalDoc != undefined) {
                 formData.append(
                   this.documentTypes[6].documentType.code,
@@ -788,6 +832,13 @@ export default {
           this.documentTypes[5].documentType.code,
           this.englishLanguage
         );
+        formData.append(this.documentSpec[7].documentType.code, this.diploma);
+
+        formData.append(
+          this.documentSpec[8].documentType.code,
+          this.transcript
+        );
+        formData.append(this.documentSpec[21].documentType.code, this.degree);
         if (this.professionalDoc != undefined) {
           formData.append(
             this.documentTypes[6].documentType.code,
