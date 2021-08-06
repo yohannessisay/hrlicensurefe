@@ -50,7 +50,7 @@
       </div>
       <a
         
-        class="text-primary-500 w-full text-right mr-small hover:underline"
+        class="text-primary-500 w-full text-right mr-small hover:underline cursor-pointer"
         @click="$emit('forgotPassword')"
       >
         Forgot password

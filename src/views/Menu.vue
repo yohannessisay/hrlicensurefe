@@ -1,7 +1,7 @@
 <template>
   <div>
     <Navigation :display="menu" @changeDisplay="displaySet" />
-    <div style="width:100%" class="flex flex-row">
+    <div style="width:100%" class="flex flex-row bg-lightBlueB-200   w-screen  h-screen">
       <div class="sidenav">
         <SideNav :display="menu" @changeDisplay="displaySet" />
       </div>
