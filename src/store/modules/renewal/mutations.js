@@ -13,6 +13,8 @@ import {
   SET_REMARK,
   SET_DECLINED_FIELDS,
   SET_ACCEPTED_FIELDS,
+  SET_PROFESSIONAL_DOCUMENT,
+  SET_PAYROLL
 } from "./mutation-types";
 
 export default {
@@ -34,8 +36,14 @@ export default {
   [SET_RENEWAL_CPD](state, renewalCpd) {
     state.cpd = renewalCpd;
   },
+  [SET_PROFESSIONAL_DOCUMENT](state, professionalDocuments) {
+    state.professionalDocuments = professionalDocuments;
+  },
   [SET_RENEWAL_WORK_EXPERIENCE](state, renewalWorkExperience) {
     state.workExperience = renewalWorkExperience;
+  },
+  [SET_PAYROLL](state, payroll) {
+    state.payroll = payroll;
   },
   [SET_BUTTONS](state, buttons) {
     state.buttons = buttons;

@@ -1,158 +1,204 @@
 <template>
   <div class="flex justify-center">
-    <div class="w-screen max-w-full">
+    <div class="bg-lightBlueB-200 w-screen h-screen max-w-full">
       <div
-        class="flex flex-col pt-large w-full bg-white blue-box-shadow-light rounded "
+        class="
+          flex flex-col
+          pt-large
+          w-full
+          bg-white
+          blue-box-shadow-light
+          rounded
+        "
       >
         <TitleWithIllustration
           illustration="User"
           message="Professional Documents"
           class="mt-8"
         />
-        <div class="flex-row justify-center px-8 py-4">
-          <h2
-            class="flex"
-            v-if="this.declinedFieldsCheck1"
-            style="color: #e63636"
-          >
-            REJECTED
-          </h2>
-          <h2
-            class="flex"
-            v-if="this.acceptedFieldsCheck1"
-            style="color: Green"
-          >
-            ACCEPTED
-          </h2>
-          <div class="ml-4" style="width:250px">
-            <span v-if="showUpload">
-              <label class="text-primary-700 text-lg"
-                >Professional Document:
-                <div class="dropbox">
-                  <input
-                    type="file"
-                    id="photoFile"
-                    ref="photoFile"
-                    v-on:change="handleCertificateUpload()"
-                    style="margin-bottom: 15px !important;"
-                  />
-                  <p>
-                    Drag your file(s) here to begin<br />
-                    or click to browse
-                  </p>
-                </div>
-              </label>
-            </span>
+        <div class="flex flex-row justify-center px-8 py-4">
+          <div>
+            <h2
+              class="flex"
+              v-if="this.declinedFieldsCheck1"
+              style="color: #e63636"
+            >
+              REJECTED
+            </h2>
+            <h2
+              class="flex"
+              v-if="this.acceptedFieldsCheck1"
+              style="color: Green"
+            >
+              ACCEPTED
+            </h2>
+            <div class="ml-4" style="width: 250px">
+              <span>
+                <h2>{{ this.photoFile.name }}</h2>
+                <h2>{{ this.photoFileSize }}</h2>
+              </span>
+              <span v-if="showUpload">
+                <label class="text-primary-700 text-lg"
+                  >Professional Document:
+                  <div class="dropbox">
+                    <input
+                      type="file"
+                      id="photoFile"
+                      ref="photoFile"
+                      v-on:change="handleCertificateUpload()"
+                      style="margin-bottom: 15px !important"
+                      accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
+                    />
+                    <p>
+                      Drag your file(s) here to begin<br />
+                      or click to browse
+                    </p>
+                  </div>
+                </label>
+              </span>
 
-            <picture v-if="!showUpload && isImage">
-              <p>
-                <a href="javascript:void(0)" @click="reset()">Upload again</a>
-              </p>
-              <img v-bind:src="filePreview" v-show="showPreview" />
-            </picture>
-
-            <span v-if="!showUpload && !isImage">
-              <img :src="filePreview" alt="" class="preview" />
-            </span>
+              <picture v-if="!showUpload && isImage">
+                <p>
+                  <a href="javascript:void(0)" @click="reset()">Upload again</a>
+                </p>
+                <img v-bind:src="filePreview" v-show="showPreview" />
+              </picture>
+              <!--  -->
+              <div v-if="!showUpload && isPdf  ">
+                <p>
+                  <a href="javascript:void(0)" @click="reset()">Upload again</a>
+                </p>
+                <embed v-bind:src="filePreview" v-show="showPreview"  />
+              </div>
+              <span v-if="!showUpload && !isImage && !isPdf">
+                <img :src="filePreview" alt="" class="preview" />
+              </span>
+            </div>
           </div>
-          <h2
-            class="flex"
-            v-if="this.declinedFieldsCheck2"
-            style="color: #e63636"
-          >
-            REJECTED
-          </h2>
-          <h2
-            class="flex"
-            v-if="this.acceptedFieldsCheck2"
-            style="color: Green"
-          >
-            ACCEPTED
-          </h2>
+          <div>
+            <h2
+              class="flex"
+              v-if="this.declinedFieldsCheck2"
+              style="color: #e63636"
+            >
+              REJECTED
+            </h2>
+            <h2
+              class="flex"
+              v-if="this.acceptedFieldsCheck2"
+              style="color: Green"
+            >
+              ACCEPTED
+            </h2>
 
-          <div class="ml-4" style="width:250px">
-            <span v-if="showDiplomaUpload">
-              <label class="text-primary-700 text-lg"
-                >Upload Diploma:
-                <div class="dropbox">
-                  <input
-                    type="file"
-                    id="diplomaFile"
-                    ref="diplomaFile"
-                    v-on:change="handleDiplomaUpload()"
-                    style="margin-bottom: 15px !important;"
-                  />
-                  <p>
-                    Drag your file(s) here to begin<br />
-                    or click to browse
-                  </p>
-                </div>
-              </label>
-            </span>
+            <div class="ml-4" style="width: 250px">
+              <span>
+                <h2>{{ this.diplomaFile.name }}</h2>
+                <h2>{{ this.diplomaFileSize }}</h2>
+              </span>
+              <span v-if="showDiplomaUpload">
+                <label class="text-primary-700 text-lg"
+                  >Upload Diploma:
+                  <div class="dropbox">
+                    <input
+                      type="file"
+                      id="diplomaFile"
+                      ref="diplomaFile"
+                      v-on:change="handleDiplomaUpload()"
+                      style="margin-bottom: 15px !important"
+                      accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
+                    />
+                    <p>
+                      Drag your file(s) here to begin<br />
+                      or click to browse
+                    </p>
+                  </div>
+                </label>
+              </span>
 
-            <picture v-if="!showDiplomaUpload && isDiplomaImage">
-              <p>
-                <a href="javascript:void(0)" @click="resetDiploma()"
-                  >Upload again</a
-                >
-              </p>
-              <img v-bind:src="diplomaPreview" v-show="showDiplomaPreview" />
-            </picture>
-
-            <span v-if="!showDiplomaUpload && !isDiplomaImage">
-              <img :src="diplomaPreview" alt="" class="preview" />
-            </span>
+              <picture v-if="!showDiplomaUpload && isDiplomaImage">
+                <p>
+                  <a href="javascript:void(0)" @click="resetDiploma()"
+                    >Upload again</a
+                  >
+                </p>
+                <img v-bind:src="diplomaPreview" v-show="showDiplomaPreview" />
+              </picture>
+              <div v-if="!showDiplomaUpload && isUDPdf  ">
+                <p>
+                  <a href="javascript:void(0)" @click="resetDiploma()">Upload again</a>
+                </p>
+                <embed v-bind:src="diplomaPreview" v-show="showDiplomaPreview"  />
+              </div>
+              <span v-if="!showDiplomaUpload && !isDiplomaImage && !isUDPdf">
+                <img :src="diplomaPreview" alt="" class="preview" />
+              </span>
+            </div>
           </div>
-          <h2
-            class="flex"
-            v-if="this.declinedFieldsCheck3"
-            style="color: #e63636"
-          >
-            REJECTED
-          </h2>
-          <h2
-            class="flex"
-            v-if="this.acceptedFieldsCheck3"
-            style="color: Green"
-          >
-            ACCEPTED
-          </h2>
-          <div class="ml-4" style="width:250px">
-            <span v-if="showTranscriptUpload">
-              <label class="text-primary-700 text-lg"
-                >Upload Transcript:
-                <div class="dropbox">
-                  <input
-                    type="file"
-                    id="transcriptFile"
-                    ref="transcriptFile"
-                    v-on:change="handleTranscriptUpload()"
-                    style="margin-bottom: 15px !important;"
-                  />
-                  <p>
-                    Drag your file(s) here to begin<br />
-                    or click to browse
-                  </p>
-                </div>
-              </label>
-            </span>
+          <div>
+            <h2
+              class="flex"
+              v-if="this.declinedFieldsCheck3"
+              style="color: #e63636"
+            >
+              REJECTED
+            </h2>
+            <h2
+              class="flex"
+              v-if="this.acceptedFieldsCheck3"
+              style="color: Green"
+            >
+              ACCEPTED
+            </h2>
+            <div class="ml-4" style="width: 250px">
+              <span>
+                <h2>{{ this.transcriptFile.name }}</h2>
+                <h2>{{ this.transcriptFileSize }}</h2>
+              </span>
+              <span v-if="showTranscriptUpload">
+                <label class="text-primary-700 text-lg"
+                  >Upload Transcript:
+                  <div class="dropbox">
+                    <input
+                      type="file"
+                      id="transcriptFile"
+                      ref="transcriptFile"
+                      v-on:change="handleTranscriptUpload()"
+                      style="margin-bottom: 15px !important"
+                      accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
+                    />
+                    <p>
+                      Drag your file(s) here to begin<br />
+                      or click to browse
+                    </p>
+                  </div>
+                </label>
+              </span>
 
-            <picture v-if="!showTranscriptUpload && isTranscriptImage">
-              <p>
-                <a href="javascript:void(0)" @click="resetTranscript()"
-                  >Upload again</a
-                >
-              </p>
-              <img
-                v-bind:src="transcriptPreview"
-                v-show="showTranscriptPreview"
-              />
-            </picture>
+              <picture v-if="!showTranscriptUpload && isTranscriptImage">
+                <p>
+                  <a href="javascript:void(0)" @click="resetTranscript()"
+                    >Upload again</a
+                  >
+                </p>
+                <img
+                  v-bind:src="transcriptPreview"
+                  v-show="showTranscriptPreview"
+                />
+              </picture>
+                   <div v-if="!showTranscriptUpload && isUTPdf  ">
+                <p>
+                  <a href="javascript:void(0)" @click="resetTranscript()">Upload again</a>
+                </p>
+                <embed v-bind:src="diplomaPreview" v-show="showDiplomaPreview"  />
+              </div>
 
-            <span v-if="!showTranscriptUpload && !isTranscriptImage">
-              <img :src="transcriptPreview" alt="" class="preview" />
-            </span>
+              <span v-if="!showTranscriptUpload && !isTranscriptImage" && !isUTPdf>
+                <img :src="transcriptPreview" alt="" class="preview" />
+              </span>
+            </div>
           </div>
+
           <!-- 
             <div class="ml-4" style="width:220px">
               <span v-if="showExperienceUpload">
@@ -197,9 +243,7 @@
         </div>
         <div v-if="this.draftStatus == 'DRA' || !this.draftStatus">
           <div class="flex justify-center mt-4 mb-8">
-            <button @click="submit">
-              Next
-            </button>
+            <button @click="submit">Next</button>
             <button
               v-if="this.buttons.length < 3"
               @click="draft(this.buttons[1].action)"
@@ -229,9 +273,7 @@
           v-if="this.draftStatus == 'SUB'"
           class="flex justify-center mt-8 pb-12"
         >
-          <button @click="submit">
-            Next
-          </button>
+          <button @click="submit">Next</button>
           <button
             class="withdraw"
             @click="withdraw(this.buttons[0].action)"
@@ -244,9 +286,7 @@
           v-if="this.draftStatus == 'USUP'"
           class="flex justify-center mt-8 pb-12"
         >
-          <button @click="submit">
-            Next
-          </button>
+          <button @click="submit">Next</button>
           <button @click="draft(this.buttons[0].action)" variant="outline">
             {{ this.buttons[0]["name"] }}
           </button>
@@ -258,9 +298,7 @@
           v-if="this.draftStatus == 'DEC'"
           class="flex justify-center mt-8 pb-12"
         >
-          <button @click="submit">
-            Next
-          </button>
+          <button @click="submit">Next</button>
           <button @click="draft(this.buttons[0].action)" variant="outline">
             {{ this.buttons[0]["name"] }}
           </button>
@@ -308,7 +346,8 @@ export default {
       filePreview: "",
       showUpload: true,
       isImage: true,
-
+     isUTPdf:false,
+      isUDPdf:false,
       diplomaFile: "",
       showDiplomaPreview: false,
       diplomaPreview: "",
@@ -320,6 +359,10 @@ export default {
       transcriptPreview: "",
       showTranscriptUpload: true,
       isTranscriptImage: true,
+
+      photoFileSize: "",
+      transcriptFileSize: "",
+      diplomaFileSize: "",
 
       // experienceFile: "",
       // showExperiencePreview: false,
@@ -344,6 +387,10 @@ export default {
       letterfromOrg: "",
       renewedLicense: "",
       professionalLicense: "",
+      payroll: "",
+      diploma: "",
+      transcript: "",
+      degree: "",
 
       declinedFields: [],
       acceptedFields: [],
@@ -385,7 +432,12 @@ export default {
       getWorkExperience: "newlicense/getWorkExperience",
       getLetterfromOrg: "newlicense/getLetterfromOrg",
       getRenewedLicense: "newlicense/getRenewedLicense",
+      getPayroll: "renewal/getPayroll",
       getProfessionalLicense: "newlicense/getProfessionalLicense",
+      getDiploma: "newlicense/getDiploma",
+      getTranscript: "newlicense/getTranscript",
+      getDegree: "newlicense/getDegree",
+
       getDraftData: "newlicense/getDraft",
       getDeclinedFields: "newlicense/getDeclinedFields",
       getAcceptedFields: "newlicense/getAcceptedFields",
@@ -422,7 +474,14 @@ export default {
       for (let i = 0; i < this.draftData.documents.length; i++) {
         if (this.draftData.documents[i].documentTypeCode == "PDC") {
           this.showUpload = false;
-          this.isImage = true;
+         if(this.draftData.documents[i].fileName.split(".")[1]=="pdf")
+            {
+               this.isPdf=true;
+            }
+            else
+            {
+              this.isImage = true;
+            }
           this.photoFile = this.draftData.documents[i];
           this.showPreview = true;
           this.filePreview =
@@ -430,7 +489,14 @@ export default {
         }
         if (this.draftData.documents[i].documentTypeCode == "PDD") {
           this.showDiplomaUpload = false;
-          this.isDiplomaImage = true;
+           if(this.draftData.documents[i].fileName.split(".")[1]=="pdf")
+            {
+               this.isUDPdf=true;
+            }
+            else
+            {
+              this.isDiplomaImage = true;
+            }
           this.diplomaFile = this.draftData.documents[i];
           this.showDiplomaPreview = true;
           this.diplomaPreview =
@@ -438,7 +504,14 @@ export default {
         }
         if (this.draftData.documents[i].documentTypeCode == "PDT") {
           this.showTranscriptUpload = false;
-          this.isTranscriptImage = true;
+            if(this.draftData.documents[i].fileName.split(".")[1]=="pdf")
+            {
+               this.isUTPdf=true;
+            }
+            else
+            {
+                this.isTranscriptImage = true;
+            }
           this.transcriptFile = this.draftData.documents[i];
           this.showTranscriptPreview = true;
           this.transcriptPreview =
@@ -462,6 +535,10 @@ export default {
     this.letterfromOrg = this.getLetterfromOrg;
     this.renewedLicense = this.getRenewedLicense;
     this.professionalLicense = this.getProfessionalLicense;
+    this.payroll = this.getPayroll;
+    this.diploma = this.getDiploma;
+    this.transcript = this.getTranscript;
+    this.degree = this.getDegree;
   },
   methods: {
     ...mapActions(["setProfessionalDoc"]),
@@ -472,6 +549,8 @@ export default {
       this.photoFile = "";
       this.filePreview = "";
       this.isImage = true;
+      this.isPdf=false;
+      this.photoFileSize="";
     },
     resetDiploma() {
       this.showDiplomaUpload = true;
@@ -479,6 +558,8 @@ export default {
       this.diplomaFile = "";
       this.diplomaPreview = "";
       this.isDiplomaImage = true;
+       this.isUDPdf=false;
+      this.diplomaFileSize="";
     },
     resetTranscript() {
       this.showTranscriptUpload = true;
@@ -486,6 +567,8 @@ export default {
       this.transcriptFile = "";
       this.transcriptPreview = "";
       this.isTranscriptImage = true;
+           this.isUTPdf=false;
+      this.transcriptFileSize=""
     },
     // resetExperience() {
     //   this.showExperienceUpload = true;
@@ -499,9 +582,17 @@ export default {
       this.photoFile = this.$refs.photoFile.files[0];
       let reader = new FileReader();
 
+      let fileS = this.photoFile.size;
+      if (fileS > 0 && fileS < 1000) {
+        this.photoFileSize = fileS + " " + "B";
+      } else if (fileS > 1000 && fileS < 1000000) {
+        this.photoFileSize = fileS / 1000 + "kB";
+      } else {
+        this.photoFileSize = fileS / 1000000 + "MB";
+      }
       reader.addEventListener(
         "load",
-        function() {
+        function () {
           this.showPreview = true;
           this.filePreview = reader.result;
         }.bind(this),
@@ -514,7 +605,8 @@ export default {
           reader.readAsDataURL(this.photoFile);
         } else if (/\.(pdf)$/i.test(this.photoFile.name)) {
           this.isImage = false;
-          reader.readAsText(this.photoFile);
+           this.isPdf=true;
+          reader.readAsDataURL(this.photoFile);
         }
       }
     },
@@ -523,9 +615,18 @@ export default {
       this.diplomaFile = this.$refs.diplomaFile.files[0];
       let reader = new FileReader();
 
+      let fileS = this.diplomaFile.size;
+      if (fileS > 0 && fileS < 1000) {
+        this.diplomaFileSize += "B";
+      } else if (fileS > 1000 && fileS < 1000000) {
+        this.diplomaFileSize = fileS / 1000 + "kB";
+      } else {
+        this.diplomaFileSize = fileS / 1000000 + "MB";
+      }
+
       reader.addEventListener(
         "load",
-        function() {
+        function () {
           this.showDiplomaPreview = true;
           this.diplomaPreview = reader.result;
         }.bind(this),
@@ -538,7 +639,8 @@ export default {
           reader.readAsDataURL(this.diplomaFile);
         } else if (/\.(pdf)$/i.test(this.diplomaFile.name)) {
           this.isDiplomaImage = false;
-          reader.readAsText(this.diplomaFile);
+           this.isUDPdf=true;
+          reader.readAsDataURL(this.diplomaFile);
         }
       }
     },
@@ -547,9 +649,18 @@ export default {
       this.transcriptFile = this.$refs.transcriptFile.files[0];
       let reader = new FileReader();
 
+      let fileS = this.transcriptFile.size;
+      if (fileS > 0 && fileS < 1000) {
+        this.transcriptFileSize += "B";
+      } else if (fileS > 1000 && fileS < 1000000) {
+        this.transcriptFileSize = fileS / 1000 + "kB";
+      } else {
+        this.transcriptFileSize = fileS / 1000000 + "MB";
+      }
+
       reader.addEventListener(
         "load",
-        function() {
+        function () {
           this.showTranscriptPreview = true;
           this.transcriptPreview = reader.result;
         }.bind(this),
@@ -562,7 +673,8 @@ export default {
           reader.readAsDataURL(this.transcriptFile);
         } else if (/\.(pdf)$/i.test(this.transcriptFile.name)) {
           this.isTranscriptImage = false;
-          reader.readAsText(this.transcriptFile);
+          this.isUTPdf=true;
+          reader.readAsDataURL(this.transcriptFile);
         }
       }
     },
@@ -634,7 +746,6 @@ export default {
             },
             residenceWoredaId: this.license.residenceWoredaId,
             professionalTypeId: this.licenseInfo.professionalTypeId,
-
           },
         };
         this.$store
@@ -717,7 +828,10 @@ export default {
               this.documentSpec[19].documentType.code,
               this.professionalLicense
             );
-
+            formData.append(
+              this.documentSpec[20].documentType.code,
+              this.payroll
+            );
             let payload = { document: formData, id: licenseId };
             this.$store
               .dispatch("newlicense/uploadDocuments", payload)

@@ -1,6 +1,6 @@
 <template>
   <div class="flex justify-center">
-    <div class="w-screen max-w-4xl">
+    <div class="bg-lightBlueB-200 w-screen h-screen max-w-4xl">
       <div
         class="flex flex-col pt-large w-full bg-white blue-box-shadow-light rounded "
       >
@@ -44,6 +44,7 @@
                       ref="letterFileP"
                       v-on:change="handleFileUpload()"
                       style="margin-bottom: 15px !important;"
+                       accept=".jpeg, .png, .gif, .jpg, .pdf, .tiff , .svg"
                     />
                     <p>
                       Drag your file(s) here to begin<br />
@@ -53,14 +54,20 @@
                 </label>
               </span>
 
-              <picture v-if="!showUpload && isImage">
+               <picture v-if="!showUpload && isImage">
                 <p>
                   <a href="javascript:void(0)" @click="reset()">Upload again</a>
                 </p>
                 <img v-bind:src="filePreview" v-show="showPreview" />
               </picture>
-
-              <span v-if="!showUpload && !isImage">
+              <!--  -->
+              <div v-if="!showUpload && isPdf  ">
+                <p>
+                  <a href="javascript:void(0)" @click="reset()">Upload again</a>
+                </p>
+                <embed v-bind:src="filePreview" v-show="showPreview"  />
+              </div>
+              <span v-if="!showUpload && !isImage && !isPdf">
                 <img :src="filePreview" alt="" class="preview" />
               </span>
             </div>
@@ -186,8 +193,8 @@ export default {
     let showPreview = ref(false);
     let filePreview = ref("");
     let showUpload = ref(true);
-    let isImage = ref(true);
-
+    let isImage = ref(false);
+    let isPdf = ref(false);
     let draftStatus = ref("");
 
     let dataChanged = ref(false);
@@ -211,6 +218,8 @@ export default {
       letterFile.value = "";
       filePreview.value = "";
       isImage.value = true;
+       fileSize.value="";
+      isPdf.value=false;
     };
     const handleFileUpload = () => {
       dataChanged.value = true;
@@ -242,7 +251,8 @@ export default {
           reader.readAsDataURL(letterFile.value);
         } else if (/\.(pdf)$/i.test(letterFile.value.name)) {
           isImage.value = false;
-          reader.readAsText(letterFile.value);
+           isPdf.value=true;
+          reader.readAsDataURL(letterFile.value);
         }
       }
     };
@@ -274,7 +284,14 @@ export default {
         for (let i = 0; i < draftData.documents.length; i++) {
           if (draftData.documents[i].documentTypeCode == "LHI") {
             showUpload.value = false;
-            isImage.value = true;
+            if(draftData.documents[i].fileName.split(".")[1]=="pdf")
+            {
+               isPdf.value=true;
+            }
+            else
+            {
+              isImage.value = true;
+            }
             letterFile.value = draftData.documents[i];
             showPreview.value = true;
             filePreview.value = basePath + draftData.documents[i].filePath;
@@ -526,6 +543,7 @@ export default {
       filePreview,
       showUpload,
       isImage,
+      isPdf,
       handleFileUpload,
       reset,
       submit,

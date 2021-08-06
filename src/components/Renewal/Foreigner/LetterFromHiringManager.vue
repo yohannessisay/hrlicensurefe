@@ -1,8 +1,14 @@
 <template>
   <div class="flex justify-center">
-    <div class="w-screen max-w-4xl">
-      <div
-        class="flex flex-col pt-large w-full bg-white blue-box-shadow-light rounded "
+ <div class="bg-lightBlueB-200 w-screen h-screen max-w-4xl">      <div
+        class="
+          flex flex-col
+          pt-large
+          w-full
+          bg-white
+          blue-box-shadow-light
+          rounded
+        "
       >
         <h2
           class="flex justify-center"
@@ -41,6 +47,7 @@
                       ref="letterFileP"
                       v-on:change="handleFileUpload()"
                       style="margin-bottom: 15px !important;"
+                      accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
                     />
                     <p>
                       Drag your file(s) here to begin<br />
@@ -50,23 +57,27 @@
                 </label>
               </span>
 
-              <picture v-if="!showUpload && isImage">
+                 <picture v-if="!showUpload && isImage">
                 <p>
                   <a href="javascript:void(0)" @click="reset()">Upload again</a>
                 </p>
                 <img v-bind:src="filePreview" v-show="showPreview" />
               </picture>
-
-              <span v-if="!showUpload && !isImage">
+              <!--  -->
+              <div v-if="!showUpload && isPdf  ">
+                <p>
+                  <a href="javascript:void(0)" @click="reset()">Upload again</a>
+                </p>
+                <embed v-bind:src="filePreview" v-show="showPreview"  />
+              </div>
+              <span v-if="!showUpload && !isImage && !isPdf">
                 <img :src="filePreview" alt="" class="preview" />
               </span>
             </div>
           </div>
         </form>
         <div v-if="buttons && !draftStatus" class="flex justify-center mb-8">
-          <button @click="submit">
-            Next
-          </button>
+          <button @click="submit">Next</button>
           <button @click="draft(buttons[1].action)" variant="outline">
             {{ buttons[1]["name"] }}
           </button>
@@ -75,9 +86,7 @@
           v-if="buttons && draftStatus == 'DRA'"
           class="flex justify-center mb-8"
         >
-          <button @click="submit">
-            Next
-          </button>
+          <button @click="submit">Next</button>
           <button @click="draft(buttons[2].action)" variant="outline">
             {{ buttons[2]["name"] }}
           </button>
@@ -93,9 +102,7 @@
           v-if="buttons && draftStatus == 'SUB'"
           class="flex justify-center mb-8"
         >
-          <button @click="submit">
-            Next
-          </button>
+          <button @click="submit">Next</button>
           <button
             class="withdraw"
             @click="withdraw(buttons[0].action)"
@@ -108,9 +115,7 @@
           v-if="buttons && draftStatus == 'USUP'"
           class="flex justify-center mb-8"
         >
-          <button @click="submit">
-            Next
-          </button>
+          <button @click="submit">Next</button>
           <button @click="draft(buttons[0].action)" variant="outline">
             {{ buttons[0]["name"] }}
           </button>
@@ -122,9 +127,7 @@
           v-if="buttons && draftStatus == 'DEC'"
           class="flex justify-center mb-8"
         >
-          <button @click="submit">
-            Next
-          </button>
+          <button @click="submit">Next</button>
           <button @click="draft(buttons[0].action)" variant="outline">
             {{ buttons[0]["name"] }}
           </button>
@@ -185,7 +188,9 @@ export default {
     let showPreview = ref(false);
     let filePreview = ref("");
     let showUpload = ref(true);
-    let isImage = ref(true);
+    let isImage = ref(false);
+    let isPdf = ref(false);
+    
 
     let draftStatus = ref("");
     let buttons = [];
@@ -205,6 +210,8 @@ export default {
     let healthExamCert = ref("");
     let cpd = ref("");
     let previousLicense = ref("");
+    let professionalDoc = ref([]);
+    let payroll = ref("");
 
     const reset = () => {
       showUpload.value = true;
@@ -212,6 +219,8 @@ export default {
       letterFile.value = "";
       filePreview.value = "";
       isImage.value = true;
+       fileSize.value="";
+      isPdf.value=false;
     };
     const handleFileUpload = () => {
       dataChanged.value = true;
@@ -228,7 +237,7 @@ export default {
       }
       reader.addEventListener(
         "load",
-        function() {
+        function () {
           showPreview.value = true;
           filePreview.value = reader.result;
         },
@@ -241,7 +250,8 @@ export default {
           reader.readAsDataURL(letterFile.value);
         } else if (/\.(pdf)$/i.test(letterFile.value.name)) {
           isImage.value = false;
-          reader.readAsText(letterFile.value);
+           isPdf.value=true;
+          reader.readAsDataURL(letterFile.value);
         }
       }
     };
@@ -253,6 +263,8 @@ export default {
     workExperience = store.getters["renewal/getRenewalWorkExperience"];
     cpd = store.getters["renewal/getRenewalCpd"];
     previousLicense = store.getters["renewal/getPreviousLicense"];
+    payroll = store.getters["renewal/getPayroll"];
+    professionalDoc = store.getters["newlicense/getProfessionalDocuments"];
 
     const submit = () => {
       emit("changeActiveState");
@@ -276,7 +288,16 @@ export default {
         for (let i = 0; i < draftData.documents.length; i++) {
           if (draftData.documents[i].documentTypeCode == "LHI") {
             showUpload.value = false;
-            isImage.value = true;
+              if(draftData.documents[i].fileName.split(".")[1]=="pdf")
+            {
+               isPdf.value=true;
+            }
+            else
+            {
+              isImage.value = true;
+            }
+            
+            
             letterFile.value = draftData.documents[i];
             showPreview.value = true;
             filePreview.value = basePath + draftData.documents[i].filePath;
@@ -371,6 +392,21 @@ export default {
               documentSpecs[6].documentType.code,
               previousLicense
             );
+            if (professionalDoc != undefined) {
+              formData.append(
+                documentSpecs[6].documentType.code,
+                professionalDoc[0]
+              );
+              formData.append(
+                documentSpecs[7].documentType.code,
+                professionalDoc[1]
+              );
+              formData.append(
+                documentSpecs[8].documentType.code,
+                professionalDoc[2]
+              );
+            }
+            formData.append(documentSpecs[11].documentType, payroll);
             let payload = { document: formData, id: licenseId };
             store
               .dispatch("renewal/uploadDocuments", payload)
@@ -420,8 +456,8 @@ export default {
                       router.push({ path: "/menu" });
                     }, 1500);
                   } else {
-                    message.value.showErrorFlash = !message.value
-                      .showErrorFlash;
+                    message.value.showErrorFlash =
+                      !message.value.showErrorFlash;
                   }
                 })
                 .catch((err) => {});
@@ -518,6 +554,7 @@ export default {
       filePreview,
       showUpload,
       isImage,
+      isPdf,
       handleFileUpload,
       reset,
       submit,

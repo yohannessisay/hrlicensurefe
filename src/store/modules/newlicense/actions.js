@@ -14,6 +14,10 @@ import {
   SET_LETTER_FROM_ORG,
   SET_RENEWED_LICENSE,
   SET_PROFESSIONAL_LICENSE,
+  SET_PAYROLL,
+  SET_DEGREE,
+  SET_TRANSCRIPT,
+  SET_DIPLOMA,
   SET_BUTTONS,
   SET_APPLICATION_ID,
   SET_DOCUMENT_SPEC,
@@ -69,6 +73,18 @@ export default {
   setProfessionalLicense({ commit }, license) {
     commit(SET_PROFESSIONAL_LICENSE, license);
   },
+  setPayroll({ commit }, payroll) {
+    commit(SET_PAYROLL, payroll);
+  },
+  setDegree({ commit }, degree) {
+    commit(SET_DEGREE, degree);
+  },
+  setTranscript({ commit }, transcript) {
+    commit(SET_TRANSCRIPT, transcript);
+  },
+  setDiploma({ commit }, diploma) {
+    commit(SET_DIPLOMA, diploma);
+  },
   setButtons({ commit }, buttons) {
     commit(SET_BUTTONS, buttons);
   },
@@ -83,7 +99,7 @@ export default {
   },
   async addNewLicense({ commit }, license) {
     try {
-     
+
       const resp = await ApiService.post(url + "newLicenses/add", license);
       return resp;
     } catch (error) {
@@ -175,7 +191,6 @@ export default {
       return error;
     }
   },
-
   async getNewLicense({ commit }) {
     try {
       const resp = await ApiService.get(url + "newLicenses/user/" + userId);

@@ -13,6 +13,7 @@
       <Login
         @closeModal="showLogin = false"
         @redirectToSignup="redirectToSignup"
+        @forgotPassword="forgotPassword"
       />
     </Modal>
     <Modal v-if="showSignUp">
@@ -20,6 +21,9 @@
         @closeModal="showSignUp = false"
         @redirectToLogin="redirectToLogin"
       />
+    </Modal>
+    <Modal v-if="showSendEmail">
+      <SendEmail @closeModal="showSendEmail=false" />
     </Modal>
   </div>
 </template>
@@ -34,6 +38,7 @@ import GoodStandingSection from "./sections/GoodStandingSection";
 import DeviceAccessibilitySection from "./sections/DeviceAccessibilitySection";
 import MinistryOfHealthSection from "./sections/MinistryOfHealthSection";
 import FooterSection from "./sections/FooterSection";
+import SendEmail from "@/components/Signup/SendEmail";
 import Modal from "@/sharedComponents/Modal";
 import Login from "@/components/Login/Login";
 import Signup from "@/components/Signup/Signup";
@@ -51,12 +56,13 @@ export default {
     FooterSection,
     Modal,
     Login,
-    Signup
+    Signup,
+    SendEmail,
   },
   setup() {
     const showLogin = ref(false);
     const showSignUp = ref(false);
-
+    const showSendEmail = ref(false);
     const redirectToSignup = () => {
       showLogin.value = false;
       showSignUp.value = true;
@@ -65,14 +71,20 @@ export default {
       showLogin.value = true;
       showSignUp.value = false;
     };
-
+    const forgotPassword = () => {
+      showLogin.value = false;
+      showSignUp.value = false;
+      showSendEmail.value = true;
+    };
     return {
       showLogin,
       showSignUp,
       redirectToSignup,
-      redirectToLogin
+      redirectToLogin,
+      forgotPassword,
+      showSendEmail
     };
-  }
+  },
 };
 </script>
 <style lang="postcss">
