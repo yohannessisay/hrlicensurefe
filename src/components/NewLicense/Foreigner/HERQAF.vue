@@ -1,6 +1,6 @@
 <template>
   <div class="flex justify-center">
-    <div class="w-screen max-w-4xl">
+    <div class="bg-lightBlueB-200 w-screen h-screen max-w-4xl">
       <div
         class="
           flex flex-col
@@ -48,6 +48,7 @@
                       ref="herqaFileP"
                       v-on:change="handleFileUpload()"
                       style="margin-bottom: 15px !important"
+                      accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
                     />
                     <p>
                       Drag your file(s) here to begin<br />
@@ -606,6 +607,7 @@ export default {
       filePreview,
       showUpload,
       isImage,
+      isPdf,
       handleFileUpload,
       fileSize,
       reset,
@@ -624,7 +626,7 @@ export default {
       remark,
       declinedFieldsCheck,
       acceptedFieldsCheck,
-      isPdf,
+    
     };
   },
 };

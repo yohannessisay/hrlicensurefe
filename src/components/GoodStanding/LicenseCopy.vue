@@ -1,6 +1,6 @@
 <template>
   <div class="flex justify-center">
-    <div class="w-screen max-w-4xl">
+    <div class="bg-lightBlueB-200 w-screen h-screen max-w-4xl">
       <div
         class="flex flex-col pt-large w-full bg-white blue-box-shadow-light rounded "
       >

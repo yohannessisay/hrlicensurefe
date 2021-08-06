@@ -2,7 +2,13 @@
   <header class="px-10 py-3.5 inset-box-shadow bg-lightBlueB-100">
     <nav>
       <main class="navigate flex items-center justify-between">
-        <div @click="selectMenu(0)" class="flex items-center">
+        <div @click="selectMenu(0)" v-if="!isFirstTime" class="flex items-center">
+          <RenderIllustration class="" illustration="Logo" message="Address" />
+          <h2 class="text-md AtkinsonHyperlegibleBold text-primary-600 ml-2 ">
+            HRIS - License
+          </h2>
+        </div>
+         <div v-if="isFirstTime" class="flex items-center">
           <RenderIllustration class="" illustration="Logo" message="Address" />
           <h2 class="text-md AtkinsonHyperlegibleBold text-primary-600 ml-2 ">
             HRIS - License
@@ -33,9 +39,14 @@
                 <path d="M3,21 h18 C 21,12 3,12 3,21" />
           
               </svg> -->
-              <div class="w-12 h-12 ">
+              <div  v-if="!isFirstTime" class="w-12 h-12 ">
                 <img  v-bind:src="pic" alt="image here"  class="w-20 h-12" />
                  </div>
+                 <div v-if="isFirstTime">
+                 <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 " fill="none" viewBox="0 0 24 24" stroke="currentColor">
+  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+</svg>
+</div>
               <!-- <div style="height:100px; width:100px;">
                 <img v-bind:src="'data:image/jpg;base64,' + pic" />
               </div> -->
@@ -158,6 +169,7 @@ export default {
     let name = ref({
       fullName: ""
     });
+    let isFirstTime= ref(false);
     let pic = ref();
     let blob = ref();
     const getProfile = () => {
@@ -172,12 +184,28 @@ export default {
     const getImage = profile => {
       //let x= profile.photo.data.join('');
 //  console.log(x);
-      pic.value = profile.photo;
+     console.log(profile);
+      if(!profile)
+      {
+        
+     
+        isFirstTime.value=true;
+      }
+      else
+      {
+ pic.value = profile.photo;
+      }
+      
       // blob = base64StringToBlob(pic, "image/jpg");
       
     };
     const getName = profile => {
+       if(profile)
+      {
       name.value.fullName = profile.name + " " + profile.fatherName;
+      }
+    
+     
     };
     onMounted(() => {
      
@@ -188,7 +216,8 @@ export default {
       name,
       getImage,
       pic,
-      blob
+      blob,
+      isFirstTime
     };
   }
 };

@@ -1,6 +1,6 @@
 <template>
   <div class="flex justify-center">
-    <div class="w-screen max-w-4xl">
+    <div class="bg-lightBlueB-200 w-screen h-screen max-w-4xl">
       <div
         class="
           flex flex-col
@@ -44,6 +44,7 @@
                       ref="COCFileP"
                       v-on:change="handleFileUpload()"
                       style="margin-bottom: 15px !important"
+                      accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
                     />
                     <p>
                       Drag your file(s) here to begin<br />
@@ -53,14 +54,20 @@
                 </label>
               </span>
 
-              <picture v-if="!showUpload && isImage">
+                <picture v-if="!showUpload && isImage">
                 <p>
                   <a href="javascript:void(0)" @click="reset()">Upload again</a>
                 </p>
                 <img v-bind:src="filePreview" v-show="showPreview" />
               </picture>
-
-              <span v-if="!showUpload && !isImage">
+              <!--  -->
+              <div v-if="!showUpload && isPdf">
+                <p>
+                  <a href="javascript:void(0)" @click="reset()">Upload again</a>
+                </p>
+                <embed v-bind:src="filePreview" v-show="showPreview" />
+              </div>
+              <span v-if="!showUpload && !isImage && !isPdf">
                 <img :src="filePreview" alt="" class="preview" />
               </span>
             </div>
@@ -179,6 +186,7 @@ export default {
     let filePreview = ref("");
     let showUpload = ref(true);
     let isImage = ref(false);
+    let isPdf = ref(false);
     let buttons = [];
     let documentSpecs = ref([]);
     let userId = +localStorage.getItem("userId");
@@ -215,6 +223,8 @@ export default {
       COCFile.value = "";
       filePreview.value = "";
       isImage.value = true;
+      fileSize.value = "";
+      isPdf.value = false;
     };
 
     const handleFileUpload = () => {
@@ -246,7 +256,8 @@ export default {
           reader.readAsDataURL(COCFile.value);
         } else if (/\.(pdf)$/i.test(COCFile.value.name)) {
           isImage.value = false;
-          reader.readAsText(COCFile.value);
+           isPdf.value = true;
+          reader.readAsDataURL(COCFile.value);
         }
       }
     };
@@ -564,7 +575,12 @@ export default {
         for (let i = 0; i < draftData.documents.length; i++) {
           if (draftData.documents[i].documentTypeCode == "COC") {
             showUpload.value = false;
-            isImage.value = true;
+              if (draftData.documents[i].fileName.split(".")[1] == "pdf") {
+              isPdf.value = true;
+            } else {
+              isImage.value = true;
+            }
+
             COCFile.value = draftData.documents[i];
             showPreview.value = true;
             filePreview.value = basePath + draftData.documents[i].filePath;
@@ -579,6 +595,7 @@ export default {
       filePreview,
       showUpload,
       isImage,
+      isPdf,
       handleFileUpload,
       reset,
       submit,
