@@ -1,6 +1,6 @@
 <template>
   <div>
-    <reviewer-nav-bar tab="renewalAssignedToOthers" />
+    <!-- <reviewer-nav-bar tab="renewalAssignedToOthers" /> -->
     <div class="bg-lightBlueB-200 h-full" v-if="!allInfo.searchByInput">
       <div class="pl-12">
         <div>Filter By</div>
@@ -28,7 +28,7 @@
       </div>
       <div class="flex flex-wrap pb-medium rounded h-full" v-if="!showLoading">
         <nothing-to-show :nothingToShow="nothingToShow" />
-        <assigned-applications :assignedApplication="getRenewalAssigned" app_type="Renewal" assigned_to_others="true"/>
+        <assigned-applications :assignedApplication="getRenewalAssignedOthers" app_type="Renewal" assigned_to_others="true"/>
       </div>
     </div>
     <div
@@ -78,7 +78,7 @@ import FilteredInfo from "../../ChildComponents/FilteredDatas/FilteredInfo.vue";
 export default {
   computed: {
     moment: () => moment,
-    getRenewalAssigned() {
+    getRenewalAssignedOthers() {
       return store.getters["reviewerRenewal/getRenewalAssignedToOthersSearched"];
     },
   },
@@ -93,7 +93,7 @@ export default {
   },
   setup() {
     const store = useStore();
-    let renewalAssigned = ref([]);
+    let renewalAssignedOthers = ref([]);
 
     const adminId = +localStorage.getItem("adminId");
 
@@ -130,7 +130,7 @@ export default {
       showLoading.value = true;
       store.dispatch("reviewerRenewal/getRenewalOthersAssigned", adminId).then((res) => {
         showLoading.value = false;
-        renewalAssigned.value =
+        renewalAssignedOthers.value =
           store.getters["reviewerRenewal/getRenewalAssignedToOthersSearched"];
         allInfo.value.assignApplication =
           store.getters["reviewerRenewal/getRenewalAssignedToOthersSearched"];
@@ -147,7 +147,7 @@ export default {
               allInfo.value.assignApplication[applicant].applicantType;
           }
         }
-        if (store.getters["reviewerRenewal/getRenewalAssignedToOthers"].length === 0) {
+        if (renewalAssignedOthers.value.length === 0) {
           nothingToShow.value = true;
         }
       });

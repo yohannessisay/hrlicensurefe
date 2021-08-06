@@ -1,6 +1,6 @@
 <template>
   <div>
-    <reviewer-nav-bar tab="RenewalUnassigned" />
+    <!-- <reviewer-nav-bar tab="RenewalUnassigned" /> -->
     <div class="bg-lightBlueB-200 h-full" v-if="!allInfo.searchByInput">
       <div class="pl-12">
         <div>Filter By</div>

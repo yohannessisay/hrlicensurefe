@@ -122,10 +122,15 @@ const routes = [
     name: "Submitted",
     component: () => import("../views/Submitted.vue"),
   },
+  // {
+  //   path: "/admin/review",
+  //   name: "ReviewerHome",
+  //   component: () => import("../components/Reviewer/Home.vue"),
+  // },
   {
     path: "/admin/review",
     name: "ReviewerHome",
-    component: () => import("../components/Reviewer/Home.vue"),
+    component: () => import("../components/Reviewer/ReviewerMenu.vue"),
   },
   {
     path: "/admin/changePassword",

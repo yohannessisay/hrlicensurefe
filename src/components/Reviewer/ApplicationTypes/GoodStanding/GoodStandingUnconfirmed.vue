@@ -1,6 +1,6 @@
 <template>
   <div>
-    <reviewer-nav-bar tab="goodStandingUnconfirmed" />
+    <!-- <reviewer-nav-bar tab="goodStandingUnconfirmed" /> -->
     <div class="bg-lightBlueB-200 h-full" v-if="!allInfo.searchByInput">
       <div class="pl-12">
         <div>Filter By</div>
@@ -24,11 +24,8 @@
         </button>
       </div>
       
-      <div class="flex pl-12 pt-tiny" v-if="expertLevel === 3">
-        <Title message="Good Standing Finished" />
-      </div>
-      <div class="flex pl-12 pt-tiny" v-else>
-        <Title message="Good Standing Unconfirmed" />
+      <div class="flex pl-12 pt-tiny">
+        <Title message="Good Standing Approved" />
       </div>
       <div class="flex flex-wrap pb-medium rounded h-full" v-if="!showLoading">
         <nothing-to-show :nothingToShow="nothingToShow" />
@@ -49,7 +46,7 @@
       <div class="flex pl-12 pt-tiny">
         <Title
           :message="
-            'Unconfirmed Applicants on Date Range ' +
+            'Approved Applicants on Date Range ' +
               moment(allInfo.searchFromDate).format('MMM D, YYYY') +
               ' To ' +
               moment(allInfo.searchUpToDate).format('MMM D, YYYY')

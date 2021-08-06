@@ -44,7 +44,7 @@
           </div>
         </div>
 
-        <div class="flex items-center space-x-5">
+        <!-- <div class="flex items-center space-x-5">
           <div>
             <router-link to="/admin/review">
               <a v-if="tab != `Home`" class="mr-small">
@@ -272,25 +272,6 @@
                 <hr class="yellow-gradient border-none" />
               </a>
             </router-link>
-            <!-- <span v-if="isSuperAdmin">
-              <router-link to="/admin/allCertifiedUsers">
-                <a
-                  v-if="tab != `allCertifiedUsers`"
-                  class="mr-small"
-                >
-                  Licensed Users
-                </a>
-                <a
-                  v-if="tab == `allCertifiedUsers`"
-                  class="text-primary-300 mr-small width-medium inline-block pr-tiny justify-center item-center"
-                >
-                  <p class="text-primary-600 font-AtkinsonHyperlegibleBold">
-                    Licensed Users
-                  </p>
-                  <hr class="yellow-gradient border-none" />
-                </a>
-              </router-link>
-            </span> -->
             <div class="relative inline-block text-left text-primary-300">
                 <a
                   class="text-primary-300"
@@ -330,57 +311,20 @@
                   </router-link>
                 </div>
               </div>
-            <!-- <span v-else>
-              <router-link to="/admin/allCertifiedUsers">
-                <a
-                  v-if="tab != `certifiedUsers`"
-                  class="mr-small"
-                >
-                  Licensed Users
-                </a>
-                <a
-                  v-if="tab == `certifiedUsers`"
-                  class="text-primary-300 mr-small width-medium inline-block pr-tiny justify-center item-center"
-                >
-                  <p class="text-primary-600 font-AtkinsonHyperlegibleBold">
-                    Licensed Users
-                  </p>
-                  <hr class="yellow-gradient border-none" />
-                </a>
-              </router-link>
-            </span> -->
-            <!-- <a v-if="tab != `Reviewers`" class="text-primary-300 mr-small">
-              Reviewers
-            </a>
-            <a
-              v-if="tab == `Reviewers`"
-              class="text-primary-300 mr-small width-small inline-block pr-12 justify-center item-center"
-            >
-              <p class="text-primary-600 font-AtkinsonHyperlegibleBold">
-                Reviewers
-              </p>
-              <hr class="yellow-gradient border-none" />
-            </a> -->
-
-          
-          <!--  -->
 
           <router-link to="/admin/report">
               <a class="mr-small">
                 Report
               </a>
-              <!-- <a
-                v-if="tab == `Unassigned`"
-                class="text-primary-300 mr-small width-medium inline-block pr-tiny justify-center item-center"
-              >
-                <p class="text-primary-600 font-AtkinsonHyperlegibleBold">
-                  Report
-                </p>
-                <hr class="yellow-gradient border-none" />
-              </a> -->
+
             </router-link>
           </div>
-          <div class="relative inline-block text-left">
+          
+        </div> -->
+        <div class="pr-12">
+          {{adminName}}
+        </div>
+        <div class="relative inline-block text-left">
             <a
               class="focus:outline-none bg-lightBlueB-300 text-lightBlueB-400 hover:text-gray-800 w-7 h-7 rounded-full flex items-center justify-center"
               id="options-menu"
@@ -408,12 +352,7 @@
               aria-labelledby="options-menu"
             >
               <div class="py-1" role="none">
-                <!-- <a
-                  href="#"
-                  class="block px-4 py-2 text-sm text-blue-100 hover:bg-gray-100 hover:text-gray-900"
-                  role="menuitem"
-                  >Profile
-                </a> -->
+
                 <router-link to="/admin/create" v-if="showAdminCreate">
                   <a
                     class="block px-4 py-2 text-sm text-blue-100 hover:bg-gray-100 hover:text-gray-900"
@@ -421,34 +360,9 @@
                     >Create Admin User
                   </a>
                 </router-link>
-                <!-- <router-link to="/admin/pendingPayments">
-                  <a
-                    class="block px-4 py-2 text-sm text-blue-100 hover:bg-gray-100 hover:text-gray-900"
-                    role="menuitem"
-                    >Pending
-                  </a>
-                </router-link>
-                <router-link to="/admin/allPendingPayments" v-if="isSuperAdmin">
-                  <a
-                    class="block px-4 py-2 text-sm text-blue-100 hover:bg-gray-100 hover:text-gray-900"
-                    role="menuitem"
-                    >Others Pending
-                  </a>
-                </router-link> -->
-                <!-- <a
-                  href="#"
-                  class="block px-4 py-2 text-sm text-blue-100 hover:bg-gray-100 hover:text-gray-900"
-                  role="menuitem"
-                  >About
-                </a> -->
               </div>
               <div class="py-1" role="none">
-                <!-- <a
-                  href="#"
-                  class="block px-4 py-2 text-sm text-blue-100 hover:bg-gray-100 hover:text-gray-900"
-                  role="menuitem"
-                  >Display Settings
-                </a> -->
+
                 <a
                   @click="logout()"
                   class="block px-4 py-2 text-sm text-blue-100 hover:bg-gray-100 hover:text-gray-900"
@@ -460,7 +374,6 @@
               </div>
             </div>
           </div>
-        </div>
       </main>
     </nav>
   </header>
@@ -482,7 +395,15 @@ export default {
       default: "No title",
     },
   },
-  setup(props) {
+
+  computed: {
+    changeSelectedSideBar(menu) {
+      return menu;
+    }
+  },
+  setup(props, {emit}) {
+
+    console.log("tab value must be", props.tab)
     const router = useRouter();
     const store = useStore();
     let showDD = ref(false);
@@ -492,6 +413,13 @@ export default {
     let showLicensedDD = ref(false);
     let search = ref("");
     let primaryText = ref("");
+    const adminName = JSON.parse(localStorage.getItem("allAdminData")).name;
+
+    // const changeSelectedSideBar
+    watch(props.tab, () => {
+      console.log("props is changed")
+    })
+
     watch(search, () => {
       if (props.tab === "Unassigned") {
         store.dispatch("reviewer/getUnassignedSearched", search.value);
@@ -805,7 +733,8 @@ export default {
       logout,
       showAdminCreate,
       isSuperAdmin,
-      primaryText
+      primaryText,
+      adminName,
     };
   },
 };
