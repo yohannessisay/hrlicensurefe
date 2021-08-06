@@ -209,6 +209,9 @@ export default {
     let letterfromOrg = ref("");
     let renewedLicense = ref("");
     let payroll = ref("");
+    let coc = ref("");
+    let diploma = ref("");
+    let transcript = ref("");
 
     const reset = () => {
       showUpload.value = true;
@@ -271,6 +274,9 @@ export default {
     professionalLicense = store.getters["newlicense/getProfessionalLicense"];
     letterfromOrg = store.getters["newlicense/getLetterfromOrg"];
     payroll = store.getters["newlicense/getPayroll"];
+    transcript = store.getters["newlicense/getTranscript"];
+    diploma = store.getters["newlicense/getDiploma"];
+    coc = store.getters["newlicense/getCoc"];
 
     const draft = (action) => {
       message.value.showLoading = true;
@@ -354,6 +360,9 @@ export default {
               documentSpecs[5].documentType.code,
               englishLanguage
             );
+            formData.append(documentSpecs[7].documentType.code, diploma);
+            formData.append(documentSpecs[8].documentType.code, transcript);
+            formData.append(documentSpecs[9].documentType.code, coc);
             if (professionalDoc != undefined) {
               formData.append(
                 documentSpecs[6].documentType.code,
@@ -369,7 +378,7 @@ export default {
               );
             }
             formData.append(
-              documentSpecs[9].documentType.code,
+              documentSpecs[21].documentType.code,
               DegreeFile.value
             );
             if (educationDoc != undefined) {
@@ -502,10 +511,9 @@ export default {
             let licenseId = res.data.data.id;
             let formData = new FormData();
             formData.append(
-              documentSpecs[1].documentType.code,
+              documentSpecs[21].documentType.code,
               DegreeFile.value
             );
-            formData.append(documentSpecs[2].documentType.code, licenseCopy);
             let payload = { document: formData, id: licenseId };
             store
               .dispatch("newlicense/uploadDocuments", payload)
@@ -552,10 +560,10 @@ export default {
       declinedFields = store.getters["newlicense/getDeclinedFields"];
       acceptedFields = store.getters["newlicense/getAcceptedFields"];
       remark = store.getters["newlicense/getRemark"];
-      if (declinedFields != undefined && declinedFields.includes("COC")) {
+      if (declinedFields != undefined && declinedFields.includes("DEG")) {
         declinedFieldsCheck.value = true;
       }
-      if (acceptedFields != undefined && acceptedFields.includes("COC")) {
+      if (acceptedFields != undefined && acceptedFields.includes("DEG")) {
         acceptedFieldsCheck.value = true;
       }
       buttons = store.getters["newlicense/getButtons"];
@@ -563,7 +571,7 @@ export default {
       if (route.params.id) {
         draftStatus.value = route.params.status;
         for (let i = 0; i < draftData.documents.length; i++) {
-          if (draftData.documents[i].documentTypeCode == "COC") {
+          if (draftData.documents[i].documentTypeCode == "DEG") {
             showUpload.value = false;
             isImage.value = true;
             DegreeFile.value = draftData.documents[i];

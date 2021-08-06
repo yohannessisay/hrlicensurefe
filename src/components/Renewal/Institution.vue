@@ -333,31 +333,17 @@ export default {
     payrollDocType: false,
     payrollID: 0,
 
-    payrollData: {
-      status: "Success",
-      message: "All applicant types retrieved successfully!",
-      data: [
-        {
-          id: 1,
-          name: "Governmental",
-          code: "GVO",
-          createdAt: "2021-04-12T21:48:37.743Z",
-          updatedAt: "2021-04-12T21:48:37.743Z",
-        },
-        {
-          id: 2,
-          name: "Non-Governmental",
-          code: "NGO",
-          createdAt: "2021-04-12T21:48:37.743Z",
-          updatedAt: "2021-04-12T21:48:37.743Z",
-        },
-      ],
-    },
+    payrollData: "",
   }),
 
   methods: {
     fetchPayrollData() {
-      return this.payrollData;
+      this.$store.dispatch("lookups/getGovernment").then((res) => {
+        if (res.data.status == "Success") {
+          this.payrollData = res.data;
+        } else {
+        }
+      });
     },
     checkApplicantType(applicantType) {
       if (applicantType == 1) {
