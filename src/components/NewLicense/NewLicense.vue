@@ -72,8 +72,26 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 9">
+                <Degree :activeState="9" @changeActiveState="activeState++" />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 10">
+                <Transcript
+                  :activeState="10"
+                  @changeActiveState="activeState++"
+                />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 11">
+                <Diploma :activeState="11" @changeActiveState="activeState++" />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 12">
                 <LicenseSummary
-                  :activeState="9"
+                  :activeState="12"
                   @changeActiveState="activeState++"
                 />
               </div>
@@ -126,9 +144,27 @@
               </div>
             </transition>
             <transition name="fade" mode="out-in">
-              <div v-if="this.activeState == 8">
+              <div v-if="this.activeState == 9">
+                <Degree :activeState="9" @changeActiveState="activeState++" />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 10">
+                <Transcript
+                  :activeState="10"
+                  @changeActiveState="activeState++"
+                />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 11">
+                <Diploma :activeState="11" @changeActiveState="activeState++" />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 12">
                 <LicenseSummary
-                  :activeState="8"
+                  :activeState="12"
                   @changeActiveState="activeState++"
                 />
               </div>
@@ -381,6 +417,10 @@ import RenewedLicense from "./Foreigner/RenewedLicense";
 import WorkExperienceFF from "./Foreigner/WorkExperience.vue";
 import PayrollDoc from "./Ethiopians L/Payroll.vue";
 
+import Degree from "./Ethiopians L/Degree.vue";
+import Diploma from "./Ethiopians L/Diploma.vue";
+import Transcript from "./Ethiopians L/Transcript.vue";
+
 export default {
   created() {
     this.draftId = this.$route.params.id;
@@ -429,17 +469,20 @@ export default {
     WorkExperienceF,
     WorkExperienceFF,
     PayrollDoc,
+    Degree,
+    Transcript,
+    Diploma,
   },
 
   methods: {
-    applicantTypeSet: function (params) {
+    applicantTypeSet: function(params) {
       if (params == null || params == undefined || params == "") {
         this.applicantType = 3;
       } else {
         this.applicantType = params;
       }
     },
-    nativeLanguage: function (params) {
+    nativeLanguage: function(params) {
       if (
         params == null ||
         params == undefined ||
@@ -453,7 +496,7 @@ export default {
         this.displayEnglishLanguageOption = true;
       }
     },
-    payrollDocumentSet: function (params) {
+    payrollDocumentSet: function(params) {
       if (
         params == null ||
         params == undefined ||
@@ -476,31 +519,31 @@ export default {
         this.applicationStatuses = results;
         if (this.draftId != undefined) {
           if (this.draftStatus == "DRA") {
-            let status = this.applicationStatuses.filter(function (e) {
+            let status = this.applicationStatuses.filter(function(e) {
               return e.code == "DRA";
             });
             this.buttons = status[0]["buttons"];
           }
           if (this.draftStatus == "SUB") {
-            let status = this.applicationStatuses.filter(function (e) {
+            let status = this.applicationStatuses.filter(function(e) {
               return e.code == "SUB";
             });
             this.buttons = status[0]["buttons"];
           }
           if (this.draftStatus == "USUP") {
-            let status = this.applicationStatuses.filter(function (e) {
+            let status = this.applicationStatuses.filter(function(e) {
               return e.code == "USUP";
             });
             this.buttons = status[0]["buttons"];
           }
           if (this.draftStatus == "DEC") {
-            let status = this.applicationStatuses.filter(function (e) {
+            let status = this.applicationStatuses.filter(function(e) {
               return e.code == "DEC";
             });
             this.buttons = status[0]["buttons"];
           }
         } else {
-          let status = this.applicationStatuses.filter(function (e) {
+          let status = this.applicationStatuses.filter(function(e) {
             return e.code == "INIT";
           });
           this.buttons = status[0]["buttons"];
