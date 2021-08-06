@@ -2,7 +2,7 @@
   <div>
     <Navigation />
     <div class="w-screen bg-lightBlueB-200 flex items-center justify-center">
-      <div class="w-screen max-w-4xl mt-large">
+      <div class="bg-lightBlueB-200 w-screen h-screen max-w-4xl">
         <div class="flex flex-col w-full  rounded mb-large">
           <h2 class="flex justify-center pb-medium">
             Verification
