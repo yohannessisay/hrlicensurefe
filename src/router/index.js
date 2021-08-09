@@ -56,6 +56,12 @@ const routes = [
     name: "LicenseRequests",
     component: () => import("../views/LicenseRequests.vue"),
   },
+  {
+    name: "Google-Form",
+    path: "/google-form",
+    component: {},
+    meta: { RedirectExternalUrl: "https://google.com" },
+  },
   // {
   //   path: "/approved",
   //   name: "Approved",
@@ -472,32 +478,50 @@ const routes = [
   {
     path: "/admin/newlicense/on-review",
     name: "NewLicenesOnReview",
-    component: () => import("../components/Reviewer/ApplicationTypes/NewLicense/NewLicenseOnReview.vue"),
+    component: () =>
+      import(
+        "../components/Reviewer/ApplicationTypes/NewLicense/NewLicenseOnReview.vue"
+      ),
   },
   {
     path: "/admin/newlicense/others-on-review",
     name: "NewLicenesOthersOnReview",
-    component: () => import("../components/Reviewer/ApplicationTypes/NewLicense/NewLicenseOthersOnReview.vue"),
+    component: () =>
+      import(
+        "../components/Reviewer/ApplicationTypes/NewLicense/NewLicenseOthersOnReview.vue"
+      ),
   },
   {
     path: "/admin/newlicense/re-evaluate",
     name: "NewLicenseReEvaluate",
-    component: () => import("../components/Reviewer/ApplicationTypes/NewLicense/NewLicenseReEvaluate.vue"),
+    component: () =>
+      import(
+        "../components/Reviewer/ApplicationTypes/NewLicense/NewLicenseReEvaluate.vue"
+      ),
   },
   {
     path: "/admin/newlicense/others-re-evaluate",
     name: "NewLicenseOthersReEvaluate",
-    component: () => import("../components/Reviewer/ApplicationTypes/NewLicense/NewLicenseOthersReEvaluate.vue"),
+    component: () =>
+      import(
+        "../components/Reviewer/ApplicationTypes/NewLicense/NewLicenseOthersReEvaluate.vue"
+      ),
   },
   {
     path: "/admin/newlicense/confirmed",
     name: "NewLicenseReConfirmed",
-    component: () => import("../components/Reviewer/ApplicationTypes/NewLicense/NewLicenseConfirmed.vue"),
+    component: () =>
+      import(
+        "../components/Reviewer/ApplicationTypes/NewLicense/NewLicenseConfirmed.vue"
+      ),
   },
   {
     path: "/admin/newlicense/others-confirmed",
     name: "NewLicenseOthersReConfirmed",
-    component: () => import("../components/Reviewer/ApplicationTypes/NewLicense/NewLicenseOthersConfirmed.vue"),
+    component: () =>
+      import(
+        "../components/Reviewer/ApplicationTypes/NewLicense/NewLicenseOthersConfirmed.vue"
+      ),
   },
 
   {
@@ -695,32 +719,50 @@ const routes = [
   {
     path: "/admin/renewal/on-review",
     name: "RenewalOnReview",
-    component: () => import("../components/Reviewer/ApplicationTypes/Renewal/RenewalOnReview.vue"),
+    component: () =>
+      import(
+        "../components/Reviewer/ApplicationTypes/Renewal/RenewalOnReview.vue"
+      ),
   },
   {
     path: "/admin/renewal/others-on-review",
     name: "RenewalOthersOnReview",
-    component: () => import("../components/Reviewer/ApplicationTypes/Renewal/RenewalOthersOnReview.vue"),
+    component: () =>
+      import(
+        "../components/Reviewer/ApplicationTypes/Renewal/RenewalOthersOnReview.vue"
+      ),
   },
   {
     path: "/admin/renewal/re-evaluate",
     name: "RenewalReEvaluate",
-    component: () => import("../components/Reviewer/ApplicationTypes/Renewal/RenewalReEvaluate.vue"),
+    component: () =>
+      import(
+        "../components/Reviewer/ApplicationTypes/Renewal/RenewalReEvaluate.vue"
+      ),
   },
   {
     path: "/admin/renewal/others-re-evaluate",
     name: "RenewalOthersReEvaluate",
-    component: () => import("../components/Reviewer/ApplicationTypes/Renewal/RenewalOthersReEvaluate.vue"),
+    component: () =>
+      import(
+        "../components/Reviewer/ApplicationTypes/Renewal/RenewalOthersReEvaluate.vue"
+      ),
   },
   {
     path: "/admin/renewal/confirmed",
     name: "RenewalConfirmed",
-    component: () => import("../components/Reviewer/ApplicationTypes/Renewal/RenewalConfirmed.vue"),
+    component: () =>
+      import(
+        "../components/Reviewer/ApplicationTypes/Renewal/RenewalConfirmed.vue"
+      ),
   },
   {
     path: "/admin/renewal/others-confirmed",
     name: "RenewalOthersConfirmed",
-    component: () => import("../components/Reviewer/ApplicationTypes/Renewal/RenewalOthersConfirmed.vue"),
+    component: () =>
+      import(
+        "../components/Reviewer/ApplicationTypes/Renewal/RenewalOthersConfirmed.vue"
+      ),
   },
 
   {
@@ -801,22 +843,23 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
 });
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   const auth = localStorage.getItem("token");
-  
- if(to.path.includes("/resetpassword"))
- {
-  next();
- } else if (
+  if (to.matched.some((record) => record.meta.RedirectExternalUrl)) {
+    const url = to.meta.RedirectExternalUrl;
+    window.open(url, "_blank");
+    return;
+  }
+  if (to.path.includes("/resetpassword")) {
+    next();
+  } else if (
     !auth &&
     to.path !== "/landing" &&
     to.path !== "/" &&
     to.path !== "/admin"
-    
   )
-     next("/landing");
-    // console.log(to.path.split("/")[2]);
-    
+    next("/landing");
+  // console.log(to.path.split("/")[2]);
   else next();
 });
 

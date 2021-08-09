@@ -68,12 +68,14 @@
                 </router-link>
               </div>
               <div role="none">
-                <a
-                  href="#"
-                  class="block px-4 py-2 text-sm text-blue-100 hover:bg-gray-100 hover:text-gray-900"
-                  role="menuitem"
-                  >Display Settings
-                </a>
+                <router-link to="/google-form">
+                  <li
+                    class="block px-4 py-2 text-sm text-blue-100 hover:bg-gray-100 hover:text-gray-900"
+                    role="menuitem"
+                  >
+                    Leave a Feedback
+                  </li>
+                </router-link>
                 <a
                   @click="logout()"
                   class="block px-4 py-2 text-sm text-blue-100 hover:bg-gray-100 hover:text-gray-900"
@@ -146,6 +148,9 @@ export default {
       } else {
         this.$emit("changeDisplay", menu);
       }
+    },
+    openFeedbackPage() {
+      window.location = "http://google.com";
     },
   },
   computed() {
