@@ -152,7 +152,7 @@
               v-if="this.displayPayrollDoc"
               class="flex flex-col mb-medium w-2/5 mr-12 mr-12"
             >
-              <label class="text-primary-700">Payroll</label>
+              <label class="text-primary-700">Occupation Type</label>
               <select
                 class="max-w-3xl"
                 @change="setPayrollDoc()"
