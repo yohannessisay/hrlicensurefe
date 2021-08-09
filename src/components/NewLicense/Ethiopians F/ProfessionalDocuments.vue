@@ -317,7 +317,9 @@ export default {
   props: ["activeState"],
   data() {
     return {
-      basePath: "https://hrlicensurebe.dev.k8s.sandboxaddis.com/",
+       basePath : "https://storage.googleapis.com/hris-lisence-dev/",
+
+
       dataChanged: false,
       showFlash: false,
       showErrorFlash: false,
