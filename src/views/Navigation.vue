@@ -2,13 +2,17 @@
   <header class="px-10 py-3.5 inset-box-shadow bg-lightBlueB-100">
     <nav>
       <main class="navigate flex items-center justify-between">
-        <div @click="selectMenu(0)" v-if="!isFirstTime" class="flex items-center">
+        <div
+          @click="selectMenu(0)"
+          v-if="!isFirstTime"
+          class="flex items-center"
+        >
           <RenderIllustration class="" illustration="Logo" message="Address" />
           <h2 class="text-md AtkinsonHyperlegibleBold text-primary-600 ml-2 ">
             HRIS - License
           </h2>
         </div>
-         <div v-if="isFirstTime" class="flex items-center">
+        <div v-if="isFirstTime" class="flex items-center">
           <RenderIllustration class="" illustration="Logo" message="Address" />
           <h2 class="text-md AtkinsonHyperlegibleBold text-primary-600 ml-2 ">
             HRIS - License
@@ -26,32 +30,26 @@
               href="#"
               v-on:click="showDropDown()"
             >
-              <!-- <svg
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                fill="none"
-                class="w-8 h-8 px-1 py-1"
-                aria-hidden="true"
-              >
-             
-                <circle cx="12" cy="8" r="5" />
-                
-                <path d="M3,21 h18 C 21,12 3,12 3,21" />
-          
-              </svg> -->
-              <div  v-if="!isFirstTime" class="w-12 h-12 ">
-                <img  v-bind:src="pic" alt="image here"  class="w-20 h-12" />
-                 </div>
-                 <div v-if="isFirstTime">
-                 <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 " fill="none" viewBox="0 0 24 24" stroke="currentColor">
-  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-</svg>
-</div>
-              <!-- <div style="height:100px; width:100px;">
-                <img v-bind:src="'data:image/jpg;base64,' + pic" />
-              </div> -->
+              <div v-if="!isFirstTime" class="w-12 h-12 ">
+                <img v-bind:src="pic" alt="image here" class="w-20 h-12" />
+              </div>
+              <div v-if="isFirstTime">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="w-12 h-12 "
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+              </div>
             </a>
-            
             <div
               v-if="showDD == true"
               class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white focus:outline-none"
@@ -59,13 +57,7 @@
               aria-orientation="vertical"
               aria-labelledby="options-menu"
             >
-              <div class="py-1" role="none">
-                <a
-                  href="#"
-                  class="block px-4 py-2 text-sm text-blue-100  hover:bg-gray-100 hover:text-gray-900"
-                  role="menuitem"
-                  >Profile
-                </a>
+              <div role="none">
                 <router-link to="/about">
                   <li
                     class="block px-4 py-2 text-sm text-blue-100 hover:bg-gray-100 hover:text-gray-900"
@@ -75,7 +67,7 @@
                   </li>
                 </router-link>
               </div>
-              <div class="py-1" role="none">
+              <div role="none">
                 <a
                   href="#"
                   class="block px-4 py-2 text-sm text-blue-100 hover:bg-gray-100 hover:text-gray-900"
@@ -122,7 +114,7 @@ import Title from "@/sharedComponents/Title";
 import RenderIllustration from "@/sharedComponents/RenderIllustration";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
-import { base64StringToBlob } from 'blob-util';
+import { base64StringToBlob } from "blob-util";
 
 import { ref, onMounted } from "vue";
 
@@ -132,7 +124,7 @@ export default {
     return {
       auth: false,
       token: "",
-      showDD: false
+      showDD: false,
     };
   },
   created() {
@@ -154,7 +146,7 @@ export default {
       } else {
         this.$emit("changeDisplay", menu);
       }
-    }
+    },
   },
   computed() {
     if (this.token != undefined) {
@@ -167,59 +159,41 @@ export default {
     const store = useStore();
     const id = +localStorage.getItem("userId");
     let name = ref({
-      fullName: ""
+      fullName: "",
     });
-    let isFirstTime= ref(false);
+    let isFirstTime = ref(false);
     let pic = ref();
     let blob = ref();
     const getProfile = () => {
-      store.dispatch("profile/getProfileByUserId", id).then(res => {
-        // var profile= store.getters["profile/getPersonalInfo"];
-
+      store.dispatch("profile/getProfileByUserId", id).then((res) => {
         getImage(res.data.data);
         getName(res.data.data);
       });
     };
 
-    const getImage = profile => {
-      //let x= profile.photo.data.join('');
-//  console.log(x);
-     console.log(profile);
-      if(!profile)
-      {
-        
-     
-        isFirstTime.value=true;
+    const getImage = (profile) => {
+      if (!profile) {
+        isFirstTime.value = true;
+      } else {
+        pic.value = profile.photo;
       }
-      else
-      {
- pic.value = profile.photo;
-      }
-      
-      // blob = base64StringToBlob(pic, "image/jpg");
-      
     };
-    const getName = profile => {
-       if(profile)
-      {
-      name.value.fullName = profile.name + " " + profile.fatherName;
+    const getName = (profile) => {
+      if (profile) {
+        name.value.fullName = profile.name + " " + profile.fatherName;
       }
-    
-     
     };
     onMounted(() => {
-     
       getProfile();
     });
-
     return {
       name,
       getImage,
       pic,
       blob,
-      isFirstTime
+      isFirstTime,
     };
-  }
+  },
 };
 </script>
 <style>
