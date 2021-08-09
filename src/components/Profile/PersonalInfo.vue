@@ -145,17 +145,17 @@
             />
           </div>
         </div>
-        <div class="flex flex-col mb-medium w-1/2 m1-12">
-          <label class="text-primary-700">Date of birth </label>
-          <input
-            class="max-w-3xl"
-            type="date"
-            v-model="personalInfo.dateOfBirth"
-          />
-          <span style="color: red">{{ personalInfoErrors.dateOfBirth }}</span>
-        </div>
         <div class="flex">
-          <div class="flex w-1/2 mb-small  mr-12">
+          <div class="flex flex-col mb-medium w-1/2 mr-6">
+            <label class="text-primary-700">Date of birth </label>
+            <input
+              class="max-w-3xl"
+              type="date"
+              v-model="personalInfo.dateOfBirth"
+            />
+            <span style="color: red">{{ personalInfoErrors.dateOfBirth }}</span>
+          </div>
+          <div class="flex flex-col mb-medium w-1/2 ml-12">
             <div class="flex flex-col w-full">
               <label class="text-primary-700">Gender</label>
               <div class="flex w-full">
@@ -197,6 +197,8 @@
               >
             </div>
           </div>
+        </div>
+        <div class="flex">
           <div class="flex w-1/2 mb-small m1-12">
             <div class="flex flex-col w-full">
               <label class="text-primary-700">Martial Status</label>
@@ -252,9 +254,7 @@
               }}</span>
             </div>
           </div>
-        </div>
-        <div class="flex">
-          <div class="flex flex-col mb-medium w-1/2 mr-6">
+          <div class="flex flex-col mb-medium w-1/2 ml-12">
             <label class="text-primary-700">User Type</label>
             <select class="max-w-3xl" v-model="personalInfo.userTypeId">
               <option
@@ -267,7 +267,9 @@
             </select>
             <span style="color: red">{{ personalInfoErrors.userTypeId }}</span>
           </div>
-          <div class="flex flex-col mb-medium w-1/2 ml-12">
+        </div>
+        <div class="flex">
+          <div class="flex flex-col mb-medium w-1/2 mr-6">
             <label class="text-primary-700">Region</label>
             <select
               class="max-w-3xl"
@@ -283,9 +285,7 @@
               </option>
             </select>
           </div>
-        </div>
-        <div class="flex">
-          <div class="flex flex-col mb-medium w-1/2 mr-6">
+          <div class="flex flex-col mb-medium w-1/2 ml-12">
             <label class="text-primary-700">Zone</label>
             <select
               class="max-w-3xl"
@@ -301,7 +301,9 @@
               </option>
             </select>
           </div>
-          <div class="flex flex-col mb-medium w-1/2 ml-12">
+        </div>
+        <div class="flex">
+          <div class="flex flex-col mb-medium w-1/2 mr-6">
             <label class="text-primary-700">Woreda</label>
             <select class="max-w-3xl" v-model="personalInfo.woredaId">
               <option
