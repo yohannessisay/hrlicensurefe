@@ -165,8 +165,8 @@
                   flex
                   justify-center
                   items-center
-                  ml-8
-                  mr-8
+                  ml-4
+                  mr-4
                   box-shadow-pop
                   rounded-lg
                   bg-lightGrey-100
@@ -246,8 +246,8 @@
                   flex
                   justify-center
                   items-center
-                  ml-8
-                  mr-8
+                  ml-4
+                  mr-4
                   box-shadow-pop
                   rounded-lg
                   bg-lightGrey-100
@@ -334,8 +334,8 @@
                   flex
                   justify-center
                   items-center
-                  ml-8
-                  mr-8
+                  ml-4
+                  mr-4
                   box-shadow-pop
                   rounded-lg
                   bg-lightGrey-100
@@ -425,8 +425,8 @@
                   flex
                   justify-center
                   items-center
-                  ml-8
-                  mr-8
+                  ml-4
+                  mr-4
                   box-shadow-pop
                   rounded-lg
                   bg-lightGrey-100
