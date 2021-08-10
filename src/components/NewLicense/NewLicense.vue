@@ -144,27 +144,27 @@
               </div>
             </transition>
             <transition name="fade" mode="out-in">
-              <div v-if="this.activeState == 9">
-                <Degree :activeState="9" @changeActiveState="activeState++" />
+              <div v-if="this.activeState == 8">
+                <Degree :activeState="8" @changeActiveState="activeState++" />
               </div>
             </transition>
             <transition name="fade" mode="out-in">
-              <div v-if="this.activeState == 10">
+              <div v-if="this.activeState == 9">
                 <Transcript
-                  :activeState="10"
+                  :activeState="9"
                   @changeActiveState="activeState++"
                 />
               </div>
             </transition>
             <transition name="fade" mode="out-in">
-              <div v-if="this.activeState == 11">
-                <Diploma :activeState="11" @changeActiveState="activeState++" />
+              <div v-if="this.activeState == 10">
+                <Diploma :activeState="10" @changeActiveState="activeState++" />
               </div>
             </transition>
             <transition name="fade" mode="out-in">
-              <div v-if="this.activeState == 12">
+              <div v-if="this.activeState == 11">
                 <LicenseSummary
-                  :activeState="12"
+                  :activeState="11"
                   @changeActiveState="activeState++"
                 />
               </div>

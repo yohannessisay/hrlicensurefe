@@ -397,9 +397,9 @@ export default {
     },
     setPayrollDoc() {
       if (this.payrollID == 1) {
-        this.payrollDocType = true;
-      } else {
         this.payrollDocType = false;
+      } else {
+        this.payrollDocType = true;
       }
     },
 
