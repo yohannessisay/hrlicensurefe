@@ -60,7 +60,7 @@
 
         <div>
           <label class="ml-8 text-primary-300"> Marital Status</label>
-          <h5 class="ml-8">{{ personalInfo.maritalStatus }}</h5>
+          <h5 class="ml-8">{{ maritalStatus }}</h5>
         </div>
       </div>
 
@@ -181,10 +181,10 @@ export default {
     };
 
     let success = ref(false);
-    let a = true;
     let response = {};
     let showFlash = ref(false);
     let nationality = ref("");
+    let maritalStatus = ref("");
 
     const addProfile = () => {
       message.value.showLoading = true;
@@ -251,10 +251,13 @@ export default {
     const prevStep = () => {
       emit("changeActiveStatePrevious");
     };
+
     personalInfo = store.getters["profile/getPersonalInfo"];
     address = store.getters["profile/getAddress"];
     contact = store.getters["profile/getContact"];
     nationality = store.getters["profile/getNationality"];
+    maritalStatus = store.getters["profile/getMaritalStatus"];
+
     onMounted(() => {
       fetchUser();
       nextTick(function() {
@@ -269,8 +272,8 @@ export default {
       address,
       contact,
       success,
-      a,
       nationality,
+      maritalStatus,
       response,
       message,
       submit,

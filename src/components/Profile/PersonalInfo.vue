@@ -488,7 +488,11 @@ export default {
           nationality.value = state.value.nationalities[i].name;
         }
       }
+      if (personalInfo.value.maritalStatusId == 1) maritalStatus.value = "Single";
+      if (personalInfo.value.maritalStatusId == 2) maritalStatus.value = "Married";
+      if (personalInfo.value.maritalStatusId == 3) maritalStatus.value = "Divorced";
       store.dispatch("profile/setNationality", nationality.value);
+      store.dispatch("profile/setMaritalStatus", maritalStatus.value);
       let empty = isEmpty(personalInfoErrors.value);
       if (empty == false) {
         return;
