@@ -354,6 +354,8 @@ export default {
     let isImage = ref(true);
     let photoSizeCheck = ref(false);
     let fileSize = ref("");
+    let nationality = ref("");
+    let maritalStatus = ref("");
 
     let personalInfo = ref({
       name: "",
@@ -478,11 +480,17 @@ export default {
     };
 
     const nextStep = () => {
-      console.log(personalInfo.value);
       personalInfoErrors.value = validateForm(personalInfo.value);
+      for (let i = 0; i < state.value.nationalities.length; i++) {
+        if (
+          state.value.nationalities[i].id == personalInfo.value.nationalityId
+        ) {
+          nationality.value = state.value.nationalities[i].name;
+        }
+      }
+      store.dispatch("profile/setNationality", nationality.value);
       let empty = isEmpty(personalInfoErrors.value);
       if (empty == false) {
-        console.log("sth is false");
         return;
       }
       if (empty == true) {
@@ -543,6 +551,8 @@ export default {
       personalInfoErrors,
       photoSizeCheck,
       validateForm,
+      nationality,
+      maritalStatus,
       isEmpty,
       state,
       id,

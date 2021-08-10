@@ -4,6 +4,8 @@ import {
   SET_PERSONAL_INFO,
   SET_ADDRESS,
   SET_PHOTO,
+  SET_NATIONALITY,
+  SET_MARITAL_STATUS,
 } from "./mutation-types";
 
 const url = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api/";
@@ -26,6 +28,12 @@ export default {
   },
   setPhoto({ commit }, photo) {
     commit(SET_PHOTO, photo);
+  },
+  setNationality({ commit }, nationality) {
+    commit(SET_NATIONALITY, nationality);
+  },
+  setMaritalStatus({ commit }, maritalStatus) {
+    commit(SET_MARITAL_STATUS, maritalStatus);
   },
 
   async getUserTypes() {

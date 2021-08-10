@@ -39,7 +39,7 @@
         </div>
         <div>
           <label class="ml-8 text-primary-300"> Nationality</label>
-          <h5 class="ml-8">{{ personalInfo.nationality }}</h5>
+          <h5 class="ml-8">{{ nationality }}</h5>
         </div>
         <div>
           <label class="ml-8 text-primary-300"> Place of Birth</label>
@@ -184,6 +184,7 @@ export default {
     let a = true;
     let response = {};
     let showFlash = ref(false);
+    let nationality = ref("");
 
     const addProfile = () => {
       message.value.showLoading = true;
@@ -253,7 +254,7 @@ export default {
     personalInfo = store.getters["profile/getPersonalInfo"];
     address = store.getters["profile/getAddress"];
     contact = store.getters["profile/getContact"];
-
+    nationality = store.getters["profile/getNationality"];
     onMounted(() => {
       fetchUser();
       nextTick(function() {
@@ -269,6 +270,7 @@ export default {
       contact,
       success,
       a,
+      nationality,
       response,
       message,
       submit,

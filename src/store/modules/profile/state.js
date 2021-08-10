@@ -17,6 +17,8 @@ export default {
       woredaId: "",
       nationalityId: "",
     },
+    maritalStatus: "",
+    nationality: "",
     address: {
       kebele: "",
       houseNumber: "",
