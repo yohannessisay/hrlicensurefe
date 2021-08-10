@@ -201,7 +201,7 @@ export default {
           gender: personalInfo.gender,
           dateOfBirth: personalInfo.dateOfBirth,
           placeOfBirth: personalInfo.placeOfBirth,
-          nationality: personalInfo.nationality,
+          nationality: personalInfo.nationalityId,
           userTypeId: personalInfo.userTypeId,
           maritalStatusId: personalInfo.maritalStatusId,
           kebele: address.kebele,

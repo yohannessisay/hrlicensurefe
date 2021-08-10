@@ -312,7 +312,7 @@
           </div>
         </div>
         <div class="flex">
-          <div style="width: 360px" class="flex flex-col mb-medium mr-6">
+          <div style="width: 47%" class="flex flex-col mb-medium mr-6">
             <label class="text-primary-700">Woreda</label>
             <select class="max-w-3xl" v-model="personalInfo.woredaId">
               <option
