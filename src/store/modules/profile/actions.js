@@ -66,6 +66,16 @@ export default {
       return resp;
     }
   },
+  async getNationalities() {
+    try {
+      const baseUrl = url + "lookups/nationalities";
+      const resp = await ApiService.get(baseUrl);
+      return resp;
+    } catch (error) {
+      const resp = error;
+      return resp;
+    }
+  },
   async addProfile({ commit }, profile) {
     try {
       const resp = await ApiService.post(url + "profiles/add", profile);
@@ -101,7 +111,6 @@ export default {
   async getUserById({ commit }, id) {
     try {
       const resp = await ApiService.get(url + "users/" + id);
-      console.log(resp);
       return resp;
     } catch (error) {
       return error;

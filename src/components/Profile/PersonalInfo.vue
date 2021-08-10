@@ -128,14 +128,23 @@
         <div class="flex">
           <div class="flex flex-col mb-medium w-1/2 mr-6">
             <label class="text-primary-700">Nationality</label>
-            <input
+            <select
               class="max-w-3xl"
-              type="text"
-              v-model="personalInfo.nationality"
-            />
-            <span style="color: red">{{ personalInfoErrors.nationality }}</span>
+              v-model="personalInfo.nationalityId"
+              @change="fetchNationalities()"
+            >
+              <option
+                v-for="types in state.nationalities"
+                v-bind:key="types.name"
+                v-bind:value="types.id"
+              >
+                {{ types.name }}
+              </option>
+            </select>
+            <span style="color: red">{{
+              personalInfoErrors.nationalityId
+            }}</span>
           </div>
-
           <div class="flex flex-col mb-medium w-1/2 ml-12">
             <label class="text-primary-700">Place of birth(Optional)</label>
             <input
@@ -303,7 +312,7 @@
           </div>
         </div>
         <div class="flex">
-          <div class="flex flex-col mb-medium w-1/2 mr-6">
+          <div style="width: 360px" class="flex flex-col mb-medium mr-6">
             <label class="text-primary-700">Woreda</label>
             <select class="max-w-3xl" v-model="personalInfo.woredaId">
               <option
@@ -316,7 +325,6 @@
             </select>
           </div>
         </div>
-
         <div class="flex mb-medium w-full mt-medium">
           <button
             class="block mx-auto w-1/4  bg-lightBlue-500 hover:bg-lightBlue-600 hover:shadow-lg"
@@ -357,7 +365,7 @@ export default {
       gender: "",
       dateOfBirth: "",
       placeOfBirth: "",
-      nationality: "",
+      nationalityId: "",
       userTypeId: "",
       maritalStatusId: "",
       photo: "",
@@ -370,7 +378,7 @@ export default {
       alternativeName: "",
       alternativeFatherName: "",
       alternativeGrandFatherName: "",
-      nationality: "",
+      nationalityId: "",
       gender: "",
       maritalStatusId: "",
       userTypeId: "",
@@ -383,6 +391,7 @@ export default {
       regions: {},
       zones: {},
       woreda: {},
+      nationalities: {},
     });
     let id = ref({
       regionID: {},
@@ -461,11 +470,19 @@ export default {
         state.value.woreda = woredasResult.data;
       });
     };
+    const fetchNationalities = () => {
+      store.dispatch("profile/getNationalities").then((res) => {
+        const nationalities = res.data;
+        state.value.nationalities = nationalities.data;
+      });
+    };
 
     const nextStep = () => {
+      console.log(personalInfo.value);
       personalInfoErrors.value = validateForm(personalInfo.value);
       let empty = isEmpty(personalInfoErrors.value);
       if (empty == false) {
+        console.log("sth is false");
         return;
       }
       if (empty == true) {
@@ -473,10 +490,8 @@ export default {
         emit("changeActiveState");
       }
     };
-
     const validateForm = (formData) => {
       const errors = {};
-
       if (!formData.name) errors.name = "First Name Required";
       if (!formData.fatherName) errors.fatherName = "Father's Name Required";
       if (!formData.grandFatherName)
@@ -488,13 +503,13 @@ export default {
       if (!formData.alternativeGrandFatherName)
         errors.alternativeGrandFatherName =
           "Alternative Grandfather's Name Required";
-      if (!formData.nationality) errors.nationality = "Nationality Required";
+      if (!formData.nationalityId)
+        errors.nationalityId = "Nationality Required";
+      if (!formData.dateOfBirth) errors.dateOfBirth = "Date of Birth Required";
       if (!formData.gender) errors.gender = "Gender Required";
       if (!formData.maritalStatusId)
         errors.maritalStatusId = "Marital Status Required";
       if (!formData.userTypeId) errors.userTypeId = "User Type Required";
-      if (!formData.dateOfBirth) errors.dateOfBirth = "Date of Birth Required";
-
       return errors;
     };
     const isEmpty = (obj) => {
@@ -503,7 +518,6 @@ export default {
           return false;
         }
       }
-
       return true;
     };
 
@@ -513,6 +527,7 @@ export default {
       }
       fetchUserTypes();
       fetchRegions();
+      fetchNationalities();
     });
     return {
       photoFile,
@@ -536,6 +551,7 @@ export default {
       fetchRegions,
       fetchZones,
       fetchWoredas,
+      fetchNationalities,
     };
   },
 };
