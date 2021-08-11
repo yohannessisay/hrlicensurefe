@@ -395,13 +395,7 @@ export default {
         this.nativeEnglishSpeaker = false;
       }
     },
-    setPayrollDoc() {
-      if (this.payrollID == 1) {
-        this.payrollDocType = false;
-      } else {
-        this.payrollDocType = true;
-      }
-    },
+    setPayrollDoc() {},
 
     draft(action) {
       this.showLoading = true;

@@ -17,7 +17,7 @@
             </div>
           </transition>
 
-          <div v-if="this.applicantType == 1 && !this.displayPayrollOption">
+          <div v-if="this.applicantType == 1 && this.displayPayrollOption">
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 2">
                 <Passport :activeState="2" @changeActiveState="activeState++" />
@@ -98,7 +98,7 @@
             </transition>
           </div>
 
-          <div v-if="this.applicantType == 1 && this.displayPayrollOption">
+          <div v-if="this.applicantType == 1 && !this.displayPayrollOption">
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 2">
                 <Passport :activeState="2" @changeActiveState="activeState++" />
@@ -497,17 +497,10 @@ export default {
       }
     },
     payrollDocumentSet: function(params) {
-      if (
-        params == null ||
-        params == undefined ||
-        params == "" ||
-        params == 0 ||
-        params == 1
-      ) {
-        this.displayPayrollOption = false;
-      }
       if (params == 2) {
         this.displayPayrollOption = true;
+      } else {
+        this.displayPayrollOption = false;
       }
     },
     submit(n) {
