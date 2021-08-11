@@ -1,6 +1,7 @@
 <template>
   <div class="flex justify-center">
- <div class="bg-lightBlueB-200 w-screen h-screen max-w-4xl">      <div
+    <div class="bg-lightBlueB-200 w-screen h-screen max-w-4xl">
+      <div
         class="
           flex flex-col
           pt-large
@@ -56,18 +57,18 @@
                 </label>
               </span>
 
-                <picture v-if="!showUpload && isImage">
+              <picture v-if="!showUpload && isImage">
                 <p>
                   <a href="javascript:void(0)" @click="reset()">Upload again</a>
                 </p>
                 <img v-bind:src="filePreview" v-show="showPreview" />
               </picture>
               <!--  -->
-              <div v-if="!showUpload && isPdf  ">
+              <div v-if="!showUpload && isPdf">
                 <p>
                   <a href="javascript:void(0)" @click="reset()">Upload again</a>
                 </p>
-                <embed v-bind:src="filePreview" v-show="showPreview"  />
+                <embed v-bind:src="filePreview" v-show="showPreview" />
               </div>
               <span v-if="!showUpload && !isImage && !isPdf">
                 <img :src="filePreview" alt="" class="preview" />
@@ -105,7 +106,7 @@
                       ref="diplomaFile"
                       v-on:change="handleDiplomaUpload()"
                       style="margin-bottom: 15px !important;"
-                       accept=".jpeg, .png, .gif, .jpg, .pdf, .tiff , .svg"
+                      accept=".jpeg, .png, .gif, .jpg, .pdf, .tiff , .svg"
                     />
                     <p>
                       Drag your file(s) here to begin<br />
@@ -123,11 +124,16 @@
                 </p>
                 <img v-bind:src="diplomaPreview" v-show="showDiplomaPreview" />
               </picture>
-                <div v-if="!showDiplomaUpload && isUDPdf  ">
+              <div v-if="!showDiplomaUpload && isUDPdf">
                 <p>
-                  <a href="javascript:void(0)" @click="resetDiploma()">Upload again</a>
+                  <a href="javascript:void(0)" @click="resetDiploma()"
+                    >Upload again</a
+                  >
                 </p>
-                <embed v-bind:src="diplomaPreview" v-show="showDiplomaPreview"  />
+                <embed
+                  v-bind:src="diplomaPreview"
+                  v-show="showDiplomaPreview"
+                />
               </div>
               <span v-if="!showDiplomaUpload && !isDiplomaImage && !isUDPdf">
                 <img :src="diplomaPreview" alt="" class="preview" />
@@ -164,7 +170,7 @@
                       ref="transcriptFile"
                       v-on:change="handleTranscriptUpload()"
                       style="margin-bottom: 15px !important;"
-                       accept=".jpeg, .png, .gif, .jpg, .pdf, .tiff , .svg"
+                      accept=".jpeg, .png, .gif, .jpg, .pdf, .tiff , .svg"
                     />
                     <p>
                       Drag your file(s) here to begin<br />
@@ -185,13 +191,20 @@
                   v-show="showTranscriptPreview"
                 />
               </picture>
-            <div v-if="!showTranscriptUpload && isUTPdf  ">
+              <div v-if="!showTranscriptUpload && isUTPdf">
                 <p>
-                  <a href="javascript:void(0)" @click="resetTranscript()">Upload again</a>
+                  <a href="javascript:void(0)" @click="resetTranscript()"
+                    >Upload again</a
+                  >
                 </p>
-                <embed v-bind:src="transcriptPreview" v-show="showTranscriptPreview"  />
+                <embed
+                  v-bind:src="transcriptPreview"
+                  v-show="showTranscriptPreview"
+                />
               </div>
-              <span v-if="!showTranscriptUpload && !isTranscriptImage && !isUTPdf">
+              <span
+                v-if="!showTranscriptUpload && !isTranscriptImage && !isUTPdf"
+              >
                 <img :src="transcriptPreview" alt="" class="preview" />
               </span>
             </div>
@@ -335,7 +348,7 @@ export default {
   props: ["activeState"],
   data() {
     return {
-       basePath : "https://storage.googleapis.com/hris-lisence-dev/",
+      basePath: "https://storage.googleapis.com/hris-lisence-dev/",
 
       dataChanged: false,
       showFlash: false,
@@ -345,9 +358,9 @@ export default {
       filePreview: "",
       showUpload: true,
       isImage: false,
-      isPdf:false,
-      isUTPdf:false,
-      isUDPdf:false,
+      isPdf: false,
+      isUTPdf: false,
+      isUDPdf: false,
       diplomaFile: "",
       showDiplomaPreview: false,
       diplomaPreview: "",
@@ -455,15 +468,12 @@ export default {
       for (let i = 0; i < this.draftData.documents.length; i++) {
         if (this.draftData.documents[i].documentTypeCode == "PDC") {
           this.showUpload = false;
-           if(this.draftData.documents[i].fileName.split(".")[1]=="pdf")
-            {
-               this.isPdf=true;
-            }
-            else
-            {
-              this.isImage = true;
-            }
-          
+          if (this.draftData.documents[i].fileName.split(".")[1] == "pdf") {
+            this.isPdf = true;
+          } else {
+            this.isImage = true;
+          }
+
           this.photoFile = this.draftData.documents[i];
           this.showPreview = true;
           this.filePreview =
@@ -471,14 +481,11 @@ export default {
         }
         if (this.draftData.documents[i].documentTypeCode == "PDD") {
           this.showDiplomaUpload = false;
-           if(this.draftData.documents[i].fileName.split(".")[1]=="pdf")
-            {
-               this.isUDPdf=true;
-            }
-            else
-            {
-              this.isDiplomaImage = true;
-            }
+          if (this.draftData.documents[i].fileName.split(".")[1] == "pdf") {
+            this.isUDPdf = true;
+          } else {
+            this.isDiplomaImage = true;
+          }
           this.diplomaFile = this.draftData.documents[i];
           this.showDiplomaPreview = true;
           this.diplomaPreview =
@@ -486,15 +493,12 @@ export default {
         }
         if (this.draftData.documents[i].documentTypeCode == "PDT") {
           this.showTranscriptUpload = false;
-          if(this.draftData.documents[i].fileName.split(".")[1]=="pdf")
-            {
-               this.isUTPdf=true;
-            }
-            else
-            {
-                this.isTranscriptImage = true;
-            }
-        
+          if (this.draftData.documents[i].fileName.split(".")[1] == "pdf") {
+            this.isUTPdf = true;
+          } else {
+            this.isTranscriptImage = true;
+          }
+
           this.transcriptFile = this.draftData.documents[i];
           this.showTranscriptPreview = true;
           this.transcriptPreview =
@@ -522,8 +526,8 @@ export default {
       this.photoFile = "";
       this.filePreview = "";
       this.isImage = true;
-      this.isPdf=false;
-      this.photoFileSize="";
+      this.isPdf = false;
+      this.photoFileSize = "";
     },
     resetDiploma() {
       this.showDiplomaUpload = true;
@@ -531,8 +535,8 @@ export default {
       this.diplomaFile = "";
       this.diplomaPreview = "";
       this.isDiplomaImage = true;
-      this.isUDPdf=false;
-      this.diplomaFileSize="";
+      this.isUDPdf = false;
+      this.diplomaFileSize = "";
     },
     resetTranscript() {
       this.showTranscriptUpload = true;
@@ -540,8 +544,8 @@ export default {
       this.transcriptFile = "";
       this.transcriptPreview = "";
       this.isTranscriptImage = true;
-      this.isUTPdf=false;
-      this.transcriptFileSize="";
+      this.isUTPdf = false;
+      this.transcriptFileSize = "";
     },
     // resetExperience() {
     //   this.showExperienceUpload = true;
@@ -564,7 +568,7 @@ export default {
       }
       reader.addEventListener(
         "load",
-        function () {
+        function() {
           this.showPreview = true;
           this.filePreview = reader.result;
         }.bind(this),
@@ -577,7 +581,7 @@ export default {
           reader.readAsDataURL(this.photoFile);
         } else if (/\.(pdf)$/i.test(this.photoFile.name)) {
           this.isImage = false;
-          this.isPdf=true;
+          this.isPdf = true;
           reader.readAsDataURL(this.photoFile);
         }
       }
@@ -597,7 +601,7 @@ export default {
 
       reader.addEventListener(
         "load",
-        function () {
+        function() {
           this.showDiplomaPreview = true;
           this.diplomaPreview = reader.result;
         }.bind(this),
@@ -610,7 +614,7 @@ export default {
           reader.readAsDataURL(this.diplomaFile);
         } else if (/\.(pdf)$/i.test(this.diplomaFile.name)) {
           this.isDiplomaImage = false;
-          this.isUDPdf=true;
+          this.isUDPdf = true;
           reader.readAsDataURL(this.diplomaFile);
         }
       }
@@ -630,7 +634,7 @@ export default {
 
       reader.addEventListener(
         "load",
-        function () {
+        function() {
           this.showTranscriptPreview = true;
           this.transcriptPreview = reader.result;
         }.bind(this),
@@ -643,7 +647,7 @@ export default {
           reader.readAsDataURL(this.transcriptFile);
         } else if (/\.(pdf)$/i.test(this.transcriptFile.name)) {
           this.isTranscriptImage = false;
-          this.isUTPdf=true;
+          this.isUTPdf = true;
           reader.readAsDataURL(this.transcriptFile);
         }
       }
@@ -714,6 +718,7 @@ export default {
             },
             residenceWoredaId: this.license.residenceWoredaId,
             professionalTypeId: this.licenseInfo.professionalTypeId,
+            paymentSlip: null,
           },
         };
         this.$store

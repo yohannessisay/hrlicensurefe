@@ -64,11 +64,11 @@
                 <img v-bind:src="filePreview" v-show="showPreview" />
               </picture>
               <!--  -->
-              <div v-if="!showUpload && isPdf">
+              <div v-if="!showUpload && isPdf  ">
                 <p>
                   <a href="javascript:void(0)" @click="reset()">Upload again</a>
                 </p>
-                <embed v-bind:src="filePreview" v-show="showPreview" />
+                <embed v-bind:src="filePreview" v-show="showPreview"  />
               </div>
               <span v-if="!showUpload && !isImage && !isPdf">
                 <img :src="filePreview" alt="" class="preview" />
@@ -191,7 +191,7 @@ export default {
     let showUpload = ref(true);
     let isImage = ref(false);
     let isPdf = ref(false);
-   
+    
 
     let buttons = ref([]);
     let documentSpecs = ref([]);
@@ -220,8 +220,8 @@ export default {
       cpdFile.value = "";
       filePreview.value = "";
       isImage.value = true;
-      fileSize.value = "";
-      isPdf.value = false;
+      fileSize.value="";
+      isPdf.value=false;
     };
     const handleFileUpload = () => {
       dataChanged.value = true;
@@ -251,7 +251,7 @@ export default {
           reader.readAsDataURL(cpdFile.value);
         } else if (/\.(pdf)$/i.test(cpdFile.value.name)) {
           isImage.value = false;
-          isPdf.value = true;
+                isPdf.value=true;
           reader.readAsDataURL(cpdFile.value);
         }
       }
@@ -289,9 +289,12 @@ export default {
         for (let i = 0; i < draftData.documents.length; i++) {
           if (draftData.documents[i].documentTypeCode == "CPD") {
             showUpload.value = false;
-            if (draftData.documents[i].fileName.split(".")[1] == "pdf") {
-              isPdf.value = true;
-            } else {
+             if(draftData.documents[i].fileName.split(".")[1]=="pdf")
+            {
+               isPdf.value=true;
+            }
+            else
+            {
               isImage.value = true;
             }
             cpdFile.value = draftData.documents[i];
@@ -371,6 +374,7 @@ export default {
             },
             professionalTypeId: licenseInfo.professionalTypeId,
             residenceWoredaId: licenseInfo.residenceWoredaId,
+            paymentSlip: null,
           },
         };
         store.dispatch("renewal/addRenewalLicense", license).then((res) => {
@@ -489,6 +493,7 @@ export default {
             },
             professionalTypeId: licenseInfo.professionalTypeId,
             residenceWoredaId: licenseInfo.residenceWoredaId,
+            paymentSlip: null,
           },
         };
         store.dispatch("renewal/addRenewalLicense", license).then((res) => {

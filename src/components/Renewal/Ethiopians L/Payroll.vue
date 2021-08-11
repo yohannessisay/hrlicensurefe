@@ -355,6 +355,7 @@ export default {
             },
             professionalTypeId: licenseInfo.professionalTypeId,
             residenceWoredaId: licenseInfo.residenceWoredaId,
+            paymentSlip: null,
           },
         };
         store.dispatch("renewal/addRenewalLicense", license).then((res) => {
@@ -476,6 +477,7 @@ export default {
             },
             professionalTypeId: licenseInfo.professionalTypeId,
             residenceWoredaId: licenseInfo.residenceWoredaId,
+            paymentSlip: null,
           },
         };
         store.dispatch("renewal/addRenewalLicense", license).then((res) => {

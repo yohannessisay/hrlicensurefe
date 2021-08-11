@@ -1,6 +1,7 @@
 <template>
   <div class="flex justify-center">
- <div class="bg-lightBlueB-200 w-screen h-screen max-w-4xl">      <div
+    <div class="bg-lightBlueB-200 w-screen h-screen max-w-4xl">
+      <div
         class="
           flex flex-col
           pt-large
@@ -57,18 +58,18 @@
                 </label>
               </span>
 
-                 <picture v-if="!showUpload && isImage">
+              <picture v-if="!showUpload && isImage">
                 <p>
                   <a href="javascript:void(0)" @click="reset()">Upload again</a>
                 </p>
                 <img v-bind:src="filePreview" v-show="showPreview" />
               </picture>
               <!--  -->
-              <div v-if="!showUpload && isPdf  ">
+              <div v-if="!showUpload && isPdf">
                 <p>
                   <a href="javascript:void(0)" @click="reset()">Upload again</a>
                 </p>
-                <embed v-bind:src="filePreview" v-show="showPreview"  />
+                <embed v-bind:src="filePreview" v-show="showPreview" />
               </div>
               <span v-if="!showUpload && !isImage && !isPdf">
                 <img :src="filePreview" alt="" class="preview" />
@@ -172,8 +173,7 @@ export default {
     const route = useRoute();
     const router = useRouter();
 
-     const basePath = "https://storage.googleapis.com/hris-lisence-dev/";
-
+    const basePath = "https://storage.googleapis.com/hris-lisence-dev/";
 
     let message = ref({
       showFlash: false,
@@ -191,7 +191,6 @@ export default {
     let showUpload = ref(true);
     let isImage = ref(false);
     let isPdf = ref(false);
-    
 
     let draftStatus = ref("");
     let buttons = [];
@@ -220,8 +219,8 @@ export default {
       letterFile.value = "";
       filePreview.value = "";
       isImage.value = true;
-       fileSize.value="";
-      isPdf.value=false;
+      fileSize.value = "";
+      isPdf.value = false;
     };
     const handleFileUpload = () => {
       dataChanged.value = true;
@@ -238,7 +237,7 @@ export default {
       }
       reader.addEventListener(
         "load",
-        function () {
+        function() {
           showPreview.value = true;
           filePreview.value = reader.result;
         },
@@ -251,7 +250,7 @@ export default {
           reader.readAsDataURL(letterFile.value);
         } else if (/\.(pdf)$/i.test(letterFile.value.name)) {
           isImage.value = false;
-           isPdf.value=true;
+          isPdf.value = true;
           reader.readAsDataURL(letterFile.value);
         }
       }
@@ -289,16 +288,12 @@ export default {
         for (let i = 0; i < draftData.documents.length; i++) {
           if (draftData.documents[i].documentTypeCode == "LHI") {
             showUpload.value = false;
-              if(draftData.documents[i].fileName.split(".")[1]=="pdf")
-            {
-               isPdf.value=true;
-            }
-            else
-            {
+            if (draftData.documents[i].fileName.split(".")[1] == "pdf") {
+              isPdf.value = true;
+            } else {
               isImage.value = true;
             }
-            
-            
+
             letterFile.value = draftData.documents[i];
             showPreview.value = true;
             filePreview.value = basePath + draftData.documents[i].filePath;
@@ -375,6 +370,7 @@ export default {
             },
             professionalTypeId: licenseInfo.professionalTypeId,
             residenceWoredaId: licenseInfo.residenceWoredaId,
+            paymentSlip: null,
           },
         };
         store.dispatch("renewal/addRenewalLicense", license).then((res) => {
@@ -457,8 +453,8 @@ export default {
                       router.push({ path: "/menu" });
                     }, 1500);
                   } else {
-                    message.value.showErrorFlash =
-                      !message.value.showErrorFlash;
+                    message.value.showErrorFlash = !message.value
+                      .showErrorFlash;
                   }
                 })
                 .catch((err) => {});
