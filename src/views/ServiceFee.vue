@@ -144,8 +144,7 @@ export default {
     const route = useRoute();
     const router = useRouter();
 
-     const basePath = "https://storage.googleapis.com/hris-lisence-dev/";
-
+    const basePath = "https://storage.googleapis.com/hris-lisence-dev/";
 
     let message = ref({
       showFlash: false,
@@ -242,7 +241,7 @@ export default {
     });
     const update = () => {};
     const paymentSlipChange = (paymentSlip) => {
-      console.log(paymentSlip);
+      // console.log(paymentSlip);
     };
     const save = () => {
       message.value.showLoading = true;

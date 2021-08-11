@@ -323,7 +323,6 @@
             v-bind:key="i"
           >
             <div
-              @click="openServiceFeeModal(item)"
               class="container mb-medium"
               v-for="item in this.verification.slice((i - 1) * 4, i * 4)"
               v-bind:key="item"
@@ -414,7 +413,6 @@
             v-bind:key="i"
           >
             <div
-              @click="openServiceFeeModal(item)"
               class="container mb-medium"
               v-for="item in this.goodstanding.slice((i - 1) * 4, i * 4)"
               v-bind:key="item"
