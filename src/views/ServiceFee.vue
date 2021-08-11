@@ -59,6 +59,7 @@
                         ref="serviceFileP"
                         v-on:change="handleFileUpload()"
                         style="margin-bottom: 15px !important"
+                        accept=".jpeg, .png, .gif, .jpg, .pdf, .tiff , .svg"
                       />
                       <p>
                         Drag your file(s) here to begin<br />
@@ -77,7 +78,15 @@
                   <img v-bind:src="filePreview" v-show="showPreview" />
                 </picture>
 
-                <span v-if="!showUpload && !isImage">
+                <div v-if="!showUpload && isPdf">
+                  <p>
+                    <a href="javascript:void(0)" @click="reset()"
+                      >Upload again</a
+                    >
+                  </p>
+                  <embed v-bind:src="filePreview" v-show="showPreview" />
+                </div>
+                <span v-if="!showUpload && !isImage && !isPdf">
                   <img :src="filePreview" alt="" class="preview" />
                 </span>
               </div>
@@ -159,6 +168,7 @@ export default {
     let filePreview = ref("");
     let showUpload = ref(true);
     let isImage = ref(true);
+    let isPdf = ref(false);
     let documentSpecs = ref([]);
     let buttons = ref([]);
     let paymentSlip = ref("");
@@ -179,6 +189,8 @@ export default {
       serviceFile.value = "";
       filePreview.value = "";
       isImage.value = true;
+      fileSize.value = "";
+      isPdf.value = false;
     };
     const handleFileUpload = () => {
       dataChanged.value = true;
@@ -202,14 +214,14 @@ export default {
         },
         false
       );
-
       if (serviceFile.value) {
         if (/\.(jpe?g|png|gif)$/i.test(serviceFile.value.name)) {
           isImage.value = true;
           reader.readAsDataURL(serviceFile.value);
         } else if (/\.(pdf)$/i.test(serviceFile.value.name)) {
           isImage.value = false;
-          reader.readAsText(serviceFile.value);
+          isPdf.value = true;
+          reader.readAsDataURL(serviceFile.value);
         }
       }
     };
@@ -300,6 +312,7 @@ export default {
       filePreview,
       showUpload,
       isImage,
+      isPdf,
       handleFileUpload,
       reset,
       documents,

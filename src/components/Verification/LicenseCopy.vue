@@ -58,18 +58,17 @@
                 </label>
               </span>
 
-             <picture v-if="!showUpload && isImage">
+              <picture v-if="!showUpload && isImage">
                 <p>
                   <a href="javascript:void(0)" @click="reset()">Upload again</a>
                 </p>
                 <img v-bind:src="filePreview" v-show="showPreview" />
               </picture>
-              <!--  -->
-              <div v-if="!showUpload && isPdf  ">
+              <div v-if="!showUpload && isPdf">
                 <p>
                   <a href="javascript:void(0)" @click="reset()">Upload again</a>
                 </p>
-                <embed v-bind:src="filePreview" v-show="showPreview"  />
+                <embed v-bind:src="filePreview" v-show="showPreview" />
               </div>
               <span v-if="!showUpload && !isImage && !isPdf">
                 <img :src="filePreview" alt="" class="preview" />
@@ -172,8 +171,7 @@ export default {
     const route = useRoute();
     const router = useRouter();
 
-     const basePath = "https://storage.googleapis.com/hris-lisence-dev/";
-
+    const basePath = "https://storage.googleapis.com/hris-lisence-dev/";
 
     let message = ref({
       showFlash: false,
@@ -217,8 +215,8 @@ export default {
       licenseFile.value = "";
       filePreview.value = "";
       isImage.value = true;
-      fileSize.value="";
-      isPdf.value=false;
+      fileSize.value = "";
+      isPdf.value = false;
     };
     const handleFileUpload = () => {
       dataChanged.value = true;
@@ -236,7 +234,7 @@ export default {
       }
       reader.addEventListener(
         "load",
-        function () {
+        function() {
           showPreview.value = true;
           filePreview.value = reader.result;
         },
@@ -248,11 +246,8 @@ export default {
           reader.readAsDataURL(licenseFile.value);
         } else if (/\.(pdf)$/i.test(licenseFile.value.name)) {
           isImage.value = false;
-          isPdf.value=true;
+          isPdf.value = true;
           reader.readAsDataURL(licenseFile.value);
-          // pdfView.value = true;
-          // path.value = licenseFile.value.path;
-          // name.value = licenseFile.value.name;
         }
       }
     };
@@ -285,16 +280,11 @@ export default {
         for (let i = 0; i < draftData.documents.length; i++) {
           if (draftData.documents[i].documentTypeCode == "LC") {
             showUpload.value = false;
-             if(draftData.documents[i].fileName.split(".")[1]=="pdf")
-            {
-               isPdf.value=true;
-            }
-            else
-            {
+            if (draftData.documents[i].fileName.split(".")[1] == "pdf") {
+              isPdf.value = true;
+            } else {
               isImage.value = true;
             }
-            
-           
             licenseFile.value = draftData.documents[i];
             showPreview.value = true;
             filePreview.value = basePath + draftData.documents[i].filePath;
@@ -335,8 +325,8 @@ export default {
                         router.push({ path: "/menu" });
                       }, 1500);
                     } else {
-                      message.value.showErrorFlash =
-                        !message.value.showErrorFlash;
+                      message.value.showErrorFlash = !message.value
+                        .showErrorFlash;
                     }
                   })
                   .catch((err) => {});
@@ -404,8 +394,8 @@ export default {
                       router.push({ path: "/menu" });
                     }, 1500);
                   } else {
-                    message.value.showErrorFlash =
-                      !message.value.showErrorFlash;
+                    message.value.showErrorFlash = !message.value
+                      .showErrorFlash;
                   }
                 })
                 .catch((err) => {});
@@ -445,8 +435,8 @@ export default {
                         router.push({ path: "/menu" });
                       }, 1500);
                     } else {
-                      message.value.showErrorFlash =
-                        !message.value.showErrorFlash;
+                      message.value.showErrorFlash = !message.value
+                        .showErrorFlash;
                     }
                   })
                   .catch((err) => {});
@@ -510,8 +500,8 @@ export default {
                       router.push({ path: "/menu" });
                     }, 1500);
                   } else {
-                    message.value.showErrorFlash =
-                      !message.value.showErrorFlash;
+                    message.value.showErrorFlash = !message.value
+                      .showErrorFlash;
                   }
                 })
                 .catch((err) => {});
@@ -550,7 +540,6 @@ export default {
       showUpload,
       isImage,
       isPdf,
-      // pdfView,
       handleFileUpload,
       reset,
       submit,
