@@ -2,7 +2,8 @@
   <div>
     <Navigation />
     <div class="w-screen bg-lightBlueB-200 flex items-center justify-center">
- <div class="bg-lightBlueB-200 w-screen h-screen max-w-4xl">        <div class="flex flex-col w-full rounded mb-large">
+      <div class="bg-lightBlueB-200 w-screen h-screen max-w-4xl">
+        <div class="flex flex-col w-full rounded mb-large">
           <h2 class="flex justify-center pb-medium">Renewal</h2>
           <transition name="fade" mode="out-in">
             <div v-if="this.activeState == 1">
@@ -273,25 +274,18 @@ export default {
     PayrollDoc,
   },
   methods: {
-    applicantTypeSet: function (params) {
+    applicantTypeSet: function(params) {
       if (params == null || params == undefined || params == "") {
         this.applicantType = 3;
       } else {
         this.applicantType = params;
       }
     },
-    payrollDocumentSet: function (params) {
-      if (
-        params == null ||
-        params == undefined ||
-        params == "" ||
-        params == 0 ||
-        params == 1
-      ) {
-        this.displayPayrollOption = false;
-      }
+    payrollDocumentSet: function(params) {
       if (params == 2) {
         this.displayPayrollOption = true;
+      } else {
+        this.displayPayrollOption = false;
       }
     },
     submit(n) {
@@ -303,31 +297,31 @@ export default {
         this.applicationStatuses = results;
         if (this.draftId != undefined) {
           if (this.draftStatus == "DRA") {
-            let status = this.applicationStatuses.filter(function (e) {
+            let status = this.applicationStatuses.filter(function(e) {
               return e.code == "DRA";
             });
             this.buttons = status[0]["buttons"];
           }
           if (this.draftStatus == "SUB") {
-            let status = this.applicationStatuses.filter(function (e) {
+            let status = this.applicationStatuses.filter(function(e) {
               return e.code == "SUB";
             });
             this.buttons = status[0]["buttons"];
           }
           if (this.draftStatus == "USUP") {
-            let status = this.applicationStatuses.filter(function (e) {
+            let status = this.applicationStatuses.filter(function(e) {
               return e.code == "USUP";
             });
             this.buttons = status[0]["buttons"];
           }
           if (this.draftStatus == "DEC") {
-            let status = this.applicationStatuses.filter(function (e) {
+            let status = this.applicationStatuses.filter(function(e) {
               return e.code == "DEC";
             });
             this.buttons = status[0]["buttons"];
           }
         } else {
-          let status = this.applicationStatuses.filter(function (e) {
+          let status = this.applicationStatuses.filter(function(e) {
             return e.code == "INIT";
           });
           this.buttons = status[0]["buttons"];

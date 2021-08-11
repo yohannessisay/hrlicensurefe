@@ -1,6 +1,7 @@
 <template>
   <div class="flex justify-center">
- <div class="bg-lightBlueB-200 w-screen h-screen max-w-4xl">      <div
+    <div class="bg-lightBlueB-200 w-screen h-screen max-w-4xl">
+      <div
         class="
           flex flex-col
           pt-large
@@ -165,8 +166,7 @@ export default {
     const route = useRoute();
     const router = useRouter();
 
-     const basePath = "https://storage.googleapis.com/hris-lisence-dev/";
-
+    const basePath = "https://storage.googleapis.com/hris-lisence-dev/";
 
     let message = ref({
       showFlash: false,
@@ -227,7 +227,7 @@ export default {
       }
       reader.addEventListener(
         "load",
-        function () {
+        function() {
           showPreview.value = true;
           filePreview.value = reader.result;
         },
@@ -316,8 +316,8 @@ export default {
                       router.push({ path: "/menu" });
                     }, 1500);
                   } else {
-                    message.value.showErrorFlash =
-                      !message.value.showErrorFlash;
+                    message.value.showErrorFlash = !message.value
+                      .showErrorFlash;
                   }
                 })
                 .catch((err) => {});
@@ -437,8 +437,8 @@ export default {
                       router.push({ path: "/menu" });
                     }, 1500);
                   } else {
-                    message.value.showErrorFlash =
-                      !message.value.showErrorFlash;
+                    message.value.showErrorFlash = !message.value
+                      .showErrorFlash;
                   }
                 })
                 .catch((err) => {});
@@ -529,8 +529,8 @@ export default {
     };
 
     return {
-      cpdFile,
-      cpdFileP,
+      payrollFile,
+      payrollFileP,
       showPreview,
       filePreview,
       showUpload,
