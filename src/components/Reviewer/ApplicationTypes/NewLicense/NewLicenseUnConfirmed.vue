@@ -151,6 +151,7 @@ export default {
             store.getters[
               "reviewerNewLicense/getNewLicenseApprovedSearched"
             ];
+            console.log("mmmmm",  store.getters["reviewerNewLicense/getNewLicenseApprovedSearched"])
           allInfo.value.assignApplication =
             store.getters[
               "reviewerNewLicense/getNewLicenseApprovedSearched"

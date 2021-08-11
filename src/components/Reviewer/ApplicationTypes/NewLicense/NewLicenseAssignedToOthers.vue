@@ -132,7 +132,6 @@ export default {
         showLoading.value = false;
         newLicenseAssigned.value =
           store.getters["reviewerNewLicense/getNewLicenseAssignedToOthersSearched"];
-          console.log("_________________", newLicenseAssigned.value)
         allInfo.value.assignApplication =
           store.getters["reviewerNewLicense/getNewLicenseAssignedToOthersSearched"];
 

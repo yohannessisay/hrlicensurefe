@@ -10,7 +10,7 @@
     >
       <div
         class="p-4 w-48 h-64"
-        @Click="detail(`/admin/applicant-detail`, item.id, item.applicant.id)"
+        @Click="detail(`/admin/returnedToMeDetail`, item.id, item.applicant.id)"
       >
         <div class="flex content-center justify-center">
           <span v-if="item.applicant.profile.photo !== '' && item.applicant.profile.photo !== null">

@@ -42,7 +42,6 @@ const filterApplication = (moment, allInfo) => {
 }
 
 const searchByInput = (startingFrom, upTo, app_type, allInfo, moment) => {
-    console.log("working", startingFrom, upTo, "allinfo", allInfo)
     allInfo.searchByInput = true;
     for (let applicant in allInfo.assignApplication) {
       if (

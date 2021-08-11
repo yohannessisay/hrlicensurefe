@@ -108,7 +108,8 @@
                     accepted[index]
                 "
               > -->
-              {{ documentTypeName }}
+              
+              {{ documentTypeName }} | </label><label :class="'justify-center items-center text-'+approvedColor+' text-2xl'"> {{ approvedOrRejected }}
               <!-- </div> -->
               <!-- <div
                 v-else-if="
@@ -137,7 +138,12 @@
               <!-- {{docs[0].filePath}} -->
             </div>
           </div>
-          <div class="mt-medium" v-if="!showButtons">
+          <!-- ---------- re evaluator don't have to accept and reject already evaluated
+          --------------- applications, rather he reviews and finally he will accept or
+          --------------- return the application to the evaluator who approved the 
+          --------------- application before
+          -->
+          <!-- <div class="mt-medium" v-if="!showButtons">
             <button class="mr-medium" @click="accept(docs[index])">
               Accept
             </button>
@@ -149,7 +155,7 @@
             >
               save as Draft
             </button>
-          </div>
+          </div> -->
           <div class="relative pt-1 mt-medium">
             <div
               class="overflow-hidden h-2 mb-4 text-xs flex rounded bg-grey-100 w-screen max-w-2xl"
@@ -311,7 +317,7 @@
                           xmlns="http://www.w3.org/2000/svg"
                           version="1.1"
                           @click="nextRemark()"
-                          v-if="ind != rejected.length - 1"
+                          v-if="ind != rejected.length - 1 && ind != 0"
                           class="hover:text-primary-60"
                         >
                           <polyline
@@ -334,6 +340,9 @@
                   v-model="newLicense.remark"
                   class="resize-none tArea border rounded-md flex mb-small w-full"
                 ></textarea>
+                <div v-if="isRemarked">
+                  <p style="color:red">please write a remark!</p>
+                </div>
                 <div
                   class="flex items-center justify-center p-6 border-t border-solid border-blueGray-200 rounded-b"
                 >
@@ -393,6 +402,9 @@ export default {
     const router = useRouter();
     const store = useStore();
 
+    let approvedOrRejected = ref("");
+    let approvedColor = ref("lightBlueB-500");
+    let isRemarked = ref(false);
     let accepted = ref([]);
     let rejected = ref([]);
     let rejectedObj = ref([]);
@@ -494,7 +506,6 @@ export default {
     const fetchDocumentTypes = async () => {
       store.dispatch("reviewer/getDocumentTypes").then((res) => {
         documentTypes.value = res.data.data;
-        console.log("documents type is ", documentTypes.value);
       });
     };
 
@@ -516,86 +527,95 @@ export default {
       width.value = "width:" + amount.value + "%";
       findDocumentType(documentTypes.value, docs.value[index.value]);
       showButtons.value = false;
+      lastIndex.value = false;
     };
 
-    const accept = (doc) => {
-      if (accepted.value.length > 0) {
-        if (!accepted.value.includes(doc.documentTypeCode)) {
-          accepted.value.push(doc.documentTypeCode);
+    /* 
+    * approve is not needed for re evaluation feature
+    */
 
-          if (index.value == docs.value.length - 1) {
-            showButtons.value = true;
-          }
+    // const accept = (doc) => {
+    //   if (accepted.value.length > 0) {
+    //     if (!accepted.value.includes(doc.documentTypeCode)) {
+    //       accepted.value.push(doc.documentTypeCode);
 
-          if (rejected.value.includes(doc.documentTypeCode)) {
-            rejected.value.splice(
-              rejected.value.indexOf(doc.documentTypeCode),
-              1
-            );
-            rejectedObj.value.splice(
-              rejectedObj.value.indexOf(doc.documentTypeCode),
-              1
-            );
-          }
-        } else {
-          if (index.value == docs.value.length - 1) {
-            showButtons.value = true;
-          }
-        }
-      } else {
-        accepted.value.push(doc.documentTypeCode);
-        if (index.value == docs.value.length - 1) {
-          showButtons.value = true;
-        }
-        if (rejected.value.includes(doc.documentTypeCode)) {
-          rejected.value.splice(
-            rejected.value.indexOf(doc.documentTypeCode),
-            1
-          );
-          rejectedObj.value.splice(
-            rejectedObj.value.indexOf(doc.documentTypeCode),
-            1
-          );
-        }
-      }
-    };
+    //       if (index.value == docs.value.length - 1) {
+    //         showButtons.value = true;
+    //       }
 
-    const reject = (doc) => {
-      if (rejected.value.length > 0) {
-        if (!rejected.value.includes(doc.documentTypeCode)) {
-          rejected.value.push(doc.documentTypeCode);
-          rejectedObj.value.push(doc);
-          if (index.value == docs.value.length - 1) {
-            showButtons.value = true;
-          }
-          if (accepted.value.includes(doc.documentTypeCode)) {
-            accepted.value.splice(
-              accepted.value.indexOf(doc.documentTypeCode),
-              1
-            );
-          }
-        } else {
-          if (index.value == docs.value.length - 1) {
-            showButtons.value = true;
-          }
-        }
-      } else {
-        rejected.value.push(doc.documentTypeCode);
-        rejectedObj.value.push(doc);
-        if (index.value == docs.value.length - 1) {
-          showButtons.value = true;
-        }
-        if (accepted.value.includes(doc.documentTypeCode)) {
-          accepted.value.splice(
-            accepted.value.indexOf(doc.documentTypeCode),
-            1
-          );
-        }
-      }
-    };
+    //       if (rejected.value.includes(doc.documentTypeCode)) {
+    //         rejected.value.splice(
+    //           rejected.value.indexOf(doc.documentTypeCode),
+    //           1
+    //         );
+    //         rejectedObj.value.splice(
+    //           rejectedObj.value.indexOf(doc.documentTypeCode),
+    //           1
+    //         );
+    //       }
+    //     } else {
+    //       if (index.value == docs.value.length - 1) {
+    //         showButtons.value = true;
+    //       }
+    //     }
+    //   } else {
+    //     accepted.value.push(doc.documentTypeCode);
+    //     if (index.value == docs.value.length - 1) {
+    //       showButtons.value = true;
+    //     }
+    //     if (rejected.value.includes(doc.documentTypeCode)) {
+    //       rejected.value.splice(
+    //         rejected.value.indexOf(doc.documentTypeCode),
+    //         1
+    //       );
+    //       rejectedObj.value.splice(
+    //         rejectedObj.value.indexOf(doc.documentTypeCode),
+    //         1
+    //       );
+    //     }
+    //   }
+    // };
+
+    /* 
+    * reject is not needed for re evaluation feature
+    */
+
+    // const reject = (doc) => {
+    //   if (rejected.value.length > 0) {
+    //     if (!rejected.value.includes(doc.documentTypeCode)) {
+    //       rejected.value.push(doc.documentTypeCode);
+    //       rejectedObj.value.push(doc);
+    //       if (index.value == docs.value.length - 1) {
+    //         showButtons.value = true;
+    //       }
+    //       if (accepted.value.includes(doc.documentTypeCode)) {
+    //         accepted.value.splice(
+    //           accepted.value.indexOf(doc.documentTypeCode),
+    //           1
+    //         );
+    //       }
+    //     } else {
+    //       if (index.value == docs.value.length - 1) {
+    //         showButtons.value = true;
+    //       }
+    //     }
+    //   } else {
+    //     rejected.value.push(doc.documentTypeCode);
+    //     rejectedObj.value.push(doc);
+    //     if (index.value == docs.value.length - 1) {
+    //       showButtons.value = true;
+    //     }
+    //     if (accepted.value.includes(doc.documentTypeCode)) {
+    //       accepted.value.splice(
+    //         accepted.value.indexOf(doc.documentTypeCode),
+    //         1
+    //       );
+    //     }
+    //   }
+    // };
 
     const action = (actionValue) => {
-      if (actionValue == "UpdatePaymentEvent") {
+      if (actionValue == "ReturnToReviewerEvent") {
         modalFindDocumentType(
           documentTypes.value,
           rejectedObj.value[0]
@@ -605,7 +625,6 @@ export default {
         if (fromModalSendDeclinedData.value == true) {
           sendDeclinedData.value = true;
         }
-        // return;
         console.log("rejected val", rejected.value);
         console.log("rejectedObj val", rejectedObj.value)
       }
@@ -618,33 +637,33 @@ export default {
       };
       if (sendDeclinedData.value == true) {
         if (applicationType.value == "Verification") {
-          editApplication("reviewer", "editVerification", req);
+          editApplication("editVerification", req);
         }
         if (applicationType.value == "Renewal") {
-          editApplication("reviewer", "editRenewal", req);
+          editApplication("editRenewal", req);
         }
         if (applicationType.value == "Good Standing") {
-          editApplication("reviewer", "editGoodStanding", req);
+          editApplication("editGoodStanding", req);
         }
         if (applicationType.value == "New License") {
-          editApplication("newlicense", "editNewLicense", req);
+          editApplication("editNewLicense", req);
         }
       }
     };
 
-    const editApplication = (reviewType, applicationType, req) => {
-      store.dispatch(reviewType + "/" + applicationType, req).then((res) => {
+    const editApplication = (applicationType, req) => {
+      store.dispatch("reviewer/" + applicationType, req).then((res) => {
         console.log("ieie resp", res);
         if (res.statusText == "Created") {
           showFlash.value = true;
           console.log("successful");
           return;
           setTimeout(() => {
-            router.push("/admin/unconfirmed");
+            router.push("/admin/review");
           }, 3000);
         } else {
           showErrorFlash.value = true;
-          console.log("something went wrong");
+          console.log("something went wrong here?");
           return;
           setTimeout(() => {
             router.go();
@@ -655,14 +674,15 @@ export default {
 
     const toggleModal = () => {
       showRemark.value = !showRemark.value;
-      console.log("toggle modal");
     };
     const submitRemark = () => {
-      showRemark.value = !showRemark.value;
+      if(newLicense.value.remark == null) {
+        isRemarked.value = true;
+      } else {
+        showRemark.value = !showRemark.value;
       fromModalSendDeclinedData.value = true;
-      action("UpdatePaymentEvent");
-
-      console.log("submit remark");
+        action("ReturnToReviewerEvent");
+      }
     };
 
     const nextRemark = () => {
@@ -679,9 +699,18 @@ export default {
       modalFindDocumentType(documentTypes.value, rejectedObj.value[ind.value]);
     };
     const findDocumentType = (obj, ab) => {
+      approvedOrRejected.value = "Approved";
+      approvedColor.value = "lightBlueB-500";
       for (var prop in obj) {
         if (obj[prop].code == ab.documentTypeCode) {
+          console.log("object value is ", obj[prop])
           documentTypeName.value = obj[prop].name;
+        }
+        for (var rejected in rejectedObj.value){
+          if (ab.documentTypeCode == rejectedObj.value[rejected]) {
+            approvedColor.value = "red-200"
+            approvedOrRejected.value = "Rejected";
+          }
         }
       }
     };
@@ -689,7 +718,6 @@ export default {
     const modalFindDocumentType = (obj, ab) => {
       for (var prop in obj) {
         if (obj[prop].code == ab) {
-          console.log("object name is ", obj[prop].name)
           modalDocumentTypeName.value = obj[prop].name;
         }
       }
@@ -701,6 +729,9 @@ export default {
       findDocumentType(documentTypes.value, docs.value[0]);
     });
     return {
+      approvedOrRejected,
+      approvedColor,
+      isRemarked,
       accepted,
       rejected,
       rejectedObj,
@@ -722,8 +753,6 @@ export default {
       modalDocumentTypeName,
       next,
       previous,
-      accept,
-      reject,
       action,
       toggleModal,
       submitRemark,

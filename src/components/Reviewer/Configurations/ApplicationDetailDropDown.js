@@ -52,9 +52,7 @@ export const applicationTypeDD = (applicationDetail, dropdown) => {
     
   }
   if (applicationDetail == "NewLicense") {
-    console.log("entering to new license", dropdown.newLicense)
     dropdown.newLicense = !dropdown.newLicense;
-    console.log("after entering to new license", dropdown.newLicense)
     dropdown.newLicenseAssigned = false;
     dropdown.newLicenseUnfinished = false;
     dropdown.newLicenseUnconfirmed = false;

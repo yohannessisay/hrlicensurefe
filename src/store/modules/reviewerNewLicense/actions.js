@@ -57,8 +57,8 @@ import {
 const baseUrl = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api";
 
 export default {
-  async getNewLicenseUnassigned({ commit }) {
-    const url = baseUrl + "/newLicenses/status/3";
+  async getNewLicenseUnassigned({ commit }, statusId) {
+    const url = baseUrl + "/newLicenses/status/"+statusId;
     const resp = await ApiService.get(url);
     commit(SET_NEW_LICENSE_UNASSIGNED, resp.data.data);
   },
@@ -156,11 +156,11 @@ export default {
     commit(SET_NEW_LICENSE_OTHERS_UNFINISHED_SEARCHED, searchedVal);
   },
 
-  async getNewLicenseAssigned({ commit }, adminId) {
-    const url = baseUrl + "/newLicenses/status/4";
+  async getNewLicenseAssigned({ commit }, adminStatus) {
+    const url = baseUrl + "/newLicenses/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
     const assignedToMe = resp.data.data.filter(function(e) {
-      return e.reviewerId === adminId;
+      return e.reviewerId === adminStatus[1];
     });
     commit(SET_NEW_LICENSE_ASSIGNED_TO_YOU, assignedToMe);
   },
@@ -617,13 +617,19 @@ export default {
   /* 
   /* re evaluate status is wrong for the time (status/7) is placeholder
   */
-  async getNewLicenseReEvaluate({ commit }, adminId) {
-    const url = baseUrl + "/newlicenses/status/7";
+  async getNewLicenseReEvaluate({ commit }, adminStatus) {
+    const url = baseUrl + "/newlicenses/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
-    const reEvaluate = resp.data.data.filter(function(e) {
-      return e.reviewerId === adminId;
-    });
-    commit(SET_NEW_LICENSE_RE_EVALUATE, reEvaluate);
+    let evaluator = [];
+    const allApplications = resp.data.data.forEach(function (e) {
+      const myApplications = e.evaluators.forEach(function (ee) {
+        if(ee.evaluatorId === adminStatus[1]) {
+          evaluator.push(e);
+        }
+      })
+      
+    })
+    commit(SET_NEW_LICENSE_RE_EVALUATE, evaluator);
   },
 
   getNewLicenseReEvaluateSearched({ commit, getters }, searchKey) {
@@ -650,13 +656,23 @@ export default {
   /* 
   /* re evaluate status is wrong for the time (status/7) is placeholder
   */
-  async getNewLicenseOthersReEvaluate({ commit }, adminId) {
-    const url = baseUrl + "/newlicenses/status/7";
+  async getNewLicenseOthersReEvaluate({ commit }, adminStatus) {
+    const url = baseUrl + "/newlicenses/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
-    const othersReEvaluate = resp.data.data.filter(function(e) {
-      return e.reviewerId !== adminId
-    })
-    commit(SET_NEW_LICENSE_OTHERS_RE_EVALUATE, othersReEvaluate);
+    // const othersReEvaluate = resp.data.data.filter(function(e) {
+    //   return e.reviewerId !== adminId
+    // })
+    let otherEvaluators = resp.data.data;
+    console.log("response iss", resp.data.data)
+    // const allApplications = resp.data.data.forEach(function (e) {
+    //   const othersApplications = e.evaluators.forEach(function (ee) {
+    //     if(ee.evaluatorId !== adminStatus[1]) {
+    //       otherEvaluators.push(e);
+    //     }
+    //   })
+      
+    // })
+    commit(SET_NEW_LICENSE_OTHERS_RE_EVALUATE, otherEvaluators);
   },
   getNewLicenseOthersReEvaluateSearched({ commit, getters }, searchKey) {
     if (getters.getNewLicenseOthersReEvaluate === undefined) {

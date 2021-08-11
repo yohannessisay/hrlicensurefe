@@ -11,12 +11,12 @@
         <unconfirmed-container />
       </div>
     </div>
-    <!-- <div class="bg-lightBlueB-200 h-full">
+    <div class="bg-lightBlueB-200 h-full">
       <returned-to-me-container />
     </div>
     <div class="bg-lightBlueB-200 h-full">
       <returned-to-others-container />
-    </div> -->
+    </div>
     <!-- <div class="bg-lightBlueB-200 h-full">
       <confirm-review-container />
     </div> -->

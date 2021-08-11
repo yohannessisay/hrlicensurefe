@@ -46,9 +46,9 @@ import {
 const baseUrl = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api";
 
 export default {
-  async getUnassignedRenewal({ commit }) {
+  async getUnassignedRenewal({ commit }, statusId) {
     try {
-      const url = baseUrl + "/renewals/status/5";
+      const url = baseUrl + "/renewals/status/"+statusId;
       const resp = await ApiService.get(url);
       commit(SET_RENEWAL_UNASSIGNED, resp.data.data);
     } catch (err) {
@@ -606,8 +606,8 @@ export default {
   /* 
   /* on re evaluate status is wrong for the time (status/7) is placeholder
   */
-  async getRenewalReEvaluate({ commit }, adminId) {
-    const url = baseUrl + "/renewals/status/7";
+  async getRenewalReEvaluate({ commit }, statusId, adminId) {
+    const url = baseUrl + "/renewals/status/"+statusId;
     const resp = await ApiService.get(url);
     const reEvaluate = resp.data.data.filter(function(e) {
       return e.reviewerId === adminId;

@@ -86,7 +86,6 @@ export default {
   name: "AssignedApplications",
   setup(props) {
     let router = useRouter();
-    console.log("ppp", props.assignedApplication)
     const detail = (data, applicationId, applicantId) => {
       const url =
         data + "/" + props.app_type + "/" + applicationId + "/" + applicantId;
