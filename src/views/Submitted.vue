@@ -275,11 +275,13 @@
                     >
                       <b>Certified: &nbsp;</b>No
                     </span>
+
                     <span
                       class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                     >
                       <b>Reviewer: &nbsp;</b>{{ item.reviewer }}
                     </span>
+
                     <span
                       class="
                       mt-medium
@@ -572,7 +574,10 @@ export default {
           this.license = res.data.data;
           if (this.license) {
             this.newlicense = this.license.filter(function(e) {
-              return e.applicationStatus.code.includes("SUB");
+              return (
+                e.applicationStatus.code.includes("SUB") ||
+                e.applicationStatus.code.includes("UPD")
+              );
             });
           }
         })
@@ -581,9 +586,13 @@ export default {
             this.license = res.data.data;
             if (this.license) {
               this.renewal = this.license.filter(function(e) {
-                return e.applicationStatus.code.includes("SUB");
+                return (
+                  e.applicationStatus.code.includes("SUB") ||
+                  e.applicationStatus.code.includes("UPD")
+                );
               });
             }
+            console.log(this.renewal);
           });
         })
         .then(() => {
@@ -593,7 +602,10 @@ export default {
               this.license = res.data.data;
               if (this.license) {
                 this.verification = this.license.filter(function(e) {
-                  return e.applicationStatus.code.includes("SUB");
+                  return (
+                    e.applicationStatus.code.includes("SUB") ||
+                    e.applicationStatus.code.includes("UPD")
+                  );
                 });
               }
             });
@@ -603,11 +615,13 @@ export default {
             .dispatch("goodstanding/getGoodStandingLicense")
             .then((res) => {
               this.license = res.data.data;
-              console.log(res.data.data);
               this.showLoading = !this.showLoading;
               if (this.license) {
                 this.goodstanding = this.license.filter(function(e) {
-                  return e.applicationStatus.code.includes("SUB");
+                  return (
+                    e.applicationStatus.code.includes("SUB") ||
+                    e.applicationStatus.code.includes("UPD")
+                  );
                 });
               }
             });
