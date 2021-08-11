@@ -1,7 +1,7 @@
 <template>
   <div>
     <Navigation :display="menu" @changeDisplay="displaySet" />
-    <div style="width:100%" class="flex flex-row bg-lightBlueB-200   w-screen  h-screen">
+    <div style="width:100%" class="flex flex-row bg-lightBlueB-200">
       <div class="sidenav">
         <SideNav :display="menu" @changeDisplay="displaySet" />
       </div>
@@ -36,7 +36,7 @@
         <div v-if="this.display == 9">
           <UnderSupervision />
         </div>
-         <div v-if="this.display == 10">
+        <div v-if="this.display == 10">
           <PendingPayment />
         </div>
       </div>

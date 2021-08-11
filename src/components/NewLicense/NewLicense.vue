@@ -17,7 +17,7 @@
             </div>
           </transition>
 
-          <div v-if="this.applicantType == 1 && !this.displayPayrollOption">
+          <div v-if="this.applicantType == 1 && this.displayPayrollOption">
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 2">
                 <Passport :activeState="2" @changeActiveState="activeState++" />
@@ -98,7 +98,7 @@
             </transition>
           </div>
 
-          <div v-if="this.applicantType == 1 && this.displayPayrollOption">
+          <div v-if="this.applicantType == 1 && !this.displayPayrollOption">
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 2">
                 <Passport :activeState="2" @changeActiveState="activeState++" />
@@ -144,27 +144,27 @@
               </div>
             </transition>
             <transition name="fade" mode="out-in">
-              <div v-if="this.activeState == 9">
-                <Degree :activeState="9" @changeActiveState="activeState++" />
+              <div v-if="this.activeState == 8">
+                <Degree :activeState="8" @changeActiveState="activeState++" />
               </div>
             </transition>
             <transition name="fade" mode="out-in">
-              <div v-if="this.activeState == 10">
+              <div v-if="this.activeState == 9">
                 <Transcript
-                  :activeState="10"
+                  :activeState="9"
                   @changeActiveState="activeState++"
                 />
               </div>
             </transition>
             <transition name="fade" mode="out-in">
-              <div v-if="this.activeState == 11">
-                <Diploma :activeState="11" @changeActiveState="activeState++" />
+              <div v-if="this.activeState == 10">
+                <Diploma :activeState="10" @changeActiveState="activeState++" />
               </div>
             </transition>
             <transition name="fade" mode="out-in">
-              <div v-if="this.activeState == 12">
+              <div v-if="this.activeState == 11">
                 <LicenseSummary
-                  :activeState="12"
+                  :activeState="11"
                   @changeActiveState="activeState++"
                 />
               </div>
@@ -497,17 +497,10 @@ export default {
       }
     },
     payrollDocumentSet: function(params) {
-      if (
-        params == null ||
-        params == undefined ||
-        params == "" ||
-        params == 0 ||
-        params == 1
-      ) {
-        this.displayPayrollOption = false;
-      }
       if (params == 2) {
         this.displayPayrollOption = true;
+      } else {
+        this.displayPayrollOption = false;
       }
     },
     submit(n) {

@@ -4,9 +4,12 @@ import {
   SET_PERSONAL_INFO,
   SET_ADDRESS,
   SET_PHOTO,
+  SET_NATIONALITY,
+  SET_MARITAL_STATUS,
 } from "./mutation-types";
 
-const baseUrl = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api";
+const url = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api/";
+
 export default {
   async setProfile({ commit }, profile) {
     try {
@@ -26,37 +29,16 @@ export default {
   setPhoto({ commit }, photo) {
     commit(SET_PHOTO, photo);
   },
+  setNationality({ commit }, nationality) {
+    commit(SET_NATIONALITY, nationality);
+  },
+  setMaritalStatus({ commit }, maritalStatus) {
+    commit(SET_MARITAL_STATUS, maritalStatus);
+  },
 
   async getUserTypes() {
     try {
-      const resp = await ApiService.get(baseUrl + "/lookups/userTypes");
-      return resp;
-    } catch (error) {
-      const resp = error;
-      return resp;
-    }
-  },
-  async getExpertLevels() {
-    try {
-      const resp = await ApiService.get(baseUrl + "/lookups/expertLevels");
-      return resp;
-    } catch (error) {
-      const resp = error;
-      return resp;
-    }
-  },
-  async getHealthOffice() {
-    try {
-      const resp = await ApiService.get(baseUrl + "/lookups/healthOffices");
-      return resp;
-    } catch (error) {
-      const resp = error;
-      return resp;
-    }
-  },
-  async getMaritalStatus() {
-    try {
-      const resp = await ApiService.get(baseUrl + "/lookups/maritalStatuses");
+      const resp = await ApiService.get(url + "lookups/userTypes");
       return resp;
     } catch (error) {
       const resp = error;
@@ -65,7 +47,7 @@ export default {
   },
   async getRegions() {
     try {
-      const resp = await ApiService.get(baseUrl + "/lookups/regions");
+      const resp = await ApiService.get(url + "lookups/regions");
       return resp;
     } catch (error) {
       const resp = error;
@@ -74,8 +56,8 @@ export default {
   },
   async getWoredas(context, zoneId) {
     try {
-      const url = baseUrl + "/lookups/woredas/" + zoneId;
-      const resp = await ApiService.get(url);
+      const baseUrl = url + "lookups/woredas/" + zoneId;
+      const resp = await ApiService.get(baseUrl);
       return resp;
     } catch (error) {
       const resp = error;
@@ -84,8 +66,18 @@ export default {
   },
   async getZones(context, regionId) {
     try {
-      const url = baseUrl + "/lookups/zones/" + regionId;
-      const resp = await ApiService.get(url);
+      const baseUrl = url + "lookups/zones/" + regionId;
+      const resp = await ApiService.get(baseUrl);
+      return resp;
+    } catch (error) {
+      const resp = error;
+      return resp;
+    }
+  },
+  async getNationalities() {
+    try {
+      const baseUrl = url + "lookups/nationalities";
+      const resp = await ApiService.get(baseUrl);
       return resp;
     } catch (error) {
       const resp = error;
@@ -94,7 +86,7 @@ export default {
   },
   async addProfile({ commit }, profile) {
     try {
-      const resp = await ApiService.post(baseUrl + "/profiles/add", profile);
+      const resp = await ApiService.post(url + "profiles/add", profile);
       return resp;
     } catch (error) {
       return error;
@@ -102,7 +94,7 @@ export default {
   },
   async getProfiles() {
     try {
-      const resp = await ApiService.get(baseUrl + "/profiles/");
+      const resp = await ApiService.get(url + "profiles/");
       return resp;
     } catch (error) {
       return error;
@@ -110,7 +102,7 @@ export default {
   },
   async getProfileById({ commit }, id) {
     try {
-      const resp = await ApiService.get(baseUrl + "/profiles/" + id);
+      const resp = await ApiService.get(url + "profiles/" + id);
       return resp;
     } catch (error) {
       return error;
@@ -118,7 +110,7 @@ export default {
   },
   async getProfileByUserId({ commit }, id) {
     try {
-      const resp = await ApiService.get(baseUrl + "/profiles/user/" + id);
+      const resp = await ApiService.get(url + "profiles/user/" + id);
       return resp;
     } catch (error) {
       return error;
@@ -126,34 +118,31 @@ export default {
   },
   async getUserById({ commit }, id) {
     try {
-      const resp = await ApiService.get(baseUrl + "/users/" + id);
+      const resp = await ApiService.get(url + "users/" + id);
       return resp;
     } catch (error) {
       return error;
     }
   },
-  async resetPassword({commit},data)
-  {data
-    try{
-     
-  const resp = await ApiService.post(baseUrl + "/resetpassword/" + data.id,data.pass);
- 
-  return resp;
-    }
-    catch(err)
-    {
+  async resetPassword({ commit }, data) {
+    data;
+    try {
+      const resp = await ApiService.post(
+        baseUrl + "/resetpassword/" + data.id,
+        data.pass
+      );
+
+      return resp;
+    } catch (err) {
       return err;
     }
   },
-  async sendEmail({commit},email)
-  {
-    try{
-  const resp = await ApiService.post(baseUrl + "/forgotpassword" , email);
-  return resp;
-    }
-    catch(err)
-    {
+  async sendEmail({ commit }, email) {
+    try {
+      const resp = await ApiService.post(url + "/forgotpassword", email);
+      return resp;
+    } catch (err) {
       return err;
     }
-  }
+  },
 };

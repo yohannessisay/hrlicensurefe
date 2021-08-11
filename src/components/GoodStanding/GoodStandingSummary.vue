@@ -358,7 +358,8 @@ export default {
     this.buttons = this.getButtons;
   },
   data: () => ({
-    basePath: "https://hrlicensurebe.dev.k8s.sandboxaddis.com/",
+     basePath : "https://storage.googleapis.com/hris-lisence-dev/",
+
 
     show: false,
     profileInfo: {},

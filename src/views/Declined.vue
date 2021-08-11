@@ -50,7 +50,7 @@
             >
               <div
                 @click="routeTo(item)"
-                class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
+                class="flex justify-center items-center  ml-4 mr-4 box-shadow-pop rounded-lg bg-lightGrey-100"
               >
                 <div class="p-4 w-48 h-64">
                   <span
@@ -157,7 +157,7 @@
                 }"
               >
                 <div
-                  class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
+                  class="flex justify-center items-center  ml-4 mr-4 box-shadow-pop rounded-lg bg-lightGrey-100"
                 >
                   <div class="p-4 w-48 h-64">
                     <span
@@ -238,7 +238,7 @@
                 }"
               >
                 <div
-                  class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
+                  class="flex justify-center items-center  ml-4 mr-4 box-shadow-pop rounded-lg bg-lightGrey-100"
                 >
                   <div class="p-4 w-48 h-64">
                     <span
@@ -323,7 +323,7 @@
                 }"
               >
                 <div
-                  class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
+                  class="flex justify-center items-center  ml-4 mr-4 box-shadow-pop rounded-lg bg-lightGrey-100"
                 >
                   <div class="p-4 w-48 h-64">
                     <span
@@ -411,7 +411,7 @@
                 }"
               >
                 <div
-                  class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
+                  class="flex justify-center items-center  ml-4 mr-4 box-shadow-pop rounded-lg bg-lightGrey-100"
                 >
                   <div class="p-4 w-48 h-64">
                     <span

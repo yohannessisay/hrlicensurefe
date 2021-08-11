@@ -176,7 +176,8 @@ export default {
 
     let fileSize = ref("");
 
-    const basePath = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/";
+     const basePath = "https://storage.googleapis.com/hris-lisence-dev/";
+
 
     let dataChanged = ref(false);
 

@@ -24,9 +24,12 @@
         <ul>
           <li>Health Exam Certificate</li>
           <li>Letter from Hiring Organization</li>
-          <li>Renewed License</li>
+          <li>Previous License</li>
           <li>CPD</li>
-          <li>Work Experience</li>
+          <li>Professional Document Certificate</li>
+          <li>Professional Document Diploma</li>
+          <li>Professional Document Transcript</li>
+          <li>Authenticated Work Experience</li>
         </ul>
       </div>
       <div class="ml-8">
@@ -35,7 +38,11 @@
           <li>Health Exam Certificate</li>
           <li>Previous License</li>
           <li>CPD</li>
-          <li>Work Experience</li>
+          <li>Payroll Document</li>
+          <li>Professional Document Certificate</li>
+          <li>Professional Document Diploma</li>
+          <li>Professional Document Transcript</li>
+          <li>Authenticated Work Experience</li>
         </ul>
       </div>
       <div class="ml-8">
@@ -44,7 +51,10 @@
           <li>Health Exam Certificate</li>
           <li>CPD</li>
           <li>Previous License</li>
-          <li>Work Experience</li>
+          <li>Professional Document Certificate</li>
+          <li>Professional Document Diploma</li>
+          <li>Professional Document Transcript</li>
+          <li>Authenticated Work Experience</li>
         </ul>
       </div>
     </div>

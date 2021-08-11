@@ -1,7 +1,7 @@
 <template>
   <div class="flex justify-center items">
- <div class="bg-lightBlueB-200 w-screen h-screen max-w-4xl">
-         <div
+    <div class="bg-lightBlueB-200 w-screen h-screen max-w-4xl">
+      <div
         class="
           flex flex-col
           pt-large
@@ -172,7 +172,7 @@
               v-if="this.displayPayrollDoc"
               class="flex flex-col mb-medium w-2/5 mr-12 mr-12"
             >
-              <label class="text-primary-700">Payroll</label>
+              <label class="text-primary-700">Occupation Type</label>
               <select
                 class="max-w-3xl"
                 @change="setPayrollDoc()"
@@ -395,13 +395,7 @@ export default {
         this.nativeEnglishSpeaker = false;
       }
     },
-    setPayrollDoc() {
-      if (this.payrollID == 1) {
-        this.payrollDocType = true;
-      } else {
-        this.payrollDocType = false;
-      }
-    },
+    setPayrollDoc() {},
 
     draft(action) {
       this.showLoading = true;
