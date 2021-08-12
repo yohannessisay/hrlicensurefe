@@ -11,7 +11,7 @@
           />
         </div>
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-10">
-          <div class="flex">
+          <div id="main" class="flex pt-8 mt-4">
             <div class="flex flex-col mb-medium w-2/5 ml-medium mr-12">
               <label class="text-primary-700">Applicant Type</label>
               <select class="max-w-3xl" v-model="licenseInfo.applicantTypeId">
@@ -27,7 +27,9 @@
                 licenseInfoErrors.applicantTypeId
               }}</span>
             </div>
-            <div class="flex flex-col mb-medium w-2/5 mr-12">
+          </div>
+          <div id="main" class="flex pt-8 mt-4">
+            <div class="flex flex-col mb-medium w-2/5 ml-medium mr-12">
               <label class="text-primary-700">Department</label>
               <select
                 class="max-w-3xl"
@@ -45,10 +47,7 @@
                 licenseInfoErrors.education.departmentId
               }}</span>
             </div>
-          </div>
-
-          <div class="flex">
-            <div class="flex flex-col mb-medium w-2/5 mr-12 ml-medium">
+            <div class="flex flex-col mb-medium w-2/5 mr-12">
               <label class="text-primary-700">Educational Institution</label>
               <select v-model="licenseInfo.education.institutionId">
                 <option
@@ -63,58 +62,64 @@
                 licenseInfoErrors.education.institutionId
               }}</span>
             </div>
-            <div class="flex flex-col mb-medium w-2/5 mr-12">
-              <label class="text-primary-700">Region</label>
-              <select
-                class="max-w-3xl"
-                v-model="regionID"
-                @change="fetchZones()"
-              >
-                <option
-                  v-for="types in regionArray"
-                  v-bind:key="types.name"
-                  v-bind:value="types.id"
+          </div>
+          <div id="main" class="pt-8 mt-4">
+            <div class="flex">
+              <div class="flex flex-col mb-medium w-2/5 ml-medium mr-12">
+                <label class="text-primary-700">Region</label>
+                <select
+                  class="max-w-3xl"
+                  v-model="regionID"
+                  @change="fetchZones()"
                 >
-                  {{ types.name }}
-                </option>
-              </select>
+                  <option
+                    v-for="types in regionArray"
+                    v-bind:key="types.name"
+                    v-bind:value="types.id"
+                  >
+                    {{ types.name }}
+                  </option>
+                </select>
+              </div>
+              <div class="flex flex-col mb-medium w-2/5 mr-12">
+                <label class="text-primary-700">Zone</label>
+                <select
+                  class="max-w-3xl"
+                  @change="fetchWoredas()"
+                  v-model="zoneID"
+                >
+                  <option
+                    v-for="types in zoneArray"
+                    v-bind:key="types.name"
+                    v-bind:value="types.id"
+                  >
+                    {{ types.name }}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="flex">
+              <div class="flex flex-col mb-medium w-2/5 ml-medium mr-12">
+                <label class="text-primary-700">Woreda</label>
+                <select
+                  class="max-w-3xl"
+                  v-model="licenseInfo.residenceWoredaId"
+                >
+                  <option
+                    v-for="types in woredaArray"
+                    v-bind:key="types.name"
+                    v-bind:value="types.id"
+                  >
+                    {{ types.name }}
+                  </option>
+                </select>
+                <span style="color: red">{{
+                  licenseInfoErrors.residenceWoredaId
+                }}</span>
+              </div>
             </div>
           </div>
-
-          <div class="flex">
-            <div class="flex flex-col mb-medium w-2/5 mr-12 ml-medium">
-              <label class="text-primary-700">Zone</label>
-              <select
-                class="max-w-3xl"
-                @change="fetchWoredas()"
-                v-model="zoneID"
-              >
-                <option
-                  v-for="types in zoneArray"
-                  v-bind:key="types.name"
-                  v-bind:value="types.id"
-                >
-                  {{ types.name }}
-                </option>
-              </select>
-            </div>
-            <div class="flex flex-col mb-medium w-2/5 mr-12">
-              <label class="text-primary-700">Woreda</label>
-              <select class="max-w-3xl" v-model="licenseInfo.residenceWoredaId">
-                <option
-                  v-for="types in woredaArray"
-                  v-bind:key="types.name"
-                  v-bind:value="types.id"
-                >
-                  {{ types.name }}
-                </option>
-              </select>
-              <span style="color: red">{{
-                licenseInfoErrors.residenceWoredaId
-              }}</span>
-            </div>
-          </div>
-          <div class="flex">
+          <div id="main" class="flex pt-8 mt-4">
             <div class="flex flex-col mb-medium w-2/5 mr-12 ml-medium">
               <label class="text-primary-700">Professional Type</label>
               <select
@@ -542,5 +547,9 @@ export default {
   background-image: linear-gradient(to right, #d63232, #e63636) !important;
   color: white;
   border-color: tomato;
+}
+#main {
+  border: 1px solid #cccccc;
+  border-radius: 5px;
 }
 </style>
