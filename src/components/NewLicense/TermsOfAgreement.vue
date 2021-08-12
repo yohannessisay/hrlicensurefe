@@ -26,12 +26,13 @@
           <li>Health Exam Certificate</li>
           <li>English Language Certificate</li>
           <li>Higher Education Relevance and Quality Agency center(HERQA)</li>
+          <li>Letter from Organization</li>
           <li>Professional Document Certificate</li>
           <li>Professional Document Diploma</li>
           <li>Professional Document Transcript</li>
-          <li>Letter from Organization</li>
           <li>Authenticated Professional License from Country of Origin</li>
           <li>Renewed License of the Organization</li>
+          <li>Authenticated Work Experience</li>
         </ul>
       </div>
       <div class="ml-8">
@@ -40,13 +41,17 @@
           <li>Passport(Identification Card)</li>
           <li>Health Exam Certificate</li>
           <li>COC</li>
+          <li>Degree</li>
+          <li>Diploma</li>
           <li>8<sup>th</sup> Grade Certificate</li>
           <li>10<sup>th</sup> Grade Certificate</li>
           <li>12<sup>th</sup> Grade Certificate</li>
           <li>9<sup>th</sup> - 10<sup>th</sup> Transcript</li>
           <li>11<sup>th</sup> - 12<sup>th</sup> Transcript</li>
-          <li>Work Experience Certificate</li>
-          <li>Support Letter</li>
+          <li>Payroll Document</li>
+          <li>Suppport Letter</li>
+          <li>Transcript</li>
+          <li>Authenticated Work Experience</li>
         </ul>
       </div>
       <div class="ml-8">
@@ -54,11 +59,12 @@
         <ul>
           <li>Passport(Identification Card)</li>
           <li>Health Exam Certificate</li>
-          <li>HERQA</li>
+          <li>Higher Education Relevance and Quality Agency center(HERQA)</li>
           <li>Professional Document Certificate</li>
           <li>Professional Document Diploma</li>
           <li>Professional Document Transcript</li>
           <li>Support Letter</li>
+          <li>Authenticated Work Experience</li>
         </ul>
       </div>
     </div>

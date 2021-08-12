@@ -1,5 +1,8 @@
 <template>
-  <div v-if="this.showLoading2" class="h-screen max-h-4xl">
+  <div
+    v-if="this.showLoading2"
+    class="bg-lightBlueB-200 w-screen h-screen max-w-4xl"
+  >
     <Spinner class="bg-lightBlueB-200" />
   </div>
   <div class="bg-white mb-large rounded pl-4 pt-4 pr-4 pb-4">
@@ -315,7 +318,6 @@ export default {
       this.draftData = this.getDraftData;
     }
 
-    
     this.passport = this.getPassport;
     this.healthExamCert = this.getHealthExamCert;
     this.englishLanguage = this.getEnglishLanguage;
@@ -329,6 +331,10 @@ export default {
     this.letterfromOrg = this.getLetterfromOrg;
     this.renewedLicense = this.getRenewedLicense;
     this.professionalLicense = this.getProfessionalLicense;
+    this.diploma = this.getDiploma;
+    this.transcript = this.getTranscript;
+    this.degree = this.getDegree;
+
     this.buttons = this.getButtons;
     this.fetchProfileInfo();
     this.setDocs();
@@ -343,7 +349,7 @@ export default {
     this.buttons = this.getButtons;
   },
   data: () => ({
-    basePath: "https://hrlicensurebe.dev.k8s.sandboxaddis.com/",
+    basePath: "https://storage.googleapis.com/hris-lisence-dev/",
 
     show: false,
     profileInfo: {},
@@ -364,6 +370,7 @@ export default {
     showErrorFlash: false,
     showLoading: false,
     showLoading2: false,
+
     passport: "",
     healthExamCert: "",
     englishLanguage: "",
@@ -376,6 +383,10 @@ export default {
     letterfromOrg: "",
     renewedLicense: "",
     professionalLicense: "",
+    degree: "",
+    diploma: "",
+    transcript: "",
+
     applicationId: "",
     buttons: [],
     documentTypes: [],
@@ -399,6 +410,9 @@ export default {
       getLetterfromOrg: "newlicense/getLetterfromOrg",
       getRenewedLicense: "newlicense/getRenewedLicense",
       getProfessionalLicense: "newlicense/getProfessionalLicense",
+      getDiploma: "newlicense/getDiploma",
+      getTranscript: "newlicense/getTranscript",
+      getDegree: "newlicense/getDegree",
     }),
   },
   methods: {
@@ -469,6 +483,19 @@ export default {
               formData.append(
                 this.documentTypes[5].documentType.code,
                 this.englishLanguage
+              );
+              formData.append(
+                this.documentTypes[7].documentType.code,
+                this.diploma
+              );
+
+              formData.append(
+                this.documentTypes[8].documentType.code,
+                this.transcript
+              );
+              formData.append(
+                this.documentTypes[21].documentType.code,
+                this.degree
               );
               if (this.professionalDoc != undefined) {
                 formData.append(
@@ -564,6 +591,13 @@ export default {
           this.documentTypes[5].documentType.code,
           this.englishLanguage
         );
+        formData.append(this.documentTypes[7].documentType.code, this.diploma);
+
+        formData.append(
+          this.documentTypes[8].documentType.code,
+          this.transcript
+        );
+        formData.append(this.documentTypes[21].documentType.code, this.degree);
         if (this.professionalDoc != undefined) {
           formData.append(
             this.documentTypes[6].documentType.code,
@@ -693,6 +727,19 @@ export default {
                 this.documentTypes[5].documentType.code,
                 this.englishLanguage
               );
+              formData.append(
+                this.documentTypes[7].documentType.code,
+                this.diploma
+              );
+
+              formData.append(
+                this.documentTypes[8].documentType.code,
+                this.transcript
+              );
+              formData.append(
+                this.documentTypes[21].documentType.code,
+                this.degree
+              );
               if (this.professionalDoc != undefined) {
                 formData.append(
                   this.documentTypes[6].documentType.code,
@@ -788,6 +835,13 @@ export default {
           this.documentTypes[5].documentType.code,
           this.englishLanguage
         );
+        formData.append(this.documentTypes[7].documentType.code, this.diploma);
+
+        formData.append(
+          this.documentTypes[8].documentType.code,
+          this.transcript
+        );
+        formData.append(this.documentTypes[21].documentType.code, this.degree);
         if (this.professionalDoc != undefined) {
           formData.append(
             this.documentTypes[6].documentType.code,

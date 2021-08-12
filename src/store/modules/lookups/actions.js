@@ -18,4 +18,20 @@ export default {
       return resp;
     }
   },
+  async getGovernment({ commit }, id) {
+    try {
+      const resp = await ApiService.get(url + "lookups/OccupationTypes");
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+  async getNativeLanguage({ commit }, id) {
+    try {
+      const resp = await ApiService.get(url + "lookups/NativeLanguages");
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
 };

@@ -1,8 +1,14 @@
 <template>
   <div class="flex justify-center">
-    <div class="w-screen max-w-full">
-      <div
-        class="flex flex-col pt-large w-full bg-white blue-box-shadow-light rounded "
+ <div class="bg-lightBlueB-200 w-screen h-screen max-w-4xl">      <div
+        class="
+          flex flex-col
+          pt-large
+          w-full
+          bg-white
+          blue-box-shadow-light
+          rounded
+        "
       >
         <TitleWithIllustration
           illustration="User"
@@ -25,7 +31,7 @@
             >
               ACCEPTED
             </h2>
-            <div class="ml-4" style="width:250px">
+            <div class="ml-4" style="width: 250px">
               <span>
                 <h2>{{ this.photoFile.name }}</h2>
                 <h2>{{ this.photoFileSize }}</h2>
@@ -40,6 +46,7 @@
                       ref="photoFile"
                       v-on:change="handleCertificateUpload()"
                       style="margin-bottom: 15px !important;"
+                      accept=".jpeg, .png, .gif, .jpg, .pdf, .tiff , .svg"
                     />
                     <p>
                       Drag your file(s) here to begin<br />
@@ -49,14 +56,20 @@
                 </label>
               </span>
 
-              <picture v-if="!showUpload && isImage">
+                <picture v-if="!showUpload && isImage">
                 <p>
                   <a href="javascript:void(0)" @click="reset()">Upload again</a>
                 </p>
                 <img v-bind:src="filePreview" v-show="showPreview" />
               </picture>
-
-              <span v-if="!showUpload && !isImage">
+              <!--  -->
+              <div v-if="!showUpload && isPdf  ">
+                <p>
+                  <a href="javascript:void(0)" @click="reset()">Upload again</a>
+                </p>
+                <embed v-bind:src="filePreview" v-show="showPreview"  />
+              </div>
+              <span v-if="!showUpload && !isImage && !isPdf">
                 <img :src="filePreview" alt="" class="preview" />
               </span>
             </div>
@@ -77,7 +90,7 @@
               ACCEPTED
             </h2>
 
-            <div class="ml-4" style="width:250px">
+            <div class="ml-4" style="width: 250px">
               <span>
                 <h2>{{ this.diplomaFile.name }}</h2>
                 <h2>{{ this.diplomaFileSize }}</h2>
@@ -92,6 +105,7 @@
                       ref="diplomaFile"
                       v-on:change="handleDiplomaUpload()"
                       style="margin-bottom: 15px !important;"
+                       accept=".jpeg, .png, .gif, .jpg, .pdf, .tiff , .svg"
                     />
                     <p>
                       Drag your file(s) here to begin<br />
@@ -109,8 +123,13 @@
                 </p>
                 <img v-bind:src="diplomaPreview" v-show="showDiplomaPreview" />
               </picture>
-
-              <span v-if="!showDiplomaUpload && !isDiplomaImage">
+                <div v-if="!showDiplomaUpload && isUDPdf  ">
+                <p>
+                  <a href="javascript:void(0)" @click="resetDiploma()">Upload again</a>
+                </p>
+                <embed v-bind:src="diplomaPreview" v-show="showDiplomaPreview"  />
+              </div>
+              <span v-if="!showDiplomaUpload && !isDiplomaImage && !isUDPdf">
                 <img :src="diplomaPreview" alt="" class="preview" />
               </span>
             </div>
@@ -130,7 +149,7 @@
             >
               ACCEPTED
             </h2>
-            <div class="ml-4" style="width:250px">
+            <div class="ml-4" style="width: 250px">
               <span>
                 <h2>{{ this.transcriptFile.name }}</h2>
                 <h2>{{ this.transcriptFileSize }}</h2>
@@ -145,6 +164,7 @@
                       ref="transcriptFile"
                       v-on:change="handleTranscriptUpload()"
                       style="margin-bottom: 15px !important;"
+                       accept=".jpeg, .png, .gif, .jpg, .pdf, .tiff , .svg"
                     />
                     <p>
                       Drag your file(s) here to begin<br />
@@ -165,8 +185,13 @@
                   v-show="showTranscriptPreview"
                 />
               </picture>
-
-              <span v-if="!showTranscriptUpload && !isTranscriptImage">
+            <div v-if="!showTranscriptUpload && isUTPdf  ">
+                <p>
+                  <a href="javascript:void(0)" @click="resetTranscript()">Upload again</a>
+                </p>
+                <embed v-bind:src="transcriptPreview" v-show="showTranscriptPreview"  />
+              </div>
+              <span v-if="!showTranscriptUpload && !isTranscriptImage && !isUTPdf">
                 <img :src="transcriptPreview" alt="" class="preview" />
               </span>
             </div>
@@ -216,9 +241,7 @@
         </div>
         <div v-if="this.draftStatus == 'DRA' || !this.draftStatus">
           <div class="flex justify-center mt-4 mb-8">
-            <button @click="submit">
-              Next
-            </button>
+            <button @click="submit">Next</button>
             <button
               v-if="this.buttons.length < 3"
               @click="draft(this.buttons[1].action)"
@@ -248,9 +271,7 @@
           v-if="this.draftStatus == 'SUB'"
           class="flex justify-center mt-8 pb-12"
         >
-          <button @click="submit">
-            Next
-          </button>
+          <button @click="submit">Next</button>
           <button
             class="withdraw"
             @click="withdraw(this.buttons[0].action)"
@@ -263,9 +284,7 @@
           v-if="this.draftStatus == 'USUP'"
           class="flex justify-center mt-8 pb-12"
         >
-          <button @click="submit">
-            Next
-          </button>
+          <button @click="submit">Next</button>
           <button @click="draft(this.buttons[0].action)" variant="outline">
             {{ this.buttons[0]["name"] }}
           </button>
@@ -277,9 +296,7 @@
           v-if="this.draftStatus == 'DEC'"
           class="flex justify-center mt-8 pb-12"
         >
-          <button @click="submit">
-            Next
-          </button>
+          <button @click="submit">Next</button>
           <button @click="draft(this.buttons[0].action)" variant="outline">
             {{ this.buttons[0]["name"] }}
           </button>
@@ -318,7 +335,8 @@ export default {
   props: ["activeState"],
   data() {
     return {
-      basePath: "https://hrlicensurebe.dev.k8s.sandboxaddis.com/",
+       basePath : "https://storage.googleapis.com/hris-lisence-dev/",
+
       dataChanged: false,
       showFlash: false,
       showErrorFlash: false,
@@ -326,8 +344,10 @@ export default {
       showPreview: false,
       filePreview: "",
       showUpload: true,
-      isImage: true,
-
+      isImage: false,
+      isPdf:false,
+      isUTPdf:false,
+      isUDPdf:false,
       diplomaFile: "",
       showDiplomaPreview: false,
       diplomaPreview: "",
@@ -362,6 +382,7 @@ export default {
       previousLicense: "",
       professionalDoc: [],
       healthExamCert: "",
+      payroll: "",
 
       declinedFields: [],
       acceptedFields: [],
@@ -397,7 +418,7 @@ export default {
       getcpd: "renewal/getRenewalCpd",
       getPreviousLicense: "renewal/getPreviousLicense",
       getHealthExamCert: "renewal/getRenewalHealthExamCert",
-
+      getPayroll: "renewal/getPayroll",
       getDraftData: "renewal/getDraft",
       getDeclinedFields: "renewal/getDeclinedFields",
       getAcceptedFields: "renewal/getAcceptedFields",
@@ -434,7 +455,15 @@ export default {
       for (let i = 0; i < this.draftData.documents.length; i++) {
         if (this.draftData.documents[i].documentTypeCode == "PDC") {
           this.showUpload = false;
-          this.isImage = true;
+           if(this.draftData.documents[i].fileName.split(".")[1]=="pdf")
+            {
+               this.isPdf=true;
+            }
+            else
+            {
+              this.isImage = true;
+            }
+          
           this.photoFile = this.draftData.documents[i];
           this.showPreview = true;
           this.filePreview =
@@ -442,7 +471,14 @@ export default {
         }
         if (this.draftData.documents[i].documentTypeCode == "PDD") {
           this.showDiplomaUpload = false;
-          this.isDiplomaImage = true;
+           if(this.draftData.documents[i].fileName.split(".")[1]=="pdf")
+            {
+               this.isUDPdf=true;
+            }
+            else
+            {
+              this.isDiplomaImage = true;
+            }
           this.diplomaFile = this.draftData.documents[i];
           this.showDiplomaPreview = true;
           this.diplomaPreview =
@@ -450,7 +486,15 @@ export default {
         }
         if (this.draftData.documents[i].documentTypeCode == "PDT") {
           this.showTranscriptUpload = false;
-          this.isTranscriptImage = true;
+          if(this.draftData.documents[i].fileName.split(".")[1]=="pdf")
+            {
+               this.isUTPdf=true;
+            }
+            else
+            {
+                this.isTranscriptImage = true;
+            }
+        
           this.transcriptFile = this.draftData.documents[i];
           this.showTranscriptPreview = true;
           this.transcriptPreview =
@@ -467,6 +511,7 @@ export default {
     this.previousLicense = this.getPreviousLicense;
     this.renewalLetter = this.getRenewalLetter;
     this.professionalDoc = this.getProfessionalDocuments;
+    this.payroll = this.getPayroll;
   },
   methods: {
     ...mapActions(["setProfessionalDoc"]),
@@ -477,6 +522,8 @@ export default {
       this.photoFile = "";
       this.filePreview = "";
       this.isImage = true;
+      this.isPdf=false;
+      this.photoFileSize="";
     },
     resetDiploma() {
       this.showDiplomaUpload = true;
@@ -484,6 +531,8 @@ export default {
       this.diplomaFile = "";
       this.diplomaPreview = "";
       this.isDiplomaImage = true;
+      this.isUDPdf=false;
+      this.diplomaFileSize="";
     },
     resetTranscript() {
       this.showTranscriptUpload = true;
@@ -491,6 +540,8 @@ export default {
       this.transcriptFile = "";
       this.transcriptPreview = "";
       this.isTranscriptImage = true;
+      this.isUTPdf=false;
+      this.transcriptFileSize="";
     },
     // resetExperience() {
     //   this.showExperienceUpload = true;
@@ -513,7 +564,7 @@ export default {
       }
       reader.addEventListener(
         "load",
-        function() {
+        function () {
           this.showPreview = true;
           this.filePreview = reader.result;
         }.bind(this),
@@ -526,7 +577,8 @@ export default {
           reader.readAsDataURL(this.photoFile);
         } else if (/\.(pdf)$/i.test(this.photoFile.name)) {
           this.isImage = false;
-          reader.readAsText(this.photoFile);
+          this.isPdf=true;
+          reader.readAsDataURL(this.photoFile);
         }
       }
     },
@@ -545,7 +597,7 @@ export default {
 
       reader.addEventListener(
         "load",
-        function() {
+        function () {
           this.showDiplomaPreview = true;
           this.diplomaPreview = reader.result;
         }.bind(this),
@@ -558,7 +610,8 @@ export default {
           reader.readAsDataURL(this.diplomaFile);
         } else if (/\.(pdf)$/i.test(this.diplomaFile.name)) {
           this.isDiplomaImage = false;
-          reader.readAsText(this.diplomaFile);
+          this.isUDPdf=true;
+          reader.readAsDataURL(this.diplomaFile);
         }
       }
     },
@@ -577,7 +630,7 @@ export default {
 
       reader.addEventListener(
         "load",
-        function() {
+        function () {
           this.showTranscriptPreview = true;
           this.transcriptPreview = reader.result;
         }.bind(this),
@@ -590,7 +643,8 @@ export default {
           reader.readAsDataURL(this.transcriptFile);
         } else if (/\.(pdf)$/i.test(this.transcriptFile.name)) {
           this.isTranscriptImage = false;
-          reader.readAsText(this.transcriptFile);
+          this.isUTPdf=true;
+          reader.readAsDataURL(this.transcriptFile);
         }
       }
     },
@@ -697,6 +751,10 @@ export default {
             formData.append(
               this.documentSpec[10].documentType.code,
               this.transcriptFile
+            );
+            formData.append(
+              this.documentSpec[11].documentType.code,
+              this.payroll
             );
             let payload = { document: formData, id: licenseId };
             this.$store

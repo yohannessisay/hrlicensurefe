@@ -1,6 +1,6 @@
 <template>
   <div>
-    <reviewer-nav-bar tab="othersNewLicenseReEvaluate" />
+    <!-- <reviewer-nav-bar tab="othersNewLicenseReEvaluate" /> -->
     <div class="bg-lightBlueB-200 h-full" v-if="!allInfo.searchByInput">
       <div class="pl-12">
         <div>Filter By</div>
@@ -70,17 +70,20 @@
 
 <script>
 import { ref, onMounted } from "vue";
-import Title from "@/sharedComponents/TitleWithIllustration";
+import moment from "moment";
+import { useStore } from "vuex";
+
+import applicationStatus from "../../Configurations/getApplicationStatus.js";
+import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
+import filterApplication from "../../ChildComponents/FilteredDatas/FilterApplication.js";
+import FilteredInfo from "../../ChildComponents/FilteredDatas/FilteredInfo.vue";
+import NothingToShow from "../../ChildComponents/NothingToShow.vue";
 import ReviewerNavBar from "../../ReviewerNavBar.vue";
 import ReEvaluateApplications from "../ChildApplicationTypes/ReEvaluateApplications.vue";
-import NothingToShow from "../../ChildComponents/NothingToShow.vue";
-import { useStore } from "vuex";
-import store from "../../../../store";
 import Spinner from "@/sharedComponents/Spinner";
-import moment from "moment";
-import filterApplication from "../../ChildComponents/FilteredDatas/FilterApplication.js";
-import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
-import FilteredInfo from "../../ChildComponents/FilteredDatas/FilteredInfo.vue";
+import store from "../../../../store";
+import Title from "@/sharedComponents/TitleWithIllustration";
+
 
 export default {
   computed: {
@@ -104,6 +107,8 @@ export default {
     const store = useStore();
 
     let newLicenseReEvaluate = ref([]);
+
+    let otherEvaluators = ref([]);
 
     const adminId = +localStorage.getItem("adminId");
 
@@ -138,8 +143,10 @@ export default {
 
     const fetchNewLicenseReEvaluate = () => {
       showLoading.value = true;
+      const statusId = applicationStatus(store, 'EVAASS');
+      const adminStatus = [statusId, adminId]
       store
-        .dispatch("reviewerNewLicense/getNewLicenseOthersReEvaluate", adminId)
+        .dispatch("reviewerNewLicense/getNewLicenseOthersReEvaluate", adminStatus)
         .then((res) => {
           showLoading.value = false;
           newLicenseReEvaluate.value =
@@ -150,6 +157,8 @@ export default {
             store.getters[
               "reviewerNewLicense/getNewLicenseOthersReEvaluateSearched"
             ];
+
+            console.log("all values are", store.getters["reviewerNewLicense/getNewLicenseOthersReEvaluateSearched"])
 
           for (let applicant in allInfo.value.assignApplication) {
             allInfo.value.assignApplication[applicant].createdAt = moment(
@@ -162,12 +171,30 @@ export default {
               allInfo.value.assignApplication[applicant].applicationType =
                 allInfo.value.assignApplication[applicant].applicantType;
             }
+            // allInfo.value.assignApplication[applicant].forEarch(e => {
+            //   console.log("gete all", e)
+            // })
+            // console.log("gete all", allInfo.value.assignApplication[applicant])
+            // if (allInfo.value.assignApplication[applicant].) 
+            // allInfo.value.assignApplication[applicant].evaluators.forEarch(e => {
+              // console.log("gete e", allInfo.value.assignApplication[applicant].evaluators.length)
+              let evaluatorsList = allInfo.value.assignApplication[applicant].evaluators
+              for(var evaluator in evaluatorsList) {
+                // otherEvaluators.value = evaluatorsList[evaluator].filter(function(e) {
+                //   otherEvaluators.value = e.evaluatorId !== adminId;
+                  if (evaluatorsList[evaluator].evaluatorId !== adminId) {
+                    otherEvaluators.value.push(evaluatorsList[evaluator])
+                  }
+                // })
+              }
+            // })
           }
           if (
             newLicenseReEvaluate.value.length === 0
           ) {
             nothingToShow.value = true;
           }
+          console.log("finally", otherEvaluators.value)
         });
     };
     onMounted(() => {

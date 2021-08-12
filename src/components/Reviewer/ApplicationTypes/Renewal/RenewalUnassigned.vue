@@ -1,6 +1,6 @@
 <template>
   <div>
-    <reviewer-nav-bar tab="RenewalUnassigned" />
+    <!-- <reviewer-nav-bar tab="RenewalUnassigned" /> -->
     <div class="bg-lightBlueB-200 h-full" v-if="!allInfo.searchByInput">
       <div class="pl-12">
         <div>Filter By</div>
@@ -62,15 +62,19 @@
 import store from "../../../../store";
 import { useStore } from "vuex";
 import { ref, onMounted } from "vue";
-import Title from "@/sharedComponents/TitleWithIllustration";
-import ReviewerNavBar from "../../ReviewerNavBar.vue";
-import UnassignedApplications from "../ChildApplicationTypes/UnassignedApplications.vue";
-import NothingToShow from "../../ChildComponents/NothingToShow.vue";
-import Spinner from "@/sharedComponents/Spinner";
 import moment from "moment";
-import filterApplication from "../../ChildComponents/FilteredDatas/FilterApplication.js";
+
+import applicationStatus from "../../Configurations/getApplicationStatus.js";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
+import filterApplication from "../../ChildComponents/FilteredDatas/FilterApplication.js";
 import FilteredInfo from "../../ChildComponents/FilteredDatas/FilteredInfo.vue";
+import NothingToShow from "../../ChildComponents/NothingToShow.vue";
+import ReviewerNavBar from "../../ReviewerNavBar.vue";
+import Spinner from "@/sharedComponents/Spinner";
+import Title from "@/sharedComponents/TitleWithIllustration";
+import UnassignedApplications from "../ChildApplicationTypes/UnassignedApplications.vue";
+
+
 export default {
   name: "RenewalUnassigned",
   components: {
@@ -125,17 +129,15 @@ export default {
 
     const fetchUnassignedRenewal = () => {
       showLoading.value = true;
+      const statusId = applicationStatus(store, 'SUB');
       store
-        .dispatch("reviewerRenewal/getUnassignedRenewal")
+        .dispatch("reviewerRenewal/getUnassignedRenewal", statusId)
         .then((res) => {
           showLoading.value = false;
           RenewalUnassigned.value =
             store.getters[
               "reviewerRenewal/getRenewalUnassignedSearched"
             ];
-            console.log("______--", store.getters[
-              "reviewerRenewal/getRenewalUnassignedSearched"
-            ])
           allInfo.value.assignApplication =
             store.getters[
               "reviewerRenewal/getRenewalUnassignedSearched"

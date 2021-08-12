@@ -1,6 +1,6 @@
 <template>
   <div>
-    <reviewer-nav-bar tab="newLicenseUnassigned" />
+    <!-- <reviewer-nav-bar tab="newLicenseUnassigned" /> -->
     <div class="bg-lightBlueB-200 h-full" v-if="!allInfo.searchByInput">
       <div class="pl-12">
         <div>Filter By</div>
@@ -73,6 +73,7 @@ import moment from "moment";
 import filterApplication from "../../ChildComponents/FilteredDatas/FilterApplication.js";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import FilteredInfo from "../../ChildComponents/FilteredDatas/FilteredInfo.vue";
+import applicationStatus from "../../Configurations/getApplicationStatus.js";
 
 
 export default {
@@ -126,13 +127,13 @@ export default {
 
     const fetchNewLicenseUnassigned = () => {
       showLoading.value = true;
-      store.dispatch("reviewerNewLicense/getNewLicenseUnassigned").then((res) => {
+      const statusId = applicationStatus(store, 'SUB');
+      store.dispatch("reviewerNewLicense/getNewLicenseUnassigned", statusId).then((res) => {
         showLoading.value = false;
         newLicenseUnassigned.value =
           store.getters["reviewerNewLicense/getNewLicenseUnassignedSearched"];
         allInfo.value.assignApplication =
           store.getters["reviewerNewLicense/getNewLicenseUnassignedSearched"];
-
         for (let applicant in allInfo.value.assignApplication) {
           allInfo.value.assignApplication[applicant].createdAt = moment(
             allInfo.value.assignApplication[applicant].createdAt
@@ -150,6 +151,7 @@ export default {
         }
       });
     };
+
     onMounted(() => {
       fetchNewLicenseUnassigned();
     });

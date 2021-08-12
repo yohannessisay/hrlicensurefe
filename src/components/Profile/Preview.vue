@@ -39,7 +39,7 @@
         </div>
         <div>
           <label class="ml-8 text-primary-300"> Nationality</label>
-          <h5 class="ml-8">{{ personalInfo.nationality }}</h5>
+          <h5 class="ml-8">{{ nationality }}</h5>
         </div>
         <div>
           <label class="ml-8 text-primary-300"> Place of Birth</label>
@@ -60,7 +60,7 @@
 
         <div>
           <label class="ml-8 text-primary-300"> Marital Status</label>
-          <h5 class="ml-8">{{ personalInfo.maritalStatus }}</h5>
+          <h5 class="ml-8">{{ maritalStatus }}</h5>
         </div>
       </div>
 
@@ -181,9 +181,10 @@ export default {
     };
 
     let success = ref(false);
-    let a = true;
     let response = {};
     let showFlash = ref(false);
+    let nationality = ref("");
+    let maritalStatus = ref("");
 
     const addProfile = () => {
       message.value.showLoading = true;
@@ -201,7 +202,7 @@ export default {
           gender: personalInfo.gender,
           dateOfBirth: personalInfo.dateOfBirth,
           placeOfBirth: personalInfo.placeOfBirth,
-          nationality: personalInfo.nationality,
+          nationality: personalInfo.nationalityId,
           userTypeId: personalInfo.userTypeId,
           maritalStatusId: personalInfo.maritalStatusId,
           kebele: address.kebele,
@@ -222,7 +223,7 @@ export default {
             }, 1500);
             setTimeout(() => {
               router.push({ path: "/menu" });
-            }, 10);
+            }, 11);
           } else {
             message.value.showLoading = false;
             message.value.showFlash = false;
@@ -250,9 +251,12 @@ export default {
     const prevStep = () => {
       emit("changeActiveStatePrevious");
     };
+
     personalInfo = store.getters["profile/getPersonalInfo"];
     address = store.getters["profile/getAddress"];
     contact = store.getters["profile/getContact"];
+    nationality = store.getters["profile/getNationality"];
+    maritalStatus = store.getters["profile/getMaritalStatus"];
 
     onMounted(() => {
       fetchUser();
@@ -268,7 +272,8 @@ export default {
       address,
       contact,
       success,
-      a,
+      nationality,
+      maritalStatus,
       response,
       message,
       submit,

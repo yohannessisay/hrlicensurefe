@@ -18,6 +18,12 @@
         </div>
         <div class="flex mb-4 justify-center">
           <span v-if="showUpload">
+            <span>
+              <label class="text-primary-700 ml-4"
+                >Maximum size for profile picture is 100 KB
+              </label>
+            </span>
+            <br />
             <label class="text-primary-700 ml-4"
               >Upload Profile Picture:
               <div class="dropbox">
@@ -29,6 +35,7 @@
                   v-on:change="handleFileUpload()"
                   style="margin-bottom: 15px !important;"
                 />
+                <!-- we can restirct what type of file format it can use using accept=".jpeg,.jpg,.png,.pdf,...." -->
                 <p>
                   Drag your Profile Picture here to begin<br />
                   or click to browse
@@ -43,8 +50,11 @@
             </p>
             <img v-bind:src="filePreview" v-show="showPreview" />
           </picture>
-
-          <span v-if="!showUpload && !isImage">
+          <span v-if="photoSizeCheck" style="color: red"
+            >Image size to big, Upload again. Image must be less than 100
+            kB</span
+          >
+          <span v-if="!showUpload && !isImage && !photoSizeCheck">
             <img :src="filePreview" alt="" class="preview" />
           </span>
         </div>
@@ -118,14 +128,23 @@
         <div class="flex">
           <div class="flex flex-col mb-medium w-1/2 mr-6">
             <label class="text-primary-700">Nationality</label>
-            <input
+            <select
               class="max-w-3xl"
-              type="text"
-              v-model="personalInfo.nationality"
-            />
-            <span style="color: red">{{ personalInfoErrors.nationality }}</span>
+              v-model="personalInfo.nationalityId"
+              @change="fetchNationalities()"
+            >
+              <option
+                v-for="types in state.nationalities"
+                v-bind:key="types.name"
+                v-bind:value="types.id"
+              >
+                {{ types.name }}
+              </option>
+            </select>
+            <span style="color: red">{{
+              personalInfoErrors.nationalityId
+            }}</span>
           </div>
-
           <div class="flex flex-col mb-medium w-1/2 ml-12">
             <label class="text-primary-700">Place of birth(Optional)</label>
             <input
@@ -135,17 +154,17 @@
             />
           </div>
         </div>
-        <div class="flex flex-col mb-medium w-1/2 m1-12">
-          <label class="text-primary-700">Date of birth </label>
-          <input
-            class="max-w-3xl"
-            type="date"
-            v-model="personalInfo.dateOfBirth"
-          />
-          <span style="color: red">{{ personalInfoErrors.dateOfBirth }}</span>
-        </div>
         <div class="flex">
-          <div class="flex w-1/2 mb-small  mr-12">
+          <div class="flex flex-col mb-medium w-1/2 mr-6">
+            <label class="text-primary-700">Date of birth </label>
+            <input
+              class="max-w-3xl"
+              type="date"
+              v-model="personalInfo.dateOfBirth"
+            />
+            <span style="color: red">{{ personalInfoErrors.dateOfBirth }}</span>
+          </div>
+          <div class="flex flex-col mb-medium w-1/2 ml-12">
             <div class="flex flex-col w-full">
               <label class="text-primary-700">Gender</label>
               <div class="flex w-full">
@@ -187,6 +206,8 @@
               >
             </div>
           </div>
+        </div>
+        <div class="flex">
           <div class="flex w-1/2 mb-small m1-12">
             <div class="flex flex-col w-full">
               <label class="text-primary-700">Martial Status</label>
@@ -199,7 +220,6 @@
                       id="single"
                       value="1"
                       v-model="personalInfo.maritalStatusId"
-                      @change="genderChanged()"
                     />
                     <label
                       class="ml-tiny flex flex-col text-primary-700"
@@ -217,7 +237,6 @@
                         id="married"
                         value="2"
                         v-model="personalInfo.maritalStatusId"
-                        @change="genderChanged()"
                       />
                       <label class="ml-tiny text-primary-700" for="married">
                         Married
@@ -232,7 +251,6 @@
                       id="divorced"
                       value="3"
                       v-model="personalInfo.maritalStatusId"
-                      @change="genderChanged()"
                     />
                     <label class="ml-tiny text-primary-700" for="divorced">
                       Divorced
@@ -245,9 +263,7 @@
               }}</span>
             </div>
           </div>
-        </div>
-        <div class="flex">
-          <div class="flex flex-col mb-medium w-1/2 mr-12">
+          <div class="flex flex-col mb-medium w-1/2 ml-12">
             <label class="text-primary-700">User Type</label>
             <select class="max-w-3xl" v-model="personalInfo.userTypeId">
               <option
@@ -261,7 +277,54 @@
             <span style="color: red">{{ personalInfoErrors.userTypeId }}</span>
           </div>
         </div>
-
+        <div class="flex">
+          <div class="flex flex-col mb-medium w-1/2 mr-6">
+            <label class="text-primary-700">Region</label>
+            <select
+              class="max-w-3xl"
+              v-model="id.regionID"
+              @change="fetchZones(id.regionID)"
+            >
+              <option
+                v-for="types in state.regions"
+                v-bind:key="types.name"
+                v-bind:value="types.id"
+              >
+                {{ types.name }}
+              </option>
+            </select>
+          </div>
+          <div class="flex flex-col mb-medium w-1/2 ml-12">
+            <label class="text-primary-700">Zone</label>
+            <select
+              class="max-w-3xl"
+              @change="fetchWoredas(id.zoneID)"
+              v-model="id.zoneID"
+            >
+              <option
+                v-for="types in state.zones"
+                v-bind:key="types.name"
+                v-bind:value="types.id"
+              >
+                {{ types.name }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="flex">
+          <div style="width: 47%" class="flex flex-col mb-medium mr-6">
+            <label class="text-primary-700">Woreda</label>
+            <select class="max-w-3xl" v-model="personalInfo.woredaId">
+              <option
+                v-for="types in state.woreda"
+                v-bind:key="types.name"
+                v-bind:value="types.id"
+              >
+                {{ types.name }}
+              </option>
+            </select>
+          </div>
+        </div>
         <div class="flex mb-medium w-full mt-medium">
           <button
             class="block mx-auto w-1/4  bg-lightBlue-500 hover:bg-lightBlue-600 hover:shadow-lg"
@@ -273,13 +336,11 @@
     </div>
   </div>
 </template>
-
 <script>
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
 import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
-import { base64StringToBlob } from 'blob-util';
-
+import { base64StringToBlob } from "blob-util";
 export default {
   components: { TitleWithIllustration },
   props: ["activeState"],
@@ -291,8 +352,10 @@ export default {
     let filePreview = ref("");
     let showUpload = ref(true);
     let isImage = ref(true);
-
+    let photoSizeCheck = ref(false);
     let fileSize = ref("");
+    let nationality = ref("");
+    let maritalStatus = ref("");
 
     let personalInfo = ref({
       name: "",
@@ -304,10 +367,11 @@ export default {
       gender: "",
       dateOfBirth: "",
       placeOfBirth: "",
-      nationality: "",
+      nationalityId: "",
       userTypeId: "",
       maritalStatusId: "",
       photo: "",
+      woredaId: "",
     });
     let personalInfoErrors = ref({
       name: "",
@@ -316,17 +380,24 @@ export default {
       alternativeName: "",
       alternativeFatherName: "",
       alternativeGrandFatherName: "",
-      nationality: "",
+      nationalityId: "",
       gender: "",
       maritalStatusId: "",
       userTypeId: "",
     });
-
     let state = ref({
       userTypes: {},
       expertLevel: {},
       healthOffices: {},
       maritalStatuses: {},
+      regions: {},
+      zones: {},
+      woreda: {},
+      nationalities: {},
+    });
+    let id = ref({
+      regionID: {},
+      zoneID: {},
     });
     const reset = () => {
       showUpload.value = true;
@@ -334,53 +405,45 @@ export default {
       photoFile.value = "";
       filePreview.value = "";
       isImage.value = true;
+      photoSizeCheck.value = false;
+      fileSize.value = "";
     };
     const handleFileUpload = async () => {
       showUpload.value = false;
       photoFile.value = photoFileP.value.files[0];
-  
       let reader = new FileReader();
- 
-      let fileS = photoFile.value.size;
-      if (fileS > 0 && fileS < 1000) {
-        fileSize.value += "B";
-      } else if (fileS > 1000 && fileS < 1000000) {
-        fileSize.value = fileS / 1000 + "kB";
+      if (photoFile.value.size > 100000) {
+        photoSizeCheck.value = true;
       } else {
-        fileSize.value = fileS / 1000000 + "MB";
-      }
-      
-
-      reader.addEventListener(
-        "load",
-       async function() {
-          showPreview.value = true;
-          filePreview.value = reader.result;
-          
-          console.log(photoFile.value);
-          var base64 = reader.result;
-         
-          // var blob= reader.readAsArrayBuffer( );;
-          // console.log("blob file");
-          // console.log(blob)
-     
-   personalInfo.value.photo =base64 ;
-
-          
-        },
-        false
-      );
-      if (photoFile.value) {
-        if (/\.(jpe?g|png|gif)$/i.test(photoFile.value.name)) {
-          isImage.value = true;
-          reader.readAsDataURL(photoFile.value);
-        } else if (/\.(pdf)$/i.test(photoFile.value.name)) {
-          isImage.value = false;
-          reader.readAsText(photoFile.value);
+        let fileS = photoFile.value.size;
+        if (fileS > 0 && fileS < 1000) {
+          fileSize.value += "B";
+        } else if (fileS > 1000 && fileS < 1000000) {
+          fileSize.value = fileS / 1000 + "kB";
+        } else {
+          fileSize.value = fileS / 1000000 + "MB";
+        }
+        reader.addEventListener(
+          "load",
+          async function() {
+            showPreview.value = true;
+            filePreview.value = reader.result;
+            var base64 = reader.result;
+            personalInfo.value.photo = base64;
+          },
+          false
+        );
+        if (photoFile.value) {
+          if (/\.(jpe?g|png|gif)$/i.test(photoFile.value.name)) {
+            isImage.value = true;
+            reader.readAsDataURL(photoFile.value);
+          } else if (/\.(pdf)$/i.test(photoFile.value.name)) {
+            isImage.value = false;
+            reader.readAsText(photoFile.value);
+          }
         }
       }
     };
-
     const fetchUserTypes = () => {
       store.dispatch("profile/getUserTypes").then((res) => {
         const utResults = res.data;
@@ -391,25 +454,45 @@ export default {
         );
       });
     };
-
-    const fetchExpertLevel = () => {
-      store.dispatch("profile/getExpertLevels").then((res) => {
-        const elResults = res.data;
-        state.value.expertLevel = elResults.data;
+    const fetchRegions = () => {
+      store.dispatch("profile/getRegions").then((res) => {
+        const regionsResult = res.data;
+        state.value.regions = regionsResult.data;
       });
     };
-
-    const fetchHealthOffices = () => {
-      if (personalInfo.value.expertLevelId == 4) {
-        store.dispatch("profile/getHealthOffice").then((res) => {
-          const hoResults = res.data;
-          state.value.healthOffices = hoResults.data;
-        });
-      }
+    const fetchZones = (id) => {
+      store.dispatch("profile/getZones", id).then((res) => {
+        const zonesResult = res.data;
+        state.value.zones = zonesResult.data;
+      });
+    };
+    const fetchWoredas = (id) => {
+      store.dispatch("profile/getWoredas", id).then((res) => {
+        const woredasResult = res.data;
+        state.value.woreda = woredasResult.data;
+      });
+    };
+    const fetchNationalities = () => {
+      store.dispatch("profile/getNationalities").then((res) => {
+        const nationalities = res.data;
+        state.value.nationalities = nationalities.data;
+      });
     };
 
     const nextStep = () => {
       personalInfoErrors.value = validateForm(personalInfo.value);
+      for (let i = 0; i < state.value.nationalities.length; i++) {
+        if (
+          state.value.nationalities[i].id == personalInfo.value.nationalityId
+        ) {
+          nationality.value = state.value.nationalities[i].name;
+        }
+      }
+      if (personalInfo.value.maritalStatusId == 1) maritalStatus.value = "Single";
+      if (personalInfo.value.maritalStatusId == 2) maritalStatus.value = "Married";
+      if (personalInfo.value.maritalStatusId == 3) maritalStatus.value = "Divorced";
+      store.dispatch("profile/setNationality", nationality.value);
+      store.dispatch("profile/setMaritalStatus", maritalStatus.value);
       let empty = isEmpty(personalInfoErrors.value);
       if (empty == false) {
         return;
@@ -417,25 +500,10 @@ export default {
       if (empty == true) {
         store.dispatch("profile/setProfileInfo", personalInfo);
         emit("changeActiveState");
-       
       }
     };
-
-    const genderChanged = () => {
-      if (personalInfo.value.maritalStatusId == 3) {
-        personalInfo.value.maritalStatus = "Divorced";
-      }
-      if (personalInfo.value.maritalStatusId == 2) {
-        personalInfo.value.maritalStatus = "Married";
-      }
-      if (personalInfo.value.maritalStatusId == 1) {
-        personalInfo.value.maritalStatus = "Single";
-      }
-    };
-
     const validateForm = (formData) => {
       const errors = {};
-
       if (!formData.name) errors.name = "First Name Required";
       if (!formData.fatherName) errors.fatherName = "Father's Name Required";
       if (!formData.grandFatherName)
@@ -447,13 +515,13 @@ export default {
       if (!formData.alternativeGrandFatherName)
         errors.alternativeGrandFatherName =
           "Alternative Grandfather's Name Required";
-      if (!formData.nationality) errors.nationality = "Nationality Required";
+      if (!formData.nationalityId)
+        errors.nationalityId = "Nationality Required";
+      if (!formData.dateOfBirth) errors.dateOfBirth = "Date of Birth Required";
       if (!formData.gender) errors.gender = "Gender Required";
       if (!formData.maritalStatusId)
         errors.maritalStatusId = "Marital Status Required";
       if (!formData.userTypeId) errors.userTypeId = "User Type Required";
-      if (!formData.dateOfBirth) errors.dateOfBirth = "Date of Birth Required";
-
       return errors;
     };
     const isEmpty = (obj) => {
@@ -462,7 +530,6 @@ export default {
           return false;
         }
       }
-
       return true;
     };
 
@@ -471,7 +538,8 @@ export default {
         personalInfo.value = store.getters["profile/getPersonalInfo"];
       }
       fetchUserTypes();
-      fetchExpertLevel();
+      fetchRegions();
+      fetchNationalities();
     });
     return {
       photoFile,
@@ -485,14 +553,19 @@ export default {
       reset,
       personalInfo,
       personalInfoErrors,
+      photoSizeCheck,
       validateForm,
+      nationality,
+      maritalStatus,
       isEmpty,
       state,
+      id,
       fetchUserTypes,
-      fetchExpertLevel,
-      fetchHealthOffices,
       nextStep,
-      genderChanged,
+      fetchRegions,
+      fetchZones,
+      fetchWoredas,
+      fetchNationalities,
     };
   },
 };

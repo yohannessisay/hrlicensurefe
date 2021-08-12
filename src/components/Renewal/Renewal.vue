@@ -2,17 +2,16 @@
   <div>
     <Navigation />
     <div class="w-screen bg-lightBlueB-200 flex items-center justify-center">
-      <div class="w-screen max-w-4xl mt-large">
+      <div class="bg-lightBlueB-200 w-screen h-screen max-w-4xl">
         <div class="flex flex-col w-full rounded mb-large">
-          <h2 class="flex justify-center pb-medium">
-            Renewal
-          </h2>
+          <h2 class="flex justify-center pb-medium">Renewal</h2>
           <transition name="fade" mode="out-in">
             <div v-if="this.activeState == 1">
               <Institution
                 :activeState="1"
                 @changeActiveState="activeState++"
                 @applicantTypeValue="applicantTypeSet"
+                @payrollDocumentSet="payrollDocumentSet"
               />
             </div>
           </transition>
@@ -24,7 +23,7 @@
               />
             </div>
           </transition>
-          <div v-if="this.applicantType == 1">
+          <div v-if="this.applicantType == 1 && this.displayPayrollOption">
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 3">
                 <PreviousLicenseL
@@ -56,6 +55,56 @@
                 />
               </div>
             </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 7">
+                <PayrollDoc
+                  :activeState="7"
+                  @changeActiveState="activeState++"
+                />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 8">
+                <LicenseSummary
+                  :activeState="8"
+                  @changeActiveState="activeState++"
+                />
+              </div>
+            </transition>
+          </div>
+          <div v-if="this.applicantType == 1 && !this.displayPayrollOption">
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 3">
+                <PreviousLicenseL
+                  :activeState="3"
+                  @changeActiveState="activeState++"
+                />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 4">
+                <CPDF
+                  :activeState="4"
+                  @changeActiveState="activeState++"
+                /></div
+            ></transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 5">
+                <WorkExperience
+                  :activeState="5"
+                  @changeActiveState="activeState++"
+                />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 6">
+                <ProfessionalDocuments
+                  :activeState="6"
+                  @changeActiveState="activeState++"
+                />
+              </div>
+            </transition>
+
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 7">
                 <LicenseSummary
@@ -179,6 +228,7 @@ import ProfessionalDocuments from "./ProfessionalDocument";
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import Spinner from "@/sharedComponents/Spinner";
+import PayrollDoc from "./Ethiopians L/Payroll.vue";
 
 export default {
   created() {
@@ -202,6 +252,7 @@ export default {
     declinedFields: [],
     acceptedFields: [],
     remark: "",
+    displayPayrollOption: false,
   }),
   components: {
     Institution,
@@ -220,6 +271,7 @@ export default {
     FlashMessage,
     ErrorFlashMessage,
     Spinner,
+    PayrollDoc,
   },
   methods: {
     applicantTypeSet: function(params) {
@@ -227,6 +279,13 @@ export default {
         this.applicantType = 3;
       } else {
         this.applicantType = params;
+      }
+    },
+    payrollDocumentSet: function(params) {
+      if (params == 2) {
+        this.displayPayrollOption = true;
+      } else {
+        this.displayPayrollOption = false;
       }
     },
     submit(n) {
@@ -288,7 +347,6 @@ export default {
         .then((res) => {
           const results = res.data.data;
           this.documentSpecs = results;
-          console.log(this.documentSpecs);
           this.$store
             .dispatch("renewal/setDocumentSpecs", this.documentSpecs)
             .then((res) => {});
