@@ -252,8 +252,8 @@ export default {
       // });
     });
     const update = () => {};
-    const paymentSlipChange = (paymentSlip) => {
-      // console.log(paymentSlip);
+    const paymentSlipChange = (payment) => {
+      console.log(payment);
     };
     const save = () => {
       message.value.showLoading = true;
@@ -324,6 +324,7 @@ export default {
       fileSize,
       serviceFeeName,
       paymentSlipChange,
+      paymentSlip,
     };
   },
 };
