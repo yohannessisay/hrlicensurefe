@@ -11,127 +11,132 @@
           />
         </div>
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-10">
-          <div class="flex">
-            <div class="flex flex-col mb-medium w-2/5 mr-12">
-              <label class="text-primary-700">Region</label>
-              <select
-                class="max-w-3xl"
-                v-model="regionID"
-                @change="fetchZones()"
-              >
-                <option
-                  v-for="types in regionArray"
-                  v-bind:key="types.name"
-                  v-bind:value="types.id"
+          <div id="main" class="mt-4 pt-8 pl-4">
+            <div class="flex">
+              <div class="flex flex-col mb-medium w-2/5 mr-12">
+                <label class="text-primary-700">Region</label>
+                <select
+                  class="max-w-3xl"
+                  v-model="regionID"
+                  @change="fetchZones()"
                 >
-                  {{ types.name }}
-                </option>
-              </select>
+                  <option
+                    v-for="types in regionArray"
+                    v-bind:key="types.name"
+                    v-bind:value="types.id"
+                  >
+                    {{ types.name }}
+                  </option>
+                </select>
+              </div>
+              <div class="flex flex-col mb-medium w-2/5 mr-12 ml-medium">
+                <label class="text-primary-700">Zone</label>
+                <select
+                  class="max-w-3xl"
+                  @change="fetchWoredas()"
+                  v-model="zoneID"
+                >
+                  <option
+                    v-for="types in zoneArray"
+                    v-bind:key="types.name"
+                    v-bind:value="types.id"
+                  >
+                    {{ types.name }}
+                  </option>
+                </select>
+              </div>
             </div>
-            <div class="flex flex-col mb-medium w-2/5 mr-12 ml-medium">
-              <label class="text-primary-700">Zone</label>
-              <select
-                class="max-w-3xl"
-                @change="fetchWoredas()"
-                v-model="zoneID"
-              >
-                <option
-                  v-for="types in zoneArray"
-                  v-bind:key="types.name"
-                  v-bind:value="types.id"
+            <div class="flex">
+              <div class="flex flex-col mb-medium w-2/5 mr-12">
+                <label class="text-primary-700">Woreda</label>
+                <select
+                  class="max-w-3xl"
+                  v-model="licenseInfo.residenceWoredaId"
+                  @change="woredaChanged()"
                 >
-                  {{ types.name }}
-                </option>
-              </select>
+                  <option
+                    v-for="types in woredaArray"
+                    v-bind:key="types.name"
+                    v-bind:value="types.id"
+                  >
+                    {{ types.name }}
+                  </option>
+                </select>
+                <span style="color: red">{{
+                  licenseInfoErrors.residenceWoredaId
+                }}</span>
+              </div>
+              <div class="flex flex-col mb-medium w-2/5 mr-12 ml-medium">
+                <label class="text-primary-700">Applicant Title</label>
+                <input
+                  class="max-w-3xl"
+                  type="text"
+                  v-model="licenseInfo.applicantTitle"
+                />
+                <span style="color: red">{{
+                  licenseInfoErrors.applicantTitle
+                }}</span>
+              </div>
             </div>
           </div>
+          <div id="main" class="mt-4 pt-8 pl-4">
+            <div class="flex">
+              <div class="flex flex-col mb-medium w-2/5 mr-12">
+                <label class="text-primary-700"
+                  >Organization Letter is written for:
+                </label>
+                <input
+                  class="max-w-3xl"
+                  type="text"
+                  v-model="licenseInfo.whomGoodStandingFor"
+                />
+                <span style="color: red">{{
+                  licenseInfoErrors.whomGoodStandingFor
+                }}</span>
+              </div>
+              <div class="flex flex-col mb-medium w-2/5 mr-12 ml-medium">
+                <label class="text-primary-700">License Issued Date</label>
+                <input
+                  class="max-w-3xl"
+                  type="date"
+                  v-model="licenseInfo.licenseIssuedDate"
+                />
+                <span style="color: red">{{
+                  licenseInfoErrors.licenseIssuedDate
+                }}</span>
+              </div>
+            </div>
 
-          <div class="flex">
-            <div class="flex flex-col mb-medium w-2/5 mr-12">
-              <label class="text-primary-700">Woreda</label>
-              <select
-                class="max-w-3xl"
-                v-model="licenseInfo.residenceWoredaId"
-                @change="woredaChanged()"
-              >
-                <option
-                  v-for="types in woredaArray"
-                  v-bind:key="types.name"
-                  v-bind:value="types.id"
+            <div class="flex">
+              <div class="flex flex-col mb-medium w-2/5 mr-12">
+                <label class="text-primary-700"
+                  >Who Issued Previous License</label
                 >
-                  {{ types.name }}
-                </option>
-              </select>
-              <span style="color: red">{{
-                licenseInfoErrors.residenceWoredaId
-              }}</span>
-            </div>
-            <div class="flex flex-col mb-medium w-2/5 mr-12 ml-medium">
-              <label class="text-primary-700">Applicant Title</label>
-              <input
-                class="max-w-3xl"
-                type="text"
-                v-model="licenseInfo.applicantTitle"
-              />
-              <span style="color: red">{{
-                licenseInfoErrors.applicantTitle
-              }}</span>
-            </div>
-          </div>
-          <div class="flex">
-            <div class="flex flex-col mb-medium w-2/5 mr-12">
-              <label class="text-primary-700"
-                >Organization Letter is written for:
-              </label>
-              <input
-                class="max-w-3xl"
-                type="text"
-                v-model="licenseInfo.whomGoodStandingFor"
-              />
-              <span style="color: red">{{
-                licenseInfoErrors.whomGoodStandingFor
-              }}</span>
-            </div>
-            <div class="flex flex-col mb-medium w-2/5 mr-12 ml-medium">
-              <label class="text-primary-700">License Issued Date</label>
-              <input
-                class="max-w-3xl"
-                type="date"
-                v-model="licenseInfo.licenseIssuedDate"
-              />
-              <span style="color: red">{{
-                licenseInfoErrors.licenseIssuedDate
-              }}</span>
+                <input
+                  class="max-w-3xl"
+                  type="text"
+                  v-model="licenseInfo.whoIssued"
+                />
+                <span style="color: red">{{
+                  licenseInfoErrors.whoIssued
+                }}</span>
+              </div>
+              <div class="flex flex-col mb-medium w-2/5 mr-12 ml-medium">
+                <label class="text-primary-700"
+                  >License Registration Number</label
+                >
+                <input
+                  class="max-w-3xl"
+                  type="text"
+                  v-model="licenseInfo.licenseRegistrationNumber"
+                />
+                <span style="color: red">{{
+                  licenseInfoErrors.licenseRegistrationNumber
+                }}</span>
+              </div>
             </div>
           </div>
-
-          <div class="flex">
-            <div class="flex flex-col mb-medium w-2/5 mr-12">
-              <label class="text-primary-700"
-                >Who Issued Previous License</label
-              >
-              <input
-                class="max-w-3xl"
-                type="text"
-                v-model="licenseInfo.whoIssued"
-              />
-              <span style="color: red">{{ licenseInfoErrors.whoIssued }}</span>
-            </div>
-            <div class="flex flex-col mb-medium w-2/5 mr-12 ml-medium">
-              <label class="text-primary-700"
-                >License Registration Number</label
-              >
-              <input
-                class="max-w-3xl"
-                type="text"
-                v-model="licenseInfo.licenseRegistrationNumber"
-              />
-              <span style="color: red">{{
-                licenseInfoErrors.licenseRegistrationNumber
-              }}</span>
-            </div>
-          </div>
-          <div class="flex">
+          <div id="main" class="flex mt-4 pt-8 pl-4 mb-medium">
             <div class="flex flex-col mb-medium w-2/5 mr-12">
               <label class="text-primary-700">Applicant Position (Title)</label>
               <select
@@ -612,5 +617,9 @@ export default {
   background-image: linear-gradient(to right, #d63232, #e63636) !important;
   color: white;
   border-color: tomato;
+}
+#main {
+  border: 1px solid #cccccc;
+  border-radius: 5px;
 }
 </style>
