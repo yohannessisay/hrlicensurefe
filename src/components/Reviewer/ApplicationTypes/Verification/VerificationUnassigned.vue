@@ -156,9 +156,6 @@ export default {
             store.getters[
               "reviewerVerification/getVerificationUnassignedSearched"
             ];
-            console.log("______--", store.getters[
-              "reviewerVerification/getVerificationUnassignedSearched"
-            ])
           allInfo.value.assignApplication =
             store.getters[
               "reviewerVerification/getVerificationUnassignedSearched"

@@ -81,14 +81,14 @@
   </div> -->
   
   <div>
-    <reviewer-nav-bar :tab="display" @changeSelectedSideBar="displaySet" :getSelectedSideNav="getSelectedSideNav"/>
+    <reviewer-nav-bar :tab="display" @changeSelectedSideBar="displaySet"/>
     <!-- <reviewer-nav-bar :display="menu" @changeDisplay="displaySet" /> -->
     <div style="width:100%" class="flex flex-row">
       <div class="sidenav">
         <reviewer-side-nav :display="menu" @changeDisplay="displaySet" />
       </div>
       <div class="menu">
-        <div v-if="this.display == 'newLicenseUnassigned'">
+        <div v-if="this.display == 'newLicenseUnassigned' && this.isStatusFetched==true">
           <new-license-unassigned />
         </div>
         <div v-if="this.display == 'newLicenseAssigned'">
@@ -261,7 +261,7 @@
 <script>
 
 import { ref, onMounted } from "vue";
-import { useStore } from "vuex";
+import { useStore } from 'vuex';
 
 import newLicenseUnassigned from "./ApplicationTypes/NewLicense/newLicenseUnassigned.vue"
 import NewLicenseAssigned from "./ApplicationTypes/NewLicense/NewLicenseAssigned.vue"
@@ -325,7 +325,6 @@ import GoodStandingAllDeclined from "./ApplicationTypes/GoodStanding/GoodStandin
 
 import ReviewerNavBar from './ReviewerNavBar.vue';
 import ReviewerSideNav from "./ReviewerSideNav.vue";
-import store from "../../store"
 
 export default {
   components: {
@@ -389,19 +388,6 @@ export default {
     GoodStandingAllDeclined,
 
   },
-  computed: {
-    getSelectedSideNav() {
-      return store.getters["reviewerNewLicense/getNewLicenseUnassignedSearched"];
-    }
-  },
-  // data: () => ({
-  //   display: 0,
-  // }),
-  // methods: {
-  //   displaySet: function(display) {
-  //     this.display = display;
-  //   },
-  // },
   setup() {
 
     const store = useStore();
@@ -411,14 +397,22 @@ export default {
     const displaySet = (menu) => {
       display.value = menu;
     }
+    let isStatusFetched = ref(false);
+
+    const fetchApplicationStatus = () => {
+      store.dispatch("admin/getApplicationStatus").then(res => {
+        isStatusFetched.value = true;
+      })
+    }
 
     onMounted(() => {
-      console.log("store value is ", store.getters["reviewerNewLicense/getNewLicenseUnassignedSearched"])
+      fetchApplicationStatus();
     })
     
     return {
       displaySet,
       display,
+      isStatusFetched,
       selectedValue,
     }
   }

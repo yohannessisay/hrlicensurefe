@@ -402,8 +402,7 @@ export default {
     }
   },
   setup(props, {emit}) {
-
-    console.log("tab value must be", props.tab)
+    
     const router = useRouter();
     const store = useStore();
     let showDD = ref(false);
@@ -415,10 +414,6 @@ export default {
     let primaryText = ref("");
     const adminName = JSON.parse(localStorage.getItem("allAdminData")).name;
 
-    // const changeSelectedSideBar
-    watch(props.tab, () => {
-      console.log("props is changed")
-    })
 
     watch(search, () => {
       if (props.tab === "Unassigned") {

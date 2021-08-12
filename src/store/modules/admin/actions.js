@@ -4,6 +4,7 @@ import {
   ADD_ADMIN_LOADING,
   ADD_ADMIN_SUCCESS,
   ADD_ADMIN_ERROR,
+  SET_APPLICATION_STATUSES,
 } from "./mutation-types";
 const url = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api/";
 export default {
@@ -11,20 +12,25 @@ export default {
     commit(ADD_ADMIN_LOADING);
     try {
       const resp = await ApiService.post(url + "admins/login", admin, {});
-      console.log("response is ", resp.data.data)
       window.localStorage.setItem("token", resp.data["token"]);
       window.localStorage.setItem("adminId", resp.data.data["id"]);
       window.localStorage.setItem("role", resp.data.data["role"]["code"]);
       window.localStorage.setItem("adminEmail", resp.data.data["email"]);
       window.localStorage.setItem("allAdminData", JSON.stringify(resp.data.data))
-
-      console.log("is first time", JSON.parse(localStorage.getItem("allAdminData")).isFirstTime)
       // window.localStorage.setItem("role", "SA");
       commit(SET_ADMIN, resp.data.data);
       commit(ADD_ADMIN_SUCCESS);
       return resp;
     } catch (error) {
       commit(ADD_ADMIN_ERROR);
+    }
+  },
+  async getApplicationStatus({commit}) {
+    try {
+      const AppStatuses = await ApiService.get(url+"applicationStatuses");
+      commit(SET_APPLICATION_STATUSES, AppStatuses.data.data)
+    } catch(error) {
+      console.log("error");
     }
   },
   async getRole({ commit }) {

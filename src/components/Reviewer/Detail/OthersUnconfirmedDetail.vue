@@ -430,7 +430,7 @@ export default {
             if (response.statusText == "Created") {
               showFlash.value = true;
               setTimeout(() => {
-                router.push("/admin/unconfirmed");
+                router.push("/admin/review");
               }, 3000);
             }
           });
@@ -447,7 +447,7 @@ export default {
             if (response.statusText == "Created") {
               showFlash.value = true;
               setTimeout(() => {
-                router.push("/admin/unconfirmed");
+                router.push("/admin/review");
               }, 3000);
             }
           });
@@ -462,7 +462,7 @@ export default {
             if (response.statusText == "Created") {
               showFlash.value = true;
               setTimeout(() => {
-                router.push("/admin/unconfirmed");
+                router.push("/admin/review");
               }, 3000);
             }
           });
@@ -479,7 +479,7 @@ export default {
             if (response.statusText == "Created") {
               showFlash.value = true;
               setTimeout(() => {
-                router.push("/admin/unconfirmed");
+                router.push("/admin/review");
               }, 3000);
             }
           });

@@ -3,6 +3,7 @@ import {
     ADD_ADMIN_LOADING,
     ADD_ADMIN_SUCCESS,
     ADD_ADMIN_ERROR,
+    SET_APPLICATION_STATUSES,
   } from "./mutation-types";
   export default {
     [SET_ADMIN](state, adminInfo) {
@@ -25,4 +26,7 @@ import {
       state.addAdminSuccess = false;
       state.addAdminError = true;
     },
+    [SET_APPLICATION_STATUSES](state, appStatuses) {
+      state.appStatuses = appStatuses;
+    }
   };

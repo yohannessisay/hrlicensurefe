@@ -45,7 +45,6 @@ export default {
     });
 
     const applicationTypeHandler = (value) => {
-      console.log("in side nav", value)
       applicationTypeDD(value, dropdownValue.value);
     }
 
