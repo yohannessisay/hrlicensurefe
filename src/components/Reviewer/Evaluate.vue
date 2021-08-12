@@ -23,14 +23,15 @@
               class="flex justify-center items-center mb-small"
               v-if="docs.length > 0"
             >
-              <img
-                style="border-radius: 100%"
-                v-bind:src="
-                  'https://hrlicensurebe.dev.k8s.sandboxaddis.com/' +
-                    docs[0].filePath
-                "
-                class="img"
-              />
+              <span v-if="newLicense.applicant.profile.photo !== '' && newLicense.applicant.profile.photo !== null">
+                <img :src="newLicense.applicant.profile.photo" alt="profile picture"  class="w-20 h-12" />
+              </span>
+              <span v-else>
+                <img
+                  class="box-shadow-pop"
+                  src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
+                />
+              </span>
             </picture>
             <div class="flex justify-center items-center">
               <h4 class="mt-2 mr-small w-1/2">
@@ -540,8 +541,6 @@ export default {
                 }
               }
               accepted.value = newLicense.value.acceptedFields;
-              console.log("rr - rejected", rejected.value);
-              console.log("ro - rejectedObj", rejectedObj.value);
               index.value = rejected.value.length + accepted.value.length;
               if (index.value == docs.value.length) {
                 index.value -= 1;
@@ -835,9 +834,6 @@ export default {
         if (fromModalSendDeclinedData.value == true) {
           sendDeclinedData.value = true;
         }
-        console.log("rejjj", rejected.value);
-        console.log("rejj obje", rejectedObj.value);
-        console.log("acc", accepted.value);
       }
       newLicense.value.declinedFields = rejected.value;
       newLicense.value.acceptedFields = accepted.value;
@@ -856,7 +852,7 @@ export default {
         sendDeclinedData.value == true
       ) {
         store
-          .dispatch("newlicense/editNewLicense", req)
+          .dispatch("reviewer/editNewLicense", req)
           .then((res) => {
             if (res.statusText == "Created") {
               showFlash.value = true;
@@ -882,6 +878,7 @@ export default {
         store.dispatch("reviewer/editVerification", req).then((res) => {
           if (res.statusText == "Created") {
             showFlash.value = true;
+            showDeclineFlash.value = true;
             setTimeout(() => {
               router.push("/admin/review");
             }, 3000);
@@ -900,6 +897,7 @@ export default {
         store.dispatch("reviewer/editGoodStanding", req).then((res) => {
           if (res.statusText == "Created") {
             showFlash.value = true;
+            showDeclineFlash.value = true;
             let redirectUrl = "/admin/review";
             if (req.action == "ApproveEvent") {
               redirectUrl =
@@ -929,6 +927,7 @@ export default {
         store.dispatch("reviewer/editRenewal", req).then((res) => {
           if (res.statusText == "Created") {
             showFlash.value = true;
+            showDeclineFlash.value = true;
             setTimeout(() => {
               router.push("/admin/review");
             }, 3000);

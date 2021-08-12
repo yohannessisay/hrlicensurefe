@@ -583,7 +583,7 @@ export default {
             console.log("successful");
             evaluationSuccess.value = true;
             setTimeout(() => {
-              router.push("/admin/unconfirmed");
+              router.push("/admin/review");
             }, 3000);
           } else {
             showErrorFlash.value = true;

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <reviewer-nav-bar tab="newLicenseOthersUnfinished" />
+    <!-- <reviewer-nav-bar tab="newLicenseOthersUnfinished" /> -->
     <div class="bg-lightBlueB-200 h-full" v-if="!allInfo.searchByInput">
       <div class="pl-12">
         <div>Filter By</div>

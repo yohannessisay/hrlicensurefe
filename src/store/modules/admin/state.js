@@ -3,6 +3,7 @@ export default {
       adminInfo: {},
       addAdminLoading: false,
       addAdminSuccess: false,
-      addAdminError: false
+      addAdminError: false,
+      appStatuses: [],
     },
   };

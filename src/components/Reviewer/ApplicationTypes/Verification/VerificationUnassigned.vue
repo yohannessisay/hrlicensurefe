@@ -1,6 +1,6 @@
 <template>
   <div>
-    <reviewer-nav-bar tab="verificationUnassigned" />
+    <!-- <reviewer-nav-bar tab="verificationUnassigned" /> -->
     <div class="bg-lightBlueB-200 h-full" v-if="!allInfo.searchByInput">
       <div class="pl-12">
         <div>Filter By</div>
@@ -156,9 +156,6 @@ export default {
             store.getters[
               "reviewerVerification/getVerificationUnassignedSearched"
             ];
-            console.log("______--", store.getters[
-              "reviewerVerification/getVerificationUnassignedSearched"
-            ])
           allInfo.value.assignApplication =
             store.getters[
               "reviewerVerification/getVerificationUnassignedSearched"

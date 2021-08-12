@@ -64,10 +64,24 @@
             >
               <div class="flex content-center justify-center">
                 <!-- <img class="box-shadow-pop" v-bind:src="item.picture.large" /> -->
-                <img
-                  class="box-shadow-pop"
-                  src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
-                />
+                <span
+                  v-if="
+                    item.applicant.profile.photo !== '' &&
+                      item.applicant.profile.photo !== null
+                  "
+                >
+                  <img
+                    :src="item.applicant.profile.photo"
+                    alt="profile picture"
+                    class="w-20 h-12"
+                  />
+                </span>
+                <span v-else>
+                  <img
+                    class="box-shadow-pop"
+                    src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
+                  />
+                </span>
               </div>
               <h4
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
@@ -83,7 +97,7 @@
               <span
                 class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
               >
-              <i class="fas fa-user-cog"></i> &nbsp;
+                <i class="fas fa-user-cog"></i> &nbsp;
                 {{ item.reviewer.name ? item.reviewer.name : "-" }}
               </span>
               <!-- <h6
@@ -101,8 +115,9 @@
                 {{ item.newLicenseCode ? item.newLicenseCode : "-" }}
               </span>
               <span
-                class="text-lightBlueB-500 mt-tiny flex justify-end content-center">
-                  {{item.createdAt ? moment(item.createdAt).fromNow() : '-'}}
+                class="text-lightBlueB-500 mt-tiny flex justify-end content-center"
+              >
+                {{ item.createdAt ? moment(item.createdAt).fromNow() : "-" }}
               </span>
             </div>
           </div>
@@ -121,10 +136,7 @@
         <Title :message="'Assigned To Others Applicants'" />
         <button @click="backClicked">back</button>
       </div>
-      <filtered-info
-        :filteredData="allInfo.filteredByDate"
-        type="detail"
-      />
+      <filtered-info :filteredData="allInfo.filteredByDate" type="detail" />
     </div>
   </div>
   <div v-if="allInfo.message.showErrorFlash">
@@ -143,7 +155,7 @@ import { useRouter } from "vue-router";
 import { ref, onMounted } from "vue";
 import store from "../../store";
 import Spinner from "@/sharedComponents/Spinner";
-import moment from 'moment'
+import moment from "moment";
 import filterApplication from "./ChildComponents/FilteredDatas/FilterApplication.js";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import FilteredInfo from "./ChildComponents/FilteredDatas/FilteredInfo.vue";
@@ -173,7 +185,6 @@ export default {
     let userId = +localStorage.getItem("userId");
     let adminId = +localStorage.getItem("adminId");
     let adminRole = localStorage.getItem("role");
-
 
     let allInfo = ref({
       alreadyPushed: false,
@@ -225,62 +236,64 @@ export default {
     };
 
     const fetchassignedToOthers = () => {
-      const adminData = [adminRole, adminId]
+      const adminData = [adminRole, adminId];
       showLoading.value = true;
-      store.dispatch("reviewer/getAssignedToEveryOne", adminData).then((res) => {
-        showLoading.value = false;
-        // if (res.status != "Error") {
-        assignedToOthers.value =
-          store.getters["reviewer/getAssignedForEveryOneSearched"];
-        allInfo.value.assignApplication =
-          store.getters["reviewer/getAssignedForEveryOneSearched"];
-        for (let unassignedUser in allInfo.value.assignApplication) {
-          allInfo.value.assignApplication[unassignedUser].createdAt = moment(
-            allInfo.value.assignApplication[unassignedUser].createdAt
-          ).format("MMMM D, YYYY");
-        }
-        if (assignedToOthers.value.length !== 0) {
-          for (var prop in store.getters[
-            "reviewer/getAssignedForEveryOneSearched"
-          ]) {
-            if (
-              store.getters["reviewer/getAssignedForEveryOneSearched"][prop]
-                .applicationType == "Renewal"
-            ) {
-              store.getters["reviewer/getAssignedForEveryOneSearched"][
-                prop
-              ].newLicenseCode =
-                store.getters["reviewer/getAssignedForEveryOneSearched"][
-                  prop
-                ].renewalCode;
-            }
-            if (
-              store.getters["reviewer/getAssignedForEveryOneSearched"][prop]
-                .applicationType == "Good Standing"
-            ) {
-              store.getters["reviewer/getAssignedForEveryOneSearched"][
-                prop
-              ].newLicenseCode =
-                store.getters["reviewer/getAssignedForEveryOneSearched"][
-                  prop
-                ].goodStandingCode;
-            }
-            if (
-              store.getters["reviewer/getAssignedForEveryOneSearched"][prop]
-                .applicationType == "Verification"
-            ) {
-              store.getters["reviewer/getAssignedForEveryOneSearched"][
-                prop
-              ].newLicenseCode =
-                store.getters["reviewer/getAssignedForEveryOneSearched"][
-                  prop
-                ].verificationCode;
-            }
+      store
+        .dispatch("reviewer/getAssignedToEveryOne", adminData)
+        .then((res) => {
+          showLoading.value = false;
+          // if (res.status != "Error") {
+          assignedToOthers.value =
+            store.getters["reviewer/getAssignedForEveryOneSearched"];
+          allInfo.value.assignApplication =
+            store.getters["reviewer/getAssignedForEveryOneSearched"];
+          for (let unassignedUser in allInfo.value.assignApplication) {
+            allInfo.value.assignApplication[unassignedUser].createdAt = moment(
+              allInfo.value.assignApplication[unassignedUser].createdAt
+            ).format("MMMM D, YYYY");
           }
-        } else {
-          nothingToShow.value = true;
-        }
-      });
+          if (assignedToOthers.value.length !== 0) {
+            for (var prop in store.getters[
+              "reviewer/getAssignedForEveryOneSearched"
+            ]) {
+              if (
+                store.getters["reviewer/getAssignedForEveryOneSearched"][prop]
+                  .applicationType == "Renewal"
+              ) {
+                store.getters["reviewer/getAssignedForEveryOneSearched"][
+                  prop
+                ].newLicenseCode =
+                  store.getters["reviewer/getAssignedForEveryOneSearched"][
+                    prop
+                  ].renewalCode;
+              }
+              if (
+                store.getters["reviewer/getAssignedForEveryOneSearched"][prop]
+                  .applicationType == "Good Standing"
+              ) {
+                store.getters["reviewer/getAssignedForEveryOneSearched"][
+                  prop
+                ].newLicenseCode =
+                  store.getters["reviewer/getAssignedForEveryOneSearched"][
+                    prop
+                  ].goodStandingCode;
+              }
+              if (
+                store.getters["reviewer/getAssignedForEveryOneSearched"][prop]
+                  .applicationType == "Verification"
+              ) {
+                store.getters["reviewer/getAssignedForEveryOneSearched"][
+                  prop
+                ].newLicenseCode =
+                  store.getters["reviewer/getAssignedForEveryOneSearched"][
+                    prop
+                  ].verificationCode;
+              }
+            }
+          } else {
+            nothingToShow.value = true;
+          }
+        });
     };
 
     const detail = (data, applicationType, applicationId, applicantId) => {

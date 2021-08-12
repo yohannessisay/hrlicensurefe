@@ -160,7 +160,7 @@
                 }"
               >
                 <div
-                  class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
+                  class="flex justify-center items-center  ml-4 mr-4 box-shadow-pop rounded-lg bg-lightGrey-100"
                 >
                   <div class="p-4 w-48 h-64">
                     <span
@@ -244,7 +244,7 @@
                 }"
               >
                 <div
-                  class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
+                  class="flex justify-center items-center  ml-4 mr-4 box-shadow-pop rounded-lg bg-lightGrey-100"
                 >
                   <div class="p-4 w-48 h-64">
                     <span
@@ -275,11 +275,13 @@
                     >
                       <b>Certified: &nbsp;</b>No
                     </span>
+
                     <span
                       class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                     >
                       <b>Reviewer: &nbsp;</b>{{ item.reviewer }}
                     </span>
+
                     <span
                       class="
                       mt-medium
@@ -332,7 +334,7 @@
                 }"
               >
                 <div
-                  class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
+                  class="flex justify-center items-center  ml-4 mr-4 box-shadow-pop rounded-lg bg-lightGrey-100"
                 >
                   <div class="p-4 w-48 h-64">
                     <span
@@ -390,7 +392,7 @@
       </div>
       <div v-if="!this.showLoading" class="bg-lightBlueB-200 h-full">
         <div class="flex pl-12 pt-medium">
-          <Title message="Good Standing Draft Applications" />
+          <Title message="Good Standing Submitted Applications" />
         </div>
         <div
           v-if="this.goodstanding && this.goodstanding.length == 0"
@@ -420,7 +422,7 @@
                 }"
               >
                 <div
-                  class="flex justify-center items-center  ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
+                  class="flex justify-center items-center  ml-4 mr-4 box-shadow-pop rounded-lg bg-lightGrey-100"
                 >
                   <div class="p-4 w-48 h-64">
                     <span
@@ -572,7 +574,10 @@ export default {
           this.license = res.data.data;
           if (this.license) {
             this.newlicense = this.license.filter(function(e) {
-              return e.applicationStatus.code.includes("SUB");
+              return (
+                e.applicationStatus.code.includes("SUB") ||
+                e.applicationStatus.code.includes("UPD")
+              );
             });
           }
         })
@@ -581,9 +586,13 @@ export default {
             this.license = res.data.data;
             if (this.license) {
               this.renewal = this.license.filter(function(e) {
-                return e.applicationStatus.code.includes("SUB");
+                return (
+                  e.applicationStatus.code.includes("SUB") ||
+                  e.applicationStatus.code.includes("UPD")
+                );
               });
             }
+            console.log(this.renewal);
           });
         })
         .then(() => {
@@ -593,7 +602,10 @@ export default {
               this.license = res.data.data;
               if (this.license) {
                 this.verification = this.license.filter(function(e) {
-                  return e.applicationStatus.code.includes("SUB");
+                  return (
+                    e.applicationStatus.code.includes("SUB") ||
+                    e.applicationStatus.code.includes("UPD")
+                  );
                 });
               }
             });
@@ -606,7 +618,10 @@ export default {
               this.showLoading = !this.showLoading;
               if (this.license) {
                 this.goodstanding = this.license.filter(function(e) {
-                  return e.applicationStatus.code.includes("SUB");
+                  return (
+                    e.applicationStatus.code.includes("SUB") ||
+                    e.applicationStatus.code.includes("UPD")
+                  );
                 });
               }
             });

@@ -1,8 +1,15 @@
 <template>
   <div class="flex justify-center">
-    <div class="w-screen max-w-4xl">
+    <div class="bg-lightBlueB-200 w-screen h-screen max-w-4xl">
       <div
-        class="flex flex-col pt-large w-full bg-white blue-box-shadow-light rounded "
+        class="
+          flex flex-col
+          pt-large
+          w-full
+          bg-white
+          blue-box-shadow-light
+          rounded
+        "
       >
         <h2
           class="flex justify-center"
@@ -41,6 +48,7 @@
                       ref="workExperienceFileP"
                       v-on:change="handleFileUpload()"
                       style="margin-bottom: 15px !important;"
+                      accept=".jpeg, .png, .gif, .jpg, .pdf, .tiff , .svg"
                     />
                     <p>
                       Drag your file(s) here to begin<br />
@@ -50,23 +58,27 @@
                 </label>
               </span>
 
-              <picture v-if="!showUpload && isImage">
+                <picture v-if="!showUpload && isImage">
                 <p>
                   <a href="javascript:void(0)" @click="reset()">Upload again</a>
                 </p>
                 <img v-bind:src="filePreview" v-show="showPreview" />
               </picture>
-
-              <span v-if="!showUpload && !isImage">
+              <!--  -->
+              <div v-if="!showUpload && isPdf  ">
+                <p>
+                  <a href="javascript:void(0)" @click="reset()">Upload again</a>
+                </p>
+                <embed v-bind:src="filePreview" v-show="showPreview"  />
+              </div>
+              <span v-if="!showUpload && !isImage && !isPdf">
                 <img :src="filePreview" alt="" class="preview" />
               </span>
             </div>
           </div>
         </form>
         <div v-if="buttons && !draftStatus" class="flex justify-center mb-8">
-          <button @click="submit">
-            Next
-          </button>
+          <button @click="submit">Next</button>
           <button @click="draft(buttons[1].action)" variant="outline">
             {{ buttons[1]["name"] }}
           </button>
@@ -75,9 +87,7 @@
           v-if="buttons && draftStatus == 'DRA'"
           class="flex justify-center mb-8"
         >
-          <button @click="submit">
-            Next
-          </button>
+          <button @click="submit">Next</button>
           <button @click="draft(buttons[2].action)" variant="outline">
             {{ buttons[2]["name"] }}
           </button>
@@ -93,9 +103,7 @@
           v-if="buttons && draftStatus == 'SUB'"
           class="flex justify-center mb-8"
         >
-          <button @click="submit">
-            Next
-          </button>
+          <button @click="submit">Next</button>
           <button
             class="withdraw"
             @click="withdraw(buttons[0].action)"
@@ -108,9 +116,7 @@
           v-if="buttons && draftStatus == 'USUP'"
           class="flex justify-center mb-8"
         >
-          <button @click="submit">
-            Next
-          </button>
+          <button @click="submit">Next</button>
           <button @click="draft(buttons[0].action)" variant="outline">
             {{ buttons[0]["name"] }}
           </button>
@@ -122,9 +128,7 @@
           v-if="buttons && draftStatus == 'DEC'"
           class="flex justify-center mb-8"
         >
-          <button @click="submit">
-            Next
-          </button>
+          <button @click="submit">Next</button>
           <button @click="draft(buttons[0].action)" variant="outline">
             {{ buttons[0]["name"] }}
           </button>
@@ -166,7 +170,8 @@ export default {
       showErrorFlash: false,
       showLoading: false,
     });
-    const basePath = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/";
+     const basePath = "https://storage.googleapis.com/hris-lisence-dev/";
+
 
     let fileSize = ref("");
 
@@ -175,10 +180,10 @@ export default {
     let showPreview = ref(false);
     let filePreview = ref("");
     let showUpload = ref(true);
-    let isImage = ref(true);
+    let isImage = ref(false);
+    let isPdf = ref(false);
     let dataChanged = ref(false);
     let draftData = ref("");
-    let professionalDoc = ref([]);
 
     let buttons = [];
     let documentSpecs = ref([]);
@@ -197,6 +202,8 @@ export default {
     let renewalLetter = ref("");
     let cpd = ref("");
     let previousLicense = ref("");
+    let payroll = ref("");
+    let professionalDoc = ref([]);
 
     const reset = () => {
       showUpload.value = true;
@@ -204,6 +211,8 @@ export default {
       workExperienceFile.value = "";
       filePreview.value = "";
       isImage.value = true;
+       fileSize.value="";
+      isPdf.value=false;
     };
     const handleFileUpload = () => {
       dataChanged.value = true;
@@ -222,7 +231,7 @@ export default {
 
       reader.addEventListener(
         "load",
-        function() {
+        function () {
           showPreview.value = true;
           filePreview.value = reader.result;
         },
@@ -235,19 +244,21 @@ export default {
           reader.readAsDataURL(workExperienceFile.value);
         } else if (/\.(pdf)$/i.test(workExperienceFile.value.name)) {
           isImage.value = false;
-          reader.readAsText(workExperienceFile.value);
+          isPdf.value=true;
+          reader.readAsDataURL(workExperienceFile.value);
         }
       }
     };
     buttons = store.getters["renewal/getButtons"];
     documentSpecs = store.getters["renewal/getDocumentSpec"];
     licenseInfo = store.getters["renewal/getLicense"];
-    professionalDoc = store.getters["newlicense/getProfessionalDocuments"];
 
     healthExamCert = store.getters["renewal/getRenewalHealthExamCert"];
     renewalLetter = store.getters["renewal/getRenewalLicense"];
     cpd = store.getters["renewal/getRenewalCpd"];
     previousLicense = store.getters["renewal/getPreviousLicense"];
+    payroll = store.getters["renewal/getPayroll"];
+    professionalDoc = store.getters["newlicense/getProfessionalDocuments"];
 
     const submit = () => {
       emit("changeActiveState");
@@ -271,7 +282,15 @@ export default {
         for (let i = 0; i < draftData.documents.length; i++) {
           if (draftData.documents[i].documentTypeCode == "WE") {
             showUpload.value = false;
-            isImage.value = true;
+            if(draftData.documents[i].fileName.split(".")[1]=="pdf")
+            {
+               isPdf.value=true;
+            }
+            else
+            {
+              isImage.value = true;
+            }
+            
             workExperienceFile.value = draftData.documents[i];
             showPreview.value = true;
             filePreview.value = basePath + draftData.documents[i].filePath;
@@ -310,8 +329,8 @@ export default {
                       router.push({ path: "/menu" });
                     }, 1500);
                   } else {
-                    message.value.showErrorFlash = !message.value
-                      .showErrorFlash;
+                    message.value.showErrorFlash =
+                      !message.value.showErrorFlash;
                   }
                 })
                 .catch((err) => {});
@@ -380,6 +399,7 @@ export default {
                 professionalDoc[2]
               );
             }
+            formData.append(documentSpecs[11].documentType, payroll);
             let payload = { document: formData, id: licenseId };
             store
               .dispatch("renewal/uploadDocuments", payload)
@@ -416,7 +436,7 @@ export default {
               let formData = new FormData();
               formData.append(
                 documentSpecs[1].documentType.code,
-                letterFile.value
+                workExperienceFile.value
               );
               let payload = { document: formData, id: licenseId };
               store
@@ -429,8 +449,8 @@ export default {
                       router.push({ path: "/menu" });
                     }, 1500);
                   } else {
-                    message.value.showErrorFlash = !message.value
-                      .showErrorFlash;
+                    message.value.showErrorFlash =
+                      !message.value.showErrorFlash;
                   }
                 })
                 .catch((err) => {});
@@ -476,7 +496,7 @@ export default {
             let formData = new FormData();
             formData.append(
               documentSpecs[1].documentType.code,
-              letterFile.value
+              workExperienceFile.value
             );
             formData.append(documentSpecs[2].documentType.code, licenseCopy);
             let payload = { document: formData, id: licenseId };
@@ -529,6 +549,7 @@ export default {
       filePreview,
       showUpload,
       isImage,
+      isPdf,
       handleFileUpload,
       fileSize,
       reset,

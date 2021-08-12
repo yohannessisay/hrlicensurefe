@@ -7,7 +7,8 @@
       </div>
       <div
         class="flex flex-wrap pb-medium rounded h-full"
-          v-if="!showLoadingApproved">
+        v-if="!showLoadingApproved"
+      >
         <div class="pl-large w-52 h-26" v-if="nothingToAllApproved == true">
           <div class="flex content-center justify-center">
             <h2>Nothing To Show!</h2>
@@ -24,44 +25,61 @@
           <div
             class="justify-center items-center mt-8 ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
           >
-            <div class="p-4 w-48 h-64"
-              @click="detail('/admin/finishedDetail',
-                item.applicationType,
-                item.id
-                )"
+            <div
+              class="p-4 w-48 h-64"
+              @click="
+                detail('/admin/finishedDetail', item.applicationType, item.id)
+              "
             >
               <div class="flex content-center justify-center">
-                  <img class="box-shadow-pop" 
-                  src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp" />
+                <span
+                  v-if="
+                    item.applicant.profile.photo !== '' &&
+                      item.applicant.profile.photo !== null
+                  "
+                >
+                  <img
+                    :src="item.applicant.profile.photo"
+                    alt="profile picture"
+                    class="w-20 h-12"
+                  />
+                </span>
+                <span v-else>
+                  <img
+                    class="box-shadow-pop"
+                    src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
+                  />
+                </span>
               </div>
               <h4
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
               >
-                <b>{{ item.applicant.profile.name + " " + item.applicant.profile.fatherName }}</b>
+                <b>{{
+                  item.applicant.profile.name +
+                    " " +
+                    item.applicant.profile.fatherName
+                }}</b>
               </h4>
               <span
                 class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
               >
-              <i class="fas fa-user-cog"></i> &nbsp;
-                {{
-                  item.reviewer.name
-                    ? item.reviewer.name
-                    : "-"
-                }}
+                <i class="fas fa-user-cog"></i> &nbsp;
+                {{ item.reviewer.name ? item.reviewer.name : "-" }}
               </span>
               <span
                 class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
               >
-                {{item.applicationType}}
+                {{ item.applicationType }}
               </span>
               <span
                 class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
               >
-                {{ item.newLicenseCode ? item.newLicenseCode : '-' }}
+                {{ item.newLicenseCode ? item.newLicenseCode : "-" }}
               </span>
               <span
-                class="text-lightBlueB-500 mt-tiny flex justify-end content-center">
-                  {{item.createdAt ? moment(item.createdAt).fromNow() : '-'}}
+                class="text-lightBlueB-500 mt-tiny flex justify-end content-center"
+              >
+                {{ item.createdAt ? moment(item.createdAt).fromNow() : "-" }}
               </span>
             </div>
           </div>
@@ -69,7 +87,7 @@
         <!-- Second !-->
       </div>
       <div
-      v-if="showLoadingApproved"
+        v-if="showLoadingApproved"
         class="flex content-center justify-center"
       >
         <Spinner />
@@ -79,8 +97,9 @@
       </div>
       <div
         class="flex flex-wrap pb-medium rounded h-full"
-          v-if="!showLoadingRejected">
-          <div class="pl-large w-52 h-26" v-if="nothingToShowAllRejected == true">
+        v-if="!showLoadingRejected"
+      >
+        <div class="pl-large w-52 h-26" v-if="nothingToShowAllRejected == true">
           <div class="flex content-center justify-center">
             <h2>Nothing To Show!</h2>
           </div>
@@ -96,62 +115,70 @@
           <div
             class="justify-center items-center mt-8 ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
           >
-            <div class="p-4 w-48 h-64"
-              @click="detail('/admin/finishedDetail',
-                item.applicationType,
-                item.id
-                )"
+            <div
+              class="p-4 w-48 h-64"
+              @click="
+                detail('/admin/finishedDetail', item.applicationType, item.id)
+              "
             >
               <div class="flex content-center justify-center">
-                  <img class="box-shadow-pop" 
-                  src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp" />
+                <img
+                  class="box-shadow-pop"
+                  src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
+                />
               </div>
               <h4
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
               >
-                <b>{{ item.applicant.profile.name + " " + item.applicant.profile.fatherName }}</b>
+                <b>{{
+                  item.applicant.profile.name +
+                    " " +
+                    item.applicant.profile.fatherName
+                }}</b>
               </h4>
               <span
                 class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
               >
-              <i class="fas fa-user-cog"></i> &nbsp;
-                {{
-                  item.reviewer.name
-                    ? item.reviewer.name
-                    : "-"
-                }}
+                <i class="fas fa-user-cog"></i> &nbsp;
+                {{ item.reviewer.name ? item.reviewer.name : "-" }}
               </span>
               <span
                 class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
               >
-                {{item.applicationType}}
+                {{ item.applicationType }}
               </span>
               <span
                 class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
               >
-                {{ item.newLicenseCode ? item.newLicenseCode : '-' }}
+                {{ item.newLicenseCode ? item.newLicenseCode : "-" }}
               </span>
               <span
-                class="text-lightBlueB-500 mt-tiny flex justify-end content-center">
-                  {{item.createdAt ? moment(item.createdAt).fromNow() : '-'}}
+                class="text-lightBlueB-500 mt-tiny flex justify-end content-center"
+              >
+                {{ item.createdAt ? moment(item.createdAt).fromNow() : "-" }}
               </span>
             </div>
           </div>
         </div>
         <!-- Second !-->
       </div>
-      <div v-if="showLoadingRejected"
-          class="flex content-center justify-center"
-        >
-          <Spinner />
-        </div>
+      <div
+        v-if="showLoadingRejected"
+        class="flex content-center justify-center"
+      >
+        <Spinner />
+      </div>
       <div class="flex pl-12 pt-tiny">
         <Title message="Under SuperVision" />
       </div>
       <div
         class="flex flex-wrap pb-medium rounded h-full"
-          v-if="!showLoadingSuperVision">
-          <div class="pl-large w-52 h-26" v-if="nothingToShowAllUnderSuperVision == true">
+        v-if="!showLoadingSuperVision"
+      >
+        <div
+          class="pl-large w-52 h-26"
+          v-if="nothingToShowAllUnderSuperVision == true"
+        >
           <div class="flex content-center justify-center">
             <h2>Nothing To Show!</h2>
           </div>
@@ -167,46 +194,49 @@
           <div
             class="justify-center items-center mt-8 ml-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
           >
-            <div class="p-4 w-48 h-64"
-              @click="detail('/admin/finishedDetail',
-                item.applicationType,
-                item.id
-                )"
+            <div
+              class="p-4 w-48 h-64"
+              @click="
+                detail('/admin/finishedDetail', item.applicationType, item.id)
+              "
             >
               <div class="flex content-center justify-center">
-                  <img class="box-shadow-pop" 
-                  src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp" />
+                <img
+                  class="box-shadow-pop"
+                  src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
+                />
               </div>
               <h4
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
               >
                 <b>
-                  {{ item.applicant.profile.name + " " + item.applicant.profile.fatherName }} 
+                  {{
+                    item.applicant.profile.name +
+                      " " +
+                      item.applicant.profile.fatherName
+                  }}
                 </b>
               </h4>
               <span
                 class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
               >
-              <i class="fas fa-user-cog"></i> &nbsp;
-                {{
-                  item.reviewer.name
-                    ? item.reviewer.name
-                    : "-"
-                }}
+                <i class="fas fa-user-cog"></i> &nbsp;
+                {{ item.reviewer.name ? item.reviewer.name : "-" }}
               </span>
               <span
                 class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
               >
-                {{item.applicationType}}
+                {{ item.applicationType }}
               </span>
               <span
                 class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
               >
-                {{ item.newLicenseCode ? item.newLicenseCode : '-' }}
+                {{ item.newLicenseCode ? item.newLicenseCode : "-" }}
               </span>
               <span
-                class="text-lightBlueB-500 mt-tiny flex justify-end content-center">
-                  {{item.createdAt ? moment(item.createdAt).fromNow() : '-'}}
+                class="text-lightBlueB-500 mt-tiny flex justify-end content-center"
+              >
+                {{ item.createdAt ? moment(item.createdAt).fromNow() : "-" }}
               </span>
             </div>
           </div>
@@ -214,13 +244,12 @@
         <!-- Second !-->
       </div>
       <div
-      v-if="showLoadingSuperVision"
-      class="flex content-center justify-center"
-    >
-      <Spinner />
+        v-if="showLoadingSuperVision"
+        class="flex content-center justify-center"
+      >
+        <Spinner />
+      </div>
     </div>
-    </div>
-    
   </div>
 </template>
 
@@ -228,12 +257,12 @@
 import Title from "@/sharedComponents/TitleWithIllustration";
 import ReviewerNavBar from "@/components/Reviewer/ReviewerNavBar";
 import { useStore } from "vuex";
-import { useRouter } from "vue-router"
-import moment from 'moment'
+import { useRouter } from "vue-router";
+import moment from "moment";
 
 import { ref, onMounted } from "vue";
 
-import store from "../../store"
+import store from "../../store";
 import Spinner from "@/sharedComponents/Spinner";
 
 export default {
@@ -241,22 +270,21 @@ export default {
   computed: {
     moment: () => moment,
     getAllApproved() {
-      return store.getters['reviewer/getAllApprovedSearched']
+      return store.getters["reviewer/getAllApprovedSearched"];
     },
     getRecentlyFinished() {
-      return store.getters['reviewer/getRecentlyFinishedSearched']
+      return store.getters["reviewer/getRecentlyFinishedSearched"];
     },
     getAllRejected() {
-      return store.getters['reviewer/getAllRejectedSearched']
+      return store.getters["reviewer/getAllRejectedSearched"];
     },
     getAllUnderSuperVision() {
-      return store.getters['reviewer/getAllUnderSuperVisionSearched']
-    }
+      return store.getters["reviewer/getAllUnderSuperVisionSearched"];
+    },
   },
   setup() {
     const store = useStore();
-    const router = useRouter()
-
+    const router = useRouter();
 
     let adminId = +localStorage.getItem("adminId");
     let adminRole = localStorage.getItem("role");
@@ -273,80 +301,95 @@ export default {
     let allUnderSuperVision = ref({});
 
     const fetchRecentlyFinished = () => {
-      showLoadingApproved.value = true
-      showLoadingRejected.value = true
-      showLoadingSuperVision.value = true
-      const adminData = [adminRole, adminId]
-      store.dispatch("reviewer/getAllRecentlyFinished", adminData).then(res => {
-        
-        if(store.getters['reviewer/getAllApprovedSearched'].length == 0) {
-          nothingToAllApproved.value = true;
-        } else {
-          allApproved.value = store.getters['reviewer/getAllApprovedSearched']
-          for (var prop in store.getters['reviewer/getAllApprovedSearched']) {
-            if (allApproved.value[prop].applicationType == "Renewal") {
-              allApproved.value[prop].newLicenseCode =
-                allApproved.value[prop].renewalCode;
-            }
-            if (allApproved.value[prop].applicationType == "Good Standing") {
-              allApproved.value[prop].newLicenseCode =
-                allApproved.value[prop].goodStandingCode;
-            }
-            if (allApproved.value[prop].applicationType == "Verification") {
-              allApproved.value[prop].newLicenseCode =
-                allApproved.value[prop].verificationCode;
-            }
-          }
-        }
-        if(store.getters['reviewer/getAllRejectedSearched'].length == 0) {
-          nothingToShowAllRejected.value = true;
-        } else {
-          allRejected.value = store.getters['reviewer/getAllRejectedSearched']
-          for (var prop in store.getters['reviewer/getAllRejectedSearched']) {
-            if (allRejected.value[prop].applicationType == "Renewal") {
-              allRejected.value[prop].newLicenseCode =
-                allRejected.value[prop].renewalCode;
-            }
-            if (allRejected.value[prop].applicationType == "Good Standing") {
-              allRejected.value[prop].newLicenseCode =
-                allRejected.value[prop].goodStandingCode;
-            }
-            if (allRejected.value[prop].applicationType == "Verification") {
-              allRejected.value[prop].newLicenseCode =
-                allRejected.value[prop].verificationCode;
+      showLoadingApproved.value = true;
+      showLoadingRejected.value = true;
+      showLoadingSuperVision.value = true;
+      const adminData = [adminRole, adminId];
+      store
+        .dispatch("reviewer/getAllRecentlyFinished", adminData)
+        .then((res) => {
+          if (store.getters["reviewer/getAllApprovedSearched"].length == 0) {
+            nothingToAllApproved.value = true;
+          } else {
+            allApproved.value =
+              store.getters["reviewer/getAllApprovedSearched"];
+            for (var prop in store.getters["reviewer/getAllApprovedSearched"]) {
+              if (allApproved.value[prop].applicationType == "Renewal") {
+                allApproved.value[prop].newLicenseCode =
+                  allApproved.value[prop].renewalCode;
+              }
+              if (allApproved.value[prop].applicationType == "Good Standing") {
+                allApproved.value[prop].newLicenseCode =
+                  allApproved.value[prop].goodStandingCode;
+              }
+              if (allApproved.value[prop].applicationType == "Verification") {
+                allApproved.value[prop].newLicenseCode =
+                  allApproved.value[prop].verificationCode;
+              }
             }
           }
-        }
-        if (store.getters['reviewer/getAllUnderSuperVisionSearched'].length == 0) {
-          nothingToShowAllUnderSuperVision.value = true;
-        } else {
-          allUnderSuperVision.value = store.getters['reviewer/getAllUnderSuperVisionSearched']
-          for (var prop in store.getters['reviewer/getAllUnderSuperVisionSearched']) {
-            if (allUnderSuperVision.value[prop].applicationType == "Renewal") {
-              allUnderSuperVision.value[prop].newLicenseCode =
-                allUnderSuperVision.value[prop].renewalCode;
-            }
-            if (allUnderSuperVision.value[prop].applicationType == "Good Standing") {
-              allUnderSuperVision.value[prop].newLicenseCode =
-                allUnderSuperVision.value[prop].goodStandingCode;
-            }
-            if (allUnderSuperVision.value[prop].applicationType == "Verification") {
-              allUnderSuperVision.value[prop].newLicenseCode =
-                allUnderSuperVision.value[prop].verificationCode;
+          if (store.getters["reviewer/getAllRejectedSearched"].length == 0) {
+            nothingToShowAllRejected.value = true;
+          } else {
+            allRejected.value =
+              store.getters["reviewer/getAllRejectedSearched"];
+            for (var prop in store.getters["reviewer/getAllRejectedSearched"]) {
+              if (allRejected.value[prop].applicationType == "Renewal") {
+                allRejected.value[prop].newLicenseCode =
+                  allRejected.value[prop].renewalCode;
+              }
+              if (allRejected.value[prop].applicationType == "Good Standing") {
+                allRejected.value[prop].newLicenseCode =
+                  allRejected.value[prop].goodStandingCode;
+              }
+              if (allRejected.value[prop].applicationType == "Verification") {
+                allRejected.value[prop].newLicenseCode =
+                  allRejected.value[prop].verificationCode;
+              }
             }
           }
-        }
-        showLoadingApproved.value = false
-        showLoadingRejected.value = false
-        showLoadingSuperVision.value = false
-      });
+          if (
+            store.getters["reviewer/getAllUnderSuperVisionSearched"].length == 0
+          ) {
+            nothingToShowAllUnderSuperVision.value = true;
+          } else {
+            allUnderSuperVision.value =
+              store.getters["reviewer/getAllUnderSuperVisionSearched"];
+            for (var prop in store.getters[
+              "reviewer/getAllUnderSuperVisionSearched"
+            ]) {
+              if (
+                allUnderSuperVision.value[prop].applicationType == "Renewal"
+              ) {
+                allUnderSuperVision.value[prop].newLicenseCode =
+                  allUnderSuperVision.value[prop].renewalCode;
+              }
+              if (
+                allUnderSuperVision.value[prop].applicationType ==
+                "Good Standing"
+              ) {
+                allUnderSuperVision.value[prop].newLicenseCode =
+                  allUnderSuperVision.value[prop].goodStandingCode;
+              }
+              if (
+                allUnderSuperVision.value[prop].applicationType ==
+                "Verification"
+              ) {
+                allUnderSuperVision.value[prop].newLicenseCode =
+                  allUnderSuperVision.value[prop].verificationCode;
+              }
+            }
+          }
+          showLoadingApproved.value = false;
+          showLoadingRejected.value = false;
+          showLoadingSuperVision.value = false;
+        });
     };
 
     const detail = (data, appilcationType, appilcationId, applicantId) => {
-      const url = 
-        data + "/" + appilcationType + "/" + appilcationId;
-        router.push(url)
-    }
+      const url = data + "/" + appilcationType + "/" + appilcationId;
+      router.push(url);
+    };
 
     onMounted(() => {
       fetchRecentlyFinished();
@@ -362,9 +405,9 @@ export default {
       nothingToShowAllUnderSuperVision,
       allApproved,
       allRejected,
-      allUnderSuperVision
+      allUnderSuperVision,
     };
-  }
+  },
 };
 </script>
 <style scoped>

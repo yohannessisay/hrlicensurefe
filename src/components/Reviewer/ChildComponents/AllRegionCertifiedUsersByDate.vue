@@ -1,6 +1,5 @@
 <template>
   <div>
-    
     <div class="flex flex-wrap pb-medium rounded h-full">
       <div class="pl-large w-52 h-26" v-if="searchedApplicantsLength == 0">
         <div class="flex content-center justify-center">
@@ -28,11 +27,24 @@
             "
           >
             <div class="flex content-center justify-center">
-              <!-- <img class="box-shadow-pop" v-bind:src="item.picture.large" /> -->
-              <img
-                class="box-shadow-pop"
-                src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
-              />
+              <span
+                v-if="
+                  item.applicant.profile.photo !== '' &&
+                    item.applicant.profile.photo !== null
+                "
+              >
+                <img
+                  :src="item.applicant.profile.photo"
+                  alt="profile picture"
+                  class="w-20 h-12"
+                />
+              </span>
+              <span v-else>
+                <img
+                  class="box-shadow-pop"
+                  src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
+                />
+              </span>
             </div>
             <h4
               class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
@@ -99,8 +111,8 @@ export default {
   setup(props) {
     const router = useRouter();
 
-    console.log("props value: ", props.allRegionLicensedByDate)
-    
+    console.log("props value: ", props.allRegionLicensedByDate);
+
     let searchedApplicantsLength = props.allRegionLicensedByDate.length;
 
     const detail = (data, applicationType, applicationId, applicantId) => {
@@ -109,8 +121,7 @@ export default {
       router.push(url);
     };
 
-    onMounted(() => {
-    });
+    onMounted(() => {});
 
     return {
       searchedApplicantsLength,

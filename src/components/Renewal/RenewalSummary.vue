@@ -1,6 +1,7 @@
 <template>
-  <div v-if="this.showLoading2" class="h-screen max-h-4xl">
-    <Spinner class="bg-lightBlueB-200  " />
+  <div v-if="this.showLoading2" class="bg-lightBlueB-200 w-screen h-screen max-w-4xl">
+    
+    <Spinner class="bg-lightBlueB-200" />
   </div>
   <div class="bg-white mb-large rounded pl-4 pt-4 pr-4 pb-4">
     <div v-if="this.show && !this.showLoading2">
@@ -16,10 +17,10 @@
           <h5 class="ml-4">
             {{
               this.profileInfo.name +
-                " " +
-                this.profileInfo.fatherName +
-                " " +
-                this.profileInfo.grandFatherName
+              " " +
+              this.profileInfo.fatherName +
+              " " +
+              this.profileInfo.grandFatherName
             }}
           </h5>
         </div>
@@ -324,6 +325,8 @@ export default {
     this.previousLicense = this.getPreviousLicense;
     this.workExperience = this.getWorkExperience;
     this.cpd = this.getCpd;
+    this.payroll = this.getPayroll;
+    this.professionalDoc = this.getProfessionalDocuments;
 
     this.buttons = this.getButtons;
     this.fetchProfileInfo();
@@ -339,7 +342,8 @@ export default {
     this.buttons = this.getButtons;
   },
   data: () => ({
-    basePath: "https://hrlicensurebe.dev.k8s.sandboxaddis.com/",
+     basePath : "https://storage.googleapis.com/hris-lisence-dev/",
+
 
     show: false,
     profileInfo: {},
@@ -363,16 +367,17 @@ export default {
     showSuccess: false,
 
     letter: "",
-    healthExamCert: "",
-    serviceFee: "",
     workExperience: "",
     cpd: "",
     previousLicense: "",
+    professionalDoc: [],
+    healthExamCert: "",
+    payroll: "",
+    serviceFee: "",
 
     applicationId: "",
     buttons: [],
     documentTypes: [],
-    professionalDoc: [],
     docs: [],
   }),
   computed: {
@@ -387,14 +392,14 @@ export default {
       getServiceFee: "renewal/getRenewalServiceFee",
       getPreviousLicense: "renewal/getPreviousLicense",
       getProfessionalDocuments: "renewal/getProfessionalDocuments",
-
+      getPayroll: "renewal/getPayroll",
       getButtons: "renewal/getButtons",
       getApplicationId: "renewal/getApplicationId",
       getDraftData: "renewal/getDraft",
     }),
   },
   methods: {
-    moment: function(date) {
+    moment: function (date) {
       return moment(date);
     },
     fetchProfileInfo() {
@@ -481,6 +486,11 @@ export default {
                   this.professionalDoc[2]
                 );
               }
+              formData.append(
+                this.documentTypes[11].documentType.code,
+                this.payroll
+              );
+
               let payload = { document: formData, id: licenseId };
               this.$store
                 .dispatch("renewal/uploadDocuments", payload)
@@ -529,6 +539,8 @@ export default {
             this.professionalDoc[2]
           );
         }
+        formData.append(this.documentTypes[11].documentType.code, this.payroll);
+
         let license = {
           action: action,
           data: {
@@ -666,7 +678,10 @@ export default {
                   this.professionalDoc[2]
                 );
               }
-
+              formData.append(
+                this.documentTypes[11].documentType.code,
+                this.payroll
+              );
               let payload = { document: formData, id: licenseId };
               this.$store
                 .dispatch("renewal/uploadDocuments", payload)
@@ -715,6 +730,7 @@ export default {
             this.professionalDoc[2]
           );
         }
+        formData.append(this.documentTypes[11].documentType.code, this.payroll);
         let license = {
           action: action,
           data: {
@@ -776,7 +792,7 @@ export default {
     },
   },
   mounted() {
-    this.$nextTick(function() {
+    this.$nextTick(function () {
       window.setInterval(() => {
         this.showFlash = false;
         this.showErrorFlash = false;

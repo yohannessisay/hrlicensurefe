@@ -165,8 +165,8 @@
                   flex
                   justify-center
                   items-center
-                  ml-8
-                  mr-8
+                  ml-4
+                  mr-4
                   box-shadow-pop
                   rounded-lg
                   bg-lightGrey-100
@@ -246,8 +246,8 @@
                   flex
                   justify-center
                   items-center
-                  ml-8
-                  mr-8
+                  ml-4
+                  mr-4
                   box-shadow-pop
                   rounded-lg
                   bg-lightGrey-100
@@ -323,7 +323,6 @@
             v-bind:key="i"
           >
             <div
-              @click="openServiceFeeModal(item)"
               class="container mb-medium"
               v-for="item in this.verification.slice((i - 1) * 4, i * 4)"
               v-bind:key="item"
@@ -334,8 +333,8 @@
                   flex
                   justify-center
                   items-center
-                  ml-8
-                  mr-8
+                  ml-4
+                  mr-4
                   box-shadow-pop
                   rounded-lg
                   bg-lightGrey-100
@@ -414,7 +413,6 @@
             v-bind:key="i"
           >
             <div
-              @click="openServiceFeeModal(item)"
               class="container mb-medium"
               v-for="item in this.goodstanding.slice((i - 1) * 4, i * 4)"
               v-bind:key="item"
@@ -425,8 +423,8 @@
                   flex
                   justify-center
                   items-center
-                  ml-8
-                  mr-8
+                  ml-4
+                  mr-4
                   box-shadow-pop
                   rounded-lg
                   bg-lightGrey-100

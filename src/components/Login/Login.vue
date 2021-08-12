@@ -49,10 +49,11 @@
         <span style="color: red">{{ credentialsErrors.password }}</span>
       </div>
       <a
-        href="#"
-        class="text-primary-500 w-full text-right mr-small hover:underline"
+        
+        class="text-primary-500 w-full text-right mr-small hover:underline cursor-pointer"
+        @click="$emit('forgotPassword')"
       >
-        Forgot password?
+        Forgot password
       </a>
       <button click="submit()" class="mt-medium">
         Login
@@ -64,7 +65,7 @@
       />
       <a
         class="text-base text-primary-500 hover:underline cursor-pointer"
-        @click="redirectToSignup"
+        @click="$emit('redirectToSignup')"
         >Don't have an account? Sign Up
       </a>
     </form>
@@ -86,7 +87,7 @@ import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import Spinner from "@/sharedComponents/Spinner";
 export default {
   components: { Title, FlashMessage, ErrorFlashMessage, Spinner },
-  setup() {
+  setup({emit}) {
     const store = useStore();
     const router = useRouter();
 
@@ -101,7 +102,7 @@ export default {
       emailAddress: "",
       password: "",
     });
-
+let forgot= ref(false);
     const credentialsErrors = ref({
       emailAddress: undefined,
       password: undefined,
@@ -179,6 +180,8 @@ export default {
       isEmail,
       validateForm,
       message,
+     
+      forgot
     };
   },
 };

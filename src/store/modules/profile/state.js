@@ -14,7 +14,11 @@ export default {
       userTypeId: "",
       maritalStatusId: "",
       photo: "",
+      woredaId: "",
+      nationalityId: "",
     },
+    maritalStatus: "",
+    nationality: "",
     address: {
       kebele: "",
       houseNumber: "",

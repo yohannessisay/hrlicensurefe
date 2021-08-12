@@ -1,6 +1,6 @@
 <template>
   <div>
-    <reviewer-nav-bar tab="newLicenseAssignedToOthers" />
+    <!-- <reviewer-nav-bar tab="newLicenseAssignedToOthers" /> -->
     <div class="bg-lightBlueB-200 h-full" v-if="!allInfo.searchByInput">
       <div class="pl-12">
         <div>Filter By</div>
@@ -132,7 +132,6 @@ export default {
         showLoading.value = false;
         newLicenseAssigned.value =
           store.getters["reviewerNewLicense/getNewLicenseAssignedToOthersSearched"];
-          console.log("_________________", newLicenseAssigned.value)
         allInfo.value.assignApplication =
           store.getters["reviewerNewLicense/getNewLicenseAssignedToOthersSearched"];
 

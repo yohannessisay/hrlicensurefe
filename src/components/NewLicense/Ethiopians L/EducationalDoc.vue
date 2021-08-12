@@ -1,8 +1,15 @@
 <template>
   <div class="flex justify-center">
-    <div>
+    <div class="bg-lightBlueB-200 w-screen h-screen max-w-4xl">
       <div
-        class="flex flex-col pt-large w-full bg-white blue-box-shadow-light rounded "
+        class="
+          flex flex-col
+          pt-large
+          w-full
+          bg-white
+          blue-box-shadow-light
+          rounded
+        "
       >
         <TitleWithIllustration
           illustration="User"
@@ -26,7 +33,7 @@
             >
               ACCEPTED
             </h2>
-            <div class="ml-4" style="width:250px">
+            <div class="ml-4" style="width: 250px">
               <span>
                 <h2>{{ this.certificateFile1.name }}</h2>
                 <h2>{{ this.certificate1Size }}</h2>
@@ -40,7 +47,8 @@
                       id="certificateFile1"
                       ref="certificateFile1"
                       v-on:change="handleCertificate1Upload()"
-                      style="margin-bottom: 15px !important;"
+                      style="margin-bottom: 15px !important"
+                      accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
                     />
                     <p>
                       Drag your file(s) here to begin<br />
@@ -61,8 +69,21 @@
                   v-show="showCertificate1Preview"
                 />
               </picture>
+              <div v-if="!showCertificate1Upload && isPdf1">
+                <p>
+                  <a href="javascript:void(0)" @click="resetCert1()"
+                    >Upload again</a
+                  >
+                </p>
+                <embed
+                  v-bind:src="certificate1Preview"
+                  v-show="showCertificate1Preview"
+                />
+              </div>
 
-              <span v-if="!showCertificate1Upload && !isCertificate1">
+              <span
+                v-if="!showCertificate1Upload && !isCertificate1 && !isPdf1"
+              >
                 <img :src="certificate1Preview" alt="" class="preview" />
               </span>
             </div>
@@ -82,7 +103,7 @@
             >
               ACCEPTED
             </h2>
-            <div class="ml-4" style="width:250px">
+            <div class="ml-4" style="width: 250px">
               <span>
                 <h2>{{ this.certificateFile2.name }}</h2>
                 <h2>{{ this.certificate2Size }}</h2>
@@ -96,7 +117,8 @@
                       id="certificateFile2"
                       ref="certificateFile2"
                       v-on:change="handleCertificate2Upload()"
-                      style="margin-bottom: 15px !important;"
+                      style="margin-bottom: 15px !important"
+                      accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
                     />
                     <p>
                       Drag your file(s) here to begin<br />
@@ -117,8 +139,21 @@
                   v-show="showCertificate2Preview"
                 />
               </picture>
+              <div v-if="!showCertificate2Upload && isPdf2">
+                <p>
+                  <a href="javascript:void(0)" @click="resetCert2()"
+                    >Upload again</a
+                  >
+                </p>
+                <embed
+                  v-bind:src="certificate2Preview"
+                  v-show="showCertificate2Preview"
+                />
+              </div>
 
-              <span v-if="!showCertificate2Upload && !isCertificate2">
+              <span
+                v-if="!showCertificate2Upload && !isCertificate2 && !isPdf2"
+              >
                 <img :src="certificate2Preview" alt="" class="preview" />
               </span>
             </div>
@@ -139,7 +174,7 @@
               ACCEPTED
             </h2>
 
-            <div class="ml-4" style="width:250px">
+            <div class="ml-4" style="width: 250px">
               <span>
                 <h2>{{ this.certificateFile3.name }}</h2>
                 <h2>{{ this.certificate3Size }}</h2>
@@ -153,7 +188,8 @@
                       id="certificateFile3"
                       ref="certificateFile3"
                       v-on:change="handleCertificate3Upload()"
-                      style="margin-bottom: 15px !important;"
+                      style="margin-bottom: 15px !important"
+                      accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
                     />
                     <p>
                       Drag your file(s) here to begin<br />
@@ -174,13 +210,27 @@
                   v-show="showCertificate3Preview"
                 />
               </picture>
+              <div v-if="!showCertificate3Upload && isPdf3">
+                <p>
+                  <a href="javascript:void(0)" @click="resetCert3()"
+                    >Upload again</a
+                  >
+                </p>
+                <embed
+                  v-bind:src="certificate3Preview"
+                  v-show="showCertificate3Preview"
+                />
+              </div>
 
-              <span v-if="!showCertificate3Upload && !isCertificate3">
+              <span
+                v-if="!showCertificate3Upload && !isCertificate3 && !isPdf3"
+              >
                 <img :src="certificate3Preview" alt="" class="preview" />
               </span>
             </div>
           </div>
-
+        </div>
+        <div class="flex flex-row justify-center px-8 py-4">
           <div>
             <h2
               class="flex justify-center"
@@ -196,7 +246,7 @@
             >
               ACCEPTED
             </h2>
-            <div class="ml-4" style="width:250px">
+            <div class="ml-4" style="width: 250px">
               <span>
                 <h2>{{ this.certificateFile4.name }}</h2>
                 <h2>{{ this.certificate4Size }}</h2>
@@ -210,7 +260,8 @@
                       id="certificateFile4"
                       ref="certificateFile4"
                       v-on:change="handleCertificate4Upload()"
-                      style="margin-bottom: 15px !important;"
+                      style="margin-bottom: 15px !important"
+                      accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
                     />
                     <p>
                       Drag your file(s) here to begin<br />
@@ -231,8 +282,21 @@
                   v-show="showCertificate4Preview"
                 />
               </picture>
+              <div v-if="!showCertificate4Upload && isPdf4">
+                <p>
+                  <a href="javascript:void(0)" @click="resetCert4()"
+                    >Upload again</a
+                  >
+                </p>
+                <embed
+                  v-bind:src="certificate4Preview"
+                  v-show="showCertificate4Preview"
+                />
+              </div>
 
-              <span v-if="!showCertificate4Upload && !isCertificate4">
+              <span
+                v-if="!showCertificate4Upload && !isCertificate4 && !isPdf4"
+              >
                 <img :src="certificate4Preview" alt="" class="preview" />
               </span>
             </div>
@@ -252,7 +316,7 @@
             >
               ACCEPTED
             </h2>
-            <div class="ml-4" style="width:250px">
+            <div class="ml-4" style="width: 250px">
               <span>
                 <h2>{{ this.certificateFile5.name }}</h2>
                 <h2>{{ this.certificate5Size }}</h2>
@@ -266,7 +330,8 @@
                       id="certificateFile5"
                       ref="certificateFile5"
                       v-on:change="handleCertificate5Upload()"
-                      style="margin-bottom: 15px !important;"
+                      style="margin-bottom: 15px !important"
+                      accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
                     />
                     <p>
                       Drag your file(s) here to begin<br />
@@ -287,8 +352,20 @@
                   v-show="showCertificate5Preview"
                 />
               </picture>
-
-              <span v-if="!showCertificate5Upload && !isCertificate5">
+              <div v-if="!showCertificate5Upload && isPdf5">
+                <p>
+                  <a href="javascript:void(0)" @click="resetCert5()"
+                    >Upload again</a
+                  >
+                </p>
+                <embed
+                  v-bind:src="certificate5Preview"
+                  v-show="showCertificate5Preview"
+                />
+              </div>
+              <span
+                v-if="!showCertificate5Upload && !isCertificate5 && !isPdf5"
+              >
                 <img :src="certificate5Preview" alt="" class="preview" />
               </span>
             </div>
@@ -296,9 +373,7 @@
         </div>
         <div v-if="this.draftStatus == 'DRA' || !this.draftStatus">
           <div class="flex justify-center mt-4 mb-8">
-            <button @click="submit">
-              Next
-            </button>
+            <button @click="submit">Next</button>
             <button
               v-if="this.buttons.length < 3"
               @click="draft(this.buttons[1].action)"
@@ -328,9 +403,7 @@
           v-if="this.draftStatus == 'SUB'"
           class="flex justify-center mt-8 pb-12"
         >
-          <button @click="submit">
-            Next
-          </button>
+          <button @click="submit">Next</button>
           <button
             class="withdraw"
             @click="withdraw(this.buttons[0].action)"
@@ -343,9 +416,7 @@
           v-if="this.draftStatus == 'USUP'"
           class="flex justify-center mt-8 pb-12"
         >
-          <button @click="submit">
-            Next
-          </button>
+          <button @click="submit">Next</button>
           <button @click="draft(this.buttons[0].action)" variant="outline">
             {{ this.buttons[0]["name"] }}
           </button>
@@ -357,9 +428,7 @@
           v-if="this.draftStatus == 'DEC'"
           class="flex justify-center mt-8 pb-12"
         >
-          <button @click="submit">
-            Next
-          </button>
+          <button @click="submit">Next</button>
           <button @click="draft(this.buttons[0].action)" variant="outline">
             {{ this.buttons[0]["name"] }}
           </button>
@@ -398,7 +467,8 @@ export default {
   props: ["activeState"],
   data() {
     return {
-      basePath: "https://hrlicensurebe.dev.k8s.sandboxaddis.com/",
+      basePath: "https://storage.googleapis.com/hris-lisence-dev/",
+
       dataChanged: false,
       showFlash: false,
       showErrorFlash: false,
@@ -407,30 +477,35 @@ export default {
       certificate1Preview: "",
       showCertificate1Upload: true,
       isCertificate1: true,
+      isPdf1: false,
 
       certificateFile2: "",
       showCertificate2Preview: false,
       certificate2Preview: "",
       showCertificate2Upload: true,
       isCertificate2: true,
+      isPdf2: false,
 
       certificateFile3: "",
       showCertificate3Preview: false,
       certificate3Preview: "",
       showCertificate3Upload: true,
       isCertificate3: true,
+      isPdf3: false,
 
       certificateFile4: "",
       showCertificate4Preview: false,
       certificate4Preview: "",
       showCertificate4Upload: true,
       isCertificate4: true,
+      isPdf4: false,
 
       certificateFile5: "",
       showCertificate5Preview: false,
       certificate5Preview: "",
       showCertificate5Upload: true,
       isCertificate5: true,
+      isPdf5: false,
 
       declinedFields: [],
       acceptedFields: [],
@@ -467,6 +542,10 @@ export default {
       letterfromOrg: "",
       renewedLicense: "",
       professionalLicense: "",
+      payroll: "",
+      diploma: "",
+      transcript: "",
+      degree: "",
 
       draftId: "",
       draftData: "",
@@ -497,6 +576,11 @@ export default {
       getHerqa: "newlicense/getHerqa",
       getSupportLetter: "newlicense/getSupportLetter",
       getCoc: "newlicense/getCoc",
+      getPayroll: "renewal/getPayroll",
+      getDiploma: "newlicense/getDiploma",
+      getTranscript: "newlicense/getTranscript",
+      getDegree: "newlicense/getDegree",
+
       getProfessionalDoc: "newlicense/getProfessionalDocuments",
       getWorkExperience: "newlicense/getWorkExperience",
       getLetterfromOrg: "newlicense/getLetterfromOrg",
@@ -546,7 +630,12 @@ export default {
       for (let i = 0; i < this.draftData.documents.length; i++) {
         if (this.draftData.documents[i].documentTypeCode == "EDEGC") {
           this.showCertificate1Upload = false;
-          this.isCertificate1 = true;
+          if (draftData.documents[i].fileName.split(".")[1] == "pdf") {
+            this.isPdf1 = true;
+          } else {
+            this.isCertificate1 = true;
+          }
+
           this.certificateFile1 = this.draftData.documents[i];
           this.showCertificate1Preview = true;
           this.certificate1Preview =
@@ -554,7 +643,12 @@ export default {
         }
         if (this.draftData.documents[i].documentTypeCode == "EDTGC") {
           this.showCertificate2Upload = false;
-          this.isCertificate2 = true;
+          if (draftData.documents[i].fileName.split(".")[1] == "pdf") {
+            this.isPdf2 = true;
+          } else {
+            this.isCertificate2 = true;
+          }
+
           this.certificateFile2 = this.draftData.documents[i];
           this.showCertificate2Preview = true;
           this.certificate2Preview =
@@ -562,7 +656,12 @@ export default {
         }
         if (this.draftData.documents[i].documentTypeCode == "EDTWGC") {
           this.showCertificate3Upload = false;
-          this.isCertificate3 = true;
+          if (draftData.documents[i].fileName.split(".")[1] == "pdf") {
+            this.isPdf3 = true;
+          } else {
+            this.isCertificate3 = true;
+          }
+
           this.certificateFile3 = this.draftData.documents[i];
           this.showCertificate3Preview = true;
           this.certificate3Preview =
@@ -570,7 +669,12 @@ export default {
         }
         if (this.draftData.documents[i].documentTypeCode == "EDHT") {
           this.showCertificate4Upload = false;
-          this.isCertificate4 = true;
+          if (draftData.documents[i].fileName.split(".")[1] == "pdf") {
+            this.isPdf4 = true;
+          } else {
+            this.isCertificate4 = true;
+          }
+
           this.certificateFile4 = this.draftData.documents[i];
           this.showCertificate4Preview = true;
           this.certificate4Preview =
@@ -578,7 +682,12 @@ export default {
         }
         if (this.draftData.documents[i].documentTypeCode == "EDPT") {
           this.showCertificate5Upload = false;
-          this.isCertificate5 = true;
+          if (draftData.documents[i].fileName.split(".")[1] == "pdf") {
+            this.isPdf5 = true;
+          } else {
+            this.isCertificate5 = true;
+          }
+
           this.certificateFile5 = this.draftData.documents[i];
           this.showCertificate5Preview = true;
           this.certificate5Preview =
@@ -601,6 +710,10 @@ export default {
     this.letterfromOrg = this.getLetterfromOrg;
     this.renewedLicense = this.getRenewedLicense;
     this.professionalLicense = this.getProfessionalLicense;
+    this.payroll = this.getPayroll;
+    this.diploma = this.getDiploma;
+    this.transcript = this.getTranscript;
+    this.degree = this.getDegree;
   },
   methods: {
     ...mapActions(["setProfessionalDoc"]),
@@ -611,6 +724,8 @@ export default {
       this.certificateFile1 = "";
       this.certificate1Preview = "";
       this.isCertificate1 = true;
+      this.isPdf1 = false;
+      this.certificate1Size = "";
     },
     resetCert2() {
       this.showCertificate2Upload = true;
@@ -618,6 +733,8 @@ export default {
       this.certificateFile2 = "";
       this.certificate2Preview = "";
       this.isCertificate2 = true;
+      this.isPdf2 = false;
+      this.certificate2Size = "";
     },
     resetCert3() {
       this.showCertificate3Upload = true;
@@ -625,6 +742,8 @@ export default {
       this.certificateFile3 = "";
       this.certificate3Preview = "";
       this.isCertificate3 = true;
+      this.isPdf3 = false;
+      this.certificate3Size = "";
     },
     resetCert4() {
       this.showCertificate4Upload = true;
@@ -632,6 +751,8 @@ export default {
       this.certificateFile4 = "";
       this.certificate4Preview = "";
       this.isCertificate4 = true;
+      this.isPdf4 = false;
+      this.certificate4Size = "";
     },
     resetCert5() {
       this.showCertificate5Upload = true;
@@ -639,6 +760,8 @@ export default {
       this.certificateFile5 = "";
       this.certificate5Preview = "";
       this.isCertificate5 = true;
+      this.isPdf5 = false;
+      this.certificate5Size = "";
     },
     handleCertificate1Upload() {
       this.showCertificate1Upload = false;
@@ -668,7 +791,8 @@ export default {
           reader.readAsDataURL(this.certificateFile1);
         } else if (/\.(pdf)$/i.test(this.certificateFile1.name)) {
           this.isCertificate1 = false;
-          reader.readAsText(this.certificateFile1);
+          this.isPdf1 = true;
+          reader.readAsDataURL(this.certificateFile1);
         }
       }
     },
@@ -701,7 +825,8 @@ export default {
           reader.readAsDataURL(this.certificateFile2);
         } else if (/\.(pdf)$/i.test(this.certificateFile2.name)) {
           this.isCertificate2 = false;
-          reader.readAsText(this.certificateFile2);
+          this.isPdf2 = true;
+          reader.readAsDataURL(this.certificateFile2);
         }
       }
     },
@@ -733,7 +858,8 @@ export default {
           reader.readAsDataURL(this.certificateFile3);
         } else if (/\.(pdf)$/i.test(this.certificateFile3.name)) {
           this.isCertificate3 = false;
-          reader.readAsText(this.certificateFile3);
+          this.isPdf3 = true;
+          reader.readAsDataURL(this.certificateFile3);
         }
       }
     },
@@ -764,7 +890,8 @@ export default {
           reader.readAsDataURL(this.certificateFile4);
         } else if (/\.(pdf)$/i.test(this.certificateFile4.name)) {
           this.isCertificate4 = false;
-          reader.readAsText(this.certificateFile4);
+          this.isPdf4 = true;
+          reader.readAsDataURL(this.certificateFile4);
         }
       }
     },
@@ -795,7 +922,8 @@ export default {
           reader.readAsDataURL(this.certificateFile5);
         } else if (/\.(pdf)$/i.test(this.certificateFile5.name)) {
           this.isCertificate5 = false;
-          reader.readAsText(this.certificateFile5);
+          this.isPdf5 = true;
+          reader.readAsDataURL(this.certificateFile5);
         }
       }
     },
@@ -881,6 +1009,20 @@ export default {
               this.documentSpec[5].documentType.code,
               this.englishLanguage
             );
+            formData.append(
+              this.documentSpec[7].documentType.code,
+              this.diploma
+            );
+
+            formData.append(
+              this.documentSpec[8].documentType.code,
+              this.transcript
+            );
+            formData.append(
+              this.documentSpec[21].documentType.code,
+              this.degree
+            );
+
             if (this.professionalDoc != undefined) {
               formData.append(
                 this.documentSpec[6].documentType.code,
@@ -938,7 +1080,10 @@ export default {
               this.documentSpec[19].documentType.code,
               this.professionalLicense
             );
-
+            formData.append(
+              this.documentSpec[20].documentType.code,
+              this.payroll
+            );
             let payload = { document: formData, id: licenseId };
             this.$store
               .dispatch("newlicense/uploadDocuments", payload)

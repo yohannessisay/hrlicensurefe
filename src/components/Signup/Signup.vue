@@ -73,7 +73,7 @@
       </div>
       <button click="submit()">
         Sign up
-      </button>
+      </button> 
       <Spinner
         v-if="message.showLoading"
         class="mt-4 mb-4"

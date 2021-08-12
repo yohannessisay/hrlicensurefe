@@ -15,15 +15,8 @@
         @mouseleave="hover = false"
       >
         <div class="flex content-center justify-center">
-          <span v-if="item.profilePic != ''">
-            <img
-              class="box-shadow-pop"
-              src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
-            />
-            <!-- <img
-                  class="box-shadow-pop"
-                  :src="'https://hrlicensurebe.dev.k8s.sandboxaddis.com/'+item.profilePic"
-                />  -->
+          <span v-if="item.applicant.profile.photo !== '' && item.applicant.profile.photo !== null">
+                <img  :src="item.applicant.profile.photo" alt="profile picture"  class="w-20 h-12" />
           </span>
           <span v-else>
             <img
@@ -129,7 +122,7 @@ export default {
   },
   name: "AllUnassigned",
   props: ["allUnassigned"],
-  setup() {
+  setup(props) {
     const router = useRouter();
     const detail = (data, applicationType, applicationId, applicantId) => {
       const url =

@@ -1,8 +1,15 @@
 <template>
   <div class="flex justify-center">
-    <div class="w-screen max-w-4xl">
+    <div class="bg-lightBlueB-200 w-screen h-screen max-w-4xl">
       <div
-        class="flex flex-col pt-large w-full bg-white blue-box-shadow-light rounded "
+        class="
+          flex flex-col
+          pt-large
+          w-full
+          bg-white
+          blue-box-shadow-light
+          rounded
+        "
       >
         <h2
           class="flex justify-center"
@@ -40,7 +47,8 @@
                       class="photoFile"
                       ref="passportFileP"
                       v-on:change="handleFileUpload()"
-                      style="margin-bottom: 15px !important;"
+                      style="margin-bottom: 15px !important"
+                      accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
                     />
                     <p>
                       Drag your file(s) here to begin<br />
@@ -56,17 +64,21 @@
                 </p>
                 <img v-bind:src="filePreview" v-show="showPreview" />
               </picture>
-
-              <span v-if="!showUpload && !isImage">
+              <!--  -->
+              <div v-if="!showUpload && isPdf">
+                <p>
+                  <a href="javascript:void(0)" @click="reset()">Upload again</a>
+                </p>
+                <embed v-bind:src="filePreview" v-show="showPreview" />
+              </div>
+              <span v-if="!showUpload && !isImage && !isPdf">
                 <img :src="filePreview" alt="" class="preview" />
               </span>
             </div>
           </div>
         </form>
         <div v-if="buttons && !draftStatus" class="flex justify-center mb-8">
-          <button @click="submit">
-            Next
-          </button>
+          <button @click="submit">Next</button>
           <button @click="draft(buttons[1].action)" variant="outline">
             {{ buttons[1]["name"] }}
           </button>
@@ -75,9 +87,7 @@
           v-if="buttons && draftStatus == 'DRA'"
           class="flex justify-center mb-8"
         >
-          <button @click="submit">
-            Next
-          </button>
+          <button @click="submit">Next</button>
           <button @click="draft(buttons[2].action)" variant="outline">
             {{ buttons[2]["name"] }}
           </button>
@@ -93,9 +103,7 @@
           v-if="buttons && draftStatus == 'SUB'"
           class="flex justify-center mb-8"
         >
-          <button @click="submit">
-            Next
-          </button>
+          <button @click="submit">Next</button>
           <button
             class="withdraw"
             @click="withdraw(buttons[0].action)"
@@ -108,9 +116,7 @@
           v-if="buttons && draftStatus == 'USUP'"
           class="flex justify-center mb-8"
         >
-          <button @click="submit">
-            Next
-          </button>
+          <button @click="submit">Next</button>
           <button @click="draft(buttons[0].action)" variant="outline">
             {{ buttons[0]["name"] }}
           </button>
@@ -122,9 +128,7 @@
           v-if="buttons && draftStatus == 'DEC'"
           class="flex justify-center mb-8"
         >
-          <button @click="submit">
-            Next
-          </button>
+          <button @click="submit">Next</button>
           <button @click="draft(buttons[0].action)" variant="outline">
             {{ buttons[0]["name"] }}
           </button>
@@ -168,7 +172,8 @@ export default {
     const route = useRoute();
     const router = useRouter();
 
-    const basePath = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/";
+     const basePath = "https://storage.googleapis.com/hris-lisence-dev/";
+
 
     let message = ref({
       showFlash: false,
@@ -185,6 +190,7 @@ export default {
     let filePreview = ref("");
     let showUpload = ref(true);
     let isImage = ref(false);
+    let isPdf = ref(false);
     let buttons = [];
     let documentSpecs = ref([]);
     let userId = +localStorage.getItem("userId");
@@ -210,6 +216,10 @@ export default {
     let professionalLicense = ref("");
     let letterfromOrg = ref("");
     let renewedLicense = ref("");
+    let payroll = ref("");
+    let diploma = ref("");
+    let transcript = ref("");
+    let degree = ref("");
 
     const reset = () => {
       showUpload.value = true;
@@ -217,6 +227,8 @@ export default {
       passportFile.value = "";
       filePreview.value = "";
       isImage.value = true;
+       fileSize.value = "";
+      isPdf.value = false;
     };
 
     const handleFileUpload = () => {
@@ -235,7 +247,7 @@ export default {
       }
       reader.addEventListener(
         "load",
-        function() {
+        function () {
           showPreview.value = true;
           filePreview.value = reader.result;
         },
@@ -248,7 +260,8 @@ export default {
           reader.readAsDataURL(passportFile.value);
         } else if (/\.(pdf)$/i.test(passportFile.value.name)) {
           isImage.value = false;
-          reader.readAsText(passportFile.value);
+          isPdf.value = true;
+          reader.readAsDataURL(passportFile.value);
         }
       }
     };
@@ -271,6 +284,10 @@ export default {
     renewedLicense = store.getters["newlicense/getRenewedLicense"];
     professionalLicense = store.getters["newlicense/getProfessionalLicense"];
     letterfromOrg = store.getters["newlicense/getLetterfromOrg"];
+    payroll = store.getters["newlicense/getPayroll"];
+    diploma = store.getters["newlicense/getDiploma"];
+    degree = store.getters["newlicense/getDegree"];
+    transcript = store.getters["newlicense/getTranscript"];
 
     const draft = (action) => {
       message.value.showLoading = true;
@@ -303,8 +320,8 @@ export default {
                       router.push({ path: "/menu" });
                     }, 1500);
                   } else {
-                    message.value.showErrorFlash = !message.value
-                      .showErrorFlash;
+                    message.value.showErrorFlash =
+                      !message.value.showErrorFlash;
                   }
                 })
                 .catch((err) => {});
@@ -330,6 +347,7 @@ export default {
             }
           });
         }
+        
       } else {
         let license = {
           action: action,
@@ -358,6 +376,9 @@ export default {
               documentSpecs[5].documentType.code,
               englishLanguage
             );
+            formData.append(documentSpecs[7].documentType.code, diploma);
+            formData.append(documentSpecs[8].documentType.code, transcript);
+            formData.append(documentSpecs[21].documentType.code, degree);
             if (professionalDoc != undefined) {
               formData.append(
                 documentSpecs[6].documentType.code,
@@ -406,7 +427,7 @@ export default {
               documentSpecs[19].documentType.code,
               professionalLicense
             );
-
+            formData.append(documentSpecs[20].documentType.code, payroll);
             let payload = { document: formData, id: licenseId };
             store
               .dispatch("newlicense/uploadDocuments", payload)
@@ -443,7 +464,7 @@ export default {
               let formData = new FormData();
               formData.append(
                 documentSpecs[1].documentType.code,
-                letterFile.value
+                passportFile.value
               );
               let payload = { document: formData, id: licenseId };
               store
@@ -456,8 +477,8 @@ export default {
                       router.push({ path: "/menu" });
                     }, 1500);
                   } else {
-                    message.value.showErrorFlash = !message.value
-                      .showErrorFlash;
+                    message.value.showErrorFlash =
+                      !message.value.showErrorFlash;
                   }
                 })
                 .catch((err) => {});
@@ -503,7 +524,7 @@ export default {
             let formData = new FormData();
             formData.append(
               documentSpecs[1].documentType.code,
-              letterFile.value
+              passportFile.value
             );
             formData.append(documentSpecs[2].documentType.code, licenseCopy);
             let payload = { document: formData, id: licenseId };
@@ -566,7 +587,11 @@ export default {
         for (let i = 0; i < draftData.documents.length; i++) {
           if (draftData.documents[i].documentTypeCode == "IC") {
             showUpload.value = false;
-            isImage.value = true;
+           if (draftData.documents[i].fileName.split(".")[1] == "pdf") {
+              isPdf.value = true;
+            } else {
+              isImage.value = true;
+            }
             passportFile.value = draftData.documents[i];
             showPreview.value = true;
             filePreview.value = basePath + draftData.documents[i].filePath;
@@ -581,6 +606,7 @@ export default {
       filePreview,
       showUpload,
       isImage,
+      isPdf,
       handleFileUpload,
       reset,
       fileSize,

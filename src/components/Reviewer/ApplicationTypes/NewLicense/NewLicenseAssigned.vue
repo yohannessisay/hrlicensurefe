@@ -1,6 +1,6 @@
 <template>
   <div>
-    <reviewer-nav-bar tab="newLicenseAssigned" />
+    <!-- <reviewer-nav-bar tab="newLicenseAssigned" /> -->
     <div class="bg-lightBlueB-200 h-full" v-if="!allInfo.searchByInput">
       <div class="pl-12">
         <div>Filter By</div>
@@ -62,17 +62,22 @@
 
 <script>
 import { ref, onMounted } from "vue";
-import Title from "@/sharedComponents/TitleWithIllustration";
-import ReviewerNavBar from "../../ReviewerNavBar.vue";
-import AssignedApplications from "../ChildApplicationTypes/AssignedApplications.vue"
-import NothingToShow from "../../ChildComponents/NothingToShow.vue";
 import { useStore } from "vuex";
-import store from "../../../../store";
-import Spinner from "@/sharedComponents/Spinner";
-import moment from "moment";
-import filterApplication from "../../ChildComponents/FilteredDatas/FilterApplication.js";
+
+import applicationStatus from "../../Configurations/getApplicationStatus.js";
+import AssignedApplications from "../ChildApplicationTypes/AssignedApplications.vue"
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
+import filterApplication from "../../ChildComponents/FilteredDatas/FilterApplication.js";
 import FilteredInfo from "../../ChildComponents/FilteredDatas/FilteredInfo.vue";
+import moment from "moment";
+import ReviewerNavBar from "../../ReviewerNavBar.vue";
+import NothingToShow from "../../ChildComponents/NothingToShow.vue";
+import Spinner from "@/sharedComponents/Spinner";
+import store from "../../../../store";
+import Title from "@/sharedComponents/TitleWithIllustration";
+
+
+
 
 
 export default {
@@ -128,11 +133,12 @@ export default {
 
     const fetchNewLicenseAssigned = () => {
       showLoading.value = true;
-      store.dispatch("reviewerNewLicense/getNewLicenseAssigned", adminId).then((res) => {
+      const statusId = applicationStatus(store, 'IRV');
+      const adminStatus = [statusId, adminId];
+      store.dispatch("reviewerNewLicense/getNewLicenseAssigned", adminStatus).then((res) => {
         showLoading.value = false;
         newLicenseAssigned.value =
           store.getters["reviewerNewLicense/getNewLicenseAssignedToYouSearched"];
-          console.log("_________________", newLicenseAssigned.value)
         allInfo.value.assignApplication =
           store.getters["reviewerNewLicense/getNewLicenseAssignedToYouSearched"];
 

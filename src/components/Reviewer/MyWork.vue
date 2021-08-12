@@ -66,10 +66,24 @@
               "
             >
               <div class="flex content-center justify-center">
-                <img
-                  class="box-shadow-pop"
-                  src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
-                />
+                <span
+                  v-if="
+                    item.applicant.profile.photo !== '' &&
+                      item.applicant.profile.photo !== null
+                  "
+                >
+                  <img
+                    :src="item.applicant.profile.photo"
+                    alt="profile picture"
+                    class="w-20 h-12"
+                  />
+                </span>
+                <span v-else>
+                  <img
+                    class="box-shadow-pop"
+                    src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp"
+                  />
+                </span>
               </div>
               <h4
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center"
@@ -100,24 +114,20 @@
           </div>
         </div>
       </div>
-      
     </div>
-    <div
-        v-if="showLoadingApproved"
-        class="flex content-center justify-center"
-      >
-        <Spinner />
+    <div v-if="showLoadingApproved" class="flex content-center justify-center">
+      <Spinner />
+    </div>
+    <div class="bg-lightBlueB-200 h-full" v-if="allInfo.searchByInput">
+      <div class="flex pl-12 pt-tiny">
+        <Title :message="'confirmed Applicants'" />
+        <button @click="backClicked">back</button>
       </div>
-      <div class="bg-lightBlueB-200 h-full" v-if="allInfo.searchByInput">
-        <div class="flex pl-12 pt-tiny">
-          <Title :message="'confirmed Applicants'" />
-          <button @click="backClicked">back</button>
-        </div>
-        <filtered-info
-          :filteredData="allInfo.filteredByDate"
-          type="unfinishedDetail"
-        />
-      </div>
+      <filtered-info
+        :filteredData="allInfo.filteredByDate"
+        type="unfinishedDetail"
+      />
+    </div>
   </div>
   <div v-if="allInfo.message.showErrorFlash">
     <ErrorFlashMessage

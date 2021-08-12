@@ -60,6 +60,17 @@ const adminRole = localStorage.getItem("role");
 // let headers = new Headers({'Bearer Token': bearerToken});
 
 export default {
+
+  async getApplicationStatuses({commit}) {
+    try {
+      const url = baseUrl + "/applicationStatuses";
+      const resp = await ApiService.get(url);
+      console.log("response is applicationStaues", resp.data)
+    } catch(error) {
+      
+    }
+  },
+
   async getUnfinished({commit}, id) {
     try {
       // const resp = await ApiService.get("https://randomuser.me/api/?results=10");
@@ -199,10 +210,6 @@ export default {
     if(adminRole === "SA") {
       try {  
         const resp = await ApiService.get(baseUrl + "/applications/allUnconfirmedApps");
-        // const resp = respAll.data.data.filter(function(e) {
-        //   return e.reviewerId === null ? '' : e.reviewerId !== adminId
-        // })
-        console.log("reeeeeeeeeeeeeeeeeessssssss", resp.data.data)
         commit(SET_OTHERS_UNCONFIRMED, resp.data.data)
       } catch(error) {
         const resp = error
@@ -1143,7 +1150,6 @@ export default {
         baseUrl + "/renewalEvaluators/assign",
         confirm
       );
-      console.log("working ", resp)
       // return;
       return resp;
     } catch(error) {
@@ -1235,6 +1241,19 @@ export default {
         license
       );
       console.log("after response is", resp)
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+
+  async editNewLicense({ commit }, license) {
+    try {
+      console.log("data is - ", license);
+      const resp = await ApiService.put(
+        baseUrl + "/newlicenses/" + license.data.id,
+        license
+      );
       return resp;
     } catch (error) {
       return error;

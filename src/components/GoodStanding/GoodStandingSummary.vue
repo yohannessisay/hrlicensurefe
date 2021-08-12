@@ -1,5 +1,5 @@
 <template>
-  <div v-if="this.showLoading2" class="h-screen max-h-4xl">
+  <div v-if="this.showLoading2" class="bg-lightBlueB-200 w-screen h-screen max-w-4xl">
     <Spinner class="bg-lightBlueB-200" />
   </div>
   <div class="bg-white mb-large rounded pl-4 pt-4 pr-4 pb-4">
@@ -230,9 +230,9 @@
             </button>
             <button
               v-if="this.buttons.length > 2"
-              @click="submitRequest(this.buttons[1].action)"
+              @click="submitRequest(this.buttons[0].action)"
             >
-              {{ this.buttons[1].name }}
+              {{ this.buttons[0].name }}
             </button>
           </div>
         </div>
@@ -252,10 +252,10 @@
           </button>
           <button
             v-if="this.buttons.length > 2"
-            @click="draft(this.buttons[0].action)"
+            @click="draft(this.buttons[2].action)"
             variant="outline"
           >
-            {{ this.buttons[0].name }}
+            {{ this.buttons[2].name }}
           </button>
 
           <button
@@ -358,7 +358,8 @@ export default {
     this.buttons = this.getButtons;
   },
   data: () => ({
-    basePath: "https://hrlicensurebe.dev.k8s.sandboxaddis.com/",
+     basePath : "https://storage.googleapis.com/hris-lisence-dev/",
+
 
     show: false,
     profileInfo: {},
@@ -497,16 +498,17 @@ export default {
           .dispatch("goodstanding/addGoodstandingLicense", license)
           .then((res) => {
             let licenseId = res.data.data.id;
-            let payload = { document: formData, id: licenseId };
+            let payload = { document: formData, id: licenseId }; console.log(payload);
             this.$store
               .dispatch("goodstanding/uploadDocuments", payload)
               .then((res) => {
+                console.log(res);
                 this.showLoading = false;
                 if (res.data.status == "Success") {
                   this.showFlash = true;
                   setTimeout(() => {
                     this.$router.push({ path: "/menu" });
-                  }, 1500);
+                  }, 3500);
                 } else {
                   this.showErrorFlash = true;
                 }
