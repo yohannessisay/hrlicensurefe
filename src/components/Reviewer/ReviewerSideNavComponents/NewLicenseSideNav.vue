@@ -385,6 +385,25 @@
                               Others Declined
                             </p>
                           </li>
+                          <li
+                            @click="newLicenseMenuHandler('newLicenseDeclinedPayment')"
+                            class="mb-2"
+                          >
+                            <!-- <span style="color: #648ea3;"> -->
+                            <p class=" text-sm" style="color: white; ">
+                              <i
+                                class="mr-2 far fa-address-book fa-x fa-light"
+                              ></i>
+                              My Declined Payment
+                            </p>
+                          </li>
+                          <li @click="newLicenseMenuHandler('othersNewLicenseDeclinedPayment')">
+                            <!-- <span style="color: #648ea3;"> -->
+                            <p class=" text-sm" style="color: white; ">
+                              <i class="mr-2 far fa-id-card fa-x"></i>
+                              Others Declined Payment
+                            </p>
+                          </li>
                         </ul>
                       </div>
                     </div>
@@ -505,6 +524,25 @@
                             <p class=" text-sm" style="color: white; ">
                               <i class="mr-2 far fa-id-card fa-x"></i>
                               Others Confirmed
+                            </p>
+                          </li>
+                          <li
+                            @click="newLicenseMenuHandler('newLicenseApprovedPayment')"
+                            class="mb-2"
+                          >
+                            <!-- <span style="color: #648ea3;"> -->
+                            <p class=" text-sm" style="color: white; ">
+                              <i
+                                class="mr-2 far fa-address-book fa-x fa-light"
+                              ></i>
+                              My Approved Payment
+                            </p>
+                          </li>
+                          <li @click="newLicenseMenuHandler('othersNewLicenseApprovedPayment')">
+                            <!-- <span style="color: #648ea3;"> -->
+                            <p class=" text-sm" style="color: white; ">
+                              <i class="mr-2 far fa-id-card fa-x"></i>
+                              Others Approved Payment
                             </p>
                           </li>
                         </ul>

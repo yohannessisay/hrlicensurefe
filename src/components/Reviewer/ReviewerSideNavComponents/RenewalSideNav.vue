@@ -531,6 +531,29 @@
                               Others Confirmed
                             </p>
                           </li>
+                          <li
+                            @click="renewalMenuHandler('renewalApprovedPayment')"
+                            class="mb-2"
+                          >
+                            <!-- <span style="color: #648ea3;"> -->
+                            <p class=" text-sm" style="color: white; ">
+                              <i
+                                class="mr-2 far fa-address-book fa-x fa-light"
+                              ></i>
+                              My Approved Payment
+                            </p>
+                          </li>
+                          <li
+                            @click="
+                              renewalMenuHandler('othersRenewalApprovedPayment')
+                            "
+                          >
+                            <!-- <span style="color: #648ea3;"> -->
+                            <p class=" text-sm" style="color: white; ">
+                              <i class="mr-2 far fa-id-card fa-x"></i>
+                              Others Approved Payment
+                            </p>
+                          </li>
                         </ul>
                       </div>
                     </div>

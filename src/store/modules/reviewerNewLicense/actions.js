@@ -94,11 +94,11 @@ export default {
     commit(SET_NEW_LICENSE_UNASSIGNED_SEARCHED, searchedVal);
   },
 
-  async getNewLicenseUnfinished({ commit }, adminId) {
-    const url = baseUrl + "/newLicenses/status/10";
+  async getNewLicenseUnfinished({ commit }, adminStatus) {
+    const url = baseUrl + "/newLicenses/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
     const myUnfinished = resp.data.data.filter(function(e) {
-      return e.reviewerId === adminId;
+      return e.reviewerId === adminStatus[1];
     });
     commit(SET_NEW_LICENSE_UNFINISHED, myUnfinished);
   },
@@ -124,12 +124,14 @@ export default {
     commit(SET_NEW_LICENSE_UNFINISHED_SEARCHED, searchedVal);
   },
 
-  async getNewLicenseOthersUnfinished({ commit }, adminId) {
-    const url = baseUrl + "/newLicenses/status/10";
+  async getNewLicenseOthersUnfinished({ commit }, adminStatus) {
+    const url = baseUrl + "/newLicenses/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
     const othresUnfinished = resp.data.data.filter(function(e) {
-      return e.reviewerId !== adminId;
+      return e.reviewerId !== adminStatus[1];
     });
+    console.log("others unfinished is ", othresUnfinished)
+    console.log("all unfinished is ", resp.data.data)
     commit(SET_NEW_LICENSE_OTHERS_UNFINISHED, othresUnfinished);
   },
   getNewLicenseOthersUnfinishedSearched({ commit, getters }, searchKey) {
@@ -218,11 +220,11 @@ export default {
     commit(SET_NEW_LICENSE_ASSIGNED_TO_OTHERS_SEARCHED, searchedVal);
   },
 
-  async getNewLicenseApproved({ commit }, adminId) {
-    const url = baseUrl + "/newLicenses/status/5";
+  async getNewLicenseApproved({ commit }, adminStatus) {
+    const url = baseUrl + "/newLicenses/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
     const Approved = resp.data.data.filter(function(e) {
-      return e.reviewerId === adminId;
+      return e.reviewerId === adminStatus[1];
     });
     commit(SET_NEW_LICENSE_APPROVED, Approved);
   },
@@ -248,14 +250,17 @@ export default {
     commit(SET_NEW_LICENSE_APPROVED_SEARCHED, searchedVal);
   },
 
-  async getNewLicenseAllApproved({ commit }, adminId) {
-    const url = baseUrl + "/newLicenses/status/5";
+  async getNewLicenseAllApproved({ commit }, adminStatus) {
+    const url = baseUrl + "/newLicenses/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
-    let allApproved = resp.data.data
-    if(allApproved === undefined) {
-      allApproved = [];
-    }
-    commit(SET_NEW_LICENSE_ALL_APPROVED, allApproved);
+    // let allApproved = resp.data.data
+    const othersApproved = resp.data.data.filter(function(e) {
+      return e.reviewerId !== adminStatus[1];
+    });
+    // if(allApproved === undefined) {
+    //   allApproved = [];
+    // }
+    commit(SET_NEW_LICENSE_ALL_APPROVED, othersApproved);
   },
   getNewLicenseAllApprovedSearched({ commit, getters }, searchKey) {
     if (getters.getNewLicenseAllApproved === undefined) {
@@ -281,17 +286,16 @@ export default {
     commit(SET_NEW_LICENSE_ALL_APPROVED_SEARCHED, searchedVal);
   },
 
-  async getNewLicenseDeclined({ commit }, adminId) {
-    const url = baseUrl + "/newLicenses/status/6";
+  async getNewLicenseDeclined({ commit }, adminStatus) {
+    const url = baseUrl + "/newLicenses/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
-    console.log("new license declined response", resp.data)
     if(resp.data.data === undefined) {
       const declined = []
       commit(SET_NEW_LICENSE_DECLINED, declined)
       return;
     }
     const declined = resp.data.data.filter(function(e) {
-      return e.reviewerId === adminId;
+      return e.reviewerId === adminStatus[1];
     });
     commit(SET_NEW_LICENSE_DECLINED, declined);
   },
@@ -317,14 +321,18 @@ export default {
     commit(SET_NEW_LICENSE_DECLINED_SEARCHED, searchedVal);
   },
 
-  async getNewLicenseAllDeclined({ commit }, adminId) {
-    const url = baseUrl + "/newLicenses/status/6";
+  async getNewLicenseAllDeclined({ commit }, adminStatus) {
+    const url = baseUrl + "/newLicenses/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
-    let allDeclined = resp.data.data
-    if(allDeclined === undefined) {
-      allDeclined = [];
+    if(resp.data.data === undefined) {
+      const othersDeclined = []
+      commit(SET_NEW_LICENSE_ALL_DECLINED, othersDeclined)
+      return;
     }
-    commit(SET_NEW_LICENSE_ALL_DECLINED, allDeclined);
+    const othersDeclined = resp.data.data.filter(function(e) {
+      return e.reviewerId !== adminStatus[1];
+    });
+    commit(SET_NEW_LICENSE_ALL_DECLINED, othersDeclined);
   },
   getNewLicenseAllDeclinedSearched({ commit, getters }, searchKey) {
     if (getters.getNewLicenseAllDeclined === undefined) {
@@ -350,11 +358,11 @@ export default {
     commit(SET_NEW_LICENSE_ALL_DECLINED_SEARCHED, searchedVal);
   },
 
-  async getNewLicenseUnderSuperVision({ commit }, adminId) {
-    const url = baseUrl + "/newlicenses/status/7";
+  async getNewLicenseUnderSuperVision({ commit }, adminStatus) {
+    const url = baseUrl + "/newlicenses/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
     const underSuperVision = resp.data.data.filter(function(e) {
-      return e.reviewerId === adminId;
+      return e.reviewerId === adminStatus[1];
     });
     commit(SET_NEW_LICENSE_UNDER_SUPERVISION, underSuperVision);
   },
@@ -380,11 +388,11 @@ export default {
     commit(SET_NEW_LICENSE_UNDER_SUPERVISION_SEARCHED, searchedVal);
   },
 
-  async getNewLicenseOthersUnderSuperVision({ commit }, adminId) {
-    const url = baseUrl + "/newlicenses/status/7";
+  async getNewLicenseOthersUnderSuperVision({ commit }, adminStatus) {
+    const url = baseUrl + "/newlicenses/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
     const othersUnderSuperVision = resp.data.data.filter(function(e) {
-      return e.reviewerId !== adminId
+      return e.reviewerId !== adminStatus[1]
     })
     commit(SET_NEW_LICENSE_OTHERS_UNDER_SUPERVISION, othersUnderSuperVision);
   },
@@ -415,11 +423,12 @@ export default {
   /* 
   /* approved payment status is wrong for the time (status/7) is placeholder
   */
-  async getNewLicenseApprovedPayment({ commit }, adminId) {
-    const url = baseUrl + "/newlicenses/status/7";
+  async getNewLicenseApprovedPayment({ commit }, adminStatus) {
+    const url = baseUrl + "/newlicenses/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
+    console.log("response is ", resp)
     const approvedPayment = resp.data.data.filter(function(e) {
-      return e.reviewerId === adminId;
+      return e.reviewerId === adminStatus[1];
     });
     commit(SET_NEW_LICENSE_APPROVED_PAYMENT, approvedPayment);
   },
@@ -448,11 +457,11 @@ export default {
   /* 
   /* others approved payment status is wrong for the time (status/7) is placeholder
   */
-  async getNewLicenseOthersApprovedPayment({ commit }, adminId) {
-    const url = baseUrl + "/newlicenses/status/7";
+  async getNewLicenseOthersApprovedPayment({ commit }, adminStatus) {
+    const url = baseUrl + "/newlicenses/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
     const othersApprovedPayments = resp.data.data.filter(function(e) {
-      return e.reviewerId !== adminId
+      return e.reviewerId !== adminStatus[1]
     })
     commit(SET_NEW_LICENSE_OTHERS_APPROVED_PAYMENT, othersApprovedPayments);
   },
@@ -480,11 +489,11 @@ export default {
     commit(SET_NEW_LICENSE_OTHERS_APPROVED_PAYMENT_SEARCHED, searchedVal);
   },
 
-  async getNewLicenseDeclinedPayment({ commit }, adminId) {
-    const url = baseUrl + "/newlicenses/status/7";
+  async getNewLicenseDeclinedPayment({ commit }, adminStatus) {
+    const url = baseUrl + "/newlicenses/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
     const declinedPayment = resp.data.data.filter(function(e) {
-      return e.reviewerId === adminId;
+      return e.reviewerId === adminStatus[1];
     });
     commit(SET_NEW_LICENSE_DECLINED_PAYMENT, declinedPayment);
   },
@@ -513,11 +522,11 @@ export default {
   /* 
   /* others declined payment status is wrong for the time (status/7) is placeholder
   */
-  async getNewLicenseOthersDeclinedPayment({ commit }, adminId) {
-    const url = baseUrl + "/newlicenses/status/7";
+  async getNewLicenseOthersDeclinedPayment({ commit }, adminStatus) {
+    const url = baseUrl + "/newlicenses/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
     const othersDeclinedPayments = resp.data.data.filter(function(e) {
-      return e.reviewerId !== adminId
+      return e.reviewerId !== adminStatus[1]
     })
     commit(SET_NEW_LICENSE_OTHERS_DECLINED_PAYMENT, othersDeclinedPayments);
   },
@@ -549,11 +558,11 @@ export default {
   /* 
   /* on review status is wrong for the time (status/7) is placeholder
   */
-  async getNewLicenseOnReview({ commit }, adminId) {
-    const url = baseUrl + "/newlicenses/status/7";
+  async getNewLicenseOnReview({ commit }, adminStatus) {
+    const url = baseUrl + "/newlicenses/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
     const onReview = resp.data.data.filter(function(e) {
-      return e.reviewerId === adminId;
+      return e.reviewerId === adminStatus[1];
     });
     commit(SET_NEW_LICENSE_ON_REVIEW, onReview);
   },
@@ -582,11 +591,11 @@ export default {
   /* 
   /* on review payment status is wrong for the time (status/7) is placeholder
   */
-  async getNewLicenseOthersOnReview({ commit }, adminId) {
-    const url = baseUrl + "/newlicenses/status/7";
+  async getNewLicenseOthersOnReview({ commit }, adminStatus) {
+    const url = baseUrl + "/newlicenses/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
     const othersOnReview = resp.data.data.filter(function(e) {
-      return e.reviewerId !== adminId
+      return e.reviewerId !== adminStatus[1]
     })
     commit(SET_NEW_LICENSE_OTHERS_ON_REVIEW, othersOnReview);
   },
@@ -701,11 +710,11 @@ export default {
   /* 
   /* confirmed status is wrong for the time (status/7) is placeholder
   */
-  async getNewLicenseConfirmed({ commit }, adminId) {
-    const url = baseUrl + "/newlicenses/status/7";
+  async getNewLicenseConfirmed({ commit }, adminStatus) {
+    const url = baseUrl + "/newlicenses/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
     const confirmed = resp.data.data.filter(function(e) {
-      return e.reviewerId === adminId;
+      return e.reviewerId === adminStatus[1];
     });
     commit(SET_NEW_LICENSE_CONFIRMED, confirmed);
   },
@@ -734,11 +743,11 @@ export default {
   /* 
   /* confirmed status is wrong for the time (status/7) is placeholder
   */
-  async getNewLicenseOthersConfirmed({ commit }, adminId) {
-    const url = baseUrl + "/newlicenses/status/7";
+  async getNewLicenseOthersConfirmed({ commit }, adminStatus) {
+    const url = baseUrl + "/newlicenses/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
     const confirmed = resp.data.data.filter(function(e) {
-      return e.reviewerId !== adminId
+      return e.reviewerId !== adminStatus[1]
     })
     commit(SET_NEW_LICENSE_OTHERS_CONFIRMED, confirmed);
   },

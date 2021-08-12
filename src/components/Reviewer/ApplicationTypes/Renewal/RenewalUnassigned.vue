@@ -59,7 +59,6 @@
   </div>
 </template>
 <script>
-import store from "../../../../store";
 import { useStore } from "vuex";
 import { ref, onMounted } from "vue";
 import moment from "moment";
@@ -71,6 +70,7 @@ import FilteredInfo from "../../ChildComponents/FilteredDatas/FilteredInfo.vue";
 import NothingToShow from "../../ChildComponents/NothingToShow.vue";
 import ReviewerNavBar from "../../ReviewerNavBar.vue";
 import Spinner from "@/sharedComponents/Spinner";
+import store from "../../../../store";
 import Title from "@/sharedComponents/TitleWithIllustration";
 import UnassignedApplications from "../ChildApplicationTypes/UnassignedApplications.vue";
 

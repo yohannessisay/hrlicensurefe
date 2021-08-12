@@ -26,9 +26,9 @@ import {
 const baseUrl = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api";
 
 export default {
-  async getUnassignedVerification({ commit }) {
+  async getUnassignedVerification({ commit }, statusId) {
     try {
-      const url = baseUrl + "/verifications/status/5";
+      const url = baseUrl + "/verifications/status/"+statusId;
       const resp = await ApiService.get(url);
       commit(SET_VERIFICATION_UNASSIGNED, resp.data.data);
     } catch (err) {
@@ -67,11 +67,11 @@ export default {
     commit(SET_VERIFICATION_UNASSIGNED_SEARCHED, searchedVal);
   },
 
-  async getVerificationUnfinished({ commit }, adminId) {
-    const url = baseUrl + "/verifications/status/10";
+  async getVerificationUnfinished({ commit }, adminStatus) {
+    const url = baseUrl + "/verifications/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
     const myUnfinished = resp.data.data.filter(function(e) {
-      return e.reviewerId === adminId;
+      return e.reviewerId === adminStatus[1];
     });
     commit(SET_VERIFICATION_UNFINISHED, myUnfinished);
   },
@@ -97,12 +97,16 @@ export default {
     commit(SET_VERIFICATION_UNFINISHED_SEARCHED, searchedVal);
   },
 
-  async getVerificationOthersUnfinished({ commit }, adminId) {
-    const url = baseUrl + "/verifications/status/10";
+  async getVerificationOthersUnfinished({ commit }, adminStatus) {
+    const url = baseUrl + "/verifications/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
-    console.log("verification unfinished", resp.data.data);
+    if (resp.data.data === undefined) {
+      const othresUnfinished = [];
+      commit(SET_VERIFICATION_OTHERS_UNFINISHED, othresUnfinished);
+      return;
+    }
     const othresUnfinished = resp.data.data.filter(function(e) {
-      return e.reviewerId !== adminId;
+      return e.reviewerId !== adminStatus[1];
     });
     commit(SET_VERIFICATION_OTHERS_UNFINISHED, othresUnfinished);
   },
@@ -130,11 +134,11 @@ export default {
     commit(SET_VERIFICATION_OTHERS_UNFINISHED_SEARCHED, searchedVal);
   },
 
-  async getVerificationAssigned({ commit }, adminId) {
-    const url = baseUrl + "/verifications/status/4";
+  async getVerificationAssigned({ commit }, adminStatus) {
+    const url = baseUrl + "/verifications/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
     const assignedToMe = resp.data.data.filter(function(e) {
-      return e.reviewerId === adminId;
+      return e.reviewerId === adminStatus[1];
     });
     commit(SET_VERIFICATION_ASSIGNED_TO_YOU, assignedToMe);
   },
@@ -160,13 +164,18 @@ export default {
     commit(SET_VERIFICATION_ASSIGNED_TO_YOU_SEARCHED, searchedVal);
   },
 
-  async getVerificationOthersAssigned({ commit }, adminId) {
-    const url = baseUrl + "/verifications/status/4";
+  async getVerificationOthersAssigned({ commit }, adminStatus) {
+    const url = baseUrl + "/verifications/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
-    const othresUnfinished = resp.data.data.filter(function(e) {
-      return e.reviewerId !== adminId;
+    if (resp.data.data === undefined) {
+      const othersAssigned = [];
+      commit(SET_VERIFICATION_ASSIGNED_TO_OTHERS, othersAssigned);
+      return;
+    }
+    const othersAssigned = resp.data.data.filter(function(e) {
+      return e.reviewerId !== adminStatus[1];
     });
-    commit(SET_VERIFICATION_ASSIGNED_TO_OTHERS, othresUnfinished);
+    commit(SET_VERIFICATION_ASSIGNED_TO_OTHERS, othersAssigned);
   },
   getVerificationOthersAssignedSearched({ commit, getters }, searchKey) {
     if (getters.getVerificationAssignedToOthers === undefined) {
@@ -192,8 +201,8 @@ export default {
     commit(SET_VERIFICATION_ASSIGNED_TO_OTHERS_SEARCHED, searchedVal);
   },
 
-  async getVerificationApproved({ commit }, adminId) {
-    const url = baseUrl + "/verifications/status/5";
+  async getVerificationApproved({ commit }, adminStatus) {
+    const url = baseUrl + "/verifications/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
     if(resp.data.data === undefined) {
       const approved = []
@@ -201,7 +210,7 @@ export default {
       return;
     }
     const Approved = resp.data.data.filter(function(e) {
-      return e.reviewerId === adminId;
+      return e.reviewerId === adminStatus[1];
     });
     commit(SET_VERIFICATION_APPROVED, Approved);
   },
@@ -227,14 +236,17 @@ export default {
     commit(SET_VERIFICATION_APPROVED_SEARCHED, searchedVal);
   },
 
-  async getVerificationAllApproved({ commit }, adminId) {
-    const url = baseUrl + "/verifications/status/5";
+  async getVerificationAllApproved({ commit }, adminStatus) {
+    const url = baseUrl + "/verifications/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
-    let allApproved = resp.data.data
-    if(allApproved === undefined) {
-      allApproved = [];
+    if(resp.data.data === undefined) {
+      const othersApproved = [];
+      commit(SET_VERIFICATION_ALL_APPROVED, othersApproved);
     }
-    commit(SET_VERIFICATION_ALL_APPROVED, allApproved);
+    const othersApproved = resp.data.data.filter(function(e) {
+      return e.reviewerId !== adminStatus[1];
+    });
+    commit(SET_VERIFICATION_ALL_APPROVED, othersApproved);
   },
   getVerificationAllApprovedSearched({ commit, getters }, searchKey) {
     if (getters.getVerificationAllApproved === undefined) {
@@ -260,8 +272,8 @@ export default {
     commit(SET_VERIFICATION_ALL_APPROVED_SEARCHED, searchedVal);
   },
 
-  async getVerificationDeclined({ commit }, adminId) {
-    const url = baseUrl + "/verifications/status/6";
+  async getVerificationDeclined({ commit }, adminStatus) {
+    const url = baseUrl + "/verifications/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
     if(resp.data.data === undefined) {
       const declined = []
@@ -269,7 +281,7 @@ export default {
       return;
     }
     const declined = resp.data.data.filter(function(e) {
-      return e.reviewerId === adminId;
+      return e.reviewerId === adminStatus[1];
     });
     commit(SET_VERIFICATION_DECLINED, declined);
   },
@@ -295,14 +307,18 @@ export default {
     commit(SET_VERIFICATION_DECLINED_SEARCHED, searchedVal);
   },
 
-  async getVerificationAllDeclined({ commit }, adminId) {
-    const url = baseUrl + "/verifications/status/6";
+  async getVerificationAllDeclined({ commit }, adminStatus) {
+    const url = baseUrl + "/verifications/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
-    let allDeclined = resp.data.data
-    if(allDeclined === undefined) {
-      allDeclined = [];
+    if(resp.data.data === undefined) {
+      const othersDeclined = [];
+      commit(SET_VERIFICATION_ALL_DECLINED, othersDeclined);
+      return;
     }
-    commit(SET_VERIFICATION_ALL_DECLINED, allDeclined);
+    const othersDeclined = resp.data.data.filter(function(e) {
+      return e.reviewerId !== adminStatus[1];
+    });
+    commit(SET_VERIFICATION_ALL_DECLINED, othersDeclined);
   },
   getVerificationAllDeclinedSearched({ commit, getters }, searchKey) {
     if (getters.getVerificationAllDeclined === undefined) {

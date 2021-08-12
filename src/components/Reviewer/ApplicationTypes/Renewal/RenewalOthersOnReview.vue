@@ -70,17 +70,19 @@
 
 <script>
 import { ref, onMounted } from "vue";
-import Title from "@/sharedComponents/TitleWithIllustration";
-import ReviewerNavBar from "../../ReviewerNavBar.vue";
-import OnReviewApplications from "../ChildApplicationTypes/OnReviewApplications.vue";
-import NothingToShow from "../../ChildComponents/NothingToShow.vue";
 import { useStore } from "vuex";
-import store from "../../../../store";
-import Spinner from "@/sharedComponents/Spinner";
 import moment from "moment";
-import filterApplication from "../../ChildComponents/FilteredDatas/FilterApplication.js";
+
+import applicationStatus from "../../Configurations/getApplicationStatus.js";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
+import filterApplication from "../../ChildComponents/FilteredDatas/FilterApplication.js";
 import FilteredInfo from "../../ChildComponents/FilteredDatas/FilteredInfo.vue";
+import NothingToShow from "../../ChildComponents/NothingToShow.vue";
+import OnReviewApplications from "../ChildApplicationTypes/OnReviewApplications.vue";
+import ReviewerNavBar from "../../ReviewerNavBar.vue";
+import Spinner from "@/sharedComponents/Spinner";
+import store from "../../../../store";
+import Title from "@/sharedComponents/TitleWithIllustration";
 
 export default {
   computed: {
@@ -138,8 +140,10 @@ export default {
 
     const fetchRenewalOnReview = () => {
       showLoading.value = true;
+      const statusId = applicationStatus(store, 'EVAASS');
+      const adminStatus = [statusId, adminId];
       store
-        .dispatch("reviewerRenewal/getRenewalOthersOnReview", adminId)
+        .dispatch("reviewerRenewal/getRenewalOthersOnReview", adminStatus)
         .then((res) => {
           showLoading.value = false;
           RenewalOnReview.value =

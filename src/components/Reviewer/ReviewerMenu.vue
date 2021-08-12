@@ -139,6 +139,18 @@
         <div v-if="this.display == 'othersNewLicenseConfirmed'">
           <new-license-others-confirmed />
         </div>
+        <div v-if="this.display == 'newLicenseApprovedPayment'">
+          <new-license-approved-payment />
+        </div>
+        <div v-if="this.display == 'othersNewLicenseApprovedPayment'">
+          <new-license-others-approved-payment />
+        </div>
+        <div v-if="this.display == 'newLicenseDeclinedPayment'">
+          <new-license-declined-payment />
+        </div>
+        <div v-if="this.display == 'othersNewLicenseDeclinedPayment'">
+          <new-license-others-declined-payment />
+        </div>
 
         <!-- renewal -->
         <div v-if="this.display == 'RenewalUnassigned'">
@@ -191,6 +203,18 @@
         </div>
         <div v-if="this.display == 'othersRenewalConfirmed'">
           <renewal-others-confirmed />
+        </div>
+        <div v-if="this.display == 'renewalApprovedPayment'">
+          <renewal-approved-payment />
+        </div>
+        <div v-if="this.display == 'othersRenewalApprovedPayment'">
+          <renewal-others-approved-payment />
+        </div>
+        <div v-if="this.display == 'renewalDeclinedPayment'">
+          <renewal-declined-payment />
+        </div>
+        <div v-if="this.display == 'othersRenewalDeclinedPayment'">
+          <renewal-others-declined-payment />
         </div>
 
         <!-- start verification -->
@@ -280,6 +304,10 @@ import NewLicenseUnderSuperVision from "./ApplicationTypes/NewLicense/NewLicense
 import NewLicenseOthersUnderSuperVision from "./ApplicationTypes/NewLicense/NewLicenseOthersUnderSuperVision.vue";
 import NewLicenseConfirmed from "./ApplicationTypes/NewLicense/NewLicenseConfirmed.vue";
 import NewLicenseOthersConfirmed from "./ApplicationTypes/NewLicense/NewLicenseOthersConfirmed.vue";
+import NewLicenseApprovedPayment from "./ApplicationTypes/NewLicense/NewLicenseApprovedPayment.vue";
+import NewLicenseOthersApprovedPayment from "./ApplicationTypes/NewLicense/NewLicenseOthersApprovedPayment.vue";
+import NewLicenseDeclinedPayment from "./ApplicationTypes/NewLicense/NewLicenseDeclinedPayment.vue";
+import NewLicenseOthersDeclinedPayment from "./ApplicationTypes/NewLicense/NewLicenseOthersDeclinedPayment.vue";
 
 // import renewal components
 import RenewalUnassigned from "./ApplicationTypes/Renewal/RenewalUnassigned.vue"
@@ -299,6 +327,10 @@ import RenewalUnderSuperVision from "./ApplicationTypes/Renewal/RenewalUnderSupe
 import RenewalOthersUnderSuperVision from "./ApplicationTypes/Renewal/RenewalOthersUnderSuperVision.vue";
 import RenewalConfirmed from "./ApplicationTypes/Renewal/RenewalConfirmed.vue";
 import RenewalOthersConfirmed from "./ApplicationTypes/Renewal/RenewalOthersConfirmed.vue";
+import RenewalApprovedPayment from "./ApplicationTypes/Renewal/RenewalApprovedPayment.vue";
+import RenewalOthersApprovedPayment from "./ApplicationTypes/Renewal/RenewalOthersApprovedPayment.vue";
+import RenewalDeclinedPayment from "./ApplicationTypes/Renewal/RenewalDeclinedPayment.vue";
+import RenewalOthersDeclinedPayment from "./ApplicationTypes/Renewal/RenewalOthersDeclinedPayment.vue";
 
 // import verification components
 import VerificationUnassigned from "./ApplicationTypes/Verification/VerificationUnassigned.vue"
@@ -347,6 +379,10 @@ export default {
     NewLicenseOthersUnderSuperVision,
     NewLicenseConfirmed,
     NewLicenseOthersConfirmed,
+    NewLicenseApprovedPayment,
+    NewLicenseOthersApprovedPayment,
+    NewLicenseDeclinedPayment,
+    NewLicenseOthersDeclinedPayment,
 
     RenewalUnassigned,
     RenewalAssigned,
@@ -365,7 +401,10 @@ export default {
     RenewalOthersUnderSuperVision,
     RenewalConfirmed,
     RenewalOthersConfirmed,
-
+    RenewalApprovedPayment,
+    RenewalOthersApprovedPayment,
+    RenewalDeclinedPayment,
+    RenewalOthersDeclinedPayment,
 
     VerificationUnassigned,
     VerificationAssigned,

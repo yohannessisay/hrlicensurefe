@@ -70,17 +70,19 @@
 
 <script>
 import { ref, onMounted } from "vue";
-import Title from "@/sharedComponents/TitleWithIllustration";
-import ReviewerNavBar from "../../ReviewerNavBar.vue";
-import UnconfirmedApplications from "../ChildApplicationTypes/UnconfirmedApplications.vue";
-import NothingToShow from "../../ChildComponents/NothingToShow.vue";
 import { useStore } from "vuex";
-import store from "../../../../store";
-import Spinner from "@/sharedComponents/Spinner";
 import moment from "moment";
-import filterApplication from "../../ChildComponents/FilteredDatas/FilterApplication.js";
+
+import applicationStatus from "../../Configurations/getApplicationStatus.js";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
+import filterApplication from "../../ChildComponents/FilteredDatas/FilterApplication.js";
 import FilteredInfo from "../../ChildComponents/FilteredDatas/FilteredInfo.vue";
+import NothingToShow from "../../ChildComponents/NothingToShow.vue";
+import ReviewerNavBar from "../../ReviewerNavBar.vue";
+import Spinner from "@/sharedComponents/Spinner";
+import store from "../../../../store";
+import Title from "@/sharedComponents/TitleWithIllustration";
+import UnconfirmedApplications from "../ChildApplicationTypes/UnconfirmedApplications.vue";
 
 export default {
   computed: {
@@ -140,8 +142,10 @@ export default {
 
     const fetchVerificationUnconfirmed = () => {
       showLoading.value = true;
+      const statusId = applicationStatus(store, 'APP');
+      const adminStatus = [statusId, adminId];
       store
-        .dispatch("reviewerVerification/getVerificationApproved", adminId)
+        .dispatch("reviewerVerification/getVerificationApproved", adminStatus)
         .then((res) => {
           showLoading.value = false;
           verificationUnconfirmed.value =

@@ -24,7 +24,7 @@
         </button>
       </div>
       <div class="flex pl-12 pt-tiny">
-        <Title message="All Good Standing Declined" />
+        <Title message="Others Good Standing Declined" />
       </div>
       <div class="flex flex-wrap pb-medium rounded h-full" v-if="!showLoading">
         <nothing-to-show :nothingToShow="nothingToShow" />
