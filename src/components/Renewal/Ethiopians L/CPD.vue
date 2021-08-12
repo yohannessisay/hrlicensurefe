@@ -191,7 +191,8 @@ export default {
     let showUpload = ref(true);
     let isImage = ref(false);
     let isPdf = ref(false);
- 
+    
+
     let buttons = ref([]);
     let documentSpecs = ref([]);
     let userId = +localStorage.getItem("userId");
@@ -373,6 +374,7 @@ export default {
             },
             professionalTypeId: licenseInfo.professionalTypeId,
             residenceWoredaId: licenseInfo.residenceWoredaId,
+            paymentSlip: null,
           },
         };
         store.dispatch("renewal/addRenewalLicense", license).then((res) => {
@@ -491,6 +493,7 @@ export default {
             },
             professionalTypeId: licenseInfo.professionalTypeId,
             residenceWoredaId: licenseInfo.residenceWoredaId,
+            paymentSlip: null,
           },
         };
         store.dispatch("renewal/addRenewalLicense", license).then((res) => {

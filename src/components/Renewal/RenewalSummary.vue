@@ -1,6 +1,8 @@
 <template>
-  <div v-if="this.showLoading2" class="bg-lightBlueB-200 w-screen h-screen max-w-4xl">
-    
+  <div
+    v-if="this.showLoading2"
+    class="bg-lightBlueB-200 w-screen h-screen max-w-4xl"
+  >
     <Spinner class="bg-lightBlueB-200" />
   </div>
   <div class="bg-white mb-large rounded pl-4 pt-4 pr-4 pb-4">
@@ -17,10 +19,10 @@
           <h5 class="ml-4">
             {{
               this.profileInfo.name +
-              " " +
-              this.profileInfo.fatherName +
-              " " +
-              this.profileInfo.grandFatherName
+                " " +
+                this.profileInfo.fatherName +
+                " " +
+                this.profileInfo.grandFatherName
             }}
           </h5>
         </div>
@@ -342,8 +344,7 @@ export default {
     this.buttons = this.getButtons;
   },
   data: () => ({
-     basePath : "https://storage.googleapis.com/hris-lisence-dev/",
-
+    basePath: "https://storage.googleapis.com/hris-lisence-dev/",
 
     show: false,
     profileInfo: {},
@@ -399,7 +400,7 @@ export default {
     }),
   },
   methods: {
-    moment: function (date) {
+    moment: function(date) {
       return moment(date);
     },
     fetchProfileInfo() {
@@ -552,6 +553,7 @@ export default {
             },
             residenceWoredaId: this.residenceWoredaId,
             professionalTypeId: this.professionalTypeID,
+            paymentSlip: null,
           },
         };
         this.$store
@@ -592,6 +594,7 @@ export default {
             },
             residenceWoredaId: this.residenceWoredaId,
             professionalTypeId: this.professionalTypeID,
+            paymentSlip: null,
           },
         },
         id: this.draftId,
@@ -742,6 +745,7 @@ export default {
             },
             residenceWoredaId: this.residenceWoredaId,
             professionalTypeId: this.professionalTypeID,
+            paymentSlip: null,
           },
         };
         this.$store
@@ -792,7 +796,7 @@ export default {
     },
   },
   mounted() {
-    this.$nextTick(function () {
+    this.$nextTick(function() {
       window.setInterval(() => {
         this.showFlash = false;
         this.showErrorFlash = false;

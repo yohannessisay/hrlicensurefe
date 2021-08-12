@@ -68,14 +68,14 @@
                 </router-link>
               </div>
               <div role="none">
-                <router-link to="/google-form">
+                <!-- <router-link to="/google-form">
                   <li
                     class="block px-4 py-2 text-sm text-blue-100 hover:bg-gray-100 hover:text-gray-900"
                     role="menuitem"
                   >
                     Leave a Feedback
                   </li>
-                </router-link>
+                </router-link> -->
                 <a
                   @click="logout()"
                   class="block px-4 py-2 text-sm text-blue-100 hover:bg-gray-100 hover:text-gray-900"
@@ -87,7 +87,7 @@
               </div>
             </div>
           </div>
-          <a
+          <!-- <a
             class="focus:outline-none bg-lightBlueB-300 text-lightBlueB-400 hover:text-gray-800 w-7 h-7 rounded-full flex items-center justify-center"
             href="#"
           >
@@ -104,7 +104,7 @@
                 d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
               ></path>
             </svg>
-          </a>
+          </a> -->
         </div>
       </main>
     </nav>
@@ -115,9 +115,6 @@
 import Title from "@/sharedComponents/Title";
 import RenderIllustration from "@/sharedComponents/RenderIllustration";
 import { useStore } from "vuex";
-import { useRouter } from "vue-router";
-import { base64StringToBlob } from "blob-util";
-
 import { ref, onMounted } from "vue";
 
 export default {
