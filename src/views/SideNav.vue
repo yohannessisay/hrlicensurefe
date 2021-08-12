@@ -4,8 +4,22 @@
     style="max-width: 380px; background: #285180;"
   >
     <div class="px-8 h-screen">
-      <!--  -->
       <ul class="py-1 ">
+        <div class="mb-4">
+          <li @click="selectMenu(0)" class=" justify-start ">
+            <transition name="slide-fade-to-left">
+              <div class="mr-12 ">
+                <div class=" justify-center items-center ">
+                  <div class="">
+                    <h3 class="text-lightBlueB-500 mt-tiny">
+                      <span style="color: #f3f6f9; font-size:20px">Home</span>
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </transition>
+          </li>
+        </div>
         <div class="mb-4">
           <li @click="selectMenu(1)" class=" justify-start ">
             <transition name="slide-fade-to-left">
@@ -48,7 +62,7 @@
             <transition name="slide-fade-to-left">
               <div class="">
                 <div class=" justify-center items-center ">
-                  <div >
+                  <div>
                     <h3 class="text-lightBlueB-500 mt-tiny">
                       <span style="color: white;">
                         <i
@@ -95,16 +109,13 @@
                   <div class="">
                     <h3 class="text-lightBlueB-500 mt-tiny">
                       <span style="color: white;">
-                   
-
                         <i class="mr-2 far fa-thumbs-up fa-x fa-light"></i>
                       </span>
                       <span style="color: white; ">Approved</span>
                       <span style="color: white;">
-                         <i
+                        <i
                           class="fas fa-chevron-circle-down float-right mt-2"
                         ></i>
-
                       </span>
                     </h3>
                   </div>
@@ -172,16 +183,14 @@
                   <div class=" ">
                     <h3 class="text-lightBlueB-500 mt-tiny">
                       <span style="color: white;">
-                       
                         <i class="mr-2 far fa-thumbs-down fa-x fa-light"></i>
                       </span>
 
                       <span style="color: white; ">Declined </span>
-                       <span style="color: white;">
-                         <i
+                      <span style="color: white;">
+                        <i
                           class="fas fa-chevron-circle-down float-right mt-2"
                         ></i>
-
                       </span>
                     </h3>
                   </div>
@@ -264,7 +273,7 @@
                   <div class=" ">
                     <h3 class="text-lightBlueB-500 mt-tiny">
                       <span style="color: white;">
-                           <i class="mr-2 fas fa-comments-dollar fa-x"></i>
+                        <i class="mr-2 fas fa-comments-dollar fa-x"></i>
                       </span>
                       <span style="color: white; ">Pending Payment</span>
                     </h3>
@@ -304,6 +313,7 @@
 </template>
 <script>
 import { ref } from "vue";
+
 export default {
   props: ["display"],
   data() {

@@ -49,7 +49,6 @@
         <span style="color: red">{{ credentialsErrors.password }}</span>
       </div>
       <a
-        
         class="text-primary-500 w-full text-right mr-small hover:underline cursor-pointer"
         @click="$emit('forgotPassword')"
       >
@@ -87,7 +86,7 @@ import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import Spinner from "@/sharedComponents/Spinner";
 export default {
   components: { Title, FlashMessage, ErrorFlashMessage, Spinner },
-  setup({emit}) {
+  setup({ emit }) {
     const store = useStore();
     const router = useRouter();
 
@@ -102,7 +101,7 @@ export default {
       emailAddress: "",
       password: "",
     });
-let forgot= ref(false);
+    let forgot = ref(false);
     const credentialsErrors = ref({
       emailAddress: undefined,
       password: undefined,
@@ -119,8 +118,6 @@ let forgot= ref(false);
         message.value.showErrorFlash = false;
         store.dispatch("user/login", email).then((res) => {
           if (res) {
-            // if (res.data.status == "Success") {
-
             const userId = res.data.data.id;
             store.dispatch("profile/getProfileByUserId", userId).then((res) => {
               const getProfiles = res.data ? res.data.data : null;
@@ -180,8 +177,8 @@ let forgot= ref(false);
       isEmail,
       validateForm,
       message,
-     
-      forgot
+
+      forgot,
     };
   },
 };
@@ -190,7 +187,6 @@ let forgot= ref(false);
 .close-svg {
   width: 16px;
 }
-
 .card-wrapper {
   max-width: 450px;
   box-shadow: 0px -8px 6px rgb(30 64 175 / 51%);
@@ -202,4 +198,3 @@ let forgot= ref(false);
   }
 }
 </style>
-{"mode":"full","isActive":false}

@@ -115,9 +115,6 @@
 import Title from "@/sharedComponents/Title";
 import RenderIllustration from "@/sharedComponents/RenderIllustration";
 import { useStore } from "vuex";
-import { useRouter } from "vue-router";
-import { base64StringToBlob } from "blob-util";
-
 import { ref, onMounted } from "vue";
 
 export default {
