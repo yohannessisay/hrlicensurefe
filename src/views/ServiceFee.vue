@@ -225,7 +225,6 @@ export default {
         }
       }
     };
-
     onMounted(() => {
       message.value.showLoading = true;
       id = store.getters["serviceFee/getID"];
@@ -253,7 +252,8 @@ export default {
     });
     const update = () => {};
     const paymentSlipChange = (payment) => {
-      console.log(payment);
+      paymentSlip.value = payment;
+      console.log(paymentSlip.value);
     };
     const save = () => {
       message.value.showLoading = true;
@@ -272,7 +272,7 @@ export default {
       store.dispatch(sendStr + "/getDraft", id).then((res) => {
         appType = store.getters["serviceFee/getApplicationType"];
         const results = res.data.data;
-        appID = results.id;
+        results.paymentSlip = "lkjlkj";
         let saveObject = {
           save: {
             action: "UploadPaymentEvent",
