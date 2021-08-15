@@ -5,8 +5,8 @@
   >
     <div class="px-8 h-screen">
       <ul class="py-1 ">
-        <new-license-side-nav :dropdownValue="dropdownValue" @applicationTypeSelected="applicationTypeHandler" @selectNewLicenseMenu="selectMenu"/>
-        <renewal-side-nav :dropdownValue="dropdownValue" @applicationTypeSelected="applicationTypeHandler" @selectRenewalMenu="selectMenu" />
+        <new-license-side-nav :expertLevelId="expertLevelId" :dropdownValue="dropdownValue" @applicationTypeSelected="applicationTypeHandler" @selectNewLicenseMenu="selectMenu"/>
+        <renewal-side-nav :expertLevelId="expertLevelId" :dropdownValue="dropdownValue" @applicationTypeSelected="applicationTypeHandler" @selectRenewalMenu="selectMenu" />
         <verification-side-nav :dropdownValue="dropdownValue" @applicationTypeSelected="applicationTypeHandler" @selectVerificationMenu="selectMenu" />
         <good-standing-side-nav :dropdownValue="dropdownValue" @applicationTypeSelected="applicationTypeHandler" @selectGoodStandingMenu="selectMenu" />
         <!-- start verification Side Nav here -->
@@ -39,7 +39,9 @@ export default {
      GoodStandingSideNav,
  },
   setup(props, {emit}) {
-    
+
+    const expertLevelId = JSON.parse(localStorage.getItem("allAdminData")).expertLevelId;
+   
     let dropdownValue = ref({
       ...dropdown
     });
@@ -84,6 +86,7 @@ export default {
 
     return {
       dropdownValue,
+      expertLevelId,
       newlicenseDD,
       renewalDD,
       renewalAssignedDD,

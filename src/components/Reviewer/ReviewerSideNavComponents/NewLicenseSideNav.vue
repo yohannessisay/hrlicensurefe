@@ -9,18 +9,18 @@
           >
             <div class="p-1 ">
               <h3 class="text-lightBlueB-500 mt-tiny">
-                <!-- <span > -->
                 <span style="color: white;">
-                  <!-- <i
-                          class="fas fa-chevron-circle-down float-right mb-2"
-
-                        ></i> -->
-
                   <i class="mr-2 far fa-thumbs-up fa-x fa-light"></i>
-                  <i class="fas fa-chevron-circle-down float-right mt-2"></i>
+                  <i
+                    v-if="newLicenseDDIcon.isNewLicenseUp"
+                    class="fas fa-chevron-circle-up float-right mt-2"
+                  ></i>
+                  <i
+                    v-else
+                    class="fas fa-chevron-circle-down float-right mt-2"
+                  ></i>
                 </span>
                 <span class="text-lg" style="color: white; ">New License</span>
-                <!-- </span> -->
               </h3>
             </div>
           </div>
@@ -31,7 +31,10 @@
             style="color: #648ea3; width: 200px;"
           >
             <ul class="block w-full shadow float-right" style="color: #648ea3;">
-              <li @click="newLicenseMenuHandler('newLicenseUnassigned')" class="mb-2">
+              <li
+                @click="newLicenseMenuHandler('newLicenseUnassigned')"
+                class="mb-2"
+              >
                 <!-- <span style="color: #648ea3;"> -->
                 <p class=" text-base" style="color: white; ">
                   <i class="far fa-thumbs-up fa-x fa-light"></i>
@@ -52,6 +55,11 @@
                           <h3 class="text-lightBlueB-500 mt-tiny">
                             <span style="color: white;">
                               <i
+                                v-if="newLicenseDDIcon.isAssignedUp"
+                                class="fas fa-chevron-circle-up float-right mt-2"
+                              ></i>
+                              <i
+                                v-else
                                 class="fas fa-chevron-circle-down float-right mt-2"
                               ></i>
 
@@ -83,7 +91,13 @@
                               Assigned To You
                             </p>
                           </li>
-                          <li @click="newLicenseMenuHandler('newLicenseAssignedToOthers')">
+                          <li
+                            @click="
+                              newLicenseMenuHandler(
+                                'newLicenseAssignedToOthers'
+                              )
+                            "
+                          >
                             <!-- <span style="color: #648ea3;"> -->
                             <p class=" text-sm" style="color: white; ">
                               <i class="mr-2 far fa-id-card fa-x"></i>
@@ -111,6 +125,11 @@
                           <h3 class="text-lightBlueB-500 mt-tiny">
                             <span style="color: white;">
                               <i
+                                v-if="newLicenseDDIcon.isUnfinishedUp"
+                                class="fas fa-chevron-circle-up float-right mt-2"
+                              ></i>
+                              <i
+                                v-else
                                 class="fas fa-chevron-circle-down float-right mt-2"
                               ></i>
 
@@ -131,7 +150,9 @@
                       >
                         <ul class="block w-full  shadow float-right ">
                           <li
-                            @click="newLicenseMenuHandler('newLicenseUnfinished')"
+                            @click="
+                              newLicenseMenuHandler('newLicenseUnfinished')
+                            "
                             class="mb-2"
                           >
                             <!-- <span style="color: #648ea3;"> -->
@@ -142,7 +163,13 @@
                               My Unfinished
                             </p>
                           </li>
-                          <li @click="newLicenseMenuHandler('newLicenseOthersUnfinished')">
+                          <li
+                            @click="
+                              newLicenseMenuHandler(
+                                'newLicenseOthersUnfinished'
+                              )
+                            "
+                          >
                             <!-- <span style="color: #648ea3;"> -->
                             <p class=" text-sm" style="color: white; ">
                               <i class="mr-2 far fa-id-card fa-x"></i>
@@ -170,6 +197,11 @@
                           <h3 class="text-lightBlueB-500 mt-tiny">
                             <span style="color: white;">
                               <i
+                                v-if="newLicenseDDIcon.isUnconfirmedUp"
+                                class="fas fa-chevron-circle-up float-right mt-2"
+                              ></i>
+                              <i
+                                v-else
                                 class="fas fa-chevron-circle-down float-right mt-2"
                               ></i>
 
@@ -178,7 +210,7 @@
                               ></i>
                             </span>
                             <span class="text-base" style="color: white; "
-                              >Unconfirmed</span
+                              >{{expertLevelId == 4 ?  'Unconfirmed' : 'Approved' }}</span
                             >
                           </h3>
                         </div>
@@ -190,7 +222,9 @@
                       >
                         <ul class="block w-full  shadow float-right ">
                           <li
-                            @click="newLicenseMenuHandler('newLicenseUnconfirmed')"
+                            @click="
+                              newLicenseMenuHandler('newLicenseUnconfirmed')
+                            "
                             class="mb-2"
                           >
                             <!-- <span style="color: #648ea3;"> -->
@@ -198,14 +232,18 @@
                               <i
                                 class="mr-2 far fa-address-book fa-x fa-light"
                               ></i>
-                              My Unconfirmed
+                              {{expertLevelId == 4 ?  'My Unconfirmed' : 'My Approved' }}
                             </p>
                           </li>
-                          <li @click="newLicenseMenuHandler('allNewLicenseUnconfirmed')">
+                          <li
+                            @click="
+                              newLicenseMenuHandler('allNewLicenseUnconfirmed')
+                            "
+                          >
                             <!-- <span style="color: #648ea3;"> -->
                             <p class=" text-sm" style="color: white; ">
                               <i class="mr-2 far fa-id-card fa-x"></i>
-                              Others Unconfirmed
+                              {{expertLevelId == 4 ?  'Others Unconfirmed' : 'Others Approved' }}
                             </p>
                           </li>
                         </ul>
@@ -217,7 +255,7 @@
               <!-- unconfirmed ends here -->
 
               <!-- on review start here -->
-              <div>
+              <div v-if="expertLevelId == 4">
                 <li
                   @click="newlicenseDDHandler('NewLicenseOnReview')"
                   class=" justify-start "
@@ -229,6 +267,11 @@
                           <h3 class="text-lightBlueB-500 mt-tiny">
                             <span style="color: white;">
                               <i
+                                v-if="newLicenseDDIcon.isOnReivewUp"
+                                class="fas fa-chevron-circle-up float-right mt-2"
+                              ></i>
+                              <i
+                                v-else
                                 class="fas fa-chevron-circle-down float-right mt-2"
                               ></i>
 
@@ -260,7 +303,11 @@
                               My On Review
                             </p>
                           </li>
-                          <li @click="newLicenseMenuHandler('othersNewLicenseOnReview')">
+                          <li
+                            @click="
+                              newLicenseMenuHandler('othersNewLicenseOnReview')
+                            "
+                          >
                             <!-- <span style="color: #648ea3;"> -->
                             <p class=" text-sm" style="color: white; ">
                               <i class="mr-2 far fa-id-card fa-x"></i>
@@ -276,7 +323,7 @@
               <!-- on review ends here -->
 
               <!-- re evaluate starts here -->
-              <div>
+              <div v-if="expertLevelId == 4">
                 <li
                   @click="newlicenseDDHandler('NewLicenseReEvaluate')"
                   class=" justify-start "
@@ -288,6 +335,11 @@
                           <h3 class="text-lightBlueB-500 mt-tiny">
                             <span style="color: white;">
                               <i
+                                v-if="newLicenseDDIcon.isReEvaluateUp"
+                                class="fas fa-chevron-circle-up float-right mt-2"
+                              ></i>
+                              <i
+                                v-else
                                 class="fas fa-chevron-circle-down float-right mt-2"
                               ></i>
 
@@ -308,7 +360,9 @@
                       >
                         <ul class="block w-full  shadow float-right ">
                           <li
-                            @click="newLicenseMenuHandler('newLicenseReEvaluate')"
+                            @click="
+                              newLicenseMenuHandler('newLicenseReEvaluate')
+                            "
                             class="mb-2"
                           >
                             <!-- <span style="color: #648ea3;"> -->
@@ -319,7 +373,13 @@
                               My Re Evaluate
                             </p>
                           </li>
-                          <li @click="newLicenseMenuHandler('othersNewLicenseReEvaluate')">
+                          <li
+                            @click="
+                              newLicenseMenuHandler(
+                                'othersNewLicenseReEvaluate'
+                              )
+                            "
+                          >
                             <!-- <span style="color: #648ea3;"> -->
                             <p class=" text-sm" style="color: white; ">
                               <i class="mr-2 far fa-id-card fa-x"></i>
@@ -347,6 +407,11 @@
                           <h3 class="text-lightBlueB-500 mt-tiny">
                             <span style="color: white;">
                               <i
+                                v-if="newLicenseDDIcon.isDeclinedUp"
+                                class="fas fa-chevron-circle-up float-right mt-2"
+                              ></i>
+                              <i
+                                v-else
                                 class="fas fa-chevron-circle-down float-right mt-2"
                               ></i>
 
@@ -378,7 +443,11 @@
                               My Declined
                             </p>
                           </li>
-                          <li @click="newLicenseMenuHandler('allNewLicenseDeclined')">
+                          <li
+                            @click="
+                              newLicenseMenuHandler('allNewLicenseDeclined')
+                            "
+                          >
                             <!-- <span style="color: #648ea3;"> -->
                             <p class=" text-sm" style="color: white; ">
                               <i class="mr-2 far fa-id-card fa-x"></i>
@@ -386,7 +455,9 @@
                             </p>
                           </li>
                           <li
-                            @click="newLicenseMenuHandler('newLicenseDeclinedPayment')"
+                            @click="
+                              newLicenseMenuHandler('newLicenseDeclinedPayment')
+                            "
                             class="mb-2"
                           >
                             <!-- <span style="color: #648ea3;"> -->
@@ -397,7 +468,13 @@
                               My Declined Payment
                             </p>
                           </li>
-                          <li @click="newLicenseMenuHandler('othersNewLicenseDeclinedPayment')">
+                          <li
+                            @click="
+                              newLicenseMenuHandler(
+                                'othersNewLicenseDeclinedPayment'
+                              )
+                            "
+                          >
                             <!-- <span style="color: #648ea3;"> -->
                             <p class=" text-sm" style="color: white; ">
                               <i class="mr-2 far fa-id-card fa-x"></i>
@@ -425,6 +502,11 @@
                           <h3 class="text-lightBlueB-500 mt-tiny">
                             <span style="color: white;">
                               <i
+                                v-if="newLicenseDDIcon.isUnderSuperVisionUp"
+                                class="fas fa-chevron-circle-up float-right mt-2"
+                              ></i>
+                              <i
+                                v-else
                                 class="fas fa-chevron-circle-down float-right mt-2"
                               ></i>
 
@@ -445,7 +527,11 @@
                       >
                         <ul class="block w-full  shadow float-right ">
                           <li
-                            @click="newLicenseMenuHandler('newLicenseUnderSuperVision')"
+                            @click="
+                              newLicenseMenuHandler(
+                                'newLicenseUnderSuperVision'
+                              )
+                            "
                             class="mb-2"
                           >
                             <!-- <span style="color: #648ea3;"> -->
@@ -458,7 +544,9 @@
                           </li>
                           <li
                             @click="
-                              newLicenseMenuHandler('newLicenseOthersUnderSuperVision')
+                              newLicenseMenuHandler(
+                                'newLicenseOthersUnderSuperVision'
+                              )
                             "
                           >
                             <!-- <span style="color: #648ea3;"> -->
@@ -476,7 +564,7 @@
               <!-- under super vision ends here -->
 
               <!-- confirmed starts here -->
-              <div>
+              <div v-if="expertLevelId == 4">
                 <li
                   @click="newlicenseDDHandler('NewLicenseConfirmed')"
                   class=" justify-start "
@@ -488,6 +576,11 @@
                           <h3 class="text-lightBlueB-500 mt-tiny">
                             <span style="color: white;">
                               <i
+                                v-if="newLicenseDDIcon.isConfirmedUp"
+                                class="fas fa-chevron-circle-up float-right mt-2"
+                              ></i>
+                              <i
+                                v-else
                                 class="fas fa-chevron-circle-down float-right mt-2"
                               ></i>
 
@@ -508,7 +601,9 @@
                       >
                         <ul class="block w-full  shadow float-right ">
                           <li
-                            @click="newLicenseMenuHandler('newLicenseConfirmed')"
+                            @click="
+                              newLicenseMenuHandler('newLicenseConfirmed')
+                            "
                             class="mb-2"
                           >
                             <!-- <span style="color: #648ea3;"> -->
@@ -519,7 +614,11 @@
                               My Confirmed
                             </p>
                           </li>
-                          <li @click="newLicenseMenuHandler('othersNewLicenseConfirmed')">
+                          <li
+                            @click="
+                              newLicenseMenuHandler('othersNewLicenseConfirmed')
+                            "
+                          >
                             <!-- <span style="color: #648ea3;"> -->
                             <p class=" text-sm" style="color: white; ">
                               <i class="mr-2 far fa-id-card fa-x"></i>
@@ -527,7 +626,9 @@
                             </p>
                           </li>
                           <li
-                            @click="newLicenseMenuHandler('newLicenseApprovedPayment')"
+                            @click="
+                              newLicenseMenuHandler('newLicenseApprovedPayment')
+                            "
                             class="mb-2"
                           >
                             <!-- <span style="color: #648ea3;"> -->
@@ -538,7 +639,13 @@
                               My Approved Payment
                             </p>
                           </li>
-                          <li @click="newLicenseMenuHandler('othersNewLicenseApprovedPayment')">
+                          <li
+                            @click="
+                              newLicenseMenuHandler(
+                                'othersNewLicenseApprovedPayment'
+                              )
+                            "
+                          >
                             <!-- <span style="color: #648ea3;"> -->
                             <p class=" text-sm" style="color: white; ">
                               <i class="mr-2 far fa-id-card fa-x"></i>
@@ -560,18 +667,63 @@
   </div>
 </template>
 <script>
+import { ref } from "vue";
 export default {
   name: "NewLicenseSideNav",
-  props: ["dropdownValue"],
+  props: ["dropdownValue", "expertLevelId"],
   setup(props, { emit }) {
+    let newLicenseDDIcon = ref({
+      isNewLicenseUp: false,
+      isAssignedUp: false,
+      isUnfinishedUp: false,
+      isUnconfirmedUp: false,
+      isOnReivewUp: false,
+      isReEvaluateUp: false,
+      isDeclinedUp: false,
+      isUnderSuperVisionUp: false,
+      isConfirmedUp: false,
+      isFederalApprovedUp: false,
+    });
     const newLicenseMenuHandler = (menu) => {
-      emit("selectNewLicenseMenu", menu)
+      emit("selectNewLicenseMenu", menu);
     };
 
     const newlicenseDDHandler = (applicationValue) => {
+      if (applicationValue == "NewLicense") {
+        newLicenseDDIcon.value.isNewLicenseUp = !newLicenseDDIcon.value
+          .isNewLicenseUp;
+      } else if (applicationValue == "NewLicenseAssigned") {
+        newLicenseDDIcon.value.isAssignedUp = !newLicenseDDIcon.value
+          .isAssignedUp;
+      } else if (applicationValue == "NewLicenseUnfinished") {
+        newLicenseDDIcon.value.isUnfinishedUp = !newLicenseDDIcon.value
+          .isUnfinishedUp;
+      } else if (applicationValue == "NewLicenseUnconfirmed") {
+        newLicenseDDIcon.value.isUnconfirmedUp = !newLicenseDDIcon.value
+          .isUnconfirmedUp;
+      } else if (applicationValue == "NewLicenseOnReview") {
+        newLicenseDDIcon.value.isOnReivewUp = !newLicenseDDIcon.value
+          .isOnReivewUp;
+      } else if (applicationValue == "NewLicenseReEvaluate") {
+        newLicenseDDIcon.value.isReEvaluateUp = !newLicenseDDIcon.value
+          .isReEvaluateUp;
+      } else if (applicationValue == "NewLicenseDeclined") {
+        newLicenseDDIcon.value.isDeclinedUp = !newLicenseDDIcon.value
+          .isDeclinedUp;
+      } else if (applicationValue == "NewLicenseUnderSuperVision") {
+        newLicenseDDIcon.value.isUnderSuperVisionUp = !newLicenseDDIcon.value
+          .isUnderSuperVisionUp;
+      } else if (applicationValue == "NewLicenseConfirmed") {
+        newLicenseDDIcon.value.isConfirmedUp = !newLicenseDDIcon.value
+          .isConfirmedUp;
+      } else if (applicationValue == "NewLicenseFederalApproved") {
+        newLicenseDDIcon.value.isFederalApprovedUp = !newLicenseDDIcon.value
+          .isFederalApprovedUp;
+      }
       emit("applicationTypeSelected", applicationValue);
     };
     return {
+      newLicenseDDIcon,
       newlicenseDDHandler,
       newLicenseMenuHandler,
     };

@@ -9,18 +9,18 @@
           >
             <div class="p-1 ">
               <h3 class="text-lightBlueB-500 mt-tiny">
-                <!-- <span > -->
                 <span style="color: white;">
-                  <!-- <i
-                          class="fas fa-chevron-circle-down float-right mb-2"
-
-                        ></i> -->
-
                   <i class="mr-2 far fa-thumbs-up fa-x fa-light"></i>
-                  <i class="fas fa-chevron-circle-down float-right mt-2"></i>
+                  <i
+                    v-if="renewalDDIcon.isRenewalUp"
+                    class="fas fa-chevron-circle-up float-right mt-2"
+                  ></i>
+                  <i
+                    v-else
+                    class="fas fa-chevron-circle-down float-right mt-2"
+                  ></i>
                 </span>
                 <span class="text-lg" style="color: white; ">Renewal</span>
-                <!-- </span> -->
               </h3>
             </div>
           </div>
@@ -52,6 +52,11 @@
                           <h3 class="text-lightBlueB-500 mt-tiny">
                             <span style="color: white;">
                               <i
+                                v-if="renewalDDIcon.isAssignedUp"
+                                class="fas fa-chevron-circle-up float-right mt-2"
+                              ></i>
+                              <i
+                                v-else
                                 class="fas fa-chevron-circle-down float-right mt-2"
                               ></i>
 
@@ -115,6 +120,11 @@
                           <h3 class="text-lightBlueB-500 mt-tiny">
                             <span style="color: white;">
                               <i
+                                v-if="renewalDDIcon.isUnfinishedUp"
+                                class="fas fa-chevron-circle-up float-right mt-2"
+                              ></i>
+                              <i
+                                v-else
                                 class="fas fa-chevron-circle-down float-right mt-2"
                               ></i>
 
@@ -178,6 +188,11 @@
                           <h3 class="text-lightBlueB-500 mt-tiny">
                             <span style="color: white;">
                               <i
+                                v-if="renewalDDIcon.isUnconfirmedUp"
+                                class="fas fa-chevron-circle-up float-right mt-2"
+                              ></i>
+                              <i
+                                v-else
                                 class="fas fa-chevron-circle-down float-right mt-2"
                               ></i>
 
@@ -186,7 +201,7 @@
                               ></i>
                             </span>
                             <span class="text-base" style="color: white; "
-                              >Unconfirmed</span
+                              >{{expertLevelId == 4 ?  'Unconfirmed' : 'Approved' }}</span
                             >
                           </h3>
                         </div>
@@ -206,7 +221,7 @@
                               <i
                                 class="mr-2 far fa-address-book fa-x fa-light"
                               ></i>
-                              My Unconfirmed
+                              {{expertLevelId == 4 ?  'My Unconfirmed' : 'My Approved' }}
                             </p>
                           </li>
                           <li
@@ -215,7 +230,7 @@
                             <!-- <span style="color: #648ea3;"> -->
                             <p class=" text-sm" style="color: white; ">
                               <i class="mr-2 far fa-id-card fa-x"></i>
-                              Others Unconfirmed
+                              {{expertLevelId == 4 ?  'Others Unconfirmed' : 'Others Approved' }}
                             </p>
                           </li>
                         </ul>
@@ -227,7 +242,7 @@
               <!-- unconfirmed ends here -->
 
               <!-- on review start here -->
-              <div>
+              <div v-if="expertLevelId == 4">
                 <li
                   @click="renewalDDHandler('RenewalOnReview')"
                   class=" justify-start "
@@ -239,6 +254,11 @@
                           <h3 class="text-lightBlueB-500 mt-tiny">
                             <span style="color: white;">
                               <i
+                                v-if="renewalDDIcon.isOnReivewUp"
+                                class="fas fa-chevron-circle-up float-right mt-2"
+                              ></i>
+                              <i
+                                v-else
                                 class="fas fa-chevron-circle-down float-right mt-2"
                               ></i>
 
@@ -288,7 +308,7 @@
               <!-- on review ends here -->
 
               <!-- re evaluate starts here -->
-              <div>
+              <div v-if="expertLevelId == 4">
                 <li
                   @click="renewalDDHandler('RenewalReEvaluate')"
                   class=" justify-start "
@@ -300,6 +320,11 @@
                           <h3 class="text-lightBlueB-500 mt-tiny">
                             <span style="color: white;">
                               <i
+                                v-if="renewalDDIcon.isReEvaluateUp"
+                                class="fas fa-chevron-circle-up float-right mt-2"
+                              ></i>
+                              <i
+                                v-else
                                 class="fas fa-chevron-circle-down float-right mt-2"
                               ></i>
 
@@ -363,6 +388,11 @@
                           <h3 class="text-lightBlueB-500 mt-tiny">
                             <span style="color: white;">
                               <i
+                                v-if="renewalDDIcon.isDeclinedUp"
+                                class="fas fa-chevron-circle-up float-right mt-2"
+                              ></i>
+                              <i
+                                v-else
                                 class="fas fa-chevron-circle-down float-right mt-2"
                               ></i>
 
@@ -401,6 +431,33 @@
                               Others Declined
                             </p>
                           </li>
+                          <li
+                            @click="
+                              renewalMenuHandler('renewalDeclinedPayment')
+                            "
+                            class="mb-2"
+                          >
+                            <!-- <span style="color: #648ea3;"> -->
+                            <p class=" text-sm" style="color: white; ">
+                              <i
+                                class="mr-2 far fa-address-book fa-x fa-light"
+                              ></i>
+                              My Declined Payment
+                            </p>
+                          </li>
+                          <li
+                            @click="
+                              renewalMenuHandler(
+                                'othersRenewalDeclinedPayment'
+                              )
+                            "
+                          >
+                            <!-- <span style="color: #648ea3;"> -->
+                            <p class=" text-sm" style="color: white; ">
+                              <i class="mr-2 far fa-id-card fa-x"></i>
+                              Others Declined Payment
+                            </p>
+                          </li>
                         </ul>
                       </div>
                     </div>
@@ -422,6 +479,11 @@
                           <h3 class="text-lightBlueB-500 mt-tiny">
                             <span style="color: white;">
                               <i
+                                v-if="renewalDDIcon.isUnderSuperVisionUp"
+                                class="fas fa-chevron-circle-up float-right mt-2"
+                              ></i>
+                              <i
+                                v-else
                                 class="fas fa-chevron-circle-down float-right mt-2"
                               ></i>
 
@@ -477,7 +539,7 @@
               <!-- under super vision ends here -->
 
               <!-- confirmed starts here -->
-              <div>
+              <div v-if="expertLevelId == 4">
                 <li
                   @click="renewalDDHandler('RenewalConfirmed')"
                   class=" justify-start "
@@ -489,6 +551,11 @@
                           <h3 class="text-lightBlueB-500 mt-tiny">
                             <span style="color: white;">
                               <i
+                                v-if="renewalDDIcon.isConfirmedUp"
+                                class="fas fa-chevron-circle-up float-right mt-2"
+                              ></i>
+                              <i
+                                v-else
                                 class="fas fa-chevron-circle-down float-right mt-2"
                               ></i>
 
@@ -532,7 +599,9 @@
                             </p>
                           </li>
                           <li
-                            @click="renewalMenuHandler('renewalApprovedPayment')"
+                            @click="
+                              renewalMenuHandler('renewalApprovedPayment')
+                            "
                             class="mb-2"
                           >
                             <!-- <span style="color: #648ea3;"> -->
@@ -569,18 +638,60 @@
   </div>
 </template>
 <script>
+import { ref } from 'vue';
 export default {
   name: "RenewalSideNav",
-  props: ["dropdownValue"],
+  props: ["dropdownValue", "expertLevelId"],
   setup(props, { emit }) {
+    let renewalDDIcon = ref({
+      isRenewalUp: false,
+      isAssignedUp: false,
+      isUnfinishedUp: false,
+      isUnconfirmedUp: false,
+      isOnReivewUp: false,
+      isReEvaluateUp: false,
+      isDeclinedUp: false,
+      isUnderSuperVisionUp: false,
+      isConfirmedUp: false,
+      isFederalApprovedUp: false,
+    });
+
     const renewalMenuHandler = (menu) => {
       emit("selectRenewalMenu", menu);
     };
 
     const renewalDDHandler = (applicationValue) => {
+      if (applicationValue == "Renewal") {
+        renewalDDIcon.value.isRenewalUp = !renewalDDIcon.value
+          .isRenewalUp;
+      } else if (applicationValue == "RenewalAssigned") {
+        renewalDDIcon.value.isAssignedUp = !renewalDDIcon.value.isAssignedUp;
+      } else if (applicationValue == "RenewalUnfinished") {
+        renewalDDIcon.value.isUnfinishedUp = !renewalDDIcon.value
+          .isUnfinishedUp;
+      } else if (applicationValue == "RenewalUnconfirmed") {
+        renewalDDIcon.value.isUnconfirmedUp = !renewalDDIcon.value
+          .isUnconfirmedUp;
+      } else if (applicationValue == "RenewalOnReview") {
+        renewalDDIcon.value.isOnReivewUp = !renewalDDIcon.value.isOnReivewUp;
+      } else if (applicationValue == "RenewalReEvaluate") {
+        renewalDDIcon.value.isReEvaluateUp = !renewalDDIcon.value
+          .isReEvaluateUp;
+      } else if (applicationValue == "RenewalDeclined") {
+        renewalDDIcon.value.isDeclinedUp = !renewalDDIcon.value.isDeclinedUp;
+      } else if (applicationValue == "RenewalUnderSuperVision") {
+        renewalDDIcon.value.isUnderSuperVisionUp = !renewalDDIcon.value
+          .isUnderSuperVisionUp;
+      } else if (applicationValue == "RenewalConfirmed") {
+        renewalDDIcon.value.isConfirmedUp = !renewalDDIcon.value.isConfirmedUp;
+      } else if (applicationValue == "RenewalFederalApproved") {
+        renewalDDIcon.value.isFederalApprovedUp = !renewalDDIcon.value
+          .isFederalApprovedUp;
+      }
       emit("applicationTypeSelected", applicationValue);
     };
     return {
+      renewalDDIcon,
       renewalDDHandler,
       renewalMenuHandler,
     };
