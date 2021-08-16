@@ -253,7 +253,6 @@ export default {
     const update = () => {};
     const paymentSlipChange = (payment) => {
       paymentSlip.value = payment;
-      console.log(paymentSlip.value);
     };
     const save = () => {
       message.value.showLoading = true;
@@ -272,7 +271,7 @@ export default {
       store.dispatch(sendStr + "/getDraft", id).then((res) => {
         appType = store.getters["serviceFee/getApplicationType"];
         const results = res.data.data;
-        results.paymentSlip = "lkjlkj";
+        results.paymentSlip = paymentSlip.value;
         let saveObject = {
           save: {
             action: "UploadPaymentEvent",
@@ -281,6 +280,7 @@ export default {
           appType: appType,
           id: id,
         };
+
         store.dispatch("serviceFee/addLicense", saveObject).then((res) => {
           if (res.data.status == "Success") {
             let formData = new FormData();
@@ -293,7 +293,7 @@ export default {
                   message.value.showFlash = !message.value.showFlash;
                   message.value.showLoading = false;
                   setTimeout(() => {
-                    router.push({ path: "/menu" });
+                    location.reload(true);
                   }, 1500);
                 } else {
                   showErrorFlash.value = !showErrorFlash.value;
