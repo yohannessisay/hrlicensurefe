@@ -355,6 +355,7 @@ export default {
             },
             professionalTypeId: licenseInfo.professionalTypeId,
             residenceWoredaId: licenseInfo.residenceWoredaId,
+            paymentSlip: null,
           },
         };
         store.dispatch("newlicense/addNewLicense", license).then((res) => {
@@ -509,6 +510,7 @@ export default {
             },
             professionalTypeId: licenseInfo.professionalTypeId,
             residenceWoredaId: licenseInfo.residenceWoredaId,
+            paymentSlip: null
           },
         };
         store.dispatch("newlicense/addNewLicense", license).then((res) => {

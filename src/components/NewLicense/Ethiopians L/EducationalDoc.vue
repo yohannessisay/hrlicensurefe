@@ -985,6 +985,7 @@ export default {
             },
             residenceWoredaId: this.license.residenceWoredaId,
             professionalTypeId: this.licenseInfo.professionalTypeId,
+            paymentSlip: null,
           },
         };
         this.$store
