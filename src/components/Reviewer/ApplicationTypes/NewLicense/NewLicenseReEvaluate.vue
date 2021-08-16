@@ -71,12 +71,12 @@
 <script>
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
+import moment from "moment";
 
 import applicationStatus from "../../Configurations/getApplicationStatus.js";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import filterApplication from "../../ChildComponents/FilteredDatas/FilterApplication.js";
 import FilteredInfo from "../../ChildComponents/FilteredDatas/FilteredInfo.vue";
-import moment from "moment";
 import NothingToShow from "../../ChildComponents/NothingToShow.vue";
 import ReEvaluateApplications from "../ChildApplicationTypes/ReEvaluateApplications.vue";
 import ReviewerNavBar from "../../ReviewerNavBar.vue";
@@ -146,7 +146,7 @@ export default {
     const fetchNewLicenseReEvaluate = () => {
       showLoading.value = true;
       const statusId = applicationStatus(store, 'EVAASS');
-      const adminStatus = [statusId, adminId]
+      const adminStatus = [statusId, adminId];
       store
         .dispatch("reviewerNewLicense/getNewLicenseReEvaluate", adminStatus)
         .then((res) => {

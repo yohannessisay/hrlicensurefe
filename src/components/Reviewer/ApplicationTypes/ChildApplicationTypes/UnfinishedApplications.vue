@@ -38,7 +38,7 @@
           class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
         v-if="others_unfinished == 'true'">
           <i class="fas fa-user-cog"></i> &nbsp;
-          {{ item.reviewer.name ? item.reviewer.name : "-" }}
+          {{ (item.reviewer != undefined && item.reviewer.name != undefined) ? item.reviewer.name : "-" }}
         </span>
         <span
           class="text-lightBlueB-500 mt-tiny flex justify-start content-center"

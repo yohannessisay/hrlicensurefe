@@ -70,17 +70,19 @@
 
 <script>
 import { ref, onMounted } from "vue";
-import Title from "@/sharedComponents/TitleWithIllustration";
-import ReviewerNavBar from "../../ReviewerNavBar.vue";
-import UnderSuperVisionApplications from "../ChildApplicationTypes/UnderSuperVisionApplications.vue";
-import NothingToShow from "../../ChildComponents/NothingToShow.vue";
 import { useStore } from "vuex";
-import store from "../../../../store";
-import Spinner from "@/sharedComponents/Spinner";
 import moment from "moment";
-import filterApplication from "../../ChildComponents/FilteredDatas/FilterApplication.js";
+
+import applicationStatus from "../../Configurations/getApplicationStatus.js";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
+import filterApplication from "../../ChildComponents/FilteredDatas/FilterApplication.js";
 import FilteredInfo from "../../ChildComponents/FilteredDatas/FilteredInfo.vue";
+import NothingToShow from "../../ChildComponents/NothingToShow.vue";
+import ReviewerNavBar from "../../ReviewerNavBar.vue";
+import Spinner from "@/sharedComponents/Spinner";
+import store from "../../../../store";
+import Title from "@/sharedComponents/TitleWithIllustration";
+import UnderSuperVisionApplications from "../ChildApplicationTypes/UnderSuperVisionApplications.vue";
 
 export default {
   computed: {
@@ -138,8 +140,10 @@ export default {
 
     const fetchRenewalUnderSuperVision = () => {
       showLoading.value = true;
+      const statusId = applicationStatus(store, 'USUP');
+      const adminStatus = [statusId, adminId];
       store
-        .dispatch("reviewerRenewal/getRenewalUnderSuperVision", adminId)
+        .dispatch("reviewerRenewal/getRenewalUnderSuperVision", adminStatus)
         .then((res) => {
           showLoading.value = false;
           renewalUnderSuperVision.value =

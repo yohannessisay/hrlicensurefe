@@ -1,6 +1,6 @@
 <template>
   <div>
-    <reviewer-nav-bar tab="othersNewLicenseApprovedPayment" />
+    <!-- <reviewer-nav-bar tab="othersNewLicenseApprovedPayment" /> -->
     <div class="bg-lightBlueB-200 h-full" v-if="!allInfo.searchByInput">
       <div class="pl-12">
         <div>Filter By</div>
@@ -70,17 +70,19 @@
 
 <script>
 import { ref, onMounted } from "vue";
-import Title from "@/sharedComponents/TitleWithIllustration";
-import ReviewerNavBar from "../../ReviewerNavBar.vue";
-import ApprovedPaymentApplications from "../ChildApplicationTypes/ApprovedPaymentApplications.vue";
-import NothingToShow from "../../ChildComponents/NothingToShow.vue";
 import { useStore } from "vuex";
-import store from "../../../../store";
-import Spinner from "@/sharedComponents/Spinner";
 import moment from "moment";
-import filterApplication from "../../ChildComponents/FilteredDatas/FilterApplication.js";
+
+import applicationStatus from "../../Configurations/getApplicationStatus.js";
+import ApprovedPaymentApplications from "../ChildApplicationTypes/ApprovedPaymentApplications.vue";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
+import filterApplication from "../../ChildComponents/FilteredDatas/FilterApplication.js";
 import FilteredInfo from "../../ChildComponents/FilteredDatas/FilteredInfo.vue";
+import NothingToShow from "../../ChildComponents/NothingToShow.vue";
+import ReviewerNavBar from "../../ReviewerNavBar.vue";
+import Spinner from "@/sharedComponents/Spinner";
+import store from "../../../../store";
+import Title from "@/sharedComponents/TitleWithIllustration";
 
 export default {
   computed: {
@@ -138,8 +140,10 @@ export default {
 
     const fetchNewLicenseApprovedPayment = () => {
       showLoading.value = true;
+      const statusId = applicationStatus(store, 'AP');
+      const adminStatus = [statusId, adminId];
       store
-        .dispatch("reviewerNewLicense/getNewLicenseOthersApprovedPayment", adminId)
+        .dispatch("reviewerNewLicense/getNewLicenseOthersApprovedPayment", adminStatus)
         .then((res) => {
           showLoading.value = false;
           newLicenseApprovedPayments.value =

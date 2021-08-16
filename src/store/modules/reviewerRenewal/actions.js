@@ -147,11 +147,11 @@ export default {
     commit(SET_RENEWAL_OTHERS_UNFINISHED_SEARCHED, searchedVal);
   },
 
-  async getRenewalAssigned({ commit }, adminId) {
-    const url = baseUrl + "/renewals/status/4";
+  async getRenewalAssigned({ commit }, adminStatus) {
+    const url = baseUrl + "/renewals/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
     const assignedToMe = resp.data.data.filter(function(e) {
-      return e.reviewerId === adminId;
+      return e.reviewerId === adminStatus[1];
     });
     commit(SET_RENEWAL_ASSIGNED_TO_YOU, assignedToMe);
   },
@@ -177,11 +177,11 @@ export default {
     commit(SET_RENEWAL_ASSIGNED_TO_YOU_SEARCHED, searchedVal);
   },
 
-  async getRenewalOthersAssigned({ commit }, adminId) {
-    const url = baseUrl + "/renewals/status/4";
+  async getRenewalOthersAssigned({ commit }, adminStatus) {
+    const url = baseUrl + "/renewals/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
     const othresUnfinished = resp.data.data.filter(function(e) {
-      return e.reviewerId !== adminId;
+      return e.reviewerId !== adminStatus[1];
     });
     commit(SET_RENEWAL_ASSIGNED_TO_OTHERS, othresUnfinished);
   },
@@ -207,8 +207,8 @@ export default {
     commit(SET_RENEWAL_ASSIGNED_TO_OTHERS_SEARCHED, searchedVal);
   },
 
-  async getRenewalApproved({ commit }, adminId) {
-    const url = baseUrl + "/renewals/status/5";
+  async getRenewalApproved({ commit }, adminStatus) {
+    const url = baseUrl + "/renewals/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
     if (resp.data.data === undefined) {
       const approved = [];
@@ -216,7 +216,7 @@ export default {
       return;
     }
     const Approved = resp.data.data.filter(function(e) {
-      return e.reviewerId === adminId;
+      return e.reviewerId === adminStatus[1];
     });
     commit(SET_RENEWAL_APPROVED, Approved);
   },
@@ -242,14 +242,18 @@ export default {
     commit(SET_RENEWAL_APPROVED_SEARCHED, searchedVal);
   },
 
-  async getRenewalAllApproved({ commit }, adminId) {
-    const url = baseUrl + "/renewals/status/5";
+  async getRenewalAllApproved({ commit }, adminStatus) {
+    const url = baseUrl + "/renewals/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
-    let allApproved = resp.data.data;
-    if (allApproved === undefined) {
-      allApproved = [];
+    if (resp.data.data === undefined) {
+      const othersApproved = [];
+      commit(SET_RENEWAL_ALL_APPROVED, othersApproved);
+      return
     }
-    commit(SET_RENEWAL_ALL_APPROVED, allApproved);
+    const othersApproved = resp.data.data.filter(function(e) {
+      return e.reviewerId !== adminStatus[1];
+    });
+    commit(SET_RENEWAL_ALL_APPROVED, othersApproved);
   },
   getRenewalAllApprovedSearched({ commit, getters }, searchKey) {
     if (getters.getRenewalAllApproved === undefined) {
@@ -273,8 +277,8 @@ export default {
     commit(SET_RENEWAL_ALL_APPROVED_SEARCHED, searchedVal);
   },
 
-  async getRenewalDeclined({ commit }, adminId) {
-    const url = baseUrl + "/renewals/status/6";
+  async getRenewalDeclined({ commit }, adminStatus) {
+    const url = baseUrl + "/renewals/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
     if (resp.data.data === undefined) {
       const declined = [];
@@ -282,7 +286,7 @@ export default {
       return;
     }
     const declined = resp.data.data.filter(function(e) {
-      return e.reviewerId === adminId;
+      return e.reviewerId === adminStatus[1];
     });
     commit(SET_RENEWAL_DECLINED, declined);
   },
@@ -308,14 +312,18 @@ export default {
     commit(SET_RENEWAL_DECLINED_SEARCHED, searchedVal);
   },
 
-  async getRenewalAllDeclined({ commit }, adminId) {
-    const url = baseUrl + "/renewals/status/6";
+  async getRenewalAllDeclined({ commit }, adminStatus) {
+    const url = baseUrl + "/renewals/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
-    let allDeclined = resp.data.data;
-    if (allDeclined === undefined) {
-      allDeclined = [];
+    if (resp.data.data === undefined) {
+      const othersDeclined = [];
+      commit(SET_RENEWAL_ALL_DECLINED, othersDeclined);
+      return;
     }
-    commit(SET_RENEWAL_ALL_DECLINED, allDeclined);
+    const othersDeclined = resp.data.data.filter(function(e) {
+      return e.reviewerId !== adminStatus[1];
+    });
+    commit(SET_RENEWAL_ALL_DECLINED, othersDeclined);
   },
   getRenewalAllDeclinedSearched({ commit, getters }, searchKey) {
     if (getters.getRenewalAllDeclined === undefined) {
@@ -339,11 +347,11 @@ export default {
     commit(SET_RENEWAL_ALL_DECLINED_SEARCHED, searchedVal);
   },
 
-  async getRenewalUnderSuperVision({ commit }, adminId) {
-    const url = baseUrl + "/renewals/status/7";
+  async getRenewalUnderSuperVision({ commit }, adminStatus) {
+    const url = baseUrl + "/renewals/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
     const underSuperVision = resp.data.data.filter(function(e) {
-      return e.reviewerId === adminId;
+      return e.reviewerId === adminStatus[1];
     });
     commit(SET_RENEWAL_UNDER_SUPERVISION, underSuperVision);
   },
@@ -369,11 +377,11 @@ export default {
     commit(SET_RENEWAL_UNDER_SUPERVISION_SEARCHED, searchedVal);
   },
 
-  async getRenewalOthersUnderSuperVision({ commit }, adminId) {
-    const url = baseUrl + "/renewals/status/7";
+  async getRenewalOthersUnderSuperVision({ commit }, adminStatus) {
+    const url = baseUrl + "/renewals/status/"+0;
     const resp = await ApiService.get(url);
     const othersUnderSuperVision = resp.data.data.filter(function(e) {
-      return e.reviewerId !== adminId;
+      return e.reviewerId !== adminStatus[1];
     });
     commit(SET_RENEWAL_OTHERS_UNDER_SUPERVISION, othersUnderSuperVision);
   },
@@ -404,11 +412,11 @@ export default {
   /* 
   /* approved payment status is wrong for the time (status/7) is placeholder
   */
-  async getRenewalApprovedPayment({ commit }, adminId) {
-    const url = baseUrl + "/renewals/status/7";
+  async getRenewalApprovedPayment({ commit }, adminStatus) {
+    const url = baseUrl + "/renewals/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
     const approvedPayment = resp.data.data.filter(function(e) {
-      return e.reviewerId === adminId;
+      return e.reviewerId === adminStatus[1];
     });
     commit(SET_RENEWAL_APPROVED_PAYMENT, approvedPayment);
   },
@@ -437,11 +445,11 @@ export default {
   /* 
   /* others approved payment status is wrong for the time (status/7) is placeholder
   */
-  async getRenewalOthersApprovedPayment({ commit }, adminId) {
-    const url = baseUrl + "/renewals/status/7";
+  async getRenewalOthersApprovedPayment({ commit }, adminStatus) {
+    const url = baseUrl + "/renewals/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
     const othersApprovedPayments = resp.data.data.filter(function(e) {
-      return e.reviewerId !== adminId;
+      return e.reviewerId !== adminStatus[1];
     });
     commit(SET_RENEWAL_OTHERS_APPROVED_PAYMENT, othersApprovedPayments);
   },
@@ -472,11 +480,11 @@ export default {
   /* 
   /* declined payment status is wrong for the time (status/7) is placeholder
   */
-  async getRenewalDeclinedPayment({ commit }, adminId) {
-    const url = baseUrl + "/renewals/status/7";
+  async getRenewalDeclinedPayment({ commit }, adminStatus) {
+    const url = baseUrl + "/renewals/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
     const declinedPayment = resp.data.data.filter(function(e) {
-      return e.reviewerId === adminId;
+      return e.reviewerId === adminStatus[1];
     });
     commit(SET_RENEWAL_DECLINED_PAYMENT, declinedPayment);
   },
@@ -505,11 +513,11 @@ export default {
   /* 
   /* others declined payment status is wrong for the time (status/7) is placeholder
   */
-  async getRenewalOthersDeclinedPayment({ commit }, adminId) {
-    const url = baseUrl + "/renewals/status/7";
+  async getRenewalOthersDeclinedPayment({ commit }, adminStatus) {
+    const url = baseUrl + "/renewals/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
     const othersDeclinedPayments = resp.data.data.filter(function(e) {
-      return e.reviewerId !== adminId;
+      return e.reviewerId !== adminStatus[1];
     });
     commit(SET_RENEWAL_OTHERS_DECLINED_PAYMENT, othersDeclinedPayments);
   },
@@ -540,11 +548,11 @@ export default {
   /* 
   /* on review status is wrong for the time (status/7) is placeholder
   */
-  async getRenewalOnReview({ commit }, adminId) {
-    const url = baseUrl + "/renewals/status/7";
+  async getRenewalOnReview({ commit }, adminStatus) {
+    const url = baseUrl + "/renewals/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
     const onReview = resp.data.data.filter(function(e) {
-      return e.reviewerId === adminId;
+      return e.reviewerId === adminStatus[1];
     });
     commit(SET_RENEWAL_ON_REVIEW, onReview);
   },
@@ -573,11 +581,11 @@ export default {
   /* 
   /* on review status is wrong for the time (status/7) is placeholder
   */
-  async getRenewalOthersOnReview({ commit }, adminId) {
-    const url = baseUrl + "/renewals/status/7";
+  async getRenewalOthersOnReview({ commit }, adminStatus) {
+    const url = baseUrl + "/renewals/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
     const othersOnReview = resp.data.data.filter(function(e) {
-      return e.reviewerId !== adminId;
+      return e.reviewerId !== adminStatus[1];
     });
     commit(SET_RENEWAL_OTHERS_ON_REVIEW, othersOnReview);
   },
@@ -606,11 +614,11 @@ export default {
   /* 
   /* on re evaluate status is wrong for the time (status/7) is placeholder
   */
-  async getRenewalReEvaluate({ commit }, statusId, adminId) {
-    const url = baseUrl + "/renewals/status/"+statusId;
+  async getRenewalReEvaluate({ commit }, adminStatus) {
+    const url = baseUrl + "/renewals/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
     const reEvaluate = resp.data.data.filter(function(e) {
-      return e.reviewerId === adminId;
+      return e.reviewerId === adminStatus[1];
     });
     commit(SET_RENEWAL_RE_EVALUATE, reEvaluate);
   },
@@ -639,11 +647,11 @@ export default {
   /* 
   /* on re evaluate status is wrong for the time (status/7) is placeholder
   */
-  async getRenewalOthersReEvaluate({ commit }, adminId) {
-    const url = baseUrl + "/renewals/status/7";
+  async getRenewalOthersReEvaluate({ commit }, adminStatus) {
+    const url = baseUrl + "/renewals/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
     const othersReEvaluate = resp.data.data.filter(function(e) {
-      return e.reviewerId !== adminId;
+      return e.reviewerId !== adminStatus[1];
     });
     commit(SET_RENEWAL_OTHERS_RE_EVALUATE, othersReEvaluate);
   },
@@ -672,11 +680,11 @@ export default {
   /* 
   /* confirmed status is wrong for the time (status/7) is placeholder
   */
-  async getRenewalConfirmed({ commit }, adminId) {
-    const url = baseUrl + "/renewals/status/7";
+  async getRenewalConfirmed({ commit }, adminStatus) {
+    const url = baseUrl + "/renewals/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
     const confirmed = resp.data.data.filter(function(e) {
-      return e.reviewerId === adminId;
+      return e.reviewerId === adminStatus[1];
     });
     commit(SET_RENEWAL_CONFIRMED, confirmed);
   },
@@ -705,11 +713,11 @@ export default {
   /* 
   /* confirmed status is wrong for the time (status/7) is placeholder
   */
-  async getRenewalOthersConfirmed({ commit }, adminId) {
-    const url = baseUrl + "/renewals/status/7";
+  async getRenewalOthersConfirmed({ commit }, adminStatus) {
+    const url = baseUrl + "/renewals/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
     const confirmed = resp.data.data.filter(function(e) {
-      return e.reviewerId !== adminId;
+      return e.reviewerId !== adminStatus[1];
     });
     commit(SET_RENEWAL_OTHERS_CONFIRMED, confirmed);
   },

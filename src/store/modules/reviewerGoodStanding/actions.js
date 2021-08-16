@@ -26,9 +26,9 @@ import {
 const baseUrl = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api";
 
 export default {
-  async getUnassignedGoodStanding({ commit }) {
+  async getUnassignedGoodStanding({ commit }, statusId) {
     try {
-      const url = baseUrl + "/goodStandings/status/5";
+      const url = baseUrl + "/goodStandings/status/"+statusId;
       const resp = await ApiService.get(url);
       commit(SET_GOOD_STANDING_UNASSIGNED, resp.data.data);
       console.log("good standing unassigned is ", resp.data.data)
@@ -73,11 +73,11 @@ export default {
     commit(SET_GOOD_STANDING_UNASSIGNED_SEARCHED, searchedVal);
   },
 
-  async getGoodStandingUnfinished({ commit }, adminId) {
-    const url = baseUrl + "/goodstandings/status/10";
+  async getGoodStandingUnfinished({ commit }, adminStatus) {
+    const url = baseUrl + "/goodstandings/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
     const myUnfinished = resp.data.data.filter(function(e) {
-      return e.reviewerId === adminId;
+      return e.reviewerId === adminStatus[1];
     });
     commit(SET_GOOD_STANDING_UNFINISHED, myUnfinished);
   },
@@ -103,12 +103,12 @@ export default {
     commit(SET_GOOD_STANDING_UNFINISHED_SEARCHED, searchedVal);
   },
 
-  async getGoodStandingOthersUnfinished({ commit }, adminId) {
-    const url = baseUrl + "/goodstandings/status/10";
+  async getGoodStandingOthersUnfinished({ commit }, adminStatus) {
+    const url = baseUrl + "/goodstandings/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
     console.log("good standing unfinished", resp.data.data);
     const othresUnfinished = resp.data.data.filter(function(e) {
-      return e.reviewerId !== adminId;
+      return e.reviewerId !== adminStatus[1];
     });
     commit(SET_GOOD_STANDING_OTHERS_UNFINISHED, othresUnfinished);
   },
@@ -134,11 +134,11 @@ export default {
     commit(SET_GOOD_STANDING_OTHERS_UNFINISHED_SEARCHED, searchedVal);
   },
 
-  async getGoodStandingAssigned({ commit }, adminId) {
-    const url = baseUrl + "/goodstandings/status/4";
+  async getGoodStandingAssigned({ commit }, adminStatus) {
+    const url = baseUrl + "/goodstandings/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
     const assignedToMe = resp.data.data.filter(function(e) {
-      return e.reviewerId === adminId;
+      return e.reviewerId === adminStatus[1];
     });
     commit(SET_GOOD_STANDING_ASSIGNED_TO_YOU, assignedToMe);
   },
@@ -164,11 +164,11 @@ export default {
     commit(SET_GOOD_STANDING_ASSIGNED_TO_YOU_SEARCHED, searchedVal);
   },
 
-  async getGoodStandingOthersAssigned({ commit }, adminId) {
-    const url = baseUrl + "/goodstandings/status/10";
+  async getGoodStandingOthersAssigned({ commit }, adminStatus) {
+    const url = baseUrl + "/goodstandings/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
     const othresUnfinished = resp.data.data.filter(function(e) {
-      return e.reviewerId !== adminId;
+      return e.reviewerId !== adminStatus[1];
     });
     commit(SET_GOOD_STANDING_ASSIGNED_TO_OTHERS, othresUnfinished);
   },
@@ -196,18 +196,19 @@ export default {
     commit(SET_GOOD_STANDING_ASSIGNED_TO_OTHERS_SEARCHED, searchedVal);
   },
 
-  async getGoodStandingApproved({ commit }, adminId) {
-    const url = baseUrl + "/goodstandings/status/5";
+  async getGoodStandingApproved({ commit }, adminStatus) {
+    const url = baseUrl + "/goodstandings/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
     console.log("response is ", resp)
-    let approved = [];
-    if(resp.data.data !== undefined) {
-      approved = resp.data.data
+    if(resp.data.data === undefined) {
+      const myApproved = [];
+      commit(SET_GOOD_STANDING_APPROVED, myApproved);
+      return;
     }
-    // const Approved = resp.data.data.filter(function(e) {
-    //   return e.reviewerId === adminId;
-    // });
-    commit(SET_GOOD_STANDING_APPROVED, approved);
+    const myApproved = resp.data.data.filter(function(e) {
+        return e.reviewerId === adminStatus[1];
+      });
+    commit(SET_GOOD_STANDING_APPROVED, myApproved);
   },
 
   getGoodStandingApprovedSearched({ commit, getters }, searchKey) {
@@ -231,14 +232,18 @@ export default {
     commit(SET_GOOD_STANDING_APPROVED_SEARCHED, searchedVal);
   },
 
-  async getGoodStandingAllApproved({ commit }, adminId) {
-    const url = baseUrl + "/goodstandings/status/5";
+  async getGoodStandingAllApproved({ commit }, adminStatus) {
+    const url = baseUrl + "/goodstandings/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
-    let allApproved = resp.data.data
-    if(allApproved === undefined) {
-      allApproved = [];
+    if(resp.data.data === undefined) {
+      const othersApproved = [];
+      commit(SET_GOOD_STANDING_ALL_APPROVED, othersApproved);
+      return
     }
-    commit(SET_GOOD_STANDING_ALL_APPROVED, allApproved);
+    const othersApproved = resp.data.data.filter(function(e) {
+      return e.reviewerId !== adminStatus[1];
+    });
+    commit(SET_GOOD_STANDING_ALL_APPROVED, othersApproved);
   },
   getGoodStandingAllApprovedSearched({ commit, getters }, searchKey) {
     if (getters.getGoodStandingAllApproved === undefined) {
@@ -264,8 +269,8 @@ export default {
     commit(SET_GOOD_STANDING_ALL_APPROVED_SEARCHED, searchedVal);
   },
 
-  async getGoodStandingDeclined({ commit }, adminId) {
-    const url = baseUrl + "/goodstandings/status/6";
+  async getGoodStandingDeclined({ commit }, adminStatus) {
+    const url = baseUrl + "/goodstandings/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
     if(resp.data.data === undefined) {
       const declined = []
@@ -273,7 +278,7 @@ export default {
       return;
     }
     const declined = resp.data.data.filter(function(e) {
-      return e.reviewerId === adminId;
+      return e.reviewerId === adminStatus[1];
     });
     commit(SET_GOOD_STANDING_DECLINED, declined);
   },
@@ -299,14 +304,18 @@ export default {
     commit(SET_GOOD_STANDING_DECLINED_SEARCHED, searchedVal);
   },
 
-  async getGoodStandingAllDeclined({ commit }, adminId) {
-    const url = baseUrl + "/goodstandings/status/6";
+  async getGoodStandingAllDeclined({ commit }, adminStatus) {
+    const url = baseUrl + "/goodstandings/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
-    let allDeclined = resp.data.data
-    if(allDeclined === undefined) {
-      allDeclined = [];
+    if(resp.data.data === undefined) {
+      const othersDeclined = [];
+      commit(SET_GOOD_STANDING_ALL_DECLINED, othersDeclined);
+      return;
     }
-    commit(SET_GOOD_STANDING_ALL_DECLINED, allDeclined);
+    const othersDeclined = resp.data.data.filter(function(e) {
+      return e.reviewerId !== adminStatus[1];
+    });
+    commit(SET_GOOD_STANDING_ALL_DECLINED, othersDeclined);
   },
   getGoodStandingAllDeclinedSearched({ commit, getters }, searchKey) {
     if (getters.getGoodStandingAllDeclined === undefined) {

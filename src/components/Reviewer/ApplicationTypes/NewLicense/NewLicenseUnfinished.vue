@@ -72,17 +72,19 @@
 
 <script>
 import { ref, onMounted } from "vue";
-import Title from "@/sharedComponents/TitleWithIllustration";
-import ReviewerNavBar from "../../ReviewerNavBar.vue";
-import UnfinishedApplications from "../ChildApplicationTypes/UnfinishedApplications.vue"
-import NothingToShow from "../../ChildComponents/NothingToShow.vue";
 import { useStore } from "vuex";
-import store from "../../../../store";
-import Spinner from "@/sharedComponents/Spinner";
 import moment from "moment";
-import filterApplication from "../../ChildComponents/FilteredDatas/FilterApplication.js";
+
+import applicationStatus from "../../Configurations/getApplicationStatus.js";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
+import filterApplication from "../../ChildComponents/FilteredDatas/FilterApplication.js";
 import FilteredInfo from "../../ChildComponents/FilteredDatas/FilteredInfo.vue";
+import NothingToShow from "../../ChildComponents/NothingToShow.vue";
+import ReviewerNavBar from "../../ReviewerNavBar.vue";
+import Spinner from "@/sharedComponents/Spinner";
+import store from "../../../../store";
+import Title from "@/sharedComponents/TitleWithIllustration";
+import UnfinishedApplications from "../ChildApplicationTypes/UnfinishedApplications.vue"
 
 
 export default {
@@ -138,7 +140,9 @@ export default {
 
     const fetchNewLicenseUnfinished = () => {
       showLoading.value = true;
-      store.dispatch("reviewerNewLicense/getNewLicenseUnfinished", adminId).then((res) => {
+      const statusId = applicationStatus(store, 'DRA');
+      const adminStatus = [statusId, adminId];
+      store.dispatch("reviewerNewLicense/getNewLicenseUnfinished", adminStatus).then((res) => {
         showLoading.value = false;
         newLicenseUnfinished.value =
           store.getters["reviewerNewLicense/getNewLicenseUnfinishedSearched"];

@@ -62,18 +62,19 @@
 
 <script>
 import { ref, onMounted } from "vue";
-import Title from "@/sharedComponents/TitleWithIllustration";
-import ReviewerNavBar from "../../ReviewerNavBar.vue";
-import AssignedApplications from "../ChildApplicationTypes/AssignedApplications.vue"
-import NothingToShow from "../../ChildComponents/NothingToShow.vue";
 import { useStore } from "vuex";
-import store from "../../../../store";
-import Spinner from "@/sharedComponents/Spinner";
 import moment from "moment";
-import filterApplication from "../../ChildComponents/FilteredDatas/FilterApplication.js";
-import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
-import FilteredInfo from "../../ChildComponents/FilteredDatas/FilteredInfo.vue";
 
+import applicationStatus from "../../Configurations/getApplicationStatus.js";
+import AssignedApplications from "../ChildApplicationTypes/AssignedApplications.vue"
+import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
+import filterApplication from "../../ChildComponents/FilteredDatas/FilterApplication.js";
+import FilteredInfo from "../../ChildComponents/FilteredDatas/FilteredInfo.vue";
+import NothingToShow from "../../ChildComponents/NothingToShow.vue";
+import ReviewerNavBar from "../../ReviewerNavBar.vue";
+import Spinner from "@/sharedComponents/Spinner";
+import store from "../../../../store";
+import Title from "@/sharedComponents/TitleWithIllustration";
 
 export default {
   computed: {
@@ -128,7 +129,9 @@ export default {
 
     const fetchRenewalseAssigned = () => {
       showLoading.value = true;
-      store.dispatch("reviewerRenewal/getRenewalAssigned", adminId).then((res) => {
+      const statusId = applicationStatus(store, 'IRV');
+      const adminStatus = [statusId, adminId];
+      store.dispatch("reviewerRenewal/getRenewalAssigned", adminStatus).then((res) => {
         showLoading.value = false;
         renewalAssigned.value =
           store.getters["reviewerRenewal/getRenewalAssignedToYouSearched"];

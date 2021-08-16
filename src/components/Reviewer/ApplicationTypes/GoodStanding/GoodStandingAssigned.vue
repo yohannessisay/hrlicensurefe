@@ -62,17 +62,19 @@
 
 <script>
 import { ref, onMounted } from "vue";
-import Title from "@/sharedComponents/TitleWithIllustration";
-import ReviewerNavBar from "../../ReviewerNavBar.vue";
-import AssignedApplications from "../ChildApplicationTypes/AssignedApplications.vue"
-import NothingToShow from "../../ChildComponents/NothingToShow.vue";
 import { useStore } from "vuex";
-import store from "../../../../store";
-import Spinner from "@/sharedComponents/Spinner";
 import moment from "moment";
-import filterApplication from "../../ChildComponents/FilteredDatas/FilterApplication.js";
+
+import applicationStatus from "../../Configurations/getApplicationStatus.js";
+import AssignedApplications from "../ChildApplicationTypes/AssignedApplications.vue"
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
+import filterApplication from "../../ChildComponents/FilteredDatas/FilterApplication.js";
 import FilteredInfo from "../../ChildComponents/FilteredDatas/FilteredInfo.vue";
+import NothingToShow from "../../ChildComponents/NothingToShow.vue";
+import ReviewerNavBar from "../../ReviewerNavBar.vue";
+import Spinner from "@/sharedComponents/Spinner";
+import store from "../../../../store";
+import Title from "@/sharedComponents/TitleWithIllustration";
 
 
 export default {
@@ -128,7 +130,9 @@ export default {
 
     const fetchGoodStandingseAssigned = () => {
       showLoading.value = true;
-      store.dispatch("reviewerGoodStanding/getGoodStandingAssigned", adminId).then((res) => {
+      const statusId = applicationStatus(store, 'IRV');
+      const adminStatus = [statusId, adminId];
+      store.dispatch("reviewerGoodStanding/getGoodStandingAssigned", adminStatus).then((res) => {
         showLoading.value = false;
         goodStandingAssigned.value =
           store.getters["reviewerGoodStanding/getGoodStandingAssignedToYouSearched"];
