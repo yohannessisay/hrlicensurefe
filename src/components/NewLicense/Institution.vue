@@ -415,6 +415,7 @@ export default {
             },
             residenceWoredaId: this.licenseInfo.residenceWoredaId,
             professionalTypeId: this.licenseInfo.professionalTypeID,
+            paymentSlip: null,
           },
         },
         id: this.draftId,
@@ -460,6 +461,7 @@ export default {
             },
             residenceWoredaId: this.licenseInfo.residenceWoredaId,
             professionalTypeId: this.licenseInfo.professionalTypeID,
+            paymentSlip: null,
           },
         },
         id: this.draftId,
@@ -523,6 +525,7 @@ export default {
         },
         residenceWoredaId: this.licenseInfo.residenceWoredaId,
         professionalTypeId: this.licenseInfo.professionalTypeID,
+        paymentSlip: null,
       };
       this.$emit("changeActiveState");
       this.$emit("applicantTypeValue", this.licenseInfo.applicantTypeId);

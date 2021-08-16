@@ -665,6 +665,7 @@ export default {
             },
             residenceWoredaId: this.residenceWoredaId,
             professionalTypeId: this.professionalTypeID,
+            paymentSlip: null,
           },
         };
         this.$store
@@ -672,7 +673,6 @@ export default {
           .then((res) => {
             let licenseId = res.data.data.id;
             let payload = { document: formData, id: licenseId };
-            // here is the problrm
             this.$store
               .dispatch("newlicense/uploadDocuments", payload)
               .then((res) => {
@@ -909,6 +909,7 @@ export default {
             },
             residenceWoredaId: this.residenceWoredaId,
             professionalTypeId: this.professionalTypeID,
+            paymentSlip: null,
           },
         };
 
@@ -950,6 +951,7 @@ export default {
             },
             residenceWoredaId: this.residenceWoredaId,
             professionalTypeId: this.professionalTypeID,
+            paymentSlip: null,
           },
         },
         id: this.draftId,
