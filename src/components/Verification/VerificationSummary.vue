@@ -1,5 +1,8 @@
 <template>
-  <div v-if="this.showLoading2" class="bg-lightBlueB-200 w-screen h-screen max-w-4xl">
+  <div
+    v-if="this.showLoading2"
+    class="bg-lightBlueB-200 w-screen h-screen max-w-4xl"
+  >
     <Spinner class="bg-lightBlueB-200  " />
   </div>
   <div class="bg-white mb-large rounded pl-4 pt-4 pr-4 pb-4">
@@ -194,6 +197,9 @@
       <div v-if="this.draftStatus == 'DRA' || !this.draftStatus">
         <div class="mt-12 flex justify-center">
           <div>
+            <button @click="submitBack">
+              Back
+            </button>
             <button
               v-if="this.buttons.length < 3"
               @click="submitRequest(this.buttons[0].action)"
@@ -244,6 +250,9 @@
         v-if="this.draftStatus == 'SUB'"
         class="flex justify-center mt-8 pb-12"
       >
+        <button @click="submitBack">
+          Back
+        </button>
         <button
           class="withdraw"
           @click="withdraw(this.buttons[0].action)"
@@ -256,6 +265,9 @@
         v-if="this.draftStatus == 'USUP'"
         class="flex justify-center mt-8 pb-12"
       >
+        <button @click="submitBack">
+          Back
+        </button>
         <button @click="draft(this.buttons[0].action)" variant="outline">
           {{ this.buttons[0]["name"] }}
         </button>
@@ -267,6 +279,9 @@
         v-if="this.draftStatus == 'DEC'"
         class="flex justify-center mt-8 pb-12"
       >
+        <button @click="submitBack">
+          Back
+        </button>
         <button @click="draft(this.buttons[0].action)" variant="outline">
           {{ this.buttons[0]["name"] }}
         </button>
@@ -334,8 +349,7 @@ export default {
     this.buttons = this.getButtons;
   },
   data: () => ({
-     basePath : "https://storage.googleapis.com/hris-lisence-dev/",
-
+    basePath: "https://storage.googleapis.com/hris-lisence-dev/",
 
     show: false,
     profileInfo: {},
@@ -403,7 +417,9 @@ export default {
           this.documentTypes = res.data.data;
         });
     },
-
+    submitBack() {
+      this.$emit("changeActiveStateMinus");
+    },
     async submitRequest(act) {
       let action = act;
       this.showLoading = true;

@@ -131,7 +131,7 @@
       </div>
     </div>
     <div v-if="!this.searched">
-      <div v-if="!this.showLoading" class="bg-lightBlueB-200 h-full">
+      <div v-if="!this.showLoading" class="bg-lightBlueB-200 h-full main">
         <div class="flex pl-12 pt-medium">
           <Title message="New License In Review Applications" />
         </div>
@@ -152,7 +152,7 @@
               <div
                 class="flex justify-center items-center  ml-4 mr-4 box-shadow-pop rounded-lg bg-lightGrey-100"
               >
-                <div class="p-4 w-48 h-64">
+                <div class="main p-4 w-48">
                   <span
                     class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
@@ -226,7 +226,7 @@
               <div
                 class="flex justify-center items-center  ml-4 mr-4 box-shadow-pop rounded-lg bg-lightGrey-100"
               >
-                <div class="p-4 w-48 h-64">
+                <div class="main p-4 w-48">
                   <span
                     class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
@@ -304,7 +304,7 @@
               <div
                 class="flex justify-center items-center  ml-4 mr-4 box-shadow-pop rounded-lg bg-lightGrey-100"
               >
-                <div class="p-4 w-48 h-64">
+                <div class="main p-4 w-48">
                   <span
                     class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
@@ -385,7 +385,7 @@
               <div
                 class="flex justify-center items-center  ml-4 mr-4 box-shadow-pop rounded-lg bg-lightGrey-100"
               >
-                <div class="p-4 w-48 h-64">
+                <div class="main p-4 w-48">
                   <span
                     class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
@@ -414,7 +414,11 @@
                   >
                     <b>Certified: &nbsp;</b>No
                   </span>
-
+                  <span
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                  >
+                    <b>Reviewer: &nbsp;</b>{{ item.reviewer.name }}
+                  </span>
                   <span
                     class="
                       mt-medium
@@ -605,11 +609,6 @@ img {
 .hoveredCard {
   background-color: white;
 }
-/* .b{
-  cursor: pointer;
-  position: absolute;
-  transform: translate(-50%, -50%);
-} */
 .flip-box {
   transform-style: preserve-3d;
   perspective: 1000px;
@@ -632,7 +631,6 @@ img {
 }
 
 .flip-box-back {
-  /* position: absolute; */
   transform: rotateY(180deg);
   transform-style: preserve-3d;
 }
@@ -640,20 +638,6 @@ img {
 .flip-box:hover .flip-box-back {
   transform: rotateY(0deg);
   transform-style: preserve-3d;
-}
-
-.flip-box .inner {
-  /* position:absolute;
-  perspective: inherit;
-  z-index: 2;
-  transform: translateY(-50%)translateZ(60px) scale(.94); */
-}
-/* .box {
-  position: relative;
-} */
-
-.b {
-  /* position: absolute; */
 }
 #logout {
   cursor: pointer;
@@ -666,5 +650,8 @@ img {
 }
 .width-small {
   width: 8px;
+}
+main {
+  height: auto;
 }
 </style>

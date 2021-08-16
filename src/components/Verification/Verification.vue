@@ -12,6 +12,7 @@
               <Institution
                 :activeState="1"
                 @changeActiveState="activeState++"
+                @changeActiveStateMinus="activeState--"
               />
             </div>
           </transition>
@@ -20,6 +21,7 @@
               <LicenseCopy
                 :activeState="2"
                 @changeActiveState="activeState++"
+                @changeActiveStateMinus="activeState--"
               />
             </div>
           </transition>
@@ -28,6 +30,7 @@
               <VerificationLetter
                 :activeState="3"
                 @changeActiveState="activeState++"
+                @changeActiveStateMinus="activeState--"
               />
             </div>
           </transition>
@@ -36,6 +39,7 @@
               <VerificationSummary
                 :activeState="4"
                 @changeActiveState="activeState++"
+                @changeActiveStateMinus="activeState--"
               />
             </div>
           </transition>

@@ -61,11 +61,11 @@
                 <img v-bind:src="filePreview" v-show="showPreview" />
               </picture>
               <!--  -->
-              <div v-if="!showUpload && isPdf  ">
+              <div v-if="!showUpload && isPdf">
                 <p>
                   <a href="javascript:void(0)" @click="reset()">Upload again</a>
                 </p>
-                <embed v-bind:src="filePreview" v-show="showPreview"  />
+                <embed v-bind:src="filePreview" v-show="showPreview" />
               </div>
               <span v-if="!showUpload && !isImage && !isPdf">
                 <img :src="filePreview" alt="" class="preview" />
@@ -77,6 +77,9 @@
           <button @click="submit">
             Next
           </button>
+          <button @click="submitBack">
+            Back
+          </button>
           <button @click="draft(buttons[1].action)" variant="outline">
             {{ buttons[1]["name"] }}
           </button>
@@ -87,6 +90,9 @@
         >
           <button @click="submit">
             Next
+          </button>
+          <button @click="submitBack">
+            Back
           </button>
           <button @click="draft(buttons[2].action)" variant="outline">
             {{ buttons[2]["name"] }}
@@ -106,6 +112,9 @@
           <button @click="submit">
             Next
           </button>
+          <button @click="submitBack">
+            Back
+          </button>
           <button
             class="withdraw"
             @click="withdraw(buttons[0].action)"
@@ -121,6 +130,9 @@
           <button @click="submit">
             Next
           </button>
+          <button @click="submitBack">
+            Back
+          </button>
           <button @click="draft(buttons[0].action)" variant="outline">
             {{ buttons[0]["name"] }}
           </button>
@@ -134,6 +146,9 @@
         >
           <button @click="submit">
             Next
+          </button>
+          <button @click="submitBack">
+            Back
           </button>
           <button @click="draft(buttons[0].action)" variant="outline">
             {{ buttons[0]["name"] }}
@@ -178,8 +193,7 @@ export default {
     const route = useRoute();
     const router = useRouter();
 
-     const basePath = "https://storage.googleapis.com/hris-lisence-dev/";
-
+    const basePath = "https://storage.googleapis.com/hris-lisence-dev/";
 
     let message = ref({
       showFlash: false,
@@ -206,6 +220,7 @@ export default {
     let draftStatus = ref("");
 
     let licenseCopy = ref("");
+    let letterBack = ref("");
 
     let declinedFields = ref([]);
     let acceptedFields = ref([]);
@@ -220,8 +235,8 @@ export default {
       letterFile.value = "";
       filePreview.value = "";
       isImage.value = true;
-      fileSize.value="";
-      isPdf.value=false;
+      fileSize.value = "";
+      isPdf.value = false;
     };
     const handleFileUpload = () => {
       dataChanged.value = true;
@@ -251,7 +266,7 @@ export default {
           reader.readAsDataURL(letterFile.value);
         } else if (/\.(pdf)$/i.test(letterFile.value.name)) {
           isImage.value = false;
-          isPdf.value=true;
+          isPdf.value = true;
           reader.readAsDataURL(letterFile.value);
         }
       }
@@ -266,8 +281,44 @@ export default {
       emit("changeActiveState");
       store.dispatch("verification/set_Verification_Letter", letterFile);
     };
-
+    const submitBack = () => {
+      emit("changeActiveStateMinus");
+      store.dispatch("verification/set_Verification_Letter", letterFile);
+    };
     onMounted(() => {
+      letterBack = store.getters["verification/getVerificationLetter"];
+      if (letterBack || letterBack != undefined || letterBack != null) {
+        dataChanged.value = true;
+        showUpload.value = false;
+        letterFile.value = letterBack;
+        let reader = new FileReader();
+        let fileS = letterFile.value.size;
+        if (fileS > 0 && fileS < 1000) {
+          fileSize.value += "B";
+        } else if (fileS > 1000 && fileS < 1000000) {
+          fileSize.value = fileS / 1000 + "kB";
+        } else {
+          fileSize.value = fileS / 1000000 + "MB";
+        }
+        reader.addEventListener(
+          "load",
+          function() {
+            showPreview.value = true;
+            filePreview.value = reader.result;
+          },
+          false
+        );
+        if (letterFile.value) {
+          if (/\.(jpe?g|png|gif)$/i.test(letterFile.value.name)) {
+            isImage.value = true;
+            reader.readAsDataURL(letterFile.value);
+          } else if (/\.(pdf)$/i.test(letterFile.value.name)) {
+            isImage.value = false;
+            isPdf.value = true;
+            reader.readAsDataURL(letterFile.value);
+          }
+        }
+      }
       declinedFields = store.getters["goodstanding/getDeclinedFields"];
       acceptedFields = store.getters["goodstanding/getAcceptedFields"];
       remark = store.getters["goodstanding/getRemark"];
@@ -284,15 +335,12 @@ export default {
         for (let i = 0; i < draftData.documents.length; i++) {
           if (draftData.documents[i].documentTypeCode == "LHI") {
             showUpload.value = false;
-           if(draftData.documents[i].fileName.split(".")[1]=="pdf")
-            {
-               isPdf.value=true;
-            }
-            else
-            {
+            if (draftData.documents[i].fileName.split(".")[1] == "pdf") {
+              isPdf.value = true;
+            } else {
               isImage.value = true;
             }
-            
+
             letterFile.value = draftData.documents[i];
             showPreview.value = true;
             filePreview.value = basePath + draftData.documents[i].filePath;
@@ -549,6 +597,8 @@ export default {
       handleFileUpload,
       reset,
       submit,
+      submitBack,
+      letterBack,
       draft,
       withdraw,
       buttons,
