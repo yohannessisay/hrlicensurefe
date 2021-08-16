@@ -171,8 +171,7 @@ export default {
     const store = useStore();
     const route = useRoute();
     const router = useRouter();
-     const basePath = "https://storage.googleapis.com/hris-lisence-dev/";
-
+    const basePath = "https://storage.googleapis.com/hris-lisence-dev/";
 
     let message = ref({
       showFlash: false,
@@ -247,7 +246,7 @@ export default {
 
       reader.addEventListener(
         "load",
-        function () {
+        function() {
           showPreview.value = true;
           filePreview.value = reader.result;
         },
@@ -319,8 +318,8 @@ export default {
                       router.push({ path: "/menu" });
                     }, 1500);
                   } else {
-                    message.value.showErrorFlash =
-                      !message.value.showErrorFlash;
+                    message.value.showErrorFlash = !message.value
+                      .showErrorFlash;
                   }
                 })
                 .catch((err) => {});
@@ -358,6 +357,7 @@ export default {
             },
             professionalTypeId: licenseInfo.professionalTypeId,
             residenceWoredaId: licenseInfo.residenceWoredaId,
+            paymentSlip: null,
           },
         };
         store.dispatch("newlicense/addNewLicense", license).then((res) => {
@@ -475,8 +475,8 @@ export default {
                       router.push({ path: "/menu" });
                     }, 1500);
                   } else {
-                    message.value.showErrorFlash =
-                      !message.value.showErrorFlash;
+                    message.value.showErrorFlash = !message.value
+                      .showErrorFlash;
                   }
                 })
                 .catch((err) => {});
@@ -514,6 +514,7 @@ export default {
             },
             professionalTypeId: licenseInfo.professionalTypeId,
             residenceWoredaId: licenseInfo.residenceWoredaId,
+            paymentSlip: null,
           },
         };
         store.dispatch("newlicense/addNewLicense", license).then((res) => {
@@ -583,7 +584,7 @@ export default {
         for (let i = 0; i < draftData.documents.length; i++) {
           if (draftData.documents[i].documentTypeCode == "LFO") {
             showUpload.value = false;
-              if (draftData.documents[i].fileName.split(".")[1] == "pdf") {
+            if (draftData.documents[i].fileName.split(".")[1] == "pdf") {
               isPdf.value = true;
             } else {
               isImage.value = true;

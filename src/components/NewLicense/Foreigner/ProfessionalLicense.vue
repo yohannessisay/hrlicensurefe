@@ -171,8 +171,7 @@ export default {
     const store = useStore();
     const route = useRoute();
     const router = useRouter();
-     const basePath = "https://storage.googleapis.com/hris-lisence-dev/";
-
+    const basePath = "https://storage.googleapis.com/hris-lisence-dev/";
 
     let message = ref({
       showFlash: false,
@@ -247,7 +246,7 @@ export default {
 
       reader.addEventListener(
         "load",
-        function () {
+        function() {
           showPreview.value = true;
           filePreview.value = reader.result;
         },
@@ -320,8 +319,8 @@ export default {
                       router.push({ path: "/menu" });
                     }, 1500);
                   } else {
-                    message.value.showErrorFlash =
-                      !message.value.showErrorFlash;
+                    message.value.showErrorFlash = !message.value
+                      .showErrorFlash;
                   }
                 })
                 .catch((err) => {});
@@ -359,6 +358,7 @@ export default {
             },
             professionalTypeId: licenseInfo.professionalTypeId,
             residenceWoredaId: licenseInfo.residenceWoredaId,
+            paymentSlip: null,
           },
         };
         store.dispatch("newlicense/addNewLicense", license).then((res) => {
@@ -474,8 +474,8 @@ export default {
                       router.push({ path: "/menu" });
                     }, 1500);
                   } else {
-                    message.value.showErrorFlash =
-                      !message.value.showErrorFlash;
+                    message.value.showErrorFlash = !message.value
+                      .showErrorFlash;
                   }
                 })
                 .catch((err) => {});
@@ -513,6 +513,7 @@ export default {
             },
             professionalTypeId: licenseInfo.professionalTypeId,
             residenceWoredaId: licenseInfo.residenceWoredaId,
+            paymentSlip: null,
           },
         };
         store.dispatch("newlicense/addNewLicense", license).then((res) => {
