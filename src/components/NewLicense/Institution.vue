@@ -536,8 +536,6 @@ export default {
       ) {
         this.licenseInfo.nativeLanguageId = 0;
       }
-      console.log(this.licenseInfo.nativeLanguageId);
-
       let license = {
         applicantId: this.licenseInfo.applicantId,
         applicantTypeId: this.licenseInfo.applicantTypeId,
@@ -646,12 +644,11 @@ export default {
       } else {
         this.displayPayrollDoc = false;
       }
-      if (this.licenseInfo.nativeLanguageId == 1) {
+      if (this.licenseInfo.applicantTypeId == 2) {
         this.displayEnglishLanguageOption = true;
       } else {
         this.displayEnglishLanguageOption = false;
       }
-
       this.$store
         .dispatch("newlicense/getZones", this.regionID)
         .then((res) => {

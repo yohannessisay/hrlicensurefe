@@ -333,6 +333,7 @@ export default {
     this.diploma = this.getDiploma;
     this.transcript = this.getTranscript;
     this.degree = this.getDegree;
+    this.payroll = this.getPayroll;
 
     this.buttons = this.getButtons;
     this.fetchProfileInfo();
@@ -389,6 +390,7 @@ export default {
     degree: "",
     diploma: "",
     transcript: "",
+    payroll: "",
 
     applicationId: "",
     buttons: [],
@@ -416,6 +418,7 @@ export default {
       getDiploma: "newlicense/getDiploma",
       getTranscript: "newlicense/getTranscript",
       getDegree: "newlicense/getDegree",
+      getPayroll: "newlicense/getPayroll",
     }),
   },
   methods: {
@@ -495,6 +498,10 @@ export default {
               formData.append(
                 this.documentTypes[8].documentType.code,
                 this.transcript
+              );
+              formData.append(
+                this.documentTypes[20].documentType.code,
+                this.payroll
               );
               formData.append(
                 this.documentTypes[21].documentType.code,
@@ -600,6 +607,7 @@ export default {
           this.documentTypes[8].documentType.code,
           this.transcript
         );
+        formData.append(this.documentTypes[20].documentType.code, this.payroll);
         formData.append(this.documentTypes[21].documentType.code, this.degree);
         if (this.professionalDoc != undefined) {
           formData.append(
@@ -661,7 +669,7 @@ export default {
           this.occupationTypeId = 0;
         }
         if (this.nativeLanguageId == "") {
-          this.nativeLanguageId = 0;
+          this.nativeLanguageId = 1;
         }
         let license = {
           action: action,
@@ -749,6 +757,10 @@ export default {
                 this.transcript
               );
               formData.append(
+                this.documentTypes[20].documentType.code,
+                this.payroll
+              );
+              formData.append(
                 this.documentTypes[21].documentType.code,
                 this.degree
               );
@@ -853,6 +865,7 @@ export default {
           this.documentTypes[8].documentType.code,
           this.transcript
         );
+        formData.append(this.documentTypes[20].documentType.code, this.payroll);
         formData.append(this.documentTypes[21].documentType.code, this.degree);
         if (this.professionalDoc != undefined) {
           formData.append(
@@ -914,7 +927,7 @@ export default {
           this.occupationTypeId = 0;
         }
         if (this.nativeLanguageId == "") {
-          this.nativeLanguageId = 0;
+          this.nativeLanguageId = 1;
         }
         let license = {
           action: action,
@@ -963,7 +976,7 @@ export default {
         this.occupationTypeId = 0;
       }
       if (this.nativeLanguageId == "") {
-        this.nativeLanguageId = 0;
+        this.nativeLanguageId = 1;
       }
       let license = {
         data: {
