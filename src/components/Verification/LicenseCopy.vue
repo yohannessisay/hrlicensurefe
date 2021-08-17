@@ -264,10 +264,6 @@ export default {
       emit("changeActiveState");
       store.dispatch("verification/set_License_Copy", licenseFile);
     };
-    const submitBack = () => {
-      emit("changeActiveStateMinus");
-      store.dispatch("verification/set_License_Copy", licenseFile);
-    };
     onMounted(() => {
       licenseCopyBack = store.getters["verification/getLicenseCopy"];
       if (

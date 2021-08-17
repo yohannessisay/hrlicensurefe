@@ -359,6 +359,8 @@ export default {
             professionalTypeId: licenseInfo.professionalTypeId,
             residenceWoredaId: licenseInfo.residenceWoredaId,
             paymentSlip: null,
+            occupationTypeId: licenseInfo.occupationTypeId,
+            nativeLanguageId: licenseInfo.nativeLanguageId,
           },
         };
         store.dispatch("newlicense/addNewLicense", license).then((res) => {
@@ -516,6 +518,8 @@ export default {
             professionalTypeId: licenseInfo.professionalTypeId,
             residenceWoredaId: licenseInfo.residenceWoredaId,
             paymentSlip: null,
+            occupationTypeId: licenseInfo.occupationTypeId,
+            nativeLanguageId: licenseInfo.nativeLanguageId,
           },
         };
         store.dispatch("newlicense/addNewLicense", license).then((res) => {
@@ -595,6 +599,7 @@ export default {
             passportFile.value = draftData.documents[i];
             showPreview.value = true;
             filePreview.value = basePath + draftData.documents[i].filePath;
+            console.log(filePreview.value);
           }
         }
       }

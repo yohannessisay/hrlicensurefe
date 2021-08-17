@@ -360,6 +360,8 @@ export default {
             professionalTypeId: licenseInfo.professionalTypeId,
             residenceWoredaId: licenseInfo.residenceWoredaId,
             paymentSlip: null,
+            occupationTypeId: licenseInfo.occupationTypeId,
+            nativeLanguageId: licenseInfo.nativeLanguageId,
           },
         };
         store.dispatch("newlicense/addNewLicense", license).then((res) => {
@@ -517,6 +519,8 @@ export default {
             professionalTypeId: licenseInfo.professionalTypeId,
             residenceWoredaId: licenseInfo.residenceWoredaId,
             paymentSlip: null,
+            occupationTypeId: licenseInfo.occupationTypeId,
+            nativeLanguageId: licenseInfo.nativeLanguageId,
           },
         };
         store.dispatch("newlicense/addNewLicense", license).then((res) => {

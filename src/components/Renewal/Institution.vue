@@ -159,7 +159,7 @@
               <select
                 class="max-w-3xl"
                 @change="setPayrollDoc()"
-                v-model="this.payrollID"
+                v-model="licenseInfo.occupationTypeId"
               >
                 <option
                   v-for="types in this.payrollData.data"
@@ -234,7 +234,7 @@
             {{ this.buttons[1]["name"] }}
           </button>
         </div>
-        <div>
+        <div class="pt-8">
           <Spinner v-if="showLoading" />
         </div>
       </div>
@@ -270,7 +270,7 @@ export default {
     this.fetchDepartments();
     this.fetchRegions();
     this.fetchProfessionalType();
-    await this.fetchPayrollData();
+    this.fetchPayrollData();
 
     this.showLoading = true;
     setTimeout(() => {
@@ -301,6 +301,7 @@ export default {
       },
       residenceWoredaId: "",
       professionalTypeID: "",
+      occupationTypeId: "",
     },
     licenseInfoErrors: {
       applicantTypeId: "",
@@ -370,6 +371,7 @@ export default {
             residenceWoredaId: this.licenseInfo.residenceWoredaId,
             professionalTypeId: this.licenseInfo.professionalTypeID,
             paymentSlip: null,
+            occupationTypeId: this.licenseInfo.occupationTypeId,
           },
         },
         id: this.draftId,
@@ -416,6 +418,7 @@ export default {
             residenceWoredaId: this.licenseInfo.residenceWoredaId,
             professionalTypeId: this.licenseInfo.professionalTypeID,
             paymentSlip: null,
+            occupationTypeId: this.licenseInfo.occupationTypeId,
           },
         },
         id: this.draftId,
@@ -480,11 +483,11 @@ export default {
         residenceWoredaId: this.licenseInfo.residenceWoredaId,
         professionalTypeId: this.licenseInfo.professionalTypeID,
         paymentSlip: null,
+        occupationTypeId: this.licenseInfo.occupationTypeId,
       };
-
       this.$emit("changeActiveState");
       this.$emit("applicantTypeValue", this.licenseInfo.applicantTypeId);
-      this.$emit("payrollDocumentSet", this.payrollID);
+      this.$emit("payrollDocumentSet", this.licenseInfo.occupationTypeId);
       this.$store.dispatch("renewal/setLicense", license);
     },
     fetchApplicantType() {
@@ -567,6 +570,13 @@ export default {
       this.regionID = draftData.woreda.zone.region.id;
       this.zoneID = draftData.woreda.zone.id;
       this.licenseInfo.professionalTypeID = draftData.professionalTypeId;
+      this.licenseInfo.occupationTypeId = draftData.occupationTypeId;
+      this.payrollData = draftData.occupationTypes;
+      if (this.licenseInfo.applicantTypeId == 1) {
+        this.displayPayrollDoc = true;
+      } else {
+        this.displayPayrollDoc = false;
+      }
       this.$store
         .dispatch("renewal/getZones", this.regionID)
         .then((res) => {

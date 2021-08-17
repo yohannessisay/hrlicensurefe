@@ -252,7 +252,7 @@ export default {
     declinedFields: [],
     acceptedFields: [],
     remark: "",
-    displayPayrollOption: false,
+    displayPayrollOption: true,
   }),
   components: {
     Institution,
@@ -355,6 +355,11 @@ export default {
     fetchDraft(id) {
       this.$store.dispatch("renewal/getDraft", id).then((res) => {
         const results = res.data.data;
+        if (results.occupationTypeId == 2) {
+          this.displayPayrollOption = false;
+        } else {
+          this.displayPayrollOption = true;
+        }
         this.declinedFields = results.declinedFields;
         this.acceptedFields = results.acceptedFields;
         this.remark = results.remark;

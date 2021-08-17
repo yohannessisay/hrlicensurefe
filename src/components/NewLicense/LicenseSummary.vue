@@ -317,7 +317,6 @@ export default {
     if (this.draftId != undefined) {
       this.draftData = this.getDraftData;
     }
-
     this.passport = this.getPassport;
     this.healthExamCert = this.getHealthExamCert;
     this.englishLanguage = this.getEnglishLanguage;
@@ -346,6 +345,8 @@ export default {
     this.education.institutionId = this.license.education.institutionId;
     this.residenceWoredaId = this.license.residenceWoredaId;
     this.professionalTypeID = this.license.professionalTypeId;
+    this.occupationTypeId = this.license.occupationTypeId;
+    this.nativeLanguageId = this.license.nativeLanguageId;
     this.buttons = this.getButtons;
   },
   data: () => ({
@@ -361,6 +362,8 @@ export default {
     },
     residenceWoredaId: "",
     professionalTypeID: "",
+    nativeLanguageId: "",
+    occupationTypeId: "",
     draftId: "",
     draftData: "",
     draftStatus: "",
@@ -654,6 +657,12 @@ export default {
           this.documentTypes[19].documentType.code,
           this.professionalLicense
         );
+        if (this.occupationTypeId == "") {
+          this.occupationTypeId = 0;
+        }
+        if (this.nativeLanguageId == "") {
+          this.nativeLanguageId = 0;
+        }
         let license = {
           action: action,
           data: {
@@ -666,8 +675,11 @@ export default {
             residenceWoredaId: this.residenceWoredaId,
             professionalTypeId: this.professionalTypeID,
             paymentSlip: null,
+            occupationTypeId: this.occupationTypeId,
+            nativeLanguageId: this.nativeLanguageId,
           },
         };
+        console.log(license);
         this.$store
           .dispatch("newlicense/addNewLicense", license)
           .then((res) => {
@@ -898,6 +910,12 @@ export default {
           this.documentTypes[19].documentType.code,
           this.professionalLicense
         );
+        if (this.occupationTypeId == "") {
+          this.occupationTypeId = 0;
+        }
+        if (this.nativeLanguageId == "") {
+          this.nativeLanguageId = 0;
+        }
         let license = {
           action: action,
           data: {
@@ -910,6 +928,8 @@ export default {
             residenceWoredaId: this.residenceWoredaId,
             professionalTypeId: this.professionalTypeID,
             paymentSlip: null,
+            occupationTypeId: this.occupationTypeId,
+            nativeLanguageId: this.nativeLanguageId,
           },
         };
 
@@ -939,6 +959,12 @@ export default {
     },
     update(action) {
       this.showLoading = true;
+      if (this.occupationTypeId == "") {
+        this.occupationTypeId = 0;
+      }
+      if (this.nativeLanguageId == "") {
+        this.nativeLanguageId = 0;
+      }
       let license = {
         data: {
           action: action,
@@ -952,6 +978,8 @@ export default {
             residenceWoredaId: this.residenceWoredaId,
             professionalTypeId: this.professionalTypeID,
             paymentSlip: null,
+            occupationTypeId: this.occupationTypeId,
+            nativeLanguageId: this.nativeLanguageId,
           },
         },
         id: this.draftId,

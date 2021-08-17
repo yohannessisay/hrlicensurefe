@@ -8,6 +8,7 @@ export default {
     },
     residenceWoredaId: "",
     professionalTypeId: "",
+    occupationTypeId: "",
     paymentSlip: null,
     healthExamCert: "",
     workExperience: "",

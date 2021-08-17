@@ -579,6 +579,16 @@ export default {
     fetchDraft(id) {
       this.$store.dispatch("newlicense/getDraft", id).then((res) => {
         const results = res.data.data;
+        if (results.occupationTypeId == 2) {
+          this.displayPayrollOption = false;
+        } else {
+          this.displayPayrollOption = true;
+        }
+        if (results.englishLanguageId == 1) {
+          this.displayEnglishLanguageOption = false;
+        } else {
+          this.displayEnglishLanguageOption = true;
+        }
         this.declinedFields = results.declinedFields;
         this.acceptedFields = results.acceptedFields;
         this.remark = results.remark;
