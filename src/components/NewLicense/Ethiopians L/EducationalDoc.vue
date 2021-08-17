@@ -630,7 +630,7 @@ export default {
       for (let i = 0; i < this.draftData.documents.length; i++) {
         if (this.draftData.documents[i].documentTypeCode == "EDEGC") {
           this.showCertificate1Upload = false;
-          if (draftData.documents[i].fileName.split(".")[1] == "pdf") {
+          if (this.draftData.documents[i].fileName.split(".")[1] == "pdf") {
             this.isPdf1 = true;
           } else {
             this.isCertificate1 = true;
@@ -643,7 +643,7 @@ export default {
         }
         if (this.draftData.documents[i].documentTypeCode == "EDTGC") {
           this.showCertificate2Upload = false;
-          if (draftData.documents[i].fileName.split(".")[1] == "pdf") {
+          if (this.draftData.documents[i].fileName.split(".")[1] == "pdf") {
             this.isPdf2 = true;
           } else {
             this.isCertificate2 = true;
@@ -656,7 +656,7 @@ export default {
         }
         if (this.draftData.documents[i].documentTypeCode == "EDTWGC") {
           this.showCertificate3Upload = false;
-          if (draftData.documents[i].fileName.split(".")[1] == "pdf") {
+          if (this.draftData.documents[i].fileName.split(".")[1] == "pdf") {
             this.isPdf3 = true;
           } else {
             this.isCertificate3 = true;
@@ -669,7 +669,7 @@ export default {
         }
         if (this.draftData.documents[i].documentTypeCode == "EDHT") {
           this.showCertificate4Upload = false;
-          if (draftData.documents[i].fileName.split(".")[1] == "pdf") {
+          if (this.draftData.documents[i].fileName.split(".")[1] == "pdf") {
             this.isPdf4 = true;
           } else {
             this.isCertificate4 = true;
@@ -682,7 +682,7 @@ export default {
         }
         if (this.draftData.documents[i].documentTypeCode == "EDPT") {
           this.showCertificate5Upload = false;
-          if (draftData.documents[i].fileName.split(".")[1] == "pdf") {
+          if (this.draftData.documents[i].fileName.split(".")[1] == "pdf") {
             this.isPdf5 = true;
           } else {
             this.isCertificate5 = true;

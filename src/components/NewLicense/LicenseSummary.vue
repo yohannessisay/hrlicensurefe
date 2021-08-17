@@ -687,7 +687,6 @@ export default {
             nativeLanguageId: this.nativeLanguageId,
           },
         };
-        console.log(license);
         this.$store
           .dispatch("newlicense/addNewLicense", license)
           .then((res) => {
