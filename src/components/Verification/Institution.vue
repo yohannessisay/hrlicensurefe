@@ -213,7 +213,7 @@
             {{ this.buttons[1]["name"] }}
           </button>
         </div>
-        <div>
+        <div class="mt-8">
           <Spinner v-if="showLoading" />
         </div>
       </div>

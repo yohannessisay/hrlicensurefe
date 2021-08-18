@@ -317,7 +317,6 @@ export default {
     if (this.draftId != undefined) {
       this.draftData = this.getDraftData;
     }
-
     this.passport = this.getPassport;
     this.healthExamCert = this.getHealthExamCert;
     this.englishLanguage = this.getEnglishLanguage;
@@ -334,6 +333,7 @@ export default {
     this.diploma = this.getDiploma;
     this.transcript = this.getTranscript;
     this.degree = this.getDegree;
+    this.payroll = this.getPayroll;
 
     this.buttons = this.getButtons;
     this.fetchProfileInfo();
@@ -346,6 +346,8 @@ export default {
     this.education.institutionId = this.license.education.institutionId;
     this.residenceWoredaId = this.license.residenceWoredaId;
     this.professionalTypeID = this.license.professionalTypeId;
+    this.occupationTypeId = this.license.occupationTypeId;
+    this.nativeLanguageId = this.license.nativeLanguageId;
     this.buttons = this.getButtons;
   },
   data: () => ({
@@ -361,6 +363,8 @@ export default {
     },
     residenceWoredaId: "",
     professionalTypeID: "",
+    nativeLanguageId: "",
+    occupationTypeId: "",
     draftId: "",
     draftData: "",
     draftStatus: "",
@@ -386,6 +390,7 @@ export default {
     degree: "",
     diploma: "",
     transcript: "",
+    payroll: "",
 
     applicationId: "",
     buttons: [],
@@ -413,6 +418,7 @@ export default {
       getDiploma: "newlicense/getDiploma",
       getTranscript: "newlicense/getTranscript",
       getDegree: "newlicense/getDegree",
+      getPayroll: "newlicense/getPayroll",
     }),
   },
   methods: {
@@ -494,6 +500,10 @@ export default {
                 this.transcript
               );
               formData.append(
+                this.documentTypes[20].documentType.code,
+                this.payroll
+              );
+              formData.append(
                 this.documentTypes[21].documentType.code,
                 this.degree
               );
@@ -597,6 +607,7 @@ export default {
           this.documentTypes[8].documentType.code,
           this.transcript
         );
+        formData.append(this.documentTypes[20].documentType.code, this.payroll);
         formData.append(this.documentTypes[21].documentType.code, this.degree);
         if (this.professionalDoc != undefined) {
           formData.append(
@@ -654,6 +665,12 @@ export default {
           this.documentTypes[19].documentType.code,
           this.professionalLicense
         );
+        if (this.occupationTypeId == "") {
+          this.occupationTypeId = 0;
+        }
+        if (this.nativeLanguageId == "") {
+          this.nativeLanguageId = 1;
+        }
         let license = {
           action: action,
           data: {
@@ -665,6 +682,9 @@ export default {
             },
             residenceWoredaId: this.residenceWoredaId,
             professionalTypeId: this.professionalTypeID,
+            paymentSlip: null,
+            occupationTypeId: this.occupationTypeId,
+            nativeLanguageId: this.nativeLanguageId,
           },
         };
         this.$store
@@ -672,7 +692,6 @@ export default {
           .then((res) => {
             let licenseId = res.data.data.id;
             let payload = { document: formData, id: licenseId };
-            // here is the problrm
             this.$store
               .dispatch("newlicense/uploadDocuments", payload)
               .then((res) => {
@@ -737,6 +756,10 @@ export default {
                 this.transcript
               );
               formData.append(
+                this.documentTypes[20].documentType.code,
+                this.payroll
+              );
+              formData.append(
                 this.documentTypes[21].documentType.code,
                 this.degree
               );
@@ -841,6 +864,7 @@ export default {
           this.documentTypes[8].documentType.code,
           this.transcript
         );
+        formData.append(this.documentTypes[20].documentType.code, this.payroll);
         formData.append(this.documentTypes[21].documentType.code, this.degree);
         if (this.professionalDoc != undefined) {
           formData.append(
@@ -898,6 +922,12 @@ export default {
           this.documentTypes[19].documentType.code,
           this.professionalLicense
         );
+        if (this.occupationTypeId == "") {
+          this.occupationTypeId = 0;
+        }
+        if (this.nativeLanguageId == "") {
+          this.nativeLanguageId = 1;
+        }
         let license = {
           action: action,
           data: {
@@ -909,6 +939,9 @@ export default {
             },
             residenceWoredaId: this.residenceWoredaId,
             professionalTypeId: this.professionalTypeID,
+            paymentSlip: null,
+            occupationTypeId: this.occupationTypeId,
+            nativeLanguageId: this.nativeLanguageId,
           },
         };
 
@@ -938,6 +971,12 @@ export default {
     },
     update(action) {
       this.showLoading = true;
+      if (this.occupationTypeId == "") {
+        this.occupationTypeId = 0;
+      }
+      if (this.nativeLanguageId == "") {
+        this.nativeLanguageId = 1;
+      }
       let license = {
         data: {
           action: action,
@@ -950,6 +989,9 @@ export default {
             },
             residenceWoredaId: this.residenceWoredaId,
             professionalTypeId: this.professionalTypeID,
+            paymentSlip: null,
+            occupationTypeId: this.occupationTypeId,
+            nativeLanguageId: this.nativeLanguageId,
           },
         },
         id: this.draftId,

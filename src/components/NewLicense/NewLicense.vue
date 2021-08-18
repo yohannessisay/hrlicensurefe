@@ -1,8 +1,8 @@
-<template>
+7<template>
   <div>
     <Navigation />
     <div
-      class="w-screen h-full bg-lightBlueB-200 flex items-center justify-center"
+      class="w-screen h-full pb-xl bg-lightBlueB-200 flex items-center justify-center"
     >
       <div class="w-screen max-w-4xl mt-medium">
         <div class="flex flex-col w-full rounded mb-large">
@@ -489,12 +489,10 @@ export default {
         params == null ||
         params == undefined ||
         params == "" ||
-        params == 0 ||
-        params == 1
+        params == 0
       ) {
         this.displayEnglishLanguageOption = false;
-      }
-      if (params == 2) {
+      } else {
         this.displayEnglishLanguageOption = true;
       }
     },
@@ -579,6 +577,16 @@ export default {
     fetchDraft(id) {
       this.$store.dispatch("newlicense/getDraft", id).then((res) => {
         const results = res.data.data;
+        if (results.occupationTypeId == 2) {
+          this.displayPayrollOption = false;
+        } else {
+          this.displayPayrollOption = true;
+        }
+        if (results.englishLanguageId == 1) {
+          this.displayEnglishLanguageOption = false;
+        } else {
+          this.displayEnglishLanguageOption = true;
+        }
         this.declinedFields = results.declinedFields;
         this.acceptedFields = results.acceptedFields;
         this.remark = results.remark;

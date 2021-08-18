@@ -58,7 +58,7 @@
                 </label>
               </span>
 
-                <picture v-if="!showUpload && isImage">
+              <picture v-if="!showUpload && isImage">
                 <p>
                   <a href="javascript:void(0)" @click="reset()">Upload again</a>
                 </p>
@@ -172,8 +172,7 @@ export default {
     const route = useRoute();
     const router = useRouter();
 
-     const basePath = "https://storage.googleapis.com/hris-lisence-dev/";
-
+    const basePath = "https://storage.googleapis.com/hris-lisence-dev/";
 
     let dataChanged = ref(false);
     let supportLetterFile = ref("");
@@ -227,7 +226,7 @@ export default {
       supportLetterFile.value = "";
       filePreview.value = "";
       isImage.value = true;
-       fileSize.value = "";
+      fileSize.value = "";
       isPdf.value = false;
     };
 
@@ -246,7 +245,7 @@ export default {
       }
       reader.addEventListener(
         "load",
-        function () {
+        function() {
           showPreview.value = true;
           filePreview.value = reader.result;
         },
@@ -259,7 +258,7 @@ export default {
           reader.readAsDataURL(supportLetterFile.value);
         } else if (/\.(pdf)$/i.test(supportLetterFile.value.name)) {
           isImage.value = false;
-            isPdf.value = true;
+          isPdf.value = true;
           reader.readAsDataURL(supportLetterFile.value);
         }
       }
@@ -318,8 +317,8 @@ export default {
                       router.push({ path: "/menu" });
                     }, 1500);
                   } else {
-                    message.value.showErrorFlash =
-                      !message.value.showErrorFlash;
+                    message.value.showErrorFlash = !message.value
+                      .showErrorFlash;
                   }
                 })
                 .catch((err) => {});
@@ -357,6 +356,9 @@ export default {
             },
             professionalTypeId: licenseInfo.professionalTypeId,
             residenceWoredaId: licenseInfo.residenceWoredaId,
+            paymentSlip: null,
+            occupationTypeId: licenseInfo.occupationTypeId,
+            nativeLanguageId: licenseInfo.nativeLanguageId,
           },
         };
         store.dispatch("newlicense/addNewLicense", license).then((res) => {
@@ -475,8 +477,8 @@ export default {
                       router.push({ path: "/menu" });
                     }, 1500);
                   } else {
-                    message.value.showErrorFlash =
-                      !message.value.showErrorFlash;
+                    message.value.showErrorFlash = !message.value
+                      .showErrorFlash;
                   }
                 })
                 .catch((err) => {});
@@ -514,6 +516,9 @@ export default {
             },
             professionalTypeId: licenseInfo.professionalTypeId,
             residenceWoredaId: licenseInfo.residenceWoredaId,
+            paymentSlip: null,
+            occupationTypeId: licenseInfo.occupationTypeId,
+            nativeLanguageId: licenseInfo.nativeLanguageId,
           },
         };
         store.dispatch("newlicense/addNewLicense", license).then((res) => {

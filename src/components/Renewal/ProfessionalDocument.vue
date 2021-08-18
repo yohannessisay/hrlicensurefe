@@ -719,6 +719,7 @@ export default {
             residenceWoredaId: this.license.residenceWoredaId,
             professionalTypeId: this.licenseInfo.professionalTypeId,
             paymentSlip: null,
+            occupationTypeId: this.licenseInfo.occupationTypeId,
           },
         };
         this.$store

@@ -161,7 +161,7 @@
               <select
                 class="max-w-3xl"
                 @change="setEnglishLanguage()"
-                v-model="this.languageID"
+                v-model="licenseInfo.nativeLanguageId"
               >
                 <option
                   v-for="types in this.englishData.data"
@@ -180,7 +180,7 @@
               <select
                 class="max-w-3xl"
                 @change="setPayrollDoc()"
-                v-model="this.payrollID"
+                v-model="licenseInfo.occupationTypeId"
               >
                 <option
                   v-for="types in this.payrollData.data"
@@ -255,7 +255,7 @@
             {{ this.buttons[1]["name"] }}
           </button>
         </div>
-        <div>
+        <div class="pt-16">
           <Spinner v-if="showLoading" />
         </div>
       </div>
@@ -322,6 +322,8 @@ export default {
       },
       residenceWoredaId: "",
       professionalTypeID: "",
+      nativeLanguageId: "",
+      occupationTypeId: "",
     },
     licenseInfoErrors: {
       applicantTypeId: "",
@@ -415,6 +417,9 @@ export default {
             },
             residenceWoredaId: this.licenseInfo.residenceWoredaId,
             professionalTypeId: this.licenseInfo.professionalTypeID,
+            paymentSlip: null,
+            occupationTypeId: this.licenseInfo.occupationTypeId,
+            nativeLanguageId: this.licenseInfo.nativeLanguageId,
           },
         },
         id: this.draftId,
@@ -460,6 +465,9 @@ export default {
             },
             residenceWoredaId: this.licenseInfo.residenceWoredaId,
             professionalTypeId: this.licenseInfo.professionalTypeID,
+            paymentSlip: null,
+            occupationTypeId: this.licenseInfo.occupationTypeId,
+            nativeLanguageId: this.licenseInfo.nativeLanguageId,
           },
         },
         id: this.draftId,
@@ -514,6 +522,20 @@ export default {
       });
     },
     submit() {
+      if (
+        this.licenseInfo.occupationTypeId == null ||
+        this.licenseInfo.occupationTypeId == undefined ||
+        this.licenseInfo.occupationTypeId == ""
+      ) {
+        this.licenseInfo.occupationTypeId = 0;
+      }
+      if (
+        this.licenseInfo.nativeLanguageId == null ||
+        this.licenseInfo.nativeLanguageId == undefined ||
+        this.licenseInfo.nativeLanguageId == ""
+      ) {
+        this.licenseInfo.nativeLanguageId = 1;
+      }
       let license = {
         applicantId: this.licenseInfo.applicantId,
         applicantTypeId: this.licenseInfo.applicantTypeId,
@@ -523,11 +545,14 @@ export default {
         },
         residenceWoredaId: this.licenseInfo.residenceWoredaId,
         professionalTypeId: this.licenseInfo.professionalTypeID,
+        paymentSlip: null,
+        occupationTypeId: this.licenseInfo.occupationTypeId,
+        nativeLanguageId: this.licenseInfo.nativeLanguageId,
       };
       this.$emit("changeActiveState");
       this.$emit("applicantTypeValue", this.licenseInfo.applicantTypeId);
-      this.$emit("nativeLanguageSet", this.languageID);
-      this.$emit("payrollDocumentSet", this.payrollID);
+      this.$emit("nativeLanguageSet", this.licenseInfo.nativeLanguageId);
+      this.$emit("payrollDocumentSet", this.licenseInfo.occupationTypeId);
       this.$store.dispatch("newlicense/setLicense", license);
     },
     fetchApplicantType() {
@@ -611,6 +636,19 @@ export default {
       this.regionID = draftData.woreda.zone.region.id;
       this.zoneID = draftData.woreda.zone.id;
       this.licenseInfo.professionalTypeID = draftData.professionalTypeId;
+      this.licenseInfo.occupationTypeId = draftData.occupationTypeId;
+      this.licenseInfo.nativeLanguageId = draftData.nativeLanguageId;
+      this.payrollData = draftData.occupationTypes;
+      if (this.licenseInfo.applicantTypeId == 1) {
+        this.displayPayrollDoc = true;
+      } else {
+        this.displayPayrollDoc = false;
+      }
+      if (this.licenseInfo.applicantTypeId == 2) {
+        this.displayEnglishLanguageOption = true;
+      } else {
+        this.displayEnglishLanguageOption = false;
+      }
       this.$store
         .dispatch("newlicense/getZones", this.regionID)
         .then((res) => {

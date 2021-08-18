@@ -192,6 +192,8 @@ export default {
     let path = ref("");
     let name = ref("");
 
+    let licenseCopyBack = ref("");
+
     let declinedFields = ref([]);
     let acceptedFields = ref([]);
     let remark = ref("");
@@ -254,6 +256,7 @@ export default {
     buttons = store.getters["verification/getButtons"];
     documentSpecs = store.getters["verification/getDocumentSpec"];
     licenseInfo = store.getters["verification/getLicense"];
+    licenseCopyBack = store.getters["verification/getLicenseCopy"];
 
     verificationLetter = store.getters["verification/getVerificationLetter"];
 
@@ -261,8 +264,44 @@ export default {
       emit("changeActiveState");
       store.dispatch("verification/set_License_Copy", licenseFile);
     };
-
     onMounted(() => {
+      licenseCopyBack = store.getters["verification/getLicenseCopy"];
+      if (
+        licenseCopyBack ||
+        licenseCopyBack != undefined ||
+        licenseCopyBack != null
+      ) {
+        dataChanged.value = true;
+        showUpload.value = false;
+        licenseFile.value = licenseCopyBack;
+        let reader = new FileReader();
+        let fileS = licenseFile.value.size;
+        if (fileS > 0 && fileS < 1000) {
+          fileSize.value += "B";
+        } else if (fileS > 1000 && fileS < 1000000) {
+          fileSize.value = fileS / 1000 + "kB";
+        } else {
+          fileSize.value = fileS / 1000000 + "MB";
+        }
+        reader.addEventListener(
+          "load",
+          function() {
+            showPreview.value = true;
+            filePreview.value = reader.result;
+          },
+          false
+        );
+        if (licenseFile.value) {
+          if (/\.(jpe?g|png|gif)$/i.test(licenseFile.value.name)) {
+            isImage.value = true;
+            reader.readAsDataURL(licenseFile.value);
+          } else if (/\.(pdf)$/i.test(licenseFile.value.name)) {
+            isImage.value = false;
+            isPdf.value = true;
+            reader.readAsDataURL(licenseFile.value);
+          }
+        }
+      }
       declinedFields = store.getters["verification/getDeclinedFields"];
       acceptedFields = store.getters["verification/getAcceptedFields"];
       remark = store.getters["verification/getRemark"];
@@ -544,6 +583,7 @@ export default {
       reset,
       submit,
       fileSize,
+      licenseCopyBack,
       path,
       name,
       draft,

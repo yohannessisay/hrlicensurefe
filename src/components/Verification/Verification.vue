@@ -1,8 +1,10 @@
 <template>
   <div>
     <Navigation />
-    <div class="w-screen bg-lightBlueB-200 flex items-center justify-center">
-      <div class="bg-lightBlueB-200 w-screen h-screen max-w-4xl">
+    <div
+      class="w-screen h-full pb-xl bg-lightBlueB-200 flex items-center justify-center"
+    >
+      <div class="w-screen max-w-4xl mt-medium">
         <div class="flex flex-col w-full  rounded mb-large">
           <h2 class="flex justify-center pb-medium">
             Verification
@@ -12,6 +14,7 @@
               <Institution
                 :activeState="1"
                 @changeActiveState="activeState++"
+                @changeActiveStateMinus="activeState--"
               />
             </div>
           </transition>
@@ -20,6 +23,7 @@
               <LicenseCopy
                 :activeState="2"
                 @changeActiveState="activeState++"
+                @changeActiveStateMinus="activeState--"
               />
             </div>
           </transition>
@@ -28,6 +32,7 @@
               <VerificationLetter
                 :activeState="3"
                 @changeActiveState="activeState++"
+                @changeActiveStateMinus="activeState--"
               />
             </div>
           </transition>
@@ -36,6 +41,7 @@
               <VerificationSummary
                 :activeState="4"
                 @changeActiveState="activeState++"
+                @changeActiveStateMinus="activeState--"
               />
             </div>
           </transition>
