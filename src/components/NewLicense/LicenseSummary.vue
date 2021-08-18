@@ -665,12 +665,6 @@ export default {
           this.documentTypes[19].documentType.code,
           this.professionalLicense
         );
-        if (this.occupationTypeId == "") {
-          this.occupationTypeId = 0;
-        }
-        if (this.nativeLanguageId == "") {
-          this.nativeLanguageId = 1;
-        }
         let license = {
           action: action,
           data: {
@@ -922,12 +916,6 @@ export default {
           this.documentTypes[19].documentType.code,
           this.professionalLicense
         );
-        if (this.occupationTypeId == "") {
-          this.occupationTypeId = 0;
-        }
-        if (this.nativeLanguageId == "") {
-          this.nativeLanguageId = 1;
-        }
         let license = {
           action: action,
           data: {
@@ -971,12 +959,12 @@ export default {
     },
     update(action) {
       this.showLoading = true;
-      if (this.occupationTypeId == "") {
-        this.occupationTypeId = 0;
-      }
-      if (this.nativeLanguageId == "") {
-        this.nativeLanguageId = 1;
-      }
+      // if (this.occupationTypeId == "") {
+      //   this.occupationTypeId = 0;
+      // }
+      // if (this.nativeLanguageId == "") {
+      //   this.nativeLanguageId = 1;
+      // }
       let license = {
         data: {
           action: action,
