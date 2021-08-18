@@ -315,13 +315,13 @@ export default {
   data: () => ({
     licenseInfo: {
       applicantId: +localStorage.getItem("userId"),
-      applicantTypeId: "",
+      applicantTypeId: null,
       education: {
-        departmentId: "",
-        institutionId: "",
+        departmentId: null,
+        institutionId: null,
       },
-      residenceWoredaId: "",
-      professionalTypeID: "",
+      residenceWoredaId: null,
+      professionalTypeID: null,
       nativeLanguageId: null,
       occupationTypeId: null,
     },
