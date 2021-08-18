@@ -120,12 +120,13 @@
               </div> -->
               <picture v-if="docs.length > 0">
                 <div v-if="docs[index].fileName.split('.')[1] == 'pdf'" >
-                  <div v-on:click="openPdf">
+                  <div v-on:click="togglePdfModal">
                  <embed class="pdfSize"  v-bind:src="'https://storage.googleapis.com/hris-lisence-dev/' +
                       docs[index].filePath"
                        />
                        </div>
-                       <a href="https://storage.googleapis.com/hris-lisence-dev/?empcode=<%=docs[index].filePath %>" target="_blank"><p>open pdf in new tab</p></a>
+                       <br />
+                       <!-- <span @click="togglePdfModal(docs[index].filePath)"><p>see pdf in detail</p></span> -->
                   </div>
                   
                   <div v-else>
@@ -235,6 +236,58 @@
           </button>
         </div>
       </div>
+      <Modal v-if="showPdfModal">
+        <div>
+          <div
+            class="card-wrapper bg-white sm:rounded-lg w-full flex justify-center relative mb-xl mt-large"
+          >
+            <div class="">
+              <!--content-->
+              <div class="w-full">
+                <!--header-->
+                <div
+                  class="flex items-start justify-between border-b border-solid border-blueGray-200 mt-medium rounded-t"
+                >
+                  <div
+                    class=" bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+                    v-on:click="togglePdfModal()"
+                  >
+                    <span
+                      class="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none"
+                    >
+                      ×
+                    </span>
+                  </div>
+                </div>
+                <div><embed class="pdfSize"  v-bind:src="'https://storage.googleapis.com/hris-lisence-dev/' +
+                      pdfFilePath"
+                       /></div>
+                <div
+                  class="flex items-center justify-center p-6 border-t border-solid border-blueGray-200 rounded-b"
+                >
+                  <button
+                    class="md-danger"
+                    type="button"
+                    v-on:click="togglePdfModal()"
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- <div
+            v-if="showModal"
+            class="opacity-25 fixed inset-0 z-40 bg-black"
+          ></div> -->
+          <div v-if="showDeclineFlash">
+            <FlashMessage message="Operation Successful!" />
+          </div>
+          <div v-if="showErrorFlash">
+            <ErrorFlashMessage message="Operation Failed!" />
+          </div>
+        </div>
+      </Modal>
       <Modal v-if="showRemark">
         <div>
           <div
@@ -419,6 +472,9 @@ export default {
     const router = useRouter();
 
     let isPdf = ref(false);
+    let showPdfModal = ref(false);
+
+    let pdfFilePath = ref("");
 
     const newLicense = ref({
       applicant: { profile: { name: "", fatherName: "" } },
@@ -967,9 +1023,9 @@ export default {
       showRemark.value = !showRemark.value;
     };
 
-    const openPdf = (filePath) => {
-      console.log("pdf clicked")
-      window.open('https://storage.googleapis.com/hris-lisence-dev/'+filePath);
+    const togglePdfModal = (pdfPath) => {
+      pdfFilePath.value = pdfPath;
+      showPdfModal.value = !showPdfModal.value;
     }
 
     onMounted(() => {
@@ -1016,7 +1072,9 @@ export default {
       modalDocumentTypeName,
       modalFindDocumentType,
       evaluateRoute,
-      openPdf,
+      pdfFilePath,
+      showPdfModal,
+      togglePdfModal,
     };
   },
 };
