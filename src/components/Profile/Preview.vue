@@ -223,7 +223,7 @@ export default {
             }, 1500);
             setTimeout(() => {
               router.push({ path: "/menu" });
-            }, 11);
+            }, 25);
           } else {
             message.value.showLoading = false;
             message.value.showFlash = false;

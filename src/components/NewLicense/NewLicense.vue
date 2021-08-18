@@ -1,8 +1,8 @@
-<template>
+7<template>
   <div>
     <Navigation />
     <div
-      class="w-screen h-full bg-lightBlueB-200 flex items-center justify-center"
+      class="w-screen h-full pb-xl bg-lightBlueB-200 flex items-center justify-center"
     >
       <div class="w-screen max-w-4xl mt-medium">
         <div class="flex flex-col w-full rounded mb-large">
