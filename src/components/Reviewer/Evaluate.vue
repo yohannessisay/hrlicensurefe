@@ -119,12 +119,24 @@
                 </picture>
               </div> -->
               <picture v-if="docs.length > 0">
+                <div v-if="docs[index].fileName.split('.')[1] == 'pdf'" >
+                  <div v-on:click="openPdf">
+                 <embed class="pdfSize"  v-bind:src="'https://storage.googleapis.com/hris-lisence-dev/' +
+                      docs[index].filePath"
+                       />
+                       </div>
+                       <a href="https://storage.googleapis.com/hris-lisence-dev/?empcode=<%=docs[index].filePath %>" target="_blank"><p>open pdf in new tab</p></a>
+                  </div>
+                  
+                  <div v-else>
                 <img
                   v-bind:src="
-                    'https://hrlicensurebe.dev.k8s.sandboxaddis.com/' +
+                    'https://storage.googleapis.com/hris-lisence-dev/' +
                       docs[index].filePath
                   "
                 />
+                </div>
+                
               </picture>
               <div
                 class="flex content-center justify-center pb-large"
@@ -303,7 +315,7 @@
                             >
                               <img
                                 v-bind:src="
-                                  'https://hrlicensurebe.dev.k8s.sandboxaddis.com/' +
+                                  'https://storage.googleapis.com/hris-lisence-dev/' +
                                     rejectedObj[ind].filePath
                                 "
                               />
@@ -406,6 +418,8 @@ export default {
     const store = useStore();
     const router = useRouter();
 
+    let isPdf = ref(false);
+
     const newLicense = ref({
       applicant: { profile: { name: "", fatherName: "" } },
       applicantType: { name: "" },
@@ -467,6 +481,7 @@ export default {
             console.log("newLLLLLLLLLLLLLLLL", newLicense.value);
             buttons.value = res.data.data.applicationStatus.buttons;
             docs.value = res.data.data.documents;
+            console.log("docs value", docs.value)
             if (newLicense.value.applicationStatus.code == "REVDRA") {
               rejected.value = newLicense.value.declinedFields;
               for (let i in newLicense.value.documents) {
@@ -952,12 +967,18 @@ export default {
       showRemark.value = !showRemark.value;
     };
 
+    const openPdf = (filePath) => {
+      console.log("pdf clicked")
+      window.open('https://storage.googleapis.com/hris-lisence-dev/'+filePath);
+    }
+
     onMounted(() => {
       created(route.params.applicationType, route.params.applicationId);
       fetchDocumentTypes();
       findDocumentType(documentTypes.value, docs.value[0]);
     });
     return {
+      isPdf,
       newLicense,
       index,
       docs,
@@ -995,14 +1016,22 @@ export default {
       modalDocumentTypeName,
       modalFindDocumentType,
       evaluateRoute,
+      openPdf,
     };
   },
 };
 </script>
 <style>
+/* .pdfSize {
+  width: 400px;
+  height: 400px;
+} */
 .md-danger {
   background-image: linear-gradient(to right, #d63232, #e63636) !important;
   color: white;
+}
+.pdfNewTab {
+
 }
 .card-wrapper {
   width: 920px;

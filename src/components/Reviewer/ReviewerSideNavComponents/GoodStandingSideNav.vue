@@ -49,6 +49,7 @@
                 <li
                   @click="goodStandingDDHandler('GoodStandingAssigned')"
                   class=" justify-start "
+                  v-if="adminRole == 'SA'"
                 >
                   <transition name="slide-fade-to-left">
                     <div class="">
@@ -113,6 +114,17 @@
                     </div>
                   </transition>
                 </li>
+                <li
+                  @click="goodStandingMenuHandler('goodStandingAssigned')"
+                  class="mb-2"
+                  v-else
+                >
+                  <!-- <span style="color: #648ea3;"> -->
+                  <p class=" text-sm" style="color: white; ">
+                    <i class="mr-2 far fa-address-book fa-x fa-light"></i>
+                    Assigned To You
+                  </p>
+                </li>
               </div>
               <!-- assigned to you and assigned to others ends here -->
 
@@ -121,6 +133,7 @@
                 <li
                   @click="goodStandingDDHandler('GoodStandingUnfinished')"
                   class=" justify-start "
+                  v-if="adminRole == 'SA'"
                 >
                   <transition name="slide-fade-to-left">
                     <div class="">
@@ -185,6 +198,17 @@
                     </div>
                   </transition>
                 </li>
+                <li
+                  @click="goodStandingMenuHandler('goodStandingUnfinished')"
+                  class="mb-2"
+                  v-else
+                >
+                  <!-- <span style="color: #648ea3;"> -->
+                  <p class=" text-sm" style="color: white; ">
+                    <i class="mr-2 far fa-address-book fa-x fa-light"></i>
+                    Unfinished
+                  </p>
+                </li>
               </div>
               <!-- unfinished ends here -->
 
@@ -193,6 +217,7 @@
                 <li
                   @click="goodStandingDDHandler('GoodStandingApproved')"
                   class=" justify-start "
+                  v-if="adminRole == 'SA'"
                 >
                   <transition name="slide-fade-to-left">
                     <div class="">
@@ -257,6 +282,17 @@
                     </div>
                   </transition>
                 </li>
+                <li
+                  @click="goodStandingMenuHandler('goodStandingUnconfirmed')"
+                  class="mb-2"
+                  v-else
+                >
+                  <!-- <span style="color: #648ea3;"> -->
+                  <p class=" text-sm" style="color: white; ">
+                    <i class="mr-2 far fa-address-book fa-x fa-light"></i>
+                    Approved
+                  </p>
+                </li>
               </div>
               <!-- Approved ends here -->
 
@@ -265,6 +301,7 @@
                 <li
                   @click="goodStandingDDHandler('GoodStandingDeclined')"
                   class=" justify-start "
+                  v-if="adminRole == 'SA'"
                 >
                   <transition name="slide-fade-to-left">
                     <div class="">
@@ -327,6 +364,17 @@
                     </div>
                   </transition>
                 </li>
+                <li
+                  @click="goodStandingMenuHandler('goodStandingDeclined')"
+                  class="mb-2"
+                  v-else
+                >
+                  <!-- <span style="color: #648ea3;"> -->
+                  <p class=" text-sm" style="color: white; ">
+                    <i class="mr-2 far fa-address-book fa-x fa-light"></i>
+                    Declined
+                  </p>
+                </li>
               </div>
               <!-- Declined ends here -->
             </ul>
@@ -340,7 +388,7 @@
 import { ref } from "vue";
 export default {
   name: "GoodStandingSideNav",
-  props: ["dropdownValue"],
+  props: ["dropdownValue", "adminRole"],
   setup(props, { emit }) {
     let goodStandingDDIcon = ref({
       isGoodStandingUp: false,

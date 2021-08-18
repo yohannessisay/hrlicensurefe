@@ -59,18 +59,20 @@
   </div>
 </template>
 <script>
-import store from "../../../../store";
-import { useStore } from "vuex";
 import { ref, onMounted } from "vue";
-import Title from "@/sharedComponents/TitleWithIllustration";
-import ReviewerNavBar from "../../ReviewerNavBar.vue";
-import UnassignedApplications from "../ChildApplicationTypes/UnassignedApplications.vue";
-import NothingToShow from "../../ChildComponents/NothingToShow.vue";
-import Spinner from "@/sharedComponents/Spinner";
+import { useStore } from "vuex";
 import moment from "moment";
-import filterApplication from "../../ChildComponents/FilteredDatas/FilterApplication.js";
+
+import applicationStatus from "../../Configurations/getApplicationStatus.js";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
+import filterApplication from "../../ChildComponents/FilteredDatas/FilterApplication.js";
 import FilteredInfo from "../../ChildComponents/FilteredDatas/FilteredInfo.vue";
+import NothingToShow from "../../ChildComponents/NothingToShow.vue";
+import ReviewerNavBar from "../../ReviewerNavBar.vue";
+import Spinner from "@/sharedComponents/Spinner";
+import store from "../../../../store";
+import Title from "@/sharedComponents/TitleWithIllustration";
+import UnassignedApplications from "../ChildApplicationTypes/UnassignedApplications.vue";
 export default {
   name: "GoodStandingUnassigned",
   components: {
@@ -125,8 +127,9 @@ export default {
 
     const fetchUnassignedGoodStanding = () => {
       showLoading.value = true;
+      const statusId = applicationStatus(store, 'SUB');
       store
-        .dispatch("reviewerGoodStanding/getUnassignedGoodStanding")
+        .dispatch("reviewerGoodStanding/getUnassignedGoodStanding", statusId)
         .then((res) => {
           showLoading.value = false;
           RenewalUnassigned.value =

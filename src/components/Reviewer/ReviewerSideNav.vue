@@ -5,10 +5,10 @@
   >
     <div class="px-8 h-screen">
       <ul class="py-1 ">
-        <new-license-side-nav :expertLevelId="expertLevelId" :dropdownValue="dropdownValue" @applicationTypeSelected="applicationTypeHandler" @selectNewLicenseMenu="selectMenu"/>
-        <renewal-side-nav :expertLevelId="expertLevelId" :dropdownValue="dropdownValue" @applicationTypeSelected="applicationTypeHandler" @selectRenewalMenu="selectMenu" />
-        <verification-side-nav :dropdownValue="dropdownValue" @applicationTypeSelected="applicationTypeHandler" @selectVerificationMenu="selectMenu" />
-        <good-standing-side-nav :dropdownValue="dropdownValue" @applicationTypeSelected="applicationTypeHandler" @selectGoodStandingMenu="selectMenu" />
+        <new-license-side-nav :expertLevelId="expertLevelId" :adminRole="adminRole" :dropdownValue="dropdownValue" @applicationTypeSelected="applicationTypeHandler" @selectNewLicenseMenu="selectMenu"/>
+        <renewal-side-nav :expertLevelId="expertLevelId" :adminRole="adminRole" :dropdownValue="dropdownValue" @applicationTypeSelected="applicationTypeHandler" @selectRenewalMenu="selectMenu" />
+        <verification-side-nav :dropdownValue="dropdownValue" :adminRole="adminRole" @applicationTypeSelected="applicationTypeHandler" @selectVerificationMenu="selectMenu" />
+        <good-standing-side-nav :dropdownValue="dropdownValue" :adminRole="adminRole" @applicationTypeSelected="applicationTypeHandler" @selectGoodStandingMenu="selectMenu" />
         <!-- start verification Side Nav here -->
         <!-- end verification Side Nav here -->
 
@@ -41,6 +41,8 @@ export default {
   setup(props, {emit}) {
 
     const expertLevelId = JSON.parse(localStorage.getItem("allAdminData")).expertLevelId;
+    const adminRole = localStorage.getItem("role");
+    console.log("admin role is ", adminRole);
    
     let dropdownValue = ref({
       ...dropdown
@@ -50,48 +52,14 @@ export default {
       applicationTypeDD(value, dropdownValue.value);
     }
 
-
-
-    const renewalAssignedDD = () => {
-      dropdownValue.value.renewalAssigned = !dropdownValue.value.renewalAssigned;
-    }
-
-    const renewalDD = () => {
-      dropdownValue.value.renewal = !dropdownValue.value.renewal;
-      dropdownValue.value.newLicense = false;
-      dropdownValue.value.verification = false;
-      dropdownValue.value.goodStanding = false;
-    };
-
     const selectMenu = (menu) => {
         emit("changeDisplay", menu);
     }
 
-    const verificationDD = () => {
-      console.log("verification", dropdownValue.verification)
-      dropdownValue.verification = !dropdownValue.verification;
-      dropdownValue.renewal = false;
-      dropdownValue.newLicense = false;
-      dropdownValue.goodStanding = false;
-      console.log("verification after i s", dropdownValue.verification)
-    };
-    const newlicenseDD = () => {
-      console.log("what")
-    }
-    const goodStandingDD = () => {
-      console.log("what")
-    }
-
-    
-
     return {
       dropdownValue,
       expertLevelId,
-      newlicenseDD,
-      renewalDD,
-      renewalAssignedDD,
-      verificationDD,
-      goodStandingDD,
+      adminRole,
       selectMenu,
       applicationTypeHandler,
 

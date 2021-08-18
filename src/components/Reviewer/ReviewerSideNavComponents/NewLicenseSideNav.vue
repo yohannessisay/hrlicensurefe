@@ -47,6 +47,7 @@
                 <li
                   @click="newlicenseDDHandler('NewLicenseAssigned')"
                   class=" justify-start "
+                  v-if="adminRole == 'SA'"
                 >
                   <transition name="slide-fade-to-left">
                     <div class="">
@@ -109,6 +110,16 @@
                     </div>
                   </transition>
                 </li>
+                <li
+                  @click="newLicenseMenuHandler('newLicenseAssigned')"
+                  class=" mb-2 "
+                  v-else
+                >
+                  <p class=" text-sm" style="color: white; ">
+                    <i class="mr-2 far fa-address-book fa-x fa-light"></i>
+                    Assigned To You
+                  </p>
+                </li>
               </div>
               <!-- assigned to you and assigned to others ends here -->
 
@@ -117,6 +128,7 @@
                 <li
                   @click="newlicenseDDHandler('NewLicenseUnfinished')"
                   class=" justify-start "
+                  v-if="adminRole == 'SA'"
                 >
                   <transition name="slide-fade-to-left">
                     <div class="">
@@ -181,6 +193,17 @@
                     </div>
                   </transition>
                 </li>
+                <li
+                  @click="newLicenseMenuHandler('newLicenseUnfinished')"
+                  class="mb-2"
+                  v-else
+                >
+                  <!-- <span style="color: #648ea3;"> -->
+                  <p class=" text-sm" style="color: white; ">
+                    <i class="mr-2 far fa-address-book fa-x fa-light"></i>
+                    Unfinished
+                  </p>
+                </li>
               </div>
               <!-- unfinished ends here -->
 
@@ -189,6 +212,7 @@
                 <li
                   @click="newlicenseDDHandler('NewLicenseUnconfirmed')"
                   class=" justify-start "
+                  v-if="adminRole == 'SA'"
                 >
                   <transition name="slide-fade-to-left">
                     <div class="">
@@ -209,9 +233,9 @@
                                 class="mr-2 far fa-address-book fa-x fa-light"
                               ></i>
                             </span>
-                            <span class="text-base" style="color: white; "
-                              >{{expertLevelId == 4 ?  'Unconfirmed' : 'Approved' }}</span
-                            >
+                            <span class="text-base" style="color: white; ">{{
+                              expertLevelId == 4 ? "Unconfirmed" : "Approved"
+                            }}</span>
                           </h3>
                         </div>
                       </div>
@@ -232,7 +256,11 @@
                               <i
                                 class="mr-2 far fa-address-book fa-x fa-light"
                               ></i>
-                              {{expertLevelId == 4 ?  'My Unconfirmed' : 'My Approved' }}
+                              {{
+                                expertLevelId == 4
+                                  ? "My Unconfirmed"
+                                  : "My Approved"
+                              }}
                             </p>
                           </li>
                           <li
@@ -243,13 +271,28 @@
                             <!-- <span style="color: #648ea3;"> -->
                             <p class=" text-sm" style="color: white; ">
                               <i class="mr-2 far fa-id-card fa-x"></i>
-                              {{expertLevelId == 4 ?  'Others Unconfirmed' : 'Others Approved' }}
+                              {{
+                                expertLevelId == 4
+                                  ? "Others Unconfirmed"
+                                  : "Others Approved"
+                              }}
                             </p>
                           </li>
                         </ul>
                       </div>
                     </div>
                   </transition>
+                </li>
+                <li
+                  @click="newLicenseMenuHandler('newLicenseUnconfirmed')"
+                  class="mb-2"
+                  v-else
+                >
+                  <!-- <span style="color: #648ea3;"> -->
+                  <p class=" text-sm" style="color: white; ">
+                    <i class="mr-2 far fa-address-book fa-x fa-light"></i>
+                    {{ expertLevelId == 4 ? "Unconfirmed" : "Approved" }}
+                  </p>
                 </li>
               </div>
               <!-- unconfirmed ends here -->
@@ -259,6 +302,7 @@
                 <li
                   @click="newlicenseDDHandler('NewLicenseOnReview')"
                   class=" justify-start "
+                  v-if="adminRole == 'SA'"
                 >
                   <transition name="slide-fade-to-left">
                     <div class="">
@@ -319,6 +363,17 @@
                     </div>
                   </transition>
                 </li>
+                <li
+                  @click="newLicenseMenuHandler('newLicenseOnReview')"
+                  class="mb-2"
+                  v-else
+                >
+                  <!-- <span style="color: #648ea3;"> -->
+                  <p class=" text-sm" style="color: white; ">
+                    <i class="mr-2 far fa-address-book fa-x fa-light"></i>
+                    On Review
+                  </p>
+                </li>
               </div>
               <!-- on review ends here -->
 
@@ -327,6 +382,7 @@
                 <li
                   @click="newlicenseDDHandler('NewLicenseReEvaluate')"
                   class=" justify-start "
+                  v-if="adminRole == 'SA'"
                 >
                   <transition name="slide-fade-to-left">
                     <div class="">
@@ -391,109 +447,26 @@
                     </div>
                   </transition>
                 </li>
-              </div>
-              <!-- re evaluate ends here -->
-
-              <!-- decline starts here -->
-              <div>
                 <li
-                  @click="newlicenseDDHandler('NewLicenseDeclined')"
-                  class=" justify-start "
+                  @click="newLicenseMenuHandler('newLicenseReEvaluate')"
+                  class="mb-2"
+                  v-else
                 >
-                  <transition name="slide-fade-to-left">
-                    <div class="">
-                      <div class=" justify-center items-center ">
-                        <div class="p-1 ">
-                          <h3 class="text-lightBlueB-500 mt-tiny">
-                            <span style="color: white;">
-                              <i
-                                v-if="newLicenseDDIcon.isDeclinedUp"
-                                class="fas fa-chevron-circle-up float-right mt-2"
-                              ></i>
-                              <i
-                                v-else
-                                class="fas fa-chevron-circle-down float-right mt-2"
-                              ></i>
-
-                              <i
-                                class="mr-2 far fa-address-book fa-x fa-light"
-                              ></i>
-                            </span>
-                            <span class="text-base" style="color: white; "
-                              >Declined</span
-                            >
-                          </h3>
-                        </div>
-                      </div>
-                      <div
-                        v-if="dropdownValue.newLicenseDeclined"
-                        class="dropdown-menu relative  shadow-md mb-12 ml-4"
-                        style="color: #648ea3; width: 200px;"
-                      >
-                        <ul class="block w-full  shadow float-right ">
-                          <li
-                            @click="newLicenseMenuHandler('newLicenseDeclined')"
-                            class="mb-2"
-                          >
-                            <!-- <span style="color: #648ea3;"> -->
-                            <p class=" text-sm" style="color: white; ">
-                              <i
-                                class="mr-2 far fa-address-book fa-x fa-light"
-                              ></i>
-                              My Declined
-                            </p>
-                          </li>
-                          <li
-                            @click="
-                              newLicenseMenuHandler('allNewLicenseDeclined')
-                            "
-                          >
-                            <!-- <span style="color: #648ea3;"> -->
-                            <p class=" text-sm" style="color: white; ">
-                              <i class="mr-2 far fa-id-card fa-x"></i>
-                              Others Declined
-                            </p>
-                          </li>
-                          <li
-                            @click="
-                              newLicenseMenuHandler('newLicenseDeclinedPayment')
-                            "
-                            class="mb-2"
-                          >
-                            <!-- <span style="color: #648ea3;"> -->
-                            <p class=" text-sm" style="color: white; ">
-                              <i
-                                class="mr-2 far fa-address-book fa-x fa-light"
-                              ></i>
-                              My Declined Payment
-                            </p>
-                          </li>
-                          <li
-                            @click="
-                              newLicenseMenuHandler(
-                                'othersNewLicenseDeclinedPayment'
-                              )
-                            "
-                          >
-                            <!-- <span style="color: #648ea3;"> -->
-                            <p class=" text-sm" style="color: white; ">
-                              <i class="mr-2 far fa-id-card fa-x"></i>
-                              Others Declined Payment
-                            </p>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </transition>
+                  <!-- <span style="color: #648ea3;"> -->
+                  <p class=" text-sm" style="color: white; ">
+                    <i class="mr-2 far fa-address-book fa-x fa-light"></i>
+                    Re Evaluate
+                  </p>
                 </li>
               </div>
-              <!-- others decline ends here -->
+              <!-- re evaluate ends here -->
 
               <!-- under super vision starts here -->
               <div>
                 <li
                   @click="newlicenseDDHandler('NewLicenseUnderSuperVision')"
                   class=" justify-start "
+                  v-if="adminRole == 'SA'"
                 >
                   <transition name="slide-fade-to-left">
                     <div class="">
@@ -560,8 +533,116 @@
                     </div>
                   </transition>
                 </li>
+                <li
+                  @click="newLicenseMenuHandler('newLicenseUnderSuperVision')"
+                  class="mb-2"
+                  v-else
+                >
+                  <!-- <span style="color: #648ea3;"> -->
+                  <p class=" text-sm" style="color: white; ">
+                    <i class="mr-2 far fa-address-book fa-x fa-light"></i>
+                    Under Super Vision
+                  </p>
+                </li>
               </div>
               <!-- under super vision ends here -->
+
+              <!-- decline starts here -->
+              <div>
+                <li
+                  @click="newlicenseDDHandler('NewLicenseDeclined')"
+                  class=" justify-start "
+                >
+                  <transition name="slide-fade-to-left">
+                    <div class="">
+                      <div class=" justify-center items-center ">
+                        <div class="p-1 ">
+                          <h3 class="text-lightBlueB-500 mt-tiny">
+                            <span style="color: white;">
+                              <i
+                                v-if="newLicenseDDIcon.isDeclinedUp"
+                                class="fas fa-chevron-circle-up float-right mt-2"
+                              ></i>
+                              <i
+                                v-else
+                                class="fas fa-chevron-circle-down float-right mt-2"
+                              ></i>
+
+                              <i
+                                class="mr-2 far fa-address-book fa-x fa-light"
+                              ></i>
+                            </span>
+                            <span class="text-base" style="color: white; "
+                              >Declined</span
+                            >
+                          </h3>
+                        </div>
+                      </div>
+                      <div
+                        v-if="dropdownValue.newLicenseDeclined"
+                        class="dropdown-menu relative  shadow-md mb-12 ml-4"
+                        style="color: #648ea3; width: 200px;"
+                      >
+                        <ul class="block w-full  shadow float-right ">
+                          <li
+                            @click="newLicenseMenuHandler('newLicenseDeclined')"
+                            class="mb-2"
+                          >
+                            <!-- <span style="color: #648ea3;"> -->
+                            <p class=" text-sm" style="color: white; ">
+                              <i
+                                class="mr-2 far fa-address-book fa-x fa-light"
+                              ></i>
+                              {{adminRole=='SA' ?  'My Declined' : 'Declined'}}
+                            </p>
+                          </li>
+                          <li
+                            @click="
+                              newLicenseMenuHandler('allNewLicenseDeclined')
+                            "
+                            v-if="adminRole == 'SA'"
+                          >
+                            <!-- <span style="color: #648ea3;"> -->
+                            <p class=" text-sm" style="color: white; ">
+                              <i class="mr-2 far fa-id-card fa-x"></i>
+                              Others Declined
+                            </p>
+                          </li>
+                          <li
+                            @click="
+                              newLicenseMenuHandler('newLicenseDeclinedPayment')
+                            "
+                            class="mb-2"
+                          >
+                            <!-- <span style="color: #648ea3;"> -->
+                            <p class=" text-sm" style="color: white; ">
+                              <i
+                                class="mr-2 far fa-address-book fa-x fa-light"
+                              ></i>
+                              {{adminRole=='SA' ?  'My Declined Payment' : 'Declined Payment'}}
+                            </p>
+                          </li>
+                          <li
+                            @click="
+                              newLicenseMenuHandler(
+                                'othersNewLicenseDeclinedPayment'
+                              )
+                            "
+                            v-if="adminRole == 'SA'"
+                          >
+                            <!-- <span style="color: #648ea3;"> -->
+                            <p class=" text-sm" style="color: white; ">
+                              <i class="mr-2 far fa-id-card fa-x"></i>
+                              Others Declined Payment
+                            </p>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </transition>
+                </li>
+              </div>
+              <!-- others decline ends here -->
 
               <!-- confirmed starts here -->
               <div v-if="expertLevelId == 4">
@@ -611,13 +692,14 @@
                               <i
                                 class="mr-2 far fa-address-book fa-x fa-light"
                               ></i>
-                              My Confirmed
+                              {{adminRole=='SA' ?  'My Confirmed' : 'Confirmed'}}
                             </p>
                           </li>
                           <li
                             @click="
                               newLicenseMenuHandler('othersNewLicenseConfirmed')
                             "
+                            v-if="adminRole == 'SA'"
                           >
                             <!-- <span style="color: #648ea3;"> -->
                             <p class=" text-sm" style="color: white; ">
@@ -636,7 +718,7 @@
                               <i
                                 class="mr-2 far fa-address-book fa-x fa-light"
                               ></i>
-                              My Approved Payment
+                              {{adminRole=='SA' ?  'My Approved Payment' : 'Approved Payment'}}
                             </p>
                           </li>
                           <li
@@ -645,6 +727,7 @@
                                 'othersNewLicenseApprovedPayment'
                               )
                             "
+                            v-if="adminRole == 'SA'"
                           >
                             <!-- <span style="color: #648ea3;"> -->
                             <p class=" text-sm" style="color: white; ">
@@ -670,7 +753,7 @@
 import { ref } from "vue";
 export default {
   name: "NewLicenseSideNav",
-  props: ["dropdownValue", "expertLevelId"],
+  props: ["dropdownValue", "expertLevelId", "adminRole"],
   setup(props, { emit }) {
     let newLicenseDDIcon = ref({
       isNewLicenseUp: false,

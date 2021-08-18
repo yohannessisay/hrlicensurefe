@@ -59,18 +59,24 @@
   </div>
 </template>
 <script>
-import store from "../../../../store";
-import { useStore } from "vuex";
+
+
 import { ref, onMounted } from "vue";
-import Title from "@/sharedComponents/TitleWithIllustration";
-import ReviewerNavBar from "../../ReviewerNavBar.vue";
-import UnassignedApplications from "../ChildApplicationTypes/UnassignedApplications.vue";
-import NothingToShow from "../../ChildComponents/NothingToShow.vue";
-import Spinner from "@/sharedComponents/Spinner";
+import { useStore } from "vuex";
 import moment from "moment";
-import filterApplication from "../../ChildComponents/FilteredDatas/FilterApplication.js";
+
+import applicationStatus from "../../Configurations/getApplicationStatus.js";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
+import filterApplication from "../../ChildComponents/FilteredDatas/FilterApplication.js";
 import FilteredInfo from "../../ChildComponents/FilteredDatas/FilteredInfo.vue";
+import NothingToShow from "../../ChildComponents/NothingToShow.vue";
+import ReviewerNavBar from "../../ReviewerNavBar.vue";
+import Spinner from "@/sharedComponents/Spinner";
+import Title from "@/sharedComponents/TitleWithIllustration";
+import UnassignedApplications from "../ChildApplicationTypes/UnassignedApplications.vue";
+
+
+import store from "../../../../store";
 export default {
   name: "VerificationUnassigned",
   components: {
@@ -145,17 +151,20 @@ export default {
       allInfo.value.searchUpToDate = "";
       allInfo.value.app_type = "";
     };
+    console.log("value of value")
 
     const fetchUnassignedVerification = () => {
       showLoading.value = true;
+      const statusId = applicationStatus(store, 'SUB');
       store
-        .dispatch("reviewerVerification/getUnassignedVerification")
+        .dispatch("reviewerVerification/getUnassignedVerification", statusId)
         .then((res) => {
           showLoading.value = false;
           verificationUnassigned.value =
             store.getters[
               "reviewerVerification/getVerificationUnassignedSearched"
             ];
+            console.log("verification unassigned", verificationUnassigned.value)
           allInfo.value.assignApplication =
             store.getters[
               "reviewerVerification/getVerificationUnassignedSearched"
@@ -173,13 +182,15 @@ export default {
                 allInfo.value.assignApplication[applicant].applicantType;
             }
           }
-          if (verificationUnassigned.value.length === 0) {
-            nothingToShow.value = true;
-          }
+          console.log("verification value is ++", verificationUnassigned.value)
+          // if (verificationUnassigned.value.length === 0) {
+          //   nothingToShow.value = true;
+          // }
         });
     };
 
     onMounted(() => {
+      console.log("veerriiffccaattiioonn", verificationUnassigned.value)
       fetchUnassignedVerification();
     });
     return {
