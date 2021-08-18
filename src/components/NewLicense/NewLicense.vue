@@ -489,12 +489,10 @@ export default {
         params == null ||
         params == undefined ||
         params == "" ||
-        params == 0 ||
-        params == 1
+        params == 0
       ) {
         this.displayEnglishLanguageOption = false;
-      }
-      if (params == 2) {
+      } else {
         this.displayEnglishLanguageOption = true;
       }
     },

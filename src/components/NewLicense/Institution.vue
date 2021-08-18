@@ -161,7 +161,7 @@
               <select
                 class="max-w-3xl"
                 @change="setEnglishLanguage()"
-                v-model="licenseInfo.englishLanguageId"
+                v-model="licenseInfo.nativeLanguageId"
               >
                 <option
                   v-for="types in this.englishData.data"
@@ -534,7 +534,7 @@ export default {
         this.licenseInfo.nativeLanguageId == undefined ||
         this.licenseInfo.nativeLanguageId == ""
       ) {
-        this.licenseInfo.nativeLanguageId = 0;
+        this.licenseInfo.nativeLanguageId = 1;
       }
       let license = {
         applicantId: this.licenseInfo.applicantId,
