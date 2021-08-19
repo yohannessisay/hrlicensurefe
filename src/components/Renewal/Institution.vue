@@ -294,14 +294,14 @@ export default {
   data: () => ({
     licenseInfo: {
       applicantId: +localStorage.getItem("userId"),
-      applicantTypeId: "",
+      applicantTypeId: null,
       education: {
-        departmentId: "",
-        institutionId: "",
+        departmentId: null,
+        institutionId: null,
       },
-      residenceWoredaId: "",
-      professionalTypeID: "",
-      occupationTypeId: "",
+      residenceWoredaId: null,
+      professionalTypeID: null,
+      occupationTypeId: null,
     },
     licenseInfoErrors: {
       applicantTypeId: "",
@@ -334,7 +334,6 @@ export default {
 
     displayPayrollDoc: false,
     payrollDocType: false,
-    payrollID: 0,
 
     payrollData: "",
   }),

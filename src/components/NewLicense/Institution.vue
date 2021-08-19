@@ -315,15 +315,15 @@ export default {
   data: () => ({
     licenseInfo: {
       applicantId: +localStorage.getItem("userId"),
-      applicantTypeId: "",
+      applicantTypeId: null,
       education: {
-        departmentId: "",
-        institutionId: "",
+        departmentId: null,
+        institutionId: null,
       },
-      residenceWoredaId: "",
-      professionalTypeID: "",
-      nativeLanguageId: "",
-      occupationTypeId: "",
+      residenceWoredaId: null,
+      professionalTypeID: null,
+      nativeLanguageId: null,
+      occupationTypeId: null,
     },
     licenseInfoErrors: {
       applicantTypeId: "",
@@ -357,9 +357,6 @@ export default {
 
     nativeEnglishSpeaker: false,
     payrollDocType: false,
-
-    languageID: 0,
-    payrollID: 0,
 
     englishData: "",
     payrollData: "",
@@ -522,20 +519,6 @@ export default {
       });
     },
     submit() {
-      if (
-        this.licenseInfo.occupationTypeId == null ||
-        this.licenseInfo.occupationTypeId == undefined ||
-        this.licenseInfo.occupationTypeId == ""
-      ) {
-        this.licenseInfo.occupationTypeId = 0;
-      }
-      if (
-        this.licenseInfo.nativeLanguageId == null ||
-        this.licenseInfo.nativeLanguageId == undefined ||
-        this.licenseInfo.nativeLanguageId == ""
-      ) {
-        this.licenseInfo.nativeLanguageId = 1;
-      }
       let license = {
         applicantId: this.licenseInfo.applicantId,
         applicantTypeId: this.licenseInfo.applicantTypeId,
