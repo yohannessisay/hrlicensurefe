@@ -47,7 +47,7 @@
                 <li
                   @click="newlicenseDDHandler('NewLicenseAssigned')"
                   class=" justify-start "
-                  v-if="adminRole == 'SA'"
+                  v-if="adminRole == 'ADM'"
                 >
                   <transition name="slide-fade-to-left">
                     <div class="">
@@ -128,7 +128,7 @@
                 <li
                   @click="newlicenseDDHandler('NewLicenseUnfinished')"
                   class=" justify-start "
-                  v-if="adminRole == 'SA'"
+                  v-if="adminRole == 'ADM'"
                 >
                   <transition name="slide-fade-to-left">
                     <div class="">
@@ -212,7 +212,7 @@
                 <li
                   @click="newlicenseDDHandler('NewLicenseUnconfirmed')"
                   class=" justify-start "
-                  v-if="adminRole == 'SA'"
+                  v-if="adminRole == 'ADM'"
                 >
                   <transition name="slide-fade-to-left">
                     <div class="">
@@ -302,7 +302,7 @@
                 <li
                   @click="newlicenseDDHandler('NewLicenseOnReview')"
                   class=" justify-start "
-                  v-if="adminRole == 'SA'"
+                  v-if="adminRole == 'ADM'"
                 >
                   <transition name="slide-fade-to-left">
                     <div class="">
@@ -382,7 +382,7 @@
                 <li
                   @click="newlicenseDDHandler('NewLicenseReEvaluate')"
                   class=" justify-start "
-                  v-if="adminRole == 'SA'"
+                  v-if="adminRole == 'ADM'"
                 >
                   <transition name="slide-fade-to-left">
                     <div class="">
@@ -466,7 +466,7 @@
                 <li
                   @click="newlicenseDDHandler('NewLicenseUnderSuperVision')"
                   class=" justify-start "
-                  v-if="adminRole == 'SA'"
+                  v-if="adminRole == 'ADM'"
                 >
                   <transition name="slide-fade-to-left">
                     <div class="">
@@ -593,14 +593,14 @@
                               <i
                                 class="mr-2 far fa-address-book fa-x fa-light"
                               ></i>
-                              {{adminRole=='SA' ?  'My Declined' : 'Declined'}}
+                              {{adminRole=='ADM' ?  'My Declined' : 'Declined'}}
                             </p>
                           </li>
                           <li
                             @click="
                               newLicenseMenuHandler('allNewLicenseDeclined')
                             "
-                            v-if="adminRole == 'SA'"
+                            v-if="adminRole == 'ADM'"
                           >
                             <!-- <span style="color: #648ea3;"> -->
                             <p class=" text-sm" style="color: white; ">
@@ -619,7 +619,7 @@
                               <i
                                 class="mr-2 far fa-address-book fa-x fa-light"
                               ></i>
-                              {{adminRole=='SA' ?  'My Declined Payment' : 'Declined Payment'}}
+                              {{adminRole=='ADM' ?  'My Declined Payment' : 'Declined Payment'}}
                             </p>
                           </li>
                           <li
@@ -628,7 +628,7 @@
                                 'othersNewLicenseDeclinedPayment'
                               )
                             "
-                            v-if="adminRole == 'SA'"
+                            v-if="adminRole == 'ADM'"
                           >
                             <!-- <span style="color: #648ea3;"> -->
                             <p class=" text-sm" style="color: white; ">
@@ -692,14 +692,14 @@
                               <i
                                 class="mr-2 far fa-address-book fa-x fa-light"
                               ></i>
-                              {{adminRole=='SA' ?  'My Confirmed' : 'Confirmed'}}
+                              {{adminRole=='ADM' ?  'My Confirmed' : 'Confirmed'}}
                             </p>
                           </li>
                           <li
                             @click="
                               newLicenseMenuHandler('othersNewLicenseConfirmed')
                             "
-                            v-if="adminRole == 'SA'"
+                            v-if="adminRole == 'ADM'"
                           >
                             <!-- <span style="color: #648ea3;"> -->
                             <p class=" text-sm" style="color: white; ">
@@ -718,7 +718,7 @@
                               <i
                                 class="mr-2 far fa-address-book fa-x fa-light"
                               ></i>
-                              {{adminRole=='SA' ?  'My Approved Payment' : 'Approved Payment'}}
+                              {{adminRole=='ADM' ?  'My Approved Payment' : 'Approved Payment'}}
                             </p>
                           </li>
                           <li
@@ -727,7 +727,7 @@
                                 'othersNewLicenseApprovedPayment'
                               )
                             "
-                            v-if="adminRole == 'SA'"
+                            v-if="adminRole == 'ADM'"
                           >
                             <!-- <span style="color: #648ea3;"> -->
                             <p class=" text-sm" style="color: white; ">

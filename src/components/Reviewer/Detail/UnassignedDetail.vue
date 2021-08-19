@@ -8,7 +8,7 @@
         class="ml-8 mr-8 mb-12"
       >
         <div class="mt-large bg-white">
-          <div v-if="role.code === `TL` || role.code === `SA`" class="flex">
+          <div v-if="role.code === `TL` || role.code === `ADM`" class="flex">
             <div class="flex flex-col mb-medium w-2/3 ml-small mt-small"></div>
             <div class="flex flex-col mb-medium w-1/3 mr-small mt-small">
               <label class="text-primary-700">Assign To</label>
@@ -457,7 +457,7 @@ export default {
     };
 
     const assignReviewer = () => {
-      if (role.value.code === "TL" || role.value.code === "SA") {
+      if (role.value.code === "TL" || role.value.code === "ADM") {
         if (applicationType.value == "Good Standing") {
           assign.value = {
             goodStandingId: route.params.applicationId,

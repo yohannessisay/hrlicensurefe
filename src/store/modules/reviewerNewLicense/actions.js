@@ -51,6 +51,11 @@ import {
   SET_NEW_LICENSE_OTHERS_CONFIRMED,
   SET_NEW_LICENSE_OTHERS_CONFIRMED_SEARCHED,
 
+  SET_NEW_LICENSE_RETURNED_TO_ME,
+  SET_NEW_LICENSE_RETURNED_TO_ME_SEARCHED,
+  SET_NEW_LICENSE_RETURNED_TO_OTHERS,
+  SET_NEW_LICENSE_RETURNED_TO_OTHERS_SEARCHED,
+
   NEW_LICENSE_REPORT,
 } from "./mutation-types";
 
@@ -707,9 +712,6 @@ export default {
     commit(SET_NEW_LICENSE_OTHERS_RE_EVALUATE_SEARCHED, searchedVal);
   },
 
-  /* 
-  /* confirmed status is wrong for the time (status/7) is placeholder
-  */
   async getNewLicenseConfirmed({ commit }, adminStatus) {
     const url = baseUrl + "/newlicenses/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
@@ -740,9 +742,6 @@ export default {
     commit(SET_NEW_LICENSE_CONFIRMED_SEARCHED, searchedVal);
   },
 
-  /* 
-  /* confirmed status is wrong for the time (status/7) is placeholder
-  */
   async getNewLicenseOthersConfirmed({ commit }, adminStatus) {
     const url = baseUrl + "/newlicenses/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
@@ -756,6 +755,69 @@ export default {
       return;
     }
     const searchedVal = getters.getNewLicenseOthersConfirmed.filter(function(
+      e
+    ) {
+      return e.newLicenseCode === undefined
+        ? ""
+        : e.newLicenseCode.toLowerCase().includes(searchKey.toLowerCase()) ||
+            (e.applicant.profile.name + " " + e.applicant.profile.fatherName)
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.name
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.fatherName
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.reviewer.name.toLowerCase().includes(searchKey.toLowerCase());
+    });
+    commit(SET_NEW_LICENSE_OTHERS_CONFIRMED_SEARCHED, searchedVal);
+  },
+
+  async getNewLicenseReturnedToMe({ commit }, adminStatus) {
+    const url = baseUrl + "/newlicenses/status/"+adminStatus[0];
+    const resp = await ApiService.get(url);
+    const confirmed = resp.data.data.filter(function(e) {
+      return e.reviewerId === adminStatus[1];
+    });
+    commit(SET_NEW_LICENSE_RETURNED_TO_ME, confirmed);
+  },
+
+  getNewLicenseReturnedToMeSearched({ commit, getters }, searchKey) {
+    if (getters.getNewLicenseReturnedToMe === undefined) {
+      return;
+    }
+    const searchedVal = getters.getNewLicenseReturnedToMe.filter(function(e) {
+      return e.newLicenseCode === undefined
+        ? ""
+        : e.newLicenseCode.toLowerCase().includes(searchKey.toLowerCase()) ||
+            (e.applicant.profile.name + " " + e.applicant.profile.fatherName)
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.name
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.fatherName
+              .toLowerCase()
+              .includes(searchKey.toLowerCase());
+    });
+    commit(SET_NEW_LICENSE_RETURNED_TO_ME_SEARCHED, searchedVal);
+  },
+
+  async getNewLicenseReturnedToOthers({ commit }, adminStatus) {
+    const url = baseUrl + "/newlicenses/status/"+adminStatus[0];
+    const resp = await ApiService.get(url);
+    const confirmed = resp.data.data.filter(function(e) {
+      return e.reviewerId !== adminStatus[1]
+    })
+    commit(SET_NEW_LICENSE_RETURNED_TO_OTHERS, confirmed);
+  },
+
+  getNewLicenseReturnedToOthersSearched({ commit, getters }, searchKey) {
+    if (getters.getNewLicenseReturnedToOthers === undefined) {
+      return;
+    }
+    const searchedVal = getters.getNewLicenseReturnedToOthers.filter(function(
       e
     ) {
       return e.newLicenseCode === undefined

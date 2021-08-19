@@ -64,7 +64,7 @@ export default {
 
     let isSuperAdmin = ref(false);
     const superAdminStatus = () => {
-      if (role == "SA") {
+      if (role == "ADM") {
         isSuperAdmin.value = true;
       }
     };

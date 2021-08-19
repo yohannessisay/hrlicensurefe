@@ -44,7 +44,7 @@
                 <li
                   @click="renewalDDHandler('RenewalAssigned')"
                   class=" justify-start "
-                  v-if="adminRole == 'SA'"
+                  v-if="adminRole == 'ADM'"
                 >
                   <transition name="slide-fade-to-left">
                     <div class="">
@@ -126,7 +126,7 @@
                 <li
                   @click="renewalDDHandler('RenewalUnfinished')"
                   class=" justify-start "
-                  v-if="adminRole == 'SA'"
+                  v-if="adminRole == 'ADM'"
                 >
                   <transition name="slide-fade-to-left">
                     <div class="">
@@ -208,7 +208,7 @@
                 <li
                   @click="renewalDDHandler('RenewalUnconfirmed')"
                   class=" justify-start "
-                  v-if="adminRole == 'SA'"
+                  v-if="adminRole == 'ADM'"
                 >
                   <transition name="slide-fade-to-left">
                     <div class="">
@@ -288,7 +288,7 @@
                 <li
                   @click="renewalDDHandler('RenewalOnReview')"
                   class=" justify-start "
-                  v-if="adminRole == 'SA'"
+                  v-if="adminRole == 'ADM'"
                 >
                   <transition name="slide-fade-to-left">
                     <div class="">
@@ -368,7 +368,7 @@
                 <li
                   @click="renewalDDHandler('RenewalReEvaluate')"
                   class=" justify-start "
-                  v-if="adminRole == 'SA'"
+                  v-if="adminRole == 'ADM'"
                 >
                   <transition name="slide-fade-to-left">
                     <div class="">
@@ -491,10 +491,10 @@
                               <i
                                 class="mr-2 far fa-address-book fa-x fa-light"
                               ></i>
-                              {{adminRole=='SA' ?  'My Declined' : 'Declined'}}
+                              {{adminRole=='ADM' ?  'My Declined' : 'Declined'}}
                             </p>
                           </li>
-                          <li @click="renewalMenuHandler('allRenewalDeclined')" v-if="adminRole == 'SA'">
+                          <li @click="renewalMenuHandler('allRenewalDeclined')" v-if="adminRole == 'ADM'">
                             <!-- <span style="color: #648ea3;"> -->
                             <p class=" text-sm" style="color: white; ">
                               <i class="mr-2 far fa-id-card fa-x"></i>
@@ -512,7 +512,7 @@
                               <i
                                 class="mr-2 far fa-address-book fa-x fa-light"
                               ></i>
-                              {{adminRole=='SA' ?  'My Declined Payment' : 'Declined Payment'}}
+                              {{adminRole=='ADM' ?  'My Declined Payment' : 'Declined Payment'}}
                             </p>
                           </li>
                           <li
@@ -521,7 +521,7 @@
                                 'othersRenewalDeclinedPayment'
                               )
                             "
-                            v-if="adminRole == 'SA'"
+                            v-if="adminRole == 'ADM'"
                           >
                             <!-- <span style="color: #648ea3;"> -->
                             <p class=" text-sm" style="color: white; ">
@@ -542,7 +542,7 @@
                 <li
                   @click="renewalDDHandler('RenewalUnderSuperVision')"
                   class=" justify-start "
-                  v-if="adminRole == 'SA'"
+                  v-if="adminRole == 'ADM'"
                 >
                   <transition name="slide-fade-to-left">
                     <div class="">
@@ -657,14 +657,14 @@
                                 class="mr-2 far fa-address-book fa-x fa-light"
                               ></i>
                               
-                              {{adminRole=='SA' ?  'My Confirmed' : 'Confirmed'}}
+                              {{adminRole=='ADM' ?  'My Confirmed' : 'Confirmed'}}
                             </p>
                           </li>
                           <li
                             @click="
                               renewalMenuHandler('renewalOthersConfirmed')
                             "
-                            v-if="adminRole == 'SA'"
+                            v-if="adminRole == 'ADM'"
                           >
                             <!-- <span style="color: #648ea3;"> -->
                             <p class=" text-sm" style="color: white; ">
@@ -683,7 +683,7 @@
                               <i
                                 class="mr-2 far fa-address-book fa-x fa-light"
                               ></i>
-                              {{adminRole=='SA' ?  'My Approved Payment' : 'Approved Payment'}}
+                              {{adminRole=='ADM' ?  'My Approved Payment' : 'Approved Payment'}}
                               
                             </p>
                           </li>
@@ -691,7 +691,7 @@
                             @click="
                               renewalMenuHandler('othersRenewalApprovedPayment')
                             "
-                            v-if="adminRole == 'SA'"
+                            v-if="adminRole == 'ADM'"
                           >
                             <!-- <span style="color: #648ea3;"> -->
                             <p class=" text-sm" style="color: white; ">

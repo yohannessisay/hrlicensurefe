@@ -109,7 +109,7 @@ export default {
   async getEveryOneUnfinished({commit}, adminData) {
     const adminRole = adminData[0];
     const adminId = adminData[1];
-    if(adminRole === "SA") {
+    if(adminRole === "ADM") {
       try {  
         const respAll = await ApiService.get(baseUrl + "/applications/allUnfinished", { 
         });
@@ -207,7 +207,7 @@ export default {
   async getAllUnconfirmed({commit}, adminData) {
     const adminRole = adminData[0];
     const adminId = adminData[1];
-    if(adminRole === "SA") {
+    if(adminRole === "ADM") {
       try {  
         const resp = await ApiService.get(baseUrl + "/applications/allUnconfirmedApps");
         commit(SET_OTHERS_UNCONFIRMED, resp.data.data)
@@ -286,7 +286,7 @@ export default {
   async getReturnedToOthers({commit}, adminData) {
     const adminRole = adminData[0];
     const adminId = adminData[1];
-    if(adminRole === "SA") {
+    if(adminRole === "ADM") {
       try {  
         const respAll = await ApiService.get(baseUrl + "/applications/allUnfinished");
         const resp = respAll.data.data.filter(function(e) {
@@ -381,7 +381,7 @@ export default {
   async getOthersConfirmReview({commit}, adminData) {
     const adminRole = adminData[0];
     const adminId = adminData[1];
-    if(adminRole === "SA") {
+    if(adminRole === "ADM") {
       try {  
         const respAll = await ApiService.get(baseUrl + "/applications/allUnfinished");
         const resp = respAll.data.data.filter(function(e) {
@@ -455,7 +455,7 @@ export default {
   async getAssignedToEveryOne({commit}, adminData) {
     const adminRole = adminData[0];
     const adminId = adminData[1]
-    if(adminRole === "SA") {
+    if(adminRole === "ADM") {
       try {
         const respAll = await ApiService.get(baseUrl + "/applications/assignedToAll")
         const resp = respAll.data.data.filter(function(e) {
@@ -687,7 +687,7 @@ export default {
   async getAllRecentlyFinished({commit}, adminData) {
     const adminRole = adminData[0];
     const adminId = adminData[1];
-    if(adminRole == "SA") {
+    if(adminRole == "ADM") {
       try {
         const resp = await ApiService.get(baseUrl + "/applications/allFinished")
         const allCertifiedUsers = resp.data.data.filter(function(e) {

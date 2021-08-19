@@ -49,7 +49,7 @@
                 <li
                   @click="goodStandingDDHandler('GoodStandingAssigned')"
                   class=" justify-start "
-                  v-if="adminRole == 'SA'"
+                  v-if="adminRole == 'ADM'"
                 >
                   <transition name="slide-fade-to-left">
                     <div class="">
@@ -133,7 +133,7 @@
                 <li
                   @click="goodStandingDDHandler('GoodStandingUnfinished')"
                   class=" justify-start "
-                  v-if="adminRole == 'SA'"
+                  v-if="adminRole == 'ADM'"
                 >
                   <transition name="slide-fade-to-left">
                     <div class="">
@@ -217,7 +217,7 @@
                 <li
                   @click="goodStandingDDHandler('GoodStandingApproved')"
                   class=" justify-start "
-                  v-if="adminRole == 'SA'"
+                  v-if="adminRole == 'ADM'"
                 >
                   <transition name="slide-fade-to-left">
                     <div class="">
@@ -301,7 +301,7 @@
                 <li
                   @click="goodStandingDDHandler('GoodStandingDeclined')"
                   class=" justify-start "
-                  v-if="adminRole == 'SA'"
+                  v-if="adminRole == 'ADM'"
                 >
                   <transition name="slide-fade-to-left">
                     <div class="">

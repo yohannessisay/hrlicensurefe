@@ -2,14 +2,20 @@
   <header class="px-10 py-3.5 inset-box-shadow bg-lightBlueB-100">
     <nav class="">
       <main class="flex items-center justify-between">
-        <div class="flex items-center">
-          <router-link to="/admin/review">
+        <div class="flex items-center"
+          
+        >
+        <!-- <span @click="selectMenu(0)"
+          v-if="adminRole"
+          > -->
+          <a @click="navigateToHomePage()" >
             <RenderIllustration
               class=""
               illustration="Logo"
               message="Address"
             />
-          </router-link>
+            <!-- </span> -->
+          </a>
           <h3 class="ml-tiny font-AtkinsonHyperlegibleBold">HRIS - Lisence</h3>
           <div
             class="flex flex-col items-center justify-between ml-medium width-64 bg-gray-800"
@@ -43,284 +49,6 @@
             </div>
           </div>
         </div>
-
-        <!-- <div class="flex items-center space-x-5">
-          <div>
-            <router-link to="/admin/review">
-              <a v-if="tab != `Home`" class="mr-small">
-                Home
-              </a>
-              <a
-                v-if="tab == `Home`"
-                class="text-primary-300 mr-small width-small inline-block pr-12 justify-center item-center"
-              >
-                <p class="text-primary-600 font-AtkinsonHyperlegibleBold">
-                  Home
-                </p>
-                <hr class="yellow-gradient border-none" />
-              </a>
-            </router-link>
-            <span v-if="isSuperAdmin"> 
-              <div class="relative inline-block text-left text-primary-300">
-                <a
-                  class="text-primary-300"
-                  id="options-menu"
-                  aria-expanded="true"
-                  aria-haspopup="true"
-                  href="#"
-                  v-on:click="showFinishedDropDown()"
-                >
-                  <div class="text-primary-300 mr-small">
-                    <p>Finished <i class="fas fa-chevron-circle-down"></i></p>
-                    
-                  </div>
-                </a>
-                <div
-                  v-if="showFinishedDD === true"
-                  class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white focus:outline-none"
-                  role="menu"
-                  aria-orientation="vertical"
-                  aria-labelledby="options-menu"
-                >
-                  <router-link to="/myWork">
-                    <a
-                      class="block px-4 py-2 text-sm text-blue-100 hover:bg-gray-100 hover:text-gray-900"
-                      role="menuitem"
-                    >
-                      My Work
-                    </a>
-                  </router-link>
-                  <router-link to="/allWork">
-                    <a
-                      class="block px-4 py-2 text-sm text-blue-100 hover:bg-gray-100 hover:text-gray-900"
-                      role="menuitem"
-                    >
-                      Others Work
-                    </a>
-                  </router-link>
-                </div>
-              </div>
-            </span>
-            <span v-else>
-              <router-link to="/myWork">
-                <a v-if="tab != `MyWork`" class="mr-small">
-                  My Work
-                </a>
-                <a
-                  v-if="tab == `MyWork`"
-                  class="text-primary-300 mr-small width-medium inline-block pr-tiny justify-center item-center"
-                >
-                  <p class="text-primary-600 font-AtkinsonHyperlegibleBold">
-                    My Work
-                  </p>
-                  <hr class="yellow-gradient border-none" />
-                </a>
-              </router-link>
-            </span>
-            <span v-if="true">
-              <div class="relative inline-block text-left text-primary-300">
-                <a
-                  class="text-primary-300"
-                  id="options-menu"
-                  aria-expanded="true"
-                  aria-haspopup="true"
-                  href="#"
-                  v-on:click="showUnfinishedDropDown()"
-                >
-                  <div class="mr-small">
-                    <p>Unfinished <i class="fas fa-chevron-circle-down"></i></p>
-                  </div>
-                </a>
-                <div
-                  v-if="showUnfinishedDD === true"
-                  class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white focus:outline-none"
-                  role="menu"
-                  aria-orientation="vertical"
-                  aria-labelledby="options-menu"
-                >
-                  <router-link to="/admin/unfinished">
-                    <a
-                      class="block px-4 py-2 text-sm text-blue-100 hover:bg-gray-100 hover:text-gray-900"
-                      role="menuitem"
-                    >
-                      My Unfinished
-                    </a>
-                  </router-link>
-                  <div v-if="isSuperAdmin">
-                  <router-link to="/admin/unfinishedAll">
-                    <a
-                      class="block px-4 py-2 text-sm text-blue-100 hover:bg-gray-100 hover:text-gray-900"
-                      role="menuitem"
-                    >
-                      Others Unfinished
-                    </a>
-                  </router-link>
-                  </div>
-                  <router-link to="/admin/unconfirmed">
-                    <a
-                      class="block px-4 py-2 text-sm text-blue-100 hover:bg-gray-100 hover:text-gray-900"
-                      role="menuitem"
-                    >
-                      Un Confirmed
-                    </a>
-                  </router-link>
-                  <router-link to="/admin/onreview">
-                    <a
-                      class="block px-4 py-2 text-sm text-blue-100 hover:bg-gray-100 hover:text-gray-900"
-                      role="menuitem"
-                    >
-                      On Review
-                    </a>
-                  </router-link>
-                  <router-link to="/admin/evaluateReview">
-                    <a
-                      class="block px-4 py-2 text-sm text-blue-100 hover:bg-gray-100 hover:text-gray-900"
-                      role="menuitem"
-                    >
-                      Evaluate Review
-                    </a>
-                  </router-link>
-                </div>
-              </div>
-            </span>
-            <span v-else>
-              <router-link to="/admin/unfinished">
-                <a v-if="tab != `Unfinished`" class="mr-small">
-                  Unfinished
-                </a>
-                <a
-                  v-if="tab == `Unfinished`"
-                  class="text-primary-300 mr-small width-small inline-block pr-20 justify-center item-center"
-                >
-                  <p class="text-primary-600 font-AtkinsonHyperlegibleBold">
-                    Unfinished
-                  </p>
-                  <hr class="yellow-gradient border-none" />
-                </a>
-              </router-link>
-            </span>
-            <span v-if="isSuperAdmin">
-              <div class="relative inline-block text-left text-primary-300">
-                <a
-                  class="text-primary-300"
-                  id="options-menu"
-                  aria-expanded="true"
-                  aria-haspopup="true"
-                  href="#"
-                  v-on:click="showAssignedDropDown()"
-                >
-                  <div class="mr-small">
-                    <p>Assigned <i class="fas fa-chevron-circle-down"></i></p>
-                  </div>
-                </a>
-                <div
-                  v-if="showAssignedDD == true"
-                  class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white focus:outline-none"
-                  role="menu"
-                  aria-orientation="vertical"
-                  aria-labelledby="options-menu"
-                >
-                  <router-link to="/admin/assignedToYou">
-                    <a
-                      class="block px-4 py-2 text-sm text-blue-100 hover:bg-gray-100 hover:text-gray-900"
-                      role="menuitem"
-                    >
-                      Assigned to You
-                    </a>
-                  </router-link>
-                  <router-link to="/admin/assignedToAll">
-                    <a
-                      class="block px-4 py-2 text-sm text-blue-100 hover:bg-gray-100 hover:text-gray-900"
-                      role="menuitem"
-                    >
-                      Assigned to Others
-                    </a>
-                  </router-link>
-                </div>
-              </div>
-            </span>
-            <span v-else>
-              <router-link to="/admin/assignedToYou">
-                <a
-                  v-if="tab != `AssignedToYou`"
-                  class="mr-small"
-                >
-                  Assigned to You
-                </a>
-                <a
-                  v-if="tab == `AssignedToYou`"
-                  class="text-primary-300 mr-small width-medium inline-block pr-tiny justify-center item-center"
-                >
-                  <p class="text-primary-600 font-AtkinsonHyperlegibleBold">
-                    Assigned to You
-                  </p>
-                  <hr class="yellow-gradient border-none" />
-                </a>
-              </router-link>
-            </span>
-            <router-link to="/admin/unassigned">
-              <a v-if="tab != `Unassigned`" class="mr-small">
-                Unassigned
-              </a>
-              <a
-                v-if="tab == `Unassigned`"
-                class="text-primary-300 mr-small width-medium inline-block pr-tiny justify-center item-center"
-              >
-                <p class="text-primary-600 font-AtkinsonHyperlegibleBold">
-                  Unassigned
-                </p>
-                <hr class="yellow-gradient border-none" />
-              </a>
-            </router-link>
-            <div class="relative inline-block text-left text-primary-300">
-                <a
-                  class="text-primary-300"
-                  id="options-menu"
-                  aria-expanded="true"
-                  aria-haspopup="true"
-                  href="#"
-                  v-on:click="showLicensedDropDown()"
-                >
-                  <div class="text-primary-300 mr-small">
-                    <p>Licensed <i class="fas fa-chevron-circle-down"></i></p>
-                    
-                  </div>
-                </a>
-                <div
-                  v-if="showLicensedDD === true"
-                  class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white focus:outline-none"
-                  role="menu"
-                  aria-orientation="vertical"
-                  aria-labelledby="options-menu"
-                >
-                  <router-link to="/admin/allCertifiedUsers">
-                    <a
-                      class="block px-4 py-2 text-sm text-blue-100 hover:bg-gray-100 hover:text-gray-900"
-                      role="menuitem"
-                    >
-                      My Region Licensed
-                    </a>
-                  </router-link>
-                  <router-link to="/admin/allRegionCertifiedUsers">
-                    <a
-                      class="block px-4 py-2 text-sm text-blue-100 hover:bg-gray-100 hover:text-gray-900"
-                      role="menuitem"
-                    >
-                      All Region Licensed
-                    </a>
-                  </router-link>
-                </div>
-              </div>
-
-          <router-link to="/admin/report">
-              <a class="mr-small">
-                Report
-              </a>
-
-            </router-link>
-          </div>
-          
-        </div> -->
         <div class="flex flex-row">
           <div class="mr-4" style="color: #2081f8; font-size: 20px">
             {{ adminName }}
@@ -352,15 +80,6 @@
               aria-orientation="vertical"
               aria-labelledby="options-menu"
             >
-              <div class="py-1" role="none">
-                <router-link to="/admin/create" v-if="showAdminCreate">
-                  <a
-                    class="block px-4 py-2 text-sm text-blue-100 hover:bg-gray-100 hover:text-gray-900"
-                    role="menuitem"
-                    >Create Admin User
-                  </a>
-                </router-link>
-              </div>
               <div class="py-1" role="none">
                 <a
                   @click="logout()"
@@ -411,7 +130,20 @@ export default {
     let showLicensedDD = ref(false);
     let search = ref("");
     let primaryText = ref("");
+    let isUserManager = ref(false);
     const adminName = JSON.parse(localStorage.getItem("allAdminData")).name;
+    const adminRole = JSON.parse(localStorage.getItem("allAdminData")).role.code;
+    console.log("ad ro", adminRole)
+    console.log("route is ", router.currentRoute._value.path)
+    
+
+    const navigateToHomePage = () => {
+      // if(router.currentRoute._value.path === "/admin/review") {
+      //   emit("navigateToHome", "newLicenseUnassigned");
+      // } else {
+        router.push("/admin/review");
+      // }
+    }
 
     watch(search, () => {
       if (props.tab === "Unassigned") {
@@ -718,6 +450,18 @@ export default {
           search.value
         );
       }
+      if (props.tab === "newLicenseReturnedToMe") {
+        store.dispatch(
+          "reviewerNewLicense/getNewLicenseReturnedToMeSearched",
+          search.value
+        )
+      }
+      if (props.tab === "newLicenseReturnedToOthers") {
+        store.dispatch(
+          "reviewerNewLicense/getNewLicenseReturnedToOthersSearched",
+          search.value
+        )
+      }
 
       if (props.tab === "verificationUnassigned") {
         store.dispatch(
@@ -831,11 +575,11 @@ export default {
     let showAdminCreate = false;
     let isSuperAdmin = ref(false);
     const loggedInAdminRole = localStorage.getItem("role");
-    loggedInAdminRole === "TL" || loggedInAdminRole === "SA"
+    loggedInAdminRole === "UM"
       ? (showAdminCreate = true)
       : (showAdminCreate = false);
 
-    loggedInAdminRole === "SA"
+    loggedInAdminRole === "ADM"
       ? (isSuperAdmin.value = true)
       : (isSuperAdmin.value = false);
 
@@ -904,6 +648,8 @@ export default {
       isSuperAdmin,
       primaryText,
       adminName,
+      isUserManager,
+      navigateToHomePage,
     };
   },
 };
@@ -934,5 +680,8 @@ hr {
   width: 32px;
   height: 3px;
   border-radius: 3px;
+}
+a {
+  cursor: pointer;
 }
 </style>

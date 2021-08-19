@@ -31,7 +31,7 @@
         <Spinner />
       </div>
 
-      <div v-if="adminRole === 'SA'">
+      <div v-if="adminRole === 'ADM'">
         <div class="flex pl-12 mt-medium">
           <Title message="Others Unfinished" illustration="Others Unfinished" />
           <div class="flex ml-small" v-if="everyoneUnfinished.length >= 5">
@@ -79,7 +79,7 @@
       >
         <Spinner />
       </div>
-      <div v-if="adminRole === 'SA'">
+      <div v-if="adminRole === 'ADM'">
         <div class="flex pl-12 mt-medium">
           <Title message="Assigned to Others" illustration="Assigned to Others" />
           <div class="flex ml-small" v-if="assignedToEveryone.length >= 5">
@@ -135,7 +135,7 @@
         <Spinner />
       </div>
 
-      <div v-if="adminRole === 'SA'">
+      <div v-if="adminRole === 'ADM'">
         <div class="flex pl-12 mt-medium">
           <Title message="Other Pending Payments" />
           <div class="flex ml-small" v-if="allPendings.length >= 5">
@@ -290,7 +290,7 @@ export default {
     let showMyPendingLoading = ref(false);
     let showAllPendingLoading = ref(false);
 
-    adminRole === "SA"
+    adminRole === "ADM"
       ? (myTitleMessage.value = true)
       : (myTitleMessage.value = false);
     const fetchUnfinished = () => {
@@ -599,7 +599,7 @@ export default {
       fetchUnassignedApplications();
       // fetchRecentlyFinished();
       fetchAssignedtoYou();
-      if (adminRole === "SA") {
+      if (adminRole === "ADM") {
         fetchAssignedToEveryone();
         fetchEveryOneUnfinished();
         fetchOthersPendingPayment();

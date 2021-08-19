@@ -81,7 +81,7 @@
   </div> -->
   
   <div>
-    <reviewer-nav-bar :tab="display" @changeSelectedSideBar="displaySet"/>
+    <reviewer-nav-bar :tab="display" @changeSelectedSideBar="displaySet" @navigateToHome="displaySet"/>
     <!-- <reviewer-nav-bar :display="menu" @changeDisplay="displaySet" /> -->
     <div style="width:100%" class="flex flex-row">
       <div class="sidenav">
@@ -436,6 +436,7 @@ export default {
     const displaySet = (menu) => {
       display.value = menu;
     }
+
     let isStatusFetched = ref(false);
 
     const fetchApplicationStatus = () => {

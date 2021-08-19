@@ -159,7 +159,7 @@
     <FlashMessage message="Admin user registered Successful!" />
   </div>
   <div v-if="message.showErrorFlash">
-    <ErrorFlashMessage message="Registering admin user Failed!" />
+    <ErrorFlashMessage :message="errorMessage" />
   </div>
 </template>
 
@@ -187,6 +187,7 @@ export default {
     const router = useRouter();
 
     const adminExpertId = JSON.parse(localStorage.getItem('allAdminData')).expertLevelId;
+    let errorMessage = ref("");
     let admin = {
       firstName: null,
       fatherName: null,
@@ -283,11 +284,16 @@ export default {
           }
           else if (res.data.status == "Success") {
             message.value.showFlash = !message.value.showFlash;
-
             setTimeout(() => {
-              router.push({ path: "/admin/review" });
+              location.reload(true);
             }, 3000);
-          } 
+          } else if(res.data.status = "Error") {
+            errorMessage.value = res.data.message
+            message.value.showErrorFlash = !message.value.showErrorFlash;
+            setTimeout(() => {
+              location.reload(true);
+            })
+          }
         }).catch(err => {
           showLoading.value = false;
         });
@@ -341,6 +347,7 @@ export default {
     return {
       state,
       message,
+      errorMessage,
       expertLevels,
       regions,
       showLoading,

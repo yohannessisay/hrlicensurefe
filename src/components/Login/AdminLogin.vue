@@ -102,7 +102,6 @@ export default {
     const loggedInData = ref({});
 
     const submit = () => {
-      console.log("value is working here");
       showLoading.value = true;
       let credentialData = {
         email: credentials.value.email,
@@ -110,7 +109,6 @@ export default {
       };
       store.dispatch("admin/login", credentialData).then((res) => {
         loggedInData.value = store.getters["admin/getAdmin"];
-        console.log("is comming here", loggedInData.value)
         showLoading.value = false;
         if (loggedInData.value !== undefined) {
           if (loggedInData.value.isFirstTime) {
@@ -118,7 +116,14 @@ export default {
             setTimeout(() => {
               router.push({ path: "/admin/changePassword" });
             }, 3000);
-          } else {
+          }
+          else if (loggedInData.value.role.code == "UM") {
+            message.value.showErrorFlash = !message.value.showFlash
+            setTimeout(() => {
+              router.push({ path: "/admin/create"})
+            })
+          }
+           else {
             message.value.showFlash = !message.value.showFlash;
             setTimeout(() => {
               router.push({ path: "/admin/review" });

@@ -48,7 +48,7 @@
                 <li
                   @click="verificationDDHandler('VerificationAssigned')"
                   class=" justify-start "
-                  v-if="adminRole == 'SA'"
+                  v-if="adminRole == 'ADM'"
                 >
                   <transition name="slide-fade-to-left">
                     <div class="">
@@ -132,7 +132,7 @@
                 <li
                   @click="verificationDDHandler('VerificationUnfinished')"
                   class=" justify-start "
-                  v-if="adminRole == 'SA'"
+                  v-if="adminRole == 'ADM'"
                 >
                   <transition name="slide-fade-to-left">
                     <div class="">
@@ -216,7 +216,7 @@
                 <li
                   @click="verificationDDHandler('VerificationApproved')"
                   class=" justify-start "
-                  v-if="adminRole == 'SA'"
+                  v-if="adminRole == 'ADM'"
                 >
                   <transition name="slide-fade-to-left">
                     <div class="">
@@ -300,7 +300,7 @@
                 <li
                   @click="verificationDDHandler('VerificationDeclined')"
                   class=" justify-start "
-                  v-if="adminRole == 'SA'"
+                  v-if="adminRole == 'ADM'"
                 >
                   <transition name="slide-fade-to-left">
                     <div class="">

@@ -8,7 +8,7 @@
         class="ml-8  mr-8 mb-12"
       >
         <div class="mt-large bg-white">
-          <div v-if="role.code === `SA`" class="flex">
+          <div v-if="role.code === `ADM`" class="flex">
             <div class="flex flex-col mb-medium w-2/3 ml-small mt-small"></div>
             <div class="flex flex-col mb-medium w-1/3 mr-small mt-small">
               <label class="text-primary-700">Admins To Confirm</label>
@@ -386,7 +386,7 @@ export default {
         showAdminCountError.value = true;
         return;
       }
-      if (role.value.code === "SA") {
+      if (role.value.code === "ADM") {
         showAdminCountError.value = false;
         if (applicationType.value == "Good Standing") {
           assignConfirmAdmin.value = {

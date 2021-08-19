@@ -326,7 +326,7 @@ export default {
     }
 
     const transferReview = () => {
-      if (role.value.code === "TL" || role.value.code === "SA") {
+      if (role.value.code === "TL" || role.value.code === "ADM") {
         if (applicationType.value == "Good Standing") {
           transfer.value = {
             goodStandingId: route.params.applicationId,
