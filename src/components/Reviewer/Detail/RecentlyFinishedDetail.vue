@@ -92,6 +92,8 @@
           <div class="flex flex-row">
             <div
               :class="[
+                license.woreda === null ? errorClass :
+                license.woreda.zone === null ? errorClass :
                 license.woreda.zone.region === null
                   ? errorClass
                   : activeClass,
@@ -100,6 +102,8 @@
               <label class="ml-8"> Region</label>
               <h5 class="ml-8">
                 {{
+                  license.woreda === null ? "-" :
+                  license.woreda.zone === null ? "-" :
                   license.woreda.zone.region
                     ? license.woreda.zone.region.name
                     : "-"
@@ -108,13 +112,15 @@
             </div>
             <div
               :class="[
-                license.woreda.zone === null ? errorClass : activeClass,
+                license.woreda === null ?
+                errorClass : license.woreda.zone === null ? 
+                errorClass : activeClass,
               ]"
             >
               <label class="ml-8"> Zone</label>
               <h5 class="ml-8">
                 {{
-                  license.woreda.zone ? license.woreda.zone.name : "-"
+                  license.woreda === null ? "-" : license.woreda.zone ? license.woreda.zone.name : "-"
                 }}
               </h5>
             </div>

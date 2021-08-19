@@ -97,12 +97,16 @@ export default {
   setup(props) {
     let router = useRouter();
     let routeValue = ref("othersUnconfirmedDetail");
+    const adminExpertId = JSON.parse(localStorage.getItem('allAdminData')).expertLevelId;
     const detail = (data, applicationId, applicantId) => {
       if (
         props.app_type == "Good Standing" ||
         props.app_type == "Verification"
       ) {
         routeValue.value = "finishedDetail";
+      }
+      if (adminExpertId == 3) {
+        routeValue.value = "certifiedUsersDetail"
       }
       const url =
         data + "/" + routeValue.value + "/" + props.app_type + "/" + applicationId + "/" + applicantId;
