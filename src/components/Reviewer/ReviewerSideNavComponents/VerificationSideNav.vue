@@ -48,6 +48,7 @@
                 <li
                   @click="verificationDDHandler('VerificationAssigned')"
                   class=" justify-start "
+                  v-if="adminRole == 'SA'"
                 >
                   <transition name="slide-fade-to-left">
                     <div class="">
@@ -112,6 +113,17 @@
                     </div>
                   </transition>
                 </li>
+                <li
+                  @click="verificationMenuHandler('verificationAssigned')"
+                  class="mb-2"
+                  v-else
+                >
+                  <!-- <span style="color: #648ea3;"> -->
+                  <p class=" text-sm" style="color: white; ">
+                    <i class="mr-2 far fa-address-book fa-x fa-light"></i>
+                    Assigned To You
+                  </p>
+                </li>
               </div>
               <!-- assigned to you and assigned to others ends here -->
 
@@ -120,6 +132,7 @@
                 <li
                   @click="verificationDDHandler('VerificationUnfinished')"
                   class=" justify-start "
+                  v-if="adminRole == 'SA'"
                 >
                   <transition name="slide-fade-to-left">
                     <div class="">
@@ -184,6 +197,17 @@
                     </div>
                   </transition>
                 </li>
+                <li
+                  @click="verificationMenuHandler('verificationUnfinished')"
+                  class="mb-2"
+                  v-else
+                >
+                  <!-- <span style="color: #648ea3;"> -->
+                  <p class=" text-sm" style="color: white; ">
+                    <i class="mr-2 far fa-address-book fa-x fa-light"></i>
+                    Unfinished
+                  </p>
+                </li>
               </div>
               <!-- unfinished ends here -->
 
@@ -192,6 +216,7 @@
                 <li
                   @click="verificationDDHandler('VerificationApproved')"
                   class=" justify-start "
+                  v-if="adminRole == 'SA'"
                 >
                   <transition name="slide-fade-to-left">
                     <div class="">
@@ -256,6 +281,17 @@
                     </div>
                   </transition>
                 </li>
+                <li
+                  @click="verificationMenuHandler('verificationUnconfirmed')"
+                  class="mb-2"
+                  v-else
+                >
+                  <!-- <span style="color: #648ea3;"> -->
+                  <p class=" text-sm" style="color: white; ">
+                    <i class="mr-2 far fa-address-book fa-x fa-light"></i>
+                    Approved
+                  </p>
+                </li>
               </div>
               <!-- Approved ends here -->
 
@@ -264,6 +300,7 @@
                 <li
                   @click="verificationDDHandler('VerificationDeclined')"
                   class=" justify-start "
+                  v-if="adminRole == 'SA'"
                 >
                   <transition name="slide-fade-to-left">
                     <div class="">
@@ -339,7 +376,7 @@
 import { ref } from "vue";
 export default {
   name: "VerificationSideNav",
-  props: ["dropdownValue"],
+  props: ["dropdownValue", "adminRole"],
   setup(props, { emit }) {
     let verificationDDIcon = ref({
       isVerificationUp: false,

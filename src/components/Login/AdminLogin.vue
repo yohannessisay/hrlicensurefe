@@ -102,6 +102,7 @@ export default {
     const loggedInData = ref({});
 
     const submit = () => {
+      console.log("value is working here");
       showLoading.value = true;
       let credentialData = {
         email: credentials.value.email,
@@ -109,6 +110,7 @@ export default {
       };
       store.dispatch("admin/login", credentialData).then((res) => {
         loggedInData.value = store.getters["admin/getAdmin"];
+        console.log("is comming here", loggedInData.value)
         showLoading.value = false;
         if (loggedInData.value !== undefined) {
           if (loggedInData.value.isFirstTime) {

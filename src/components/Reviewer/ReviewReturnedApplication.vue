@@ -23,7 +23,7 @@
               <img
                 style="border-radius: 100%"
                 v-bind:src="
-                  'https://hrlicensurebe.dev.k8s.sandboxaddis.com/' +
+                  'https://storage.googleapis.com/hris-lisence-dev/' +
                     'docs[0].filePath'
                 "
                 class="img"
@@ -124,7 +124,7 @@
               <picture v-if="docs.length > 0">
                 <img
                   v-bind:src="
-                    'https://hrlicensurebe.dev.k8s.sandboxaddis.com/' +
+                    'https://storage.googleapis.com/hris-lisence-dev/' +
                       docs[index].filePath
                   "
                 />
@@ -301,7 +301,7 @@
                             >
                               <img
                                 v-bind:src="
-                                  'https://hrlicensurebe.dev.k8s.sandboxaddis.com/' +
+                                  'https://storage.googleapis.com/hris-lisence-dev/' +
                                     rejectedObj[ind].filePath
                                 "
                               />
@@ -657,14 +657,11 @@ export default {
         if (res.statusText == "Created") {
           showFlash.value = true;
           console.log("successful");
-          return;
           setTimeout(() => {
             router.push("/admin/review");
           }, 3000);
         } else {
           showErrorFlash.value = true;
-          console.log("something went wrong here?");
-          return;
           setTimeout(() => {
             router.go();
           }, 3000);

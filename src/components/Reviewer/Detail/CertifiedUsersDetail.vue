@@ -117,7 +117,7 @@
                         : ""}}</b>
                     </h3>
                     <h4>ተገቢውን መስፈርት አሟልተው ስለተገኙ ሚኒስቴር መስሪያ ቤቱ</h4>
-                    <h4><b>ጁኒየር ጀነራልሜዲካል ፕራክቲሽነር</b></h4>
+                    <h4><b>{{certificateDetail.professionalTypes.name}}</b></h4>
                     <br>
                     <h3>ሙያ መዝግቦ ይህን የሙያ ስራ ፈቃድ ሰጥቷል።</h3>
                     <h3>ይህ የሙያ የስራ ፈቃድ የሚያገለግለው <b>
@@ -142,7 +142,7 @@
                     </h3>
                     <h4>Having duly satisfied the requirements of the Ministry</h4>
                     <h4>hereby registered and licensed as</h4>
-                    <h4><b>Junior General Medical Practitioner</b></h4>
+                    <h4><b>{{certificateDetail.professionalTypes.name}}</b></h4>
                     <br>
                     <h3>The license is valid:<b>{{moment(certificateDetail.certifiedDate).format("MMM DD, YYYY")}} - {{moment(licenseExpireDate).format("MMM DD, YYYY")}}</b></h3>
               </div>
@@ -281,6 +281,7 @@ export default {
           route.params.applicationId
         )
         .then((res) => {
+          console.log("renewalal detail", res.data.data)
           showApplicationLoading.value = false
           certificateDetail.value = res.data.data;
           if(route.params.applicantId != certificateDetail.value.applicantId) {
@@ -359,9 +360,10 @@ export default {
       doc.text(155, 140, 'Having duly satisfied the requirements of the Ministry')
       doc.text(180, 147, 'hereby registered and licensed as')
       doc.setFontSize(15)
-      doc.text(200, 160, 'Junior')
-      doc.text(190, 170, 'DENTAL SURGON')
-      doc.text(160, 180, `This license is valid: ${moment(certificateDetail.value.certifiedDate).format("MMM DD, YYYY")} - ${moment(licenseExpireDate.value).format("MMM DD, YYYY")}`)
+      doc.text(65, 143, `${certificateDetail.value.professionalTypes.name}`)
+      doc.text(200, 160, `${certificateDetail.value.professionalTypes.name}`)
+      // doc.text(190, 170, 'DENTAL SURGON')
+      doc.text(160, 173, `This license is valid: ${moment(certificateDetail.value.certifiedDate).format("MMM DD, YYYY")} - ${moment(licenseExpireDate.value).format("MMM DD, YYYY")}`)
       doc.setFontSize(7)
       doc.text(150, 193, 'Signature of the Authorized Personel')
       doc.text(150, 196, 'Date: ' + moment(new Date()).format("MMM DD, YYYY"))
@@ -390,8 +392,8 @@ export default {
       doc.setFontSize(13)
       doc.text(20, 133, "ተገቢውን መስፈርት አሟልተው ስለተገኙ ሚኒስቴር መስሪያ ቤቱ")
       doc.setFontSize(15)
-      doc.text(65, 143, "ጁኒየር")
-      doc.text(55, 153, "ጀነራልሜዲካል ፕራክቲሽነር")
+      // doc.text(65, 143, "ጁኒየር")
+      // doc.text(55, 153, "ጀነራልሜዲካል ፕራክቲሽነር")
       doc.text(40, 163, "ሙያ መዝግቦ ይህን የሙያ ስራ ፈቃድ ሰጥቷል።")
       doc.text(15, 173, `ይህ የሙያ የስራ ፈቃድ የሚያገለግለው ${toEthiopian(moment(certificateDetail.value.certifiedDate)._d.toISOString(), false)}-${toEthiopian(moment(licenseExpireDate.value)._d.toISOString(), false)}`)
       // doc.text(10, 203, `ቀን: ${toEthiopian(new Date().toISOString(), false)}`)

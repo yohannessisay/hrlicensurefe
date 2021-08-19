@@ -11,6 +11,7 @@ export default {
   async login({ commit }, admin) {
     commit(ADD_ADMIN_LOADING);
     try {
+      console.log("admin creditianls", admin)
       const resp = await ApiService.post(url + "admins/login", admin, {});
       window.localStorage.setItem("token", resp.data["token"]);
       window.localStorage.setItem("adminId", resp.data.data["id"]);
@@ -21,6 +22,7 @@ export default {
       commit(SET_ADMIN, resp.data.data);
       commit(ADD_ADMIN_SUCCESS);
       return resp;
+      console.log("login response is ", resp)
     } catch (error) {
       commit(ADD_ADMIN_ERROR);
     }
@@ -34,7 +36,7 @@ export default {
     }
   },
   async getRole({ commit }) {
-    commit(ADD_ADMIN_LOADING);
+    // commit(ADD_ADMIN_LOADING);
     try {
       const resp = await ApiService.get(url + "roles");
       return resp;
@@ -52,6 +54,24 @@ export default {
     } catch (error) {
       commit(ADD_ADMIN_ERROR);
       return error;
+    }
+  },
+  async getExpertLevels() {
+    try {
+      const resp = await ApiService.get(url + "lookups/expertLevels");
+      return resp;
+    } catch (error) {
+      const resp = error;
+      return resp;
+    }
+  },
+  async getRegions() {
+    try {
+      const resp = await ApiService.get(url + "lookups/regions");
+      return resp;
+    } catch (error) {
+      const resp = error;
+      return resp;
     }
   },
   async changePassword({ commit }, newPassword) {
