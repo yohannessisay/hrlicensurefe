@@ -163,7 +163,6 @@ export default {
     FlashMessage,
     ErrorFlashMessage,
     Spinner,
-    // PDFJSViewer,
   },
   props: ["activeState"],
   setup(props, { emit }) {
