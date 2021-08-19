@@ -105,7 +105,7 @@ export default {
   setup() {
     const store = useStore();
 
-    let newLicenseConfirmed = ref([]);
+    let newLicenseReturnedToMe = ref([]);
 
     const adminId = +localStorage.getItem("adminId");
 
@@ -146,7 +146,7 @@ export default {
         .dispatch("reviewerNewLicense/getNewLicenseReturnedToMe", adminStatus)
         .then((res) => {
           showLoading.value = false;
-          newLicenseConfirmed.value =
+          newLicenseReturnedToMe.value =
             store.getters[
               "reviewerNewLicense/getNewLicenseReturnedToMeSearched"
             ];
@@ -168,7 +168,7 @@ export default {
             }
           }
           if (
-            newLicenseConfirmed.value.length === 0
+            newLicenseReturnedToMe.value.length === 0
           ) {
             nothingToShow.value = true;
           }
