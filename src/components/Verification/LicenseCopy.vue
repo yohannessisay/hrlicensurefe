@@ -404,6 +404,7 @@ export default {
             },
             residenceWoredaId: licenseInfo.residenceWoredaId,
             professionalTypeId: licenseInfo.professionalTypeId,
+            expertLevelId: licenseInfo.expertLevelId,
           },
         };
         store
@@ -514,6 +515,7 @@ export default {
             },
             residenceWoredaId: licenseInfo.residenceWoredaId,
             professionalTypeId: licenseInfo.professionalTypeId,
+            expertLevelId: licenseInfo.expertLevelId,
           },
         };
         store
