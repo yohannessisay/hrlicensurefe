@@ -2,6 +2,7 @@ export default {
   state: {
     applicantId: "",
     residenceWoredaId: "",
+    expertLevelId: "",
     applicantTitle: "",
     whomGoodStandingFor: "",
     licenseIssuedDate: "",

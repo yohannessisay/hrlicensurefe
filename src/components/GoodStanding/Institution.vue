@@ -14,6 +14,61 @@
           <div id="main" class="mt-4 pt-8 pl-4">
             <div class="flex">
               <div class="flex flex-col mb-medium w-2/5 mr-12">
+                <label class="text-primary-700">Applicant Type</label>
+                <select
+                  class="max-w-3xl"
+                  v-model="licenseInfo.applicantTypeId"
+                  @change="checkApplicantType(licenseInfo.applicantTypeId)"
+                >
+                  <option
+                    v-for="applicant in applicantTypes"
+                    v-bind:key="applicant.name"
+                    v-bind:value="applicant.id"
+                  >
+                    {{ applicant.name }}
+                  </option>
+                </select>
+                <span style="color: red">{{
+                  licenseInfoErrors.applicantTypeId
+                }}</span>
+              </div>
+              <div class="flex flex-col mb-small w-2/5 mr-12">
+                <label class="text-primary-700">Expert Level</label>
+                <select
+                  class="max-w-3xl"
+                  @change="checkExpertLevel(licenseInfo.expertLevelId)"
+                  v-model="licenseInfo.expertLevelId"
+                >
+                  <option
+                    v-for="expert in expertLevels"
+                    v-bind:key="expert.name"
+                    v-bind:value="expert.id"
+                  >
+                    {{ expert.name }}
+                  </option>
+                </select>
+                <span style="color: red">{{
+                  licenseInfoErrors.expertLevelId
+                }}</span>
+              </div>
+            </div>
+            <div class="flex">
+              <div class="flex flex-col mb-medium w-2/5 mr-12">
+                <label class="text-primary-700">Applicant Title</label>
+                <input
+                  class="max-w-3xl"
+                  type="text"
+                  v-model="licenseInfo.applicantTitle"
+                />
+                <span style="color: red">{{
+                  licenseInfoErrors.applicantTitle
+                }}</span>
+              </div>
+            </div>
+          </div>
+          <div v-if="this.showRegion" id="main" class="mt-4 pt-8 pl-4">
+            <div class="flex">
+              <div class="flex flex-col mb-medium w-2/5 mr-12">
                 <label class="text-primary-700">Region</label>
                 <select
                   class="max-w-3xl"
@@ -64,17 +119,6 @@
                 </select>
                 <span style="color: red">{{
                   licenseInfoErrors.residenceWoredaId
-                }}</span>
-              </div>
-              <div class="flex flex-col mb-medium w-2/5 mr-12 ml-medium">
-                <label class="text-primary-700">Applicant Title</label>
-                <input
-                  class="max-w-3xl"
-                  type="text"
-                  v-model="licenseInfo.applicantTitle"
-                />
-                <span style="color: red">{{
-                  licenseInfoErrors.applicantTitle
                 }}</span>
               </div>
             </div>
@@ -346,9 +390,37 @@ export default {
     showFlash: false,
     showErrorFlash: false,
     showLoading: false,
+    showRegion: false,
   }),
 
   methods: {
+    checkExpertLevel(expertLevel) {
+      if (expertLevel == 4) {
+        this.showRegion = true;
+      } else {
+        this.showRegion = false;
+      }
+    },
+    checkApplicantType(applicantType) {
+      if (applicantType == 1) {
+        this.$store.dispatch("newlicense/getExpertLevel").then((res) => {
+          this.expertLevels = res.data.data.filter(function(e) {
+            return e.code.includes("REG") || e.code.includes("FED");
+          });
+        });
+      } else {
+        this.$store.dispatch("newlicense/getExpertLevel").then((res) => {
+          this.expertLevels = res.data.data.filter(function(e) {
+            return e.code.includes("FED");
+          });
+        });
+      }
+      if (applicantType == 1) {
+        this.displayPayrollDoc = true;
+      } else {
+        this.displayPayrollDoc = false;
+      }
+    },
     draft(action) {
       this.showLoading = true;
       let license = {

@@ -348,6 +348,7 @@ export default {
     this.professionalTypeID = this.license.professionalTypeId;
     this.occupationTypeId = this.license.occupationTypeId;
     this.nativeLanguageId = this.license.nativeLanguageId;
+    this.expertLevelId = this.license.expertLevelId;
     this.buttons = this.getButtons;
   },
   data: () => ({
@@ -364,6 +365,7 @@ export default {
     residenceWoredaId: null,
     professionalTypeID: null,
     nativeLanguageId: null,
+    expertLevelId: null,
     occupationTypeId: null,
     draftId: "",
     draftData: "",
@@ -679,6 +681,7 @@ export default {
             paymentSlip: null,
             occupationTypeId: this.occupationTypeId,
             nativeLanguageId: this.nativeLanguageId,
+            expertLevelId: this.expertLevelId,
           },
         };
         this.$store
@@ -930,6 +933,7 @@ export default {
             paymentSlip: null,
             occupationTypeId: this.occupationTypeId,
             nativeLanguageId: this.nativeLanguageId,
+            expertLevelId: this.expertLevelId,
           },
         };
 
@@ -980,6 +984,7 @@ export default {
             paymentSlip: null,
             occupationTypeId: this.occupationTypeId,
             nativeLanguageId: this.nativeLanguageId,
+            expertLevelId: this.expertLevelId,
           },
         },
         id: this.draftId,

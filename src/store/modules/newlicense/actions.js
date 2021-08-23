@@ -99,7 +99,6 @@ export default {
   },
   async addNewLicense({ commit }, license) {
     try {
-
       const resp = await ApiService.post(url + "newLicenses/add", license);
       return resp;
     } catch (error) {
@@ -263,6 +262,14 @@ export default {
   async getProfessionalTypes() {
     try {
       const resp = await ApiService.get(url + "lookups/professionalTypes");
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+  async getExpertLevel() {
+    try {
+      const resp = await ApiService.get(url + "lookups/expertLevels");
       return resp;
     } catch (error) {
       return error;

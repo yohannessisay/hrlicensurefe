@@ -360,6 +360,7 @@ export default {
             paymentSlip: null,
             occupationTypeId: licenseInfo.occupationTypeId,
             nativeLanguageId: licenseInfo.nativeLanguageId,
+            expertLevelId: licenseInfo.expertLevelId,
           },
         };
         store.dispatch("newlicense/addNewLicense", license).then((res) => {
@@ -519,6 +520,7 @@ export default {
             paymentSlip: null,
             occupationTypeId: licenseInfo.occupationTypeId,
             nativeLanguageId: licenseInfo.nativeLanguageId,
+            expertLevelId: licenseInfo.expertLevelId,
           },
         };
         store.dispatch("newlicense/addNewLicense", license).then((res) => {

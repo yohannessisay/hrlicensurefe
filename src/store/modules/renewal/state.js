@@ -9,6 +9,7 @@ export default {
     residenceWoredaId: "",
     professionalTypeId: "",
     occupationTypeId: "",
+    expertLevelId: "",
     paymentSlip: null,
     healthExamCert: "",
     workExperience: "",

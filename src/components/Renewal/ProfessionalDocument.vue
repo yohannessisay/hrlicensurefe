@@ -720,6 +720,7 @@ export default {
             professionalTypeId: this.licenseInfo.professionalTypeId,
             paymentSlip: null,
             occupationTypeId: this.licenseInfo.occupationTypeId,
+            expertLevelId: this.licenseInfo.expertLevelId,
           },
         };
         this.$store
