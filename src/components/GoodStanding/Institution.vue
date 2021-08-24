@@ -380,6 +380,7 @@ export default {
     regionArray: [],
     zoneArray: [],
     woredaArray: [],
+    expertLevels: [],
 
     applicationPositions: [],
     applicantTypes: [],
