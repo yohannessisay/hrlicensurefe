@@ -162,7 +162,7 @@
                 <div
                   class="flex justify-center items-center  ml-4 mr-4 box-shadow-pop rounded-lg bg-lightGrey-100"
                 >
-                  <div class="p-4 w-48 h-64">
+                  <div class="p-4 w-48 h-auto">
                     <span
                       class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                     >
@@ -192,9 +192,10 @@
                       <b>Certified: &nbsp;</b>No
                     </span>
                     <span
+                      v-if="item.reviewer != null || item.reviewer != undefined"
                       class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                     >
-                      <b>Reviewer: &nbsp;</b>{{ item.reviewer }}
+                      <b>Reviewer: &nbsp;</b>{{ item.reviewer.name }}
                     </span>
                     <span
                       class="
@@ -246,7 +247,7 @@
                 <div
                   class="flex justify-center items-center  ml-4 mr-4 box-shadow-pop rounded-lg bg-lightGrey-100"
                 >
-                  <div class="p-4 w-48 h-64">
+                  <div class="p-4 w-48 h-auto">
                     <span
                       class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                     >
@@ -277,9 +278,10 @@
                     </span>
 
                     <span
+                      v-if="item.reviewer != null || item.reviewer != undefined"
                       class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                     >
-                      <b>Reviewer: &nbsp;</b>{{ item.reviewer }}
+                      <b>Reviewer: &nbsp;</b>{{ item.reviewer.name }}
                     </span>
 
                     <span
@@ -336,7 +338,7 @@
                 <div
                   class="flex justify-center items-center  ml-4 mr-4 box-shadow-pop rounded-lg bg-lightGrey-100"
                 >
-                  <div class="p-4 w-48 h-64">
+                  <div class="p-4 w-48 h-auto">
                     <span
                       class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                     >
@@ -366,9 +368,10 @@
                       <b>Certified: &nbsp;</b>No
                     </span>
                     <span
+                      v-if="item.reviewer != null || item.reviewer != undefined"
                       class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                     >
-                      <b>Reviewer: &nbsp;</b>{{ item.reviewer }}
+                      <b>Reviewer: &nbsp;</b>{{ item.reviewer.name }}
                     </span>
                     <span
                       class="
@@ -424,7 +427,7 @@
                 <div
                   class="flex justify-center items-center  ml-4 mr-4 box-shadow-pop rounded-lg bg-lightGrey-100"
                 >
-                  <div class="p-4 w-48 h-64">
+                  <div class="p-4 w-48 h-auto">
                     <span
                       class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                     >
@@ -453,7 +456,12 @@
                     >
                       <b>Certified: &nbsp;</b>No
                     </span>
-
+                    <span
+                      v-if="item.reviewer != null || item.reviewer != undefined"
+                      class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                    >
+                      <b>Reviewer: &nbsp;</b>{{ item.reviewer.name }}
+                    </span>
                     <span
                       class="
                       mt-medium
@@ -592,7 +600,6 @@ export default {
                 );
               });
             }
-            console.log(this.renewal);
           });
         })
         .then(() => {

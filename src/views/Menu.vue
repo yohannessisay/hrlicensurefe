@@ -75,7 +75,12 @@ export default {
     PendingPayment,
   },
   created() {
-    // this.$store.replaceState({});
+    this.$store.replaceState({
+      newlicense: {},
+      renewal: {},
+      verification: {},
+      goodstanding: {},
+    });
   },
   data: () => ({
     display: 0,
