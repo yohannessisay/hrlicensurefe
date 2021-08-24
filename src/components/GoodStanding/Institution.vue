@@ -351,28 +351,28 @@ export default {
   data: () => ({
     licenseInfo: {
       applicantId: +localStorage.getItem("userId"),
-      residenceWoredaId: "",
-      applicantTitle: "",
-      whomGoodStandingFor: "",
-      licenseIssuedDate: "",
-      whoIssued: "",
-      licenseRegistrationNumber: "",
-      applicantPositionId: "",
-      professionalTypeID: "",
+      residenceWoredaId: null,
+      applicantTitle: null,
+      whomGoodStandingFor: null,
+      licenseIssuedDate: null,
+      whoIssued: null,
+      licenseRegistrationNumber: null,
+      applicantPositionId: null,
+      professionalTypeID: null,
     },
 
     licenseInfoErrors: {
-      applicantTypeId: "",
-      applicantTitle: "",
-      whomGoodStandingFor: "",
-      licenseIssuedDate: "",
-      whoIssued: "",
-      licenseRegistrationNumber: "",
-      applicantPositionId: "",
-      residenceWoredaId: "",
-      regionID: "",
-      zoneID: "",
-      professionalTypeID: "",
+      applicantTypeId: null,
+      applicantTitle: null,
+      whomGoodStandingFor: null,
+      licenseIssuedDate: null,
+      whoIssued: null,
+      licenseRegistrationNumber: null,
+      applicantPositionId: null,
+      residenceWoredaId: null,
+      regionID: null,
+      zoneID: null,
+      professionalTypeID: null,
     },
     regionID: "",
     zoneID: "",
@@ -553,12 +553,12 @@ export default {
         applicantPositionId: this.licenseInfo.applicantPositionId,
         professionalTypeId: this.licenseInfo.professionalTypeID,
       };
-      console.log(license);
       this.addressErrors = this.validateForm(license);
-      let empty = this.isEmpty(this.addressErrors);
-      if (empty == false) {
-        return;
-      }
+      let empty = true;
+      // let empty = this.isEmpty(this.addressErrors);
+      // if (empty == false) {
+      //   return;
+      // }
       if (empty == true) {
         this.$emit("changeActiveState");
         this.$emit("applicantTypeValue", this.licenseInfo.applicantTypeId);
