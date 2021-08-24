@@ -74,6 +74,9 @@ export default {
     DeclinedPayment,
     PendingPayment,
   },
+  created() {
+    // this.$store.replaceState({});
+  },
   data: () => ({
     display: 0,
   }),

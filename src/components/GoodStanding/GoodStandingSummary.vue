@@ -504,11 +504,9 @@ export default {
           .then((res) => {
             let licenseId = res.data.data.id;
             let payload = { document: formData, id: licenseId };
-            console.log(payload);
             this.$store
               .dispatch("goodstanding/uploadDocuments", payload)
               .then((res) => {
-                console.log(res);
                 this.showLoading = false;
                 if (res.data.status == "Success") {
                   this.showFlash = true;
@@ -591,7 +589,7 @@ export default {
               .licenseRegistrationNumber,
             applicantPositionId: this.licenseInfo.applicantPositionId,
             professionalTypeId: this.professionalTypeID,
-            expertLevelId: this.expertLevelId,
+            expertLevelId: this.licenseInfo.expertLevel,
           },
         };
         this.$store
@@ -635,6 +633,7 @@ export default {
               .licenseRegistrationNumber,
             applicantPositionId: this.licenseInfo.applicantPositionId,
             professionalTypeId: this.professionalTypeID,
+            expertLevelId: this.licenseInfo.expertLevel,
           },
         },
         id: this.draftId,
