@@ -263,7 +263,7 @@
           {{ this.buttons[0]["name"] }}
         </button>
         <button @click="update(this.buttons[1].action)" variant="outline">
-          {{ this.buttons[1]["name"] }}
+          {{ Reapply }}
         </button>
       </div>
       <div
@@ -274,7 +274,7 @@
           {{ this.buttons[0]["name"] }}
         </button>
         <button @click="update(this.buttons[1].action)" variant="outline">
-          {{ this.buttons[1]["name"] }}
+          {{ Reapply }}
         </button>
       </div>
       <div
@@ -286,12 +286,9 @@
     </div>
   </div>
 
-  <div v-if="this.showFlash">
+  <div v-if="showFlash">
     <FlashMessage message="Operation Successful!" />
   </div>
-  <!-- <div v-if="this.showSuccess">
-    <FlashMessage message="Operation Successful!" />
-  </div> -->
   <div v-if="showErrorFlash">
     <ErrorFlashMessage message="Operation Failed!" />
   </div>

@@ -124,9 +124,9 @@
           <button @click="draft(buttons[0].action)" variant="outline">
             {{ buttons[0]["name"] }}
           </button>
-          <button @click="update(buttons[1].action)" variant="outline">
+          <!-- <button @click="update(buttons[1].action)" variant="outline">
             {{ buttons[1]["name"] }}
-          </button>
+          </button> -->
         </div>
         <div
           v-if="buttons && draftStatus == 'DEC'"
@@ -138,9 +138,9 @@
           <button @click="draft(buttons[0].action)" variant="outline">
             {{ buttons[0]["name"] }}
           </button>
-          <button @click="update(buttons[1].action)" variant="outline">
+          <!-- <button @click="update(buttons[1].action)" variant="outline">
             {{ buttons[1]["name"] }}
-          </button>
+          </button> -->
         </div>
         <div v-if="message.showLoading">
           <Spinner />
