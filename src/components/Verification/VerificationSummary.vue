@@ -272,7 +272,7 @@
           {{ this.buttons[0]["name"] }}
         </button>
         <button @click="update(this.buttons[1].action)" variant="outline">
-          {{ this.buttons[1]["name"] }}
+          {{ Reapply }}
         </button>
       </div>
       <div
@@ -286,7 +286,7 @@
           {{ this.buttons[0]["name"] }}
         </button>
         <button @click="update(this.buttons[1].action)" variant="outline">
-          {{ this.buttons[1]["name"] }}
+          {{ Reapply }}
         </button>
       </div>
       <div

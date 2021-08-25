@@ -218,9 +218,9 @@
           <button @click="draft(this.buttons[0].action)" variant="outline">
             {{ this.buttons[0]["name"] }}
           </button>
-          <button @click="update(this.buttons[1].action)" variant="outline">
+          <!-- <button @click="update(this.buttons[1].action)" variant="outline">
             {{ this.buttons[1]["name"] }}
-          </button>
+          </button> -->
         </div>
         <div
           v-if="this.showButtons && this.draftStatus == 'DEC'"
@@ -232,9 +232,9 @@
           <button @click="draft(this.buttons[0].action)" variant="outline">
             {{ this.buttons[0]["name"] }}
           </button>
-          <button @click="update(this.buttons[1].action)" variant="outline">
+          <!-- <button @click="update(this.buttons[1].action)" variant="outline">
             {{ this.buttons[1]["name"] }}
-          </button>
+          </button> -->
         </div>
         <div class="mt-8">
           <Spinner v-if="showLoading" />
