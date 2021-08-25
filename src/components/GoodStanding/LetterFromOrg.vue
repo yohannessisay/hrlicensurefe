@@ -370,6 +370,7 @@ export default {
             licenseRegistrationNumber: licenseInfo.licenseRegistrationNumber,
             applicantPositionId: licenseInfo.applicantPositionId,
             professionalTypeId: licenseInfo.professionalTypeId,
+            expertLevelId: licenseInfo.expertLevelId,
           },
         };
         store
@@ -477,6 +478,7 @@ export default {
             licenseRegistrationNumber: licenseInfo.licenseRegistrationNumber,
             applicantPositionId: licenseInfo.applicantPositionId,
             professionalTypeId: licenseInfo.professionalTypeId,
+            expertLevelId: licenseInfo.expertLevelId,
           },
         };
         store

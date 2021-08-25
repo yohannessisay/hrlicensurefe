@@ -988,6 +988,7 @@ export default {
             paymentSlip: null,
             occupationTypeId: this.licenseInfo.occupationTypeId,
             nativeLanguageId: this.licenseInfo.nativeLanguageId,
+            expertLevelId: this.licenseInfo.expertLevelId,
           },
         };
         this.$store

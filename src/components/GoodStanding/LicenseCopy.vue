@@ -168,8 +168,7 @@ export default {
     const route = useRoute();
     const router = useRouter();
 
-     const basePath = "https://storage.googleapis.com/hris-lisence-dev/";
-
+    const basePath = "https://storage.googleapis.com/hris-lisence-dev/";
 
     let message = ref({
       showFlash: false,
@@ -361,6 +360,7 @@ export default {
             licenseRegistrationNumber: licenseInfo.licenseRegistrationNumber,
             applicantPositionId: licenseInfo.applicantPositionId,
             professionalTypeId: licenseInfo.professionalTypeId,
+            expertLevelId: licenseInfo.expertLevelId,
           },
         };
         store
@@ -472,6 +472,7 @@ export default {
             licenseRegistrationNumber: licenseInfo.licenseRegistrationNumber,
             applicantPositionId: licenseInfo.applicantPositionId,
             professionalTypeId: licenseInfo.professionalTypeId,
+            expertLevelId: licenseInfo.expertLevelId,
           },
         };
         store

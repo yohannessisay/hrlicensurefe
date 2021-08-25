@@ -38,6 +38,25 @@
                 licenseInfoErrors.applicantTypeId
               }}</span>
             </div>
+            <div class="flex flex-col mb-small w-2/5 mr-12">
+              <label class="text-primary-700">Expert Level</label>
+              <select
+                class="max-w-3xl"
+                @change="checkExpertLevel(licenseInfo.expertLevelId)"
+                v-model="licenseInfo.expertLevelId"
+              >
+                <option
+                  v-for="expert in expertLevels"
+                  v-bind:key="expert.name"
+                  v-bind:value="expert.id"
+                >
+                  {{ expert.name }}
+                </option>
+              </select>
+              <span style="color: red">{{
+                licenseInfoErrors.expertLevelId
+              }}</span>
+            </div>
           </div>
           <div id="main" class="flex pt-8 mt-4">
             <div class="flex flex-col mb-medium w-2/5 ml-medium mr-12">
@@ -74,7 +93,7 @@
               }}</span>
             </div>
           </div>
-          <div id="main" class="pt-8 mt-4">
+          <div v-if="this.showRegion" id="main" class="pt-8 mt-4">
             <div class="flex">
               <div class="flex flex-col mb-medium w-2/5 ml-medium mr-12">
                 <label class="text-primary-700">Region</label>
@@ -302,6 +321,7 @@ export default {
       residenceWoredaId: null,
       professionalTypeID: null,
       occupationTypeId: null,
+      expertLevelId: null,
     },
     licenseInfoErrors: {
       applicantTypeId: "",
@@ -313,6 +333,7 @@ export default {
       regionID: "",
       zoneID: "",
       professionalTypeID: "",
+      expertLevelId: null,
     },
     regionID: "",
     zoneID: "",
@@ -320,6 +341,7 @@ export default {
     regionArray: [],
     zoneArray: [],
     woredaArray: [],
+    expertLevels: [],
 
     applicantTypes: [],
     institutions: [],
@@ -329,6 +351,7 @@ export default {
     showFlash: false,
     showErrorFlash: false,
     showLoading: false,
+    showRegion: false,
 
     professionalTypes: [],
 
@@ -347,7 +370,27 @@ export default {
         }
       });
     },
+    checkExpertLevel(expertLevel) {
+      if (expertLevel == 4) {
+        this.showRegion = true;
+      } else {
+        this.showRegion = false;
+      }
+    },
     checkApplicantType(applicantType) {
+      if (applicantType == 1) {
+        this.$store.dispatch("newlicense/getExpertLevel").then((res) => {
+          this.expertLevels = res.data.data.filter(function(e) {
+            return e.code.includes("REG") || e.code.includes("FED");
+          });
+        });
+      } else {
+        this.$store.dispatch("newlicense/getExpertLevel").then((res) => {
+          this.expertLevels = res.data.data.filter(function(e) {
+            return e.code.includes("FED");
+          });
+        });
+      }
       if (applicantType == 1) {
         this.displayPayrollDoc = true;
       } else {
@@ -371,6 +414,7 @@ export default {
             professionalTypeId: this.licenseInfo.professionalTypeID,
             paymentSlip: null,
             occupationTypeId: this.licenseInfo.occupationTypeId,
+            expertLevel: this.licenseInfo.expertLevelId,
           },
         },
         id: this.draftId,
@@ -418,6 +462,7 @@ export default {
             professionalTypeId: this.licenseInfo.professionalTypeID,
             paymentSlip: null,
             occupationTypeId: this.licenseInfo.occupationTypeId,
+            expertLevel: this.licenseInfo.expertLevelId,
           },
         },
         id: this.draftId,
@@ -483,6 +528,7 @@ export default {
         professionalTypeId: this.licenseInfo.professionalTypeID,
         paymentSlip: null,
         occupationTypeId: this.licenseInfo.occupationTypeId,
+        expertLevel: this.licenseInfo.expertLevelId,
       };
       this.$emit("changeActiveState");
       this.$emit("applicantTypeValue", this.licenseInfo.applicantTypeId);

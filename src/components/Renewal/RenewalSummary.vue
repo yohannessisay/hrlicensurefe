@@ -557,6 +557,7 @@ export default {
             professionalTypeId: this.professionalTypeID,
             paymentSlip: null,
             occupationTypeId: this.occupationTypeId,
+            expertLevelId: this.license.expertLevel,
           },
         };
         this.$store
@@ -589,16 +590,17 @@ export default {
         data: {
           action: action,
           data: {
-            applicantId: this.licenseInfo.applicantId,
-            applicantTypeId: this.licenseInfo.applicantTypeId,
+            applicantId: this.license.applicantId,
+            applicantTypeId: this.license.applicantTypeId,
             education: {
-              departmentId: this.licenseInfo.education.departmentId,
-              institutionId: this.licenseInfo.education.institutionId,
+              departmentId: this.license.education.departmentId,
+              institutionId: this.license.education.institutionId,
             },
             residenceWoredaId: this.residenceWoredaId,
             professionalTypeId: this.professionalTypeID,
             paymentSlip: null,
             occupationTypeId: this.occupationTypeId,
+            expertLevelId: this.license.expertLevel,
           },
         },
         id: this.draftId,
@@ -751,6 +753,7 @@ export default {
             professionalTypeId: this.professionalTypeID,
             paymentSlip: null,
             occupationTypeId: this.occupationTypeId,
+            expertLevelId: this.license.expertLevel,
           },
         };
         this.$store

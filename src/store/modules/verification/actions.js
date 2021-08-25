@@ -203,6 +203,14 @@ export default {
       return resp;
     }
   },
+  async getExpertLevel() {
+    try {
+      const resp = await ApiService.get(url + "lookups/expertLevels");
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
   async getProfessionalTypes() {
     try {
       const resp = await ApiService.get(url + "lookups/professionalTypes");

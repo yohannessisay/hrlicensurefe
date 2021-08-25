@@ -172,7 +172,7 @@
                   bg-lightGrey-100
                 "
               >
-                <div class="p-4 w-48 h-64">
+                <div class="p-4 w-48 h-auto">
                   <span
                     class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
@@ -202,6 +202,7 @@
                     <b>Certified: &nbsp;</b>No
                   </span>
                   <span
+                    v-if="item.reviewer != null || item.reviewer != undefined"
                     class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
                     <b>Reviewer: &nbsp;</b>{{ item.reviewer.name }}
@@ -253,7 +254,7 @@
                   bg-lightGrey-100
                 "
               >
-                <div class="p-4 w-48 h-64">
+                <div class="p-4 w-48 h-auto">
                   <span
                     class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
@@ -283,6 +284,7 @@
                     <b>Certified: &nbsp;</b>No
                   </span>
                   <span
+                    v-if="item.reviewer != null || item.reviewer != undefined"
                     class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
                     <b>Reviewer: &nbsp;</b>{{ item.reviewer.name }}
@@ -340,7 +342,7 @@
                   bg-lightGrey-100
                 "
               >
-                <div class="p-4 w-48 h-64">
+                <div class="p-4 w-48 h-auto">
                   <span
                     class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
@@ -370,6 +372,7 @@
                     <b>Certified: &nbsp;</b>No
                   </span>
                   <span
+                    v-if="item.reviewer != null || item.reviewer != undefined"
                     class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
                     <b>Reviewer: &nbsp;</b>{{ item.reviewer.name }}
@@ -430,7 +433,7 @@
                   bg-lightGrey-100
                 "
               >
-                <div class="p-4 w-48 h-64">
+                <div class="p-4 w-48 h-auto">
                   <span
                     class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
@@ -459,7 +462,12 @@
                   >
                     <b>Certified: &nbsp;</b>No
                   </span>
-
+                  <span
+                    v-if="item.reviewer != null || item.reviewer != undefined"
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                  >
+                    <b>Reviewer: &nbsp;</b>{{ item.reviewer.name }}
+                  </span>
                   <span
                     class="
                       mt-medium

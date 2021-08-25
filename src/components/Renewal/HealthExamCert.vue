@@ -375,6 +375,7 @@ export default {
             residenceWoredaId: licenseInfo.residenceWoredaId,
             paymentSlip: null,
             occupationTypeId: licenseInfo.occupationTypeId,
+            expertLevelId: licenseInfo.expertLevelId,
           },
         };
         store.dispatch("renewal/addRenewalLicense", license).then((res) => {
@@ -498,6 +499,7 @@ export default {
             residenceWoredaId: licenseInfo.residenceWoredaId,
             paymentSlip: null,
             occupationTypeId: licenseInfo.occupationTypeId,
+            expertLevelId: licenseInfo.expertLevelId,
           },
         };
         store.dispatch("renewal/addRenewalLicense", license).then((res) => {

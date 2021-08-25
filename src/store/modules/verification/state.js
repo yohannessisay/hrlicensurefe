@@ -8,6 +8,7 @@ export default {
     },
     residenceWoredaId: "",
     professionalTypeID: "",
+    expertLevelId: "",
     licenseCopy: "",
     serviceFee: "",
     verificationLetter: "",
