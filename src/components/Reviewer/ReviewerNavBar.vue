@@ -5,16 +5,12 @@
         <div class="flex items-center"
           
         >
-        <!-- <span @click="selectMenu(0)"
-          v-if="adminRole"
-          > -->
           <a @click="navigateToHomePage()" >
             <RenderIllustration
               class=""
               illustration="Logo"
               message="Address"
             />
-            <!-- </span> -->
           </a>
           <h3 class="ml-tiny font-AtkinsonHyperlegibleBold">HRIS - Lisence</h3>
           <div
@@ -138,11 +134,11 @@ export default {
     
 
     const navigateToHomePage = () => {
-      // if(router.currentRoute._value.path === "/admin/review") {
-      //   emit("navigateToHome", "newLicenseUnassigned");
-      // } else {
+      if(router.currentRoute._value.path === "/admin/review") {
+        emit("navigateToHome", "newLicenseUnassigned");
+      } else {
         router.push("/admin/review");
-      // }
+      }
     }
 
     watch(search, () => {

@@ -182,10 +182,9 @@ export default {
                 allInfo.value.assignApplication[applicant].applicantType;
             }
           }
-          console.log("verification value is ++", verificationUnassigned.value)
-          // if (verificationUnassigned.value.length === 0) {
-          //   nothingToShow.value = true;
-          // }
+          if (verificationUnassigned.value.length === 0) {
+            nothingToShow.value = true;
+          }
         });
     };
 

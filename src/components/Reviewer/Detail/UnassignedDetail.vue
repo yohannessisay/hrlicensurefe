@@ -22,6 +22,7 @@
                   v-bind:key="types.name"
                   v-bind:value="types.id"
                 >
+                <!-- <option> -->
                   {{ types.name }}
                 </option>
               </select>
@@ -348,7 +349,7 @@ export default {
     let showFlash = ref(false);
     let showErrorFlash = ref(false);
     let profile = ref({});
-    let admins = ref({});
+    let admins = ref([]);
     let assign = ref({
       reviewerId: "",
       licenseId: "",

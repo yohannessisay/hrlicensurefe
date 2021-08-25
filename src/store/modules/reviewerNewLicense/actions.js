@@ -166,6 +166,7 @@ export default {
   async getNewLicenseAssigned({ commit }, adminStatus) {
     const url = baseUrl + "/newLicenses/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
+    console.log("console", resp.data.data, "adminId", adminStatus[1])
     const assignedToMe = resp.data.data.filter(function(e) {
       return e.reviewerId === adminStatus[1];
     });
