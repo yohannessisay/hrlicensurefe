@@ -635,6 +635,7 @@ export default {
     const url = baseUrl + "/newlicenses/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
     let evaluator = [];
+    console.log("evaluators", resp.data.data)
     const allApplications = resp.data.data.forEach(function (e) {
       const myApplications = e.evaluators.forEach(function (ee) {
         if(ee.evaluatorId === adminStatus[1]) {

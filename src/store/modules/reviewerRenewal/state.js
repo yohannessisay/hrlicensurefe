@@ -52,5 +52,10 @@ export default {
     renewalConfirmedSearched: [],
     renewalOthersConfirmed: [],
     renewalOthersConfirmedSearched: [],
+
+    renewalReturnedToMe: [],
+    renewalReturnedToMeSearched: [],
+    renewalReturnedToOthers: [],
+    renewalReturnedToOthersSearched: [],
   },
 };

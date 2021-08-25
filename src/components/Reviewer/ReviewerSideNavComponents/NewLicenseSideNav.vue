@@ -742,6 +742,77 @@
                 </li>
               </div>
               <!-- confirmed ends here -->
+
+              <!-- evaluation returned starts here-->
+              <div v-if="expertLevelId == 4">
+                <li
+                  @click="newlicenseDDHandler('NewLicenseReturned')"
+                  class=" justify-start "
+                >
+                  <transition name="slide-fade-to-left">
+                    <div class="">
+                      <div class=" justify-center items-center ">
+                        <div class="p-1 ">
+                          <h3 class="text-lightBlueB-500 mt-tiny">
+                            <span style="color: white;">
+                              <i
+                                v-if="newLicenseDDIcon.isReturnedUp"
+                                class="fas fa-chevron-circle-up float-right mt-2"
+                              ></i>
+                              <i
+                                v-else
+                                class="fas fa-chevron-circle-down float-right mt-2"
+                              ></i>
+
+                              <i
+                                class="mr-2 far fa-address-book fa-x fa-light"
+                              ></i>
+                            </span>
+                            <span class="text-base" style="color: white; "
+                              >Returned Applications</span
+                            >
+                          </h3>
+                        </div>
+                      </div>
+                      <div
+                        v-if="dropdownValue.newLicenseReturned"
+                        class="dropdown-menu relative  shadow-md mb-12 ml-4"
+                        style="color: #648ea3; width: 200px;"
+                      >
+                        <ul class="block w-full  shadow float-right ">
+                          <li
+                            @click="
+                              newLicenseMenuHandler('newLicenseReturnedToMe')
+                            "
+                            class="mb-2"
+                          >
+                            <!-- <span style="color: #648ea3;"> -->
+                            <p class=" text-sm" style="color: white; ">
+                              <i
+                                class="mr-2 far fa-address-book fa-x fa-light"
+                              ></i>
+                              {{adminRole=='ADM' ?  'Returned To Me' : 'Returned Applications'}}
+                            </p>
+                          </li>
+                          <li
+                            @click="
+                              newLicenseMenuHandler('newLicenseReturnedToOthers')
+                            "
+                            v-if="adminRole == 'ADM'"
+                          >
+                            <!-- <span style="color: #648ea3;"> -->
+                            <p class=" text-sm" style="color: white; ">
+                              <i class="mr-2 far fa-id-card fa-x"></i>
+                              Returned To Others
+                            </p>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </transition>
+                </li>
+              </div>
+              <!-- evaluation returned ends here-->
             </ul>
           </div>
         </div>
@@ -765,6 +836,7 @@ export default {
       isDeclinedUp: false,
       isUnderSuperVisionUp: false,
       isConfirmedUp: false,
+      isReturned: false,
       isFederalApprovedUp: false,
     });
     const newLicenseMenuHandler = (menu) => {
@@ -799,6 +871,9 @@ export default {
       } else if (applicationValue == "NewLicenseConfirmed") {
         newLicenseDDIcon.value.isConfirmedUp = !newLicenseDDIcon.value
           .isConfirmedUp;
+      } else if (applicationValue == "NewLicenseReturned") {
+        newLicenseDDIcon.value.isReturnedUp = !newLicenseDDIcon.value
+          .isReturnedUp;
       } else if (applicationValue == "NewLicenseFederalApproved") {
         newLicenseDDIcon.value.isFederalApprovedUp = !newLicenseDDIcon.value
           .isFederalApprovedUp;

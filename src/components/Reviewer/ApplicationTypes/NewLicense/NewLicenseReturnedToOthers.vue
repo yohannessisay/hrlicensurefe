@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- <reviewer-nav-bar tab="newLicenseReturnedToMe" /> -->
+    <!-- <reviewer-nav-bar tab="newLicenseReturnedToOthers" /> -->
     <div class="bg-lightBlueB-200 h-full" v-if="!allInfo.searchByInput">
       <div class="pl-12">
         <div>Filter By</div>
@@ -25,14 +25,14 @@
       </div>
     
       <div class="flex pl-12 pt-tiny">
-        <Title message="New License Returned To Me" />
+        <Title message="New License Returned To Others" />
       </div>
       <div class="flex flex-wrap pb-medium rounded h-full" v-if="!showLoading">
         <nothing-to-show :nothingToShow="nothingToShow" />
         <returned-applications
-          :returnedApplication="getNewLicenseReturnedToMe"
+          :returnedApplication="getNewLicenseReturnedToOthers"
           app_type="New License"
-          all_Returnd="false"
+          all_Returnd="true"
         />
       </div>
     </div>
@@ -46,7 +46,7 @@
       <div class="flex pl-12 pt-tiny">
         <Title
           :message="
-            'Returned To Me Applicants on Date Range ' +
+            'Returned To Others Applicants on Date Range ' +
               moment(allInfo.searchFromDate).format('MMM D, YYYY') +
               ' To ' +
               moment(allInfo.searchUpToDate).format('MMM D, YYYY')
@@ -87,9 +87,9 @@ import Title from "@/sharedComponents/TitleWithIllustration";
 export default {
   computed: {
     moment: () => moment,
-    getNewLicenseReturnedToMe() {
+    getNewLicenseReturnedToOthers() {
       return store.getters[
-        "reviewerNewLicense/getNewLicenseReturnedToMeSearched"
+        "reviewerNewLicense/getnewLicenseReturnedToOthersSearched"
       ];
     },
   },
@@ -143,16 +143,16 @@ export default {
       const statusId = applicationStatus(store, 'RETREV');
       const adminStatus = [statusId, adminId];
       store
-        .dispatch("reviewerNewLicense/getNewLicenseReturnedToMe", adminStatus)
+        .dispatch("reviewerNewLicense/getNewLicenseReturnedToOthers", adminStatus)
         .then((res) => {
           showLoading.value = false;
           newLicenseReturnedToMe.value =
             store.getters[
-              "reviewerNewLicense/getNewLicenseReturnedToMeSearched"
+              "reviewerNewLicense/getnewLicenseReturnedToOthersSearched"
             ];
           allInfo.value.assignApplication =
             store.getters[
-              "reviewerNewLicense/getNewLicenseReturnedToMeSearched"
+              "reviewerNewLicense/getnewLicenseReturnedToOthersSearched"
             ];
 
           for (let applicant in allInfo.value.assignApplication) {

@@ -51,6 +51,11 @@ import {
   SET_RENEWAL_CONFIRMED_SEARCHED,
   SET_RENEWAL_OTHERS_CONFIRMED,
   SET_RENEWAL_OTHERS_CONFIRMED_SEARCHED,
+
+  SET_RENEWAL_RETURNED_TO_ME,
+  SET_RENEWAL_RETURNED_TO_ME_SEARCHED,
+  SET_RENEWAL_RETURNED_TO_OTHERS,
+  SET_RENEWAL_RETURNED_TO_OTHERS_SEARCHED,
 } from "./mutation-types";
 
 export default {
@@ -211,5 +216,20 @@ export default {
   },
   [SET_RENEWAL_OTHERS_CONFIRMED_SEARCHED](state, searchedVal) {
     state.renewalOthersConfirmedSearched = searchedVal;
+  },
+
+  [SET_RENEWAL_RETURNED_TO_ME](state, data) {
+    state.renewalReturnedToMe = data;
+    state.renewalReturnedToMeSearched = data;
+  },
+  [SET_RENEWAL_RETURNED_TO_ME_SEARCHED](state, searchedVal) {
+    state.renewalReturnedToMeSearched = searchedVal;
+  },
+  [SET_RENEWAL_RETURNED_TO_OTHERS](state, data) {
+    state.renewalReturnedToOthers = data;
+    state.renewalReturnedToOthersSearched = data;
+  },
+  [SET_RENEWAL_RETURNED_TO_OTHERS_SEARCHED](state, searchedVal) {
+    state.renewalReturnedToOthersSearched = searchedVal;
   },
 };

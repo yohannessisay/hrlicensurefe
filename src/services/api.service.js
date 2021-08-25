@@ -80,7 +80,7 @@ const ApiService = {
 
   put(resource, data, needsAuth = true) {
     return axios.put(resource, data, {
-      headers: authHeaders(true),
+      headers: authHeaders(needsAuth),
     });
   },
 

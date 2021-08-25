@@ -1286,14 +1286,17 @@ export default {
     }
   },
   async editRenewal({ commit }, license) {
+    console.log("comming here", license);
     try {
       const resp = await ApiService.put(
         baseUrl + "/renewals/" + license.data.id,
         license
       );
+      console.log("response of renewal is ", resp)
       // const resp = await ApiService.put(url + "newLicenses/" + license);
       return resp;
     } catch (error) {
+      console.log("but error comming", error)
       return error;
     }
   },

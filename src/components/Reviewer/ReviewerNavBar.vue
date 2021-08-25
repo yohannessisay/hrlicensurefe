@@ -323,6 +323,18 @@ export default {
           search.value
         );
       }
+      if (props.tab === "renewalReturnedToMe") {
+        store.dispatch(
+          "reviewerRenewal/getRenewalReturnedToMeSearched",
+          search.value
+        )
+      }
+      if (props.tab === "renewalReturnedToOthers") {
+        store.dispatch(
+          "reviewerRenewal/getRenewalReturnedToOthersSearched",
+          search.value
+        )
+      }
 
       if (props.tab === "newLicenseUnassigned") {
         store.dispatch(

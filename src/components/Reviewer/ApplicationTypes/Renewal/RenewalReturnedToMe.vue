@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- <reviewer-nav-bar tab="newLicenseReturnedToMe" /> -->
+    <!-- <reviewer-nav-bar tab="renewalReturnedToMe" /> -->
     <div class="bg-lightBlueB-200 h-full" v-if="!allInfo.searchByInput">
       <div class="pl-12">
         <div>Filter By</div>
@@ -25,13 +25,13 @@
       </div>
     
       <div class="flex pl-12 pt-tiny">
-        <Title message="New License Returned To Me" />
+        <Title message="Renewal Returned To Me" />
       </div>
       <div class="flex flex-wrap pb-medium rounded h-full" v-if="!showLoading">
         <nothing-to-show :nothingToShow="nothingToShow" />
         <returned-applications
-          :returnedApplication="getNewLicenseReturnedToMe"
-          app_type="New License"
+          :returnedApplication="getRenewalReturnedToMe"
+          app_type="Renewal"
           all_Returnd="false"
         />
       </div>
@@ -57,7 +57,7 @@
       <filtered-info
         :filteredData="allInfo.filteredByDate"
         type="applicant-detail"
-        app_type="New License"
+        app_type="Renewal"
       />
     </div>
   </div>
@@ -87,9 +87,9 @@ import Title from "@/sharedComponents/TitleWithIllustration";
 export default {
   computed: {
     moment: () => moment,
-    getNewLicenseReturnedToMe() {
+    getRenewalReturnedToMe() {
       return store.getters[
-        "reviewerNewLicense/getNewLicenseReturnedToMeSearched"
+        "reviewerRenewal/getRenewalReturnedToMeSearched"
       ];
     },
   },
@@ -105,7 +105,7 @@ export default {
   setup() {
     const store = useStore();
 
-    let newLicenseReturnedToMe = ref([]);
+    let renewalReturnedToMe = ref([]);
 
     const adminId = +localStorage.getItem("adminId");
 
@@ -138,21 +138,21 @@ export default {
       allInfo.value.app_type = "";
     };
 
-    const fetchNewLicenseReturnedToMe = () => {
+    const fetchRenewalReturnedToMe = () => {
       showLoading.value = true;
       const statusId = applicationStatus(store, 'RETREV');
       const adminStatus = [statusId, adminId];
       store
-        .dispatch("reviewerNewLicense/getNewLicenseReturnedToMe", adminStatus)
+        .dispatch("reviewerRenewal/getRenewalReturnedToMe", adminStatus)
         .then((res) => {
           showLoading.value = false;
-          newLicenseReturnedToMe.value =
+          renewalReturnedToMe.value =
             store.getters[
-              "reviewerNewLicense/getNewLicenseReturnedToMeSearched"
+              "reviewerRenewal/getRenewalReturnedToMeSearched"
             ];
           allInfo.value.assignApplication =
             store.getters[
-              "reviewerNewLicense/getNewLicenseReturnedToMeSearched"
+              "reviewerRenewal/getRenewalReturnedToMeSearched"
             ];
 
           for (let applicant in allInfo.value.assignApplication) {
@@ -168,14 +168,14 @@ export default {
             }
           }
           if (
-            newLicenseReturnedToMe.value.length === 0
+            renewalReturnedToMe.value.length === 0
           ) {
             nothingToShow.value = true;
           }
         });
     };
     onMounted(() => {
-      fetchNewLicenseReturnedToMe();
+      fetchRenewalReturnedToMe();
     });
 
     return {

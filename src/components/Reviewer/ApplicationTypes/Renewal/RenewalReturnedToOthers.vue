@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- <reviewer-nav-bar tab="newLicenseReturnedToMe" /> -->
+    <!-- <reviewer-nav-bar tab="renewalReturnedToOthers" /> -->
     <div class="bg-lightBlueB-200 h-full" v-if="!allInfo.searchByInput">
       <div class="pl-12">
         <div>Filter By</div>
@@ -19,20 +19,20 @@
           type="date"
           v-model="allInfo.searchUpToDate"
         />
-        <button @click="filterReturnedToMeApplication">
+        <button @click="filterReturnedToOthersApplication">
           Filter
         </button>
       </div>
     
       <div class="flex pl-12 pt-tiny">
-        <Title message="New License Returned To Me" />
+        <Title message="Renewal Returned To Others" />
       </div>
       <div class="flex flex-wrap pb-medium rounded h-full" v-if="!showLoading">
         <nothing-to-show :nothingToShow="nothingToShow" />
         <returned-applications
-          :returnedApplication="getNewLicenseReturnedToMe"
-          app_type="New License"
-          all_Returnd="false"
+          :returnedApplication="getRenewalReturnedToOthers"
+          app_type="Renewal"
+          all_Returnd="true"
         />
       </div>
     </div>
@@ -46,7 +46,7 @@
       <div class="flex pl-12 pt-tiny">
         <Title
           :message="
-            'Returned To Me Applicants on Date Range ' +
+            'Returned To Others Applicants on Date Range ' +
               moment(allInfo.searchFromDate).format('MMM D, YYYY') +
               ' To ' +
               moment(allInfo.searchUpToDate).format('MMM D, YYYY')
@@ -57,7 +57,7 @@
       <filtered-info
         :filteredData="allInfo.filteredByDate"
         type="applicant-detail"
-        app_type="New License"
+        app_type="Renewal"
       />
     </div>
   </div>
@@ -87,9 +87,9 @@ import Title from "@/sharedComponents/TitleWithIllustration";
 export default {
   computed: {
     moment: () => moment,
-    getNewLicenseReturnedToMe() {
+    getRenewalReturnedToOthers() {
       return store.getters[
-        "reviewerNewLicense/getNewLicenseReturnedToMeSearched"
+        "reviewerRenewal/getRenewalReturnedToOthersSearched"
       ];
     },
   },
@@ -105,7 +105,7 @@ export default {
   setup() {
     const store = useStore();
 
-    let newLicenseReturnedToMe = ref([]);
+    let renewalReturnedToOthers = ref([]);
 
     const adminId = +localStorage.getItem("adminId");
 
@@ -125,7 +125,7 @@ export default {
       app_type: "",
     });
 
-    const filterReturnedToMeApplication = () => {
+    const filterReturnedToOthersApplication = () => {
       filterApplication(moment, allInfo.value);
     };
 
@@ -138,21 +138,21 @@ export default {
       allInfo.value.app_type = "";
     };
 
-    const fetchNewLicenseReturnedToMe = () => {
+    const fetchRenewalReturnedToOthers = () => {
       showLoading.value = true;
       const statusId = applicationStatus(store, 'RETREV');
       const adminStatus = [statusId, adminId];
       store
-        .dispatch("reviewerNewLicense/getNewLicenseReturnedToMe", adminStatus)
+        .dispatch("reviewerRenewal/getRenewalReturnedToOthers", adminStatus)
         .then((res) => {
           showLoading.value = false;
-          newLicenseReturnedToMe.value =
+          renewalReturnedToOthers.value =
             store.getters[
-              "reviewerNewLicense/getNewLicenseReturnedToMeSearched"
+              "reviewerRenewal/getRenewalReturnedToOthersSearched"
             ];
           allInfo.value.assignApplication =
             store.getters[
-              "reviewerNewLicense/getNewLicenseReturnedToMeSearched"
+              "reviewerRenewal/getRenewalReturnedToOthersSearched"
             ];
 
           for (let applicant in allInfo.value.assignApplication) {
@@ -168,21 +168,21 @@ export default {
             }
           }
           if (
-            newLicenseReturnedToMe.value.length === 0
+            renewalReturnedToOthers.value.length === 0
           ) {
             nothingToShow.value = true;
           }
         });
     };
     onMounted(() => {
-      fetchNewLicenseReturnedToMe();
+      fetchRenewalReturnedToOthers();
     });
 
     return {
       nothingToShow,
       allInfo,
       showLoading,
-      filterReturnedToMeApplication,
+      filterReturnedToOthersApplication,
       backClicked,
     };
   },

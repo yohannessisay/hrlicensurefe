@@ -925,6 +925,8 @@ export default {
         store
           .dispatch("reviewer/editNewLicense", req)
           .then((res) => {
+            console.log("response is ", res)
+            return;
             if (res.statusText == "Created") {
               showFlash.value = true;
               showDeclineFlash.value = true;
