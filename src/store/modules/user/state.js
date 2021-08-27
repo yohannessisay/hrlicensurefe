@@ -4,8 +4,5 @@ export default {
       email: "",
       password: "",
     },
-    addProfileLoading: false,
-    addProfileSuccess: false,
-    addProfileError: false
   },
 };

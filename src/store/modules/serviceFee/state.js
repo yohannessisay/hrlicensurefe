@@ -1,6 +1,6 @@
 export default {
   state: {
-    itemId: "",
-    applicationType: "",
+    itemId: null,
+    applicationType: null,
   },
 };

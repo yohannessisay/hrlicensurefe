@@ -271,7 +271,7 @@
         class="flex justify-center mt-8 pb-12"
       >
         <button @click="draft(this.buttons[0].action)" variant="outline">
-          {{ this.buttons[0]["name"] }}
+          Re-apply
         </button>
         <button @click="update(this.buttons[1].action)" variant="outline">
           {{ this.buttons[1]["name"] }}
@@ -286,12 +286,9 @@
     </div>
   </div>
 
-  <div v-if="this.showFlash">
+  <div v-if="showFlash">
     <FlashMessage message="Operation Successful!" />
   </div>
-  <!-- <div v-if="this.showSuccess">
-    <FlashMessage message="Operation Successful!" />
-  </div> -->
   <div v-if="showErrorFlash">
     <ErrorFlashMessage message="Operation Failed!" />
   </div>
