@@ -373,12 +373,11 @@ export default {
             },
             residenceWoredaId: this.licenseInfo.residenceWoredaId,
             professionalTypeId: this.licenseInfo.professionalTypeID,
-            expertLevel: this.licenseInfo.expertLevelId,
+            expertLevelId: this.licenseInfo.expertLevelId,
           },
         },
         id: this.draftId,
       };
-
       if (this.draftId != undefined) {
         this.$store
           .dispatch("verification/editVerificationLicense", license)
@@ -419,7 +418,7 @@ export default {
             },
             residenceWoredaId: this.licenseInfo.residenceWoredaId,
             professionalTypeId: this.licenseInfo.professionalTypeID,
-            expertLevel: this.licenseInfo.expertLevelId,
+            expertLevelId: this.licenseInfo.expertLevelId,
           },
         },
         id: this.draftId,
@@ -483,7 +482,7 @@ export default {
         },
         residenceWoredaId: this.licenseInfo.residenceWoredaId,
         professionalTypeId: this.licenseInfo.professionalTypeID,
-        expertLevel: this.licenseInfo.expertLevelId,
+        expertLevelId: this.licenseInfo.expertLevelId,
       };
       this.$emit("changeActiveState");
       this.$emit("applicantTypeValue", this.licenseInfo.applicantTypeId);
@@ -570,10 +569,20 @@ export default {
         draftData.education.departmentId;
       this.licenseInfo.education.institutionId =
         draftData.education.institutionId;
-      this.licenseInfo.residenceWoredaId = draftData.woreda.id;
-      this.regionID = draftData.woreda.zone.region.id;
-      this.zoneID = draftData.woreda.zone.id;
       this.licenseInfo.professionalTypeID = draftData.professionalTypeId;
+      this.licenseInfo.expertLevelId = draftData.expertLevelId;
+      if (draftData.woreda || draftData.woreda != undefined) {
+        this.licenseInfo.residenceWoredaId = draftData.woreda.id;
+        if (draftData.woreda.zone || draftData.woreda.zone != undefined) {
+          this.zoneID = draftData.woreda.zone.id;
+          if (
+            draftData.woreda.zone.region ||
+            draftData.woreda.zone.region != undefined
+          ) {
+            this.regionID = draftData.woreda.zone.region.id;
+          }
+        }
+      }
       this.$store
         .dispatch("verification/getZones", this.regionID)
         .then((res) => {
