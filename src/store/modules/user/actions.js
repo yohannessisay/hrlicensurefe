@@ -8,7 +8,6 @@ export default {
       window.localStorage.setItem("token", resp.data["token"]);
       window.localStorage.setItem("userId", resp.data.data["id"]);
       commit(SET_PROFILE, resp.data);
-      commit(ADD_PROFILE_SUCCESS);
       return resp;
     } catch (error) {}
   },

@@ -77,15 +77,15 @@ export default {
     });
 
     const prevStep = () => {
-      addressErrors.value = validateForm(address.value);
-      let empty = isEmpty(addressErrors.value);
-      if (empty == false) {
-        return;
-      }
-      if (empty == true) {
-        store.dispatch("profile/setAddress", address);
-        emit("changeActiveStatePrevious");
-      }
+      // addressErrors.value = validateForm(address.value);
+      // let empty = isEmpty(addressErrors.value);
+      // if (empty == false) {
+      //   return;
+      // }
+      // if (empty == true) {
+      store.dispatch("profile/setAddress", address);
+      emit("changeActiveStatePrevious");
+      // }
     };
 
     const nextStep = () => {
