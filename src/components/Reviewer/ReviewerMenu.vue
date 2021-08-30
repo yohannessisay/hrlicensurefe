@@ -103,22 +103,25 @@
         <div v-if="this.display == 'newLicenseOthersUnfinished'">
           <new-license-others-unfinished />
         </div>
-        <div v-if="this.display == 'newLicenseUnconfirmed'">
+        <div v-if="this.display == 'newLicenseUnassignedEvaluation'">
           <new-license-un-confirmed />
         </div>
-        <div v-if="this.display == 'allNewLicenseUnconfirmed'">
+        <div v-if="this.display == 'newLicenseOthersUnassignedEvaluation'">
           <new-license-all-un-confirmed />
         </div>
-        <div v-if="this.display == 'newLicenseOnReview'">
+        <!-- <div v-if="this.display == 'newLicenseUnassignedEvaluation'">
+          <new-license-all-un-confirmed />
+        </div> -->
+        <div v-if="this.display == 'newLicenseUnderEvaluation'">
           <new-license-on-review />
         </div>
-        <div v-if="this.display == 'othersNewLicenseOnReview'">
+        <div v-if="this.display == 'newLicenseOthersUnderEvaluation'">
           <new-license-others-on-review />
         </div>
-        <div v-if="this.display == 'newLicenseReEvaluate'">
+        <div v-if="this.display == 'newLicenseEvaluationAssessment'">
           <new-license-re-evaluate />
         </div>
-         <div v-if="this.display == 'othersNewLicenseReEvaluate'">
+         <div v-if="this.display == 'newLicenseOthersEvaluationAssessment'">
           <new-license-others-re-evaluate />
         </div>
         <div v-if="this.display == 'newLicenseDeclined'">
@@ -139,16 +142,16 @@
         <div v-if="this.display == 'othersNewLicenseConfirmed'">
           <new-license-others-confirmed />
         </div>
-        <div v-if="this.display == 'newLicenseReturnedToMe'">
+        <div v-if="this.display == 'newLicenseReturnedEvaluation'">
           <new-license-returned-to-me />
         </div>
-        <div v-if="this.display == 'newLicenseReturnedToOthers'">
+        <div v-if="this.display == 'newLicenseOthersReturnedEvaluation'">
           <new-license-returned-to-others />
         </div>
-        <div v-if="this.display == 'newLicenseApprovedPayment'">
+        <div v-if="this.display == 'newLicenseInReviewPayment'">
           <new-license-approved-payment />
         </div>
-        <div v-if="this.display == 'othersNewLicenseApprovedPayment'">
+        <div v-if="this.display == 'othersNewLicenseInReviewPayment'">
           <new-license-others-approved-payment />
         </div>
         <div v-if="this.display == 'newLicenseDeclinedPayment'">

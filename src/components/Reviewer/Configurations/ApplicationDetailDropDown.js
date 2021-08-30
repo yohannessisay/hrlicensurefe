@@ -1,6 +1,7 @@
 export let dropdown = {
   newLicense: false,
   newLicenseAssigned: false,
+  newLicenseUnderReview: false,
   newLicenseUnfinished: false,
   newLicenseUnconfirmed: false,
   newLicenseOnReview: false,
@@ -8,6 +9,13 @@ export let dropdown = {
   newLicenseDeclined: false,
   newLicenseUnderSuperVision: false,
   newLicenseConfirmed: false,
+  newLicenseEvaluation: false,
+  newLicenseReturnedEvaluation: false,
+  newLicenseUnderEvaluation: false,
+  newLicenseUnassignedEvaluation: false,
+  newLicenseUnassignedEvaluation: false,
+  newLicenseInReviewPayment: false,
+  newLicenseDeclinedPayment: false,
   
   
   renewal: false,
@@ -200,6 +208,7 @@ export const applicationTypeDD = (applicationDetail, dropdown) => {
     dropdown.newLicenseConfirmed = false;
     dropdown.newLicenseReturned = false;
   }
+  
   if (applicationDetail == "NewLicenseUnfinished") {
     dropdown.newLicenseUnfinished = !dropdown.newLicenseUnfinished;
     dropdown.newLicenseAssigned = false;
@@ -288,6 +297,69 @@ export const applicationTypeDD = (applicationDetail, dropdown) => {
     dropdown.newLicenseUnconfirmed = false;
     dropdown.newLicenseReEvaluate = false;
     dropdown.newLicenseUnderSuperVision = false;
+  }
+  if (applicationDetail == "NewLicenseUnassignedEvaluation") {
+    dropdown.newLicenseUnassignedEvaluation = !dropdown.newLicenseUnassignedEvaluation;
+    dropdown.newLicenseUnderEvaluation = false;
+    dropdown.newLicenseEvaluationAssessment = false;
+    dropdown.newLicenseReturnedEvaluation = false;
+  }
+  if (applicationDetail == "NewLicenseUnderEvaluation") {
+    dropdown.newLicenseUnderEvaluation = !dropdown.newLicenseUnderEvaluation;
+    dropdown.newLicenseUnassignedEvaluation = false;
+    dropdown.newLicenseEvaluationAssessment = false;
+    dropdown.newLicenseReturnedEvaluation = false;
+  }
+  if (applicationDetail == "NewLicenseEvaluationAssessment") {
+    dropdown.newLicenseEvaluationAssessment = !dropdown.newLicenseEvaluationAssessment;
+    dropdown.newLicenseUnderEvaluation = false;
+    dropdown.newLicenseUnassignedEvaluation = false;
+    dropdown.newLicenseReturnedEvaluation = false;
+  }
+  if (applicationDetail == "NewLicenseReturnedEvaluation") {
+    dropdown.newLicenseReturnedEvaluation = !dropdown.newLicenseReturnedEvaluation;
+    dropdown.newLicenseUnderEvaluation = false;
+    dropdown.newLicenseEvaluationAssessment = false;
+    dropdown.newLicenseUnassignedEvaluation = false;
+  }
+  if (applicationDetail == "NewLicenseEvaluation") {
+    dropdown.newLicenseEvaluation = !dropdown.newLicenseEvaluation;
+    dropdown.newLicensePaymentReview = false;
+    dropdown.newLicenseAssigned = false;
+    dropdown.newLicenseUnfinished = false;
+    dropdown.newLicenseConfirmedEvaluation = false;
+  }
+  if (applicationDetail == "NewLicenseConfirmedEvaluation") {
+    dropdown.newLicenseConfirmedEvaluation = !dropdown.newLicenseConfirmedEvaluation;
+    dropdown.newLicenseAssigned = false;
+    dropdown.newLicenseUnfinished = false;
+    dropdown.newLicenseEvaluation = false;
+  }
+  if (applicationDetail == "NewLicensePaymentReview") {
+    dropdown.newLicensePaymentReview = !dropdown.newLicensePaymentReview;
+    dropdown.newLicenseAssigned = false;
+    dropdown.newLicenseUnfinished = false;
+    dropdown.newLicenseEvaluation = false;
+    dropdown.newLicenseConfirmedEvaluation = false;
+  }
+  if (applicationDetail == "NewLicenseInReviewPayment") {
+    dropdown.newLicenseInReviewPayment = !dropdown.newLicenseInReviewPayment;
+    dropdown.newLicenseDeclinedPayment = false;
+  }
+  if (applicationDetail == "NewLicenseDeclinedPayment") {
+    dropdown.newLicenseDeclinedPayment = !dropdown.newLicenseDeclinedPayment;
+    dropdown.newLicenseInReviewPayment = false;
+  }
+  if (applicationDetail == "NewLicenseUnderReview") {
+    dropdown.newLicenseUnderReview = !dropdown.newLicenseUnderReview;
+    dropdown.newLicenseFinished = false;
+  }
+  if (applicationDetail == "NewLicenseFinished") {
+    dropdown.newLicenseFinished = !dropdown.newLicenseFinished;
+    dropdown.newLicenseUnderReview = false;
+  }
+  if (applicationDetail == "NewLicenseLicensed") {
+    dropdown.newLicenseLicensed = !dropdown.newLicenseLicensed;
   }
 
   if (applicationDetail == "VerificationAssigned") {

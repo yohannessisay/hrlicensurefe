@@ -42,21 +42,22 @@
                 </p>
               </li>
 
-              <!-- assigned to you and assigned to others started here -->
+              <!-- under review started here -->
               <div>
-                <li
-                  @click="newlicenseDDHandler('NewLicenseAssigned')"
-                  class=" justify-start "
-                  v-if="adminRole == 'ADM'"
-                >
+                <li class=" justify-start ">
                   <transition name="slide-fade-to-left">
                     <div class="">
                       <div class=" justify-center items-center ">
                         <div class="p-1 ">
-                          <h3 class="text-lightBlueB-500 mt-tiny">
+                          <h3
+                            class="text-lightBlueB-500 mt-tiny"
+                            @click="
+                              newlicenseDDHandler('NewLicenseUnderReview')
+                            "
+                          >
                             <span style="color: white;">
                               <i
-                                v-if="newLicenseDDIcon.isAssignedUp"
+                                v-if="newLicenseDDIcon.isUnderReviewUp"
                                 class="fas fa-chevron-circle-up float-right mt-2"
                               ></i>
                               <i
@@ -69,48 +70,470 @@
                               ></i>
                             </span>
                             <span class="text-base" style="color: white; "
-                              >Assigned</span
+                              >Under Review</span
                             >
                           </h3>
                         </div>
                       </div>
+                      <drop-down-lists
+                        :dropdownValue="[
+                          dropdownValue.newLicenseUnderReview,
+                          dropdownValue.newLicenseAssigned,
+                        ]"
+                        name="In Review"
+                        dropDownHandlerValue="NewLicenseAssigned"
+                        :dropDownMenus="[
+                          'newLicenseAssigned',
+                          'newLicenseAssignedToOthers',
+                        ]"
+                        :isDropDownIconUp="newLicenseDDIcon.isAssignedUp"
+                        :adminRole="adminRole"
+                        :yoursAndOthersApplication="[
+                          'Assigned To You',
+                          'Assigned To Others',
+                        ]"
+                        @dropDownHandler="dropDownHandler"
+                        @dropDownListHandler="dropDownListHandler"
+                      />
+                      <drop-down-lists
+                        :dropdownValue="[
+                          dropdownValue.newLicenseUnderReview,
+                          dropdownValue.newLicenseUnfinished,
+                        ]"
+                        name="Draft+"
+                        dropDownHandlerValue="NewLicenseUnfinished"
+                        :dropDownMenus="[
+                          'newLicenseUnfinished',
+                          'newLicenseOthersUnfinished',
+                        ]"
+                        :isDropDownIconUp="newLicenseDDIcon.isUnfinishedUp"
+                        :adminRole="adminRole"
+                        :yoursAndOthersApplication="[
+                          'My Unfinished',
+                          'Others Unfinished',
+                        ]"
+                        @dropDownHandler="dropDownHandler"
+                        @dropDownListHandler="dropDownListHandler"
+                      />
                       <div
-                        v-if="dropdownValue.newLicenseAssigned"
+                        v-if="dropdownValue.newLicenseUnderReview"
                         class="dropdown-menu relative  shadow-md mb-12 ml-4"
                         style="color: #648ea3; width: 200px;"
                       >
-                        <ul class="block w-full  shadow float-right ">
-                          <li
-                            @click="newLicenseMenuHandler('newLicenseAssigned')"
-                            class="mb-2"
-                          >
-                            <!-- <span style="color: #648ea3;"> -->
-                            <p class=" text-sm" style="color: white; ">
-                              <i
-                                class="mr-2 far fa-address-book fa-x fa-light"
-                              ></i>
-                              Assigned To You
-                            </p>
+                        <ul
+                          class="block w-full shadow float-right"
+                          style="color: #648ea3;"
+                        >
+                          <li class=" justify-start ">
+                            <div class=" justify-center items-center ">
+                              <div class="p-1 ">
+                                <h3
+                                  class="text-lightBlueB-500 mt-tiny"
+                                  @click="
+                                    newlicenseDDHandler('NewLicenseEvaluation')
+                                  "
+                                >
+                                  <span style="color: white;">
+                                    <i
+                                      v-if="newLicenseDDIcon.isEvaluationUp"
+                                      class="fas fa-chevron-circle-up float-right mt-2"
+                                    ></i>
+                                    <i
+                                      v-else
+                                      class="fas fa-chevron-circle-down float-right mt-2"
+                                    ></i>
+
+                                    <i
+                                      class="mr-2 far fa-address-book fa-x fa-light"
+                                    ></i>
+                                  </span>
+                                  <span class="text-base" style="color: white; "
+                                    >Evaluation</span
+                                  >
+                                </h3>
+                                <div
+                                  v-if="dropdownValue.newLicenseEvaluation"
+                                  class="dropdown-menu relative  shadow-md mb-12 ml-4"
+                                  style="color: #648ea3; width: 200px;"
+                                >
+                                  <drop-down-lists
+                                    :dropdownValue="[
+                                      dropdownValue.newLicenseEvaluation,
+                                      dropdownValue.newLicenseUnassignedEvaluation,
+                                    ]"
+                                    name="Unassigned Evaluation"
+                                    dropDownHandlerValue="NewLicenseUnassignedEvaluation"
+                                    :dropDownMenus="[
+                                      'newLicenseUnassignedEvaluation',
+                                      'newLicenseOthersUnassignedEvaluation',
+                                    ]"
+                                    :isDropDownIconUp="
+                                      newLicenseDDIcon.isUnassignedEvaluationUp
+                                    "
+                                    :adminRole="adminRole"
+                                    :yoursAndOthersApplication="[
+                                      'My Unassigned Evaluation',
+                                      'Others Unassigned Evaluation',
+                                    ]"
+                                    @dropDownHandler="dropDownHandler"
+                                    @dropDownListHandler="dropDownListHandler"
+                                  />
+                                  <drop-down-lists
+                                    :dropdownValue="[
+                                      dropdownValue.newLicenseEvaluation,
+                                      dropdownValue.newLicenseUnderEvaluation,
+                                    ]"
+                                    name="Under Evaluation"
+                                    dropDownHandlerValue="NewLicenseUnderEvaluation"
+                                    :dropDownMenus="[
+                                      'newLicenseUnderEvaluation',
+                                      'newLicenseOthersUnderEvaluation',
+                                    ]"
+                                    :isDropDownIconUp="
+                                      newLicenseDDIcon.isUnderEvaluationUp
+                                    "
+                                    :adminRole="adminRole"
+                                    :yoursAndOthersApplication="[
+                                      'My Under Evaluation',
+                                      'Others Under Evaluation',
+                                    ]"
+                                    @dropDownHandler="dropDownHandler"
+                                    @dropDownListHandler="dropDownListHandler"
+                                  />
+                                  <drop-down-lists
+                                    :dropdownValue="[
+                                      dropdownValue.newLicenseEvaluation,
+                                      dropdownValue.newLicenseEvaluationAssessment,
+                                    ]"
+                                    name="Assessments"
+                                    dropDownHandlerValue="NewLicenseEvaluationAssessment"
+                                    :dropDownMenus="[
+                                      'newLicenseEvaluationAssessment',
+                                      'newLicenseOthersEvaluationAssessment',
+                                    ]"
+                                    :isDropDownIconUp="
+                                      newLicenseDDIcon.isUnderEvaluationUp
+                                    "
+                                    :adminRole="adminRole"
+                                    :yoursAndOthersApplication="[
+                                      'My Assessments',
+                                      'Others Assessments',
+                                    ]"
+                                    @dropDownHandler="dropDownHandler"
+                                    @dropDownListHandler="dropDownListHandler"
+                                  />
+                                  <drop-down-lists
+                                    :dropdownValue="[
+                                      dropdownValue.newLicenseEvaluation,
+                                      dropdownValue.newLicenseReturnedEvaluation,
+                                    ]"
+                                    name="Returned Evaluation"
+                                    dropDownHandlerValue="NewLicenseReturnedEvaluation"
+                                    :dropDownMenus="[
+                                      'newLicenseReturnedEvaluation',
+                                      'newLicenseOthersReturnedEvaluation',
+                                    ]"
+                                    :isDropDownIconUp="
+                                      newLicenseDDIcon.isReturnedEvaluationUp
+                                    "
+                                    :adminRole="adminRole"
+                                    :yoursAndOthersApplication="[
+                                      'My Returned Evaluation',
+                                      'Others Returned Evaluation',
+                                    ]"
+                                    @dropDownHandler="dropDownHandler"
+                                    @dropDownListHandler="dropDownListHandler"
+                                  />
+                                </div>
+                              </div>
+                            </div>
                           </li>
+                        </ul>
+                      </div>
+                      <div
+                        v-if="dropdownValue.newLicenseUnderReview"
+                        class="dropdown-menu relative  shadow-md mb-12 ml-4"
+                        style="color: #648ea3; width: 200px;"
+                      >
+                        <ul
+                          class="block w-full shadow float-right"
+                          style="color: #648ea3;"
+                        >
+                          <li class=" justify-start ">
+                            <div class=" justify-center items-center ">
+                              <div class="p-1 ">
+                                <h3
+                                  class="text-lightBlueB-500 mt-tiny"
+                                  @click="
+                                    newlicenseDDHandler('NewLicenseConfirmedEvaluation')
+                                  "
+                                >
+                                  <span style="color: white;">
+                                    <i
+                                      v-if="newLicenseDDIcon.isConfirmedEvaluationUp"
+                                      class="fas fa-chevron-circle-up float-right mt-2"
+                                    ></i>
+                                    <i
+                                      v-else
+                                      class="fas fa-chevron-circle-down float-right mt-2"
+                                    ></i>
+
+                                    <i
+                                      class="mr-2 far fa-address-book fa-x fa-light"
+                                    ></i>
+                                  </span>
+                                  <span class="text-base" style="color: white; "
+                                    >Confirmed</span
+                                  >
+                                </h3>
+                                <div
+                                  v-if="dropdownValue.newLicenseConfirmedEvaluation"
+                                  class="dropdown-menu relative  shadow-md mb-12 ml-4"
+                                  style="color: #648ea3; width: 200px;"
+                                >
+                                  <drop-down-lists
+                                    :dropdownValue="[
+                                      dropdownValue.newLicenseConfirmedEvaluation,
+                                      dropdownValue.newLicenseConfirmed,
+                                    ]"
+                                    name="Approved"
+                                    dropDownHandlerValue="NewLicenseConfirmed"
+                                    :dropDownMenus="[
+                                      'newLicenseConfirmed',
+                                      'othersNewLicenseConfirmed',
+                                    ]"
+                                    :isDropDownIconUp="
+                                      newLicenseDDIcon.isConfirmedUp
+                                    "
+                                    :adminRole="adminRole"
+                                    :yoursAndOthersApplication="[
+                                      'My Approved',
+                                      'Others Approved',
+                                    ]"
+                                    @dropDownHandler="dropDownHandler"
+                                    @dropDownListHandler="dropDownListHandler"
+                                  />
+                                  <drop-down-lists
+                                    :dropdownValue="[
+                                      dropdownValue.newLicenseConfirmedEvaluation,
+                                      dropdownValue.newLicenseDeclined,
+                                    ]"
+                                    name="Declined"
+                                    dropDownHandlerValue="NewLicenseDeclined"
+                                    :dropDownMenus="[
+                                      'newLicenseDeclined',
+                                      'allNewLicenseDeclined',
+                                    ]"
+                                    :isDropDownIconUp="
+                                      newLicenseDDIcon.isUnderEvaluationUp
+                                    "
+                                    :adminRole="adminRole"
+                                    :yoursAndOthersApplication="[
+                                      'My Declined',
+                                      'Others Declined',
+                                    ]"
+                                    @dropDownHandler="dropDownHandler"
+                                    @dropDownListHandler="dropDownListHandler"
+                                  />
+                                  <drop-down-lists
+                                    :dropdownValue="[
+                                      dropdownValue.newLicenseConfirmedEvaluation,
+                                      dropdownValue.newLicenseUnderSuperVision,
+                                    ]"
+                                    name="Under Super Vision"
+                                    dropDownHandlerValue="NewLicenseUnderSuperVision"
+                                    :dropDownMenus="[
+                                      'newLicenseUnderSuperVision',
+                                      'newLicenseOthersUnderSuperVision',
+                                    ]"
+                                    :isDropDownIconUp="
+                                      newLicenseDDIcon.isUnderSuperVisionUp
+                                    "
+                                    :adminRole="adminRole"
+                                    :yoursAndOthersApplication="[
+                                      'My Under Super Vision',
+                                      'Others Under Super Vision',
+                                    ]"
+                                    @dropDownHandler="dropDownHandler"
+                                    @dropDownListHandler="dropDownListHandler"
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                      <div
+                        v-if="dropdownValue.newLicenseUnderReview"
+                        class="dropdown-menu relative  shadow-md mb-12 ml-4"
+                        style="color: #648ea3; width: 200px;"
+                      >
+                        <ul
+                          class="block w-full shadow float-right"
+                          style="color: #648ea3;"
+                        >
+                          <li class=" justify-start ">
+                            <div class=" justify-center items-center ">
+                              <div class="p-1 ">
+                                <h3
+                                  class="text-lightBlueB-500 mt-tiny"
+                                  @click="
+                                    newlicenseDDHandler('NewLicensePaymentReview')
+                                  "
+                                >
+                                  <span style="color: white;">
+                                    <i
+                                      v-if="newLicenseDDIcon.isPaymentReviewnUp"
+                                      class="fas fa-chevron-circle-up float-right mt-2"
+                                    ></i>
+                                    <i
+                                      v-else
+                                      class="fas fa-chevron-circle-down float-right mt-2"
+                                    ></i>
+
+                                    <i
+                                      class="mr-2 far fa-address-book fa-x fa-light"
+                                    ></i>
+                                  </span>
+                                  <span class="text-base" style="color: white; "
+                                    >Payment Review</span
+                                  >
+                                </h3>
+                                <div
+                                  v-if="dropdownValue.newLicensePaymentReview"
+                                  class="dropdown-menu relative  shadow-md mb-12 ml-4"
+                                  style="color: #648ea3; width: 200px;"
+                                >
+                                  <drop-down-lists
+                                    :dropdownValue="[
+                                      dropdownValue.newLicensePaymentReview,
+                                      dropdownValue.newLicenseInReviewPayment,
+                                    ]"
+                                    name="In Review"
+                                    dropDownHandlerValue="NewLicenseInReviewPayment"
+                                    :dropDownMenus="[
+                                      'newLicenseInReviewPayment',
+                                      'othersNewLicenseInReviewPayment',
+                                    ]"
+                                    :isDropDownIconUp="
+                                      newLicenseDDIcon.isInReviewPaymentUp
+                                    "
+                                    :adminRole="adminRole"
+                                    :yoursAndOthersApplication="[
+                                      'My In Review Payment',
+                                      'Others In Review Payment',
+                                    ]"
+                                    @dropDownHandler="dropDownHandler"
+                                    @dropDownListHandler="dropDownListHandler"
+                                  />
+                                  <drop-down-lists
+                                    :dropdownValue="[
+                                      dropdownValue.newLicensePaymentReview,
+                                      dropdownValue.newLicenseDeclinedPayment,
+                                    ]"
+                                    name="Declined Payment"
+                                    dropDownHandlerValue="NewLicenseDeclinedPayment"
+                                    :dropDownMenus="[
+                                      'newLicenseDeclinedPayment',
+                                      'othersNewLicenseDeclinedPayment',
+                                    ]"
+                                    :isDropDownIconUp="
+                                      newLicenseDDIcon.isDeclinedPaymentUp
+                                    "
+                                    :adminRole="adminRole"
+                                    :yoursAndOthersApplication="[
+                                      'My Declined Payment',
+                                      'Others Declined Payment',
+                                    ]"
+                                    @dropDownHandler="dropDownHandler"
+                                    @dropDownListHandler="dropDownListHandler"
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                      <div
+                        v-if="dropdownValue.newLicenseUnderReview"
+                        class="dropdown-menu relative  shadow-md mb-12 ml-4"
+                        style="color: #648ea3; width: 200px;"
+                      >
+                        <ul
+                          class="block w-full shadow float-right"
+                          style="color: #648ea3;"
+                        >
                           <li
-                            @click="
-                              newLicenseMenuHandler(
-                                'newLicenseAssignedToOthers'
-                              )
-                            "
+                            @click="newlicenseDDHandler('NewLicenseUnfinished')"
+                            class=" justify-start "
+                            v-if="adminRole == 'ADM'"
                           >
-                            <!-- <span style="color: #648ea3;"> -->
-                            <p class=" text-sm" style="color: white; ">
-                              <i class="mr-2 far fa-id-card fa-x"></i>
-                              Assigned To Others
-                            </p>
+                            <div class=" justify-center items-center ">
+                              <div class="p-1 ">
+                                <h3 class="text-lightBlueB-500 mt-tiny">
+                                  <span style="color: white;">
+                                    <i
+                                      v-if="newLicenseDDIcon.isUnfinishedUp"
+                                      class="fas fa-chevron-circle-up float-right mt-2"
+                                    ></i>
+                                    <i
+                                      v-else
+                                      class="fas fa-chevron-circle-down float-right mt-2"
+                                    ></i>
+
+                                    <i
+                                      class="mr-2 far fa-address-book fa-x fa-light"
+                                    ></i>
+                                  </span>
+                                  <span class="text-base" style="color: white; "
+                                    >Evaluation</span
+                                  >
+                                </h3>
+                              </div>
+                            </div>
+                            <div
+                              v-if="dropdownValue.newLicenseUnfinished"
+                              class="dropdown-menu relative  shadow-md mb-12 ml-4"
+                              style="color: #648ea3; width: 200px;"
+                            >
+                              <ul class="block w-full  shadow float-right ">
+                                <li
+                                  @click="
+                                    newLicenseMenuHandler(
+                                      'newLicenseUnfinished'
+                                    )
+                                  "
+                                  class="mb-2"
+                                >
+                                  <p class=" text-sm" style="color: white; ">
+                                    <i
+                                      class="mr-2 far fa-address-book fa-x fa-light"
+                                    ></i>
+                                    My Unfinished
+                                  </p>
+                                </li>
+                                <li
+                                  @click="
+                                    newLicenseMenuHandler(
+                                      'newLicenseOthersUnfinished'
+                                    )
+                                  "
+                                >
+                                  <p class=" text-sm" style="color: white; ">
+                                    <i class="mr-2 far fa-id-card fa-x"></i>
+                                    Others Unfinished
+                                  </p>
+                                </li>
+                              </ul>
+                            </div>
                           </li>
                         </ul>
                       </div>
                     </div>
                   </transition>
                 </li>
-                <li
+
+                <!-- <li
                   @click="newLicenseMenuHandler('newLicenseAssigned')"
                   class=" mb-2 "
                   v-else
@@ -119,9 +542,84 @@
                     <i class="mr-2 far fa-address-book fa-x fa-light"></i>
                     Assigned To You
                   </p>
-                </li>
+                </li> -->
               </div>
-              <!-- assigned to you and assigned to others ends here -->
+              <!-- under review end here -->
+
+              <!-- Finished starts here -->
+              <div>
+                <li class=" justify-start ">
+                  <transition name="slide-fade-to-left">
+                    <div class="">
+                      <div class=" justify-center items-center ">
+                        <div class="p-1 ">
+                          <h3
+                            class="text-lightBlueB-500 mt-tiny"
+                            @click="
+                              newlicenseDDHandler('NewLicenseFinished')
+                            "
+                          >
+                            <span style="color: white;">
+                              <i
+                                v-if="newLicenseDDIcon.isFinishedUp"
+                                class="fas fa-chevron-circle-up float-right mt-2"
+                              ></i>
+                              <i
+                                v-else
+                                class="fas fa-chevron-circle-down float-right mt-2"
+                              ></i>
+
+                              <i
+                                class="mr-2 far fa-address-book fa-x fa-light"
+                              ></i>
+                            </span>
+                            <span class="text-base" style="color: white; "
+                              >Finished</span
+                            >
+                          </h3>
+                        </div>
+                      </div>
+                      <drop-down-lists
+                        :dropdownValue="[
+                          dropdownValue.newLicenseFinished,
+                          dropdownValue.newLicenseLicensed,
+                        ]"
+                        name="Licensed"
+                        dropDownHandlerValue="NewLicenseLicensed"
+                        :dropDownMenus="[
+                          'newLicenseLicensed',
+                          'newLicenseOthersLicensed',
+                        ]"
+                        :isDropDownIconUp="newLicenseDDIcon.isLicensedUp"
+                        :adminRole="adminRole"
+                        :yoursAndOthersApplication="[
+                          'Licensed',
+                          'Others Licensed',
+                        ]"
+                        @dropDownHandler="dropDownHandler"
+                        @dropDownListHandler="dropDownListHandler"
+                      />
+                    </div>
+                  </transition>
+                </li>
+
+              </div>
+              <!-- Finished ends here -->
+
+              <!-- All Licensed Applications starts here -->
+
+              <li
+                @click="newLicenseMenuHandler('newLicenseUnfinished')"
+                class="mb-2"
+              >
+                <!-- <span style="color: #648ea3;"> -->
+                <p class=" text-base" style="color: white; ">
+                  <i class="far fa-thumbs-up fa-x fa-light"></i>
+                  All Licensed
+                </p>
+              </li>
+
+              <!-- All Licensed Appilcations ends here -->
 
               <!-- unfinished started here -->
               <div>
@@ -593,7 +1091,9 @@
                               <i
                                 class="mr-2 far fa-address-book fa-x fa-light"
                               ></i>
-                              {{adminRole=='ADM' ?  'My Declined' : 'Declined'}}
+                              {{
+                                adminRole == "ADM" ? "My Declined" : "Declined"
+                              }}
                             </p>
                           </li>
                           <li
@@ -619,7 +1119,11 @@
                               <i
                                 class="mr-2 far fa-address-book fa-x fa-light"
                               ></i>
-                              {{adminRole=='ADM' ?  'My Declined Payment' : 'Declined Payment'}}
+                              {{
+                                adminRole == "ADM"
+                                  ? "My Declined Payment"
+                                  : "Declined Payment"
+                              }}
                             </p>
                           </li>
                           <li
@@ -692,7 +1196,11 @@
                               <i
                                 class="mr-2 far fa-address-book fa-x fa-light"
                               ></i>
-                              {{adminRole=='ADM' ?  'My Confirmed' : 'Confirmed'}}
+                              {{
+                                adminRole == "ADM"
+                                  ? "My Confirmed"
+                                  : "Confirmed"
+                              }}
                             </p>
                           </li>
                           <li
@@ -718,7 +1226,11 @@
                               <i
                                 class="mr-2 far fa-address-book fa-x fa-light"
                               ></i>
-                              {{adminRole=='ADM' ?  'My Approved Payment' : 'Approved Payment'}}
+                              {{
+                                adminRole == "ADM"
+                                  ? "My Approved Payment"
+                                  : "Approved Payment"
+                              }}
                             </p>
                           </li>
                           <li
@@ -791,12 +1303,18 @@
                               <i
                                 class="mr-2 far fa-address-book fa-x fa-light"
                               ></i>
-                              {{adminRole=='ADM' ?  'Returned To Me' : 'Returned Applications'}}
+                              {{
+                                adminRole == "ADM"
+                                  ? "Returned To Me"
+                                  : "Returned Applications"
+                              }}
                             </p>
                           </li>
                           <li
                             @click="
-                              newLicenseMenuHandler('newLicenseReturnedToOthers')
+                              newLicenseMenuHandler(
+                                'newLicenseReturnedToOthers'
+                              )
                             "
                             v-if="adminRole == 'ADM'"
                           >
@@ -822,12 +1340,22 @@
 </template>
 <script>
 import { ref } from "vue";
+import DropDownLists from "./DropDownLists.vue";
+import DropDownContainers from "./DropDownContainers.vue";
+
 export default {
   name: "NewLicenseSideNav",
+  components: {
+    DropDownLists,
+    DropDownContainers,
+  },
   props: ["dropdownValue", "expertLevelId", "adminRole"],
   setup(props, { emit }) {
+    let istrue = ref(false);
+
     let newLicenseDDIcon = ref({
       isNewLicenseUp: false,
+      isUnderReviewUp: false,
       isAssignedUp: false,
       isUnfinishedUp: false,
       isUnconfirmedUp: false,
@@ -838,8 +1366,48 @@ export default {
       isConfirmedUp: false,
       isReturned: false,
       isFederalApprovedUp: false,
+      isEvaluationUp: false,
+      isUnassignedEvaluationUp: false,
+      isUnderEvaluationUp: false,
+      isReturnedEvaluationUp: false,
+      isConfirmedEvaluationUp: false,
+      isPaymentReviewnUp: false,
+      isFinishedUp: false,
+      isLicensedUp: false,
     });
     const newLicenseMenuHandler = (menu) => {
+      emit("selectNewLicenseMenu", menu);
+    };
+
+    const dropDownHandler = (applicationValue) => {
+      if (applicationValue == "NewLicenseUnfinished") {
+        newLicenseDDIcon.value.isUnfinishedUp = !newLicenseDDIcon.value
+          .isUnfinishedUp;
+      } else if (applicationValue == "NewLicenseUnassignedEvaluation") {
+        newLicenseDDIcon.value.isUnassignedEvaluationUp = !newLicenseDDIcon
+          .value.isUnassignedEvaluationUp;
+      } else if (applicationValue == "NewLicenseUnderEvaluation") {
+        newLicenseDDIcon.value.isUnderEvaluationUp = !newLicenseDDIcon.value
+          .isUnderEvaluationUp;
+      } else if (applicationValue == "NewLicenseReturnedEvaluation") {
+        newLicenseDDIcon.value.isReturnedEvaluationUp = !newLicenseDDIcon.value
+          .isReturnedEvaluationUp;
+      } else if (applicationValue == "NewLicenseConfirmedEvaluation") {
+        newLicenseDDIcon.value.isConfirmedEvaluationUp = !newLicenseDDIcon.value
+          .isConfirmedEvaluationUp;
+      } else if (applicationValue == "NewLicensePaymentReview") {
+        newLicenseDDIcon.value.isPaymentReviewnUp = !newLicenseDDIcon.value
+          .isPaymentReviewnUp
+      } else if (applicationValue  == "NewLicenseInReviewPayment") {
+        newLicenseDDIcon.value.isInReviewPaymentUp = !newLicenseDDIcon.value
+          .isInReviewPaymentUp;
+      } else if (applicationValue == "NewLicenseLicensed") {
+        newLicenseDDIcon.value.isLicensedUp = !newLicenseDDIcon.value
+          .isLicensedUp;
+      }
+      emit("applicationTypeSelected", applicationValue);
+    };
+    const dropDownListHandler = (menu) => {
       emit("selectNewLicenseMenu", menu);
     };
 
@@ -847,6 +1415,12 @@ export default {
       if (applicationValue == "NewLicense") {
         newLicenseDDIcon.value.isNewLicenseUp = !newLicenseDDIcon.value
           .isNewLicenseUp;
+      } else if (applicationValue == "NewLicenseUnderReview") {
+        newLicenseDDIcon.value.isUnderReviewUp = !newLicenseDDIcon.value
+          .isUnderReviewUp;
+      } else if (applicationValue == "NewLicenseFinished") {
+        newLicenseDDIcon.value.isFinishedUp = !newLicenseDDIcon.value
+          .isFinishedUp;
       } else if (applicationValue == "NewLicenseAssigned") {
         newLicenseDDIcon.value.isAssignedUp = !newLicenseDDIcon.value
           .isAssignedUp;
@@ -877,11 +1451,17 @@ export default {
       } else if (applicationValue == "NewLicenseFederalApproved") {
         newLicenseDDIcon.value.isFederalApprovedUp = !newLicenseDDIcon.value
           .isFederalApprovedUp;
+      } else if (applicationValue == "NewLicenseEvaluation") {
+        newLicenseDDIcon.value.isEvaluationUp = !newLicenseDDIcon.value
+          .isEvaluationUp;
       }
       emit("applicationTypeSelected", applicationValue);
     };
     return {
+      istrue,
       newLicenseDDIcon,
+      dropDownHandler,
+      dropDownListHandler,
       newlicenseDDHandler,
       newLicenseMenuHandler,
     };

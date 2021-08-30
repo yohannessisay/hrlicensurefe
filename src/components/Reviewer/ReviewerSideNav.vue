@@ -42,7 +42,6 @@ export default {
 
     const expertLevelId = JSON.parse(localStorage.getItem("allAdminData")).expertLevelId;
     const adminRole = localStorage.getItem("role");
-    console.log("admin role is ", adminRole);
    
     let dropdownValue = ref({
       ...dropdown
