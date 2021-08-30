@@ -371,6 +371,9 @@ export default {
       });
     },
     checkExpertLevel(expertLevel) {
+      this.regionID = null;
+      this.zoneID = null;
+      this.licenseInfo.residenceWoredaId = null;
       if (expertLevel == 4) {
         this.showRegion = true;
       } else {
@@ -381,7 +384,7 @@ export default {
       if (applicantType == 1) {
         this.$store.dispatch("newlicense/getExpertLevel").then((res) => {
           this.expertLevels = res.data.data.filter(function(e) {
-            return e.code.includes("REG") || e.code.includes("FED");
+            return e.code.includes("REG");
           });
         });
       } else {
@@ -414,7 +417,7 @@ export default {
             professionalTypeId: this.licenseInfo.professionalTypeID,
             paymentSlip: null,
             occupationTypeId: this.licenseInfo.occupationTypeId,
-            expertLevel: this.licenseInfo.expertLevelId,
+            expertLevelId: this.licenseInfo.expertLevelId,
           },
         },
         id: this.draftId,
@@ -462,7 +465,7 @@ export default {
             professionalTypeId: this.licenseInfo.professionalTypeID,
             paymentSlip: null,
             occupationTypeId: this.licenseInfo.occupationTypeId,
-            expertLevel: this.licenseInfo.expertLevelId,
+            expertLevelId: this.licenseInfo.expertLevelId,
           },
         },
         id: this.draftId,
@@ -528,7 +531,7 @@ export default {
         professionalTypeId: this.licenseInfo.professionalTypeID,
         paymentSlip: null,
         occupationTypeId: this.licenseInfo.occupationTypeId,
-        expertLevel: this.licenseInfo.expertLevelId,
+        expertLevelId: this.licenseInfo.expertLevelId,
       };
       this.$emit("changeActiveState");
       this.$emit("applicantTypeValue", this.licenseInfo.applicantTypeId);
@@ -611,12 +614,43 @@ export default {
         draftData.education.departmentId;
       this.licenseInfo.education.institutionId =
         draftData.education.institutionId;
-      this.licenseInfo.residenceWoredaId = draftData.woreda.id;
-      this.regionID = draftData.woreda.zone.region.id;
-      this.zoneID = draftData.woreda.zone.id;
       this.licenseInfo.professionalTypeID = draftData.professionalTypeId;
       this.licenseInfo.occupationTypeId = draftData.occupationTypeId;
       this.payrollData = draftData.occupationTypes;
+      if (this.licenseInfo.applicantTypeId == 1) {
+        this.displayPayrollDoc = true;
+        this.$store.dispatch("renewal/getExpertLevel").then((res) => {
+          this.expertLevels = res.data.data.filter(function(e) {
+            return e.code.includes("REG");
+          });
+        });
+        this.fetchPayrollData();
+        this.licenseInfo.occupationTypeId = draftData.occupationTypeId;
+      } else {
+        this.$store.dispatch("renewal/getExpertLevel").then((res) => {
+          this.expertLevels = res.data.data.filter(function(e) {
+            return e.code.includes("FED");
+          });
+        });
+      }
+      this.licenseInfo.expertLevelId = draftData.expertLevelId;
+      if (this.licenseInfo.expertLevelId == 3) {
+        this.showRegion = false;
+      } else {
+        this.showRegion = true;
+      }
+      if (draftData.woreda || draftData.woreda != undefined) {
+        this.licenseInfo.residenceWoredaId = draftData.woreda.id;
+        if (draftData.woreda.zone || draftData.woreda.zone != undefined) {
+          this.zoneID = draftData.woreda.zone.id;
+          if (
+            draftData.woreda.zone.region ||
+            draftData.woreda.zone.region != undefined
+          ) {
+            this.regionID = draftData.woreda.zone.region.id;
+          }
+        }
+      }
       if (this.licenseInfo.applicantTypeId == 1) {
         this.displayPayrollDoc = true;
       } else {

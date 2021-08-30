@@ -351,6 +351,7 @@ export default {
   data: () => ({
     licenseInfo: {
       applicantId: +localStorage.getItem("userId"),
+      applicantTypeId: null,
       residenceWoredaId: null,
       applicantTitle: null,
       whomGoodStandingFor: null,
@@ -396,6 +397,9 @@ export default {
 
   methods: {
     checkExpertLevel(expertLevel) {
+      this.regionID = null;
+      this.zoneID = null;
+      this.licenseInfo.residenceWoredaId = null;
       if (expertLevel == 4) {
         this.showRegion = true;
       } else {
@@ -404,13 +408,13 @@ export default {
     },
     checkApplicantType(applicantType) {
       if (applicantType == 1) {
-        this.$store.dispatch("newlicense/getExpertLevel").then((res) => {
+        this.$store.dispatch("goodstanding/getExpertLevel").then((res) => {
           this.expertLevels = res.data.data.filter(function(e) {
-            return e.code.includes("REG") || e.code.includes("FED");
+            return e.code.includes("REG");
           });
         });
       } else {
-        this.$store.dispatch("newlicense/getExpertLevel").then((res) => {
+        this.$store.dispatch("goodstanding/getExpertLevel").then((res) => {
           this.expertLevels = res.data.data.filter(function(e) {
             return e.code.includes("FED");
           });
@@ -429,6 +433,7 @@ export default {
           action: action,
           data: {
             applicantId: this.licenseInfo.applicantId,
+            applicantTypeId: this.licenseInfo.applicantTypeId,
             residenceWoredaId: this.licenseInfo.residenceWoredaId,
             applicantTitle: this.licenseInfo.applicantTitle,
             whomGoodStandingFor: this.licenseInfo.whomGoodStandingFor,
@@ -439,11 +444,11 @@ export default {
               .licenseRegistrationNumber,
             applicantPositionId: this.licenseInfo.applicantPositionId,
             professionalTypeId: this.licenseInfo.professionalTypeID,
+            expertLevelId: this.licenseInfo.expertLevelId,
           },
         },
         id: this.draftId,
       };
-
       if (this.draftId != undefined) {
         this.$store
           .dispatch("goodstanding/editGoodstandingLicense", license)
@@ -477,6 +482,7 @@ export default {
           action: action,
           data: {
             applicantId: this.licenseInfo.applicantId,
+            applicantTypeId: this.licenseInfo.applicantTypeId,
             residenceWoredaId: this.licenseInfo.residenceWoredaId,
             applicantTitle: this.licenseInfo.applicantTitle,
             whomGoodStandingFor: this.licenseInfo.whomGoodStandingFor,
@@ -487,6 +493,7 @@ export default {
               .licenseRegistrationNumber,
             applicantPositionId: this.licenseInfo.applicantPositionId,
             professionalTypeId: this.licenseInfo.professionalTypeID,
+            expertLevelId: this.licenseInfo.expertLevelId,
           },
         },
         id: this.draftId,
@@ -543,6 +550,7 @@ export default {
     submit() {
       let license = {
         applicantId: this.licenseInfo.applicantId,
+        applicantTypeId: this.licenseInfo.applicantTypeId,
         residenceWoredaId: this.licenseInfo.residenceWoredaId,
         applicantTitle: this.licenseInfo.applicantTitle,
         whomGoodStandingFor: this.licenseInfo.whomGoodStandingFor,
@@ -552,6 +560,7 @@ export default {
         licenseRegistrationNumber: this.licenseInfo.licenseRegistrationNumber,
         applicantPositionId: this.licenseInfo.applicantPositionId,
         professionalTypeId: this.licenseInfo.professionalTypeID,
+        expertLevelId: this.licenseInfo.expertLevelId,
       };
       this.addressErrors = this.validateForm(license);
       let empty = true;
@@ -655,17 +664,45 @@ export default {
       let draftData = this.getDraft;
       this.licenseInfo.applicantId = draftData.applicantId;
       this.licenseInfo.applicantTitle = draftData.applicantTitle;
+      this.licenseInfo.applicantTypeId = draftData.applicantTypeId;
       this.licenseInfo.whomGoodStandingFor = draftData.whomGoodStandingFor;
       this.licenseInfo.licenseIssuedDate = draftData.licenseIssuedDate;
       this.licenseInfo.whoIssued = draftData.whoIssued;
       this.licenseInfo.licenseRegistrationNumber =
         draftData.licenseRegistrationNumber;
       this.licenseInfo.applicantPositionId = draftData.applicantPositionId;
-      this.licenseInfo.residenceWoredaId = draftData.woreda.id;
-      this.regionID = draftData.woreda.zone.region.id;
-      this.zoneID = draftData.woreda.zone.id;
       this.licenseInfo.professionalTypeID = draftData.professionalTypeId;
-
+      this.licenseInfo.expertLevelId = draftData.expertLevelId;
+      if (this.licenseInfo.applicantTypeId == 1) {
+        this.$store.dispatch("goodstanding/getExpertLevel").then((res) => {
+          this.expertLevels = res.data.data.filter(function(e) {
+            return e.code.includes("REG");
+          });
+        });
+      } else {
+        this.$store.dispatch("goodstanding/getExpertLevel").then((res) => {
+          this.expertLevels = res.data.data.filter(function(e) {
+            return e.code.includes("FED");
+          });
+        });
+      }
+      if (this.licenseInfo.expertLevelId == 3) {
+        this.showRegion = false;
+      } else {
+        this.showRegion = true;
+      }
+      if (draftData.woreda || draftData.woreda != undefined) {
+        this.licenseInfo.residenceWoredaId = draftData.woreda.id;
+        if (draftData.woreda.zone || draftData.woreda.zone != undefined) {
+          this.zoneID = draftData.woreda.zone.id;
+          if (
+            draftData.woreda.zone.region ||
+            draftData.woreda.zone.region != undefined
+          ) {
+            this.regionID = draftData.woreda.zone.region.id;
+          }
+        }
+      }
       this.$store
         .dispatch("goodstanding/getZones", this.regionID)
         .then((res) => {

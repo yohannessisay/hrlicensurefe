@@ -338,6 +338,9 @@ export default {
 
   methods: {
     checkExpertLevel(expertLevel) {
+      this.regionID = null;
+      this.zoneID = null;
+      this.licenseInfo.residenceWoredaId = null;
       if (expertLevel == 4) {
         this.showRegion = true;
       } else {
@@ -348,7 +351,7 @@ export default {
       if (applicantType == 1) {
         this.$store.dispatch("verification/getExpertLevel").then((res) => {
           this.expertLevels = res.data.data.filter(function(e) {
-            return e.code.includes("REG") || e.code.includes("FED");
+            return e.code.includes("REG");
           });
         });
       } else {
@@ -571,6 +574,24 @@ export default {
         draftData.education.institutionId;
       this.licenseInfo.professionalTypeID = draftData.professionalTypeId;
       this.licenseInfo.expertLevelId = draftData.expertLevelId;
+      if (this.licenseInfo.applicantTypeId == 1) {
+        this.$store.dispatch("verification/getExpertLevel").then((res) => {
+          this.expertLevels = res.data.data.filter(function(e) {
+            return e.code.includes("REG");
+          });
+        });
+      } else {
+        this.$store.dispatch("verification/getExpertLevel").then((res) => {
+          this.expertLevels = res.data.data.filter(function(e) {
+            return e.code.includes("FED");
+          });
+        });
+      }
+      if (this.licenseInfo.expertLevelId == 3) {
+        this.showRegion = false;
+      } else {
+        this.showRegion = true;
+      }
       if (draftData.woreda || draftData.woreda != undefined) {
         this.licenseInfo.residenceWoredaId = draftData.woreda.id;
         if (draftData.woreda.zone || draftData.woreda.zone != undefined) {
