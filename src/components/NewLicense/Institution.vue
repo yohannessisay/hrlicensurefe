@@ -274,7 +274,7 @@
             {{ this.buttons[1]["name"] }}
           </button>
         </div>
-        <div class="pt-16">
+        <div class="pt-8">
           <Spinner v-if="showLoading" />
         </div>
       </div>
