@@ -283,7 +283,7 @@
           Back
         </button>
         <button @click="draft(this.buttons[0].action)" variant="outline">
-          {{ this.buttons[0]["name"] }}
+          Re-apply
         </button>
         <button @click="update(this.buttons[1].action)" variant="outline">
           {{ this.buttons[1]["name"] }}

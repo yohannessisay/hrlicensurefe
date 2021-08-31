@@ -73,7 +73,7 @@
       </div>
       <button click="submit()">
         Sign up
-      </button> 
+      </button>
       <Spinner
         v-if="message.showLoading"
         class="mt-4 mb-4"
@@ -112,23 +112,20 @@ export default {
       showFlash: false,
       showErrorFlash: false,
       showLoading: false,
-      errorMessage:"",
+      errorMessage: "",
     });
-
     const credentials = ref({
       emailAddress: "",
       phoneNumber: "",
       password: "",
       repassword: "",
     });
-
     const credentialsErrors = ref({
       emailAddress: undefined,
       phoneNumber: undefined,
       password: undefined,
       repassword: undefined,
     });
-
     const submit = () => {
       let signup = {
         emailAddress: credentials.value.emailAddress.toLowerCase(),
@@ -140,41 +137,33 @@ export default {
         message.value.showFlash = false;
         message.value.showErrorFlash = false;
         store.dispatch("user/signUp", signup).then((res) => {
-          console.log("this is the incoming data", res);
-
-          if (res.data.status=="Error") {
- message.value.showLoading = false;
+          if (res.data.status == "Error") {
+            message.value.showLoading = false;
             message.value.showFlash = false;
             message.value.showErrorFlash = true;
-            message.value.errorMessage=res.data.message;
-            console.log("error ins the signup is ", res.data);
-            setTimeout(() => { message.value.showErrorFlash = false}, 3000);
-
-
-         
-          } else if(res.data.status=="Success")
-          {
-               message.value.showLoading = false;
+            message.value.errorMessage = res.data.message;
+            setTimeout(() => {
+              message.value.showErrorFlash = false;
+            }, 3000);
+          } else if (res.data.status == "Success") {
+            message.value.showLoading = false;
             message.value.showFlash = true;
             message.value.showErrorFlash = false;
             setTimeout(() => {
               location.reload();
-            }, 1500); 
-          } else{
-             message.value.showFlash = false;
+            }, 1500);
+          } else {
+            message.value.showFlash = false;
             message.value.showErrorFlash = true;
-            message.value.erroMessage="Something went wrong please try again";
-            console.log("internal server error");
+            message.value.erroMessage = "Something went wrong please try again";
           }
         });
       }
     };
-
     const isEmail = (email) => {
       const re = /\S+@\S+\.\S+/;
       return re.test(email);
     };
-
     const validateForm = (formData) => {
       const errors = {};
       if (!formData.emailAddress) errors.emailAddress = "Email Required";
@@ -191,7 +180,6 @@ export default {
       if (Object.keys(errors).length === 0) return false;
       return true;
     };
-
     return {
       credentials,
       credentialsErrors,
@@ -203,22 +191,18 @@ export default {
   },
 };
 </script>
-
 <style lang="postcss" scoped>
 .close-svg {
   width: 16px;
 }
-
 .card-wrapper {
   max-width: 450px;
   box-shadow: 0px -8px 6px rgb(30 64 175 / 51%);
   height: auto;
 }
-
 @screen md {
   .card-wrapper {
     box-shadow: 0px 3px 6px #1e40af82;
   }
 }
 </style>
-{"mode":"full","isActive":false}

@@ -271,7 +271,7 @@
         class="flex justify-center mt-8 pb-12"
       >
         <button @click="draft(this.buttons[0].action)" variant="outline">
-          {{ this.buttons[0]["name"] }}
+          Re-apply
         </button>
         <button @click="update(this.buttons[1].action)" variant="outline">
           {{ this.buttons[1]["name"] }}
@@ -286,12 +286,9 @@
     </div>
   </div>
 
-  <div v-if="this.showFlash">
+  <div v-if="showFlash">
     <FlashMessage message="Operation Successful!" />
   </div>
-  <!-- <div v-if="this.showSuccess">
-    <FlashMessage message="Operation Successful!" />
-  </div> -->
   <div v-if="showErrorFlash">
     <ErrorFlashMessage message="Operation Failed!" />
   </div>
@@ -342,6 +339,7 @@ export default {
     this.residenceWoredaId = this.license.residenceWoredaId;
     this.professionalTypeID = this.license.professionalTypeId;
     this.occupationTypeId = this.license.occupationTypeId;
+    this.expertLevelId = this.license.expertLevelId;
     this.buttons = this.getButtons;
   },
   data: () => ({
@@ -358,6 +356,7 @@ export default {
     residenceWoredaId: null,
     professionalTypeID: null,
     occupationTypeId: null,
+    expertLevelId: null,
     draftId: "",
     draftData: "",
     draftStatus: "",
@@ -453,11 +452,6 @@ export default {
             if (res.data.status == "Success") {
               let licenseId = this.draftId;
               let formData = new FormData();
-
-              formData.append(
-                this.documentTypes[1].documentType.code,
-                this.letter
-              );
               formData.append(
                 this.documentTypes[2].documentType.code,
                 this.healthExamCert
@@ -474,6 +468,10 @@ export default {
               formData.append(
                 this.documentTypes[6].documentType.code,
                 this.previousLicense
+              );
+              formData.append(
+                this.documentTypes[7].documentType.code,
+                this.letter
               );
               if (this.professionalDoc != undefined) {
                 formData.append(
@@ -513,12 +511,10 @@ export default {
           });
       } else {
         let formData = new FormData();
-        formData.append(this.documentTypes[1].documentType.code, this.letter);
         formData.append(
           this.documentTypes[2].documentType.code,
           this.healthExamCert
         );
-
         formData.append(this.documentTypes[4].documentType.code, this.cpd);
         formData.append(
           this.documentTypes[5].documentType.code,
@@ -528,6 +524,7 @@ export default {
           this.documentTypes[6].documentType.code,
           this.previousLicense
         );
+        formData.append(this.documentTypes[7].documentType.code, this.letter);
         if (this.professionalDoc != undefined) {
           formData.append(
             this.documentTypes[8].documentType.code,
@@ -557,7 +554,7 @@ export default {
             professionalTypeId: this.professionalTypeID,
             paymentSlip: null,
             occupationTypeId: this.occupationTypeId,
-            expertLevelId: this.license.expertLevel,
+            expertLevelId: this.expertLevelId,
           },
         };
         this.$store
@@ -600,7 +597,7 @@ export default {
             professionalTypeId: this.professionalTypeID,
             paymentSlip: null,
             occupationTypeId: this.occupationTypeId,
-            expertLevelId: this.license.expertLevel,
+            expertLevelId: this.expertLevelId,
           },
         },
         id: this.draftId,
@@ -651,11 +648,6 @@ export default {
             if (res.data.status == "Success") {
               let licenseId = this.draftId;
               let formData = new FormData();
-
-              formData.append(
-                this.documentTypes[1].documentType.code,
-                this.letter
-              );
               formData.append(
                 this.documentTypes[2].documentType.code,
                 this.healthExamCert
@@ -672,6 +664,10 @@ export default {
               formData.append(
                 this.documentTypes[6].documentType.code,
                 this.previousLicense
+              );
+              formData.append(
+                this.documentTypes[1].documentType.code,
+                this.letter
               );
               if (this.professionalDoc != undefined) {
                 formData.append(
@@ -710,12 +706,10 @@ export default {
           });
       } else {
         let formData = new FormData();
-        formData.append(this.documentTypes[1].documentType.code, this.letter);
         formData.append(
           this.documentTypes[2].documentType.code,
           this.healthExamCert
         );
-
         formData.append(this.documentTypes[4].documentType.code, this.cpd);
         formData.append(
           this.documentTypes[5].documentType.code,
@@ -725,6 +719,7 @@ export default {
           this.documentTypes[6].documentType.code,
           this.previousLicense
         );
+        formData.append(this.documentTypes[7].documentType.code, this.letter);
         if (this.professionalDoc != undefined) {
           formData.append(
             this.documentTypes[8].documentType.code,
@@ -753,7 +748,7 @@ export default {
             professionalTypeId: this.professionalTypeID,
             paymentSlip: null,
             occupationTypeId: this.occupationTypeId,
-            expertLevelId: this.license.expertLevel,
+            expertLevelId: this.expertLevelId,
           },
         };
         this.$store

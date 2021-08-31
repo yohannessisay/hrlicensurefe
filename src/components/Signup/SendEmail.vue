@@ -1,5 +1,5 @@
 <template>
-  <div 
+  <div
     class="
       card-wrapper
       bg-white
@@ -16,7 +16,7 @@
   >
     <button
       class="absolute top-0 right-0 mr-2 mt-2"
-      @click="$emit('closeModal' )"
+      @click="$emit('closeModal')"
       variant="rounded"
     >
       <svg
@@ -64,7 +64,7 @@ import { useStore } from "vuex";
 import { useRouter, useRoute } from "vue-router";
 import Spinner from "@/sharedComponents/Spinner";
 import FlashMessage from "@/sharedComponents/FlashMessage";
-import ErrorMessage  from "@/sharedComponents/ErrorFlashMessage"
+import ErrorMessage from "@/sharedComponents/ErrorFlashMessage";
 import Title from "@/sharedComponents/Title";
 import Modal from "@/sharedComponents/Modal";
 
@@ -74,56 +74,55 @@ export default {
     FlashMessage,
     Title,
     Modal,
-    ErrorMessage
+    ErrorMessage,
   },
   setup() {
     let email = ref("");
-    
+
     let showLoading = ref(false);
     let showFlash = ref(false);
     let showFlashError = ref(false);
     const store = useStore();
-     const router = useRouter();
+    const router = useRouter();
     const sendEmails = () => {
-      let emailToBeSent= 
-      {
-        email:email.value
-      }
-      console.log(":send clicked", emailToBeSent);
+      let emailToBeSent = {
+        email: email.value,
+      };
       store
-        .dispatch("profile/sendEmail",emailToBeSent)
+        .dispatch("profile/sendEmail", emailToBeSent)
         .then((res) => {
           showLoading.value = false;
           if (res.data.status === "Success") {
             showFlash.value = true;
-            
-            setTimeout(() => {
-                  location.reload();
-            }, 1500);
-          }
-          else{
-          showLoading.value = false;
-          showFlashError.value = true;
-          
-          setTimeout(() => {
-               location.reload();
-          }, 2500);
-          }
 
+            setTimeout(() => {
+              location.reload();
+            }, 1500);
+          } else {
+            showLoading.value = false;
+            showFlashError.value = true;
+
+            setTimeout(() => {
+              location.reload();
+            }, 2500);
+          }
         })
         .catch((err) => {
           showLoading.value = false;
           showFlashError.value = true;
-      
+
           setTimeout(() => {
-             location.reload();
+            location.reload();
           }, 2500);
-          console.log("something went wrong ", err);
         });
     };
     return {
-      email, sendEmails, showLoading, showFlash, showFlashError
-    }
+      email,
+      sendEmails,
+      showLoading,
+      showFlash,
+      showFlashError,
+    };
   },
 };
 </script>

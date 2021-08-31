@@ -267,14 +267,14 @@
           class="flex justify-center mb-8"
         >
           <button @click="submit">Next</button>
-          <button @click="draft(this.buttons[0].action)" variant="outline">
+          <!-- <button @click="draft(this.buttons[0].action)" variant="outline">
             {{ this.buttons[0]["name"] }}
-          </button>
+          </button> -->
           <button @click="update(this.buttons[1].action)" variant="outline">
             {{ this.buttons[1]["name"] }}
           </button>
         </div>
-        <div class="pt-16">
+        <div class="pt-8">
           <Spinner v-if="showLoading" />
         </div>
       </div>
@@ -403,6 +403,9 @@ export default {
       });
     },
     checkExpertLevel(expertLevel) {
+      this.regionID = null;
+      this.zoneID = null;
+      this.licenseInfo.residenceWoredaId = null;
       if (expertLevel == 4) {
         this.showRegion = true;
       } else {
@@ -413,7 +416,7 @@ export default {
       if (applicantType == 1) {
         this.$store.dispatch("newlicense/getExpertLevel").then((res) => {
           this.expertLevels = res.data.data.filter(function(e) {
-            return e.code.includes("REG") || e.code.includes("FED");
+            return e.code.includes("REG");
           });
         });
       } else {
@@ -460,12 +463,11 @@ export default {
             paymentSlip: null,
             occupationTypeId: this.licenseInfo.occupationTypeId,
             nativeLanguageId: this.licenseInfo.nativeLanguageId,
-            expertLevel: this.licenseInfo.expertLevelId,
+            expertLevelId: this.licenseInfo.expertLevelId,
           },
         },
         id: this.draftId,
       };
-
       if (this.draftId != undefined) {
         this.$store
           .dispatch("newlicense/editNewLicense", license)
@@ -660,13 +662,46 @@ export default {
         draftData.education.departmentId;
       this.licenseInfo.education.institutionId =
         draftData.education.institutionId;
-      this.licenseInfo.residenceWoredaId = draftData.woreda.id;
-      this.regionID = draftData.woreda.zone.region.id;
-      this.zoneID = draftData.woreda.zone.id;
       this.licenseInfo.professionalTypeID = draftData.professionalTypeId;
-      this.licenseInfo.occupationTypeId = draftData.occupationTypeId;
-      this.licenseInfo.nativeLanguageId = draftData.nativeLanguageId;
       this.payrollData = draftData.occupationTypes;
+      this.licenseInfo.expertLevelId = draftData.expertLevelId;
+      if (this.licenseInfo.applicantTypeId == 1) {
+        this.displayPayrollDoc = true;
+        this.$store.dispatch("newlicense/getExpertLevel").then((res) => {
+          this.expertLevels = res.data.data.filter(function(e) {
+            return e.code.includes("REG");
+          });
+        });
+        this.fetchPayrollData();
+        this.licenseInfo.occupationTypeId = draftData.occupationTypeId;
+      } else {
+        this.displayEnglishLanguageOption = true;
+        this.$store.dispatch("newlicense/getExpertLevel").then((res) => {
+          this.expertLevels = res.data.data.filter(function(e) {
+            return e.code.includes("FED");
+          });
+        });
+        this.fetchEnglishSpeaker();
+        this.licenseInfo.nativeLanguageId = draftData.nativeLanguageId;
+      }
+      this.licenseInfo.expertLevelId = draftData.expertLevelId;
+      if (this.licenseInfo.expertLevelId == 3) {
+        this.showRegion = false;
+      } else {
+        this.showRegion = true;
+      }
+      if (draftData.woreda || draftData.woreda != undefined) {
+        this.licenseInfo.residenceWoredaId = draftData.woreda.id;
+        if (draftData.woreda.zone || draftData.woreda.zone != undefined) {
+          this.zoneID = draftData.woreda.zone.id;
+          if (
+            draftData.woreda.zone.region ||
+            draftData.woreda.zone.region != undefined
+          ) {
+            this.regionID = draftData.woreda.zone.region.id;
+          }
+        }
+      }
       if (this.licenseInfo.applicantTypeId == 1) {
         this.displayPayrollDoc = true;
       } else {

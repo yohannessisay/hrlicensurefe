@@ -35,7 +35,7 @@
                   v-on:change="handleFileUpload()"
                   style="margin-bottom: 15px !important;"
                 />
-                <!-- we can restirct what type of file format it can use using accept=".jpeg,.jpg,.png,.pdf,...." -->
+                <!-- file format can be restricted by using accept=".jpeg,.jpg,.png,.pdf,...." -->
                 <p>
                   Drag your Profile Picture here to begin<br />
                   or click to browse
@@ -43,7 +43,6 @@
               </div>
             </label>
           </span>
-
           <picture v-if="!showUpload && isImage">
             <p class="ml-4">
               <a href="javascript:void(0)" @click="reset()">Upload again</a>
@@ -340,7 +339,6 @@
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
 import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
-import { base64StringToBlob } from "blob-util";
 export default {
   components: { TitleWithIllustration },
   props: ["activeState"],
@@ -478,7 +476,6 @@ export default {
         state.value.nationalities = nationalities.data;
       });
     };
-
     const nextStep = () => {
       personalInfoErrors.value = validateForm(personalInfo.value);
       for (let i = 0; i < state.value.nationalities.length; i++) {
@@ -488,9 +485,12 @@ export default {
           nationality.value = state.value.nationalities[i].name;
         }
       }
-      if (personalInfo.value.maritalStatusId == 1) maritalStatus.value = "Single";
-      if (personalInfo.value.maritalStatusId == 2) maritalStatus.value = "Married";
-      if (personalInfo.value.maritalStatusId == 3) maritalStatus.value = "Divorced";
+      if (personalInfo.value.maritalStatusId == 1)
+        maritalStatus.value = "Single";
+      if (personalInfo.value.maritalStatusId == 2)
+        maritalStatus.value = "Married";
+      if (personalInfo.value.maritalStatusId == 3)
+        maritalStatus.value = "Divorced";
       store.dispatch("profile/setNationality", nationality.value);
       store.dispatch("profile/setMaritalStatus", maritalStatus.value);
       let empty = isEmpty(personalInfoErrors.value);
@@ -499,6 +499,7 @@ export default {
       }
       if (empty == true) {
         store.dispatch("profile/setProfileInfo", personalInfo);
+        store.dispatch("profile/setPhoto", photoFile);
         emit("changeActiveState");
       }
     };
@@ -532,10 +533,46 @@ export default {
       }
       return true;
     };
-
     onMounted(() => {
       if (store.getters["profile/getPersonalInfo"]) {
         personalInfo.value = store.getters["profile/getPersonalInfo"];
+      }
+      let photoFetched = store.getters["profile/getPhoto"];
+      if (photoFetched || photoFetched != undefined || photoFetched != null) {
+        showUpload.value = false;
+        photoFile.value = photoFetched;
+        let reader = new FileReader();
+        if (photoFile.value.size > 100000) {
+          photoSizeCheck.value = true;
+        } else {
+          let fileS = photoFile.value.size;
+          if (fileS > 0 && fileS < 1000) {
+            fileSize.value += "B";
+          } else if (fileS > 1000 && fileS < 1000000) {
+            fileSize.value = fileS / 1000 + "kB";
+          } else {
+            fileSize.value = fileS / 1000000 + "MB";
+          }
+          reader.addEventListener(
+            "load",
+            async function() {
+              showPreview.value = true;
+              filePreview.value = reader.result;
+              var base64 = reader.result;
+              personalInfo.value.photo = base64;
+            },
+            false
+          );
+          if (photoFile.value) {
+            if (/\.(jpe?g|png|gif)$/i.test(photoFile.value.name)) {
+              isImage.value = true;
+              reader.readAsDataURL(photoFile.value);
+            } else if (/\.(pdf)$/i.test(photoFile.value.name)) {
+              isImage.value = false;
+              reader.readAsText(photoFile.value);
+            }
+          }
+        }
       }
       fetchUserTypes();
       fetchRegions();
@@ -583,7 +620,6 @@ img {
   position: absolute;
   cursor: pointer;
 }
-
 .dropbox {
   outline: 2px dashed grey; /* the dash box */
   outline-offset: -10px;
@@ -595,11 +631,9 @@ img {
   position: relative;
   cursor: pointer;
 }
-
 .dropbox:hover {
   background: lightblue; /* when mouse over to the drop zone, change color */
 }
-
 .dropbox p {
   font-size: 1.2em;
   text-align: center;

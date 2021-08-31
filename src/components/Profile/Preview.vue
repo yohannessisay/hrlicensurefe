@@ -57,13 +57,11 @@
             }}
           </h5>
         </div> -->
-
         <div>
           <label class="ml-8 text-primary-300"> Marital Status</label>
           <h5 class="ml-8">{{ maritalStatus }}</h5>
         </div>
       </div>
-
       <div class="flex justify-start">
         <Title message="Address" />
       </div>
@@ -167,30 +165,25 @@ export default {
       maritalStatus: null,
       userTypeId: null,
     };
-
     let address = {
       kebele: null,
       houseNumber: null,
       residence: null,
       poBox: null,
     };
-
     let contact = {
       email: null,
       poBox: null,
     };
-
     let success = ref(false);
     let response = {};
     let showFlash = ref(false);
     let nationality = ref("");
     let maritalStatus = ref("");
-
     const addProfile = () => {
       message.value.showLoading = true;
       message.value.showFlash = false;
       message.value.showErrorFlash = false;
-
       store
         .dispatch("profile/addProfile", {
           name: personalInfo.name,
@@ -212,7 +205,6 @@ export default {
           photo: personalInfo.photo,
           userId: +localStorage.getItem("userId"),
         })
-
         .then((response) => {
           if (response.statusText == "Created") {
             message.value.showLoading = false;
@@ -234,7 +226,6 @@ export default {
           }
         });
     };
-
     const fetchUser = async () => {
       message.value.showLoading2 = true;
       store
@@ -244,20 +235,17 @@ export default {
           message.value.showLoading2 = false;
         });
     };
-
     const submit = () => {
       addProfile();
     };
     const prevStep = () => {
       emit("changeActiveStatePrevious");
     };
-
     personalInfo = store.getters["profile/getPersonalInfo"];
     address = store.getters["profile/getAddress"];
     contact = store.getters["profile/getContact"];
     nationality = store.getters["profile/getNationality"];
     maritalStatus = store.getters["profile/getMaritalStatus"];
-
     onMounted(() => {
       fetchUser();
       nextTick(function() {
@@ -266,7 +254,6 @@ export default {
         }, 10000);
       });
     });
-
     return {
       personalInfo,
       address,

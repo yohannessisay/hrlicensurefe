@@ -30,6 +30,29 @@
     </div>
   </div>
 </template>
+
+<script>
+// @ is an alias to /src
+import Navigation from "@/views/Navigation";
+import PersonalInfo from "@/components/Profile/PersonalInfo.vue";
+import AddressInfo from "@/components/Profile/AddressInfo.vue";
+import ContactInfo from "@/components/Profile/ContactInfo.vue";
+import Preview from "@/components/Profile/Preview.vue";
+
+export default {
+  name: "NewProfile",
+  data: () => ({
+    activeState: 1,
+  }),
+  components: {
+    PersonalInfo,
+    AddressInfo,
+    ContactInfo,
+    Preview,
+    Navigation,
+  },
+};
+</script>
 <style>
 #holder {
   height: max-content;
@@ -60,25 +83,3 @@
   transition: opacity 0.5s ease-out ease-in;
 }
 </style>
-<script>
-// @ is an alias to /src
-import Navigation from "@/views/Navigation";
-import PersonalInfo from "@/components/Profile/PersonalInfo.vue";
-import AddressInfo from "@/components/Profile/AddressInfo.vue";
-import ContactInfo from "@/components/Profile/ContactInfo.vue";
-import Preview from "@/components/Profile/Preview.vue";
-
-export default {
-  name: "NewProfile",
-  data: () => ({
-    activeState: 1,
-  }),
-  components: {
-    PersonalInfo,
-    AddressInfo,
-    ContactInfo,
-    Preview,
-    Navigation,
-  },
-};
-</script>

@@ -164,7 +164,6 @@ export default {
     };
     const displaySet = (menu) => {
       display = menu;
-      console.log(display);
     };
     return {
       display,

@@ -53,7 +53,6 @@
     </div>
   </div>
 </template>
-
 <script>
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
@@ -63,7 +62,6 @@ export default {
   props: ["activeState"],
   setup(props, { emit }) {
     const store = useStore();
-
     let address = ref({
       kebele: "",
       houseNumber: "",
@@ -75,19 +73,10 @@ export default {
       kebele: "",
       residence: "",
     });
-
     const prevStep = () => {
-      addressErrors.value = validateForm(address.value);
-      let empty = isEmpty(addressErrors.value);
-      if (empty == false) {
-        return;
-      }
-      if (empty == true) {
-        store.dispatch("profile/setAddress", address);
-        emit("changeActiveStatePrevious");
-      }
+      store.dispatch("profile/setAddress", address);
+      emit("changeActiveStatePrevious");
     };
-
     const nextStep = () => {
       addressErrors.value = validateForm(address.value);
       let empty = isEmpty(addressErrors.value);
@@ -99,23 +88,19 @@ export default {
         emit("changeActiveState");
       }
     };
-
     const validateForm = (formData) => {
       const errors = {};
-
       if (!formData.kebele) errors.kebele = "Kebele Required";
       if (!formData.residence) errors.residence = "Residence Required";
 
       return errors;
     };
-
     const isEmpty = (obj) => {
       for (var prop in obj) {
         if (obj.hasOwnProperty(prop)) {
           return false;
         }
       }
-
       return true;
     };
     onMounted(() => {
@@ -123,7 +108,6 @@ export default {
         address.value = store.getters["profile/getAddress"];
       }
     });
-
     return {
       address,
       addressErrors,

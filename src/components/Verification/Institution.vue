@@ -229,9 +229,9 @@
           <button @click="submit">
             Next
           </button>
-          <button @click="draft(this.buttons[0].action)" variant="outline">
+          <!-- <button @click="draft(this.buttons[0].action)" variant="outline">
             {{ this.buttons[0]["name"] }}
-          </button>
+          </button> -->
           <button @click="update(this.buttons[1].action)" variant="outline">
             {{ this.buttons[1]["name"] }}
           </button>
@@ -338,6 +338,9 @@ export default {
 
   methods: {
     checkExpertLevel(expertLevel) {
+      this.regionID = null;
+      this.zoneID = null;
+      this.licenseInfo.residenceWoredaId = null;
       if (expertLevel == 4) {
         this.showRegion = true;
       } else {
@@ -348,7 +351,7 @@ export default {
       if (applicantType == 1) {
         this.$store.dispatch("verification/getExpertLevel").then((res) => {
           this.expertLevels = res.data.data.filter(function(e) {
-            return e.code.includes("REG") || e.code.includes("FED");
+            return e.code.includes("REG");
           });
         });
       } else {
@@ -373,12 +376,11 @@ export default {
             },
             residenceWoredaId: this.licenseInfo.residenceWoredaId,
             professionalTypeId: this.licenseInfo.professionalTypeID,
-            expertLevel: this.licenseInfo.expertLevelId,
+            expertLevelId: this.licenseInfo.expertLevelId,
           },
         },
         id: this.draftId,
       };
-
       if (this.draftId != undefined) {
         this.$store
           .dispatch("verification/editVerificationLicense", license)
@@ -419,7 +421,7 @@ export default {
             },
             residenceWoredaId: this.licenseInfo.residenceWoredaId,
             professionalTypeId: this.licenseInfo.professionalTypeID,
-            expertLevel: this.licenseInfo.expertLevelId,
+            expertLevelId: this.licenseInfo.expertLevelId,
           },
         },
         id: this.draftId,
@@ -483,7 +485,7 @@ export default {
         },
         residenceWoredaId: this.licenseInfo.residenceWoredaId,
         professionalTypeId: this.licenseInfo.professionalTypeID,
-        expertLevel: this.licenseInfo.expertLevelId,
+        expertLevelId: this.licenseInfo.expertLevelId,
       };
       this.$emit("changeActiveState");
       this.$emit("applicantTypeValue", this.licenseInfo.applicantTypeId);
@@ -570,10 +572,38 @@ export default {
         draftData.education.departmentId;
       this.licenseInfo.education.institutionId =
         draftData.education.institutionId;
-      this.licenseInfo.residenceWoredaId = draftData.woreda.id;
-      this.regionID = draftData.woreda.zone.region.id;
-      this.zoneID = draftData.woreda.zone.id;
       this.licenseInfo.professionalTypeID = draftData.professionalTypeId;
+      this.licenseInfo.expertLevelId = draftData.expertLevelId;
+      if (this.licenseInfo.applicantTypeId == 1) {
+        this.$store.dispatch("verification/getExpertLevel").then((res) => {
+          this.expertLevels = res.data.data.filter(function(e) {
+            return e.code.includes("REG");
+          });
+        });
+      } else {
+        this.$store.dispatch("verification/getExpertLevel").then((res) => {
+          this.expertLevels = res.data.data.filter(function(e) {
+            return e.code.includes("FED");
+          });
+        });
+      }
+      if (this.licenseInfo.expertLevelId == 3) {
+        this.showRegion = false;
+      } else {
+        this.showRegion = true;
+      }
+      if (draftData.woreda || draftData.woreda != undefined) {
+        this.licenseInfo.residenceWoredaId = draftData.woreda.id;
+        if (draftData.woreda.zone || draftData.woreda.zone != undefined) {
+          this.zoneID = draftData.woreda.zone.id;
+          if (
+            draftData.woreda.zone.region ||
+            draftData.woreda.zone.region != undefined
+          ) {
+            this.regionID = draftData.woreda.zone.region.id;
+          }
+        }
+      }
       this.$store
         .dispatch("verification/getZones", this.regionID)
         .then((res) => {
