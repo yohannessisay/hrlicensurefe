@@ -57,5 +57,10 @@ export default {
     newLicenseReturnedToMeSearched: [],
     newLicenseReturnedToOthers: [],
     newLicenseReturnedToOthersSearched: [],
+
+    newLicensePendingPayment: [],
+    newLicensePendingPaymentSearched: [],
+    newLicenseOthersPendingPayment: [],
+    newLicenseOthersPendingPaymentSearched: [],
   },
 };

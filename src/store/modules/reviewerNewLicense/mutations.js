@@ -56,6 +56,11 @@ import {
   SET_NEW_LICENSE_RETURNED_TO_ME_SEARCHED,
   SET_NEW_LICENSE_RETURNED_TO_OTHERS,
   SET_NEW_LICENSE_RETURNED_TO_OTHERS_SEARCHED,
+
+  SET_NEW_LICENSE_PENDING_PAYMENT,
+  SET_NEW_LICENSE_PENDING_PAYMENT_SEARCHED,
+  SET_NEW_LICENSE_OTHERS_PENDING_PAYMENT,
+  SET_NEW_LICENSE_OTHERS_PENDING_PAYMENT_SEARCHED,
 } from "./mutation-types";
 
 export default {
@@ -231,5 +236,20 @@ export default {
   },
   [SET_NEW_LICENSE_RETURNED_TO_OTHERS_SEARCHED](state, searchedVal) {
     state.newLicenseReturnedToOthersSearched = searchedVal;
+  },
+
+  [SET_NEW_LICENSE_PENDING_PAYMENT](state, data) {
+    state.newLicensePendingPayment = data;
+    state.newLicensePendingPaymentSearched = data;
+  },
+  [SET_NEW_LICENSE_PENDING_PAYMENT_SEARCHED](state, searchedVal) {
+    state.newLicensePendingPaymentSearched = searchedVal;
+  },
+  [SET_NEW_LICENSE_OTHERS_PENDING_PAYMENT](state, data) {
+    state.newLicenseOthersPendingPayment = data;
+    state.newLicenseOthersPendingPaymentSearched = data;
+  },
+  [SET_NEW_LICENSE_OTHERS_PENDING_PAYMENT_SEARCHED](state, searchedVal) {
+    state.newLicenseOthersPendingPaymentSearched = searchedVal;
   },
 };

@@ -35,7 +35,6 @@
                 @click="newLicenseMenuHandler('newLicenseUnassigned')"
                 class="mb-2"
               >
-                <!-- <span style="color: #648ea3;"> -->
                 <p class=" text-base" style="color: white; ">
                   <i class="far fa-thumbs-up fa-x fa-light"></i>
                   Unassigned
@@ -43,7 +42,7 @@
               </li>
 
               <!-- under review started here -->
-              <div>
+              <div v-if="expertLevelId == 4">
                 <li class=" justify-start ">
                   <transition name="slide-fade-to-left">
                     <div class="">
@@ -75,46 +74,50 @@
                           </h3>
                         </div>
                       </div>
-                      <drop-down-lists
-                        :dropdownValue="[
-                          dropdownValue.newLicenseUnderReview,
-                          dropdownValue.newLicenseAssigned,
-                        ]"
-                        name="In Review"
-                        dropDownHandlerValue="NewLicenseAssigned"
-                        :dropDownMenus="[
-                          'newLicenseAssigned',
-                          'newLicenseAssignedToOthers',
-                        ]"
-                        :isDropDownIconUp="newLicenseDDIcon.isAssignedUp"
-                        :adminRole="adminRole"
-                        :yoursAndOthersApplication="[
-                          'Assigned To You',
-                          'Assigned To Others',
-                        ]"
-                        @dropDownHandler="dropDownHandler"
-                        @dropDownListHandler="dropDownListHandler"
-                      />
-                      <drop-down-lists
-                        :dropdownValue="[
-                          dropdownValue.newLicenseUnderReview,
-                          dropdownValue.newLicenseUnfinished,
-                        ]"
-                        name="Draft+"
-                        dropDownHandlerValue="NewLicenseUnfinished"
-                        :dropDownMenus="[
-                          'newLicenseUnfinished',
-                          'newLicenseOthersUnfinished',
-                        ]"
-                        :isDropDownIconUp="newLicenseDDIcon.isUnfinishedUp"
-                        :adminRole="adminRole"
-                        :yoursAndOthersApplication="[
-                          'My Unfinished',
-                          'Others Unfinished',
-                        ]"
-                        @dropDownHandler="dropDownHandler"
-                        @dropDownListHandler="dropDownListHandler"
-                      />
+                      <div class="ml-4">
+                        <drop-down-lists
+                          :dropdownValue="[
+                            dropdownValue.newLicenseUnderReview,
+                            dropdownValue.newLicenseAssigned,
+                          ]"
+                          name="In Review"
+                          dropDownHandlerValue="NewLicenseAssigned"
+                          :dropDownMenus="[
+                            'newLicenseAssigned',
+                            'newLicenseAssignedToOthers',
+                          ]"
+                          :isDropDownIconUp="newLicenseDDIcon.isAssignedUp"
+                          :adminRole="adminRole"
+                          :yoursAndOthersApplication="[
+                            'Assigned To You',
+                            'Assigned To Others',
+                          ]"
+                          @dropDownHandler="dropDownHandler"
+                          @dropDownListHandler="dropDownListHandler"
+                        />
+                      </div>
+                      <div class="ml-4">
+                        <drop-down-lists
+                          :dropdownValue="[
+                            dropdownValue.newLicenseUnderReview,
+                            dropdownValue.newLicenseUnfinished,
+                          ]"
+                          name="Draft"
+                          dropDownHandlerValue="NewLicenseUnfinished"
+                          :dropDownMenus="[
+                            'newLicenseUnfinished',
+                            'newLicenseOthersUnfinished',
+                          ]"
+                          :isDropDownIconUp="newLicenseDDIcon.isUnfinishedUp"
+                          :adminRole="adminRole"
+                          :yoursAndOthersApplication="[
+                            'My Unfinished',
+                            'Others Unfinished',
+                          ]"
+                          @dropDownHandler="dropDownHandler"
+                          @dropDownListHandler="dropDownListHandler"
+                        />
+                      </div>
                       <div
                         v-if="dropdownValue.newLicenseUnderReview"
                         class="dropdown-menu relative  shadow-md mb-12 ml-4"
@@ -265,12 +268,16 @@
                                 <h3
                                   class="text-lightBlueB-500 mt-tiny"
                                   @click="
-                                    newlicenseDDHandler('NewLicenseConfirmedEvaluation')
+                                    newlicenseDDHandler(
+                                      'NewLicenseConfirmedEvaluation'
+                                    )
                                   "
                                 >
                                   <span style="color: white;">
                                     <i
-                                      v-if="newLicenseDDIcon.isConfirmedEvaluationUp"
+                                      v-if="
+                                        newLicenseDDIcon.isConfirmedEvaluationUp
+                                      "
                                       class="fas fa-chevron-circle-up float-right mt-2"
                                     ></i>
                                     <i
@@ -287,7 +294,9 @@
                                   >
                                 </h3>
                                 <div
-                                  v-if="dropdownValue.newLicenseConfirmedEvaluation"
+                                  v-if="
+                                    dropdownValue.newLicenseConfirmedEvaluation
+                                  "
                                   class="dropdown-menu relative  shadow-md mb-12 ml-4"
                                   style="color: #648ea3; width: 200px;"
                                 >
@@ -378,7 +387,9 @@
                                 <h3
                                   class="text-lightBlueB-500 mt-tiny"
                                   @click="
-                                    newlicenseDDHandler('NewLicensePaymentReview')
+                                    newlicenseDDHandler(
+                                      'NewLicensePaymentReview'
+                                    )
                                   "
                                 >
                                   <span style="color: white;">
@@ -454,157 +465,140 @@
                           </li>
                         </ul>
                       </div>
-                      <div
-                        v-if="dropdownValue.newLicenseUnderReview"
-                        class="dropdown-menu relative  shadow-md mb-12 ml-4"
-                        style="color: #648ea3; width: 200px;"
-                      >
-                        <ul
-                          class="block w-full shadow float-right"
-                          style="color: #648ea3;"
-                        >
-                          <li
-                            @click="newlicenseDDHandler('NewLicenseUnfinished')"
-                            class=" justify-start "
-                            v-if="adminRole == 'ADM'"
-                          >
-                            <div class=" justify-center items-center ">
-                              <div class="p-1 ">
-                                <h3 class="text-lightBlueB-500 mt-tiny">
-                                  <span style="color: white;">
-                                    <i
-                                      v-if="newLicenseDDIcon.isUnfinishedUp"
-                                      class="fas fa-chevron-circle-up float-right mt-2"
-                                    ></i>
-                                    <i
-                                      v-else
-                                      class="fas fa-chevron-circle-down float-right mt-2"
-                                    ></i>
-
-                                    <i
-                                      class="mr-2 far fa-address-book fa-x fa-light"
-                                    ></i>
-                                  </span>
-                                  <span class="text-base" style="color: white; "
-                                    >Evaluation</span
-                                  >
-                                </h3>
-                              </div>
-                            </div>
-                            <div
-                              v-if="dropdownValue.newLicenseUnfinished"
-                              class="dropdown-menu relative  shadow-md mb-12 ml-4"
-                              style="color: #648ea3; width: 200px;"
-                            >
-                              <ul class="block w-full  shadow float-right ">
-                                <li
-                                  @click="
-                                    newLicenseMenuHandler(
-                                      'newLicenseUnfinished'
-                                    )
-                                  "
-                                  class="mb-2"
-                                >
-                                  <p class=" text-sm" style="color: white; ">
-                                    <i
-                                      class="mr-2 far fa-address-book fa-x fa-light"
-                                    ></i>
-                                    My Unfinished
-                                  </p>
-                                </li>
-                                <li
-                                  @click="
-                                    newLicenseMenuHandler(
-                                      'newLicenseOthersUnfinished'
-                                    )
-                                  "
-                                >
-                                  <p class=" text-sm" style="color: white; ">
-                                    <i class="mr-2 far fa-id-card fa-x"></i>
-                                    Others Unfinished
-                                  </p>
-                                </li>
-                              </ul>
-                            </div>
-                          </li>
-                        </ul>
-                      </div>
                     </div>
                   </transition>
                 </li>
-
-                <!-- <li
-                  @click="newLicenseMenuHandler('newLicenseAssigned')"
-                  class=" mb-2 "
-                  v-else
-                >
-                  <p class=" text-sm" style="color: white; ">
-                    <i class="mr-2 far fa-address-book fa-x fa-light"></i>
-                    Assigned To You
-                  </p>
-                </li> -->
               </div>
+              <!-- Expert sidenav starts here -->
+              <div v-if="expertLevelId == 3">
+                <drop-down-lists
+                  :dropdownValue="[
+                    dropdownValue.newLicense,
+                    dropdownValue.newLicenseAssigned,
+                  ]"
+                  name="In Review"
+                  dropDownHandlerValue="NewLicenseAssigned"
+                  :dropDownMenus="[
+                    'newLicenseAssigned',
+                    'newLicenseAssignedToOthers',
+                  ]"
+                  :isDropDownIconUp="newLicenseDDIcon.isAssignedUp"
+                  :adminRole="adminRole"
+                  :yoursAndOthersApplication="[
+                    'Assigned To You',
+                    'Assigned To Others',
+                  ]"
+                  @dropDownHandler="dropDownHandler"
+                  @dropDownListHandler="dropDownListHandler"
+                />
+              </div>
+              <div v-if="expertLevelId == 3">
+                <drop-down-lists
+                  :dropdownValue="[
+                    dropdownValue.newLicense,
+                    dropdownValue.newLicenseUnfinished,
+                  ]"
+                  name="Draft"
+                  dropDownHandlerValue="NewLicenseUnfinished"
+                  :dropDownMenus="[
+                    'newLicenseUnfinished',
+                    'newLicenseOthersUnfinished',
+                  ]"
+                  :isDropDownIconUp="newLicenseDDIcon.isUnfinishedUp"
+                  :adminRole="adminRole"
+                  :yoursAndOthersApplication="[
+                    'Unfinished',
+                    'Others Unfinished',
+                  ]"
+                  @dropDownHandler="dropDownHandler"
+                  @dropDownListHandler="dropDownListHandler"
+                />
+              </div>
+              <div v-if="expertLevelId == 3">
+                <drop-down-lists
+                  :dropdownValue="[
+                    dropdownValue.newLicense,
+                    dropdownValue.newLicenseUnassignedEvaluation,
+                  ]"
+                  name="Approved"
+                  dropDownHandlerValue="NewLicenseUnassignedEvaluation"
+                  :dropDownMenus="[
+                    'newLicenseUnassignedEvaluation',
+                    'newLicenseOthersUnassignedEvaluation',
+                  ]"
+                  :isDropDownIconUp="newLicenseDDIcon.isUnconfirmedUp"
+                  :adminRole="adminRole"
+                  :yoursAndOthersApplication="[
+                    'My Approved',
+                    'Others Approved',
+                  ]"
+                  @dropDownHandler="dropDownHandler"
+                  @dropDownListHandler="dropDownListHandler"
+                />
+              </div>
+              <div v-if="expertLevelId == 3">
+                <drop-down-lists
+                  :dropdownValue="[
+                    dropdownValue.newLicense,
+                    dropdownValue.newLicenseDeclined,
+                  ]"
+                  name="Declined"
+                  dropDownHandlerValue="NewLicenseDeclined"
+                  :dropDownMenus="[
+                    'newLicenseDeclined',
+                    'allNewLicenseDeclined',
+                  ]"
+                  :isDropDownIconUp="newLicenseDDIcon.isUnderEvaluationUp"
+                  :adminRole="adminRole"
+                  :yoursAndOthersApplication="[
+                    'My Declined',
+                    'Others Declined',
+                  ]"
+                  @dropDownHandler="dropDownHandler"
+                  @dropDownListHandler="dropDownListHandler"
+                />
+              </div>
+              <div v-if="expertLevelId == 3">
+                <drop-down-lists
+                  :dropdownValue="[
+                    dropdownValue.newLicense,
+                    dropdownValue.newLicenseUnderSuperVision,
+                  ]"
+                  name="Under Super Vision"
+                  dropDownHandlerValue="NewLicenseUnderSuperVision"
+                  :dropDownMenus="[
+                    'newLicenseUnderSuperVision',
+                    'newLicenseOthersUnderSuperVision',
+                  ]"
+                  :isDropDownIconUp="newLicenseDDIcon.isUnderSuperVisionUp"
+                  :adminRole="adminRole"
+                  :yoursAndOthersApplication="[
+                    'My Under Super Vision',
+                    'Others Under Super Vision',
+                  ]"
+                  @dropDownHandler="dropDownHandler"
+                  @dropDownListHandler="dropDownListHandler"
+                />
+              </div>
+              <!-- Expert Sidenav ends here -->
               <!-- under review end here -->
-
-              <!-- Finished starts here -->
-              <div>
-                <li class=" justify-start ">
-                  <transition name="slide-fade-to-left">
-                    <div class="">
-                      <div class=" justify-center items-center ">
-                        <div class="p-1 ">
-                          <h3
-                            class="text-lightBlueB-500 mt-tiny"
-                            @click="
-                              newlicenseDDHandler('NewLicenseFinished')
-                            "
-                          >
-                            <span style="color: white;">
-                              <i
-                                v-if="newLicenseDDIcon.isFinishedUp"
-                                class="fas fa-chevron-circle-up float-right mt-2"
-                              ></i>
-                              <i
-                                v-else
-                                class="fas fa-chevron-circle-down float-right mt-2"
-                              ></i>
-
-                              <i
-                                class="mr-2 far fa-address-book fa-x fa-light"
-                              ></i>
-                            </span>
-                            <span class="text-base" style="color: white; "
-                              >Finished</span
-                            >
-                          </h3>
-                        </div>
-                      </div>
-                      <drop-down-lists
-                        :dropdownValue="[
-                          dropdownValue.newLicenseFinished,
-                          dropdownValue.newLicenseLicensed,
-                        ]"
-                        name="Licensed"
-                        dropDownHandlerValue="NewLicenseLicensed"
-                        :dropDownMenus="[
-                          'newLicenseLicensed',
-                          'newLicenseOthersLicensed',
-                        ]"
-                        :isDropDownIconUp="newLicenseDDIcon.isLicensedUp"
-                        :adminRole="adminRole"
-                        :yoursAndOthersApplication="[
-                          'Licensed',
-                          'Others Licensed',
-                        ]"
-                        @dropDownHandler="dropDownHandler"
-                        @dropDownListHandler="dropDownListHandler"
-                      />
-                    </div>
-                  </transition>
-                </li>
-
-              </div>
-              <!-- Finished ends here -->
+              <drop-down-lists
+                :dropdownValue="[
+                  dropdownValue.newLicense,
+                  dropdownValue.newLicenseLicensed,
+                ]"
+                name="Licensed"
+                dropDownHandlerValue="NewLicenseLicensed"
+                :dropDownMenus="[
+                  'newLicenseLicensed',
+                  'newLicenseOthersLicensed',
+                ]"
+                :isDropDownIconUp="newLicenseDDIcon.isLicensedUp"
+                :adminRole="adminRole"
+                :yoursAndOthersApplication="['Licensed', 'Others Licensed']"
+                @dropDownHandler="dropDownHandler"
+                @dropDownListHandler="dropDownListHandler"
+              />
 
               <!-- All Licensed Applications starts here -->
 
@@ -612,17 +606,17 @@
                 @click="newLicenseMenuHandler('newLicenseUnfinished')"
                 class="mb-2"
               >
-                <!-- <span style="color: #648ea3;"> -->
-                <p class=" text-base" style="color: white; ">
-                  <i class="far fa-thumbs-up fa-x fa-light"></i>
+                <div class=" text-base" style="color: white; ">
+                  <!-- <i class="far fa-thumbs-up fa-x fa-light mt-4"></i> -->
                   All Licensed
-                </p>
+                </div>
               </li>
+              
 
               <!-- All Licensed Appilcations ends here -->
 
               <!-- unfinished started here -->
-              <div>
+              <!-- <div>
                 <li
                   @click="newlicenseDDHandler('NewLicenseUnfinished')"
                   class=" justify-start "
@@ -665,7 +659,7 @@
                             "
                             class="mb-2"
                           >
-                            <!-- <span style="color: #648ea3;"> -->
+                            
                             <p class=" text-sm" style="color: white; ">
                               <i
                                 class="mr-2 far fa-address-book fa-x fa-light"
@@ -680,7 +674,7 @@
                               )
                             "
                           >
-                            <!-- <span style="color: #648ea3;"> -->
+                            
                             <p class=" text-sm" style="color: white; ">
                               <i class="mr-2 far fa-id-card fa-x"></i>
                               Others Unfinished
@@ -696,17 +690,17 @@
                   class="mb-2"
                   v-else
                 >
-                  <!-- <span style="color: #648ea3;"> -->
+                  
                   <p class=" text-sm" style="color: white; ">
                     <i class="mr-2 far fa-address-book fa-x fa-light"></i>
                     Unfinished
                   </p>
                 </li>
-              </div>
+              </div> -->
               <!-- unfinished ends here -->
 
               <!-- unconfirmed start here -->
-              <div>
+              <!-- <div>
                 <li
                   @click="newlicenseDDHandler('NewLicenseUnconfirmed')"
                   class=" justify-start "
@@ -749,7 +743,6 @@
                             "
                             class="mb-2"
                           >
-                            <!-- <span style="color: #648ea3;"> -->
                             <p class=" text-sm" style="color: white; ">
                               <i
                                 class="mr-2 far fa-address-book fa-x fa-light"
@@ -766,7 +759,6 @@
                               newLicenseMenuHandler('allNewLicenseUnconfirmed')
                             "
                           >
-                            <!-- <span style="color: #648ea3;"> -->
                             <p class=" text-sm" style="color: white; ">
                               <i class="mr-2 far fa-id-card fa-x"></i>
                               {{
@@ -786,17 +778,16 @@
                   class="mb-2"
                   v-else
                 >
-                  <!-- <span style="color: #648ea3;"> -->
                   <p class=" text-sm" style="color: white; ">
                     <i class="mr-2 far fa-address-book fa-x fa-light"></i>
                     {{ expertLevelId == 4 ? "Unconfirmed" : "Approved" }}
                   </p>
                 </li>
-              </div>
+              </div> -->
               <!-- unconfirmed ends here -->
 
               <!-- on review start here -->
-              <div v-if="expertLevelId == 4">
+              <!-- <div v-if="expertLevelId == 4">
                 <li
                   @click="newlicenseDDHandler('NewLicenseOnReview')"
                   class=" justify-start "
@@ -837,7 +828,7 @@
                             @click="newLicenseMenuHandler('newLicenseOnReview')"
                             class="mb-2"
                           >
-                            <!-- <span style="color: #648ea3;"> -->
+                            
                             <p class=" text-sm" style="color: white; ">
                               <i
                                 class="mr-2 far fa-address-book fa-x fa-light"
@@ -850,7 +841,7 @@
                               newLicenseMenuHandler('othersNewLicenseOnReview')
                             "
                           >
-                            <!-- <span style="color: #648ea3;"> -->
+                            
                             <p class=" text-sm" style="color: white; ">
                               <i class="mr-2 far fa-id-card fa-x"></i>
                               Others On Review
@@ -866,17 +857,17 @@
                   class="mb-2"
                   v-else
                 >
-                  <!-- <span style="color: #648ea3;"> -->
+                  
                   <p class=" text-sm" style="color: white; ">
                     <i class="mr-2 far fa-address-book fa-x fa-light"></i>
                     On Review
                   </p>
                 </li>
-              </div>
+              </div> -->
               <!-- on review ends here -->
 
               <!-- re evaluate starts here -->
-              <div v-if="expertLevelId == 4">
+              <!-- <div v-if="expertLevelId == 4">
                 <li
                   @click="newlicenseDDHandler('NewLicenseReEvaluate')"
                   class=" justify-start "
@@ -919,7 +910,7 @@
                             "
                             class="mb-2"
                           >
-                            <!-- <span style="color: #648ea3;"> -->
+                            
                             <p class=" text-sm" style="color: white; ">
                               <i
                                 class="mr-2 far fa-address-book fa-x fa-light"
@@ -934,7 +925,7 @@
                               )
                             "
                           >
-                            <!-- <span style="color: #648ea3;"> -->
+                            
                             <p class=" text-sm" style="color: white; ">
                               <i class="mr-2 far fa-id-card fa-x"></i>
                               Others Re Evaluate
@@ -950,17 +941,17 @@
                   class="mb-2"
                   v-else
                 >
-                  <!-- <span style="color: #648ea3;"> -->
+                  
                   <p class=" text-sm" style="color: white; ">
                     <i class="mr-2 far fa-address-book fa-x fa-light"></i>
                     Re Evaluate
                   </p>
                 </li>
-              </div>
+              </div> -->
               <!-- re evaluate ends here -->
 
               <!-- under super vision starts here -->
-              <div>
+              <!-- <div>
                 <li
                   @click="newlicenseDDHandler('NewLicenseUnderSuperVision')"
                   class=" justify-start "
@@ -1005,7 +996,7 @@
                             "
                             class="mb-2"
                           >
-                            <!-- <span style="color: #648ea3;"> -->
+                            
                             <p class=" text-sm" style="color: white; ">
                               <i
                                 class="mr-2 far fa-address-book fa-x fa-light"
@@ -1020,7 +1011,7 @@
                               )
                             "
                           >
-                            <!-- <span style="color: #648ea3;"> -->
+                            
                             <p class=" text-sm" style="color: white; ">
                               <i class="mr-2 far fa-id-card fa-x"></i>
                               Others Under Super Vision
@@ -1036,17 +1027,17 @@
                   class="mb-2"
                   v-else
                 >
-                  <!-- <span style="color: #648ea3;"> -->
+                  
                   <p class=" text-sm" style="color: white; ">
                     <i class="mr-2 far fa-address-book fa-x fa-light"></i>
                     Under Super Vision
                   </p>
                 </li>
-              </div>
+              </div> -->
               <!-- under super vision ends here -->
 
               <!-- decline starts here -->
-              <div>
+              <!-- <div>
                 <li
                   @click="newlicenseDDHandler('NewLicenseDeclined')"
                   class=" justify-start "
@@ -1086,7 +1077,7 @@
                             @click="newLicenseMenuHandler('newLicenseDeclined')"
                             class="mb-2"
                           >
-                            <!-- <span style="color: #648ea3;"> -->
+                            
                             <p class=" text-sm" style="color: white; ">
                               <i
                                 class="mr-2 far fa-address-book fa-x fa-light"
@@ -1102,7 +1093,7 @@
                             "
                             v-if="adminRole == 'ADM'"
                           >
-                            <!-- <span style="color: #648ea3;"> -->
+                            
                             <p class=" text-sm" style="color: white; ">
                               <i class="mr-2 far fa-id-card fa-x"></i>
                               Others Declined
@@ -1114,7 +1105,7 @@
                             "
                             class="mb-2"
                           >
-                            <!-- <span style="color: #648ea3;"> -->
+                            
                             <p class=" text-sm" style="color: white; ">
                               <i
                                 class="mr-2 far fa-address-book fa-x fa-light"
@@ -1134,7 +1125,7 @@
                             "
                             v-if="adminRole == 'ADM'"
                           >
-                            <!-- <span style="color: #648ea3;"> -->
+                            
                             <p class=" text-sm" style="color: white; ">
                               <i class="mr-2 far fa-id-card fa-x"></i>
                               Others Declined Payment
@@ -1145,11 +1136,11 @@
                     </div>
                   </transition>
                 </li>
-              </div>
+              </div> -->
               <!-- others decline ends here -->
 
               <!-- confirmed starts here -->
-              <div v-if="expertLevelId == 4">
+              <!-- <div v-if="expertLevelId == 4">
                 <li
                   @click="newlicenseDDHandler('NewLicenseConfirmed')"
                   class=" justify-start "
@@ -1191,7 +1182,7 @@
                             "
                             class="mb-2"
                           >
-                            <!-- <span style="color: #648ea3;"> -->
+                            
                             <p class=" text-sm" style="color: white; ">
                               <i
                                 class="mr-2 far fa-address-book fa-x fa-light"
@@ -1209,7 +1200,7 @@
                             "
                             v-if="adminRole == 'ADM'"
                           >
-                            <!-- <span style="color: #648ea3;"> -->
+                            
                             <p class=" text-sm" style="color: white; ">
                               <i class="mr-2 far fa-id-card fa-x"></i>
                               Others Confirmed
@@ -1221,7 +1212,7 @@
                             "
                             class="mb-2"
                           >
-                            <!-- <span style="color: #648ea3;"> -->
+                            
                             <p class=" text-sm" style="color: white; ">
                               <i
                                 class="mr-2 far fa-address-book fa-x fa-light"
@@ -1241,7 +1232,7 @@
                             "
                             v-if="adminRole == 'ADM'"
                           >
-                            <!-- <span style="color: #648ea3;"> -->
+                            
                             <p class=" text-sm" style="color: white; ">
                               <i class="mr-2 far fa-id-card fa-x"></i>
                               Others Approved Payment
@@ -1252,11 +1243,11 @@
                     </div>
                   </transition>
                 </li>
-              </div>
+              </div> -->
               <!-- confirmed ends here -->
 
               <!-- evaluation returned starts here-->
-              <div v-if="expertLevelId == 4">
+              <!-- <div v-if="expertLevelId == 4">
                 <li
                   @click="newlicenseDDHandler('NewLicenseReturned')"
                   class=" justify-start "
@@ -1298,7 +1289,7 @@
                             "
                             class="mb-2"
                           >
-                            <!-- <span style="color: #648ea3;"> -->
+                            
                             <p class=" text-sm" style="color: white; ">
                               <i
                                 class="mr-2 far fa-address-book fa-x fa-light"
@@ -1318,7 +1309,7 @@
                             "
                             v-if="adminRole == 'ADM'"
                           >
-                            <!-- <span style="color: #648ea3;"> -->
+                            
                             <p class=" text-sm" style="color: white; ">
                               <i class="mr-2 far fa-id-card fa-x"></i>
                               Returned To Others
@@ -1329,7 +1320,7 @@
                     </div>
                   </transition>
                 </li>
-              </div>
+              </div> -->
               <!-- evaluation returned ends here-->
             </ul>
           </div>
@@ -1341,18 +1332,14 @@
 <script>
 import { ref } from "vue";
 import DropDownLists from "./DropDownLists.vue";
-import DropDownContainers from "./DropDownContainers.vue";
 
 export default {
   name: "NewLicenseSideNav",
   components: {
     DropDownLists,
-    DropDownContainers,
   },
   props: ["dropdownValue", "expertLevelId", "adminRole"],
   setup(props, { emit }) {
-    let istrue = ref(false);
-
     let newLicenseDDIcon = ref({
       isNewLicenseUp: false,
       isUnderReviewUp: false,
@@ -1397,8 +1384,8 @@ export default {
           .isConfirmedEvaluationUp;
       } else if (applicationValue == "NewLicensePaymentReview") {
         newLicenseDDIcon.value.isPaymentReviewnUp = !newLicenseDDIcon.value
-          .isPaymentReviewnUp
-      } else if (applicationValue  == "NewLicenseInReviewPayment") {
+          .isPaymentReviewnUp;
+      } else if (applicationValue == "NewLicenseInReviewPayment") {
         newLicenseDDIcon.value.isInReviewPaymentUp = !newLicenseDDIcon.value
           .isInReviewPaymentUp;
       } else if (applicationValue == "NewLicenseLicensed") {
@@ -1458,7 +1445,6 @@ export default {
       emit("applicationTypeSelected", applicationValue);
     };
     return {
-      istrue,
       newLicenseDDIcon,
       dropDownHandler,
       dropDownListHandler,

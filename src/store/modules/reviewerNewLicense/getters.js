@@ -56,4 +56,9 @@ export default {
   getNewLicenseReturnedToMeSearched: (state) => state.newLicenseReturnedToMeSearched,
   getNewLicenseReturnedToOthers: (state) => state.newLicenseReturnedToOthers,
   getnewLicenseReturnedToOthersSearched: (state) => state.newLicenseReturnedToOthersSearched,
+
+  getNewLicensePendingPayment: (state) => state.newLicensePendingPayment,
+  getNewLicensePendingPaymentSearched: (state) => state.newLicensePendingPaymentSearched,
+  getNewLicenseOthersPendingPayment: (state) => state.newLicenseOthersPendingPayment,
+  getNewLicenseOthersPendingPaymentSearched: (state) => state.newLicenseOthersPendingPaymentSearched,
 };

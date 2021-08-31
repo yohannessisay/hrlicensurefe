@@ -109,9 +109,6 @@
         <div v-if="this.display == 'newLicenseOthersUnassignedEvaluation'">
           <new-license-all-un-confirmed />
         </div>
-        <!-- <div v-if="this.display == 'newLicenseUnassignedEvaluation'">
-          <new-license-all-un-confirmed />
-        </div> -->
         <div v-if="this.display == 'newLicenseUnderEvaluation'">
           <new-license-on-review />
         </div>
@@ -177,22 +174,22 @@
         <div v-if="this.display == 'renewalOthersUnfinished'">
           <renewal-others-unfinished />
         </div>
-        <div v-if="this.display == 'renewalUnconfirmed'">
+        <div v-if="this.display == 'renewalUnassignedEvaluation'">
           <renewal-unconfirmed />
         </div>
-        <div v-if="this.display == 'allRenewalUnconfirmed'">
+        <div v-if="this.display == 'renewalOthersUnassignedEvaluation'">
           <renewal-all-unconfirmed />
         </div>
-        <div v-if="this.display == 'renewalOnReview'">
+        <div v-if="this.display == 'renewalUnderEvaluation'">
           <renewal-on-review />
         </div>
-        <div v-if="this.display == 'othersRenewalOnReview'">
+        <div v-if="this.display == 'renewalOthersUnderEvaluation'">
           <renewal-others-on-review />
         </div>
-        <div v-if="this.display == 'renewalReEvaluate'">
+        <div v-if="this.display == 'renewalEvaluationAssessment'">
           <renewal-re-evaluate />
         </div>
-         <div v-if="this.display == 'othersRenewalReEvaluate'">
+         <div v-if="this.display == 'renewalOthersEvaluationAssessment'">
           <renewal-others-re-evaluate />
         </div>
         <div v-if="this.display == 'renewalDeclined'">
@@ -213,10 +210,10 @@
         <div v-if="this.display == 'othersRenewalConfirmed'">
           <renewal-others-confirmed />
         </div>
-        <div v-if="this.display == 'renewalReturnedToMe'">
+        <div v-if="this.display == 'renewalReturnedEvaluation'">
           <renewal-returned-to-me />
         </div>
-        <div v-if="this.display == 'renewalReturnedToOthers'">
+        <div v-if="this.display == 'renewalOthersReturnedEvaluation'">
           <renewal-returned-to-others />
         </div>
         <div v-if="this.display == 'renewalApprovedPayment'">

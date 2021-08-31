@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="dropdownValue[0]"
-    class="dropdown-menu relative  shadow-md ml-4"
+    class="dropdown-menu relative  shadow-md "
     style="color: #648ea3; width: 200px;"
   >
     <ul class="block w-full shadow float-right" style="color: #648ea3;">
@@ -55,7 +55,7 @@
       <li @click="dropDownListHandler(dropDownMenus[0])" v-else>
         <div
           v-if="dropdownValue[0]"
-          class="dropdown-menu relative  shadow-md ml-4"
+          class="dropdown-menu relative  shadow-md"
           style="color: #648ea3; width: 200px;"
         >
           <ul class="block w-full  shadow float-right ">
@@ -63,7 +63,7 @@
               <!-- <span style="color: #648ea3;"> -->
               <p class=" text-sm" style="color: white; ">
                 <i class="mr-2 far fa-address-book fa-x fa-light"></i>
-                {{ yoursAndOthersApplication[0] }}
+                {{ yoursAndOthersApplication[0] }} --
               </p>
             </li>
           </ul>
