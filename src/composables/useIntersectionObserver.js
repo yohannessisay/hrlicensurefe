@@ -1,5 +1,4 @@
 import { ref, onMounted } from "vue";
-
 export default function useIntesectionObserver(rootMargin) {
   const showElement = ref(false);
   const wrapperRef = ref(null);
@@ -13,18 +12,16 @@ export default function useIntesectionObserver(rootMargin) {
       {
         root: null,
         rootMargin: rootMargin || "5%",
-        threshold: 1.0
+        threshold: 1.0,
       }
     );
     if (wrapperRef.value) {
       observer.observe(wrapperRef.value);
     }
   };
-
   onMounted(observeVisibilityOnTheDOM);
-
   return {
     showElement,
-    wrapperRef
+    wrapperRef,
   };
 }

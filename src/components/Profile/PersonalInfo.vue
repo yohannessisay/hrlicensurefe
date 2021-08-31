@@ -35,7 +35,7 @@
                   v-on:change="handleFileUpload()"
                   style="margin-bottom: 15px !important;"
                 />
-                <!-- we can restirct what type of file format it can use using accept=".jpeg,.jpg,.png,.pdf,...." -->
+                <!-- file format can be restricted by using accept=".jpeg,.jpg,.png,.pdf,...." -->
                 <p>
                   Drag your Profile Picture here to begin<br />
                   or click to browse
@@ -43,7 +43,6 @@
               </div>
             </label>
           </span>
-
           <picture v-if="!showUpload && isImage">
             <p class="ml-4">
               <a href="javascript:void(0)" @click="reset()">Upload again</a>
@@ -340,7 +339,6 @@
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
 import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
-import { base64StringToBlob } from "blob-util";
 export default {
   components: { TitleWithIllustration },
   props: ["activeState"],
@@ -478,7 +476,6 @@ export default {
         state.value.nationalities = nationalities.data;
       });
     };
-
     const nextStep = () => {
       personalInfoErrors.value = validateForm(personalInfo.value);
       for (let i = 0; i < state.value.nationalities.length; i++) {
@@ -536,7 +533,6 @@ export default {
       }
       return true;
     };
-
     onMounted(() => {
       if (store.getters["profile/getPersonalInfo"]) {
         personalInfo.value = store.getters["profile/getPersonalInfo"];
@@ -624,7 +620,6 @@ img {
   position: absolute;
   cursor: pointer;
 }
-
 .dropbox {
   outline: 2px dashed grey; /* the dash box */
   outline-offset: -10px;
@@ -636,11 +631,9 @@ img {
   position: relative;
   cursor: pointer;
 }
-
 .dropbox:hover {
   background: lightblue; /* when mouse over to the drop zone, change color */
 }
-
 .dropbox p {
   font-size: 1.2em;
   text-align: center;

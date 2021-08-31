@@ -71,50 +71,39 @@
 import { ref } from "vue";
 import { useStore } from "vuex";
 import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
-
 export default {
   components: { TitleWithIllustration },
   props: ["activeState"],
   setup(props, { emit }) {
     const store = useStore();
-
     let contact = ref({
       mobileNumber: "",
       email: "",
       telephoneNumber: "",
       poBox: "",
     });
-
     let contactErrors = ref({
       mobileNumber: "",
       email: "",
       telephoneNumber: "",
     });
-
     const validateForm = (formData) => {
       const errors = {};
-
       if (!formData.mobileNumber)
         errors.mobileNumber = "Mobile Number Required";
-      // if (!formData.telephoneNumber)
-      //   errors.telephoneNumber = "Telephone Number Required";
       if (formData.email && !isEmail(formData.email)) {
         errors.email = "Invalid Email";
       }
-
       return errors;
     };
-
     const isEmpty = (obj) => {
       for (var prop in obj) {
         if (obj.hasOwnProperty(prop)) {
           return false;
         }
       }
-
       return true;
     };
-
     const isNumber = (evt) => {
       evt = evt ? evt : window.event;
       var charCode = evt.which ? evt.which : evt.keyCode;
@@ -128,12 +117,10 @@ export default {
         return true;
       }
     };
-
     const isEmail = (email) => {
       const re = /\S+@\S+\.\S+/;
       return re.test(email);
     };
-
     const nextStep = () => {
       contactErrors.value = validateForm(contact.value);
       let empty = isEmpty(contactErrors.value);
@@ -145,7 +132,6 @@ export default {
         emit("changeActiveState");
       }
     };
-
     return {
       contact,
       contactErrors,
