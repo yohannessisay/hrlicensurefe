@@ -238,7 +238,14 @@ export default {
       return error;
     }
   },
-
+  async searchNewLicense({ commit }, id) {
+    try {
+      const resp = await ApiService.get(url + "newLicenses/search/" + id);
+      return resp;
+    } catch (error) {
+      return resp;
+    }
+  },
   async storeDeclinedFields({ commit }, fields) {
     commit(SET_DECLINED_FIELDS, fields);
   },

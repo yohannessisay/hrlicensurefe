@@ -730,7 +730,7 @@ export default {
             let formData = new FormData();
 
             formData.append(
-              this.documentSpec[1].documentType.code,
+              this.documentSpec[7].documentType.code,
               this.letter
             );
             formData.append(

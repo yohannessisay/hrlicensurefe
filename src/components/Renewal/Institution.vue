@@ -155,7 +155,7 @@
               <label class="text-primary-700">Professional Type</label>
               <select
                 class="max-w-3xl"
-                @change="fetchProfessionalType()"
+                @change="fetchProfessionalType(licenseInfo.professionalTypeID)"
                 v-model="licenseInfo.professionalTypeID"
               >
                 <option
@@ -259,6 +259,9 @@
       </div>
     </div>
   </div>
+  <Modal v-if="showRenewalModal">
+    <RenewalModal @showRenewalModal="showRenewalModal = false" />
+  </Modal>
   <div class="mr-3xl" v-if="showFlash">
     <FlashMessage message="Operation Successful!" />
   </div>
@@ -273,6 +276,8 @@ import { mapGetters, mapActions } from "vuex";
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import Spinner from "@/sharedComponents/Spinner";
+import RenewalModal from "../../views/RenewalModal.vue";
+import Modal from "@/sharedComponents/Modal";
 export default {
   props: ["activeState"],
   components: {
@@ -280,6 +285,8 @@ export default {
     FlashMessage,
     ErrorFlashMessage,
     Spinner,
+    RenewalModal,
+    Modal,
   },
 
   async created() {
@@ -359,6 +366,7 @@ export default {
     payrollDocType: false,
 
     payrollData: "",
+    showRenewalModal: false,
   }),
 
   methods: {
@@ -576,7 +584,14 @@ export default {
         this.woredaArray = woredasResult.data;
       });
     },
-    fetchProfessionalType() {
+    fetchProfessionalType(id) {
+      this.$store.dispatch("renewal/searchNewLicense", id).then((res) => {
+        if (res.data.data == true) {
+          this.showRenewalModal = true;
+        } else {
+          this.showRenewalModal = false;
+        }
+      });
       this.$store.dispatch("renewal/getProfessionalTypes").then((res) => {
         this.professionalTypes = res.data.data;
       });
@@ -670,6 +685,9 @@ export default {
               this.woredaArray = woredasResult.data;
             });
         });
+    },
+    openModal() {
+      this.showRenewalModal = true;
     },
   },
 };

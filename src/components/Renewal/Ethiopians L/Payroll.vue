@@ -364,8 +364,6 @@ export default {
           if (res.data.status == "Success") {
             let licenseId = res.data.data.id;
             let formData = new FormData();
-
-            formData.append(documentSpecs[1].documentType.code, renewalLetter);
             formData.append(documentSpecs[2].documentType.code, healthExamCert);
             formData.append(documentSpecs[4].documentType.code, cpd);
             formData.append(documentSpecs[5].documentType.code, workExperience);
@@ -373,24 +371,25 @@ export default {
               documentSpecs[6].documentType.code,
               previousLicense
             );
+            formData.append(documentSpecs[7].documentType.code, renewalLetter);
+            if (professionalDoc != undefined) {
+              formData.append(
+                documentSpecs[8].documentType.code,
+                professionalDoc[0]
+              );
+              formData.append(
+                documentSpecs[9].documentType.code,
+                professionalDoc[1]
+              );
+              formData.append(
+                documentSpecs[10].documentType.code,
+                professionalDoc[2]
+              );
+            }
             formData.append(
               documentSpecs[11].documentType.code,
               payrollFile.value
             );
-            if (professionalDoc != undefined) {
-              formData.append(
-                documentSpecs[6].documentType.code,
-                professionalDoc[0]
-              );
-              formData.append(
-                documentSpecs[7].documentType.code,
-                professionalDoc[1]
-              );
-              formData.append(
-                documentSpecs[8].documentType.code,
-                professionalDoc[2]
-              );
-            }
             let payload = { document: formData, id: licenseId };
             store
               .dispatch("renewal/uploadDocuments", payload)

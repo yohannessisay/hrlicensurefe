@@ -1,31 +1,6 @@
 <template>
   <div>
-    <div
-      v-if="!this.showLoading"
-      class="relative text-gray-600 focus-within:text-gray-400 pt-10 pl-16 bg-lightBlueB-200"
-    >
-      <input
-        type="search"
-        name="search"
-        v-on:input="searchApplication()"
-        class="
-                  py-2
-                  text-sm text-black
-                  bg-gray-900
-                  width-548
-                  rounded-md
-                  pl-4
-                  focus:outline-none
-                  focus:bg-white
-                  focus:text-gray-900
-                "
-        placeholder="Search requests by Name or Order ID"
-        autocomplete="off"
-        v-model="search"
-        hidden
-      />
-    </div>
-    <div v-if="this.searched">
+    <div>
       <div class="bg-lightBlueB-200 h-screen">
         <div class="flex pl-12 pt-medium">
           <Title message="Search Result" />
@@ -469,9 +444,6 @@ export default {
       verification: [],
       goodstanding: [],
       showLoading: false,
-      search: "",
-      searchResult: [],
-      searched: false,
       showDD: false,
       auth: false,
       token: "",
@@ -491,47 +463,8 @@ export default {
     moment: function() {
       return moment();
     },
-    logout() {
-      localStorage.removeItem("token");
-      localStorage.removeItem("userId");
-      this.$router.push({ path: "/" });
-    },
     showDropDown() {
       this.showDD = !this.showDD;
-    },
-    searchApplication() {
-      let searchKey = this.search;
-      if (this.search === "" || this.search == undefined) {
-        this.searched = false;
-      } else {
-        this.searched = true;
-        this.searchResult = this.newlicense.filter(function(e) {
-          return e.newLicenseCode
-            .toLowerCase()
-            .includes(searchKey.toLowerCase());
-        });
-        if (this.searchResult.length == 0) {
-          this.searchResult = this.renewal.filter(function(e) {
-            return e.renewalCode
-              .toLowerCase()
-              .includes(searchKey.toLowerCase());
-          });
-        }
-        if (this.searchResult.length == 0) {
-          this.searchResult = this.verification.filter(function(e) {
-            return e.verificationCode
-              .toLowerCase()
-              .includes(searchKey.toLowerCase());
-          });
-        }
-        if (this.searchResult.length == 0) {
-          this.searchResult = this.goodstanding.filter(function(e) {
-            return e.goodStandingCode
-              .toLowerCase()
-              .includes(searchKey.toLowerCase());
-          });
-        }
-      }
     },
     fetchLicensebyId() {
       this.showLoading = !this.showLoading;
@@ -584,83 +517,4 @@ export default {
   },
 };
 </script>
-<style>
-span {
-  font-size: 15px;
-}
-img {
-  border-radius: 50%;
-  margin-bottom: 1rem;
-  width: 80px;
-  border-color: steelblue;
-  background-color: steelblue;
-}
-.container {
-  cursor: pointer;
-}
-.hoveredCard {
-  background-color: white;
-}
-/* .b{
-  cursor: pointer;
-  position: absolute;
-  transform: translate(-50%, -50%);
-} */
-.flip-box {
-  transform-style: preserve-3d;
-  perspective: 1000px;
-  cursor: pointer;
-}
-.flip-box-front,
-.flip-box-back {
-  transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
-  backface-visibility: hidden;
-}
-
-.flip-box-front {
-  transform: rotateY(0deg);
-  transform-style: preserve-3d;
-}
-
-.flip-box:hover .flip-box-front {
-  transform: rotateY(-180deg);
-  transform-style: preserve-3d;
-}
-
-.flip-box-back {
-  /* position: absolute; */
-  transform: rotateY(180deg);
-  transform-style: preserve-3d;
-}
-
-.flip-box:hover .flip-box-back {
-  transform: rotateY(0deg);
-  transform-style: preserve-3d;
-}
-
-.flip-box .inner {
-  /* position:absolute;
-  perspective: inherit;
-  z-index: 2;
-  transform: translateY(-50%)translateZ(60px) scale(.94); */
-}
-/* .box {
-  position: relative;
-} */
-
-.b {
-  /* position: absolute; */
-}
-#logout {
-  cursor: pointer;
-}
-.width-548 {
-  width: 548px;
-}
-.width-8 {
-  width: 22px;
-}
-.width-small {
-  width: 8px;
-}
-</style>
+<style></style>
