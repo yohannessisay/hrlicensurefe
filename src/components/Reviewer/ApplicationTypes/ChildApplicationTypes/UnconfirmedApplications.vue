@@ -106,7 +106,7 @@ export default {
         routeValue.value = "finishedDetail";
       }
       if (adminExpertId == 3) {
-        routeValue.value = "certifiedUsersDetail"
+        routeValue.value = "detail"
       }
       const url =
         data + "/" + routeValue.value + "/" + props.app_type + "/" + applicationId + "/" + applicantId;

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- <reviewer-nav-bar tab="newLicenseOthersUnfinished" /> -->
+    <!-- <reviewer-nav-bar tab="renewalOthersPendingPayment" /> -->
     <div class="bg-lightBlueB-200 h-full" v-if="!allInfo.searchByInput">
       <div class="pl-12">
         <div>Filter By</div>
@@ -19,16 +19,16 @@
           type="date"
           v-model="allInfo.searchUpToDate"
         />
-        <button @click="filterAssignedApplication">
+        <button @click="filterOthersPendingPaymentApplication">
           Filter
         </button>
       </div>
       <div class="flex pl-12 pt-tiny">
-        <Title message="Others New License Unfinished" />
+        <Title message="Renewal Others Pending Payment" />
       </div>
       <div class="flex flex-wrap pb-medium rounded h-full" v-if="!showLoading">
         <nothing-to-show :nothingToShow="nothingToShow" />
-        <unfinished-applications :unfinishedApplication="getNewLicenseOthersUnfinished" app_type="New License" others_unfinished="true"/>
+        <pending-payment-applications :pendingPaymentApplication="getRenewalOthersPendingPayment" app_type="Renewal" others_pending_payment="true"/>
       </div>
     </div>
     <div
@@ -41,15 +41,15 @@
       <div class="flex pl-12 pt-tiny">
         <Title
         :message="
-          'Unfinished Applicants on Date Range ' + moment(allInfo.searchFromDate).format('MMM D, YYYY') + ' To ' + moment(allInfo.searchUpToDate).format('MMM D, YYYY')
+          'Others Pending Payment Applicants on Date Range ' + moment(allInfo.searchFromDate).format('MMM D, YYYY') + ' To ' + moment(allInfo.searchUpToDate).format('MMM D, YYYY')
         "
       />
         <button @click="backClicked">back</button>
       </div>
       <filtered-info
         :filteredData="allInfo.filteredByDate"
-        type="unfinishedDetail"
-        app_type="New License"
+        type="detail"
+        app_type="Renewal"
       />
     </div>
   </div>
@@ -63,18 +63,19 @@
 <script>
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
-import moment from "moment";
 
 import applicationStatus from "../../Configurations/getApplicationStatus.js";
+import PendingPaymentApplications from "../ChildApplicationTypes/PendingPaymentApplications.vue"
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import filterApplication from "../../ChildComponents/FilteredDatas/FilterApplication.js";
 import FilteredInfo from "../../ChildComponents/FilteredDatas/FilteredInfo.vue";
-import NothingToShow from "../../ChildComponents/NothingToShow.vue";
+import moment from "moment";
 import ReviewerNavBar from "../../ReviewerNavBar.vue";
+import NothingToShow from "../../ChildComponents/NothingToShow.vue";
 import Spinner from "@/sharedComponents/Spinner";
 import store from "../../../../store";
 import Title from "@/sharedComponents/TitleWithIllustration";
-import UnfinishedApplications from "../ChildApplicationTypes/UnfinishedApplications.vue"
+
 
 
 
@@ -82,8 +83,8 @@ import UnfinishedApplications from "../ChildApplicationTypes/UnfinishedApplicati
 export default {
   computed: {
     moment: () => moment,
-    getNewLicenseOthersUnfinished() {
-      return store.getters["reviewerNewLicense/getNewLicenseOthersUnfinishedSearched"];
+    getRenewalOthersPendingPayment() {
+      return store.getters["reviewerRenewal/getRenewalOthersPendingPaymentSearched"];
     },
   },
   components: {
@@ -92,13 +93,13 @@ export default {
     FilteredInfo,
     Spinner,
     NothingToShow,
-    UnfinishedApplications,
+    PendingPaymentApplications,
     Title,
   },
   setup() {
     const store = useStore();
-    let newLicenseUnfinished = ref([]);
-    
+    let renewalOthersPendingPayment = ref([]);
+
     const adminId = +localStorage.getItem("adminId");
 
     let nothingToShow = ref(false);
@@ -117,7 +118,7 @@ export default {
       app_type: "",
     });
 
-    const filterAssignedApplication = () => {
+    const filterOthersPendingPaymentApplication = () => {
       filterApplication(moment, allInfo.value);
     };
 
@@ -130,17 +131,17 @@ export default {
       allInfo.value.app_type = "";
     };
 
-    const fetchNewLicenseUnfinished = () => {
+    const fetchRenewalOthersPendingPayment = () => {
       showLoading.value = true;
-      const statusId = applicationStatus(store, 'REVDRA');
+      const statusId = applicationStatus(store, 'PP');
       const adminStatus = [statusId, adminId];
-      store.dispatch("reviewerNewLicense/getNewLicenseOthersUnfinished", adminStatus).then((res) => {
+      store.dispatch("reviewerRenewal/getRenewalOthersPendingPayment", adminStatus).then((res) => {
         showLoading.value = false;
-        newLicenseUnfinished.value =
-          store.getters["reviewerNewLicense/getNewLicenseOthersUnfinishedSearched"];
+        renewalOthersPendingPayment.value =
+          store.getters["reviewerRenewal/getRenewalOthersPendingPaymentSearched"];
         allInfo.value.assignApplication =
-          store.getters["reviewerNewLicense/getNewLicenseOthersUnfinishedSearched"];
-          console.log("inside others newlicense", store.getters["reviewerNewLicense/getNewLicenseOthersUnfinishedSearched"])
+          store.getters["reviewerRenewal/getRenewalOthersPendingPaymentSearched"];
+          console.log("renewal pending payment", store.getters["reviewerRenewal/getRenewalOthersPendingPaymentSearched"])
 
         for (let applicant in allInfo.value.assignApplication) {
           allInfo.value.assignApplication[applicant].createdAt = moment(
@@ -154,20 +155,20 @@ export default {
               allInfo.value.assignApplication[applicant].applicantType;
           }
         }
-        if (store.getters["reviewerNewLicense/getNewLicenseOthersUnfinished"].length === 0) {
+        if (renewalOthersPendingPayment.value.length === 0) {
           nothingToShow.value = true;
         }
       });
     };
     onMounted(() => {
-      fetchNewLicenseUnfinished();
+      fetchRenewalOthersPendingPayment();
     });
 
     return {
       nothingToShow,
       allInfo,
       showLoading,
-      filterAssignedApplication,
+      filterOthersPendingPaymentApplication,
       backClicked,
     };
   },

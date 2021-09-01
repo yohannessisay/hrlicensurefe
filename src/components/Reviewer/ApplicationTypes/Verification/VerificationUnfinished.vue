@@ -129,7 +129,7 @@ export default {
 
     const fetchVerificationUnfinished = () => {
       showLoading.value = true;
-      const statusId = applicationStatus(store, 'DRA');
+      const statusId = applicationStatus(store, 'REVDRA');
       const adminStatus = [statusId, adminId];
       store.dispatch("reviewerVerification/getVerificationUnfinished", adminStatus).then((res) => {
         showLoading.value = false;

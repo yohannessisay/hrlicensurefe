@@ -36,7 +36,7 @@
                 class="mb-2"
               >
                 <p class=" text-base" style="color: white; ">
-                  <i class="far fa-thumbs-up fa-x fa-light"></i>
+                  <i class="far fa-thumbs-up fa-x fa-light "></i>
                   Unassigned
                 </p>
               </li>
@@ -80,7 +80,7 @@
                             dropdownValue.newLicenseUnderReview,
                             dropdownValue.newLicenseAssigned,
                           ]"
-                          name="In Review"
+                          name="Assigned"
                           dropDownHandlerValue="NewLicenseAssigned"
                           :dropDownMenus="[
                             'newLicenseAssigned',
@@ -111,8 +111,8 @@
                           :isDropDownIconUp="newLicenseDDIcon.isUnfinishedUp"
                           :adminRole="adminRole"
                           :yoursAndOthersApplication="[
-                            'My Unfinished',
-                            'Others Unfinished',
+                            'My Draft',
+                            'Others Draft',
                           ]"
                           @dropDownHandler="dropDownHandler"
                           @dropDownListHandler="dropDownListHandler"
@@ -470,6 +470,7 @@
                 </li>
               </div>
               <!-- Expert sidenav starts here -->
+              
               <div v-if="expertLevelId == 3">
                 <drop-down-lists
                   :dropdownValue="[
@@ -580,6 +581,97 @@
                   @dropDownListHandler="dropDownListHandler"
                 />
               </div>
+              <div
+                v-if="dropdownValue.newLicense && expertLevelId == 3"
+                class="dropdown-menu relative  shadow-md mb-12"
+                style="color: #648ea3; width: 200px;"
+              >
+                <ul
+                  class="block w-full shadow float-right"
+                  style="color: #648ea3;"
+                >
+                  <li class=" justify-start ">
+                    <div class=" justify-center items-center ">
+                      <div class="p-1 ">
+                        <h3
+                          class="text-lightBlueB-500 mt-tiny"
+                          @click="
+                            newlicenseDDHandler('NewLicensePaymentReview')
+                          "
+                        >
+                          <span style="color: white;">
+                            <i
+                              v-if="newLicenseDDIcon.isPaymentReviewnUp"
+                              class="fas fa-chevron-circle-up float-right mt-2"
+                            ></i>
+                            <i
+                              v-else
+                              class="fas fa-chevron-circle-down float-right mt-2"
+                            ></i>
+
+                            <i
+                              class="mr-2 far fa-address-book fa-x fa-light"
+                            ></i>
+                          </span>
+                          <span class="text-base" style="color: white; "
+                            >Payment Review</span
+                          >
+                        </h3>
+                        <div
+                          v-if="dropdownValue.newLicensePaymentReview"
+                          class="dropdown-menu relative  shadow-md mb-12 ml-4"
+                          style="color: #648ea3; width: 200px;"
+                        >
+                          <drop-down-lists
+                            :dropdownValue="[
+                              dropdownValue.newLicensePaymentReview,
+                              dropdownValue.newLicenseInReviewPayment,
+                            ]"
+                            name="In Review"
+                            dropDownHandlerValue="NewLicenseInReviewPayment"
+                            :dropDownMenus="[
+                              'newLicenseInReviewPayment',
+                              'othersNewLicenseInReviewPayment',
+                            ]"
+                            :isDropDownIconUp="
+                              newLicenseDDIcon.isInReviewPaymentUp
+                            "
+                            :adminRole="adminRole"
+                            :yoursAndOthersApplication="[
+                              'My In Review Payment',
+                              'Others In Review Payment',
+                            ]"
+                            @dropDownHandler="dropDownHandler"
+                            @dropDownListHandler="dropDownListHandler"
+                          />
+                          <drop-down-lists
+                            :dropdownValue="[
+                              dropdownValue.newLicensePaymentReview,
+                              dropdownValue.newLicenseDeclinedPayment,
+                            ]"
+                            name="Declined Payment"
+                            dropDownHandlerValue="NewLicenseDeclinedPayment"
+                            :dropDownMenus="[
+                              'newLicenseDeclinedPayment',
+                              'othersNewLicenseDeclinedPayment',
+                            ]"
+                            :isDropDownIconUp="
+                              newLicenseDDIcon.isDeclinedPaymentUp
+                            "
+                            :adminRole="adminRole"
+                            :yoursAndOthersApplication="[
+                              'My Declined Payment',
+                              'Others Declined Payment',
+                            ]"
+                            @dropDownHandler="dropDownHandler"
+                            @dropDownListHandler="dropDownListHandler"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
               <!-- Expert Sidenav ends here -->
               <!-- under review end here -->
               <drop-down-lists
@@ -607,11 +699,10 @@
                 class="mb-2"
               >
                 <div class=" text-base" style="color: white; ">
-                  <!-- <i class="far fa-thumbs-up fa-x fa-light mt-4"></i> -->
+                  <i class="mr-2 far fa-address-book fa-x fa-light"></i>
                   All Licensed
                 </div>
               </li>
-              
 
               <!-- All Licensed Appilcations ends here -->
 

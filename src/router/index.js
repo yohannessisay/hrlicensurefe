@@ -306,6 +306,13 @@ const routes = [
       import("../components/Reviewer/Detail/ReturnedToMeDetail.vue"),
   },
   {
+    path:
+      "/admin/pending-payment-evaluation/:applicationType/:applicationId/:applicantId",
+    name: "PendingPaymentEvaluation",
+    component: () =>
+      import("../components/Reviewer/Detail/PendingPaymentEvalaution.vue"),
+  },
+  {
     path: "/admin/reviewReturnedApplication/:applicationType/:applicationId",
     name: "reviewReturnedApplication",
     component: () =>

@@ -1314,6 +1314,95 @@
                   @dropDownListHandler="dropDownListHandler"
                 />
               </div>
+              <div
+                v-if="dropdownValue.renewal && expertLevelId == 3"
+                class="dropdown-menu relative  shadow-md mb-12"
+                style="color: #648ea3; width: 200px;"
+              >
+                <ul
+                  class="block w-full shadow float-right"
+                  style="color: #648ea3;"
+                >
+                  <li class=" justify-start ">
+                    <div class=" justify-center items-center ">
+                      <div class="p-1 ">
+                        <h3
+                          class="text-lightBlueB-500 mt-tiny"
+                          @click="renewalDDHandler('RenewalPaymentReview')"
+                        >
+                          <span style="color: white;">
+                            <i
+                              v-if="renewalDDIcon.isPaymentReviewnUp"
+                              class="fas fa-chevron-circle-up float-right mt-2"
+                            ></i>
+                            <i
+                              v-else
+                              class="fas fa-chevron-circle-down float-right mt-2"
+                            ></i>
+
+                            <i
+                              class="mr-2 far fa-address-book fa-x fa-light"
+                            ></i>
+                          </span>
+                          <span class="text-base" style="color: white; "
+                            >Payment Review</span
+                          >
+                        </h3>
+                        <div
+                          v-if="dropdownValue.renewalPaymentReview"
+                          class="dropdown-menu relative  shadow-md mb-12 ml-4"
+                          style="color: #648ea3; width: 200px;"
+                        >
+                          <drop-down-lists
+                            :dropdownValue="[
+                              dropdownValue.renewalPaymentReview,
+                              dropdownValue.renewalInReviewPayment,
+                            ]"
+                            name="In Review"
+                            dropDownHandlerValue="RenewalInReviewPayment"
+                            :dropDownMenus="[
+                              'renewalInReviewPayment',
+                              'othersRenewalInReviewPayment',
+                            ]"
+                            :isDropDownIconUp="
+                              renewalDDIcon.isInReviewPaymentUp
+                            "
+                            :adminRole="adminRole"
+                            :yoursAndOthersApplication="[
+                              'My In Review Payment',
+                              'Others In Review Payment',
+                            ]"
+                            @dropDownHandler="dropDownHandler"
+                            @dropDownListHandler="dropDownListHandler"
+                          />
+                          <drop-down-lists
+                            :dropdownValue="[
+                              dropdownValue.renewalPaymentReview,
+                              dropdownValue.renewalDeclinedPayment,
+                            ]"
+                            name="Declined Payment"
+                            dropDownHandlerValue="RenewalDeclinedPayment"
+                            :dropDownMenus="[
+                              'renewalDeclinedPayment',
+                              'othersRenewalDeclinedPayment',
+                            ]"
+                            :isDropDownIconUp="
+                              renewalDDIcon.isDeclinedPaymentUp
+                            "
+                            :adminRole="adminRole"
+                            :yoursAndOthersApplication="[
+                              'My Declined Payment',
+                              'Others Declined Payment',
+                            ]"
+                            @dropDownHandler="dropDownHandler"
+                            @dropDownListHandler="dropDownListHandler"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
               <!-- Expert side nav ends here -->
               <drop-down-lists
                 :dropdownValue="[
@@ -1341,7 +1430,6 @@
                   All Licensed
                 </div>
               </li>
-              
             </ul>
           </div>
         </div>

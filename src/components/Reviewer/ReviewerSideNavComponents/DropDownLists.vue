@@ -36,14 +36,12 @@
         >
           <ul class="block w-full  shadow float-right ">
             <li @click="dropDownListHandler(dropDownMenus[0])" class="mb-2">
-              <!-- <span style="color: #648ea3;"> -->
               <p class=" text-sm" style="color: white; ">
                 <i class="mr-2 far fa-address-book fa-x fa-light"></i>
                 {{ yoursAndOthersApplication[0] }}
               </p>
             </li>
             <li @click="dropDownListHandler(dropDownMenus[1])">
-              <!-- <span style="color: #648ea3;"> -->
               <p class=" text-sm" style="color: white; ">
                 <i class="mr-2 far fa-id-card fa-x"></i>
                 {{ yoursAndOthersApplication[1] }}
@@ -60,10 +58,9 @@
         >
           <ul class="block w-full  shadow float-right ">
             <li @click="dropDownListHandler(dropDownMenus[0])" class="mb-2">
-              <!-- <span style="color: #648ea3;"> -->
               <p class=" text-sm" style="color: white; ">
                 <i class="mr-2 far fa-address-book fa-x fa-light"></i>
-                {{ yoursAndOthersApplication[0] }} --
+                {{ yoursAndOthersApplication[0] }}
               </p>
             </li>
           </ul>

@@ -1,7 +1,7 @@
 <template>
   <div
     class="container"
-    v-for="item in reEvaluateApplication"
+    v-for="item in pendingPaymentApplication"
     v-bind:key="item.id"
     v-bind:value="item.id"
   >
@@ -10,11 +10,20 @@
     >
       <div
         class="p-4 w-48 h-64"
-        @Click="detail(`/admin/confirmAssignedApplication`, item.id, item.applicant.id)"
+        @Click="detail(`/admin/detail`, item.id, item.applicant.id)"
       >
         <div class="flex content-center justify-center">
-          <span v-if="item.applicant.profile.photo !== '' && item.applicant.profile.photo !== null">
-            <img :src="item.applicant.profile.photo" alt="profile picture"  class="w-20 h-12" />
+          <span
+            v-if="
+              item.applicant.profile.photo !== '' &&
+                item.applicant.profile.photo !== null
+            "
+          >
+            <img
+              :src="item.applicant.profile.photo"
+              alt="profile picture"
+              class="w-20 h-12"
+            />
           </span>
           <span v-else>
             <img
@@ -36,7 +45,7 @@
         </h4>
         <span
           class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-          v-if="all_re_evaluate == 'true'"
+          v-if="others_pending_payment == 'true'"
         >
           <i class="fas fa-user-cog"></i> &nbsp;
           {{ item.reviewer.name ? item.reviewer.name : "-" }}
@@ -87,19 +96,29 @@
 <script>
 import moment from "moment";
 import { useRouter } from "vue-router";
-import { ref } from 'vue';
 export default {
   computed: {
     moment: () => moment,
   },
-  props: ["reEvaluateApplication", "app_type", "all_re_evaluate"],
-  name: "ReEvaluateApplications",
+  props: ["pendingPaymentApplication", "app_type", "others_pending_payment"],
+  name: "PendingPaymentApplications",
   setup(props) {
     let router = useRouter();
     const detail = (data, applicationId, applicantId) => {
-      const url =
-        data + "/" + props.app_type + "/" + applicationId;
-      router.push(url);
+      if (props.others_pending_payment == "false") {
+        const url =
+          "/admin/pending-payment-evaluation/" +
+          props.app_type +
+          "/" +
+          applicationId +
+          "/" +
+          applicantId;
+        router.push(url);
+      } else {
+        const url =
+          data + "/" + props.app_type + "/" + applicationId + "/" + applicantId;
+        router.push(url);
+      }
     };
     return {
       detail,

@@ -47,6 +47,11 @@ import {
   SET_RENEWAL_RETURNED_TO_ME_SEARCHED,
   SET_RENEWAL_RETURNED_TO_OTHERS,
   SET_RENEWAL_RETURNED_TO_OTHERS_SEARCHED,
+
+  SET_RENEWAL_PENDING_PAYMENT,
+  SET_RENEWAL_PENDING_PAYMENT_SEARCHED,
+  SET_RENEWAL_OTHERS_PENDING_PAYMENT,
+  SET_RENEWAL_OTHERS_PENDING_PAYMENT_SEARCHED,
 } from "./mutation-types";
 const baseUrl = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api";
 
@@ -808,6 +813,69 @@ export default {
               .includes(searchKey.toLowerCase()) ||
             e.reviewer.name.toLowerCase().includes(searchKey.toLowerCase());
     });
-    commit(SET_RENEWAL_OTHERS_CONFIRMED_SEARCHED, searchedVal);
+    commit(SET_RENEWAL_RETURNED_TO_OTHERS_SEARCHED, searchedVal);
+  },
+
+  async getRenewalPendingPayment({ commit }, adminStatus) {
+    const url = baseUrl + "/renewals/status/"+adminStatus[0];
+    const resp = await ApiService.get(url);
+    const pendingPayment = resp.data.data.filter(function(e) {
+      return e.reviewerId === adminStatus[1];
+    });
+    commit(SET_RENEWAL_PENDING_PAYMENT, pendingPayment);
+  },
+
+  getRenewalPendingPaymentSearched({ commit, getters }, searchKey) {
+    if (getters.getRenewalPendingPayment === undefined) {
+      return;
+    }
+    const searchedVal = getters.getRenewalPendingPayment.filter(function(e) {
+      return e.renewalCode === undefined
+        ? ""
+        : e.renewalCode.toLowerCase().includes(searchKey.toLowerCase()) ||
+            (e.applicant.profile.name + " " + e.applicant.profile.fatherName)
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.name
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.fatherName
+              .toLowerCase()
+              .includes(searchKey.toLowerCase());
+    });
+    commit(SET_RENEWAL_PENDING_PAYMENT_SEARCHED, searchedVal);
+  },
+
+  async getRenewalOthersPendingPayment({ commit }, adminStatus) {
+    const url = baseUrl + "/renewals/status/"+adminStatus[0];
+    const resp = await ApiService.get(url);
+    const AllPendingPayments = resp.data.data.filter(function(e) {
+      return e.reviewerId !== adminStatus[1]
+    })
+    commit(SET_RENEWAL_OTHERS_PENDING_PAYMENT, AllPendingPayments);
+  },
+
+  getRenewalOthersPendingPaymentSearched({ commit, getters }, searchKey) {
+    if (getters.getRenewalOthersPendingPayment === undefined) {
+      return;
+    }
+    const searchedVal = getters.getRenewalOthersPendingPayment.filter(function(
+      e
+    ) {
+      return e.renewalCode === undefined
+        ? ""
+        : e.renewalCode.toLowerCase().includes(searchKey.toLowerCase()) ||
+            (e.applicant.profile.name + " " + e.applicant.profile.fatherName)
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.name
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.fatherName
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.reviewer.name.toLowerCase().includes(searchKey.toLowerCase());
+    });
+    commit(SET_RENEWAL_OTHERS_PENDING_PAYMENT_SEARCHED, searchedVal);
   },
 };

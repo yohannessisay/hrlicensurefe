@@ -138,7 +138,7 @@ export default {
 
     const fetchGoodStandingUnfinished = () => {
       showLoading.value = true;
-      const statusId = applicationStatus(store, 'DRA');
+      const statusId = applicationStatus(store, 'REVDRA');
       const adminStatus = [statusId, adminId];
       store.dispatch("reviewerGoodStanding/getGoodStandingUnfinished", adminStatus).then((res) => {
         showLoading.value = false;

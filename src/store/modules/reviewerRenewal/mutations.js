@@ -56,6 +56,12 @@ import {
   SET_RENEWAL_RETURNED_TO_ME_SEARCHED,
   SET_RENEWAL_RETURNED_TO_OTHERS,
   SET_RENEWAL_RETURNED_TO_OTHERS_SEARCHED,
+
+  SET_RENEWAL_PENDING_PAYMENT,
+  SET_RENEWAL_PENDING_PAYMENT_SEARCHED,
+  SET_RENEWAL_OTHERS_PENDING_PAYMENT,
+  SET_RENEWAL_OTHERS_PENDING_PAYMENT_SEARCHED,
+
 } from "./mutation-types";
 
 export default {
@@ -231,5 +237,20 @@ export default {
   },
   [SET_RENEWAL_RETURNED_TO_OTHERS_SEARCHED](state, searchedVal) {
     state.renewalReturnedToOthersSearched = searchedVal;
+  },
+
+  [SET_RENEWAL_PENDING_PAYMENT](state, data) {
+    state.renewalPendingPayment = data;
+    state.renewalPendingPaymentSearched = data;
+  },
+  [SET_RENEWAL_PENDING_PAYMENT_SEARCHED](state, searchedVal) {
+    state.renewalPendingPaymentSearched = searchedVal;
+  },
+  [SET_RENEWAL_OTHERS_PENDING_PAYMENT](state, data) {
+    state.renewalOthersPendingPayment = data;
+    state.renewalOthersPendingPaymentSearched = data;
+  },
+  [SET_RENEWAL_OTHERS_PENDING_PAYMENT_SEARCHED](state, searchedVal) {
+    state.renewalOthersPendingPaymentSearched = searchedVal;
   },
 };

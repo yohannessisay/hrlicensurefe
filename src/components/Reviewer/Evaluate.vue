@@ -43,11 +43,11 @@
                 }}
               </h4>
 
-              <h4 class="mt-2 ml-small w-1/2">
+              <!-- <h4 class="mt-2 ml-small w-1/2" v-if="newLicense.applicantType !== null">
                 {{ "Applicant Type:  " + newLicense.applicantType.name }}
-              </h4>
+              </h4> -->
             </div>
-            <div class="flex justify-center items-cente">
+            <div class="flex justify-center items-cente" v-if="newLicense.education !== undefined">
               <h4 class="mt-2 mr-tiny w-1/2">
                 {{ "Department:  " + newLicense.education.department.name }}
               </h4>
@@ -55,7 +55,7 @@
                 {{ "Institution:  " + newLicense.education.institution.name }}
               </h4>
             </div>
-            <div class="flex justify-center items-center">
+            <div class="flex justify-center items-center"  v-if="newLicense.education !== undefined">
               <div class="mt-2 ml-small w-1/2"></div>
               <h4 class="mt-2 ml-small w-1/2">
                 {{
@@ -522,12 +522,12 @@ export default {
         store
           .dispatch("reviewer/getGoodStandingApplication", applicationId)
           .then((res) => {
-            // newLicense.value = res.data.data;
+            newLicense.value = res.data.data;
             applicantId.value = res.data.data.applicantId;
-            newLicense.value.applicantType.name = "-";
-            newLicense.value.education.department.name = "-";
-            newLicense.value.education.institution.name = "-";
-            newLicense.value.education.institution.institutionType.name = "-";
+            // newLicense.value.applicantType.name = "-";
+            // newLicense.value.education.department.name = "-";
+            // newLicense.value.education.institution.name = "-";
+            // newLicense.value.education.institution.institutionType.name = "-";
             newLicense.value = {
               ...newLicense.value,
               ...res.data.data,

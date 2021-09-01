@@ -56,6 +56,11 @@ import {
   SET_NEW_LICENSE_RETURNED_TO_OTHERS,
   SET_NEW_LICENSE_RETURNED_TO_OTHERS_SEARCHED,
 
+  SET_NEW_LICENSE_PENDING_PAYMENT,
+  SET_NEW_LICENSE_PENDING_PAYMENT_SEARCHED,
+  SET_NEW_LICENSE_OTHERS_PENDING_PAYMENT,
+  SET_NEW_LICENSE_OTHERS_PENDING_PAYMENT_SEARCHED,
+
   NEW_LICENSE_REPORT,
 } from "./mutation-types";
 
@@ -836,6 +841,70 @@ export default {
               .includes(searchKey.toLowerCase()) ||
             e.reviewer.name.toLowerCase().includes(searchKey.toLowerCase());
     });
-    commit(SET_NEW_LICENSE_OTHERS_CONFIRMED_SEARCHED, searchedVal);
+    commit(SET_NEW_LICENSE_RETURNED_TO_OTHERS_SEARCHED, searchedVal);
   },
+
+  async getNewLicensePendingPayment({ commit }, adminStatus) {
+    const url = baseUrl + "/newlicenses/status/"+adminStatus[0];
+    const resp = await ApiService.get(url);
+    const pendingPayment = resp.data.data.filter(function(e) {
+      return e.reviewerId === adminStatus[1];
+    });
+    commit(SET_NEW_LICENSE_PENDING_PAYMENT, pendingPayment);
+  },
+
+  getNewLicensePendingPaymentSearched({ commit, getters }, searchKey) {
+    if (getters.getNewLicensePendingPayment === undefined) {
+      return;
+    }
+    const searchedVal = getters.getNewLicensePendingPayment.filter(function(e) {
+      return e.newLicenseCode === undefined
+        ? ""
+        : e.newLicenseCode.toLowerCase().includes(searchKey.toLowerCase()) ||
+            (e.applicant.profile.name + " " + e.applicant.profile.fatherName)
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.name
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.fatherName
+              .toLowerCase()
+              .includes(searchKey.toLowerCase());
+    });
+    commit(SET_NEW_LICENSE_PENDING_PAYMENT_SEARCHED, searchedVal);
+  },
+
+  async getNewLicenseOthersPendingPayment({ commit }, adminStatus) {
+    const url = baseUrl + "/newlicenses/status/"+adminStatus[0];
+    const resp = await ApiService.get(url);
+    const AllPendingPayments = resp.data.data.filter(function(e) {
+      return e.reviewerId !== adminStatus[1]
+    })
+    commit(SET_NEW_LICENSE_OTHERS_PENDING_PAYMENT, AllPendingPayments);
+  },
+
+  getNewLicenseOthersPendingPaymentSearched({ commit, getters }, searchKey) {
+    if (getters.getNewLicenseOthersPendingPayment === undefined) {
+      return;
+    }
+    const searchedVal = getters.getNewLicenseOthersPendingPayment.filter(function(
+      e
+    ) {
+      return e.newLicenseCode === undefined
+        ? ""
+        : e.newLicenseCode.toLowerCase().includes(searchKey.toLowerCase()) ||
+            (e.applicant.profile.name + " " + e.applicant.profile.fatherName)
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.name
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.fatherName
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.reviewer.name.toLowerCase().includes(searchKey.toLowerCase());
+    });
+    commit(SET_NEW_LICENSE_OTHERS_PENDING_PAYMENT_SEARCHED, searchedVal);
+  },
+  
 };

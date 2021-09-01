@@ -110,7 +110,6 @@ export default {
     let newLicenseReEvaluate = ref([]);
 
     const adminId = +localStorage.getItem("adminId");
-    console.log("aaaaaaaaaadminId", adminId)
   
 
 

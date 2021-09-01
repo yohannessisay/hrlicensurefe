@@ -146,10 +146,10 @@
           <new-license-returned-to-others />
         </div>
         <div v-if="this.display == 'newLicenseInReviewPayment'">
-          <new-license-approved-payment />
+          <new-license-pending-payment />
         </div>
         <div v-if="this.display == 'othersNewLicenseInReviewPayment'">
-          <new-license-others-approved-payment />
+          <new-license-others-pending-payment />
         </div>
         <div v-if="this.display == 'newLicenseDeclinedPayment'">
           <new-license-declined-payment />
@@ -216,11 +216,11 @@
         <div v-if="this.display == 'renewalOthersReturnedEvaluation'">
           <renewal-returned-to-others />
         </div>
-        <div v-if="this.display == 'renewalApprovedPayment'">
-          <renewal-approved-payment />
+        <div v-if="this.display == 'renewalInReviewPayment'">
+          <renewal-pending-payment />
         </div>
-        <div v-if="this.display == 'othersRenewalApprovedPayment'">
-          <renewal-others-approved-payment />
+        <div v-if="this.display == 'othersRenewalInReviewPayment'">
+          <renewal-others-pending-payment />
         </div>
         <div v-if="this.display == 'renewalDeclinedPayment'">
           <renewal-declined-payment />
@@ -318,8 +318,8 @@ import NewLicenseConfirmed from "./ApplicationTypes/NewLicense/NewLicenseConfirm
 import NewLicenseOthersConfirmed from "./ApplicationTypes/NewLicense/NewLicenseOthersConfirmed.vue";
 import NewLicenseReturnedToMe from "./ApplicationTypes/NewLicense/NewLicenseReturnedToMe.vue";
 import NewLicenseReturnedToOthers from "./ApplicationTypes/NewLicense/NewLicenseReturnedToOthers.vue";
-import NewLicenseApprovedPayment from "./ApplicationTypes/NewLicense/NewLicenseApprovedPayment.vue";
-import NewLicenseOthersApprovedPayment from "./ApplicationTypes/NewLicense/NewLicenseOthersApprovedPayment.vue";
+import NewLicensePendingPayment from "./ApplicationTypes/NewLicense/NewLicensePendingPayment.vue";
+import NewLicenseOthersPendingPayment from "./ApplicationTypes/NewLicense/NewLicenseOthersPendingPayment.vue";
 import NewLicenseDeclinedPayment from "./ApplicationTypes/NewLicense/NewLicenseDeclinedPayment.vue";
 import NewLicenseOthersDeclinedPayment from "./ApplicationTypes/NewLicense/NewLicenseOthersDeclinedPayment.vue";
 
@@ -343,8 +343,8 @@ import RenewalConfirmed from "./ApplicationTypes/Renewal/RenewalConfirmed.vue";
 import RenewalOthersConfirmed from "./ApplicationTypes/Renewal/RenewalOthersConfirmed.vue";
 import RenewalReturnedToMe from "./ApplicationTypes/Renewal/RenewalReturnedToMe.vue";
 import RenewalReturnedToOthers from "./ApplicationTypes/Renewal/RenewalReturnedToOthers.vue";
-import RenewalApprovedPayment from "./ApplicationTypes/Renewal/RenewalApprovedPayment.vue";
-import RenewalOthersApprovedPayment from "./ApplicationTypes/Renewal/RenewalOthersApprovedPayment.vue";
+import RenewalPendingPayment from "./ApplicationTypes/Renewal/RenewalPendingPayment.vue";
+import RenewalOthersPendingPayment from "./ApplicationTypes/Renewal/RenewalOthersPendingPayment.vue";
 import RenewalDeclinedPayment from "./ApplicationTypes/Renewal/RenewalDeclinedPayment.vue";
 import RenewalOthersDeclinedPayment from "./ApplicationTypes/Renewal/RenewalOthersDeclinedPayment.vue";
 
@@ -397,8 +397,8 @@ export default {
     NewLicenseOthersConfirmed,
     NewLicenseReturnedToMe,
     NewLicenseReturnedToOthers,
-    NewLicenseApprovedPayment,
-    NewLicenseOthersApprovedPayment,
+    NewLicensePendingPayment,
+    NewLicenseOthersPendingPayment,
     NewLicenseDeclinedPayment,
     NewLicenseOthersDeclinedPayment,
 
@@ -421,8 +421,8 @@ export default {
     RenewalOthersConfirmed,
     RenewalReturnedToMe,
     RenewalReturnedToOthers,
-    RenewalApprovedPayment,
-    RenewalOthersApprovedPayment,
+    RenewalPendingPayment,
+    RenewalOthersPendingPayment,
     RenewalDeclinedPayment,
     RenewalOthersDeclinedPayment,
 

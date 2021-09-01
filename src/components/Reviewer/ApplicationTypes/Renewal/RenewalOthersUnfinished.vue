@@ -130,7 +130,7 @@ export default {
 
     const fetchRenewalUnfinished = () => {
       showLoading.value = true;
-      const statusId = applicationStatus(store, 'DRA');
+      const statusId = applicationStatus(store, 'REVDRA');
       const adminStatus = [statusId, adminId];
       store.dispatch("reviewerRenewal/getRenewalOthersUnfinished", adminStatus).then((res) => {
         showLoading.value = false;

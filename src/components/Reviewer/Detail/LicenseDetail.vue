@@ -539,11 +539,11 @@ export default {
             profileInfo.value = license.value.applicant.profile;
             // applicantId.value = license.value.applicantId;
             education.value.departmentName =
-              license.value.education.department.name;
+              "-";
             education.value.institutionName =
-              license.value.education.institution.name;
+              "-";
             education.value.institutionTypeName =
-              license.value.education.institution.institutionType.name;
+              "-";
           });
       }
       if (applicationType.value == "Verification") {

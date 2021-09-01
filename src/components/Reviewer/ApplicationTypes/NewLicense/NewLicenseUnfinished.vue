@@ -140,7 +140,7 @@ export default {
 
     const fetchNewLicenseUnfinished = () => {
       showLoading.value = true;
-      const statusId = applicationStatus(store, 'DRA');
+      const statusId = applicationStatus(store, 'REVDRA');
       const adminStatus = [statusId, adminId];
       store.dispatch("reviewerNewLicense/getNewLicenseUnfinished", adminStatus).then((res) => {
         showLoading.value = false;
