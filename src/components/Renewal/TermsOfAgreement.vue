@@ -26,9 +26,9 @@
           <li>Letter from Hiring Organization</li>
           <li>Previous License</li>
           <li>CPD</li>
-          <li>Professional Document Certificate</li>
-          <li>Professional Document Diploma</li>
-          <li>Professional Document Transcript</li>
+          <li>Authenticated Professional Document Certificate</li>
+          <li>Authenticated Professional Document Diploma</li>
+          <li>Authenticated Professional Document Transcript</li>
           <li>Authenticated Work Experience</li>
         </ul>
       </div>
@@ -39,9 +39,9 @@
           <li>Previous License</li>
           <li>CPD</li>
           <li>Payroll Document</li>
-          <li>Professional Document Certificate</li>
-          <li>Professional Document Diploma</li>
-          <li>Professional Document Transcript</li>
+          <li>Authenticated Professional Document Certificate</li>
+          <li>Authenticated Professional Document Diploma</li>
+          <li>Authenticated Professional Document Transcript</li>
           <li>Authenticated Work Experience</li>
         </ul>
       </div>
@@ -51,9 +51,9 @@
           <li>Health Exam Certificate</li>
           <li>CPD</li>
           <li>Previous License</li>
-          <li>Professional Document Certificate</li>
-          <li>Professional Document Diploma</li>
-          <li>Professional Document Transcript</li>
+          <li>Authenticated Professional Document Certificate</li>
+          <li>Authenticated Professional Document Diploma</li>
+          <li>Authenticated Professional Document Transcript</li>
           <li>Authenticated Work Experience</li>
         </ul>
       </div>

@@ -39,7 +39,7 @@
               </span>
               <span v-if="showUpload">
                 <label class="text-primary-700 text-lg"
-                  >Professional Document:
+                  >Authenticated Professional Document Certificate:
                   <div class="dropbox">
                     <input
                       type="file"
@@ -63,7 +63,6 @@
                 </p>
                 <img v-bind:src="filePreview" v-show="showPreview" />
               </picture>
-              <!--  -->
               <div v-if="!showUpload && isPdf">
                 <p>
                   <a href="javascript:void(0)" @click="reset()">Upload again</a>
@@ -98,7 +97,7 @@
               </span>
               <span v-if="showDiplomaUpload">
                 <label class="text-primary-700 text-lg"
-                  >Upload Diploma:
+                  >Authenticated Professional Document Diploma:
                   <div class="dropbox">
                     <input
                       type="file"
@@ -162,7 +161,7 @@
               </span>
               <span v-if="showTranscriptUpload">
                 <label class="text-primary-700 text-lg"
-                  >Upload Transcript:
+                  >Authenticated Professional Document Transcript:
                   <div class="dropbox">
                     <input
                       type="file"
