@@ -360,4 +360,7 @@ export default {
 li {
   cursor: pointer;
 }
+span {
+  font-size: 15px;
+}
 </style>

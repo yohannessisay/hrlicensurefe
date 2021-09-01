@@ -369,7 +369,7 @@ export default {
           this.license = res.data.data;
           if (this.license) {
             this.newlicense = this.license.filter(function(e) {
-              return e.applicationStatus.code.includes("PP");
+              return e.applicationStatus.code === "PP";
             });
           }
         })
@@ -378,7 +378,7 @@ export default {
             this.license = res.data.data;
             if (this.license) {
               this.renewal = this.license.filter(function(e) {
-                return e.applicationStatus.code.includes("PP");
+                return e.applicationStatus.code === "PP";
               });
             }
           });
@@ -390,7 +390,7 @@ export default {
               this.license = res.data.data;
               if (this.license) {
                 this.verification = this.license.filter(function(e) {
-                  return e.applicationStatus.code.includes("PP");
+                  return e.applicationStatus.code === "PP";
                 });
               }
             });
@@ -403,7 +403,7 @@ export default {
               this.showLoading = !this.showLoading;
               if (this.license) {
                 this.goodstanding = this.license.filter(function(e) {
-                  return e.applicationStatus.code.includes("PP");
+                  return e.applicationStatus.code === "PP";
                 });
               }
             });

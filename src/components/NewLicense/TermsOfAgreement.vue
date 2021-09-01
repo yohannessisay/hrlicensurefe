@@ -27,9 +27,9 @@
           <li>English Language Certificate</li>
           <li>Higher Education Relevance and Quality Agency center(HERQA)</li>
           <li>Letter from Organization</li>
-          <li>Professional Document Certificate</li>
-          <li>Professional Document Diploma</li>
-          <li>Professional Document Transcript</li>
+          <li>Authenticated Professional Document Certificate</li>
+          <li>Authenticated Professional Document Diploma</li>
+          <li>Authenticated Professional Document Transcript</li>
           <li>Authenticated Professional License from Country of Origin</li>
           <li>Renewed License of the Organization</li>
           <li>Authenticated Work Experience</li>
@@ -60,9 +60,9 @@
           <li>Passport(Identification Card)</li>
           <li>Health Exam Certificate</li>
           <li>Higher Education Relevance and Quality Agency center(HERQA)</li>
-          <li>Professional Document Certificate</li>
-          <li>Professional Document Diploma</li>
-          <li>Professional Document Transcript</li>
+          <li>Authenticated Professional Document Certificate</li>
+          <li>Authenticated Professional Document Diploma</li>
+          <li>Authenticated Professional Document Transcript</li>
           <li>Support Letter</li>
           <li>Authenticated Work Experience</li>
         </ul>

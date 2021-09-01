@@ -1,5 +1,3 @@
-import state from "../admin/state";
-
 export default {
   getLicense: (state) => state.license,
   getRenewalHealthExamCert: (state) => state.healthExamCert,
