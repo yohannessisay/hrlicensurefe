@@ -419,4 +419,8 @@ export default {
   },
 };
 </script>
-<style></style>
+<style>
+.container {
+  cursor: pointer;
+}
+</style>

@@ -416,12 +416,14 @@ export default {
       if (item.goodStandingCode != undefined) {
         this.applicationType = "goodstanding";
       }
-      this.$store.dispatch("serviceFee/setItemID", this.itemId).then((res) => {
-        this.$store.dispatch(
-          "serviceFee/setApplicationType",
-          this.applicationType
-        );
-      });
+      // this.$store.dispatch("serviceFee/setItemID", this.itemId).then((res) => {
+      //   this.$store.dispatch(
+      //     "serviceFee/setApplicationType",
+      //     this.applicationType
+      //   );
+      // });
+      window.localStorage.setItem("itemId", this.itemId);
+      window.localStorage.setItem("applicationType", this.applicationType);
     },
     showDropDown() {
       this.showDD = !this.showDD;
