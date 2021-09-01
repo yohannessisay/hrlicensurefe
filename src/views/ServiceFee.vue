@@ -100,7 +100,7 @@
               <input
                 v-on:change="paymentSlipChange(paymentSlip)"
                 class="max-w-3xl"
-                type="text"
+                type="number"
                 v-model="paymentSlip"
               />
             </div>
@@ -109,10 +109,10 @@
 
         <div v-if="!message.showLoading" class="flex justify-center mb-10">
           <button @click="update()" variant="outline">
-            Update Payment
+            Save as Draft
           </button>
           <button @click="save()">
-            Upload Payment
+            Submit Payment
           </button>
         </div>
 
@@ -227,28 +227,28 @@ export default {
     };
     onMounted(() => {
       message.value.showLoading = true;
-      id = store.getters["serviceFee/getID"];
-      appType = store.getters["serviceFee/getApplicationType"];
+      id = +localStorage.getItem("itemId");
+      appType = localStorage.getItem("applicationType");
       store.dispatch("serviceFee/getApplicationStatuses").then((res) => {
         buttons.value = res.data.data[0].buttons;
         message.value.showLoading = false;
       });
-      // documentSpecs = store.getters[(appType + "/getDocumentSpecs", id)];
-      // store.dispatch(appType + "/getDraft", id).then((res) => {
-      //   const results = res.data.data;
-      //   documents = results.documents;
-      //   appID = results.id;
-      //   message.value.showLoading = false;
-      //   for (let i = 0; i < documents.length; i++) {
-      //     if (documents[i].documentTypeCode == "SF") {
-      //       showUpload.value = false;
-      //       isImage.value = true;
-      //       serviceFile.value = documents[i];
-      //       showPreview.value = true;
-      //       filePreview.value = basePath + documents[i].filePath;
-      //     }
-      //   }
-      // });
+      documentSpecs = store.getters[(appType + "/getDocumentSpecs", id)];
+      store.dispatch(appType + "/getDraft", id).then((res) => {
+        const results = res.data.data;
+        documents = results.documents;
+        appID = results.id;
+        message.value.showLoading = false;
+        for (let i = 0; i < documents.length; i++) {
+          if (documents[i].documentTypeCode == "SF") {
+            showUpload.value = false;
+            isImage.value = true;
+            serviceFile.value = documents[i];
+            showPreview.value = true;
+            filePreview.value = basePath + documents[i].filePath;
+          }
+        }
+      });
     });
     const update = () => {};
     const paymentSlipChange = (payment) => {
@@ -256,8 +256,8 @@ export default {
     };
     const save = () => {
       message.value.showLoading = true;
-      id = store.getters["serviceFee/getID"];
-      appType = store.getters["serviceFee/getApplicationType"];
+      id = +localStorage.getItem("itemId");
+      appType = localStorage.getItem("applicationType");
       let sendStr = "";
       if (appType == "newlicense") {
         sendStr = "newlicense";
@@ -269,7 +269,7 @@ export default {
         sendStr = "verification";
       }
       store.dispatch(sendStr + "/getDraft", id).then((res) => {
-        appType = store.getters["serviceFee/getApplicationType"];
+        appType = localStorage.getItem("applicationType");
         const results = res.data.data;
         results.paymentSlip = paymentSlip.value;
         let saveObject = {
@@ -280,7 +280,6 @@ export default {
           appType: appType,
           id: id,
         };
-
         store.dispatch("serviceFee/addLicense", saveObject).then((res) => {
           if (res.data.status == "Success") {
             let formData = new FormData();
@@ -304,7 +303,6 @@ export default {
         });
       });
     };
-
     return {
       serviceFile,
       serviceFileP,
