@@ -10,7 +10,7 @@
     >
       <div
         class="p-4 w-48 h-64"
-        @Click="detail(`/admin/confirmAssignedApplication`, item.id, item.applicant.id)"
+        @Click="detail(item.id, item.applicant.id)"
       >
         <div class="flex content-center justify-center">
           <span v-if="item.applicant.profile.photo !== '' && item.applicant.profile.photo !== null">
@@ -96,10 +96,17 @@ export default {
   name: "ReEvaluateApplications",
   setup(props) {
     let router = useRouter();
-    const detail = (data, applicationId, applicantId) => {
-      const url =
-        data + "/" + props.app_type + "/" + applicationId;
+    const detail = (applicationId, applicantId) => {
+      if(props.all_re_evaluate == 'true') {
+        const url =
+        "/admin/detail/" + props.app_type + "/" + applicationId + "/" + applicantId;
       router.push(url);
+      } else {
+        const url =
+        "/admin/confirmAssignedApplication/" + props.app_type + "/" + applicationId;
+        router.push(url);
+      }
+      
     };
     return {
       detail,

@@ -377,6 +377,123 @@
                 </li>
               </div>
               <!-- Declined ends here -->
+              <!-- Pending Payment starts here -->
+              <div
+                v-if="dropdownValue.goodStanding"
+                class="dropdown-menu relative  shadow-md mb-12"
+                style="color: #648ea3; width: 200px;"
+              >
+                <ul
+                  class="block w-full shadow float-right"
+                  style="color: #648ea3;"
+                >
+                  <li class=" justify-start ">
+                    <div class=" justify-center items-center ">
+                      <div class="p-1 ">
+                        <h3
+                          class="text-lightBlueB-500 mt-tiny"
+                          @click="goodStandingDDHandler('GoodStandingPaymentReview')"
+                        >
+                          <span style="color: white;">
+                            <i
+                              v-if="goodStandingDDIcon.isPaymentReviewnUp"
+                              class="fas fa-chevron-circle-up float-right mt-2"
+                            ></i>
+                            <i
+                              v-else
+                              class="fas fa-chevron-circle-down float-right mt-2"
+                            ></i>
+
+                            <i
+                              class="mr-2 far fa-address-book fa-x fa-light"
+                            ></i>
+                          </span>
+                          <span class="text-base" style="color: white; "
+                            >Payment Review</span
+                          >
+                        </h3>
+                        <div
+                          v-if="dropdownValue.goodStandingPaymentReview"
+                          class="dropdown-menu relative  shadow-md mb-12 ml-4"
+                          style="color: #648ea3; width: 200px;"
+                        >
+                          <drop-down-lists
+                            :dropdownValue="[
+                              dropdownValue.goodStandingPaymentReview,
+                              dropdownValue.goodStandingInReviewPayment,
+                            ]"
+                            name="In Review"
+                            dropDownHandlerValue="GoodStandingInReviewPayment"
+                            :dropDownMenus="[
+                              'goodStandingInReviewPayment',
+                              'othersGoodStandingInReviewPayment',
+                            ]"
+                            :isDropDownIconUp="
+                              goodStandingDDIcon.isInReviewPaymentUp
+                            "
+                            :adminRole="adminRole"
+                            :yoursAndOthersApplication="[
+                              'My In Review Payment',
+                              'Others In Review Payment',
+                            ]"
+                            @dropDownHandler="dropDownHandler"
+                            @dropDownListHandler="dropDownListHandler"
+                          />
+                          <drop-down-lists
+                            :dropdownValue="[
+                              dropdownValue.goodStandingPaymentReview,
+                              dropdownValue.goodStandingDeclinedPayment,
+                            ]"
+                            name="Declined Payment"
+                            dropDownHandlerValue="GoodStandingDeclinedPayment"
+                            :dropDownMenus="[
+                              'goodStandingDeclinedPayment',
+                              'othersGoodStandingDeclinedPayment',
+                            ]"
+                            :isDropDownIconUp="
+                              goodStandingDDIcon.isDeclinedPaymentUp
+                            "
+                            :adminRole="adminRole"
+                            :yoursAndOthersApplication="[
+                              'My Declined Payment',
+                              'Others Declined Payment',
+                            ]"
+                            @dropDownHandler="dropDownHandler"
+                            @dropDownListHandler="dropDownListHandler"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <!-- Pending Payment Ends here -->
+              <drop-down-lists
+                :dropdownValue="[
+                  dropdownValue.goodStanding,
+                  dropdownValue.goodStandingLicensed,
+                ]"
+                name="Letter"
+                dropDownHandlerValue="GoodStandingLicensed"
+                :dropDownMenus="['goodStandingLicensed', 'goodStandingOthersLicensed']"
+                :isDropDownIconUp="goodStandingDDIcon.isLicensedUp"
+                :adminRole="adminRole"
+                :yoursAndOthersApplication="['Letter', 'Others Letter']"
+                @dropDownHandler="dropDownHandler"
+                @dropDownListHandler="dropDownListHandler"
+              />
+
+              <!-- All Licensed Applications starts here -->
+
+              <li
+                @click="goodStandingMenuHandler('goodStandingAllLicensed')"
+                class="mb-2"
+              >
+                <div class=" text-base" style="color: white; ">
+                  <!-- <i class="far fa-thumbs-up fa-x fa-light mt-4"></i> -->
+                  All Letter
+                </div>
+              </li>
             </ul>
           </div>
         </div>
@@ -386,8 +503,12 @@
 </template>
 <script>
 import { ref } from "vue";
+import DropDownLists from "./DropDownLists.vue";
 export default {
   name: "GoodStandingSideNav",
+  components: {
+    DropDownLists,
+  },
   props: ["dropdownValue", "adminRole"],
   setup(props, { emit }) {
     let goodStandingDDIcon = ref({
@@ -396,8 +517,30 @@ export default {
       isUnfinishedUp: false,
       isApprovedUp: false,
       isDeclinedUp: false,
+      isPaymentReviewnUp: false,
+      isInReviewPaymentUp: false,
+      isDeclinedPaymentUp: false,
+      isLicensedUp: false,
     });
     const goodStandingMenuHandler = (menu) => {
+      emit("selectGoodStandingMenu", menu);
+    };
+
+
+    const dropDownHandler = (applicationValue) => {
+      if (applicationValue == "GoodStandingLicensed") {
+        goodStandingDDIcon.value.isLicensedUp = !goodStandingDDIcon.value.isLicensedUp;
+      } else if (applicationValue == "GoodStandingInReviewPayment") {
+        goodStandingDDIcon.value.isInReviewPaymentUp = !goodStandingDDIcon.value
+          .isInReviewPaymentUp;
+      } else if (applicationValue == "GoodStandingDeclinedPayment") {
+        goodStandingDDIcon.value.isDeclinedPaymentUp = !goodStandingDDIcon.value
+          .isDeclinedPaymentUp;
+      }
+      emit("applicationTypeSelected", applicationValue);
+    }
+
+    const dropDownListHandler = (menu) => {
       emit("selectGoodStandingMenu", menu);
     };
 
@@ -417,6 +560,9 @@ export default {
       } else if (applicationValue == "GoodStandingDeclined") {
         goodStandingDDIcon.value.isDeclinedUp = !goodStandingDDIcon.value
           .isDeclinedUp;
+      } else if (applicationValue == "GoodStandingPaymentReview") {
+        goodStandingDDIcon.value.isPaymentReviewnUp = !goodStandingDDIcon.value
+          .isPaymentReviewnUp;
       }
       emit("applicationTypeSelected", applicationValue);
     };
@@ -424,6 +570,8 @@ export default {
       goodStandingDDIcon,
       goodStandingDDHandler,
       goodStandingMenuHandler,
+      dropDownHandler,
+      dropDownListHandler,
     };
   },
 };

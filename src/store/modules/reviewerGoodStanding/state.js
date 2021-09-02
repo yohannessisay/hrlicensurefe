@@ -22,6 +22,24 @@ export default {
         goodStandingDeclinedSearched: [],
         goodStandingAllDeclined: [],
         goodStandingAllDeclinedSearched: [],
+
+        goodStandingPendingPayment: [],
+        goodStandingPendingPaymentSearched: [],
+        goodStandingOthersPendingPayment: [],
+        goodStandingOthersPendingPaymentSearched: [],
+
+        goodStandingDeclinedPayment: [],
+        goodStandingDeclinedPaymentSearched: [],
+        goodStandingOthersDeclinedPayment: [],
+        goodStandingOthersDeclinedPaymentSearched: [],
+    
+        goodStandingLicensed: [],
+        goodStandingLicensedSearched: [],
+        goodStandingOthersLicensed: [],
+        goodStandingOthersLicensedSearched: [],
+
+        goodStandingAllLicensed: [],
+        goodStandingAllLicensedSearched: [],
         
     }
 }

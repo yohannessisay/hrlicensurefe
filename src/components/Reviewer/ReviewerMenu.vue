@@ -157,6 +157,15 @@
         <div v-if="this.display == 'othersNewLicenseDeclinedPayment'">
           <new-license-others-declined-payment />
         </div>
+        <div v-if="this.display == 'newLicenseLicensed'">
+          <new-license-licensed />
+        </div>
+        <div v-if="this.display == 'newLicenseOthersLicensed'">
+          <new-license-others-licensed />
+        </div> 
+        <div v-if="this.display == 'newLicenseAllLicensed'">
+          <new-license-all-licensed />
+        </div>
 
         <!-- renewal -->
         <div v-if="this.display == 'RenewalUnassigned'">
@@ -228,6 +237,15 @@
         <div v-if="this.display == 'othersRenewalDeclinedPayment'">
           <renewal-others-declined-payment />
         </div>
+        <div v-if="this.display == 'renewalLicensed'">
+          <renewal-licensed />
+        </div>
+        <div v-if="this.display == 'renewalOthersLicensed'">
+          <renewal-others-licensed />
+        </div>
+        <div v-if="this.display == 'renewalAllLicensed'">
+          <renewal-all-licensed />
+        </div>
 
         <!-- start verification -->
         <div v-if="this.display == 'verificationUnassigned'">
@@ -287,6 +305,27 @@
         <div v-if="this.display == 'allGoodStandingDeclined'">
           <good-standing-all-declined />
         </div>
+        <div v-if="this.display == 'goodStandingInReviewPayment'">
+          <good-standing-pending-payment />
+        </div>
+        <div v-if="this.display == 'othersGoodStandingInReviewPayment'">
+          <good-standing-others-pending-payment />
+        </div>
+        <div v-if="this.display == 'goodStandingDeclinedPayment'">
+          <good-standing-declined-payment />
+        </div>
+        <div v-if="this.display == 'othersGoodStandingDeclinedPayment'">
+          <good-standing-others-declined-payment />
+        </div>
+        <div v-if="this.display == 'goodStandingLicensed'">
+          <good-standing-licensed />
+        </div>
+        <div v-if="this.display == 'goodStandingOthersLicensed'">
+          <good-standing-others-licensed />
+        </div>
+        <div v-if="this.display == 'goodStandingAllLicensed'">
+          <good-standing-all-licensed />
+        </div>
         <!-- end goodstanding -->
 
       </div>
@@ -322,6 +361,9 @@ import NewLicensePendingPayment from "./ApplicationTypes/NewLicense/NewLicensePe
 import NewLicenseOthersPendingPayment from "./ApplicationTypes/NewLicense/NewLicenseOthersPendingPayment.vue";
 import NewLicenseDeclinedPayment from "./ApplicationTypes/NewLicense/NewLicenseDeclinedPayment.vue";
 import NewLicenseOthersDeclinedPayment from "./ApplicationTypes/NewLicense/NewLicenseOthersDeclinedPayment.vue";
+import NewLicenseLicensed from "./ApplicationTypes/NewLicense/NewLicenseLicensed.vue";
+import NewLicenseOthersLicensed from "./ApplicationTypes/NewLicense/NewLicenseOthersLicensed.vue";
+import NewLicenseAllLicensed from "./ApplicationTypes/NewLicense/NewLicenseAllLicensed.vue";
 
 // import renewal components
 import RenewalUnassigned from "./ApplicationTypes/Renewal/RenewalUnassigned.vue"
@@ -347,6 +389,9 @@ import RenewalPendingPayment from "./ApplicationTypes/Renewal/RenewalPendingPaym
 import RenewalOthersPendingPayment from "./ApplicationTypes/Renewal/RenewalOthersPendingPayment.vue";
 import RenewalDeclinedPayment from "./ApplicationTypes/Renewal/RenewalDeclinedPayment.vue";
 import RenewalOthersDeclinedPayment from "./ApplicationTypes/Renewal/RenewalOthersDeclinedPayment.vue";
+import RenewalLicensed from "./ApplicationTypes/Renewal/RenewalLicensed.vue";
+import RenewalOthersLicensed from "./ApplicationTypes/Renewal/RenewalOthersLicensed.vue";
+import RenewalAllLicensed from "./ApplicationTypes/Renewal/RenewalAllLicensed.vue";
 
 // import verification components
 import VerificationUnassigned from "./ApplicationTypes/Verification/VerificationUnassigned.vue"
@@ -369,6 +414,13 @@ import GoodStandingUnconfirmed from "./ApplicationTypes/GoodStanding/GoodStandin
 import GoodStandingAllUnconfirmed from "./ApplicationTypes/GoodStanding/GoodStandingAllUnconfirmed.vue"
 import GoodStandingDeclined from "./ApplicationTypes/GoodStanding/GoodStandingDeclined.vue"
 import GoodStandingAllDeclined from "./ApplicationTypes/GoodStanding/GoodStandingAllDeclined.vue"
+import GoodStandingPendingPayment from "./ApplicationTypes/GoodStanding/GoodStandingPendingPayment.vue";
+import GoodStandingOthersPendingPayment from "./ApplicationTypes/GoodStanding/GoodStandingOthersPendingPayment.vue";
+import GoodStandingDeclinedPayment from "./ApplicationTypes/GoodStanding/GoodStandingDeclinedPayment.vue";
+import GoodStandingOthersDeclinedPayment from "./ApplicationTypes/GoodStanding/GoodStandingOthersDeclinedPayment.vue";
+import GoodStandingLicensed from "./ApplicationTypes/GoodStanding/GoodStandingLicensed.vue";
+import GoodStandingOthersLicensed from "./ApplicationTypes/GoodStanding/GoodStandingOthersLicensed.vue";
+import GoodStandingAllLicensed from "./ApplicationTypes/GoodStanding/GoodStandingAllLicensed.vue";
 
 
 import ReviewerNavBar from './ReviewerNavBar.vue';
@@ -401,6 +453,9 @@ export default {
     NewLicenseOthersPendingPayment,
     NewLicenseDeclinedPayment,
     NewLicenseOthersDeclinedPayment,
+    NewLicenseLicensed,
+    NewLicenseOthersLicensed,
+    NewLicenseAllLicensed,
 
     RenewalUnassigned,
     RenewalAssigned,
@@ -425,6 +480,9 @@ export default {
     RenewalOthersPendingPayment,
     RenewalDeclinedPayment,
     RenewalOthersDeclinedPayment,
+    RenewalLicensed,
+    RenewalOthersLicensed,
+    RenewalAllLicensed,
 
     VerificationUnassigned,
     VerificationAssigned,
@@ -445,6 +503,13 @@ export default {
     GoodStandingAllUnconfirmed,
     GoodStandingDeclined,
     GoodStandingAllDeclined,
+    GoodStandingPendingPayment,
+    GoodStandingDeclinedPayment,
+    GoodStandingOthersPendingPayment,
+    GoodStandingOthersDeclinedPayment,
+    GoodStandingLicensed,
+    GoodStandingOthersLicensed,
+    GoodStandingAllLicensed,
 
   },
   setup() {

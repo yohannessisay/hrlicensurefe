@@ -61,6 +61,14 @@ import {
   SET_NEW_LICENSE_PENDING_PAYMENT_SEARCHED,
   SET_NEW_LICENSE_OTHERS_PENDING_PAYMENT,
   SET_NEW_LICENSE_OTHERS_PENDING_PAYMENT_SEARCHED,
+
+  SET_NEW_LICENSE_LICENSED,
+  SET_NEW_LICENSE_LICENSED_SEARCHED,
+  SET_NEW_LICENSE_OTHERS_LICENSED,
+  SET_NEW_LICENSE_OTHERS_LICENSED_SEARCHED,
+
+  SET_NEW_LICENSE_ALL_LICENSED,
+  SET_NEW_LICENSE_ALL_LICENSED_SEARCHED,
 } from "./mutation-types";
 
 export default {
@@ -251,5 +259,28 @@ export default {
   },
   [SET_NEW_LICENSE_OTHERS_PENDING_PAYMENT_SEARCHED](state, searchedVal) {
     state.newLicenseOthersPendingPaymentSearched = searchedVal;
+  },
+
+  [SET_NEW_LICENSE_LICENSED](state, data) {
+    state.newLicenseLicensed = data;
+    state.newLicenseLicensedSearched = data;
+  },
+  [SET_NEW_LICENSE_LICENSED_SEARCHED](state, searchedVal) {
+    state.newLicenseLicensedSearched = searchedVal;
+  },
+  [SET_NEW_LICENSE_OTHERS_LICENSED](state, data) {
+    state.newLicenseOthersLicensed = data;
+    state.newLicenseOthersLicensedSearched = data;
+  },
+  [SET_NEW_LICENSE_OTHERS_LICENSED_SEARCHED](state, searchedVal) {
+    state.newLicenseOthersLicensedSearched = searchedVal;
+  },
+
+  [SET_NEW_LICENSE_ALL_LICENSED](state, data) {
+    state.newLicenseAllLicensed = data;
+    state.newLicenseAllLicensedSearched = data;
+  },
+  [SET_NEW_LICENSE_ALL_LICENSED_SEARCHED](state, searchedVal) {
+    state.newLicenseAllLicensedSearched = searchedVal;
   },
 };

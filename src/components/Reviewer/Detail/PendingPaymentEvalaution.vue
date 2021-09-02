@@ -5,15 +5,23 @@
       class="w-screen max-w-6xl mt-medium mb-large box-shadow-pop bg-lightGrey-100"
     >
       <div class="flex mb-large mt-medium justify-center">
-
         <div class="flex justify-start flex-wrap ml-12">
           <div>
             <picture
               class="flex justify-center items-center mb-small"
               v-if="docs.length > 0"
             >
-              <span v-if="newLicense.applicant.profile.photo !== '' && newLicense.applicant.profile.photo !== null">
-                <img :src="newLicense.applicant.profile.photo" alt="profile picture"  class="w-20 h-12" />
+              <span
+                v-if="
+                  newLicense.applicant.profile.photo !== '' &&
+                    newLicense.applicant.profile.photo !== null
+                "
+              >
+                <img
+                  :src="newLicense.applicant.profile.photo"
+                  alt="profile picture"
+                  class="w-20 h-12"
+                />
               </span>
               <span v-else>
                 <img
@@ -36,7 +44,10 @@
                 {{ "Applicant Type:  " + newLicense.applicantType.name }}
               </h4> -->
             </div>
-            <div class="flex justify-center items-cente" v-if="newLicense.education !== undefined">
+            <div
+              class="flex justify-center items-cente"
+              v-if="newLicense.education !== undefined"
+            >
               <h4 class="mt-2 mr-tiny w-1/2">
                 {{ "Department:  " + newLicense.education.department.name }}
               </h4>
@@ -44,7 +55,10 @@
                 {{ "Institution:  " + newLicense.education.institution.name }}
               </h4>
             </div>
-            <div class="flex justify-center items-center"  v-if="newLicense.education !== undefined">
+            <div
+              class="flex justify-center items-center"
+              v-if="newLicense.education !== undefined"
+            >
               <div class="mt-2 ml-small w-1/2"></div>
               <h4 class="mt-2 ml-small w-1/2">
                 {{
@@ -58,44 +72,39 @@
         </div>
       </div>
       <div class="flex justify-center">
-
         <div class="flex flex-col justify-center items-center ml-large ">
           <div class="ml-medium">
             <label
               class="justify-center items-center ml-large text-grey-200 text-2xl"
             >
-              {{ documentTypeName }}
+              {{ documentTypeName }} Payment Slip
             </label>
-            <!-- <h5 class="ml-8 text-black-100 text-3xl">
-              Addis Ababa
-            </h5> -->
+
             <div class="flex justify-start flex-wrap">
-              <!-- <div v-for="file in docs" v-bind:key="file.name">
-                <Title class="" :message="file.name" />
-                <picture>
-                  <img :src="basePath + file.filePath" />
-                </picture>
-              </div> -->
               <picture v-if="docs.length > 0">
-                <div v-if="docs[index].fileName.split('.')[1] == 'pdf'" >
+                <div v-if="docs[0].fileName.split('.')[1] == 'pdf'">
                   <div>
-                 <iframe v-bind:src="'https://storage.googleapis.com/hris-lisence-dev/' +
-                      docs[index].filePath"
-                       ></iframe>
-                       </div>
-                       <br />
-                       <a @click="openPdfInNewTab(docs[index].filePath)">see pdf in detail</a>
+                    <iframe
+                      v-bind:src="
+                        'https://storage.googleapis.com/hris-lisence-dev/' +
+                          docs[0].filePath
+                      "
+                    ></iframe>
                   </div>
-                  
-                  <div v-else>
-                <img
-                  v-bind:src="
-                    'https://storage.googleapis.com/hris-lisence-dev/' +
-                      docs[index].filePath
-                  "
-                />
+                  <br />
+                  <a @click="openPdfInNewTab(docs[0].filePath)"
+                    >see pdf in detail</a
+                  >
                 </div>
-                
+
+                <div v-else>
+                  <img
+                    v-bind:src="
+                      'https://storage.googleapis.com/hris-lisence-dev/' +
+                        docs[0].filePath
+                    "
+                  />
+                </div>
               </picture>
               <div
                 class="flex content-center justify-center pb-large"
@@ -106,29 +115,7 @@
               <!-- {{docs[0].filePath}} -->
             </div>
           </div>
-          <div class="mt-medium" v-if="!showButtons">
-            <button class="mr-medium" @click="accept(docs[index])">
-              Accept
-            </button>
-            <button class="decline" @click="reject(docs[index])">Reject</button>
-            <button
-              class=""
-              variant="outline"
-              @click="action('ReviewerDraftEvent')"
-            >
-              save as Draft
-            </button>
-          </div>
-          <div class="relative pt-1 mt-medium">
-            <div
-              class="overflow-hidden h-2 mb-4 text-xs flex rounded bg-grey-100 w-screen max-w-2xl"
-            >
-              <div
-                :style="width"
-                class="shadow-none flex flex-col text-center whitespace-nowrap  justify-center bg-primary-400"
-              ></div>
-            </div>
-          </div>
+
           <div>
             <div
               class="ml-10 h-3 relative max-w-xl rounded-full overflow-hidden"
@@ -141,35 +128,9 @@
             </div>
           </div>
         </div>
-
-        <!-- <div class="ml-large">
-          <svg
-            width="40"
-            height="60"
-            xmlns="http://www.w3.org/2000/svg"
-            version="1.1"
-            @click="next(docs[index + 1])"
-            v-if="index != docs.length - 1"
-            class="hover:text-primary-60"
-          >
-            <polyline
-              points="10 10 30 30 10 50"
-              stroke="rgba(103,128,159,1)"
-              stroke-width="3"
-              stroke-linecap="butt"
-              fill="none"
-              stroke-linejoin="round"
-            >
-              &gt;
-            </polyline>
-          </svg>
-        </div> -->
       </div>
 
-      <div
-        class="flex justify-center items-center mb-medium"
-        v-if="showButtons"
-      >
+      <div class="flex justify-center items-center mb-medium">
         <!-- <div class="flex">
           <button  class="" variant="outline" @click="action(buttons[0].action)">{{buttons[0].name}}</button>
           <button class="" variant="outline" @click="action(buttons[2].action)">{{buttons[2].name}}</button>
@@ -193,156 +154,13 @@
             {{ button.name }}
           </button>
         </div>
-      </div>
-      <Modal v-if="showRemark">
-        <div>
-          <div
-            class="card-wrapper bg-white sm:rounded-lg w-full flex justify-center relative mb-xl mt-large"
-          >
-            <div class="">
-              <!--content-->
-              <div class="w-full">
-                <!--header-->
-                <div
-                  class="flex items-start justify-between border-b border-solid border-blueGray-200 mt-medium rounded-t"
-                >
-                  <h3 class="text-3xl font-semibold">
-                    Remark
-                  </h3>
-                  <div
-                    class=" bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-                    v-on:click="toggleModal()"
-                  >
-                    <span
-                      class="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none"
-                    >
-                      ×
-                    </span>
-                  </div>
-                </div>
-                <!--body-->
-                <div class="modalBody pb-xl">
-                  <div class="flex mt-medium justify-center"></div>
-                  <div class="relative p-6 flex-auto w-full">
-                    <div class="flex justify-center">
-                      <div class="">
-                        <svg
-                          width="40"
-                          height="60"
-                          xmlns="http://www.w3.org/2000/svg"
-                          version="1.1"
-                          @click="previousRemark()"
-                          v-if="ind != 0"
-                        >
-                          <polyline
-                            points="30 10 10 30 30 50"
-                            stroke="rgba(103,128,159,1)"
-                            stroke-width="3"
-                            stroke-linecap="butt"
-                            fill="none"
-                            stroke-linejoin="round"
-                          >
-                            &gt;
-                          </polyline>
-                        </svg>
-                      </div>
-
-                      <div
-                        class="flex flex-col justify-center items-center ml-large"
-                      >
-                        <div class="ml-medium">
-                          <label
-                            class="justify-center items-center ml-large text-grey-200 text-2xl"
-                          >
-                            {{ modalDocumentTypeName }}
-                          </label>
-                          <!-- <h5 class="ml-8 text-black-100 text-3xl">
-                            Addis Ababa
-                          </h5> -->
-                          <div
-                            class="flex justify-center flex-wrap max-w-sm rounded overflow-hidden"
-                          >
-                            <!-- <div v-for="file in docs" v-bind:key="file.name">
-                              <Title class="" :message="file.name" />
-                              <picture>
-                                <img :src="basePath + file.filePath" />
-                              </picture>
-                            </div> -->
-                            <picture
-                              class="imageViewer"
-                              v-if="rejectedObj.length > 0"
-                            >
-                              <img
-                                v-bind:src="
-                                  'https://storage.googleapis.com/hris-lisence-dev/' +
-                                    rejectedObj[ind].filePath
-                                "
-                              />
-                            </picture>
-                            <!-- {{docs[0].filePath}} -->
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="ml-large">
-                        <svg
-                          width="40"
-                          height="60"
-                          xmlns="http://www.w3.org/2000/svg"
-                          version="1.1"
-                          @click="nextRemark()"
-                          v-if="ind != rejected.length - 1"
-                          class="hover:text-primary-60"
-                        >
-                          <polyline
-                            points="10 10 30 30 10 50"
-                            stroke="rgba(103,128,159,1)"
-                            stroke-width="3"
-                            stroke-linecap="butt"
-                            fill="none"
-                            stroke-linejoin="round"
-                          >
-                            &gt;
-                          </polyline>
-                        </svg>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <!--footer-->
-                <textarea
-                  v-model="newLicense.remark"
-                  class="resize-none tArea border rounded-md flex mb-small w-full"
-                ></textarea>
-                <div
-                  class="flex items-center justify-center p-6 border-t border-solid border-blueGray-200 rounded-b"
-                >
-                  <button
-                    class="md-danger"
-                    type="button"
-                    v-on:click="toggleModal()"
-                  >
-                    Close
-                  </button>
-                  <button type="button" v-on:click="submitRemark()">
-                    Submit
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- <div
-            v-if="showModal"
-            class="opacity-25 fixed inset-0 z-40 bg-black"
-          ></div> -->
-          <div v-if="showDeclineFlash">
-            <FlashMessage message="Operation Successful!" />
-          </div>
-          <div v-if="showErrorFlash">
-            <ErrorFlashMessage message="Operation Failed!" />
-          </div>
+        <div
+          v-if="showLoading"
+          class="flex justify-center justify-items-center mt-24"
+        >
+          <Spinner />
         </div>
-      </Modal>
+      </div>
       <div v-if="showFlash">
         <FlashMessage message="Operation Successful!" />
       </div>
@@ -364,6 +182,7 @@ import Modal from "@/sharedComponents/Modal";
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import ReviewerNavBar from "@/components/Reviewer/ReviewerNavBar";
+import Spinner from "@/sharedComponents/Spinner";
 
 export default {
   components: {
@@ -371,11 +190,14 @@ export default {
     FlashMessage,
     ErrorFlashMessage,
     ReviewerNavBar,
+    Spinner,
   },
   setup() {
     const route = useRoute();
     const store = useStore();
     const router = useRouter();
+
+    let showLoading = ref(false);
 
     let isPdf = ref(false);
 
@@ -404,14 +226,11 @@ export default {
     let index = ref(0);
     let ind = ref(0);
     let showButtons = ref(false);
-    let showRemark = ref(false);
     let applicationType = ref("");
     let applicantId = ref("");
     let showFlash = ref(false);
     let showErrorFlash = ref(false);
     let showDeclineFlash = ref(false);
-    let sendDeclinedData = ref(true);
-    let fromModalSendDeclinedData = ref(false);
     let evaluateRoute = ref(
       "/admin/evaluate/" +
         route.params.applicationType +
@@ -419,16 +238,39 @@ export default {
         route.params.applicationId
     );
     const created = async (applicationTypeName, applicationId) => {
-        applicationType.value = applicationTypeName;
-        if (applicationType.value == "New License") {
-            store
-            .dispatch("reviewer/getNewLicenseApplication", applicationId)
-             .then((res) => {
-                 newLicense.value = res.data.data;
-                 console.log("new license data is find", newLicense.value)
-             })
-        }
-    }
+      applicationType.value = applicationTypeName;
+      if (applicationType.value == "New License") {
+        store
+          .dispatch("reviewer/getNewLicenseApplication", applicationId)
+          .then((res) => {
+            newLicense.value = res.data.data;
+            buttons.value = res.data.data.applicationStatus.buttons;
+            docs.value = res.data.data.documents.filter((file) => {
+              return file.documentTypeCode == "SF";
+            });
+          });
+      } else if (applicationType.value == "Renewal") {
+        store
+          .dispatch("reviewer/getRenewalApplication", applicationId)
+          .then((res) => {
+            newLicense.value = res.data.data;
+            buttons.value = res.data.data.applicationStatus.buttons;
+            docs.value = res.data.data.documents.filter((file) => {
+              return file.documentTypeCode == "SF";
+            });
+          });
+      } else if (applicationType.value == "Good Standing") {
+        store
+          .dispatch("reviewer/getGoodStandingApplication", applicationId)
+          .then((res) => {
+            newLicense.value = res.data.data;
+            buttons.value = res.data.data.applicationStatus.buttons;
+            docs.value = res.data.data.documents.filter((file) => {
+              return file.documentTypeCode == "SF";
+            });
+          });
+      }
+    };
     // const created = async (applicationTypeName, applicationId) => {
     //   applicationType.value = applicationTypeName;
 
@@ -628,6 +470,109 @@ export default {
     //   applicationType.value = route.params.applicationType;
     // };
 
+    const action = (actionValue) => {
+      showLoading.value = true;
+      if (actionValue == "ApprovePaymentEvent") {
+        newLicense.value.certified = true;
+        newLicense.value.certifiedDate = new Date();
+      }
+      let req = {
+        action: actionValue,
+        data: newLicense.value,
+      };
+      if (applicationType.value == "New License") {
+        store
+          .dispatch("reviewer/editNewLicense", req)
+          .then((res) => {
+            showLoading.value = false;
+            if (res.statusText == "Created") {
+              showFlash.value = true;
+              setTimeout(() => {
+                router.push("/admin/review");
+              }, 3000);
+            } else {
+              showErrorFlash.value = true;
+              setTimeout(() => {
+                router.go();
+              }, 3000);
+            }
+          })
+          .catch((err) => {
+            console.log("error while evaluating payment", err);
+          });
+      } else if (applicationType.value == "Renewal") {
+        store
+          .dispatch("reviewer/editRenewal", req)
+          .then((res) => {
+            showLoading.value = false;
+            if (res.statusText == "Created") {
+              showFlash.value = true;
+              setTimeout(() => {
+                router.push("/admin/review");
+              }, 3000);
+            } else {
+              showErrorFlash.value = true;
+              setTimeout(() => {
+                router.go();
+              }, 3000);
+            }
+          })
+          .catch((err) => {
+            console.log("error while evaluating payment", err);
+          });
+      } else if (applicationType.value == "Verification") {
+        store
+          .dispatch("reviewer/editVerification", req)
+          .then((res) => {
+            showLoading.value = false;
+            if (res.statusText == "Created") {
+              showFlash.value = true;
+              setTimeout(() => {
+                router.push("/admin/review");
+              }, 3000);
+            } else {
+              showErrorFlash.value = true;
+              setTimeout(() => {
+                router.go();
+              }, 3000);
+            }
+          })
+          .catch((err) => {
+            console.log("error while evaluating payment", err);
+          });
+      } else if (applicationType.value == "Good Standing") {
+        store
+          .dispatch("reviewer/editGoodStanding", req)
+          .then((res) => {
+            showLoading.value = false;
+            if (res.statusText == "Created") {
+              showFlash.value = true;
+              let redirectUrl = "/admin/review";
+              if (req.action == "ApprovePaymentEvent") {
+                redirectUrl =
+                  "/admin/finishedDetail/" +
+                  route.params.applicationType +
+                  "/" +
+                  route.params.applicationId +
+                  "/" +
+                  applicantId.value;
+              }
+              setTimeout(() => {
+                router.push(`${redirectUrl}`);
+              }, 3000);
+            } else {
+              showErrorFlash.value = true;
+              setTimeout(() => {
+                router.go();
+              }, 3000);
+            }
+          })
+          .catch((err) => {
+            console.log("error while evaluating payment", err);
+          });
+      }
+    };
+
     // const action = (actionValue) => {
     //   if (actionValue == "DeclineEvent") {
     //     showRemark.value = true;
@@ -742,21 +687,13 @@ export default {
     //   }
     // };
 
-    const submitRemark = () => {
-      showRemark.value = !showRemark.value;
-      sendDeclinedData.value = true;
-      fromModalSendDeclinedData.value = true;
-      action("DeclineEvent");
-    };
-
-    const toggleModal = () => {
-      showRemark.value = !showRemark.value;
-    };
-
     const openPdfInNewTab = (pdfPath) => {
       pdfFilePath.value = pdfPath;
-      window.open("https://storage.googleapis.com/hris-lisence-dev/"+pdfPath, "_blank");
-    }
+      window.open(
+        "https://storage.googleapis.com/hris-lisence-dev/" + pdfPath,
+        "_blank"
+      );
+    };
 
     onMounted(() => {
       created(route.params.applicationType, route.params.applicationId);
@@ -767,17 +704,13 @@ export default {
       index,
       docs,
       buttons,
-    //   action,
+      action,
+      showLoading,
       showButtons,
-      showRemark,
-      toggleModal,
-      submitRemark,
       applicationType,
       showFlash,
       showErrorFlash,
       showDeclineFlash,
-      sendDeclinedData,
-      fromModalSendDeclinedData,
       ind,
       modalDocumentTypeName,
       evaluateRoute,
@@ -797,7 +730,7 @@ export default {
   color: white;
 }
 a:hover {
- cursor:pointer;
+  cursor: pointer;
 }
 .card-wrapper {
   width: 920px;

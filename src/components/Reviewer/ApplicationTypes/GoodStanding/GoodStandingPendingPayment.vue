@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- <reviewer-nav-bar tab="newLicenseAssignedToOthers" /> -->
+    <!-- <reviewer-nav-bar tab="goodStandingPendingPayment" /> -->
     <div class="bg-lightBlueB-200 h-full" v-if="!allInfo.searchByInput">
       <div class="pl-12">
         <div>Filter By</div>
@@ -19,16 +19,16 @@
           type="date"
           v-model="allInfo.searchUpToDate"
         />
-        <button @click="filterAssignedApplication">
+        <button @click="filterPendingPaymentApplication">
           Filter
         </button>
       </div>
       <div class="flex pl-12 pt-tiny">
-        <Title message="New License Assigned To Others" />
+        <Title message="Good Standing Pending Payment" />
       </div>
       <div class="flex flex-wrap pb-medium rounded h-full" v-if="!showLoading">
         <nothing-to-show :nothingToShow="nothingToShow" />
-        <assigned-applications :assignedApplication="getNewLicenseAssigned" app_type="New License" assigned_to_others="true"/>
+        <pending-payment-applications :pendingPaymentApplication="getGoodStandingPendingPayment" app_type="Good Standing" others_pending_payment="false"/>
       </div>
     </div>
     <div
@@ -41,7 +41,7 @@
       <div class="flex pl-12 pt-tiny">
         <Title
         :message="
-          'Assigned Applicants on Date Range ' + moment(allInfo.searchFromDate).format('MMM D, YYYY') + ' To ' + moment(allInfo.searchUpToDate).format('MMM D, YYYY')
+          'Pending Payment Applicants on Date Range ' + moment(allInfo.searchFromDate).format('MMM D, YYYY') + ' To ' + moment(allInfo.searchUpToDate).format('MMM D, YYYY')
         "
       />
         <button @click="backClicked">back</button>
@@ -49,7 +49,7 @@
       <filtered-info
         :filteredData="allInfo.filteredByDate"
         type="detail"
-        app_type="New License"
+        app_type="Good Standing"
       />
     </div>
   </div>
@@ -62,24 +62,29 @@
 
 <script>
 import { ref, onMounted } from "vue";
-import Title from "@/sharedComponents/TitleWithIllustration";
-import ReviewerNavBar from "../../ReviewerNavBar.vue";
-import AssignedApplications from "../ChildApplicationTypes/AssignedApplications.vue"
-import NothingToShow from "../../ChildComponents/NothingToShow.vue";
 import { useStore } from "vuex";
-import store from "../../../../store";
-import Spinner from "@/sharedComponents/Spinner";
-import moment from "moment";
-import filterApplication from "../../ChildComponents/FilteredDatas/FilterApplication.js";
+
+import applicationStatus from "../../Configurations/getApplicationStatus.js";
+import PendingPaymentApplications from "../ChildApplicationTypes/PendingPaymentApplications.vue"
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
+import filterApplication from "../../ChildComponents/FilteredDatas/FilterApplication.js";
 import FilteredInfo from "../../ChildComponents/FilteredDatas/FilteredInfo.vue";
+import moment from "moment";
+import ReviewerNavBar from "../../ReviewerNavBar.vue";
+import NothingToShow from "../../ChildComponents/NothingToShow.vue";
+import Spinner from "@/sharedComponents/Spinner";
+import store from "../../../../store";
+import Title from "@/sharedComponents/TitleWithIllustration";
+
+
+
 
 
 export default {
   computed: {
     moment: () => moment,
-    getNewLicenseAssigned() {
-      return store.getters["reviewerNewLicense/getNewLicenseAssignedToOthersSearched"];
+    getGoodStandingPendingPayment() {
+      return store.getters["reviewerGoodStanding/getGoodStandingPendingPaymentSearched"];
     },
   },
   components: {
@@ -88,12 +93,12 @@ export default {
     FilteredInfo,
     Spinner,
     NothingToShow,
-    AssignedApplications,
+    PendingPaymentApplications,
     Title,
   },
   setup() {
     const store = useStore();
-    let newLicenseAssigned = ref([]);
+    let goodStandingPendingPayment = ref([]);
 
     const adminId = +localStorage.getItem("adminId");
 
@@ -113,7 +118,7 @@ export default {
       app_type: "",
     });
 
-    const filterAssignedApplication = () => {
+    const filterPendingPaymentApplication = () => {
       filterApplication(moment, allInfo.value);
     };
 
@@ -126,16 +131,17 @@ export default {
       allInfo.value.app_type = "";
     };
 
-    const fetchNewLicenseAssigned = () => {
+    const fetchGoodStandingPendingPayment = () => {
       showLoading.value = true;
-      const statusId = applicationStatus(store, 'IRV');
+      const statusId = applicationStatus(store, 'PP');
       const adminStatus = [statusId, adminId];
-      store.dispatch("reviewerNewLicense/getNewLicenseOthersAssigned", adminStatus).then((res) => {
+      store.dispatch("reviewerGoodStanding/getGoodStandingPendingPayment", adminStatus).then((res) => {
         showLoading.value = false;
-        newLicenseAssigned.value =
-          store.getters["reviewerNewLicense/getNewLicenseAssignedToOthersSearched"];
+        goodStandingPendingPayment.value =
+          store.getters["reviewerGoodStanding/getGoodStandingPendingPaymentSearched"];
         allInfo.value.assignApplication =
-          store.getters["reviewerNewLicense/getNewLicenseAssignedToOthersSearched"];
+          store.getters["reviewerGoodStanding/getGoodStandingPendingPaymentSearched"];
+          console.log("good standing pending payment", store.getters["reviewerGoodStanding/getGoodStandingPendingPaymentSearched"])
 
         for (let applicant in allInfo.value.assignApplication) {
           allInfo.value.assignApplication[applicant].createdAt = moment(
@@ -149,20 +155,20 @@ export default {
               allInfo.value.assignApplication[applicant].applicantType;
           }
         }
-        if (store.getters["reviewerNewLicense/getNewLicenseAssignedToOthers"].length === 0) {
+        if (goodStandingPendingPayment.value.length === 0) {
           nothingToShow.value = true;
         }
       });
     };
     onMounted(() => {
-      fetchNewLicenseAssigned();
+      fetchGoodStandingPendingPayment();
     });
 
     return {
       nothingToShow,
       allInfo,
       showLoading,
-      filterAssignedApplication,
+      filterPendingPaymentApplication,
       backClicked,
     };
   },

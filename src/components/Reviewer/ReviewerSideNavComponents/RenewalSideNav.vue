@@ -1206,7 +1206,7 @@
               </div>
               <!-- under review end here -->
 
-              <!-- Expert side nav starts here -->
+              <!-- Federal Expert side nav starts here -->
               <div v-if="expertLevelId == 3">
                 <drop-down-lists
                   :dropdownValue="[
@@ -1403,7 +1403,7 @@
                   </li>
                 </ul>
               </div>
-              <!-- Expert side nav ends here -->
+              <!-- Federal Expert side nav ends here -->
               <drop-down-lists
                 :dropdownValue="[
                   dropdownValue.renewal,
@@ -1465,6 +1465,7 @@ export default {
       isReturnedEvaluationUp: false,
       isConfirmedEvaluationUp: false,
       isPaymentReviewnUp: false,
+      isDeclinedPaymentUp: false,
       isFinishedUp: false,
       isLicensedUp: false,
     });
@@ -1495,6 +1496,9 @@ export default {
       } else if (applicationValue == "RenewalInReviewPayment") {
         renewalDDIcon.value.isInReviewPaymentUp = !renewalDDIcon.value
           .isInReviewPaymentUp;
+      } else if (applicationValue == "RenewalDeclinedPayment") {
+        renewalDDIcon.value.isDeclinedPaymentUp = !renewalDDIcon.value
+          .isDeclinedPaymentUp;
       } else if (applicationValue == "RenewalLicensed") {
         renewalDDIcon.value.isLicensedUp = !renewalDDIcon.value.isLicensedUp;
       }

@@ -695,7 +695,7 @@
               <!-- All Licensed Applications starts here -->
 
               <li
-                @click="newLicenseMenuHandler('newLicenseUnfinished')"
+                @click="newLicenseMenuHandler('newLicenseAllLicensed')"
                 class="mb-2"
               >
                 <div class=" text-base" style="color: white; ">

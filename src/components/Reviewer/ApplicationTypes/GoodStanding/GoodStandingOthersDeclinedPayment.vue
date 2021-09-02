@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- <reviewer-nav-bar tab="othersRenewalDeclinedPayment" /> -->
+    <!-- <reviewer-nav-bar tab="othersGoodStandingDeclinedPayment" /> -->
     <div class="bg-lightBlueB-200 h-full" v-if="!allInfo.searchByInput">
       <div class="pl-12">
         <div>Filter By</div>
@@ -25,13 +25,13 @@
       </div>
 
       <div class="flex pl-12 pt-tiny">
-        <Title message="Others Renewal Declined Payments" />
+        <Title message="Others Good Standing Declined Payments" />
       </div>
       <div class="flex flex-wrap pb-medium rounded h-full" v-if="!showLoading">
         <nothing-to-show :nothingToShow="nothingToShow" />
         <declined-payment-applications
-          :declinedPaymentApplication="getRenewalOthersDeclinedPayments"
-          app_type="Renewal"
+          :declinedPaymentApplication="getGoodStandingOthersDeclinedPayments"
+          app_type="Good Standing"
           all_declinedPayments="true"
         />
       </div>
@@ -57,7 +57,7 @@
       <filtered-info
         :filteredData="allInfo.filteredByDate"
         type="applicant-detail"
-        app_type="Renewal"
+        app_type="Good Standing"
       />
     </div>
   </div>
@@ -87,9 +87,9 @@ import Title from "@/sharedComponents/TitleWithIllustration";
 export default {
   computed: {
     moment: () => moment,
-    getRenewalOthersDeclinedPayments() {
+    getGoodStandingOthersDeclinedPayments() {
       return store.getters[
-        "reviewerRenewal/getRenewalOthersDeclinedPaymentSearched"
+        "reviewerGoodStanding/getGoodStandingOthersDeclinedPaymentSearched"
       ];
     },
   },
@@ -105,7 +105,7 @@ export default {
   setup() {
     const store = useStore();
 
-    let renewalDeclinedPayments = ref([]);
+    let goodStandingDeclinedPayments = ref([]);
 
     const adminId = +localStorage.getItem("adminId");
 
@@ -138,21 +138,21 @@ export default {
       allInfo.value.app_type = "";
     };
 
-    const fetchOthersRenewalDeclinedPayment = () => {
+    const fetchOthersGoodStandingDeclinedPayment = () => {
       showLoading.value = true;
       const statusId = applicationStatus(store, 'DP');
       const adminStatus = [statusId, adminId];
       store
-        .dispatch("reviewerRenewal/getRenewalOthersDeclinedPayment", adminStatus)
+        .dispatch("reviewerGoodStanding/getGoodStandingOthersDeclinedPayment", adminStatus)
         .then((res) => {
           showLoading.value = false;
-          renewalDeclinedPayments.value =
+          goodStandingDeclinedPayments.value =
             store.getters[
-              "reviewerRenewal/getRenewalOthersDeclinedPaymentSearched"
+              "reviewerGoodStanding/getGoodStandingOthersDeclinedPaymentSearched"
             ];
           allInfo.value.assignApplication =
             store.getters[
-              "reviewerRenewal/getRenewalOthersDeclinedPaymentSearched"
+              "reviewerGoodStanding/getGoodStandingOthersDeclinedPaymentSearched"
             ];
 
           for (let applicant in allInfo.value.assignApplication) {
@@ -168,14 +168,14 @@ export default {
             }
           }
           if (
-            renewalDeclinedPayments.value.length === 0
+            goodStandingDeclinedPayments.value.length === 0
           ) {
             nothingToShow.value = true;
           }
         });
     };
     onMounted(() => {
-      fetchOthersRenewalDeclinedPayment();
+      fetchOthersGoodStandingDeclinedPayment();
     });
 
     return {

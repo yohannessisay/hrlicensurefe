@@ -543,8 +543,6 @@ export default {
                 : (button.name = button.name);
             });
             docs.value = res.data.data.documents;
-            console.log("documentssss", res.data.data.documents)
-            console.log("goddddddddddddddddd", newLicense.value);
             if (newLicense.value.applicationStatus.code == "REVDRA") {
               rejected.value = newLicense.value.declinedFields;
               for (let i in newLicense.value.documents) {
