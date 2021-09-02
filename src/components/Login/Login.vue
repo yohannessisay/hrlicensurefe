@@ -128,9 +128,10 @@ export default {
                 setTimeout(() => {
                   location.reload(true);
                 }, 1500);
-                setTimeout(() => {
-                  router.push({ path: "/menu" });
-                }, 10);
+                router.push({ path: "/menu" });
+                // setTimeout(() => {
+                //   router.push({ path: "/menu" });
+                // }, 2500);
               } else {
                 message.value.showLoading = false;
                 message.value.showFlash = true;
@@ -144,7 +145,7 @@ export default {
             message.value.showLoading = false;
             message.value.showFlash = false;
             message.value.showErrorFlash = true;
-            message.value.errorMessage = "Incorrect username and password";
+            message.value.errorMessage = "Incorrect Username or Password";
             setTimeout(() => {
               message.value.showErrorFlash = false;
               credentials.value.emailAddress = "";
