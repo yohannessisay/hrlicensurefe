@@ -915,18 +915,17 @@ export default {
             showFlash.value = true;
             showDeclineFlash.value = true;
             let redirectUrl = "/admin/review";
-            if (req.action == "ApproveEvent") {
-              redirectUrl =
-                "/admin/finishedDetail/" +
-                route.params.applicationType +
-                "/" +
-                route.params.applicationId +
-                "/" +
-                applicantId.value;
-            }
+            // if (req.action == "ApproveEvent") {
+            //   redirectUrl =
+            //     "/admin/finishedDetail/" +
+            //     route.params.applicationType +
+            //     "/" +
+            //     route.params.applicationId +
+            //     "/" +
+            //     applicantId.value;
+            // }
             setTimeout(() => {
-
-              router.push(`${redirectUrl}`);
+              router.push("/admin/review");
             }, 3000);
           } else {
             showErrorFlash.value = true;

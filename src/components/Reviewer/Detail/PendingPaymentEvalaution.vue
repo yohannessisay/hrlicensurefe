@@ -264,6 +264,7 @@ export default {
           .dispatch("reviewer/getGoodStandingApplication", applicationId)
           .then((res) => {
             newLicense.value = res.data.data;
+            applicantId.value = res.data.data.applicantId;
             buttons.value = res.data.data.applicationStatus.buttons;
             docs.value = res.data.data.documents.filter((file) => {
               return file.documentTypeCode == "SF";
