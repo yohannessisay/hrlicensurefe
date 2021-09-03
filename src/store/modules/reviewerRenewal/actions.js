@@ -629,7 +629,7 @@ export default {
     let evaluator = [];
     const allApplications = resp.data.data.forEach(function (e) {
       const myApplications = e.evaluators.forEach(function (ee) {
-        if(ee.evaluatorId === adminStatus[1]) {
+        if(ee.evaluatorId === adminStatus[1] && ee.actionEvent === null) {
           evaluator.push(e);
         }
       })

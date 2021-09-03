@@ -544,7 +544,6 @@ export default {
       evaluateData.value = evaluateData.value.filter((evaluate) => {
         return evaluate.evaluatorId == adminId;
       });
-      console.log("action value isss", evaluateData.value, "and actionvalue is ", actionValue, "newe", newLicense.value.evaluators)
       evaluateData.value[0].actionEvent = actionValue;
       if (actionValue == "ReturnToReviewerEvent") {
         showRemark.value = true;
@@ -559,6 +558,7 @@ export default {
       req.value = {
         ...evaluateData.value[0],
       };
+      console.log("request value finally", req.value);
       if (sendDeclinedData.value == true) {
         if (applicationType.value == "Verification") {
           evaluateApplication("evaluatVerification", req.value);
@@ -578,7 +578,6 @@ export default {
     const evaluateApplication = (applicationType, req) => {
       showLoadingconfirmed.value = true;
       console.log("request will be sent is ", req);
-      return;
         store.dispatch("reviewer/" + applicationType, req).then((res) => {
           showLoadingconfirmed.value = false;
           if (res.statusText == "Created") {
