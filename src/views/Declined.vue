@@ -397,7 +397,13 @@ export default {
           this.license = res.data.data;
           if (this.license) {
             this.newlicense = this.license.filter(function(e) {
-              return e.applicationStatus.code.includes("DEC");
+              if (e.expertLevelId === 3) {
+                return e.applicationStatus.code === "DEC";
+              } else {
+                return (
+                  e.applicationStatusId == 16 && e.previousAppStatusId == 6
+                );
+              }
             });
           }
         })
@@ -406,7 +412,13 @@ export default {
             this.license = res.data.data;
             if (this.license) {
               this.renewal = this.license.filter(function(e) {
-                return e.applicationStatus.code.includes("DEC");
+                if (e.expertLevelId === 3) {
+                  return e.applicationStatus.code === "DEC";
+                } else {
+                  return (
+                    e.applicationStatusId == 16 && e.previousAppStatusId == 6
+                  );
+                }
               });
             }
           });
@@ -418,7 +430,13 @@ export default {
               this.license = res.data.data;
               if (this.license) {
                 this.verification = this.license.filter(function(e) {
-                  return e.applicationStatus.code.includes("DEC");
+                  if (e.expertLevelId === 3) {
+                    return e.applicationStatus.code === "DEC";
+                  } else {
+                    return (
+                      e.applicationStatusId == 16 && e.previousAppStatusId == 6
+                    );
+                  }
                 });
               }
             });
@@ -431,7 +449,13 @@ export default {
               this.showLoading = !this.showLoading;
               if (this.license) {
                 this.goodstanding = this.license.filter(function(e) {
-                  return e.applicationStatus.code.includes("DEC");
+                  if (e.expertLevelId === 3) {
+                    return e.applicationStatus.code === "DEC";
+                  } else {
+                    return (
+                      e.applicationStatusId == 16 && e.previousAppStatusId == 6
+                    );
+                  }
                 });
               }
             });
