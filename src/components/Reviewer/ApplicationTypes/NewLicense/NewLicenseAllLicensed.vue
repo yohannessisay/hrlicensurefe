@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- <reviewer-nav-bar tab="newLicenseAssignedToOthers" /> -->
+    <!-- <reviewer-nav-bar tab="newLicenseAllLicensed" /> -->
     <div class="bg-lightBlueB-200 h-full" v-if="!allInfo.searchByInput">
       <div class="pl-12">
         <div>Filter By</div>
@@ -19,16 +19,16 @@
           type="date"
           v-model="allInfo.searchUpToDate"
         />
-        <button @click="filterAssignedApplication">
+        <button @click="filterAllLicensedApplication">
           Filter
         </button>
       </div>
       <div class="flex pl-12 pt-tiny">
-        <Title message="New License Assigned To Others" />
+        <Title message="New License All Licensed" />
       </div>
       <div class="flex flex-wrap pb-medium rounded h-full" v-if="!showLoading">
         <nothing-to-show :nothingToShow="nothingToShow" />
-        <assigned-applications :assignedApplication="getNewLicenseAssigned" app_type="New License" assigned_to_others="true"/>
+        <all-licensed-applications :allLicensedApplication="getNewLicenseAllLicensed" app_type="New License" others_licensed="false"/>
       </div>
     </div>
     <div
@@ -41,7 +41,7 @@
       <div class="flex pl-12 pt-tiny">
         <Title
         :message="
-          'Assigned Applicants on Date Range ' + moment(allInfo.searchFromDate).format('MMM D, YYYY') + ' To ' + moment(allInfo.searchUpToDate).format('MMM D, YYYY')
+          'All Licensed Applicants on Date Range ' + moment(allInfo.searchFromDate).format('MMM D, YYYY') + ' To ' + moment(allInfo.searchUpToDate).format('MMM D, YYYY')
         "
       />
         <button @click="backClicked">back</button>
@@ -62,24 +62,28 @@
 
 <script>
 import { ref, onMounted } from "vue";
-import Title from "@/sharedComponents/TitleWithIllustration";
-import ReviewerNavBar from "../../ReviewerNavBar.vue";
-import AssignedApplications from "../ChildApplicationTypes/AssignedApplications.vue"
-import NothingToShow from "../../ChildComponents/NothingToShow.vue";
 import { useStore } from "vuex";
-import store from "../../../../store";
-import Spinner from "@/sharedComponents/Spinner";
-import moment from "moment";
-import filterApplication from "../../ChildComponents/FilteredDatas/FilterApplication.js";
+
+import AllLicensedApplications from "../ChildApplicationTypes/AllLicensedApplications.vue"
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
+import filterApplication from "../../ChildComponents/FilteredDatas/FilterApplication.js";
 import FilteredInfo from "../../ChildComponents/FilteredDatas/FilteredInfo.vue";
+import moment from "moment";
+import ReviewerNavBar from "../../ReviewerNavBar.vue";
+import NothingToShow from "../../ChildComponents/NothingToShow.vue";
+import Spinner from "@/sharedComponents/Spinner";
+import store from "../../../../store";
+import Title from "@/sharedComponents/TitleWithIllustration";
+
+
+
 
 
 export default {
   computed: {
     moment: () => moment,
-    getNewLicenseAssigned() {
-      return store.getters["reviewerNewLicense/getNewLicenseAssignedToOthersSearched"];
+    getNewLicenseAllLicensed() {
+      return store.getters["reviewerNewLicense/getNewLicenseAllLicensedSearched"];
     },
   },
   components: {
@@ -88,12 +92,12 @@ export default {
     FilteredInfo,
     Spinner,
     NothingToShow,
-    AssignedApplications,
+    AllLicensedApplications,
     Title,
   },
   setup() {
     const store = useStore();
-    let newLicenseAssigned = ref([]);
+    let newLicenseAllLicensed = ref([]);
 
     const adminId = +localStorage.getItem("adminId");
 
@@ -113,7 +117,7 @@ export default {
       app_type: "",
     });
 
-    const filterAssignedApplication = () => {
+    const filterAllLicensedApplication = () => {
       filterApplication(moment, allInfo.value);
     };
 
@@ -126,17 +130,14 @@ export default {
       allInfo.value.app_type = "";
     };
 
-    const fetchNewLicenseAssigned = () => {
+    const fetchNewLicenseAllLicensed = () => {
       showLoading.value = true;
-      const statusId = applicationStatus(store, 'IRV');
-      const adminStatus = [statusId, adminId];
-      store.dispatch("reviewerNewLicense/getNewLicenseOthersAssigned", adminStatus).then((res) => {
+      store.dispatch("reviewerNewLicense/getNewLicenseAllLicensed").then((res) => {
         showLoading.value = false;
-        newLicenseAssigned.value =
-          store.getters["reviewerNewLicense/getNewLicenseAssignedToOthersSearched"];
+        newLicenseAllLicensed.value =
+          store.getters["reviewerNewLicense/getNewLicenseAllLicensedSearched"];
         allInfo.value.assignApplication =
-          store.getters["reviewerNewLicense/getNewLicenseAssignedToOthersSearched"];
-
+          store.getters["reviewerNewLicense/getNewLicenseAllLicensedSearched"];
         for (let applicant in allInfo.value.assignApplication) {
           allInfo.value.assignApplication[applicant].createdAt = moment(
             allInfo.value.assignApplication[applicant].createdAt
@@ -149,20 +150,20 @@ export default {
               allInfo.value.assignApplication[applicant].applicantType;
           }
         }
-        if (store.getters["reviewerNewLicense/getNewLicenseAssignedToOthers"].length === 0) {
+        if (newLicenseAllLicensed.value.length === 0) {
           nothingToShow.value = true;
         }
       });
     };
     onMounted(() => {
-      fetchNewLicenseAssigned();
+      fetchNewLicenseAllLicensed();
     });
 
     return {
       nothingToShow,
       allInfo,
       showLoading,
-      filterAssignedApplication,
+      filterAllLicensedApplication,
       backClicked,
     };
   },

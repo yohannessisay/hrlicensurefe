@@ -8,7 +8,7 @@
         class="ml-8 mr-8 mb-12"
       >
         <div class="mt-large bg-white">
-          <span v-if="isGoodStanding && license.applicationStatus.name === 'Approve'">
+          <span v-if="isGoodStanding && license.applicationStatus.code === 'AP'">
           <button @click="GenerateLetter">Generate Letter</button>
           </span>
           <div class="flex justify-center"><Title message="Summary" /></div>
@@ -316,7 +316,7 @@ export default {
     let getReviewId = ref(0);
 
     const GenerateLetter = () => {
-      if(license.value.applicationStatus.name !== "Approve") {
+      if(license.value.applicationStatus.code !== "AP") {
         // if user is not approved don't generate a good standing letter
         return;
       }

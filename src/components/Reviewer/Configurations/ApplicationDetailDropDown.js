@@ -48,6 +48,10 @@ export let dropdown = {
   goodStandingUnfinished: false,
   goodStandingApproved: false,
   goodStandingDeclined: false,
+  goodStandingPaymentReview: false,
+  goodStandingInReviewPayment: false,
+  goodStandingDeclinedPayment: false,
+  goodStandingLicensed: false,
   
 };
 
@@ -333,23 +337,57 @@ export const applicationTypeDD = (applicationDetail, dropdown) => {
     dropdown.goodStandingUnfinished = false;
     dropdown.goodStandingApproved = false;
     dropdown.goodStandingDeclined = false;
+    dropdown.goodStandingLicensed = false;
+    dropdown.goodStandingPaymentReview = false;
   }
   if (applicationDetail == "GoodStandingUnfinished") {
     dropdown.goodStandingUnfinished = !dropdown.goodStandingUnfinished;
     dropdown.goodStandingAssigned = false;
     dropdown.goodStandingApproved = false;
     dropdown.goodStandingDeclined = false;
+    dropdown.goodStandingLicensed = false;
+    dropdown.goodStandingPaymentReview = false;
   }
   if (applicationDetail == "GoodStandingApproved") {
     dropdown.goodStandingApproved = !dropdown.goodStandingApproved;
     dropdown.goodStandingUnfinished = false;
     dropdown.goodStandingAssigned = false;
     dropdown.goodStandingDeclined = false;
+    dropdown.goodStandingLicensed = false;
+    dropdown.goodStandingPaymentReview = false;
   }
   if (applicationDetail == "GoodStandingDeclined") {
     dropdown.goodStandingDeclined = !dropdown.goodStandingDeclined;
     dropdown.goodStandingApproved = false;
     dropdown.goodStandingUnfinished = false;
     dropdown.goodStandingAssigned = false;
+    dropdown.goodStandingLicensed = false;
+    dropdown.goodStandingPaymentReview = false;
+  }
+  if (applicationDetail == "GoodStandingPaymentReview") {
+    dropdown.goodStandingPaymentReview = !dropdown.goodStandingPaymentReview;
+    dropdown.goodStandingDeclined = false;
+    dropdown.goodStandingApproved = false;
+    dropdown.goodStandingUnfinished = false;
+    dropdown.goodStandingAssigned = false;
+    dropdown.goodStandingLicensed = false;
+    dropdown.goodStandingInReviewPayment = false;
+    dropdown.goodStandingDeclinedPayment = false;
+  }
+  if (applicationDetail == "GoodStandingInReviewPayment") {
+    dropdown.goodStandingInReviewPayment = !dropdown.goodStandingInReviewPayment;
+    dropdown.goodStandingDeclinedPayment = false;
+  }
+  if (applicationDetail == "GoodStandingDeclinedPayment") {
+    dropdown.goodStandingDeclinedPayment = !dropdown.goodStandingDeclinedPayment;
+    dropdown.goodStandingInReviewPayment = false;
+  }
+  if (applicationDetail == "GoodStandingLicensed") {
+    dropdown.goodStandingLicensed = !dropdown.goodStandingLicensed;
+    dropdown.goodStandingDeclined = false;
+    dropdown.goodStandingApproved = false;
+    dropdown.goodStandingUnfinished = false;
+    dropdown.goodStandingAssigned = false;
+    dropdown.goodStandingPaymentReview = false;
   }
 };

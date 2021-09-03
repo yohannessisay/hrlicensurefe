@@ -32,7 +32,7 @@
                   bg-lightGrey-100
                 "
               >
-                <div class="p-4 w-48 h-64">
+                <div class="p-4 w-48 h-auto">
                   <span
                     class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
@@ -113,7 +113,7 @@
                   bg-lightGrey-100
                 "
               >
-                <div class="p-4 w-48 h-64">
+                <div class="p-4 w-48 h-auto">
                   <span
                     class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
@@ -200,7 +200,7 @@
                   bg-lightGrey-100
                 "
               >
-                <div class="p-4 w-48 h-64">
+                <div class="p-4 w-48 h-auto">
                   <span
                     class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
@@ -291,7 +291,7 @@
                   bg-lightGrey-100
                 "
               >
-                <div class="p-4 w-48 h-64">
+                <div class="p-4 w-48 h-auto">
                   <span
                     class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
@@ -431,16 +431,29 @@ export default {
           this.license = res.data.data;
           if (this.license) {
             this.newlicense = this.license.filter(function(e) {
-              return e.applicationStatus.code.includes("APP");
+              if (e.expertLevelId === 3) {
+                return e.applicationStatus.code === "APP";
+              } else {
+                return (
+                  e.applicationStatusId == 16 && e.previousAppStatusId == 5
+                );
+              }
             });
           }
+          console.log("new license", this.newlicense);
         })
         .then(() => {
           this.$store.dispatch("renewal/getRenewalLicense").then((res) => {
             this.license = res.data.data;
             if (this.license) {
               this.renewal = this.license.filter(function(e) {
-                return e.applicationStatus.code.includes("APP");
+                if (e.expertLevelId === 3) {
+                  return e.applicationStatus.code === "APP";
+                } else {
+                  return (
+                    e.applicationStatusId == 16 && e.previousAppStatusId == 5
+                  );
+                }
               });
             }
           });
@@ -452,7 +465,13 @@ export default {
               this.license = res.data.data;
               if (this.license) {
                 this.verification = this.license.filter(function(e) {
-                  return e.applicationStatus.code.includes("APP");
+                  if (e.expertLevelId === 3) {
+                    return e.applicationStatus.code === "APP";
+                  } else {
+                    return (
+                      e.applicationStatusId == 16 && e.previousAppStatusId == 5
+                    );
+                  }
                 });
               }
             });
@@ -465,7 +484,13 @@ export default {
               this.showLoading = !this.showLoading;
               if (this.license) {
                 this.goodstanding = this.license.filter(function(e) {
-                  return e.applicationStatus.code.includes("APP");
+                  if (e.expertLevelId === 3) {
+                    return e.applicationStatus.code === "APP";
+                  } else {
+                    return (
+                      e.applicationStatusId == 16 && e.previousAppStatusId == 5
+                    );
+                  }
                 });
               }
             });

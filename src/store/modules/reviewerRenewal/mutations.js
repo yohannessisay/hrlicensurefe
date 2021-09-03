@@ -62,6 +62,14 @@ import {
   SET_RENEWAL_OTHERS_PENDING_PAYMENT,
   SET_RENEWAL_OTHERS_PENDING_PAYMENT_SEARCHED,
 
+  SET_RENEWAL_LICENSED,
+  SET_RENEWAL_LICENSED_SEARCHED,
+  SET_RENEWAL_OTHERS_LICENSED,
+  SET_RENEWAL_OTHERS_LICENSED_SEARCHED,
+
+  SET_RENEWAL_ALL_LICENSED,
+  SET_RENEWAL_ALL_LICENSED_SEARCHED,
+
 } from "./mutation-types";
 
 export default {
@@ -252,5 +260,28 @@ export default {
   },
   [SET_RENEWAL_OTHERS_PENDING_PAYMENT_SEARCHED](state, searchedVal) {
     state.renewalOthersPendingPaymentSearched = searchedVal;
+  },
+
+  [SET_RENEWAL_LICENSED](state, data) {
+    state.renewalLicensed = data;
+    state.renewalLicensedSearched = data;
+  },
+  [SET_RENEWAL_LICENSED_SEARCHED](state, searchedVal) {
+    state.renewalLicensedSearched = searchedVal;
+  },
+  [SET_RENEWAL_OTHERS_LICENSED](state, data) {
+    state.renewalOthersLicensed = data;
+    state.renewalOthersLicensedSearched = data;
+  },
+  [SET_RENEWAL_OTHERS_LICENSED_SEARCHED](state, searchedVal) {
+    state.renewalOthersLicensedSearched = searchedVal;
+  },
+
+  [SET_RENEWAL_ALL_LICENSED](state, data) {
+    state.renewalAllLicensed = data;
+    state.renewalAllLicensedSearched = data;
+  },
+  [SET_RENEWAL_ALL_LICENSED_SEARCHED](state, searchedVal) {
+    state.renewalAllLicensedSearched = searchedVal;
   },
 };

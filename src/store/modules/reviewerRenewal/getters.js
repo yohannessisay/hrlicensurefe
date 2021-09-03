@@ -61,4 +61,12 @@ export default {
     getRenewalPendingPaymentSearched: (state) => state.renewalPendingPaymentSearched,
     getRenewalOthersPendingPayment: (state) => state.renewalOthersPendingPayment,
     getRenewalOthersPendingPaymentSearched: (state) => state.renewalOthersPendingPaymentSearched,
+
+    getRenewalLicensed: (state) => state.renewalLicensed,
+    getRenewalLicensedSearched: (state) => state.renewalLicensedSearched,
+    getRenewalOthersLicensed: (state) => state.renewalOthersPendingPayment,
+    getRenewalOthersLicensedSearched: (state) => state.renewalOthersLicensed,
+
+    getRenewalAllLicensed: (state) => state.renewalAllLicensed,
+    getRenewalAllLicensedSearched: (state) => state.renewalAllLicensedSearched,
 }

@@ -22,6 +22,19 @@ import {
   SET_GOOD_STANDING_ALL_DECLINED,
   SET_GOOD_STANDING_ALL_DECLINED_SEARCHED,
 
+  SET_GOOD_STANDING_PENDING_PAYMENT,
+  SET_GOOD_STANDING_PENDING_PAYMENT_SEARCHED,
+  SET_GOOD_STANDING_OTHERS_PENDING_PAYMENT,
+  SET_GOOD_STANDING_OTHERS_PENDING_PAYMENT_SEARCHED,
+
+  SET_GOOD_STANDING_LICENSED,
+  SET_GOOD_STANDING_LICENSED_SEARCHED,
+  SET_GOOD_STANDING_OTHERS_LICENSED,
+  SET_GOOD_STANDING_OTHERS_LICENSED_SEARCHED,
+
+  SET_GOOD_STANDING_ALL_LICENSED,
+  SET_GOOD_STANDING_ALL_LICENSED_SEARCHED,
+
 } from "./mutation-types";
 export default {
   [SET_GOOD_STANDING_UNASSIGNED](state, data) {
@@ -30,7 +43,6 @@ export default {
   },
 
   [SET_GOOD_STANDING_UNASSIGNED_SEARCHED](state, searchedVal) {
-    console.log("searched val is ", searchedVal);
     state.goodStandingUnassignedSearched = searchedVal;
   },
   [SET_GOOD_STANDING_UNFINISHED](state, data) {
@@ -91,6 +103,44 @@ export default {
   },
   [SET_GOOD_STANDING_ALL_DECLINED_SEARCHED](state, searchedVal) {
     state.goodStandingAllDeclinedSearched = searchedVal;
+  },
+
+  [SET_GOOD_STANDING_PENDING_PAYMENT](state, data) {
+    state.goodStandingPendingPayment = data;
+    state.goodStandingPendingPaymentSearched = data;
+  },
+  [SET_GOOD_STANDING_PENDING_PAYMENT_SEARCHED](state, searchedVal) {
+    state.goodStandingPendingPaymentSearched = searchedVal;
+  },
+  [SET_GOOD_STANDING_OTHERS_PENDING_PAYMENT](state, data) {
+    state.goodStandingOthersPendingPayment = data;
+    state.goodStandingOthersPendingPaymentSearched = data;
+  },
+  [SET_GOOD_STANDING_OTHERS_PENDING_PAYMENT_SEARCHED](state, searchedVal) {
+    state.goodStandingOthersPendingPaymentSearched = searchedVal;
+  },
+
+  [SET_GOOD_STANDING_LICENSED](state, data) {
+    state.goodStandingLicensed = data;
+    state.goodStandingLicensedSearched = data;
+  },
+  [SET_GOOD_STANDING_LICENSED_SEARCHED](state, searchedVal) {
+    state.goodStandingLicensedSearched = searchedVal;
+  },
+  [SET_GOOD_STANDING_OTHERS_LICENSED](state, data) {
+    state.goodStandingOthersLicensed = data;
+    state.goodStandingOthersLicensedSearched = data;
+  },
+  [SET_GOOD_STANDING_OTHERS_LICENSED_SEARCHED](state, searchedVal) {
+    state.goodStandingOthersLicensedSearched = searchedVal;
+  },
+
+  [SET_GOOD_STANDING_ALL_LICENSED](state, data) {
+    state.goodStandingAllLicensed = data;
+    state.goodStandingAllLicensedSearched = data;
+  },
+  [SET_GOOD_STANDING_ALL_LICENSED_SEARCHED](state, searchedVal) {
+    state.goodStandingAllLicensedSearched = searchedVal;
   },
 
 };

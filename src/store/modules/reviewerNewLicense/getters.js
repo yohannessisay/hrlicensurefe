@@ -61,4 +61,12 @@ export default {
   getNewLicensePendingPaymentSearched: (state) => state.newLicensePendingPaymentSearched,
   getNewLicenseOthersPendingPayment: (state) => state.newLicenseOthersPendingPayment,
   getNewLicenseOthersPendingPaymentSearched: (state) => state.newLicenseOthersPendingPaymentSearched,
+
+  getNewLicenseLicensed: (state) => state.newLicenseLicensed,
+  getNewLicenseLicensedSearched: (state) => state.newLicenseLicensedSearched,
+  getNewLicenseOthersLicensed: (state) => state.newLicenseOthersPendingPayment,
+  getNewLicenseOthersLicensedSearched: (state) => state.newLicenseOthersLicensed,
+
+  getNewLicenseAllLicensed: (state) => state.newLicenseAllLicensed,
+  getNewLicenseAllLicensedSearched: (state) => state.newLicenseAllLicensedSearched,
 };

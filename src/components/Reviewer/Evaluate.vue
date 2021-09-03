@@ -543,8 +543,6 @@ export default {
                 : (button.name = button.name);
             });
             docs.value = res.data.data.documents;
-            console.log("documentssss", res.data.data.documents)
-            console.log("goddddddddddddddddd", newLicense.value);
             if (newLicense.value.applicationStatus.code == "REVDRA") {
               rejected.value = newLicense.value.declinedFields;
               for (let i in newLicense.value.documents) {
@@ -917,18 +915,17 @@ export default {
             showFlash.value = true;
             showDeclineFlash.value = true;
             let redirectUrl = "/admin/review";
-            if (req.action == "ApproveEvent") {
-              redirectUrl =
-                "/admin/finishedDetail/" +
-                route.params.applicationType +
-                "/" +
-                route.params.applicationId +
-                "/" +
-                applicantId.value;
-            }
+            // if (req.action == "ApproveEvent") {
+            //   redirectUrl =
+            //     "/admin/finishedDetail/" +
+            //     route.params.applicationType +
+            //     "/" +
+            //     route.params.applicationId +
+            //     "/" +
+            //     applicantId.value;
+            // }
             setTimeout(() => {
-
-              router.push(`${redirectUrl}`);
+              router.push("/admin/review");
             }, 3000);
           } else {
             showErrorFlash.value = true;

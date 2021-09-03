@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- <reviewer-nav-bar tab="newLicenseAssignedToOthers" /> -->
+    <!-- <reviewer-nav-bar tab="goodStandingDeclinedPayment" /> -->
     <div class="bg-lightBlueB-200 h-full" v-if="!allInfo.searchByInput">
       <div class="pl-12">
         <div>Filter By</div>
@@ -19,16 +19,21 @@
           type="date"
           v-model="allInfo.searchUpToDate"
         />
-        <button @click="filterAssignedApplication">
+        <button @click="filterDeclinedPaymentApplication">
           Filter
         </button>
       </div>
+
       <div class="flex pl-12 pt-tiny">
-        <Title message="New License Assigned To Others" />
+        <Title message="Good Standing Declined Payments" />
       </div>
       <div class="flex flex-wrap pb-medium rounded h-full" v-if="!showLoading">
         <nothing-to-show :nothingToShow="nothingToShow" />
-        <assigned-applications :assignedApplication="getNewLicenseAssigned" app_type="New License" assigned_to_others="true"/>
+        <declined-payment-applications
+          :declinedPaymentApplication="getGoodStandingDeclinedPayments"
+          app_type="Good Standing"
+          all_declinedPayments="false"
+        />
       </div>
     </div>
     <div
@@ -40,16 +45,19 @@
     <div class="bg-lightBlueB-200 h-full" v-if="allInfo.searchByInput">
       <div class="flex pl-12 pt-tiny">
         <Title
-        :message="
-          'Assigned Applicants on Date Range ' + moment(allInfo.searchFromDate).format('MMM D, YYYY') + ' To ' + moment(allInfo.searchUpToDate).format('MMM D, YYYY')
-        "
-      />
+          :message="
+            'Declined Payments Applicants on Date Range ' +
+              moment(allInfo.searchFromDate).format('MMM D, YYYY') +
+              ' To ' +
+              moment(allInfo.searchUpToDate).format('MMM D, YYYY')
+          "
+        />
         <button @click="backClicked">back</button>
       </div>
       <filtered-info
         :filteredData="allInfo.filteredByDate"
-        type="detail"
-        app_type="New License"
+        type="applicant-detail"
+        app_type="Good Standing"
       />
     </div>
   </div>
@@ -62,24 +70,27 @@
 
 <script>
 import { ref, onMounted } from "vue";
-import Title from "@/sharedComponents/TitleWithIllustration";
-import ReviewerNavBar from "../../ReviewerNavBar.vue";
-import AssignedApplications from "../ChildApplicationTypes/AssignedApplications.vue"
-import NothingToShow from "../../ChildComponents/NothingToShow.vue";
 import { useStore } from "vuex";
-import store from "../../../../store";
-import Spinner from "@/sharedComponents/Spinner";
 import moment from "moment";
-import filterApplication from "../../ChildComponents/FilteredDatas/FilterApplication.js";
-import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
-import FilteredInfo from "../../ChildComponents/FilteredDatas/FilteredInfo.vue";
 
+import applicationStatus from "../../Configurations/getApplicationStatus.js";
+import DeclinedPaymentApplications from "../ChildApplicationTypes/DeclinedPaymentApplications.vue";
+import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
+import filterApplication from "../../ChildComponents/FilteredDatas/FilterApplication.js";
+import FilteredInfo from "../../ChildComponents/FilteredDatas/FilteredInfo.vue";
+import NothingToShow from "../../ChildComponents/NothingToShow.vue";
+import ReviewerNavBar from "../../ReviewerNavBar.vue";
+import Spinner from "@/sharedComponents/Spinner";
+import store from "../../../../store";
+import Title from "@/sharedComponents/TitleWithIllustration";
 
 export default {
   computed: {
     moment: () => moment,
-    getNewLicenseAssigned() {
-      return store.getters["reviewerNewLicense/getNewLicenseAssignedToOthersSearched"];
+    getGoodStandingDeclinedPayments() {
+      return store.getters[
+        "reviewerGoodStanding/getGoodStandingDeclinedPaymentSearched"
+      ];
     },
   },
   components: {
@@ -88,12 +99,13 @@ export default {
     FilteredInfo,
     Spinner,
     NothingToShow,
-    AssignedApplications,
+    DeclinedPaymentApplications,
     Title,
   },
   setup() {
     const store = useStore();
-    let newLicenseAssigned = ref([]);
+
+    let goodStandingDeclinedPayments = ref([]);
 
     const adminId = +localStorage.getItem("adminId");
 
@@ -113,7 +125,7 @@ export default {
       app_type: "",
     });
 
-    const filterAssignedApplication = () => {
+    const filterDeclinedPaymentApplication = () => {
       filterApplication(moment, allInfo.value);
     };
 
@@ -126,43 +138,51 @@ export default {
       allInfo.value.app_type = "";
     };
 
-    const fetchNewLicenseAssigned = () => {
+    const fetchGoodStandingDeclinedPayment = () => {
       showLoading.value = true;
-      const statusId = applicationStatus(store, 'IRV');
+      const statusId = applicationStatus(store, 'DP');
       const adminStatus = [statusId, adminId];
-      store.dispatch("reviewerNewLicense/getNewLicenseOthersAssigned", adminStatus).then((res) => {
-        showLoading.value = false;
-        newLicenseAssigned.value =
-          store.getters["reviewerNewLicense/getNewLicenseAssignedToOthersSearched"];
-        allInfo.value.assignApplication =
-          store.getters["reviewerNewLicense/getNewLicenseAssignedToOthersSearched"];
+      store
+        .dispatch("reviewerGoodStanding/getGoodStandingDeclinedPayment", adminStatus)
+        .then((res) => {
+          showLoading.value = false;
+          goodStandingDeclinedPayments.value =
+            store.getters[
+              "reviewerGoodStanding/getGoodStandingDeclinedPaymentSearched"
+            ];
+          allInfo.value.assignApplication =
+            store.getters[
+              "reviewerGoodStanding/getGoodStandingDeclinedPaymentSearched"
+            ];
 
-        for (let applicant in allInfo.value.assignApplication) {
-          allInfo.value.assignApplication[applicant].createdAt = moment(
-            allInfo.value.assignApplication[applicant].createdAt
-          ).format("MMMM D, YYYY");
-          if (
-            allInfo.value.assignApplication[applicant].applicationType ===
-            undefined
-          ) {
-            allInfo.value.assignApplication[applicant].applicationType =
-              allInfo.value.assignApplication[applicant].applicantType;
+          for (let applicant in allInfo.value.assignApplication) {
+            allInfo.value.assignApplication[applicant].createdAt = moment(
+              allInfo.value.assignApplication[applicant].createdAt
+            ).format("MMMM D, YYYY");
+            if (
+              allInfo.value.assignApplication[applicant].applicationType ===
+              undefined
+            ) {
+              allInfo.value.assignApplication[applicant].applicationType =
+                allInfo.value.assignApplication[applicant].applicantType;
+            }
           }
-        }
-        if (store.getters["reviewerNewLicense/getNewLicenseAssignedToOthers"].length === 0) {
-          nothingToShow.value = true;
-        }
-      });
+          if (
+            goodStandingDeclinedPayments.value.length === 0
+          ) {
+            nothingToShow.value = true;
+          }
+        });
     };
     onMounted(() => {
-      fetchNewLicenseAssigned();
+      fetchGoodStandingDeclinedPayment();
     });
 
     return {
       nothingToShow,
       allInfo,
       showLoading,
-      filterAssignedApplication,
+      filterDeclinedPaymentApplication,
       backClicked,
     };
   },

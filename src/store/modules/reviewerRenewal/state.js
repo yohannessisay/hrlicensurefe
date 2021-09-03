@@ -62,5 +62,13 @@ export default {
     renewalPendingPaymentSearched: [],
     renewalOthersPendingPayment: [],
     renewalOthersPendingPaymentSearched: [],
+
+    renewalLicensed: [],
+    renewalLicensedSearched: [],
+    renewalOthersLicensed: [],
+    renewalOthersLicensedSearched: [],
+
+    renewalAllLicensed: [],
+    renewalAllLicensedSearched: [],
   },
 };

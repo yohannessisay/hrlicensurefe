@@ -1,7 +1,7 @@
 <template>
   <div
     class="container"
-    v-for="item in unconfirmedApplication"
+    v-for="item in licensedApplication"
     v-bind:key="item.id"
     v-bind:value="item.id"
   >
@@ -10,11 +10,22 @@
     >
       <div
         class="p-4 w-48 h-64"
-        @Click="detail(`/admin`, item.id, item.applicant.id)"
+        @Click="
+          detail(`/admin/certifiedUsersDetail`, item.id, item.applicant.id)
+        "
       >
         <div class="flex content-center justify-center">
-          <span v-if="item.applicant.profile.photo !== '' && item.applicant.profile.photo !== null">
-            <img :src="item.applicant.profile.photo" alt="profile picture"  class="w-20 h-12" />
+          <span
+            v-if="
+              item.applicant.profile.photo !== '' &&
+                item.applicant.profile.photo !== null
+            "
+          >
+            <img
+              :src="item.applicant.profile.photo"
+              alt="profile picture"
+              class="w-20 h-12"
+            />
           </span>
           <span v-else>
             <img
@@ -36,7 +47,7 @@
         </h4>
         <span
           class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-          v-if="all_unconfirmed == 'true'"
+          v-if="others_licensed == 'true'"
         >
           <i class="fas fa-user-cog"></i> &nbsp;
           {{ item.reviewer.name ? item.reviewer.name : "-" }}
@@ -87,29 +98,24 @@
 <script>
 import moment from "moment";
 import { useRouter } from "vue-router";
-import { ref } from 'vue';
 export default {
   computed: {
     moment: () => moment,
   },
-  props: ["unconfirmedApplication", "app_type", "all_unconfirmed"],
-  name: "UnconfirmedApplications",
+  props: ["licensedApplication", "app_type", "others_licensed"],
+  name: "LicensedApplications",
   setup(props) {
     let router = useRouter();
-    let routeValue = ref("othersUnconfirmedDetail");
-    const adminExpertId = JSON.parse(localStorage.getItem('allAdminData')).expertLevelId;
     const detail = (data, applicationId, applicantId) => {
-      if (
-        props.app_type == "Verification"
-      ) {
-        routeValue.value = "finishedDetail";
+      if (props.app_type == "Good Standing") {
+        const url =
+          "/admin/finishedDetail/" + props.app_type + "/" + applicationId + "/" + applicantId;
+        router.push(url);
+      } else {
+        const url =
+          data + "/" + props.app_type + "/" + applicationId + "/" + applicantId;
+        router.push(url);
       }
-      if (adminExpertId == 3) {
-        routeValue.value = "applicant-detail"
-      }
-      const url =
-        data + "/" + routeValue.value + "/" + props.app_type + "/" + applicationId + "/" + applicantId;
-      router.push(url);
     };
     return {
       detail,
