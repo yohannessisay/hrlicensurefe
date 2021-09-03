@@ -873,11 +873,13 @@ export default {
             if (res.statusText == "Created") {
               showFlash.value = true;
               showDeclineFlash.value = true;
+              return;
               setTimeout(() => {
                 router.push("/admin/review");
               }, 3000);
             } else {
               showErrorFlash.value = true;
+              return;
               setTimeout(() => {
                 router.go();
               }, 3000);

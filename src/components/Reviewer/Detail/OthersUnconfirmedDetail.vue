@@ -39,7 +39,7 @@
                 Assign
               </button>
               <div
-              class="flex justify-center justify-items-center mt-6"
+                class="flex justify-center justify-items-center mt-6"
                 v-if="showAssignLoading"
               >
                 <Spinner />
@@ -131,9 +131,11 @@
           <div class="flex flex-row">
             <div
               :class="[
-                license.woreda === null ? errorClass :
-                license.woreda.zone === null ? errorClass :
-                license.woreda.zone.region === null
+                license.woreda === null
+                  ? errorClass
+                  : license.woreda.zone === null
+                  ? errorClass
+                  : license.woreda.zone.region === null
                   ? errorClass
                   : activeClass,
               ]"
@@ -141,9 +143,11 @@
               <label class="ml-8"> Region</label>
               <h5 class="ml-8">
                 {{
-                  license.woreda === null ? "-" :
-                  license.woreda.zone === null ? "-" :
-                  license.woreda.zone.region
+                  license.woreda === null
+                    ? "-"
+                    : license.woreda.zone === null
+                    ? "-"
+                    : license.woreda.zone.region
                     ? license.woreda.zone.region.name
                     : "-"
                 }}
@@ -151,15 +155,21 @@
             </div>
             <div
               :class="[
-                license.woreda === null ?
-                errorClass : license.woreda.zone === null ? 
-                errorClass : activeClass,
+                license.woreda === null
+                  ? errorClass
+                  : license.woreda.zone === null
+                  ? errorClass
+                  : activeClass,
               ]"
             >
               <label class="ml-8"> Zone</label>
               <h5 class="ml-8">
                 {{
-                  license.woreda === null ? "-" : license.woreda.zone ? license.woreda.zone.name : "-"
+                  license.woreda === null
+                    ? "-"
+                    : license.woreda.zone
+                    ? license.woreda.zone.name
+                    : "-"
                 }}
               </h5>
             </div>
@@ -271,6 +281,47 @@
               </h5>
             </div>
           </div>
+          <div class="flex justify-start" v-if="previousEvaluators.length > 0">
+            <Title message="Previous Evaluators" />
+          </div>
+          <div class="flex flex-row" v-if="previousEvaluators.length > 0">
+            <div
+              v-for="evaluator in previousEvaluators"
+              v-bind:key="evaluator.evaluator.name"
+              v-bind:value="evaluator.evaluator.id"
+            >
+              <div>
+                <label class="ml-8"> Evaluators Aname</label>
+                <h5 class="ml-8" v-if="evaluator.evaluator">
+                  {{ evaluator.evaluator.name }}
+                </h5>
+              </div>
+              <div>
+                <label class="ml-8"> Evaluators Action</label>
+                <h5 class="ml-8" v-if="evaluator">
+                  {{ evaluator.actionEvent }}
+                </h5>
+              </div>
+            </div>
+            <div>
+              <label class="ml-8"> Evaluators Name</label>
+              <h5 class="ml-8" v-if="education.institutionName">
+                {{ education.institutionName }}
+              </h5>
+            </div>
+            <div>
+              <label class="ml-8"> Evaluators Action</label>
+              <h5 class="ml-8" v-if="education.departmentName">
+                {{ education.departmentName }}
+              </h5>
+            </div>
+            <div>
+              <label class="ml-8"> Institution Type</label>
+              <h5 class="ml-8" v-if="education.institutionTypeName">
+                {{ education.institutionTypeName }}
+              </h5>
+            </div>
+          </div>
           <div class="flex justify-start flex-wrap"></div>
         </div>
       </div>
@@ -317,6 +368,8 @@ export default {
     let admins = ref({});
 
     let showAdminCountError = ref(false);
+
+    let previousEvaluators = ref([]);
 
     let assignConfirmAdmin = ref({
       evaluatorIds: [],
@@ -377,7 +430,7 @@ export default {
 
     const fetchAdminsByRegion = (regionId) => {
       store.dispatch("reviewer/getAdminsByRegion", regionId).then((res) => {
-        admins.value = res.data.data
+        admins.value = res.data.data;
         // admins.value = res.data.data.filter((admins) => {
         //   return admins.id != loggedInAdminId;
         // });
@@ -390,7 +443,7 @@ export default {
 
     const assignAdminToConfirm = () => {
       showAssignLoading.value = true;
-      
+
       if (
         assignConfirmAdmin.value.evaluatorIds.length > 3 ||
         assignConfirmAdmin.value.evaluatorIds.length < 2
@@ -429,7 +482,7 @@ export default {
           };
         }
       }
-      console.log("assigned data is for admins is ", assignConfirmAdmin.value)
+      console.log("assigned data is for admins is ", assignConfirmAdmin.value);
       if (applicationType.value == "New License") {
         store
           .dispatch(
@@ -507,6 +560,8 @@ export default {
           .dispatch("reviewer/getNewLicenseApplication", applicationId)
           .then((res) => {
             console.log("ffffound newlicense dddata", res);
+            previousEvaluators.value = res.data.data.evaluators;
+            console.log("previous evaluators is ", previousEvaluators.value);
             showLoading.value = false;
             license.value = res.data.data;
             getReviewId.value = license.value.reviewerId;
@@ -564,6 +619,8 @@ export default {
           .dispatch("reviewer/getRenewalApplication", applicationId)
           .then((res) => {
             console.log("ffffound renewal dddata", res);
+            previousEvaluators.value = res.data.data.evaluators;
+            console.log("previous evaluators is ", previousEvaluators.value);
             showLoading.value = false;
             license.value = res.data.data;
             getReviewId.value = license.value.reviewerId;
@@ -623,6 +680,7 @@ export default {
       showAdminCountError,
       gen,
       assignAdminToConfirm,
+      previousEvaluators,
     };
   },
 
