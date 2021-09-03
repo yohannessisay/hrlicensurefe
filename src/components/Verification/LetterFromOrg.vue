@@ -60,7 +60,6 @@
                 </p>
                 <img v-bind:src="filePreview" v-show="showPreview" />
               </picture>
-              <!--  -->
               <div v-if="!showUpload && isPdf">
                 <p>
                   <a href="javascript:void(0)" @click="reset()">Upload again</a>
@@ -287,7 +286,12 @@ export default {
     };
     onMounted(() => {
       letterBack = store.getters["verification/getVerificationLetter"];
-      if (letterBack || letterBack != undefined || letterBack != null) {
+      if (
+        letterBack &&
+        letterBack !== undefined &&
+        letterBack !== null &&
+        letterBack !== ""
+      ) {
         dataChanged.value = true;
         showUpload.value = false;
         letterFile.value = letterBack;
