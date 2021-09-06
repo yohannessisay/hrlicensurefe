@@ -234,7 +234,6 @@ export default {
       dataChanged.value = true;
       showUpload.value = false;
       herqaFile.value = herqaFileP.value.files[0];
-      console.log(herqaFile.value.type);
       let reader = new FileReader();
       isImage.value = true;
       let fileS = herqaFile.value.size;
@@ -603,7 +602,6 @@ export default {
             herqaFile.value = draftData.documents[i];
             showPreview.value = true;
             filePreview.value = basePath + draftData.documents[i].filePath;
-            console.log(draftData.documents[i].fileName.split(".")[1]);
           }
         }
       }

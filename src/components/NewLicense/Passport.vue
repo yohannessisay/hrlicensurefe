@@ -601,7 +601,6 @@ export default {
             passportFile.value = draftData.documents[i];
             showPreview.value = true;
             filePreview.value = basePath + draftData.documents[i].filePath;
-            console.log(filePreview.value);
           }
         }
       }
