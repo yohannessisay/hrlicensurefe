@@ -299,15 +299,15 @@ export default {
       } else {
         this.showRegion = true;
       }
-      if (draftData.woreda || draftData.woreda != undefined) {
-        this.licenseInfo.residenceWoredaId = draftData.woreda.id;
-        if (draftData.woreda.zone || draftData.woreda.zone != undefined) {
-          this.zoneID = draftData.woreda.zone.id;
+      if (draftData.regionId != undefined || draftData.regionId) {
+        this.regionID = draftData.regionId;
+        if (draftData.zoneId != undefined || draftData.zoneId) {
+          this.zoneID = draftData.zoneId;
           if (
-            draftData.woreda.zone.region ||
-            draftData.woreda.zone.region != undefined
+            draftData.residenceWoredaId != undefined ||
+            draftData.residenceWoredaId
           ) {
-            this.regionID = draftData.woreda.zone.region.id;
+            this.licenseInfo.residenceWoredaId = draftData.residenceWoredaId;
           }
         }
       }
@@ -356,8 +356,8 @@ export default {
         institutionId: "",
       },
       residenceWoredaId: "",
-      regionID: "",
-      zoneID: "",
+      regionId: "",
+      zoneId: "",
       professionalTypeID: "",
     },
     regionID: "",
@@ -528,6 +528,8 @@ export default {
           departmentId: this.licenseInfo.education.departmentId,
           institutionId: this.licenseInfo.education.institutionId,
         },
+        regionId: this.regionID,
+        zoneId: this.zoneID,
         residenceWoredaId: this.licenseInfo.residenceWoredaId,
         professionalTypeId: this.licenseInfo.professionalTypeID,
         expertLevelId: this.licenseInfo.expertLevelId,
