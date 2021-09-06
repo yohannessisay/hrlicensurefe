@@ -28,7 +28,7 @@
                 <div
                   class="flex justify-center items-center  ml-4 mr-4 pb-16 box-shadow-pop rounded-lg bg-lightGrey-100"
                 >
-                  <div class="p-4 w-48 h-auto">
+                  <div class="p-4 w-auto h-auto">
                     <span
                       class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                     >
@@ -110,7 +110,7 @@
                 <div
                   class="flex justify-center items-center  ml-4 mr-4 pb-20 box-shadow-pop rounded-lg bg-lightGrey-100"
                 >
-                  <div class="p-4 w-48 h-auto">
+                  <div class="p-4 w-auto h-auto">
                     <span
                       class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                     >
@@ -196,7 +196,7 @@
                 <div
                   class="flex justify-center items-center pb-16 ml-4 mr-4 box-shadow-pop rounded-lg bg-lightGrey-100"
                 >
-                  <div class="p-4 w-48 h-auto">
+                  <div class="p-4 w-auto h-auto">
                     <span
                       class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                     >
@@ -285,7 +285,7 @@
                 <div
                   class="flex justify-center items-center pb-16 ml-4 mr-4 box-shadow-pop rounded-lg bg-lightGrey-100"
                 >
-                  <div class="p-4 w-48 h-auto">
+                  <div class="p-4 w-auto h-auto">
                     <span
                       class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                     >
@@ -397,15 +397,13 @@ export default {
           this.license = res.data.data;
           if (this.license) {
             this.newlicense = this.license.filter(function(e) {
-              this.verification = this.license.filter(function(e) {
-                if (e.expertLevelId === 3) {
-                  return e.applicationStatus.code === "USUP";
-                } else {
-                  return (
-                    e.applicationStatusId == 16 && e.previousAppStatusId == 7
-                  );
-                }
-              });
+              if (e.expertLevelId === 3) {
+                return e.applicationStatus.code === "USUP";
+              } else {
+                return (
+                  e.applicationStatusId == 16 && e.previousAppStatusId == 7
+                );
+              }
             });
           }
         })
@@ -414,15 +412,13 @@ export default {
             this.license = res.data.data;
             if (this.license) {
               this.renewal = this.license.filter(function(e) {
-                this.verification = this.license.filter(function(e) {
-                  if (e.expertLevelId === 3) {
-                    return e.applicationStatus.code === "USUP";
-                  } else {
-                    return (
-                      e.applicationStatusId == 16 && e.previousAppStatusId == 7
-                    );
-                  }
-                });
+                if (e.expertLevelId === 3) {
+                  return e.applicationStatus.code === "USUP";
+                } else {
+                  return (
+                    e.applicationStatusId == 16 && e.previousAppStatusId == 7
+                  );
+                }
               });
             }
           });
@@ -434,16 +430,13 @@ export default {
               this.license = res.data.data;
               if (this.license) {
                 this.verification = this.license.filter(function(e) {
-                  this.verification = this.license.filter(function(e) {
-                    if (e.expertLevelId === 3) {
-                      return e.applicationStatus.code === "USUP";
-                    } else {
-                      return (
-                        e.applicationStatusId == 16 &&
-                        e.previousAppStatusId == 7
-                      );
-                    }
-                  });
+                  if (e.expertLevelId === 3) {
+                    return e.applicationStatus.code === "USUP";
+                  } else {
+                    return (
+                      e.applicationStatusId == 16 && e.previousAppStatusId == 7
+                    );
+                  }
                 });
               }
             });
@@ -456,16 +449,13 @@ export default {
               this.showLoading = !this.showLoading;
               if (this.license) {
                 this.goodstanding = this.license.filter(function(e) {
-                  this.verification = this.license.filter(function(e) {
-                    if (e.expertLevelId === 3) {
-                      return e.applicationStatus.code === "USUP";
-                    } else {
-                      return (
-                        e.applicationStatusId == 16 &&
-                        e.previousAppStatusId == 7
-                      );
-                    }
-                  });
+                  if (e.expertLevelId === 3) {
+                    return e.applicationStatus.code === "USUP";
+                  } else {
+                    return (
+                      e.applicationStatusId == 16 && e.previousAppStatusId == 7
+                    );
+                  }
                 });
               }
             });
