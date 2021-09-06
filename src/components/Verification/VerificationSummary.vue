@@ -169,31 +169,14 @@
           </h5>
         </div>
       </div>
-      <!-- <div class="flex justify-start">
-        <Title message="Institution" />
-      </div>
-      <div class="flex flex-row">
-        <div>
-          <label class="ml-4"> Institution Name</label>
-          <h5 class="ml-4">Hawassa University</h5>
-        </div>
-        <div>
-          <label class="ml-4"> Department</label>
-          <h5 class="ml-4">Electrical Engineering</h5>
-        </div>
-        <div>
-          <label class="ml-4"> Institution Type</label>
-          <h5 class="ml-4">Private</h5>
+      <!-- <div class="flex justify-start flex-wrap">
+        <div v-for="file in docs" v-bind:key="file.name">
+          <Title class="" :message="file.name" />
+          <picture>
+            <img :src="basePath + file.filePath" />
+          </picture>
         </div>
       </div> -->
-      <!-- <div class="flex justify-start flex-wrap">
-      <div v-for="file in docs" v-bind:key="file.name">
-        <Title class="" :message="file.name" />
-        <picture>
-          <img :src="basePath + file.filePath" />
-        </picture>
-      </div>
-    </div> -->
       <div v-if="this.draftStatus == 'DRA' || !this.draftStatus">
         <div class="mt-12 flex justify-center">
           <div>
