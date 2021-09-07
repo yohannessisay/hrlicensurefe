@@ -32,7 +32,7 @@
                   bg-lightGrey-100
                 "
               >
-                <div class="p-4 w-48 h-auto">
+                <div class="p-4 w-auto h-auto">
                   <span
                     class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
@@ -113,7 +113,7 @@
                   bg-lightGrey-100
                 "
               >
-                <div class="p-4 w-48 h-auto">
+                <div class="p-4 w-auto h-auto">
                   <span
                     class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
@@ -200,7 +200,7 @@
                   bg-lightGrey-100
                 "
               >
-                <div class="p-4 w-48 h-auto">
+                <div class="p-4 w-auto h-auto">
                   <span
                     class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
@@ -291,7 +291,7 @@
                   bg-lightGrey-100
                 "
               >
-                <div class="p-4 w-48 h-auto">
+                <div class="p-4 w-auto h-auto">
                   <span
                     class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >

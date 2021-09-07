@@ -28,7 +28,7 @@
                 <div
                   class="flex justify-center items-center  ml-4 mr-4 box-shadow-pop rounded-lg bg-lightGrey-100"
                 >
-                  <div class="p-4 w-48 h-64">
+                  <div class="p-4 w-auto h-64">
                     <span
                       class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                     >
@@ -104,7 +104,7 @@
                 <div
                   class="flex justify-center items-center  ml-4 mr-4 box-shadow-pop rounded-lg bg-lightGrey-100"
                 >
-                  <div class="p-4 w-48 h-64">
+                  <div class="p-4 w-auto h-64">
                     <span
                       class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                     >
@@ -185,7 +185,7 @@
                 <div
                   class="flex justify-center items-center  ml-4 mr-4 box-shadow-pop rounded-lg bg-lightGrey-100"
                 >
-                  <div class="p-4 w-48 h-64">
+                  <div class="p-4 w-auto h-64">
                     <span
                       class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                     >
@@ -269,7 +269,7 @@
                 <div
                   class="flex justify-center items-center  ml-4 mr-4 box-shadow-pop rounded-lg bg-lightGrey-100"
                 >
-                  <div class="p-4 w-48 h-64">
+                  <div class="p-4 w-auto h-64">
                     <span
                       class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                     >
