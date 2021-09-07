@@ -853,10 +853,6 @@ export default {
       }
       newLicense.value.declinedFields = rejected.value;
       newLicense.value.acceptedFields = accepted.value;
-      if (actionValue == "ApproveEvent") {
-        newLicense.value.certified = true;
-        newLicense.value.certifiedDate = new Date();
-      }
 
       let appId = newLicense.value.id;
       let req = {
@@ -873,13 +869,11 @@ export default {
             if (res.statusText == "Created") {
               showFlash.value = true;
               showDeclineFlash.value = true;
-              return;
               setTimeout(() => {
                 router.push("/admin/review");
               }, 3000);
             } else {
               showErrorFlash.value = true;
-              return;
               setTimeout(() => {
                 router.go();
               }, 3000);
