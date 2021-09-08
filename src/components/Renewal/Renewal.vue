@@ -12,6 +12,7 @@
               <Institution
                 :activeState="1"
                 @changeActiveState="activeState++"
+                @changeActiveStateMinus="activeState--"
                 @applicantTypeValue="applicantTypeSet"
                 @payrollDocumentSet="payrollDocumentSet"
               />
@@ -22,6 +23,7 @@
               <HealthExamCert
                 :activeState="2"
                 @changeActiveState="activeState++"
+                @changeActiveStateMinus="activeState--"
               />
             </div>
           </transition>
@@ -31,6 +33,7 @@
                 <PreviousLicenseL
                   :activeState="3"
                   @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
                 />
               </div>
             </transition>
@@ -39,6 +42,7 @@
                 <CPDF
                   :activeState="4"
                   @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
                 /></div
             ></transition>
             <transition name="fade" mode="out-in">
@@ -46,6 +50,7 @@
                 <WorkExperience
                   :activeState="5"
                   @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
                 />
               </div>
             </transition>
@@ -54,6 +59,7 @@
                 <ProfessionalDocuments
                   :activeState="6"
                   @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
                 />
               </div>
             </transition>
@@ -62,6 +68,7 @@
                 <PayrollDoc
                   :activeState="7"
                   @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
                 />
               </div>
             </transition>
@@ -70,6 +77,7 @@
                 <LicenseSummary
                   :activeState="8"
                   @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
                 />
               </div>
             </transition>
@@ -80,6 +88,7 @@
                 <PreviousLicenseL
                   :activeState="3"
                   @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
                 />
               </div>
             </transition>
@@ -88,6 +97,7 @@
                 <CPDF
                   :activeState="4"
                   @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
                 /></div
             ></transition>
             <transition name="fade" mode="out-in">
@@ -95,6 +105,7 @@
                 <WorkExperience
                   :activeState="5"
                   @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
                 />
               </div>
             </transition>
@@ -103,6 +114,7 @@
                 <ProfessionalDocuments
                   :activeState="6"
                   @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
                 />
               </div>
             </transition>
@@ -112,6 +124,7 @@
                 <LicenseSummary
                   :activeState="7"
                   @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
                 />
               </div>
             </transition>
@@ -122,6 +135,7 @@
                 <LetterFromInstitution
                   :activeState="3"
                   @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
                 />
               </div>
             </transition>
@@ -130,12 +144,17 @@
                 <PreviousLicenseF
                   :activeState="4"
                   @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
                 />
               </div>
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 5">
-                <CPDE :activeState="5" @changeActiveState="activeState++" />
+                <CPDE
+                  :activeState="5"
+                  @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
+                />
               </div>
             </transition>
             <transition name="fade" mode="out-in">
@@ -143,6 +162,7 @@
                 <WorkExperience
                   :activeState="6"
                   @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
                 />
               </div>
             </transition>
@@ -151,6 +171,7 @@
                 <ProfessionalDocuments
                   :activeState="7"
                   @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
                 />
               </div>
             </transition>
@@ -159,6 +180,7 @@
                 <LicenseSummary
                   :activeState="8"
                   @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
                 />
               </div>
             </transition>
@@ -166,7 +188,11 @@
           <div v-if="this.applicantType == 3">
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 3">
-                <CPDL :activeState="3" @changeActiveState="activeState++" />
+                <CPDL
+                  :activeState="3"
+                  @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
+                />
               </div>
             </transition>
             <transition name="fade" mode="out-in">
@@ -174,6 +200,7 @@
                 <PreviousLicenseE
                   :activeState="4"
                   @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
                 />
               </div>
             </transition>
@@ -182,6 +209,7 @@
                 <WorkExperience
                   :activeState="5"
                   @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
                 />
               </div>
             </transition>
@@ -190,6 +218,7 @@
                 <ProfessionalDocuments
                   :activeState="6"
                   @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
                 />
               </div>
             </transition>
@@ -198,6 +227,7 @@
                 <LicenseSummary
                   :activeState="7"
                   @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
                 />
               </div>
             </transition>

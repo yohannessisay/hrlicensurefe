@@ -6,6 +6,8 @@ export default {
       departmentId: "",
       institutionId: "",
     },
+    regionId: "",
+    zoneId: "",
     residenceWoredaId: "",
     professionalTypeId: "",
     occupationTypeId: "",

@@ -71,6 +71,9 @@
           </div>
         </form>
         <div v-if="buttons && !draftStatus" class="flex justify-center mb-8">
+          <button @click="submitBack">
+            Back
+          </button>
           <button @click="submit">Next</button>
           <button @click="draft(buttons[1].action)" variant="outline">
             {{ buttons[1]["name"] }}
@@ -80,6 +83,9 @@
           v-if="buttons && draftStatus == 'DRA'"
           class="flex justify-center mb-8"
         >
+          <button @click="submitBack">
+            Back
+          </button>
           <button @click="submit">Next</button>
           <button @click="draft(buttons[2].action)" variant="outline">
             {{ buttons[2]["name"] }}
@@ -96,6 +102,9 @@
           v-if="buttons && draftStatus == 'SUB'"
           class="flex justify-center mb-8"
         >
+          <button @click="submitBack">
+            Back
+          </button>
           <button @click="submit">Next</button>
           <button
             class="withdraw"
@@ -109,6 +118,9 @@
           v-if="buttons && draftStatus == 'USUP'"
           class="flex justify-center mb-8"
         >
+          <button @click="submitBack">
+            Back
+          </button>
           <button @click="submit">Next</button>
           <button @click="draft(buttons[0].action)" variant="outline">
             {{ buttons[0]["name"] }}
@@ -121,6 +133,9 @@
           v-if="buttons && draftStatus == 'DEC'"
           class="flex justify-center mb-8"
         >
+          <button @click="submitBack">
+            Back
+          </button>
           <button @click="submit">Next</button>
           <!-- <button @click="draft(buttons[0].action)" variant="outline">
             {{ buttons[0]["name"] }}
@@ -183,6 +198,8 @@ export default {
     let filePreview = ref("");
     let showUpload = ref(true);
     let isImage = ref(true);
+
+    let payRollBack = ref("");
 
     let buttons = ref([]);
     let documentSpecs = ref([]);
@@ -259,8 +276,50 @@ export default {
       emit("changeActiveState");
       store.dispatch("renewal/setPayroll", payrollFile);
     };
+    const submitBack = () => {
+      emit("changeActiveStateMinus");
+      store.dispatch("renewal/setPayroll", payrollFile);
+    };
 
     onMounted(() => {
+      payRollBack = store.getters["renewal/getPayroll"];
+      if (
+        payRollBack &&
+        payRollBack !== undefined &&
+        payRollBack !== null &&
+        payRollBack !== ""
+      ) {
+        dataChanged.value = true;
+        showUpload.value = false;
+        payrollFile.value = payRollBack;
+        let reader = new FileReader();
+        let fileS = payrollFile.value.size;
+        if (fileS > 0 && fileS < 1000) {
+          fileSize.value += "B";
+        } else if (fileS > 1000 && fileS < 1000000) {
+          fileSize.value = fileS / 1000 + "kB";
+        } else {
+          fileSize.value = fileS / 1000000 + "MB";
+        }
+        reader.addEventListener(
+          "load",
+          function() {
+            showPreview.value = true;
+            filePreview.value = reader.result;
+          },
+          false
+        );
+        if (payrollFile.value) {
+          if (/\.(jpe?g|png|gif)$/i.test(payrollFile.value.name)) {
+            isImage.value = true;
+            reader.readAsDataURL(payrollFile.value);
+          } else if (/\.(pdf)$/i.test(payrollFile.value.name)) {
+            isImage.value = false;
+            isPdf.value = true;
+            reader.readAsDataURL(payrollFile.value);
+          }
+        }
+      }
       declinedFields = store.getters["renewal/getDeclinedFields"];
       acceptedFields = store.getters["renewal/getAcceptedFields"];
       remark = store.getters["renewal/getRemark"];
@@ -536,6 +595,7 @@ export default {
     return {
       payrollFile,
       payrollFileP,
+      payRollBack,
       showPreview,
       filePreview,
       showUpload,
@@ -543,6 +603,7 @@ export default {
       handleFileUpload,
       reset,
       submit,
+      submitBack,
       draft,
       fileSize,
       withdraw,
