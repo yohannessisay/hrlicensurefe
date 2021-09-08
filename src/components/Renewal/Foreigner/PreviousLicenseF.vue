@@ -57,7 +57,6 @@
                 </p>
                 <img v-bind:src="filePreview" v-show="showPreview" />
               </picture>
-              <!--  -->
               <div v-if="!showUpload && isPdf">
                 <p>
                   <a href="javascript:void(0)" @click="reset()">Upload again</a>
@@ -71,6 +70,9 @@
           </div>
         </form>
         <div v-if="buttons && !draftStatus" class="flex justify-center mb-8">
+          <button @click="submitBack">
+            Back
+          </button>
           <button @click="submit">
             Next
           </button>
@@ -82,6 +84,9 @@
           v-if="buttons && draftStatus == 'DRA'"
           class="flex justify-center mb-8"
         >
+          <button @click="submitBack">
+            Back
+          </button>
           <button @click="submit">
             Next
           </button>
@@ -100,6 +105,9 @@
           v-if="buttons && draftStatus == 'SUB'"
           class="flex justify-center mb-8"
         >
+          <button @click="submitBack">
+            Back
+          </button>
           <button @click="submit">
             Next
           </button>
@@ -115,6 +123,9 @@
           v-if="buttons && draftStatus == 'USUP'"
           class="flex justify-center mb-8"
         >
+          <button @click="submitBack">
+            Back
+          </button>
           <button @click="submit">
             Next
           </button>
@@ -129,6 +140,9 @@
           v-if="buttons && draftStatus == 'DEC'"
           class="flex justify-center mb-8"
         >
+          <button @click="submitBack">
+            Back
+          </button>
           <button @click="submit">
             Next
           </button>
@@ -194,6 +208,8 @@ export default {
     let isImage = ref(false);
     let isPdf = ref(false);
     let draftStatus = ref("");
+
+    let previousLicenseBack = ref("");
 
     let buttons = [];
     let documentSpecs = ref([]);
@@ -273,7 +289,50 @@ export default {
       emit("changeActiveState");
       store.dispatch("renewal/setPreviousLicense", previousLicenseFile);
     };
+    const submitBack = () => {
+      emit("changeActiveStateMinus");
+      store.dispatch("renewal/setPreviousLicense", previousLicenseFile);
+    };
+
     onMounted(() => {
+      previousLicenseBack = store.getters["renewal/getPreviousLicense"];
+      if (
+        previousLicenseBack &&
+        previousLicenseBack !== undefined &&
+        previousLicenseBack !== null &&
+        previousLicenseBack !== ""
+      ) {
+        dataChanged.value = true;
+        showUpload.value = false;
+        previousLicenseFile.value = previousLicenseBack;
+        let reader = new FileReader();
+        let fileS = previousLicenseFile.value.size;
+        if (fileS > 0 && fileS < 1000) {
+          fileSize.value += "B";
+        } else if (fileS > 1000 && fileS < 1000000) {
+          fileSize.value = fileS / 1000 + "kB";
+        } else {
+          fileSize.value = fileS / 1000000 + "MB";
+        }
+        reader.addEventListener(
+          "load",
+          function() {
+            showPreview.value = true;
+            filePreview.value = reader.result;
+          },
+          false
+        );
+        if (previousLicenseFile.value) {
+          if (/\.(jpe?g|png|gif)$/i.test(previousLicenseFile.value.name)) {
+            isImage.value = true;
+            reader.readAsDataURL(previousLicenseFile.value);
+          } else if (/\.(pdf)$/i.test(previousLicenseFile.value.name)) {
+            isImage.value = false;
+            isPdf.value = true;
+            reader.readAsDataURL(previousLicenseFile.value);
+          }
+        }
+      }
       declinedFields = store.getters["renewal/getDeclinedFields"];
       acceptedFields = store.getters["renewal/getAcceptedFields"];
       remark = store.getters["renewal/getRemark"];
@@ -554,6 +613,7 @@ export default {
     return {
       previousLicenseFile,
       previousLicenseFileP,
+      previousLicenseBack,
       showPreview,
       filePreview,
       showUpload,
@@ -562,6 +622,7 @@ export default {
       handleFileUpload,
       reset,
       submit,
+      submitBack,
       draft,
       withdraw,
       buttons,

@@ -6,6 +6,9 @@ import {
   SET_RENEWAL_SERVICE_FEE,
   SET_RENEWAL_CPD,
   SET_PREVIOUS_LICEENSE,
+  SET_CERTIFICATE,
+  SET_DIPLOMA,
+  SET_TRANSCRIPT,
   SET_BUTTONS,
   SET_APPLICATION_ID,
   SET_DOCUMENT_SPEC,
@@ -14,7 +17,7 @@ import {
   SET_DECLINED_FIELDS,
   SET_ACCEPTED_FIELDS,
   SET_PROFESSIONAL_DOCUMENT,
-  SET_PAYROLL
+  SET_PAYROLL,
 } from "./mutation-types";
 
 export default {
@@ -41,6 +44,15 @@ export default {
   },
   [SET_RENEWAL_WORK_EXPERIENCE](state, renewalWorkExperience) {
     state.workExperience = renewalWorkExperience;
+  },
+  [SET_CERTIFICATE](state, certificate) {
+    state.certificate = certificate;
+  },
+  [SET_DIPLOMA](state, diploma) {
+    state.diploma = diploma;
+  },
+  [SET_TRANSCRIPT](state, transcript) {
+    state.transcript = transcript;
   },
   [SET_PAYROLL](state, payroll) {
     state.payroll = payroll;

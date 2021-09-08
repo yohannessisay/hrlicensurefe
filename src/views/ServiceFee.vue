@@ -173,8 +173,6 @@ export default {
     let buttons = ref([]);
     let paymentSlip = ref("");
 
-    let userId = localStorage.getItem("userId");
-
     let documents = ref([]);
 
     let dataChanged = ref(false);

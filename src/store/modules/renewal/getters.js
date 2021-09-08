@@ -1,3 +1,5 @@
+import state from "../ReviewerSideNav/state";
+
 export default {
   getLicense: (state) => state.license,
   getRenewalHealthExamCert: (state) => state.healthExamCert,
@@ -6,6 +8,9 @@ export default {
   getRenewalWorkExperience: (state) => state.workExperience,
   getRenewalLicense: (state) => state.letterFromHiringInstitution,
   getProfessionalDocuments: (state) => state.professionalDocuments,
+  getCertificate: (state) => state.certificate,
+  getDiploma: (state) => state.diploma,
+  getTranscript: (state) => state.transcript,
   getPreviousLicense: (state) => state.previosLicense,
   getPayroll: (state) => state.payroll,
   getButtons: (state) => state.buttons,

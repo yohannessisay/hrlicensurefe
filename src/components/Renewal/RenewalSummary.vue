@@ -197,6 +197,9 @@
       <div v-if="this.draftStatus == 'DRA' || !this.draftStatus">
         <div class="mt-12 flex justify-center">
           <div>
+            <button @click="submitBack">
+              Back
+            </button>
             <button
               v-if="this.buttons.length < 3"
               @click="submitRequest(this.buttons[0].action)"
@@ -247,6 +250,9 @@
         v-if="this.draftStatus == 'SUB'"
         class="flex justify-center mt-8 pb-12"
       >
+        <button @click="submitBack">
+          Back
+        </button>
         <button
           class="withdraw"
           @click="withdraw(this.buttons[0].action)"
@@ -259,6 +265,9 @@
         v-if="this.draftStatus == 'USUP'"
         class="flex justify-center mt-8 pb-12"
       >
+        <button @click="submitBack">
+          Back
+        </button>
         <button @click="draft(this.buttons[0].action)" variant="outline">
           {{ this.buttons[0]["name"] }}
         </button>
@@ -433,6 +442,9 @@ export default {
         .then((res) => {
           this.documentTypes = res.data.data;
         });
+    },
+    submitBack() {
+      this.$emit("changeActiveStateMinus");
     },
 
     async submitRequest(act) {

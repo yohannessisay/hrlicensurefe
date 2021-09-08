@@ -7,6 +7,9 @@ import {
   SET_RENEWAL_SERVICE_FEE,
   SET_RENEWAL_CPD,
   SET_PREVIOUS_LICEENSE,
+  SET_CERTIFICATE,
+  SET_DIPLOMA,
+  SET_TRANSCRIPT,
   SET_PAYROLL,
   SET_PROFESSIONAL_DOCUMENT,
   SET_BUTTONS,
@@ -44,6 +47,15 @@ export default {
   },
   setPreviousLicense({ commit }, license) {
     commit(SET_PREVIOUS_LICEENSE, license);
+  },
+  setCertificate({ commit }, certificate) {
+    commit(SET_CERTIFICATE, certificate);
+  },
+  setDiploma({ commit }, diploma) {
+    commit(SET_DIPLOMA, diploma);
+  },
+  setTranscript({ commit }, transcript) {
+    commit(SET_TRANSCRIPT, transcript);
   },
   setPayroll({ commit }, payroll) {
     commit(SET_PAYROLL, payroll);
