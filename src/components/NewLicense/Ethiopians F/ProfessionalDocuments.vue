@@ -63,6 +63,7 @@
                 </p>
                 <img v-bind:src="filePreview" v-show="showPreview" />
               </picture>
+              <!--  -->
               <div v-if="!showUpload && isPdf">
                 <p>
                   <a href="javascript:void(0)" @click="reset()">Upload again</a>
@@ -211,51 +212,12 @@
               </span>
             </div>
           </div>
-
-          <!-- 
-            <div class="ml-4" style="width:220px">
-              <span v-if="showExperienceUpload">
-                <label class="text-primary-700"
-                  >Upload Work Experience:
-                  <div class="dropbox">
-                    <input
-                      type="file"
-                      id="experienceFile"
-                      ref="experienceFile"
-                      v-on:change="handleExperienceUpload()"
-                      style="margin-bottom: 15px !important;"
-                    />
-                    <p>
-                      Drag your file(s) here to begin<br />
-                      or click to browse
-                    </p>
-                  </div>
-                </label>
-              </span>
-
-              <picture v-if="!showExperienceUpload && isExperienceImage">
-                <p>
-                  <a href="javascript:void(0)" @click="resetExperience()"
-                    >Upload again</a
-                  >
-                </p>
-                <img
-                  v-bind:src="experiencePreview"
-                  v-show="showExperiencePreview"
-                />
-              </picture>
-
-              <span v-if="!showExperienceUpload && !isExperienceImage">
-                <img :src="experiencePreview" alt="" class="preview" />
-              </span>
-
-              <h6 style="margin-top: 15px !important;">
-                Your photo should be passport size
-              </h6>
-            </div> -->
         </div>
         <div v-if="this.draftStatus == 'DRA' || !this.draftStatus">
           <div class="flex justify-center mt-4 mb-8">
+            <button @click="submitBack">
+              Back
+            </button>
             <button @click="submit">Next</button>
             <button
               v-if="this.buttons.length < 3"
@@ -286,6 +248,9 @@
           v-if="this.draftStatus == 'SUB'"
           class="flex justify-center mt-8 pb-12"
         >
+          <button @click="submitBack">
+            Back
+          </button>
           <button @click="submit">Next</button>
           <button
             class="withdraw"
@@ -299,6 +264,9 @@
           v-if="this.draftStatus == 'USUP'"
           class="flex justify-center mt-8 pb-12"
         >
+          <button @click="submitBack">
+            Back
+          </button>
           <button @click="submit">Next</button>
           <button @click="draft(this.buttons[0].action)" variant="outline">
             {{ this.buttons[0]["name"] }}
@@ -311,6 +279,9 @@
           v-if="this.draftStatus == 'DEC'"
           class="flex justify-center mt-8 pb-12"
         >
+          <button @click="submitBack">
+            Back
+          </button>
           <button @click="submit">Next</button>
           <!-- <button @click="draft(this.buttons[0].action)" variant="outline">
             {{ this.buttons[0]["name"] }}
@@ -378,11 +349,9 @@ export default {
       transcriptFileSize: "",
       diplomaFileSize: "",
 
-      // experienceFile: "",
-      // showExperiencePreview: false,
-      // experiencePreview: "",
-      // showExperienceUpload: true,
-      // isExperienceImage: true,
+      photoFileBack: "",
+      transcriptFileBack: "",
+      diplomaFileBack: "",
 
       buttons: [],
       showButtons: false,
@@ -459,6 +428,122 @@ export default {
     }),
   },
   created() {
+    let certificate = this.$store.getters["newlicense/getProCertificate"];
+    let diploma = this.$store.getters["newlicense/getProDiploma"];
+    let transcript = this.$store.getters["newlicense/getProTranscript"];
+    if (
+      certificate &&
+      certificate !== undefined &&
+      certificate !== null &&
+      certificate !== ""
+    ) {
+      this.showUpload = false;
+      this.photoFile = certificate;
+      let reader = new FileReader();
+      let fileS = this.photoFile.size;
+      if (fileS > 0 && fileS < 1000) {
+        this.photoFileSize = fileS + " " + "B";
+      } else if (fileS > 1000 && fileS < 1000000) {
+        this.photoFileSize = fileS / 1000 + "kB";
+      } else {
+        this.photoFileSize = fileS / 1000000 + "MB";
+      }
+      reader.addEventListener(
+        "load",
+        function() {
+          this.showPreview = true;
+          this.filePreview = reader.result;
+        }.bind(this),
+        false
+      );
+
+      if (this.photoFile) {
+        if (/\.(jpe?g|png|gif)$/i.test(this.photoFile.name)) {
+          this.isImage = true;
+          reader.readAsDataURL(this.photoFile);
+        } else if (/\.(pdf)$/i.test(this.photoFile.name)) {
+          this.isImage = false;
+          this.isPdf = true;
+          reader.readAsDataURL(this.photoFile);
+        }
+      }
+    }
+    if (
+      diploma &&
+      diploma !== undefined &&
+      diploma !== null &&
+      diploma !== ""
+    ) {
+      this.showDiplomaUpload = false;
+      this.diplomaFile = diploma;
+      let reader = new FileReader();
+      let fileS = this.diplomaFile.size;
+      if (fileS > 0 && fileS < 1000) {
+        this.diplomaFileSize += "B";
+      } else if (fileS > 1000 && fileS < 1000000) {
+        this.diplomaFileSize = fileS / 1000 + "kB";
+      } else {
+        this.diplomaFileSize = fileS / 1000000 + "MB";
+      }
+
+      reader.addEventListener(
+        "load",
+        function() {
+          this.showDiplomaPreview = true;
+          this.diplomaPreview = reader.result;
+        }.bind(this),
+        false
+      );
+
+      if (this.diplomaFile) {
+        if (/\.(jpe?g|png|gif)$/i.test(this.diplomaFile.name)) {
+          this.isDiplomaImage = true;
+          reader.readAsDataURL(this.diplomaFile);
+        } else if (/\.(pdf)$/i.test(this.diplomaFile.name)) {
+          this.isDiplomaImage = false;
+          this.isUDPdf = true;
+          reader.readAsDataURL(this.diplomaFile);
+        }
+      }
+    }
+    if (
+      transcript &&
+      transcript !== undefined &&
+      transcript !== null &&
+      transcript !== ""
+    ) {
+      this.showTranscriptUpload = false;
+      this.transcriptFile = transcript;
+      let reader = new FileReader();
+      let fileS = this.transcriptFile.size;
+      if (fileS > 0 && fileS < 1000) {
+        this.transcriptFileSize += "B";
+      } else if (fileS > 1000 && fileS < 1000000) {
+        this.transcriptFileSize = fileS / 1000 + "kB";
+      } else {
+        this.transcriptFileSize = fileS / 1000000 + "MB";
+      }
+
+      reader.addEventListener(
+        "load",
+        function() {
+          this.showTranscriptPreview = true;
+          this.transcriptPreview = reader.result;
+        }.bind(this),
+        false
+      );
+
+      if (this.transcriptFile) {
+        if (/\.(jpe?g|png|gif)$/i.test(this.transcriptFile.name)) {
+          this.isTranscriptImage = true;
+          reader.readAsDataURL(this.transcriptFile);
+        } else if (/\.(pdf)$/i.test(this.transcriptFile.name)) {
+          this.isTranscriptImage = false;
+          this.isUTPdf = true;
+          reader.readAsDataURL(this.transcriptFile);
+        }
+      }
+    }
     this.draftId = this.$route.params.id;
     this.draftStatus = this.$route.params.status;
     this.declinedFields = this.getDeclinedFields;
@@ -548,7 +633,6 @@ export default {
   methods: {
     ...mapActions(["setProfessionalDoc"]),
     reset() {
-      // reset form to initial state
       this.showUpload = true;
       this.showPreview = false;
       this.photoFile = "";
@@ -575,13 +659,6 @@ export default {
       this.isUTPdf = false;
       this.transcriptFileSize = "";
     },
-    // resetExperience() {
-    //   this.showExperienceUpload = true;
-    //   this.showExperiencePreview = false;
-    //   this.experienceFile = "";
-    //   this.experiencePreview = "";
-    //   this.isExperienceImage = true;
-    // },
     handleCertificateUpload() {
       this.showUpload = false;
       this.photoFile = this.$refs.photoFile.files[0];
@@ -683,31 +760,19 @@ export default {
         }
       }
     },
-    // handleExperienceUpload() {
-    //   this.showExperienceUpload = false;
-    //   this.experienceFile = this.$refs.experienceFile.files[0];
-    //   let reader = new FileReader();
-
-    //   reader.addEventListener(
-    //     "load",
-    //     function() {
-    //       this.showExperiencePreview = true;
-    //       this.experiencePreview = reader.result;
-    //     }.bind(this),
-    //     false
-    //   );
-    //   if (this.experienceFile) {
-    //     if (/\.(jpe?g|png|gif)$/i.test(this.experienceFile.name)) {
-    //       this.isExperienceImage = true;
-    //       reader.readAsDataURL(this.experienceFile);
-    //     } else if (/\.(pdf)$/i.test(this.experienceFile.name)) {
-    //       this.isExperienceImage = false;
-    //       reader.readAsText(this.experienceFile);
-    //     }
-    //   }
-    // },
     submit() {
       this.$emit("changeActiveState");
+      this.$store.dispatch("newlicense/setProCertificate", this.photoFile);
+      this.$store.dispatch("newlicense/setProDiploma", this.diplomaFile);
+      this.$store.dispatch("newlicense/setProTranscript", this.transcriptFile);
+      let file = [this.photoFile, this.diplomaFile, this.transcriptFile];
+      this.$store.dispatch("newlicense/setProfessionalDoc", file);
+    },
+    submitBack() {
+      this.$emit("changeActiveStateMinus");
+      this.$store.dispatch("newlicense/setProCertificate", this.photoFile);
+      this.$store.dispatch("newlicense/setProDiploma", this.diplomaFile);
+      this.$store.dispatch("newlicense/setProTranscript", this.transcriptFile);
       let file = [this.photoFile, this.diplomaFile, this.transcriptFile];
       this.$store.dispatch("newlicense/setProfessionalDoc", file);
     },
@@ -715,7 +780,6 @@ export default {
       this.showLoading = true;
       if (this.draftId) {
         if (this.photoFile || this.diplomaFile || this.transcriptFile) {
-          // modify the drafData before dispatching
         } else {
           let draftObj = {
             action: action,

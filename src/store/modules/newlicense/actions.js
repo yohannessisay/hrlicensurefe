@@ -18,6 +18,14 @@ import {
   SET_DEGREE,
   SET_TRANSCRIPT,
   SET_DIPLOMA,
+  SET_PRO_CERTIFICATE,
+  SET_PRO_DIPLOMA,
+  SET_PRO_TRANSCRIPT,
+  SET_EDU_EIGHTH,
+  SET_EDU_TENTH,
+  SET_EDU_TWELVETH,
+  SET_EDU_TRANSCRIPT1,
+  SET_EDU_TRANSCRIPT2,
   SET_BUTTONS,
   SET_APPLICATION_ID,
   SET_DOCUMENT_SPEC,
@@ -84,6 +92,30 @@ export default {
   },
   setDiploma({ commit }, diploma) {
     commit(SET_DIPLOMA, diploma);
+  },
+  setProCertificate({ commit }, proCertificate) {
+    commit(SET_PRO_CERTIFICATE, proCertificate);
+  },
+  setProDiploma({ commit }, proDiploma) {
+    commit(SET_PRO_DIPLOMA, proDiploma);
+  },
+  setProTranscript({ commit }, proTranscript) {
+    commit(SET_PRO_TRANSCRIPT, proTranscript);
+  },
+  setEduEighth({ commit }, eduEighth) {
+    commit(SET_EDU_EIGHTH, eduEighth);
+  },
+  setEduTenth({ commit }, eduTenth) {
+    commit(SET_EDU_TENTH, eduTenth);
+  },
+  setEduTwelveth({ commit }, eduTwelveth) {
+    commit(SET_EDU_TWELVETH, eduTwelveth);
+  },
+  setEduTranscript1({ commit }, eduTranscript1) {
+    commit(SET_EDU_TRANSCRIPT1, eduTranscript1);
+  },
+  setEduTranscript2({ commit }, eduTranscript2) {
+    commit(SET_EDU_TRANSCRIPT2, eduTranscript2);
   },
   setButtons({ commit }, buttons) {
     commit(SET_BUTTONS, buttons);

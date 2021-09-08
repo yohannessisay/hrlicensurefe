@@ -581,6 +581,8 @@ export default {
           departmentId: this.licenseInfo.education.departmentId,
           institutionId: this.licenseInfo.education.institutionId,
         },
+        regionId: this.regionID,
+        zoneId: this.zoneID,
         residenceWoredaId: this.licenseInfo.residenceWoredaId,
         professionalTypeId: this.licenseInfo.professionalTypeID,
         paymentSlip: null,

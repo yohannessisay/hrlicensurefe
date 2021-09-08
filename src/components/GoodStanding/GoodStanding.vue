@@ -14,6 +14,7 @@
               <Institution
                 :activeState="1"
                 @changeActiveState="activeState++"
+                @changeActiveStateMinus="activeState--"
               />
             </div>
           </transition>
@@ -22,6 +23,7 @@
               <LicenseCopy
                 :activeState="2"
                 @changeActiveState="activeState++"
+                @changeActiveStateMinus="activeState--"
               />
             </div>
           </transition>
@@ -30,6 +32,7 @@
               <GoodStandingLetter
                 :activeState="3"
                 @changeActiveState="activeState++"
+                @changeActiveStateMinus="activeState--"
               />
             </div>
           </transition>
@@ -38,6 +41,7 @@
               <GoodStandingSummary
                 :activeState="4"
                 @changeActiveState="activeState++"
+                @changeActiveStateMinus="activeState--"
               />
             </div>
           </transition>

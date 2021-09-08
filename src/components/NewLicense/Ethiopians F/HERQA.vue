@@ -64,7 +64,6 @@
                 </p>
                 <img v-bind:src="filePreview" v-show="showPreview" />
               </picture>
-              <!--  -->
               <div v-if="!showUpload && isPdf">
                 <p>
                   <a href="javascript:void(0)" @click="reset()">Upload again</a>
@@ -78,6 +77,9 @@
           </div>
         </form>
         <div v-if="buttons && !draftStatus" class="flex justify-center mb-8">
+          <button @click="submitBack">
+            Back
+          </button>
           <button @click="submit">Next</button>
           <button @click="draft(buttons[1].action)" variant="outline">
             {{ buttons[1]["name"] }}
@@ -87,6 +89,9 @@
           v-if="buttons && draftStatus == 'DRA'"
           class="flex justify-center mb-8"
         >
+          <button @click="submitBack">
+            Back
+          </button>
           <button @click="submit">Next</button>
           <button @click="draft(buttons[2].action)" variant="outline">
             {{ buttons[2]["name"] }}
@@ -103,6 +108,9 @@
           v-if="buttons && draftStatus == 'SUB'"
           class="flex justify-center mb-8"
         >
+          <button @click="submitBack">
+            Back
+          </button>
           <button @click="submit">Next</button>
           <button
             class="withdraw"
@@ -116,6 +124,9 @@
           v-if="buttons && draftStatus == 'USUP'"
           class="flex justify-center mb-8"
         >
+          <button @click="submitBack">
+            Back
+          </button>
           <button @click="submit">Next</button>
           <button @click="draft(buttons[0].action)" variant="outline">
             {{ buttons[0]["name"] }}
@@ -128,6 +139,9 @@
           v-if="buttons && draftStatus == 'DEC'"
           class="flex justify-center mb-8"
         >
+          <button @click="submitBack">
+            Back
+          </button>
           <button @click="submit">Next</button>
           <!-- <button @click="draft(buttons[0].action)" variant="outline">
             {{ buttons[0]["name"] }}
@@ -196,6 +210,8 @@ export default {
     let licenseInfo = ref("");
     let draftData = ref("");
     let draftStatus = ref("");
+
+    let herqaBack = ref("");
 
     let declinedFields = ref([]);
     let acceptedFields = ref([]);
@@ -266,6 +282,10 @@ export default {
     };
     const submit = () => {
       emit("changeActiveState");
+      store.dispatch("newlicense/setHerqa", herqaFile);
+    };
+    const submitBack = () => {
+      emit("changeActiveStateMinus");
       store.dispatch("newlicense/setHerqa", herqaFile);
     };
     buttons = store.getters["newlicense/getButtons"];
@@ -576,6 +596,44 @@ export default {
     };
 
     onMounted(() => {
+      herqaBack = store.getters["newlicense/getHerqa"];
+      if (
+        herqaBack &&
+        herqaBack !== undefined &&
+        herqaBack !== null &&
+        herqaBack !== ""
+      ) {
+        dataChanged.value = true;
+        showUpload.value = false;
+        herqaFile.value = herqaBack;
+        let reader = new FileReader();
+        let fileS = herqaFile.value.size;
+        if (fileS > 0 && fileS < 1000) {
+          fileSize.value += "B";
+        } else if (fileS > 1000 && fileS < 1000000) {
+          fileSize.value = fileS / 1000 + "kB";
+        } else {
+          fileSize.value = fileS / 1000000 + "MB";
+        }
+        reader.addEventListener(
+          "load",
+          function() {
+            showPreview.value = true;
+            filePreview.value = reader.result;
+          },
+          false
+        );
+        if (herqaFile.value) {
+          if (/\.(jpe?g|png|gif)$/i.test(herqaFile.value.name)) {
+            isImage.value = true;
+            reader.readAsDataURL(herqaFile.value);
+          } else if (/\.(pdf)$/i.test(herqaFile.value.name)) {
+            isImage.value = false;
+            isPdf.value = true;
+            reader.readAsDataURL(herqaFile.value);
+          }
+        }
+      }
       declinedFields = store.getters["newlicense/getDeclinedFields"];
       acceptedFields = store.getters["newlicense/getAcceptedFields"];
       remark = store.getters["newlicense/getRemark"];
@@ -609,6 +667,7 @@ export default {
     return {
       herqaFile,
       herqaFileP,
+      herqaBack,
       showPreview,
       filePreview,
       showUpload,
@@ -618,6 +677,7 @@ export default {
       fileSize,
       reset,
       submit,
+      submitBack,
       draft,
       withdraw,
       buttons,
