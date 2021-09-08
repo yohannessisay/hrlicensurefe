@@ -272,6 +272,12 @@ export default {
           admin.fatherName +
           " " +
           admin.grandfatherName;
+        
+        admin.email = admin.email.toLowerCase();
+
+        console.log("email is_ ", admin.email);
+
+        return;
 
         store.dispatch("admin/registerAdmin", admin).then((res) => {
           showLoading.value = false;

@@ -22,4 +22,9 @@ export default {
     getVerificationAllDeclined: (state) => state.verificationAllDeclined,
     getVerificationAllDeclinedSearched: (state) => state.verificationAllDeclinedSearched,
 
+    getVerificationReApply: (state) => state.verificationReApply,
+    getVerificationReApplySearched: (state) => state.verificationReApplySearched,
+    getVerificationOthersReApply: (state) => state.verificationOthersReApply,
+    getVerificationOthersReApplySearched: (state) => state.verificationOthersReApplySearched,
+
 }

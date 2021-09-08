@@ -69,6 +69,21 @@ import {
 
   SET_NEW_LICENSE_ALL_LICENSED,
   SET_NEW_LICENSE_ALL_LICENSED_SEARCHED,
+
+  SET_NEW_LICENSE_RE_APPLY,
+  SET_NEW_LICENSE_RE_APPLY_SEARCHED,
+  SET_NEW_LICENSE_OTHERS_RE_APPLY,
+  SET_NEW_LICENSE_OTHERS_RE_APPLY_SEARCHED,
+
+  SET_NEW_LICENSE_DECLINE_CONFIRMED,
+  SET_NEW_LICENSE_DECLINE_CONFIRMED_SEARCHED,
+  SET_NEW_LICENSE_OTHERS_DECLINE_CONFIRMED,
+  SET_NEW_LICENSE_OTHERS_DECLINE_CONFIRMED_SEARCHED,
+
+  SET_NEW_LICENSE_UNDER_SUPER_VISION_CONFIRMED,
+  SET_NEW_LICENSE_UNDER_SUPER_VISION_CONFIRMED_SEARCHED,
+  SET_NEW_LICENSE_OTHERS_UNDER_SUPER_VISION_CONFIRMED,
+  SET_NEW_LICENSE_OTHERS_UNDER_SUPER_VISION_CONFIRMED_SEARCHED,
 } from "./mutation-types";
 
 export default {
@@ -282,5 +297,50 @@ export default {
   },
   [SET_NEW_LICENSE_ALL_LICENSED_SEARCHED](state, searchedVal) {
     state.newLicenseAllLicensedSearched = searchedVal;
+  },
+
+  [SET_NEW_LICENSE_RE_APPLY](state, data) {
+    state.newLicenseReApply = data;
+    state.newLicenseReApplySearched = data;
+  },
+  [SET_NEW_LICENSE_RE_APPLY_SEARCHED](state, searchedVal) {
+    state.newLicenseReApplySearched = searchedVal;
+  },
+  [SET_NEW_LICENSE_OTHERS_RE_APPLY](state, data) {
+    state.newLicenseOthersReApply = data;
+    state.newLicenseOthersReApplySearched = data;
+  },
+  [SET_NEW_LICENSE_OTHERS_RE_APPLY_SEARCHED](state, searchedVal) {
+    state.newLicenseOthersReApplySearched = searchedVal;
+  },
+
+  [SET_NEW_LICENSE_DECLINE_CONFIRMED](state, data) {
+    state.newLicenseDeclineConfirmed = data;
+    state.newLicenseDeclineConfirmedSearched = data;
+  },
+  [SET_NEW_LICENSE_DECLINE_CONFIRMED_SEARCHED](state, searchedVal) {
+    state.newLicenseDeclineConfirmedSearched = searchedVal;
+  },
+  [SET_NEW_LICENSE_OTHERS_DECLINE_CONFIRMED](state, data) {
+    state.newLicenseOthersDeclineConfirmed = data;
+    state.newLicenseOthersDeclineConfirmedSearched = data;
+  },
+  [SET_NEW_LICENSE_OTHERS_DECLINE_CONFIRMED_SEARCHED](state, searchedVal) {
+    state.newLicenseOthersDeclineConfirmedSearched = searchedVal;
+  },
+
+  [SET_NEW_LICENSE_UNDER_SUPER_VISION_CONFIRMED](state, data) {
+    state.newLicenseUnderSuperVisionConfirmed = data;
+    state.newLicenseUnderSuperVisionConfirmedSearched = data;
+  },
+  [SET_NEW_LICENSE_UNDER_SUPER_VISION_CONFIRMED_SEARCHED](state, searchedVal) {
+    state.newLicenseUnderSuperVisionConfirmedSearched = searchedVal;
+  },
+  [SET_NEW_LICENSE_OTHERS_UNDER_SUPER_VISION_CONFIRMED](state, data) {
+    state.newLicenseOthersUnderSuperVisionConfirmed = data;
+    state.newLicenseOthersUnderSuperVisionConfirmedSearched = data;
+  },
+  [SET_NEW_LICENSE_OTHERS_UNDER_SUPER_VISION_CONFIRMED_SEARCHED](state, searchedVal) {
+    state.newLicenseOthersUnderSuperVisionConfirmedSearched = searchedVal;
   },
 };

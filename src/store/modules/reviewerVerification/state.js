@@ -22,5 +22,10 @@ export default {
         verificationDeclinedSearched: [],
         verificationAllDeclined: [],
         verificationAllDeclinedSearched: [],
+
+        verificationReApply: [],
+        verificationReApplySearched: [],
+        verificationOthersReApply: [],
+        verificationOthersReApplySearched: [],
     }
 }

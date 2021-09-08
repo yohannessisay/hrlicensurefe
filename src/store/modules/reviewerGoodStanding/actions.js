@@ -40,6 +40,11 @@ import {
 
   SET_GOOD_STANDING_ALL_LICENSED,
   SET_GOOD_STANDING_ALL_LICENSED_SEARCHED,
+
+  SET_GOOD_STANDING_RE_APPLY,
+  SET_GOOD_STANDING_RE_APPLY_SEARCHED,
+  SET_GOOD_STANDING_OTHERS_RE_APPLY,
+  SET_GOOD_STANDING_OTHERS_RE_APPLY_SEARCHED,
 } from "./mutation-types";
 const baseUrl = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api";
 
@@ -574,5 +579,68 @@ export default {
               .includes(searchKey.toLowerCase());
     });
     commit(SET_GOOD_STANDING_ALL_LICENSED_SEARCHED, searchedVal);
+  },
+
+  async getGoodStandingReApply({ commit }, adminStatus) {
+    const url = baseUrl + "/goodstandings/status/"+adminStatus[0];
+    const resp = await ApiService.get(url);
+    const reApply = resp.data.data.filter(function(e) {
+      return e.reviewerId === adminStatus[1];
+    });
+    commit(SET_GOOD_STANDING_RE_APPLY, reApply);
+  },
+
+  getGoodStandingReApplySearched({ commit, getters }, searchKey) {
+    if (getters.getGoodStandingReApply === undefined) {
+      return;
+    }
+    const searchedVal = getters.getGoodStandingReApply.filter(function(e) {
+      return e.goodStandingCode === undefined
+        ? ""
+        : e.goodStandingCode.toLowerCase().includes(searchKey.toLowerCase()) ||
+            (e.applicant.profile.name + " " + e.applicant.profile.fatherName)
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.name
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.fatherName
+              .toLowerCase()
+              .includes(searchKey.toLowerCase());
+    });
+    commit(SET_GOOD_STANDING_RE_APPLY_SEARCHED, searchedVal);
+  },
+
+  async getGoodStandingOtherReApply({ commit }, adminStatus) {
+    const url = baseUrl + "/goodstandings/status/"+adminStatus[0];
+    const resp = await ApiService.get(url);
+    const othersReApply = resp.data.data.filter(function(e) {
+      return e.reviewerId !== adminStatus[1];
+    });
+    commit(SET_GOOD_STANDING_OTHERS_RE_APPLY, othersReApply);
+  },
+
+  getGoodStandingOthersReApplySearched({ commit, getters }, searchKey) {
+    if (getters.getGoodStandingOthersReApply === undefined) {
+      return;
+    }
+    const searchedVal = getters.getGoodStandingOthersReApply.filter(function(
+      e
+    ) {
+      return e.goodStandingCode === undefined
+        ? ""
+        : e.goodStandingCode.toLowerCase().includes(searchKey.toLowerCase()) ||
+            (e.applicant.profile.name + " " + e.applicant.profile.fatherName)
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.name
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.fatherName
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.reviewer.name.toLowerCase().includes(searchKey.toLowerCase());
+    });
+    commit(SET_GOOD_STANDING_OTHERS_RE_APPLY_SEARCHED, searchedVal);
   },
 };

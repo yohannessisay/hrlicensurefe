@@ -185,6 +185,8 @@
         </div>
         <div v-if="this.display == 'renewalUnassignedEvaluation'">
           <renewal-unconfirmed />
+          <renewal-declined />
+          <renewal-under-super-vision />
         </div>
         <div v-if="this.display == 'renewalOthersUnassignedEvaluation'">
           <renewal-all-unconfirmed />

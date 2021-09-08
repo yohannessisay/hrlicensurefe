@@ -35,6 +35,11 @@ import {
   SET_GOOD_STANDING_ALL_LICENSED,
   SET_GOOD_STANDING_ALL_LICENSED_SEARCHED,
 
+  SET_GOOD_STANDING_RE_APPLY,
+  SET_GOOD_STANDING_RE_APPLY_SEARCHED,
+  SET_GOOD_STANDING_OTHERS_RE_APPLY,
+  SET_GOOD_STANDING_OTHERS_RE_APPLY_SEARCHED,
+
 } from "./mutation-types";
 export default {
   [SET_GOOD_STANDING_UNASSIGNED](state, data) {
@@ -141,6 +146,21 @@ export default {
   },
   [SET_GOOD_STANDING_ALL_LICENSED_SEARCHED](state, searchedVal) {
     state.goodStandingAllLicensedSearched = searchedVal;
+  },
+
+  [SET_GOOD_STANDING_RE_APPLY](state, data) {
+    state.goodStandingReApply = data;
+    state.goodStandingReApplySearched = data;
+  },
+  [SET_GOOD_STANDING_RE_APPLY_SEARCHED](state, searchedVal) {
+    state.goodStandingReApplySearched = searchedVal;
+  },
+  [SET_GOOD_STANDING_OTHERS_RE_APPLY](state, data) {
+    state.goodStandingOthersReApply = data;
+    state.goodStandingOthersReApplySearched = data;
+  },
+  [SET_GOOD_STANDING_OTHERS_RE_APPLY_SEARCHED](state, searchedVal) {
+    state.goodStandingOthersReApplySearched = searchedVal;
   },
 
 };

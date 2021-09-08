@@ -22,6 +22,11 @@ import {
   SET_VERIFICATION_DECLINED_SEARCHED,
   SET_VERIFICATION_ALL_DECLINED,
   SET_VERIFICATION_ALL_DECLINED_SEARCHED,
+
+  SET_VERIFICATION_RE_APPLY,
+  SET_VERIFICATION_RE_APPLY_SEARCHED,
+  SET_VERIFICATION_OTHERS_RE_APPLY,
+  SET_VERIFICATION_OTHERS_RE_APPLY_SEARCHED,
 } from "./mutation-types";
 const baseUrl = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api";
 
@@ -342,5 +347,68 @@ export default {
             e.reviewer.name.toLowerCase().includes(searchKey.toLowerCase());
     });
     commit(SET_VERIFICATION_ALL_DECLINED_SEARCHED, searchedVal);
+  },
+
+  async getVerificationReApply({ commit }, adminStatus) {
+    const url = baseUrl + "/verifications/status/"+adminStatus[0];
+    const resp = await ApiService.get(url);
+    const reApply = resp.data.data.filter(function(e) {
+      return e.reviewerId === adminStatus[1];
+    });
+    commit(SET_VERIFICATION_RE_APPLY, reApply);
+  },
+
+  getVerificationReApplySearched({ commit, getters }, searchKey) {
+    if (getters.getVerificationReApply === undefined) {
+      return;
+    }
+    const searchedVal = getters.getVerificationReApply.filter(function(e) {
+      return e.verificationCode === undefined
+        ? ""
+        : e.verificationCode.toLowerCase().includes(searchKey.toLowerCase()) ||
+            (e.applicant.profile.name + " " + e.applicant.profile.fatherName)
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.name
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.fatherName
+              .toLowerCase()
+              .includes(searchKey.toLowerCase());
+    });
+    commit(SET_VERIFICATION_RE_APPLY_SEARCHED, searchedVal);
+  },
+
+  async getVerificationOtherReApply({ commit }, adminStatus) {
+    const url = baseUrl + "/verifications/status/"+adminStatus[0];
+    const resp = await ApiService.get(url);
+    const othersReApply = resp.data.data.filter(function(e) {
+      return e.reviewerId !== adminStatus[1];
+    });
+    commit(SET_VERIFICATION_OTHERS_RE_APPLY, othersReApply);
+  },
+
+  getVerificationOthersReApplySearched({ commit, getters }, searchKey) {
+    if (getters.getVerificationOthersReApply === undefined) {
+      return;
+    }
+    const searchedVal = getters.getVerificationOthersReApply.filter(function(
+      e
+    ) {
+      return e.verificationCode === undefined
+        ? ""
+        : e.verificationCode.toLowerCase().includes(searchKey.toLowerCase()) ||
+            (e.applicant.profile.name + " " + e.applicant.profile.fatherName)
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.name
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.fatherName
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.reviewer.name.toLowerCase().includes(searchKey.toLowerCase());
+    });
+    commit(SET_VERIFICATION_OTHERS_RE_APPLY_SEARCHED, searchedVal);
   },
 };

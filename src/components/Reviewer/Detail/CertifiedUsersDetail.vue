@@ -217,6 +217,7 @@ export default {
     let myRegion = ref(true);
 
     const adminRegionId = JSON.parse(localStorage.getItem("allAdminData")).regionId
+    const expertLevelId = JSON.parse(localStorage.getItem("allAdminData")).expertLevelId
     console.log("adminREgion id", adminRegionId, "type", typeof adminRegionId)
 
     const fetchCertifiedUser = () => {
@@ -247,9 +248,17 @@ export default {
           if(route.params.applicantId != certificateDetail.value.applicantId) {
             isUserCertified.value = false;
           }
+          if (certificateDetail.value.woreda !== null && certificateDetail.value.woreda.zone !== null && certificateDetail.value.woreda.zone.region !== null) {
           if(adminRegionId != certificateDetail.value.woreda.zone.region.id) {
             myRegion.value = false
           } 
+          } else {
+            if (
+                expertLevelId != goodStandingUser.value.expertLevelId
+              ) {
+                myRegion.value = false;
+              }
+          }
           licenseExpireDate.value = moment(certificateDetail.value.certifiedDate)._d;
           licenseExpireDate.value.setFullYear(licenseExpireDate.value.getFullYear() + 5);
         }).catch(error => {

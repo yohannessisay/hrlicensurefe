@@ -40,4 +40,9 @@ export default {
     getGoodStandingAllLicensed: (state) => state.goodStandingAllLicensed,
     getGoodStandingAllLicensedSearched: (state) => state.goodStandingAllLicensedSearched,
 
+    getGoodStandingReApply: (state) => state.goodStandingReApply,
+    getGoodStandingReApplySearched: (state) => state.goodStandingReApplySearched,
+    getGoodStandingOthersReApply: (state) => state.goodStandingOthersReApply,
+    getGoodStandingOthersReApplySearched: (state) => state.goodStandingOthersReApplySearched,
+
 }

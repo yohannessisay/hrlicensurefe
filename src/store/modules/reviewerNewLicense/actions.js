@@ -69,6 +69,21 @@ import {
   SET_NEW_LICENSE_ALL_LICENSED,
   SET_NEW_LICENSE_ALL_LICENSED_SEARCHED,
 
+  SET_NEW_LICENSE_RE_APPLY,
+  SET_NEW_LICENSE_RE_APPLY_SEARCHED,
+  SET_NEW_LICENSE_OTHERS_RE_APPLY,
+  SET_NEW_LICENSE_OTHERS_RE_APPLY_SEARCHED,
+
+  SET_NEW_LICENSE_DECLINE_CONFIRMED,
+  SET_NEW_LICENSE_DECLINE_CONFIRMED_SEARCHED,
+  SET_NEW_LICENSE_OTHERS_DECLINE_CONFIRMED,
+  SET_NEW_LICENSE_OTHERS_DECLINE_CONFIRMED_SEARCHED,
+
+  SET_NEW_LICENSE_UNDER_SUPER_VISION_CONFIRMED,
+  SET_NEW_LICENSE_UNDER_SUPER_VISION_CONFIRMED_SEARCHED,
+  SET_NEW_LICENSE_OTHERS_UNDER_SUPER_VISION_CONFIRMED,
+  SET_NEW_LICENSE_OTHERS_UNDER_SUPER_VISION_CONFIRMED_SEARCHED,
+
   NEW_LICENSE_REPORT,
 } from "./mutation-types";
 
@@ -438,9 +453,6 @@ export default {
     commit(SET_NEW_LICENSE_OTHERS_UNDER_SUPERVISION_SEARCHED, searchedVal);
   },
 
-  /* 
-  /* approved payment status is wrong for the time (status/7) is placeholder
-  */
   async getNewLicenseApprovedPayment({ commit }, adminStatus) {
     const url = baseUrl + "/newlicenses/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
@@ -472,9 +484,6 @@ export default {
     commit(SET_NEW_LICENSE_APPROVED_PAYMENT_SEARCHED, searchedVal);
   },
 
-  /* 
-  /* others approved payment status is wrong for the time (status/7) is placeholder
-  */
   async getNewLicenseOthersApprovedPayment({ commit }, adminStatus) {
     const url = baseUrl + "/newlicenses/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
@@ -537,9 +546,6 @@ export default {
     commit(SET_NEW_LICENSE_DECLINED_PAYMENT_SEARCHED, searchedVal);
   },
 
-  /* 
-  /* others declined payment status is wrong for the time (status/7) is placeholder
-  */
   async getNewLicenseOthersDeclinedPayment({ commit }, adminStatus) {
     const url = baseUrl + "/newlicenses/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
@@ -573,9 +579,6 @@ export default {
     commit(SET_NEW_LICENSE_OTHERS_DECLINED_PAYMENT_SEARCHED, searchedVal);
   },
 
-  /* 
-  /* on review status is wrong for the time (status/7) is placeholder
-  */
   async getNewLicenseOnReview({ commit }, adminStatus) {
     const url = baseUrl + "/newlicenses/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
@@ -606,9 +609,6 @@ export default {
     commit(SET_NEW_LICENSE_ON_REVIEW_SEARCHED, searchedVal);
   },
 
-  /* 
-  /* on review payment status is wrong for the time (status/7) is placeholder
-  */
   async getNewLicenseOthersOnReview({ commit }, adminStatus) {
     const url = baseUrl + "/newlicenses/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
@@ -641,9 +641,6 @@ export default {
     commit(SET_NEW_LICENSE_OTHERS_ON_REVIEW_SEARCHED, searchedVal);
   },
 
-  /* 
-  /* re evaluate status is wrong for the time (status/7) is placeholder
-  */
   async getNewLicenseReEvaluate({ commit }, adminStatus) {
     const url = baseUrl + "/newlicenses/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
@@ -680,9 +677,6 @@ export default {
     commit(SET_NEW_LICENSE_RE_EVALUATE_SEARCHED, searchedVal);
   },
 
-  /* 
-  /* re evaluate status is wrong for the time (status/7) is placeholder
-  */
   async getNewLicenseOthersReEvaluate({ commit }, adminStatus) {
     const url = baseUrl + "/newlicenses/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
@@ -1004,4 +998,194 @@ export default {
     });
     commit(SET_NEW_LICENSE_ALL_LICENSED_SEARCHED, searchedVal);
   },
+
+  async getNewLicenseReApply({ commit }, adminStatus) {
+    const url = baseUrl + "/newlicenses/status/"+adminStatus[0];
+    const resp = await ApiService.get(url);
+    const reApply = resp.data.data.filter(function(e) {
+      return e.reviewerId === adminStatus[1];
+    });
+    commit(SET_NEW_LICENSE_RE_APPLY, reApply);
+  },
+
+  getNewLicenseReApplySearched({ commit, getters }, searchKey) {
+    if (getters.getNewLicenseReApply === undefined) {
+      return;
+    }
+    const searchedVal = getters.getNewLicenseReApply.filter(function(e) {
+      return e.newLicenseCode === undefined
+        ? ""
+        : e.newLicenseCode.toLowerCase().includes(searchKey.toLowerCase()) ||
+            (e.applicant.profile.name + " " + e.applicant.profile.fatherName)
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.name
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.fatherName
+              .toLowerCase()
+              .includes(searchKey.toLowerCase());
+    });
+    commit(SET_NEW_LICENSE_RE_APPLY_SEARCHED, searchedVal);
+  },
+
+  async getNewLicenseOtherReApply({ commit }, adminStatus) {
+    const url = baseUrl + "/newLicenses/status/"+adminStatus[0];
+    const resp = await ApiService.get(url);
+    const othersReApply = resp.data.data.filter(function(e) {
+      return e.reviewerId !== adminStatus[1];
+    });
+    commit(SET_NEW_LICENSE_OTHERS_RE_APPLY, othersReApply);
+  },
+
+  getNewLicenseOthersReApplySearched({ commit, getters }, searchKey) {
+    if (getters.getNewLicenseOthersReApply === undefined) {
+      return;
+    }
+    const searchedVal = getters.getNewLicenseOthersReApply.filter(function(
+      e
+    ) {
+      return e.newLicenseCode === undefined
+        ? ""
+        : e.newLicenseCode.toLowerCase().includes(searchKey.toLowerCase()) ||
+            (e.applicant.profile.name + " " + e.applicant.profile.fatherName)
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.name
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.fatherName
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.reviewer.name.toLowerCase().includes(searchKey.toLowerCase());
+    });
+    commit(SET_NEW_LICENSE_OTHERS_RE_APPLY_SEARCHED, searchedVal);
+  },
+
+  async getNewLicenseDeclineConfirmed({ commit }, adminStatus) {
+    const url = baseUrl + "/newlicenses/status/"+adminStatus[0];
+    const resp = await ApiService.get(url);
+    const declineConfirmed = resp.data.data.filter(function(e) {
+      return e.reviewerId === adminStatus[1];
+    });
+    commit(SET_NEW_LICENSE_DECLINE_CONFIRMED, declineConfirmed);
+  },
+
+  getNewLicenseDeclineConfirmedSearched({ commit, getters }, searchKey) {
+    if (getters.getNewLicenseDeclineConfirmed === undefined) {
+      return;
+    }
+    const searchedVal = getters.getNewLicenseDeclineConfirmed.filter(function(e) {
+      return e.newLicenseCode === undefined
+        ? ""
+        : e.newLicenseCode.toLowerCase().includes(searchKey.toLowerCase()) ||
+            (e.applicant.profile.name + " " + e.applicant.profile.fatherName)
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.name
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.fatherName
+              .toLowerCase()
+              .includes(searchKey.toLowerCase());
+    });
+    commit(SET_NEW_LICENSE_DECLINE_CONFIRMED_SEARCHED, searchedVal);
+  },
+
+  async getNewLicenseOtherDeclineConfirmed({ commit }, adminStatus) {
+    const url = baseUrl + "/newLicenses/status/"+adminStatus[0];
+    const resp = await ApiService.get(url);
+    const othersDeclineConfirmed = resp.data.data.filter(function(e) {
+      return e.reviewerId !== adminStatus[1];
+    });
+    commit(SET_NEW_LICENSE_OTHERS_DECLINE_CONFIRMED, othersDeclineConfirmed);
+  },
+
+  getNewLicenseOthersDeclineConfirmedSearched({ commit, getters }, searchKey) {
+    if (getters.getNewLicenseOthersDeclineConfirmed === undefined) {
+      return;
+    }
+    const searchedVal = getters.getNewLicenseOthersDeclineConfirmed.filter(function(
+      e
+    ) {
+      return e.newLicenseCode === undefined
+        ? ""
+        : e.newLicenseCode.toLowerCase().includes(searchKey.toLowerCase()) ||
+            (e.applicant.profile.name + " " + e.applicant.profile.fatherName)
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.name
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.fatherName
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.reviewer.name.toLowerCase().includes(searchKey.toLowerCase());
+    });
+    commit(SET_NEW_LICENSE_OTHERS_DECLINE_CONFIRMED_SEARCHED, searchedVal);
+  },
+
+  async getNewLicenseUnderSuperVisionConfirmed({ commit }, adminStatus) {
+    const url = baseUrl + "/newlicenses/status/"+adminStatus[0];
+    const resp = await ApiService.get(url);
+    const underSuperVisionConfirmed = resp.data.data.filter(function(e) {
+      return e.reviewerId === adminStatus[1];
+    });
+    commit(SET_NEW_LICENSE_UNDER_SUPER_VISION_CONFIRMED, underSuperVisionConfirmed);
+  },
+
+  getNewLicenseUnderSuperVisionConfirmedSearched({ commit, getters }, searchKey) {
+    if (getters.getNewLicenseUnderSuperVisionConfirmed === undefined) {
+      return;
+    }
+    const searchedVal = getters.getNewLicenseUnderSuperVisionConfirmed.filter(function(e) {
+      return e.newLicenseCode === undefined
+        ? ""
+        : e.newLicenseCode.toLowerCase().includes(searchKey.toLowerCase()) ||
+            (e.applicant.profile.name + " " + e.applicant.profile.fatherName)
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.name
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.fatherName
+              .toLowerCase()
+              .includes(searchKey.toLowerCase());
+    });
+    commit(SET_NEW_LICENSE_UNDER_SUPER_VISION_CONFIRMED_SEARCHED, searchedVal);
+  },
+
+  async getNewLicenseOtherUnderSuperVisionConfirmed({ commit }, adminStatus) {
+    const url = baseUrl + "/newLicenses/status/"+adminStatus[0];
+    const resp = await ApiService.get(url);
+    const othersUnderSuperVisionConfirmed = resp.data.data.filter(function(e) {
+      return e.reviewerId !== adminStatus[1];
+    });
+    commit(SET_NEW_LICENSE_OTHERS_UNDER_SUPER_VISION_CONFIRMED, othersUnderSuperVisionConfirmed);
+  },
+
+  getNewLicenseOthersUnderSuperVisionConfirmedSearched({ commit, getters }, searchKey) {
+    if (getters.getNewLicenseOthersUnderSuperVisionConfirmed === undefined) {
+      return;
+    }
+    const searchedVal = getters.getNewLicenseOthersUnderSuperVisionConfirmed.filter(function(
+      e
+    ) {
+      return e.newLicenseCode === undefined
+        ? ""
+        : e.newLicenseCode.toLowerCase().includes(searchKey.toLowerCase()) ||
+            (e.applicant.profile.name + " " + e.applicant.profile.fatherName)
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.name
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.fatherName
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.reviewer.name.toLowerCase().includes(searchKey.toLowerCase());
+    });
+    commit(SET_NEW_LICENSE_OTHERS_UNDER_SUPER_VISION_CONFIRMED_SEARCHED, searchedVal);
+  },
+  
 };

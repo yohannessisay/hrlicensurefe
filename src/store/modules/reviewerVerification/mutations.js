@@ -21,6 +21,12 @@ import {
   SET_VERIFICATION_DECLINED_SEARCHED,
   SET_VERIFICATION_ALL_DECLINED,
   SET_VERIFICATION_ALL_DECLINED_SEARCHED,
+
+  SET_VERIFICATION_RE_APPLY,
+  SET_VERIFICATION_RE_APPLY_SEARCHED,
+  SET_VERIFICATION_OTHERS_RE_APPLY,
+  SET_VERIFICATION_OTHERS_RE_APPLY_SEARCHED,
+
 } from "./mutation-types";
 export default {
   [SET_VERIFICATION_UNASSIGNED](state, data) {
@@ -92,4 +98,18 @@ export default {
     state.verificationAllDeclinedSearched = searchedVal;
   },
 
+  [SET_VERIFICATION_RE_APPLY](state, data) {
+    state.verificationReApply = data;
+    state.verificationReApplySearched = data;
+  },
+  [SET_VERIFICATION_RE_APPLY_SEARCHED](state, searchedVal) {
+    state.verificationReApplySearched = searchedVal;
+  },
+  [SET_VERIFICATION_OTHERS_RE_APPLY](state, data) {
+    state.verificationOthersReApply = data;
+    state.verificationOthersReApplySearched = data;
+  },
+  [SET_VERIFICATION_OTHERS_RE_APPLY_SEARCHED](state, searchedVal) {
+    state.verificationOthersReApplySearched = searchedVal;
+  },
 };
