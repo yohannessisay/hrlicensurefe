@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- <reviewer-nav-bar tab="renewalDeclined" /> -->
+    <!-- <reviewer-nav-bar tab="renewalDeclineConfirmed" /> -->
     <div class="bg-lightBlueB-200 h-full" v-if="!allInfo.searchByInput">
       <div class="pl-12">
         <div>Filter By</div>
@@ -19,20 +19,20 @@
           type="date"
           v-model="allInfo.searchUpToDate"
         />
-        <button @click="filterDeclinedApplication">
+        <button @click="filterDeclineConfirmedApplication">
           Filter
         </button>
       </div>
     
       <div class="flex pl-12 pt-tiny">
-        <Title message="Renewal Declined" />
+        <Title message="Renewal Decline Confirmed" />
       </div>
       <div class="flex flex-wrap pb-medium rounded h-full" v-if="!showLoading">
         <nothing-to-show :nothingToShow="nothingToShow" />
-        <declined-applications
-          :declinedApplication="getRenewalDeclined"
+        <decline-confirmed-applications
+          :declineConfirmedApplication="getRenewalDeclineConfirmed"
           app_type="Renewal"
-          all_declined="false"
+          others_decline_confirmed="false"
         />
       </div>
     </div>
@@ -46,7 +46,7 @@
       <div class="flex pl-12 pt-tiny">
         <Title
           :message="
-            'Declined Applicants on Date Range ' +
+            'Decline Confirmed Applicants on Date Range ' +
               moment(allInfo.searchFromDate).format('MMM D, YYYY') +
               ' To ' +
               moment(allInfo.searchUpToDate).format('MMM D, YYYY')
@@ -74,7 +74,7 @@ import { useStore } from "vuex";
 import moment from "moment";
 
 import applicationStatus from "../../Configurations/getApplicationStatus.js";
-import DeclinedApplications from "../ChildApplicationTypes/DeclinedApplications.vue";
+import DeclineConfirmedApplications from "../ChildApplicationTypes/DeclineConfirmedApplications.vue";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import filterApplication from "../../ChildComponents/FilteredDatas/FilterApplication.js";
 import FilteredInfo from "../../ChildComponents/FilteredDatas/FilteredInfo.vue";
@@ -86,9 +86,9 @@ import Title from "@/sharedComponents/TitleWithIllustration";
 export default {
   computed: {
     moment: () => moment,
-    getRenewalDeclined() {
+    getRenewalDeclineConfirmed() {
       return store.getters[
-        "reviewerRenewal/getRenewalDeclinedSearched"
+        "reviewerRenewal/getRenewalDeclineConfirmedSearched"
       ];
     },
   },
@@ -97,13 +97,13 @@ export default {
     FilteredInfo,
     Spinner,
     NothingToShow,
-    DeclinedApplications,
+    DeclineConfirmedApplications,
     Title,
   },
   setup() {
     const store = useStore();
 
-    let RenewalDeclined = ref([]);
+    let renewalDeclineConfirmed = ref([]);
 
     const adminId = +localStorage.getItem("adminId");
 
@@ -123,7 +123,7 @@ export default {
       app_type: "",
     });
 
-    const filterDeclinedApplication = () => {
+    const filterDeclineConfirmedApplication = () => {
       filterApplication(moment, allInfo.value);
     };
 
@@ -136,21 +136,21 @@ export default {
       allInfo.value.app_type = "";
     };
 
-    const fetchRenewalDeclined = () => {
+    const fetchRenewalDeclineConfirmed = () => {
       showLoading.value = true;
-      const statusId = applicationStatus(store, 'DEC');
+      const statusId = applicationStatus(store, 'CONF');
       const adminStatus = [statusId, adminId];
       store
-        .dispatch("reviewerRenewal/getRenewalDeclined", adminStatus)
+        .dispatch("reviewerRenewal/getRenewalDeclineConfirmed", adminStatus)
         .then(() => {
           showLoading.value = false;
-          RenewalDeclined.value =
+          renewalDeclineConfirmed.value =
             store.getters[
-              "reviewerRenewal/getRenewalDeclinedSearched"
+              "reviewerRenewal/getRenewalDeclineConfirmedSearched"
             ];
           allInfo.value.assignApplication =
             store.getters[
-              "reviewerRenewal/getRenewalDeclinedSearched"
+              "reviewerRenewal/getRenewalDeclineConfirmedSearched"
             ];
 
           for (let applicant in allInfo.value.assignApplication) {
@@ -166,22 +166,21 @@ export default {
             }
           }
           if (
-            store.getters["reviewerRenewal/getRenewalDeclined"]
-              .length === 0
+            renewalDeclineConfirmed.value.length === 0
           ) {
             nothingToShow.value = true;
           }
         });
     };
     onMounted(() => {
-      fetchRenewalDeclined();
+      fetchRenewalDeclineConfirmed();
     });
 
     return {
       nothingToShow,
       allInfo,
       showLoading,
-      filterDeclinedApplication,
+      filterDeclineConfirmedApplication,
       backClicked,
     };
   },

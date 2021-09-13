@@ -328,9 +328,9 @@
                                       dropdownValue.newLicenseDeclined,
                                     ]"
                                     name="Declined"
-                                    dropDownHandlerValue="NewLicenseDeclined"
+                                    dropDownHandlerValue="NewLicenseDeclineConfirmed"
                                     :dropDownMenus="[
-                                      'newLicenseDeclined',
+                                      'newLicenseDeclineConfirmed',
                                       'allNewLicenseDeclined',
                                     ]"
                                     :isDropDownIconUp="
@@ -1514,7 +1514,7 @@ export default {
       } else if (applicationValue == "NewLicenseReEvaluate") {
         newLicenseDDIcon.value.isReEvaluateUp = !newLicenseDDIcon.value
           .isReEvaluateUp;
-      } else if (applicationValue == "NewLicenseDeclined") {
+      } else if (applicationValue == "NewLicenseDeclineConfirmed") {
         newLicenseDDIcon.value.isDeclinedUp = !newLicenseDDIcon.value
           .isDeclinedUp;
       } else if (applicationValue == "NewLicenseUnderSuperVision") {
