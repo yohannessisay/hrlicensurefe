@@ -56,7 +56,31 @@
           name="password"
           autocomplete="current-password"
           required
+          v-on:keyup="showPasswordStrength(credentials.password)"
         />
+        <password-meter :password="credentials.password" />
+        <div v-if="passwordStrengthDisplay">
+          <ul>
+            Password should be:
+            <div class="ml-16 pl-8">
+              <li>
+                Minimum of Eight Characters
+              </li>
+              <li>
+                At least one Uppercase Character
+              </li>
+              <li>
+                At least one Lowercase Character
+              </li>
+              <li>
+                At least one Number
+              </li>
+              <li>
+                At least one special Character
+              </li>
+            </div>
+          </ul>
+        </div>
         <span style="color: red">{{ credentialsErrors.password }}</span>
       </div>
       <div class="flex flex-col mb-medium w-full">
@@ -69,6 +93,7 @@
           autocomplete="current-password"
           required
         />
+        <password-meter :password="credentials.repassword" />
         <span style="color: red">{{ credentialsErrors.repassword }}</span>
       </div>
       <button click="submit()">
@@ -101,9 +126,16 @@ import { useRouter } from "vue-router";
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import Spinner from "@/sharedComponents/Spinner";
+import PasswordMeter from "vue-simple-password-meter";
 
 export default {
-  components: { Title, FlashMessage, ErrorFlashMessage, Spinner },
+  components: {
+    Title,
+    FlashMessage,
+    ErrorFlashMessage,
+    Spinner,
+    PasswordMeter,
+  },
   props: ["closeModal"],
   setup({ emit }) {
     const store = useStore();
@@ -120,12 +152,21 @@ export default {
       password: "",
       repassword: "",
     });
+    const password = ref("");
+    const passwordStrengthDisplay = ref(false);
     const credentialsErrors = ref({
       emailAddress: undefined,
       phoneNumber: undefined,
       password: undefined,
       repassword: undefined,
     });
+    const showPasswordStrength = (password) => {
+      if (password != "") {
+        passwordStrengthDisplay.value = true;
+      } else {
+        passwordStrengthDisplay.value = false;
+      }
+    };
     const submit = () => {
       let signup = {
         emailAddress: credentials.value.emailAddress.toLowerCase(),
@@ -187,6 +228,9 @@ export default {
       isEmail,
       validateForm,
       message,
+      password,
+      showPasswordStrength,
+      passwordStrengthDisplay,
     };
   },
 };
@@ -204,5 +248,8 @@ export default {
   .card-wrapper {
     box-shadow: 0px 3px 6px #1e40af82;
   }
+}
+ul {
+  list-style-type: square;
 }
 </style>
