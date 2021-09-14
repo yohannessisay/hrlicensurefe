@@ -6,13 +6,13 @@ export let dropdown = {
   newLicenseUnconfirmed: false,
   newLicenseOnReview: false,
   newLicenseReEvaluate: false,
-  newLicenseDeclined: false,
+  newLicenseDeclineConfirmed: false,
   newLicenseUnderSuperVision: false,
+  newLicenseUnderSuperVisionConfirmed: false,
   newLicenseConfirmed: false,
   newLicenseEvaluation: false,
   newLicenseReturnedEvaluation: false,
   newLicenseUnderEvaluation: false,
-  newLicenseUnassignedEvaluation: false,
   newLicenseUnassignedEvaluation: false,
   newLicenseInReviewPayment: false,
   newLicenseDeclinedPayment: false,
@@ -31,7 +31,6 @@ export let dropdown = {
   renewalEvaluation: false,
   renewalReturnedEvaluation: false,
   renewalUnderEvaluation: false,
-  renewalUnassignedEvaluation: false,
   renewalUnassignedEvaluation: false,
   renewalInReviewPayment: false,
   renewalDeclinedPayment: false,
@@ -217,9 +216,19 @@ export const applicationTypeDD = (applicationDetail, dropdown) => {
     dropdown.newLicensePaymentReview = false;
     dropdown.newLicenseConfirmedEvaluation = false;
   }
+  if (applicationDetail == "NewLicenseDeclineConfirmed") {
+    dropdown.newLicenseDeclineConfirmed = !dropdown.newLicenseDeclineConfirmed;
+    dropdown.newLicenseUnderSuperVisionConfirmed = false;
+    dropdown.newLicenseConfirmed = false;
+  }
   if (applicationDetail == "NewLicenseDeclined") {
     dropdown.newLicenseDeclined = !dropdown.newLicenseDeclined;
     dropdown.newLicenseUnderSuperVision = false;
+    dropdown.newLicenseConfirmed = false;
+  }
+  if (applicationDetail == "NewLicenseUnderSuperVisionDeclined") {
+    dropdown.newLicenseUnderSuperVisionConfirmed = !dropdown.newLicenseUnderSuperVisionConfirmed;
+    dropdown.newLicenseDeclineConfirmed = false;
     dropdown.newLicenseConfirmed = false;
   }
   if (applicationDetail == "NewLicenseUnderSuperVision") {
@@ -229,7 +238,7 @@ export const applicationTypeDD = (applicationDetail, dropdown) => {
   }
   if (applicationDetail == "NewLicenseConfirmed") {
     dropdown.newLicenseConfirmed = !dropdown.newLicenseConfirmed;
-    dropdown.newLicenseDeclined = false;
+    dropdown.newLicenseDeclineConfirmed = false;
     dropdown.newLicenseUnderSuperVision = false;
   }
   if (applicationDetail == "NewLicenseUnassignedEvaluation") {
@@ -273,7 +282,7 @@ export const applicationTypeDD = (applicationDetail, dropdown) => {
     dropdown.newLicenseUnfinished = false;
     dropdown.newLicenseEvaluation = false;
     dropdown.newLicenseConfirmed = false;
-    dropdown.newLicenseDeclined = false;
+    dropdown.newLicenseDeclineConfirmed = false;
     dropdown.newLicenseUnderSuperVision = false;
   }
   if (applicationDetail == "NewLicensePaymentReview") {

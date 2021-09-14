@@ -70,7 +70,6 @@ import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import filterApplication from "../../ChildComponents/FilteredDatas/FilterApplication.js";
 import FilteredInfo from "../../ChildComponents/FilteredDatas/FilteredInfo.vue";
 import NothingToShow from "../../ChildComponents/NothingToShow.vue";
-import ReviewerNavBar from "../../ReviewerNavBar.vue";
 import Spinner from "@/sharedComponents/Spinner";
 import store from "../../../../store";
 import Title from "@/sharedComponents/TitleWithIllustration";
@@ -85,7 +84,6 @@ export default {
     },
   },
   components: {
-    ReviewerNavBar,
     ErrorFlashMessage,
     FilteredInfo,
     Spinner,

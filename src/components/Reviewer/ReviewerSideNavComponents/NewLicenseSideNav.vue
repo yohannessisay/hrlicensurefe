@@ -325,16 +325,16 @@
                                   <drop-down-lists
                                     :dropdownValue="[
                                       dropdownValue.newLicenseConfirmedEvaluation,
-                                      dropdownValue.newLicenseDeclined,
+                                      dropdownValue.newLicenseDeclineConfirmed,
                                     ]"
                                     name="Declined"
                                     dropDownHandlerValue="NewLicenseDeclineConfirmed"
                                     :dropDownMenus="[
                                       'newLicenseDeclineConfirmed',
-                                      'allNewLicenseDeclined',
+                                      'othersNewLicenseDeclineConfirmed',
                                     ]"
                                     :isDropDownIconUp="
-                                      newLicenseDDIcon.isUnderEvaluationUp
+                                      newLicenseDDIcon.isDeclineConfirmedUp
                                     "
                                     :adminRole="adminRole"
                                     :yoursAndOthersApplication="[
@@ -347,16 +347,16 @@
                                   <drop-down-lists
                                     :dropdownValue="[
                                       dropdownValue.newLicenseConfirmedEvaluation,
-                                      dropdownValue.newLicenseUnderSuperVision,
+                                      dropdownValue.newLicenseUnderSuperVisionConfirmed,
                                     ]"
                                     name="Under Super Vision"
-                                    dropDownHandlerValue="NewLicenseUnderSuperVision"
+                                    dropDownHandlerValue="NewLicenseUnderSuperVisionConfirmed"
                                     :dropDownMenus="[
                                       'newLicenseUnderSuperVision',
                                       'newLicenseOthersUnderSuperVision',
                                     ]"
                                     :isDropDownIconUp="
-                                      newLicenseDDIcon.isUnderSuperVisionUp
+                                      newLicenseDDIcon.isUnderSuperVisionConfirmedUp
                                     "
                                     :adminRole="adminRole"
                                     :yoursAndOthersApplication="[
@@ -549,7 +549,7 @@
                     'newLicenseDeclined',
                     'allNewLicenseDeclined',
                   ]"
-                  :isDropDownIconUp="newLicenseDDIcon.isUnderEvaluationUp"
+                  :isDropDownIconUp="newLicenseDDIcon.isDeclinedUp"
                   :adminRole="adminRole"
                   :yoursAndOthersApplication="[
                     'My Declined',
@@ -1440,7 +1440,9 @@ export default {
       isOnReivewUp: false,
       isReEvaluateUp: false,
       isDeclinedUp: false,
+      isDeclineConfirmedUp: false,
       isUnderSuperVisionUp: false,
+      isUnderSuperVisionConfirmedUp: false,
       isConfirmedUp: false,
       isReturned: false,
       isFederalApprovedUp: false,
@@ -1473,6 +1475,15 @@ export default {
       } else if (applicationValue == "NewLicenseConfirmedEvaluation") {
         newLicenseDDIcon.value.isConfirmedEvaluationUp = !newLicenseDDIcon.value
           .isConfirmedEvaluationUp;
+      } else if (applicationValue == "NewLicenseDeclined") {
+        newLicenseDDIcon.value.isDeclinedUp = !newLicenseDDIcon.value
+          .isDeclinedUp;
+      } else if (applicationValue == "NewLicenseDeclineConfirmed") {
+        newLicenseDDIcon.value.isDeclineConfirmedUp = !newLicenseDDIcon.value
+          .isDeclineConfirmedUp;
+      } else if (applicationValue == "NewLicenseUnderSuperVisionConfirmed") {
+        newLicenseDDIcon.value.isUnderSuperVisionConfirmedUp = !newLicenseDDIcon.value
+          .isUnderSuperVisionConfirmedUp;
       } else if (applicationValue == "NewLicensePaymentReview") {
         newLicenseDDIcon.value.isPaymentReviewnUp = !newLicenseDDIcon.value
           .isPaymentReviewnUp;
@@ -1514,10 +1525,7 @@ export default {
       } else if (applicationValue == "NewLicenseReEvaluate") {
         newLicenseDDIcon.value.isReEvaluateUp = !newLicenseDDIcon.value
           .isReEvaluateUp;
-      } else if (applicationValue == "NewLicenseDeclineConfirmed") {
-        newLicenseDDIcon.value.isDeclinedUp = !newLicenseDDIcon.value
-          .isDeclinedUp;
-      } else if (applicationValue == "NewLicenseUnderSuperVision") {
+      }  else if (applicationValue == "NewLicenseUnderSuperVision") {
         newLicenseDDIcon.value.isUnderSuperVisionUp = !newLicenseDDIcon.value
           .isUnderSuperVisionUp;
       } else if (applicationValue == "NewLicenseConfirmed") {

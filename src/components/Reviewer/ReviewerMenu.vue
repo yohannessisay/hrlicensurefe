@@ -136,11 +136,14 @@
         <div v-if="this.display == 'newLicenseConfirmed'">
           <new-license-confirmed />
         </div>
+        <div v-if="this.display == 'othersNewLicenseConfirmed'">
+          <new-license-others-confirmed />
+        </div>
         <div v-if="this.display == 'newLicenseDeclineConfirmed'">
           <new-license-decline-confirmed />
         </div>
-        <div v-if="this.display == 'othersNewLicenseConfirmed'">
-          <new-license-others-confirmed />
+        <div v-if="this.display == 'othersNewLicenseDeclineConfirmed'">
+          <new-license-others-decline-confirmed />
         </div>
         <div v-if="this.display == 'newLicenseReturnedEvaluation'">
           <new-license-returned-to-me />
@@ -361,6 +364,7 @@ import NewLicenseOthersUnderSuperVision from "./ApplicationTypes/NewLicense/NewL
 import NewLicenseConfirmed from "./ApplicationTypes/NewLicense/NewLicenseConfirmed.vue";
 import NewLicenseOthersConfirmed from "./ApplicationTypes/NewLicense/NewLicenseOthersConfirmed.vue";
 import NewLicenseDeclineConfirmed from "./ApplicationTypes/NewLicense/NewLicenseDeclineConfirmed.vue";
+import NewLicenseOthersDeclineConfirmed from "./ApplicationTypes/NewLicense/NewLicenseOthersDeclineConfirmed.vue";
 import NewLicenseReturnedToMe from "./ApplicationTypes/NewLicense/NewLicenseReturnedToMe.vue";
 import NewLicenseReturnedToOthers from "./ApplicationTypes/NewLicense/NewLicenseReturnedToOthers.vue";
 import NewLicensePendingPayment from "./ApplicationTypes/NewLicense/NewLicensePendingPayment.vue";
@@ -454,6 +458,7 @@ export default {
     NewLicenseConfirmed,
     NewLicenseOthersConfirmed,
     NewLicenseDeclineConfirmed,
+    NewLicenseOthersDeclineConfirmed,
     NewLicenseReturnedToMe,
     NewLicenseReturnedToOthers,
     NewLicensePendingPayment,
