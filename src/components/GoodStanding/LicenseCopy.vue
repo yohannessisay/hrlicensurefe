@@ -64,6 +64,9 @@
           </div>
         </form>
         <div v-if="buttons && !draftStatus" class="flex justify-center mb-8">
+          <button @click="submitBack">
+            Back
+          </button>
           <button @click="submit">
             Next
           </button>
@@ -75,6 +78,9 @@
           v-if="buttons && draftStatus == 'DRA'"
           class="flex justify-center mb-8"
         >
+          <button @click="submitBack">
+            Back
+          </button>
           <button @click="submit">
             Next
           </button>
@@ -93,6 +99,9 @@
           v-if="buttons && draftStatus == 'SUB'"
           class="flex justify-center mb-8"
         >
+          <button @click="submitBack">
+            Back
+          </button>
           <button @click="submit">
             Next
           </button>
@@ -108,6 +117,9 @@
           v-if="buttons && draftStatus == 'USUP'"
           class="flex justify-center mb-8"
         >
+          <button @click="submitBack">
+            Back
+          </button>
           <button @click="submit">
             Next
           </button>
@@ -122,6 +134,9 @@
           v-if="buttons && draftStatus == 'DEC'"
           class="flex justify-center mb-8"
         >
+          <button @click="submitBack">
+            Back
+          </button>
           <button @click="submit">
             Next
           </button>
@@ -193,6 +208,8 @@ export default {
     let draftData = ref("");
     let draftStatus = ref("");
 
+    let licenseCopyBack = ref("");
+
     let declinedFields = ref([]);
     let acceptedFields = ref([]);
     let remark = ref("");
@@ -256,7 +273,50 @@ export default {
       store.dispatch("goodstanding/set_License_Copy", licenseFile);
     };
 
+    const submitBack = () => {
+      emit("changeActiveStateMinus");
+      store.dispatch("goodstanding/set_License_Copy", licenseFile);
+    };
+
     onMounted(() => {
+      licenseCopyBack = store.getters["goodstanding/getLicenseCopy"];
+      if (
+        licenseCopyBack &&
+        licenseCopyBack !== undefined &&
+        licenseCopyBack !== null &&
+        licenseCopyBack !== ""
+      ) {
+        dataChanged.value = true;
+        showUpload.value = false;
+        licenseFile.value = licenseCopyBack;
+        let reader = new FileReader();
+        let fileS = licenseFile.value.size;
+        if (fileS > 0 && fileS < 1000) {
+          fileSize.value += "B";
+        } else if (fileS > 1000 && fileS < 1000000) {
+          fileSize.value = fileS / 1000 + "kB";
+        } else {
+          fileSize.value = fileS / 1000000 + "MB";
+        }
+        reader.addEventListener(
+          "load",
+          function() {
+            showPreview.value = true;
+            filePreview.value = reader.result;
+          },
+          false
+        );
+        if (licenseFile.value) {
+          if (/\.(jpe?g|png|gif)$/i.test(licenseFile.value.name)) {
+            isImage.value = true;
+            reader.readAsDataURL(licenseFile.value);
+          } else if (/\.(pdf)$/i.test(licenseFile.value.name)) {
+            isImage.value = false;
+            isPdf.value = true;
+            reader.readAsDataURL(licenseFile.value);
+          }
+        }
+      }
       declinedFields = store.getters["goodstanding/getDeclinedFields"];
       acceptedFields = store.getters["goodstanding/getAcceptedFields"];
       remark = store.getters["goodstanding/getRemark"];
@@ -532,6 +592,7 @@ export default {
     return {
       licenseFile,
       licenseFileP,
+      licenseCopyBack,
       showPreview,
       filePreview,
       showUpload,
@@ -540,6 +601,7 @@ export default {
       handleFileUpload,
       reset,
       submit,
+      submitBack,
       draft,
       fileSize,
       withdraw,

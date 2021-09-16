@@ -60,7 +60,6 @@
                 </p>
                 <img v-bind:src="filePreview" v-show="showPreview" />
               </picture>
-              <!--  -->
               <div v-if="!showUpload && isPdf">
                 <p>
                   <a href="javascript:void(0)" @click="reset()">Upload again</a>
@@ -74,6 +73,9 @@
           </div>
         </form>
         <div v-if="buttons && !draftStatus" class="flex justify-center mb-8">
+          <button @click="submitBack">
+            Back
+          </button>
           <button @click="submit">
             Next
           </button>
@@ -85,6 +87,9 @@
           v-if="buttons && draftStatus == 'DRA'"
           class="flex justify-center mb-8"
         >
+          <button @click="submitBack">
+            Back
+          </button>
           <button @click="submit">
             Next
           </button>
@@ -103,6 +108,9 @@
           v-if="buttons && draftStatus == 'SUB'"
           class="flex justify-center mb-8"
         >
+          <button @click="submitBack">
+            Back
+          </button>
           <button @click="submit">
             Next
           </button>
@@ -118,6 +126,9 @@
           v-if="buttons && draftStatus == 'USUP'"
           class="flex justify-center mb-8"
         >
+          <button @click="submitBack">
+            Back
+          </button>
           <button @click="submit">
             Next
           </button>
@@ -132,6 +143,9 @@
           v-if="buttons && draftStatus == 'DEC'"
           class="flex justify-center mb-8"
         >
+          <button @click="submitBack">
+            Back
+          </button>
           <button @click="submit">
             Next
           </button>
@@ -196,6 +210,8 @@ export default {
     let isImage = ref(false);
     let isPdf = ref(false);
     let draftStatus = ref("");
+
+    let letterBack = ref("");
 
     let dataChanged = ref(false);
     let buttons = ref([]);
@@ -266,8 +282,50 @@ export default {
       emit("changeActiveState");
       store.dispatch("goodstanding/set_Goodstanding_Letter", letterFile);
     };
+    const submitBack = () => {
+      emit("changeActiveStateMinus");
+      store.dispatch("goodstanding/set_Goodstanding_Letter", letterFile);
+    };
 
     onMounted(() => {
+      letterBack = store.getters["goodstanding/getGoodStandingLetter"];
+      if (
+        letterBack &&
+        letterBack !== undefined &&
+        letterBack !== null &&
+        letterBack !== ""
+      ) {
+        dataChanged.value = true;
+        showUpload.value = false;
+        letterFile.value = letterBack;
+        let reader = new FileReader();
+        let fileS = letterFile.value.size;
+        if (fileS > 0 && fileS < 1000) {
+          fileSize.value += "B";
+        } else if (fileS > 1000 && fileS < 1000000) {
+          fileSize.value = fileS / 1000 + "kB";
+        } else {
+          fileSize.value = fileS / 1000000 + "MB";
+        }
+        reader.addEventListener(
+          "load",
+          function() {
+            showPreview.value = true;
+            filePreview.value = reader.result;
+          },
+          false
+        );
+        if (letterFile.value) {
+          if (/\.(jpe?g|png|gif)$/i.test(letterFile.value.name)) {
+            isImage.value = true;
+            reader.readAsDataURL(letterFile.value);
+          } else if (/\.(pdf)$/i.test(letterFile.value.name)) {
+            isImage.value = false;
+            isPdf.value = true;
+            reader.readAsDataURL(letterFile.value);
+          }
+        }
+      }
       declinedFields = store.getters["goodstanding/getDeclinedFields"];
       acceptedFields = store.getters["goodstanding/getAcceptedFields"];
       remark = store.getters["goodstanding/getRemark"];
@@ -538,6 +596,7 @@ export default {
     return {
       letterFile,
       letterFileP,
+      letterBack,
       showPreview,
       filePreview,
       showUpload,
@@ -546,6 +605,7 @@ export default {
       handleFileUpload,
       reset,
       submit,
+      submitBack,
       draft,
       withdraw,
       update,

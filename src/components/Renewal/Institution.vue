@@ -291,6 +291,51 @@ export default {
 
   async created() {
     this.draftStatus = this.$route.params.status;
+    if (
+      this.getLicense ||
+      this.getLicense != undefined ||
+      this.getLicense != null
+    ) {
+      let draftData = this.getLicense;
+      this.licenseInfo.applicantId = draftData.applicantId;
+      this.licenseInfo.applicantTypeId = draftData.applicantTypeId;
+      this.licenseInfo.education.departmentId =
+        draftData.education.departmentId;
+      this.licenseInfo.education.institutionId =
+        draftData.education.institutionId;
+      this.licenseInfo.professionalTypeID = draftData.professionalTypeId;
+      this.licenseInfo.expertLevelId = draftData.expertLevelId;
+      if (this.licenseInfo.applicantTypeId == 1) {
+        this.$store.dispatch("renewal/getExpertLevel").then((res) => {
+          this.expertLevels = res.data.data.filter(function(e) {
+            return e.code.includes("REG");
+          });
+        });
+      } else {
+        this.$store.dispatch("renewal/getExpertLevel").then((res) => {
+          this.expertLevels = res.data.data.filter(function(e) {
+            return e.code.includes("FED");
+          });
+        });
+      }
+      if (this.licenseInfo.expertLevelId == 3) {
+        this.showRegion = false;
+      } else {
+        this.showRegion = true;
+      }
+      if (draftData.regionId != undefined || draftData.regionId) {
+        this.regionID = draftData.regionId;
+        if (draftData.zoneId != undefined || draftData.zoneId) {
+          this.zoneID = draftData.zoneId;
+          if (
+            draftData.residenceWoredaId != undefined ||
+            draftData.residenceWoredaId
+          ) {
+            this.licenseInfo.residenceWoredaId = draftData.residenceWoredaId;
+          }
+        }
+      }
+    }
     this.fetchApplicantType();
     this.fetchInstitutions();
     this.fetchDepartments();
@@ -315,6 +360,7 @@ export default {
     ...mapGetters({
       getButtons: "renewal/getButtons",
       getDraft: "renewal/getDraft",
+      getLicense: "renewal/getLicense",
     }),
   },
   data: () => ({
@@ -535,6 +581,8 @@ export default {
           departmentId: this.licenseInfo.education.departmentId,
           institutionId: this.licenseInfo.education.institutionId,
         },
+        regionId: this.regionID,
+        zoneId: this.zoneID,
         residenceWoredaId: this.licenseInfo.residenceWoredaId,
         professionalTypeId: this.licenseInfo.professionalTypeID,
         paymentSlip: null,

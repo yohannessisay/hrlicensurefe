@@ -373,6 +373,9 @@
         </div>
         <div v-if="this.draftStatus == 'DRA' || !this.draftStatus">
           <div class="flex justify-center mt-4 mb-8">
+            <button @click="submitBack">
+              Back
+            </button>
             <button @click="submit">Next</button>
             <button
               v-if="this.buttons.length < 3"
@@ -403,6 +406,9 @@
           v-if="this.draftStatus == 'SUB'"
           class="flex justify-center mt-8 pb-12"
         >
+          <button @click="submitBack">
+            Back
+          </button>
           <button @click="submit">Next</button>
           <button
             class="withdraw"
@@ -416,6 +422,9 @@
           v-if="this.draftStatus == 'USUP'"
           class="flex justify-center mt-8 pb-12"
         >
+          <button @click="submitBack">
+            Back
+          </button>
           <button @click="submit">Next</button>
           <button @click="draft(this.buttons[0].action)" variant="outline">
             {{ this.buttons[0]["name"] }}
@@ -428,6 +437,9 @@
           v-if="this.draftStatus == 'DEC'"
           class="flex justify-center mt-8 pb-12"
         >
+          <button @click="submitBack">
+            Back
+          </button>
           <button @click="submit">Next</button>
           <!-- <button @click="draft(this.buttons[0].action)" variant="outline">
             {{ this.buttons[0]["name"] }}
@@ -590,6 +602,197 @@ export default {
     }),
   },
   created() {
+    let eduEighth = this.$store.getters["newlicense/getEduEighth"];
+    let eduTenth = this.$store.getters["newlicense/getEduTenth"];
+    let eduTwelveth = this.$store.getters["newlicense/getEduTwelveth"];
+    let transcript1 = this.$store.getters["newlicense/getEduTranscript1"];
+    let transcript2 = this.$store.getters["newlicense/getEduTranscript2"];
+    if (
+      eduEighth &&
+      eduEighth !== undefined &&
+      eduEighth !== null &&
+      eduEighth !== ""
+    ) {
+      this.showCertificate1Upload = false;
+      this.certificateFile1 = eduEighth;
+      let reader = new FileReader();
+      let fileS = this.certificateFile1.size;
+      if (fileS > 0 && fileS < 1000) {
+        this.certificate1Size = fileS + " " + "B";
+      } else if (fileS > 1000 && fileS < 1000000) {
+        this.certificate1Size = fileS / 1000 + "kB";
+      } else {
+        this.certificate1Size = fileS / 1000000 + "MB";
+      }
+      reader.addEventListener(
+        "load",
+        function() {
+          this.showCertificate1Preview = true;
+          this.certificate1Preview = reader.result;
+        }.bind(this),
+        false
+      );
+
+      if (this.certificateFile1) {
+        if (/\.(jpe?g|png|gif)$/i.test(this.certificateFile1.name)) {
+          this.isImage = true;
+          reader.readAsDataURL(this.certificateFile1);
+        } else if (/\.(pdf)$/i.test(this.certificateFile1.name)) {
+          this.isImage = false;
+          this.isPdf = true;
+          reader.readAsDataURL(this.certificateFile1);
+        }
+      }
+    }
+    if (
+      eduTenth &&
+      eduTenth !== undefined &&
+      eduTenth !== null &&
+      eduTenth !== ""
+    ) {
+      this.showCertificate2Upload = false;
+      this.certificateFile2 = eduTenth;
+      let reader = new FileReader();
+      let fileS = this.certificateFile2.size;
+      if (fileS > 0 && fileS < 1000) {
+        this.certificate2Size = fileS + " " + "B";
+      } else if (fileS > 1000 && fileS < 1000000) {
+        this.certificate2Size = fileS / 1000 + "kB";
+      } else {
+        this.certificate2Size = fileS / 1000000 + "MB";
+      }
+      reader.addEventListener(
+        "load",
+        function() {
+          this.showCertificate2Preview = true;
+          this.certificate2Preview = reader.result;
+        }.bind(this),
+        false
+      );
+
+      if (this.certificateFile2) {
+        if (/\.(jpe?g|png|gif)$/i.test(this.certificateFile2.name)) {
+          this.isImage = true;
+          reader.readAsDataURL(this.certificateFile2);
+        } else if (/\.(pdf)$/i.test(this.certificateFile2.name)) {
+          this.isImage = false;
+          this.isPdf = true;
+          reader.readAsDataURL(this.certificateFile2);
+        }
+      }
+    }
+    if (
+      eduTwelveth &&
+      eduTwelveth !== undefined &&
+      eduTwelveth !== null &&
+      eduTwelveth !== ""
+    ) {
+      this.showCertificate3Upload = false;
+      this.certificateFile3 = eduTwelveth;
+      let reader = new FileReader();
+      let fileS = this.certificateFile3.size;
+      if (fileS > 0 && fileS < 1000) {
+        this.certificate3Size = fileS + " " + "B";
+      } else if (fileS > 1000 && fileS < 1000000) {
+        this.certificate3Size = fileS / 1000 + "kB";
+      } else {
+        this.certificate3Size = fileS / 1000000 + "MB";
+      }
+      reader.addEventListener(
+        "load",
+        function() {
+          this.showCertificate3Preview = true;
+          this.certificate3Preview = reader.result;
+        }.bind(this),
+        false
+      );
+
+      if (this.certificateFile3) {
+        if (/\.(jpe?g|png|gif)$/i.test(this.certificateFile3.name)) {
+          this.isImage = true;
+          reader.readAsDataURL(this.certificateFile3);
+        } else if (/\.(pdf)$/i.test(this.certificateFile3.name)) {
+          this.isImage = false;
+          this.isPdf = true;
+          reader.readAsDataURL(this.certificateFile3);
+        }
+      }
+    }
+    if (
+      transcript1 &&
+      transcript1 !== undefined &&
+      transcript1 !== null &&
+      transcript1 !== ""
+    ) {
+      this.showCertificate4Upload = false;
+      this.certificateFile4 = transcript1;
+      let reader = new FileReader();
+      let fileS = this.certificateFile4.size;
+      if (fileS > 0 && fileS < 1000) {
+        this.certificate4Size = fileS + " " + "B";
+      } else if (fileS > 1000 && fileS < 1000000) {
+        this.certificate4Size = fileS / 1000 + "kB";
+      } else {
+        this.certificate4Size = fileS / 1000000 + "MB";
+      }
+      reader.addEventListener(
+        "load",
+        function() {
+          this.showCertificate4Preview = true;
+          this.certificate4Preview = reader.result;
+        }.bind(this),
+        false
+      );
+
+      if (this.certificateFile4) {
+        if (/\.(jpe?g|png|gif)$/i.test(this.certificateFile4.name)) {
+          this.isImage = true;
+          reader.readAsDataURL(this.certificateFile4);
+        } else if (/\.(pdf)$/i.test(this.certificateFile4.name)) {
+          this.isImage = false;
+          this.isPdf = true;
+          reader.readAsDataURL(this.certificateFile4);
+        }
+      }
+    }
+    if (
+      transcript2 &&
+      transcript2 !== undefined &&
+      transcript2 !== null &&
+      transcript2 !== ""
+    ) {
+      this.showCertificate5Upload = false;
+      this.certificateFile5 = transcript2;
+      let reader = new FileReader();
+      let fileS = this.certificateFile5.size;
+      if (fileS > 0 && fileS < 1000) {
+        this.certificate5Size = fileS + " " + "B";
+      } else if (fileS > 1000 && fileS < 1000000) {
+        this.certificate5Size = fileS / 1000 + "kB";
+      } else {
+        this.certificate5Size = fileS / 1000000 + "MB";
+      }
+      reader.addEventListener(
+        "load",
+        function() {
+          this.showCertificate5Preview = true;
+          this.certificate5Preview = reader.result;
+        }.bind(this),
+        false
+      );
+
+      if (this.certificateFile5) {
+        if (/\.(jpe?g|png|gif)$/i.test(this.certificateFile5.name)) {
+          this.isImage = true;
+          reader.readAsDataURL(this.certificateFile5);
+        } else if (/\.(pdf)$/i.test(this.certificateFile5.name)) {
+          this.isImage = false;
+          this.isPdf = true;
+          reader.readAsDataURL(this.certificateFile5);
+        }
+      }
+    }
+
     this.draftId = this.$route.params.id;
     this.draftStatus = this.$route.params.status;
     this.declinedFields = this.getDeclinedFields;
@@ -718,7 +921,6 @@ export default {
   methods: {
     ...mapActions(["setProfessionalDoc"]),
     resetCert1() {
-      // reset form to initial state
       this.showCertificate1Upload = true;
       this.showCertificate1Preview = false;
       this.certificateFile1 = "";
@@ -929,6 +1131,17 @@ export default {
     },
     submit() {
       this.$emit("changeActiveState");
+      this.$store.dispatch("newlicense/setEduEighth", this.certificateFile1);
+      this.$store.dispatch("newlicense/setEduTenth", this.certificateFile2);
+      this.$store.dispatch("newlicense/setEduTwelveth", this.certificateFile3);
+      this.$store.dispatch(
+        "newlicense/setEduTranscript1",
+        this.certificateFile4
+      );
+      this.$store.dispatch(
+        "newlicense/setEduTranscript2",
+        this.certificateFile5
+      );
       let file = [
         this.certificateFile1,
         this.certificateFile2,
@@ -936,7 +1149,28 @@ export default {
         this.certificateFile4,
         this.certificateFile5,
       ];
-
+      this.$store.dispatch("newlicense/setEducationalDocument", file);
+    },
+    submitBack() {
+      this.$emit("changeActiveStateMinus");
+      this.$store.dispatch("newlicense/setEduEighth", this.certificateFile1);
+      this.$store.dispatch("newlicense/setEduTenth", this.certificateFile2);
+      this.$store.dispatch("newlicense/setEduTwelveth", this.certificateFile3);
+      this.$store.dispatch(
+        "newlicense/setEduTranscript1",
+        this.certificateFile4
+      );
+      this.$store.dispatch(
+        "newlicense/setEduTranscript2",
+        this.certificateFile5
+      );
+      let file = [
+        this.certificateFile1,
+        this.certificateFile2,
+        this.certificateFile3,
+        this.certificateFile4,
+        this.certificateFile5,
+      ];
       this.$store.dispatch("newlicense/setEducationalDocument", file);
     },
     draft(action) {
@@ -949,7 +1183,6 @@ export default {
           this.certificateFile4 ||
           this.certificateFile5
         ) {
-          // modify the drafData before dispatching
         } else {
           let draftObj = {
             action: action,

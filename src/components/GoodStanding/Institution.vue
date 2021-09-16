@@ -323,6 +323,54 @@ export default {
 
   async created() {
     this.draftStatus = this.$route.params.status;
+    if (
+      this.getLicense != undefined ||
+      this.getLicense != null ||
+      this.getLicense
+    ) {
+      let draftData = this.getLicense;
+      this.licenseInfo.applicantId = draftData.applicantId;
+      this.licenseInfo.applicantTitle = draftData.applicantTitle;
+      this.licenseInfo.applicantTypeId = draftData.applicantTypeId;
+      this.licenseInfo.whomGoodStandingFor = draftData.whomGoodStandingFor;
+      this.licenseInfo.licenseIssuedDate = draftData.licenseIssuedDate;
+      this.licenseInfo.whoIssued = draftData.whoIssued;
+      this.licenseInfo.licenseRegistrationNumber =
+        draftData.licenseRegistrationNumber;
+      this.licenseInfo.applicantPositionId = draftData.applicantPositionId;
+      this.licenseInfo.professionalTypeID = draftData.professionalTypeId;
+      this.licenseInfo.expertLevelId = draftData.expertLevelId;
+      if (this.licenseInfo.applicantTypeId == 1) {
+        this.$store.dispatch("goodstanding/getExpertLevel").then((res) => {
+          this.expertLevels = res.data.data.filter(function(e) {
+            return e.code.includes("REG");
+          });
+        });
+      } else {
+        this.$store.dispatch("goodstanding/getExpertLevel").then((res) => {
+          this.expertLevels = res.data.data.filter(function(e) {
+            return e.code.includes("FED");
+          });
+        });
+      }
+      if (this.licenseInfo.expertLevelId == 3) {
+        this.showRegion = false;
+      } else {
+        this.showRegion = true;
+      }
+      if (draftData.woreda || draftData.woreda != undefined) {
+        this.licenseInfo.residenceWoredaId = draftData.woreda.id;
+        if (draftData.woreda.zone || draftData.woreda.zone != undefined) {
+          this.zoneID = draftData.woreda.zone.id;
+          if (
+            draftData.woreda.zone.region ||
+            draftData.woreda.zone.region != undefined
+          ) {
+            this.regionID = draftData.woreda.zone.region.id;
+          }
+        }
+      }
+    }
     this.fetchApplicantType();
     this.fetchInstitutions();
     this.fetchDepartments();
@@ -346,6 +394,7 @@ export default {
     ...mapGetters({
       getButtons: "goodstanding/getButtons",
       getDraft: "goodstanding/getDraft",
+      getLicense: "goodstanding/getLicense",
     }),
   },
   data: () => ({
