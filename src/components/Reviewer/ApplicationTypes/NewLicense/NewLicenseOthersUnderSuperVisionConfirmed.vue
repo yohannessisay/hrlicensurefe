@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- <reviewer-nav-bar tab="othersRenewalConfirmed" /> -->
+    <!-- <reviewer-nav-bar tab="newLicenseOthersUnderSuperVisionConfirmed" /> -->
     <div class="bg-lightBlueB-200 h-full" v-if="!allInfo.searchByInput">
       <div class="pl-12">
         <div>Filter By</div>
@@ -19,19 +19,19 @@
           type="date"
           v-model="allInfo.searchUpToDate"
         />
-        <button @click="filterConfirmedApplication">
+        <button @click="filterUnderSuperVisionConfirmedApplication">
           Filter
         </button>
       </div>
     
       <div class="flex pl-12 pt-tiny">
-        <Title message="Others Renewal Confirmed" />
+        <Title message="Others New License Under Super Vision Confirmed" />
       </div>
       <div class="flex flex-wrap pb-medium rounded h-full" v-if="!showLoading">
         <nothing-to-show :nothingToShow="nothingToShow" />
         <confirmed-applications
-          :confirmedApplication="getRenewalOthersConfirmed"
-          app_type="Renewal"
+          :confirmedApplication="getNewLicenseOthersUnderSuperVisionConfirmed"
+          app_type="New License"
           others_confirmed="true"
         />
       </div>
@@ -46,7 +46,7 @@
       <div class="flex pl-12 pt-tiny">
         <Title
           :message="
-            'Others Confirmed Applicants on Date Range ' +
+            'Under Super Vision Confirmed Applicants on Date Range ' +
               moment(allInfo.searchFromDate).format('MMM D, YYYY') +
               ' To ' +
               moment(allInfo.searchUpToDate).format('MMM D, YYYY')
@@ -57,7 +57,7 @@
       <filtered-info
         :filteredData="allInfo.filteredByDate"
         type="applicant-detail"
-        app_type="Renewal"
+        app_type="New License"
       />
     </div>
   </div>
@@ -86,9 +86,9 @@ import Title from "@/sharedComponents/TitleWithIllustration";
 export default {
   computed: {
     moment: () => moment,
-    getRenewalOthersConfirmed() {
+    getNewLicenseOthersUnderSuperVisionConfirmed() {
       return store.getters[
-        "reviewerRenewal/getRenewalOthersConfirmedSearched"
+        "reviewerNewLicense/getNewLicenseOthersUnderSuperVisionConfirmedSearched"
       ];
     },
   },
@@ -103,7 +103,7 @@ export default {
   setup() {
     const store = useStore();
 
-    let RenewalConfirmed = ref([]);
+    let newLicenseOthersUnderSuperVisionConfirmed = ref([]);
 
     const adminId = +localStorage.getItem("adminId");
 
@@ -123,7 +123,7 @@ export default {
       app_type: "",
     });
 
-    const filterConfirmedApplication = () => {
+    const filterUnderSuperVisionConfirmedApplication = () => {
       filterApplication(moment, allInfo.value);
     };
 
@@ -136,21 +136,21 @@ export default {
       allInfo.value.app_type = "";
     };
 
-    const fetchRenewalConfirmed = () => {
+    const fetchNewLicenseOthersUnderSuperVisionConfirmed = () => {
       showLoading.value = true;
       const statusId = applicationStatus(store, 'CONF');
       const adminStatus = [statusId, adminId];
       store
-        .dispatch("reviewerRenewal/getRenewalOthersConfirmed", adminStatus)
+        .dispatch("reviewerNewLicense/getNewLicenseOthersUnderSuperVisionConfirmed", adminStatus)
         .then(() => {
           showLoading.value = false;
-          RenewalConfirmed.value =
+          newLicenseOthersUnderSuperVisionConfirmed.value =
             store.getters[
-              "reviewerRenewal/getRenewalOthersConfirmedSearched"
+              "reviewerNewLicense/getNewLicenseOthersUnderSuperVisionConfirmedSearched"
             ];
           allInfo.value.assignApplication =
             store.getters[
-              "reviewerRenewal/getRenewalOthersConfirmedSearched"
+              "reviewerNewLicense/getNewLicenseOthersUnderSuperVisionConfirmedSearched"
             ];
 
           for (let applicant in allInfo.value.assignApplication) {
@@ -166,21 +166,21 @@ export default {
             }
           }
           if (
-            RenewalConfirmed.value.length === 0
+            newLicenseOthersUnderSuperVisionConfirmed.value.length === 0
           ) {
             nothingToShow.value = true;
           }
         });
     };
     onMounted(() => {
-      fetchRenewalConfirmed();
+      fetchNewLicenseOthersUnderSuperVisionConfirmed();
     });
 
     return {
       nothingToShow,
       allInfo,
       showLoading,
-      filterConfirmedApplication,
+      filterUnderSuperVisionConfirmedApplication,
       backClicked,
     };
   },

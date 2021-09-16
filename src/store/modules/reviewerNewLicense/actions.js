@@ -1155,7 +1155,7 @@ export default {
     commit(SET_NEW_LICENSE_UNDER_SUPER_VISION_CONFIRMED_SEARCHED, searchedVal);
   },
 
-  async getNewLicenseOtherUnderSuperVisionConfirmed({ commit }, adminStatus) {
+  async getNewLicenseOthersUnderSuperVisionConfirmed({ commit }, adminStatus) {
     const url = baseUrl + "/newLicenses/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
     const othersUnderSuperVisionConfirmed = resp.data.data.filter(function(e) {

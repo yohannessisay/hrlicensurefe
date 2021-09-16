@@ -32,7 +32,7 @@
         <confirmed-applications
           :confirmedApplication="getRenewalConfirmed"
           app_type="Renewal"
-          all_confirmed="false"
+          others_confirmed="false"
         />
       </div>
     </div>

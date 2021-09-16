@@ -1,7 +1,7 @@
 <template>
   <div
     class="container"
-    v-for="item in declineConfirmedApplication"
+    v-for="item in confirmedApplication"
     v-bind:key="item.id"
     v-bind:value="item.id"
   >
@@ -36,7 +36,7 @@
         </h4>
         <span
           class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-          v-if="others_decline_confirmed == 'true'"
+          v-if="others_confirmed == 'true'"
         >
           <i class="fas fa-user-cog"></i> &nbsp;
           {{ item.reviewer.name ? item.reviewer.name : "-" }}
@@ -91,7 +91,7 @@ export default {
   computed: {
     moment: () => moment,
   },
-  props: ["declineConfirmedApplication", "app_type", "others_decline_confirmed"],
+  props: ["confirmedApplication", "app_type", "others_confirmed"],
   name: "DeclineConfirmedApplication",
   setup(props) {
     let router = useRouter();

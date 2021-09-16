@@ -1060,7 +1060,7 @@ export default {
     const url = baseUrl + "/renewals/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
     const declineConfirmed = resp.data.data.filter(function(e) {
-      return e.reviewerId === adminStatus[1];
+      return e.reviewerId === adminStatus[1] && e.previousApplicationStatus.code === "DEC";
     });
     commit(SET_RENEWAL_DECLINE_CONFIRMED, declineConfirmed);
   },
@@ -1086,11 +1086,11 @@ export default {
     commit(SET_RENEWAL_DECLINE_CONFIRMED_SEARCHED, searchedVal);
   },
 
-  async getRenewalOtherDeclineConfirmed({ commit }, adminStatus) {
+  async getRenewalOthersDeclineConfirmed({ commit }, adminStatus) {
     const url = baseUrl + "/renewals/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
     const othersDeclineConfirmed = resp.data.data.filter(function(e) {
-      return e.reviewerId !== adminStatus[1];
+      return e.reviewerId !== adminStatus[1] && e.previousApplicationStatus.code === "DEC";
     });
     commit(SET_RENEWAL_OTHERS_DECLINE_CONFIRMED, othersDeclineConfirmed);
   },
@@ -1123,7 +1123,7 @@ export default {
     const url = baseUrl + "/renewals/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
     const underSuperVisionConfirmed = resp.data.data.filter(function(e) {
-      return e.reviewerId === adminStatus[1];
+      return (e.reviewerId === adminStatus[1] && e.previousApplicationStatus.code === "USUP");
     });
     commit(SET_RENEWAL_UNDER_SUPER_VISION_CONFIRMED, underSuperVisionConfirmed);
   },
@@ -1149,11 +1149,11 @@ export default {
     commit(SET_RENEWAL_UNDER_SUPER_VISION_CONFIRMED_SEARCHED, searchedVal);
   },
 
-  async getRenewalOtherUnderSuperVisionConfirmed({ commit }, adminStatus) {
+  async getRenewalOthersUnderSuperVisionConfirmed({ commit }, adminStatus) {
     const url = baseUrl + "/renewals/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
     const othersUnderSuperVisionConfirmed = resp.data.data.filter(function(e) {
-      return e.reviewerId !== adminStatus[1];
+      return e.reviewerId !== adminStatus[1] && e.previousApplicationStatus.code === "USUP";
     });
     commit(SET_RENEWAL_OTHERS_UNDER_SUPER_VISION_CONFIRMED, othersUnderSuperVisionConfirmed);
   },

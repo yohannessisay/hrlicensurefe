@@ -29,10 +29,10 @@
       </div>
       <div class="flex flex-wrap pb-medium rounded h-full" v-if="!showLoading">
         <nothing-to-show :nothingToShow="nothingToShow" />
-        <decline-confirmed-applications
-          :declineConfirmedApplication="getNewLicenseDeclineConfirmed"
+        <confirmed-applications
+          :confirmedApplication="getNewLicenseDeclineConfirmed"
           app_type="New License"
-          others_decline_confirmed="false"
+          others_confirmed="false"
         />
       </div>
     </div>
@@ -74,7 +74,7 @@ import { useStore } from "vuex";
 import moment from "moment";
 
 import applicationStatus from "../../Configurations/getApplicationStatus.js";
-import DeclineConfirmedApplications from "../ChildApplicationTypes/DeclineConfirmedApplications.vue";
+import ConfirmedApplications from "../ChildApplicationTypes/ConfirmedApplications.vue";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import filterApplication from "../../ChildComponents/FilteredDatas/FilterApplication.js";
 import FilteredInfo from "../../ChildComponents/FilteredDatas/FilteredInfo.vue";
@@ -97,7 +97,7 @@ export default {
     FilteredInfo,
     Spinner,
     NothingToShow,
-    DeclineConfirmedApplications,
+    ConfirmedApplications,
     Title,
   },
   setup() {

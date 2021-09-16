@@ -1062,16 +1062,16 @@
                                   <drop-down-lists
                                     :dropdownValue="[
                                       dropdownValue.renewalConfirmedEvaluation,
-                                      dropdownValue.renewalDeclined,
+                                      dropdownValue.renewalDeclineConfirmed,
                                     ]"
                                     name="Declined"
-                                    dropDownHandlerValue="RenewalDeclined"
+                                    dropDownHandlerValue="RenewalDeclineConfirmed"
                                     :dropDownMenus="[
-                                      'renewalDeclined',
-                                      'allRenewalDeclined',
+                                      'renewalDeclineConfirmed',
+                                      'othersRenewalDeclineConfirmed',
                                     ]"
                                     :isDropDownIconUp="
-                                      renewalDDIcon.isUnderEvaluationUp
+                                      renewalDDIcon.isDeclineConfirmedUp
                                     "
                                     :adminRole="adminRole"
                                     :yoursAndOthersApplication="[
@@ -1084,16 +1084,16 @@
                                   <drop-down-lists
                                     :dropdownValue="[
                                       dropdownValue.renewalConfirmedEvaluation,
-                                      dropdownValue.renewalUnderSuperVision,
+                                      dropdownValue.renewalUnderSuperVisionConfirmed,
                                     ]"
                                     name="Under Super Vision"
-                                    dropDownHandlerValue="RenewalUnderSuperVision"
+                                    dropDownHandlerValue="RenewalUnderSuperVisionConfirmed"
                                     :dropDownMenus="[
-                                      'renewalUnderSuperVision',
-                                      'renewalOthersUnderSuperVision',
+                                      'renewalUnderSuperVisionConfirmed',
+                                      'renewalOthersUnderSuperVisionConfirmed',
                                     ]"
                                     :isDropDownIconUp="
-                                      renewalDDIcon.isUnderSuperVisionUp
+                                      renewalDDIcon.isUnderSuperVisionConfirmedUp
                                     "
                                     :adminRole="adminRole"
                                     :yoursAndOthersApplication="[
@@ -1282,7 +1282,7 @@
                   name="Declined"
                   dropDownHandlerValue="RenewalDeclined"
                   :dropDownMenus="['renewalDeclined', 'allRenewalDeclined']"
-                  :isDropDownIconUp="renewalDDIcon.isUnderEvaluationUp"
+                  :isDropDownIconUp="renewalDDIcon.isDeclinedUp"
                   :adminRole="adminRole"
                   :yoursAndOthersApplication="[
                     'My Declined',
@@ -1455,6 +1455,8 @@ export default {
       isOnReivewUp: false,
       isReEvaluateUp: false,
       isDeclinedUp: false,
+      isDeclineConfirmedUp: false,
+      isUnderSuperVisionConfirmedUp: false,
       isUnderSuperVisionUp: false,
       isConfirmedUp: false,
       isReturnedUp: false,
@@ -1490,6 +1492,10 @@ export default {
       } else if (applicationValue == "RenewalConfirmedEvaluation") {
         renewalDDIcon.value.isConfirmedEvaluationUp = !renewalDDIcon.value
           .isConfirmedEvaluationUp;
+      } else if (applicationValue == "RenewalDeclineConfirmed") {
+        renewalDDIcon.value.isDeclineConfirmedUp = !renewalDDIcon.value.isDeclineConfirmedUp;
+      } else if (applicationValue == "RenewalUnderSuperVisionConfirmed") {
+        renewalDDIcon.value.isUnderSuperVisionConfirmedUp = !renewalDDIcon.value.isUnderSuperVisionConfirmedUp;
       } else if (applicationValue == "RenewalPaymentReview") {
         renewalDDIcon.value.isPaymentReviewnUp = !renewalDDIcon.value
           .isPaymentReviewnUp;

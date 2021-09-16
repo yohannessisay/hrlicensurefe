@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- <reviewer-nav-bar tab="othersRenewalConfirmed" /> -->
+    <!-- <reviewer-nav-bar tab="renewalUnderSuperVisionConfirmed" /> -->
     <div class="bg-lightBlueB-200 h-full" v-if="!allInfo.searchByInput">
       <div class="pl-12">
         <div>Filter By</div>
@@ -19,20 +19,20 @@
           type="date"
           v-model="allInfo.searchUpToDate"
         />
-        <button @click="filterConfirmedApplication">
+        <button @click="filterUnderSuperVisionConfirmedApplication">
           Filter
         </button>
       </div>
     
       <div class="flex pl-12 pt-tiny">
-        <Title message="Others Renewal Confirmed" />
+        <Title message="Renewal Under Super Vision Confirmed" />
       </div>
       <div class="flex flex-wrap pb-medium rounded h-full" v-if="!showLoading">
         <nothing-to-show :nothingToShow="nothingToShow" />
         <confirmed-applications
-          :confirmedApplication="getRenewalOthersConfirmed"
+          :confirmedApplication="getRenewalUnderSuperVisionConfirmed"
           app_type="Renewal"
-          others_confirmed="true"
+          others_confirmed="false"
         />
       </div>
     </div>
@@ -46,7 +46,7 @@
       <div class="flex pl-12 pt-tiny">
         <Title
           :message="
-            'Others Confirmed Applicants on Date Range ' +
+            'Under Super Vision Confirmed Applicants on Date Range ' +
               moment(allInfo.searchFromDate).format('MMM D, YYYY') +
               ' To ' +
               moment(allInfo.searchUpToDate).format('MMM D, YYYY')
@@ -86,9 +86,9 @@ import Title from "@/sharedComponents/TitleWithIllustration";
 export default {
   computed: {
     moment: () => moment,
-    getRenewalOthersConfirmed() {
+    getRenewalUnderSuperVisionConfirmed() {
       return store.getters[
-        "reviewerRenewal/getRenewalOthersConfirmedSearched"
+        "reviewerRenewal/getRenewalUnderSuperVisionConfirmedSearched"
       ];
     },
   },
@@ -103,7 +103,7 @@ export default {
   setup() {
     const store = useStore();
 
-    let RenewalConfirmed = ref([]);
+    let renewalUnderSuperVisionConfirmed = ref([]);
 
     const adminId = +localStorage.getItem("adminId");
 
@@ -123,7 +123,7 @@ export default {
       app_type: "",
     });
 
-    const filterConfirmedApplication = () => {
+    const filterUnderSuperVisionConfirmedApplication = () => {
       filterApplication(moment, allInfo.value);
     };
 
@@ -136,21 +136,21 @@ export default {
       allInfo.value.app_type = "";
     };
 
-    const fetchRenewalConfirmed = () => {
+    const fetchRenewalUnderSuperVisionConfirmed = () => {
       showLoading.value = true;
       const statusId = applicationStatus(store, 'CONF');
       const adminStatus = [statusId, adminId];
       store
-        .dispatch("reviewerRenewal/getRenewalOthersConfirmed", adminStatus)
+        .dispatch("reviewerRenewal/getRenewalUnderSuperVisionConfirmed", adminStatus)
         .then(() => {
           showLoading.value = false;
-          RenewalConfirmed.value =
+          renewalUnderSuperVisionConfirmed.value =
             store.getters[
-              "reviewerRenewal/getRenewalOthersConfirmedSearched"
+              "reviewerRenewal/getRenewalUnderSuperVisionConfirmedSearched"
             ];
           allInfo.value.assignApplication =
             store.getters[
-              "reviewerRenewal/getRenewalOthersConfirmedSearched"
+              "reviewerRenewal/getRenewalUnderSuperVisionConfirmedSearched"
             ];
 
           for (let applicant in allInfo.value.assignApplication) {
@@ -166,21 +166,21 @@ export default {
             }
           }
           if (
-            RenewalConfirmed.value.length === 0
+            renewalUnderSuperVisionConfirmed.value.length === 0
           ) {
             nothingToShow.value = true;
           }
         });
     };
     onMounted(() => {
-      fetchRenewalConfirmed();
+      fetchRenewalUnderSuperVisionConfirmed();
     });
 
     return {
       nothingToShow,
       allInfo,
       showLoading,
-      filterConfirmedApplication,
+      filterUnderSuperVisionConfirmedApplication,
       backClicked,
     };
   },

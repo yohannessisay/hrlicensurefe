@@ -32,7 +32,7 @@
         <confirmed-applications
           :confirmedApplication="getNewLicenseOthersConfirmed"
           app_type="New License"
-          all_confirmed="true"
+          others_confirmed="true"
         />
       </div>
     </div>

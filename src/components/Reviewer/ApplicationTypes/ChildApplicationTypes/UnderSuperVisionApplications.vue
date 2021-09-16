@@ -10,7 +10,7 @@
     >
       <div
         class="p-4 w-48 h-64"
-        @Click="detail(`/admin/applicant-detail`, item.id, item.applicant.id)"
+        @Click="detail(`/admin`, item.id, item.applicant.id)"
       >
         <div class="flex content-center justify-center">
           <span v-if="item.applicant.profile.photo !== '' && item.applicant.profile.photo !== null">
@@ -96,10 +96,17 @@ export default {
   name: "UnderSuperVisionApplications",
   setup(props) {
     let router = useRouter();
+    let routeValue = ref("othersUnconfirmedDetail");
+    const adminExpertId = JSON.parse(localStorage.getItem('allAdminData')).expertLevelId;
     const detail = (data, applicationId, applicantId) => {
+      if (
+        (props.app_type == "Verification" || props.app_type == "Good Standing" || adminExpertId == 3 || props.all_declined == "true")
+      ) {
+        routeValue.value = "applicant-detail";
+      }
       const url =
-        data + "/" + props.app_type + "/" + applicationId + "/" + applicantId;
-        router.push(url);
+        data + "/" + routeValue.value + "/" + props.app_type + "/" + applicationId + "/" + applicantId;
+      router.push(url);
     };
     return {
       detail,

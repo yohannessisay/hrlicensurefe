@@ -331,7 +331,7 @@
                                     dropDownHandlerValue="NewLicenseDeclineConfirmed"
                                     :dropDownMenus="[
                                       'newLicenseDeclineConfirmed',
-                                      'othersNewLicenseDeclineConfirmed',
+                                      'newLicenseOthersDeclineConfirmed',
                                     ]"
                                     :isDropDownIconUp="
                                       newLicenseDDIcon.isDeclineConfirmedUp
@@ -352,8 +352,8 @@
                                     name="Under Super Vision"
                                     dropDownHandlerValue="NewLicenseUnderSuperVisionConfirmed"
                                     :dropDownMenus="[
-                                      'newLicenseUnderSuperVision',
-                                      'newLicenseOthersUnderSuperVision',
+                                      'newLicenseUnderSuperVisionConfirmed',
+                                      'newLicenseOthersUnderSuperVisionConfirmed',
                                     ]"
                                     :isDropDownIconUp="
                                       newLicenseDDIcon.isUnderSuperVisionConfirmedUp
@@ -547,7 +547,7 @@
                   dropDownHandlerValue="NewLicenseDeclined"
                   :dropDownMenus="[
                     'newLicenseDeclined',
-                    'allNewLicenseDeclined',
+                    'newLicenseOthersDeclined',
                   ]"
                   :isDropDownIconUp="newLicenseDDIcon.isDeclinedUp"
                   :adminRole="adminRole"

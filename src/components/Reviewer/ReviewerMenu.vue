@@ -105,9 +105,13 @@
         </div>
         <div v-if="this.display == 'newLicenseUnassignedEvaluation'">
           <new-license-un-confirmed />
+          <new-license-declined />
+          <new-license-under-super-vision />
         </div>
         <div v-if="this.display == 'newLicenseOthersUnassignedEvaluation'">
           <new-license-all-un-confirmed />
+          <new-license-all-declined />
+          <new-license-others-under-super-vision />
         </div>
         <div v-if="this.display == 'newLicenseUnderEvaluation'">
           <new-license-on-review />
@@ -124,7 +128,7 @@
         <div v-if="this.display == 'newLicenseDeclined'">
           <new-license-declined />
         </div>
-        <div v-if="this.display == 'allNewLicenseDeclined'">
+        <div v-if="this.display == 'newLicenseOthersDeclined'">
           <new-license-all-declined />
         </div>
         <div v-if="this.display == 'newLicenseUnderSuperVision'">
@@ -142,8 +146,14 @@
         <div v-if="this.display == 'newLicenseDeclineConfirmed'">
           <new-license-decline-confirmed />
         </div>
-        <div v-if="this.display == 'othersNewLicenseDeclineConfirmed'">
+        <div v-if="this.display == 'newLicenseOthersDeclineConfirmed'">
           <new-license-others-decline-confirmed />
+        </div>
+        <div v-if="this.display == 'newLicenseUnderSuperVisionConfirmed'">
+          <new-license-under-super-vision-confirmed />
+        </div>
+         <div v-if="this.display == 'newLicenseOthersUnderSuperVisionConfirmed'">
+          <new-license-others-under-super-vision-confirmed />
         </div>
         <div v-if="this.display == 'newLicenseReturnedEvaluation'">
           <new-license-returned-to-me />
@@ -196,6 +206,8 @@
         </div>
         <div v-if="this.display == 'renewalOthersUnassignedEvaluation'">
           <renewal-all-unconfirmed />
+          <renewal-all-declined />
+          <renewal-others-under-super-vision />
         </div>
         <div v-if="this.display == 'renewalUnderEvaluation'">
           <renewal-on-review />
@@ -226,6 +238,18 @@
         </div>
         <div v-if="this.display == 'othersRenewalConfirmed'">
           <renewal-others-confirmed />
+        </div>
+        <div v-if="this.display == 'renewalDeclineConfirmed'">
+          <renewal-decline-confirmed />
+        </div>
+        <div v-if="this.display == 'othersRenewalDeclineConfirmed'">
+          <renewal-others-decline-confirmed />
+        </div>
+        <div v-if="this.display == 'renewalUnderSuperVisionConfirmed'">
+          <renewal-under-super-vision-confirmed />
+        </div>
+         <div v-if="this.display == 'renewalOthersUnderSuperVisionConfirmed'">
+          <renewal-others-under-super-vision-confirmed />
         </div>
         <div v-if="this.display == 'renewalReturnedEvaluation'">
           <renewal-returned-to-me />
@@ -365,6 +389,8 @@ import NewLicenseConfirmed from "./ApplicationTypes/NewLicense/NewLicenseConfirm
 import NewLicenseOthersConfirmed from "./ApplicationTypes/NewLicense/NewLicenseOthersConfirmed.vue";
 import NewLicenseDeclineConfirmed from "./ApplicationTypes/NewLicense/NewLicenseDeclineConfirmed.vue";
 import NewLicenseOthersDeclineConfirmed from "./ApplicationTypes/NewLicense/NewLicenseOthersDeclineConfirmed.vue";
+import NewLicenseUnderSuperVisionConfirmed from "./ApplicationTypes/NewLicense/NewLicenseUnderSuperVisionConfirmed.vue";
+import NewLicenseOthersUnderSuperVisionConfirmed from "./ApplicationTypes/NewLicense/NewLicenseOthersUnderSuperVisionConfirmed.vue";
 import NewLicenseReturnedToMe from "./ApplicationTypes/NewLicense/NewLicenseReturnedToMe.vue";
 import NewLicenseReturnedToOthers from "./ApplicationTypes/NewLicense/NewLicenseReturnedToOthers.vue";
 import NewLicensePendingPayment from "./ApplicationTypes/NewLicense/NewLicensePendingPayment.vue";
@@ -393,6 +419,10 @@ import RenewalUnderSuperVision from "./ApplicationTypes/Renewal/RenewalUnderSupe
 import RenewalOthersUnderSuperVision from "./ApplicationTypes/Renewal/RenewalOthersUnderSuperVision.vue";
 import RenewalConfirmed from "./ApplicationTypes/Renewal/RenewalConfirmed.vue";
 import RenewalOthersConfirmed from "./ApplicationTypes/Renewal/RenewalOthersConfirmed.vue";
+import RenewalDeclineConfirmed from "./ApplicationTypes/Renewal/RenewalDeclineConfirmed.vue";
+import RenewalOthersDeclineConfirmed from "./ApplicationTypes/Renewal/RenewalOthersDeclineConfirmed.vue";
+import RenewalUnderSuperVisionConfirmed from "./ApplicationTypes/Renewal/RenewalUnderSuperVisionConfirmed.vue";
+import RenewalOthersUnderSuperVisionConfirmed from "./ApplicationTypes/Renewal/RenewalOthersUnderSuperVisionConfirmed.vue";
 import RenewalReturnedToMe from "./ApplicationTypes/Renewal/RenewalReturnedToMe.vue";
 import RenewalReturnedToOthers from "./ApplicationTypes/Renewal/RenewalReturnedToOthers.vue";
 import RenewalPendingPayment from "./ApplicationTypes/Renewal/RenewalPendingPayment.vue";
@@ -431,9 +461,7 @@ import GoodStandingOthersDeclinedPayment from "./ApplicationTypes/GoodStanding/G
 import GoodStandingLicensed from "./ApplicationTypes/GoodStanding/GoodStandingLicensed.vue";
 import GoodStandingOthersLicensed from "./ApplicationTypes/GoodStanding/GoodStandingOthersLicensed.vue";
 import GoodStandingAllLicensed from "./ApplicationTypes/GoodStanding/GoodStandingAllLicensed.vue";
-
-
-import ReviewerNavBar from './ReviewerNavBar.vue';
+import ReviewerNavBar from "./ReviewerNavBar.vue";
 import ReviewerSideNav from "./ReviewerSideNav.vue";
 
 export default {
@@ -458,6 +486,8 @@ export default {
     NewLicenseConfirmed,
     NewLicenseOthersConfirmed,
     NewLicenseDeclineConfirmed,
+    NewLicenseUnderSuperVisionConfirmed,
+    NewLicenseOthersUnderSuperVisionConfirmed,
     NewLicenseOthersDeclineConfirmed,
     NewLicenseReturnedToMe,
     NewLicenseReturnedToOthers,
@@ -486,6 +516,10 @@ export default {
     RenewalOthersUnderSuperVision,
     RenewalConfirmed,
     RenewalOthersConfirmed,
+    RenewalDeclineConfirmed,
+    RenewalOthersDeclineConfirmed,
+    RenewalUnderSuperVisionConfirmed,
+    RenewalOthersUnderSuperVisionConfirmed,
     RenewalReturnedToMe,
     RenewalReturnedToOthers,
     RenewalPendingPayment,

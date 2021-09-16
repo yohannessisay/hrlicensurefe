@@ -28,6 +28,8 @@ export let dropdown = {
   renewalDeclined: false,
   renewalUnderSuperViesion: false,
   renewalConfirmed: false,
+  renewalDeclineConfirmed: false,
+  renewalUnderSuperVisionConfirmed: false,
   renewalEvaluation: false,
   renewalReturnedEvaluation: false,
   renewalUnderEvaluation: false,
@@ -125,6 +127,16 @@ export const applicationTypeDD = (applicationDetail, dropdown) => {
     dropdown.renewalConfirmed = !dropdown.renewalConfirmed;
     dropdown.renewalDeclined = false;
     dropdown.renewalUnderSuperVision = false;
+  }
+  if (applicationDetail == "RenewalDeclineConfirmed") {
+    dropdown.renewalDeclineConfirmed = !dropdown.renewalDeclineConfirmed;
+    dropdown.renewalConfirmed = false;
+    dropdown.renewalUnderSuperVisionConfirmed = false;
+  }
+  if (applicationDetail == "RenewalUnderSuperVisionConfirmed") {
+    dropdown.renewalUnderSuperVisionConfirmed = !dropdown.renewalUnderSuperVisionConfirmed;
+    dropdown.renewalConfirmed = false;
+    dropdown.renewalDeclineConfirmed = false;
   }
   if (applicationDetail == "RenewalUnassignedEvaluation") {
     dropdown.renewalUnassignedEvaluation = !dropdown.renewalUnassignedEvaluation;
@@ -226,7 +238,7 @@ export const applicationTypeDD = (applicationDetail, dropdown) => {
     dropdown.newLicenseUnderSuperVision = false;
     dropdown.newLicenseConfirmed = false;
   }
-  if (applicationDetail == "NewLicenseUnderSuperVisionDeclined") {
+  if (applicationDetail == "NewLicenseUnderSuperVisionConfirmed") {
     dropdown.newLicenseUnderSuperVisionConfirmed = !dropdown.newLicenseUnderSuperVisionConfirmed;
     dropdown.newLicenseDeclineConfirmed = false;
     dropdown.newLicenseConfirmed = false;

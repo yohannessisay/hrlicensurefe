@@ -71,7 +71,6 @@ import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import filterApplication from "../../ChildComponents/FilteredDatas/FilterApplication.js";
 import FilteredInfo from "../../ChildComponents/FilteredDatas/FilteredInfo.vue";
 import NothingToShow from "../../ChildComponents/NothingToShow.vue";
-import ReviewerNavBar from "../../ReviewerNavBar.vue";
 import Spinner from "@/sharedComponents/Spinner";
 import store from "../../../../store";
 import Title from "@/sharedComponents/TitleWithIllustration";
@@ -85,7 +84,6 @@ export default {
     },
   },
   components: {
-    ReviewerNavBar,
     ErrorFlashMessage,
     FilteredInfo,
     Spinner,
@@ -132,7 +130,7 @@ export default {
       showLoading.value = true;
       const statusId = applicationStatus(store, 'REVDRA');
       const adminStatus = [statusId, adminId];
-      store.dispatch("reviewerRenewal/getRenewalUnfinished", adminStatus).then((res) => {
+      store.dispatch("reviewerRenewal/getRenewalUnfinished", adminStatus).then(() => {
         showLoading.value = false;
         renewalUnfinished.value =
           store.getters["reviewerRenewal/getRenewalUnfinishedSearched"];
