@@ -23,12 +23,12 @@
       />
     </Modal>
     <Modal v-if="showSendEmail">
-      <SendEmail @closeModal="showSendEmail=false" />
+      <SendEmail @closeModal="showSendEmail = false" />
     </Modal>
   </div>
 </template>
 <script>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import LandingTopNav from "./sections/LandingTopNav";
 import GetCertifiedSection from "./sections/GetCertifiedSection";
 import NewLicenseSection from "./sections/NewLicenseSection";
@@ -60,6 +60,11 @@ export default {
     SendEmail,
   },
   setup() {
+    onMounted(() => {
+      // setTimeout(() => {
+      // location.reload(true);
+      // }, 1500);
+    });
     const showLogin = ref(false);
     const showSignUp = ref(false);
     const showSendEmail = ref(false);
@@ -82,7 +87,7 @@ export default {
       redirectToSignup,
       redirectToLogin,
       forgotPassword,
-      showSendEmail
+      showSendEmail,
     };
   },
 };
