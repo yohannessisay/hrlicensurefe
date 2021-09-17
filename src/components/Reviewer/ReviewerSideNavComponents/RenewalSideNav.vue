@@ -819,7 +819,7 @@
                             dropdownValue.renewalUnderReview,
                             dropdownValue.renewalAssigned,
                           ]"
-                          name="In Review"
+                          name="Assigned"
                           dropDownHandlerValue="RenewalAssigned"
                           :dropDownMenus="[
                             'renewalAssigned',
@@ -1213,7 +1213,7 @@
                     dropdownValue.renewal,
                     dropdownValue.renewalAssigned,
                   ]"
-                  name="In Review"
+                  name="Assigned"
                   dropDownHandlerValue="RenewalAssigned"
                   :dropDownMenus="[
                     'renewalAssigned',

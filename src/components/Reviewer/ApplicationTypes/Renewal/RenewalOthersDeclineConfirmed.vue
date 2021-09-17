@@ -28,7 +28,7 @@
       </div>
       <div class="flex flex-wrap pb-medium rounded h-full" v-if="!showLoading">
         <nothing-to-show :nothingToShow="nothingToShow" />
-        <decline-confirmed-applications
+        <confirmed-applications
           :declineConfirmedApplication="getRenewalOthersDeclineConfirmed"
           app_type="Renewal"
           others_decline_confirmed="true"
@@ -73,7 +73,7 @@ import { useStore } from "vuex";
 import moment from "moment";
 
 import applicationStatus from "../../Configurations/getApplicationStatus.js";
-import DeclineConfirmedApplications from "../ChildApplicationTypes/DeclineConfirmedApplications.vue";
+import ConfirmedApplications from "../ChildApplicationTypes/ConfirmedApplications.vue";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import filterApplication from "../../ChildComponents/FilteredDatas/FilterApplication.js";
 import FilteredInfo from "../../ChildComponents/FilteredDatas/FilteredInfo.vue";
@@ -96,7 +96,7 @@ export default {
     FilteredInfo,
     Spinner,
     NothingToShow,
-    DeclineConfirmedApplications,
+    ConfirmedApplications,
     Title,
   },
   setup() {

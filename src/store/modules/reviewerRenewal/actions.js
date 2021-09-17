@@ -650,9 +650,6 @@ export default {
       })
       
     })
-    // const reEvaluate = resp.data.data.filter(function(e) {
-    //   return e.reviewerId === adminStatus[1];
-    // });
     commit(SET_RENEWAL_RE_EVALUATE, evaluator);
   },
 
@@ -1060,7 +1057,7 @@ export default {
     const url = baseUrl + "/renewals/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
     const declineConfirmed = resp.data.data.filter(function(e) {
-      return e.reviewerId === adminStatus[1] && e.previousApplicationStatus.code === "DEC";
+      return e.reviewerId === adminStatus[1] && e.previousApplicationStatus.code == "DEC";
     });
     commit(SET_RENEWAL_DECLINE_CONFIRMED, declineConfirmed);
   },

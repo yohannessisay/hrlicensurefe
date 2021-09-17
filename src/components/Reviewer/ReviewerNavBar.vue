@@ -129,8 +129,6 @@ export default {
     let isUserManager = ref(false);
     const adminName = JSON.parse(localStorage.getItem("allAdminData")).name;
     const adminRole = JSON.parse(localStorage.getItem("allAdminData")).role.code;
-    console.log("ad ro", adminRole)
-    console.log("route is ", router.currentRoute._value.path)
     
 
     const navigateToHomePage = () => {
