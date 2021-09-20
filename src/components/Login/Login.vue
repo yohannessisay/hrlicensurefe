@@ -79,7 +79,7 @@
 <script>
 import Title from "@/sharedComponents/Title";
 import { useStore } from "vuex";
-import { ref, reactive } from "vue";
+import { ref } from "vue";
 import { useRouter } from "vue-router";
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
@@ -116,7 +116,9 @@ export default {
         message.value.showLoading = true;
         message.value.showFlash = false;
         message.value.showErrorFlash = false;
+        console.log(email);
         store.dispatch("user/login", email).then((res) => {
+          console.log(res);
           if (res) {
             const userId = res.data.data.id;
             store.dispatch("profile/getProfileByUserId", userId).then((res) => {
@@ -129,9 +131,6 @@ export default {
                   location.reload(true);
                 }, 1500);
                 router.push({ path: "/menu" });
-                // setTimeout(() => {
-                //   router.push({ path: "/menu" });
-                // }, 2500);
               } else {
                 message.value.showLoading = false;
                 message.value.showFlash = true;
@@ -178,7 +177,6 @@ export default {
       isEmail,
       validateForm,
       message,
-
       forgot,
     };
   },
