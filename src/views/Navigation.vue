@@ -132,6 +132,7 @@ export default {
   },
   methods: {
     logout() {
+      location.reload();
       localStorage.removeItem("token");
       localStorage.removeItem("userId");
       this.$router.push({ path: "/" });
