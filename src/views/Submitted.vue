@@ -410,8 +410,8 @@ export default {
           if (this.license) {
             this.newlicense = this.license.filter(function(e) {
               return (
-                e.applicationStatus.code.includes("SUB") ||
-                e.applicationStatus.code.includes("UPD")
+                e.applicationStatus.code.includes("UPD") ||
+                e.applicationStatus.code.includes("SUB")
               );
             });
           }
@@ -422,8 +422,8 @@ export default {
             if (this.license) {
               this.renewal = this.license.filter(function(e) {
                 return (
-                  e.applicationStatus.code.includes("SUB") ||
-                  e.applicationStatus.code.includes("UPD")
+                  e.applicationStatus.code.includes("UPD") ||
+                  e.applicationStatus.code.includes("SUB")
                 );
               });
             }
@@ -437,8 +437,8 @@ export default {
               if (this.license) {
                 this.verification = this.license.filter(function(e) {
                   return (
-                    e.applicationStatus.code.includes("SUB") ||
-                    e.applicationStatus.code.includes("UPD")
+                    e.applicationStatus.code.includes("UPD") ||
+                    e.applicationStatus.code.includes("SUB")
                   );
                 });
               }
@@ -453,8 +453,8 @@ export default {
               if (this.license) {
                 this.goodstanding = this.license.filter(function(e) {
                   return (
-                    e.applicationStatus.code.includes("SUB") ||
-                    e.applicationStatus.code.includes("UPD")
+                    e.applicationStatus.code.includes("UPD") ||
+                    e.applicationStatus.code.includes("SUB")
                   );
                 });
               }
