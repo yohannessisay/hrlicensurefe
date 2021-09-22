@@ -79,16 +79,25 @@
       </div>
     </div>
   </div> -->
-  
+
   <div>
-    <reviewer-nav-bar :tab="display" @changeSelectedSideBar="displaySet" @navigateToHome="displaySet"/>
+    <reviewer-nav-bar
+      :tab="display"
+      @changeSelectedSideBar="displaySet"
+      @navigateToHome="displaySet"
+    />
     <!-- <reviewer-nav-bar :display="menu" @changeDisplay="displaySet" /> -->
     <div style="width:100%" class="flex flex-row">
       <div class="sidenav">
         <reviewer-side-nav :display="menu" @changeDisplay="displaySet" />
       </div>
       <div class="menu">
-        <div v-if="this.display == 'newLicenseUnassigned' && this.isStatusFetched==true">
+        <div
+          v-if="
+            this.display == 'newLicenseUnassigned' &&
+              this.isStatusFetched == true
+          "
+        >
           <new-license-unassigned />
         </div>
         <div v-if="this.display == 'newLicenseAssigned'">
@@ -122,7 +131,7 @@
         <div v-if="this.display == 'newLicenseEvaluationAssessment'">
           <new-license-re-evaluate />
         </div>
-         <div v-if="this.display == 'newLicenseOthersEvaluationAssessment'">
+        <div v-if="this.display == 'newLicenseOthersEvaluationAssessment'">
           <new-license-others-re-evaluate />
         </div>
         <div v-if="this.display == 'newLicenseDeclined'">
@@ -134,7 +143,7 @@
         <div v-if="this.display == 'newLicenseUnderSuperVision'">
           <new-license-under-super-vision />
         </div>
-         <div v-if="this.display == 'newLicenseOthersUnderSuperVision'">
+        <div v-if="this.display == 'newLicenseOthersUnderSuperVision'">
           <new-license-others-under-super-vision />
         </div>
         <div v-if="this.display == 'newLicenseConfirmed'">
@@ -152,7 +161,7 @@
         <div v-if="this.display == 'newLicenseUnderSuperVisionConfirmed'">
           <new-license-under-super-vision-confirmed />
         </div>
-         <div v-if="this.display == 'newLicenseOthersUnderSuperVisionConfirmed'">
+        <div v-if="this.display == 'newLicenseOthersUnderSuperVisionConfirmed'">
           <new-license-others-under-super-vision-confirmed />
         </div>
         <div v-if="this.display == 'newLicenseReturnedEvaluation'">
@@ -178,7 +187,7 @@
         </div>
         <div v-if="this.display == 'newLicenseOthersLicensed'">
           <new-license-others-licensed />
-        </div> 
+        </div>
         <div v-if="this.display == 'newLicenseAllLicensed'">
           <new-license-all-licensed />
         </div>
@@ -218,7 +227,7 @@
         <div v-if="this.display == 'renewalEvaluationAssessment'">
           <renewal-re-evaluate />
         </div>
-         <div v-if="this.display == 'renewalOthersEvaluationAssessment'">
+        <div v-if="this.display == 'renewalOthersEvaluationAssessment'">
           <renewal-others-re-evaluate />
         </div>
         <div v-if="this.display == 'renewalDeclined'">
@@ -230,7 +239,7 @@
         <div v-if="this.display == 'renewalUnderSuperVision'">
           <renewal-under-super-vision />
         </div>
-         <div v-if="this.display == 'renewalOthersUnderSuperVision'">
+        <div v-if="this.display == 'renewalOthersUnderSuperVision'">
           <renewal-others-under-super-vision />
         </div>
         <div v-if="this.display == 'renewalConfirmed'">
@@ -248,7 +257,7 @@
         <div v-if="this.display == 'renewalUnderSuperVisionConfirmed'">
           <renewal-under-super-vision-confirmed />
         </div>
-         <div v-if="this.display == 'renewalOthersUnderSuperVisionConfirmed'">
+        <div v-if="this.display == 'renewalOthersUnderSuperVisionConfirmed'">
           <renewal-others-under-super-vision-confirmed />
         </div>
         <div v-if="this.display == 'renewalReturnedEvaluation'">
@@ -359,28 +368,26 @@
           <good-standing-all-licensed />
         </div>
         <!-- end goodstanding -->
-
       </div>
     </div>
   </div>
 </template>
 
 <script>
-
 import { ref, onMounted } from "vue";
-import { useStore } from 'vuex';
+import { useStore } from "vuex";
 
-import newLicenseUnassigned from "./ApplicationTypes/NewLicense/newLicenseUnassigned.vue"
-import NewLicenseAssigned from "./ApplicationTypes/NewLicense/NewLicenseAssigned.vue"
-import NewLicenseAssignedToOthers from "./ApplicationTypes/NewLicense/NewLicenseAssignedToOthers.vue"
-import NewLicenseUnfinished from "./ApplicationTypes/NewLicense/NewLicenseUnfinished.vue"
-import NewLicenseOthersUnfinished from "./ApplicationTypes/NewLicense/NewLicenseOthersUnfinished.vue"
-import NewLicenseUnConfirmed from "./ApplicationTypes/NewLicense/NewLicenseUnConfirmed.vue"
-import NewLicenseAllUnConfirmed from "./ApplicationTypes/NewLicense/NewLicenseAllUnConfirmed.vue"
-import NewLicenseOnReview from "./ApplicationTypes/NewLicense/NewLicenseOnReview.vue"
-import NewLicenseOthersOnReview from "./ApplicationTypes/NewLicense/NewLicenseOthersOnReview.vue"
-import NewLicenseReEvaluate from "./ApplicationTypes/NewLicense/NewLicenseReEvaluate.vue"
-import NewLicenseOthersReEvaluate from "./ApplicationTypes/NewLicense/NewLicenseOthersReEvaluate.vue"
+import newLicenseUnassigned from "./ApplicationTypes/NewLicense/newLicenseUnassigned.vue";
+import NewLicenseAssigned from "./ApplicationTypes/NewLicense/NewLicenseAssigned.vue";
+import NewLicenseAssignedToOthers from "./ApplicationTypes/NewLicense/NewLicenseAssignedToOthers.vue";
+import NewLicenseUnfinished from "./ApplicationTypes/NewLicense/NewLicenseUnfinished.vue";
+import NewLicenseOthersUnfinished from "./ApplicationTypes/NewLicense/NewLicenseOthersUnfinished.vue";
+import NewLicenseUnConfirmed from "./ApplicationTypes/NewLicense/NewLicenseUnConfirmed.vue";
+import NewLicenseAllUnConfirmed from "./ApplicationTypes/NewLicense/NewLicenseAllUnConfirmed.vue";
+import NewLicenseOnReview from "./ApplicationTypes/NewLicense/NewLicenseOnReview.vue";
+import NewLicenseOthersOnReview from "./ApplicationTypes/NewLicense/NewLicenseOthersOnReview.vue";
+import NewLicenseReEvaluate from "./ApplicationTypes/NewLicense/NewLicenseReEvaluate.vue";
+import NewLicenseOthersReEvaluate from "./ApplicationTypes/NewLicense/NewLicenseOthersReEvaluate.vue";
 import NewLicenseDeclined from "./ApplicationTypes/NewLicense/NewLicenseDeclined.vue";
 import NewLicenseAllDeclined from "./ApplicationTypes/NewLicense/NewLicenseAllDeclined.vue";
 import NewLicenseUnderSuperVision from "./ApplicationTypes/NewLicense/NewLicenseUnderSuperVision.vue";
@@ -402,17 +409,17 @@ import NewLicenseOthersLicensed from "./ApplicationTypes/NewLicense/NewLicenseOt
 import NewLicenseAllLicensed from "./ApplicationTypes/NewLicense/NewLicenseAllLicensed.vue";
 
 // import renewal components
-import RenewalUnassigned from "./ApplicationTypes/Renewal/RenewalUnassigned.vue"
-import RenewalAssigned from "./ApplicationTypes/Renewal/RenewalAssigned.vue"
-import RenewalAssignedToOthers from "./ApplicationTypes/Renewal/RenewalAssignedToOthers.vue"
-import RenewalUnfinished from "./ApplicationTypes/Renewal/RenewalUnfinished.vue"
-import RenewalOthersUnfinished from "./ApplicationTypes/Renewal/RenewalOthersUnfinished.vue"
-import RenewalUnconfirmed from "./ApplicationTypes/Renewal/RenewalUnconfirmed.vue"
-import RenewalAllUnconfirmed from "./ApplicationTypes/Renewal/RenewalAllUnconfirmed.vue"
-import RenewalOnReview from "./ApplicationTypes/Renewal/RenewalOnReview.vue"
-import RenewalOthersOnReview from "./ApplicationTypes/Renewal/RenewalOthersOnReview.vue"
-import RenewalReEvaluate from "./ApplicationTypes/Renewal/RenewalReEvaluate.vue"
-import RenewalOthersReEvaluate from "./ApplicationTypes/Renewal/RenewalOthersReEvaluate.vue"
+import RenewalUnassigned from "./ApplicationTypes/Renewal/RenewalUnassigned.vue";
+import RenewalAssigned from "./ApplicationTypes/Renewal/RenewalAssigned.vue";
+import RenewalAssignedToOthers from "./ApplicationTypes/Renewal/RenewalAssignedToOthers.vue";
+import RenewalUnfinished from "./ApplicationTypes/Renewal/RenewalUnfinished.vue";
+import RenewalOthersUnfinished from "./ApplicationTypes/Renewal/RenewalOthersUnfinished.vue";
+import RenewalUnconfirmed from "./ApplicationTypes/Renewal/RenewalUnconfirmed.vue";
+import RenewalAllUnconfirmed from "./ApplicationTypes/Renewal/RenewalAllUnconfirmed.vue";
+import RenewalOnReview from "./ApplicationTypes/Renewal/RenewalOnReview.vue";
+import RenewalOthersOnReview from "./ApplicationTypes/Renewal/RenewalOthersOnReview.vue";
+import RenewalReEvaluate from "./ApplicationTypes/Renewal/RenewalReEvaluate.vue";
+import RenewalOthersReEvaluate from "./ApplicationTypes/Renewal/RenewalOthersReEvaluate.vue";
 import RenewalDeclined from "./ApplicationTypes/Renewal/RenewalDeclined.vue";
 import RenewalAllDeclined from "./ApplicationTypes/Renewal/RenewalAllDeclined.vue";
 import RenewalUnderSuperVision from "./ApplicationTypes/Renewal/RenewalUnderSuperVision.vue";
@@ -434,26 +441,26 @@ import RenewalOthersLicensed from "./ApplicationTypes/Renewal/RenewalOthersLicen
 import RenewalAllLicensed from "./ApplicationTypes/Renewal/RenewalAllLicensed.vue";
 
 // import verification components
-import VerificationUnassigned from "./ApplicationTypes/Verification/VerificationUnassigned.vue"
-import VerificationAssigned from "./ApplicationTypes/Verification/VerificationAssigned.vue"
-import VerificationAssignedToOthers from "./ApplicationTypes/Verification/VerificationAssignedToOthers.vue"
-import VerificationUnfinished from "./ApplicationTypes/Verification/VerificationUnfinished.vue"
-import VerificationOthersUnfinished from "./ApplicationTypes/Verification/VerificationOthersUnfinished.vue"
-import VerificationUnconfirmed from "./ApplicationTypes/Verification/VerificationUnconfirmed.vue"
-import VerificationAllUnconfirmed from "./ApplicationTypes/Verification/VerificationUnconfirmed.vue"
-import VerificationDeclined from "./ApplicationTypes/Verification/VerificationDeclined.vue"
-import VerificationAllDeclined from "./ApplicationTypes/Verification/VerificationAllDeclined.vue"
+import VerificationUnassigned from "./ApplicationTypes/Verification/VerificationUnassigned.vue";
+import VerificationAssigned from "./ApplicationTypes/Verification/VerificationAssigned.vue";
+import VerificationAssignedToOthers from "./ApplicationTypes/Verification/VerificationAssignedToOthers.vue";
+import VerificationUnfinished from "./ApplicationTypes/Verification/VerificationUnfinished.vue";
+import VerificationOthersUnfinished from "./ApplicationTypes/Verification/VerificationOthersUnfinished.vue";
+import VerificationUnconfirmed from "./ApplicationTypes/Verification/VerificationUnconfirmed.vue";
+import VerificationAllUnconfirmed from "./ApplicationTypes/Verification/VerificationUnconfirmed.vue";
+import VerificationDeclined from "./ApplicationTypes/Verification/VerificationDeclined.vue";
+import VerificationAllDeclined from "./ApplicationTypes/Verification/VerificationAllDeclined.vue";
 
 // import goodstanding components
-import GoodStandingUnassigned from "./ApplicationTypes/GoodStanding/GoodStandingUnassigned.vue"
-import GoodStandingAssigned from "./ApplicationTypes/GoodStanding/GoodStandingAssigned.vue"
-import GoodStandingAssignedToOthers from "./ApplicationTypes/GoodStanding/GoodStandingAssignedToOthers.vue"
-import GoodStandingUnfinished from "./ApplicationTypes/GoodStanding/GoodStandingUnfinished.vue"
-import GoodStandingOthersUnfinished from "./ApplicationTypes/GoodStanding/GoodStandingOthersUnfinished.vue"
-import GoodStandingUnconfirmed from "./ApplicationTypes/GoodStanding/GoodStandingUnconfirmed.vue"
-import GoodStandingAllUnconfirmed from "./ApplicationTypes/GoodStanding/GoodStandingAllUnconfirmed.vue"
-import GoodStandingDeclined from "./ApplicationTypes/GoodStanding/GoodStandingDeclined.vue"
-import GoodStandingAllDeclined from "./ApplicationTypes/GoodStanding/GoodStandingAllDeclined.vue"
+import GoodStandingUnassigned from "./ApplicationTypes/GoodStanding/GoodStandingUnassigned.vue";
+import GoodStandingAssigned from "./ApplicationTypes/GoodStanding/GoodStandingAssigned.vue";
+import GoodStandingAssignedToOthers from "./ApplicationTypes/GoodStanding/GoodStandingAssignedToOthers.vue";
+import GoodStandingUnfinished from "./ApplicationTypes/GoodStanding/GoodStandingUnfinished.vue";
+import GoodStandingOthersUnfinished from "./ApplicationTypes/GoodStanding/GoodStandingOthersUnfinished.vue";
+import GoodStandingUnconfirmed from "./ApplicationTypes/GoodStanding/GoodStandingUnconfirmed.vue";
+import GoodStandingAllUnconfirmed from "./ApplicationTypes/GoodStanding/GoodStandingAllUnconfirmed.vue";
+import GoodStandingDeclined from "./ApplicationTypes/GoodStanding/GoodStandingDeclined.vue";
+import GoodStandingAllDeclined from "./ApplicationTypes/GoodStanding/GoodStandingAllDeclined.vue";
 import GoodStandingPendingPayment from "./ApplicationTypes/GoodStanding/GoodStandingPendingPayment.vue";
 import GoodStandingOthersPendingPayment from "./ApplicationTypes/GoodStanding/GoodStandingOthersPendingPayment.vue";
 import GoodStandingDeclinedPayment from "./ApplicationTypes/GoodStanding/GoodStandingDeclinedPayment.vue";
@@ -556,37 +563,35 @@ export default {
     GoodStandingLicensed,
     GoodStandingOthersLicensed,
     GoodStandingAllLicensed,
-
   },
   setup() {
-
     const store = useStore();
     let display = ref("newLicenseUnassigned");
     let selectedValue = ref("");
 
     const displaySet = (menu) => {
       display.value = menu;
-    }
+    };
 
     let isStatusFetched = ref(false);
 
     const fetchApplicationStatus = () => {
-      store.dispatch("admin/getApplicationStatus").then(res => {
+      store.dispatch("admin/getApplicationStatus").then((res) => {
         isStatusFetched.value = true;
-      })
-    }
+      });
+    };
 
     onMounted(() => {
       fetchApplicationStatus();
-    })
-    
+    });
+
     return {
       displaySet,
       display,
       isStatusFetched,
       selectedValue,
-    }
-  }
+    };
+  },
 };
 </script>
 <style>

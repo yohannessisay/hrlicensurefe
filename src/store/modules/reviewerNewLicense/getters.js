@@ -84,4 +84,7 @@ export default {
   getNewLicenseUnderSuperVisionConfirmedSearched: (state) => state.newLicenseUnderSuperVisionConfirmedSearched,
   getNewLicenseOthersUnderSuperVisionConfirmed: (state) => state.newLicenseOthersUnderSuperVisionConfirmed,
   getNewLicenseOthersUnderSuperVisionConfirmedSearched: (state) => state.newLicenseOthersUnderSuperVisionConfirmedSearched,
+
+  getNewLicenseForSpecificUser: (state) => state.newLicenseForSpecificUser,
+  getNewLicenseForSpecificUserSearched: (state) => state.newLicenseForSpecificUserSearched,
 };

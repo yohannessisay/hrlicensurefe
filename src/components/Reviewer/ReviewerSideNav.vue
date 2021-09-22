@@ -5,10 +5,32 @@
   >
     <div class="px-8 h-screen">
       <ul class="py-1 ">
-        <new-license-side-nav :expertLevelId="expertLevelId" :adminRole="adminRole" :dropdownValue="dropdownValue" @applicationTypeSelected="applicationTypeHandler" @selectNewLicenseMenu="selectMenu"/>
-        <renewal-side-nav :expertLevelId="expertLevelId" :adminRole="adminRole" :dropdownValue="dropdownValue" @applicationTypeSelected="applicationTypeHandler" @selectRenewalMenu="selectMenu" />
-        <verification-side-nav :dropdownValue="dropdownValue" :adminRole="adminRole" @applicationTypeSelected="applicationTypeHandler" @selectVerificationMenu="selectMenu" />
-        <good-standing-side-nav :dropdownValue="dropdownValue" :adminRole="adminRole" @applicationTypeSelected="applicationTypeHandler" @selectGoodStandingMenu="selectMenu" />
+        <new-license-side-nav
+          :expertLevelId="expertLevelId"
+          :adminRole="adminRole"
+          :dropdownValue="dropdownValue"
+          @applicationTypeSelected="applicationTypeHandler"
+          @selectNewLicenseMenu="selectMenu"
+        />
+        <renewal-side-nav
+          :expertLevelId="expertLevelId"
+          :adminRole="adminRole"
+          :dropdownValue="dropdownValue"
+          @applicationTypeSelected="applicationTypeHandler"
+          @selectRenewalMenu="selectMenu"
+        />
+        <verification-side-nav
+          :dropdownValue="dropdownValue"
+          :adminRole="adminRole"
+          @applicationTypeSelected="applicationTypeHandler"
+          @selectVerificationMenu="selectMenu"
+        />
+        <good-standing-side-nav
+          :dropdownValue="dropdownValue"
+          :adminRole="adminRole"
+          @applicationTypeSelected="applicationTypeHandler"
+          @selectGoodStandingMenu="selectMenu"
+        />
         <!-- start verification Side Nav here -->
         <!-- end verification Side Nav here -->
 
@@ -20,11 +42,14 @@
 </template>
 <script>
 import { ref } from "vue";
-import NewLicenseSideNav from './ReviewerSideNavComponents/NewLicenseSideNav.vue';
-import RenewalSideNav from './ReviewerSideNavComponents/RenewalSideNav.vue';
-import VerificationSideNav from './ReviewerSideNavComponents/VerificationSideNav.vue';
-import GoodStandingSideNav from './ReviewerSideNavComponents/GoodStandingSideNav.vue';
-import { dropdown, applicationTypeDD } from "./Configurations/ApplicationDetailDropDown";
+import NewLicenseSideNav from "./ReviewerSideNavComponents/NewLicenseSideNav.vue";
+import RenewalSideNav from "./ReviewerSideNavComponents/RenewalSideNav.vue";
+import VerificationSideNav from "./ReviewerSideNavComponents/VerificationSideNav.vue";
+import GoodStandingSideNav from "./ReviewerSideNavComponents/GoodStandingSideNav.vue";
+import {
+  dropdown,
+  applicationTypeDD,
+} from "./Configurations/ApplicationDetailDropDown";
 export default {
   props: ["display"],
   // methods: {
@@ -32,28 +57,28 @@ export default {
   //     this.$emit("changeDisplay", menu);
   //   },
   // },
- components: {
-     NewLicenseSideNav,
-     RenewalSideNav,
-     VerificationSideNav,
-     GoodStandingSideNav,
- },
-  setup(props, {emit}) {
-
-    const expertLevelId = JSON.parse(localStorage.getItem("allAdminData")).expertLevelId;
+  components: {
+    NewLicenseSideNav,
+    RenewalSideNav,
+    VerificationSideNav,
+    GoodStandingSideNav,
+  },
+  setup(props, { emit }) {
+    const expertLevelId = JSON.parse(localStorage.getItem("allAdminData"))
+      .expertLevelId;
     const adminRole = localStorage.getItem("role");
-   
+
     let dropdownValue = ref({
-      ...dropdown
+      ...dropdown,
     });
 
     const applicationTypeHandler = (value) => {
       applicationTypeDD(value, dropdownValue.value);
-    }
+    };
 
     const selectMenu = (menu) => {
-        emit("changeDisplay", menu);
-    }
+      emit("changeDisplay", menu);
+    };
 
     return {
       dropdownValue,
@@ -61,7 +86,6 @@ export default {
       adminRole,
       selectMenu,
       applicationTypeHandler,
-
     };
   },
 };

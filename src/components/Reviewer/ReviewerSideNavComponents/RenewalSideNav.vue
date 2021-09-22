@@ -1493,9 +1493,11 @@ export default {
         renewalDDIcon.value.isConfirmedEvaluationUp = !renewalDDIcon.value
           .isConfirmedEvaluationUp;
       } else if (applicationValue == "RenewalDeclineConfirmed") {
-        renewalDDIcon.value.isDeclineConfirmedUp = !renewalDDIcon.value.isDeclineConfirmedUp;
+        renewalDDIcon.value.isDeclineConfirmedUp = !renewalDDIcon.value
+          .isDeclineConfirmedUp;
       } else if (applicationValue == "RenewalUnderSuperVisionConfirmed") {
-        renewalDDIcon.value.isUnderSuperVisionConfirmedUp = !renewalDDIcon.value.isUnderSuperVisionConfirmedUp;
+        renewalDDIcon.value.isUnderSuperVisionConfirmedUp = !renewalDDIcon.value
+          .isUnderSuperVisionConfirmedUp;
       } else if (applicationValue == "RenewalPaymentReview") {
         renewalDDIcon.value.isPaymentReviewnUp = !renewalDDIcon.value
           .isPaymentReviewnUp;

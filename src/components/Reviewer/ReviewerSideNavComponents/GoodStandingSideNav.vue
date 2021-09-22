@@ -392,7 +392,9 @@
                       <div class="p-1 ">
                         <h3
                           class="text-lightBlueB-500 mt-tiny"
-                          @click="goodStandingDDHandler('GoodStandingPaymentReview')"
+                          @click="
+                            goodStandingDDHandler('GoodStandingPaymentReview')
+                          "
                         >
                           <span style="color: white;">
                             <i
@@ -475,7 +477,10 @@
                 ]"
                 name="Letter"
                 dropDownHandlerValue="GoodStandingLicensed"
-                :dropDownMenus="['goodStandingLicensed', 'goodStandingOthersLicensed']"
+                :dropDownMenus="[
+                  'goodStandingLicensed',
+                  'goodStandingOthersLicensed',
+                ]"
                 :isDropDownIconUp="goodStandingDDIcon.isLicensedUp"
                 :adminRole="adminRole"
                 :yoursAndOthersApplication="['Letter', 'Others Letter']"
@@ -526,10 +531,10 @@ export default {
       emit("selectGoodStandingMenu", menu);
     };
 
-
     const dropDownHandler = (applicationValue) => {
       if (applicationValue == "GoodStandingLicensed") {
-        goodStandingDDIcon.value.isLicensedUp = !goodStandingDDIcon.value.isLicensedUp;
+        goodStandingDDIcon.value.isLicensedUp = !goodStandingDDIcon.value
+          .isLicensedUp;
       } else if (applicationValue == "GoodStandingInReviewPayment") {
         goodStandingDDIcon.value.isInReviewPaymentUp = !goodStandingDDIcon.value
           .isInReviewPaymentUp;
@@ -538,7 +543,7 @@ export default {
           .isDeclinedPaymentUp;
       }
       emit("applicationTypeSelected", applicationValue);
-    }
+    };
 
     const dropDownListHandler = (menu) => {
       emit("selectGoodStandingMenu", menu);

@@ -84,6 +84,9 @@ import {
   SET_NEW_LICENSE_UNDER_SUPER_VISION_CONFIRMED_SEARCHED,
   SET_NEW_LICENSE_OTHERS_UNDER_SUPER_VISION_CONFIRMED,
   SET_NEW_LICENSE_OTHERS_UNDER_SUPER_VISION_CONFIRMED_SEARCHED,
+
+  SET_NEW_LICENSE_FOR_SPECIFIC_USER,
+  SET_NEW_LICENSE_FOR_SPECIFIC_USER_SEARCHED,
 } from "./mutation-types";
 
 export default {
@@ -342,5 +345,13 @@ export default {
   },
   [SET_NEW_LICENSE_OTHERS_UNDER_SUPER_VISION_CONFIRMED_SEARCHED](state, searchedVal) {
     state.newLicenseOthersUnderSuperVisionConfirmedSearched = searchedVal;
+  },
+
+  [SET_NEW_LICENSE_FOR_SPECIFIC_USER](state, data) {
+    state.newLicenseForSpecificUser = data;
+    state.newLicenseForSpecificUserSearched = data;
+  },
+  [SET_NEW_LICENSE_FOR_SPECIFIC_USER_SEARCHED](state, searchedVal) {
+    state.newLicenseForSpecificUserSearched = searchedVal;
   },
 };

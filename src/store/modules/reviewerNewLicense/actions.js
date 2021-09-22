@@ -84,6 +84,9 @@ import {
   SET_NEW_LICENSE_OTHERS_UNDER_SUPER_VISION_CONFIRMED,
   SET_NEW_LICENSE_OTHERS_UNDER_SUPER_VISION_CONFIRMED_SEARCHED,
 
+  SET_NEW_LICENSE_FOR_SPECIFIC_USER,
+  SET_NEW_LICENSE_FOR_SPECIFIC_USER_SEARCHED,
+
   NEW_LICENSE_REPORT,
 } from "./mutation-types";
 
@@ -1187,5 +1190,38 @@ export default {
     });
     commit(SET_NEW_LICENSE_OTHERS_UNDER_SUPER_VISION_CONFIRMED_SEARCHED, searchedVal);
   },
+
+  async getNewLicenseForSpecificUser({ commit }, userStatus) {
+    const url = baseUrl + "/newLicenses/status/"+userStatus[0];
+    const resp = await ApiService.get(url);
+
+    const getUsersNewLicense = resp.data.data.filter(function(e) {
+      return e.applicant.id === userStatus[1];
+    })
+    commit(SET_NEW_LICENSE_FOR_SPECIFIC_USER, getUsersNewLicense);
+  },
   
+  getNewLicenseForSpecificUserSearched({ commit, getters }, searchKey) {
+    if (getters.getNewLicenseForSpecificUser === undefined) {
+      return;
+    }
+    const searchedVal = getters.getNewLicenseForSpecificUser.filter(function(
+      e
+    ) {
+      return e.newLicenseCode === undefined
+        ? ""
+        : e.newLicenseCode.toLowerCase().includes(searchKey.toLowerCase()) ||
+            (e.applicant.profile.name + " " + e.applicant.profile.fatherName)
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.name
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.fatherName
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.reviewer.name.toLowerCase().includes(searchKey.toLowerCase());
+    });
+    commit(SET_NEW_LICENSE_FOR_SPECIFIC_USER_SEARCHED, searchedVal);
+  },
 };

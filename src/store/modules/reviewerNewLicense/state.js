@@ -86,5 +86,8 @@ export default {
     newLicenseOthersUnderSuperVisionConfirmed: [],
     newLicenseOthersUnderSuperVisionConfirmedSearched: [],
 
+    newLicenseForSpecificUser: [],
+    newLicenseForSpecificUserSearched: [],
+
   },
 };

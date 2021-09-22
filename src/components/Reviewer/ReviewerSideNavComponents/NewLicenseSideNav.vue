@@ -470,7 +470,7 @@
                 </li>
               </div>
               <!-- Expert sidenav starts here -->
-              
+
               <div v-if="expertLevelId == 3">
                 <drop-down-lists
                   :dropdownValue="[
@@ -1482,8 +1482,8 @@ export default {
         newLicenseDDIcon.value.isDeclineConfirmedUp = !newLicenseDDIcon.value
           .isDeclineConfirmedUp;
       } else if (applicationValue == "NewLicenseUnderSuperVisionConfirmed") {
-        newLicenseDDIcon.value.isUnderSuperVisionConfirmedUp = !newLicenseDDIcon.value
-          .isUnderSuperVisionConfirmedUp;
+        newLicenseDDIcon.value.isUnderSuperVisionConfirmedUp = !newLicenseDDIcon
+          .value.isUnderSuperVisionConfirmedUp;
       } else if (applicationValue == "NewLicensePaymentReview") {
         newLicenseDDIcon.value.isPaymentReviewnUp = !newLicenseDDIcon.value
           .isPaymentReviewnUp;
@@ -1525,7 +1525,7 @@ export default {
       } else if (applicationValue == "NewLicenseReEvaluate") {
         newLicenseDDIcon.value.isReEvaluateUp = !newLicenseDDIcon.value
           .isReEvaluateUp;
-      }  else if (applicationValue == "NewLicenseUnderSuperVision") {
+      } else if (applicationValue == "NewLicenseUnderSuperVision") {
         newLicenseDDIcon.value.isUnderSuperVisionUp = !newLicenseDDIcon.value
           .isUnderSuperVisionUp;
       } else if (applicationValue == "NewLicenseConfirmed") {
