@@ -404,11 +404,11 @@ export default {
     fetchLicensebyId() {
       this.showLoading = !this.showLoading;
       this.$store
-        .dispatch("newlicense/getNewLicense")
+        .dispatch("renewal/getRenewalLicense")
         .then((res) => {
           this.license = res.data.data;
           if (this.license) {
-            this.newlicense = this.license.filter(function(e) {
+            this.renewal = this.license.filter(function(e) {
               return (
                 e.applicationStatus.code.includes("UPD") ||
                 e.applicationStatus.code.includes("SUB")
@@ -417,10 +417,10 @@ export default {
           }
         })
         .then(() => {
-          this.$store.dispatch("renewal/getRenewalLicense").then((res) => {
+          this.$store.dispatch("newlicense/getNewLicense").then((res) => {
             this.license = res.data.data;
             if (this.license) {
-              this.renewal = this.license.filter(function(e) {
+              this.newlicense = this.license.filter(function(e) {
                 return (
                   e.applicationStatus.code.includes("UPD") ||
                   e.applicationStatus.code.includes("SUB")
