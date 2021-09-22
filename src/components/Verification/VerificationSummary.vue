@@ -169,14 +169,21 @@
           </h5>
         </div>
       </div>
-      <!-- <div class="flex justify-start flex-wrap">
-        <div v-for="file in docs" v-bind:key="file.name">
-          <Title class="" :message="file.name" />
+      <Title class="justify justify-start" message="Uploaded Files" />
+      <div class="flex flex-row">
+        <div v-if="this.showFilePreview">
           <picture>
-            <img :src="basePath + file.filePath" />
+            <h2>Licence Copy</h2>
+            <img v-bind:src="this.filePreview" />
           </picture>
         </div>
-      </div> -->
+        <div v-if="this.showLetterPreview">
+          <picture>
+            <h2>Letter from Hiring Organization</h2>
+            <img v-bind:src="this.letterPreview" />
+          </picture>
+        </div>
+      </div>
       <div v-if="this.draftStatus == 'DRA' || !this.draftStatus">
         <div class="mt-12 flex justify-center">
           <div>
@@ -311,13 +318,18 @@ export default {
     if (this.draftId != undefined) {
       this.draftData = this.getDraftData;
     }
-
     this.userId = +localStorage.getItem("userId");
-
     this.licenseCopy = this.getLicenseCopy;
     this.serviceFee = this.getServiceFee;
     this.goodstandingLetter = this.getLetter;
-
+    if (this.licenseCopy != "") {
+      this.filePreview = await this.blobToBase64(this.licenseCopy);
+      this.showFilePreview = true;
+    }
+    if (this.goodstandingLetter != "") {
+      this.letterPreview = await this.blobToBase64(this.goodstandingLetter);
+      this.showLetterPreview = true;
+    }
     this.buttons = this.getButtons;
     this.fetchProfileInfo();
     this.setDocs();
@@ -335,6 +347,10 @@ export default {
   data: () => ({
     basePath: "https://storage.googleapis.com/hris-lisence-dev/",
 
+    filePreview: "",
+    showFilePreview: "",
+    letterPreview: "",
+    showLetterPreview: "",
     show: false,
     profileInfo: {},
     applicantId: "",
@@ -379,6 +395,13 @@ export default {
   methods: {
     moment: function(date) {
       return moment(date);
+    },
+    blobToBase64(blob) {
+      return new Promise((resolve, _) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result);
+        reader.readAsDataURL(blob);
+      });
     },
     fetchProfileInfo() {
       this.showLoading2 = true;
@@ -663,6 +686,12 @@ export default {
 };
 </script>
 <style>
+@import "../../styles/document-upload.css";
+img {
+  width: 250px;
+  height: 250px;
+  border-radius: 0%;
+}
 .text-danger > label,
 .text-danger > h5 {
   color: red;
