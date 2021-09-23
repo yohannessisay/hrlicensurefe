@@ -169,31 +169,22 @@
           </h5>
         </div>
       </div>
-      <!-- <div class="flex justify-start">
-        <Title message="Institution" />
+      <div class="flex justify-start flex-wrap">
+        <div v-for="i in docList.length" v-bind:key="i">
+          <div
+            class="mr-4"
+            v-for="item in docList.slice((i - 1) * 1, i * 1)"
+            v-bind="item"
+            v-bind:value="item"
+          >
+            <Title style="font-size: 24px" :message="item.title" />
+            <picture>
+              <img :src="item.docFile" />
+            </picture>
+          </div>
+        </div>
       </div>
-      <div class="flex flex-row">
-        <div>
-          <label class="ml-4"> Institution Name</label>
-          <h5 class="ml-4">Hawassa University</h5>
-        </div>
-        <div>
-          <label class="ml-4"> Department</label>
-          <h5 class="ml-4">Electrical Engineering</h5>
-        </div>
-        <div>
-          <label class="ml-4"> Institution Type</label>
-          <h5 class="ml-4">Private</h5>
-        </div>
-      </div> -->
-      <!-- <div class="flex justify-start flex-wrap">
-      <div v-for="file in docs" v-bind:key="file.name">
-        <Title class="" :message="file.name" />
-        <picture>
-          <img :src="basePath + file.filePath" />
-        </picture>
-      </div>
-    </div> -->
+
       <div v-if="this.draftStatus == 'DRA' || !this.draftStatus">
         <div class="mt-12 flex justify-center">
           <div>
@@ -337,7 +328,87 @@ export default {
     this.workExperience = this.getWorkExperience;
     this.cpd = this.getCpd;
     this.payroll = this.getPayroll;
+
     this.professionalDoc = this.getProfessionalDocuments;
+
+    this.proCertificate = this.getProCertificate;
+    this.proTranscript = this.getProTranscript;
+    this.proDiploma = this.getProDiploma;
+
+    if (this.letter != "") {
+      if (this.letter != undefined) {
+        var filePreview = await this.blobToBase64(this.letter);
+        this.letter.docFile = filePreview;
+        this.letter.title = "Letter from Hiring Institution";
+        this.docList.push(this.letter);
+      }
+    }
+    if (this.healthExamCert != "") {
+      if (this.healthExamCert != undefined) {
+        var filePreview = await this.blobToBase64(this.healthExamCert);
+        this.healthExamCert.docFile = filePreview;
+        this.healthExamCert.title = "Medical Certificate";
+        this.docList.push(this.healthExamCert);
+      }
+    }
+    if (this.previousLicense != "") {
+      if (this.previousLicense != undefined) {
+        var filePreview = await this.blobToBase64(this.previousLicense);
+        this.previousLicense.docFile = filePreview;
+        this.previousLicense.title = "Previous License";
+        this.docList.push(this.previousLicense);
+      }
+    }
+
+    if (this.workExperience != "") {
+      if (this.workExperience != undefined) {
+        var filePreview = await this.blobToBase64(this.workExperience);
+        this.workExperience.docFile = filePreview;
+        this.workExperience.title = "Work Experience";
+        this.docList.push(this.workExperience);
+      }
+    }
+
+    if (this.cpd != "") {
+      if (this.cpd != undefined) {
+        var filePreview = await this.blobToBase64(this.cpd);
+        this.cpd.docFile = filePreview;
+        this.cpd.title = "CPD";
+        this.docList.push(this.cpd);
+      }
+    }
+    if (this.payroll != "") {
+      if (this.payroll != undefined) {
+        var filePreview = await this.blobToBase64(this.payroll);
+        this.payroll.docFile = filePreview;
+        this.payroll.title = "Payroll";
+        this.docList.push(this.payroll);
+      }
+    }
+    if (this.proCertificate != "") {
+      if (this.proCertificate != undefined) {
+        var filePreview = await this.blobToBase64(this.proCertificate);
+        this.proCertificate.docFile = filePreview;
+        this.proCertificate.title = "Professional Certificate";
+        this.docList.push(this.proCertificate);
+      }
+    }
+    if (this.proTranscript != "") {
+      if (this.proTranscript != undefined) {
+        var filePreview = await this.blobToBase64(this.proTranscript);
+        this.proTranscript.docFile = filePreview;
+        this.proTranscript.title = "Professional Transcript";
+        this.docList.push(this.proTranscript);
+      }
+    }
+    if (this.proDiploma != "") {
+      if (this.proDiploma != undefined) {
+        var filePreview = await this.blobToBase64(this.proDiploma);
+        this.proDiploma.docFile = filePreview;
+        this.proDiploma.title = "Professional Diploma";
+        this.docList.push(this.proDiploma);
+      }
+    }
 
     this.buttons = this.getButtons;
     this.fetchProfileInfo();
@@ -356,7 +427,7 @@ export default {
   },
   data: () => ({
     basePath: "https://storage.googleapis.com/hris-lisence-dev/",
-
+    docList: [],
     show: false,
     profileInfo: {},
     applicantId: null,
@@ -389,6 +460,10 @@ export default {
     payroll: "",
     serviceFee: "",
 
+    proCertificate: "",
+    proTranscrip: "",
+    proDiploma: "",
+
     applicationId: "",
     buttons: [],
     documentTypes: [],
@@ -410,6 +485,10 @@ export default {
       getButtons: "renewal/getButtons",
       getApplicationId: "renewal/getApplicationId",
       getDraftData: "renewal/getDraft",
+
+      getProCertificate: "newlicense/getProCertificate",
+      getProTranscript: "newlicense/getProTranscript",
+      getProDiploma: "newlicense/getProDiploma",
     }),
   },
   methods: {
@@ -424,6 +503,13 @@ export default {
           this.show = true;
           this.showLoading2 = false;
         }, 3000);
+      });
+    },
+    blobToBase64(blob) {
+      return new Promise((resolve, _) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result);
+        reader.readAsDataURL(blob);
       });
     },
     setDocs() {

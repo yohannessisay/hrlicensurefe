@@ -205,7 +205,7 @@
             v-bind="item"
             v-bind:value="item"
           >
-            <Title class="" :message="item.name" />
+            <Title class="" :message="item.title" />
             <picture>
               <img :src="item.docFile" />
             </picture>
@@ -354,11 +354,13 @@ export default {
     if (this.licenseCopy != "") {
       this.filePreview = await this.blobToBase64(this.licenseCopy);
       this.licenseCopy.docFile = this.filePreview;
+      this.licenseCopy.title = "License Copy";
       this.docList.push(this.licenseCopy);
     }
     if (this.goodstandingLetter != "") {
       this.letterPreview = await this.blobToBase64(this.goodstandingLetter);
       this.goodstandingLetter.docFile = this.letterPreview;
+      this.goodstandingLetter.title = "Good standing Letter";
       this.docList.push(this.goodstandingLetter);
     }
     this.buttons = this.getButtons;

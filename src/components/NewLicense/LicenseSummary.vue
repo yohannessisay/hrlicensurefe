@@ -177,7 +177,7 @@
             v-bind="item"
             v-bind:value="item"
           >
-            <Title class="" :message="item.name" />
+            <Title style="font-size: 24px" :message="item.title" />
             <picture>
               <img :src="item.docFile" />
             </picture>
@@ -347,10 +347,12 @@ export default {
     this.transcript = this.getTranscript;
     this.degree = this.getDegree;
     this.payroll = this.getPayroll;
+    
     if (this.passport != "") {
       if (this.passport != undefined) {
         var filePreview = await this.blobToBase64(this.passport);
         this.passport.docFile = filePreview;
+        this.passport.title = "Passport";
         this.docList.push(this.passport);
       }
     }
@@ -358,6 +360,7 @@ export default {
       if (this.healthExamCert != undefined) {
         var filePreview = await this.blobToBase64(this.healthExamCert);
         this.healthExamCert.docFile = filePreview;
+        this.healthExamCert.title = "Medical Certificate";
         this.docList.push(this.healthExamCert);
       }
     }
@@ -365,6 +368,7 @@ export default {
       if (this.englishLanguage != undefined) {
         var filePreview = await this.blobToBase64(this.englishLanguage);
         this.englishLanguage.docFile = filePreview;
+        this.englishLanguage.title = "English Language Certificated";
         this.docList.push(this.englishLanguage);
       }
     }
@@ -372,6 +376,7 @@ export default {
       if (this.proCertificate != undefined) {
         var filePreview = await this.blobToBase64(this.proCertificate);
         this.proCertificate.docFile = filePreview;
+        this.proCertificate.title = "Professional Certificate";
         this.docList.push(this.proCertificate);
       }
     }
@@ -379,6 +384,7 @@ export default {
       if (this.proTranscript != undefined) {
         var filePreview = await this.blobToBase64(this.proTranscript);
         this.proTranscript.docFile = filePreview;
+        this.proTranscript.title = "Transcript";
         this.docList.push(this.proTranscript);
       }
     }
@@ -386,6 +392,7 @@ export default {
       if (this.proDiploma != undefined) {
         var filePreview = await this.blobToBase64(this.proDiploma);
         this.proDiploma.docFile = filePreview;
+        this.proDiploma.title = "Diploma";
         this.docList.push(this.proDiploma);
       }
     }
@@ -393,6 +400,7 @@ export default {
       if (this.eduEighth != undefined) {
         var filePreview = await this.blobToBase64(this.eduEighth);
         this.eduEighth.docFile = filePreview;
+        this.eduEighth = "Eighth Grade Certificate";
         this.docList.push(this.eduEighth);
       }
     }
@@ -400,6 +408,7 @@ export default {
       if (this.eduTenth != undefined) {
         var filePreview = await this.blobToBase64(this.eduTenth);
         this.eduTenth.docFile = filePreview;
+        this.eduTenth.title = "Tenth Grade Certificate";
         this.docList.push(this.eduTenth);
       }
     }
@@ -407,6 +416,7 @@ export default {
       if (this.eduTwelveth != undefined) {
         var filePreview = await this.blobToBase64(this.eduTwelveth);
         this.eduTwelveth.docFile = filePreview;
+        this.eduTwelveth.title = "Twelveth Grade Certificate";
         this.docList.push(this.eduTwelveth);
       }
     }
@@ -414,6 +424,7 @@ export default {
       if (this.eduTranscript1 != undefined) {
         var filePreview = await this.blobToBase64(this.eduTranscript1);
         this.eduTranscript1.docFile = filePreview;
+        this.eduTranscript1.title = "Education Transcript 1";
         this.docList.push(this.eduTranscript1);
       }
     }
@@ -421,6 +432,7 @@ export default {
       if (this.eduTranscript2 != undefined) {
         var filePreview = await this.blobToBase64(this.eduTranscript2);
         this.eduTranscript2.docFile = filePreview;
+        this.eduTranscript2.title = "Education Transcript 2";
         this.docList.push(this.eduTranscript2);
       }
     }
@@ -428,6 +440,7 @@ export default {
       if (this.herqa != undefined) {
         var filePreview = await this.blobToBase64(this.herqa);
         this.herqa.docFile = filePreview;
+        this.herqa.title = "HERQA";
         this.docList.push(this.herqa);
       }
     }
@@ -435,6 +448,7 @@ export default {
       if (this.supportLetter != undefined) {
         var filePreview = await this.blobToBase64(this.supportLetter);
         this.supportLetter.docFile = filePreview;
+        this.supportLetter.title = "Support Letter";
         this.docList.push(this.supportLetter);
       }
     }
@@ -442,6 +456,7 @@ export default {
       if (this.coc != undefined) {
         var filePreview = await this.blobToBase64(this.coc);
         this.coc.docFile = filePreview;
+        this.coc.title = "COC";
         this.docList.push(this.coc);
       }
     }
@@ -449,6 +464,7 @@ export default {
       if (this.workExperience != undefined) {
         var filePreview = await this.blobToBase64(this.workExperience);
         this.workExperience.docFile = filePreview;
+        this.workExperience.title = "Work Experience";
         this.docList.push(this.workExperience);
       }
     }
@@ -456,6 +472,7 @@ export default {
       if (this.serviceFee != undefined) {
         var filePreview = await this.blobToBase64(this.serviceFee);
         this.serviceFee.docFile = filePreview;
+        this.serviceFee.title = "Service Fee";
         this.docList.push(this.serviceFee);
       }
     }
@@ -463,6 +480,7 @@ export default {
       if (this.letterfromOrg != undefined) {
         var filePreview = await this.blobToBase64(this.letterfromOrg);
         this.letterfromOrg.docFile = filePreview;
+        this.letterfromOrg.title = "Letter from Hiring Organization";
         this.docList.push(this.letterfromOrg);
       }
     }
@@ -470,6 +488,7 @@ export default {
       if (this.renewedLicense != undefined) {
         var filePreview = await this.blobToBase64(this.renewedLicense);
         this.renewedLicense.docFile = filePreview;
+        this.renewedLicense.title = "Renewed License";
         this.docList.push(this.renewedLicense);
       }
     }
@@ -477,6 +496,7 @@ export default {
       if (this.professionalLicense != undefined) {
         var filePreview = await this.blobToBase64(this.professionalLicense);
         this.professionalLicense.docFile = filePreview;
+        this.professionalLicense.title = "Professional License";
         this.docList.push(this.professionalLicense);
       }
     }
@@ -484,6 +504,7 @@ export default {
       if (this.diploma != undefined) {
         var filePreview = await this.blobToBase64(this.diploma);
         this.diploma.docFile = filePreview;
+        this.diploma.title = "Diploma";
         this.docList.push(this.diploma);
       }
     }
@@ -491,6 +512,7 @@ export default {
       if (this.transcript != undefined) {
         var filePreview = await this.blobToBase64(this.transcript);
         this.transcript.docFile = filePreview;
+        this.transcript.title = "Transcript";
         this.docList.push(this.transcript);
       }
     }
@@ -498,6 +520,7 @@ export default {
       if (this.degree != undefined) {
         var filePreview = await this.blobToBase64(this.degree);
         this.degree.docFile = filePreview;
+        this.degree.title = "Degree";
         this.docList.push(this.degree);
       }
     }
@@ -505,6 +528,7 @@ export default {
       if (this.payroll != undefined) {
         var filePreview = await this.blobToBase64(this.payroll);
         this.payroll.docFile = filePreview;
+        this.payroll.title = "Payroll";
         this.docList.push(this.payroll);
       }
     }
