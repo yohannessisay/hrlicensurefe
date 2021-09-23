@@ -169,14 +169,21 @@
           </h5>
         </div>
       </div>
-      <!-- <div class="flex justify-start flex-wrap">
-        <div v-for="file in docs" v-bind:key="file.name">
-          <Title class="" :message="file.name" />
-          <picture>
-            <img :src="basePath + file.filePath" />
-          </picture>
+      <div class="flex justify-start flex-wrap">
+        <div v-for="i in docList.length" v-bind:key="i">
+          <div
+            class="mr-4"
+            v-for="item in docList.slice((i - 1) * 1, i * 1)"
+            v-bind="item"
+            v-bind:value="item"
+          >
+            <Title class="" :message="item.title" />
+            <picture>
+              <img :src="item.docFile" />
+            </picture>
+          </div>
         </div>
-      </div> -->
+      </div>
       <div v-if="this.draftStatus == 'DRA' || !this.draftStatus">
         <div class="mt-12 flex justify-center">
           <div>
@@ -311,13 +318,22 @@ export default {
     if (this.draftId != undefined) {
       this.draftData = this.getDraftData;
     }
-
     this.userId = +localStorage.getItem("userId");
-
     this.licenseCopy = this.getLicenseCopy;
     this.serviceFee = this.getServiceFee;
     this.goodstandingLetter = this.getLetter;
-
+    if (this.licenseCopy != "") {
+      var filePreview = await this.blobToBase64(this.licenseCopy);
+      this.licenseCopy.docFile = filePreview;
+      this.licenseCopy.title = "License Copy";
+      this.docList.push(this.licenseCopy);
+    }
+    if (this.goodstandingLetter != "") {
+      this.letterPreview = await this.blobToBase64(this.goodstandingLetter);
+      this.goodstandingLetter.docFile = this.letterPreview;
+      this.goodstandingLetter.title = "Verification Letter";
+      this.docList.push(this.goodstandingLetter);
+    }
     this.buttons = this.getButtons;
     this.fetchProfileInfo();
     this.setDocs();
@@ -335,6 +351,9 @@ export default {
   data: () => ({
     basePath: "https://storage.googleapis.com/hris-lisence-dev/",
 
+    filePreview: "",
+    letterPreview: "",
+    docList: [],
     show: false,
     profileInfo: {},
     applicantId: "",
@@ -379,6 +398,13 @@ export default {
   methods: {
     moment: function(date) {
       return moment(date);
+    },
+    blobToBase64(blob) {
+      return new Promise((resolve, _) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result);
+        reader.readAsDataURL(blob);
+      });
     },
     fetchProfileInfo() {
       this.showLoading2 = true;
@@ -663,6 +689,12 @@ export default {
 };
 </script>
 <style>
+@import "../../styles/document-upload.css";
+img {
+  width: 250px;
+  height: 250px;
+  border-radius: 0%;
+}
 .text-danger > label,
 .text-danger > h5 {
   color: red;

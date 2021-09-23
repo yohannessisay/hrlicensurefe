@@ -144,14 +144,14 @@
               personalInfoErrors.nationalityId
             }}</span>
           </div>
-          <div class="flex flex-col mb-medium w-1/2 ml-12">
+          <!-- <div class="flex flex-col mb-medium w-1/2 ml-12">
             <label class="text-primary-700">Place of birth(Optional)</label>
             <input
               class="max-w-3xl"
               type="text"
               v-model="personalInfo.placeOfBirth"
             />
-          </div>
+          </div> -->
         </div>
         <div class="flex">
           <div class="flex flex-col mb-medium w-1/2 mr-6">
@@ -262,7 +262,7 @@
               }}</span>
             </div>
           </div>
-          <div class="flex flex-col mb-medium w-1/2 ml-12">
+          <!-- <div class="flex flex-col mb-medium w-1/2 ml-12">
             <label class="text-primary-700">User Type</label>
             <select class="max-w-3xl" v-model="personalInfo.userTypeId">
               <option
@@ -274,9 +274,9 @@
               </option>
             </select>
             <span style="color: red">{{ personalInfoErrors.userTypeId }}</span>
-          </div>
+          </div> -->
         </div>
-        <div class="flex">
+        <!-- <div class="flex">
           <div class="flex flex-col mb-medium w-1/2 mr-6">
             <label class="text-primary-700">Region</label>
             <select
@@ -309,8 +309,8 @@
               </option>
             </select>
           </div>
-        </div>
-        <div class="flex">
+        </div> -->
+        <!-- <div class="flex">
           <div style="width: 47%" class="flex flex-col mb-medium mr-6">
             <label class="text-primary-700">Woreda</label>
             <select class="max-w-3xl" v-model="personalInfo.woredaId">
@@ -323,7 +323,7 @@
               </option>
             </select>
           </div>
-        </div>
+        </div> -->
         <div class="flex mb-medium w-full mt-medium">
           <button
             class="block mx-auto w-1/4  bg-lightBlue-500 hover:bg-lightBlue-600 hover:shadow-lg"
@@ -522,7 +522,7 @@ export default {
       if (!formData.gender) errors.gender = "Gender Required";
       if (!formData.maritalStatusId)
         errors.maritalStatusId = "Marital Status Required";
-      if (!formData.userTypeId) errors.userTypeId = "User Type Required";
+      // if (!formData.userTypeId) errors.userTypeId = "User Type Required";
       return errors;
     };
     const isEmpty = (obj) => {

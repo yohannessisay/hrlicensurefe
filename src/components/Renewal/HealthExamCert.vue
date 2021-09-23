@@ -27,7 +27,7 @@
         </h2>
         <TitleWithIllustration
           illustration="Certificate"
-          message="Health Examination Certificate"
+          message="Medical Certificate"
           class="mt-8"
         />
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
@@ -290,7 +290,7 @@ export default {
 
     onMounted(() => {
       healthExamBack = store.getters["renewal/getRenewalHealthExamCert"];
-       if (
+      if (
         healthExamBack &&
         healthExamBack !== undefined &&
         healthExamBack !== null &&
