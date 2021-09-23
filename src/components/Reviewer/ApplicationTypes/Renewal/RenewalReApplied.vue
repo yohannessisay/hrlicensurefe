@@ -96,6 +96,8 @@ export default {
     const store = useStore();
     let renewalReapplied = ref([]);
 
+    const adminId = +localStorage.getItem("adminId");
+
     let nothingToShow = ref(false);
     let showLoading = ref(false);
 
@@ -127,8 +129,9 @@ export default {
 
     const fetchRenewalReApplied = () => {
       showLoading.value = true;
-      const statusId = applicationStatus(store, 'SUB');
-      store.dispatch("reviewerRenewal/getRenewalReApply", statusId).then((res) => {
+      const statusId = applicationStatus(store, 'UPD');
+      const adminStatus = [statusId, adminId];
+      store.dispatch("reviewerRenewal/getRenewalReApply", adminStatus).then((res) => {
         showLoading.value = false;
         renewalReapplied.value =
           store.getters["reviewerRenewal/getRenewalReApplySearched"];

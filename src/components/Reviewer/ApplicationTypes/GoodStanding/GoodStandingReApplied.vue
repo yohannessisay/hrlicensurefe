@@ -24,7 +24,7 @@
         </button>
       </div>
       <div class="flex pl-12 pt-tiny">
-        <Title message="Reapplied Reapplied" />
+        <Title message="Good Standing Reapplied" />
       </div>
       <div class="flex flex-wrap pb-medium rounded h-full" v-if="!showLoading">
         <nothing-to-show :nothingToShow="nothingToShow" />
@@ -96,6 +96,8 @@ export default {
     const store = useStore();
     let goodStandingReapplied = ref([]);
 
+    const adminId = +localStorage.getItem("adminId");
+
     let nothingToShow = ref(false);
     let showLoading = ref(false);
 
@@ -127,8 +129,9 @@ export default {
 
     const fetchGoodStandingReApplied = () => {
       showLoading.value = true;
-      const statusId = applicationStatus(store, 'SUB');
-      store.dispatch("reviewerGoodStanding/getGoodStandingReApply", statusId).then((res) => {
+      const statusId = applicationStatus(store, 'UPD');
+      const adminStatus = [statusId, adminId];
+      store.dispatch("reviewerGoodStanding/getGoodStandingReApply", adminStatus).then((res) => {
         showLoading.value = false;
         goodStandingReapplied.value =
           store.getters["reviewerGoodStanding/getGoodStandingReApplySearched"];

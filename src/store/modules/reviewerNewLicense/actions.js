@@ -1005,6 +1005,7 @@ export default {
   async getNewLicenseReApply({ commit }, adminStatus) {
     const url = baseUrl + "/newlicenses/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
+    console.log("update is ", resp)
     const reApply = resp.data.data.filter(function(e) {
       return e.reviewerId === adminStatus[1];
     });

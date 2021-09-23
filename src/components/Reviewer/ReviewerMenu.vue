@@ -100,6 +100,9 @@
         >
           <new-license-unassigned />
         </div>
+        <div v-if="this.display == 'newLicenseReSubmitted'">
+          <new-license-re-applied />
+        </div>
         <div v-if="this.display == 'newLicenseAssigned'">
           <new-license-assigned />
         </div>
@@ -195,6 +198,9 @@
         <!-- renewal -->
         <div v-if="this.display == 'RenewalUnassigned'">
           <renewal-unassigned />
+        </div>
+        <div v-if="this.display == 'renewalReSubmitted'">
+          <renewal-re-applied />
         </div>
         <div v-if="this.display == 'renewalAssigned'">
           <renewal-assigned />
@@ -292,6 +298,9 @@
         <div v-if="this.display == 'verificationUnassigned'">
           <verification-unassigned />
         </div>
+        <div v-if="this.display == 'verificationReSubmitted'">
+          <verification-re-applied />
+        </div>
         <div v-if="this.display == 'verificationAssigned'">
           <verification-assigned />
         </div>
@@ -321,6 +330,9 @@
         <!-- start goodstanding -->
         <div v-if="this.display == 'goodStandingUnassigned'">
           <good-standing-unassigned />
+        </div>
+        <div v-if="this.display == 'goodStandingReSubmitted'">
+          <good-standing-re-applied />
         </div>
         <div v-if="this.display == 'goodStandingAssigned'">
           <good-standing-assigned />
@@ -365,7 +377,7 @@
           <good-standing-others-licensed />
         </div>
         <div v-if="this.display == 'goodStandingAllLicensed'">
-          <good-standing-all-licensed />
+          <good-standing-licensed />
         </div>
         <!-- end goodstanding -->
       </div>
@@ -378,6 +390,7 @@ import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
 
 import newLicenseUnassigned from "./ApplicationTypes/NewLicense/newLicenseUnassigned.vue";
+import NewLicenseReApplied from "./ApplicationTypes/NewLicense/NewLicenseReApplied.vue";
 import NewLicenseAssigned from "./ApplicationTypes/NewLicense/NewLicenseAssigned.vue";
 import NewLicenseAssignedToOthers from "./ApplicationTypes/NewLicense/NewLicenseAssignedToOthers.vue";
 import NewLicenseUnfinished from "./ApplicationTypes/NewLicense/NewLicenseUnfinished.vue";
@@ -410,6 +423,7 @@ import NewLicenseAllLicensed from "./ApplicationTypes/NewLicense/NewLicenseAllLi
 
 // import renewal components
 import RenewalUnassigned from "./ApplicationTypes/Renewal/RenewalUnassigned.vue";
+import RenewalReApplied from "./ApplicationTypes/Renewal/RenewalReApplied.vue";
 import RenewalAssigned from "./ApplicationTypes/Renewal/RenewalAssigned.vue";
 import RenewalAssignedToOthers from "./ApplicationTypes/Renewal/RenewalAssignedToOthers.vue";
 import RenewalUnfinished from "./ApplicationTypes/Renewal/RenewalUnfinished.vue";
@@ -442,6 +456,7 @@ import RenewalAllLicensed from "./ApplicationTypes/Renewal/RenewalAllLicensed.vu
 
 // import verification components
 import VerificationUnassigned from "./ApplicationTypes/Verification/VerificationUnassigned.vue";
+import VerificationReApplied from "./ApplicationTypes/Verification/VerificationReApplied.vue";
 import VerificationAssigned from "./ApplicationTypes/Verification/VerificationAssigned.vue";
 import VerificationAssignedToOthers from "./ApplicationTypes/Verification/VerificationAssignedToOthers.vue";
 import VerificationUnfinished from "./ApplicationTypes/Verification/VerificationUnfinished.vue";
@@ -453,6 +468,7 @@ import VerificationAllDeclined from "./ApplicationTypes/Verification/Verificatio
 
 // import goodstanding components
 import GoodStandingUnassigned from "./ApplicationTypes/GoodStanding/GoodStandingUnassigned.vue";
+import GoodStandingReApplied from "./ApplicationTypes/GoodStanding/GoodStandingReApplied.vue";
 import GoodStandingAssigned from "./ApplicationTypes/GoodStanding/GoodStandingAssigned.vue";
 import GoodStandingAssignedToOthers from "./ApplicationTypes/GoodStanding/GoodStandingAssignedToOthers.vue";
 import GoodStandingUnfinished from "./ApplicationTypes/GoodStanding/GoodStandingUnfinished.vue";
@@ -474,6 +490,7 @@ import ReviewerSideNav from "./ReviewerSideNav.vue";
 export default {
   components: {
     newLicenseUnassigned,
+    NewLicenseReApplied,
     ReviewerNavBar,
     ReviewerSideNav,
     NewLicenseAssigned,
@@ -507,6 +524,7 @@ export default {
     NewLicenseAllLicensed,
 
     RenewalUnassigned,
+    RenewalReApplied,
     RenewalAssigned,
     RenewalAssignedToOthers,
     RenewalUnfinished,
@@ -538,6 +556,7 @@ export default {
     RenewalAllLicensed,
 
     VerificationUnassigned,
+    VerificationReApplied,
     VerificationAssigned,
     VerificationAssignedToOthers,
     VerificationUnfinished,
@@ -548,6 +567,7 @@ export default {
     VerificationAllDeclined,
 
     GoodStandingUnassigned,
+    GoodStandingReApplied,
     GoodStandingAssigned,
     GoodStandingAssignedToOthers,
     GoodStandingUnfinished,

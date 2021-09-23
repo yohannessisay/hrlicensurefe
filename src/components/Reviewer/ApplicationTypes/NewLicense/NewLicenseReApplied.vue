@@ -96,6 +96,8 @@ export default {
     const store = useStore();
     let newLicenseReapplied = ref([]);
 
+    const adminId = +localStorage.getItem("adminId");
+
     let nothingToShow = ref(false);
     let showLoading = ref(false);
 
@@ -127,8 +129,9 @@ export default {
 
     const fetchNewLicenseReApplied = () => {
       showLoading.value = true;
-      const statusId = applicationStatus(store, 'SUB');
-      store.dispatch("reviewerNewLicense/getNewLicenseReApply", statusId).then((res) => {
+      const statusId = applicationStatus(store, 'UPD');
+      const adminStatus = [statusId, adminId];
+      store.dispatch("reviewerNewLicense/getNewLicenseReApply", adminStatus).then((res) => {
         showLoading.value = false;
         newLicenseReapplied.value =
           store.getters["reviewerNewLicense/getNewLicenseReApplySearched"];

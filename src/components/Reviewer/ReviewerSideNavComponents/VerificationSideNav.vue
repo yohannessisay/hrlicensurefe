@@ -32,16 +32,23 @@
             style="color: #648ea3; width: 200px;"
           >
             <ul class="block w-full shadow float-right" style="color: #648ea3;">
-              <li
-                @click="verificationMenuHandler('verificationUnassigned')"
-                class="mb-2"
-              >
-                <!-- <span style="color: #648ea3;"> -->
-                <p class=" text-base" style="color: white; ">
-                  <i class="far fa-thumbs-up fa-x fa-light"></i>
-                  Unassigned
-                </p>
-              </li>
+              <drop-down-lists
+                :dropdownValue="[
+                  dropdownValue.verification,
+                  dropdownValue.verificationUnassigned,
+                ]"
+                name="Unassigned"
+                dropDownHandlerValue="VerificationUnassigned"
+                :dropDownMenus="[
+                  'verificationUnassigned',
+                  'verificationReSubmitted',
+                ]"
+                :isDropDownIconUp="verificationDDIcon.isUnassignedUp"
+                :adminRole="adminRole"
+                :yoursAndOthersApplication="['Unassigned', 'Re Submitted']"
+                @dropDownHandler="dropDownHandler"
+                @dropDownListHandler="dropDownListHandler"
+              />
 
               <!-- assigned to you and assigned to others started here -->
               <div>
@@ -374,8 +381,12 @@
 </template>
 <script>
 import { ref } from "vue";
+import DropDownLists from "./DropDownLists.vue";
 export default {
   name: "VerificationSideNav",
+  components: {
+    DropDownLists,
+  },
   props: ["dropdownValue", "adminRole"],
   setup(props, { emit }) {
     let verificationDDIcon = ref({
@@ -384,8 +395,20 @@ export default {
       isUnfinishedUp: false,
       isApprovedUp: false,
       isDeclinedUp: false,
+      isUnassignedUp: false,
     });
     const verificationMenuHandler = (menu) => {
+      emit("selectVerificationMenu", menu);
+    };
+
+    const dropDownHandler = (applicationValue) => {
+      if (applicationValue == "VerificationUnassigned") {
+        verificationDDIcon.value.isUnassignedUp = !verificationDDIcon.value
+          .isUnassignedUp;
+      }
+      emit("applicationTypeSelected", applicationValue);
+    }
+    const dropDownListHandler = (menu) => {
       emit("selectVerificationMenu", menu);
     };
 
@@ -412,6 +435,8 @@ export default {
       verificationDDIcon,
       verificationDDHandler,
       verificationMenuHandler,
+      dropDownHandler,
+      dropDownListHandler,
     };
   },
 };

@@ -33,16 +33,23 @@
             style="color: #648ea3; width: 200px;"
           >
             <ul class="block w-full shadow float-right" style="color: #648ea3;">
-              <li
-                @click="goodStandingMenuHandler('goodStandingUnassigned')"
-                class="mb-2"
-              >
-                <!-- <span style="color: #648ea3;"> -->
-                <p class=" text-base" style="color: white; ">
-                  <i class="far fa-thumbs-up fa-x fa-light"></i>
-                  Unassigned
-                </p>
-              </li>
+              <drop-down-lists
+                :dropdownValue="[
+                  dropdownValue.goodStanding,
+                  dropdownValue.goodStandingUnassigned,
+                ]"
+                name="Unassigned"
+                dropDownHandlerValue="GoodStandingUnassigned"
+                :dropDownMenus="[
+                  'goodStandingUnassigned',
+                  'goodStandingReSubmitted',
+                ]"
+                :isDropDownIconUp="goodStandingDDIcon.isUnassignedUp"
+                :adminRole="adminRole"
+                :yoursAndOthersApplication="['Unassigned', 'Re Submitted']"
+                @dropDownHandler="dropDownHandler"
+                @dropDownListHandler="dropDownListHandler"
+              />
 
               <!-- assigned to you and assigned to others started here -->
               <div>
@@ -526,6 +533,7 @@ export default {
       isInReviewPaymentUp: false,
       isDeclinedPaymentUp: false,
       isLicensedUp: false,
+      isUnassignedUp: false,
     });
     const goodStandingMenuHandler = (menu) => {
       emit("selectGoodStandingMenu", menu);
@@ -541,6 +549,10 @@ export default {
       } else if (applicationValue == "GoodStandingDeclinedPayment") {
         goodStandingDDIcon.value.isDeclinedPaymentUp = !goodStandingDDIcon.value
           .isDeclinedPaymentUp;
+      }
+      if (applicationValue == "GoodStandingUnassigned") {
+        goodStandingDDIcon.value.isUnassignedUp = !goodStandingDDIcon.value
+          .isUnassignedUp;
       }
       emit("applicationTypeSelected", applicationValue);
     };
