@@ -197,46 +197,19 @@
           </h5>
         </div>
       </div>
-      <!-- <div class="flex justify-start">
-        <Title message="Institution" />
-      </div>
-      <div class="flex flex-row">
-        <div>
-          <label class="ml-4"> Institution Name</label>
-          <h5 class="ml-4">Hawassa University</h5>
-        </div>
-        <div>
-          <label class="ml-4"> Department</label>
-          <h5 class="ml-4">Electrical Engineering</h5>
-        </div>
-        <div>
-          <label class="ml-4"> Institution Type</label>
-          <h5 class="ml-4">Private</h5>
-        </div>
-      </div> -->
-      <!-- <div class="flex justify-start flex-wrap">
-      <div v-for="file in docs" v-bind:key="file.name">
-        <Title class="" :message="file.name" />
-        <picture>
-          <img :src="basePath + file.filePath" />
-        </picture>
-      </div>
-    </div> -->
-      <div class="flex justify-start mt-8">
-        <Title message="Uploaded Files" />
-      </div>
-      <div class="flex flex-row">
-        <div class="mr-4" v-if="this.showFilePreview">
-          <picture>
-            <h2>Licence Copy</h2>
-            <img v-bind:src="this.filePreview" />
-          </picture>
-        </div>
-        <div v-if="this.showLetterPreview">
-          <picture>
-            <h2>Letter from Hiring Organization</h2>
-            <img v-bind:src="this.letterPreview" />
-          </picture>
+      <div class="flex justify-start flex-wrap">
+        <div v-for="i in docList.length" v-bind:key="i">
+          <div
+            class="mr-4"
+            v-for="item in docList.slice((i - 1) * 1, i * 1)"
+            v-bind="item"
+            v-bind:value="item"
+          >
+            <Title class="" :message="item.name" />
+            <picture>
+              <img :src="item.docFile" />
+            </picture>
+          </div>
         </div>
       </div>
       <div v-if="this.draftStatus == 'DRA' || !this.draftStatus">
@@ -380,11 +353,13 @@ export default {
     this.goodstandingLetter = this.getLetter;
     if (this.licenseCopy != "") {
       this.filePreview = await this.blobToBase64(this.licenseCopy);
-      this.showFilePreview = true;
+      this.licenseCopy.docFile = this.filePreview;
+      this.docList.push(this.licenseCopy);
     }
     if (this.goodstandingLetter != "") {
       this.letterPreview = await this.blobToBase64(this.goodstandingLetter);
-      this.showLetterPreview = true;
+      this.goodstandingLetter.docFile = this.letterPreview;
+      this.docList.push(this.goodstandingLetter);
     }
     this.buttons = this.getButtons;
     this.fetchProfileInfo();
@@ -401,9 +376,8 @@ export default {
     basePath: "https://storage.googleapis.com/hris-lisence-dev/",
 
     filePreview: "",
-    showFilePreview: "",
     letterPreview: "",
-    showLetterPreview: "",
+    docList: [],
     show: false,
     profileInfo: {},
     applicantId: "",

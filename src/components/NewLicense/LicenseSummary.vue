@@ -169,31 +169,21 @@
           </h5>
         </div>
       </div>
-      <!-- <div class="flex justify-start">
-        <Title message="Institution" />
+      <div class="flex justify-start flex-wrap">
+        <div v-for="i in docList.length" v-bind:key="i">
+          <div
+            class="mr-4"
+            v-for="item in docList.slice((i - 1) * 1, i * 1)"
+            v-bind="item"
+            v-bind:value="item"
+          >
+            <Title class="" :message="item.name" />
+            <picture>
+              <img :src="item.docFile" />
+            </picture>
+          </div>
+        </div>
       </div>
-      <div class="flex flex-row">
-        <div>
-          <label class="ml-4"> Institution Name</label>
-          <h5 class="ml-4">Hawassa University</h5>
-        </div>
-        <div>
-          <label class="ml-4"> Department</label>
-          <h5 class="ml-4">Electrical Engineering</h5>
-        </div>
-        <div>
-          <label class="ml-4"> Institution Type</label>
-          <h5 class="ml-4">Private</h5>
-        </div>
-      </div> -->
-      <!-- <div class="flex justify-start flex-wrap">
-      <div v-for="file in docs" v-bind:key="file.name">
-        <Title class="" :message="file.name" />
-        <picture>
-          <img :src="basePath + file.filePath" />
-        </picture>
-      </div>
-    </div> -->
       <div v-if="this.draftStatus == 'DRA' || !this.draftStatus">
         <div class="mt-12 flex justify-center">
           <div>
@@ -333,6 +323,17 @@ export default {
     this.healthExamCert = this.getHealthExamCert;
     this.englishLanguage = this.getEnglishLanguage;
     this.professionalDoc = this.getProfessionalDocuments;
+
+    this.proCertificate = this.getProCertificate;
+    this.proTranscript = this.getProTranscript;
+    this.proDiploma = this.getProDiploma;
+
+    this.eduEighth = this.getEduEighth;
+    this.eduTenth = this.getEduTenth;
+    this.eduTwelveth = this.getEduTwelveth;
+    this.eduTranscript1 = this.getEduTranscript1;
+    this.eduTranscript2 = this.getEduTranscript2;
+
     this.herqa = this.getHerqa;
     this.supportLetter = this.getSupportLetter;
     this.coc = this.getCoc;
@@ -346,6 +347,167 @@ export default {
     this.transcript = this.getTranscript;
     this.degree = this.getDegree;
     this.payroll = this.getPayroll;
+    if (this.passport != "") {
+      if (this.passport != undefined) {
+        var filePreview = await this.blobToBase64(this.passport);
+        this.passport.docFile = filePreview;
+        this.docList.push(this.passport);
+      }
+    }
+    if (this.healthExamCert != "") {
+      if (this.healthExamCert != undefined) {
+        var filePreview = await this.blobToBase64(this.healthExamCert);
+        this.healthExamCert.docFile = filePreview;
+        this.docList.push(this.healthExamCert);
+      }
+    }
+    if (this.englishLanguage != "") {
+      if (this.englishLanguage != undefined) {
+        var filePreview = await this.blobToBase64(this.englishLanguage);
+        this.englishLanguage.docFile = filePreview;
+        this.docList.push(this.englishLanguage);
+      }
+    }
+    if (this.proCertificate != "") {
+      if (this.proCertificate != undefined) {
+        var filePreview = await this.blobToBase64(this.proCertificate);
+        this.proCertificate.docFile = filePreview;
+        this.docList.push(this.proCertificate);
+      }
+    }
+    if (this.proTranscript != "") {
+      if (this.proTranscript != undefined) {
+        var filePreview = await this.blobToBase64(this.proTranscript);
+        this.proTranscript.docFile = filePreview;
+        this.docList.push(this.proTranscript);
+      }
+    }
+    if (this.proDiploma != "") {
+      if (this.proDiploma != undefined) {
+        var filePreview = await this.blobToBase64(this.proDiploma);
+        this.proDiploma.docFile = filePreview;
+        this.docList.push(this.proDiploma);
+      }
+    }
+    if (this.eduEighth != "") {
+      if (this.eduEighth != undefined) {
+        var filePreview = await this.blobToBase64(this.eduEighth);
+        this.eduEighth.docFile = filePreview;
+        this.docList.push(this.eduEighth);
+      }
+    }
+    if (this.eduTenth != "") {
+      if (this.eduTenth != undefined) {
+        var filePreview = await this.blobToBase64(this.eduTenth);
+        this.eduTenth.docFile = filePreview;
+        this.docList.push(this.eduTenth);
+      }
+    }
+    if (this.eduTwelveth != "") {
+      if (this.eduTwelveth != undefined) {
+        var filePreview = await this.blobToBase64(this.eduTwelveth);
+        this.eduTwelveth.docFile = filePreview;
+        this.docList.push(this.eduTwelveth);
+      }
+    }
+    if (this.eduTranscript1 != "") {
+      if (this.eduTranscript1 != undefined) {
+        var filePreview = await this.blobToBase64(this.eduTranscript1);
+        this.eduTranscript1.docFile = filePreview;
+        this.docList.push(this.eduTranscript1);
+      }
+    }
+    if (this.eduTranscript2 != "") {
+      if (this.eduTranscript2 != undefined) {
+        var filePreview = await this.blobToBase64(this.eduTranscript2);
+        this.eduTranscript2.docFile = filePreview;
+        this.docList.push(this.eduTranscript2);
+      }
+    }
+    if (this.herqa != "") {
+      if (this.herqa != undefined) {
+        var filePreview = await this.blobToBase64(this.herqa);
+        this.herqa.docFile = filePreview;
+        this.docList.push(this.herqa);
+      }
+    }
+    if (this.supportLetter != "") {
+      if (this.supportLetter != undefined) {
+        var filePreview = await this.blobToBase64(this.supportLetter);
+        this.supportLetter.docFile = filePreview;
+        this.docList.push(this.supportLetter);
+      }
+    }
+    if (this.coc != "") {
+      if (this.coc != undefined) {
+        var filePreview = await this.blobToBase64(this.coc);
+        this.coc.docFile = filePreview;
+        this.docList.push(this.coc);
+      }
+    }
+    if (this.workExperience != "") {
+      if (this.workExperience != undefined) {
+        var filePreview = await this.blobToBase64(this.workExperience);
+        this.workExperience.docFile = filePreview;
+        this.docList.push(this.workExperience);
+      }
+    }
+    if (this.serviceFee != "") {
+      if (this.serviceFee != undefined) {
+        var filePreview = await this.blobToBase64(this.serviceFee);
+        this.serviceFee.docFile = filePreview;
+        this.docList.push(this.serviceFee);
+      }
+    }
+    if (this.letterfromOrg != "") {
+      if (this.letterfromOrg != undefined) {
+        var filePreview = await this.blobToBase64(this.letterfromOrg);
+        this.letterfromOrg.docFile = filePreview;
+        this.docList.push(this.letterfromOrg);
+      }
+    }
+    if (this.renewedLicense != "") {
+      if (this.renewedLicense != undefined) {
+        var filePreview = await this.blobToBase64(this.renewedLicense);
+        this.renewedLicense.docFile = filePreview;
+        this.docList.push(this.renewedLicense);
+      }
+    }
+    if (this.professionalLicense != "") {
+      if (this.professionalLicense != undefined) {
+        var filePreview = await this.blobToBase64(this.professionalLicense);
+        this.professionalLicense.docFile = filePreview;
+        this.docList.push(this.professionalLicense);
+      }
+    }
+    if (this.diploma != "") {
+      if (this.diploma != undefined) {
+        var filePreview = await this.blobToBase64(this.diploma);
+        this.diploma.docFile = filePreview;
+        this.docList.push(this.diploma);
+      }
+    }
+    if (this.transcript != "") {
+      if (this.transcript != undefined) {
+        var filePreview = await this.blobToBase64(this.transcript);
+        this.transcript.docFile = filePreview;
+        this.docList.push(this.transcript);
+      }
+    }
+    if (this.degree != "") {
+      if (this.degree != undefined) {
+        var filePreview = await this.blobToBase64(this.degree);
+        this.degree.docFile = filePreview;
+        this.docList.push(this.degree);
+      }
+    }
+    if (this.payroll != "") {
+      if (this.payroll != undefined) {
+        var filePreview = await this.blobToBase64(this.payroll);
+        this.payroll.docFile = filePreview;
+        this.docList.push(this.payroll);
+      }
+    }
 
     this.buttons = this.getButtons;
     this.fetchProfileInfo();
@@ -365,7 +527,7 @@ export default {
   },
   data: () => ({
     basePath: "https://storage.googleapis.com/hris-lisence-dev/",
-
+    docList: [],
     show: false,
     profileInfo: {},
     applicantId: null,
@@ -406,6 +568,16 @@ export default {
     transcript: "",
     payroll: "",
 
+    eduEighth: "",
+    eduTenth: "",
+    eduTwelveth: "",
+    eduTranscript1: "",
+    eduTranscript2: "",
+
+    proCertificate: "",
+    proTranscrip: "",
+    proDiploma: "",
+
     applicationId: "",
     buttons: [],
     documentTypes: [],
@@ -418,6 +590,16 @@ export default {
       getHealthExamCert: "newlicense/getHealthExamCert",
       getEnglishLanguage: "newlicense/getEnglishLanguage",
       getProfessionalDocuments: "newlicense/getProfessionalDocuments",
+      getProCertificate: "newlicense/getProCertificate",
+      getProTranscript: "newlicense/getProTranscript",
+      getProDiploma: "newlicense/getProDiploma",
+
+      getEduEighth: "newlicense/getEduEighth",
+      getEduTenth: "newlicense/getEduTenth",
+      getEduTwelveth: "newlicense/getEduTwelveth",
+      getEduTranscript1: "newlicense/getEduTranscript1",
+      getEduTranscript2: "newlicense/getEduTranscript2",
+
       getHerqa: "newlicense/getHerqa",
       getSupportLetter: "newlicense/getSupportLetter",
       getCoc: "newlicense/getCoc",
@@ -447,6 +629,13 @@ export default {
           this.show = true;
           this.showLoading2 = false;
         }, 3000);
+      });
+    },
+    blobToBase64(blob) {
+      return new Promise((resolve, _) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result);
+        reader.readAsDataURL(blob);
       });
     },
     setDocs() {
