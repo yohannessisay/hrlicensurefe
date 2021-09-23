@@ -353,6 +353,12 @@ const routes = [
       import("../components/Reviewer/Detail/ApplicantDetail.vue"),
   },
   {
+    path:
+      "/admin/newlicense-document/:applicationType/:applicationId/:applicantId",
+    name: "newlicenseDocuments",
+    component: () => import("../components/Reviewer/Detail/NewLicenseDocumentsForRenewal.vue")
+  },
+  {
     path: "/admin",
     name: "Admin",
     component: () => import("../components/Landing/AdminLanding.vue"),

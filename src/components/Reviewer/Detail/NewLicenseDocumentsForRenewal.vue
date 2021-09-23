@@ -1,6 +1,6 @@
 <template>
   <div class="bg-lightBlueB-200">
-    <ReviewerNavBar tab="ConfirmReview" />
+    <ReviewerNavBar tab="applicantDetail" />
     <div class="bg-lightBlueB-200 h-full">
       <div
         v-if="show"
@@ -125,7 +125,9 @@
                 }}
               </h5>
             </div>
-            <div :class="[license.woreda === null ? errorClass : activeClass]">
+            <div
+              :class="[license.woreda === null ? errorClass : activeClass]"
+            >
               <label class="ml-8"> Wereda</label>
               <h5 class="ml-8">
                 {{ license.woreda ? license.woreda.name : "-" }}
@@ -222,30 +224,6 @@
             </div>
           </div>
           <div class="flex justify-start flex-wrap"></div>
-          <div v-if="isCurrentAdminEvaluator">
-            <div class="flex justify-start">
-              <Title message="Application Status" />
-            </div>
-            <div>
-              <label class="ml-8">
-                {{ license.previousApplicationStatus ?
-                 license.previousApplicationStatus.name : '-' }}
-              </label>
-              <label
-                class="ml-8"
-                v-if="license.previousApplicationStatus && license.previousApplicationStatus.remark !== null"
-              >
-                {{ license.previousApplicationStatus.remark }}
-              </label>
-            </div>
-            <!-- <div v-if="getReviewId == loggedInAdminId"> -->
-            <div class="mt-4 flex justify-center">
-              <div>
-                <button @click="evaluate()">Continue Evaluating</button>
-              </div>
-            </div>
-            <!-- </div> -->
-          </div>
         </div>
       </div>
     </div>
@@ -283,18 +261,12 @@ export default {
     const route = useRoute();
 
     let userId = +localStorage.getItem("userId");
-    let loggedInAdminId = +localStorage.getItem("adminId");
 
-    let isCurrentAdminEvaluator = ref(false);
-
-    let evaluators = ref({
-      actionEvent: "",
-      remark: "",
-      evaluator: {
-        name: "",
-      },
-    });
-
+    let assignConfirmAdmin = ref({
+      reviewersId: [],
+      licenseId: "",
+      createdByAdminId: "",
+    })
     let show = ref(false);
     let showLoading = ref(false);
     let license = ref({
@@ -332,6 +304,9 @@ export default {
 
     let getReviewId = ref(0);
 
+    let loggedInAdminId = +localStorage.getItem("adminId");
+
+
     const created = async (applicationTypeName, applicationId, applicantId) => {
       licenseId.value = applicationId;
       applicationType.value = applicationTypeName;
@@ -340,15 +315,12 @@ export default {
         store
           .dispatch("reviewer/getNewLicenseApplication", applicationId)
           .then((res) => {
-            console.log("newlicense response", res);
-            isAdminEvaluator(res.data.data.evaluators);
             showLoading.value = false;
             license.value = res.data.data;
-            evaluators.value = license.value.evaluators;
+            console.log("license value", license.value)
             getReviewId.value = license.value.reviewerId;
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
-            // applicantId.value = license.value.applicantId;
             education.value.departmentName =
               license.value.education.department.name;
             education.value.institutionName =
@@ -357,89 +329,6 @@ export default {
               license.value.education.institution.institutionType.name;
           });
       }
-      if (applicationType.value == "Good Standing") {
-        store
-          .dispatch("reviewer/getGoodStandingApplication", applicationId)
-          .then((res) => {
-            isAdminEvaluator(res.data.data.evaluators);
-            showLoading.value = false;
-            license.value = res.data.data;
-            evaluators.value = license.value.evaluators;
-            getReviewId.value = license.value.reviewerId;
-            show.value = true;
-            profileInfo.value = license.value.applicant.profile;
-            // applicantId.value = license.value.applicantId;
-            education.value.departmentName =
-              license.value.education.department.name;
-            education.value.institutionName =
-              license.value.education.institution.name;
-            education.value.institutionTypeName =
-              license.value.education.institution.institutionType.name;
-          });
-      }
-      if (applicationType.value == "Verification") {
-        store
-          .dispatch("reviewer/getVerificationApplication", applicationId)
-          .then((res) => {
-            console.log("resssss", res)
-            isAdminEvaluator(res.data.data.evaluators);
-            showLoading.value = false;
-            license.value = res.data.data;
-            evaluators.value = license.value.evaluators;
-            getReviewId.value = license.value.reviewerId;
-            show.value = true;
-            profileInfo.value = license.value.applicant.profile;
-            // applicantId.value = license.value.applicantId;
-            education.value.departmentName =
-              license.value.education.department.name;
-            education.value.institutionName =
-              license.value.education.institution.name;
-            education.value.institutionTypeName =
-              license.value.education.institution.institutionType.name;
-          });
-      }
-      if (applicationType.value == "Renewal") {
-        store
-          .dispatch("reviewer/getRenewalApplication", applicationId)
-          .then((res) => {
-            console.log("renewal response value ", res);
-            isAdminEvaluator(res.data.data.evaluators);
-            showLoading.value = false;
-            license.value = res.data.data;
-            evaluators.value = license.value.evaluators;
-            console.log("evaluators is ", evaluators.value);
-            getReviewId.value = license.value.reviewerId;
-            show.value = true;
-            profileInfo.value = license.value.applicant.profile;
-            // applicantId.value = license.value.applicantId;
-            education.value.departmentName =
-              license.value.education.department.name;
-            education.value.institutionName =
-              license.value.education.institution.name;
-            education.value.institutionTypeName =
-              license.value.education.institution.institutionType.name;
-          });
-      }
-    };
-
-    const isAdminEvaluator = (evaluators) => {
-      evaluators.map((evaluator) => {
-        if (evaluator.evaluator.id == loggedInAdminId) {
-          isCurrentAdminEvaluator.value = true;
-        }
-      });
-    };
-
-    const evaluate = () => {
-      //   router.push(
-      //     "/admin/confirmReview/" + applicationType.value + "/" + licenseId.value
-      //   );
-      router.push(
-        "/admin/confirmAssignedApplication/" +
-          applicationType.value +
-          "/" +
-          licenseId.value
-      );
     };
 
     onMounted(() => {
@@ -466,13 +355,10 @@ export default {
       applicantTypeId,
       education,
       show,
-      isCurrentAdminEvaluator,
       created,
-      evaluate,
       applicationType,
       licenseId,
       showLoading,
-      evaluators,
     };
   },
 
