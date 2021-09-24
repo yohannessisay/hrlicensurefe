@@ -64,7 +64,7 @@
             }}
           </h5>
         </div>
-        <div
+        <!-- <div
           :class="[
             this.profileInfo.placeOfBirth === null ? errorClass : activeClass,
           ]"
@@ -77,7 +77,7 @@
                 : "-"
             }}
           </h5>
-        </div>
+        </div> -->
         <div
           :class="[
             this.profileInfo.dateOfBirth === null ? errorClass : activeClass,
@@ -113,7 +113,7 @@
       <div class="flex justify-start">
         <Title message="Address" />
       </div>
-      <div class="flex flex-row">
+      <!-- <div class="flex flex-row">
         <div
           :class="[this.profileInfo.kebele === null ? errorClass : activeClass]"
         >
@@ -144,7 +144,7 @@
             {{ this.profileInfo.residence ? this.profileInfo.residence : "-" }}
           </h5>
         </div>
-      </div>
+      </div> -->
       <div class="flex justify-start">
         <Title message="Contact" />
       </div>
@@ -182,7 +182,7 @@
             }}
           </h5>
         </div>
-        <div
+        <!-- <div
           :class="[
             this.profileInfo.userType.name === null ? errorClass : activeClass,
           ]"
@@ -195,7 +195,7 @@
                 : "-"
             }}
           </h5>
-        </div>
+        </div> -->
       </div>
       <div class="flex justify-start flex-wrap">
         <div v-for="i in docList.length" v-bind:key="i">
