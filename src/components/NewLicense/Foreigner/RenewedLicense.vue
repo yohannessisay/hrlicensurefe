@@ -26,7 +26,7 @@
           ACCEPTED
         </h2>
         <TitleWithIllustration
-          illustration="User"
+          illustration="Certificate"
           message="Renewed License of the Organization"
           class="mt-8"
         />

@@ -12,7 +12,7 @@
         "
       >
         <TitleWithIllustration
-          illustration="User"
+          illustration="Institution"
           message="Educational Documents"
           class="mt-8"
         />

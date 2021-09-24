@@ -26,7 +26,7 @@
           ACCEPTED
         </h2>
         <TitleWithIllustration
-          illustration="User"
+          illustration="Certificate"
           message="Authenticated Professional License from Country of Origin"
           class="mt-8"
         />

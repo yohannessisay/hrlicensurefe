@@ -8,31 +8,31 @@
       </div>
       <form class="mx-auto max-w-3xl w-full mt-10" @submit.prevent="nextStep">
         <div class="flex">
-          <div class="flex flex-col mb-medium w-1/2 mr-12">
-            <label class="text-primary-700">Kebele</label>
-            <input class="max-w-3xl" type="number" v-model="address.kebele" />
-            <span style="color: red">{{ addressErrors.kebele }}</span>
+          <div class="flex flex-col mb-medium w-1/2 ml-12">
+            <label class="text-primary-700">PO Box(Optional)</label>
+            <input class="max-w-3xl" type="text" v-model="address.poBox" />
           </div>
-          <div class="flex flex-col mb-medium w-1/2 m1-12">
+          <!-- <div class="flex flex-col mb-medium w-1/2 m1-12">
             <label class="text-primary-700">House No(Optional)</label>
             <input
               class="max-w-3xl"
               type="text"
               v-model="address.houseNumber"
             />
-          </div>
+          </div> -->
         </div>
-        <div class="flex">
+        <!-- <div class="flex">
           <div class="flex flex-col mb-medium w-1/2">
             <label class="text-primary-700">Residence</label>
             <input class="max-w-3xl" type="text" v-model="address.residence" />
             <span style="color: red">{{ addressErrors.residence }}</span>
           </div>
-          <div class="flex flex-col mb-medium w-1/2 ml-12">
-            <label class="text-primary-700">PO Box(Optional)</label>
-            <input class="max-w-3xl" type="text" v-model="address.poBox" />
+          <div class="flex flex-col mb-medium w-1/2 mr-12">
+            <label class="text-primary-700">Kebele</label>
+            <input class="max-w-3xl" type="number" v-model="address.kebele" />
+            <span style="color: red">{{ addressErrors.kebele }}</span>
           </div>
-        </div>
+        </div> -->
       </form>
       <div class="flex justify-center mb-medium mt-medium">
         <button
@@ -63,15 +63,15 @@ export default {
   setup(props, { emit }) {
     const store = useStore();
     let address = ref({
-      kebele: "",
-      houseNumber: "",
-      residence: "",
+      // kebele: "",
+      // houseNumber: "",
+      // residence: "",
       poBox: "",
     });
 
     let addressErrors = ref({
       kebele: "",
-      residence: "",
+      // residence: "",
     });
     const prevStep = () => {
       store.dispatch("profile/setAddress", address);
@@ -90,8 +90,8 @@ export default {
     };
     const validateForm = (formData) => {
       const errors = {};
-      if (!formData.kebele) errors.kebele = "Kebele Required";
-      if (!formData.residence) errors.residence = "Residence Required";
+      // if (!formData.kebele) errors.kebele = "Kebele Required";
+      // if (!formData.residence) errors.residence = "Residence Required";
 
       return errors;
     };

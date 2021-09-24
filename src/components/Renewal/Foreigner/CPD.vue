@@ -9,8 +9,7 @@
           bg-white
           blue-box-shadow-light
           rounded
-        "
-      >
+        ">
         <h2
           class="flex justify-center"
           v-if="declinedFieldsCheck"

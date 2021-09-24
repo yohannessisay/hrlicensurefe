@@ -26,7 +26,7 @@
           ACCEPTED
         </h2>
         <TitleWithIllustration
-          illustration="User"
+          illustration="Certificate"
           message="Authenticated Work Experience"
           class="mt-8"
         />

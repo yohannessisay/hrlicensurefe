@@ -15,7 +15,7 @@
         <div
           :class="[this.profileInfo.name === null ? errorClass : activeClass]"
         >
-          <label class="ml-4"> Full Name</label>
+          <label class="ml-4 text-primary-300"> Full Name</label>
           <h5 class="ml-4">
             {{
               this.profileInfo.name +
@@ -26,10 +26,22 @@
             }}
           </h5>
         </div>
+        <div>
+          <label class="ml-8 text-primary-300"> Full Alternative Name</label>
+          <h5 class="ml-8">
+            {{
+              this.profileInfo.alternativeName +
+                " " +
+                this.profileInfo.alternativeFatherName +
+                " " +
+                this.profileInfo.alternativeGrandFatherName
+            }}
+          </h5>
+        </div>
         <div
           :class="[this.profileInfo.gender === null ? errorClass : activeClass]"
         >
-          <label class="ml-4"> Gender</label>
+          <label class="ml-4 text-primary-300"> Gender</label>
           <h5 class="ml-4">
             {{ this.profileInfo.gender ? this.profileInfo["gender"] : "-" }}
           </h5>
@@ -39,7 +51,7 @@
             this.profileInfo.nationality === null ? errorClass : activeClass,
           ]"
         >
-          <label class="ml-4"> Nationality</label>
+          <label class="ml-4 text-primary-300"> Nationality</label>
           <h5 class="ml-4">
             {{
               this.profileInfo.nationality ? this.profileInfo.nationality : "-"
@@ -48,24 +60,10 @@
         </div>
         <div
           :class="[
-            this.profileInfo.placeOfBirth === null ? errorClass : activeClass,
-          ]"
-        >
-          <label class="ml-4"> Place of Birth</label>
-          <h5 class="ml-4">
-            {{
-              this.profileInfo.placeOfBirth
-                ? this.profileInfo.placeOfBirth
-                : "-"
-            }}
-          </h5>
-        </div>
-        <div
-          :class="[
             this.profileInfo.dateOfBirth === null ? errorClass : activeClass,
           ]"
         >
-          <label class="ml-4"> Date of Birth</label>
+          <label class="ml-4 text-primary-300"> Date of Birth</label>
           <h5 class="ml-4">
             {{
               this.profileInfo.dateOfBirth
@@ -81,7 +79,7 @@
               : activeClass,
           ]"
         >
-          <label class="ml-4"> Marital Status</label>
+          <label class="ml-4 text-primary-300"> Marital Status</label>
           <h5 class="ml-4">
             {{
               this.profileInfo.maritalStatus.name
@@ -95,27 +93,9 @@
       <div class="flex justify-start">
         <Title message="Address" />
       </div>
-      <div class="flex flex-row">
-        <div
-          :class="[this.profileInfo.kebele === null ? errorClass : activeClass]"
-        >
-          <label class="ml-4"> Kebele</label>
-          <h5 class="ml-4">
-            {{ this.profileInfo.kebele ? this.profileInfo.kebele : "-" }}
-          </h5>
-        </div>
-        <div
-          :class="[
-            this.profileInfo.houseNumber === null ? errorClass : activeClass,
-          ]"
-        >
-          <label class="ml-4"> House Number</label>
-          <h5 class="ml-4">
-            {{
-              this.profileInfo.houseNumber ? this.profileInfo.houseNumber : "-"
-            }}
-          </h5>
-        </div>
+      <div>
+        <label class="ml-8 text-primary-300"> PO Box</label>
+        <h5 class="ml-8">{{ this.profileInfo.poBox }}</h5>
       </div>
       <div class="flex justify-start">
         <Title message="Contact" />
@@ -128,7 +108,7 @@
               : activeClass,
           ]"
         >
-          <label class="ml-4"> Mobile Number</label>
+          <label class="ml-4 text-primary-300"> Mobile Number</label>
           <h5 class="ml-4">
             {{
               this.profileInfo.user.phoneNumber
@@ -145,7 +125,7 @@
               : activeClass,
           ]"
         >
-          <label class="ml-4"> Email</label>
+          <label class="ml-4 text-primary-300"> Email</label>
           <h5 class="ml-4">
             {{
               this.profileInfo.user.emailAddress
@@ -154,46 +134,22 @@
             }}
           </h5>
         </div>
-        <div
-          :class="[
-            this.profileInfo.userType.name === null ? errorClass : activeClass,
-          ]"
-        >
-          <label class="ml-4"> User Type</label>
-          <h5 class="ml-4">
-            {{
-              this.profileInfo.userType.name
-                ? this.profileInfo.userType.name
-                : "-"
-            }}
-          </h5>
+      </div>
+      <div class="flex justify-start flex-wrap">
+        <div v-for="i in docList.length" v-bind:key="i">
+          <div
+            class="mr-4"
+            v-for="item in docList.slice((i - 1) * 1, i * 1)"
+            v-bind="item"
+            v-bind:value="item"
+          >
+            <Title style="font-size: 24px" :message="item.title" />
+            <picture>
+              <img :src="item.docFile" />
+            </picture>
+          </div>
         </div>
       </div>
-      <!-- <div class="flex justify-start">
-        <Title message="Institution" />
-      </div>
-      <div class="flex flex-row">
-        <div>
-          <label class="ml-4"> Institution Name</label>
-          <h5 class="ml-4">Hawassa University</h5>
-        </div>
-        <div>
-          <label class="ml-4"> Department</label>
-          <h5 class="ml-4">Electrical Engineering</h5>
-        </div>
-        <div>
-          <label class="ml-4"> Institution Type</label>
-          <h5 class="ml-4">Private</h5>
-        </div>
-      </div> -->
-      <!-- <div class="flex justify-start flex-wrap">
-      <div v-for="file in docs" v-bind:key="file.name">
-        <Title class="" :message="file.name" />
-        <picture>
-          <img :src="basePath + file.filePath" />
-        </picture>
-      </div>
-    </div> -->
       <div v-if="this.draftStatus == 'DRA' || !this.draftStatus">
         <div class="mt-12 flex justify-center">
           <div>
@@ -333,6 +289,17 @@ export default {
     this.healthExamCert = this.getHealthExamCert;
     this.englishLanguage = this.getEnglishLanguage;
     this.professionalDoc = this.getProfessionalDocuments;
+
+    this.proCertificate = this.getProCertificate;
+    this.proTranscript = this.getProTranscript;
+    this.proDiploma = this.getProDiploma;
+
+    this.eduEighth = this.getEduEighth;
+    this.eduTenth = this.getEduTenth;
+    this.eduTwelveth = this.getEduTwelveth;
+    this.eduTranscript1 = this.getEduTranscript1;
+    this.eduTranscript2 = this.getEduTranscript2;
+
     this.herqa = this.getHerqa;
     this.supportLetter = this.getSupportLetter;
     this.coc = this.getCoc;
@@ -346,6 +313,191 @@ export default {
     this.transcript = this.getTranscript;
     this.degree = this.getDegree;
     this.payroll = this.getPayroll;
+
+    if (this.passport != "") {
+      if (this.passport != undefined) {
+        var filePreview = await this.blobToBase64(this.passport);
+        this.passport.docFile = filePreview;
+        this.passport.title = "Passport";
+        this.docList.push(this.passport);
+      }
+    }
+    if (this.healthExamCert != "") {
+      if (this.healthExamCert != undefined) {
+        var filePreview = await this.blobToBase64(this.healthExamCert);
+        this.healthExamCert.docFile = filePreview;
+        this.healthExamCert.title = "Medical Certificate";
+        this.docList.push(this.healthExamCert);
+      }
+    }
+    if (this.englishLanguage != "") {
+      if (this.englishLanguage != undefined) {
+        var filePreview = await this.blobToBase64(this.englishLanguage);
+        this.englishLanguage.docFile = filePreview;
+        this.englishLanguage.title = "English Language Certificated";
+        this.docList.push(this.englishLanguage);
+      }
+    }
+    if (this.proCertificate != "") {
+      if (this.proCertificate != undefined) {
+        var filePreview = await this.blobToBase64(this.proCertificate);
+        this.proCertificate.docFile = filePreview;
+        this.proCertificate.title = "Professional Certificate";
+        this.docList.push(this.proCertificate);
+      }
+    }
+    if (this.proTranscript != "") {
+      if (this.proTranscript != undefined) {
+        var filePreview = await this.blobToBase64(this.proTranscript);
+        this.proTranscript.docFile = filePreview;
+        this.proTranscript.title = "Transcript";
+        this.docList.push(this.proTranscript);
+      }
+    }
+    if (this.proDiploma != "") {
+      if (this.proDiploma != undefined) {
+        var filePreview = await this.blobToBase64(this.proDiploma);
+        this.proDiploma.docFile = filePreview;
+        this.proDiploma.title = "Diploma";
+        this.docList.push(this.proDiploma);
+      }
+    }
+    if (this.eduEighth != "") {
+      if (this.eduEighth != undefined) {
+        var filePreview = await this.blobToBase64(this.eduEighth);
+        this.eduEighth.docFile = filePreview;
+        this.eduEighth = "Eighth Grade Certificate";
+        this.docList.push(this.eduEighth);
+      }
+    }
+    if (this.eduTenth != "") {
+      if (this.eduTenth != undefined) {
+        var filePreview = await this.blobToBase64(this.eduTenth);
+        this.eduTenth.docFile = filePreview;
+        this.eduTenth.title = "Tenth Grade Certificate";
+        this.docList.push(this.eduTenth);
+      }
+    }
+    if (this.eduTwelveth != "") {
+      if (this.eduTwelveth != undefined) {
+        var filePreview = await this.blobToBase64(this.eduTwelveth);
+        this.eduTwelveth.docFile = filePreview;
+        this.eduTwelveth.title = "Twelveth Grade Certificate";
+        this.docList.push(this.eduTwelveth);
+      }
+    }
+    if (this.eduTranscript1 != "") {
+      if (this.eduTranscript1 != undefined) {
+        var filePreview = await this.blobToBase64(this.eduTranscript1);
+        this.eduTranscript1.docFile = filePreview;
+        this.eduTranscript1.title = "Education Transcript 1";
+        this.docList.push(this.eduTranscript1);
+      }
+    }
+    if (this.eduTranscript2 != "") {
+      if (this.eduTranscript2 != undefined) {
+        var filePreview = await this.blobToBase64(this.eduTranscript2);
+        this.eduTranscript2.docFile = filePreview;
+        this.eduTranscript2.title = "Education Transcript 2";
+        this.docList.push(this.eduTranscript2);
+      }
+    }
+    if (this.herqa != "") {
+      if (this.herqa != undefined) {
+        var filePreview = await this.blobToBase64(this.herqa);
+        this.herqa.docFile = filePreview;
+        this.herqa.title = "HERQA";
+        this.docList.push(this.herqa);
+      }
+    }
+    if (this.supportLetter != "") {
+      if (this.supportLetter != undefined) {
+        var filePreview = await this.blobToBase64(this.supportLetter);
+        this.supportLetter.docFile = filePreview;
+        this.supportLetter.title = "Support Letter";
+        this.docList.push(this.supportLetter);
+      }
+    }
+    if (this.coc != "") {
+      if (this.coc != undefined) {
+        var filePreview = await this.blobToBase64(this.coc);
+        this.coc.docFile = filePreview;
+        this.coc.title = "COC";
+        this.docList.push(this.coc);
+      }
+    }
+    if (this.workExperience != "") {
+      if (this.workExperience != undefined) {
+        var filePreview = await this.blobToBase64(this.workExperience);
+        this.workExperience.docFile = filePreview;
+        this.workExperience.title = "Work Experience";
+        this.docList.push(this.workExperience);
+      }
+    }
+    if (this.serviceFee != "") {
+      if (this.serviceFee != undefined) {
+        var filePreview = await this.blobToBase64(this.serviceFee);
+        this.serviceFee.docFile = filePreview;
+        this.serviceFee.title = "Service Fee";
+        this.docList.push(this.serviceFee);
+      }
+    }
+    if (this.letterfromOrg != "") {
+      if (this.letterfromOrg != undefined) {
+        var filePreview = await this.blobToBase64(this.letterfromOrg);
+        this.letterfromOrg.docFile = filePreview;
+        this.letterfromOrg.title = "Letter from Hiring Organization";
+        this.docList.push(this.letterfromOrg);
+      }
+    }
+    if (this.renewedLicense != "") {
+      if (this.renewedLicense != undefined) {
+        var filePreview = await this.blobToBase64(this.renewedLicense);
+        this.renewedLicense.docFile = filePreview;
+        this.renewedLicense.title = "Renewed License";
+        this.docList.push(this.renewedLicense);
+      }
+    }
+    if (this.professionalLicense != "") {
+      if (this.professionalLicense != undefined) {
+        var filePreview = await this.blobToBase64(this.professionalLicense);
+        this.professionalLicense.docFile = filePreview;
+        this.professionalLicense.title = "Professional License";
+        this.docList.push(this.professionalLicense);
+      }
+    }
+    if (this.diploma != "") {
+      if (this.diploma != undefined) {
+        var filePreview = await this.blobToBase64(this.diploma);
+        this.diploma.docFile = filePreview;
+        this.diploma.title = "Diploma";
+        this.docList.push(this.diploma);
+      }
+    }
+    if (this.transcript != "") {
+      if (this.transcript != undefined) {
+        var filePreview = await this.blobToBase64(this.transcript);
+        this.transcript.docFile = filePreview;
+        this.transcript.title = "Transcript";
+        this.docList.push(this.transcript);
+      }
+    }
+    if (this.degree != "") {
+      if (this.degree != undefined) {
+        var filePreview = await this.blobToBase64(this.degree);
+        this.degree.docFile = filePreview;
+        this.degree.title = "Degree";
+        this.docList.push(this.degree);
+      }
+    }
+    if (this.payroll != "") {
+      if (this.payroll != undefined) {
+        var filePreview = await this.blobToBase64(this.payroll);
+        this.payroll.docFile = filePreview;
+        this.payroll.title = "Payroll";
+        this.docList.push(this.payroll);
+      }
+    }
 
     this.buttons = this.getButtons;
     this.fetchProfileInfo();
@@ -365,7 +517,7 @@ export default {
   },
   data: () => ({
     basePath: "https://storage.googleapis.com/hris-lisence-dev/",
-
+    docList: [],
     show: false,
     profileInfo: {},
     applicantId: null,
@@ -406,6 +558,16 @@ export default {
     transcript: "",
     payroll: "",
 
+    eduEighth: "",
+    eduTenth: "",
+    eduTwelveth: "",
+    eduTranscript1: "",
+    eduTranscript2: "",
+
+    proCertificate: "",
+    proTranscrip: "",
+    proDiploma: "",
+
     applicationId: "",
     buttons: [],
     documentTypes: [],
@@ -418,6 +580,16 @@ export default {
       getHealthExamCert: "newlicense/getHealthExamCert",
       getEnglishLanguage: "newlicense/getEnglishLanguage",
       getProfessionalDocuments: "newlicense/getProfessionalDocuments",
+      getProCertificate: "newlicense/getProCertificate",
+      getProTranscript: "newlicense/getProTranscript",
+      getProDiploma: "newlicense/getProDiploma",
+
+      getEduEighth: "newlicense/getEduEighth",
+      getEduTenth: "newlicense/getEduTenth",
+      getEduTwelveth: "newlicense/getEduTwelveth",
+      getEduTranscript1: "newlicense/getEduTranscript1",
+      getEduTranscript2: "newlicense/getEduTranscript2",
+
       getHerqa: "newlicense/getHerqa",
       getSupportLetter: "newlicense/getSupportLetter",
       getCoc: "newlicense/getCoc",
@@ -447,6 +619,13 @@ export default {
           this.show = true;
           this.showLoading2 = false;
         }, 3000);
+      });
+    },
+    blobToBase64(blob) {
+      return new Promise((resolve, _) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result);
+        reader.readAsDataURL(blob);
       });
     },
     setDocs() {
@@ -978,12 +1157,6 @@ export default {
     },
     update(action) {
       this.showLoading = true;
-      // if (this.occupationTypeId == "") {
-      //   this.occupationTypeId = 0;
-      // }
-      // if (this.nativeLanguageId == "") {
-      //   this.nativeLanguageId = 1;
-      // }
       let license = {
         data: {
           action: action,

@@ -15,7 +15,7 @@
         <div
           :class="[this.profileInfo.name === null ? errorClass : activeClass]"
         >
-          <label class="ml-4"> Full Name</label>
+          <label class="ml-4 text-primary-300"> Full Name</label>
           <h5 class="ml-4">
             {{
               this.profileInfo.name +
@@ -26,10 +26,22 @@
             }}
           </h5>
         </div>
+        <div>
+          <label class="ml-8 text-primary-300"> Full Alternative Name</label>
+          <h5 class="ml-8">
+            {{
+              this.profileInfo.alternativeName +
+                " " +
+                this.profileInfo.alternativeFatherName +
+                " " +
+                this.profileInfo.alternativeGrandFatherName
+            }}
+          </h5>
+        </div>
         <div
           :class="[this.profileInfo.gender === null ? errorClass : activeClass]"
         >
-          <label class="ml-4"> Gender</label>
+          <label class="ml-4 text-primary-300"> Gender</label>
           <h5 class="ml-4">
             {{ this.profileInfo.gender ? this.profileInfo["gender"] : "-" }}
           </h5>
@@ -39,7 +51,7 @@
             this.profileInfo.nationality === null ? errorClass : activeClass,
           ]"
         >
-          <label class="ml-4"> Nationality</label>
+          <label class="ml-4 text-primary-300"> Nationality</label>
           <h5 class="ml-4">
             {{
               this.profileInfo.nationality ? this.profileInfo.nationality : "-"
@@ -48,24 +60,10 @@
         </div>
         <div
           :class="[
-            this.profileInfo.placeOfBirth === null ? errorClass : activeClass,
-          ]"
-        >
-          <label class="ml-4"> Place of Birth</label>
-          <h5 class="ml-4">
-            {{
-              this.profileInfo.placeOfBirth
-                ? this.profileInfo.placeOfBirth
-                : "-"
-            }}
-          </h5>
-        </div>
-        <div
-          :class="[
             this.profileInfo.dateOfBirth === null ? errorClass : activeClass,
           ]"
         >
-          <label class="ml-4"> Date of Birth</label>
+          <label class="ml-4 text-primary-300"> Date of Birth</label>
           <h5 class="ml-4">
             {{
               this.profileInfo.dateOfBirth
@@ -81,7 +79,7 @@
               : activeClass,
           ]"
         >
-          <label class="ml-4"> Marital Status</label>
+          <label class="ml-4 text-primary-300"> Marital Status</label>
           <h5 class="ml-4">
             {{
               this.profileInfo.maritalStatus.name
@@ -95,27 +93,9 @@
       <div class="flex justify-start">
         <Title message="Address" />
       </div>
-      <div class="flex flex-row">
-        <div
-          :class="[this.profileInfo.kebele === null ? errorClass : activeClass]"
-        >
-          <label class="ml-4"> Kebele</label>
-          <h5 class="ml-4">
-            {{ this.profileInfo.kebele ? this.profileInfo.kebele : "-" }}
-          </h5>
-        </div>
-        <div
-          :class="[
-            this.profileInfo.houseNumber === null ? errorClass : activeClass,
-          ]"
-        >
-          <label class="ml-4"> House Number</label>
-          <h5 class="ml-4">
-            {{
-              this.profileInfo.houseNumber ? this.profileInfo.houseNumber : "-"
-            }}
-          </h5>
-        </div>
+      <div>
+        <label class="ml-8 text-primary-300"> PO Box</label>
+        <h5 class="ml-8">{{ this.profileInfo.poBox }}</h5>
       </div>
       <div class="flex justify-start">
         <Title message="Contact" />
@@ -128,7 +108,7 @@
               : activeClass,
           ]"
         >
-          <label class="ml-4"> Mobile Number</label>
+          <label class="ml-4 text-primary-300"> Mobile Number</label>
           <h5 class="ml-4">
             {{
               this.profileInfo.user.phoneNumber
@@ -145,7 +125,7 @@
               : activeClass,
           ]"
         >
-          <label class="ml-4"> Email</label>
+          <label class="ml-4 text-primary-300"> Email</label>
           <h5 class="ml-4">
             {{
               this.profileInfo.user.emailAddress
@@ -154,29 +134,22 @@
             }}
           </h5>
         </div>
-        <div
-          :class="[
-            this.profileInfo.userType.name === null ? errorClass : activeClass,
-          ]"
-        >
-          <label class="ml-4"> User Type</label>
-          <h5 class="ml-4">
-            {{
-              this.profileInfo.userType.name
-                ? this.profileInfo.userType.name
-                : "-"
-            }}
-          </h5>
+      </div>
+      <div class="flex justify-start flex-wrap">
+        <div v-for="i in docList.length" v-bind:key="i">
+          <div
+            class="mr-4"
+            v-for="item in docList.slice((i - 1) * 1, i * 1)"
+            v-bind="item"
+            v-bind:value="item"
+          >
+            <Title class="" :message="item.title" />
+            <picture>
+              <img :src="item.docFile" />
+            </picture>
+          </div>
         </div>
       </div>
-      <!-- <div class="flex justify-start flex-wrap">
-        <div v-for="file in docs" v-bind:key="file.name">
-          <Title class="" :message="file.name" />
-          <picture>
-            <img :src="basePath + file.filePath" />
-          </picture>
-        </div>
-      </div> -->
       <div v-if="this.draftStatus == 'DRA' || !this.draftStatus">
         <div class="mt-12 flex justify-center">
           <div>
@@ -311,13 +284,22 @@ export default {
     if (this.draftId != undefined) {
       this.draftData = this.getDraftData;
     }
-
     this.userId = +localStorage.getItem("userId");
-
     this.licenseCopy = this.getLicenseCopy;
     this.serviceFee = this.getServiceFee;
     this.goodstandingLetter = this.getLetter;
-
+    if (this.licenseCopy != "") {
+      var filePreview = await this.blobToBase64(this.licenseCopy);
+      this.licenseCopy.docFile = filePreview;
+      this.licenseCopy.title = "License Copy";
+      this.docList.push(this.licenseCopy);
+    }
+    if (this.goodstandingLetter != "") {
+      this.letterPreview = await this.blobToBase64(this.goodstandingLetter);
+      this.goodstandingLetter.docFile = this.letterPreview;
+      this.goodstandingLetter.title = "Verification Letter";
+      this.docList.push(this.goodstandingLetter);
+    }
     this.buttons = this.getButtons;
     this.fetchProfileInfo();
     this.setDocs();
@@ -335,6 +317,9 @@ export default {
   data: () => ({
     basePath: "https://storage.googleapis.com/hris-lisence-dev/",
 
+    filePreview: "",
+    letterPreview: "",
+    docList: [],
     show: false,
     profileInfo: {},
     applicantId: "",
@@ -379,6 +364,13 @@ export default {
   methods: {
     moment: function(date) {
       return moment(date);
+    },
+    blobToBase64(blob) {
+      return new Promise((resolve, _) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result);
+        reader.readAsDataURL(blob);
+      });
     },
     fetchProfileInfo() {
       this.showLoading2 = true;
@@ -663,6 +655,12 @@ export default {
 };
 </script>
 <style>
+@import "../../styles/document-upload.css";
+img {
+  width: 250px;
+  height: 250px;
+  border-radius: 0%;
+}
 .text-danger > label,
 .text-danger > h5 {
   color: red;

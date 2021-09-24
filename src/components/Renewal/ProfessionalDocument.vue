@@ -12,7 +12,7 @@
         "
       >
         <TitleWithIllustration
-          illustration="User"
+          illustration="Certificate"
           message="Professional Documents"
           class="mt-8"
         />
