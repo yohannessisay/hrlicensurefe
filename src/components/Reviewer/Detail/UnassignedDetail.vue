@@ -22,7 +22,7 @@
                   v-bind:key="types.name"
                   v-bind:value="types.id"
                 >
-                <!-- <option> -->
+                  <!-- <option> -->
                   {{ types.name }}
                 </option>
               </select>
@@ -57,10 +57,10 @@
               <h5 class="ml-8">
                 {{
                   profileInfo.name +
-                  " " +
-                  profileInfo.fatherName +
-                  " " +
-                  profileInfo.grandFatherName
+                    " " +
+                    profileInfo.fatherName +
+                    " " +
+                    profileInfo.grandFatherName
                 }}
               </h5>
             </div>
@@ -130,9 +130,11 @@
           <div class="flex flex-row">
             <div
               :class="[
-                license.woreda === null ? errorClass :
-                license.woreda.zone === null ? errorClass :
-                license.woreda.zone.region === null
+                license.woreda === null
+                  ? errorClass
+                  : license.woreda.zone === null
+                  ? errorClass
+                  : license.woreda.zone.region === null
                   ? errorClass
                   : activeClass,
               ]"
@@ -140,9 +142,11 @@
               <label class="ml-8"> Region</label>
               <h5 class="ml-8">
                 {{
-                  license.woreda === null ? "-" :
-                  license.woreda.zone === null ? "-" :
-                  license.woreda.zone.region
+                  license.woreda === null
+                    ? "-"
+                    : license.woreda.zone === null
+                    ? "-"
+                    : license.woreda.zone.region
                     ? license.woreda.zone.region.name
                     : "-"
                 }}
@@ -150,21 +154,25 @@
             </div>
             <div
               :class="[
-                license.woreda === null ?
-                errorClass : license.woreda.zone === null ? 
-                errorClass : activeClass,
+                license.woreda === null
+                  ? errorClass
+                  : license.woreda.zone === null
+                  ? errorClass
+                  : activeClass,
               ]"
             >
               <label class="ml-8"> Zone</label>
               <h5 class="ml-8">
                 {{
-                  license.woreda === null ? "-" : license.woreda.zone ? license.woreda.zone.name : "-"
+                  license.woreda === null
+                    ? "-"
+                    : license.woreda.zone
+                    ? license.woreda.zone.name
+                    : "-"
                 }}
               </h5>
             </div>
-            <div
-              :class="[license.woreda === null ? errorClass : activeClass]"
-            >
+            <div :class="[license.woreda === null ? errorClass : activeClass]">
               <label class="ml-8"> Wereda</label>
               <h5 class="ml-8">
                 {{ license.woreda ? license.woreda.name : "-" }}
@@ -260,10 +268,12 @@
               </h5>
             </div>
           </div>
-          <div class="flex justify-start flex-wrap">
-          </div>
+          <div class="flex justify-start flex-wrap"></div>
           <div v-if="showFlash">
             <FlashMessage message="Your profile is successfully created" />
+          </div>
+          <div v-if="showErrorFlash">
+            <ErrorFlashMessage message="Operation Failed!" />
           </div>
         </div>
       </div>
@@ -285,6 +295,8 @@ import ReviewerNavBar from "@/components/Reviewer/ReviewerNavBar";
 import { ref, onMounted } from "vue";
 import Spinner from "@/sharedComponents/Spinner";
 import moment from "moment";
+import FlashMessage from "@/sharedComponents/FlashMessage";
+import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 
 export default {
   props: ["activeState"],
@@ -292,6 +304,8 @@ export default {
     Title,
     ReviewerNavBar,
     Spinner,
+    FlashMessage,
+    ErrorFlashMessage,
   },
   computed: {
     moment: () => moment,
@@ -363,13 +377,13 @@ export default {
         store
           .dispatch("reviewer/getNewLicenseApplication", applicationId)
           .then((res) => {
-            console.log("unassigned new license", res)
+            console.log("unassigned new license", res);
             showLoading.value = false;
             showLoading.value = false;
             license.value = res.data.data;
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
-            console.log("profile info new license", profileInfo.value)
+            console.log("profile info new license", profileInfo.value);
             // applicantId.value = license.value.applicantId;
             education.value.departmentName =
               license.value.education.department.name;
@@ -420,7 +434,7 @@ export default {
             license.value = res.data.data;
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
-            console.log("profile info is", profileInfo.value)
+            console.log("profile info is", profileInfo.value);
             education.value.departmentName =
               license.value.education.department.name;
             education.value.institutionName =
@@ -434,17 +448,16 @@ export default {
     const fetchAdmins = () => {
       store.dispatch("reviewer/getAdmins").then((res) => {
         admins.value = res.data.data;
-        console.log("federal admin", admins.value)
+        console.log("federal admin", admins.value);
       });
     };
 
     const fetchAdminsByRegion = (regionId) => {
-      store.dispatch("reviewer/getAdminsByRegion", regionId)
-      .then(res => {
+      store.dispatch("reviewer/getAdminsByRegion", regionId).then((res) => {
         admins.value = res.data.data;
-        console.log("regional admin", admins.value)
-      })
-    }
+        console.log("regional admin", admins.value);
+      });
+    };
 
     const fetchRole = (id) => {
       store.dispatch("reviewer/getRoles", id).then((res) => {
@@ -469,7 +482,7 @@ export default {
           };
         }
         if (applicationType.value == "Renewal") {
-          console.log("is renewal")
+          console.log("is renewal");
           assign.value = {
             renewalId: route.params.applicationId,
             reviewerId: assign.value.reviewerId,
@@ -477,13 +490,13 @@ export default {
           };
         }
         if (applicationType.value == "New License") {
-          console.log("is new license")
+          console.log("is new license");
           assign.value = {
             licenseId: route.params.applicationId,
             reviewerId: assign.value.reviewerId,
             createdByAdminId: +localStorage.getItem("adminId"),
           };
-          console.log("assigne value is ", assign.value)
+          console.log("assigne value is ", assign.value);
         }
       }
 
@@ -518,49 +531,153 @@ export default {
         }
       }
       if (applicationType.value == "New License") {
-        store
-          .dispatch("reviewer/assignReviewer", assign.value)
-
-          .then((response) => {
-            console.log("the response is ", response)
-            if (response.statusText == "Created") {
+        if (license.value.applicationStatus.code === "UPD") {
+          license.value.reviewerId = assign.value.reviewerId;
+          let req = {
+            action: "UpdateEvent",
+            data: license.value,
+          };
+          store
+          .dispatch("reviewer/editNewLicense", req)
+          .then((res) => {
+            if (res.statusText == "Created") {
               showFlash.value = true;
-              router.push("/admin/review");
+              setTimeout(() => {
+                router.push("/admin/review");
+              }, 3000);
+            } else {
+              showErrorFlash.value = true;
+              setTimeout(() => {
+                router.go();
+              }, 3000);
             }
+          })
+          .catch((err) => {
+            console.log("error while evaluating", err);
           });
+        } else {
+          store
+            .dispatch("reviewer/assignReviewer", assign.value)
+
+            .then((response) => {
+              console.log("the response is ", response);
+              if (response.statusText == "Created") {
+                showFlash.value = true;
+                router.push("/admin/review");
+              }
+            });
+        }
       }
       if (applicationType.value == "Verification") {
-        store
-          .dispatch("reviewer/assignVerificationReviewer", assign.value)
-
-          .then((response) => {
-            if (response.statusText == "Created") {
+        if (license.value.applicationStatus.code === "UPD") {
+          license.value.reviewerId = assign.value.reviewerId;
+          let req = {
+            action: "UpdateEvent",
+            data: license.value,
+          };
+          store
+          .dispatch("reviewer/editVerification", req)
+          .then((res) => {
+            if (res.statusText == "Created") {
               showFlash.value = true;
-              router.push("/admin/review");
+              setTimeout(() => {
+                router.push("/admin/review");
+              }, 3000);
+            } else {
+              showErrorFlash.value = true;
+              setTimeout(() => {
+                router.go();
+              }, 3000);
             }
+          })
+          .catch((err) => {
+            console.log("error while evaluating", err);
           });
+        } else {
+          store
+            .dispatch("reviewer/assignVerificationReviewer", assign.value)
+
+            .then((response) => {
+              if (response.statusText == "Created") {
+                showFlash.value = true;
+                router.push("/admin/review");
+              }
+            });
+        }
       }
       if (applicationType.value == "Renewal") {
-        store
-          .dispatch("reviewer/assignRenewalReviewer", assign.value)
-
-          .then((response) => {
-            if (response.statusText == "Created") {
+        if (license.value.applicationStatus.code === "UPD") {
+          license.value.reviewerId = assign.value.reviewerId;
+          let req = {
+            action: "UpdateEvent",
+            data: license.value,
+          };
+          store
+          .dispatch("reviewer/editRenewal", req)
+          .then((res) => {
+            if (res.statusText == "Created") {
               showFlash.value = true;
-              router.push("/admin/review");
+              setTimeout(() => {
+                router.push("/admin/review");
+              }, 3000);
+            } else {
+              showErrorFlash.value = true;
+              setTimeout(() => {
+                router.go();
+              }, 3000);
             }
+          })
+          .catch((err) => {
+            console.log("error while evaluating", err);
           });
+        } else {
+          store
+            .dispatch("reviewer/assignRenewalReviewer", assign.value)
+
+            .then((response) => {
+              if (response.statusText == "Created") {
+                showFlash.value = true;
+                router.push("/admin/review");
+              }
+            });
+        }
       }
       if (applicationType.value == "Good Standing") {
-        store
-          .dispatch("reviewer/assignGoodStandingReviewer", assign.value)
-
-          .then((response) => {
-            if (response.statusText == "Created") {
+        if (license.value.applicationStatus.code === "UPD") {
+          license.value.reviewerId = assign.value.reviewerId;
+          let req = {
+            action: "UpdateEvent",
+            data: license.value,
+          };
+          store
+          .dispatch("reviewer/editGoodStanding", req)
+          .then((res) => {
+            if (res.statusText == "Created") {
               showFlash.value = true;
-              router.push("/admin/review");
+              setTimeout(() => {
+                router.push("/admin/review");
+              }, 3000);
+            } else {
+              showErrorFlash.value = true;
+              setTimeout(() => {
+                router.go();
+              }, 3000);
             }
+          })
+          .catch((err) => {
+            console.log("error while evaluating", err);
           });
+        } else {
+          store
+            .dispatch("reviewer/assignGoodStandingReviewer", assign.value)
+
+            .then((response) => {
+              if (response.statusText == "Created") {
+                showFlash.value = true;
+                router.push("/admin/review");
+              }
+            });
+        }
       }
     };
 
@@ -577,7 +694,7 @@ export default {
         route.params.applicantId
       );
       fetchRole(adminId);
-      if(regionId !== null) {
+      if (regionId !== null) {
         fetchAdminsByRegion(regionId);
       } else {
         fetchAdmins();
