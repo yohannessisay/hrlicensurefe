@@ -144,6 +144,10 @@
               personalInfoErrors.nationalityId
             }}</span>
           </div>
+          <div class="flex flex-col mb-medium w-1/2 ml-12">
+            <label class="text-primary-700">PO Box(Optional)</label>
+            <input class="max-w-3xl" type="text" v-model="personalInfo.poBox" />
+          </div>
           <!-- <div class="flex flex-col mb-medium w-1/2 ml-12">
             <label class="text-primary-700">Place of birth(Optional)</label>
             <input
@@ -363,13 +367,14 @@ export default {
       alternativeFatherName: "",
       alternativeGrandFatherName: "",
       gender: "",
+      poBox: "",
       dateOfBirth: "",
-      placeOfBirth: "",
+      // placeOfBirth: "",
       nationalityId: "",
-      userTypeId: "",
+      // userTypeId: "",
       maritalStatusId: "",
       photo: "",
-      woredaId: "",
+      // woredaId: "",
     });
     let personalInfoErrors = ref({
       name: "",
@@ -381,7 +386,7 @@ export default {
       nationalityId: "",
       gender: "",
       maritalStatusId: "",
-      userTypeId: "",
+      // userTypeId: "",
     });
     let state = ref({
       userTypes: {},

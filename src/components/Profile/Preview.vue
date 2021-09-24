@@ -163,6 +163,7 @@ export default {
       gender: null,
       maritalStatusId: null,
       maritalStatus: null,
+      poBox: null,
       // userTypeId: null,
     };
     let address = {
@@ -201,7 +202,7 @@ export default {
           // kebele: address.kebele,
           // houseNumber: address.houseNumber,
           // residence: address.residence,
-          poBox: address.poBox,
+          poBox: personalInfo.poBox,
           photo: personalInfo.photo,
           userId: +localStorage.getItem("userId"),
         })
