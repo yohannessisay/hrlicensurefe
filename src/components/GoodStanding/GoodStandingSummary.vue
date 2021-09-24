@@ -15,7 +15,7 @@
         <div
           :class="[this.profileInfo.name === null ? errorClass : activeClass]"
         >
-          <label class="ml-4"> Full Name</label>
+          <label class="ml-4 text-primary-300"> Full Name</label>
           <h5 class="ml-4">
             {{
               this.profileInfo.name +
@@ -33,8 +33,20 @@
               : activeClass,
           ]"
         >
-          <label class="ml-4"> Full Name</label>
+          <label class="ml-4 text-primary-300"> Full Name</label>
           <h5 class="ml-4">
+            {{
+              this.profileInfo.alternativeName +
+                " " +
+                this.profileInfo.alternativeFatherName +
+                " " +
+                this.profileInfo.alternativeGrandFatherName
+            }}
+          </h5>
+        </div>
+        <div>
+          <label class="ml-8 text-primary-300"> Full Alternative Name</label>
+          <h5 class="ml-8">
             {{
               this.profileInfo.alternativeName +
                 " " +
@@ -47,7 +59,7 @@
         <div
           :class="[this.profileInfo.gender === null ? errorClass : activeClass]"
         >
-          <label class="ml-4"> Gender</label>
+          <label class="ml-4 text-primary-300"> Gender</label>
           <h5 class="ml-4">
             {{ this.profileInfo.gender ? this.profileInfo["gender"] : "-" }}
           </h5>
@@ -57,7 +69,7 @@
             this.profileInfo.nationality === null ? errorClass : activeClass,
           ]"
         >
-          <label class="ml-4"> Nationality</label>
+          <label class="ml-4 text-primary-300"> Nationality</label>
           <h5 class="ml-4">
             {{
               this.profileInfo.nationality ? this.profileInfo.nationality : "-"
@@ -83,7 +95,7 @@
             this.profileInfo.dateOfBirth === null ? errorClass : activeClass,
           ]"
         >
-          <label class="ml-4"> Date of Birth</label>
+          <label class="ml-4 text-primary-300"> Date of Birth</label>
           <h5 class="ml-4">
             {{
               this.profileInfo.dateOfBirth
@@ -99,7 +111,7 @@
               : activeClass,
           ]"
         >
-          <label class="ml-4"> Marital Status</label>
+          <label class="ml-4 text-primary-300"> Marital Status</label>
           <h5 class="ml-4">
             {{
               this.profileInfo.maritalStatus.name
@@ -112,6 +124,10 @@
 
       <div class="flex justify-start">
         <Title message="Address" />
+      </div>
+      <div>
+        <label class="ml-8 text-primary-300"> PO Box</label>
+        <h5 class="ml-8">{{ this.profileInfo.poBox }}</h5>
       </div>
       <!-- <div class="flex flex-row">
         <div
@@ -156,7 +172,7 @@
               : activeClass,
           ]"
         >
-          <label class="ml-4"> Mobile Number</label>
+          <label class="ml-4 text-primary-300"> Mobile Number</label>
           <h5 class="ml-4">
             {{
               this.profileInfo.user.phoneNumber
@@ -173,7 +189,7 @@
               : activeClass,
           ]"
         >
-          <label class="ml-4"> Email</label>
+          <label class="ml-4 text-primary-300"> Email</label>
           <h5 class="ml-4">
             {{
               this.profileInfo.user.emailAddress
