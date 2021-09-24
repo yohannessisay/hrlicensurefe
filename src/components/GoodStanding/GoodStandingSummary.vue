@@ -76,20 +76,6 @@
             }}
           </h5>
         </div>
-        <!-- <div
-          :class="[
-            this.profileInfo.placeOfBirth === null ? errorClass : activeClass,
-          ]"
-        >
-          <label class="ml-4"> Place of Birth</label>
-          <h5 class="ml-4">
-            {{
-              this.profileInfo.placeOfBirth
-                ? this.profileInfo.placeOfBirth
-                : "-"
-            }}
-          </h5>
-        </div> -->
         <div
           :class="[
             this.profileInfo.dateOfBirth === null ? errorClass : activeClass,
@@ -129,38 +115,6 @@
         <label class="ml-8 text-primary-300"> PO Box</label>
         <h5 class="ml-8">{{ this.profileInfo.poBox }}</h5>
       </div>
-      <!-- <div class="flex flex-row">
-        <div
-          :class="[this.profileInfo.kebele === null ? errorClass : activeClass]"
-        >
-          <label class="ml-4"> Kebele</label>
-          <h5 class="ml-4">
-            {{ this.profileInfo.kebele ? this.profileInfo.kebele : "-" }}
-          </h5>
-        </div>
-        <div
-          :class="[
-            this.profileInfo.houseNumber === null ? errorClass : activeClass,
-          ]"
-        >
-          <label class="ml-4"> House Number</label>
-          <h5 class="ml-4">
-            {{
-              this.profileInfo.houseNumber ? this.profileInfo.houseNumber : "-"
-            }}
-          </h5>
-        </div>
-        <div
-          :class="[
-            this.profileInfo.residence === null ? errorClass : activeClass,
-          ]"
-        >
-          <label class="ml-4"> Residence</label>
-          <h5 class="ml-4">
-            {{ this.profileInfo.residence ? this.profileInfo.residence : "-" }}
-          </h5>
-        </div>
-      </div> -->
       <div class="flex justify-start">
         <Title message="Contact" />
       </div>
@@ -198,20 +152,6 @@
             }}
           </h5>
         </div>
-        <!-- <div
-          :class="[
-            this.profileInfo.userType.name === null ? errorClass : activeClass,
-          ]"
-        >
-          <label class="ml-4"> User Type</label>
-          <h5 class="ml-4">
-            {{
-              this.profileInfo.userType.name
-                ? this.profileInfo.userType.name
-                : "-"
-            }}
-          </h5>
-        </div> -->
       </div>
       <div class="flex justify-start flex-wrap">
         <div v-for="i in docList.length" v-bind:key="i">

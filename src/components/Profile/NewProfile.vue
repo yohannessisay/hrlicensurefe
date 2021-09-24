@@ -10,15 +10,6 @@
           <PersonalInfo :activeState="1" @changeActiveState="activeState++" />
         </div>
       </transition>
-      <!-- <transition name="fade" mode="out-in">
-        <div v-if="this.activeState == 2">
-          <AddressInfo
-            :activeState="2"
-            @changeActiveState="activeState++"
-            @changeActiveStatePrevious="activeState--"
-          />
-        </div>
-      </transition> -->
       <transition name="fade" mode="out-in">
         <div v-if="this.activeState == 2">
           <Preview
@@ -35,8 +26,6 @@
 // @ is an alias to /src
 import Navigation from "@/views/Navigation";
 import PersonalInfo from "@/components/Profile/PersonalInfo.vue";
-// import AddressInfo from "@/components/Profile/AddressInfo.vue";
-// import ContactInfo from "@/components/Profile/ContactInfo.vue";
 import Preview from "@/components/Profile/Preview.vue";
 
 export default {
@@ -46,8 +35,6 @@ export default {
   }),
   components: {
     PersonalInfo,
-    // AddressInfo,
-    // ContactInfo,
     Preview,
     Navigation,
   },
