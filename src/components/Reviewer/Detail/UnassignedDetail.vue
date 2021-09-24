@@ -469,6 +469,7 @@ export default {
           };
         }
         if (applicationType.value == "Renewal") {
+          console.log("is renewal")
           assign.value = {
             renewalId: route.params.applicationId,
             reviewerId: assign.value.reviewerId,
@@ -476,11 +477,13 @@ export default {
           };
         }
         if (applicationType.value == "New License") {
+          console.log("is new license")
           assign.value = {
             licenseId: route.params.applicationId,
             reviewerId: assign.value.reviewerId,
             createdByAdminId: +localStorage.getItem("adminId"),
           };
+          console.log("assigne value is ", assign.value)
         }
       }
 
@@ -519,6 +522,7 @@ export default {
           .dispatch("reviewer/assignReviewer", assign.value)
 
           .then((response) => {
+            console.log("the response is ", response)
             if (response.statusText == "Created") {
               showFlash.value = true;
               router.push("/admin/review");

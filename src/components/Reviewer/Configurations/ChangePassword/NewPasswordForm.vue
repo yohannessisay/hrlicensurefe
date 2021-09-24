@@ -21,7 +21,31 @@
           class="max-w-3xl"
           type="password"
           v-model="passwordInfo.newPassword"
+          v-on:keyup="showPasswordStrength(passwordInfo.newPassword)"
         />
+        <password-meter :password="passwordInfo.newPassword" />
+        <div v-if="passwordStrengthDisplay">
+          <ul>
+            Password should be:
+            <div class="ml-16 pl-8">
+              <li>
+                Minimum of Eight Characters
+              </li>
+              <li>
+                At least one Uppercase Character
+              </li>
+              <li>
+                At least one Lowercase Character
+              </li>
+              <li>
+                At least one Number
+              </li>
+              <li>
+                At least one special Character
+              </li>
+            </div>
+          </ul>
+        </div>
         <br />
         <label class="text-primary-700">Confirm New Password</label>
         <input
@@ -62,11 +86,13 @@ import { useRouter } from "vue-router";
 import Spinner from "@/sharedComponents/Spinner";
 import logout from "../adminLogout.js";
 import FlashMessage from "@/sharedComponents/FlashMessage";
+import PasswordMeter from "vue-simple-password-meter";
 
 export default {
   components: {
     Spinner,
-    FlashMessage
+    FlashMessage,
+    PasswordMeter,
   },
   computed: {
     logout: () => logout,
@@ -89,9 +115,20 @@ export default {
     let oldPasswordError = ref(false);
     let showFlash = ref(false);
 
+    const passwordStrengthDisplay = ref(false);
+
     const store = useStore();
     const router = useRouter();
     const adminId = localStorage.getItem("adminId");
+
+    const showPasswordStrength = (password) => {
+      if (password != "") {
+        passwordStrengthDisplay.value = true;
+      } else {
+        passwordStrengthDisplay.value = false;
+      }
+    };
+
     const submitForm = () => {
       oldPasswordError.value = false;
       showLoading.value = true;
@@ -138,6 +175,8 @@ export default {
       }
     };
     return {
+      showPasswordStrength,
+      passwordStrengthDisplay,
       submitForm,
       passwordInfo,
       showLoading,

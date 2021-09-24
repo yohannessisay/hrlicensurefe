@@ -354,7 +354,7 @@ const routes = [
   },
   {
     path:
-      "/admin/newlicense-document/:applicationType/:applicationId/:applicantId",
+      "/admin/newlicense-document/:newLicenseApplicationId/:newLicenseApplicantId/:renewalApplicationId/:renewalApplicantId",
     name: "newlicenseDocuments",
     component: () => import("../components/Reviewer/Detail/NewLicenseDocumentsForRenewal.vue")
   },

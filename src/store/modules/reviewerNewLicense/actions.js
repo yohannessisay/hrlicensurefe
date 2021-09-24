@@ -1193,13 +1193,14 @@ export default {
   },
 
   async getNewLicenseForSpecificUser({ commit }, userStatus) {
-    const url = baseUrl + "/newLicenses/status/"+userStatus[0];
+    const url = baseUrl + "/newLicenses/user/"+userStatus[0];
     const resp = await ApiService.get(url);
-
+    console.log("new license for renewal value is ", resp.data.data, "users status", userStatus[1])
     const getUsersNewLicense = resp.data.data.filter(function(e) {
-      return e.applicant.id === userStatus[1];
+      return e.professionalTypes.code === userStatus[1];
     })
-    commit(SET_NEW_LICENSE_FOR_SPECIFIC_USER, getUsersNewLicense);
+    console.log("by application status", getUsersNewLicense)
+    commit(SET_NEW_LICENSE_FOR_SPECIFIC_USER, getUsersNewLicense[0]);
   },
   
   getNewLicenseForSpecificUserSearched({ commit, getters }, searchKey) {
