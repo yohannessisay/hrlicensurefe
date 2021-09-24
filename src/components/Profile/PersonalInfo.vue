@@ -25,7 +25,7 @@
             </span>
             <br />
             <label class="text-primary-700 ml-4"
-              >Upload Profile Picture:
+              >Upload Profile Picture: (*)
               <div class="dropbox">
                 <input
                   type="file"
@@ -41,8 +41,12 @@
                   or click to browse
                 </p>
               </div>
+              <div class="ml-8">
+                <span style="color: red">{{ personalInfoErrors.photo }}</span>
+              </div>
             </label>
           </span>
+
           <picture v-if="!showUpload && isImage">
             <p class="ml-4">
               <a href="javascript:void(0)" @click="reset()">Upload again</a>
@@ -59,12 +63,12 @@
         </div>
         <div class="flex">
           <div class="flex flex-col mb-medium w-1/2 mr-6">
-            <label class="text-primary-700">First Name</label>
+            <label class="text-primary-700">First Name (*)</label>
             <input class="max-w-3xl" type="text" v-model="personalInfo.name" />
             <span style="color: red">{{ personalInfoErrors.name }}</span>
           </div>
           <div class="flex flex-col mb-medium w-1/2 ml-12">
-            <label class="text-primary-700">Father Name</label>
+            <label class="text-primary-700">Father Name (*)</label>
             <input
               class="max-w-3xl"
               type="text"
@@ -75,7 +79,7 @@
         </div>
         <div class="flex">
           <div class="flex flex-col mb-medium w-1/2 mr-6">
-            <label class="text-primary-700">Grand Father Name</label>
+            <label class="text-primary-700">Grand Father Name (*)</label>
             <input
               class="max-w-3xl"
               type="text"
@@ -126,7 +130,7 @@
 
         <div class="flex">
           <div class="flex flex-col mb-medium w-1/2 mr-6">
-            <label class="text-primary-700">Nationality</label>
+            <label class="text-primary-700">Nationality (*)</label>
             <select
               class="max-w-3xl"
               v-model="personalInfo.nationalityId"
@@ -159,7 +163,7 @@
         </div>
         <div class="flex">
           <div class="flex flex-col mb-medium w-1/2 mr-6">
-            <label class="text-primary-700">Date of birth </label>
+            <label class="text-primary-700">Date of birth (*)</label>
             <input
               class="max-w-3xl"
               type="date"
@@ -386,6 +390,7 @@ export default {
       nationalityId: "",
       gender: "",
       maritalStatusId: "",
+      photo: "",
       // userTypeId: "",
     });
     let state = ref({
@@ -510,23 +515,24 @@ export default {
     };
     const validateForm = (formData) => {
       const errors = {};
+      if (!formData.photo) errors.photo = "Profile Picture Required";
       if (!formData.name) errors.name = "First Name Required";
       if (!formData.fatherName) errors.fatherName = "Father's Name Required";
       if (!formData.grandFatherName)
         errors.grandFatherName = "Grandfather's Name Required";
-      if (!formData.alternativeName)
-        errors.alternativeName = "Alternative Name Required";
-      if (!formData.alternativeFatherName)
-        errors.alternativeFatherName = "Alternative Father's Name Required";
-      if (!formData.alternativeGrandFatherName)
-        errors.alternativeGrandFatherName =
-          "Alternative Grandfather's Name Required";
+      // if (!formData.alternativeName)
+      //   errors.alternativeName = "Alternative Name Required";
+      // if (!formData.alternativeFatherName)
+      //   errors.alternativeFatherName = "Alternative Father's Name Required";
+      // if (!formData.alternativeGrandFatherName)
+      //   errors.alternativeGrandFatherName =
+      //     "Alternative Grandfather's Name Required";
       if (!formData.nationalityId)
         errors.nationalityId = "Nationality Required";
       if (!formData.dateOfBirth) errors.dateOfBirth = "Date of Birth Required";
-      if (!formData.gender) errors.gender = "Gender Required";
-      if (!formData.maritalStatusId)
-        errors.maritalStatusId = "Marital Status Required";
+      // if (!formData.gender) errors.gender = "Gender Required";
+      // if (!formData.maritalStatusId)
+      //   errors.maritalStatusId = "Marital Status Required";
       // if (!formData.userTypeId) errors.userTypeId = "User Type Required";
       return errors;
     };

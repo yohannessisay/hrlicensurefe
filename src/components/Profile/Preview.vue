@@ -1,12 +1,25 @@
 <template>
-  <div v-if="message.showLoading2" class="h-screen max-h-4xl mt-large">
+  <div v-if="message.showLoading2" class="h-screen mt-large pt-large">
     <Spinner class="bg-lightBlueB-200  " />
   </div>
-  <div class="bg-white mb-large rounded pr-20 pl-20 pb-12">
+  <div
+    style="width: 1000px"
+    class="bg-white mb-large rounded pr-20 pl-20 pb-12"
+  >
     <div v-if="!message.showLoading2">
       <div class="flex justify-center"><Title message="Summary" /></div>
+      <div class="flex justify-start flex-col mb-large mt-large">
+        <div class="flex justify-start mb-medium">
+          <Title message="Profile Picture" />
+        </div>
+        <div>
+          <picture>
+            <img :src="profilePic" />
+          </picture>
+        </div>
+      </div>
       <div class="flex justify-start">
-        <Title message="Personal Info" />
+        <Title message="Personal Info" class="mb-small" />
       </div>
       <div class="flex flex-row">
         <div>
@@ -63,24 +76,24 @@
         </div>
       </div>
       <div class="flex justify-start">
-        <Title message="Address" />
+        <Title message="Address" class="mb-small" />
       </div>
-      <!-- <div class="flex flex-row">
+      <div class="flex flex-row">
         <div>
-          <label class="ml-8 text-primary-300"> Kebele</label>
-          <h5 class="ml-8">{{ address.kebele }}</h5>
+          <label class="ml-8 text-primary-300"> PO Box</label>
+          <h5 class="ml-8">{{ personalInfo.poBox }}</h5>
         </div>
-        <div>
+        <!-- <div>
           <label class="ml-8 text-primary-300"> House Number</label>
           <h5 class="ml-8">{{ address.houseNumber }}</h5>
         </div>
         <div>
           <label class="ml-8 text-primary-300"> Residence</label>
           <h5 class="ml-8">{{ address.residence }}</h5>
-        </div>
-      </div> -->
+        </div> -->
+      </div>
       <div class="flex justify-start">
-        <Title message="Contact" />
+        <Title message="Contact" class="mb-small" />
       </div>
       <div class="flex flex-row">
         <!-- <div>
@@ -138,6 +151,7 @@ export default {
   setup(props, { emit }) {
     const store = useStore();
     const router = useRouter();
+    let profilePic = null;
     let message = ref({
       showFlash: false,
       showErrorFlash: false,
@@ -243,6 +257,14 @@ export default {
       emit("changeActiveStatePrevious");
     };
     personalInfo = store.getters["profile/getPersonalInfo"];
+    console.log(personalInfo);
+    if (
+      personalInfo.photo != undefined ||
+      personalInfo.photo != null ||
+      personalInfo.photo != ""
+    ) {
+      profilePic = personalInfo.photo;
+    }
     address = store.getters["profile/getAddress"];
     contact = store.getters["profile/getContact"];
     nationality = store.getters["profile/getNationality"];
@@ -256,6 +278,7 @@ export default {
       });
     });
     return {
+      profilePic,
       personalInfo,
       address,
       contact,
