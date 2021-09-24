@@ -26,7 +26,7 @@
           ACCEPTED
         </h2>
         <TitleWithIllustration
-          illustration="User"
+          illustration="Certificate"
           message="Medical Certificate"
           class="mt-8"
         />

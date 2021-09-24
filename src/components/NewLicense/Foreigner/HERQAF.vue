@@ -26,7 +26,7 @@
           ACCEPTED
         </h2>
         <TitleWithIllustration
-          illustration="User"
+          illustration="Certificate"
           message="Higher Education Relevance and Quality Agency center(HERQA)"
           class="mt-8"
         />
