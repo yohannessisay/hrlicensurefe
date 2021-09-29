@@ -1,5 +1,3 @@
-import state from "../ReviewerSideNav/state";
-
 export default {
   getLicense: (state) => state.license,
   getRenewalHealthExamCert: (state) => state.healthExamCert,
@@ -20,4 +18,22 @@ export default {
   getRemark: (state) => state.remark,
   getDeclinedFields: (state) => state.declinedFields,
   getAcceptedFields: (state) => state.acceptedFields,
+  getPassport: (state) => state.passport,
+  getEnglishLanguage: (state) => state.englishLanguage,
+  getHerqa: (state) => state.herqa,
+  getLetterfromOrg: (state) => state.letterfromOrg,
+  getProfessionalLicense: (state) => state.professionalLicense,
+  getRenewedLicense: (state) => state.renewedLicense,
+  getCoc: (state) => state.coc,
+  getDegree: (state) => state.degree,
+  getEducationalDocuments: (state) => state.educationalDocuments,
+  getEduEighth: (state) => state.eduEighthGrade,
+  getEduTenth: (state) => state.eduTenthGrade,
+  getEduTwelveth: (state) => state.eduTwelvethGrade,
+  getEduTranscript1: (state) => state.eduTranscript1,
+  getEduTranscript2: (state) => state.eduTranscript2,
+  getSupportLetter: (state) => state.supportLetter,
+  getProCertificate: (state) => state.proCertificate,
+  getProTranscript: (state) => state.proTranscript,
+  getProDiploma: (state) => state.proDiploma,
 };

@@ -19,6 +19,24 @@ import {
   SET_DECLINED_FIELDS,
   SET_REMARK,
   SET_ACCEPTED_FIELDS,
+  SET_PASSPORT,
+  SET_LANGUAGE,
+  SET_HERQA,
+  SET_LETTER_FROM_ORG,
+  SET_PROFESSIONAL_LICENSE,
+  SET_RENEWED_LICENSE,
+  SET_COC,
+  SET_DEGREE,
+  SET_EDUCATIONAL_DOCUMENT,
+  SET_EDU_EIGHTH,
+  SET_EDU_TENTH,
+  SET_EDU_TWELVETH,
+  SET_EDU_TRANSCRIPT1,
+  SET_EDU_TRANSCRIPT2,
+  SET_SUPPORT_LETTER,
+  SET_PRO_CERTIFICATE,
+  SET_PRO_DIPLOMA,
+  SET_PRO_TRANSCRIPT,
 } from "./mutation-types";
 
 const url = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api/";
@@ -71,6 +89,60 @@ export default {
   },
   setDraft({ commit }, draft) {
     commit(SET_DRAFT, draft);
+  },
+  setPassport({ commit }, passport) {
+    commit(SET_PASSPORT, passport);
+  },
+  setLanguage({ commit }, language) {
+    commit(SET_LANGUAGE, language);
+  },
+  setHerqa({ commit }, herqa) {
+    commit(SET_HERQA, herqa);
+  },
+  setLetterfromOrg({ commit }, letter) {
+    commit(SET_LETTER_FROM_ORG, letter);
+  },
+  setProfessionalLicense({ commit }, license) {
+    commit(SET_PROFESSIONAL_LICENSE, license);
+  },
+  setRenewedLicense({ commit }, license) {
+    commit(SET_RENEWED_LICENSE, license);
+  },
+  setCOC({ commit }, coc) {
+    commit(SET_COC, coc);
+  },
+  setDegree({ commit }, degree) {
+    commit(SET_DEGREE, degree);
+  },
+  setEducationalDocument({ commit }, educationalDoc) {
+    commit(SET_EDUCATIONAL_DOCUMENT, educationalDoc);
+  },
+  setEduEighth({ commit }, eduEighth) {
+    commit(SET_EDU_EIGHTH, eduEighth);
+  },
+  setEduTenth({ commit }, eduTenth) {
+    commit(SET_EDU_TENTH, eduTenth);
+  },
+  setEduTwelveth({ commit }, eduTwelveth) {
+    commit(SET_EDU_TWELVETH, eduTwelveth);
+  },
+  setEduTranscript1({ commit }, eduTranscript1) {
+    commit(SET_EDU_TRANSCRIPT1, eduTranscript1);
+  },
+  setEduTranscript2({ commit }, eduTranscript2) {
+    commit(SET_EDU_TRANSCRIPT2, eduTranscript2);
+  },
+  setSupportLetter({ commit }, letter) {
+    commit(SET_SUPPORT_LETTER, letter);
+  },
+  setProCertificate({ commit }, proCertificate) {
+    commit(SET_PRO_CERTIFICATE, proCertificate);
+  },
+  setProDiploma({ commit }, proDiploma) {
+    commit(SET_PRO_DIPLOMA, proDiploma);
+  },
+  setProTranscript({ commit }, proTranscript) {
+    commit(SET_PRO_TRANSCRIPT, proTranscript);
   },
   async addRenewalLicense({ commit }, license) {
     try {
@@ -146,7 +218,6 @@ export default {
       return resp;
     } catch (error) {
       return error;
-      Test7;
     }
   },
   async getApplicationCategories() {

@@ -2,7 +2,14 @@
   <div class="flex justify-center">
     <div class="bg-lightBlueB-200 w-screen h-screen max-w-4xl">
       <div
-        class="flex flex-col pt-large w-full bg-white blue-box-shadow-light rounded "
+        class="
+          flex flex-col
+          pt-large
+          w-full
+          bg-white
+          blue-box-shadow-light
+          rounded
+        "
       >
         <h2
           class="flex justify-center"
@@ -20,14 +27,14 @@
         </h2>
         <TitleWithIllustration
           illustration="Certificate"
-          message="Previous License"
+          message="Higher Education Relevance and Quality Agency center(HERQA)"
           class="mt-8"
         />
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
-          <div class="flex justify-center mb-10">
+          <div class="flex justify-center">
             <div>
               <span>
-                <h2>{{ previousLicenseFile.name }}</h2>
+                <h2>{{ herqaFile.name }}</h2>
                 <h2>{{ fileSize }}</h2>
               </span>
               <span v-if="showUpload">
@@ -36,11 +43,11 @@
                   <div class="dropbox">
                     <input
                       type="file"
-                      id="previousLicenseFile"
+                      id="herqaFile"
                       class="photoFile"
-                      ref="previousLicenseFileP"
+                      ref="herqaFileP"
                       v-on:change="handleFileUpload()"
-                      style="margin-bottom: 15px !important;"
+                      style="margin-bottom: 15px !important"
                       accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
                     />
                     <p>
@@ -73,9 +80,7 @@
           <button @click="submitBack">
             Back
           </button>
-          <button @click="submit">
-            Next
-          </button>
+          <button @click="submit">Next</button>
           <button @click="draft(buttons[1].action)" variant="outline">
             {{ buttons[1]["name"] }}
           </button>
@@ -87,9 +92,7 @@
           <button @click="submitBack">
             Back
           </button>
-          <button @click="submit">
-            Next
-          </button>
+          <button @click="submit">Next</button>
           <button @click="draft(buttons[2].action)" variant="outline">
             {{ buttons[2]["name"] }}
           </button>
@@ -108,9 +111,7 @@
           <button @click="submitBack">
             Back
           </button>
-          <button @click="submit">
-            Next
-          </button>
+          <button @click="submit">Next</button>
           <button
             class="withdraw"
             @click="withdraw(buttons[0].action)"
@@ -126,9 +127,7 @@
           <button @click="submitBack">
             Back
           </button>
-          <button @click="submit">
-            Next
-          </button>
+          <button @click="submit">Next</button>
           <button @click="draft(buttons[0].action)" variant="outline">
             {{ buttons[0]["name"] }}
           </button>
@@ -143,9 +142,7 @@
           <button @click="submitBack">
             Back
           </button>
-          <button @click="submit">
-            Next
-          </button>
+          <button @click="submit">Next</button>
           <!-- <button @click="draft(buttons[0].action)" variant="outline">
             {{ buttons[0]["name"] }}
           </button> -->
@@ -175,15 +172,16 @@ import { useRoute, useRouter } from "vue-router";
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import Spinner from "@/sharedComponents/Spinner";
+import HealthExamCertVue from "../../NewLicense/HealthExamCert.vue";
 
 export default {
-  props: ["activeState"],
   components: {
     TitleWithIllustration,
     FlashMessage,
     ErrorFlashMessage,
     Spinner,
   },
+  props: ["activeState"],
   setup(props, { emit }) {
     const store = useStore();
     const route = useRoute();
@@ -200,22 +198,21 @@ export default {
     let fileSize = ref("");
 
     let dataChanged = ref(false);
-    let previousLicenseFile = ref("");
-    let previousLicenseFileP = ref("");
+    let herqaFile = ref("");
+    let herqaFileP = ref("");
     let showPreview = ref(false);
     let filePreview = ref("");
     let showUpload = ref(true);
     let isImage = ref(false);
     let isPdf = ref(false);
-    let draftStatus = ref("");
-
-    let previousLicenseBack = ref("");
-
     let buttons = [];
     let documentSpecs = ref([]);
     let userId = +localStorage.getItem("userId");
     let licenseInfo = ref("");
     let draftData = ref("");
+    let draftStatus = ref("");
+
+    let herqaBack = ref("");
 
     let declinedFields = ref([]);
     let acceptedFields = ref([]);
@@ -226,21 +223,16 @@ export default {
 
     let passport = ref("");
     let healthExamCert = ref("");
-    let professionalDoc = [];
+    let professionalDoc = ref("");
     let workExperience = ref("");
     let cpd = ref("");
-    let degree = ref("");
-    let diploma = ref("");
-    let educationDoc = [];
-    let payroll = ref("");
-    let coc = ref("");
+    let previousLicense = ref("");
     let supportLetter = ref("");
-    let transcript = ref("");
 
     const reset = () => {
       showUpload.value = true;
       showPreview.value = false;
-      previousLicenseFile.value = "";
+      herqaFile.value = "";
       filePreview.value = "";
       isImage.value = true;
       fileSize.value = "";
@@ -250,9 +242,10 @@ export default {
     const handleFileUpload = () => {
       dataChanged.value = true;
       showUpload.value = false;
-      previousLicenseFile.value = previousLicenseFileP.value.files[0];
+      herqaFile.value = herqaFileP.value.files[0];
       let reader = new FileReader();
-      let fileS = previousLicenseFile.value.size;
+      isImage.value = true;
+      let fileS = herqaFile.value.size;
       if (fileS > 0 && fileS < 1000) {
         fileSize.value += "B";
       } else if (fileS > 1000 && fileS < 1000000) {
@@ -269,16 +262,24 @@ export default {
         false
       );
 
-      if (previousLicenseFile.value) {
-        if (/\.(jpe?g|png|gif)$/i.test(previousLicenseFile.value.name)) {
+      if (herqaFile.value) {
+        if (/\.(jpe?g|png|gif)$/i.test(herqaFile.value.name)) {
           isImage.value = true;
-          reader.readAsDataURL(previousLicenseFile.value);
-        } else if (/\.(pdf)$/i.test(previousLicenseFile.value.name)) {
+          reader.readAsDataURL(herqaFile.value);
+        } else if (/\.(pdf)$/i.test(herqaFile.value.name)) {
           isImage.value = false;
           isPdf.value = true;
-          reader.readAsDataURL(previousLicenseFile.value);
+          reader.readAsDataURL(herqaFile.value);
         }
       }
+    };
+    const submit = () => {
+      emit("changeActiveState");
+      store.dispatch("renewal/setHerqa", herqaFile);
+    };
+    const submitBack = () => {
+      emit("changeActiveStateMinus");
+      store.dispatch("renewal/setHerqa", herqaFile);
     };
     buttons = store.getters["renewal/getButtons"];
     documentSpecs = store.getters["renewal/getDocumentSpec"];
@@ -289,91 +290,8 @@ export default {
     professionalDoc = store.getters["renewal/getProfessionalDocuments"];
     workExperience = store.getters["renewal/getRenewalWorkExperience"];
     cpd = store.getters["renewal/getRenewalCpd"];
-    degree = store.getters["renewal/getDegree"];
-    diploma = store.getters["renewal/getDiploma"];
-    educationDoc = store.getters["renewal/getEducationalDocuments"];
-    payroll = store.getters["renewal/getPayroll"];
-    coc = store.getters["renewal/getCoc"];
+    previousLicense = store.getters["renewal/getPreviousLicense"];
     supportLetter = store.getters["renewal/getSupportLetter"];
-    transcript = store.getters["renewal/getTranscript"];
-
-    const submit = () => {
-      emit("changeActiveState");
-      store.dispatch("renewal/setPreviousLicense", previousLicenseFile);
-    };
-    const submitBack = () => {
-      emit("changeActiveStateMinus");
-      store.dispatch("renewal/setPreviousLicense", previousLicenseFile);
-    };
-
-    onMounted(() => {
-      previousLicenseBack = store.getters["renewal/getPreviousLicense"];
-      if (
-        previousLicenseBack &&
-        previousLicenseBack !== undefined &&
-        previousLicenseBack !== null &&
-        previousLicenseBack !== ""
-      ) {
-        dataChanged.value = true;
-        showUpload.value = false;
-        previousLicenseFile.value = previousLicenseBack;
-        let reader = new FileReader();
-        let fileS = previousLicenseFile.value.size;
-        if (fileS > 0 && fileS < 1000) {
-          fileSize.value += "B";
-        } else if (fileS > 1000 && fileS < 1000000) {
-          fileSize.value = fileS / 1000 + "kB";
-        } else {
-          fileSize.value = fileS / 1000000 + "MB";
-        }
-        reader.addEventListener(
-          "load",
-          function() {
-            showPreview.value = true;
-            filePreview.value = reader.result;
-          },
-          false
-        );
-        if (previousLicenseFile.value) {
-          if (/\.(jpe?g|png|gif)$/i.test(previousLicenseFile.value.name)) {
-            isImage.value = true;
-            reader.readAsDataURL(previousLicenseFile.value);
-          } else if (/\.(pdf)$/i.test(previousLicenseFile.value.name)) {
-            isImage.value = false;
-            isPdf.value = true;
-            reader.readAsDataURL(previousLicenseFile.value);
-          }
-        }
-      }
-      declinedFields = store.getters["renewal/getDeclinedFields"];
-      acceptedFields = store.getters["renewal/getAcceptedFields"];
-      remark = store.getters["renewal/getRemark"];
-      if (declinedFields != undefined && declinedFields.includes("PL")) {
-        declinedFieldsCheck.value = true;
-      }
-      if (acceptedFields != undefined && acceptedFields.includes("PL")) {
-        acceptedFieldsCheck.value = true;
-      }
-      buttons = store.getters["renewal/getButtons"];
-      draftData = store.getters["renewal/getDraft"];
-      if (route.params.id) {
-        draftStatus.value = route.params.status;
-        for (let i = 0; i < draftData.documents.length; i++) {
-          if (draftData.documents[i].documentTypeCode == "PL") {
-            showUpload.value = false;
-            if (draftData.documents[i].fileName.split(".")[1] == "pdf") {
-              isPdf.value = true;
-            } else {
-              isImage.value = true;
-            }
-
-            previousLicenseFile.value = draftData.documents[i];
-            showPreview.value = true;
-            filePreview.value = basePath + draftData.documents[i].filePath;
-          }
-        }
-      }
-    });
 
     const draft = (action) => {
       message.value.showLoading = true;
@@ -386,15 +304,14 @@ export default {
             },
             id: route.params.id,
           };
-          store.dispatch("renewal/editRenewalLicense", license).then((res) => {
+          store.dispatch("renewal/editNewLicense", license).then((res) => {
             if (res.data.status == "Success") {
               let licenseId = route.params.id;
               let formData = new FormData();
               formData.append(
-                documentSpecs[6].documentType.code,
-                previousLicenseFile.value
+                documentSpecs[18].documentType.code,
+                herqaFile.value
               );
-
               let payload = { document: formData, id: licenseId };
               store
                 .dispatch("renewal/uploadDocuments", payload)
@@ -421,7 +338,7 @@ export default {
             },
             id: route.params.id,
           };
-          store.dispatch("renewal/editRenewalLicense", license).then((res) => {
+          store.dispatch("renewal/editNewLicense", license).then((res) => {
             if (res.data.status == "Success") {
               message.value.showFlash = !message.value.showFlash;
               message.value.showLoading = false;
@@ -447,14 +364,14 @@ export default {
             residenceWoredaId: licenseInfo.residenceWoredaId,
             paymentSlip: null,
             occupationTypeId: licenseInfo.occupationTypeId,
+            nativeLanguageId: licenseInfo.nativeLanguageId,
             expertLevelId: licenseInfo.expertLevelId,
           },
         };
-        store.dispatch("renewal/addRenewalLicense", license).then((res) => {
+        store.dispatch("renewal/addNewLicense", license).then((res) => {
           if (res.data.status == "Success") {
             let licenseId = res.data.data.id;
             let formData = new FormData();
-
             formData.append(documentSpecs[0].documentType.code, passport);
             formData.append(documentSpecs[2].documentType.code, healthExamCert);
             if (professionalDoc != undefined) {
@@ -473,38 +390,16 @@ export default {
             }
             formData.append(documentSpecs[5].documentType.code, workExperience);
             formData.append(documentSpecs[4].documentType.code, cpd);
-            formData.append(documentSpecs[11].documentType.code, coc);
-            formData.append(documentSpecs[24].documentType.code, degree);
-            formData.append(documentSpecs[9].documentType.code, diploma);
-            if (educationDoc != undefined) {
-              formData.append(
-                documentSpecs[12].documentType.code,
-                educationDoc[0]
-              );
-              formData.append(
-                documentSpecs[13].documentType.code,
-                educationDoc[1]
-              );
-              formData.append(
-                documentSpecs[14].documentType.code,
-                educationDoc[2]
-              );
-              formData.append(
-                documentSpecs[15].documentType.code,
-                educationDoc[3]
-              );
-              formData.append(
-                documentSpecs[16].documentType.code,
-                educationDoc[4]
-              );
-            }
-            formData.append(documentSpecs[23].documentType.code, payroll);
+            formData.append(
+              documentSpecs[18].documentType.code,
+              herqaFile.value
+            );
             formData.append(
               documentSpecs[6].documentType.code,
-              previousLicenseFile.value
+              previousLicense
             );
             formData.append(documentSpecs[17].documentType.code, supportLetter);
-            formData.append(documentSpecs[10].documentType.code, transcript);
+
             let payload = { document: formData, id: licenseId };
             store
               .dispatch("renewal/uploadDocuments", payload)
@@ -535,13 +430,13 @@ export default {
             },
             id: route.params.id,
           };
-          store.dispatch("renewal/editRenewalLicense", license).then((res) => {
+          store.dispatch("renewal/editNewLicense", license).then((res) => {
             if (res.data.status == "Success") {
               let licenseId = route.params.id;
               let formData = new FormData();
               formData.append(
-                documentSpecs[1].documentType.code,
-                previousLicenseFile.value
+                documentSpecs[18].documentType.code,
+                herqaFile.value
               );
               let payload = { document: formData, id: licenseId };
               store
@@ -569,7 +464,7 @@ export default {
             },
             id: route.params.id,
           };
-          store.dispatch("renewal/editRenewalLicense", license).then((res) => {
+          store.dispatch("renewal/editNewLicense", license).then((res) => {
             if (res.data.status == "Success") {
               message.value.showFlash = !message.value.showFlash;
               message.value.showLoading = false;
@@ -595,16 +490,17 @@ export default {
             residenceWoredaId: licenseInfo.residenceWoredaId,
             paymentSlip: null,
             occupationTypeId: licenseInfo.occupationTypeId,
+            nativeLanguageId: licenseInfo.nativeLanguageId,
             expertLevelId: licenseInfo.expertLevelId,
           },
         };
-        store.dispatch("renewal/addRenewalLicense", license).then((res) => {
+        store.dispatch("renewal/addNewLicense", license).then((res) => {
           if (res.data.status == "Success") {
             let licenseId = res.data.data.id;
             let formData = new FormData();
             formData.append(
-              documentSpecs[1].documentType.code,
-              previousLicenseFile.value
+              documentSpecs[18].documentType.code,
+              herqaFile.value
             );
             let payload = { document: formData, id: licenseId };
             store
@@ -625,6 +521,7 @@ export default {
         });
       }
     };
+
     const withdraw = (action) => {
       message.value.showLoading = !message.value.showLoading;
       let withdrawObj = {
@@ -636,9 +533,9 @@ export default {
         withdrawData: withdrawObj,
       };
       store.dispatch("renewal/withdraw", payload).then((res) => {
-        if (res.data.status == "Success") {
-          message.value.showLoading = !message.value.showLoading;
+        if (res) {
           message.value.showFlash = !message.value.showFlash;
+          message.value.showLoading = false;
           setTimeout(() => {
             router.push({ path: "/menu" });
           }, 1500);
@@ -648,26 +545,95 @@ export default {
       });
     };
 
+    onMounted(() => {
+      herqaBack = store.getters["renewal/getHerqa"];
+      if (
+        herqaBack &&
+        herqaBack !== undefined &&
+        herqaBack !== null &&
+        herqaBack !== ""
+      ) {
+        dataChanged.value = true;
+        showUpload.value = false;
+        herqaFile.value = herqaBack;
+        let reader = new FileReader();
+        let fileS = herqaFile.value.size;
+        if (fileS > 0 && fileS < 1000) {
+          fileSize.value += "B";
+        } else if (fileS > 1000 && fileS < 1000000) {
+          fileSize.value = fileS / 1000 + "kB";
+        } else {
+          fileSize.value = fileS / 1000000 + "MB";
+        }
+        reader.addEventListener(
+          "load",
+          function() {
+            showPreview.value = true;
+            filePreview.value = reader.result;
+          },
+          false
+        );
+        if (herqaFile.value) {
+          if (/\.(jpe?g|png|gif)$/i.test(herqaFile.value.name)) {
+            isImage.value = true;
+            reader.readAsDataURL(herqaFile.value);
+          } else if (/\.(pdf)$/i.test(herqaFile.value.name)) {
+            isImage.value = false;
+            isPdf.value = true;
+            reader.readAsDataURL(herqaFile.value);
+          }
+        }
+      }
+      declinedFields = store.getters["renewal/getDeclinedFields"];
+      acceptedFields = store.getters["renewal/getAcceptedFields"];
+      remark = store.getters["renewal/getRemark"];
+      if (declinedFields != undefined && declinedFields.includes("HERQA")) {
+        declinedFieldsCheck.value = true;
+      }
+      if (acceptedFields != undefined && acceptedFields.includes("HERQA")) {
+        acceptedFieldsCheck.value = true;
+      }
+
+      buttons = store.getters["renewal/getButtons"];
+      draftData = store.getters["renewal/getDraft"];
+      if (route.params.id) {
+        draftStatus.value = route.params.status;
+        for (let i = 0; i < draftData.documents.length; i++) {
+          if (draftData.documents[i].documentTypeCode == "HERQA") {
+            showUpload.value = false;
+            if (draftData.documents[i].fileName.split(".")[1] == "pdf") {
+              isPdf.value = true;
+            } else {
+              isImage.value = true;
+            }
+
+            herqaFile.value = draftData.documents[i];
+            showPreview.value = true;
+            filePreview.value = basePath + draftData.documents[i].filePath;
+          }
+        }
+      }
+    });
     return {
-      previousLicenseFile,
-      previousLicenseFileP,
-      previousLicenseBack,
+      herqaFile,
+      herqaFileP,
+      herqaBack,
       showPreview,
       filePreview,
       showUpload,
       isImage,
       isPdf,
       handleFileUpload,
+      fileSize,
       reset,
       submit,
       submitBack,
       draft,
       withdraw,
       buttons,
-      draftData,
       draftStatus,
-      fileSize,
       update,
+      draftData,
       basePath,
       message,
       dataChanged,
@@ -682,20 +648,14 @@ export default {
       professionalDoc,
       workExperience,
       cpd,
-      degree,
-      diploma,
-      educationDoc,
-      payroll,
-      coc,
+      previousLicense,
       supportLetter,
-      transcript,
     };
   },
 };
 </script>
 <style>
 @import "../../../styles/document-upload.css";
-
 img {
   width: 250px;
   height: 250px;
