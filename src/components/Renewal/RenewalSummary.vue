@@ -135,7 +135,7 @@
           </h5>
         </div>
       </div>
-      <div class="flex justify-start flex-wrap">
+      <div v-if="draftId == undefined" class="flex justify-start flex-wrap">
         <div v-for="i in docList.length" v-bind:key="i">
           <div
             class="mr-4"
@@ -143,9 +143,29 @@
             v-bind="item"
             v-bind:value="item"
           >
-            <Title style="font-size: 24px" :message="item.title" />
+            <Title class="" :message="item.title" />
             <picture>
               <img :src="item.docFile" />
+            </picture>
+          </div>
+        </div>
+      </div>
+      <div v-if="draftId != undefined" class="flex justify-start flex-wrap">
+        <div v-for="i in draftData.documents.length" v-bind:key="i">
+          <div
+            class="mr-4"
+            v-for="item in draftData.documents.slice((i - 1) * 1, i * 1)"
+            v-bind="item"
+            v-bind:value="item"
+          >
+            <Title class="" :message="item.documentTypeCode" />
+            <picture>
+              <img
+                :src="
+                  'https://storage.googleapis.com/hris-lisence-dev/' +
+                    item.filePath
+                "
+              />
             </picture>
           </div>
         </div>
@@ -301,7 +321,7 @@ export default {
     this.proTranscript = this.getProTranscript;
     this.proDiploma = this.getProDiploma;
 
-    if (this.letter != "") {
+    if (this.letter != "" && this.draftId == undefined) {
       if (this.letter != undefined) {
         var filePreview = await this.blobToBase64(this.letter);
         this.letter.docFile = filePreview;
@@ -309,7 +329,7 @@ export default {
         this.docList.push(this.letter);
       }
     }
-    if (this.healthExamCert != "") {
+    if (this.healthExamCert != "" && this.draftId == undefined) {
       if (this.healthExamCert != undefined) {
         var filePreview = await this.blobToBase64(this.healthExamCert);
         this.healthExamCert.docFile = filePreview;
@@ -317,7 +337,7 @@ export default {
         this.docList.push(this.healthExamCert);
       }
     }
-    if (this.previousLicense != "") {
+    if (this.previousLicense != "" && this.draftId == undefined) {
       if (this.previousLicense != undefined) {
         var filePreview = await this.blobToBase64(this.previousLicense);
         this.previousLicense.docFile = filePreview;
@@ -326,7 +346,7 @@ export default {
       }
     }
 
-    if (this.workExperience != "") {
+    if (this.workExperience != "" && this.draftId == undefined) {
       if (this.workExperience != undefined) {
         var filePreview = await this.blobToBase64(this.workExperience);
         this.workExperience.docFile = filePreview;
@@ -335,7 +355,7 @@ export default {
       }
     }
 
-    if (this.cpd != "") {
+    if (this.cpd != "" && this.draftId == undefined) {
       if (this.cpd != undefined) {
         var filePreview = await this.blobToBase64(this.cpd);
         this.cpd.docFile = filePreview;
@@ -343,7 +363,7 @@ export default {
         this.docList.push(this.cpd);
       }
     }
-    if (this.payroll != "") {
+    if (this.payroll != "" && this.draftId == undefined) {
       if (this.payroll != undefined) {
         var filePreview = await this.blobToBase64(this.payroll);
         this.payroll.docFile = filePreview;
@@ -351,7 +371,7 @@ export default {
         this.docList.push(this.payroll);
       }
     }
-    if (this.proCertificate != "") {
+    if (this.proCertificate != "" && this.draftId == undefined) {
       if (this.proCertificate != undefined) {
         var filePreview = await this.blobToBase64(this.proCertificate);
         this.proCertificate.docFile = filePreview;
@@ -359,7 +379,7 @@ export default {
         this.docList.push(this.proCertificate);
       }
     }
-    if (this.proTranscript != "") {
+    if (this.proTranscript != "" && this.draftId == undefined) {
       if (this.proTranscript != undefined) {
         var filePreview = await this.blobToBase64(this.proTranscript);
         this.proTranscript.docFile = filePreview;
@@ -367,7 +387,7 @@ export default {
         this.docList.push(this.proTranscript);
       }
     }
-    if (this.proDiploma != "") {
+    if (this.proDiploma != "" && this.draftId == undefined) {
       if (this.proDiploma != undefined) {
         var filePreview = await this.blobToBase64(this.proDiploma);
         this.proDiploma.docFile = filePreview;
