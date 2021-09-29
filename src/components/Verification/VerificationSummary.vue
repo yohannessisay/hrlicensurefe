@@ -135,7 +135,7 @@
           </h5>
         </div>
       </div>
-      <div class="flex justify-start flex-wrap">
+      <div v-if="draftId == undefined" class="flex justify-start flex-wrap">
         <div v-for="i in docList.length" v-bind:key="i">
           <div
             class="mr-4"
@@ -146,6 +146,26 @@
             <Title class="" :message="item.title" />
             <picture>
               <img :src="item.docFile" />
+            </picture>
+          </div>
+        </div>
+      </div>
+      <div v-if="draftId != undefined" class="flex justify-start flex-wrap">
+        <div v-for="i in draftData.documents.length" v-bind:key="i">
+          <div
+            class="mr-4"
+            v-for="item in draftData.documents.slice((i - 1) * 1, i * 1)"
+            v-bind="item"
+            v-bind:value="item"
+          >
+            <Title class="" :message="item.documentTypeCode" />
+            <picture>
+              <img
+                :src="
+                  'https://storage.googleapis.com/hris-lisence-dev/' +
+                    item.filePath
+                "
+              />
             </picture>
           </div>
         </div>
@@ -288,13 +308,13 @@ export default {
     this.licenseCopy = this.getLicenseCopy;
     this.serviceFee = this.getServiceFee;
     this.goodstandingLetter = this.getLetter;
-    if (this.licenseCopy != "") {
+    if (this.licenseCopy != "" && this.draftId == undefined) {
       var filePreview = await this.blobToBase64(this.licenseCopy);
       this.licenseCopy.docFile = filePreview;
       this.licenseCopy.title = "License Copy";
       this.docList.push(this.licenseCopy);
     }
-    if (this.goodstandingLetter != "") {
+    if (this.goodstandingLetter != "" && this.draftId == undefined) {
       this.letterPreview = await this.blobToBase64(this.goodstandingLetter);
       this.goodstandingLetter.docFile = this.letterPreview;
       this.goodstandingLetter.title = "Verification Letter";

@@ -135,7 +135,7 @@
           </h5>
         </div>
       </div>
-      <div class="flex justify-start flex-wrap">
+      <div v-if="draftId == undefined" class="flex justify-start flex-wrap">
         <div v-for="i in docList.length" v-bind:key="i">
           <div
             class="mr-4"
@@ -143,9 +143,29 @@
             v-bind="item"
             v-bind:value="item"
           >
-            <Title style="font-size: 24px" :message="item.title" />
+            <Title class="" :message="item.title" />
             <picture>
               <img :src="item.docFile" />
+            </picture>
+          </div>
+        </div>
+      </div>
+      <div v-if="draftId != undefined" class="flex justify-start flex-wrap">
+        <div v-for="i in draftData.documents.length" v-bind:key="i">
+          <div
+            class="mr-4"
+            v-for="item in draftData.documents.slice((i - 1) * 1, i * 1)"
+            v-bind="item"
+            v-bind:value="item"
+          >
+            <Title class="" :message="item.documentTypeCode" />
+            <picture>
+              <img
+                :src="
+                  'https://storage.googleapis.com/hris-lisence-dev/' +
+                    item.filePath
+                "
+              />
             </picture>
           </div>
         </div>
@@ -314,7 +334,7 @@ export default {
     this.degree = this.getDegree;
     this.payroll = this.getPayroll;
 
-    if (this.passport != "") {
+    if (this.passport != "" && this.draftId == undefined) {
       if (this.passport != undefined) {
         var filePreview = await this.blobToBase64(this.passport);
         this.passport.docFile = filePreview;
@@ -322,7 +342,7 @@ export default {
         this.docList.push(this.passport);
       }
     }
-    if (this.healthExamCert != "") {
+    if (this.healthExamCert != "" && this.draftId == undefined) {
       if (this.healthExamCert != undefined) {
         var filePreview = await this.blobToBase64(this.healthExamCert);
         this.healthExamCert.docFile = filePreview;
@@ -330,7 +350,7 @@ export default {
         this.docList.push(this.healthExamCert);
       }
     }
-    if (this.englishLanguage != "") {
+    if (this.englishLanguage != "" && this.draftId == undefined) {
       if (this.englishLanguage != undefined) {
         var filePreview = await this.blobToBase64(this.englishLanguage);
         this.englishLanguage.docFile = filePreview;
@@ -338,7 +358,7 @@ export default {
         this.docList.push(this.englishLanguage);
       }
     }
-    if (this.proCertificate != "") {
+    if (this.proCertificate != "" && this.draftId == undefined) {
       if (this.proCertificate != undefined) {
         var filePreview = await this.blobToBase64(this.proCertificate);
         this.proCertificate.docFile = filePreview;
@@ -346,7 +366,7 @@ export default {
         this.docList.push(this.proCertificate);
       }
     }
-    if (this.proTranscript != "") {
+    if (this.proTranscript != "" && this.draftId == undefined) {
       if (this.proTranscript != undefined) {
         var filePreview = await this.blobToBase64(this.proTranscript);
         this.proTranscript.docFile = filePreview;
@@ -354,7 +374,7 @@ export default {
         this.docList.push(this.proTranscript);
       }
     }
-    if (this.proDiploma != "") {
+    if (this.proDiploma != "" && this.draftId == undefined) {
       if (this.proDiploma != undefined) {
         var filePreview = await this.blobToBase64(this.proDiploma);
         this.proDiploma.docFile = filePreview;
@@ -362,7 +382,7 @@ export default {
         this.docList.push(this.proDiploma);
       }
     }
-    if (this.eduEighth != "") {
+    if (this.eduEighth != "" && this.draftId == undefined) {
       if (this.eduEighth != undefined) {
         var filePreview = await this.blobToBase64(this.eduEighth);
         this.eduEighth.docFile = filePreview;
@@ -370,7 +390,7 @@ export default {
         this.docList.push(this.eduEighth);
       }
     }
-    if (this.eduTenth != "") {
+    if (this.eduTenth != "" && this.draftId == undefined) {
       if (this.eduTenth != undefined) {
         var filePreview = await this.blobToBase64(this.eduTenth);
         this.eduTenth.docFile = filePreview;
@@ -378,7 +398,7 @@ export default {
         this.docList.push(this.eduTenth);
       }
     }
-    if (this.eduTwelveth != "") {
+    if (this.eduTwelveth != "" && this.draftId == undefined) {
       if (this.eduTwelveth != undefined) {
         var filePreview = await this.blobToBase64(this.eduTwelveth);
         this.eduTwelveth.docFile = filePreview;
@@ -386,7 +406,7 @@ export default {
         this.docList.push(this.eduTwelveth);
       }
     }
-    if (this.eduTranscript1 != "") {
+    if (this.eduTranscript1 != "" && this.draftId == undefined) {
       if (this.eduTranscript1 != undefined) {
         var filePreview = await this.blobToBase64(this.eduTranscript1);
         this.eduTranscript1.docFile = filePreview;
@@ -394,7 +414,7 @@ export default {
         this.docList.push(this.eduTranscript1);
       }
     }
-    if (this.eduTranscript2 != "") {
+    if (this.eduTranscript2 != "" && this.draftId == undefined) {
       if (this.eduTranscript2 != undefined) {
         var filePreview = await this.blobToBase64(this.eduTranscript2);
         this.eduTranscript2.docFile = filePreview;
@@ -402,7 +422,7 @@ export default {
         this.docList.push(this.eduTranscript2);
       }
     }
-    if (this.herqa != "") {
+    if (this.herqa != "" && this.draftId == undefined) {
       if (this.herqa != undefined) {
         var filePreview = await this.blobToBase64(this.herqa);
         this.herqa.docFile = filePreview;
@@ -410,7 +430,7 @@ export default {
         this.docList.push(this.herqa);
       }
     }
-    if (this.supportLetter != "") {
+    if (this.supportLetter != "" && this.draftId == undefined) {
       if (this.supportLetter != undefined) {
         var filePreview = await this.blobToBase64(this.supportLetter);
         this.supportLetter.docFile = filePreview;
@@ -418,7 +438,7 @@ export default {
         this.docList.push(this.supportLetter);
       }
     }
-    if (this.coc != "") {
+    if (this.coc != "" && this.draftId == undefined) {
       if (this.coc != undefined) {
         var filePreview = await this.blobToBase64(this.coc);
         this.coc.docFile = filePreview;
@@ -426,7 +446,7 @@ export default {
         this.docList.push(this.coc);
       }
     }
-    if (this.workExperience != "") {
+    if (this.workExperience != "" && this.draftId == undefined) {
       if (this.workExperience != undefined) {
         var filePreview = await this.blobToBase64(this.workExperience);
         this.workExperience.docFile = filePreview;
@@ -434,7 +454,7 @@ export default {
         this.docList.push(this.workExperience);
       }
     }
-    if (this.serviceFee != "") {
+    if (this.serviceFee != "" && this.draftId == undefined) {
       if (this.serviceFee != undefined) {
         var filePreview = await this.blobToBase64(this.serviceFee);
         this.serviceFee.docFile = filePreview;
@@ -442,7 +462,7 @@ export default {
         this.docList.push(this.serviceFee);
       }
     }
-    if (this.letterfromOrg != "") {
+    if (this.letterfromOrg != "" && this.draftId == undefined) {
       if (this.letterfromOrg != undefined) {
         var filePreview = await this.blobToBase64(this.letterfromOrg);
         this.letterfromOrg.docFile = filePreview;
@@ -450,7 +470,7 @@ export default {
         this.docList.push(this.letterfromOrg);
       }
     }
-    if (this.renewedLicense != "") {
+    if (this.renewedLicense != "" && this.draftId == undefined) {
       if (this.renewedLicense != undefined) {
         var filePreview = await this.blobToBase64(this.renewedLicense);
         this.renewedLicense.docFile = filePreview;
@@ -458,7 +478,7 @@ export default {
         this.docList.push(this.renewedLicense);
       }
     }
-    if (this.professionalLicense != "") {
+    if (this.professionalLicense != "" && this.draftId == undefined) {
       if (this.professionalLicense != undefined) {
         var filePreview = await this.blobToBase64(this.professionalLicense);
         this.professionalLicense.docFile = filePreview;
@@ -466,7 +486,7 @@ export default {
         this.docList.push(this.professionalLicense);
       }
     }
-    if (this.diploma != "") {
+    if (this.diploma != "" && this.draftId == undefined) {
       if (this.diploma != undefined) {
         var filePreview = await this.blobToBase64(this.diploma);
         this.diploma.docFile = filePreview;
@@ -474,7 +494,7 @@ export default {
         this.docList.push(this.diploma);
       }
     }
-    if (this.transcript != "") {
+    if (this.transcript != "" && this.draftId == undefined) {
       if (this.transcript != undefined) {
         var filePreview = await this.blobToBase64(this.transcript);
         this.transcript.docFile = filePreview;
@@ -482,7 +502,7 @@ export default {
         this.docList.push(this.transcript);
       }
     }
-    if (this.degree != "") {
+    if (this.degree != "" && this.draftId == undefined) {
       if (this.degree != undefined) {
         var filePreview = await this.blobToBase64(this.degree);
         this.degree.docFile = filePreview;
@@ -490,7 +510,7 @@ export default {
         this.docList.push(this.degree);
       }
     }
-    if (this.payroll != "") {
+    if (this.payroll != "" && this.draftId == undefined) {
       if (this.payroll != undefined) {
         var filePreview = await this.blobToBase64(this.payroll);
         this.payroll.docFile = filePreview;
