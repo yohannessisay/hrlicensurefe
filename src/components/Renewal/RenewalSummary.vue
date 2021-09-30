@@ -599,7 +599,7 @@ export default {
     letterOrg: "",
 
     proCertificate: "",
-    proTranscrip: "",
+    proTranscript: "",
     proDiploma: "",
 
     eduEighth: "",
