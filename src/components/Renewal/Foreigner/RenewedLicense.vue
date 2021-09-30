@@ -214,19 +214,15 @@ export default {
 
     let passport = ref("");
     let healthExamCert = ref("");
-    let englishLanguage = ref("");
-    let professionalDoc = ref([]);
-    let herqa = ref("");
-    let supportLetter = ref("");
-    let coc = ref("");
-    let educationDoc = ref([]);
+    let professionalDoc = ref("");
     let workExperience = ref("");
+    let englishLanguage = ref("");
+    let herqa = ref("");
+    let letterFromOrg = ref("");
+    let letterOrg = ref("");
+    let previousLicense = ref("");
     let professionalLicense = ref("");
-    let letterfromOrg = ref("");
-    let payroll = ref("");
-    let diploma = ref("");
-    let transcript = ref("");
-    let degree = ref("");
+    let cpd = ref("");
 
     let declinedFields = ref([]);
     let acceptedFields = ref([]);
@@ -294,20 +290,16 @@ export default {
     licenseInfo = store.getters["renewal/getLicense"];
 
     passport = store.getters["renewal/getPassport"];
-    healthExamCert = store.getters["renewal/getHealthExamCert"];
+    healthExamCert = store.getters["renewal/getRenewalHealthExamCert"];
     professionalDoc = store.getters["renewal/getProfessionalDocuments"];
+    workExperience = store.getters["renewal/getRenewalWorkExperience"];
     englishLanguage = store.getters["renewal/getEnglishLanguage"];
     herqa = store.getters["renewal/getHerqa"];
-    supportLetter = store.getters["renewal/getSupportLetter"];
-    coc = store.getters["renewal/getCoc"];
-    educationDoc = store.getters["renewal/getEducationalDocuments"];
-    workExperience = store.getters["renewal/getWorkExperience"];
+    letterFromOrg = store.getters["renewal/getRenewalLicense"];
+    previousLicense = store.getters["renewal/getPreviousLicense"];
     professionalLicense = store.getters["renewal/getProfessionalLicense"];
-    letterfromOrg = store.getters["renewal/getLetterfromOrg"];
-    payroll = store.getters["renewal/getPayroll"];
-    diploma = store.getters["renewal/getDiploma"];
-    degree = store.getters["renewal/getDegree"];
-    transcript = store.getters["renewal/getTranscript"];
+    cpd = store.getters["renewal/getRenewalCpd"];
+    letterOrg = store.getters["renewal/getLetterfromOrg"];
 
     const draft = (action) => {
       message.value.showLoading = true;
@@ -325,7 +317,7 @@ export default {
               let licenseId = route.params.id;
               let formData = new FormData();
               formData.append(
-                documentSpecs[18].documentType.code,
+                documentSpecs[21].documentType.code,
                 letterFile.value
               );
               let payload = { document: formData, id: licenseId };
@@ -388,65 +380,44 @@ export default {
           if (res.data.status == "Success") {
             let licenseId = res.data.data.id;
             let formData = new FormData();
-            formData.append(documentSpecs[1].documentType.code, passport);
+            formData.append(documentSpecs[0].documentType.code, passport);
             formData.append(documentSpecs[2].documentType.code, healthExamCert);
-            formData.append(documentSpecs[4].documentType.code, workExperience);
-            formData.append(
-              documentSpecs[5].documentType.code,
-              englishLanguage
-            );
-            formData.append(documentSpecs[7].documentType.code, diploma);
-            formData.append(documentSpecs[8].documentType.code, transcript);
-            formData.append(documentSpecs[21].documentType.code, degree);
             if (professionalDoc != undefined) {
               formData.append(
-                documentSpecs[6].documentType.code,
+                documentSpecs[8].documentType.code,
                 professionalDoc[0]
               );
               formData.append(
-                documentSpecs[7].documentType.code,
+                documentSpecs[9].documentType.code,
                 professionalDoc[1]
               );
               formData.append(
-                documentSpecs[8].documentType.code,
+                documentSpecs[10].documentType.code,
                 professionalDoc[2]
               );
             }
-            formData.append(documentSpecs[9].documentType.code, coc);
-            if (educationDoc != undefined) {
-              formData.append(
-                documentSpecs[10].documentType.code,
-                educationDoc[0]
-              );
-              formData.append(
-                documentSpecs[11].documentType.code,
-                educationDoc[1]
-              );
-              formData.append(
-                documentSpecs[12].documentType.code,
-                educationDoc[2]
-              );
-              formData.append(
-                documentSpecs[13].documentType.code,
-                educationDoc[3]
-              );
-              formData.append(
-                documentSpecs[14].documentType.code,
-                educationDoc[4]
-              );
-            }
-            formData.append(documentSpecs[15].documentType.code, supportLetter);
-            formData.append(documentSpecs[16].documentType.code, herqa);
-            formData.append(documentSpecs[17].documentType.code, letterfromOrg);
+            formData.append(documentSpecs[5].documentType.code, workExperience);
+            formData.append(documentSpecs[4].documentType.code, cpd);
             formData.append(
-              documentSpecs[18].documentType.code,
-              letterFile.value
+              documentSpecs[7].documentType.code,
+              englishLanguage
+            );
+            formData.append(documentSpecs[18].documentType.code, herqa);
+            formData.append(documentSpecs[19].documentType.code, letterFromOrg);
+            formData.append(
+              documentSpecs[6].documentType.code,
+              previousLicense
             );
             formData.append(
-              documentSpecs[19].documentType.code,
+              documentSpecs[22].documentType.code,
               professionalLicense
             );
-            formData.append(documentSpecs[20].documentType.code, payroll);
+            formData.append(
+              documentSpecs[21].documentType.code,
+              letterFile.value
+            );
+            formData.append(documentSpecs[20].documentType.code, letterOrg);
+
             let payload = { document: formData, id: licenseId };
             store
               .dispatch("renewal/uploadDocuments", payload)
@@ -482,7 +453,7 @@ export default {
               let licenseId = route.params.id;
               let formData = new FormData();
               formData.append(
-                documentSpecs[1].documentType.code,
+                documentSpecs[21].documentType.code,
                 letterFile.value
               );
               let payload = { document: formData, id: licenseId };
@@ -684,6 +655,18 @@ export default {
       remark,
       declinedFieldsCheck,
       acceptedFieldsCheck,
+
+      passport,
+      healthExamCert,
+      professionalDoc,
+      workExperience,
+      englishLanguage,
+      herqa,
+      letterFromOrg,
+      previousLicense,
+      professionalLicense,
+      cpd,
+      letterOrg,
     };
   },
 };

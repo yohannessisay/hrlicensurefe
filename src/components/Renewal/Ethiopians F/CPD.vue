@@ -277,13 +277,6 @@ export default {
     documentSpecs = store.getters["renewal/getDocumentSpec"];
     licenseInfo = store.getters["renewal/getLicense"];
 
-    healthExamCert = store.getters["renewal/getRenewalHealthExamCert"];
-    workExperience = store.getters["renewal/getRenewalWorkExperience"];
-    renewalLetter = store.getters["renewal/getRenewalLicense"];
-    previousLicense = store.getters["renewal/getPreviousLicense"];
-    payroll = store.getters["renewal/getPayroll"];
-    professionalDoc = store.getters["newlicense/getProfessionalDocuments"];
-
     passport = store.getters["renewal/getPassport"];
     healthExamCert = store.getters["renewal/getRenewalHealthExamCert"];
     professionalDoc = store.getters["renewal/getProfessionalDocuments"];

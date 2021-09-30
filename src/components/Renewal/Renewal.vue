@@ -15,6 +15,7 @@
                 @changeActiveStateMinus="activeState--"
                 @applicantTypeValue="applicantTypeSet"
                 @payrollDocumentSet="payrollDocumentSet"
+                @firstTimeUserSet="firstTimeUserSet"
               />
             </div>
           </transition>
@@ -729,7 +730,7 @@ export default {
     this.fetchApplicationCategory();
   },
   data: () => ({
-    firstTimeUser: true,
+    firstTimeUser: false,
     activeState: 1,
     applicantType: 1,
     applicationStatuses: "",
@@ -791,6 +792,13 @@ export default {
         this.displayPayrollOption = false;
       }
     },
+    firstTimeUserSet: function(params) {
+      if (params) {
+        this.firstTimeUser = false;
+      } else {
+        this.firstTimeUser = true;
+      }
+    },
     submit(n) {
       this.activeState = n;
     },
@@ -850,7 +858,6 @@ export default {
         .then((res) => {
           const results = res.data.data;
           this.documentSpecs = results;
-          console.log(this.documentSpecs);
           this.$store
             .dispatch("renewal/setDocumentSpecs", this.documentSpecs)
             .then((res) => {});

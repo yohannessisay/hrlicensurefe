@@ -1235,31 +1235,29 @@ export default {
           formData.append(this.documentSpec[11].documentType.code, this.coc);
           formData.append(this.documentSpec[24].documentType.code, this.degree);
           formData.append(
-            this.documentSpec[11].documentType.code,
+            this.documentSpec[9].documentType.code,
             this.diploma
           );
-          if (this.educationDoc != undefined) {
-            formData.append(
-              this.documentSpec[12].documentType.code,
-              this.educationDoc[0]
-            );
-            formData.append(
-              this.documentSpec[13].documentType.code,
-              this.educationDoc[1]
-            );
-            formData.append(
-              this.documentSpec[14].documentType.code,
-              this.educationDoc[2]
-            );
-            formData.append(
-              this.documentSpec[15].documentType.code,
-              this.educationDoc[3]
-            );
-            formData.append(
-              this.documentSpec[16].documentType.code,
-              this.educationDoc[4]
-            );
-          }
+          formData.append(
+            this.documentSpec[12].documentType.code,
+            this.certificateFile1
+          );
+          formData.append(
+            this.documentSpec[13].documentType.code,
+            this.certificateFile2
+          );
+          formData.append(
+            this.documentSpec[14].documentType.code,
+            this.certificateFile3
+          );
+          formData.append(
+            this.documentSpec[15].documentType.code,
+            this.certificateFile4
+          );
+          formData.append(
+            this.documentSpec[16].documentType.code,
+            this.certificateFile5
+          );
           formData.append(
             this.documentSpec[23].documentType.code,
             this.payroll

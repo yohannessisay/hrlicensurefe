@@ -221,20 +221,23 @@ export default {
     let acceptedFieldsCheck = ref(false);
 
     let healthExamCert = ref("");
-    let englishLanguage = ref("");
-    let professionalDoc = ref([]);
+    let professionalDoc = [];
+    let workExperience = ref("");
+    let cpd = ref("");
     let herqa = ref("");
+    let previousLicense = ref("");
     let supportLetter = ref("");
     let coc = ref("");
-    let educationDoc = ref([]);
-    let workExperience = ref("");
-    let professionalLicense = ref("");
-    let letterfromOrg = ref("");
-    let renewedLicense = ref("");
-    let payroll = ref("");
-    let diploma = ref("");
-    let transcript = ref("");
     let degree = ref("");
+    let diploma = ref("");
+    let educationDoc = [];
+    let payroll = ref("");
+    let transcript = ref("");
+    let englishLanguage = ref("");
+    let letterFromOrg = ref("");
+    let professionalLicense = ref("");
+    let renewedLicense = ref("");
+    let letterOrg = ref("");
 
     const reset = () => {
       showUpload.value = true;
@@ -293,20 +296,23 @@ export default {
     licenseInfo = store.getters["renewal/getLicense"];
 
     healthExamCert = store.getters["renewal/getHealthExamCert"];
-    englishLanguage = store.getters["renewal/getEnglishLanguage"];
     professionalDoc = store.getters["renewal/getProfessionalDocuments"];
+    workExperience = store.getters["renewal/getRenewalWorkExperience"];
+    cpd = store.getters["renewal/getRenewalCpd"];
     herqa = store.getters["renewal/getHerqa"];
+    previousLicense = store.getters["renewal/getPreviousLicense"];
     supportLetter = store.getters["renewal/getSupportLetter"];
     coc = store.getters["renewal/getCoc"];
-    educationDoc = store.getters["renewal/getEducationalDocuments"];
-    workExperience = store.getters["renewal/getWorkExperience"];
-    renewedLicense = store.getters["renewal/getRenewedLicense"];
-    professionalLicense = store.getters["renewal/getProfessionalLicense"];
-    letterfromOrg = store.getters["renewal/getLetterfromOrg"];
-    payroll = store.getters["renewal/getPayroll"];
-    diploma = store.getters["renewal/getDiploma"];
     degree = store.getters["renewal/getDegree"];
+    diploma = store.getters["renewal/getDiploma"];
+    educationDoc = store.getters["renewal/getEducationalDocuments"];
+    payroll = store.getters["renewal/getPayroll"];
     transcript = store.getters["renewal/getTranscript"];
+    englishLanguage = store.getters["renewal/getEnglishLanguage"];
+    letterFromOrg = store.getters["renewal/getRenewalLicense"];
+    professionalLicense = store.getters["renewal/getProfessionalLicense"];
+    renewedLicense = store.getters["renewal/getRenewedLicense"];
+    letterOrg = store.getters["renewal/getLetterfromOrg"];
 
     const draft = (action) => {
       message.value.showLoading = true;
@@ -324,7 +330,7 @@ export default {
               let licenseId = route.params.id;
               let formData = new FormData();
               formData.append(
-                documentSpecs[1].documentType.code,
+                documentSpecs[0].documentType.code,
                 passportFile.value
               );
 
@@ -389,67 +395,73 @@ export default {
             let licenseId = res.data.data.id;
             let formData = new FormData();
             formData.append(
-              documentSpecs[1].documentType.code,
+              documentSpecs[0].documentType.code,
               passportFile.value
             );
             formData.append(documentSpecs[2].documentType.code, healthExamCert);
-            formData.append(documentSpecs[4].documentType.code, workExperience);
-            formData.append(
-              documentSpecs[5].documentType.code,
-              englishLanguage
-            );
-            formData.append(documentSpecs[7].documentType.code, diploma);
-            formData.append(documentSpecs[8].documentType.code, transcript);
-            formData.append(documentSpecs[21].documentType.code, degree);
             if (professionalDoc != undefined) {
               formData.append(
-                documentSpecs[6].documentType.code,
+                documentSpecs[8].documentType.code,
                 professionalDoc[0]
               );
               formData.append(
-                documentSpecs[7].documentType.code,
+                documentSpecs[9].documentType.code,
                 professionalDoc[1]
               );
               formData.append(
-                documentSpecs[8].documentType.code,
+                documentSpecs[10].documentType.code,
                 professionalDoc[2]
               );
             }
-            formData.append(documentSpecs[9].documentType.code, coc);
+            formData.append(documentSpecs[5].documentType.code, workExperience);
+            formData.append(documentSpecs[4].documentType.code, cpd);
+            formData.append(documentSpecs[18].documentType.code, herqa);
+            formData.append(
+              documentSpecs[6].documentType.code,
+              previousLicense
+            );
+            formData.append(documentSpecs[17].documentType.code, supportLetter);
+            formData.append(documentSpecs[11].documentType.code, coc);
+            formData.append(documentSpecs[24].documentType.code, degree);
+            formData.append(documentSpecs[9].documentType.code, diploma);
             if (educationDoc != undefined) {
               formData.append(
-                documentSpecs[10].documentType.code,
+                documentSpecs[12].documentType.code,
                 educationDoc[0]
               );
               formData.append(
-                documentSpecs[11].documentType.code,
+                documentSpecs[13].documentType.code,
                 educationDoc[1]
               );
               formData.append(
-                documentSpecs[12].documentType.code,
+                documentSpecs[14].documentType.code,
                 educationDoc[2]
               );
               formData.append(
-                documentSpecs[13].documentType.code,
+                documentSpecs[15].documentType.code,
                 educationDoc[3]
               );
               formData.append(
-                documentSpecs[14].documentType.code,
+                documentSpecs[16].documentType.code,
                 educationDoc[4]
               );
             }
-            formData.append(documentSpecs[15].documentType.code, supportLetter);
-            formData.append(documentSpecs[16].documentType.code, herqa);
-            formData.append(documentSpecs[17].documentType.code, letterfromOrg);
+            formData.append(documentSpecs[23].documentType.code, payroll);
+            formData.append(documentSpecs[10].documentType.code, transcript);
             formData.append(
-              documentSpecs[18].documentType.code,
-              renewedLicense
+              documentSpecs[7].documentType.code,
+              englishLanguage
             );
+            formData.append(documentSpecs[19].documentType.code, letterFromOrg);
             formData.append(
-              documentSpecs[19].documentType.code,
+              documentSpecs[22].documentType.code,
               professionalLicense
             );
-            formData.append(documentSpecs[20].documentType.code, payroll);
+            formData.append(
+              documentSpecs[21].documentType.code,
+              renewedLicense
+            );
+            formData.append(documentSpecs[20].documentType.code, letterOrg);
             let payload = { document: formData, id: licenseId };
             store
               .dispatch("renewal/uploadDocuments", payload)
@@ -552,7 +564,6 @@ export default {
               documentSpecs[1].documentType.code,
               passportFile.value
             );
-            formData.append(documentSpecs[2].documentType.code, licenseCopy);
             let payload = { document: formData, id: licenseId };
             store
               .dispatch("renewal/uploadDocuments", payload)
@@ -691,6 +702,25 @@ export default {
       remark,
       declinedFieldsCheck,
       acceptedFieldsCheck,
+
+      healthExamCert,
+      professionalDoc,
+      workExperience,
+      cpd,
+      herqa,
+      previousLicense,
+      supportLetter,
+      coc,
+      degree,
+      diploma,
+      educationDoc,
+      payroll,
+      transcript,
+      englishLanguage,
+      letterFromOrg,
+      professionalLicense,
+      renewedLicense,
+      letterOrg,
     };
   },
 };

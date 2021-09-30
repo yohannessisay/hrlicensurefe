@@ -615,6 +615,7 @@ export default {
       getCoc: "newlicense/getCoc",
       getEducationalDocuments: "newlicense/getEducationalDocuments",
       getWorkExperience: "newlicense/getWorkExperience",
+      
       getButtons: "newlicense/getButtons",
       getApplicationId: "newlicense/getApplicationId",
       getDraftData: "newlicense/getDraft",

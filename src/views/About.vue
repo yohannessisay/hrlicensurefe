@@ -1,9 +1,7 @@
 <template>
   <Navigation />
-  <div class="flex flex-col">
-    <div
-      class="w-full bg-white py-xl flex justify-center items-center flex-col"
-    >
+  <div class="flex flex-col h-screen bg-lightBlueB-200">
+    <div class="w-full py-xl flex justify-center items-center flex-col">
       <div class="mb-medium">
         <Title message="About" />
       </div>
