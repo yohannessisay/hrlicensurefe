@@ -170,7 +170,6 @@
           </div>
         </div>
       </div>
-
       <div v-if="this.draftStatus == 'DRA' || !this.draftStatus">
         <div class="mt-12 flex justify-center">
           <div>
@@ -304,6 +303,7 @@ export default {
     this.draftStatus = this.$route.params.status;
     if (this.draftId != undefined) {
       this.draftData = this.getDraftData;
+      this.documentsArray = this.draftData.documents;
     }
 
     this.userId = +localStorage.getItem("userId");
@@ -338,205 +338,305 @@ export default {
     this.eduTranscript1 = this.getEduTranscript1;
     this.eduTranscript2 = this.getEduTranscript2;
 
-    if (this.passport != "" && this.draftId == undefined) {
-      if (this.passport != undefined) {
-        var filePreview = await this.blobToBase64(this.passport);
-        this.passport.docFile = filePreview;
-        this.passport.title = "Passport";
-        this.docList.push(this.passport);
+    if (this.passport != "" && "name" in this.passport) {
+      if (this.draftId != undefined) {
+        this.documentsArray.splice(
+          this.documentsArray.findIndex((e) => e.documentTypeCode === "PSP"),
+          1
+        );
       }
+      var filePreview = await this.blobToBase64(this.passport);
+      this.passport.docFile = filePreview;
+      this.passport.title = "Passport";
+      this.docList.push(this.passport);
     }
-    if (this.healthExamCert != "" && this.draftId == undefined) {
-      if (this.healthExamCert != undefined) {
-        var filePreview = await this.blobToBase64(this.healthExamCert);
-        this.healthExamCert.docFile = filePreview;
-        this.healthExamCert.title = "Medical Certificate";
-        this.docList.push(this.healthExamCert);
+    if (this.healthExamCert != "" && "name" in this.healthExamCert) {
+      if (this.draftId != undefined) {
+        this.documentsArray.splice(
+          this.documentsArray.findIndex((e) => e.documentTypeCode === "HEC"),
+          1
+        );
       }
+      var filePreview = await this.blobToBase64(this.healthExamCert);
+      this.healthExamCert.docFile = filePreview;
+      this.healthExamCert.title = "Medical Certificate";
+      this.docList.push(this.healthExamCert);
     }
-    if (this.workExperience != "" && this.draftId == undefined) {
-      if (this.workExperience != undefined) {
-        var filePreview = await this.blobToBase64(this.workExperience);
-        this.workExperience.docFile = filePreview;
-        this.workExperience.title = "Work Experience";
-        this.docList.push(this.workExperience);
+    if (this.workExperience != "" && "name" in this.workExperience) {
+      if (this.draftId != undefined) {
+        this.documentsArray.splice(
+          this.documentsArray.findIndex((e) => e.documentTypeCode === "WE"),
+          1
+        );
       }
+      var filePreview = await this.blobToBase64(this.workExperience);
+      this.workExperience.docFile = filePreview;
+      this.workExperience.title = "Work Experience";
+      this.docList.push(this.workExperience);
     }
-    if (this.cpd != "" && this.draftId == undefined) {
-      if (this.cpd != undefined) {
-        var filePreview = await this.blobToBase64(this.cpd);
-        this.cpd.docFile = filePreview;
-        this.cpd.title = "CPD";
-        this.docList.push(this.cpd);
+    if (this.cpd != "" && "name" in this.cpd) {
+      if (this.draftId != undefined) {
+        this.documentsArray.splice(
+          this.documentsArray.findIndex((e) => e.documentTypeCode === "CPD"),
+          1
+        );
       }
+      var filePreview = await this.blobToBase64(this.cpd);
+      this.cpd.docFile = filePreview;
+      this.cpd.title = "CPD";
+      this.docList.push(this.cpd);
     }
-    if (this.herqa != "" && this.draftId == undefined) {
-      if (this.herqa != undefined) {
-        var filePreview = await this.blobToBase64(this.herqa);
-        this.herqa.docFile = filePreview;
-        this.herqa.title = "HERQA";
-        this.docList.push(this.herqa);
+    if (this.herqa != "" && "name" in this.herqa) {
+      if (this.draftId != undefined) {
+        this.documentsArray.splice(
+          this.documentsArray.findIndex((e) => e.documentTypeCode === "HERQA"),
+          1
+        );
       }
+      var filePreview = await this.blobToBase64(this.herqa);
+      this.herqa.docFile = filePreview;
+      this.herqa.title = "HERQA";
+      this.docList.push(this.herqa);
     }
-    if (this.previousLicense != "" && this.draftId == undefined) {
-      if (this.previousLicense != undefined) {
-        var filePreview = await this.blobToBase64(this.previousLicense);
-        this.previousLicense.docFile = filePreview;
-        this.previousLicense.title = "Previous License";
-        this.docList.push(this.previousLicense);
+    if (this.previousLicense != "" && "name" in this.previousLicense) {
+      if (this.draftId != undefined) {
+        this.documentsArray.splice(
+          this.documentsArray.findIndex((e) => e.documentTypeCode === "PL"),
+          1
+        );
       }
+      var filePreview = await this.blobToBase64(this.previousLicense);
+      this.previousLicense.docFile = filePreview;
+      this.previousLicense.title = "Previous License";
+      this.docList.push(this.previousLicense);
     }
-    if (this.supportLetter != "" && this.draftId == undefined) {
-      if (this.supportLetter != undefined) {
-        var filePreview = await this.blobToBase64(this.supportLetter);
-        this.supportLetter.docFile = filePreview;
-        this.supportLetter.title = "Support Letter";
-        this.docList.push(this.supportLetter);
+    if (this.supportLetter != "" && "name" in this.supportLetter) {
+      if (this.draftId != undefined) {
+        this.documentsArray.splice(
+          this.documentsArray.findIndex((e) => e.documentTypeCode === "SL"),
+          1
+        );
       }
+      var filePreview = await this.blobToBase64(this.supportLetter);
+      this.supportLetter.docFile = filePreview;
+      this.supportLetter.title = "Support Letter";
+      this.docList.push(this.supportLetter);
     }
-    if (this.coc != "" && this.draftId == undefined) {
-      if (this.coc != undefined) {
-        var filePreview = await this.blobToBase64(this.coc);
-        this.coc.docFile = filePreview;
-        this.coc.title = "COC";
-        this.docList.push(this.coc);
+    if (this.coc != "" && "name" in this.coc) {
+      if (this.draftId != undefined) {
+        this.documentsArray.splice(
+          this.documentsArray.findIndex((e) => e.documentTypeCode === "COC"),
+          1
+        );
       }
+      var filePreview = await this.blobToBase64(this.coc);
+      this.coc.docFile = filePreview;
+      this.coc.title = "COC";
+      this.docList.push(this.coc);
     }
-    if (this.degree != "" && this.draftId == undefined) {
-      if (this.degree != undefined) {
-        var filePreview = await this.blobToBase64(this.degree);
-        this.degree.docFile = filePreview;
-        this.degree.title = "Degree";
-        this.docList.push(this.degree);
+    if (this.degree != "" && "name" in this.degree) {
+      if (this.draftId != undefined) {
+        this.documentsArray.splice(
+          this.documentsArray.findIndex((e) => e.documentTypeCode === "DEG"),
+          1
+        );
       }
+      var filePreview = await this.blobToBase64(this.degree);
+      this.degree.docFile = filePreview;
+      this.degree.title = "Degree";
+      this.docList.push(this.degree);
     }
-    if (this.diploma != "" && this.draftId == undefined) {
-      if (this.diploma != undefined) {
-        var filePreview = await this.blobToBase64(this.diploma);
-        this.diploma.docFile = filePreview;
-        this.diploma.title = "Diploma";
-        this.docList.push(this.diploma);
+    if (this.diploma != "" && "name" in this.diploma) {
+      if (this.draftId != undefined) {
+        this.documentsArray.splice(
+          this.documentsArray.findIndex((e) => e.documentTypeCode === "PDD"),
+          1
+        );
       }
+      var filePreview = await this.blobToBase64(this.diploma);
+      this.diploma.docFile = filePreview;
+      this.diploma.title = "Diploma";
+      this.docList.push(this.diploma);
     }
-    if (this.payroll != "" && this.draftId == undefined) {
-      if (this.payroll != undefined) {
-        var filePreview = await this.blobToBase64(this.payroll);
-        this.payroll.docFile = filePreview;
-        this.payroll.title = "Payroll";
-        this.docList.push(this.payroll);
+    if (this.payroll != "" && "name" in this.payroll) {
+      if (this.draftId != undefined) {
+        this.documentsArray.splice(
+          this.documentsArray.findIndex((e) => e.documentTypeCode === "PAYR"),
+          1
+        );
       }
+      var filePreview = await this.blobToBase64(this.payroll);
+      this.payroll.docFile = filePreview;
+      this.payroll.title = "Payroll";
+      this.docList.push(this.payroll);
     }
-    if (this.transcript != "" && this.draftId == undefined) {
-      if (this.transcript != undefined) {
-        var filePreview = await this.blobToBase64(this.transcript);
-        this.transcript.docFile = filePreview;
-        this.transcript.title = "Transcript";
-        this.docList.push(this.transcript);
+    if (this.transcript != "" && "name" in this.transcript) {
+      if (this.draftId != undefined) {
+        this.documentsArray.splice(
+          this.documentsArray.findIndex((e) => e.documentTypeCode === "PDT"),
+          1
+        );
       }
+      var filePreview = await this.blobToBase64(this.transcript);
+      this.transcript.docFile = filePreview;
+      this.transcript.title = "Transcript";
+      this.docList.push(this.transcript);
     }
-    if (this.englishLanguage != "" && this.draftId == undefined) {
-      if (this.englishLanguage != undefined) {
-        var filePreview = await this.blobToBase64(this.englishLanguage);
-        this.englishLanguage.docFile = filePreview;
-        this.englishLanguage.title = "English Language Proficiency";
-        this.docList.push(this.englishLanguage);
+    if (this.englishLanguage != "" && "name" in this.englishLanguage) {
+      if (this.draftId != undefined) {
+        this.documentsArray.splice(
+          this.documentsArray.findIndex((e) => e.documentTypeCode === "ELPC"),
+          1
+        );
       }
+      var filePreview = await this.blobToBase64(this.englishLanguage);
+      this.englishLanguage.docFile = filePreview;
+      this.englishLanguage.title = "English Language Proficiency";
+      this.docList.push(this.englishLanguage);
     }
-    if (this.letterFromOrg != "" && this.draftId == undefined) {
-      if (this.letterFromOrg != undefined) {
-        var filePreview = await this.blobToBase64(this.letterFromOrg);
-        this.letterFromOrg.docFile = filePreview;
-        this.letterFromOrg.title = "Letter from Hiring Institution";
-        this.docList.push(this.letterFromOrg);
+    if (this.letterFromOrg != "" && "name" in this.letterFromOrg) {
+      if (this.draftId != undefined) {
+        this.documentsArray.splice(
+          this.documentsArray.findIndex((e) => e.documentTypeCode === "LHI"),
+          1
+        );
       }
+      var filePreview = await this.blobToBase64(this.letterFromOrg);
+      this.letterFromOrg.docFile = filePreview;
+      this.letterFromOrg.title = "Letter from Hiring Institution";
+      this.docList.push(this.letterFromOrg);
     }
-    if (this.professionalLicense != "" && this.draftId == undefined) {
-      if (this.professionalLicense != undefined) {
-        var filePreview = await this.blobToBase64(this.professionalLicense);
-        this.professionalLicense.docFile = filePreview;
-        this.professionalLicense.title = "Authenticated Professional License";
-        this.docList.push(this.professionalLicense);
+    if (this.professionalLicense != "" && "name" in this.professionalLicense) {
+      if (this.draftId != undefined) {
+        this.documentsArray.splice(
+          this.documentsArray.findIndex((e) => e.documentTypeCode === "APLFCO"),
+          1
+        );
       }
+      var filePreview = await this.blobToBase64(this.professionalLicense);
+      this.professionalLicense.docFile = filePreview;
+      this.professionalLicense.title = "Authenticated Professional License";
+      this.docList.push(this.professionalLicense);
     }
-    if (this.renewedLicense != "" && this.draftId == undefined) {
-      if (this.renewedLicense != undefined) {
-        var filePreview = await this.blobToBase64(this.renewedLicense);
-        this.renewedLicense.docFile = filePreview;
-        this.renewedLicense.title = "Renewed License";
-        this.docList.push(this.renewedLicense);
+    if (this.renewedLicense != "" && "name" in this.renewedLicense) {
+      if (this.draftId != undefined) {
+        this.documentsArray.splice(
+          this.documentsArray.findIndex((e) => e.documentTypeCode === "RLOTO"),
+          1
+        );
       }
+      var filePreview = await this.blobToBase64(this.renewedLicense);
+      this.renewedLicense.docFile = filePreview;
+      this.renewedLicense.title = "Renewed License";
+      this.docList.push(this.renewedLicense);
     }
-    if (this.letterOrg != "" && this.draftId == undefined) {
-      if (this.letterOrg != undefined) {
-        var filePreview = await this.blobToBase64(this.letterOrg);
-        this.letterOrg.docFile = filePreview;
-        this.letterOrg.title = "Letter from Organization";
-        this.docList.push(this.letterOrg);
+    if (this.letterOrg != "" && "name" in this.letterOrg) {
+      if (this.draftId != undefined) {
+        this.documentsArray.splice(
+          this.documentsArray.findIndex((e) => e.documentTypeCode === "LFO"),
+          1
+        );
       }
+      var filePreview = await this.blobToBase64(this.letterOrg);
+      this.letterOrg.docFile = filePreview;
+      this.letterOrg.title = "Letter from Organization";
+      this.docList.push(this.letterOrg);
     }
-    if (this.proCertificate != "" && this.draftId == undefined) {
-      if (this.proCertificate != undefined) {
-        var filePreview = await this.blobToBase64(this.proCertificate);
-        this.proCertificate.docFile = filePreview;
-        this.proCertificate.title = "Professional Certificate";
-        this.docList.push(this.proCertificate);
+    if (this.proCertificate != "" && "name" in this.proCertificate) {
+      if (this.draftId != undefined) {
+        this.documentsArray.splice(
+          this.documentsArray.findIndex((e) => e.documentTypeCode === "PDC"),
+          1
+        );
       }
+      var filePreview = await this.blobToBase64(this.proCertificate);
+      this.proCertificate.docFile = filePreview;
+      this.proCertificate.title = "Professional Certificate";
+      this.docList.push(this.proCertificate);
     }
-    if (this.proTranscript != "" && this.draftId == undefined) {
-      if (this.proTranscript != undefined) {
-        var filePreview = await this.blobToBase64(this.proTranscript);
-        this.proTranscript.docFile = filePreview;
-        this.proTranscript.title = "Professional Transcript";
-        this.docList.push(this.proTranscript);
+    if (this.proTranscript != "" && "name" in this.proTranscript) {
+      if (this.draftId != undefined) {
+        this.documentsArray.splice(
+          this.documentsArray.findIndex((e) => e.documentTypeCode === "PDT"),
+          1
+        );
       }
+      var filePreview = await this.blobToBase64(this.proTranscript);
+      this.proTranscript.docFile = filePreview;
+      this.proTranscript.title = "Professional Transcript";
+      this.docList.push(this.proTranscript);
     }
-    if (this.proDiploma != "" && this.draftId == undefined) {
-      if (this.proDiploma != undefined) {
-        var filePreview = await this.blobToBase64(this.proDiploma);
-        this.proDiploma.docFile = filePreview;
-        this.proDiploma.title = "Professional Diploma";
-        this.docList.push(this.proDiploma);
+    if (this.proDiploma != "" && "name" in this.proDiploma) {
+      if (this.draftId != undefined) {
+        this.documentsArray.splice(
+          this.documentsArray.findIndex((e) => e.documentTypeCode === "PDD"),
+          1
+        );
       }
+      var filePreview = await this.blobToBase64(this.proDiploma);
+      this.proDiploma.docFile = filePreview;
+      this.proDiploma.title = "Professional Diploma";
+      this.docList.push(this.proDiploma);
     }
-    if (this.eduEighth != "" && this.draftId == undefined) {
-      if (this.eduEighth != undefined) {
-        var filePreview = await this.blobToBase64(this.eduEighth);
-        this.eduEighth.docFile = filePreview;
-        this.eduEighth = "Eighth Grade Certificate";
-        this.docList.push(this.eduEighth);
+    if (this.eduEighth != "" && "name" in this.eduEighth) {
+      if (this.draftId != undefined) {
+        this.documentsArray.splice(
+          this.documentsArray.findIndex((e) => e.documentTypeCode === "EDEGC"),
+          1
+        );
       }
+      var filePreview = await this.blobToBase64(this.eduEighth);
+      this.eduEighth.docFile = filePreview;
+      this.eduEighth = "Eighth Grade Certificate";
+      this.docList.push(this.eduEighth);
     }
-    if (this.eduTenth != "" && this.draftId == undefined) {
-      if (this.eduTenth != undefined) {
-        var filePreview = await this.blobToBase64(this.eduTenth);
-        this.eduTenth.docFile = filePreview;
-        this.eduTenth.title = "Tenth Grade Certificate";
-        this.docList.push(this.eduTenth);
+    if (this.eduTenth != "" && "name" in this.eduTenth) {
+      if (this.draftId != undefined) {
+        this.documentsArray.splice(
+          this.documentsArray.findIndex((e) => e.documentTypeCode === "EDTGC"),
+          1
+        );
       }
+      var filePreview = await this.blobToBase64(this.eduTenth);
+      this.eduTenth.docFile = filePreview;
+      this.eduTenth.title = "Tenth Grade Certificate";
+      this.docList.push(this.eduTenth);
     }
-    if (this.eduTwelveth != "" && this.draftId == undefined) {
-      if (this.eduTwelveth != undefined) {
-        var filePreview = await this.blobToBase64(this.eduTwelveth);
-        this.eduTwelveth.docFile = filePreview;
-        this.eduTwelveth.title = "Twelveth Grade Certificate";
-        this.docList.push(this.eduTwelveth);
+    if (this.eduTwelveth != "" && "name" in this.eduTwelveth) {
+      if (this.draftId != undefined) {
+        this.documentsArray.splice(
+          this.documentsArray.findIndex((e) => e.documentTypeCode === "EDTWGC"),
+          1
+        );
       }
+      var filePreview = await this.blobToBase64(this.eduTwelveth);
+      this.eduTwelveth.docFile = filePreview;
+      this.eduTwelveth.title = "Twelveth Grade Certificate";
+      this.docList.push(this.eduTwelveth);
     }
-    if (this.eduTranscript1 != "" && this.draftId == undefined) {
-      if (this.eduTranscript1 != undefined) {
-        var filePreview = await this.blobToBase64(this.eduTranscript1);
-        this.eduTranscript1.docFile = filePreview;
-        this.eduTranscript1.title = "Education Transcript 1";
-        this.docList.push(this.eduTranscript1);
+    if (this.eduTranscript1 != "" && "name" in this.eduTranscript1) {
+      if (this.draftId != undefined) {
+        this.documentsArray.splice(
+          this.documentsArray.findIndex((e) => e.documentTypeCode === "EDHT"),
+          1
+        );
       }
+      var filePreview = await this.blobToBase64(this.eduTranscript1);
+      this.eduTranscript1.docFile = filePreview;
+      this.eduTranscript1.title = "Education Transcript 1";
+      this.docList.push(this.eduTranscript1);
     }
-    if (this.eduTranscript2 != "" && this.draftId == undefined) {
-      if (this.eduTranscript2 != undefined) {
-        var filePreview = await this.blobToBase64(this.eduTranscript2);
-        this.eduTranscript2.docFile = filePreview;
-        this.eduTranscript2.title = "Education Transcript 2";
-        this.docList.push(this.eduTranscript2);
+    if (this.eduTranscript2 != "" && "name" in this.eduTranscript2) {
+      if (this.draftId != undefined) {
+        this.documentsArray.splice(
+          this.documentsArray.findIndex((e) => e.documentTypeCode === "EDPT"),
+          1
+        );
       }
+      var filePreview = await this.blobToBase64(this.eduTranscript2);
+      this.eduTranscript2.docFile = filePreview;
+      this.eduTranscript2.title = "Education Transcript 2";
+      this.docList.push(this.eduTranscript2);
     }
     this.buttons = this.getButtons;
     this.fetchProfileInfo();
@@ -555,6 +655,7 @@ export default {
   data: () => ({
     basePath: "https://storage.googleapis.com/hris-lisence-dev/",
     docList: [],
+    documentsArray: [],
     show: false,
     profileInfo: {},
     applicantId: null,
@@ -740,7 +841,10 @@ export default {
                 this.documentTypes[5].documentType.code,
                 this.workExperience
               );
-              formData.append(this.documentTypes[4].documentType.code, this.cpd);
+              formData.append(
+                this.documentTypes[4].documentType.code,
+                this.cpd
+              );
               formData.append(
                 this.documentTypes[18].documentTypeCode,
                 this.herqa
@@ -1054,7 +1158,10 @@ export default {
                 this.documentTypes[5].documentType.code,
                 this.workExperience
               );
-              formData.append(this.documentTypes[4].documentType.code, this.cpd);
+              formData.append(
+                this.documentTypes[4].documentType.code,
+                this.cpd
+              );
               formData.append(
                 this.documentTypes[18].documentTypeCode,
                 this.herqa

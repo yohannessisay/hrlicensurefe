@@ -649,10 +649,10 @@ export default {
       declinedFields = store.getters["renewal/getDeclinedFields"];
       acceptedFields = store.getters["renewal/getAcceptedFields"];
       remark = store.getters["renewal/getRemark"];
-      if (declinedFields != null && declinedFields.includes("IC")) {
+      if (declinedFields != null && declinedFields.includes("PSP")) {
         declinedFieldsCheck.value = true;
       }
-      if (acceptedFields != null && acceptedFields.includes("IC")) {
+      if (acceptedFields != null && acceptedFields.includes("PSP")) {
         acceptedFieldsCheck.value = true;
       }
       buttons = store.getters["renewal/getButtons"];
@@ -660,7 +660,7 @@ export default {
       if (route.params.id) {
         draftStatus.value = route.params.status;
         for (let i = 0; i < draftData.documents.length; i++) {
-          if (draftData.documents[i].documentTypeCode == "IC") {
+          if (draftData.documents[i].documentTypeCode == "PSP") {
             showUpload.value = false;
             if (draftData.documents[i].fileName.split(".")[1] == "pdf") {
               isPdf.value = true;
