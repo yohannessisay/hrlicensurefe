@@ -356,13 +356,24 @@ export default {
       licenseInfo: "",
       userId: +localStorage.getItem("userId"),
 
-      workExperience: "",
-      renewalLetter: "",
-      cpd: "",
-      previousLicense: "",
-      professionalDoc: [],
+      passport: "",
       healthExamCert: "",
+      workExperience: "",
+      cpd: "",
+      herqa: "",
+      previousLicense: "",
+      supportLetter: "",
+      coc: "",
+      degree: "",
+      diploma: "",
+      educationalDocs: "",
       payroll: "",
+      transcript: "",
+      englishLanguage: "",
+      letterFromOrg: "",
+      professionalLicense: "",
+      renewedLicense: "",
+      letterOrg: "",
 
       declinedFields: [],
       acceptedFields: [],
@@ -393,12 +404,25 @@ export default {
       getLicense: "renewal/getLicense",
       getDocumentSpec: "renewal/getDocumentSpec",
 
-      getWorkExperience: "renewal/getRenewalWorkExperience",
-      getRenewalLetter: "renewal/getRenewalLicense",
-      getcpd: "renewal/getRenewalCpd",
-      getPreviousLicense: "renewal/getPreviousLicense",
+      getPassport: "renewal/getPassport",
       getHealthExamCert: "renewal/getRenewalHealthExamCert",
+      getWorkExperience: "renewal/getRenewalWorkExperience",
+      getcpd: "renewal/getRenewalCpd",
+      getHerqa: "renewal/getHerqa",
+      getPreviousLicense: "renewal/getPreviousLicense",
+      getSupportLetter: "renewal/getSupportLetter",
+      getCoc: "renewal/getCoc",
+      getDegree: "renewal/getDegree",
+      getDiploma: "renewal/getDiploma",
+      getEducationalDocuments: "renewal/getEducationalDocuments",
       getPayroll: "renewal/getPayroll",
+      getTranscript: "renewal/getTranscript",
+      getEnglishLanguage: "renewal/getEnglishLanguage",
+      getLetterFromHiringInstitution: "renewal/getRenewalLicense",
+      getProfessionalLicense: "renewal/getProfessionalLicense",
+      getRenewedLicense: "renewal/getPreviousLicense",
+      getLetterFromOrg: "renewal/getLetterfromOrg",
+
       getDraftData: "renewal/getDraft",
       getDeclinedFields: "renewal/getDeclinedFields",
       getAcceptedFields: "renewal/getAcceptedFields",
@@ -593,13 +617,25 @@ export default {
     this.license = this.getLicense;
     this.buttons = this.getButtons;
     this.documentSpec = this.getDocumentSpec;
+
+    this.passport = this.getPassport;
+    this.healthExamCert = this.getHealthExamCert;
     this.workExperience = this.getWorkExperience;
     this.cpd = this.getcpd;
-    this.healthExamCert = this.getHealthExamCert;
+    this.herqa = this.getHerqa;
     this.previousLicense = this.getPreviousLicense;
-    this.renewalLetter = this.getRenewalLetter;
-    this.professionalDoc = this.getProfessionalDocuments;
+    this.supportLetter = this.getSupportLetter;
+    this.coc = this.getCoc;
+    this.degree = this.getDegree;
+    this.diploma = this.getDiploma;
+    this.educationalDocs = this.getEducationalDocuments;
     this.payroll = this.getPayroll;
+    this.transcript = this.getTranscript;
+    this.englishLanguage = this.getEnglishLanguage;
+    this.letterFromOrg = this.getLetterFromHiringInstitution;
+    this.professionalLicense = this.getProfessionalLicense;
+    this.renewedLicense = this.getRenewedLicense;
+    this.letterOrg = this.getLetterFromOrg;
   },
   methods: {
     ...mapActions(["setProfessionalDoc"]),
@@ -794,27 +830,18 @@ export default {
             let formData = new FormData();
 
             formData.append(
-              this.documentSpec[7].documentType.code,
-              this.letter
+              this.documentSpec[0].documentType.code,
+              this.passport
             );
             formData.append(
               this.documentSpec[2].documentType.code,
               this.healthExamCert
             );
-
-            formData.append(this.documentSpec[4].documentType.code, this.cpd);
-            formData.append(
-              this.documentSpec[5].documentType.code,
-              this.workExperience
-            );
-            formData.append(
-              this.documentSpec[6].documentType.code,
-              this.previousLicense
-            );
             formData.append(
               this.documentSpec[8].documentType.code,
               this.photoFile
             );
+
             formData.append(
               this.documentSpec[9].documentType.code,
               this.diplomaFile
@@ -824,8 +851,77 @@ export default {
               this.transcriptFile
             );
             formData.append(
-              this.documentSpec[11].documentType.code,
+              this.documentSpec[5].documentType.code,
+              this.workExperience
+            );
+            formData.append(this.documentSpec[4].documentType.code, this.cpd);
+            formData.append(this.documentSpec[18].documentTypeCode, this.herqa);
+            formData.append(
+              this.documentSpec[6].documentTypeCode,
+              this.previousLicense
+            );
+            formData.append(
+              this.documentSpec[17].documentTypeCode,
+              this.supportLetter
+            );
+            formData.append(this.documentSpec[11].documentType.code, this.coc);
+            formData.append(
+              this.documentSpec[24].documentType.code,
+              this.degree
+            );
+            formData.append(
+              this.documentSpec[9].documentType.code,
+              this.diploma
+            );
+            if (this.educationalDocs != undefined) {
+              formData.append(
+                this.documentSpec[12].documentType.code,
+                this.educationalDocs[0]
+              );
+              formData.append(
+                this.documentSpec[13].documentType.code,
+                this.educationalDocs[1]
+              );
+              formData.append(
+                this.documentSpec[14].documentType.code,
+                this.educationalDocs[2]
+              );
+              formData.append(
+                this.documentSpec[15].documentType.code,
+                this.educationalDocs[3]
+              );
+              formData.append(
+                this.documentSpec[16].documentType.code,
+                this.educationalDocs[4]
+              );
+            }
+            formData.append(
+              this.documentSpec[23].documentType.code,
               this.payroll
+            );
+            formData.append(
+              this.documentSpec[10].documentType.code,
+              this.transcript
+            );
+            formData.append(
+              this.documentSpec[7].documentType.code,
+              this.englishLanguage
+            );
+            formData.append(
+              this.documentSpec[19].documentType.code,
+              this.letterFromOrg
+            );
+            formData.append(
+              this.documentSpec[22].documentType.code,
+              this.professionalLicense
+            );
+            formData.append(
+              this.documentSpec[21].documentType.code,
+              this.renewedLicense
+            );
+            formData.append(
+              this.documentSpec[20].documentType.code,
+              this.letterOrg
             );
             let payload = { document: formData, id: licenseId };
             this.$store

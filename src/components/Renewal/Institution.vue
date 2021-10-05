@@ -259,9 +259,6 @@
       </div>
     </div>
   </div>
-  <Modal v-if="showRenewalModal">
-    <RenewalModal @showRenewalModal="showRenewalModal = false" />
-  </Modal>
   <div class="mr-3xl" v-if="showFlash">
     <FlashMessage message="Operation Successful!" />
   </div>
@@ -277,7 +274,6 @@ import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import Spinner from "@/sharedComponents/Spinner";
 import RenewalModal from "../../views/RenewalModal.vue";
-import Modal from "@/sharedComponents/Modal";
 export default {
   props: ["activeState"],
   components: {
@@ -286,7 +282,6 @@ export default {
     ErrorFlashMessage,
     Spinner,
     RenewalModal,
-    Modal,
   },
 
   async created() {
@@ -412,7 +407,7 @@ export default {
     payrollDocType: false,
 
     payrollData: "",
-    showRenewalModal: false,
+    firstTimeUser: false,
   }),
 
   methods: {
@@ -592,6 +587,7 @@ export default {
       this.$emit("changeActiveState");
       this.$emit("applicantTypeValue", this.licenseInfo.applicantTypeId);
       this.$emit("payrollDocumentSet", this.licenseInfo.occupationTypeId);
+      this.$emit("firstTimeUserSet", this.firstTimeUser);
       this.$store.dispatch("renewal/setLicense", license);
     },
     fetchApplicantType() {
@@ -635,9 +631,9 @@ export default {
     fetchProfessionalType(id) {
       this.$store.dispatch("renewal/searchNewLicense", id).then((res) => {
         if (res.data.data == true) {
-          this.showRenewalModal = true;
+          this.firstTimeUser = true;
         } else {
-          this.showRenewalModal = false;
+          this.firstTimeUser = false;
         }
       });
       this.$store.dispatch("renewal/getProfessionalTypes").then((res) => {
@@ -733,9 +729,6 @@ export default {
               this.woredaArray = woredasResult.data;
             });
         });
-    },
-    openModal() {
-      this.showRenewalModal = true;
     },
   },
 };

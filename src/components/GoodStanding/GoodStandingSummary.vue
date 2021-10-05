@@ -168,6 +168,26 @@
           </div>
         </div>
       </div>
+      <div v-if="draftId != undefined" class="flex justify-start flex-wrap">
+        <div v-for="i in documentsArray.length" v-bind:key="i">
+          <div
+            class="mr-4"
+            v-for="item in documentsArray.slice((i - 1) * 1, i * 1)"
+            v-bind="item"
+            v-bind:value="item"
+          >
+            <Title class="" :message="item.documentTypeCode" />
+            <picture>
+              <img
+                :src="
+                  'https://storage.googleapis.com/hris-lisence-dev/' +
+                    item.filePath
+                "
+              />
+            </picture>
+          </div>
+        </div>
+      </div>
       <div v-if="this.draftStatus == 'DRA' || !this.draftStatus">
         <div class="mt-12 flex justify-center">
           <div>
@@ -303,20 +323,33 @@ export default {
     this.draftStatus = this.$route.params.status;
     if (this.draftId != undefined) {
       this.draftData = this.getDraftData;
+      this.documentsArray = this.draftData.documents;
     }
     this.licenseCopy = this.getLicenseCopy;
     this.serviceFee = this.getServiceFee;
     this.goodstandingLetter = this.getLetter;
-    if (this.licenseCopy != "") {
-      this.filePreview = await this.blobToBase64(this.licenseCopy);
-      this.licenseCopy.docFile = this.filePreview;
+    if (this.licenseCopy != "" && "name" in this.licenseCopy) {
+      if (this.draftId != undefined) {
+        this.documentsArray.splice(
+          this.documentsArray.findIndex((e) => e.documentTypeCode === "LC"),
+          1
+        );
+      }
+      var filePreview = await this.blobToBase64(this.licenseCopy);
+      this.licenseCopy.docFile = filePreview;
       this.licenseCopy.title = "License Copy";
       this.docList.push(this.licenseCopy);
     }
-    if (this.goodstandingLetter != "") {
+    if (this.goodstandingLetter != "" && "name" in this.goodstandingLetter) {
+      if (this.draftId != undefined) {
+        this.documentsArray.splice(
+          this.documentsArray.findIndex((e) => e.documentTypeCode === "LHI"),
+          1
+        );
+      }
       this.letterPreview = await this.blobToBase64(this.goodstandingLetter);
       this.goodstandingLetter.docFile = this.letterPreview;
-      this.goodstandingLetter.title = "Good standing Letter";
+      this.goodstandingLetter.title = "Verification Letter";
       this.docList.push(this.goodstandingLetter);
     }
     this.buttons = this.getButtons;
@@ -336,6 +369,7 @@ export default {
     filePreview: "",
     letterPreview: "",
     docList: [],
+    documentsArray: [],
     show: false,
     profileInfo: {},
     applicantId: "",
