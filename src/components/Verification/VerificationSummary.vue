@@ -316,8 +316,10 @@ export default {
     this.draftId = this.$route.params.id;
     this.draftStatus = this.$route.params.status;
     if (this.draftId != undefined) {
-      this.draftData = this.getDraftData;
-      this.documentsArray = this.draftData.documents;
+      setTimeout(() => {
+        this.draftData = this.getDraftData;
+        this.documentsArray = this.draftData.documents;
+      }, 3500);
     }
     this.userId = +localStorage.getItem("userId");
     this.licenseCopy = this.getLicenseCopy;

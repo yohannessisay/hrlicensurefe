@@ -332,9 +332,10 @@ export default {
     this.draftId = this.$route.params.id;
     this.draftStatus = this.$route.params.status;
     if (this.draftId != undefined) {
-      this.draftData = this.getDraftData;
-      this.documentsArray = this.draftData.documents;
-      console.log(this.documentsArray);
+      setTimeout(() => {
+        this.draftData = this.getDraftData;
+        this.documentsArray = this.draftData.documents;
+      }, 3500);
     }
     this.passport = this.getPassport;
     this.healthExamCert = this.getHealthExamCert;
