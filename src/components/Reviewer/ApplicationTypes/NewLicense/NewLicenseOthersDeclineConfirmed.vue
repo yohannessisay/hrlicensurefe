@@ -141,7 +141,7 @@ export default {
       const adminStatus = [statusId, adminId];
       store.dispatch(
           "reviewerNewLicense/getNewLicenseOthersDeclineConfirmed", adminStatus)
-          .then(() => {
+          .then((res) => {
           showLoading.value = false;
           newLicenseOthersDeclineConfirmed.value =
             store.getters[

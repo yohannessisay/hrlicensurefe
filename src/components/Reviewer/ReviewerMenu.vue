@@ -192,7 +192,7 @@
           <new-license-others-licensed />
         </div>
         <div v-if="this.display == 'newLicenseAllLicensed'">
-          <new-license-licensed />
+          <new-license-all-licensed />
         </div>
 
         <!-- renewal -->
@@ -291,7 +291,7 @@
           <renewal-others-licensed />
         </div>
         <div v-if="this.display == 'renewalAllLicensed'">
-          <renewal-licensed />
+          <renewal-all-licensed />
         </div>
 
         <!-- start verification -->
