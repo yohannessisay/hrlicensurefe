@@ -336,10 +336,8 @@ export default {
     this.draftId = this.$route.params.id;
     this.draftStatus = this.$route.params.status;
     if (this.draftId != undefined) {
-      setTimeout(() => {
         this.draftData = this.getDraftData;
         this.documentsArray = this.draftData.documents;
-      }, 3500);
     }
     this.licenseCopy = this.getLicenseCopy;
     this.serviceFee = this.getServiceFee;
