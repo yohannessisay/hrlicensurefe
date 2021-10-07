@@ -8,13 +8,19 @@
     <div
       class="flex justify-center items-center ml-8 mt-8 mr-8 box-shadow-pop rounded-lg bg-lightGrey-100"
     >
-      <div
-        class="p-4 w-48 h-64"
-        @Click="detail(item.id, item.applicant.id)"
-      >
+      <div class="p-4 w-48 h-64" @Click="detail(item.id, item.applicant.id)">
         <div class="flex content-center justify-center">
-          <span v-if="item.applicant.profile.photo !== '' && item.applicant.profile.photo !== null">
-            <img :src="item.applicant.profile.photo" alt="profile picture"  class="w-20 h-12" />
+          <span
+            v-if="
+              item.applicant.profile.photo !== '' &&
+                item.applicant.profile.photo !== null
+            "
+          >
+            <img
+              :src="item.applicant.profile.photo"
+              alt="profile picture"
+              class="w-20 h-12"
+            />
           </span>
           <span v-else>
             <img
@@ -87,7 +93,7 @@
 <script>
 import moment from "moment";
 import { useRouter } from "vue-router";
-import { ref } from 'vue';
+import { ref } from "vue";
 export default {
   computed: {
     moment: () => moment,
@@ -97,16 +103,23 @@ export default {
   setup(props) {
     let router = useRouter();
     const detail = (applicationId, applicantId) => {
-      if(props.all_re_evaluate == 'true') {
+      if (props.all_re_evaluate == "true") {
         const url =
-        "/admin/detail/" + props.app_type + "/" + applicationId + "/" + applicantId;
-      router.push(url);
+          "/admin/detail/" +
+          props.app_type +
+          "/" +
+          applicationId +
+          "/" +
+          applicantId;
+        router.push(url);
       } else {
         const url =
-        "/admin/confirmAssignedApplication/" + props.app_type + "/" + applicationId;
+          "/admin/confirmAssignedApplication/" +
+          props.app_type +
+          "/" +
+          applicationId;
         router.push(url);
       }
-      
     };
     return {
       detail,

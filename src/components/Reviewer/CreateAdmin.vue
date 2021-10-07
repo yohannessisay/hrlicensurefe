@@ -275,10 +275,6 @@ export default {
         
         admin.email = admin.email.toLowerCase();
 
-        console.log("email is_ ", admin.email);
-
-        return;
-
         store.dispatch("admin/registerAdmin", admin).then((res) => {
           showLoading.value = false;
           console.log("registration information is ", res)

@@ -13,8 +13,17 @@
         @Click="detail(`/admin`, item.id, item.applicant.id)"
       >
         <div class="flex content-center justify-center">
-          <span v-if="item.applicant.profile.photo !== '' && item.applicant.profile.photo !== null">
-            <img  :src="item.applicant.profile.photo" alt="profile picture"  class="w-20 h-12" />
+          <span
+            v-if="
+              item.applicant.profile.photo !== '' &&
+                item.applicant.profile.photo !== null
+            "
+          >
+            <img
+              :src="item.applicant.profile.photo"
+              alt="profile picture"
+              class="w-20 h-12"
+            />
           </span>
           <span v-else>
             <img
@@ -87,7 +96,7 @@
 <script>
 import moment from "moment";
 import { useRouter } from "vue-router";
-import { ref } from 'vue';
+import { ref } from "vue";
 export default {
   computed: {
     moment: () => moment,
@@ -97,15 +106,27 @@ export default {
   setup(props) {
     let router = useRouter();
     let routeValue = ref("othersUnconfirmedDetail");
-    const adminExpertId = JSON.parse(localStorage.getItem('allAdminData')).expertLevelId;
+    const adminExpertId = JSON.parse(localStorage.getItem("allAdminData"))
+      .expertLevelId;
     const detail = (data, applicationId, applicantId) => {
       if (
-        (props.app_type == "Verification" || props.app_type == "Good Standing" || adminExpertId == 3 || props.all_declined == "true")
+        props.app_type == "Verification" ||
+        props.app_type == "Good Standing" ||
+        adminExpertId == 3 ||
+        props.all_declined == "true"
       ) {
         routeValue.value = "applicant-detail";
       }
       const url =
-        data + "/" + routeValue.value + "/" + props.app_type + "/" + applicationId + "/" + applicantId;
+        data +
+        "/" +
+        routeValue.value +
+        "/" +
+        props.app_type +
+        "/" +
+        applicationId +
+        "/" +
+        applicantId;
       router.push(url);
     };
     return {

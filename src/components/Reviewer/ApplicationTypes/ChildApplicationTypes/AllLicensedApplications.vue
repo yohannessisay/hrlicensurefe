@@ -13,8 +13,17 @@
         @Click="detail(`/admin/applicant-detail`, item.id, item.applicant.id)"
       >
         <div class="flex content-center justify-center">
-          <span v-if="item.applicant.profile.photo !== '' && item.applicant.profile.photo !== null">
-                <img  :src="item.applicant.profile.photo" alt="profile picture"  class="w-20 h-12" />
+          <span
+            v-if="
+              item.applicant.profile.photo !== '' &&
+                item.applicant.profile.photo !== null
+            "
+          >
+            <img
+              :src="item.applicant.profile.photo"
+              alt="profile picture"
+              class="w-20 h-12"
+            />
           </span>
           <span v-else>
             <img
@@ -36,7 +45,8 @@
         </h4>
         <span
           class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-        v-if="others_licensed == 'true'">
+          v-if="others_licensed == 'true'"
+        >
           <i class="fas fa-user-cog"></i> &nbsp;
           {{ item.reviewer.name ? item.reviewer.name : "-" }}
         </span>
@@ -56,13 +66,21 @@
         >
           {{
             app_type == "New License"
-              ? item.newLicenseCode ? item.newLicenseCode : "-"
+              ? item.newLicenseCode
+                ? item.newLicenseCode
+                : "-"
               : app_type == "Verification"
-              ? item.verificationCode ? item.verificationCode : "-"
+              ? item.verificationCode
+                ? item.verificationCode
+                : "-"
               : app_type == "Good Standing"
-              ? item.goodStandingCode ? item.goodStandingCode : "-"
+              ? item.goodStandingCode
+                ? item.goodStandingCode
+                : "-"
               : app_type == "Renewal"
-              ? item.renewalCode ? item.renewalCode : "-"
+              ? item.renewalCode
+                ? item.renewalCode
+                : "-"
               : "-"
           }}
         </span>
