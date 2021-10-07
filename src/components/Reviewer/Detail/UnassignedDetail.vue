@@ -531,111 +531,47 @@ export default {
         }
       }
       if (applicationType.value == "New License") {
-        if (license.value.applicationStatus.code === "UPD") {
-          license.value.reviewerId = assign.value.reviewerId;
-          let req = {
-            action: "UpdateEvent",
-            data: license.value,
-          };
-          store
-          .dispatch("reviewer/editNewLicense", req)
-          .then((res) => {
-            if (res.statusText == "Created") {
+        store
+          .dispatch("reviewer/assignReviewer", assign.value)
+          .then((response) => {
+            if (response.statusText == "Created") {
               showFlash.value = true;
-              setTimeout(() => {
-                router.push("/admin/review");
-              }, 3000);
-            } else {
-              showErrorFlash.value = true;
-              setTimeout(() => {
-                router.go();
-              }, 3000);
+              router.push("/admin/review");
             }
           })
           .catch((err) => {
-            console.log("error while evaluating", err);
+            showErrorFlash.value = true;
           });
-        } else {
-          store
-            .dispatch("reviewer/assignReviewer", assign.value)
-
-            .then((response) => {
-              console.log("the response is ", response);
-              if (response.statusText == "Created") {
-                showFlash.value = true;
-                return;
-                router.push("/admin/review");
-              }
-            });
-        }
       }
       if (applicationType.value == "Verification") {
-        if (license.value.applicationStatus.code === "UPD") {
-          license.value.reviewerId = assign.value.reviewerId;
-          store
-            .dispatch("reviewer/assignVerificationReviewer", assign.value)
-
-            .then((response) => {
-              if (response.statusText == "Created") {
-                showFlash.value = true;
-                router.push("/admin/review");
-              }
-            });
-          // let req = {
-          //   action: "UpdateEvent",
-          //   data: license.value,
-          // };
-          
-          // store
-          // .dispatch("reviewer/editVerification", req)
-          // .then((res) => {
-          //   if (res.statusText == "Created") {
-          //     showFlash.value = true;
-          //     setTimeout(() => {
-          //       router.push("/admin/review");
-          //     }, 3000);
-          //   } else {
-          //     showErrorFlash.value = true;
-          //     setTimeout(() => {
-          //       router.go();
-          //     }, 3000);
-          //   }
-          // })
-          // .catch((err) => {
-          //   console.log("error while evaluating", err);
-          // });
-        } else {
-          store
-            .dispatch("reviewer/assignVerificationReviewer", assign.value)
-
-            .then((response) => {
-              if (response.statusText == "Created") {
-                showFlash.value = true;
-                router.push("/admin/review");
-              }
-            });
-        }
+        store
+          .dispatch("reviewer/assignVerificationReviewer", assign.value)
+          .then((response) => {
+            if (response.statusText == "Created") {
+              showFlash.value = true;
+              router.push("/admin/review");
+            }
+          })
+          .catch((err) => {
+            showErrorFlash.value = true;
+          });
       }
       if (applicationType.value == "Renewal") {
-        console.log("ww")
         if (license.value.applicationStatus.code === "UPD") {
           license.value.reviewerId = assign.value.reviewerId;
           store
             .dispatch("reviewer/assignRenewalReviewer", assign.value)
-
             .then((response) => {
               if (response.statusText == "Created") {
-                console.log("it works")
-                return;
                 showFlash.value = true;
                 router.push("/admin/review");
               } else {
-                console.log("not working")
+                showErrorFlash.value = true;
               }
-            }).catch(err => {
-              console.log("something went wrong", err)
-              return;
             })
+            .catch((err) => {
+              showErrorFlash.value = true;
+            });
           // let req = {
           //   action: "InReview",
           //   data: license.value,
@@ -670,45 +606,24 @@ export default {
                 showFlash.value = true;
                 router.push("/admin/review");
               }
+            })
+            .catch((err) => {
+              showErrorFlash.value = true;
             });
         }
       }
       if (applicationType.value == "Good Standing") {
-        if (license.value.applicationStatus.code === "UPD") {
-          license.value.reviewerId = assign.value.reviewerId;
-          let req = {
-            action: "UpdateEvent",
-            data: license.value,
-          };
-          store
-          .dispatch("reviewer/editGoodStanding", req)
-          .then((res) => {
-            if (res.statusText == "Created") {
+        store
+          .dispatch("reviewer/assignGoodStandingReviewer", assign.value)
+          .then((response) => {
+            if (response.statusText == "Created") {
               showFlash.value = true;
-              setTimeout(() => {
-                router.push("/admin/review");
-              }, 3000);
-            } else {
-              showErrorFlash.value = true;
-              setTimeout(() => {
-                router.go();
-              }, 3000);
+              router.push("/admin/review");
             }
           })
           .catch((err) => {
-            console.log("error while evaluating", err);
+            showErrorFlash.value = true;
           });
-        } else {
-          store
-            .dispatch("reviewer/assignGoodStandingReviewer", assign.value)
-
-            .then((response) => {
-              if (response.statusText == "Created") {
-                showFlash.value = true;
-                router.push("/admin/review");
-              }
-            });
-        }
       }
     };
 
