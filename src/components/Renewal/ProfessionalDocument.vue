@@ -870,7 +870,7 @@ export default {
               this.degree
             );
             formData.append(
-              this.documentSpec[9].documentType.code,
+              this.documentSpec[25].documentType.code,
               this.diploma
             );
             if (this.educationalDocs != undefined) {
@@ -900,7 +900,7 @@ export default {
               this.payroll
             );
             formData.append(
-              this.documentSpec[10].documentType.code,
+              this.documentSpec[26].documentType.code,
               this.transcript
             );
             formData.append(

@@ -403,7 +403,7 @@ export default {
             formData.append(documentSpecs[11].documentType.code, coc);
             formData.append(documentSpecs[24].documentType.code, degree);
             formData.append(
-              documentSpecs[9].documentType.code,
+              documentSpecs[25].documentType.code,
               DiplomaFile.value
             );
             if (educationDoc != undefined) {
@@ -434,7 +434,7 @@ export default {
               previousLicense
             );
             formData.append(documentSpecs[17].documentType.code, supportLetter);
-            formData.append(documentSpecs[10].documentType.code, transcript);
+            formData.append(documentSpecs[26].documentType.code, transcript);
 
             let payload = { document: formData, id: licenseId };
             store

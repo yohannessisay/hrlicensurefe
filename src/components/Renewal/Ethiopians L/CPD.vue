@@ -471,7 +471,7 @@ export default {
             formData.append(documentSpecs[4].documentType.code, cpdFile.value);
             formData.append(documentSpecs[11].documentType.code, coc);
             formData.append(documentSpecs[24].documentType.code, degree);
-            formData.append(documentSpecs[9].documentType.code, diploma);
+            formData.append(documentSpecs[25].documentType.code, diploma);
             if (educationDoc != undefined) {
               formData.append(
                 documentSpecs[12].documentType.code,
@@ -500,7 +500,7 @@ export default {
               previousLicense
             );
             formData.append(documentSpecs[17].documentType.code, supportLetter);
-            formData.append(documentSpecs[10].documentType.code, transcript);
+            formData.append(documentSpecs[26].documentType.code, transcript);
             let payload = { document: formData, id: licenseId };
             store
               .dispatch("renewal/uploadDocuments", payload)
