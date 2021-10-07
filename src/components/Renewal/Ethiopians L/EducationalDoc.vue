@@ -1235,7 +1235,7 @@ export default {
           formData.append(this.documentSpec[11].documentType.code, this.coc);
           formData.append(this.documentSpec[24].documentType.code, this.degree);
           formData.append(
-            this.documentSpec[9].documentType.code,
+            this.documentSpec[25].documentType.code,
             this.diploma
           );
           formData.append(
@@ -1271,7 +1271,7 @@ export default {
             this.supportLetter
           );
           formData.append(
-            this.documentSpec[10].documentType.code,
+            this.documentSpec[26].documentType.code,
             this.transcript
           );
 

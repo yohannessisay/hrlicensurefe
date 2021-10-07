@@ -116,9 +116,7 @@ export default {
         message.value.showLoading = true;
         message.value.showFlash = false;
         message.value.showErrorFlash = false;
-        console.log(email);
         store.dispatch("user/login", email).then((res) => {
-          console.log(res);
           if (res) {
             const userId = res.data.data.id;
             store.dispatch("profile/getProfileByUserId", userId).then((res) => {
