@@ -153,6 +153,13 @@
           </h5>
         </div>
       </div>
+      <label
+        style="font-size: 20px"
+        v-if="docList.length != 0"
+        class="flex justify-center text-primary-300"
+      >
+        Newly Attached Documents</label
+      >
       <div class="flex justify-start flex-wrap">
         <div v-for="i in docList.length" v-bind:key="i">
           <div
@@ -168,6 +175,13 @@
           </div>
         </div>
       </div>
+      <label
+        style="font-size: 20px"
+        v-if="documentsArray.length != 0"
+        class="flex justify-center text-primary-300"
+      >
+        Draft Documents</label
+      >
       <div v-if="draftId != undefined" class="flex justify-start flex-wrap">
         <div v-for="i in documentsArray.length" v-bind:key="i">
           <div
@@ -322,35 +336,39 @@ export default {
     this.draftId = this.$route.params.id;
     this.draftStatus = this.$route.params.status;
     if (this.draftId != undefined) {
-      this.draftData = this.getDraftData;
-      this.documentsArray = this.draftData.documents;
+        this.draftData = this.getDraftData;
+        this.documentsArray = this.draftData.documents;
     }
     this.licenseCopy = this.getLicenseCopy;
     this.serviceFee = this.getServiceFee;
     this.goodstandingLetter = this.getLetter;
-    if (this.licenseCopy != "" && "name" in this.licenseCopy) {
-      if (this.draftId != undefined) {
-        this.documentsArray.splice(
-          this.documentsArray.findIndex((e) => e.documentTypeCode === "LC"),
-          1
-        );
+    if (this.licenseCopy != "" && this.licenseCopy != undefined) {
+      if ("name" in this.licenseCopy) {
+        if (this.draftId != undefined) {
+          this.documentsArray.splice(
+            this.documentsArray.findIndex((e) => e.documentTypeCode === "LC"),
+            1
+          );
+        }
+        var filePreview = await this.blobToBase64(this.licenseCopy);
+        this.licenseCopy.docFile = filePreview;
+        this.licenseCopy.title = "License Copy";
+        this.docList.push(this.licenseCopy);
       }
-      var filePreview = await this.blobToBase64(this.licenseCopy);
-      this.licenseCopy.docFile = filePreview;
-      this.licenseCopy.title = "License Copy";
-      this.docList.push(this.licenseCopy);
     }
-    if (this.goodstandingLetter != "" && "name" in this.goodstandingLetter) {
-      if (this.draftId != undefined) {
-        this.documentsArray.splice(
-          this.documentsArray.findIndex((e) => e.documentTypeCode === "LHI"),
-          1
-        );
+    if (this.goodstandingLetter != "" && this.goodstandingLetter != undefined) {
+      if ("name" in this.goodstandingLetter) {
+        if (this.draftId != undefined) {
+          this.documentsArray.splice(
+            this.documentsArray.findIndex((e) => e.documentTypeCode === "LHI"),
+            1
+          );
+        }
+        this.letterPreview = await this.blobToBase64(this.goodstandingLetter);
+        this.goodstandingLetter.docFile = this.letterPreview;
+        this.goodstandingLetter.title = "Verification Letter";
+        this.docList.push(this.goodstandingLetter);
       }
-      this.letterPreview = await this.blobToBase64(this.goodstandingLetter);
-      this.goodstandingLetter.docFile = this.letterPreview;
-      this.goodstandingLetter.title = "Verification Letter";
-      this.docList.push(this.goodstandingLetter);
     }
     this.buttons = this.getButtons;
     this.fetchProfileInfo();
