@@ -135,21 +135,6 @@
           </h5>
         </div>
       </div>
-      <div v-if="draftId == undefined" class="flex justify-start flex-wrap">
-        <div v-for="i in docList.length" v-bind:key="i">
-          <div
-            class="mr-4"
-            v-for="item in docList.slice((i - 1) * 1, i * 1)"
-            v-bind="item"
-            v-bind:value="item"
-          >
-            <Title class="" :message="item.title" />
-            <picture>
-              <img :src="item.docFile" />
-            </picture>
-          </div>
-        </div>
-      </div>
       <label
         style="font-size: 20px"
         v-if="docList.length != 0"
