@@ -1247,12 +1247,12 @@ export default {
               this.englishLanguage
             );
             formData.append(
-              this.documentSpec[7].documentType.code,
+              this.documentSpec[22].documentType.code,
               this.diploma
             );
 
             formData.append(
-              this.documentSpec[8].documentType.code,
+              this.documentSpec[23].documentType.code,
               this.transcript
             );
             formData.append(
