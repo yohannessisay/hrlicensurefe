@@ -317,10 +317,10 @@ export default {
     this.draftId = this.$route.params.id;
     this.draftStatus = this.$route.params.status;
     if (this.draftId != undefined) {
-      setTimeout(() => {
-        this.draftData = this.getDraftData;
-        this.documentsArray = this.draftData.documents;
-      }, 3500);
+      // setTimeout(() => {
+      this.draftData = this.getDraftData;
+      this.documentsArray = this.draftData.documents;
+      // }, 3500);
     }
     this.passport = this.getPassport;
     this.healthExamCert = this.getHealthExamCert;
@@ -408,17 +408,18 @@ export default {
       }
     }
     if (this.proTranscript != "" && this.proTranscript != undefined) {
-      if ("name" in this.proTranscript)
+      if ("name" in this.proTranscript) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
             this.documentsArray.findIndex((e) => e.documentTypeCode === "PDT"),
             1
           );
         }
-      var filePreview = await this.blobToBase64(this.proTranscript);
-      this.proTranscript.docFile = filePreview;
-      this.proTranscript.title = "Transcript";
-      this.docList.push(this.proTranscript);
+        var filePreview = await this.blobToBase64(this.proTranscript);
+        this.proTranscript.docFile = filePreview;
+        this.proTranscript.title = "Transcript";
+        this.docList.push(this.proTranscript);
+      }
     }
     if (this.proDiploma != "" && this.proDiploma != undefined) {
       if ("name" in this.proDiploma) {

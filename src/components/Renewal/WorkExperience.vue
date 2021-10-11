@@ -141,6 +141,9 @@
           v-if="buttons && draftStatus == 'DEC'"
           class="flex justify-center mb-8"
         >
+          <button @click="submitBack">
+            Back
+          </button>
           <button @click="submit">Next</button>
           <!-- <button @click="draft(buttons[0].action)" variant="outline">
             {{ buttons[0]["name"] }}

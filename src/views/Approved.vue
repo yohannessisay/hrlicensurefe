@@ -2,6 +2,13 @@
   <div>
     <div>
       <div v-if="!this.showLoading" class="bg-lightBlueB-200 h-full">
+        <h3
+          style="color: #b30000; font-weight: bold"
+          class="flex justify-center mt-medium"
+        >
+          Applicants are required to bring all original documents to licensing
+          office.
+        </h3>
         <div class="flex pl-12 pt-medium">
           <Title message="New License Approved Applications" />
         </div>
