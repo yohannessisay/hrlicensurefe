@@ -16,7 +16,7 @@
           message="Educational Documents"
           class="mt-8"
         />
-
+        <span class="flex justify-center">{{ this.documentMessage }}</span>
         <div class="flex flex-row justify-center px-8 py-4">
           <div>
             <h2
@@ -468,6 +468,7 @@ import { mapGetters, mapActions } from "vuex";
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import Spinner from "@/sharedComponents/Spinner";
+import MESSAGE from "../../../composables/documentMessage";
 
 export default {
   components: {
@@ -559,6 +560,8 @@ export default {
       transcript: "",
       degree: "",
 
+      documentMessage: "",
+
       draftId: "",
       draftData: "",
       draftStatus: "",
@@ -602,6 +605,7 @@ export default {
     }),
   },
   created() {
+    this.documentMessage = MESSAGE.DOC_MESSAGE;
     let eduEighth = this.$store.getters["newlicense/getEduEighth"];
     let eduTenth = this.$store.getters["newlicense/getEduTenth"];
     let eduTwelveth = this.$store.getters["newlicense/getEduTwelveth"];

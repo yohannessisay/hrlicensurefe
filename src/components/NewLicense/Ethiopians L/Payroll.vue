@@ -30,6 +30,7 @@
           message="Payroll Document"
           class="mt-8"
         />
+        <span class="flex justify-center">{{ documentMessage }}</span>
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
           <div class="flex justify-center">
             <div>
@@ -217,6 +218,8 @@ export default {
     let declinedFields = ref([]);
     let acceptedFields = ref([]);
     let remark = ref("");
+
+    let documentMessage = ref("");
 
     let declinedFieldsCheck = ref(false);
     let acceptedFieldsCheck = ref(false);
@@ -596,6 +599,7 @@ export default {
     };
 
     onMounted(() => {
+      documentMessage.value = MESSAGE.DOC_MESSAGE;
       payrollBack = store.getters["newlicense/getPayroll"];
       if (
         payrollBack &&
@@ -690,6 +694,7 @@ export default {
       remark,
       declinedFieldsCheck,
       acceptedFieldsCheck,
+      documentMessage,
     };
   },
 };
