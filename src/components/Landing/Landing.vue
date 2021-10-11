@@ -60,11 +60,7 @@ export default {
     SendEmail,
   },
   setup() {
-    onMounted(() => {
-      // setTimeout(() => {
-      // location.reload(true);
-      // }, 1500);
-    });
+    onMounted(() => {});
     const showLogin = ref(false);
     const showSignUp = ref(false);
     const showSendEmail = ref(false);
