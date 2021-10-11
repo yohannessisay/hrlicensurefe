@@ -16,6 +16,7 @@
           message="Professional Documents"
           class="mt-8"
         />
+        <span class="flex justify-center">{{ this.documentMessage }}</span>
         <div class="flex flex-row justify-center px-8 py-4">
           <div>
             <h2
@@ -306,6 +307,7 @@ import { mapGetters, mapActions } from "vuex";
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import Spinner from "@/sharedComponents/Spinner";
+import MESSAGE from "../../composables/documentMessage";
 
 export default {
   components: {
@@ -379,6 +381,8 @@ export default {
       acceptedFields: [],
       remark: "",
 
+      documentMessage: "",
+
       declinedFieldsCheck1: false,
       acceptedFieldsCheck1: false,
 
@@ -430,6 +434,7 @@ export default {
     }),
   },
   created() {
+    this.documentMessage = MESSAGE.DOC_MESSAGE;
     let certificate = this.$store.getters["renewal/getCertificate"];
     let diploma = this.$store.getters["renewal/getDiploma"];
     let transcript = this.$store.getters["renewal/getTranscript"];

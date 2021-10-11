@@ -30,6 +30,7 @@
           message="Renewed License of the Organization"
           class="mt-8"
         />
+        <span class="flex justify-center">{{ documentMessage }}</span>
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
           <div class="flex justify-center">
             <div>
@@ -172,6 +173,7 @@ import { useRoute, useRouter } from "vue-router";
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import Spinner from "@/sharedComponents/Spinner";
+import MESSAGE from "../../../composables/documentMessage";
 
 export default {
   components: {
@@ -211,6 +213,8 @@ export default {
     let draftStatus = ref("");
 
     let letterFileBack = ref("");
+
+    let documentMessage = ref("");
 
     let passport = ref("");
     let healthExamCert = ref("");
@@ -563,6 +567,7 @@ export default {
       });
     };
     onMounted(() => {
+      documentMessage.value = MESSAGE.DOC_MESSAGE;
       letterFileBack = store.getters["renewal/getRenewedLicense"];
       if (
         letterFileBack &&
@@ -641,6 +646,7 @@ export default {
       handleFileUpload,
       reset,
       submit,
+      submitBack,
       draft,
       withdraw,
       buttons,
@@ -667,6 +673,8 @@ export default {
       professionalLicense,
       cpd,
       letterOrg,
+
+      documentMessage,
     };
   },
 };

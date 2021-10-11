@@ -23,6 +23,7 @@
           message="Previous License"
           class="mt-8"
         />
+        <span class="flex justify-center">{{ documentMessage }}</span>
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
           <div class="flex justify-center mb-10">
             <div>
@@ -175,6 +176,7 @@ import { useRoute, useRouter } from "vue-router";
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import Spinner from "@/sharedComponents/Spinner";
+import MESSAGE from "../../../composables/documentMessage";
 
 export default {
   props: ["activeState"],
@@ -210,6 +212,8 @@ export default {
     let draftStatus = ref("");
 
     let previousLicenseBack = ref("");
+
+    let documentMessage = ref("");
 
     let buttons = [];
     let documentSpecs = ref([]);
@@ -305,6 +309,7 @@ export default {
     };
 
     onMounted(() => {
+      documentMessage.value = MESSAGE.DOC_MESSAGE;
       previousLicenseBack = store.getters["renewal/getPreviousLicense"];
       if (
         previousLicenseBack &&
@@ -673,6 +678,8 @@ export default {
       professionalLicense,
       renewedLicense,
       letterOrg,
+
+      documentMessage,
     };
   },
 };

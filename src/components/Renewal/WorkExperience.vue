@@ -30,6 +30,7 @@
           message="Authenticated Work Experience(3 to 4 years)"
           class="mt-8"
         />
+        <span class="flex justify-center">{{ documentMessage }}</span>
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
           <div class="flex justify-center mb-10">
             <div>
@@ -169,6 +170,7 @@ import { useStore } from "vuex";
 import { useRoute, useRouter } from "vue-router";
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
+import MESSAGE from "../../composables/documentMessage";
 
 export default {
   props: ["activeState"],
@@ -210,6 +212,8 @@ export default {
 
     let declinedFieldsCheck = ref(false);
     let acceptedFieldsCheck = ref(false);
+
+    let documentMessage = ref("");
 
     let passport = ref("");
     let professionalDoc = [];
@@ -307,6 +311,7 @@ export default {
     };
 
     onMounted(() => {
+      documentMessage.value = MESSAGE.DOC_MESSAGE;
       workExperienceBack = store.getters["renewal/getRenewalWorkExperience"];
       if (
         workExperienceBack &&
@@ -707,6 +712,8 @@ export default {
       professionalLicense,
       renewedLicense,
       letterOrg,
+
+      documentMessage,
     };
   },
 };
