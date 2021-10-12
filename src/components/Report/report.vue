@@ -1,336 +1,518 @@
-<template>
-  <div>
-    <div>
-      <ReviewerNavBar />
-    </div>
-    <div class="">
-      <span class="text-base ml-5"> Applicant type</span>
-      <select class="w-56 ml-5 mt-20" v-model="applicantTypeId">
-        <option
-          v-for="types in applicantType"
-          v-bind:key="types.name"
-          v-bind:value="types.id"
-        >
-          {{ types.name }}
-        </option>
-      </select>
-      <span class="text-base ml-5"> Regions</span>
-      <select class="w-56 ml-5" v-model="regionId">
-        <option
-          v-for="types in regions"
-          v-bind:key="types.name"
-          v-bind:value="types.id"
-        >
-          {{ types.name }}
-        </option>
-      </select>
-      <input
-        placeholder="Select date"
-       type="date"
-              class="ml-5"
-       
-        
-      />
-    
-      <month-picker
-        @change="datePicker"
-        v-if="showDate"
-        @click="displayDate()"
-      />
-      <button @click="searchButton">Search</button>
-      <!-- Write v-model fro the filters -->
-    </div>
-    <div class="container mt-5 ml-40 w-1/2 h-full ">
-      <apexchart
-        id="chart"
-        type="bar"
-        :options="chartOptions"
-        :series="series"
-        :updateSeries="series"
-      ></apexchart>
-    </div>
-    <div v-if="isLoading">
-      <Spinner />
+<template
+  ><div>
+    <ReviewerNavBar tab="Home" />
+    <div class="flex flex-row">
+      <div>
+        <ReviewerSideBar />
+      </div>
+      <div v-if="loader" style="margin-left: 45%; margin-top: 5%">
+        <Spinner />
+      </div>
+      <div v-else>
+        <div class="px-4 sm:px-4">
+          <div class="py-8">
+            <div class="flex flex-row">
+              <div class="ml-2">
+                <h2 class="text-2xl font-semibold leading-tight">
+                  Report
+                </h2>
+              </div>
+              <div id="export" @click="exportTable()" style="margin-left:35%">
+                <h2 class="text-2xl font-semibold leading-tight">
+                  <i class="fa fa-file-text" aria-hidden="true"></i>
+                  Export
+                </h2>
+              </div>
+            </div>
+            <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
+              <div
+                id="printable"
+                class="inline-block min-w-full shadow-md rounded-lg overflow-hidden"
+              >
+                <table class="min-w-full leading-normal">
+                  <thead>
+                    <tr class="">
+                      <th
+                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+                      >
+                        First Name
+                      </th>
+                      <th
+                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+                      >
+                        Last Name
+                      </th>
+                      <th
+                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+                      >
+                        Grand Father Name
+                      </th>
+                      <th
+                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+                      >
+                        Date of Birth
+                      </th>
+                      <th
+                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+                      >
+                        Nationality
+                      </th>
+                      <th
+                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+                      >
+                        Gender
+                      </th>
+                      <th
+                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+                      >
+                        Phone No.
+                      </th>
+
+                      <th
+                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+                      >
+                        Professional Type
+                      </th>
+                      <th
+                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+                      >
+                        Region
+                      </th>
+                      <th
+                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+                      >
+                        Start Date
+                      </th>
+                      <th
+                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+                      >
+                        End Date
+                      </th>
+                      <th
+                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+                      >
+                        Status
+                      </th>
+                      <th
+                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+                      >
+                        Remark
+                      </th>
+                      <th
+                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+                      >
+                        License Code
+                      </th>
+                      <th
+                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+                      >
+                        Reviewer
+                      </th>
+                      <th
+                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+                      >
+                        Expert Level
+                      </th>
+
+                      <th
+                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+                      >
+                        Department
+                      </th>
+                      <th
+                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+                      >
+                        Institution
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="item in report" :key="item">
+                      <td class="px-5 py-5 border-gray-200 bg-white text-sm">
+                        <div class="flex">
+                          <div class="ml-3">
+                            <p class="text-gray-900 whitespace-no-wrap">
+                              {{ item.name }}
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="px-5 py-5  border-gray-200 bg-white text-sm">
+                        <div class="flex">
+                          <div class="ml-3">
+                            <p class="text-gray-900 whitespace-no-wrap">
+                              {{ item.fatherName }}
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="px-5 py-5  border-gray-200 bg-white text-sm">
+                        <div class="flex">
+                          <div class="ml-3">
+                            <p class="text-gray-900 whitespace-no-wrap">
+                              {{ item.grandFatherName }}
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="px-5 py-5  border-gray-200 bg-white text-sm">
+                        <div class="flex">
+                          <div class="ml-3">
+                            <p class="text-gray-900 whitespace-no-wrap">
+                              {{
+                                item.dateOfBirth
+                                  ? moment(item.dateOfBirth).fromNow()
+                                  : "-"
+                              }}
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td
+                        v-if="item.nationality"
+                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
+                      >
+                        <div class="flex">
+                          <div class="ml-3">
+                            <p class="text-gray-900 whitespace-no-wrap">
+                              {{ item.nationality }}
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td
+                        v-else
+                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
+                      >
+                        <div class="flex">
+                          <div class="ml-3">
+                            <p class="text-gray-900 whitespace-no-wrap">
+                              ---
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td
+                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
+                      >
+                        <div class="flex">
+                          <div class="ml-3">
+                            <p class="text-gray-900 whitespace-no-wrap">
+                              {{ item.gender }}
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td
+                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
+                      >
+                        <div class="flex">
+                          <div class="ml-3">
+                            <p class="text-gray-900 whitespace-no-wrap">
+                              {{ item.applicant.phoneNumber }}
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td
+                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
+                        v-if="item.professionalTypes"
+                      >
+                        <div class="flex">
+                          <div class="ml-3">
+                            <p class="text-gray-900 whitespace-no-wrap">
+                              {{ item.professionalTypes.name }}
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td
+                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
+                      >
+                        <div class="flex">
+                          <div class="ml-3">
+                            <p class="text-gray-900 whitespace-no-wrap">
+                              Region
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td
+                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
+                      >
+                        <div class="flex">
+                          <div class="ml-3">
+                            <p class="text-gray-900 whitespace-no-wrap">
+                              {{
+                                item.createdAt
+                                  ? moment(item.createdAt).fromNow()
+                                  : "-"
+                              }}
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td
+                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
+                      >
+                        <div class="flex">
+                          <div class="ml-3">
+                            <p class="text-gray-900 whitespace-no-wrap">
+                              {{
+                                item.certifiedDate
+                                  ? moment(item.certifiedDate).fromNow()
+                                  : "-"
+                              }}
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td
+                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
+                      >
+                        <div class="flex">
+                          <div class="ml-3">
+                            <p class="text-gray-900 whitespace-no-wrap">
+                              {{ item.applicationStatus.name }}
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td
+                        v-if="item.remark"
+                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
+                      >
+                        <div class="flex">
+                          <div class="ml-3">
+                            <p class="text-gray-900 whitespace-no-wrap">
+                              {{ item.remark }}
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td
+                        v-else
+                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
+                      >
+                        <div class="flex">
+                          <div class="ml-3">
+                            <p class="text-gray-900 whitespace-no-wrap">
+                              ---
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td
+                        v-if="item.newLicenseCode"
+                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
+                      >
+                        <div class="flex">
+                          <div class="ml-3">
+                            <p class="text-gray-900 whitespace-no-wrap">
+                              {{ item.newLicenseCode }}
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td
+                        v-if="item.renewalCode"
+                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
+                      >
+                        <div class="flex">
+                          <div class="ml-3">
+                            <p class="text-gray-900 whitespace-no-wrap">
+                              {{ item.renewalCode }}
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+
+                      <td
+                        v-if="item.verificationCode"
+                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
+                      >
+                        <div class="flex">
+                          <div class="ml-3">
+                            <p class="text-gray-900 whitespace-no-wrap">
+                              {{ item.verificationCode }}
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td
+                        v-if="item.goodStandingCode"
+                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
+                      >
+                        <div class="flex">
+                          <div class="ml-3">
+                            <p class="text-gray-900 whitespace-no-wrap">
+                              {{ item.goodStandingCode }}
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td
+                        v-if="item.reviewer"
+                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
+                      >
+                        <div class="flex">
+                          <div class="ml-3">
+                            <p class="text-gray-900 whitespace-no-wrap">
+                              {{ item.reviewer.name }}
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td
+                        v-else
+                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
+                      >
+                        <div class="flex">
+                          <div class="ml-3">
+                            <p class="text-gray-900 whitespace-no-wrap">
+                              ---
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td
+                        v-if="item.expertLevels"
+                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
+                      >
+                        <div class="flex">
+                          <div class="ml-3">
+                            <p class="text-gray-900 whitespace-no-wrap">
+                              {{ item.expertLevels.name }}
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td
+                        v-if="item.education"
+                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
+                      >
+                        <div class="flex">
+                          <div class="ml-3">
+                            <p class="text-gray-900 whitespace-no-wrap">
+                              {{ item.education.department.name }}
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td
+                        v-if="item.education"
+                        class="px-5 py-5 border-gray-200 bg-white text-sm text-right"
+                      >
+                        <div class="flex">
+                          <div class="ml-3">
+                            <p class="text-gray-900 whitespace-no-wrap">
+                              {{ item.education.institution.name }}
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script scoped>
 import ReviewerNavBar from "@/components/Reviewer/ReviewerNavBar";
+import ReviewerSideBar from "../Reviewer/ReviewerSideNav.vue";
 import Spinner from "@/sharedComponents/Spinner";
-import VueApexCharts from "vue3-apexcharts";
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
-import { MonthPicker } from "vue-month-picker";
-import { MonthPickerInput } from "vue-month-picker";
-import Vue from "vue";
+import { useRouter, useRoute } from "vue-router";
+import moment from "moment";
+import { saveAs } from "file-saver";
 
-import Barchart from "@/components/Report/barchart";
 export default {
-  name: "App",
   components: {
     ReviewerNavBar,
-    apexchart: VueApexCharts,
     Spinner,
-    Barchart,
-    MonthPicker,
-    MonthPickerInput
+    ReviewerSideBar,
   },
 
-  computed: {},
-  setup() {},
-  data: function() {
-    let chartOptions = ref();
-    let series = ref();
-    let isLoading = ref(false);
-    let goodStanding = ref({
-      approved: "",
-      declined: "",
-      underReview: ""
-    });
-
-    let newLicense = ref({
-      approved: "",
-      declined: "",
-      underReview: ""
-    });
-
-    let renewal = ref({
-      approved: "",
-      declined: "",
-      underReview: ""
-    });
-
-    let verification = ref({
-      approved: "",
-      declined: "",
-      underReview: ""
-    });
-    let checkData = false;
+  computed: {
+    moment: () => moment,
+    getAllassignedToOthers() {
+      return store.getters["reviewer/getAssignedForEveryOneSearched"];
+    },
+  },
+  setup(props, { emit }) {
     const store = useStore();
-    let applicantType = ref();
-    let regions = ref();
-    let applicantTypeId = ref(null);
-    let regionId = ref(null);
-    let showDate = ref(false);
-    let date = ref(null);
-    const displayDate = () => {
-      showDate.value = !showDate.value;
-    };
-    const getApplicantTypeAndRegion = () => {
-      store.dispatch("lookups/getApplicantType").then(res => {
-        console.log(res.data.data);
-        applicantType.value = res.data.data;
-      });
-      store.dispatch("lookups/getRegions").then(res => {
-        console.log(res.data.data);
-        regions.value = res.data.data;
+    const route = useRoute();
+    const router = useRouter();
+
+    let report = ref([]);
+
+    let loader = ref(false);
+
+    const fetchNewLicenseReport = () => {
+      loader.value = true;
+      store.dispatch("report/getNewLicenseReport").then((res) => {
+        report.value = res.data.data;
+        loader.value = false;
       });
     };
-    function datePicker(dateIncoming) {
-      date.value = "" + dateIncoming.monthIndex + "/" + dateIncoming.year;
-    }
-    const searchButton = () => {
-      console.log(
-        "applicant id and region id is",
-        applicantTypeId.value,
-        "    ",
-        regionId.value,
-        "  ",
-        date.value
-      );
+    const fetchRenewalReport = () => {
+      store.dispatch("report/getRenewalReport").then((res) => {});
     };
-    const getGoodStanding = async () => {
-      isLoading.value = true;
-      await store
-        .dispatch("reviewerGoodStanding/getGoodstandingReport")
-        .then(res => {
-          // var profile= store.getters["profile/getPersonalInfo"];
-          goodStanding.value.approved = !res[0].data.data
-            ? 0
-            : res[0].data.data.length;
-          goodStanding.value.declined = !res[1].data.data
-            ? 0
-            : res[1].data.data.length;
-          goodStanding.value.underReview = !res[2].data.data
-            ? 0
-            : res[2].data.data.length;
-          console.log("all good standing ", res);
-          // series.value.$forceUpdate();
-          //return [res[0].length,res[1].length,res[2].length];
-        });
+    const fetchVerificationReport = () => {
+      store.dispatch("report/getVerificationReport").then((res) => {});
     };
-    const getNewLicense = async () => {
-      await store
-        .dispatch("reviewerNewLicense/getNewLicenseReport")
-        .then(res => {
-          // var profile= store.getters["profile/getPersonalInfo"];
-          newLicense.value.approved = !res[0].data.data
-            ? 0
-            : res[0].data.data.length;
-          newLicense.value.declined = !res[1].data.data
-            ? 0
-            : res[1].data.data.length;
-          newLicense.value.underReview = !res[2].data.data
-            ? 0
-            : res[2].data.data.length;
-          console.log("all newLicense ", res);
-          // series.value.$forceUpdate();
-          //return [res[0].length,res[1].length,res[2].length];
-        });
-    };
-    const getRenewal = async () => {
-      await store.dispatch("reviewerRenewal/getRenewalReport").then(res => {
-        // var profile= store.getters["profile/getPersonalInfo"];
-        renewal.value.approved = !res[0].data.data
-          ? 0
-          : res[0].data.data.length;
-        renewal.value.declined = !res[1].data.data
-          ? 0
-          : res[1].data.data.length;
-        renewal.value.underReview = !res[2].data.data
-          ? 0
-          : res[2].data.data.length;
-        console.log("all renewal ", res);
-        // series.value.$forceUpdate();
-        //return [res[0].length,res[1].length,res[2].length];
+    // const fetchGoodstandingReport = () => {
+    //   store.dispatch("report/getGoodstandingReport").then((res) => {
+    //     console.log(res);
+    //   });
+    // };
+    const exportTable = () => {
+      var blob = new Blob([document.getElementById("printable").innerHTML], {
+        type:
+          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8",
       });
+      saveAs(blob, "Report.xls");
     };
-    const getVerification = async () => {
-      await store
-        .dispatch("reviewerVerification/getVerificationReport")
-        .then(res => {
-          // var profile= store.getters["profile/getPersonalInfo"];
-          verification.value.approved = !res[0].data.data
-            ? 0
-            : res[0].data.data.length;
-          verification.value.declined = !res[1].data.data
-            ? 0
-            : res[1].data.data.length;
-          verification.value.underReview = !res[2].data.data
-            ? 0
-            : res[2].data.data.length;
-          console.log("all verification ", res);
-
-          // series.value.$forceUpdate();
-          // return [res[0].length,res[1].length,res[2].length];
-        });
-    };
-    let cat;
-
-    cat = ["new license", "Good standing", "Renewal", "Verification"];
-
-    (chartOptions = {
-      chart: {
-        id: "Status-report"
-      },
-      colors:["#002D62","#FF1818","#72A0C1"],
-      xaxis: {
-        categories: cat
-      }
-    }),
-      (series = [
-        {
-          name: "approved",
-          data: [1, 1, 1, 1]
-        },
-        {
-          name: "declined",
-          data: [1, 1, 1, 1]
-        },
-        {
-          name: "Under supervision",
-          data: [1, 1, 1, 1]
-        }
-      ]);
-    const display = () => {
-      try {
-        console.log("incoming data");
-
-        console.log(
-          goodStanding.value.approved,
-          goodStanding.value.declined,
-          goodStanding.value.underReview
-        );
-        console.log(
-          newLicense.value.approved,
-          newLicense.value.declined,
-          newLicense.value.underReview
-        );
-        console.log(
-          renewal.value.approved,
-          renewal.value.declined,
-          renewal.value.underReview
-        );
-        console.log(
-          verification.value.approved,
-          verification.value.declined,
-          verification.value.underReview
-        );
-        this.series = [
-          {
-            name: "approved",
-            data: [
-              newLicense.value.approved,
-              goodStanding.value.approved,
-              renewal.value.approved,
-              verification.value.approved
-            ]
-          },
-          {
-            name: "declined",
-            data: [
-              newLicense.value.declined,
-              goodStanding.value.declined,
-              renewal.value.declined,
-              verification.value.declined
-            ]
-          },
-          {
-            name: "Under supervision",
-            data: [
-              newLicense.value.underReview,
-              goodStanding.value.underReview,
-              renewal.value.underReview,
-              verification.value.underReview
-            ]
-          }
-        ];
-
-        isLoading.value = false;
-        console.log(series);
-        return series;
-      } catch (x) {
-        console.log("error occured ", x);
-      }
-    };
-    onMounted(async () => {
-      await getGoodStanding();
-      await getNewLicense();
-      await getRenewal();
-      await getVerification();
-      display();
-      getApplicantTypeAndRegion();
+    onMounted(() => {
+      fetchNewLicenseReport();
+      // fetchRenewalReport();
+      // fetchVerificationReport();
+      // fetchGoodstandingReport();
     });
     return {
-      chartOptions,
-      series,
-
-      applicantType,
-      regions,
-      checkData,
-      display,
-      isLoading,
-      applicantTypeId,
-      regionId,
-      showDate,
-      displayDate,
-      searchButton,
-      date,
-      datePicker
+      loader,
+      report,
+      exportTable,
+      fetchNewLicenseReport,
+      fetchRenewalReport,
+      fetchVerificationReport,
+      // fetchGoodstandingReport,
     };
-  }
+  },
 };
 </script>
 
-<style></style>
+<style>
+/* table,
+th,
+td {
+  border: black;
+} */
+th {
+  color: #648ea3;
+  background-color: #eff6ff;
+}
+.sidenav {
+  width: 500px;
+}
+#export {
+  cursor: pointer;
+}
+</style>
