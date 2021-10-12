@@ -30,6 +30,7 @@
           message="Support Letter"
           class="mt-8"
         />
+        <span class="flex justify-center">{{ documentMessage }}</span>
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
           <div class="flex justify-center">
             <div>
@@ -172,6 +173,7 @@ import { useRoute, useRouter } from "vue-router";
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import Spinner from "@/sharedComponents/Spinner";
+import MESSAGE from "../../../composables/documentMessage";
 
 export default {
   components: {
@@ -206,6 +208,8 @@ export default {
     let draftStatus = ref("");
 
     let supportLetterBack = ref("");
+
+    let documentMessage = ref("");
 
     let declinedFields = ref([]);
     let acceptedFields = ref([]);
@@ -389,15 +393,15 @@ export default {
             }
             formData.append(documentSpecs[5].documentType.code, workExperience);
             formData.append(documentSpecs[4].documentType.code, cpd);
-            formData.append(
-              documentSpecs[18].documentType.code,
-              herqa
-            );
+            formData.append(documentSpecs[18].documentType.code, herqa);
             formData.append(
               documentSpecs[6].documentType.code,
               previousLicense
             );
-            formData.append(documentSpecs[17].documentType.code, supportLetterFile.value);
+            formData.append(
+              documentSpecs[17].documentType.code,
+              supportLetterFile.value
+            );
             let payload = { document: formData, id: licenseId };
             store
               .dispatch("renewal/uploadDocuments", payload)
@@ -542,6 +546,7 @@ export default {
       });
     };
     onMounted(() => {
+      documentMessage.value = MESSAGE.DOC_MESSAGE;
       supportLetterBack = store.getters["renewal/getSupportLetter"];
       if (
         supportLetterBack &&
@@ -644,6 +649,8 @@ export default {
       cpd,
       previousLicense,
       herqa,
+
+      documentMessage,
     };
   },
 };

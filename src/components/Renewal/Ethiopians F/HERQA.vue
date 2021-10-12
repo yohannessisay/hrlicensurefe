@@ -30,6 +30,7 @@
           message="Higher Education Relevance and Quality Agency center(HERQA)"
           class="mt-8"
         />
+        <span class="flex justify-center">{{ documentMessage }}</span>
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
           <div class="flex justify-center">
             <div>
@@ -173,6 +174,7 @@ import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import Spinner from "@/sharedComponents/Spinner";
 import HealthExamCertVue from "../../NewLicense/HealthExamCert.vue";
+import MESSAGE from "../../../composables/documentMessage";
 
 export default {
   components: {
@@ -213,6 +215,8 @@ export default {
     let draftStatus = ref("");
 
     let herqaBack = ref("");
+
+    let documentMessage = ref("");
 
     let declinedFields = ref([]);
     let acceptedFields = ref([]);
@@ -546,6 +550,7 @@ export default {
     };
 
     onMounted(() => {
+      documentMessage.value = MESSAGE.DOC_MESSAGE;
       herqaBack = store.getters["renewal/getHerqa"];
       if (
         herqaBack &&
@@ -650,6 +655,8 @@ export default {
       cpd,
       previousLicense,
       supportLetter,
+
+      documentMessage,
     };
   },
 };

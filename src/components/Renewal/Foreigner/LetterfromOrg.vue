@@ -30,6 +30,7 @@
           message="Letter from Organization"
           class="mt-8"
         />
+        <span class="flex justify-center">{{ documentMessage }}</span>
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
           <div class="flex justify-center">
             <div>
@@ -172,6 +173,7 @@ import { useRoute, useRouter } from "vue-router";
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import Spinner from "@/sharedComponents/Spinner";
+import MESSAGE from "../../../composables/documentMessage";
 import LetterfromOrgVue from "../../NewLicense/Foreigner/LetterfromOrg.vue";
 
 export default {
@@ -224,6 +226,8 @@ export default {
     let letterFromOrg = ref("");
 
     let letterFileBack = ref("");
+
+    let documentMessage = ref("");
 
     let declinedFields = ref([]);
     let acceptedFields = ref([]);
@@ -565,6 +569,7 @@ export default {
       });
     };
     onMounted(() => {
+      documentMessage.value = MESSAGE.DOC_MESSAGE;
       letterFileBack = store.getters["renewal/getLetterfromOrg"];
       if (
         letterFileBack &&
@@ -671,6 +676,8 @@ export default {
       professionalLicense,
       renewedLicense,
       letterFromOrg,
+
+      documentMessage,
     };
   },
 };

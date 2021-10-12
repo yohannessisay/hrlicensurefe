@@ -30,6 +30,7 @@
           message="Medical Certificate"
           class="mt-8"
         />
+        <span class="flex justify-center">{{ documentMessage }}</span>
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
           <div class="flex justify-center">
             <div>
@@ -172,6 +173,7 @@ import { useRoute, useRouter } from "vue-router";
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import Spinner from "@/sharedComponents/Spinner";
+import MESSAGE from "../../composables/documentMessage";
 
 export default {
   components: {
@@ -210,6 +212,8 @@ export default {
     let draftStatus = ref("");
 
     let healthExamBack = ref("");
+
+    let documentMessage = ref("");
 
     let declinedFieldsCheck = ref(false);
     let acceptedFieldsCheck = ref(false);
@@ -400,8 +404,8 @@ export default {
               documentSpecs[5].documentType.code,
               englishLanguage
             );
-            formData.append(documentSpecs[7].documentType.code, diploma);
-            formData.append(documentSpecs[8].documentType.code, transcript);
+            formData.append(documentSpecs[22].documentType.code, diploma);
+            formData.append(documentSpecs[23].documentType.code, transcript);
             formData.append(documentSpecs[21].documentType.code, degree);
             if (professionalDoc != undefined) {
               formData.append(
@@ -487,7 +491,7 @@ export default {
               let licenseId = route.params.id;
               let formData = new FormData();
               formData.append(
-                documentSpecs[1].documentType.code,
+                documentSpecs[2].documentType.code,
                 healthExamFile.value
               );
               let payload = { document: formData, id: licenseId };
@@ -551,10 +555,9 @@ export default {
             let licenseId = res.data.data.id;
             let formData = new FormData();
             formData.append(
-              documentSpecs[1].documentType.code,
+              documentSpecs[2].documentType.code,
               healthExamFile.value
             );
-            formData.append(documentSpecs[2].documentType.code, licenseCopy);
             let payload = { document: formData, id: licenseId };
             store
               .dispatch("newlicense/uploadDocuments", payload)
@@ -598,6 +601,7 @@ export default {
       });
     };
     onMounted(() => {
+      documentMessage.value = MESSAGE.DOC_MESSAGE;
       healthExamBack = store.getters["newlicense/getHealthExamCert"];
       if (
         healthExamBack &&
@@ -692,6 +696,7 @@ export default {
       remark,
       declinedFieldsCheck,
       acceptedFieldsCheck,
+      documentMessage,
     };
   },
 };

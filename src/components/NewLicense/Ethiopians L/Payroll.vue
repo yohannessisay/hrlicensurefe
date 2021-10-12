@@ -30,6 +30,7 @@
           message="Payroll Document"
           class="mt-8"
         />
+        <span class="flex justify-center">{{ documentMessage }}</span>
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
           <div class="flex justify-center">
             <div>
@@ -218,6 +219,8 @@ export default {
     let acceptedFields = ref([]);
     let remark = ref("");
 
+    let documentMessage = ref("");
+
     let declinedFieldsCheck = ref(false);
     let acceptedFieldsCheck = ref(false);
 
@@ -395,8 +398,8 @@ export default {
               documentSpecs[5].documentType.code,
               englishLanguage
             );
-            formData.append(documentSpecs[7].documentType.code, diploma);
-            formData.append(documentSpecs[8].documentType.code, transcript);
+            formData.append(documentSpecs[22].documentType.code, diploma);
+            formData.append(documentSpecs[23].documentType.code, transcript);
             formData.append(documentSpecs[21].documentType.code, degree);
             if (professionalDoc != undefined) {
               formData.append(
@@ -596,6 +599,7 @@ export default {
     };
 
     onMounted(() => {
+      documentMessage.value = MESSAGE.DOC_MESSAGE;
       payrollBack = store.getters["newlicense/getPayroll"];
       if (
         payrollBack &&
@@ -690,6 +694,7 @@ export default {
       remark,
       declinedFieldsCheck,
       acceptedFieldsCheck,
+      documentMessage,
     };
   },
 };

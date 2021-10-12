@@ -30,6 +30,7 @@
           message="Transcript"
           class="mt-8"
         />
+        <span class="flex justify-center">{{ documentMessage }}</span>
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
           <div class="flex justify-center">
             <div>
@@ -172,6 +173,7 @@ import { useRoute, useRouter } from "vue-router";
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import Spinner from "@/sharedComponents/Spinner";
+import MESSAGE from "../../../composables/documentMessage";
 
 export default {
   components: {
@@ -217,6 +219,8 @@ export default {
     let declinedFields = ref([]);
     let acceptedFields = ref([]);
     let remark = ref("");
+
+    let documentMessage = ref("");
 
     let declinedFieldsCheck = ref(false);
     let acceptedFieldsCheck = ref(false);
@@ -325,7 +329,7 @@ export default {
               let licenseId = route.params.id;
               let formData = new FormData();
               formData.append(
-                documentSpecs[8].documentType.code,
+                documentSpecs[23].documentType.code,
                 TranscriptFile.value
               );
               let payload = { document: formData, id: licenseId };
@@ -396,7 +400,7 @@ export default {
               englishLanguage
             );
             formData.append(documentSpecs[21].documentType.code, degree);
-            formData.append(documentSpecs[7].documentType.code, diploma);
+            formData.append(documentSpecs[22].documentType.code, diploma);
             formData.append(documentSpecs[9].documentType.code, coc);
             if (professionalDoc != undefined) {
               formData.append(
@@ -486,7 +490,7 @@ export default {
               let licenseId = route.params.id;
               let formData = new FormData();
               formData.append(
-                documentSpecs[8].documentType.code,
+                documentSpecs[23].documentType.code,
                 TranscriptFile.value
               );
               let payload = { document: formData, id: licenseId };
@@ -550,10 +554,9 @@ export default {
             let licenseId = res.data.data.id;
             let formData = new FormData();
             formData.append(
-              documentSpecs[1].documentType.code,
+              documentSpecs[23].documentType.code,
               TranscriptFile.value
             );
-            formData.append(documentSpecs[2].documentType.code, licenseCopy);
             let payload = { document: formData, id: licenseId };
             store
               .dispatch("newlicense/uploadDocuments", payload)
@@ -597,6 +600,7 @@ export default {
     };
 
     onMounted(() => {
+      documentMessage.value = MESSAGE.DOC_MESSAGE;
       transcriptBack = store.getters["newlicense/getTranscript"];
       if (
         transcriptBack &&
@@ -691,6 +695,7 @@ export default {
       remark,
       declinedFieldsCheck,
       acceptedFieldsCheck,
+      documentMessage,
     };
   },
 };

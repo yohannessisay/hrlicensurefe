@@ -26,6 +26,7 @@
         <span class="flex justify-center mt-2"
           >Request Letter from Federal or Regional</span
         >
+        <span class="flex justify-center">{{ documentMessage }}</span>
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
           <div class="flex justify-center">
             <div>
@@ -178,6 +179,7 @@ import { useRoute, useRouter } from "vue-router";
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import Spinner from "@/sharedComponents/Spinner";
+import MESSAGE from "../../composables/documentMessage";
 
 export default {
   components: {
@@ -215,6 +217,8 @@ export default {
     let userId = +localStorage.getItem("userId");
     let licenseInfo = ref("");
     let draftData = ref("");
+
+    let documentMessage = ref("");
 
     let draftStatus = ref("");
 
@@ -285,6 +289,7 @@ export default {
       store.dispatch("verification/set_Verification_Letter", letterFile);
     };
     onMounted(() => {
+      documentMessage.value = MESSAGE.DOC_MESSAGE;
       letterBack = store.getters["verification/getVerificationLetter"];
       if (
         letterBack &&
@@ -620,6 +625,7 @@ export default {
       remark,
       declinedFieldsCheck,
       acceptedFieldsCheck,
+      documentMessage,
     };
   },
 };

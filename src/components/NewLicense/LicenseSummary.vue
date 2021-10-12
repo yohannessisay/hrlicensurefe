@@ -135,21 +135,6 @@
           </h5>
         </div>
       </div>
-      <div v-if="draftId == undefined" class="flex justify-start flex-wrap">
-        <div v-for="i in docList.length" v-bind:key="i">
-          <div
-            class="mr-4"
-            v-for="item in docList.slice((i - 1) * 1, i * 1)"
-            v-bind="item"
-            v-bind:value="item"
-          >
-            <Title class="" :message="item.title" />
-            <picture>
-              <img :src="item.docFile" />
-            </picture>
-          </div>
-        </div>
-      </div>
       <label
         style="font-size: 20px"
         v-if="docList.length != 0"
@@ -332,10 +317,10 @@ export default {
     this.draftId = this.$route.params.id;
     this.draftStatus = this.$route.params.status;
     if (this.draftId != undefined) {
-      setTimeout(() => {
-        this.draftData = this.getDraftData;
-        this.documentsArray = this.draftData.documents;
-      }, 3500);
+      // setTimeout(() => {
+      this.draftData = this.getDraftData;
+      this.documentsArray = this.draftData.documents;
+      // }, 3500);
     }
     this.passport = this.getPassport;
     this.healthExamCert = this.getHealthExamCert;
@@ -423,17 +408,18 @@ export default {
       }
     }
     if (this.proTranscript != "" && this.proTranscript != undefined) {
-      if ("name" in this.proTranscript)
+      if ("name" in this.proTranscript) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
             this.documentsArray.findIndex((e) => e.documentTypeCode === "PDT"),
             1
           );
         }
-      var filePreview = await this.blobToBase64(this.proTranscript);
-      this.proTranscript.docFile = filePreview;
-      this.proTranscript.title = "Transcript";
-      this.docList.push(this.proTranscript);
+        var filePreview = await this.blobToBase64(this.proTranscript);
+        this.proTranscript.docFile = filePreview;
+        this.proTranscript.title = "Transcript";
+        this.docList.push(this.proTranscript);
+      }
     }
     if (this.proDiploma != "" && this.proDiploma != undefined) {
       if ("name" in this.proDiploma) {

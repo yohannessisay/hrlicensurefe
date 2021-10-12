@@ -30,6 +30,7 @@
           message="English Language Proficiency Certificate"
           class="mt-8"
         />
+        <span class="flex justify-center">{{ documentMessage }}</span>
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
           <div class="flex justify-center">
             <div>
@@ -172,6 +173,7 @@ import { useRoute, useRouter } from "vue-router";
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import Spinner from "@/sharedComponents/Spinner";
+import MESSAGE from "../../../composables/documentMessage";
 
 export default {
   components: {
@@ -218,6 +220,8 @@ export default {
     let draftStatus = ref("");
 
     let languageBack = ref("");
+
+    let documentMessage = ref("");
 
     let passport = ref("");
     let healthExamCert = ref("");
@@ -563,6 +567,7 @@ export default {
       });
     };
     onMounted(() => {
+      documentMessage.value = MESSAGE.DOC_MESSAGE;
       languageBack = store.getters["renewal/getEnglishLanguage"];
       if (
         languageBack &&
@@ -669,6 +674,8 @@ export default {
       professionalLicense,
       renewedLicense,
       letterOrg,
+
+      documentMessage,
     };
   },
 };

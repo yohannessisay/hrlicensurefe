@@ -30,6 +30,7 @@
           message="Diploma"
           class="mt-8"
         />
+        <span class="flex justify-center">{{ documentMessage }}</span>
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
           <div class="flex justify-center">
             <div>
@@ -172,6 +173,7 @@ import { useRoute, useRouter } from "vue-router";
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import Spinner from "@/sharedComponents/Spinner";
+import MESSAGE from "../../../composables/documentMessage";
 
 export default {
   components: {
@@ -213,6 +215,8 @@ export default {
     let draftStatus = ref("");
 
     let diplomaBack = ref("");
+
+    let documentMessage = ref("");
 
     let declinedFields = ref([]);
     let acceptedFields = ref([]);
@@ -325,7 +329,7 @@ export default {
               let licenseId = route.params.id;
               let formData = new FormData();
               formData.append(
-                documentSpecs[7].documentType.code,
+                documentSpecs[22].documentType.code,
                 DiplomaFile.value
               );
               let payload = { document: formData, id: licenseId };
@@ -396,7 +400,7 @@ export default {
               englishLanguage
             );
             formData.append(documentSpecs[21].documentType.code, degree);
-            formData.append(documentSpecs[8].documentType.code, transcript);
+            formData.append(documentSpecs[23].documentType.code, transcript);
             formData.append(documentSpecs[9].documentType.code, coc);
             if (professionalDoc != undefined) {
               formData.append(
@@ -486,7 +490,7 @@ export default {
               let licenseId = route.params.id;
               let formData = new FormData();
               formData.append(
-                documentSpecs[1].documentType.code,
+                documentSpecs[22].documentType.code,
                 DiplomaFile.value
               );
               let payload = { document: formData, id: licenseId };
@@ -550,10 +554,9 @@ export default {
             let licenseId = res.data.data.id;
             let formData = new FormData();
             formData.append(
-              documentSpecs[1].documentType.code,
+              documentSpecs[22].documentType.code,
               DiplomaFile.value
             );
-            formData.append(documentSpecs[2].documentType.code, licenseCopy);
             let payload = { document: formData, id: licenseId };
             store
               .dispatch("newlicense/uploadDocuments", payload)
@@ -597,6 +600,7 @@ export default {
     };
 
     onMounted(() => {
+      documentMessage.value = MESSAGE.DOC_MESSAGE;
       diplomaBack = store.getters["newlicense/getDiploma"];
       if (
         diplomaBack &&
@@ -691,6 +695,7 @@ export default {
       remark,
       declinedFieldsCheck,
       acceptedFieldsCheck,
+      documentMessage,
     };
   },
 };

@@ -25,7 +25,12 @@
         >
           ACCEPTED
         </h2>
-        <TitleWithIllustration illustration="Certificate" message="COC" class="mt-8" />
+        <TitleWithIllustration
+          illustration="Certificate"
+          message="COC"
+          class="mt-8"
+        />
+        <span class="flex justify-center">{{ documentMessage }}</span>
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
           <div class="flex justify-center">
             <div>
@@ -168,6 +173,7 @@ import { useRoute, useRouter } from "vue-router";
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import Spinner from "@/sharedComponents/Spinner";
+import MESSAGE from "../../../composables/documentMessage";
 
 export default {
   components: {
@@ -213,6 +219,8 @@ export default {
     let declinedFields = ref([]);
     let acceptedFields = ref([]);
     let remark = ref("");
+
+    let documentMessage = ref("");
 
     let declinedFieldsCheck = ref(false);
     let acceptedFieldsCheck = ref(false);
@@ -391,8 +399,8 @@ export default {
               documentSpecs[5].documentType.code,
               englishLanguage
             );
-            formData.append(documentSpecs[7].documentType.code, diploma);
-            formData.append(documentSpecs[8].documentType.code, transcript);
+            formData.append(documentSpecs[22].documentType.code, diploma);
+            formData.append(documentSpecs[23].documentType.code, transcript);
             formData.append(documentSpecs[21].documentType.code, degree);
             if (professionalDoc != undefined) {
               formData.append(
@@ -542,8 +550,7 @@ export default {
           if (res.data.status == "Success") {
             let licenseId = res.data.data.id;
             let formData = new FormData();
-            formData.append(documentSpecs[1].documentType.code, COCFile.value);
-            formData.append(documentSpecs[2].documentType.code, licenseCopy);
+            formData.append(documentSpecs[9].documentType.code, COCFile.value);
             let payload = { document: formData, id: licenseId };
             store
               .dispatch("newlicense/uploadDocuments", payload)
@@ -587,6 +594,7 @@ export default {
     };
 
     onMounted(() => {
+      documentMessage.value = MESSAGE.DOC_MESSAGE;
       cocBack = store.getters["newlicense/getCoc"];
       if (
         cocBack &&
@@ -682,6 +690,7 @@ export default {
       remark,
       declinedFieldsCheck,
       acceptedFieldsCheck,
+      documentMessage,
     };
   },
 };
