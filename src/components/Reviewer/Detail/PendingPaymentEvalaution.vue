@@ -77,7 +77,7 @@
             <label
               class="justify-center items-center ml-large text-grey-200 text-2xl"
             >
-              {{ documentTypeName }} Payment Slip
+              {{ documentTypeName }} Payment Slip => {{ newLicense.paymentSlip}} ETB
             </label>
 
             <div class="flex justify-start flex-wrap">

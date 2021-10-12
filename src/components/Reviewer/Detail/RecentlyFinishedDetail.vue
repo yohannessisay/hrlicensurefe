@@ -9,8 +9,11 @@
       >
         <div class="mt-large bg-white">
           <span
-            v-if="isGoodStanding && license.applicationStatus.code === 'AP' &&
-            myRegion"
+            v-if="
+              isGoodStanding &&
+                license.applicationStatus.code === 'AP' &&
+                myRegion
+            "
           >
             <button @click="GenerateLetter">Generate Letter</button>
           </span>
@@ -270,7 +273,8 @@ export default {
     const router = useRouter();
     const route = useRoute();
     let myRegion = ref(true);
-    const expertLevelId = JSON.parse(localStorage.getItem("allAdminData")).expertLevelId;
+    const expertLevelId = JSON.parse(localStorage.getItem("allAdminData"))
+      .expertLevelId;
 
     const adminRegionId = JSON.parse(localStorage.getItem("allAdminData"))
       .regionId;
@@ -457,9 +461,7 @@ export default {
                 myRegion.value = false;
               }
             } else {
-              if (
-                expertLevelId != goodStandingUser.value.expertLevelId
-              ) {
+              if (expertLevelId != goodStandingUser.value.expertLevelId) {
                 myRegion.value = false;
               }
             }
