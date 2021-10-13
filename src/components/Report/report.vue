@@ -12,24 +12,132 @@
         <div class="px-4 sm:px-4">
           <div class="py-8">
             <div class="flex flex-row">
-              <div class="ml-2">
-                <h2 class="text-2xl font-semibold leading-tight">
-                  Report
-                </h2>
+              <div class="ml-2 flex flex-row">
+                <div @click="fetchNewLicenseReport()">
+                  <a class="text-2xl font-semibold leading-tight">
+                    New License Report
+                  </a>
+                </div>
+                <div @click="fetchRenewalReport()">
+                  <a class="ml-8 text-2xl font-semibold leading-tight">
+                    Renewal Report
+                  </a>
+                </div>
+                <div @click="fetchVerificationReport()">
+                  <a class="ml-8 text-2xl font-semibold leading-tight">
+                    Verification Report
+                  </a>
+                </div>
+                <div @click="fetchGoodstandingReport()">
+                  <a class="ml-8 text-2xl font-semibold leading-tight">
+                    Goodstanding Report
+                  </a>
+                </div>
               </div>
-              <div id="export" @click="exportTable()" style="margin-left:35%">
-                <h2 class="text-2xl font-semibold leading-tight">
+              <div id="export" @click="exportTable()" style="margin-left:10%">
+                <a class="text-2xl font-semibold leading-tight">
                   <i class="fa fa-file-text" aria-hidden="true"></i>
                   Export
-                </h2>
+                </a>
               </div>
             </div>
-            <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
-              <div
-                id="printable"
-                class="inline-block min-w-full shadow-md rounded-lg overflow-hidden"
-              >
-                <table class="min-w-full leading-normal">
+            <div class="mt-8">
+              <label>Filter By:</label>
+            </div>
+            <div class="flex">
+              <div class="flex flex-col mb-medium w-72 mr-4">
+                <label class="text-primary-700">Professional Type</label>
+                <select
+                  class="max-w-3xl"
+                  v-model="filter.profType"
+                  @change="filterProfession(filter.profType)"
+                >
+                  <option
+                    v-for="profession in professions"
+                    v-bind:key="profession.name"
+                    v-bind:value="profession.name"
+                  >
+                    {{ profession.name }}
+                  </option>
+                </select>
+              </div>
+              <div class="flex flex-col mb-small w-72 mr-4">
+                <label class="text-primary-700">Region</label>
+                <select class="max-w-3xl" v-model="filter.region">
+                  <option
+                    v-for="region in regions"
+                    v-bind:key="region.name"
+                    v-bind:value="region.id"
+                  >
+                    {{ region.name }}
+                  </option>
+                </select>
+              </div>
+              <div class="flex flex-col mb-small w-72 mr-4">
+                <label class="text-primary-700">Gender</label>
+                <div class="flex w-full">
+                  <div class="flex flex-col mb-small w-60 mr-8">
+                    <div class="flex py-2">
+                      <input
+                        class="flex flex-col"
+                        type="radio"
+                        id="male"
+                        value="male"
+                        v-model="filter.gender"
+                        @change="filterGender(filter.gender)"
+                      />
+                      <label
+                        class="ml-tiny flex flex-col text-primary-700"
+                        for="male"
+                      >
+                        Male
+                      </label>
+                    </div>
+                  </div>
+                  <div class="flex w-1/3">
+                    <div class="flex flex-col w-60">
+                      <div class="flex py-2">
+                        <input
+                          type="radio"
+                          id="female"
+                          value="female"
+                          v-model="filter.gender"
+                          @change="filterGender(filter.gender)"
+                        />
+                        <label class="ml-tiny text-primary-700" for="female">
+                          Female
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="flex flex-col mb-small w-80 mr-4">
+                <label class="text-primary-700">Application Statuses</label>
+                <select
+                  class="max-w-3xl"
+                  v-model="filter.status"
+                  @change="filterAppStatus(filter.status)"
+                >
+                  <option
+                    v-for="status in applicationStatuses"
+                    v-bind:key="status.name"
+                    v-bind:value="status.name"
+                  >
+                    {{ status.name }}
+                  </option>
+                </select>
+              </div>
+              <div class="flex flex-row mb-small w-80 mr-4">
+                <label class="text-primary-700 mr-2">From</label>
+                <input class="max-w-3xl mr-5" type="date" />
+                <label class="text-primary-700 mr-2">To</label>
+                <input class="max-w-3xl mr-5" type="date" />
+              </div>
+            </div>
+            <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 max-w-4xl">
+              <div id="printable" class="shadow-md rounded-lg">
+                <table class="leading-normal">
                   <thead>
                     <tr class="">
                       <th
@@ -175,7 +283,7 @@
                         <div class="flex">
                           <div class="ml-3">
                             <p class="text-gray-900 whitespace-no-wrap">
-                              {{ item.nationality }}
+                              {{ item.nationality.name }}
                             </p>
                           </div>
                         </div>
@@ -452,6 +560,16 @@ export default {
     const router = useRouter();
 
     let report = ref([]);
+    let professions = ref([]);
+    let regions = ref([]);
+    let applicationStatuses = ref([]);
+
+    let filter = ref({
+      profType: "",
+      gender: "",
+      region: "",
+      status: "",
+    });
 
     let loader = ref(false);
 
@@ -463,16 +581,41 @@ export default {
       });
     };
     const fetchRenewalReport = () => {
-      store.dispatch("report/getRenewalReport").then((res) => {});
+      loader.value = true;
+      store.dispatch("report/getRenewalReport").then((res) => {
+        report.value = res.data.data;
+        loader.value = false;
+      });
     };
     const fetchVerificationReport = () => {
-      store.dispatch("report/getVerificationReport").then((res) => {});
+      loader.value = true;
+      store.dispatch("report/getVerificationReport").then((res) => {
+        report.value = res.data.data;
+        loader.value = false;
+      });
     };
-    // const fetchGoodstandingReport = () => {
-    //   store.dispatch("report/getGoodstandingReport").then((res) => {
-    //     console.log(res);
-    //   });
-    // };
+    const fetchGoodstandingReport = () => {
+      loader.value = true;
+      store.dispatch("report/getGoodstandingReport").then((res) => {
+        report.value = res.data.data;
+        loader.value = false;
+      });
+    };
+    const fetchProfessionType = () => {
+      store.dispatch("report/getProfessionalTypes").then((res) => {
+        professions.value = res.data.data;
+      });
+    };
+    const fetchRegion = () => {
+      store.dispatch("report/getRegions").then((res) => {
+        regions.value = res.data.data;
+      });
+    };
+    const fetchApplicationStatuses = () => {
+      store.dispatch("report/getapplicationStatuses").then((res) => {
+        applicationStatuses.value = res.data.data;
+      });
+    };
     const exportTable = () => {
       var blob = new Blob([document.getElementById("printable").innerHTML], {
         type:
@@ -480,11 +623,38 @@ export default {
       });
       saveAs(blob, "Report.xls");
     };
+    const filterProfession = (profType) => {
+      var tableFilter = [];
+      tableFilter = report.value;
+      report = tableFilter.filter(function(e) {
+        if (
+          e.professionalTypes.name != null ||
+          e.professionalTypes.name ||
+          e.professionalTypes.name != undefined
+        ) {
+          // return e.professionalTypes.name.includes(profType);
+        }
+      });
+    };
+    const filterGender = (gender) => {
+      var gendertable = [];
+      gendertable = report.value;
+      report.value = gendertable.filter(function(e) {
+        return e.gender == gender;
+      });
+    };
+    const filterAppStatus = (status) => {
+      var statusTable = [];
+      statusTable = report.value;
+      report.value = statusTable.filter(function(e) {
+        return e.applicationStatus.name == status;
+      });
+    };
     onMounted(() => {
       fetchNewLicenseReport();
-      // fetchRenewalReport();
-      // fetchVerificationReport();
-      // fetchGoodstandingReport();
+      fetchProfessionType();
+      fetchRegion();
+      fetchApplicationStatuses();
     });
     return {
       loader,
@@ -493,18 +663,23 @@ export default {
       fetchNewLicenseReport,
       fetchRenewalReport,
       fetchVerificationReport,
-      // fetchGoodstandingReport,
+      fetchGoodstandingReport,
+      fetchProfessionType,
+      fetchRegion,
+      fetchApplicationStatuses,
+      professions,
+      regions,
+      applicationStatuses,
+      filter,
+      filterProfession,
+      filterGender,
+      filterAppStatus,
     };
   },
 };
 </script>
 
 <style>
-/* table,
-th,
-td {
-  border: black;
-} */
 th {
   color: #648ea3;
   background-color: #eff6ff;
@@ -514,5 +689,28 @@ th {
 }
 #export {
   cursor: pointer;
+}
+a:link {
+  color: yellow;
+}
+a {
+  cursor: pointer;
+  color: #648ea3;
+}
+a:visited {
+  color: red;
+  cursor: pointer;
+}
+a:active {
+  color: red;
+}
+a:hover {
+  color: #0b5980;
+}
+#printable {
+  display: block;
+  /* overflow-y: auto; */
+  /* overflow-x: hidden; */
+  /* overflow-x: scroll; */
 }
 </style>

@@ -36,12 +36,38 @@ export default {
       return error;
     }
   },
-  // async getGoodstandingReport({ commit }) {
-  //   try {
-  //     const resp = await ApiService.get(url + "goodstandingReport");
-  //     return resp;
-  //   } catch (error) {
-  //     return error;
-  //   }
-  // },
+  async getGoodstandingReport({ commit }) {
+    try {
+      const resp = await ApiService.get(url + "goodstandingReport");
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+  async getRegions({ commit }) {
+    try {
+      const resp = await ApiService.get(url + "lookups/regions");
+      return resp;
+    } catch (error) {
+      const resp = error;
+      return resp;
+    }
+  },
+  async getapplicationStatuses({ commit }) {
+    try {
+      const resp = await ApiService.get(url + "applicationStatuses");
+      return resp;
+    } catch (error) {
+      const resp = error;
+      return resp;
+    }
+  },
+  async getProfessionalTypes({ commit }) {
+    try {
+      const resp = await ApiService.get(url + "lookups/professionalTypes");
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
 };
