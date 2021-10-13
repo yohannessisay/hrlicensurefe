@@ -1,9 +1,8 @@
 <template>
   <div class="bg-lightBlueB-200">
-    <ReviewerNavBar tab="returnedToMeDetail" />
+    <ReviewerNavBar tab="evaluationApplicationDetail" />
     <div class="bg-lightBlueB-200 h-full">
       <div
-        v-if="show"
         style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);"
         class="ml-8  mr-8 mb-12"
       >
@@ -91,52 +90,8 @@
             <Title message="Address" />
           </div>
           <div class="flex flex-row">
-            <div
-              :class="[
-                license.woreda.zone.region === null ? errorClass : activeClass,
-              ]"
-            >
-              <label class="ml-8"> Region</label>
-              <h5 class="ml-8">
-                {{
-                  license.woreda === null
-                    ? "-"
-                    : license.woreda.zone === null
-                    ? "-"
-                    : license.woreda.zone.region
-                    ? license.woreda.zone.region.name
-                    : "-"
-                }}
-              </h5>
-            </div>
-            <div
-              :class="[license.woreda.zone === null ? errorClass : activeClass]"
-            >
-              <label class="ml-8"> Zone</label>
-              <h5 class="ml-8">
-                {{
-                  license.woreda === null
-                    ? "-"
-                    : license.woreda.zone
-                    ? license.woreda.zone.name
-                    : "-"
-                }}
-              </h5>
-            </div>
-            <div :class="[license.woreda === null ? errorClass : activeClass]">
-              <label class="ml-8"> Wereda</label>
-              <h5 class="ml-8">
-                {{ license.woreda ? license.woreda.name : "-" }}
-              </h5>
-            </div>
-            <div
-              :class="[profileInfo.kebele === null ? errorClass : activeClass]"
-            >
-              <label class="ml-8"> Kebele</label>
-              <h5 class="ml-8">
-                {{ profileInfo.kebele ? profileInfo.kebele : "-" }}
-              </h5>
-            </div>
+
+
             <div
               :class="[
                 profileInfo.houseNumber === null ? errorClass : activeClass,
@@ -195,6 +150,18 @@
                 }}
               </h5>
             </div>
+            <div
+              :class="[
+                profileInfo.userType.name === null ? errorClass : activeClass,
+              ]"
+            >
+              <label class="ml-8"> User Type</label>
+              <h5 class="ml-8">
+                {{
+                  profileInfo.userType.name ? profileInfo.userType.name : "-"
+                }}
+              </h5>
+            </div>
           </div>
           <div class="flex justify-start">
             <Title message="Institution" />
@@ -219,29 +186,9 @@
               </h5>
             </div>
           </div>
-          <div class="flex justify-start flex-wrap">
-            <!-- <div v-for="file in docs" v-bind:key="file.id">
-              <Title class="" :message="file.fieldName" />
-              <picture>
-                <img :src="basePath + file.filePath" />
-              </picture>
-            </div> -->
-          </div>
-          <div v-if="getReviewId == loggedInAdminId">
-            <div class="mt-12 flex justify-center">
-              <div>
-                <button @click="evaluate()">Re Evaluate</button>
-              </div>  
-            </div>
-          </div>
+          <div class="flex justify-start flex-wrap"></div>
         </div>
       </div>
-    </div>
-    <div
-      v-if="showLoading"
-      class="flex justify-center justify-items-center mt-24"
-    >
-      <Spinner />
     </div>
   </div>
 </template>
@@ -272,8 +219,11 @@ export default {
 
     let userId = +localStorage.getItem("userId");
 
-    let show = ref(false);
-    let showLoading = ref(false);
+    let assignConfirmAdmin = ref({
+      reviewersId: [],
+      licenseId: "",
+      createdByAdminId: "",
+    })
     let license = ref({
       applicant: {},
       applicantType: {},
@@ -302,135 +252,26 @@ export default {
     let activeClass = ref("active");
     let errorClass = ref("text-danger");
     let dataFetched = ref(false);
-    let showFlash = ref(false);
-    let showErrorFlash = ref(false);
     let profile = ref({});
     let applicationType = ref("");
 
-    let getReviewId = ref(0);
-
-    let loggedInAdminId = +localStorage.getItem("adminId");
-
-    const created = async (applicationTypeName, applicationId, applicantId) => {
-      licenseId.value = applicationId;
-      applicationType.value = applicationTypeName;
-      showLoading.value = true;
-      if (applicationType.value == "New License") {
-        store
-          .dispatch("reviewer/getNewLicenseApplication", applicationId)
-          .then((res) => {
-            console.log("license value", res.data.data);
-            showLoading.value = false;
-            license.value = res.data.data;
-            getReviewId.value = license.value.reviewerId;
-            show.value = true;
-            profileInfo.value = license.value.applicant.profile;
-            // applicantId.value = license.value.applicantId;
-            education.value.departmentName =
-              license.value.education.department.name;
-            education.value.institutionName =
-              license.value.education.institution.name;
-            education.value.institutionTypeName =
-              license.value.education.institution.institutionType.name;
-          });
-      }
-      if (applicationType.value == "Good Standing") {
-        store
-          .dispatch("reviewer/getGoodStandingApplication", applicationId)
-          .then((res) => {
-            showLoading.value = false;
-            license.value = res.data.data;
-            getReviewId.value = license.value.reviewerId;
-            show.value = true;
-            profileInfo.value = license.value.applicant.profile;
-            // applicantId.value = license.value.applicantId;
-            education.value.departmentName =
-              license.value.education.department.name;
-            education.value.institutionName =
-              license.value.education.institution.name;
-            education.value.institutionTypeName =
-              license.value.education.institution.institutionType.name;
-          });
-      }
-      if (applicationType.value == "Verification") {
-        store
-          .dispatch("reviewer/getVerificationApplication", applicationId)
-          .then((res) => {
-            showLoading.value = false;
-            license.value = res.data.data;
-            getReviewId.value = license.value.reviewerId;
-            show.value = true;
-            profileInfo.value = license.value.applicant.profile;
-            // applicantId.value = license.value.applicantId;
-            education.value.departmentName =
-              license.value.education.department.name;
-            education.value.institutionName =
-              license.value.education.institution.name;
-            education.value.institutionTypeName =
-              license.value.education.institution.institutionType.name;
-          });
-      }
-      if (applicationType.value == "Renewal") {
-        store
-          .dispatch("reviewer/getRenewalApplication", applicationId)
-          .then((res) => {
-            showLoading.value = false;
-            license.value = res.data.data;
-            getReviewId.value = license.value.reviewerId;
-            show.value = true;
-            profileInfo.value = license.value.applicant.profile;
-            // applicantId.value = license.value.applicantId;
-            education.value.departmentName =
-              license.value.education.department.name;
-            education.value.institutionName =
-              license.value.education.institution.name;
-            education.value.institutionTypeName =
-              license.value.education.institution.institutionType.name;
-          });
-      }
-    };
-
-    const evaluate = () => {
-      //   router.push(
-      //     "/admin/confirmReview/" + applicationType.value + "/" + licenseId.value
-      //   );
-      router.push(
-        "/admin/reviewReturnedApplication/" +
-          applicationType.value +
-          "/" +
-          licenseId.value
-      );
-    };
 
     onMounted(() => {
-      created(
-        route.params.applicationType,
-        route.params.applicationId,
-        route.params.applicantId
-      );
     });
 
     return {
       userId,
       license,
       profileInfo,
-      getReviewId,
-      loggedInAdminId,
       activeClass,
       errorClass,
       dataFetched,
-      showFlash,
-      showErrorFlash,
       profile,
       applicantId,
       applicantTypeId,
       education,
-      show,
-      created,
-      evaluate,
       applicationType,
       licenseId,
-      showLoading,
     };
   },
 

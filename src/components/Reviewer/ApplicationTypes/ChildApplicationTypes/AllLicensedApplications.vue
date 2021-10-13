@@ -53,7 +53,7 @@
         <span
           class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
         >
-          {{ app_type }}
+          {{ item.reviewer.expertLevel.code === "FED" ? "Federal" : item.reviewer.region.name }}
         </span>
         <span
           class="text-lightBlueB-500 mt-tiny flex justify-start content-center"

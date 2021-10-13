@@ -23,8 +23,17 @@
               class="flex justify-center items-center mb-small"
               v-if="docs.length > 0"
             >
-              <span v-if="newLicense.applicant.profile.photo !== '' && newLicense.applicant.profile.photo !== null">
-                <img :src="newLicense.applicant.profile.photo" alt="profile picture"  class="w-20 h-12" />
+              <span
+                v-if="
+                  newLicense.applicant.profile.photo !== '' &&
+                    newLicense.applicant.profile.photo !== null
+                "
+              >
+                <img
+                  :src="newLicense.applicant.profile.photo"
+                  alt="profile picture"
+                  class="w-20 h-12"
+                />
               </span>
               <span v-else>
                 <img
@@ -47,7 +56,10 @@
                 {{ "Applicant Type:  " + newLicense.applicantType.name }}
               </h4> -->
             </div>
-            <div class="flex justify-center items-cente" v-if="newLicense.education !== undefined">
+            <div
+              class="flex justify-center items-cente"
+              v-if="newLicense.education !== undefined"
+            >
               <h4 class="mt-2 mr-tiny w-1/2">
                 {{ "Department:  " + newLicense.education.department.name }}
               </h4>
@@ -55,7 +67,10 @@
                 {{ "Institution:  " + newLicense.education.institution.name }}
               </h4>
             </div>
-            <div class="flex justify-center items-center"  v-if="newLicense.education !== undefined">
+            <div
+              class="flex justify-center items-center"
+              v-if="newLicense.education !== undefined"
+            >
               <div class="mt-2 ml-small w-1/2"></div>
               <h4 class="mt-2 ml-small w-1/2">
                 {{
@@ -104,6 +119,7 @@
         <div class="flex flex-col justify-center items-center ml-large ">
           <div class="ml-medium">
             <label
+              v-if="!showButtons"
               class="justify-center items-center ml-large text-grey-200 text-2xl"
             >
               {{ documentTypeName }}
@@ -118,27 +134,267 @@
                   <img :src="basePath + file.filePath" />
                 </picture>
               </div> -->
-              <picture v-if="docs.length > 0">
-                <div v-if="docs[index].fileName.split('.')[1] == 'pdf'" >
-                  <div>
-                 <iframe v-bind:src="'https://storage.googleapis.com/hris-lisence-dev/' +
-                      docs[index].filePath"
-                       ></iframe>
-                       </div>
-                       <br />
-                       <a @click="openPdfInNewTab(docs[index].filePath)">see pdf in detail</a>
-                  </div>
-                  
-                  <div v-else>
-                <img
-                  v-bind:src="
-                    'https://storage.googleapis.com/hris-lisence-dev/' +
-                      docs[index].filePath
-                  "
-                />
+              <div v-if="showButtons">
+                <div class="flex justify-center">
+                  <Title message="Summary" />
                 </div>
-                
-              </picture>
+                <div class="flex justify-start">
+                  <Title message="Personal Info" />
+                </div>
+                <div class="flex flex-row">
+                  <div
+                    :class="[
+                      profileInfo.name === null ? errorClass : activeClassd,
+                    ]"
+                  >
+                    <label class="ml-8 titleColors"> Full Name </label>
+                    <h5 class="ml-8">
+                      {{
+                        profileInfo.name +
+                          " " +
+                          profileInfo.fatherName +
+                          " " +
+                          profileInfo.grandFatherName
+                      }}
+                    </h5>
+                  </div>
+                  <div
+                    :class="[
+                      profileInfo.alternativeName === null ||
+                      profileInfo.alternativeFatherName === null ||
+                      profileInfo.alternativeGrandFatherName === null
+                        ? errorClass
+                        : activeClass,
+                    ]"
+                  >
+                    <label class="ml-8 titleColors"> Name In Amharic </label>
+                    <h5 class="ml-8">
+                      {{
+                        profileInfo.alternativeName === null
+                          ? "-"
+                          : profileInfo.alternativeName +
+                              " " +
+                              profileInfo.fatherName ===
+                            null
+                          ? "-"
+                          : profileInfo.alternativeFatherName +
+                              " " +
+                              profileInfo.grandFatherName ===
+                            null
+                          ? "-"
+                          : profileInfo.alternativeGrandFatherName
+                      }}
+                    </h5>
+                  </div>
+
+                  <div
+                    :class="[
+                      profileInfo.gender === null ? errorClass : activeClass,
+                    ]"
+                  >
+                    <label class="ml-8 titleColors"> Gender</label>
+                    <h5 class="ml-8">
+                      {{ profileInfo.gender ? profileInfo["gender"] : "-" }}
+                    </h5>
+                  </div>
+                  <div
+                    :class="[
+                      profileInfo.nationality === null
+                        ? errorClass
+                        : activeClass,
+                    ]"
+                  >
+                    <label class="ml-8 titleColors"> Nationality</label>
+                    <h5 class="ml-8">
+                      {{
+                        profileInfo.nationality ? profileInfo.nationality : "-"
+                      }}
+                    </h5>
+                  </div>
+                  <div
+                    :class="[
+                      profileInfo.placeOfBirth === null
+                        ? errorClass
+                        : activeClass,
+                    ]"
+                  >
+                    <label class="ml-8 titleColors"> Place of Birth</label>
+                    <h5 class="ml-8">
+                      {{
+                        profileInfo.placeOfBirth
+                          ? profileInfo.placeOfBirth
+                          : "-"
+                      }}
+                    </h5>
+                  </div>
+                </div>
+                <div class="flex flex-row">
+                  <div
+                    :class="[
+                      profileInfo.dateOfBirth === null
+                        ? errorClass
+                        : activeClass,
+                    ]"
+                  >
+                    <label class="ml-8 titleColors"> Date of Birth</label>
+                    <h5 class="ml-8">
+                      {{
+                        profileInfo.dateOfBirth
+                          ? moment(profileInfo.dateOfBirth).format(
+                              "MMM D, YYYY"
+                            )
+                          : "-"
+                      }}
+                    </h5>
+                  </div>
+                  <div
+                    :class="[
+                      profileInfo.maritalStatus === null
+                        ? errorClass
+                        : activeClass,
+                    ]"
+                  >
+                    <label class="ml-8 titleColors"> Marital Status</label>
+                    <h5 class="ml-8">
+                      {{
+                        profileInfo.maritalStatus.name
+                          ? profileInfo.maritalStatus.name
+                          : "-"
+                      }}
+                    </h5>
+                  </div>
+                </div>
+                <div class="flex justify-start">
+                  <Title message="Contact" />
+                </div>
+                <div class="flex flex-row">
+                  <div
+                    :class="[
+                      profileInfo.user.phoneNumber === null
+                        ? errorClass
+                        : activeClass,
+                    ]"
+                  >
+                    <label class="ml-8 titleColors"> Mobile Number</label>
+                    <h5 class="ml-8">
+                      {{
+                        profileInfo.user.phoneNumber
+                          ? profileInfo.user.phoneNumber
+                          : "-"
+                      }}
+                    </h5>
+                  </div>
+
+                  <div
+                    :class="[
+                      profileInfo.user.emailAddress === null
+                        ? errorClass
+                        : activeClass,
+                    ]"
+                  >
+                    <label class="ml-8 titleColors"> Email</label>
+                    <h5 class="ml-8">
+                      {{
+                        profileInfo.user.emailAddress
+                          ? profileInfo.user.emailAddress
+                          : "-"
+                      }}
+                    </h5>
+                  </div>
+                </div>
+                <div class="flex justify-start">
+                  <Title message="Institution" />
+                </div>
+                <div class="flex flex-row">
+                  <div>
+                    <label class="ml-8 titleColors"> Institution Name</label>
+                    <h5
+                      class="ml-8"
+                      v-if="newLicense.education.institution.name"
+                    >
+                      {{ newLicense.education.institution.name }}
+                    </h5>
+                  </div>
+                  <div>
+                    <label class="ml-8 titleColors"> Department</label>
+                    <h5
+                      class="ml-8"
+                      v-if="newLicense.education.department.name"
+                    >
+                      {{ newLicense.education.department.name }}
+                    </h5>
+                  </div>
+                  <div>
+                    <label class="ml-8 titleColors"> Institution Type</label>
+                    <h5
+                      class="ml-8"
+                      v-if="
+                        newLicense.education.institution.institutionType.name
+                      "
+                    >
+                      {{
+                        newLicense.education.institution.institutionType.name
+                      }}
+                    </h5>
+                  </div>
+                </div>
+                <div v-if="newLicense.professionalTypes.name">
+                  <div class="flex justify-start">
+                    <Title message="Professional Type" />
+                  </div>
+                  <div class="flex flex-row">
+                    <div>
+                      <label class="ml-8 titleColors"> Professional Type</label>
+                      <h5 class="ml-8" v-if="newLicense.professionalTypes.name">
+                        {{ newLicense.professionalTypes.name }}
+                      </h5>
+                    </div>
+                    <!-- <div>
+                      <div v-if="!isToChangeProfession">
+                      <button @click="toChangeProfession()">
+                        change Profession
+                      </button>
+                      </div>
+                      <div v-else>
+                      <input class="max-w-3xl" type="text" />
+                      <button>
+                        change
+                      </button>
+                      <a @click="cancelProfessionChange()"  class="red">
+                        cancel
+                      </a>
+                      </div>
+                    </div> -->
+                  </div>
+                </div>
+              </div>
+              <div v-else>
+                <picture v-if="docs.length > 0">
+                  <div v-if="docs[index].fileName.split('.')[1] == 'pdf'">
+                    <div>
+                      <iframe
+                        v-bind:src="
+                          'https://storage.googleapis.com/hris-lisence-dev/' +
+                            docs[index].filePath
+                        "
+                      ></iframe>
+                    </div>
+                    <br />
+                    <a @click="openPdfInNewTab(docs[index].filePath)"
+                      >see pdf in detail</a
+                    >
+                  </div>
+
+                  <div v-else>
+                    <img
+                      v-bind:src="
+                        'https://storage.googleapis.com/hris-lisence-dev/' +
+                          docs[index].filePath
+                      "
+                    />
+                  </div>
+                </picture>
+              </div>
               <div
                 class="flex content-center justify-center pb-large"
                 v-if="docs.length == 0"
@@ -402,10 +658,12 @@ import { ref, onMounted } from "vue";
 
 import { useRouter } from "vue-router";
 
+import Title from "@/sharedComponents/Title";
 import Modal from "@/sharedComponents/Modal";
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import ReviewerNavBar from "@/components/Reviewer/ReviewerNavBar";
+import moment from "moment";
 
 export default {
   components: {
@@ -413,6 +671,10 @@ export default {
     FlashMessage,
     ErrorFlashMessage,
     ReviewerNavBar,
+    Title,
+  },
+  computed: {
+    moment: () => moment,
   },
   setup() {
     const route = useRoute();
@@ -459,6 +721,10 @@ export default {
     let nextClickable = ref(false);
     let foundInRejected = ref(false);
     let foundInAcceptted = ref(false);
+    let isToChangeProfession = ref(false);
+    let profileInfo = ref({});
+    let activeClass = ref("active");
+    let errorClass = ref("text-danger");
     let showRemark = ref(false);
     let applicationType = ref("");
     let applicantId = ref("");
@@ -481,10 +747,11 @@ export default {
           .dispatch("reviewer/getNewLicenseApplication", applicationId)
           .then((res) => {
             newLicense.value = res.data.data;
+            profileInfo = newLicense.value.applicant.profile;
             console.log("newLLLLLLLLLLLLLLLL", newLicense.value);
             buttons.value = res.data.data.applicationStatus.buttons;
             docs.value = res.data.data.documents;
-            console.log("docs value", docs.value)
+            console.log("docs value", docs.value);
             if (newLicense.value.applicationStatus.code == "REVDRA") {
               rejected.value = newLicense.value.declinedFields;
               for (let i in newLicense.value.documents) {
@@ -523,6 +790,7 @@ export default {
           .dispatch("reviewer/getGoodStandingApplication", applicationId)
           .then((res) => {
             newLicense.value = res.data.data;
+            profileInfo = newLicense.value.applicant.profile;
             applicantId.value = res.data.data.applicantId;
             // newLicense.value.applicantType.name = "-";
             // newLicense.value.education.department.name = "-";
@@ -581,6 +849,7 @@ export default {
           .dispatch("reviewer/getVerificationApplication", applicationId)
           .then((res) => {
             newLicense.value = res.data.data;
+            profileInfo = newLicense.value.applicant.profile;
             // buttons.value = res.data.data.applicationStatus.buttons;
             buttons.value = res.data.data.applicationStatus.buttons.filter(
               (allButtons) => {
@@ -632,6 +901,8 @@ export default {
           .then((res) => {
             newLicense.value = res.data.data;
             console.log("rennnnnnnnnn", newLicense.value);
+            profileInfo.value = newLicense.value.applicant.profile;
+            console.log("profile info is ", profileInfo.value);
             buttons.value = res.data.data.applicationStatus.buttons;
             docs.value = res.data.data.documents;
             if (newLicense.value.applicationStatus.code == "REVDRA") {
@@ -647,7 +918,7 @@ export default {
                   }
                 }
               }
-              accepted.value = newLicense.value.acceptedFields;;
+              accepted.value = newLicense.value.acceptedFields;
               index.value = rejected.value.length + accepted.value.length;
               if (index.value == docs.value.length) {
                 index.value -= 1;
@@ -965,7 +1236,20 @@ export default {
 
     const openPdfInNewTab = (pdfPath) => {
       pdfFilePath.value = pdfPath;
-      window.open("https://storage.googleapis.com/hris-lisence-dev/"+pdfPath, "_blank");
+      window.open(
+        "https://storage.googleapis.com/hris-lisence-dev/" + pdfPath,
+        "_blank"
+      );
+    };
+
+    const toChangeProfession = () => {
+      isToChangeProfession.value = true;
+    }
+    const cancelProfessionChange = () => {
+      isToChangeProfession.value = false;
+    }
+    const changeProfession = () => {
+
     }
 
     onMounted(() => {
@@ -994,12 +1278,16 @@ export default {
       buttons,
       action,
       showButtons,
+      isToChangeProfession,
+      profileInfo,
       disableNext,
       nextClickable,
       foundInRejected,
       foundInAcceptted,
       showRemark,
       toggleModal,
+      activeClass,
+      errorClass,
       submitRemark,
       applicationType,
       showFlash,
@@ -1014,6 +1302,9 @@ export default {
       evaluateRoute,
       pdfFilePath,
       openPdfInNewTab,
+      toChangeProfession,
+      cancelProfessionChange,
+      changeProfession,
     };
   },
 };
@@ -1028,7 +1319,7 @@ export default {
   color: white;
 }
 a:hover {
- cursor:pointer;
+  cursor: pointer;
 }
 .card-wrapper {
   width: 920px;
@@ -1081,6 +1372,9 @@ svg:hover {
   .tArea {
     width: 720px;
     height: 95px;
+  }
+  .titleColors {
+    color: blue;
   }
   /* .tArea:focus {
     border-color: hsl(var(--input-focus-h), var(--input-focus-s), var(--input-focus-l));

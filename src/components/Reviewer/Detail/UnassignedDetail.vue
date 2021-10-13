@@ -45,6 +45,9 @@
               </button>
             </div>
           </div>
+          <div v-if="showAdminAssignLoading">
+            <Spinner />
+          </div>
           <div class="flex justify-center"><Title message="Summary" /></div>
           <div class="flex justify-start">
             <Title message="Personal Info" />
@@ -270,7 +273,7 @@
           </div>
           <div class="flex justify-start flex-wrap"></div>
           <div v-if="showFlash">
-            <FlashMessage message="Your profile is successfully created" />
+            <FlashMessage message="Admin successfully Assigend" />
           </div>
           <div v-if="showErrorFlash">
             <ErrorFlashMessage message="Operation Failed!" />
@@ -360,6 +363,7 @@ export default {
     let role = ref({});
 
     let showLoading = ref(false);
+    let showAdminAssignLoading = ref(false);
 
     let reviewerAdminId = ref(0);
 
@@ -531,12 +535,16 @@ export default {
         }
       }
       if (applicationType.value == "New License") {
+        showAdminAssignLoading.value = true;
         store
           .dispatch("reviewer/assignReviewer", assign.value)
           .then((response) => {
+            showAdminAssignLoading.value = false;
             if (response.statusText == "Created") {
               showFlash.value = true;
-              router.push("/admin/review");
+              setTimeout(() => {
+                router.push("/admin/review");
+              }, 3000);
             }
           })
           .catch((err) => {
@@ -544,12 +552,16 @@ export default {
           });
       }
       if (applicationType.value == "Verification") {
+        showAdminAssignLoading.value = true;
         store
           .dispatch("reviewer/assignVerificationReviewer", assign.value)
           .then((response) => {
+            showAdminAssignLoading.value = false;
             if (response.statusText == "Created") {
               showFlash.value = true;
-              router.push("/admin/review");
+              setTimeout(() => {
+                router.push("/admin/review");
+              }, 3000);
             }
           })
           .catch((err) => {
@@ -559,12 +571,16 @@ export default {
       if (applicationType.value == "Renewal") {
         if (license.value.applicationStatus.code === "UPD") {
           license.value.reviewerId = assign.value.reviewerId;
+          showAdminAssignLoading.value = true;
           store
             .dispatch("reviewer/assignRenewalReviewer", assign.value)
             .then((response) => {
+              showAdminAssignLoading.value = false;
               if (response.statusText == "Created") {
                 showFlash.value = true;
-                router.push("/admin/review");
+                setTimeout(() => {
+                  router.push("/admin/review");
+                }, 3000);
               } else {
                 showErrorFlash.value = true;
               }
@@ -584,7 +600,7 @@ export default {
           //   if (res.statusText == "Created") {
           //     showFlash.value = true;
           //     setTimeout(() => {
-          //       router.push("/admin/review");
+          //     router.push("/admin/review");
           //     }, 3000);
           //   } else {
           //     showErrorFlash.value = true;
@@ -598,13 +614,17 @@ export default {
           //   console.log("error while evaluating", err);
           // });
         } else {
+          showAdminAssignLoading.value = true;
           store
             .dispatch("reviewer/assignRenewalReviewer", assign.value)
 
             .then((response) => {
+              showAdminAssignLoading.value = false;
               if (response.statusText == "Created") {
                 showFlash.value = true;
-                router.push("/admin/review");
+                setTimeout(() => {
+                  router.push("/admin/review");
+                }, 3000);
               }
             })
             .catch((err) => {
@@ -613,12 +633,16 @@ export default {
         }
       }
       if (applicationType.value == "Good Standing") {
+        showAdminAssignLoading.value = true;
         store
           .dispatch("reviewer/assignGoodStandingReviewer", assign.value)
           .then((response) => {
+            showAdminAssignLoading.value = false;
             if (response.statusText == "Created") {
               showFlash.value = true;
-              router.push("/admin/review");
+              setTimeout(() => {
+                router.push("/admin/review");
+              }, 3000);
             }
           })
           .catch((err) => {
@@ -672,6 +696,7 @@ export default {
       gen,
       applicationType,
       showLoading,
+      showAdminAssignLoading,
     };
   },
 
