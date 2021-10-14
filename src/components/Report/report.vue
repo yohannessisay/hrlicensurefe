@@ -773,9 +773,9 @@ a:hover {
   color: #0b5980;
 }
 #printable {
-  display: block;
-  /* overflow-y: auto; */
-  /* overflow-x: hidden; */
-  /* overflow-x: scroll; */
+  /* display: block; */
+  width: 170vh;
+  overflow-x: scroll;
+  overflow-y: hidden;
 }
 </style>
