@@ -14,12 +14,12 @@ export default {
     return {
       credentials: {
         emailAddress: "",
-        password: ""
+        password: "",
       },
       credentialsErrors: {
         emailAddress: undefined,
-        password: undefined
-      }
+        password: undefined,
+      },
     };
   },
 
@@ -28,7 +28,7 @@ export default {
       this.credentialsErrors = this.validateForm(this.credentials);
       if (Object.keys(this.credentialsErrors).length) return;
       let email = {
-        emailAddress: this.credentials.emailAddress
+        emailAddress: this.credentials.emailAddress,
       };
       this.$store.dispatch("user/setContact", email);
       this.$router.push({ path: "/menu" });
@@ -49,8 +49,8 @@ export default {
     isEmail(email) {
       const re = /\S+@\S+\.\S+/;
       return re.test(email);
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="postcss" scoped>

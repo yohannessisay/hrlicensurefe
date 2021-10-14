@@ -3,7 +3,7 @@
     <ReviewerNavBar tab="Home" />
     <div class="flex flex-row">
       <div>
-        <ReviewerSideBar />
+        <ReviewerSideBar style="width: 30vh" />
       </div>
       <div v-if="loader" style="margin-left: 45%; margin-top: 5%">
         <Spinner />
