@@ -138,7 +138,7 @@
           </button>
         </div>
         <div
-          v-if="buttons && draftStatus == 'DEC'"
+          v-if="buttons && (draftStatus == 'DEC' || draftStatus == 'CONF')"
           class="flex justify-center mb-8"
         >
           <button @click="submitBack">
@@ -695,7 +695,7 @@ export default {
       supportLetter,
       transcript,
 
-      documentMessage
+      documentMessage,
     };
   },
 };

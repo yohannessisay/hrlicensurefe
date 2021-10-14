@@ -76,7 +76,23 @@
               <div class="flex flex-col mb-small w-72 mr-4">
                 <label class="text-primary-700">Gender</label>
                 <div class="flex w-full">
-                  <div class="flex flex-col mb-small w-60 mr-8">
+                  <div class="flex w-1/3">
+                    <div class="flex flex-col w-60 mr-4">
+                      <div class="flex py-2">
+                        <input
+                          type="radio"
+                          id="both"
+                          value="both"
+                          v-model="filter.gender"
+                          @change="filterGender(filter.gender)"
+                        />
+                        <label class="ml-tiny text-primary-700" for="female">
+                          Both
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="flex flex-col mb-small w-60 mr-4">
                     <div class="flex py-2">
                       <input
                         class="flex flex-col"
@@ -116,9 +132,13 @@
                 <label class="text-primary-700">Application Statuses</label>
                 <select
                   class="max-w-3xl"
+                  clearable="{true}"
                   v-model="filter.status"
                   @change="filterAppStatus(filter.status)"
                 >
+                  <option v-bind:key="filter.all" v-bind:value="filter.all"
+                    >All</option
+                  >
                   <option
                     v-for="status in applicationStatuses"
                     v-bind:key="status.name"
@@ -130,9 +150,18 @@
               </div>
               <div class="flex flex-row mb-small w-80 mr-4">
                 <label class="text-primary-700 mr-2">From</label>
-                <input class="max-w-3xl mr-5" type="date" />
+                <input
+                  v-model="filter.startDate"
+                  class="max-w-3xl mr-5"
+                  type="date"
+                />
                 <label class="text-primary-700 mr-2">To</label>
-                <input class="max-w-3xl mr-5" type="date" />
+                <input
+                  v-model="filter.endDate"
+                  @change="filterDate(filter.startDate, filter.endDate)"
+                  class="max-w-3xl mr-5"
+                  type="date"
+                />
               </div>
             </div>
             <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 max-w-4xl">
@@ -569,6 +598,9 @@ export default {
       gender: "",
       region: "",
       status: "",
+      startDate: "",
+      endDate: "",
+      all: null,
     });
 
     let loader = ref(false);
@@ -577,6 +609,7 @@ export default {
       loader.value = true;
       store.dispatch("report/getNewLicenseReport").then((res) => {
         report.value = res.data.data;
+        store.dispatch("report/setReport", report.value);
         loader.value = false;
       });
     };
@@ -584,6 +617,7 @@ export default {
       loader.value = true;
       store.dispatch("report/getRenewalReport").then((res) => {
         report.value = res.data.data;
+        store.dispatch("report/setReport", report.value);
         loader.value = false;
       });
     };
@@ -591,6 +625,7 @@ export default {
       loader.value = true;
       store.dispatch("report/getVerificationReport").then((res) => {
         report.value = res.data.data;
+        store.dispatch("report/setReport", report.value);
         loader.value = false;
       });
     };
@@ -598,6 +633,7 @@ export default {
       loader.value = true;
       store.dispatch("report/getGoodstandingReport").then((res) => {
         report.value = res.data.data;
+        store.dispatch("report/setReport", report.value);
         loader.value = false;
       });
     };
@@ -636,19 +672,47 @@ export default {
         }
       });
     };
-    const filterGender = (gender) => {
-      var gendertable = [];
-      gendertable = report.value;
-      report.value = gendertable.filter(function(e) {
-        return e.gender == gender;
+    const filterDate = (startDate, endDate) => {
+      report.value = store.getters["report/getReport"];
+      var dateFilter = [];
+      dateFilter = report.value;
+      report.value = dateFilter.filter(function(date) {
+        // console.log(Date.parse(date.createdAt));
+        // console.log(Date.parse(date.certifiedDate));
+        return (
+          // !isNaN(Date.parse(date.applicant.createdAt)) &&
+          Date.parse(date.applicant.createdAt) >= Date.parse(startDate) &&
+          // !isNaN(Date.parse(date.createdAt)) &&
+          Date.parse(date.createdAt) <= Date.parse(endDate)
+        );
       });
     };
+    const filterGender = (gender) => {
+      report.value = store.getters["report/getReport"];
+      var gendertable = [];
+      gendertable = report.value;
+      console.log(gender);
+      if (gender == "both") {
+        report.value = gendertable.filter(function(e) {
+          return e.gender == "male" || e.gender == "female";
+        });
+      } else {
+        report.value = gendertable.filter(function(e) {
+          return e.gender == gender;
+        });
+      }
+    };
     const filterAppStatus = (status) => {
+      report.value = store.getters["report/getReport"];
       var statusTable = [];
       statusTable = report.value;
-      report.value = statusTable.filter(function(e) {
-        return e.applicationStatus.name == status;
-      });
+      if (status == null) {
+        report.value = store.getter["report/getReport"];
+      } else {
+        report.value = statusTable.filter(function(e) {
+          return e.applicationStatus.name == status;
+        });
+      }
     };
     onMounted(() => {
       fetchNewLicenseReport();
@@ -674,6 +738,7 @@ export default {
       filterProfession,
       filterGender,
       filterAppStatus,
+      filterDate,
     };
   },
 };
