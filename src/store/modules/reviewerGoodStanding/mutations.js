@@ -27,6 +27,11 @@ import {
   SET_GOOD_STANDING_OTHERS_PENDING_PAYMENT,
   SET_GOOD_STANDING_OTHERS_PENDING_PAYMENT_SEARCHED,
 
+  SET_GOOD_STANDING_DECLINED_PAYMENT,
+  SET_GOOD_STANDING_DECLINED_PAYMENT_SEARCHED,
+  SET_GOOD_STANDING_OTHERS_DECLINED_PAYMENT,
+  SET_GOOD_STANDING_OTHERS_DECLINED_PAYMENT_SEARCHED,
+
   SET_GOOD_STANDING_LICENSED,
   SET_GOOD_STANDING_LICENSED_SEARCHED,
   SET_GOOD_STANDING_OTHERS_LICENSED,
@@ -123,6 +128,21 @@ export default {
   },
   [SET_GOOD_STANDING_OTHERS_PENDING_PAYMENT_SEARCHED](state, searchedVal) {
     state.goodStandingOthersPendingPaymentSearched = searchedVal;
+  },
+
+  [SET_GOOD_STANDING_DECLINED_PAYMENT](state, data) {
+    state.goodStandingDeclinedPayment = data;
+    state.goodStandingDeclinedPaymentSearched = data;
+  },
+  [SET_GOOD_STANDING_DECLINED_PAYMENT_SEARCHED](state, searchedVal) {
+    state.goodStandingDeclinedPaymentSearched = searchedVal;
+  },
+  [SET_GOOD_STANDING_OTHERS_DECLINED_PAYMENT](state, data) {
+    state.goodStandingOthersDeclinedPayment = data;
+    state.goodStandingOthersDeclinedPaymentSearched = data;
+  },
+  [SET_GOOD_STANDING_OTHERS_DECLINED_PAYMENT_SEARCHED](state, searchedVal) {
+    state.goodStandingOthersDeclinedPaymentSearched = searchedVal;
   },
 
   [SET_GOOD_STANDING_LICENSED](state, data) {

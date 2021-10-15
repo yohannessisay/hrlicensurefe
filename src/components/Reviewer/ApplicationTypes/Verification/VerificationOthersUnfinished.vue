@@ -63,6 +63,8 @@
 <script>
 import { ref, onMounted } from "vue";
 import Title from "@/sharedComponents/TitleWithIllustration";
+
+import applicationStatus from "../../Configurations/getApplicationStatus.js";
 import ReviewerNavBar from "../../ReviewerNavBar.vue";
 import UnfinishedApplications from "../ChildApplicationTypes/UnfinishedApplications.vue"
 import NothingToShow from "../../ChildComponents/NothingToShow.vue";

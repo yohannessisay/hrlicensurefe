@@ -699,14 +699,6 @@ export default {
       showAdminAssignLoading,
     };
   },
-
-  //   this.license = this.getLicense;
-  //   this.applicantId = this.license.applicantId;
-  //   this.applicantTypeId = this.license.applicantTypeId;
-  //   this.education.departmentId = this.license.education.departmentId;
-  //   this.education.institutionId = this.license.education.institutionId;
-  //   this.docs = this.getDocs.data;
-  // },
 };
 </script>
 <style>

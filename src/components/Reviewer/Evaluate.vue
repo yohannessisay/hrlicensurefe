@@ -167,8 +167,15 @@
                         : activeClass,
                     ]"
                   >
-                    <label class="ml-8 titleColors"> Name In Amharic </label>
-                    <h5 class="ml-8">
+                    <label class="ml-8 titleColors"> Amharic First Name</label>
+                    <div>
+                      <input
+                        class="max-w-3xl ml-8"
+                        type="text"
+                        v-model="profileInfo.alternativeName"
+                      />
+                    </div>
+                    <!-- <h5 class="ml-8">
                       {{
                         profileInfo.alternativeName === null
                           ? "-"
@@ -184,9 +191,30 @@
                           ? "-"
                           : profileInfo.alternativeGrandFatherName
                       }}
-                    </h5>
+                    </h5> -->
                   </div>
-
+                  <div>
+                    <label class="ml-8 titleColors"> Amharic Middle Name</label>
+                    <div>
+                      <input
+                        class="max-w-3xl ml-8"
+                        type="text"
+                        v-model="profileInfo.alternativeFatherName"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label class="ml-8 titleColors"> Amharic Last Name</label>
+                    <div>
+                      <input
+                        class="max-w-3xl ml-8"
+                        type="text"
+                        v-model="profileInfo.alternativeGrandFatherName"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="flex flex-row">
                   <div
                     :class="[
                       profileInfo.gender === null ? errorClass : activeClass,
@@ -227,8 +255,7 @@
                       }}
                     </h5>
                   </div>
-                </div>
-                <div class="flex flex-row">
+
                   <div
                     :class="[
                       profileInfo.dateOfBirth === null
@@ -249,7 +276,7 @@
                   </div>
                   <div
                     :class="[
-                      profileInfo.maritalStatus === null
+                      profileInfo.maritalStatus.name === null
                         ? errorClass
                         : activeClass,
                     ]"
@@ -295,8 +322,7 @@
                     <label class="ml-8 titleColors"> Email</label>
                     <h5 class="ml-8">
                       {{
-                        profileInfo.user.emailAddress
-                          ? profileInfo.user.emailAddress
+                        profileInfo.user.emailAddress ? profileInfo.user.emailAddress
                           : "-"
                       }}
                     </h5>
@@ -747,7 +773,7 @@ export default {
           .dispatch("reviewer/getNewLicenseApplication", applicationId)
           .then((res) => {
             newLicense.value = res.data.data;
-            profileInfo = newLicense.value.applicant.profile;
+            profileInfo.value = newLicense.value.applicant.profile;
             console.log("newLLLLLLLLLLLLLLLL", newLicense.value);
             buttons.value = res.data.data.applicationStatus.buttons;
             docs.value = res.data.data.documents;
@@ -790,7 +816,7 @@ export default {
           .dispatch("reviewer/getGoodStandingApplication", applicationId)
           .then((res) => {
             newLicense.value = res.data.data;
-            profileInfo = newLicense.value.applicant.profile;
+            profileInfo.value = newLicense.value.applicant.profile;
             applicantId.value = res.data.data.applicantId;
             // newLicense.value.applicantType.name = "-";
             // newLicense.value.education.department.name = "-";
@@ -849,7 +875,7 @@ export default {
           .dispatch("reviewer/getVerificationApplication", applicationId)
           .then((res) => {
             newLicense.value = res.data.data;
-            profileInfo = newLicense.value.applicant.profile;
+            profileInfo.value = newLicense.value.applicant.profile;
             // buttons.value = res.data.data.applicationStatus.buttons;
             buttons.value = res.data.data.applicationStatus.buttons.filter(
               (allButtons) => {
@@ -902,7 +928,6 @@ export default {
             newLicense.value = res.data.data;
             console.log("rennnnnnnnnn", newLicense.value);
             profileInfo.value = newLicense.value.applicant.profile;
-            console.log("profile info is ", profileInfo.value);
             buttons.value = res.data.data.applicationStatus.buttons;
             docs.value = res.data.data.documents;
             if (newLicense.value.applicationStatus.code == "REVDRA") {
@@ -1244,13 +1269,11 @@ export default {
 
     const toChangeProfession = () => {
       isToChangeProfession.value = true;
-    }
+    };
     const cancelProfessionChange = () => {
       isToChangeProfession.value = false;
-    }
-    const changeProfession = () => {
-
-    }
+    };
+    const changeProfession = () => {};
 
     onMounted(() => {
       created(route.params.applicationType, route.params.applicationId);

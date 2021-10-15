@@ -29,7 +29,7 @@
       <div class="flex flex-wrap pb-medium rounded h-full" v-if="!showLoading">
         <nothing-to-show :nothingToShow="nothingToShow" />
         <confirmed-applications
-          :declineConfirmedApplication="getRenewalOthersDeclineConfirmed"
+          :confirmedApplication="getRenewalOthersDeclineConfirmed"
           app_type="Renewal"
           others_decline_confirmed="true"
         />
