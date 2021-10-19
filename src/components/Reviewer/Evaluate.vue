@@ -322,7 +322,8 @@
                     <label class="ml-8 titleColors"> Email</label>
                     <h5 class="ml-8">
                       {{
-                        profileInfo.user.emailAddress ? profileInfo.user.emailAddress
+                        profileInfo.user.emailAddress
+                          ? profileInfo.user.emailAddress
                           : "-"
                       }}
                     </h5>
@@ -368,13 +369,30 @@
                   <div class="flex justify-start">
                     <Title message="Professional Type" />
                   </div>
-                  <div class="flex flex-row">
+                  <div class="flex flex-col mb-medium w-1/2 mr-12">
+                    <select v-model="newLicense.professionalTypeId" >
+                      <option
+                        v-for="profession in professionalTypes"
+                        v-bind:key="profession.name"
+                        v-bind:value="profession.id"
+                      >
+                        {{ profession.name }}
+                      </option>
+                    </select>
+                    <!-- </div> -->
+                    <!-- <div>
+                      <label class="ml-8 titleColors"> Professional Type</label>
+                      <h5 class="ml-8" v-if="newLicense.professionalTypes.name">
+                        {{ newLicense.professionalTypes.name }}
+                      </h5>
+                    </div> -->
+                    <!--<div class="flex flex-row">
                     <div>
                       <label class="ml-8 titleColors"> Professional Type</label>
                       <h5 class="ml-8" v-if="newLicense.professionalTypes.name">
                         {{ newLicense.professionalTypes.name }}
                       </h5>
-                    </div>
+                    </div>  -->
                     <!-- <div>
                       <div v-if="!isToChangeProfession">
                       <button @click="toChangeProfession()">
@@ -759,6 +777,8 @@ export default {
     let showDeclineFlash = ref(false);
     let sendDeclinedData = ref(true);
     let fromModalSendDeclinedData = ref(false);
+
+    let professionalTypes = ref([]);
     let evaluateRoute = ref(
       "/admin/evaluate/" +
         route.params.applicationType +
@@ -1027,6 +1047,7 @@ export default {
       }
     };
     const accept = (doc) => {
+      console.log("docs value for accept is ", doc);
       nextClickable.value = true;
       if (accepted.value.length > 0) {
         if (!accepted.value.includes(doc.documentTypeCode)) {
@@ -1275,10 +1296,19 @@ export default {
     };
     const changeProfession = () => {};
 
+    const getProfessionalTypes = () => {
+      store.dispatch("reviewer/getProfessionalType").then((res) => {
+        professionalTypes.value = res.data.data;
+        console.log("professional types", professionalTypes.value)
+      });
+    };
+    const selected = "good"
+
     onMounted(() => {
       created(route.params.applicationType, route.params.applicationId);
       fetchDocumentTypes();
       findDocumentType(documentTypes.value, docs.value[0]);
+      getProfessionalTypes();
     });
     return {
       isPdf,
@@ -1286,6 +1316,7 @@ export default {
       index,
       docs,
       next,
+      selected,
       previous,
       nextRemark,
       previousRemark,
@@ -1328,6 +1359,7 @@ export default {
       toChangeProfession,
       cancelProfessionChange,
       changeProfession,
+      professionalTypes,
     };
   },
 };

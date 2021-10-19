@@ -53,6 +53,8 @@ import {
   SET_MY_REGION_CERTIFIED_USERS,
   SET_MY_REGION_CERTIFIED_USERS_SEARCHED,
 
+  SET_PROFESSIONAL_TYPES,
+
 } from "./mutation-types";
 const baseUrl = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api";
 const adminId = +localStorage.getItem("adminId");
@@ -1297,6 +1299,15 @@ export default {
       return resp;
     } catch (error) {
       console.log("but error comming", error)
+      return error;
+    }
+  },
+  async getProfessionalType() {
+    try {
+      const url = baseUrl + "/lookups/professionalTypes";
+      const resp = await ApiService.get(url);
+      return resp;
+    } catch (error) {
       return error;
     }
   },
