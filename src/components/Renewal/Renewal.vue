@@ -470,7 +470,7 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 6">
-                <LetterfromOrg
+                <ProfessionalLicense
                   :activeState="6"
                   @changeActiveState="activeState++"
                   @changeActiveStateMinus="activeState--"
@@ -479,7 +479,7 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 7">
-                <ProfessionalLicense
+                <RenewedLicense
                   :activeState="7"
                   @changeActiveState="activeState++"
                   @changeActiveStateMinus="activeState--"
@@ -488,7 +488,7 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 8">
-                <RenewedLicense
+                <LetterFromInstitution
                   :activeState="8"
                   @changeActiveState="activeState++"
                   @changeActiveStateMinus="activeState--"
@@ -497,7 +497,7 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 9">
-                <LetterFromInstitution
+                <PreviousLicenseF
                   :activeState="9"
                   @changeActiveState="activeState++"
                   @changeActiveStateMinus="activeState--"
@@ -506,7 +506,7 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 10">
-                <PreviousLicenseF
+                <CPDE
                   :activeState="10"
                   @changeActiveState="activeState++"
                   @changeActiveStateMinus="activeState--"
@@ -515,7 +515,7 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 11">
-                <CPDE
+                <WorkExperience
                   :activeState="11"
                   @changeActiveState="activeState++"
                   @changeActiveStateMinus="activeState--"
@@ -524,7 +524,7 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 12">
-                <WorkExperience
+                <ProfessionalDocuments
                   :activeState="12"
                   @changeActiveState="activeState++"
                   @changeActiveStateMinus="activeState--"
@@ -533,17 +533,8 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 13">
-                <ProfessionalDocuments
-                  :activeState="13"
-                  @changeActiveState="activeState++"
-                  @changeActiveStateMinus="activeState--"
-                />
-              </div>
-            </transition>
-            <transition name="fade" mode="out-in">
-              <div v-if="this.activeState == 14">
                 <LicenseSummary
-                  :activeState="14"
+                  :activeState="13"
                   @changeActiveState="activeState++"
                   @changeActiveStateMinus="activeState--"
                 />
@@ -812,6 +803,15 @@ export default {
               return e.code == "DRA";
             });
             this.buttons = status[0]["buttons"];
+            console.log(this.buttons);
+            let temp = "";
+            temp = this.buttons[1];
+            this.buttons[1] = this.buttons[2];
+            this.buttons[2] = temp;
+            let temp2 = "";
+            temp2 = this.buttons[0];
+            this.buttons[0] = this.buttons[2];
+            this.buttons[2] = temp2;
           }
           if (this.draftStatus == "SUB") {
             let status = this.applicationStatuses.filter(function(e) {
