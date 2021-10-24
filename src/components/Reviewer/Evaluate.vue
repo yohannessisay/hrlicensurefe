@@ -172,7 +172,7 @@
                       <input
                         class="max-w-3xl ml-8"
                         type="text"
-                        v-model="profileInfo.alternativeName"
+                        v-model="newLicense.applicant.profile.alternativeName"
                       />
                     </div>
                     <!-- <h5 class="ml-8">
@@ -199,7 +199,7 @@
                       <input
                         class="max-w-3xl ml-8"
                         type="text"
-                        v-model="profileInfo.alternativeFatherName"
+                        v-model="newLicense.applicant.profile.alternativeFatherName"
                       />
                     </div>
                   </div>
@@ -209,7 +209,7 @@
                       <input
                         class="max-w-3xl ml-8"
                         type="text"
-                        v-model="profileInfo.alternativeGrandFatherName"
+                        v-model="newLicense.applicant.profile.alternativeGrandFatherName"
                       />
                     </div>
                   </div>
@@ -370,7 +370,7 @@
                     <Title message="Professional Type" />
                   </div>
                   <div class="flex flex-col mb-medium w-1/2 mr-12">
-                    <select v-model="newLicense.professionalTypeId" >
+                    <select v-model="newLicense.professionalTypeId">
                       <option
                         v-for="profession in professionalTypes"
                         v-bind:key="profession.name"
@@ -1299,10 +1299,10 @@ export default {
     const getProfessionalTypes = () => {
       store.dispatch("reviewer/getProfessionalType").then((res) => {
         professionalTypes.value = res.data.data;
-        console.log("professional types", professionalTypes.value)
+        console.log("professional types", professionalTypes.value);
       });
     };
-    const selected = "good"
+    const selected = "good";
 
     onMounted(() => {
       created(route.params.applicationType, route.params.applicationId);

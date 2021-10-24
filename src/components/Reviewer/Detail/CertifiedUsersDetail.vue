@@ -110,7 +110,9 @@
                 <h4>በአዋጅ ቁጥር 916/2008 አንቀጽ 33(13)በተሰጠው ስልጣን መሰረት</h4>
                 <br><br><br><br>
                 <h3 class="underline">
-                  <b>{{ certifiedUser.alternativeName }} {{ certifiedUser.alternativeFatherName }}
+                  <b>{{ certifiedUser.alternativeName != null
+                    ? certifiedUser.alternativeName: ""}} {{ certifiedUser.alternativeFatherName
+                    != null ? certifiedUser.alternativeFatherName: "" }}
                     {{
                       certifiedUser.alternativeGrandFatherName != null
                         ? certifiedUser.alternativeGrandFatherName
@@ -152,6 +154,8 @@
           </div>
         </div>
       </div>
+      <div id="qr_code">
+      </div>
       </span>
       <span v-else-if="!isUserCertified && isUserFound">
         <div class="flex justify-center content-center userNotFound">
@@ -173,6 +177,8 @@
   </div>
 </template>
 <script>
+
+import QRCode from "qrcode";
 import ReviewerNavBar from "@/components/Reviewer/ReviewerNavBar";
 import Title from "@/sharedComponents/Title";
 import { ref, onMounted } from "vue";
@@ -333,7 +339,17 @@ export default {
         filters: ["ASCIIHexEncode"]
       });
       
+      // let qrCode = new QRCode("qr_code", {
+      //   text: "I love it",
+      //   width: 128,
+      //   height: 128,
+      //   colorDark: "#000000",
+      //   colorLight: "#ffffff",
+      // });
 
+      // let base64Image = $("#qr_code img").attr('src');
+
+      // doc.addImage(base64Image, 'png', 0, 0, 40, 40);
       
       
       doc.addImage(backgroundImage, 'JPEG', 0, 0, 298, 213, undefined, 'FAST')
