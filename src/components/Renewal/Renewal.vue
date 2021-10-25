@@ -798,7 +798,7 @@ export default {
         const results = res.data.data;
         this.applicationStatuses = results;
         if (this.draftId != undefined) {
-          if (this.draftStatus == "DRA") {
+          if (this.draftStatus == "DRA" || this.draftStatus == "CONF") {
             let status = this.applicationStatuses.filter(function(e) {
               return e.code == "DRA";
             });

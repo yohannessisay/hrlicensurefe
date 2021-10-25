@@ -266,13 +266,13 @@
         </button>
       </div>
       <div
-        v-if="this.draftStatus == 'DEC'"
+        v-if="this.draftStatus == 'DEC' || this.draftStatus == 'CONF'"
         class="flex justify-center mt-8 pb-12"
       >
         <button @click="submitBack">
           Back
         </button>
-        <button @click="draft(this.buttons[0].action)" variant="outline">
+        <button @click="draft('UpdateEvent')" variant="outline">
           Re-apply
         </button>
         <button @click="update(this.buttons[1].action)" variant="outline">
@@ -288,10 +288,10 @@
     </div>
   </div>
 
-  <div v-if="showFlash">
+  <div v-if="this.showFlash">
     <FlashMessage message="Operation Successful!" />
   </div>
-  <div v-if="showErrorFlash">
+  <div v-if="this.showErrorFlash">
     <ErrorFlashMessage message="Operation Failed!" />
   </div>
 </template>
@@ -1200,6 +1200,7 @@ export default {
     },
     async draft(act) {
       let action = act;
+      console.log(action);
       this.showLoading = true;
       if (this.draftId != null) {
         let license = {
@@ -1335,6 +1336,10 @@ export default {
                   }
                 })
                 .catch((err) => {});
+            } else {
+              setTimeout(() => {
+                this.showErrorFlash = true;
+              }, 1500);
             }
           });
       } else {

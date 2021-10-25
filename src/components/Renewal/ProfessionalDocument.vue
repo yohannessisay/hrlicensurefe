@@ -273,7 +273,7 @@
           </button>
         </div>
         <div
-          v-if="this.draftStatus == 'DEC'"
+          v-if="this.draftStatus == 'DEC' || this.draftStatus == 'CONF'"
           class="flex justify-center mt-8 pb-12"
         >
           <button @click="submitBack">
