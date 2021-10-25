@@ -242,7 +242,10 @@
           </button>
         </div>
         <div
-          v-if="this.showButtons && this.draftStatus == 'DEC'"
+          v-if="
+            this.showButtons &&
+              (this.draftStatus == 'DEC' || this.draftStatus == 'CONF')
+          "
           class="flex justify-center mb-8"
         >
           <button @click="submit">Next</button>
