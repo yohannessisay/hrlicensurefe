@@ -88,7 +88,8 @@
             </div>
             <span id="main">
             <div class="flex-container">
-              <div><h4><b>No Photo<br/> Available</b></h4></div>
+              <div></div>
+              <!-- <div><h4><b>No Photo<br/> Available</b></h4></div> -->
               <div class="inner-flex">
                 <h2><b>በኢትዮፕያ ፌደራላዊ ዴሞክራሲያዊ ሪፐብሊክ</b></h2>
                 <h2><b>Federal Democratic Republic Ethiopia</b></h2>
@@ -119,7 +120,7 @@
                         : ""}}</b>
                     </h3>
                     <h4>ተገቢውን መስፈርት አሟልተው ስለተገኙ ሚኒስቴር መስሪያ ቤቱ</h4>
-                    <h4><b>{{certificateDetail.professionalTypes.name}}</b></h4>
+                    <h4><b>{{certificateDetail.professionalTypes ? (certificateDetail.professionalTypes.name != null ? certificateDetail.professionalTypes.name : " ") : " "}}</b></h4>
                     <br>
                     <h3>ሙያ መዝግቦ ይህን የሙያ ስራ ፈቃድ ሰጥቷል።</h3>
                     <h3>ይህ የሙያ የስራ ፈቃድ የሚያገለግለው <b>
@@ -144,7 +145,7 @@
                     </h3>
                     <h4>Having duly satisfied the requirements of the Ministry</h4>
                     <h4>hereby registered and licensed as</h4>
-                    <h4><b>{{certificateDetail.professionalTypes.name}}</b></h4>
+                    <h4><b>{{certificateDetail.professionalTypes ? (certificateDetail.professionalTypes.name != null ? certificateDetail.professionalTypes.name : " ") : " "}}</b></h4>
                     <br>
                     <h3>The license is valid:<b>{{moment(certificateDetail.certifiedDate).format("MMM DD, YYYY")}} - {{moment(licenseExpireDate).format("MMM DD, YYYY")}}</b></h3>
               </div>
@@ -178,7 +179,6 @@
 </template>
 <script>
 
-import QRCode from "qrcode";
 import ReviewerNavBar from "@/components/Reviewer/ReviewerNavBar";
 import Title from "@/sharedComponents/Title";
 import { ref, onMounted } from "vue";
@@ -190,6 +190,7 @@ import Spinner from "@/sharedComponents/Spinner";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import backgroundImage from "../../../assets/hrl_background_certificate.jpg";
+import qrcode from "../../../assets/qrcode_image.jpg";
 import certifiedUserImage from "../../../assets/certified_user.jpg";
 import AmharicFont from "../Configurations/amharicFont.js";
 import { toEthiopian } from "../Configurations/dateConvertor";
@@ -224,7 +225,6 @@ export default {
 
     const adminRegionId = JSON.parse(localStorage.getItem("allAdminData")).regionId
     const expertLevelId = JSON.parse(localStorage.getItem("allAdminData")).expertLevelId
-    console.log("adminREgion id", adminRegionId, "type", typeof adminRegionId)
 
     const fetchCertifiedUser = () => {
       showLoading.value = true;
@@ -327,7 +327,6 @@ export default {
           }
           licenseExpireDate.value = moment(certificateDetail.value.certifiedDate)._d;
           licenseExpireDate.value.setFullYear(licenseExpireDate.value.getFullYear() + 5);
-          console.log("application ++++ ", certificateDetail.value)
         });
       }
       
@@ -339,34 +338,22 @@ export default {
         filters: ["ASCIIHexEncode"]
       });
       
-      // let qrCode = new QRCode("qr_code", {
-      //   text: "I love it",
-      //   width: 128,
-      //   height: 128,
-      //   colorDark: "#000000",
-      //   colorLight: "#ffffff",
-      // });
 
-      // let base64Image = $("#qr_code img").attr('src');
-
-      // doc.addImage(base64Image, 'png', 0, 0, 40, 40);
-      
+    const userImage = certifiedUser.value.photo;
       
       doc.addImage(backgroundImage, 'JPEG', 0, 0, 298, 213, undefined, 'FAST')
-      // doc.addImage(certifiedUserImage, 'JPG', 10, 10, 20, 30)
+      doc.addImage(qrcode, 'JPG', 250, 8, 40, 40);
+      if(userImage !== null) {
+        doc.addImage(userImage, 'JPG', 8, 8, 30, 30)
+      } 
       doc.setFontSize(25)
       // doc.addFileToVFS("Amiri-Regular.ttf", AmiriRegular);
       doc.addFileToVFS("Tera-Regular-normal.ttf", AmharicFont);
       
       doc.addFont('Tera-Regular-normal.ttf', 'Tera-Regular', 'normal');
 
-      
-      // doc.text(100, 60, ["إذا لم تستح فاصنع ما شئت", "إذا لم تستح فاصنع ما شئت"], {lang: 'ar', align: 'right'});
-      // doc.text(100, 20, 'በኢትዮፕያ ፌደራላዊ ዴሞክራሲያዊ ሪፐብሊክ', {lang: 'amh', align: 'right'})
-      // doc.setFontStyle('bold')
       doc.text(80, 25, 'Federal Democratic Republic Ethiopia')
       doc.setFontSize(17)
-      // doc.setFontStyle('normal')
       doc.text(110, 50, 'MINSTRY OF HEALTH')
 
       doc.setFontSize(14)

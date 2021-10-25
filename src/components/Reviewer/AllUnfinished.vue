@@ -151,11 +151,13 @@ import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import FilteredInfo from "./ChildComponents/FilteredDatas/FilteredInfo.vue";
 
 export default {
-  components: { 
-    ReviewerNavBar, 
-    Title, Spinner,
+  components: {
+    ReviewerNavBar,
+    Title,
+    Spinner,
     FilteredInfo,
-    ErrorFlashMessage  },
+    ErrorFlashMessage,
+  },
   computed: {
     moment: () => moment,
     getAllUnfinished() {
@@ -231,13 +233,13 @@ export default {
           showLoading.value = false;
           unfinished.value =
             store.getters["reviewer/getEveryOneUnfinishedSearched"];
-            allInfo.value.assignApplication =
-          store.getters["reviewer/getEveryOneUnfinishedSearched"];
-        for (let applicant in allInfo.value.assignApplication) {
-          allInfo.value.assignApplication[applicant].createdAt = moment(
-            allInfo.value.assignApplication[applicant].createdAt
-          ).format("MMMM D, YYYY");
-        }
+          allInfo.value.assignApplication =
+            store.getters["reviewer/getEveryOneUnfinishedSearched"];
+          for (let applicant in allInfo.value.assignApplication) {
+            allInfo.value.assignApplication[applicant].createdAt = moment(
+              allInfo.value.assignApplication[applicant].createdAt
+            ).format("MMMM D, YYYY");
+          }
           if (
             store.getters["reviewer/getEveryOneUnfinishedSearched"].length !== 0
           ) {
