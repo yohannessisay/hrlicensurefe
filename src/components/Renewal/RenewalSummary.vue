@@ -244,6 +244,13 @@
           Back
         </button>
         <button
+          class="draft"
+          @click="draft(this.buttons[0].action)"
+          variant="outline"
+        >
+          {{ this.buttons[0]["name"] }}
+        </button>
+        <button
           class="withdraw"
           @click="withdraw(this.buttons[1].action)"
           variant="outline"
@@ -721,7 +728,6 @@ export default {
         this.docList.push(this.eduTranscript2);
       }
     }
-
     this.buttons = this.getButtons;
     this.fetchProfileInfo();
     this.setDocs();
@@ -930,15 +936,15 @@ export default {
                 this.cpd
               );
               formData.append(
-                this.documentTypes[18].documentTypeCode,
+                this.documentTypes[18].documentType.code,
                 this.herqa
               );
               formData.append(
-                this.documentTypes[6].documentTypeCode,
+                this.documentTypes[6].documentType.code,
                 this.previousLicense
               );
               formData.append(
-                this.documentTypes[17].documentTypeCode,
+                this.documentTypes[17].documentType.code,
                 this.supportLetter
               );
               formData.append(
@@ -1048,13 +1054,13 @@ export default {
           this.workExperience
         );
         formData.append(this.documentTypes[4].documentType.code, this.cpd);
-        formData.append(this.documentTypes[18].documentTypeCode, this.herqa);
+        formData.append(this.documentTypes[18].documentType.code, this.herqa);
         formData.append(
-          this.documentTypes[6].documentTypeCode,
+          this.documentTypes[6].documentType.code,
           this.previousLicense
         );
         formData.append(
-          this.documentTypes[17].documentTypeCode,
+          this.documentTypes[17].documentType.code,
           this.supportLetter
         );
         formData.append(this.documentTypes[11].documentType.code, this.coc);
@@ -1200,7 +1206,6 @@ export default {
     },
     async draft(act) {
       let action = act;
-      console.log(action);
       this.showLoading = true;
       if (this.draftId != null) {
         let license = {
@@ -1248,15 +1253,15 @@ export default {
                 this.cpd
               );
               formData.append(
-                this.documentTypes[18].documentTypeCode,
+                this.documentTypes[18].documentType.code,
                 this.herqa
               );
               formData.append(
-                this.documentTypes[6].documentTypeCode,
+                this.documentTypes[6].documentType.code,
                 this.previousLicense
               );
               formData.append(
-                this.documentTypes[17].documentTypeCode,
+                this.documentTypes[17].documentType.code,
                 this.supportLetter
               );
               formData.append(
@@ -1369,13 +1374,13 @@ export default {
           this.workExperience
         );
         formData.append(this.documentTypes[4].documentType.code, this.cpd);
-        formData.append(this.documentTypes[18].documentTypeCode, this.herqa);
+        formData.append(this.documentTypes[18].documentType.code, this.herqa);
         formData.append(
-          this.documentTypes[6].documentTypeCode,
+          this.documentTypes[6].documentType.code,
           this.previousLicense
         );
         formData.append(
-          this.documentTypes[17].documentTypeCode,
+          this.documentTypes[17].documentType.code,
           this.supportLetter
         );
         formData.append(this.documentTypes[11].documentType.code, this.coc);

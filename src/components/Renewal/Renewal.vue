@@ -803,7 +803,22 @@ export default {
               return e.code == "DRA";
             });
             this.buttons = status[0]["buttons"];
-            console.log(this.buttons);
+
+            // let temp = "";
+            // temp = this.buttons[0];
+            // this.buttons[0] = this.buttons[2];
+            // this.buttons[2] = temp;
+           
+           let temp2 = "";
+            temp2 = this.buttons[1];
+            this.buttons[1] = this.buttons[2];
+            this.buttons[2] = temp2;
+          }
+          if (this.draftStatus == "SUB") {
+            let status = this.applicationStatuses.filter(function(e) {
+              return e.code == "SUB";
+            });
+            this.buttons = status[0]["buttons"];
             let temp = "";
             temp = this.buttons[1];
             this.buttons[1] = this.buttons[2];
@@ -812,12 +827,6 @@ export default {
             temp2 = this.buttons[0];
             this.buttons[0] = this.buttons[2];
             this.buttons[2] = temp2;
-          }
-          if (this.draftStatus == "SUB") {
-            let status = this.applicationStatuses.filter(function(e) {
-              return e.code == "SUB";
-            });
-            this.buttons = status[0]["buttons"];
           }
           if (this.draftStatus == "USUP") {
             let status = this.applicationStatuses.filter(function(e) {
@@ -866,6 +875,15 @@ export default {
     fetchDraft(id) {
       this.$store.dispatch("renewal/getDraft", id).then((res) => {
         const results = res.data.data;
+        this.$store
+          .dispatch("renewal/searchNewLicense", results.professionalTypes.id)
+          .then((res) => {
+            if (res.data.data) {
+              this.firstTimeUser = false;
+            } else {
+              this.firstTimeUser = true;
+            }
+          });
         if (results.occupationTypeId == 2) {
           this.displayPayrollOption = false;
         } else {
