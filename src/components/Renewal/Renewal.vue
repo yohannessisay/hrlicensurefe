@@ -804,12 +804,7 @@ export default {
             });
             this.buttons = status[0]["buttons"];
 
-            // let temp = "";
-            // temp = this.buttons[0];
-            // this.buttons[0] = this.buttons[2];
-            // this.buttons[2] = temp;
-           
-           let temp2 = "";
+            let temp2 = "";
             temp2 = this.buttons[1];
             this.buttons[1] = this.buttons[2];
             this.buttons[2] = temp2;
@@ -839,6 +834,10 @@ export default {
               return e.code == "DEC";
             });
             this.buttons = status[0]["buttons"];
+            let temp3 = "";
+            temp3 = this.buttons[1];
+            this.buttons[1] = this.buttons[2];
+            this.buttons[2] = temp3;
           }
         } else {
           let status = this.applicationStatuses.filter(function(e) {
