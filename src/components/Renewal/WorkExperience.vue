@@ -65,7 +65,6 @@
                 </p>
                 <img v-bind:src="filePreview" v-show="showPreview" />
               </picture>
-              <!--  -->
               <div v-if="!showUpload && isPdf">
                 <p>
                   <a href="javascript:void(0)" @click="reset()">Upload again</a>
