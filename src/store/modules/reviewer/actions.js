@@ -1311,4 +1311,13 @@ export default {
       return error;
     }
   },
+
+  async getQrCode ({commit}, url) {
+    try {
+      const resp = await ApiService.post(baseUrl + "/generateQrCode/scan", url);
+      return resp;
+    } catch (err) {
+      return err;
+    }
+  }
 };

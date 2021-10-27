@@ -230,6 +230,18 @@ const routes = [
       import("../components/Reviewer/Detail/CertifiedUsersDetail.vue"),
   },
   {
+    path: "/scanned-certified-user/:guuid",
+    name: "scannedCertifiedUser",
+    component: () => 
+      import("../components/Reviewer/Detail/ScannedCertifiedUsers.vue"),
+  },
+  {
+    path: "/qrcode-image",
+    name: "qrcodeImage",
+    component: () =>
+      import("../components/Reviewer/Detail/QrCodeImage.vue"),
+  },
+  {
     path: "/admin/pendingPayments",
     name: "pendingPayments",
     component: () => import("../components/Reviewer/PendingPayments.vue"),
