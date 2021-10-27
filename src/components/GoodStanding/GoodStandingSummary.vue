@@ -284,13 +284,13 @@
         </button>
       </div>
       <div
-        v-if="this.draftStatus == 'DEC'"
+        v-if="this.draftStatus == 'DEC' || this.draftStatus == 'CONF'"
         class="flex justify-center mt-8 pb-12"
       >
         <button @click="submitBack">
           Back
         </button>
-        <button @click="draft(this.buttons[0].action)" variant="outline">
+        <button @click="draft('UpdateEvent')" variant="outline">
           Re-apply
         </button>
         <button @click="update(this.buttons[1].action)" variant="outline">
@@ -336,8 +336,8 @@ export default {
     this.draftId = this.$route.params.id;
     this.draftStatus = this.$route.params.status;
     if (this.draftId != undefined) {
-        this.draftData = this.getDraftData;
-        this.documentsArray = this.draftData.documents;
+      this.draftData = this.getDraftData;
+      this.documentsArray = this.draftData.documents;
     }
     this.licenseCopy = this.getLicenseCopy;
     this.serviceFee = this.getServiceFee;

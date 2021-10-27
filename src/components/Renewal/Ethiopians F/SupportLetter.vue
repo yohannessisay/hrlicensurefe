@@ -306,7 +306,7 @@ export default {
             },
             id: route.params.id,
           };
-          store.dispatch("renewal/editNewLicense", license).then((res) => {
+          store.dispatch("renewal/editRenewalLicense", license).then((res) => {
             if (res.data.status == "Success") {
               let licenseId = route.params.id;
               let formData = new FormData();
@@ -340,7 +340,7 @@ export default {
             },
             id: route.params.id,
           };
-          store.dispatch("renewal/editNewLicense", license).then((res) => {
+          store.dispatch("renewal/editRenewalLicense", license).then((res) => {
             if (res.data.status == "Success") {
               message.value.showFlash = !message.value.showFlash;
               message.value.showLoading = false;
@@ -370,7 +370,7 @@ export default {
             expertLevelId: licenseInfo.expertLevelId,
           },
         };
-        store.dispatch("renewal/addNewLicense", license).then((res) => {
+        store.dispatch("renewal/addRenewalLicense", license).then((res) => {
           if (res.data.status == "Success") {
             let licenseId = res.data.data.id;
             let formData = new FormData();
@@ -432,7 +432,7 @@ export default {
             },
             id: route.params.id,
           };
-          store.dispatch("renewal/editNewLicense", license).then((res) => {
+          store.dispatch("renewal/editRenewalLicense", license).then((res) => {
             if (res.data.status == "Success") {
               let licenseId = route.params.id;
               let formData = new FormData();
@@ -466,7 +466,7 @@ export default {
             },
             id: route.params.id,
           };
-          store.dispatch("renewal/editNewLicense", license).then((res) => {
+          store.dispatch("renewal/editRenewalLicense", license).then((res) => {
             if (res.data.status == "Success") {
               message.value.showFlash = !message.value.showFlash;
               message.value.showLoading = false;
@@ -496,7 +496,7 @@ export default {
             expertLevelId: licenseInfo.expertLevelId,
           },
         };
-        store.dispatch("renewal/addNewLicense", license).then((res) => {
+        store.dispatch("renewal/addRenewalLicense", license).then((res) => {
           if (res.data.status == "Success") {
             let licenseId = res.data.data.id;
             let formData = new FormData();

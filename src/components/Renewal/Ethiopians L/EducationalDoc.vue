@@ -1204,7 +1204,7 @@ export default {
             expertLevelId: this.licenseInfo.expertLevelId,
           },
         };
-        this.$store.dispatch("renewal/addNewLicense", license).then((res) => {
+        this.$store.dispatch("renewal/addRenewalLicense", license).then((res) => {
           let licenseId = res.data.data.id;
           let formData = new FormData();
 
