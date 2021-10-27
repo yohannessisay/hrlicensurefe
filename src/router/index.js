@@ -230,7 +230,7 @@ const routes = [
       import("../components/Reviewer/Detail/CertifiedUsersDetail.vue"),
   },
   {
-    path: "/scanned-certified-user/:guuid",
+    path: "/scanned-certified-user/:applicationType/:userId/:applicationId",
     name: "scannedCertifiedUser",
     component: () => 
       import("../components/Reviewer/Detail/ScannedCertifiedUsers.vue"),

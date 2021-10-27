@@ -1319,5 +1319,14 @@ export default {
     } catch (err) {
       return err;
     }
+  },
+  
+  async getCertifiedUserById ({commit}, id) {
+    try {
+      const resp = await ApiService.get(baseUrl+ "/users/"+id);
+      return resp;
+    } catch (error) {
+      return error;
+    }
   }
 };

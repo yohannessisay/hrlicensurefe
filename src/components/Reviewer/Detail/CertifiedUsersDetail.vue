@@ -310,12 +310,12 @@ export default {
     const fetchQrCode = () => {
       const staticUrl = STATIC_CERTIFICATE_URL;
       const userId = route.params.applicantId;
-
-      console.log("staticUrl", staticUrl, "userId", userId);
+      const applicationId = route.params.applicationId;
+      const applicationType = route.params.applicationType;
 
       const qrParam = { url: null };
 
-      qrParam.url = staticUrl + "/" + userId;
+      qrParam.url = staticUrl + "/" + applicationType + "/" + userId + "/" + applicationId;
       store
         .dispatch("reviewer/getQrCode", qrParam)
         .then((res) => {

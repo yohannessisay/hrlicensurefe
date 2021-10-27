@@ -2,10 +2,8 @@
   <header class="px-10 py-3.5 inset-box-shadow bg-lightBlueB-100">
     <nav class="">
       <main class="flex items-center justify-between">
-        <div class="flex items-center"
-          
-        >
-          <a @click="navigateToHomePage()" >
+        <div class="flex items-center">
+          <a @click="navigateToHomePage()">
             <RenderIllustration
               class=""
               illustration="Logo"
@@ -128,16 +126,16 @@ export default {
     let primaryText = ref("");
     let isUserManager = ref(false);
     const adminName = JSON.parse(localStorage.getItem("allAdminData")).name;
-    const adminRole = JSON.parse(localStorage.getItem("allAdminData")).role.code;
-    
+    const adminRole = JSON.parse(localStorage.getItem("allAdminData")).role
+      .code;
 
     const navigateToHomePage = () => {
-      if(router.currentRoute._value.path === "/admin/review") {
+      if (router.currentRoute._value.path === "/admin/review") {
         emit("navigateToHome", "newLicenseUnassigned");
       } else {
         router.push("/admin/review");
       }
-    }
+    };
 
     watch(search, () => {
       if (props.tab === "Unassigned") {
@@ -321,13 +319,13 @@ export default {
         store.dispatch(
           "reviewerRenewal/getRenewalReturnedToMeSearched",
           search.value
-        )
+        );
       }
       if (props.tab === "renewalReturnedToOthers") {
         store.dispatch(
           "reviewerRenewal/getRenewalReturnedToOthersSearched",
           search.value
-        )
+        );
       }
 
       if (props.tab === "newLicenseUnassigned") {
@@ -460,13 +458,13 @@ export default {
         store.dispatch(
           "reviewerNewLicense/getNewLicenseReturnedToMeSearched",
           search.value
-        )
+        );
       }
       if (props.tab === "newLicenseReturnedToOthers") {
         store.dispatch(
           "reviewerNewLicense/getNewLicenseReturnedToOthersSearched",
           search.value
-        )
+        );
       }
 
       if (props.tab === "verificationUnassigned") {

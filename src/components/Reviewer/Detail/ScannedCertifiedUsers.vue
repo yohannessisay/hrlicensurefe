@@ -111,30 +111,72 @@
     
   </div> -->
 
-  <div class="container">
-      <div class="">
-        <img class="moh-logo" src="../../../assets/image.png" />
-      </div>
-      <div class="title">
-        <h2>Health Professionals Certificate</h2>
-      </div>
-      <div class="name">
-        <h3>Mahlet Samuel Akalu  ማህሌት ሳሙኤል አካሉ</h3> 
-      </div>
-      <div>
-        <h4>Having duly satisfied the requirement of the ministry hereby</h4>
-        <h4>registered and licensed as Dental Medicine</h4>
-      </div>
-      <div>
-        <h4>This license is valid: Oct 09, 2021 - Oct 10, 2026</h4>
-      </div>
-      <div>
-        <h5>Ethiopian Ministry of Health</h5>
-      </div>
+  <div class="container" v-if="isUserCertified && isApplicationTypeFound">
+    <div class="">
+      <img class="moh-logo" src="../../../assets/image.png" />
+    </div>
+    <div class="title">
+      <h2>Health Professionals Certificate</h2>
+    </div>
+    <div class="name">
+      <span class="underline mt-12"
+        >{{ certifiedUser.name ? certifiedUser.name : "" }}
+        {{ certifiedUser.fatherName ? certifiedUser.fatherName : "" }}
+        {{
+          certifiedUser.grandFatherName ? certifiedUser.grandFatherName : ""
+        }}</span
+      >
+      <span class="underline"> {{certifiedUser.alternativeName ? certifiedUser.alternativeName : ""}}
+        {{certifiedUser.alternativeFatherName ? certifiedUser.alternativeFatherName : ""}}
+        {{certifiedUser.alternativeGrandFatherName ? certifiedUser.alternativeGrandFatherName : ""}}
+      </span>
+    </div>
+    <div class="description">
+      <h4 class="flex justify-center mt-8 first-text text-2xl">
+        Having duly satisfied the requirement of the ministry hereby
+      </h4>
+      <h4 class="flex justify-center second-text text-2xl">
+        registered and licensed as
+        <div class="profession">
+          &nbsp;{{
+            certificateDetail.professionalTypes
+              ? certificateDetail.professionalTypes.name
+              : ""
+          }}
+        </div>
+      </h4>
+    </div>
+    <div class="mt-8 summary">
+      <h4>
+        The license is valid:<b
+          >{{ moment(certificateDetail.certifiedDate).format("MMM DD, YYYY") }}
+          -
+          {{ moment(licenseExpireDate).format("MMM DD, YYYY") }}</b
+        >
+      </h4>
+    </div>
+    <div class="mt-8 last">
+      <p class="text-lg">Ethiopian Ministry of Health</p>
+    </div>
+  </div>
+  <div v-else-if="!isUserFound">
+    <div class="flex justify-center content-center">
+      <h1>User is not Found</h1>
+    </div>
+  </div>
+  <div v-else-if="!isUserCertified && isUserFound">
+    <div class="flex justify-center content-center">
+      <h1>User is not Certified</h1>
+    </div>
+  </div>
+  
+  <div v-else-if="!isApplicationTypeFound">
+    <div class="flex justify-center content-center">
+      <h1>{{applicationType}} Application type is not found for this request</h1>
+    </div>
   </div>
 </template>
 <script>
-
 import ReviewerNavBar from "@/components/Reviewer/ReviewerNavBar";
 import Title from "@/sharedComponents/Title";
 import { ref, onMounted } from "vue";
@@ -170,117 +212,145 @@ export default {
     let showApplicationLoading = ref(false);
     let isUserCertified = ref(true);
     let isUserFound = ref(true);
-    let myRegion = ref(true);
+    let isApplicationTypeFound = ref(true);
 
-    const adminRegionId = JSON.parse(localStorage.getItem("allAdminData")).regionId
-    const expertLevelId = JSON.parse(localStorage.getItem("allAdminData")).expertLevelId
+    const applicationType = route.params.applicationType;
+
+    const adminRegionId = JSON.parse(localStorage.getItem("allAdminData"))
+      .regionId;
+    const expertLevelId = JSON.parse(localStorage.getItem("allAdminData"))
+      .expertLevelId;
 
     const fetchCertifiedUser = () => {
       showLoading.value = true;
       store
-        .dispatch("profile/getProfileByUserId", route.params.applicantId)
+        .dispatch("profile/getProfileByUserId", route.params.userId)
         .then((res) => {
           showLoading.value = false;
+          if(res.data.data === undefined) {
+            isUserFound.value = false;
+            return;
+          }
           certifiedUser.value = res.data.data;
           show.value = true;
-        }).catch(error => {
+        })
+        .catch((error) => {
           isUserFound.value = false;
         });
     };
 
-    
     const fetchApplication = () => {
       showApplicationLoading.value = true;
-      if(route.params.applicationType === "Verification") {
+      if (route.params.applicationType === "Verification") {
         store
-        .dispatch(
-          "reviewer/getVerificationApplication",
-          route.params.applicationId
-        )
-        .then((res) => {
-          showApplicationLoading.value = false;
-          certificateDetail.value = res.data.data;
-          if(route.params.applicantId != certificateDetail.value.applicantId) {
-            isUserCertified.value = false;
-          }
-          if (certificateDetail.value.woreda !== null && certificateDetail.value.woreda.zone !== null && certificateDetail.value.woreda.zone.region !== null) {
-          if(adminRegionId != certificateDetail.value.woreda.zone.region.id) {
-            myRegion.value = false
-          } 
-          } else {
+          .dispatch(
+            "reviewer/getVerificationApplication",
+            route.params.applicationId
+          )
+          .then((res) => {
+            showApplicationLoading.value = false;
+            if(res.data.data === undefined) {
+              isApplicationTypeFound.value = false;
+              return;
+            }
+            certificateDetail.value = res.data.data;
             if (
-                expertLevelId != goodStandingUser.value.expertLevelId
-              ) {
-                myRegion.value = false;
-              }
-          }
-          licenseExpireDate.value = moment(certificateDetail.value.certifiedDate)._d;
-          licenseExpireDate.value.setFullYear(licenseExpireDate.value.getFullYear() + 5);
-        }).catch(error => {
-        });
-      }
-      else if(route.params.applicationType === "Good Standing") {
-        store
-        .dispatch(
-          "reviewer/getGoodStandingApplication",
-          route.params.applicationId
-        )
-        .then((res) => {
-          showApplicationLoading.value = false;
-          certificateDetail.value = res.data.data;
-          if(route.params.applicantId != certificateDetail.value.applicantId) {
-            isUserCertified.value = false;
-          }
-          if(adminRegionId != certificateDetail.value.woreda.zone.region.id) {
-            myRegion.value = false
-          }
-          licenseExpireDate.value = moment(certificateDetail.value.certifiedDate)._d;
-          licenseExpireDate.value.setFullYear(licenseExpireDate.value.getFullYear() + 5);
-        });
-      }
-      else if(route.params.applicationType === "New License") {
-        store
-        .dispatch(
-          "reviewer/getNewLicenseApplication",
-          route.params.applicationId
-        )
-        .then((res) => {
-          console.log("renewalal detail", res.data.data)
-          showApplicationLoading.value = false
-          certificateDetail.value = res.data.data;
-          if(route.params.applicantId != certificateDetail.value.applicantId) {
-            isUserCertified.value = false;
-          }
-          if(adminRegionId != certificateDetail.value.woreda.zone.region.id) {
-            myRegion.value = false
-          }
-          licenseExpireDate.value = moment(certificateDetail.value.certifiedDate)._d;
-          licenseExpireDate.value.setFullYear(licenseExpireDate.value.getFullYear() + 5);
-        });
+              route.params.userId != certificateDetail.value.applicantId ||
+              certificateDetail.value.certified === false
+            ) {
+              isUserCertified.value = false;
+            }
+            licenseExpireDate.value = moment(
+              certificateDetail.value.certifiedDate
+            )._d;
+            licenseExpireDate.value.setFullYear(
+              licenseExpireDate.value.getFullYear() + 5
+            );
+          })
+          .catch((error) => {
 
-      } else if(route.params.applicationType === "Renewal") {
+          });
+      } else if (route.params.applicationType === "Good Standing") {
         store
-        .dispatch(
-          "reviewer/getRenewalApplication",
-          route.params.applicationId
-        )
-        .then((res) => {
-          console.log("renewalal detail", res.data.data)
-          showApplicationLoading.value = false;
-          certificateDetail.value = res.data.data;
-          if(route.params.applicantId != certificateDetail.value.applicantId) {
-            isUserCertified.value = false;
-          }
-          if(adminRegionId != certificateDetail.value.woreda.zone.region.id) {
-            myRegion.value = false
-          }
-          licenseExpireDate.value = moment(certificateDetail.value.certifiedDate)._d;
-          licenseExpireDate.value.setFullYear(licenseExpireDate.value.getFullYear() + 5);
-        });
+          .dispatch(
+            "reviewer/getGoodStandingApplication",
+            route.params.applicationId
+          )
+          .then((res) => {
+            showApplicationLoading.value = false;
+            if(res.data.data === undefined) {
+              isApplicationTypeFound.value = false;
+              return;
+            }
+            certificateDetail.value = res.data.data;
+            if (
+              route.params.userId != certificateDetail.value.applicantId ||
+              certificateDetail.value.certified === false
+            ) {
+              isUserCertified.value = false;
+            }
+            licenseExpireDate.value = moment(
+              certificateDetail.value.certifiedDate
+            )._d;
+            licenseExpireDate.value.setFullYear(
+              licenseExpireDate.value.getFullYear() + 5
+            );
+          });
+      } else if (route.params.applicationType === "New License") {
+        store
+          .dispatch(
+            "reviewer/getNewLicenseApplication",
+            route.params.applicationId
+          )
+          .then((res) => {
+            showApplicationLoading.value = false;
+            if(res.data.data === undefined) {
+              isApplicationTypeFound.value = false;
+              return;
+            }
+            certificateDetail.value = res.data.data;
+            console.log("cerdet", certificateDetail.value);
+            if (
+              route.params.userId != certificateDetail.value.applicantId ||
+              certificateDetail.value.certified === false
+            ) {
+              isUserCertified.value = false;
+            }
+            licenseExpireDate.value = moment(
+              certificateDetail.value.certifiedDate
+            )._d;
+            licenseExpireDate.value.setFullYear(
+              licenseExpireDate.value.getFullYear() + 5
+            );
+          });
+      } else if (route.params.applicationType === "Renewal") {
+        store
+          .dispatch(
+            "reviewer/getRenewalApplication",
+            route.params.applicationId
+          )
+          .then((res) => {
+            showApplicationLoading.value = false;
+            if(res.data.data === undefined) {
+              isApplicationTypeFound.value = false;
+              return;
+            }
+            certificateDetail.value = res.data.data;
+            if (
+              route.params.userId != certificateDetail.value.applicantId ||
+              certificateDetail.value.certified === false
+            ) {
+              isUserCertified.value = false;
+            }
+            licenseExpireDate.value = moment(
+              certificateDetail.value.certifiedDate
+            )._d;
+            licenseExpireDate.value.setFullYear(
+              licenseExpireDate.value.getFullYear() + 5
+            );
+          });
       }
-      
     };
-
 
     onMounted(() => {
       fetchCertifiedUser();
@@ -293,8 +363,9 @@ export default {
       certificateDetail,
       isUserCertified,
       isUserFound,
-      myRegion,
       licenseExpireDate,
+      isApplicationTypeFound,
+      applicationType,
     };
   },
 };
@@ -324,6 +395,34 @@ export default {
   color: #000;
   font-size: 40px;
 }
+/* .name {
+  justify-content: space-around;
+} */
+.name .underline {
+  font-size: 28px;
+  color: #707070;
+}
+.description .first-text {
+  font-size: 25px;
+  color: #707070;
+}
+.description h4 {
+  color: #707070;
+  font-size: 25px;
+}
+.profession {
+  font-style: italic;
+  color: #000;
+}
+.summary h4 {
+  color: #707070;
+}
+.last p {
+  color: #707070;
+}
+/* .name h4 > span {
+  font-size: 40px;
+} */
 /* * {
   box-sizing: border-box;
 }

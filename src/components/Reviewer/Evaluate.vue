@@ -199,7 +199,9 @@
                       <input
                         class="max-w-3xl ml-8"
                         type="text"
-                        v-model="newLicense.applicant.profile.alternativeFatherName"
+                        v-model="
+                          newLicense.applicant.profile.alternativeFatherName
+                        "
                       />
                     </div>
                   </div>
@@ -209,7 +211,10 @@
                       <input
                         class="max-w-3xl ml-8"
                         type="text"
-                        v-model="newLicense.applicant.profile.alternativeGrandFatherName"
+                        v-model="
+                          newLicense.applicant.profile
+                            .alternativeGrandFatherName
+                        "
                       />
                     </div>
                   </div>
