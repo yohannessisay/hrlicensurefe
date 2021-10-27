@@ -266,13 +266,13 @@
         </button>
       </div>
       <div
-        v-if="this.draftStatus == 'DEC'"
+        v-if="this.draftStatus == 'DEC' || this.draftStatus == 'CONF'"
         class="flex justify-center mt-8 pb-12"
       >
         <button @click="submitBack">
           Back
         </button>
-        <button @click="draft(this.buttons[0].action)" variant="outline">
+        <button @click="draft('UpdateEvent')" variant="outline">
           Re-apply
         </button>
         <button @click="update(this.buttons[1].action)" variant="outline">
@@ -583,18 +583,18 @@ export default {
         this.docList.push(this.serviceFee);
       }
     }
-    if (this.letterFromOrg != "" && this.letterFromOrg != undefined) {
-      if ("name" in this.letterFromOrg) {
+    if (this.letterfromOrg != "" && this.letterfromOrg != undefined) {
+      if ("name" in this.letterfromOrg) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
             this.documentsArray.findIndex((e) => e.documentTypeCode === "LHI"),
             1
           );
         }
-        var filePreview = await this.blobToBase64(this.letterFromOrg);
-        this.letterFromOrg.docFile = filePreview;
-        this.letterFromOrg.title = "Letter from Hiring Institution";
-        this.docList.push(this.letterFromOrg);
+        var filePreview = await this.blobToBase64(this.letterfromOrg);
+        this.letterfromOrg.docFile = filePreview;
+        this.letterfromOrg.title = "Letter from Hiring Institution";
+        this.docList.push(this.letterfromOrg);
       }
     }
     if (this.renewedLicense != "" && this.renewedLicense != undefined) {

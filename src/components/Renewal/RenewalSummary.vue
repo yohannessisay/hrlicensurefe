@@ -244,13 +244,6 @@
           Back
         </button>
         <button
-          class="draft"
-          @click="draft(this.buttons[0].action)"
-          variant="outline"
-        >
-          {{ this.buttons[0]["name"] }}
-        </button>
-        <button
           class="withdraw"
           @click="withdraw(this.buttons[1].action)"
           variant="outline"

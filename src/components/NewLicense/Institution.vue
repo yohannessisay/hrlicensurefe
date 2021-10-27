@@ -485,9 +485,9 @@ export default {
     },
     setEnglishLanguage() {
       if (this.languageID == 1) {
-        this.nativeEnglishSpeaker = true;
-      } else {
         this.nativeEnglishSpeaker = false;
+      } else {
+        this.nativeEnglishSpeaker = true;
       }
     },
     setPayrollDoc() {},
