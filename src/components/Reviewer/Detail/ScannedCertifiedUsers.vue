@@ -126,9 +126,18 @@
           certifiedUser.grandFatherName ? certifiedUser.grandFatherName : ""
         }}</span
       >
-      <span class="underline"> {{certifiedUser.alternativeName ? certifiedUser.alternativeName : ""}}
-        {{certifiedUser.alternativeFatherName ? certifiedUser.alternativeFatherName : ""}}
-        {{certifiedUser.alternativeGrandFatherName ? certifiedUser.alternativeGrandFatherName : ""}}
+      <span class="underline">
+        {{ certifiedUser.alternativeName ? certifiedUser.alternativeName : "" }}
+        {{
+          certifiedUser.alternativeFatherName
+            ? certifiedUser.alternativeFatherName
+            : ""
+        }}
+        {{
+          certifiedUser.alternativeGrandFatherName
+            ? certifiedUser.alternativeGrandFatherName
+            : ""
+        }}
       </span>
     </div>
     <div class="description">
@@ -169,10 +178,12 @@
       <h1>User is not Certified</h1>
     </div>
   </div>
-  
+
   <div v-else-if="!isApplicationTypeFound">
     <div class="flex justify-center content-center">
-      <h1>{{applicationType}} Application type is not found for this request</h1>
+      <h1>
+        {{ applicationType }} Application type is not found for this request
+      </h1>
     </div>
   </div>
 </template>
@@ -227,7 +238,7 @@ export default {
         .dispatch("profile/getProfileByUserId", route.params.userId)
         .then((res) => {
           showLoading.value = false;
-          if(res.data.data === undefined) {
+          if (res.data.data === undefined) {
             isUserFound.value = false;
             return;
           }
@@ -249,7 +260,7 @@ export default {
           )
           .then((res) => {
             showApplicationLoading.value = false;
-            if(res.data.data === undefined) {
+            if (res.data.data === undefined) {
               isApplicationTypeFound.value = false;
               return;
             }
@@ -267,9 +278,7 @@ export default {
               licenseExpireDate.value.getFullYear() + 5
             );
           })
-          .catch((error) => {
-
-          });
+          .catch((error) => {});
       } else if (route.params.applicationType === "Good Standing") {
         store
           .dispatch(
@@ -278,7 +287,7 @@ export default {
           )
           .then((res) => {
             showApplicationLoading.value = false;
-            if(res.data.data === undefined) {
+            if (res.data.data === undefined) {
               isApplicationTypeFound.value = false;
               return;
             }
@@ -304,7 +313,7 @@ export default {
           )
           .then((res) => {
             showApplicationLoading.value = false;
-            if(res.data.data === undefined) {
+            if (res.data.data === undefined) {
               isApplicationTypeFound.value = false;
               return;
             }
@@ -331,7 +340,7 @@ export default {
           )
           .then((res) => {
             showApplicationLoading.value = false;
-            if(res.data.data === undefined) {
+            if (res.data.data === undefined) {
               isApplicationTypeFound.value = false;
               return;
             }
