@@ -31,6 +31,22 @@
           @applicationTypeSelected="applicationTypeHandler"
           @selectGoodStandingMenu="selectMenu"
         />
+        <ul>
+          <li>
+            <i
+              style="color: white; margin-left:5px"
+              class="fa fa-file-text"
+              aria-hidden="true"
+            ></i>
+            <router-link
+              style="color:white; font-size: 18px; margin-left:5px"
+              to="/admin/report"
+            >
+              Report
+            </router-link>
+          </li>
+        </ul>
+
         <!-- start verification Side Nav here -->
         <!-- end verification Side Nav here -->
 
@@ -93,5 +109,9 @@ export default {
 <style>
 li {
   cursor: pointer;
+}
+li router-link {
+  color: white;
+  font-size: 90px;
 }
 </style>

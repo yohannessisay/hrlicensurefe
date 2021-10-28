@@ -365,11 +365,24 @@
                       </td>
                       <td
                         class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
+                        v-if="item.region"
                       >
                         <div class="flex">
                           <div class="ml-3">
                             <p class="text-gray-900 whitespace-no-wrap">
-                              Region
+                              {{ item.region.name }}
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td
+                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
+                        v-else
+                      >
+                        <div class="flex">
+                          <div class="ml-3">
+                            <p class="text-gray-900 whitespace-no-wrap">
+                              ---
                             </p>
                           </div>
                         </div>
