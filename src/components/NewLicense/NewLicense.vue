@@ -572,7 +572,7 @@ export default {
         params == null ||
         params == undefined ||
         params == "" ||
-        params == 0
+        params == 1
       ) {
         this.displayEnglishLanguageOption = false;
       } else {
