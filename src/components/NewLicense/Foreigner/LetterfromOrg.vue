@@ -286,7 +286,6 @@ export default {
     };
     const submit = () => {
       emit("changeActiveState");
-      console.log(letterFile);
       store.dispatch("newlicense/setLetterfromOrg", letterFile);
     };
     const submitBack = () => {
