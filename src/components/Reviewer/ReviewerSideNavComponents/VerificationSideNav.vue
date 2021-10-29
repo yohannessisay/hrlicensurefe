@@ -373,7 +373,7 @@
               </div>
               <!-- Declined ends here -->
 
-              <!-- <li
+              <li
                 class="mb-2"
               >
                 <a href="https://hrdelk.sandboxaddis.com/s/hrl/app/kibana#/dashboard/9361b100-388d-11ec-9b4d-1fc6319d2633?_a=(description:'',filters:!(),fullScreenMode:!f,options:(hidePanelTitles:!f,useMargins:!t),panels:!((embeddableConfig:(title:Applications),gridData:(h:7,i:'97b6d373-c1d8-4f29-93e3-36eae67d1920',w:17,x:0,y:0),id:cdd814b0-388c-11ec-9b4d-1fc6319d2633,panelIndex:'97b6d373-c1d8-4f29-93e3-36eae67d1920',title:Applications,type:visualization,version:'7.7.0'),(embeddableConfig:(title:'Experts%20Engaged'),gridData:(h:7,i:'53e04a31-8d65-4ded-b8e9-470d3331ab8e',w:17,x:17,y:0),id:'09183b90-388d-11ec-9b4d-1fc6319d2633',panelIndex:'53e04a31-8d65-4ded-b8e9-470d3331ab8e',title:'Experts%20Engaged',type:visualization,version:'7.7.0'),(embeddableConfig:(title:'Application%20by%20Status'),gridData:(h:15,i:'6a659c46-ec9c-4afc-a509-dafa66a91f96',w:30,x:0,y:7),id:'0821ff40-388e-11ec-9b4d-1fc6319d2633',panelIndex:'6a659c46-ec9c-4afc-a509-dafa66a91f96',title:'Application%20by%20Status',type:visualization,version:'7.7.0'),(embeddableConfig:(title:'Application%20by%20Gender'),gridData:(h:15,i:'9e68d15f-f19d-46b6-a5e4-a900166da0e5',w:18,x:30,y:7),id:'60b6d8b0-388e-11ec-9b4d-1fc6319d2633',panelIndex:'9e68d15f-f19d-46b6-a5e4-a900166da0e5',title:'Application%20by%20Gender',type:visualization,version:'7.7.0'),(embeddableConfig:(legendOpen:!f,title:'Application%20by%20Profession',vis:(legendOpen:!t)),gridData:(h:15,i:ad2f8468-66a5-4008-8359-e2de56f94404,w:24,x:0,y:22),id:'9afe95d0-388e-11ec-9b4d-1fc6319d2633',panelIndex:ad2f8468-66a5-4008-8359-e2de56f94404,title:'Application%20by%20Profession',type:visualization,version:'7.7.0'),(embeddableConfig:(title:'Application%20by%20Region'),gridData:(h:15,i:'86590a70-8d96-4ea0-a2c5-d36198e09518',w:24,x:24,y:22),id:f231b900-3865-11ec-9b4d-1fc6319d2633,panelIndex:'86590a70-8d96-4ea0-a2c5-d36198e09518',title:'Application%20by%20Region',type:visualization,version:'7.7.0')),query:(language:kuery,query:''),timeRestore:!f,title:verification,viewMode:view)&_g=(filters:!(),refreshInterval:(pause:!t,value:0),time:(from:now-30d,to:now))" 
@@ -381,7 +381,7 @@
                   <i class="mr-2 far fa-address-book fa-x fa-light"></i>
                   Dashboard
                 </a>
-              </li> -->
+              </li>
             </ul>
           </div>
         </div>
