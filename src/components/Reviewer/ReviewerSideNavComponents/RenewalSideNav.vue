@@ -686,6 +686,16 @@
                 @dropDownListHandler="dropDownListHandler"
               />
 
+              <!-- <li
+                class="mb-2"
+              >
+                <a href="https://hrdelk.sandboxaddis.com/s/hrl/app/kibana#/dashboard/c1cd0480-3884-11ec-9b4d-1fc6319d2633?_a=(description:'',filters:!(),fullScreenMode:!f,options:(hidePanelTitles:!f,useMargins:!t),panels:!((embeddableConfig:(title:Applications),gridData:(h:7,i:'6fc0fb76-a9ea-49a2-82ec-029cdcf67de7',w:16,x:0,y:0),id:def43e70-3884-11ec-9b4d-1fc6319d2633,panelIndex:'6fc0fb76-a9ea-49a2-82ec-029cdcf67de7',title:Applications,type:visualization,version:'7.7.0'),(embeddableConfig:(title:'Experts%20Engaged'),gridData:(h:7,i:'4751f4c8-812c-4990-8489-426b96729d70',w:14,x:16,y:0),id:'267a5540-3885-11ec-9b4d-1fc6319d2633',panelIndex:'4751f4c8-812c-4990-8489-426b96729d70',title:'Experts%20Engaged',type:visualization,version:'7.7.0'),(embeddableConfig:(title:'Application%20by%20Status'),gridData:(h:15,i:'2725aa8d-8fcf-4dd2-80fc-3397e908a9c4',w:27,x:0,y:7),id:f91a6600-3887-11ec-9b4d-1fc6319d2633,panelIndex:'2725aa8d-8fcf-4dd2-80fc-3397e908a9c4',title:'Application%20by%20Status',type:visualization,version:'7.7.0'),(embeddableConfig:(title:'Application%20by%20Gender'),gridData:(h:15,i:a909e9a8-0986-4105-9a0a-5584b4fbb079,w:21,x:27,y:7),id:'935f39a0-3885-11ec-9b4d-1fc6319d2633',panelIndex:a909e9a8-0986-4105-9a0a-5584b4fbb079,title:'Application%20by%20Gender',type:visualization,version:'7.7.0'),(embeddableConfig:(title:'Application%20by%20Profession'),gridData:(h:15,i:'0cf63039-863b-4f18-93e5-2a2e2a41733b',w:24,x:0,y:22),id:'8e6f9320-3887-11ec-9b4d-1fc6319d2633',panelIndex:'0cf63039-863b-4f18-93e5-2a2e2a41733b',title:'Application%20by%20Profession',type:visualization,version:'7.7.0'),(embeddableConfig:(title:'Application%20by%20Region'),gridData:(h:15,i:'5bb96718-de8c-40f2-8a97-2329bd7bef2f',w:24,x:24,y:22),id:'9f7eb170-3867-11ec-9b4d-1fc6319d2633',panelIndex:'5bb96718-de8c-40f2-8a97-2329bd7bef2f',title:'Application%20by%20Region',type:visualization,version:'7.7.0')),query:(language:kuery,query:''),timeRestore:!f,title:renewal,viewMode:view)&_g=(filters:!(),refreshInterval:(pause:!t,value:0),time:(from:now-7d,to:now))" 
+                target ="_blank" class=" text-base" style="color: white; ">
+                  <i class="mr-2 far fa-address-book fa-x fa-light"></i>
+                  Dashboard
+                </a>
+              </li> -->
+
               <!-- All Licensed Applications starts here -->
 
               <li

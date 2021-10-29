@@ -253,7 +253,8 @@ import Spinner from "@/sharedComponents/Spinner";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import backgroundImage from "../../../assets/hrl_background_certificate.jpg";
-import oromiaCertificateBackground from "../../../assets/oromia_certificate_background.jpg";
+import oromiaCertificateBackground from "../../../assets/Oromiya_certificate.jpg";
+import addisAbabaCertificateBackground from "../../../assets/AA_certificate.jpg";
 import qrcode_image from "../../../assets/qrcode_image.jpg";
 import certifiedUserImage from "../../../assets/certified_user.jpg";
 import AmharicFont from "../Configurations/amharicFont.js";
@@ -458,9 +459,12 @@ export default {
       const userImage = certifiedUser.value.photo;
       if (certificateDetail.value.reviewer.expertLevel.code === "FED") {
         doc.addImage(backgroundImage, "JPEG", 0, 0, 298, 213, undefined, "FAST");
-      } else if(certificateDetail.value.reviewer.region.name === "Oromia") {
+      } else if(certificateDetail.value.reviewer.region.code === "ORO") {
         doc.addImage(oromiaCertificateBackground, "JPEG", 0, 0, 298, 213, undefined, "FAST");
+      } else if(certificateDetail.value.reviewer.region.code === "AA") {
+        doc.addImage(addisAbabaCertificateBackground, "JPEG", 0, 0, 298, 213, undefined, "FAST");
       }
+
 
       // doc.addImage(backgroundImage, "JPEG", 0, 0, 298, 213, undefined, "FAST");
       doc.addImage(imageSrc.value, "JPG", 250, 8, 40, 40);
