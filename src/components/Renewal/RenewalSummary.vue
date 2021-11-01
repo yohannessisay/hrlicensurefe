@@ -442,23 +442,22 @@ export default {
         this.docList.push(this.previousLicense);
       }
     }
-    console.log(this.renewedLicense)
-    // if (this.renewedLicense != "" && this.renewedLicense != undefined) {
-    //   if ("name" in this.renewedLicense) {
-    //     if (this.draftId != undefined) {
-    //       this.documentsArray.splice(
-    //         this.documentsArray.findIndex(
-    //           (e) => e.documentTypeCode === "RLOTO"
-    //         ),
-    //         1
-    //       );
-    //     }
-    //     var filePreview = await this.blobToBase64(this.renewedLicense);
-    //     this.renewedLicense.docFile = filePreview;
-    //     this.renewedLicense.title = "Renewed License";
-    //     this.docList.push(this.renewedLicense);
-    //   }
-    // }
+    if (this.renewedLicense != "" && this.renewedLicense != undefined) {
+      if ("name" in this.renewedLicense) {
+        if (this.draftId != undefined) {
+          this.documentsArray.splice(
+            this.documentsArray.findIndex(
+              (e) => e.documentTypeCode === "RLOTO"
+            ),
+            1
+          );
+        }
+        var filePreview = await this.blobToBase64(this.renewedLicense);
+        this.renewedLicense.docFile = filePreview;
+        this.renewedLicense.title = "Renewed License";
+        this.docList.push(this.renewedLicense);
+      }
+    }
     if (this.supportLetter != "" && this.supportLetter != undefined) {
       if ("name" in this.supportLetter) {
         if (this.draftId != undefined) {

@@ -27,15 +27,15 @@
         </h2>
         <TitleWithIllustration
           illustration="Certificate"
-          message="COC"
+          message="Letter from Hiring Institution"
           class="mt-8"
         />
         <span class="flex justify-center">{{ documentMessage }}</span>
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
-          <div class="flex justify-center">
+          <div class="flex justify-center mb-10">
             <div>
               <span>
-                <h2>{{ COCFile.name }}</h2>
+                <h2>{{ letterFile.name }}</h2>
                 <h2>{{ fileSize }}</h2>
               </span>
               <span v-if="showUpload">
@@ -44,11 +44,11 @@
                   <div class="dropbox">
                     <input
                       type="file"
-                      id="COCFile"
+                      id="letterFile"
                       class="photoFile"
-                      ref="COCFileP"
+                      ref="letterFileP"
                       v-on:change="handleFileUpload()"
-                      style="margin-bottom: 15px !important"
+                      style="margin-bottom: 15px !important;"
                       accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
                     />
                     <p>
@@ -58,7 +58,6 @@
                   </div>
                 </label>
               </span>
-
               <picture v-if="!showUpload && isImage">
                 <p>
                   <a href="javascript:void(0)" @click="reset()">Upload again</a>
@@ -176,17 +175,20 @@ import Spinner from "@/sharedComponents/Spinner";
 import MESSAGE from "../../../composables/documentMessage";
 
 export default {
+  props: ["activeState"],
   components: {
     TitleWithIllustration,
     FlashMessage,
     ErrorFlashMessage,
     Spinner,
   },
-  props: ["activeState"],
+
   setup(props, { emit }) {
     const store = useStore();
     const route = useRoute();
     const router = useRouter();
+
+    const basePath = "https://storage.googleapis.com/hris-lisence-dev/";
 
     let message = ref({
       showFlash: false,
@@ -196,27 +198,23 @@ export default {
 
     let fileSize = ref("");
 
-    const basePath = "https://storage.googleapis.com/hris-lisence-dev/";
-
     let dataChanged = ref(false);
-
-    let COCFile = ref("");
-    let COCFileP = ref("");
+    let letterFile = ref("");
+    let letterFileP = ref("");
     let showPreview = ref(false);
     let filePreview = ref("");
     let showUpload = ref(true);
     let isImage = ref(false);
     let isPdf = ref(false);
+
+    let letterFileBack = ref("");
+
+    let draftStatus = ref("");
     let buttons = [];
     let documentSpecs = ref([]);
     let userId = +localStorage.getItem("userId");
     let licenseInfo = ref("");
     let draftData = ref("");
-    let draftStatus = ref("");
-
-    let cocBack = ref("");
-
-    let documentMessage = ref("");
 
     let declinedFields = ref([]);
     let acceptedFields = ref([]);
@@ -224,6 +222,8 @@ export default {
 
     let declinedFieldsCheck = ref(false);
     let acceptedFieldsCheck = ref(false);
+
+    let documentMessage = ref("");
 
     let passport = ref("");
     let healthExamCert = ref("");
@@ -242,20 +242,18 @@ export default {
     const reset = () => {
       showUpload.value = true;
       showPreview.value = false;
-      COCFile.value = "";
+      letterFile.value = "";
       filePreview.value = "";
       isImage.value = true;
       fileSize.value = "";
       isPdf.value = false;
     };
-
     const handleFileUpload = () => {
       dataChanged.value = true;
       showUpload.value = false;
-      COCFile.value = COCFileP.value.files[0];
+      letterFile.value = letterFileP.value.files[0];
       let reader = new FileReader();
-      isImage.value = true;
-      let fileS = COCFile.value.size;
+      let fileS = letterFile.value.size;
       if (fileS > 0 && fileS < 1000) {
         fileSize.value += "B";
       } else if (fileS > 1000 && fileS < 1000000) {
@@ -272,24 +270,16 @@ export default {
         false
       );
 
-      if (COCFile.value) {
-        if (/\.(jpe?g|png|gif)$/i.test(COCFile.value.name)) {
+      if (letterFile.value) {
+        if (/\.(jpe?g|png|gif)$/i.test(letterFile.value.name)) {
           isImage.value = true;
-          reader.readAsDataURL(COCFile.value);
-        } else if (/\.(pdf)$/i.test(COCFile.value.name)) {
+          reader.readAsDataURL(letterFile.value);
+        } else if (/\.(pdf)$/i.test(letterFile.value.name)) {
           isImage.value = false;
           isPdf.value = true;
-          reader.readAsDataURL(COCFile.value);
+          reader.readAsDataURL(letterFile.value);
         }
       }
-    };
-    const submit = () => {
-      emit("changeActiveState");
-      store.dispatch("renewal/setCOC", COCFile);
-    };
-    const submitBack = () => {
-      emit("changeActiveStateMinus");
-      store.dispatch("renewal/setCOC", COCFile);
     };
     buttons = store.getters["renewal/getButtons"];
     documentSpecs = store.getters["renewal/getDocumentSpec"];
@@ -309,6 +299,85 @@ export default {
     cpd = store.getters["renewal/getRenewalCpd"];
     letterFromHiringManager = store.getters["renewal/getRenewalLicense"];
 
+    const submit = () => {
+      emit("changeActiveState");
+      store.dispatch("renewal/setRenewalLetter", letterFile);
+    };
+    const submitBack = () => {
+      emit("changeActiveStateMinus");
+      store.dispatch("renewal/setRenewalLetter", letterFile);
+    };
+
+    onMounted(() => {
+      documentMessage.value = MESSAGE.DOC_MESSAGE;
+      letterFileBack = store.getters["renewal/getRenewalLicense"];
+      if (
+        letterFileBack &&
+        letterFileBack !== undefined &&
+        letterFileBack !== null &&
+        letterFileBack !== ""
+      ) {
+        dataChanged.value = true;
+        showUpload.value = false;
+        letterFile.value = letterFileBack;
+        let reader = new FileReader();
+        let fileS = letterFile.value.size;
+        if (fileS > 0 && fileS < 1000) {
+          fileSize.value += "B";
+        } else if (fileS > 1000 && fileS < 1000000) {
+          fileSize.value = fileS / 1000 + "kB";
+        } else {
+          fileSize.value = fileS / 1000000 + "MB";
+        }
+        reader.addEventListener(
+          "load",
+          function() {
+            showPreview.value = true;
+            filePreview.value = reader.result;
+          },
+          false
+        );
+        if (letterFile.value) {
+          if (/\.(jpe?g|png|gif)$/i.test(letterFile.value.name)) {
+            isImage.value = true;
+            reader.readAsDataURL(letterFile.value);
+          } else if (/\.(pdf)$/i.test(letterFile.value.name)) {
+            isImage.value = false;
+            isPdf.value = true;
+            reader.readAsDataURL(letterFile.value);
+          }
+        }
+      }
+      declinedFields = store.getters["renewal/getDeclinedFields"];
+      acceptedFields = store.getters["renewal/getAcceptedFields"];
+      remark = store.getters["renewal/getRemark"];
+      if (declinedFields != undefined && declinedFields.includes("LHI")) {
+        declinedFieldsCheck.value = true;
+      }
+      if (acceptedFields != undefined && acceptedFields.includes("LHI")) {
+        acceptedFieldsCheck.value = true;
+      }
+      buttons = store.getters["renewal/getButtons"];
+      draftData = store.getters["renewal/getDraft"];
+      if (route.params.id) {
+        draftStatus.value = route.params.status;
+        for (let i = 0; i < draftData.documents.length; i++) {
+          if (draftData.documents[i].documentTypeCode == "LHI") {
+            showUpload.value = false;
+            if (draftData.documents[i].fileName.split(".")[1] == "pdf") {
+              isPdf.value = true;
+            } else {
+              isImage.value = true;
+            }
+
+            letterFile.value = draftData.documents[i];
+            showPreview.value = true;
+            filePreview.value = basePath + draftData.documents[i].filePath;
+          }
+        }
+      }
+    });
+
     const draft = (action) => {
       message.value.showLoading = true;
       if (route.params.id) {
@@ -325,8 +394,8 @@ export default {
               let licenseId = route.params.id;
               let formData = new FormData();
               formData.append(
-                documentSpecs[11].documentType.code,
-                COCFile.value
+                documentSpecs[19].documentType.code,
+                letterFile.value
               );
               let payload = { document: formData, id: licenseId };
               store
@@ -339,8 +408,7 @@ export default {
                       router.push({ path: "/menu" });
                     }, 1500);
                   } else {
-                    message.value.showErrorFlash = !message.value
-                      .showErrorFlash;
+                    showErrorFlash.value = !showErrorFlash.value;
                   }
                 })
                 .catch((err) => {});
@@ -362,7 +430,7 @@ export default {
                 router.push({ path: "/menu" });
               }, 1500);
             } else {
-              message.value.showErrorFlash = !message.value.showErrorFlash;
+              showErrorFlash.value = !showErrorFlash.value;
             }
           });
         }
@@ -380,7 +448,6 @@ export default {
             residenceWoredaId: licenseInfo.residenceWoredaId,
             paymentSlip: null,
             occupationTypeId: licenseInfo.occupationTypeId,
-            nativeLanguageId: licenseInfo.nativeLanguageId,
             expertLevelId: licenseInfo.expertLevelId,
           },
         };
@@ -388,9 +455,10 @@ export default {
           if (res.data.status == "Success") {
             let licenseId = res.data.data.id;
             let formData = new FormData();
+
             formData.append(documentSpecs[0].documentType.code, passport);
             formData.append(documentSpecs[2].documentType.code, healthExamCert);
-            formData.append(documentSpecs[11].documentType.code, COCFile.value);
+            formData.append(documentSpecs[11].documentType.code, coc);
             formData.append(documentSpecs[24].documentType.code, degree);
             formData.append(documentSpecs[25].documentType.code, diploma);
             if (educationDoc != undefined) {
@@ -426,7 +494,7 @@ export default {
             formData.append(documentSpecs[4].documentType.code, cpd);
             formData.append(
               documentSpecs[19].documentType.code,
-              letterFromHiringManager
+              letterFile.value
             );
 
             let payload = { document: formData, id: licenseId };
@@ -440,7 +508,7 @@ export default {
                     router.push({ path: "/menu" });
                   }, 1500);
                 } else {
-                  message.value.showErrorFlash = !message.value.showErrorFlash;
+                  showErrorFlash.value = !showErrorFlash.value;
                 }
               })
               .catch((err) => {});
@@ -464,8 +532,8 @@ export default {
               let licenseId = route.params.id;
               let formData = new FormData();
               formData.append(
-                documentSpecs[11].documentType.code,
-                COCFile.value
+                documentSpecs[19].documentType.code,
+                letterFile.value
               );
               let payload = { document: formData, id: licenseId };
               store
@@ -519,7 +587,6 @@ export default {
             residenceWoredaId: licenseInfo.residenceWoredaId,
             paymentSlip: null,
             occupationTypeId: licenseInfo.occupationTypeId,
-            nativeLanguageId: licenseInfo.nativeLanguageId,
             expertLevelId: licenseInfo.expertLevelId,
           },
         };
@@ -527,7 +594,10 @@ export default {
           if (res.data.status == "Success") {
             let licenseId = res.data.data.id;
             let formData = new FormData();
-            formData.append(documentSpecs[11].documentType.code, COCFile.value);
+            formData.append(
+              documentSpecs[19].documentType.code,
+              letterFile.value
+            );
             let payload = { document: formData, id: licenseId };
             store
               .dispatch("renewal/uploadDocuments", payload)
@@ -548,7 +618,7 @@ export default {
       }
     };
     const withdraw = (action) => {
-      message.value.showLoading = !message.value.showLoading;
+      message.showLoading.value = !message.showLoading.value;
       let withdrawObj = {
         action: action,
         data: draftData,
@@ -558,91 +628,21 @@ export default {
         withdrawData: withdrawObj,
       };
       store.dispatch("renewal/withdraw", payload).then((res) => {
-        if (res) {
-          message.value.showFlash = !message.value.showFlash;
-          message.value.showLoading = false;
+        if (res.data.status == "Success") {
+          message.showFlash.value = !message.showFlash.value;
+          message.showLoading.value = !message.showLoading.value;
           setTimeout(() => {
             router.push({ path: "/menu" });
           }, 1500);
         } else {
-          message.value.showErrorFlash = !message.value.showErrorFlash;
+          message.showErrorFlash.value = !message.showErrorFlash.value;
         }
       });
     };
-
-    onMounted(() => {
-      documentMessage.value = MESSAGE.DOC_MESSAGE;
-      cocBack = store.getters["renewal/getCoc"];
-      if (
-        cocBack &&
-        cocBack !== undefined &&
-        cocBack !== null &&
-        cocBack !== ""
-      ) {
-        dataChanged.value = true;
-        showUpload.value = false;
-        COCFile.value = cocBack;
-        let reader = new FileReader();
-        let fileS = COCFile.value.size;
-        if (fileS > 0 && fileS < 1000) {
-          fileSize.value += "B";
-        } else if (fileS > 1000 && fileS < 1000000) {
-          fileSize.value = fileS / 1000 + "kB";
-        } else {
-          fileSize.value = fileS / 1000000 + "MB";
-        }
-        reader.addEventListener(
-          "load",
-          function() {
-            showPreview.value = true;
-            filePreview.value = reader.result;
-          },
-          false
-        );
-        if (COCFile.value) {
-          if (/\.(jpe?g|png|gif)$/i.test(COCFile.value.name)) {
-            isImage.value = true;
-            reader.readAsDataURL(COCFile.value);
-          } else if (/\.(pdf)$/i.test(COCFile.value.name)) {
-            isImage.value = false;
-            isPdf.value = true;
-            reader.readAsDataURL(COCFile.value);
-          }
-        }
-      }
-      declinedFields = store.getters["renewal/getDeclinedFields"];
-      acceptedFields = store.getters["renewal/getAcceptedFields"];
-      remark = store.getters["renewal/getRemark"];
-      if (declinedFields != undefined && declinedFields.includes("COC")) {
-        declinedFieldsCheck.value = true;
-      }
-      if (acceptedFields != undefined && acceptedFields.includes("COC")) {
-        acceptedFieldsCheck.value = true;
-      }
-      buttons = store.getters["renewal/getButtons"];
-      draftData = store.getters["renewal/getDraft"];
-      if (route.params.id) {
-        draftStatus.value = route.params.status;
-        for (let i = 0; i < draftData.documents.length; i++) {
-          if (draftData.documents[i].documentTypeCode == "COC") {
-            showUpload.value = false;
-            if (draftData.documents[i].fileName.split(".")[1] == "pdf") {
-              isPdf.value = true;
-            } else {
-              isImage.value = true;
-            }
-
-            COCFile.value = draftData.documents[i];
-            showPreview.value = true;
-            filePreview.value = basePath + draftData.documents[i].filePath;
-          }
-        }
-      }
-    });
     return {
-      COCFile,
-      COCFileP,
-      cocBack,
+      letterFile,
+      letterFileP,
+      letterFileBack,
       showPreview,
       filePreview,
       showUpload,
@@ -656,9 +656,9 @@ export default {
       withdraw,
       fileSize,
       buttons,
-      draftData,
       draftStatus,
       update,
+      draftData,
       basePath,
       message,
       dataChanged,
@@ -689,6 +689,7 @@ export default {
 </script>
 <style>
 @import "../../../styles/document-upload.css";
+
 img {
   width: 250px;
   height: 250px;

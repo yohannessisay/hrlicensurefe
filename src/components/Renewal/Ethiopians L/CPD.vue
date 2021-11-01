@@ -227,16 +227,17 @@ export default {
 
     let passport = ref("");
     let healthExamCert = ref("");
-    let professionalDoc = [];
-    let workExperience = ref("");
     let coc = ref("");
     let degree = ref("");
     let diploma = ref("");
-    let transcript = ref("");
     let educationDoc = [];
     let payroll = ref("");
-    let previousLicense = ref("");
     let supportLetter = ref("");
+    let transcript = ref("");
+    let workExperience = ref("");
+    let previousLicense = ref("");
+    let cpd = ref("");
+    let letterFromHiringManager = ref("");
 
     const reset = () => {
       showUpload.value = true;
@@ -286,16 +287,17 @@ export default {
 
     passport = store.getters["renewal/getPassport"];
     healthExamCert = store.getters["renewal/getRenewalHealthExamCert"];
-    professionalDoc = store.getters["renewal/getProfessionalDocuments"];
-    workExperience = store.getters["renewal/getRenewalWorkExperience"];
-    coc = store.getters["renewal/getCoc"];
+    coc = store.getters["renewal/getRenewalCpd"];
     degree = store.getters["renewal/getDegree"];
     diploma = store.getters["renewal/getDiploma"];
-    transcript = store.getters["renewal/getTranscript"];
     educationDoc = store.getters["renewal/getEducationalDocuments"];
     payroll = store.getters["renewal/getPayroll"];
-    previousLicense = store.getters["renewal/getPreviousLicense"];
     supportLetter = store.getters["renewal/getSupportLetter"];
+    transcript = store.getters["renewal/getTranscript"];
+    workExperience = store.getters["renewal/getRenewalWorkExperience"];
+    previousLicense = store.getters["renewal/getPreviousLicense"];
+    cpd = store.getters["renewal/getRenewalCpd"];
+    letterFromHiringManager = store.getters["renewal/getRenewalLicense"];
 
     const submit = () => {
       emit("changeActiveState");
@@ -456,26 +458,9 @@ export default {
             let formData = new FormData();
             formData.append(documentSpecs[0].documentType.code, passport);
             formData.append(documentSpecs[2].documentType.code, healthExamCert);
-            if (professionalDoc != undefined) {
-              formData.append(
-                documentSpecs[8].documentType.code,
-                professionalDoc[0]
-              );
-              formData.append(
-                documentSpecs[9].documentType.code,
-                professionalDoc[1]
-              );
-              formData.append(
-                documentSpecs[10].documentType.code,
-                professionalDoc[2]
-              );
-            }
-            formData.append(documentSpecs[5].documentType.code, workExperience);
-            formData.append(documentSpecs[4].documentType.code, cpdFile.value);
             formData.append(documentSpecs[11].documentType.code, coc);
             formData.append(documentSpecs[24].documentType.code, degree);
             formData.append(documentSpecs[25].documentType.code, diploma);
-            formData.append(documentSpecs[26].documentType.code, transcript);
             if (educationDoc != undefined) {
               formData.append(
                 documentSpecs[12].documentType.code,
@@ -499,11 +484,18 @@ export default {
               );
             }
             formData.append(documentSpecs[23].documentType.code, payroll);
+            formData.append(documentSpecs[17].documentType.code, supportLetter);
+            formData.append(documentSpecs[26].documentType.code, transcript);
+            formData.append(documentSpecs[5].documentType.code, workExperience);
             formData.append(
               documentSpecs[6].documentType.code,
               previousLicense
             );
-            formData.append(documentSpecs[17].documentType.code, supportLetter);
+            formData.append(documentSpecs[4].documentType.code, cpdFile.value);
+            formData.append(
+              documentSpecs[19].documentType.code,
+              letterFromHiringManager
+            );
             let payload = { document: formData, id: licenseId };
             store
               .dispatch("renewal/uploadDocuments", payload)
@@ -673,6 +665,20 @@ export default {
       declinedFieldsCheck,
       acceptedFieldsCheck,
       documentMessage,
+
+      passport,
+      healthExamCert,
+      coc,
+      degree,
+      diploma,
+      educationDoc,
+      payroll,
+      supportLetter,
+      transcript,
+      workExperience,
+      previousLicense,
+      cpd,
+      letterFromHiringManager,
     };
   },
 };
