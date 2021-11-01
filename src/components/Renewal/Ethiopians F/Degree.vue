@@ -27,15 +27,15 @@
         </h2>
         <TitleWithIllustration
           illustration="Certificate"
-          message="CPD"
+          message="Degree"
           class="mt-8"
         />
         <span class="flex justify-center">{{ documentMessage }}</span>
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
-          <div class="flex justify-center mb-10">
+          <div class="flex justify-center">
             <div>
               <span>
-                <h2>{{ cpdFile.name }}</h2>
+                <h2>{{ DegreeFile.name }}</h2>
                 <h2>{{ fileSize }}</h2>
               </span>
               <span v-if="showUpload">
@@ -44,11 +44,11 @@
                   <div class="dropbox">
                     <input
                       type="file"
-                      id="cpdFile"
+                      id="DegreeFile"
                       class="photoFile"
-                      ref="cpdFileP"
+                      ref="DegreeFileP"
                       v-on:change="handleFileUpload()"
-                      style="margin-bottom: 15px !important;"
+                      style="margin-bottom: 15px !important"
                       accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
                     />
                     <p>
@@ -58,6 +58,7 @@
                   </div>
                 </label>
               </span>
+
               <picture v-if="!showUpload && isImage">
                 <p>
                   <a href="javascript:void(0)" @click="reset()">Upload again</a>
@@ -175,20 +176,17 @@ import Spinner from "@/sharedComponents/Spinner";
 import MESSAGE from "../../../composables/documentMessage";
 
 export default {
-  props: ["activeState"],
   components: {
     TitleWithIllustration,
     FlashMessage,
     ErrorFlashMessage,
     Spinner,
   },
-
+  props: ["activeState"],
   setup(props, { emit }) {
     const store = useStore();
     const route = useRoute();
     const router = useRouter();
-
-    const basePath = "https://storage.googleapis.com/hris-lisence-dev/";
 
     let message = ref({
       showFlash: false,
@@ -198,29 +196,31 @@ export default {
 
     let fileSize = ref("");
 
+    const basePath = "https://storage.googleapis.com/hris-lisence-dev/";
+
     let dataChanged = ref(false);
-    let cpdFile = ref("");
-    let cpdFileP = ref("");
+
+    let DegreeFile = ref("");
+    let DegreeFileP = ref("");
     let showPreview = ref(false);
     let filePreview = ref("");
     let showUpload = ref(true);
     let isImage = ref(false);
     let isPdf = ref(false);
-
-    let cpdBack = ref("");
-
-    let buttons = ref([]);
+    let buttons = [];
     let documentSpecs = ref([]);
     let userId = +localStorage.getItem("userId");
     let licenseInfo = ref("");
     let draftData = ref("");
     let draftStatus = ref("");
 
+    let degreeBack = ref("");
+
+    let documentMessage = ref("");
+
     let declinedFields = ref([]);
     let acceptedFields = ref([]);
     let remark = ref("");
-
-    let documentMessage = ref("");
 
     let declinedFieldsCheck = ref(false);
     let acceptedFieldsCheck = ref(false);
@@ -240,18 +240,20 @@ export default {
     const reset = () => {
       showUpload.value = true;
       showPreview.value = false;
-      cpdFile.value = "";
+      DegreeFile.value = "";
       filePreview.value = "";
       isImage.value = true;
       fileSize.value = "";
       isPdf.value = false;
     };
+
     const handleFileUpload = () => {
       dataChanged.value = true;
       showUpload.value = false;
-      cpdFile.value = cpdFileP.value.files[0];
+      DegreeFile.value = DegreeFileP.value.files[0];
       let reader = new FileReader();
-      let fileS = cpdFile.value.size;
+      isImage.value = true;
+      let fileS = DegreeFile.value.size;
       if (fileS > 0 && fileS < 1000) {
         fileSize.value += "B";
       } else if (fileS > 1000 && fileS < 1000000) {
@@ -268,16 +270,24 @@ export default {
         false
       );
 
-      if (cpdFile.value) {
-        if (/\.(jpe?g|png|gif)$/i.test(cpdFile.value.name)) {
+      if (DegreeFile.value) {
+        if (/\.(jpe?g|png|gif)$/i.test(DegreeFile.value.name)) {
           isImage.value = true;
-          reader.readAsDataURL(cpdFile.value);
-        } else if (/\.(pdf)$/i.test(cpdFile.value.name)) {
+          reader.readAsDataURL(DegreeFile.value);
+        } else if (/\.(pdf)$/i.test(DegreeFile.value.name)) {
           isImage.value = false;
           isPdf.value = true;
-          reader.readAsDataURL(cpdFile.value);
+          reader.readAsDataURL(DegreeFile.value);
         }
       }
+    };
+    const submit = () => {
+      emit("changeActiveState");
+      store.dispatch("renewal/setDegree", DegreeFile);
+    };
+    const submitBack = () => {
+      emit("changeActiveStateMinus");
+      store.dispatch("renewal/setDegree", DegreeFile);
     };
     buttons = store.getters["renewal/getButtons"];
     documentSpecs = store.getters["renewal/getDocumentSpec"];
@@ -295,84 +305,6 @@ export default {
     letterFromHiringManager = store.getters["renewal/getRenewalLicense"];
     workExperience = store.getters["renewal/getRenewalWorkExperience"];
 
-    const submit = () => {
-      emit("changeActiveState");
-      store.dispatch("renewal/setRenewalCpd", cpdFile);
-    };
-    const submitBack = () => {
-      emit("changeActiveStateMinus");
-      store.dispatch("renewal/setRenewalCpd", cpdFile);
-    };
-
-    onMounted(() => {
-      documentMessage.value = MESSAGE.DOC_MESSAGE;
-      cpdBack = store.getters["renewal/getRenewalCpd"];
-      if (
-        cpdBack &&
-        cpdBack !== undefined &&
-        cpdBack !== null &&
-        cpdBack !== ""
-      ) {
-        dataChanged.value = true;
-        showUpload.value = false;
-        cpdFile.value = cpdBack;
-        let reader = new FileReader();
-        let fileS = cpdFile.value.size;
-        if (fileS > 0 && fileS < 1000) {
-          fileSize.value += "B";
-        } else if (fileS > 1000 && fileS < 1000000) {
-          fileSize.value = fileS / 1000 + "kB";
-        } else {
-          fileSize.value = fileS / 1000000 + "MB";
-        }
-        reader.addEventListener(
-          "load",
-          function() {
-            showPreview.value = true;
-            filePreview.value = reader.result;
-          },
-          false
-        );
-        if (cpdFile.value) {
-          if (/\.(jpe?g|png|gif)$/i.test(cpdFile.value.name)) {
-            isImage.value = true;
-            reader.readAsDataURL(cpdFile.value);
-          } else if (/\.(pdf)$/i.test(cpdFile.value.name)) {
-            isImage.value = false;
-            isPdf.value = true;
-            reader.readAsDataURL(cpdFile.value);
-          }
-        }
-      }
-      declinedFields = store.getters["renewal/getDeclinedFields"];
-      acceptedFields = store.getters["renewal/getAcceptedFields"];
-      remark = store.getters["renewal/getRemark"];
-      if (declinedFields != undefined && declinedFields.includes("CPD")) {
-        declinedFieldsCheck.value = true;
-      }
-      if (acceptedFields != undefined && acceptedFields.includes("CPD")) {
-        acceptedFieldsCheck.value = true;
-      }
-      buttons = store.getters["renewal/getButtons"];
-      draftData = store.getters["renewal/getDraft"];
-      if (route.params.id) {
-        draftStatus.value = route.params.status;
-        for (let i = 0; i < draftData.documents.length; i++) {
-          if (draftData.documents[i].documentTypeCode == "CPD") {
-            showUpload.value = false;
-            if (draftData.documents[i].fileName.split(".")[1] == "pdf") {
-              isPdf.value = true;
-            } else {
-              isImage.value = true;
-            }
-            cpdFile.value = draftData.documents[i];
-            showPreview.value = true;
-            filePreview.value = basePath + draftData.documents[i].filePath;
-          }
-        }
-      }
-    });
-
     const draft = (action) => {
       message.value.showLoading = true;
       if (route.params.id) {
@@ -389,8 +321,8 @@ export default {
               let licenseId = route.params.id;
               let formData = new FormData();
               formData.append(
-                documentSpecs[4].documentType.code,
-                cpdFile.value
+                documentSpecs[24].documentType.code,
+                DegreeFile.value
               );
               let payload = { document: formData, id: licenseId };
               store
@@ -444,7 +376,7 @@ export default {
             residenceWoredaId: licenseInfo.residenceWoredaId,
             paymentSlip: null,
             occupationTypeId: licenseInfo.occupationTypeId,
-            occupationTypeId: licenseInfo.occupationTypeId,
+            nativeLanguageId: licenseInfo.nativeLanguageId,
             expertLevelId: licenseInfo.expertLevelId,
           },
         };
@@ -455,7 +387,10 @@ export default {
             formData.append(documentSpecs[0].documentType.code, passport);
             formData.append(documentSpecs[2].documentType.code, healthExamCert);
             formData.append(documentSpecs[18].documentType.code, herqa);
-            formData.append(documentSpecs[24].documentType.code, degree);
+            formData.append(
+              documentSpecs[24].documentType.code,
+              DegreeFile.value
+            );
             formData.append(documentSpecs[25].documentType.code, diploma);
             formData.append(documentSpecs[26].documentType.code, transcript);
             formData.append(documentSpecs[17].documentType.code, supportLetter);
@@ -463,7 +398,7 @@ export default {
               documentSpecs[6].documentType.code,
               previousLicense
             );
-            formData.append(documentSpecs[4].documentType.code, cpdFile.value);
+            formData.append(documentSpecs[4].documentType.code, cpd);
             formData.append(
               documentSpecs[19].documentType.code,
               letterFromHiringManager
@@ -505,8 +440,8 @@ export default {
               let licenseId = route.params.id;
               let formData = new FormData();
               formData.append(
-                documentSpecs[4].documentType.code,
-                cpdFile.value
+                documentSpecs[24].documentType.code,
+                DegreeFile.value
               );
               let payload = { document: formData, id: licenseId };
               store
@@ -560,6 +495,7 @@ export default {
             residenceWoredaId: licenseInfo.residenceWoredaId,
             paymentSlip: null,
             occupationTypeId: licenseInfo.occupationTypeId,
+            nativeLanguageId: licenseInfo.nativeLanguageId,
             expertLevelId: licenseInfo.expertLevelId,
           },
         };
@@ -567,7 +503,10 @@ export default {
           if (res.data.status == "Success") {
             let licenseId = res.data.data.id;
             let formData = new FormData();
-            formData.append(documentSpecs[4].documentType.code, cpdFile.value);
+            formData.append(
+              documentSpecs[24].documentType.code,
+              DegreeFile.value
+            );
             let payload = { document: formData, id: licenseId };
             store
               .dispatch("renewal/uploadDocuments", payload)
@@ -598,9 +537,9 @@ export default {
         withdrawData: withdrawObj,
       };
       store.dispatch("renewal/withdraw", payload).then((res) => {
-        if (res.data.status == "Success") {
-          message.value.showLoading = !message.value.showLoading;
+        if (res) {
           message.value.showFlash = !message.value.showFlash;
+          message.value.showLoading = false;
           setTimeout(() => {
             router.push({ path: "/menu" });
           }, 1500);
@@ -610,10 +549,79 @@ export default {
       });
     };
 
+    onMounted(() => {
+      documentMessage.value = MESSAGE.DOC_MESSAGE;
+      degreeBack = store.getters["renewal/getDegree"];
+      if (
+        degreeBack &&
+        degreeBack !== undefined &&
+        degreeBack !== null &&
+        degreeBack !== ""
+      ) {
+        dataChanged.value = true;
+        showUpload.value = false;
+        DegreeFile.value = degreeBack;
+        let reader = new FileReader();
+        let fileS = DegreeFile.value.size;
+        if (fileS > 0 && fileS < 1000) {
+          fileSize.value += "B";
+        } else if (fileS > 1000 && fileS < 1000000) {
+          fileSize.value = fileS / 1000 + "kB";
+        } else {
+          fileSize.value = fileS / 1000000 + "MB";
+        }
+        reader.addEventListener(
+          "load",
+          function() {
+            showPreview.value = true;
+            filePreview.value = reader.result;
+          },
+          false
+        );
+        if (DegreeFile.value) {
+          if (/\.(jpe?g|png|gif)$/i.test(DegreeFile.value.name)) {
+            isImage.value = true;
+            reader.readAsDataURL(DegreeFile.value);
+          } else if (/\.(pdf)$/i.test(DegreeFile.value.name)) {
+            isImage.value = false;
+            isPdf.value = true;
+            reader.readAsDataURL(DegreeFile.value);
+          }
+        }
+      }
+      declinedFields = store.getters["renewal/getDeclinedFields"];
+      acceptedFields = store.getters["renewal/getAcceptedFields"];
+      remark = store.getters["renewal/getRemark"];
+      if (declinedFields != undefined && declinedFields.includes("DEG")) {
+        declinedFieldsCheck.value = true;
+      }
+      if (acceptedFields != undefined && acceptedFields.includes("DEG")) {
+        acceptedFieldsCheck.value = true;
+      }
+      buttons = store.getters["renewal/getButtons"];
+      draftData = store.getters["renewal/getDraft"];
+      if (route.params.id) {
+        draftStatus.value = route.params.status;
+        for (let i = 0; i < draftData.documents.length; i++) {
+          if (draftData.documents[i].documentTypeCode == "DEG") {
+            showUpload.value = false;
+            if (draftData.documents[i].fileName.split(".")[1] == "pdf") {
+              isPdf.value = true;
+            } else {
+              isImage.value = true;
+            }
+
+            DegreeFile.value = draftData.documents[i];
+            showPreview.value = true;
+            filePreview.value = basePath + draftData.documents[i].filePath;
+          }
+        }
+      }
+    });
     return {
-      cpdFile,
-      cpdFileP,
-      cpdBack,
+      DegreeFile,
+      DegreeFileP,
+      degreeBack,
       showPreview,
       filePreview,
       showUpload,
@@ -624,12 +632,12 @@ export default {
       submit,
       submitBack,
       draft,
-      fileSize,
       withdraw,
+      fileSize,
       buttons,
+      draftData,
       draftStatus,
       update,
-      draftData,
       basePath,
       message,
       dataChanged,
@@ -658,7 +666,6 @@ export default {
 </script>
 <style>
 @import "../../../styles/document-upload.css";
-
 img {
   width: 250px;
   height: 250px;

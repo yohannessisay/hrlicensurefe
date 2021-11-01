@@ -544,7 +544,7 @@
           <div v-if="this.applicantType == 3 && !this.firstTimeUser">
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 3">
-                <CPDL
+                <LetterFromHiringManagerForeignerEthiopian
                   :activeState="3"
                   @changeActiveState="activeState++"
                   @changeActiveStateMinus="activeState--"
@@ -562,7 +562,7 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 5">
-                <WorkExperience
+                <CPDL
                   :activeState="5"
                   @changeActiveState="activeState++"
                   @changeActiveStateMinus="activeState--"
@@ -571,7 +571,7 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 6">
-                <ProfessionalDocuments
+                <WorkExperience
                   :activeState="6"
                   @changeActiveState="activeState++"
                   @changeActiveStateMinus="activeState--"
@@ -609,7 +609,7 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 5">
-                <SupportLetterForeign
+                <DegreeForeignerEthiopian
                   :activeState="5"
                   @changeActiveState="activeState++"
                   @changeActiveStateMinus="activeState--"
@@ -618,7 +618,7 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 6">
-                <CPDL
+                <DiplomaForeignerEthiopian
                   :activeState="6"
                   @changeActiveState="activeState++"
                   @changeActiveStateMinus="activeState--"
@@ -627,7 +627,7 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 7">
-                <PreviousLicenseE
+                <TranscriptForeignerEthiopian
                   :activeState="7"
                   @changeActiveState="activeState++"
                   @changeActiveStateMinus="activeState--"
@@ -636,7 +636,7 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 8">
-                <WorkExperience
+                <SupportLetterForeign
                   :activeState="8"
                   @changeActiveState="activeState++"
                   @changeActiveStateMinus="activeState--"
@@ -645,7 +645,7 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 9">
-                <ProfessionalDocuments
+                <WorkExperience
                   :activeState="9"
                   @changeActiveState="activeState++"
                   @changeActiveStateMinus="activeState--"
@@ -654,8 +654,26 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 10">
-                <LicenseSummary
+                <PreviousLicenseE
                   :activeState="10"
+                  @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
+                />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 11">
+                <CPDL
+                  :activeState="11"
+                  @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
+                />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 12">
+                <LicenseSummary
+                  :activeState="12"
                   @changeActiveState="activeState++"
                   @changeActiveStateMinus="activeState--"
                 />
@@ -699,6 +717,11 @@ import HERQAF from "./Foreigner/HERQAF.vue";
 import LetterfromOrg from "./Foreigner/LetterfromOrg";
 import ProfessionalLicense from "./Foreigner/ProfessionalLicense";
 import RenewedLicense from "./Foreigner/RenewedLicense";
+
+import DegreeForeignerEthiopian from "./Ethiopians F/Degree.vue";
+import DiplomaForeignerEthiopian from "./Ethiopians F/Diploma.vue";
+import TranscriptForeignerEthiopian from "./Ethiopians F/Transcript.vue";
+import LetterFromHiringManagerForeignerEthiopian from "./Ethiopians F/LetterFromHiringManager.vue";
 
 import COC from "./Ethiopians L/COC";
 import Degree from "./Ethiopians L/Degree.vue";
@@ -767,6 +790,10 @@ export default {
     SupportLetterEthiopian,
     HERQAF,
     SupportLetterForeign,
+    DegreeForeignerEthiopian,
+    TranscriptForeignerEthiopian,
+    DiplomaForeignerEthiopian,
+    LetterFromHiringManagerForeignerEthiopian,
   },
   methods: {
     applicantTypeSet: function(params) {
@@ -789,6 +816,7 @@ export default {
       } else {
         this.firstTimeUser = true;
       }
+      this.firstTimeUser = false;
     },
     submit(n) {
       this.activeState = n;
@@ -866,6 +894,7 @@ export default {
         .then((res) => {
           const results = res.data.data;
           this.documentSpecs = results;
+          console.log(this.documentSpecs);
           this.$store
             .dispatch("renewal/setDocumentSpecs", this.documentSpecs)
             .then((res) => {});

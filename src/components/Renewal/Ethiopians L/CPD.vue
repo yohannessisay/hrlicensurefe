@@ -58,14 +58,12 @@
                   </div>
                 </label>
               </span>
-
               <picture v-if="!showUpload && isImage">
                 <p>
                   <a href="javascript:void(0)" @click="reset()">Upload again</a>
                 </p>
                 <img v-bind:src="filePreview" v-show="showPreview" />
               </picture>
-              <!--  -->
               <div v-if="!showUpload && isPdf">
                 <p>
                   <a href="javascript:void(0)" @click="reset()">Upload again</a>
@@ -234,11 +232,11 @@ export default {
     let coc = ref("");
     let degree = ref("");
     let diploma = ref("");
+    let transcript = ref("");
     let educationDoc = [];
     let payroll = ref("");
     let previousLicense = ref("");
     let supportLetter = ref("");
-    let transcript = ref("");
 
     const reset = () => {
       showUpload.value = true;
@@ -293,11 +291,11 @@ export default {
     coc = store.getters["renewal/getCoc"];
     degree = store.getters["renewal/getDegree"];
     diploma = store.getters["renewal/getDiploma"];
+    transcript = store.getters["renewal/getTranscript"];
     educationDoc = store.getters["renewal/getEducationalDocuments"];
     payroll = store.getters["renewal/getPayroll"];
     previousLicense = store.getters["renewal/getPreviousLicense"];
     supportLetter = store.getters["renewal/getSupportLetter"];
-    transcript = store.getters["renewal/getTranscript"];
 
     const submit = () => {
       emit("changeActiveState");
@@ -477,6 +475,7 @@ export default {
             formData.append(documentSpecs[11].documentType.code, coc);
             formData.append(documentSpecs[24].documentType.code, degree);
             formData.append(documentSpecs[25].documentType.code, diploma);
+            formData.append(documentSpecs[26].documentType.code, transcript);
             if (educationDoc != undefined) {
               formData.append(
                 documentSpecs[12].documentType.code,
@@ -505,7 +504,6 @@ export default {
               previousLicense
             );
             formData.append(documentSpecs[17].documentType.code, supportLetter);
-            formData.append(documentSpecs[26].documentType.code, transcript);
             let payload = { document: formData, id: licenseId };
             store
               .dispatch("renewal/uploadDocuments", payload)

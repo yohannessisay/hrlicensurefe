@@ -27,7 +27,7 @@
         </h2>
         <TitleWithIllustration
           illustration="Certificate"
-          message="CPD"
+          message="Letter from Hiring Institution"
           class="mt-8"
         />
         <span class="flex justify-center">{{ documentMessage }}</span>
@@ -35,7 +35,7 @@
           <div class="flex justify-center mb-10">
             <div>
               <span>
-                <h2>{{ cpdFile.name }}</h2>
+                <h2>{{ letterFile.name }}</h2>
                 <h2>{{ fileSize }}</h2>
               </span>
               <span v-if="showUpload">
@@ -44,9 +44,9 @@
                   <div class="dropbox">
                     <input
                       type="file"
-                      id="cpdFile"
+                      id="letterFile"
                       class="photoFile"
-                      ref="cpdFileP"
+                      ref="letterFileP"
                       v-on:change="handleFileUpload()"
                       style="margin-bottom: 15px !important;"
                       accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
@@ -199,31 +199,31 @@ export default {
     let fileSize = ref("");
 
     let dataChanged = ref(false);
-    let cpdFile = ref("");
-    let cpdFileP = ref("");
+    let letterFile = ref("");
+    let letterFileP = ref("");
     let showPreview = ref(false);
     let filePreview = ref("");
     let showUpload = ref(true);
     let isImage = ref(false);
     let isPdf = ref(false);
 
-    let cpdBack = ref("");
+    let letterFileBack = ref("");
 
-    let buttons = ref([]);
+    let draftStatus = ref("");
+    let buttons = [];
     let documentSpecs = ref([]);
     let userId = +localStorage.getItem("userId");
     let licenseInfo = ref("");
     let draftData = ref("");
-    let draftStatus = ref("");
 
     let declinedFields = ref([]);
     let acceptedFields = ref([]);
     let remark = ref("");
 
-    let documentMessage = ref("");
-
     let declinedFieldsCheck = ref(false);
     let acceptedFieldsCheck = ref(false);
+
+    let documentMessage = ref("");
 
     let passport = ref("");
     let healthExamCert = ref("");
@@ -240,7 +240,7 @@ export default {
     const reset = () => {
       showUpload.value = true;
       showPreview.value = false;
-      cpdFile.value = "";
+      letterFile.value = "";
       filePreview.value = "";
       isImage.value = true;
       fileSize.value = "";
@@ -249,9 +249,9 @@ export default {
     const handleFileUpload = () => {
       dataChanged.value = true;
       showUpload.value = false;
-      cpdFile.value = cpdFileP.value.files[0];
+      letterFile.value = letterFileP.value.files[0];
       let reader = new FileReader();
-      let fileS = cpdFile.value.size;
+      let fileS = letterFile.value.size;
       if (fileS > 0 && fileS < 1000) {
         fileSize.value += "B";
       } else if (fileS > 1000 && fileS < 1000000) {
@@ -268,14 +268,14 @@ export default {
         false
       );
 
-      if (cpdFile.value) {
-        if (/\.(jpe?g|png|gif)$/i.test(cpdFile.value.name)) {
+      if (letterFile.value) {
+        if (/\.(jpe?g|png|gif)$/i.test(letterFile.value.name)) {
           isImage.value = true;
-          reader.readAsDataURL(cpdFile.value);
-        } else if (/\.(pdf)$/i.test(cpdFile.value.name)) {
+          reader.readAsDataURL(letterFile.value);
+        } else if (/\.(pdf)$/i.test(letterFile.value.name)) {
           isImage.value = false;
           isPdf.value = true;
-          reader.readAsDataURL(cpdFile.value);
+          reader.readAsDataURL(letterFile.value);
         }
       }
     };
@@ -297,27 +297,27 @@ export default {
 
     const submit = () => {
       emit("changeActiveState");
-      store.dispatch("renewal/setRenewalCpd", cpdFile);
+      store.dispatch("renewal/setRenewalLetter", letterFile);
     };
     const submitBack = () => {
       emit("changeActiveStateMinus");
-      store.dispatch("renewal/setRenewalCpd", cpdFile);
+      store.dispatch("renewal/setRenewalLetter", letterFile);
     };
 
     onMounted(() => {
       documentMessage.value = MESSAGE.DOC_MESSAGE;
-      cpdBack = store.getters["renewal/getRenewalCpd"];
+      letterFileBack = store.getters["renewal/getRenewalLicense"];
       if (
-        cpdBack &&
-        cpdBack !== undefined &&
-        cpdBack !== null &&
-        cpdBack !== ""
+        letterFileBack &&
+        letterFileBack !== undefined &&
+        letterFileBack !== null &&
+        letterFileBack !== ""
       ) {
         dataChanged.value = true;
         showUpload.value = false;
-        cpdFile.value = cpdBack;
+        letterFile.value = letterFileBack;
         let reader = new FileReader();
-        let fileS = cpdFile.value.size;
+        let fileS = letterFile.value.size;
         if (fileS > 0 && fileS < 1000) {
           fileSize.value += "B";
         } else if (fileS > 1000 && fileS < 1000000) {
@@ -333,24 +333,24 @@ export default {
           },
           false
         );
-        if (cpdFile.value) {
-          if (/\.(jpe?g|png|gif)$/i.test(cpdFile.value.name)) {
+        if (letterFile.value) {
+          if (/\.(jpe?g|png|gif)$/i.test(letterFile.value.name)) {
             isImage.value = true;
-            reader.readAsDataURL(cpdFile.value);
-          } else if (/\.(pdf)$/i.test(cpdFile.value.name)) {
+            reader.readAsDataURL(letterFile.value);
+          } else if (/\.(pdf)$/i.test(letterFile.value.name)) {
             isImage.value = false;
             isPdf.value = true;
-            reader.readAsDataURL(cpdFile.value);
+            reader.readAsDataURL(letterFile.value);
           }
         }
       }
       declinedFields = store.getters["renewal/getDeclinedFields"];
       acceptedFields = store.getters["renewal/getAcceptedFields"];
       remark = store.getters["renewal/getRemark"];
-      if (declinedFields != undefined && declinedFields.includes("CPD")) {
+      if (declinedFields != undefined && declinedFields.includes("LHI")) {
         declinedFieldsCheck.value = true;
       }
-      if (acceptedFields != undefined && acceptedFields.includes("CPD")) {
+      if (acceptedFields != undefined && acceptedFields.includes("LHI")) {
         acceptedFieldsCheck.value = true;
       }
       buttons = store.getters["renewal/getButtons"];
@@ -358,14 +358,15 @@ export default {
       if (route.params.id) {
         draftStatus.value = route.params.status;
         for (let i = 0; i < draftData.documents.length; i++) {
-          if (draftData.documents[i].documentTypeCode == "CPD") {
+          if (draftData.documents[i].documentTypeCode == "LHI") {
             showUpload.value = false;
             if (draftData.documents[i].fileName.split(".")[1] == "pdf") {
               isPdf.value = true;
             } else {
               isImage.value = true;
             }
-            cpdFile.value = draftData.documents[i];
+
+            letterFile.value = draftData.documents[i];
             showPreview.value = true;
             filePreview.value = basePath + draftData.documents[i].filePath;
           }
@@ -389,8 +390,8 @@ export default {
               let licenseId = route.params.id;
               let formData = new FormData();
               formData.append(
-                documentSpecs[4].documentType.code,
-                cpdFile.value
+                documentSpecs[19].documentType.code,
+                letterFile.value
               );
               let payload = { document: formData, id: licenseId };
               store
@@ -403,8 +404,7 @@ export default {
                       router.push({ path: "/menu" });
                     }, 1500);
                   } else {
-                    message.value.showErrorFlash = !message.value
-                      .showErrorFlash;
+                    showErrorFlash.value = !showErrorFlash.value;
                   }
                 })
                 .catch((err) => {});
@@ -426,7 +426,7 @@ export default {
                 router.push({ path: "/menu" });
               }, 1500);
             } else {
-              message.value.showErrorFlash = !message.value.showErrorFlash;
+              showErrorFlash.value = !showErrorFlash.value;
             }
           });
         }
@@ -444,7 +444,6 @@ export default {
             residenceWoredaId: licenseInfo.residenceWoredaId,
             paymentSlip: null,
             occupationTypeId: licenseInfo.occupationTypeId,
-            occupationTypeId: licenseInfo.occupationTypeId,
             expertLevelId: licenseInfo.expertLevelId,
           },
         };
@@ -452,6 +451,7 @@ export default {
           if (res.data.status == "Success") {
             let licenseId = res.data.data.id;
             let formData = new FormData();
+
             formData.append(documentSpecs[0].documentType.code, passport);
             formData.append(documentSpecs[2].documentType.code, healthExamCert);
             formData.append(documentSpecs[18].documentType.code, herqa);
@@ -463,10 +463,10 @@ export default {
               documentSpecs[6].documentType.code,
               previousLicense
             );
-            formData.append(documentSpecs[4].documentType.code, cpdFile.value);
+            formData.append(documentSpecs[4].documentType.code, cpd);
             formData.append(
               documentSpecs[19].documentType.code,
-              letterFromHiringManager
+              letterFile.value
             );
             formData.append(documentSpecs[5].documentType.code, workExperience);
 
@@ -481,7 +481,7 @@ export default {
                     router.push({ path: "/menu" });
                   }, 1500);
                 } else {
-                  message.value.showErrorFlash = !message.value.showErrorFlash;
+                  showErrorFlash.value = !showErrorFlash.value;
                 }
               })
               .catch((err) => {});
@@ -505,8 +505,8 @@ export default {
               let licenseId = route.params.id;
               let formData = new FormData();
               formData.append(
-                documentSpecs[4].documentType.code,
-                cpdFile.value
+                documentSpecs[19].documentType.code,
+                letterFile.value
               );
               let payload = { document: formData, id: licenseId };
               store
@@ -567,7 +567,10 @@ export default {
           if (res.data.status == "Success") {
             let licenseId = res.data.data.id;
             let formData = new FormData();
-            formData.append(documentSpecs[4].documentType.code, cpdFile.value);
+            formData.append(
+              documentSpecs[19].documentType.code,
+              letterFile.value
+            );
             let payload = { document: formData, id: licenseId };
             store
               .dispatch("renewal/uploadDocuments", payload)
@@ -588,7 +591,7 @@ export default {
       }
     };
     const withdraw = (action) => {
-      message.value.showLoading = !message.value.showLoading;
+      message.showLoading.value = !message.showLoading.value;
       let withdrawObj = {
         action: action,
         data: draftData,
@@ -599,21 +602,20 @@ export default {
       };
       store.dispatch("renewal/withdraw", payload).then((res) => {
         if (res.data.status == "Success") {
-          message.value.showLoading = !message.value.showLoading;
-          message.value.showFlash = !message.value.showFlash;
+          message.showFlash.value = !message.showFlash.value;
+          message.showLoading.value = !message.showLoading.value;
           setTimeout(() => {
             router.push({ path: "/menu" });
           }, 1500);
         } else {
-          message.value.showErrorFlash = !message.value.showErrorFlash;
+          message.showErrorFlash.value = !message.showErrorFlash.value;
         }
       });
     };
-
     return {
-      cpdFile,
-      cpdFileP,
-      cpdBack,
+      letterFile,
+      letterFileP,
+      letterFileBack,
       showPreview,
       filePreview,
       showUpload,
@@ -624,8 +626,8 @@ export default {
       submit,
       submitBack,
       draft,
-      fileSize,
       withdraw,
+      fileSize,
       buttons,
       draftStatus,
       update,

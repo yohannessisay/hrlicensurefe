@@ -442,6 +442,23 @@ export default {
         this.docList.push(this.previousLicense);
       }
     }
+    console.log(this.renewedLicense)
+    // if (this.renewedLicense != "" && this.renewedLicense != undefined) {
+    //   if ("name" in this.renewedLicense) {
+    //     if (this.draftId != undefined) {
+    //       this.documentsArray.splice(
+    //         this.documentsArray.findIndex(
+    //           (e) => e.documentTypeCode === "RLOTO"
+    //         ),
+    //         1
+    //       );
+    //     }
+    //     var filePreview = await this.blobToBase64(this.renewedLicense);
+    //     this.renewedLicense.docFile = filePreview;
+    //     this.renewedLicense.title = "Renewed License";
+    //     this.docList.push(this.renewedLicense);
+    //   }
+    // }
     if (this.supportLetter != "" && this.supportLetter != undefined) {
       if ("name" in this.supportLetter) {
         if (this.draftId != undefined) {
@@ -488,7 +505,7 @@ export default {
       if ("name" in this.diploma) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "PDD"),
+            this.documentsArray.findIndex((e) => e.documentTypeCode === "DIPL"),
             1
           );
         }
@@ -516,7 +533,7 @@ export default {
       if ("name" in this.transcript) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "PDT"),
+            this.documentsArray.findIndex((e) => e.documentTypeCode === "TRAN"),
             1
           );
         }
@@ -571,22 +588,6 @@ export default {
         this.professionalLicense.docFile = filePreview;
         this.professionalLicense.title = "Authenticated Professional License";
         this.docList.push(this.professionalLicense);
-      }
-    }
-    if (this.renewedLicense != "" && this.renewedLicense != undefined) {
-      if ("name" in this.renewedLicense) {
-        if (this.draftId != undefined) {
-          this.documentsArray.splice(
-            this.documentsArray.findIndex(
-              (e) => e.documentTypeCode === "RLOTO"
-            ),
-            1
-          );
-        }
-        var filePreview = await this.blobToBase64(this.renewedLicense);
-        this.renewedLicense.docFile = filePreview;
-        this.renewedLicense.title = "Renewed License";
-        this.docList.push(this.renewedLicense);
       }
     }
     if (this.letterOrg != "" && this.letterOrg != undefined) {
@@ -820,7 +821,7 @@ export default {
       getEnglishLanguage: "renewal/getEnglishLanguage",
       getLetterFromHiringInstitution: "renewal/getRenewalLicense",
       getProfessionalLicense: "renewal/getProfessionalLicense",
-      getRenewedLicense: "renewal/getPreviousLicense",
+      getRenewedLicense: "renewal/getRenewedLicense",
       getLetterFromOrg: "renewal/getLetterfromOrg",
       getProfessionalDocuments: "renewal/getProfessionalDocuments",
 
@@ -949,7 +950,7 @@ export default {
                 this.degree
               );
               formData.append(
-                this.documentTypes[9].documentType.code,
+                this.documentTypes[25].documentType.code,
                 this.diploma
               );
               if (this.educationalDocs != undefined) {
@@ -979,7 +980,7 @@ export default {
                 this.payroll
               );
               formData.append(
-                this.documentTypes[10].documentType.code,
+                this.documentTypes[26].documentType.code,
                 this.transcript
               );
               formData.append(
@@ -1058,7 +1059,7 @@ export default {
         );
         formData.append(this.documentTypes[11].documentType.code, this.coc);
         formData.append(this.documentTypes[24].documentType.code, this.degree);
-        formData.append(this.documentTypes[9].documentType.code, this.diploma);
+        formData.append(this.documentTypes[25].documentType.code, this.diploma);
         if (this.educationalDocs != undefined) {
           formData.append(
             this.documentTypes[12].documentType.code,
@@ -1083,7 +1084,7 @@ export default {
         }
         formData.append(this.documentTypes[23].documentType.code, this.payroll);
         formData.append(
-          this.documentTypes[10].documentType.code,
+          this.documentTypes[26].documentType.code,
           this.transcript
         );
         formData.append(
@@ -1266,7 +1267,7 @@ export default {
                 this.degree
               );
               formData.append(
-                this.documentTypes[9].documentType.code,
+                this.documentTypes[25].documentType.code,
                 this.diploma
               );
               if (this.educationalDocs != undefined) {
@@ -1296,7 +1297,7 @@ export default {
                 this.payroll
               );
               formData.append(
-                this.documentTypes[10].documentType.code,
+                this.documentTypes[26].documentType.code,
                 this.transcript
               );
               formData.append(
@@ -1378,7 +1379,7 @@ export default {
         );
         formData.append(this.documentTypes[11].documentType.code, this.coc);
         formData.append(this.documentTypes[24].documentType.code, this.degree);
-        formData.append(this.documentTypes[9].documentType.code, this.diploma);
+        formData.append(this.documentTypes[25].documentType.code, this.diploma);
         if (this.educationalDocs != undefined) {
           formData.append(
             this.documentTypes[12].documentType.code,
@@ -1403,7 +1404,7 @@ export default {
         }
         formData.append(this.documentTypes[23].documentType.code, this.payroll);
         formData.append(
-          this.documentTypes[10].documentType.code,
+          this.documentTypes[26].documentType.code,
           this.transcript
         );
         formData.append(
