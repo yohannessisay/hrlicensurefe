@@ -158,66 +158,99 @@
                       }}
                     </h5>
                   </div>
-                  <div
-                    :class="[
-                      profileInfo.alternativeName === null ||
-                      profileInfo.alternativeFatherName === null ||
-                      profileInfo.alternativeGrandFatherName === null
-                        ? errorClass
-                        : activeClass,
-                    ]"
-                  >
-                    <label class="ml-8 titleColors"> Amharic First Name</label>
-                    <div>
-                      <input
-                        class="max-w-3xl ml-8"
-                        type="text"
-                        v-model="newLicense.applicant.profile.alternativeName"
-                      />
-                    </div>
-                    <!-- <h5 class="ml-8">
-                      {{
+                  <div v-if="!canChangeName" class="flex flex-row">
+                    <div
+                      :class="[
                         profileInfo.alternativeName === null
-                          ? "-"
-                          : profileInfo.alternativeName +
+                          ? errorClass
+                          : activeClass,
+                      ]"
+                    >
+                      <!-- <div v-if="true"> -->
+                      <label class="ml-8 titleColors">
+                        Full Name In Amharic
+                      </label>
+                      <div>
+                        <h5 class="ml-8">
+                          {{
+                            profileInfo.alternativeName +
                               " " +
-                              profileInfo.fatherName ===
-                            null
-                          ? "-"
-                          : profileInfo.alternativeFatherName +
+                              profileInfo.alternativeFatherName +
                               " " +
-                              profileInfo.grandFatherName ===
-                            null
-                          ? "-"
-                          : profileInfo.alternativeGrandFatherName
-                      }}
-                    </h5> -->
-                  </div>
-                  <div>
-                    <label class="ml-8 titleColors"> Amharic Middle Name</label>
+                              profileInfo.alternativeGrandFatherName
+                          }}
+                        </h5>
+                      </div>
+                    </div>
                     <div>
-                      <input
-                        class="max-w-3xl ml-8"
-                        type="text"
-                        v-model="
-                          newLicense.applicant.profile.alternativeFatherName
-                        "
-                      />
+                      <button @click="allowChangeName">change name?</button>
+                      <i
+                        class="fas fa-chevron-edit float-right mt-2"
+                        @click="allowChangeName"
+                      ></i>
                     </div>
                   </div>
-                  <div>
-                    <label class="ml-8 titleColors"> Amharic Last Name</label>
+                  <div v-if="canChangeName" class="flex flex-row">
                     <div>
-                      <input
-                        class="max-w-3xl ml-8"
-                        type="text"
-                        v-model="
-                          newLicense.applicant.profile
-                            .alternativeGrandFatherName
-                        "
-                      />
+                      <label class="ml-8 titleColors">
+                        Amharic First Name</label
+                      >
+                      <div>
+                        <input
+                          class="max-w-3xl ml-8"
+                          type="text"
+                          v-model="newLicense.applicant.profile.alternativeName"
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <label class="ml-8 titleColors">
+                        Amharic Middle Name</label
+                      >
+                      <div>
+                        <input
+                          class="max-w-3xl ml-8"
+                          type="text"
+                          v-model="
+                            newLicense.applicant.profile.alternativeFatherName
+                          "
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <label class="ml-8 titleColors"> Amharic Last Name</label>
+                      <div>
+                        <input
+                          class="max-w-3xl ml-8"
+                          type="text"
+                          v-model="
+                            newLicense.applicant.profile
+                              .alternativeGrandFatherName
+                          "
+                        />
+                      </div>
                     </div>
                   </div>
+                </div>
+                <div class="flex flex-row justify-center" v-if="canChangeName">
+                  <div>
+                    <button
+                      style="backgroundColor: red"
+                      @click="changeAmharicName"
+                    >
+                      Save
+                    </button>
+                  </div>
+                  <div>
+                    &#160;
+                    <button @click="disallowChangeName">cancel</button>
+                  </div>
+                </div>
+                <div
+                  v-if="showSpinner"
+                  class="flex justify-center justify-items-center mt-24"
+                >
+                  <Spinner />
                 </div>
                 <div class="flex flex-row">
                   <div
@@ -696,6 +729,12 @@
       <div v-if="showErrorFlash">
         <ErrorFlashMessage message="Operation Failed!" />
       </div>
+      <div v-if="showNameChangeFlash">
+        <FlashMessage message="name change Successful!" />
+      </div>
+      <div v-if="showNameChangeErrorFlash">
+        <ErrorFlashMessage message="name change Failed!" />
+      </div>
     </div>
   </div>
 </template>
@@ -710,6 +749,7 @@ import { useRouter } from "vue-router";
 import Title from "@/sharedComponents/Title";
 import Modal from "@/sharedComponents/Modal";
 import FlashMessage from "@/sharedComponents/FlashMessage";
+import Spinner from "@/sharedComponents/Spinner";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import ReviewerNavBar from "@/components/Reviewer/ReviewerNavBar";
 import moment from "moment";
@@ -721,6 +761,7 @@ export default {
     ErrorFlashMessage,
     ReviewerNavBar,
     Title,
+    Spinner,
   },
   computed: {
     moment: () => moment,
@@ -733,6 +774,12 @@ export default {
     let isPdf = ref(false);
 
     let pdfFilePath = ref("");
+
+    let canChangeName = ref(false);
+    let showSpinner = ref(false);
+
+    let showNameChangeFlash = ref(false);
+    let showNameChangeErrorFlash = ref(false);
 
     const newLicense = ref({
       applicant: { profile: { name: "", fatherName: "" } },
@@ -1181,6 +1228,8 @@ export default {
         action: actionValue,
         data: newLicense.value,
       };
+
+      console.log("name changed", newLicense.value);
       if (
         applicationType.value == "New License" &&
         sendDeclinedData.value == true
@@ -1307,7 +1356,42 @@ export default {
         console.log("professional types", professionalTypes.value);
       });
     };
-    const selected = "good";
+    const allowChangeName = () => {
+      canChangeName.value = true;
+    };
+    const disallowChangeName = () => {
+      canChangeName.value = false;
+    };
+    const changeAmharicName = () => {
+      showSpinner.value = true;
+      const id = profileInfo.value.id;
+      let newProfile = {
+        alternativeName: newLicense.value.applicant.profile.alternativeName,
+        alternativeFatherName:
+          newLicense.value.applicant.profile.alternativeFatherName,
+        alternativeGrandFatherName:
+          newLicense.value.applicant.profile.alternativeGrandFatherName,
+      };
+      console.log("new profile data", newProfile)
+      const profileData = [id, newProfile];
+      store
+        .dispatch("profile/changeUserProfile", profileData)
+        .then((res) => {
+          showSpinner.value = false;
+          canChangeName.value = false;
+          showNameChangeFlash.value = true;
+          setTimeout(() => {
+            showNameChangeFlash.value = false;
+          }, 3000)
+        })
+        .catch((err) => {
+          canChangeName.value = false;
+          showNameChangeErrorFlash.value = true;
+          setTimeout(() => {
+            showNameChangeErrorFlash.value = false;
+          }, 3000)
+        });
+    };
 
     onMounted(() => {
       created(route.params.applicationType, route.params.applicationId);
@@ -1321,7 +1405,6 @@ export default {
       index,
       docs,
       next,
-      selected,
       previous,
       nextRemark,
       previousRemark,
@@ -1365,6 +1448,13 @@ export default {
       cancelProfessionChange,
       changeProfession,
       professionalTypes,
+      canChangeName,
+      allowChangeName,
+      disallowChangeName,
+      changeAmharicName,
+      showSpinner,
+      showNameChangeFlash,
+      showNameChangeErrorFlash,
     };
   },
 };

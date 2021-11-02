@@ -40,9 +40,25 @@
             ></i>
             <router-link
               style="color:white; font-size: 18px; margin-left:5px"
-              to="/admin/report"
+              to="/admin/review/report"
             >
               Report
+            </router-link>
+          </li>
+        </ul>
+
+        <ul>
+          <li>
+            <i
+              style="color: white; margin-left:5px"
+              class="fa fa-file-text"
+              aria-hidden="true"
+            ></i>
+            <router-link
+              style="color:white; font-size: 18px; margin-left:5px"
+              to="/admin/review/dashboard"
+            >
+              Dashboard
             </router-link>
           </li>
         </ul>

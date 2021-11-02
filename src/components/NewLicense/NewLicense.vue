@@ -229,20 +229,18 @@
                 />
               </div>
             </transition>
-
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 3">
-                <HealthExamCert
+                <EnglishLanguageForeigner
                   :activeState="3"
                   @changeActiveState="activeState++"
                   @changeActiveStateMinus="activeState--"
                 />
               </div>
             </transition>
-
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 4">
-                <EnglishLanguageForeigner
+                <HealthExamCert
                   :activeState="4"
                   @changeActiveState="activeState++"
                   @changeActiveStateMinus="activeState--"

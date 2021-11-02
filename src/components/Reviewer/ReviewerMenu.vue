@@ -380,6 +380,10 @@
           <good-standing-licensed />
         </div>
         <!-- end goodstanding -->
+
+        <div v-if="this.display == 'dashboard'">
+          <dashboard />
+        </div>
       </div>
     </div>
   </div>
@@ -484,6 +488,8 @@ import GoodStandingOthersDeclinedPayment from "./ApplicationTypes/GoodStanding/G
 import GoodStandingLicensed from "./ApplicationTypes/GoodStanding/GoodStandingLicensed.vue";
 import GoodStandingOthersLicensed from "./ApplicationTypes/GoodStanding/GoodStandingOthersLicensed.vue";
 import GoodStandingAllLicensed from "./ApplicationTypes/GoodStanding/GoodStandingAllLicensed.vue";
+
+import Dashboard from "./Dashboard.vue";
 import ReviewerNavBar from "./ReviewerNavBar.vue";
 import ReviewerSideNav from "./ReviewerSideNav.vue";
 
@@ -583,6 +589,7 @@ export default {
     GoodStandingLicensed,
     GoodStandingOthersLicensed,
     GoodStandingAllLicensed,
+    Dashboard,
   },
   setup() {
     const store = useStore();

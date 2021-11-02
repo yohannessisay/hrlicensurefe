@@ -152,9 +152,14 @@ const routes = [
       ),
   },
   {
-    path: "/admin/report",
+    path: "/admin/review/report",
     name: "report",
     component: () => import("../components/Report/report.vue"),
+  },
+  {
+    path: "/admin/review/dashboard",
+    name: "dashboard",
+    component: () => import("../components/Reviewer/Dashboard.vue"),
   },
   {
     path: "/myWork",
@@ -232,14 +237,13 @@ const routes = [
   {
     path: "/scanned-certified-user/:applicationType/:userId/:applicationId",
     name: "scannedCertifiedUser",
-    component: () => 
+    component: () =>
       import("../components/Reviewer/Detail/ScannedCertifiedUsers.vue"),
   },
   {
     path: "/qrcode-image",
     name: "qrcodeImage",
-    component: () =>
-      import("../components/Reviewer/Detail/QrCodeImage.vue"),
+    component: () => import("../components/Reviewer/Detail/QrCodeImage.vue"),
   },
   {
     path: "/admin/pendingPayments",
@@ -368,7 +372,8 @@ const routes = [
     path:
       "/admin/newlicense-document/:newLicenseApplicationId/:newLicenseApplicantId/:renewalApplicationId/:renewalApplicantId",
     name: "newlicenseDocuments",
-    component: () => import("../components/Reviewer/Detail/NewLicenseDocumentsForRenewal.vue")
+    component: () =>
+      import("../components/Reviewer/Detail/NewLicenseDocumentsForRenewal.vue"),
   },
   {
     path: "/admin",
@@ -881,10 +886,10 @@ router.beforeEach(async (to, from, next) => {
     !auth &&
     to.path !== "/landing" &&
     to.path !== "/" &&
-    to.path !== "/admin"
+    to.path !== "/admin" &&
+    to.name !== "scannedCertifiedUser"
   )
     next("/landing");
-  // console.log(to.path.split("/")[2]);
   else next();
 });
 

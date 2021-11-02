@@ -30,7 +30,6 @@
           message="CPD"
           class="mt-8"
         />
-        <span class="flex justify-center">{{ documentMessage }}</span>
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
           <div class="flex justify-center mb-10">
             <div>
@@ -58,14 +57,12 @@
                   </div>
                 </label>
               </span>
-
               <picture v-if="!showUpload && isImage">
                 <p>
                   <a href="javascript:void(0)" @click="reset()">Upload again</a>
                 </p>
                 <img v-bind:src="filePreview" v-show="showPreview" />
               </picture>
-              <!--  -->
               <div v-if="!showUpload && isPdf">
                 <p>
                   <a href="javascript:void(0)" @click="reset()">Upload again</a>
@@ -116,10 +113,10 @@
           <button @click="submit">Next</button>
           <button
             class="withdraw"
-            @click="withdraw(buttons[1].action)"
+            @click="withdraw(buttons[0].action)"
             variant="outline"
           >
-            {{ buttons[1]["name"] }}
+            {{ buttons[0]["name"] }}
           </button>
         </div>
         <div
@@ -138,7 +135,7 @@
           </button>
         </div>
         <div
-          v-if="buttons && (draftStatus == 'DEC' || draftStatus == 'CONF')"
+          v-if="buttons && draftStatus == 'DEC'"
           class="flex justify-center mb-8"
         >
           <button @click="submitBack">
@@ -174,7 +171,6 @@ import { useRoute, useRouter } from "vue-router";
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import Spinner from "@/sharedComponents/Spinner";
-import MESSAGE from "../../../composables/documentMessage";
 
 export default {
   props: ["activeState"],
@@ -222,18 +218,18 @@ export default {
     let acceptedFields = ref([]);
     let remark = ref("");
 
-    let documentMessage = ref("");
-
     let declinedFieldsCheck = ref(false);
     let acceptedFieldsCheck = ref(false);
 
     let passport = ref("");
     let healthExamCert = ref("");
-    let professionalDoc = ref("");
-    let workExperience = ref("");
     let herqa = ref("");
-    let previousLicense = ref("");
+    let professionalDoc = ref([]);
     let supportLetter = ref("");
+    let previousLicense = ref("");
+    let cpd = ref("");
+    let letterFromHiringManager = ref("");
+    let workExperience = ref("");
 
     const reset = () => {
       showUpload.value = true;
@@ -283,11 +279,13 @@ export default {
 
     passport = store.getters["renewal/getPassport"];
     healthExamCert = store.getters["renewal/getRenewalHealthExamCert"];
-    professionalDoc = store.getters["renewal/getProfessionalDocuments"];
-    workExperience = store.getters["renewal/getRenewalWorkExperience"];
     herqa = store.getters["renewal/getHerqa"];
-    previousLicense = store.getters["renewal/getPreviousLicense"];
+    professionalDoc = store.getters["renewal/getProfessionalDocuments"];
     supportLetter = store.getters["renewal/getSupportLetter"];
+    previousLicense = store.getters["renewal/getPreviousLicense"];
+    cpd = store.getters["renewal/getRenewalCpd"];
+    letterFromHiringManager = store.getters["renewal/getRenewalLicense"];
+    workExperience = store.getters["renewal/getRenewalWorkExperience"];
 
     const submit = () => {
       emit("changeActiveState");
@@ -299,7 +297,6 @@ export default {
     };
 
     onMounted(() => {
-      documentMessage.value = MESSAGE.DOC_MESSAGE;
       cpdBack = store.getters["renewal/getRenewalCpd"];
       if (
         cpdBack &&
@@ -446,8 +443,9 @@ export default {
           if (res.data.status == "Success") {
             let licenseId = res.data.data.id;
             let formData = new FormData();
-            formData.append(documentSpecs[0].documentType.code, passport);
+            formData.append(documentSpecs[0].documentTypeCode, passport);
             formData.append(documentSpecs[2].documentType.code, healthExamCert);
+            formData.append(documentSpecs[18].documentTypeCode, herqa);
             if (professionalDoc != undefined) {
               formData.append(
                 documentSpecs[8].documentType.code,
@@ -462,14 +460,18 @@ export default {
                 professionalDoc[2]
               );
             }
-            formData.append(documentSpecs[5].documentType.code, workExperience);
-            formData.append(documentSpecs[4].documentType.code, cpdFile.value);
-            formData.append(documentSpecs[18].documentType.code, herqa);
+            formData.append(documentSpecs[17].documentTypeCode, supportLetter);
             formData.append(
               documentSpecs[6].documentType.code,
               previousLicense
             );
-            formData.append(documentSpecs[17].documentType.code, supportLetter);
+            formData.append(documentSpecs[4].documentType.code, cpdFile.value);
+            formData.append(
+              documentSpecs[7].documentType.code,
+              letterFromHiringManager
+            );
+            formData.append(documentSpecs[5].documentType.code, workExperience);
+
             let payload = { document: formData, id: licenseId };
             store
               .dispatch("renewal/uploadDocuments", payload)
@@ -641,13 +643,13 @@ export default {
 
       passport,
       healthExamCert,
-      professionalDoc,
-      workExperience,
       herqa,
-      previousLicense,
+      professionalDoc,
       supportLetter,
-
-      documentMessage,
+      previousLicense,
+      cpd,
+      letterFromHiringManager,
+      workExperience,
     };
   },
 };
