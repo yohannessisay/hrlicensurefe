@@ -221,16 +221,17 @@ export default {
 
     let passport = ref("");
     let healthExamCert = ref("");
-    let professionalDoc = [];
-    let workExperience = ref("");
-    let cpd = ref("");
+    let coc = ref("");
     let degree = ref("");
     let diploma = ref("");
     let educationDoc = [];
-    let coc = ref("");
-    let previousLicense = ref("");
+    let payroll = ref("");
     let supportLetter = ref("");
     let transcript = ref("");
+    let workExperience = ref("");
+    let previousLicense = ref("");
+    let cpd = ref("");
+    let letterFromHiringManager = ref("");
 
     const reset = () => {
       showUpload.value = true;
@@ -277,16 +278,17 @@ export default {
 
     passport = store.getters["renewal/getPassport"];
     healthExamCert = store.getters["renewal/getRenewalHealthExamCert"];
-    professionalDoc = store.getters["renewal/getProfessionalDocuments"];
-    workExperience = store.getters["renewal/getRenewalWorkExperience"];
-    cpd = store.getters["renewal/getRenewalCpd"];
+    coc = store.getters["renewal/getRenewalCpd"];
     degree = store.getters["renewal/getDegree"];
     diploma = store.getters["renewal/getDiploma"];
     educationDoc = store.getters["renewal/getEducationalDocuments"];
-    coc = store.getters["renewal/getCoc"];
-    previousLicense = store.getters["renewal/getPreviousLicense"];
+    payroll = store.getters["renewal/getPayroll"];
     supportLetter = store.getters["renewal/getSupportLetter"];
     transcript = store.getters["renewal/getTranscript"];
+    workExperience = store.getters["renewal/getRenewalWorkExperience"];
+    previousLicense = store.getters["renewal/getPreviousLicense"];
+    cpd = store.getters["renewal/getRenewalCpd"];
+    letterFromHiringManager = store.getters["renewal/getRenewalLicense"];
 
     const submit = () => {
       emit("changeActiveState");
@@ -442,22 +444,6 @@ export default {
             let formData = new FormData();
             formData.append(documentSpecs[0].documentType.code, passport);
             formData.append(documentSpecs[2].documentType.code, healthExamCert);
-            if (professionalDoc != undefined) {
-              formData.append(
-                documentSpecs[8].documentType.code,
-                professionalDoc[0]
-              );
-              formData.append(
-                documentSpecs[9].documentType.code,
-                professionalDoc[1]
-              );
-              formData.append(
-                documentSpecs[10].documentType.code,
-                professionalDoc[2]
-              );
-            }
-            formData.append(documentSpecs[5].documentType.code, workExperience);
-            formData.append(documentSpecs[4].documentType.code, cpd);
             formData.append(documentSpecs[11].documentType.code, coc);
             formData.append(documentSpecs[24].documentType.code, degree);
             formData.append(documentSpecs[25].documentType.code, diploma);
@@ -487,12 +473,19 @@ export default {
               documentSpecs[23].documentType.code,
               payrollFile.value
             );
+            formData.append(documentSpecs[17].documentType.code, supportLetter);
+            formData.append(documentSpecs[26].documentType.code, transcript);
+            formData.append(documentSpecs[5].documentType.code, workExperience);
             formData.append(
               documentSpecs[6].documentType.code,
               previousLicense
             );
-            formData.append(documentSpecs[17].documentType.code, supportLetter);
-            formData.append(documentSpecs[26].documentType.code, transcript);
+            formData.append(documentSpecs[4].documentType.code, cpd);
+            formData.append(
+              documentSpecs[19].documentType.code,
+              letterFromHiringManager
+            );
+
             let payload = { document: formData, id: licenseId };
             store
               .dispatch("renewal/uploadDocuments", payload)
@@ -666,16 +659,17 @@ export default {
 
       passport,
       healthExamCert,
-      professionalDoc,
-      workExperience,
-      cpd,
+      coc,
       degree,
       diploma,
       educationDoc,
-      coc,
-      previousLicense,
+      payroll,
       supportLetter,
       transcript,
+      workExperience,
+      previousLicense,
+      cpd,
+      letterFromHiringManager,
 
       documentMessage,
     };

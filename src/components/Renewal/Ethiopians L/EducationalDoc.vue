@@ -546,16 +546,16 @@ export default {
 
       passport: "",
       healthExamCert: "",
-      professionalDoc: [],
-      workExperience: "",
-      cpd: "",
       coc: "",
       degree: "",
       diploma: "",
       payroll: "",
-      previousLicense: "",
       supportLetter: "",
       transcript: "",
+      workExperience: "",
+      previousLicense: "",
+      cpd: "",
+      letterFromHiringOrganization: "",
 
       documentMessage: "",
 
@@ -583,16 +583,16 @@ export default {
 
       getPassport: "renewal/getPassport",
       getHealthExamCert: "renewal/getHealthExamCert",
-      getProfessionalDoc: "renewal/getProfessionalDocuments",
-      getWorkExperience: "renewal/getRenewalWorkExperience",
-      getCpd: "renewal/getRenewalCpd",
       getCoc: "renewal/getCoc",
       getDegree: "renewal/getDegree",
       getDiploma: "renewal/getDiploma",
       getPayroll: "renewal/getPayroll",
-      getPreviousLicense: "renewal/getPreviousLicense",
       getSupportLetter: "renewal/getSupportLetter",
       getTranscript: "renewal/getTranscript",
+      getWorkExperience: "renewal/getRenewalWorkExperience",
+      getPreviousLicense: "renewal/getPreviousLicense",
+      getCpd: "renewal/getRenewalCpd",
+      getLetterFromHiringInstitution: "renewal/getRenewalLicense",
 
       getDraftData: "renewal/getDraft",
     }),
@@ -901,16 +901,16 @@ export default {
 
     this.passport = this.getPassport;
     this.healthExamCert = this.getHealthExamCert;
-    this.professionalDoc = this.getProfessionalDocuments;
-    this.workExperience = this.getWorkExperience;
-    this.cpd = this.getCpd;
     this.coc = this.getCoc;
     this.degree = this.getDegree;
     this.diploma = this.getDiploma;
     this.payroll = this.getPayroll;
-    this.professionalLicense = this.getProfessionalLicense;
     this.supportLetter = this.getSupportLetter;
     this.transcript = this.getTranscript;
+    this.workExperience = this.getWorkExperience;
+    this.previousLicense = this.getPreviousLicense;
+    this.cpd = this.getCpd;
+    this.letterFromHiringOrganization = this.getLetterFromHiringInstitution;
   },
   methods: {
     ...mapActions(["setProfessionalDoc"]),
@@ -1204,97 +1204,91 @@ export default {
             expertLevelId: this.licenseInfo.expertLevelId,
           },
         };
-        this.$store.dispatch("renewal/addRenewalLicense", license).then((res) => {
-          let licenseId = res.data.data.id;
-          let formData = new FormData();
-
-          formData.append(
-            this.documentSpec[0].documentType.code,
-            this.passport
-          );
-          formData.append(
-            this.documentSpec[2].documentType.code,
-            this.healthExamCert
-          );
-          if (professionalDoc != undefined) {
-            formData.append(
-              this.documentSpec[8].documentType.code,
-              this.professionalDoc[0]
-            );
+        this.$store
+          .dispatch("renewal/addRenewalLicense", license)
+          .then((res) => {
+            let licenseId = res.data.data.id;
+            let formData = new FormData();
 
             formData.append(
-              this.documentSpec[9].documentType.code,
-              this.professionalDoc[1]
+              this.documentSpec[0].documentType.code,
+              this.passport
             );
             formData.append(
-              this.documentSpec[10].documentType.code,
-              this.professionalDoc[2]
+              this.documentSpec[2].documentType.code,
+              this.healthExamCert
             );
-          }
-          formData.append(
-            this.documentSpec[5].documentType.code,
-            this.workExperience
-          );
-          formData.append(this.documentSpec[4].documentType.code, this.cpd);
-          formData.append(this.documentSpec[11].documentType.code, this.coc);
-          formData.append(this.documentSpec[24].documentType.code, this.degree);
-          formData.append(
-            this.documentSpec[25].documentType.code,
-            this.diploma
-          );
-          formData.append(
-            this.documentSpec[12].documentType.code,
-            this.certificateFile1
-          );
-          formData.append(
-            this.documentSpec[13].documentType.code,
-            this.certificateFile2
-          );
-          formData.append(
-            this.documentSpec[14].documentType.code,
-            this.certificateFile3
-          );
-          formData.append(
-            this.documentSpec[15].documentType.code,
-            this.certificateFile4
-          );
-          formData.append(
-            this.documentSpec[16].documentType.code,
-            this.certificateFile5
-          );
-          formData.append(
-            this.documentSpec[23].documentType.code,
-            this.payroll
-          );
-          formData.append(
-            this.documentSpec[6].documentType.code,
-            this.previousLicense
-          );
-          formData.append(
-            this.documentSpec[17].documentType.code,
-            this.supportLetter
-          );
-          formData.append(
-            this.documentSpec[26].documentType.code,
-            this.transcript
-          );
+            formData.append(this.documentSpec[11].documentType.code, this.coc);
+            formData.append(
+              this.documentSpec[24].documentType.code,
+              this.degree
+            );
+            formData.append(
+              this.documentSpec[25].documentType.code,
+              this.diploma
+            );
+            formData.append(
+              this.documentSpec[12].documentType.code,
+              this.certificateFile1
+            );
+            formData.append(
+              this.documentSpec[13].documentType.code,
+              this.certificateFile2
+            );
+            formData.append(
+              this.documentSpec[14].documentType.code,
+              this.certificateFile3
+            );
+            formData.append(
+              this.documentSpec[15].documentType.code,
+              this.certificateFile4
+            );
+            formData.append(
+              this.documentSpec[16].documentType.code,
+              this.certificateFile5
+            );
+            formData.append(
+              this.documentSpec[23].documentType.code,
+              this.payroll
+            );
+            formData.append(
+              this.documentSpec[17].documentType.code,
+              this.supportLetter
+            );
+            formData.append(
+              this.documentSpec[26].documentType.code,
+              this.transcript
+            );
+            formData.append(
+              this.documentSpec[5].documentType.code,
+              this.workExperience
+            );
+            formData.append(
+              this.documentSpec[6].documentType.code,
+              this.previousLicense
+            );
+            formData.append(this.documentSpec[4].documentType.code, this.cpd);
+            formData.append(
+              this.documentSpec[19].documentType.code,
+              this.letterFromHiringOrganization
+            );
 
-          let payload = { document: formData, id: licenseId };
-          this.$store
-            .dispatch("renewal/uploadDocuments", payload)
-            .then((res) => {
-              if (res) {
-                this.showFlash = true;
-                this.showLoading = false;
-                setTimeout(() => {
-                  this.$router.push({ path: "/menu" });
-                }, 1500);
-              } else {
-                this.showErrorFlash = true;
-              }
-            })
-            .catch((err) => {});
-        });
+            let payload = { document: formData, id: licenseId };
+            this.$store
+              .dispatch("renewal/uploadDocuments", payload)
+              .then((res) => {
+                if (res) {
+                  this.showFlash = true;
+                  this.showLoading = false;
+                  setTimeout(() => {
+                    this.$router.push({ path: "/menu" });
+                  }, 1500);
+                } else {
+                  this.showErrorFlash = true;
+                }
+              })
+              .catch((err) => {});
+          });
       }
     },
     withdraw(action) {
