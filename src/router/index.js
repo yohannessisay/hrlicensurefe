@@ -232,14 +232,13 @@ const routes = [
   {
     path: "/scanned-certified-user/:applicationType/:userId/:applicationId",
     name: "scannedCertifiedUser",
-    component: () => 
+    component: () =>
       import("../components/Reviewer/Detail/ScannedCertifiedUsers.vue"),
   },
   {
     path: "/qrcode-image",
     name: "qrcodeImage",
-    component: () =>
-      import("../components/Reviewer/Detail/QrCodeImage.vue"),
+    component: () => import("../components/Reviewer/Detail/QrCodeImage.vue"),
   },
   {
     path: "/admin/pendingPayments",
@@ -368,7 +367,8 @@ const routes = [
     path:
       "/admin/newlicense-document/:newLicenseApplicationId/:newLicenseApplicantId/:renewalApplicationId/:renewalApplicantId",
     name: "newlicenseDocuments",
-    component: () => import("../components/Reviewer/Detail/NewLicenseDocumentsForRenewal.vue")
+    component: () =>
+      import("../components/Reviewer/Detail/NewLicenseDocumentsForRenewal.vue"),
   },
   {
     path: "/admin",
@@ -881,7 +881,9 @@ router.beforeEach(async (to, from, next) => {
     !auth &&
     to.path !== "/landing" &&
     to.path !== "/" &&
-    to.path !== "/admin"
+    to.path !== "/admin" &&
+    to.path !==
+      "/scanned-certified-user/:applicationType/:userId/:applicationId"
   )
     next("/landing");
   // console.log(to.path.split("/")[2]);
