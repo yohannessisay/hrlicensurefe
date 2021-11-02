@@ -152,9 +152,14 @@ const routes = [
       ),
   },
   {
-    path: "/admin/report",
+    path: "/admin/review/report",
     name: "report",
     component: () => import("../components/Report/report.vue"),
+  },
+  {
+    path: "/admin/review/dashboard",
+    name: "dashboard",
+    component: () => import("../components/Reviewer/Dashboard.vue"),
   },
   {
     path: "/myWork",

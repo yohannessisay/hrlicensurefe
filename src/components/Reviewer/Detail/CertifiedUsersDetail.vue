@@ -253,7 +253,7 @@ import Spinner from "@/sharedComponents/Spinner";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import backgroundImage from "../../../assets/hrl_background_certificate.jpg";
-import oromiaCertificateBackground from "../../../assets/Oromiya_certificate.jpg";
+import oromiaCertificateBackground from "../../../assets/oromia_background_certificate.jpg";
 import addisAbabaCertificateBackground from "../../../assets/AA_certificate.jpg";
 import qrcode_image from "../../../assets/qrcode_image.jpg";
 import certifiedUserImage from "../../../assets/certified_user.jpg";

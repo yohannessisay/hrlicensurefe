@@ -1,6 +1,6 @@
 <template
   ><div>
-    <ReviewerNavBar tab="Home" />
+    <ReviewerNavBar tab="Report" />
     <div class="flex flex-row">
       <div>
         <ReviewerSideBar style="width: 30vh" />

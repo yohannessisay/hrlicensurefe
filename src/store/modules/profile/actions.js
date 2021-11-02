@@ -116,6 +116,14 @@ export default {
       return error;
     }
   },
+  async changeUserProfile({commit}, profileInfo) {
+    try {
+      const resp = await ApiService.put(url + "profiles/" + profileInfo[0], profileInfo[1]);
+      return resp
+    } catch(err) {
+      return err;
+    }
+  },
   async getUserById({ commit }, id) {
     try {
       const resp = await ApiService.get(url + "users/" + id);
