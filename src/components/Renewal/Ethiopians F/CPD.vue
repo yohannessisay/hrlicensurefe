@@ -30,7 +30,6 @@
           message="CPD"
           class="mt-8"
         />
-        <span class="flex justify-center">{{ documentMessage }}</span>
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
           <div class="flex justify-center mb-10">
             <div>
@@ -114,10 +113,10 @@
           <button @click="submit">Next</button>
           <button
             class="withdraw"
-            @click="withdraw(buttons[1].action)"
+            @click="withdraw(buttons[0].action)"
             variant="outline"
           >
-            {{ buttons[1]["name"] }}
+            {{ buttons[0]["name"] }}
           </button>
         </div>
         <div
@@ -136,7 +135,7 @@
           </button>
         </div>
         <div
-          v-if="buttons && (draftStatus == 'DEC' || draftStatus == 'CONF')"
+          v-if="buttons && draftStatus == 'DEC'"
           class="flex justify-center mb-8"
         >
           <button @click="submitBack">
@@ -172,7 +171,6 @@ import { useRoute, useRouter } from "vue-router";
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import Spinner from "@/sharedComponents/Spinner";
-import MESSAGE from "../../../composables/documentMessage";
 
 export default {
   props: ["activeState"],
@@ -220,17 +218,13 @@ export default {
     let acceptedFields = ref([]);
     let remark = ref("");
 
-    let documentMessage = ref("");
-
     let declinedFieldsCheck = ref(false);
     let acceptedFieldsCheck = ref(false);
 
     let passport = ref("");
     let healthExamCert = ref("");
     let herqa = ref("");
-    let degree = ref("");
-    let diploma = ref("");
-    let transcript = ref("");
+    let professionalDoc = ref([]);
     let supportLetter = ref("");
     let previousLicense = ref("");
     let cpd = ref("");
@@ -286,9 +280,7 @@ export default {
     passport = store.getters["renewal/getPassport"];
     healthExamCert = store.getters["renewal/getRenewalHealthExamCert"];
     herqa = store.getters["renewal/getHerqa"];
-    degree = store.getters["renewal/getDegree"];
-    diploma = store.getters["renewal/getDiploma"];
-    transcript = store.getters["renewal/getTranscript"];
+    professionalDoc = store.getters["renewal/getProfessionalDocuments"];
     supportLetter = store.getters["renewal/getSupportLetter"];
     previousLicense = store.getters["renewal/getPreviousLicense"];
     cpd = store.getters["renewal/getRenewalCpd"];
@@ -305,7 +297,6 @@ export default {
     };
 
     onMounted(() => {
-      documentMessage.value = MESSAGE.DOC_MESSAGE;
       cpdBack = store.getters["renewal/getRenewalCpd"];
       if (
         cpdBack &&
@@ -452,20 +443,31 @@ export default {
           if (res.data.status == "Success") {
             let licenseId = res.data.data.id;
             let formData = new FormData();
-            formData.append(documentSpecs[0].documentType.code, passport);
+            formData.append(documentSpecs[0].documentTypeCode, passport);
             formData.append(documentSpecs[2].documentType.code, healthExamCert);
-            formData.append(documentSpecs[18].documentType.code, herqa);
-            formData.append(documentSpecs[24].documentType.code, degree);
-            formData.append(documentSpecs[25].documentType.code, diploma);
-            formData.append(documentSpecs[26].documentType.code, transcript);
-            formData.append(documentSpecs[17].documentType.code, supportLetter);
+            formData.append(documentSpecs[18].documentTypeCode, herqa);
+            if (professionalDoc != undefined) {
+              formData.append(
+                documentSpecs[8].documentType.code,
+                professionalDoc[0]
+              );
+              formData.append(
+                documentSpecs[9].documentType.code,
+                professionalDoc[1]
+              );
+              formData.append(
+                documentSpecs[10].documentType.code,
+                professionalDoc[2]
+              );
+            }
+            formData.append(documentSpecs[17].documentTypeCode, supportLetter);
             formData.append(
               documentSpecs[6].documentType.code,
               previousLicense
             );
             formData.append(documentSpecs[4].documentType.code, cpdFile.value);
             formData.append(
-              documentSpecs[19].documentType.code,
+              documentSpecs[7].documentType.code,
               letterFromHiringManager
             );
             formData.append(documentSpecs[5].documentType.code, workExperience);
@@ -642,16 +644,12 @@ export default {
       passport,
       healthExamCert,
       herqa,
-      degree,
-      diploma,
-      transcript,
+      professionalDoc,
       supportLetter,
       previousLicense,
       cpd,
       letterFromHiringManager,
       workExperience,
-
-      documentMessage,
     };
   },
 };

@@ -221,9 +221,7 @@ export default {
     let passport = ref("");
     let healthExamCert = ref("");
     let herqa = ref("");
-    let degree = ref("");
-    let diploma = ref("");
-    let transcript = ref("");
+    let professionalDoc = ref([]);
     let supportLetter = ref("");
     let previousLicense = ref("");
     let cpd = ref("");
@@ -294,9 +292,7 @@ export default {
     passport = store.getters["renewal/getPassport"];
     healthExamCert = store.getters["renewal/getRenewalHealthExamCert"];
     herqa = store.getters["renewal/getHerqa"];
-    degree = store.getters["renewal/getDegree"];
-    diploma = store.getters["renewal/getDiploma"];
-    transcript = store.getters["renewal/getTranscript"];
+    professionalDoc = store.getters["renewal/getProfessionalDocuments"];
     supportLetter = store.getters["renewal/getSupportLetter"];
     previousLicense = store.getters["renewal/getPreviousLicense"];
     cpd = store.getters["renewal/getRenewalCpd"];
@@ -383,14 +379,25 @@ export default {
             let licenseId = res.data.data.id;
             let formData = new FormData();
 
-            formData.append(documentSpecs[0].documentType.code, passport);
+            formData.append(documentSpecs[0].documentTypeCode, passport);
             formData.append(documentSpecs[2].documentType.code, healthExamCert);
-            formData.append(documentSpecs[18].documentType.code, herqa);
-            formData.append(documentSpecs[24].documentType.code, degree);
-            formData.append(documentSpecs[25].documentType.code, diploma);
-            formData.append(documentSpecs[26].documentType.code, transcript);
+            formData.append(documentSpecs[18].documentTypeCode, herqa);
+            if (professionalDoc != undefined) {
+              formData.append(
+                documentSpecs[8].documentType.code,
+                professionalDoc[0]
+              );
+              formData.append(
+                documentSpecs[9].documentType.code,
+                professionalDoc[1]
+              );
+              formData.append(
+                documentSpecs[10].documentType.code,
+                professionalDoc[2]
+              );
+            }
             formData.append(
-              documentSpecs[17].documentType.code,
+              documentSpecs[17].documentTypeCode,
               supportLetterFile.value
             );
             formData.append(
@@ -399,7 +406,7 @@ export default {
             );
             formData.append(documentSpecs[4].documentType.code, cpd);
             formData.append(
-              documentSpecs[19].documentType.code,
+              documentSpecs[7].documentType.code,
               letterFromHiringManager
             );
             formData.append(documentSpecs[5].documentType.code, workExperience);
@@ -647,9 +654,7 @@ export default {
       passport,
       healthExamCert,
       herqa,
-      degree,
-      diploma,
-      transcript,
+      professionalDoc,
       supportLetter,
       previousLicense,
       cpd,
