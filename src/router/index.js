@@ -886,7 +886,6 @@ router.beforeEach(async (to, from, next) => {
       "/scanned-certified-user/:applicationType/:userId/:applicationId"
   )
     next("/landing");
-  // console.log(to.path.split("/")[2]);
   else next();
 });
 
