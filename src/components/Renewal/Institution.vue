@@ -589,15 +589,20 @@ export default {
       this.$store.dispatch("renewal/searchNewLicense").then((res) => {
         if (res.data.data == true) {
           this.firstTimeUser = false;
+          this.$emit("changeActiveState");
+          this.$emit("applicantTypeValue", this.licenseInfo.applicantTypeId);
+          this.$emit("payrollDocumentSet", this.licenseInfo.occupationTypeId);
+          this.$emit("firstTimeUserSet", this.firstTimeUser);
+          this.$store.dispatch("renewal/setLicense", license);
         } else {
           this.firstTimeUser = true;
+          this.$emit("changeActiveState");
+          this.$emit("applicantTypeValue", this.licenseInfo.applicantTypeId);
+          this.$emit("payrollDocumentSet", this.licenseInfo.occupationTypeId);
+          this.$emit("firstTimeUserSet", this.firstTimeUser);
+          this.$store.dispatch("renewal/setLicense", license);
         }
       });
-      this.$emit("changeActiveState");
-      this.$emit("applicantTypeValue", this.licenseInfo.applicantTypeId);
-      this.$emit("payrollDocumentSet", this.licenseInfo.occupationTypeId);
-      this.$emit("firstTimeUserSet", this.firstTimeUser);
-      this.$store.dispatch("renewal/setLicense", license);
     },
     fetchApplicantType() {
       this.$store.dispatch("renewal/getApplicantType").then((res) => {
