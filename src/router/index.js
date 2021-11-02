@@ -882,8 +882,7 @@ router.beforeEach(async (to, from, next) => {
     to.path !== "/landing" &&
     to.path !== "/" &&
     to.path !== "/admin" &&
-    to.path !==
-      "/scanned-certified-user/:applicationType/:userId/:applicationId"
+    to.name !== "scannedCertifiedUser"
   )
     next("/landing");
   else next();
