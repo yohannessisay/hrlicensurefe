@@ -323,7 +323,7 @@ export default {
   },
   async searchNewLicense({ commit }, id) {
     try {
-      const resp = await ApiService.get(url + "newLicenses/search/" + id);
+      const resp = await ApiService.get(url + "newLicenses/search/applicant");
       return resp;
     } catch (error) {
       return resp;

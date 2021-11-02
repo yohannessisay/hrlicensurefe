@@ -155,7 +155,6 @@
               <label class="text-primary-700">Professional Type</label>
               <select
                 class="max-w-3xl"
-                @change="fetchProfessionalType(licenseInfo.professionalTypeID)"
                 v-model="licenseInfo.professionalTypeID"
               >
                 <option
@@ -338,7 +337,7 @@ export default {
     this.fetchInstitutions();
     this.fetchDepartments();
     this.fetchRegions();
-    this.fetchProfessionalType();
+    this.fetchFirstTimeUser();
     this.fetchPayrollData();
 
     this.showLoading = true;
@@ -587,6 +586,13 @@ export default {
         occupationTypeId: this.licenseInfo.occupationTypeId,
         expertLevelId: this.licenseInfo.expertLevelId,
       };
+      this.$store.dispatch("renewal/searchNewLicense").then((res) => {
+        if (res.data.data == true) {
+          this.firstTimeUser = false;
+        } else {
+          this.firstTimeUser = true;
+        }
+      });
       this.$emit("changeActiveState");
       this.$emit("applicantTypeValue", this.licenseInfo.applicantTypeId);
       this.$emit("payrollDocumentSet", this.licenseInfo.occupationTypeId);
@@ -631,14 +637,7 @@ export default {
         this.woredaArray = woredasResult.data;
       });
     },
-    fetchProfessionalType(id) {
-      this.$store.dispatch("renewal/searchNewLicense", id).then((res) => {
-        if (res.data.data == true) {
-          this.firstTimeUser = true;
-        } else {
-          this.firstTimeUser = false;
-        }
-      });
+    fetchFirstTimeUser(id) {
       this.$store.dispatch("renewal/getProfessionalTypes").then((res) => {
         this.professionalTypes = res.data.data;
       });
