@@ -227,11 +227,6 @@ export default {
 
     const applicationType = route.params.applicationType;
 
-    const adminRegionId = JSON.parse(localStorage.getItem("allAdminData"))
-      .regionId;
-    const expertLevelId = JSON.parse(localStorage.getItem("allAdminData"))
-      .expertLevelId;
-
     const fetchCertifiedUser = () => {
       showLoading.value = true;
       store
