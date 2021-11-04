@@ -1,10 +1,10 @@
 <template
   ><div>
-    <ReviewerNavBar tab="Report" />
+    <!-- <ReviewerNavBar tab="Report" /> -->
     <div class="flex flex-row">
-      <div>
+      <!-- <div>
         <ReviewerSideBar style="width: 30vh" />
-      </div>
+      </div> -->
       <div v-if="loader" style="margin-left: 45%; margin-top: 5%">
         <Spinner />
       </div>

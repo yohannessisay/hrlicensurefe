@@ -381,6 +381,10 @@
         </div>
         <!-- end goodstanding -->
 
+        <div v-if="this.display == 'report'">
+          <report />
+        </div>
+
         <div v-if="this.display == 'dashboard'">
           <dashboard />
         </div>
@@ -489,7 +493,9 @@ import GoodStandingLicensed from "./ApplicationTypes/GoodStanding/GoodStandingLi
 import GoodStandingOthersLicensed from "./ApplicationTypes/GoodStanding/GoodStandingOthersLicensed.vue";
 import GoodStandingAllLicensed from "./ApplicationTypes/GoodStanding/GoodStandingAllLicensed.vue";
 
+import Report from "../Report/report.vue"
 import Dashboard from "./Dashboard.vue";
+
 import ReviewerNavBar from "./ReviewerNavBar.vue";
 import ReviewerSideNav from "./ReviewerSideNav.vue";
 
@@ -590,6 +596,7 @@ export default {
     GoodStandingOthersLicensed,
     GoodStandingAllLicensed,
     Dashboard,
+    Report,
   },
   setup() {
     const store = useStore();
