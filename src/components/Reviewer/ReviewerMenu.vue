@@ -117,13 +117,17 @@
         </div>
         <div v-if="this.display == 'newLicenseUnassignedEvaluation'">
           <new-license-un-confirmed />
+          <div v-if="expertLevelId != 3">
           <new-license-declined />
           <new-license-under-super-vision />
+          </div>
         </div>
         <div v-if="this.display == 'newLicenseOthersUnassignedEvaluation'">
           <new-license-all-un-confirmed />
+          <div v-if="expertLevelId != 3">
           <new-license-all-declined />
           <new-license-others-under-super-vision />
+          </div>
         </div>
         <div v-if="this.display == 'newLicenseUnderEvaluation'">
           <new-license-on-review />
@@ -216,13 +220,17 @@
         </div>
         <div v-if="this.display == 'renewalUnassignedEvaluation'">
           <renewal-unconfirmed />
+          <div v-if="expertLevelId != 3">
           <renewal-declined />
           <renewal-under-super-vision />
+          </div>
         </div>
         <div v-if="this.display == 'renewalOthersUnassignedEvaluation'">
           <renewal-all-unconfirmed />
-          <renewal-all-declined />
-          <renewal-others-under-super-vision />
+          <div v-if="expertLevelId != 3">
+            <renewal-all-declined />
+            <renewal-others-under-super-vision />
+          </div>
         </div>
         <div v-if="this.display == 'renewalUnderEvaluation'">
           <renewal-on-review />
@@ -600,6 +608,10 @@ export default {
   },
   setup() {
     const store = useStore();
+
+    const expertLevelId = JSON.parse(localStorage.getItem("allAdminData"))
+      .expertLevelId;
+      console.log("expert level id is ", expertLevelId)
     let display = ref("newLicenseUnassigned");
     let selectedValue = ref("");
 
@@ -624,6 +636,7 @@ export default {
       display,
       isStatusFetched,
       selectedValue,
+      expertLevelId,
     };
   },
 };
