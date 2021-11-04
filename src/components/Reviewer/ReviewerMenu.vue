@@ -118,15 +118,15 @@
         <div v-if="this.display == 'newLicenseUnassignedEvaluation'">
           <new-license-un-confirmed />
           <div v-if="expertLevelId != 3">
-          <new-license-declined />
-          <new-license-under-super-vision />
+            <new-license-declined />
+            <new-license-under-super-vision />
           </div>
         </div>
         <div v-if="this.display == 'newLicenseOthersUnassignedEvaluation'">
           <new-license-all-un-confirmed />
           <div v-if="expertLevelId != 3">
-          <new-license-all-declined />
-          <new-license-others-under-super-vision />
+            <new-license-all-declined />
+            <new-license-others-under-super-vision />
           </div>
         </div>
         <div v-if="this.display == 'newLicenseUnderEvaluation'">
@@ -221,8 +221,8 @@
         <div v-if="this.display == 'renewalUnassignedEvaluation'">
           <renewal-unconfirmed />
           <div v-if="expertLevelId != 3">
-          <renewal-declined />
-          <renewal-under-super-vision />
+            <renewal-declined />
+            <renewal-under-super-vision />
           </div>
         </div>
         <div v-if="this.display == 'renewalOthersUnassignedEvaluation'">
@@ -501,7 +501,7 @@ import GoodStandingLicensed from "./ApplicationTypes/GoodStanding/GoodStandingLi
 import GoodStandingOthersLicensed from "./ApplicationTypes/GoodStanding/GoodStandingOthersLicensed.vue";
 import GoodStandingAllLicensed from "./ApplicationTypes/GoodStanding/GoodStandingAllLicensed.vue";
 
-import Report from "../Report/Report.vue"
+import Report from "../Report/Report.vue";
 import Dashboard from "./Dashboard.vue";
 
 import ReviewerNavBar from "./ReviewerNavBar.vue";
@@ -611,7 +611,7 @@ export default {
 
     const expertLevelId = JSON.parse(localStorage.getItem("allAdminData"))
       .expertLevelId;
-      console.log("expert level id is ", expertLevelId)
+    console.log("expert level id is ", expertLevelId);
     let display = ref("newLicenseUnassigned");
     let selectedValue = ref("");
 
