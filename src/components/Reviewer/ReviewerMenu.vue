@@ -501,7 +501,7 @@ import GoodStandingLicensed from "./ApplicationTypes/GoodStanding/GoodStandingLi
 import GoodStandingOthersLicensed from "./ApplicationTypes/GoodStanding/GoodStandingOthersLicensed.vue";
 import GoodStandingAllLicensed from "./ApplicationTypes/GoodStanding/GoodStandingAllLicensed.vue";
 
-import Report from "../Report/report.vue"
+import Report from "../Report/Report.vue"
 import Dashboard from "./Dashboard.vue";
 
 import ReviewerNavBar from "./ReviewerNavBar.vue";
