@@ -1,14 +1,6 @@
 <template>
   <div>
-    <ReviewerNavBar tab="Report" />
     <div class="flex flex-row">
-      <div>
-        <reviewer-side-nav
-          style="width: 30vh"
-          :display="menu"
-          @changeDisplay="displaySet"
-        />
-      </div>
       <div>
         <div class="flex flex-column">
           <h2 class="flex justify-center">New License</h2>

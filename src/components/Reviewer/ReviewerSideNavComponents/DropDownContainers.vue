@@ -17,7 +17,7 @@
 
         <i class="mr-2 far fa-address-book fa-x fa-light"></i>
       </span>
-      <span class="text-base" style="color: white; ">Under Review ++ </span>
+      <span class="text-base" style="color: white; ">Under Review </span>
     </h3>
   </div>
   <!-- <drop-down-lists
@@ -47,7 +47,6 @@ export default {
     };
 
     const dropDownListHandler = (menu) => {
-      console.log("menu is ", menu);
     };
 
     return {
