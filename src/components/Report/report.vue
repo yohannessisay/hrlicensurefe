@@ -52,6 +52,9 @@
                   v-model="filter.profType"
                   @change="filterProfession(filter.profType)"
                 >
+                  <option v-bind:key="filter.all" v-bind:value="filter.all"
+                    >All</option
+                  >
                   <option
                     v-for="profession in professions"
                     v-bind:key="profession.name"
@@ -63,11 +66,18 @@
               </div>
               <div class="flex flex-col mb-small w-72 mr-4">
                 <label class="text-primary-700">Region</label>
-                <select class="max-w-3xl" v-model="filter.region">
+                <select
+                  class="max-w-3xl"
+                  v-model="filter.region"
+                  @change="filterRegion(filter.region)"
+                >
+                  <option v-bind:key="filter.all" v-bind:value="filter.all"
+                    >All</option
+                  >
                   <option
                     v-for="region in regions"
                     v-bind:key="region.name"
-                    v-bind:value="region.id"
+                    v-bind:value="region.name"
                   >
                     {{ region.name }}
                   </option>
@@ -673,17 +683,40 @@ export default {
       saveAs(blob, "Report.xls");
     };
     const filterProfession = (profType) => {
+      report.value = store.getters["report/getReport"];
       var tableFilter = [];
       tableFilter = report.value;
-      report = tableFilter.filter(function(e) {
-        if (
-          e.professionalTypes.name != null ||
-          e.professionalTypes.name ||
-          e.professionalTypes.name != undefined
-        ) {
-          // return e.professionalTypes.name.includes(profType);
+      var tableFilter2 = [];
+      for (var i = 0; i < tableFilter.length; i++) {
+        if (tableFilter[i].professionalTypes != null) {
+          tableFilter2.push(tableFilter[i]);
         }
-      });
+      }
+      if (profType == null) {
+        report.value = store.getter["report/getReport"];
+      } else {
+        report.value = tableFilter2.filter(function(e) {
+          return e.professionalTypes.name == profType;
+        });
+      }
+    };
+    const filterRegion = (region) => {
+      report.value = store.getters["report/getReport"];
+      var tableFilter = [];
+      tableFilter = report.value;
+      var tableFilter2 = [];
+      for (var i = 0; i < tableFilter.length; i++) {
+        if (tableFilter[i].region != null) {
+          tableFilter2.push(tableFilter[i]);
+        }
+      }
+      if (region == null) {
+        report.value = store.getter["report/getReport"];
+      } else {
+        report.value = tableFilter2.filter(function(e) {
+          return e.region.name == region;
+        });
+      }
     };
     const filterDate = (startDate, endDate) => {
       report.value = store.getters["report/getReport"];
@@ -752,6 +785,7 @@ export default {
       filterGender,
       filterAppStatus,
       filterDate,
+      filterRegion,
     };
   },
 };
