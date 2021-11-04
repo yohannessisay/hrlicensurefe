@@ -154,7 +154,7 @@ const routes = [
   {
     path: "/admin/report",
     name: "report",
-    component: () => import("../components/Report/report.vue"),
+    component: () => import("../components/Report/Report.vue"),
   },
   {
     path: "/myWork",

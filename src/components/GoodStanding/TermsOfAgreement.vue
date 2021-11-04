@@ -19,6 +19,9 @@
       </svg>
     </button>
     <div>
+      <span class="flex justify-center mt-small mb-small">{{
+        documentMessage
+      }}</span>
       <div class="ml-8">
         <h2>For All Applicants</h2>
         <ul>
@@ -35,11 +38,20 @@
 </template>
 <script>
 import Title from "@/sharedComponents/Title";
-
+import { ref } from "vue";
+import MESSAGE from "../../composables/documentMessage";
+import { onMounted } from "@vue/runtime-core";
 export default {
   components: { Title },
-
-  setup() {},
+  setup() {
+    let documentMessage = ref("");
+    onMounted(() => {
+      documentMessage.value = MESSAGE.DOC_MESSAGE;
+    });
+    return {
+      documentMessage,
+    };
+  },
 };
 </script>
 <style lang="postcss" scoped>
