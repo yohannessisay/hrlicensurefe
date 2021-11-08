@@ -19,7 +19,7 @@
       </svg>
     </button>
     <div>
-      <span class="flex justify-center mt-small mb-small text-xl">{{
+      <span class="flex justify-center mt-small mb-small text-lg font-semibold">{{
         documentMessage
       }}</span>
       <div class="ml-8">
