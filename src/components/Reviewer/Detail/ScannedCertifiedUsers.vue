@@ -1,116 +1,4 @@
 <template>
-  <!-- <div class="bg-lightBlueB-200">
-    <ReviewerNavBar tab="certifiedUsers" />
-    <span
-      v-if="showLoading || showApplicationLoading"
-      class="flex justify-center justify-items-center mt-24"
-    >
-      <Spinner />
-    </span>
-    <span v-else>
-      
-      <span v-if="isUserCertified && myRegion">
-      <button @click="downloadPdf">Download PDF</button>
-      <div class="bg-lightBlueB-200 h-full">
-        <div
-          v-if="show"
-          style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2)"
-          class="ml-8 mr-8 mb-12"
-        >
-
-          <div class="container">
-            <img
-              src="../../../assets/certeficate_Background_image.jpg"
-              alt="Notebook"
-              style="width: 100%"
-            />
-            <div class="content">
-            </div>
-            <span id="main">
-            <div class="flex-container">
-              <div></div>
-              <div class="inner-flex">
-                <h2><b>በኢትዮፕያ ፌደራላዊ ዴሞክራሲያዊ ሪፐብሊክ</b></h2>
-                <h2><b>Federal Democratic Republic Ethiopia</b></h2>
-                 <br/> 
-                <div class="flex-center">
-                  <h2>የጤና ጥበቃ ሚኒስቴር</h2>
-                  <h2>Ministry of Health</h2>
-                </div>
-              </div>
-              <div>
-                <h6>የምዝገባ ቁጥር: {{certifiedUser.newLicenseCode}}</h6>
-              </div>
-            </div>
-            <div class="flex-second-container">
-              <div>
-                <h3 class="underline"><b>የጤና ባለሙያዎች የሙያ ምዝገባና ፈቃድ የምስከር ወረቀት</b></h3>
-                <br>
-                <h4>በኢትዮጵያ ፌዴራላዊ ዴሞክራሲያዊ ረፐብሊክ የጤና ጥበቃ ሚንስቴር </h4>
-                <h4>በአዋጅ ቁጥር 916/2008 አንቀጽ 33(13)በተሰጠው ስልጣን መሰረት</h4>
-                <br><br><br><br>
-                <h3 class="underline">
-                  <b>{{ certifiedUser.alternativeName != null
-                    ? certifiedUser.alternativeName: ""}} {{ certifiedUser.alternativeFatherName
-                    != null ? certifiedUser.alternativeFatherName: "" }}
-                    {{
-                      certifiedUser.alternativeGrandFatherName != null
-                        ? certifiedUser.alternativeGrandFatherName
-                        : ""}}</b>
-                    </h3>
-                    <h4>ተገቢውን መስፈርት አሟልተው ስለተገኙ ሚኒስቴር መስሪያ ቤቱ</h4>
-                    <h4><b>{{certificateDetail.professionalTypes ? (certificateDetail.professionalTypes.name != null ? certificateDetail.professionalTypes.name : " ") : " "}}</b></h4>
-                    <br>
-                    <h3>ሙያ መዝግቦ ይህን የሙያ ስራ ፈቃድ ሰጥቷል።</h3>
-                    <h3>ይህ የሙያ የስራ ፈቃድ የሚያገለግለው <b>
-                      {{toEthiopian(moment(certificateDetail.certifiedDate)._d.toISOString(), false)}}
-                      -{{toEthiopian(moment(licenseExpireDate)._d.toISOString(), false)}}
-                      </b></h3>
-              </div>
-              <div>
-                <h3 class="underline"><b>HEALTH PROFFESSIONALS REGISTRATION AND</b></h3>
-                <h3 class="underline"><b>LICENSING CERTEFICATE</b></h3>
-                <br>
-                <h4>Under the Federal Democratic Republic of Ethiopiathe Minstry</h4>
-                <h4>of Health by Virtue of proclamation No. 916/2015 Article 33(13)</h4>
-                <h4>is given the authority to issue</h4>
-                <br>
-                <h3 class="underline">
-                  <b>{{ certifiedUser.name }} {{ certifiedUser.fatherName }}
-                    {{
-                      certifiedUser.grandFatherName != null
-                        ? certifiedUser.grandFatherName
-                        : ""}}</b>
-                    </h3>
-                    <h4>Having duly satisfied the requirements of the Ministry</h4>
-                    <h4>hereby registered and licensed as</h4>
-                    <h4><b>{{certificateDetail.professionalTypes ? (certificateDetail.professionalTypes.name != null ? certificateDetail.professionalTypes.name : " ") : " "}}</b></h4>
-                    <br>
-                    <h3>The license is valid:<b>{{moment(certificateDetail.certifiedDate).format("MMM DD, YYYY")}} - {{moment(licenseExpireDate).format("MMM DD, YYYY")}}</b></h3>
-              </div>
-
-            </div>
-            </span> 
-          </div>
-        </div>
-      </div>
-      <div>
-      </div>
-      </span>
-      <span v-else-if="!isUserCertified && isUserFound">
-        <div class="flex justify-center content-center userNotFound">
-          <h1>User is not Certified</h1>
-        </div>
-      </span>
-      <span v-else-if="!isUserFound">
-        <div class="flex justify-center content-center userNotFound">
-          <h1>User is not Found</h1>
-        </div>
-      </span>
-    </span>
-    
-  </div> -->
-
   <div class="container" v-if="isUserCertified && isApplicationTypeFound">
     <div class="">
       <img class="moh-logo" src="../../../assets/image.png" />
@@ -125,7 +13,7 @@
         {{
           certifiedUser.grandFatherName ? certifiedUser.grandFatherName : ""
         }}</span
-      >
+      > &#160;
       <span class="underline">
         {{ certifiedUser.alternativeName ? certifiedUser.alternativeName : "" }}
         {{
@@ -226,11 +114,6 @@ export default {
     let isApplicationTypeFound = ref(true);
 
     const applicationType = route.params.applicationType;
-
-    const adminRegionId = JSON.parse(localStorage.getItem("allAdminData"))
-      .regionId;
-    const expertLevelId = JSON.parse(localStorage.getItem("allAdminData"))
-      .expertLevelId;
 
     const fetchCertifiedUser = () => {
       showLoading.value = true;

@@ -31,27 +31,13 @@
           @applicationTypeSelected="applicationTypeHandler"
           @selectGoodStandingMenu="selectMenu"
         />
-        <ul>
-          <li>
-            <i
-              style="color: white; margin-left:5px"
-              class="fa fa-file-text"
-              aria-hidden="true"
-            ></i>
-            <router-link
-              style="color:white; font-size: 18px; margin-left:5px"
-              to="/admin/report"
-            >
-              Report
-            </router-link>
-          </li>
-        </ul>
+        <report-side-nav
+        @selectReportMenu="selectMenu" />
 
-        <!-- start verification Side Nav here -->
-        <!-- end verification Side Nav here -->
+        <dashboard-side-nav
+        @selectDashboardMenu="selectMenu" />
 
-        <!-- start good standing Side Nav here -->
-        <!-- end good standing Side Nav here -->
+
       </ul>
     </div>
   </div>
@@ -62,6 +48,8 @@ import NewLicenseSideNav from "./ReviewerSideNavComponents/NewLicenseSideNav.vue
 import RenewalSideNav from "./ReviewerSideNavComponents/RenewalSideNav.vue";
 import VerificationSideNav from "./ReviewerSideNavComponents/VerificationSideNav.vue";
 import GoodStandingSideNav from "./ReviewerSideNavComponents/GoodStandingSideNav.vue";
+import ReportSideNav from "./ReviewerSideNavComponents/ReportSideNav.vue"
+import DashboardSideNav from "./ReviewerSideNavComponents/DashboardSideNav.vue"
 import {
   dropdown,
   applicationTypeDD,
@@ -78,6 +66,8 @@ export default {
     RenewalSideNav,
     VerificationSideNav,
     GoodStandingSideNav,
+    ReportSideNav,
+    DashboardSideNav,
   },
   setup(props, { emit }) {
     const expertLevelId = JSON.parse(localStorage.getItem("allAdminData"))
