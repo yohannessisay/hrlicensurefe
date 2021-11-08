@@ -1157,6 +1157,7 @@ export default {
             paymentSlip: null,
             occupationTypeId: this.occupationTypeId,
             expertLevelId: this.expertLevelId,
+            islegal: this.checkBoxValue,
           },
         };
         this.$store
@@ -1200,6 +1201,7 @@ export default {
             paymentSlip: null,
             occupationTypeId: this.occupationTypeId,
             expertLevelId: this.expertLevelId,
+            islegal: this.checkBoxValue,
           },
         },
         id: this.draftId,
@@ -1476,6 +1478,7 @@ export default {
             paymentSlip: null,
             occupationTypeId: this.occupationTypeId,
             expertLevelId: this.expertLevelId,
+            islegal: this.checkBoxValue,
           },
         };
         this.$store

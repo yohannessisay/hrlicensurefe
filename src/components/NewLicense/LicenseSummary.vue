@@ -1104,6 +1104,7 @@ export default {
             occupationTypeId: this.occupationTypeId,
             nativeLanguageId: this.nativeLanguageId,
             expertLevelId: this.expertLevelId,
+            islegal: this.checkBoxValue,
           },
         };
         this.$store
@@ -1356,6 +1357,7 @@ export default {
             occupationTypeId: this.occupationTypeId,
             nativeLanguageId: this.nativeLanguageId,
             expertLevelId: this.expertLevelId,
+            islegal: this.checkBoxValue,
           },
         };
 
@@ -1401,6 +1403,7 @@ export default {
             occupationTypeId: this.occupationTypeId,
             nativeLanguageId: this.nativeLanguageId,
             expertLevelId: this.expertLevelId,
+            islegal: this.checkBoxValue,
           },
         },
         id: this.draftId,

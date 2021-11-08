@@ -550,6 +550,7 @@ export default {
             residenceWoredaId: this.residenceWoredaId,
             professionalTypeId: this.professionalTypeID,
             expertLevelId: this.expertLevelId,
+            islegal: this.checkBoxValue,
           },
         };
         this.$store
@@ -640,6 +641,7 @@ export default {
             residenceWoredaId: this.residenceWoredaId,
             professionalTypeId: this.professionalTypeID,
             expertLevelId: this.expertLevelId,
+            islegal: this.checkBoxValue,
           },
         };
         this.$store
@@ -681,6 +683,7 @@ export default {
             residenceWoredaId: this.residenceWoredaId,
             professionalTypeId: this.professionalTypeID,
             expertLevelId: this.expertLevelId,
+            islegal: this.checkBoxValue,
           },
         },
         id: this.draftId,

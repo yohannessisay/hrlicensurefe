@@ -501,7 +501,6 @@ export default {
     submitBack() {
       this.$emit("changeActiveStateMinus");
     },
-
     async submitRequest(act) {
       let action = act;
       this.showLoading = true;
@@ -568,6 +567,7 @@ export default {
             applicantPositionId: this.licenseInfo.applicantPositionId,
             professionalTypeId: this.professionalTypeID,
             expertLevelId: this.expertLevelId,
+            islegal: this.checkBoxValue,
           },
         };
         this.$store
@@ -661,6 +661,7 @@ export default {
             applicantPositionId: this.licenseInfo.applicantPositionId,
             professionalTypeId: this.professionalTypeID,
             expertLevelId: this.licenseInfo.expertLevel,
+            islegal: this.checkBoxValue,
           },
         };
         this.$store
@@ -705,6 +706,7 @@ export default {
             applicantPositionId: this.licenseInfo.applicantPositionId,
             professionalTypeId: this.professionalTypeID,
             expertLevelId: this.licenseInfo.expertLevel,
+            islegal: this.checkBoxValue,
           },
         },
         id: this.draftId,
