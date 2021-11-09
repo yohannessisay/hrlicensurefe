@@ -28,7 +28,11 @@
       </div>
       <div class="flex flex-wrap pb-medium rounded h-full" v-if="!showLoading">
         <nothing-to-show :nothingToShow="nothingToShow" />
-        <licensed-applications :licensedApplication="getNewLicenseLicensed" app_type="New License" others_licensed="false"/>
+        <licensed-applications
+          :licensedApplication="getNewLicenseLicensed"
+          app_type="New License"
+          others_licensed="false"
+        />
       </div>
     </div>
     <div
@@ -40,10 +44,13 @@
     <div class="bg-lightBlueB-200 h-full" v-if="allInfo.searchByInput">
       <div class="flex pl-12 pt-tiny">
         <Title
-        :message="
-          'Licensed Applicants on Date Range ' + moment(allInfo.searchFromDate).format('MMM D, YYYY') + ' To ' + moment(allInfo.searchUpToDate).format('MMM D, YYYY')
-        "
-      />
+          :message="
+            'Licensed Applicants on Date Range ' +
+              moment(allInfo.searchFromDate).format('MMM D, YYYY') +
+              ' To ' +
+              moment(allInfo.searchUpToDate).format('MMM D, YYYY')
+          "
+        />
         <button @click="backClicked">back</button>
       </div>
       <filtered-info
@@ -65,7 +72,7 @@ import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
 
 import applicationStatus from "../../Configurations/getApplicationStatus.js";
-import LicensedApplications from "../ChildApplicationTypes/LicensedApplications.vue"
+import LicensedApplications from "../ChildApplicationTypes/LicensedApplications.vue";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import filterApplication from "../../ChildComponents/FilteredDatas/FilterApplication.js";
 import FilteredInfo from "../../ChildComponents/FilteredDatas/FilteredInfo.vue";
@@ -75,10 +82,6 @@ import NothingToShow from "../../ChildComponents/NothingToShow.vue";
 import Spinner from "@/sharedComponents/Spinner";
 import store from "../../../../store";
 import Title from "@/sharedComponents/TitleWithIllustration";
-
-
-
-
 
 export default {
   computed: {
@@ -133,31 +136,41 @@ export default {
 
     const fetchNewLicenseLicensed = () => {
       showLoading.value = true;
-      const statusId = applicationStatus(store, 'AP');
-      const adminStatus = [statusId, adminId];
-      store.dispatch("reviewerNewLicense/getNewLicenseLicensed", adminStatus).then((res) => {
-        showLoading.value = false;
-        newLicenseLicensed.value =
-          store.getters["reviewerNewLicense/getNewLicenseLicensedSearched"];
-        allInfo.value.assignApplication =
-          store.getters["reviewerNewLicense/getNewLicenseLicensedSearched"];
+      const approvedPaymentStatus = applicationStatus(store, "AP");
+      const confirmedStatus = applicationStatus(store, "CONF");
 
-        for (let applicant in allInfo.value.assignApplication) {
-          allInfo.value.assignApplication[applicant].createdAt = moment(
-            allInfo.value.assignApplication[applicant].createdAt
-          ).format("MMMM D, YYYY");
-          if (
-            allInfo.value.assignApplication[applicant].applicationType ===
-            undefined
-          ) {
-            allInfo.value.assignApplication[applicant].applicationType =
-              allInfo.value.assignApplication[applicant].applicantType;
+      const approvedStatus = applicationStatus(store, "APP");
+      const adminStatus = [
+        adminId,
+        approvedPaymentStatus,
+        confirmedStatus,
+        approvedStatus,
+      ];
+      store
+        .dispatch("reviewerNewLicense/getNewLicenseLicensed", adminStatus)
+        .then((res) => {
+          showLoading.value = false;
+          newLicenseLicensed.value =
+            store.getters["reviewerNewLicense/getNewLicenseLicensedSearched"];
+          allInfo.value.assignApplication =
+            store.getters["reviewerNewLicense/getNewLicenseLicensedSearched"];
+          console.log("all new license licensed is ", newLicenseLicensed.value);
+          for (let applicant in allInfo.value.assignApplication) {
+            allInfo.value.assignApplication[applicant].createdAt = moment(
+              allInfo.value.assignApplication[applicant].createdAt
+            ).format("MMMM D, YYYY");
+            if (
+              allInfo.value.assignApplication[applicant].applicationType ===
+              undefined
+            ) {
+              allInfo.value.assignApplication[applicant].applicationType =
+                allInfo.value.assignApplication[applicant].applicantType;
+            }
           }
-        }
-        if (newLicenseLicensed.value.length === 0) {
-          nothingToShow.value = true;
-        }
-      });
+          if (newLicenseLicensed.value.length === 0) {
+            nothingToShow.value = true;
+          }
+        });
     };
     onMounted(() => {
       fetchNewLicenseLicensed();

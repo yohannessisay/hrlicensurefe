@@ -417,36 +417,18 @@
                         {{ profession.name }}
                       </option>
                     </select>
-                    <!-- </div> -->
-                    <!-- <div>
-                      <label class="ml-8 titleColors"> Professional Type</label>
-                      <h5 class="ml-8" v-if="newLicense.professionalTypes.name">
-                        {{ newLicense.professionalTypes.name }}
-                      </h5>
-                    </div> -->
-                    <!--<div class="flex flex-row">
-                    <div>
-                      <label class="ml-8 titleColors"> Professional Type</label>
-                      <h5 class="ml-8" v-if="newLicense.professionalTypes.name">
-                        {{ newLicense.professionalTypes.name }}
-                      </h5>
-                    </div>  -->
-                    <!-- <div>
-                      <div v-if="!isToChangeProfession">
-                      <button @click="toChangeProfession()">
-                        change Profession
-                      </button>
-                      </div>
-                      <div v-else>
-                      <input class="max-w-3xl" type="text" />
-                      <button>
-                        change
-                      </button>
-                      <a @click="cancelProfessionChange()"  class="red">
-                        cancel
-                      </a>
-                      </div>
-                    </div> -->
+                  </div>
+                </div>
+                <div v-if="newLicense.professionalTypes.name">
+                  <div class="flex justify-start">
+                    <Title message="License Expiration Date" />
+                  </div>
+                  <div class="flex flex-col mb-medium w-1/2 mr-12">
+                    <input
+                      class="max-w-3xl mr-5"
+                      type="date"
+                      v-model="expireDate"
+                    />
                   </div>
                 </div>
               </div>
@@ -829,6 +811,8 @@ export default {
     let showDeclineFlash = ref(false);
     let sendDeclinedData = ref(true);
     let fromModalSendDeclinedData = ref(false);
+
+    let expireDate = ref();
 
     let professionalTypes = ref([]);
     let evaluateRoute = ref(
@@ -1230,6 +1214,8 @@ export default {
       };
 
       console.log("name changed", newLicense.value);
+      console.log("expiration date is ", expireDate)
+      return;
       if (
         applicationType.value == "New License" &&
         sendDeclinedData.value == true
@@ -1372,7 +1358,7 @@ export default {
         alternativeGrandFatherName:
           newLicense.value.applicant.profile.alternativeGrandFatherName,
       };
-      console.log("new profile data", newProfile)
+      console.log("new profile data", newProfile);
       const profileData = [id, newProfile];
       store
         .dispatch("profile/changeUserProfile", profileData)
@@ -1382,14 +1368,14 @@ export default {
           showNameChangeFlash.value = true;
           setTimeout(() => {
             showNameChangeFlash.value = false;
-          }, 3000)
+          }, 3000);
         })
         .catch((err) => {
           canChangeName.value = false;
           showNameChangeErrorFlash.value = true;
           setTimeout(() => {
             showNameChangeErrorFlash.value = false;
-          }, 3000)
+          }, 3000);
         });
     };
 
@@ -1455,6 +1441,7 @@ export default {
       showSpinner,
       showNameChangeFlash,
       showNameChangeErrorFlash,
+      expireDate,
     };
   },
 };
