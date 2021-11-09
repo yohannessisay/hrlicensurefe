@@ -133,8 +133,16 @@ export default {
 
     const fetchRenewalLicensed = () => {
       showLoading.value = true;
-      const statusId = applicationStatus(store, 'AP');
-      const adminStatus = [statusId, adminId];
+      const approvedPaymentStatus = applicationStatus(store, "AP");
+      const confirmedStatus = applicationStatus(store, "CONF");
+
+      const approvedStatus = applicationStatus(store, "APP");
+      const adminStatus = [
+        adminId,
+        approvedPaymentStatus,
+        confirmedStatus,
+        approvedStatus,
+      ];
       store.dispatch("reviewerRenewal/getRenewalLicensed", adminStatus).then((res) => {
         showLoading.value = false;
         renewalLicensed.value =

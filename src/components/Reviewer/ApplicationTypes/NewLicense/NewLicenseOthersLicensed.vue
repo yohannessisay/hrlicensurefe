@@ -133,8 +133,16 @@ export default {
 
     const fetchNewLicenseOthersLicensed = () => {
       showLoading.value = true;
-      const statusId = applicationStatus(store, 'AP');
-      const adminStatus = [statusId, adminId];
+      const approvedPaymentStatus = applicationStatus(store, "AP");
+      const confirmedStatus = applicationStatus(store, "CONF");
+
+      const approvedStatus = applicationStatus(store, "APP");
+      const adminStatus = [
+        adminId,
+        approvedPaymentStatus,
+        confirmedStatus,
+        approvedStatus,
+      ];
       store.dispatch("reviewerNewLicense/getNewLicenseOtherLicensed", adminStatus).then((res) => {
         showLoading.value = false;
         newLicenseOthersLicensed.value =

@@ -911,12 +911,29 @@ export default {
   },
 
   async getNewLicenseLicensed({ commit }, adminStatus) {
-    const url = baseUrl + "/newlicenses/status/"+adminStatus[0];
+    const expertLevelId = JSON.parse(localStorage.getItem("allAdminData")).expertLevelId;
+    const url = baseUrl + "/newlicenses/status/"+adminStatus[1];
+    const confirmedUrl = baseUrl + "/newlicenses/status/"+adminStatus[2];
     const resp = await ApiService.get(url);
+    const confirmedResp = await ApiService.get(confirmedUrl);
     const licensed = resp.data.data.filter(function(e) {
-      return e.reviewerId === adminStatus[1];
+      return e.reviewerId === adminStatus[0];
     });
-    commit(SET_NEW_LICENSE_LICENSED, licensed);
+    const confirmedLicensed = confirmedResp.data.data.filter(function(e) {
+      return e.reviewerId === adminStatus[0];
+    })
+    const concateLicensedUsers = licensed.concat(confirmedLicensed);
+    if(expertLevelId === 3) {
+      const ApprovedUrl = baseUrl + "/newlicenses/status/"+adminStatus[3];
+      const ApprovedResp = await ApiService.get(ApprovedUrl);
+      const ApprovedLicensed = ApprovedResp.data.data.filter(function(e) {
+        return e.reviewerId === adminStatus[0];
+      });
+      const concateForFederalApproved = concateLicensedUsers.concat(ApprovedLicensed);
+      commit(SET_NEW_LICENSE_LICENSED, concateForFederalApproved);
+      return;
+    }
+    commit(SET_NEW_LICENSE_LICENSED, concateLicensedUsers);
   },
 
   getNewLicenseLicensedSearched({ commit, getters }, searchKey) {
@@ -941,12 +958,29 @@ export default {
   },
 
   async getNewLicenseOtherLicensed({ commit }, adminStatus) {
-    const url = baseUrl + "/newLicenses/status/"+adminStatus[0];
+    const expertLevelId = JSON.parse(localStorage.getItem("allAdminData")).expertLevelId;
+    const url = baseUrl + "/newLicenses/status/"+adminStatus[1];
+    const confirmedUrl = baseUrl + "/newLicenses/status/"+adminStatus[2];
     const resp = await ApiService.get(url);
+    const confirmedResp = await ApiService.get(confirmedUrl);
     const othersLicensed = resp.data.data.filter(function(e) {
-      return e.reviewerId !== adminStatus[1];
+      return e.reviewerId !== adminStatus[0];
     });
-    commit(SET_NEW_LICENSE_OTHERS_LICENSED, othersLicensed);
+    const othersConfirmedLicensed = confirmedResp.data.data.filter(function(e) {
+      return e.reviewerId !== adminStatus[0];
+    })
+    const othersConcateLicensedUsers = othersLicensed.concat(othersConfirmedLicensed);
+    if(expertLevelId === 3) {
+      const ApprovedUrl = baseUrl + "/newLicenses/status/"+adminStatus[3];
+      const ApprovedResp = await ApiService.get(ApprovedUrl);
+      const ApprovedLicensed = ApprovedResp.data.data.filter(function(e) {
+        return e.reviewerId !== adminStatus[0];
+      });
+      const concateForFederalApproved = othersConcateLicensedUsers.concat(ApprovedLicensed);
+      commit(SET_NEW_LICENSE_OTHERS_LICENSED, concateForFederalApproved);
+      return;
+    }
+    commit(SET_NEW_LICENSE_OTHERS_LICENSED, othersConcateLicensedUsers);
   },
 
   getNewLicenseOthersLicensedSearched({ commit, getters }, searchKey) {
