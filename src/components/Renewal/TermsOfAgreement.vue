@@ -18,6 +18,9 @@
         />
       </svg>
     </button>
+    <span class="flex justify-center mt-small mb-small text-lg font-semibold">{{
+      documentMessage
+    }}</span>
     <div class="flex flex-row">
       <div class="ml-8">
         <h2>Foreigner</h2>
@@ -66,11 +69,22 @@
 </template>
 <script>
 import Title from "@/sharedComponents/Title";
+import { ref } from "vue";
+import MESSAGE from "../../composables/documentMessage";
+import { onMounted } from "@vue/runtime-core";
 
 export default {
   components: { Title },
 
-  setup() {},
+  setup() {
+    let documentMessage = ref("");
+    onMounted(() => {
+      documentMessage.value = MESSAGE.DOC_MESSAGE;
+    });
+    return {
+      documentMessage,
+    };
+  },
 };
 </script>
 <style lang="postcss" scoped>

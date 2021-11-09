@@ -18,6 +18,9 @@
         />
       </svg>
     </button>
+    <span class="flex justify-center mt-small mb-small text-lg font-semibold">{{
+      documentMessage
+    }}</span>
     <div class="flex flex-row">
       <div class="ml-8">
         <h2>Foreigner</h2>
@@ -51,7 +54,7 @@
           <li>Payroll Document</li>
           <li>Suppport Letter</li>
           <li>Transcript</li>
-          <li>Authenticated Work Experience</li>
+          <li>Work Experience</li>
         </ul>
       </div>
       <div class="ml-8">
@@ -75,12 +78,23 @@
   </div>
 </template>
 <script>
+import { ref } from "vue";
+import MESSAGE from "../../composables/documentMessage";
+import { onMounted } from "@vue/runtime-core";
 import Title from "@/sharedComponents/Title";
 
 export default {
   components: { Title },
 
-  setup() {},
+  setup() {
+    let documentMessage = ref("");
+    onMounted(() => {
+      documentMessage.value = MESSAGE.DOC_MESSAGE;
+    });
+    return {
+      documentMessage,
+    };
+  },
 };
 </script>
 <style lang="postcss" scoped>

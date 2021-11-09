@@ -184,6 +184,14 @@
           </div>
         </div>
       </div>
+      <div class="flex justify-center mt-8">
+        <label class="inline-flex items-center">
+          <input @change="checkBox()" type="checkbox" class="form-checkbox" />
+          <span style="font-size: 16px" class="ml-2"
+            >All attached documents are legal.</span
+          >
+        </label>
+      </div>
       <div v-if="this.draftStatus == 'DRA' || !this.draftStatus">
         <div class="mt-12 flex justify-center">
           <div>
@@ -191,12 +199,14 @@
               Back
             </button>
             <button
+              :disabled="this.checkBoxValue == true"
               v-if="this.buttons.length < 3"
               @click="submitRequest(this.buttons[0].action)"
             >
               {{ this.buttons[0].name }}
             </button>
             <button
+              :disabled="this.checkBoxValue == true"
               v-if="this.buttons.length > 2"
               @click="submitRequest(this.buttons[0].action)"
             >
@@ -272,7 +282,7 @@
         <button @click="submitBack">
           Back
         </button>
-        <button @click="draft('UpdateEvent')" variant="outline">
+        <button disabled @click="draft('UpdateEvent')" variant="outline">
           Re-apply
         </button>
         <button @click="update(this.buttons[1].action)" variant="outline">
@@ -796,6 +806,8 @@ export default {
     buttons: [],
     documentTypes: [],
     docs: [],
+
+    checkBoxValue: true,
   }),
   computed: {
     ...mapGetters({
@@ -836,6 +848,9 @@ export default {
     }),
   },
   methods: {
+    checkBox: function() {
+      this.checkBoxValue = !this.checkBoxValue;
+    },
     moment: function(date) {
       return moment(date);
     },
@@ -1121,6 +1136,7 @@ export default {
             paymentSlip: null,
             occupationTypeId: this.occupationTypeId,
             expertLevelId: this.expertLevelId,
+            islegal: this.checkBoxValue,
           },
         };
         this.$store
@@ -1164,6 +1180,7 @@ export default {
             paymentSlip: null,
             occupationTypeId: this.occupationTypeId,
             expertLevelId: this.expertLevelId,
+            islegal: this.checkBoxValue,
           },
         },
         id: this.draftId,
@@ -1440,6 +1457,7 @@ export default {
             paymentSlip: null,
             occupationTypeId: this.occupationTypeId,
             expertLevelId: this.expertLevelId,
+            islegal: this.checkBoxValue,
           },
         };
         this.$store
