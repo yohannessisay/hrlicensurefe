@@ -54,7 +54,7 @@
           <li>Payroll Document</li>
           <li>Suppport Letter</li>
           <li>Transcript</li>
-          <li>Authenticated Work Experience</li>
+          <li>Work Experience</li>
         </ul>
       </div>
       <div class="ml-8">
