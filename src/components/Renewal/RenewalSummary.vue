@@ -222,7 +222,6 @@
         </div>
         <div class="flex justify-center mt-4 mb-8">
           <button
-            :disabled="this.checkBoxValue == true"
             v-if="this.buttons.length < 3"
             @click="draft(this.buttons[1].action)"
             variant="outline"
@@ -230,7 +229,6 @@
             {{ this.buttons[1].name }}
           </button>
           <button
-            :disabled="this.checkBoxValue == true"
             v-if="this.buttons.length > 2"
             @click="draft(this.buttons[2].action)"
             variant="outline"
@@ -239,7 +237,6 @@
           </button>
 
           <button
-            :disabled="this.checkBoxValue == true"
             v-if="this.buttons.length > 2"
             class="withdraw"
             @click="withdraw(this.buttons[1].action)"
@@ -257,7 +254,6 @@
           Back
         </button>
         <button
-          :disabled="this.checkBoxValue == true"
           class="withdraw"
           @click="withdraw(this.buttons[1].action)"
           variant="outline"
@@ -272,18 +268,10 @@
         <button @click="submitBack">
           Back
         </button>
-        <button
-          :disabled="this.checkBoxValue == true"
-          @click="draft(this.buttons[0].action)"
-          variant="outline"
-        >
+        <button @click="draft(this.buttons[0].action)" variant="outline">
           {{ this.buttons[0]["name"] }}
         </button>
-        <button
-          :disabled="this.checkBoxValue == true"
-          @click="update(this.buttons[1].action)"
-          variant="outline"
-        >
+        <button @click="update(this.buttons[1].action)" variant="outline">
           {{ this.buttons[1]["name"] }}
         </button>
       </div>
@@ -294,19 +282,10 @@
         <button @click="submitBack">
           Back
         </button>
-        <button
-          disabled
-          :disabled="this.checkBoxValue == true"
-          @click="draft('UpdateEvent')"
-          variant="outline"
-        >
+        <button disabled @click="draft('UpdateEvent')" variant="outline">
           Re-apply
         </button>
-        <button
-          :disabled="this.checkBoxValue == true"
-          @click="update(this.buttons[1].action)"
-          variant="outline"
-        >
+        <button @click="update(this.buttons[1].action)" variant="outline">
           {{ this.buttons[1]["name"] }}
         </button>
       </div>
