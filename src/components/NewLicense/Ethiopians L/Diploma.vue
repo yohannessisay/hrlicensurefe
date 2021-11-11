@@ -41,6 +41,11 @@
               <span v-if="showUpload">
                 <label class="text-primary-700"
                   >Upload image:
+                  <span
+                    v-if="eduLevel == 'diploma'"
+                    style="color: red; font-weight: bold; font-size:16px"
+                    >(*)</span
+                  >
                   <div class="dropbox">
                     <input
                       type="file"
@@ -241,6 +246,8 @@ export default {
     let degree = ref("");
     let transcript = ref("");
 
+    let eduLevel = ref("");
+
     const reset = () => {
       showUpload.value = true;
       showPreview.value = false;
@@ -312,6 +319,8 @@ export default {
     transcript = store.getters["newlicense/getTranscript"];
     degree = store.getters["newlicense/getDegree"];
     coc = store.getters["newlicense/getCoc"];
+
+    eduLevel = store.getters["lookups/getEducationalLevel"];
 
     const draft = (action) => {
       message.value.showLoading = true;
@@ -696,6 +705,7 @@ export default {
       declinedFieldsCheck,
       acceptedFieldsCheck,
       documentMessage,
+      eduLevel,
     };
   },
 };

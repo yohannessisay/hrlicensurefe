@@ -41,6 +41,7 @@
               <span v-if="showCertificate1Upload">
                 <label class="text-primary-700 text-lg"
                   >Upload 8th Grade Certificate:
+                  <span style="color: red; font-weight: bold; font-size:16px">(*)</span>
                   <div class="dropbox">
                     <input
                       type="file"
@@ -57,7 +58,6 @@
                   </div>
                 </label>
               </span>
-
               <picture v-if="!showCertificate1Upload && isCertificate1">
                 <p>
                   <a href="javascript:void(0)" @click="resetCert1()"
@@ -80,7 +80,6 @@
                   v-show="showCertificate1Preview"
                 />
               </div>
-
               <span
                 v-if="!showCertificate1Upload && !isCertificate1 && !isPdf1"
               >
@@ -111,6 +110,7 @@
               <span v-if="showCertificate2Upload">
                 <label class="text-primary-700 text-lg"
                   >Upload 10th Grade Certificate:
+                  <span style="color: red; font-weight: bold; font-size:16px">(*)</span>
                   <div class="dropbox">
                     <input
                       type="file"
@@ -182,6 +182,11 @@
               <span v-if="showCertificate3Upload">
                 <label class="text-primary-700 text-lg"
                   >Upload 12th Grade Certificate:
+                  <span
+                    v-if="this.eduLevel !== 'diploma'"
+                    style="color: red; font-weight: bold; font-size:16px"
+                    >(*)</span
+                  >
                   <div class="dropbox">
                     <input
                       type="file"
@@ -254,6 +259,7 @@
               <span v-if="showCertificate4Upload">
                 <label class="text-primary-700 text-lg"
                   >Upload Transcript 9-10:
+                  <span style="color: red; font-weight: bold; font-size:16px">(*)</span>
                   <div class="dropbox">
                     <input
                       type="file"
@@ -324,6 +330,11 @@
               <span v-if="showCertificate5Upload">
                 <label class="text-primary-700 text-lg"
                   >Upload Transcript 11-12:
+                  <span
+                    v-if="this.eduLevel !== 'diploma'"
+                    style="color: red; font-weight: bold; font-size:16px"
+                    >(*)</span
+                  >
                   <div class="dropbox">
                     <input
                       type="file"
@@ -461,7 +472,6 @@
     <ErrorFlashMessage message="Operation Failed!" />
   </div>
 </template>
-
 <script>
 import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
 import { mapGetters, mapActions } from "vuex";
@@ -575,6 +585,8 @@ export default {
       certificate3Size: "",
       certificate4Size: "",
       certificate5Size: "",
+
+      eduLevel: "",
     };
   },
   computed: {
@@ -602,10 +614,13 @@ export default {
       getRenewedLicense: "newlicense/getRenewedLicense",
       getProfessionalLicense: "newlicense/getProfessionalLicense",
       getDraftData: "newlicense/getDraft",
+
+      getEducationalLevel: "lookups/getEducationalLevel",
     }),
   },
   created() {
     this.documentMessage = MESSAGE.DOC_MESSAGE;
+    this.eduLevel = this.getEducationalLevel;
     let eduEighth = this.$store.getters["newlicense/getEduEighth"];
     let eduTenth = this.$store.getters["newlicense/getEduTenth"];
     let eduTwelveth = this.$store.getters["newlicense/getEduTwelveth"];
