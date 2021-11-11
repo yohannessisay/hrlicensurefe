@@ -650,6 +650,7 @@ export default {
           this.$emit("applicantTypeValue", this.licenseInfo.applicantTypeId);
           this.$emit("payrollDocumentSet", this.licenseInfo.occupationTypeId);
           this.$emit("firstTimeUserSet", this.firstTimeUser);
+          this.$emit("diplomaSet", this.licenseInfo.educationLevelId);
           this.$store.dispatch("renewal/setLicense", license);
         } else {
           this.firstTimeUser = true;
@@ -657,6 +658,7 @@ export default {
           this.$emit("applicantTypeValue", this.licenseInfo.applicantTypeId);
           this.$emit("payrollDocumentSet", this.licenseInfo.occupationTypeId);
           this.$emit("firstTimeUserSet", this.firstTimeUser);
+          this.$emit("diplomaSet", this.licenseInfo.educationLevelId);
           this.$store.dispatch("renewal/setLicense", license);
         }
       });
