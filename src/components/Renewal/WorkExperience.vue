@@ -41,6 +41,9 @@
               <span v-if="showUpload">
                 <label class="text-primary-700"
                   >Upload image:
+                  <span v-if="required" style="color: red; font-weight: bold"
+                    >(*)</span
+                  >
                   <div class="dropbox">
                     <input
                       type="file"
@@ -236,6 +239,8 @@ export default {
     let renewedLicense = ref("");
     let letterOrg = ref("");
 
+    let required = ref(false);
+
     const reset = () => {
       showUpload.value = true;
       showPreview.value = false;
@@ -313,6 +318,9 @@ export default {
     };
 
     onMounted(() => {
+      if (licenseInfo.applicantTypeId == 2) {
+        required.value = true;
+      }
       documentMessage.value = MESSAGE.DOC_MESSAGE;
       workExperienceBack = store.getters["renewal/getRenewalWorkExperience"];
       if (
@@ -716,6 +724,7 @@ export default {
       letterOrg,
 
       documentMessage,
+      required,
     };
   },
 };

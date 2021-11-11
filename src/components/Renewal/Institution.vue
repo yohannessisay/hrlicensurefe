@@ -169,10 +169,25 @@
                 licenseInfoErrors.professionalTypeID
               }}</span>
             </div>
-            <div
-              v-if="this.displayPayrollDoc"
-              class="flex flex-col mb-medium w-2/5 mr-12 mr-12"
-            >
+            <div class="flex flex-col mb-medium w-2/5 mr-12">
+              <label class="text-primary-700">Education Level </label>
+              <select
+                class="max-w-3xl"
+                @change="setEducationLevel(licenseInfo.educationLevelId)"
+                v-model="licenseInfo.educationLevelId"
+              >
+                <option
+                  v-for="types in this.educationData"
+                  v-bind:key="types.name"
+                  v-bind:value="types.id"
+                >
+                  {{ types.name }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div v-if="this.displayPayrollDoc" id="main" class="flex pt-8 mt-4">
+            <div class="flex flex-col mb-medium w-2/5 mr-12 ml-medium">
               <label class="text-primary-700">Occupation Type</label>
               <select
                 class="max-w-3xl"
@@ -410,6 +425,37 @@ export default {
 
     payrollData: "",
     firstTimeUser: false,
+
+    educationData: [
+      {
+        id: 1,
+        name: "Diploma",
+        code: "DIP",
+        createdAt: "2021-08-04T15:01:00.533Z",
+        updatedAt: "2021-08-04T15:01:00.533Z",
+      },
+      {
+        id: 2,
+        name: "Degree",
+        code: "DEGR",
+        createdAt: "2021-08-04T15:01:00.533Z",
+        updatedAt: "2021-08-04T15:01:00.533Z",
+      },
+      {
+        id: 3,
+        name: "Masters",
+        code: "MAS",
+        createdAt: "2021-08-04T15:01:00.533Z",
+        updatedAt: "2021-08-04T15:01:00.533Z",
+      },
+      {
+        id: 4,
+        name: "PhD",
+        code: "PHD",
+        createdAt: "2021-08-04T15:01:00.533Z",
+        updatedAt: "2021-08-04T15:01:00.533Z",
+      },
+    ],
   }),
 
   methods: {
@@ -449,6 +495,17 @@ export default {
         this.displayPayrollDoc = true;
       } else {
         this.displayPayrollDoc = false;
+      }
+    },
+    setEducationLevel(educationLevelId) {
+      if (educationLevelId == 1) {
+        this.$store.dispatch("lookups/setEducationalLevel", "diploma");
+      } else if (educationLevelId == 2) {
+        this.$store.dispatch("lookups/setEducationalLevel", "degree");
+      } else if (educationLevelId == 3) {
+        this.$store.dispatch("lookups/setEducationalLevel", "masters");
+      } else {
+        this.$store.dispatch("lookups/setEducationalLevel", "phd");
       }
     },
     setPayrollDoc() {},

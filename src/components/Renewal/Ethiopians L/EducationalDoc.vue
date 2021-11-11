@@ -181,7 +181,11 @@
               </span>
               <span v-if="showCertificate3Upload">
                 <label class="text-primary-700 text-lg"
-                  >Upload 12th Grade Certificate:
+                  >Upload 12th Grade Certificate:<span
+                    v-if="this.eduLevel !== 'diploma'"
+                    style="color: red; font-weight: bold"
+                    >(*)</span
+                  >
                   <div class="dropbox">
                     <input
                       type="file"
@@ -323,7 +327,11 @@
               </span>
               <span v-if="showCertificate5Upload">
                 <label class="text-primary-700 text-lg"
-                  >Upload Transcript 11-12:
+                  >Upload Transcript 11-12:<span
+                    v-if="this.eduLevel !== 'diploma'"
+                    style="color: red; font-weight: bold"
+                    >(*)</span
+                  >
                   <div class="dropbox">
                     <input
                       type="file"
@@ -572,6 +580,8 @@ export default {
       certificate3Size: "",
       certificate4Size: "",
       certificate5Size: "",
+
+      eduLevel: "",
     };
   },
   computed: {
@@ -595,10 +605,13 @@ export default {
       getLetterFromHiringInstitution: "renewal/getRenewalLicense",
 
       getDraftData: "renewal/getDraft",
+
+      getEducationalLevel: "lookups/getEducationalLevel",
     }),
   },
   created() {
     this.documentMessage = MESSAGE.DOC_MESSAGE;
+    this.eduLevel = this.getEducationalLevel;
     let eduEighth = this.$store.getters["renewal/getEduEighth"];
     let eduTenth = this.$store.getters["renewal/getEduTenth"];
     let eduTwelveth = this.$store.getters["renewal/getEduTwelveth"];
