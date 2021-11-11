@@ -18,7 +18,7 @@
         />
       </svg>
     </button>
-    <span class="flex justify-center mt-small mb-small">{{
+    <span class="flex justify-center mt-small mb-small text-lg font-semibold">{{
       documentMessage
     }}</span>
     <div class="flex flex-row">
@@ -54,7 +54,7 @@
           <li>Payroll Document</li>
           <li>Suppport Letter</li>
           <li>Transcript</li>
-          <li>Authenticated Work Experience</li>
+          <li>Work Experience</li>
         </ul>
       </div>
       <div class="ml-8">

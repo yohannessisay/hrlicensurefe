@@ -27,7 +27,7 @@
         </h2>
         <TitleWithIllustration
           illustration="Certificate"
-          message="Authenticated Work Experience"
+          message="Work Experience"
           class="mt-8"
         />
         <span class="flex justify-center">{{ documentMessage }}</span>
