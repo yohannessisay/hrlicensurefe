@@ -221,6 +221,14 @@ export default {
       return error;
     }
   },
+  // async getEducationalLevel({ commit }) {
+  //   try {
+  //     const resp = await ApiService.get(url + "educationalLevel/");
+  //     return resp;
+  //   } catch (error) {
+  //     return error;
+  //   }
+  // },
   async getNewLicense({ commit }) {
     try {
       const resp = await ApiService.get(url + "newLicenses/user/" + userId);
