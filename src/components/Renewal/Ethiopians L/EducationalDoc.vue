@@ -183,7 +183,7 @@
                 <label class="text-primary-700 text-lg"
                   >Upload 12th Grade Certificate:<span
                     v-if="this.eduLevel !== 'diploma'"
-                    style="color: red; font-weight: bold"
+                    style="color: red; font-weight: bold; font-size:16px"
                     >(*)</span
                   >
                   <div class="dropbox">
@@ -329,7 +329,7 @@
                 <label class="text-primary-700 text-lg"
                   >Upload Transcript 11-12:<span
                     v-if="this.eduLevel !== 'diploma'"
-                    style="color: red; font-weight: bold"
+                    style="color: red; font-weight: bold; font-size:16px"
                     >(*)</span
                   >
                   <div class="dropbox">

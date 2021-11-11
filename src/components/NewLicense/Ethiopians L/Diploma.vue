@@ -43,7 +43,7 @@
                   >Upload image:
                   <span
                     v-if="eduLevel == 'diploma'"
-                    style="color: red; font-weight: bold"
+                    style="color: red; font-weight: bold; font-size:16px"
                     >(*)</span
                   >
                   <div class="dropbox">

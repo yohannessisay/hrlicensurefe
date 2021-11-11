@@ -41,7 +41,7 @@
               <span v-if="showUpload">
                 <label class="text-primary-700 text-lg"
                   >Authenticated Professional Document Certificate:
-                  <span style="color: red; font-weight: bold">(*)</span>
+                  <span style="color: red; font-weight: bold; font-size:16px">(*)</span>
                   <div class="dropbox">
                     <input
                       type="file"
@@ -100,7 +100,7 @@
               <span v-if="showDiplomaUpload">
                 <label class="text-primary-700 text-lg"
                   >Authenticated Professional Document Diploma:
-                  <span style="color: red; font-weight: bold">(*)</span>
+                  <span style="color: red; font-weight: bold; font-size:16px">(*)</span>
                   <div class="dropbox">
                     <input
                       type="file"
@@ -165,7 +165,7 @@
               <span v-if="showTranscriptUpload">
                 <label class="text-primary-700 text-lg"
                   >Authenticated Professional Document Transcript:
-                  <span style="color: red; font-weight: bold">(*)</span>
+                  <span style="color: red; font-weight: bold; font-size:16px">(*)</span>
                   <div class="dropbox">
                     <input
                       type="file"
