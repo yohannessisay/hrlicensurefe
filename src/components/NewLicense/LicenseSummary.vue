@@ -188,7 +188,8 @@
         <label class="inline-flex items-center">
           <input @change="checkBox()" type="checkbox" class="form-checkbox" />
           <span style="font-size: 16px" class="ml-2"
-            >All attached documents are legal.</span
+            >This is to verify that all the attached documents are legitimate
+            and not forgery.</span
           >
         </label>
       </div>

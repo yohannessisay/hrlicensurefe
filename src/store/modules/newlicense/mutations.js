@@ -1,4 +1,3 @@
-import { prod } from "mathjs";
 import {
   SET_LICENSE,
   SET_PASSPORT,

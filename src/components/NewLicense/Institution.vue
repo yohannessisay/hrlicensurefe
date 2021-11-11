@@ -128,7 +128,6 @@
                 </select>
               </div>
             </div>
-
             <div class="flex">
               <div class="flex flex-col mb-medium w-2/5 ml-medium mr-12">
                 <label class="text-primary-700">Woreda</label>
@@ -172,9 +171,31 @@
                 licenseInfoErrors.professionalTypeID
               }}</span>
             </div>
+            <div class="flex flex-col mb-medium w-2/5 mr-12">
+              <label class="text-primary-700">Education Level </label>
+              <select
+                class="max-w-3xl"
+                @change="setEducationLevel(licenseInfo.educationLevelId)"
+                v-model="licenseInfo.educationLevelId"
+              >
+                <option
+                  v-for="types in this.educationData"
+                  v-bind:key="types.name"
+                  v-bind:value="types.id"
+                >
+                  {{ types.name }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div
+            v-if="this.displayEnglishLanguageOption || this.displayPayrollDoc"
+            id="main"
+            class="flex pt-8 mt-4"
+          >
             <div
               v-if="this.displayEnglishLanguageOption"
-              class="flex flex-col mb-medium w-2/5 mr-12 mr-12"
+              class="flex flex-col mb-medium w-2/5 mr-12 ml-medium"
             >
               <label class="text-primary-700">English Language</label>
               <select
@@ -193,7 +214,7 @@
             </div>
             <div
               v-if="this.displayPayrollDoc"
-              class="flex flex-col mb-medium w-2/5 mr-12 mr-12"
+              class="flex flex-col mb-medium w-2/5 mr-12 ml-medium"
             >
               <label class="text-primary-700">Occupation Type</label>
               <select
@@ -290,7 +311,7 @@
 
 <script>
 import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters } from "vuex";
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import Spinner from "@/sharedComponents/Spinner";
@@ -357,6 +378,7 @@ export default {
     await this.fetchProfessionalType();
     await this.fetchEnglishSpeaker();
     await this.fetchPayrollData();
+    // await this.fetchEducationLevel();
     this.showLoading = true;
     setTimeout(() => {
       this.buttons = this.getButtons;
@@ -390,6 +412,7 @@ export default {
       nativeLanguageId: null,
       occupationTypeId: null,
       expertLevelId: null,
+      educationLevelId: null,
     },
     licenseInfoErrors: {
       applicantTypeId: "",
@@ -402,6 +425,7 @@ export default {
       zoneID: "",
       professionalTypeID: "",
       expertLevelId: null,
+      educationLevelId: null,
     },
     regionID: "",
     zoneID: "",
@@ -410,6 +434,7 @@ export default {
     zoneArray: [],
     woredaArray: [],
     expertLevels: [],
+    educationLevel: [],
 
     applicantTypes: [],
     institutions: [],
@@ -429,6 +454,36 @@ export default {
 
     englishData: "",
     payrollData: "",
+    educationData: [
+      {
+        id: 1,
+        name: "Diploma",
+        code: "DIP",
+        createdAt: "2021-08-04T15:01:00.533Z",
+        updatedAt: "2021-08-04T15:01:00.533Z",
+      },
+      {
+        id: 2,
+        name: "Degree",
+        code: "DEGR",
+        createdAt: "2021-08-04T15:01:00.533Z",
+        updatedAt: "2021-08-04T15:01:00.533Z",
+      },
+      {
+        id: 3,
+        name: "Masters",
+        code: "MAS",
+        createdAt: "2021-08-04T15:01:00.533Z",
+        updatedAt: "2021-08-04T15:01:00.533Z",
+      },
+      {
+        id: 4,
+        name: "PhD",
+        code: "PHD",
+        createdAt: "2021-08-04T15:01:00.533Z",
+        updatedAt: "2021-08-04T15:01:00.533Z",
+      },
+    ],
   }),
 
   methods: {
@@ -440,6 +495,14 @@ export default {
         }
       });
     },
+    // fetchEducationLevel() {
+    //   this.$store.dispatch("lookups/getNativeLanguage").then((res) => {
+    //     if (res.data.status == "Success") {
+    //       this.educationData = res.data;
+    //     } else {
+    //     }
+    //   });
+    // },
     fetchPayrollData() {
       this.$store.dispatch("lookups/getGovernment").then((res) => {
         if (res.data.status == "Success") {
@@ -488,6 +551,17 @@ export default {
         this.nativeEnglishSpeaker = false;
       } else {
         this.nativeEnglishSpeaker = true;
+      }
+    },
+    setEducationLevel(educationLevelId) {
+      if (educationLevelId == 1) {
+        this.$store.dispatch("lookups/setEducationalLevel", "diploma");
+      } else if (educationLevelId == 2) {
+        this.$store.dispatch("lookups/setEducationalLevel", "degree");
+      } else if (educationLevelId == 3) {
+        this.$store.dispatch("lookups/setEducationalLevel", "masters");
+      } else {
+        this.$store.dispatch("lookups/setEducationalLevel", "phd");
       }
     },
     setPayrollDoc() {},
