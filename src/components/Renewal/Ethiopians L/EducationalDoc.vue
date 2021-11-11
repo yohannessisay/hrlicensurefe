@@ -605,13 +605,11 @@ export default {
       getLetterFromHiringInstitution: "renewal/getRenewalLicense",
 
       getDraftData: "renewal/getDraft",
-
-      getEducationalLevel: "lookups/getEducationalLevel",
     }),
   },
   created() {
     this.documentMessage = MESSAGE.DOC_MESSAGE;
-    this.eduLevel = this.getEducationalLevel;
+    this.eduLevel = localStorage.getItem("educationalLevel");
     let eduEighth = this.$store.getters["renewal/getEduEighth"];
     let eduTenth = this.$store.getters["renewal/getEduTenth"];
     let eduTwelveth = this.$store.getters["renewal/getEduTwelveth"];

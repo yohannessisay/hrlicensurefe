@@ -555,13 +555,13 @@ export default {
     },
     setEducationLevel(educationLevelId) {
       if (educationLevelId == 1) {
-        this.$store.dispatch("lookups/setEducationalLevel", "diploma");
+        window.localStorage.setItem("educationalLevel", "diploma");
       } else if (educationLevelId == 2) {
-        this.$store.dispatch("lookups/setEducationalLevel", "degree");
+        window.localStorage.setItem("educationalLevel", "degree");
       } else if (educationLevelId == 3) {
-        this.$store.dispatch("lookups/setEducationalLevel", "masters");
+        window.localStorage.setItem("educationalLevel", "masters");
       } else {
-        this.$store.dispatch("lookups/setEducationalLevel", "phd");
+        window.localStorage.setItem("educationalLevel", "phd");
       }
     },
     setPayrollDoc() {},

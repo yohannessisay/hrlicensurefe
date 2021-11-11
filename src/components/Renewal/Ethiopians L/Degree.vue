@@ -316,7 +316,7 @@ export default {
     cpd = store.getters["renewal/getRenewalCpd"];
     letterFromHiringManager = store.getters["renewal/getRenewalLicense"];
 
-    eduLevel = store.getters["lookups/getEducationalLevel"];
+    eduLevel = localStorage.getItem("educationalLevel");
 
     const draft = (action) => {
       message.value.showLoading = true;

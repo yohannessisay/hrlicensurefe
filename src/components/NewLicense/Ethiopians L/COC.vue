@@ -320,7 +320,7 @@ export default {
     degree = store.getters["newlicense/getDegree"];
     transcript = store.getters["newlicense/getTranscript"];
 
-    eduLevel = store.getters["lookups/getEducationalLevel"];
+    eduLevel = localStorage.getItem("educationalLevel");
 
     const draft = (action) => {
       message.value.showLoading = true;
