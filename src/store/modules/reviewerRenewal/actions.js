@@ -909,7 +909,7 @@ export default {
       return e.reviewerId === adminStatus[0];
     });
     const confirmedLicensed = confirmedResp.data.data.filter(function(e) {
-      return e.reviewerId === adminStatus[0];
+      return e.reviewerId === adminStatus[0] && e.previousApplicationStatus.code === "APP";
     })
     const concateLicensedUsers = licensed.concat(confirmedLicensed);
     if(expertLevelId === 3) {

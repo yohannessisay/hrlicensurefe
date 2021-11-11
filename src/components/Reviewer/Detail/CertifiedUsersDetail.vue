@@ -144,19 +144,19 @@
                     <h3>
                       ይህ የሙያ የስራ ፈቃድ የሚያገለግለው
                       <b>
-                        {{
+                        {{ certificateDetail.certifiedDate ?
                           toEthiopian(
                             moment(
                               certificateDetail.certifiedDate
                             )._d.toISOString(),
                             false
-                          )
+                          ) : ""
                         }}
-                        -{{
+                        -{{ certificateDetail.licenseExpirationDate !== null ?
                           toEthiopian(
-                            moment(licenseExpireDate)._d.toISOString(),
+                            moment(certificateDetail.licenseExpirationDate)._d.toISOString(),
                             false
-                          )
+                          ) : " አልተገለጸም"
                         }}
                       </b>
                     </h3>
@@ -204,14 +204,16 @@
                     <br />
                     <h3>
                       The license is valid:<b
-                        >{{
+                        >{{ certificateDetail.certifiedDate ? 
                           moment(certificateDetail.certifiedDate).format(
                             "MMM DD, YYYY"
-                          )
+                          ) : ""
                         }}
                         -
                         {{
-                          moment(licenseExpireDate).format("MMM DD, YYYY")
+                         certificateDetail.licenseExpirationDate ?
+                          moment(certificateDetail.licenseExpirationDate).format("MMM DD, YYYY")
+                          : " Not specified"
                         }}</b
                       >
                     </h3>
@@ -283,7 +285,6 @@ export default {
     let show = ref(false);
     let certifiedUser = ref({});
     let certificateDetail = ref({});
-    let licenseExpireDate = ref({});
     let showLoading = ref(false);
     let showApplicationLoading = ref(false);
     let isUserCertified = ref(true);
@@ -359,12 +360,6 @@ export default {
                 myRegion.value = false;
               }
             }
-            licenseExpireDate.value = moment(
-              certificateDetail.value.certifiedDate
-            )._d;
-            licenseExpireDate.value.setFullYear(
-              licenseExpireDate.value.getFullYear() + 5
-            );
           })
           .catch((error) => {});
       } else if (route.params.applicationType === "Good Standing") {
@@ -386,12 +381,6 @@ export default {
             ) {
               myRegion.value = false;
             }
-            licenseExpireDate.value = moment(
-              certificateDetail.value.certifiedDate
-            )._d;
-            licenseExpireDate.value.setFullYear(
-              licenseExpireDate.value.getFullYear() + 5
-            );
           });
       } else if (route.params.applicationType === "New License") {
         store
@@ -413,12 +402,6 @@ export default {
             ) {
               myRegion.value = false;
             }
-            licenseExpireDate.value = moment(
-              certificateDetail.value.certifiedDate
-            )._d;
-            licenseExpireDate.value.setFullYear(
-              licenseExpireDate.value.getFullYear() + 5
-            );
           });
       } else if (route.params.applicationType === "Renewal") {
         store
@@ -440,12 +423,6 @@ export default {
             ) {
               myRegion.value = false;
             }
-            licenseExpireDate.value = moment(
-              certificateDetail.value.certifiedDate
-            )._d;
-            licenseExpireDate.value.setFullYear(
-              licenseExpireDate.value.getFullYear() + 5
-            );
           });
       }
     };
@@ -455,6 +432,7 @@ export default {
         orientation: "landscape",
         filters: ["ASCIIHexEncode"],
       });
+      console.log("expiration date", certificateDetail.value.licenseExpirationDate === null)
 
       const userImage = certifiedUser.value.photo;
       if (certificateDetail.value.reviewer.expertLevel.code === "FED") {
@@ -469,7 +447,7 @@ export default {
       // doc.addImage(backgroundImage, "JPEG", 0, 0, 298, 213, undefined, "FAST");
       doc.addImage(imageSrc.value, "JPG", 250, 8, 40, 40);
       if (userImage !== null) {
-        doc.addImage(userImage, "JPG", 8, 8, 30, 30);
+        doc.addImage(userImage, "JPEG", 8, 8, 30, 30);
       }
       doc.setFontSize(25);
       // doc.addFileToVFS("Amiri-Regular.ttf", AmiriRegular);
@@ -523,11 +501,12 @@ export default {
       doc.text(
         160,
         173,
-        `This license is valid: ${moment(
+        `This license is valid: ${ certificateDetail.value.certifiedDate ? moment(
           certificateDetail.value.certifiedDate
-        ).format("MMM DD, YYYY")} - ${moment(licenseExpireDate.value).format(
+        ).format("MMM DD, YYYY") : ""} - ${ certificateDetail.value.licenseExpirationDate ?
+         moment(certificateDetail.value.licenseExpirationDate).format(
           "MMM DD, YYYY"
-        )}`
+        ) : "Not Specified"}`
       );
       doc.setFontSize(7);
       doc.text(150, 193, "Signature of the Authorized Personel");
@@ -587,13 +566,13 @@ export default {
       doc.text(
         15,
         173,
-        `ይህ የሙያ የስራ ፈቃድ የሚያገለግለው ${toEthiopian(
+        `ይህ የሙያ የስራ ፈቃድ የሚያገለግለው ${certificateDetail.certifiedDate ? toEthiopian(
           moment(certificateDetail.value.certifiedDate)._d.toISOString(),
           false
-        )}-${toEthiopian(
-          moment(licenseExpireDate.value)._d.toISOString(),
+        ) : ""}-${ certificateDetail.value.licenseExpirationDate ? toEthiopian(
+          moment(certificateDetail.value.licenseExpirationDate)._d.toISOString(),
           false
-        )}`
+        ) : " አልተገለጸም"}`
       );
       // doc.text(10, 203, `ቀን: ${toEthiopian(new Date().toISOString(), false)}`)
       doc.setFontSize(10);
@@ -633,7 +612,6 @@ export default {
       isUserCertified,
       isUserFound,
       myRegion,
-      licenseExpireDate,
     };
   },
 };
