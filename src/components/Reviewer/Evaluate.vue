@@ -427,7 +427,7 @@
                     <input
                       class="max-w-3xl mr-5"
                       type="date"
-                      v-model="expireDate"
+                      v-model="newLicense.licenseExpirationDate"
                     />
                   </div>
                 </div>
@@ -717,6 +717,9 @@
       <div v-if="showNameChangeErrorFlash">
         <ErrorFlashMessage message="name change Failed!" />
       </div>
+      <div v-if="showLicenseDateRequirementError">
+        <ErrorFlashMessage message="Please add Expiration date!" />
+      </div>
     </div>
   </div>
 </template>
@@ -762,6 +765,8 @@ export default {
 
     let showNameChangeFlash = ref(false);
     let showNameChangeErrorFlash = ref(false);
+
+    let showLicenseDateRequirementError = ref(false);
 
     const newLicense = ref({
       applicant: { profile: { name: "", fatherName: "" } },
@@ -811,8 +816,6 @@ export default {
     let showDeclineFlash = ref(false);
     let sendDeclinedData = ref(true);
     let fromModalSendDeclinedData = ref(false);
-
-    let expireDate = ref();
 
     let professionalTypes = ref([]);
     let evaluateRoute = ref(
@@ -1197,6 +1200,15 @@ export default {
     };
 
     const action = (actionValue) => {
+      if(actionValue === "ApproveEvent") {
+        if(newLicense.value.licenseExpirationDate === null ) {
+          showLicenseDateRequirementError.value = true;
+          setTimeout(() => {
+            showLicenseDateRequirementError.value = false;
+          }, 4000)
+          return;
+        }
+      }
       if (actionValue == "DeclineEvent") {
         showRemark.value = true;
         sendDeclinedData.value = false;
@@ -1206,6 +1218,8 @@ export default {
       }
       newLicense.value.declinedFields = rejected.value;
       newLicense.value.acceptedFields = accepted.value;
+      newLicense.value.certified = true;
+      newLicense.value.certifiedDate = new Date();
 
       let appId = newLicense.value.id;
       let req = {
@@ -1213,9 +1227,7 @@ export default {
         data: newLicense.value,
       };
 
-      console.log("name changed", newLicense.value);
-      console.log("expiration date is ", expireDate)
-      return;
+      console.log("req value ", req);
       if (
         applicationType.value == "New License" &&
         sendDeclinedData.value == true
@@ -1441,7 +1453,7 @@ export default {
       showSpinner,
       showNameChangeFlash,
       showNameChangeErrorFlash,
-      expireDate,
+      showLicenseDateRequirementError,
     };
   },
 };
