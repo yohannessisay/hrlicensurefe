@@ -41,6 +41,7 @@
               <span v-if="showUpload">
                 <label class="text-primary-700 text-lg"
                   >Authenticated Professional Document Certificate:
+                  <span style="color: red; font-weight: bold">(*)</span>
                   <div class="dropbox">
                     <input
                       type="file"
@@ -57,7 +58,6 @@
                   </div>
                 </label>
               </span>
-
               <picture v-if="!showUpload && isImage">
                 <p>
                   <a href="javascript:void(0)" @click="reset()">Upload again</a>
@@ -90,7 +90,6 @@
             >
               ACCEPTED
             </h2>
-
             <div class="ml-4" style="width: 250px">
               <span>
                 <h2>{{ this.diplomaFile.name }}</h2>
@@ -99,6 +98,7 @@
               <span v-if="showDiplomaUpload">
                 <label class="text-primary-700 text-lg"
                   >Authenticated Professional Document Diploma:
+                  <span style="color: red; font-weight: bold">(*)</span>
                   <div class="dropbox">
                     <input
                       type="file"
@@ -115,7 +115,6 @@
                   </div>
                 </label>
               </span>
-
               <picture v-if="!showDiplomaUpload && isDiplomaImage">
                 <p>
                   <a href="javascript:void(0)" @click="resetDiploma()"
@@ -163,6 +162,7 @@
               <span v-if="showTranscriptUpload">
                 <label class="text-primary-700 text-lg"
                   >Authenticated Professional Document Transcript:
+                  <span style="color: red; font-weight: bold">(*)</span>
                   <div class="dropbox">
                     <input
                       type="file"
@@ -179,7 +179,6 @@
                   </div>
                 </label>
               </span>
-
               <picture v-if="!showTranscriptUpload && isTranscriptImage">
                 <p>
                   <a href="javascript:void(0)" @click="resetTranscript()"
@@ -202,7 +201,6 @@
                   v-show="showDiplomaPreview"
                 />
               </div>
-
               <span
                 v-if="!showTranscriptUpload && !isTranscriptImage"
                 &&

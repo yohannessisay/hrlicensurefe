@@ -41,6 +41,7 @@
               <span v-if="showUpload">
                 <label class="text-primary-700"
                   >Upload image:
+                  <span style="color: red; font-weight: bold">(*)</span>
                   <div class="dropbox">
                     <input
                       type="file"

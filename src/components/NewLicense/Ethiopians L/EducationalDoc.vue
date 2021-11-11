@@ -41,6 +41,7 @@
               <span v-if="showCertificate1Upload">
                 <label class="text-primary-700 text-lg"
                   >Upload 8th Grade Certificate:
+                  <span style="color: red; font-weight: bold">(*)</span>
                   <div class="dropbox">
                     <input
                       type="file"
@@ -57,7 +58,6 @@
                   </div>
                 </label>
               </span>
-
               <picture v-if="!showCertificate1Upload && isCertificate1">
                 <p>
                   <a href="javascript:void(0)" @click="resetCert1()"
@@ -80,7 +80,6 @@
                   v-show="showCertificate1Preview"
                 />
               </div>
-
               <span
                 v-if="!showCertificate1Upload && !isCertificate1 && !isPdf1"
               >
@@ -111,6 +110,7 @@
               <span v-if="showCertificate2Upload">
                 <label class="text-primary-700 text-lg"
                   >Upload 10th Grade Certificate:
+                  <span style="color: red; font-weight: bold">(*)</span>
                   <div class="dropbox">
                     <input
                       type="file"
@@ -182,6 +182,7 @@
               <span v-if="showCertificate3Upload">
                 <label class="text-primary-700 text-lg"
                   >Upload 12th Grade Certificate:
+                  <span style="color: red; font-weight: bold">(*)</span>
                   <div class="dropbox">
                     <input
                       type="file"
@@ -254,6 +255,7 @@
               <span v-if="showCertificate4Upload">
                 <label class="text-primary-700 text-lg"
                   >Upload Transcript 9-10:
+                  <span style="color: red; font-weight: bold">(*)</span>
                   <div class="dropbox">
                     <input
                       type="file"
@@ -324,6 +326,7 @@
               <span v-if="showCertificate5Upload">
                 <label class="text-primary-700 text-lg"
                   >Upload Transcript 11-12:
+                  <span style="color: red; font-weight: bold">(*)</span>
                   <div class="dropbox">
                     <input
                       type="file"
