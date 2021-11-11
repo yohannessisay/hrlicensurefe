@@ -1,3 +1,5 @@
 export default {
-  educationalLevel: "",
+  state: {
+    educationalLevel: "",
+  },
 };

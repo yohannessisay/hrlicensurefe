@@ -9,7 +9,7 @@
     <div v-if="this.show && !this.showLoading2">
       <div class="flex justify-center"><Title message="Summary" /></div>
       <div class="flex justify-start">
-        <Title message="Personal Info" />
+        <Title message="Personal Information" />
       </div>
       <div class="flex flex-row">
         <div
