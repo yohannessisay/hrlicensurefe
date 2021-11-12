@@ -9,7 +9,7 @@ export default {
     regionId: "",
     zoneId: "",
     residenceWoredaId: "",
-    professionalTypeId: "",
+    professionalTypeIds: [],
     occupationTypeId: "",
     nativeLanguageId: "",
     expertLevelId: "",

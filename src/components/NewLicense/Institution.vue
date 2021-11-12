@@ -338,7 +338,7 @@ export default {
         draftData.education.departmentId;
       this.licenseInfo.education.institutionId =
         draftData.education.institutionId;
-      this.licenseInfo.professionalTypeID = draftData.professionalTypeId;
+      this.licenseInfo.professionalTypeID = draftData.professionalTypeIds;
       this.licenseInfo.expertLevelId = draftData.expertLevelId;
       if (this.licenseInfo.applicantTypeId == 1) {
         this.$store.dispatch("newlicense/getExpertLevel").then((res) => {
@@ -408,7 +408,7 @@ export default {
         institutionId: null,
       },
       residenceWoredaId: null,
-      professionalTypeID: null,
+      professionalTypeID: [],
       nativeLanguageId: null,
       occupationTypeId: null,
       expertLevelId: null,
@@ -579,7 +579,7 @@ export default {
               institutionId: this.licenseInfo.education.institutionId,
             },
             residenceWoredaId: this.licenseInfo.residenceWoredaId,
-            professionalTypeId: this.licenseInfo.professionalTypeID,
+            professionalTypeIds: this.licenseInfo.professionalTypeID,
             paymentSlip: null,
             occupationTypeId: this.licenseInfo.occupationTypeId,
             nativeLanguageId: this.licenseInfo.nativeLanguageId,
@@ -627,7 +627,7 @@ export default {
               institutionId: this.licenseInfo.education.institutionId,
             },
             residenceWoredaId: this.licenseInfo.residenceWoredaId,
-            professionalTypeId: this.licenseInfo.professionalTypeID,
+            professionalTypeIds: [this.licenseInfo.professionalTypeID],
             paymentSlip: null,
             occupationTypeId: this.licenseInfo.occupationTypeId,
             nativeLanguageId: this.licenseInfo.nativeLanguageId,
@@ -696,7 +696,7 @@ export default {
         regionId: this.regionID,
         zoneId: this.zoneID,
         residenceWoredaId: this.licenseInfo.residenceWoredaId,
-        professionalTypeId: this.licenseInfo.professionalTypeID,
+                    professionalTypeIds: [this.licenseInfo.professionalTypeID],
         paymentSlip: null,
         occupationTypeId: this.licenseInfo.occupationTypeId,
         nativeLanguageId: this.licenseInfo.nativeLanguageId,
@@ -785,7 +785,7 @@ export default {
         draftData.education.departmentId;
       this.licenseInfo.education.institutionId =
         draftData.education.institutionId;
-      this.licenseInfo.professionalTypeID = draftData.professionalTypeId;
+      this.licenseInfo.professionalTypeID = draftData.professionalTypeIds;
       this.payrollData = draftData.occupationTypes;
       this.licenseInfo.expertLevelId = draftData.expertLevelId;
       if (this.licenseInfo.applicantTypeId == 1) {

@@ -458,7 +458,7 @@ export default {
         }
         var filePreview = await this.blobToBase64(this.eduEighth);
         this.eduEighth.docFile = filePreview;
-        this.eduEighth = "Eighth Grade Certificate";
+        this.eduEighth.title = "Eighth Grade Certificate";
         this.docList.push(this.eduEighth);
       }
     }
@@ -710,7 +710,7 @@ export default {
     this.education.departmentId = this.license.education.departmentId;
     this.education.institutionId = this.license.education.institutionId;
     this.residenceWoredaId = this.license.residenceWoredaId;
-    this.professionalTypeID = this.license.professionalTypeId;
+    this.professionalTypeID = this.license.professionalTypeIds;
     this.occupationTypeId = this.license.occupationTypeId;
     this.nativeLanguageId = this.license.nativeLanguageId;
     this.expertLevelId = this.license.expertLevelId;
@@ -1079,12 +1079,12 @@ export default {
               departmentId: this.education.departmentId,
             },
             residenceWoredaId: this.residenceWoredaId,
-            professionalTypeId: this.professionalTypeID,
+            professionalTypeIds: this.professionalTypeID,
             paymentSlip: null,
             occupationTypeId: this.occupationTypeId,
             nativeLanguageId: this.nativeLanguageId,
             expertLevelId: this.expertLevelId,
-            islegal: this.checkBoxValue,
+            isLegal: this.checkBoxValue,
           },
         };
         this.$store
@@ -1332,18 +1332,19 @@ export default {
               departmentId: this.education.departmentId,
             },
             residenceWoredaId: this.residenceWoredaId,
-            professionalTypeId: this.professionalTypeID,
+            professionalTypeIds: this.professionalTypeID,
             paymentSlip: null,
             occupationTypeId: this.occupationTypeId,
             nativeLanguageId: this.nativeLanguageId,
             expertLevelId: this.expertLevelId,
-            islegal: this.checkBoxValue,
+            isLegal: this.checkBoxValue,
           },
         };
-
+        console.log(license);
         this.$store
           .dispatch("newlicense/addNewLicense", license)
           .then((res) => {
+            console.log(res.data);
             let licenseId = res.data.data.id;
             let payload = { document: formData, id: licenseId };
             this.$store
@@ -1378,12 +1379,12 @@ export default {
               institutionId: this.licenseInfo.education.institutionId,
             },
             residenceWoredaId: this.residenceWoredaId,
-            professionalTypeId: this.professionalTypeID,
+            professionalTypeIds: this.professionalTypeID,
             paymentSlip: null,
             occupationTypeId: this.occupationTypeId,
             nativeLanguageId: this.nativeLanguageId,
             expertLevelId: this.expertLevelId,
-            islegal: this.checkBoxValue,
+            isLegal: this.checkBoxValue,
           },
         },
         id: this.draftId,
