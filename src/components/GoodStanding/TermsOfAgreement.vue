@@ -19,14 +19,22 @@
       </svg>
     </button>
     <div>
-      <span class="flex justify-center mt-small mb-small text-lg font-semibold">{{
-        documentMessage
-      }}</span>
+      <span
+        class="flex justify-center mt-small mb-small text-lg font-semibold"
+        >{{ documentMessage }}</span
+      >
       <div class="ml-8">
         <h2>For All Applicants</h2>
         <ul>
-          <li>Letter from Hiring Organization</li>
-          <li>License Copy</li>
+          <div class="tooltip">
+            Letter from Hiring Organization
+            <span class="tooltiptext ml-4"> Something </span>
+          </div>
+          <br>
+          <div class="tooltip">
+            License Copy
+            <span class="tooltiptext ml-4"> Something </span>
+          </div>
         </ul>
       </div>
     </div>
@@ -69,5 +77,28 @@ export default {
   .card-wrapper {
     box-shadow: 0px 3px 6px #1e40af82;
   }
+}
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #1e40af82;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+
+  /* Position the tooltip text - see examples below! */
+  position: absolute;
+  z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted white; /* If you want dots under the hoverable text */
 }
 </style>
