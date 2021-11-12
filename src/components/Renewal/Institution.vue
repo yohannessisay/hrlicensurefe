@@ -64,6 +64,9 @@
               <select
                 class="max-w-3xl"
                 v-model="licenseInfo.education.departmentId"
+                @change="
+                  fetchProfessionalType(licenseInfo.education.departmentId)
+                "
               >
                 <option
                   v-for="department in departments"
@@ -354,6 +357,7 @@ export default {
     this.fetchRegions();
     this.fetchFirstTimeUser();
     this.fetchPayrollData();
+    this.fetchProfessionalType();
 
     this.showLoading = true;
     setTimeout(() => {
@@ -703,6 +707,11 @@ export default {
     },
     fetchFirstTimeUser(id) {
       this.$store.dispatch("renewal/getProfessionalTypes").then((res) => {
+        this.professionalTypes = res.data.data;
+      });
+    },
+    fetchProfessionalType(id) {
+      this.$store.dispatch("renewal/getProfessionalTypes", id).then((res) => {
         this.professionalTypes = res.data.data;
       });
     },

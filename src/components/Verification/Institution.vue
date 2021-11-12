@@ -57,6 +57,9 @@
               <select
                 class="max-w-3xl"
                 v-model="licenseInfo.education.departmentId"
+                @change="
+                  fetchProfessionalType(licenseInfo.education.departmentId)
+                "
               >
                 <option
                   v-for="department in departments"
@@ -147,7 +150,6 @@
               <label class="text-primary-700">Professional Type</label>
               <select
                 class="max-w-3xl"
-                @change="fetchProfessionalType()"
                 v-model="licenseInfo.professionalTypeID"
               >
                 <option
@@ -316,7 +318,6 @@ export default {
     this.fetchInstitutions();
     this.fetchDepartments();
     this.fetchRegions();
-    this.fetchProfessionalType();
     this.showLoading = true;
     setTimeout(() => {
       this.buttons = this.getButtons;
@@ -580,10 +581,12 @@ export default {
           this.woredaArray = woredasResult.data;
         });
     },
-    fetchProfessionalType() {
-      this.$store.dispatch("verification/getProfessionalTypes").then((res) => {
-        this.professionalTypes = res.data.data;
-      });
+    fetchProfessionalType(id) {
+      this.$store
+        .dispatch("verification/getProfessionalTypes", id)
+        .then((res) => {
+          this.professionalTypes = res.data.data;
+        });
     },
 
     validateForm(formData) {

@@ -26,8 +26,8 @@
       <div class="ml-8">
         <h2>For All Applicants</h2>
         <ul>
-          <li>liLetter from Hiring Organization</li>
-          <li>">License Copy</li>
+          <li>Letter from Hiring Organization</li>
+          <li>License Copy</li>
         </ul>
       </div>
     </div>

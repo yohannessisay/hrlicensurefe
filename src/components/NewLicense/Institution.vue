@@ -64,6 +64,9 @@
               <select
                 class="max-w-3xl"
                 v-model="licenseInfo.education.departmentId"
+                @change="
+                  fetchProfessionalType(licenseInfo.education.departmentId)
+                "
               >
                 <option
                   v-for="department in departments"
@@ -156,11 +159,10 @@
               <label class="text-primary-700">Professional Type</label>
               <select
                 class="max-w-3xl"
-                @change="fetchProfessionalType()"
                 v-model="licenseInfo.professionalTypeID"
               >
                 <option
-                  v-for="types in professionalTypes"
+                  v-for="types in this.professionalTypes"
                   v-bind:key="types.name"
                   v-bind:value="types.id"
                 >
@@ -696,7 +698,7 @@ export default {
         regionId: this.regionID,
         zoneId: this.zoneID,
         residenceWoredaId: this.licenseInfo.residenceWoredaId,
-                    professionalTypeIds: [this.licenseInfo.professionalTypeID],
+        professionalTypeIds: [this.licenseInfo.professionalTypeID],
         paymentSlip: null,
         occupationTypeId: this.licenseInfo.occupationTypeId,
         nativeLanguageId: this.licenseInfo.nativeLanguageId,
@@ -747,10 +749,12 @@ export default {
         this.woredaArray = woredasResult.data;
       });
     },
-    fetchProfessionalType() {
-      this.$store.dispatch("newlicense/getProfessionalTypes").then((res) => {
-        this.professionalTypes = res.data.data;
-      });
+    fetchProfessionalType(id) {
+      this.$store
+        .dispatch("newlicense/getProfessionalTypes", id)
+        .then((res) => {
+          this.professionalTypes = res.data.data;
+        });
     },
     woredaChanged() {},
     validateForm(formData) {

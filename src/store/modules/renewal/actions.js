@@ -313,9 +313,11 @@ export default {
       return error;
     }
   },
-  async getProfessionalTypes() {
+  async getProfessionalTypes(context, deptId) {
     try {
-      const resp = await ApiService.get(url + "lookups/professionalTypes");
+      const resp = await ApiService.get(
+        url + "lookups/professionalTypes/" + deptId
+      );
       return resp;
     } catch (error) {
       return error;
