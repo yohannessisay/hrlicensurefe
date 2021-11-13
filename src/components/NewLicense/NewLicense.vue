@@ -1173,7 +1173,7 @@ export default {
       } else if (params == 2) {
         this.eduLevel = "degree";
       } else if (params == 3) {
-        this.eduLevel == "masters";
+        this.eduLevel = "masters";
       } else {
         this.eduLevel = "phd";
       }
