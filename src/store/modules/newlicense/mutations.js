@@ -32,6 +32,10 @@ import {
   SET_EDU_TWELVETH,
   SET_EDU_TRANSCRIPT1,
   SET_EDU_TRANSCRIPT2,
+  SET_MASTERS,
+  SET_MASTERS_TRANSCRIPT,
+  SET_PHD,
+  SET_PHD_TRANSCRIPT,
 } from "./mutation-types";
 
 export default {
@@ -103,6 +107,18 @@ export default {
   },
   [SET_EDU_TRANSCRIPT2](state, eduTranscript2) {
     state.eduTranscript2 = eduTranscript2;
+  },
+  [SET_MASTERS](state, masters) {
+    state.masters = masters;
+  },
+  [SET_MASTERS_TRANSCRIPT](state, transcript) {
+    state.transcript = transcript;
+  },
+  [SET_PHD](state, phd) {
+    state.phd = phd;
+  },
+  [SET_PHD_TRANSCRIPT](state, phdTranscript) {
+    state.phdTranscript = phdTranscript;
   },
   [SET_BUTTONS](state, buttons) {
     state.buttons = buttons;

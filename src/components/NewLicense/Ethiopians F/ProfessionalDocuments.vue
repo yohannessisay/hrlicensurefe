@@ -41,7 +41,9 @@
               <span v-if="showUpload">
                 <label class="text-primary-700 text-lg"
                   >Authenticated Professional Document Certificate:
-                  <span style="color: red; font-weight: bold; font-size:16px">(*)</span>
+                  <span style="color: red; font-weight: bold; font-size:16px"
+                    >(*)</span
+                  >
                   <div class="dropbox">
                     <input
                       type="file"
@@ -100,7 +102,9 @@
               <span v-if="showDiplomaUpload">
                 <label class="text-primary-700 text-lg"
                   >Authenticated Professional Document Diploma:
-                  <span style="color: red; font-weight: bold; font-size:16px">(*)</span>
+                  <span style="color: red; font-weight: bold; font-size:16px"
+                    >(*)</span
+                  >
                   <div class="dropbox">
                     <input
                       type="file"
@@ -165,7 +169,9 @@
               <span v-if="showTranscriptUpload">
                 <label class="text-primary-700 text-lg"
                   >Authenticated Professional Document Transcript:
-                  <span style="color: red; font-weight: bold; font-size:16px">(*)</span>
+                  <span style="color: red; font-weight: bold; font-size:16px"
+                    >(*)</span
+                  >
                   <div class="dropbox">
                     <input
                       type="file"
@@ -380,6 +386,10 @@ export default {
       diploma: "",
       transcript: "",
       degree: "",
+      masters: "",
+      mastersTranscript: "",
+      phd: "",
+      phdTranscript: "",
 
       declinedFields: [],
       acceptedFields: [],
@@ -426,6 +436,10 @@ export default {
       getDiploma: "newlicense/getDiploma",
       getTranscript: "newlicense/getTranscript",
       getDegree: "newlicense/getDegree",
+      getMasters: "newlicense/getMasters",
+      getMastersTranscript: "newlicense/getMastersTranscript",
+      getPhd: "newlicense/getPhd",
+      getPhdTranscript: "newlicense/getPhdTranscript",
 
       getDraftData: "newlicense/getDraft",
       getDeclinedFields: "newlicense/getDeclinedFields",
@@ -636,6 +650,10 @@ export default {
     this.diploma = this.getDiploma;
     this.transcript = this.getTranscript;
     this.degree = this.getDegree;
+    this.degree = this.getDegree;
+    this.masters = this.getMasters;
+    this.mastersTranscript = this.getMastersTranscript;
+    this.phd = this.getPhdTranscript;
   },
   methods: {
     ...mapActions(["setProfessionalDoc"]),
@@ -911,6 +929,19 @@ export default {
             formData.append(
               this.documentSpec[20].documentType.code,
               this.payroll
+            );
+            formData.append(
+              this.documentSpec[24].documentType.code,
+              this.masters
+            );
+            formData.append(
+              this.documentSpec[25].documentType.code,
+              this.mastersTranscript
+            );
+            formData.append(this.documentSpec[26].documentType.code, this.phd);
+            formData.append(
+              this.documentSpec[27].documentType.code,
+              this.phdTranscript
             );
             let payload = { document: formData, id: licenseId };
             this.$store

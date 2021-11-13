@@ -750,6 +750,7 @@ export default {
       });
     },
     fetchProfessionalType(id) {
+      // this.professionalTypes = [];
       this.$store
         .dispatch("newlicense/getProfessionalTypes", id)
         .then((res) => {

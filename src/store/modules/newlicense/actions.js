@@ -26,6 +26,10 @@ import {
   SET_EDU_TWELVETH,
   SET_EDU_TRANSCRIPT1,
   SET_EDU_TRANSCRIPT2,
+  SET_MASTERS,
+  SET_MASTERS_TRANSCRIPT,
+  SET_PHD,
+  SET_PHD_TRANSCRIPT,
   SET_BUTTONS,
   SET_APPLICATION_ID,
   SET_DOCUMENT_SPEC,
@@ -116,6 +120,18 @@ export default {
   },
   setEduTranscript2({ commit }, eduTranscript2) {
     commit(SET_EDU_TRANSCRIPT2, eduTranscript2);
+  },
+  setMasters({ commit }, masters) {
+    commit(SET_MASTERS, masters);
+  },
+  setMastersTranscript({ commit }, mastersTranscript) {
+    commit(SET_MASTERS_TRANSCRIPT, mastersTranscript);
+  },
+  setPhd({ commit }, phd) {
+    commit(SET_PHD, phd);
+  },
+  setPhdTranscript({ commit }, phdTranscript) {
+    commit(SET_PHD_TRANSCRIPT, phdTranscript);
   },
   setButtons({ commit }, buttons) {
     commit(SET_BUTTONS, buttons);

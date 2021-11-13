@@ -362,6 +362,11 @@ export default {
     this.degree = this.getDegree;
     this.payroll = this.getPayroll;
 
+    this.masters = this.getMasters;
+    this.mastersTranscript = this.getMastersTranscript;
+    this.phd = this.getPhd;
+    this.phdTranscript = this.getPhdTranscript;
+
     if (this.passport != "" && this.passport != undefined) {
       if ("name" in this.passport) {
         if (this.draftId != undefined) {
@@ -699,7 +704,66 @@ export default {
         this.docList.push(this.payroll);
       }
     }
-
+    if (this.masters != "" && this.masters != undefined) {
+      if ("name" in this.masters) {
+        if (this.draftId != undefined) {
+          this.documentsArray.splice(
+            this.documentsArray.findIndex((e) => e.documentTypeCode === "MAST"),
+            1
+          );
+        }
+        var filePreview = await this.blobToBase64(this.masters);
+        this.masters.docFile = filePreview;
+        this.masters.title = "Masters";
+        this.docList.push(this.masters);
+      }
+    }
+    if (this.mastersTranscript != "" && this.mastersTranscript != undefined) {
+      if ("name" in this.mastersTranscript) {
+        if (this.draftId != undefined) {
+          this.documentsArray.splice(
+            this.documentsArray.findIndex(
+              (e) => e.documentTypeCode === "MASTRAN"
+            ),
+            1
+          );
+        }
+        var filePreview = await this.blobToBase64(this.mastersTranscript);
+        this.mastersTranscript.docFile = filePreview;
+        this.mastersTranscript.title = "Masters Transcript";
+        this.docList.push(this.mastersTranscript);
+      }
+    }
+    if (this.phd != "" && this.phd != undefined) {
+      if ("name" in this.phd) {
+        if (this.draftId != undefined) {
+          this.documentsArray.splice(
+            this.documentsArray.findIndex((e) => e.documentTypeCode === "PHD"),
+            1
+          );
+        }
+        var filePreview = await this.blobToBase64(this.phd);
+        this.phd.docFile = filePreview;
+        this.phd.title = "PhD";
+        this.docList.push(this.phd);
+      }
+    }
+    if (this.phdTranscript != "" && this.phdTranscript != undefined) {
+      if ("name" in this.phdTranscript) {
+        if (this.draftId != undefined) {
+          this.documentsArray.splice(
+            this.documentsArray.findIndex(
+              (e) => e.documentTypeCode === "PHDTRAN"
+            ),
+            1
+          );
+        }
+        var filePreview = await this.blobToBase64(this.phdTranscript);
+        this.phdTranscript.docFile = filePreview;
+        this.phdTranscript.title = "PhD Transcript";
+        this.docList.push(this.phdTranscript);
+      }
+    }
     this.buttons = this.getButtons;
     this.fetchProfileInfo();
     this.setDocs();
@@ -759,6 +823,10 @@ export default {
     diploma: "",
     transcript: "",
     payroll: "",
+    masters: "",
+    mastersTranscript: "",
+    phd: "",
+    phdTranscript: "",
 
     eduEighth: "",
     eduTenth: "",
@@ -799,6 +867,10 @@ export default {
       getCoc: "newlicense/getCoc",
       getEducationalDocuments: "newlicense/getEducationalDocuments",
       getWorkExperience: "newlicense/getWorkExperience",
+      getMasters: "newlicense/getMasters",
+      getMastersTranscript: "newlicense/getMastersTranscript",
+      getPhd: "newlicense/getPhd",
+      getPhdTranscript: "newlicense/getPhdTranscript",
 
       getButtons: "newlicense/getButtons",
       getApplicationId: "newlicense/getApplicationId",
@@ -973,7 +1045,24 @@ export default {
                 this.documentTypes[19].documentType.code,
                 this.professionalLicense
               );
+              formData.append(
+                this.documentSpec[24].documentType.code,
+                this.masters
+              );
+              formData.append(
+                this.documentSpec[25].documentType.code,
+                this.mastersTranscript
+              );
+              formData.append(
+                this.documentSpec[26].documentType.code,
+                this.phd
+              );
+              formData.append(
+                this.documentSpec[27].documentType.code,
+                this.phdTranscript
+              );
               let payload = { document: formData, id: licenseId };
+
               this.$store
                 .dispatch("newlicense/uploadDocuments", payload)
                 .then((res) => {
@@ -1068,6 +1157,16 @@ export default {
         formData.append(
           this.documentTypes[19].documentType.code,
           this.professionalLicense
+        );
+        formData.append(this.documentSpec[24].documentType.code, this.masters);
+        formData.append(
+          this.documentSpec[25].documentType.code,
+          this.mastersTranscript
+        );
+        formData.append(this.documentSpec[26].documentType.code, this.phd);
+        formData.append(
+          this.documentSpec[27].documentType.code,
+          this.phdTranscript
         );
         let license = {
           action: action,
@@ -1225,6 +1324,22 @@ export default {
                 this.documentTypes[19].documentType.code,
                 this.professionalLicense
               );
+              formData.append(
+                this.documentSpec[24].documentType.code,
+                this.masters
+              );
+              formData.append(
+                this.documentSpec[25].documentType.code,
+                this.mastersTranscript
+              );
+              formData.append(
+                this.documentSpec[26].documentType.code,
+                this.phd
+              );
+              formData.append(
+                this.documentSpec[27].documentType.code,
+                this.phdTranscript
+              );
               let payload = { document: formData, id: licenseId };
               this.$store
                 .dispatch("newlicense/uploadDocuments", payload)
@@ -1321,6 +1436,16 @@ export default {
         formData.append(
           this.documentTypes[19].documentType.code,
           this.professionalLicense
+        );
+        formData.append(this.documentSpec[24].documentType.code, this.masters);
+        formData.append(
+          this.documentSpec[25].documentType.code,
+          this.mastersTranscript
+        );
+        formData.append(this.documentSpec[26].documentType.code, this.phd);
+        formData.append(
+          this.documentSpec[27].documentType.code,
+          this.phdTranscript
         );
         let license = {
           action: action,
