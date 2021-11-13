@@ -1046,19 +1046,19 @@ export default {
                 this.professionalLicense
               );
               formData.append(
-                this.documentSpec[24].documentType.code,
+                this.documentTypes[24].documentType.code,
                 this.masters
               );
               formData.append(
-                this.documentSpec[25].documentType.code,
+                this.documentTypes[25].documentType.code,
                 this.mastersTranscript
               );
               formData.append(
-                this.documentSpec[26].documentType.code,
+                this.documentTypes[26].documentType.code,
                 this.phd
               );
               formData.append(
-                this.documentSpec[27].documentType.code,
+                this.documentTypes[27].documentType.code,
                 this.phdTranscript
               );
               let payload = { document: formData, id: licenseId };
@@ -1158,14 +1158,14 @@ export default {
           this.documentTypes[19].documentType.code,
           this.professionalLicense
         );
-        formData.append(this.documentSpec[24].documentType.code, this.masters);
+        formData.append(this.documentTypes[24].documentType.code, this.masters);
         formData.append(
-          this.documentSpec[25].documentType.code,
+          this.documentTypes[25].documentType.code,
           this.mastersTranscript
         );
-        formData.append(this.documentSpec[26].documentType.code, this.phd);
+        formData.append(this.documentTypes[26].documentType.code, this.phd);
         formData.append(
-          this.documentSpec[27].documentType.code,
+          this.documentTypes[27].documentType.code,
           this.phdTranscript
         );
         let license = {
@@ -1325,19 +1325,19 @@ export default {
                 this.professionalLicense
               );
               formData.append(
-                this.documentSpec[24].documentType.code,
+                this.documentTypes[24].documentType.code,
                 this.masters
               );
               formData.append(
-                this.documentSpec[25].documentType.code,
+                this.documentTypes[25].documentType.code,
                 this.mastersTranscript
               );
               formData.append(
-                this.documentSpec[26].documentType.code,
+                this.documentTypes[26].documentType.code,
                 this.phd
               );
               formData.append(
-                this.documentSpec[27].documentType.code,
+                this.documentTypes[27].documentType.code,
                 this.phdTranscript
               );
               let payload = { document: formData, id: licenseId };
@@ -1437,14 +1437,14 @@ export default {
           this.documentTypes[19].documentType.code,
           this.professionalLicense
         );
-        formData.append(this.documentSpec[24].documentType.code, this.masters);
+        formData.append(this.documentTypes[24].documentType.code, this.masters);
         formData.append(
-          this.documentSpec[25].documentType.code,
+          this.documentTypes[25].documentType.code,
           this.mastersTranscript
         );
-        formData.append(this.documentSpec[26].documentType.code, this.phd);
+        formData.append(this.documentTypes[26].documentType.code, this.phd);
         formData.append(
-          this.documentSpec[27].documentType.code,
+          this.documentTypes[27].documentType.code,
           this.phdTranscript
         );
         let license = {
@@ -1465,11 +1465,9 @@ export default {
             isLegal: this.checkBoxValue,
           },
         };
-        console.log(license);
         this.$store
           .dispatch("newlicense/addNewLicense", license)
           .then((res) => {
-            console.log(res.data);
             let licenseId = res.data.data.id;
             let payload = { document: formData, id: licenseId };
             this.$store

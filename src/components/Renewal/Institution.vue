@@ -648,6 +648,7 @@ export default {
         expertLevelId: this.licenseInfo.expertLevelId,
       };
       this.$store.dispatch("renewal/searchNewLicense").then((res) => {
+        console.log(res.data.data);
         if (res.data.data == true) {
           this.firstTimeUser = false;
           this.$emit("changeActiveState");
