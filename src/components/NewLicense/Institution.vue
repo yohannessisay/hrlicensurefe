@@ -159,7 +159,7 @@
               <label class="text-primary-700">Professional Type</label>
               <select
                 class="max-w-3xl"
-                v-model="licenseInfo.professionalTypeID"
+                v-model="licenseInfo.professionalTypeIds"
               >
                 <option
                   v-for="types in this.professionalTypes"
@@ -169,9 +169,9 @@
                   {{ types.name }}
                 </option>
               </select>
-              <span style="color: red">{{
-                licenseInfoErrors.professionalTypeID
-              }}</span>
+              <!-- <span style="color: red">{{
+                licenseInfoErrors.professionalTypeIds
+              }}</span> -->
             </div>
             <div class="flex flex-col mb-medium w-2/5 mr-12">
               <label class="text-primary-700">Education Level </label>
@@ -340,7 +340,7 @@ export default {
         draftData.education.departmentId;
       this.licenseInfo.education.institutionId =
         draftData.education.institutionId;
-      this.licenseInfo.professionalTypeID = draftData.professionalTypeIds;
+      this.licenseInfo.professionalTypeIds = draftData.professionalTypeIds;
       this.licenseInfo.expertLevelId = draftData.expertLevelId;
       if (this.licenseInfo.applicantTypeId == 1) {
         this.$store.dispatch("newlicense/getExpertLevel").then((res) => {
@@ -377,7 +377,6 @@ export default {
     await this.fetchInstitutions();
     await this.fetchDepartments();
     await this.fetchRegions();
-    await this.fetchProfessionalType();
     await this.fetchEnglishSpeaker();
     await this.fetchPayrollData();
     // await this.fetchEducationLevel();
@@ -410,7 +409,7 @@ export default {
         institutionId: null,
       },
       residenceWoredaId: null,
-      professionalTypeID: [],
+      professionalTypeIds: [],
       nativeLanguageId: null,
       occupationTypeId: null,
       expertLevelId: null,
@@ -425,7 +424,7 @@ export default {
       residenceWoredaId: "",
       regionID: "",
       zoneID: "",
-      professionalTypeID: "",
+      professionalTypeIds: [],
       expertLevelId: null,
       educationLevelId: null,
     },
@@ -437,6 +436,8 @@ export default {
     woredaArray: [],
     expertLevels: [],
     educationLevel: [],
+
+    professionalTypes: [],
 
     applicantTypes: [],
     institutions: [],
@@ -581,7 +582,7 @@ export default {
               institutionId: this.licenseInfo.education.institutionId,
             },
             residenceWoredaId: this.licenseInfo.residenceWoredaId,
-            professionalTypeIds: this.licenseInfo.professionalTypeID,
+            professionalTypeIds: this.licenseInfo.professionalTypeIds,
             paymentSlip: null,
             occupationTypeId: this.licenseInfo.occupationTypeId,
             nativeLanguageId: this.licenseInfo.nativeLanguageId,
@@ -629,7 +630,7 @@ export default {
               institutionId: this.licenseInfo.education.institutionId,
             },
             residenceWoredaId: this.licenseInfo.residenceWoredaId,
-            professionalTypeIds: [this.licenseInfo.professionalTypeID],
+            professionalTypeIds: [this.licenseInfo.professionalTypeIds],
             paymentSlip: null,
             occupationTypeId: this.licenseInfo.occupationTypeId,
             nativeLanguageId: this.licenseInfo.nativeLanguageId,
@@ -698,7 +699,7 @@ export default {
         regionId: this.regionID,
         zoneId: this.zoneID,
         residenceWoredaId: this.licenseInfo.residenceWoredaId,
-        professionalTypeIds: [this.licenseInfo.professionalTypeID],
+        professionalTypeIds: [this.licenseInfo.professionalTypeIds],
         paymentSlip: null,
         occupationTypeId: this.licenseInfo.occupationTypeId,
         nativeLanguageId: this.licenseInfo.nativeLanguageId,
@@ -710,6 +711,7 @@ export default {
       this.$emit("payrollDocumentSet", this.licenseInfo.occupationTypeId);
       this.$emit("diplomaSet", this.licenseInfo.educationLevelId);
       this.$store.dispatch("newlicense/setLicense", license);
+      console.log(license);
     },
     fetchApplicantType() {
       this.$store.dispatch("newlicense/getApplicantType").then((res) => {
@@ -750,7 +752,7 @@ export default {
       });
     },
     fetchProfessionalType(id) {
-      // this.professionalTypes = [];
+      this.professionalTypes = [];
       this.$store
         .dispatch("newlicense/getProfessionalTypes", id)
         .then((res) => {
@@ -790,7 +792,7 @@ export default {
         draftData.education.departmentId;
       this.licenseInfo.education.institutionId =
         draftData.education.institutionId;
-      this.licenseInfo.professionalTypeID = draftData.professionalTypeIds;
+      this.licenseInfo.professionalTypeIds = draftData.professionalTypeIds;
       this.payrollData = draftData.occupationTypes;
       this.licenseInfo.expertLevelId = draftData.expertLevelId;
       if (this.licenseInfo.applicantTypeId == 1) {

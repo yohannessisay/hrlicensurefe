@@ -582,6 +582,7 @@ export default {
         });
     },
     fetchProfessionalType(id) {
+      this.professionalTypes = [];
       this.$store
         .dispatch("verification/getProfessionalTypes", id)
         .then((res) => {

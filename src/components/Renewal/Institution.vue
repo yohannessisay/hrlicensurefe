@@ -711,6 +711,7 @@ export default {
       });
     },
     fetchProfessionalType(id) {
+      this.professionalTypes = [];
       this.$store.dispatch("renewal/getProfessionalTypes", id).then((res) => {
         this.professionalTypes = res.data.data;
       });

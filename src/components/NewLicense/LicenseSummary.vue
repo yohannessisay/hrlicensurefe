@@ -774,7 +774,7 @@ export default {
     this.education.departmentId = this.license.education.departmentId;
     this.education.institutionId = this.license.education.institutionId;
     this.residenceWoredaId = this.license.residenceWoredaId;
-    this.professionalTypeID = this.license.professionalTypeIds;
+    this.professionalTypeIds = this.license.professionalTypeIds;
     this.occupationTypeId = this.license.occupationTypeId;
     this.nativeLanguageId = this.license.nativeLanguageId;
     this.expertLevelId = this.license.expertLevelId;
@@ -793,7 +793,7 @@ export default {
       institutionId: null,
     },
     residenceWoredaId: null,
-    professionalTypeID: null,
+    professionalTypeIds: [],
     nativeLanguageId: null,
     expertLevelId: null,
     occupationTypeId: null,
@@ -1178,7 +1178,7 @@ export default {
               departmentId: this.education.departmentId,
             },
             residenceWoredaId: this.residenceWoredaId,
-            professionalTypeIds: this.professionalTypeID,
+            professionalTypeIds: this.professionalTypeIds,
             paymentSlip: null,
             occupationTypeId: this.occupationTypeId,
             nativeLanguageId: this.nativeLanguageId,
@@ -1457,7 +1457,7 @@ export default {
               departmentId: this.education.departmentId,
             },
             residenceWoredaId: this.residenceWoredaId,
-            professionalTypeIds: this.professionalTypeID,
+            professionalTypeIds: this.professionalTypeIds,
             paymentSlip: null,
             occupationTypeId: this.occupationTypeId,
             nativeLanguageId: this.nativeLanguageId,
@@ -1504,7 +1504,7 @@ export default {
               institutionId: this.licenseInfo.education.institutionId,
             },
             residenceWoredaId: this.residenceWoredaId,
-            professionalTypeIds: this.professionalTypeID,
+            professionalTypeIds: this.professionalTypeIds,
             paymentSlip: null,
             occupationTypeId: this.occupationTypeId,
             nativeLanguageId: this.nativeLanguageId,
