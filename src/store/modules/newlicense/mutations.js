@@ -111,8 +111,8 @@ export default {
   [SET_MASTERS](state, masters) {
     state.masters = masters;
   },
-  [SET_MASTERS_TRANSCRIPT](state, transcript) {
-    state.transcript = transcript;
+  [SET_MASTERS_TRANSCRIPT](state, mastersTranscript) {
+    state.mastersTranscript = mastersTranscript;
   },
   [SET_PHD](state, phd) {
     state.phd = phd;
