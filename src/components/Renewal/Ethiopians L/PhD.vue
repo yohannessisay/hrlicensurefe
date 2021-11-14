@@ -27,7 +27,7 @@
         </h2>
         <TitleWithIllustration
           illustration="Certificate"
-          message="Diploma"
+          message="PhD"
           class="mt-8"
         />
         <span class="flex justify-center">{{ documentMessage }}</span>
@@ -35,23 +35,23 @@
           <div class="flex justify-center">
             <div>
               <span>
-                <h2>{{ DiplomaFile.name }}</h2>
+                <h2>{{ PhdFile.name }}</h2>
                 <h2>{{ fileSize }}</h2>
               </span>
               <span v-if="showUpload">
                 <label class="text-primary-700"
                   >Upload image:
                   <span
-                    v-if="eduLevel == 'diploma'"
+                    v-if="eduLevel !== 'diploma'"
                     style="color: red; font-weight: bold; font-size:16px"
                     >(*)</span
                   >
                   <div class="dropbox">
                     <input
                       type="file"
-                      id="DiplomaFile"
+                      id="PhdFile"
                       class="photoFile"
-                      ref="DiplomaFileP"
+                      ref="PhdFileP"
                       v-on:change="handleFileUpload()"
                       style="margin-bottom: 15px !important"
                       accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
@@ -205,8 +205,8 @@ export default {
 
     let dataChanged = ref(false);
 
-    let DiplomaFile = ref("");
-    let DiplomaFileP = ref("");
+    let PhdFile = ref("");
+    let PhdFileP = ref("");
     let showPreview = ref(false);
     let filePreview = ref("");
     let showUpload = ref(true);
@@ -219,7 +219,9 @@ export default {
     let draftData = ref("");
     let draftStatus = ref("");
 
-    let diplomaBack = ref("");
+    let phdBack = ref("");
+
+    let documentMessage = ref("");
 
     let declinedFields = ref([]);
     let acceptedFields = ref([]);
@@ -227,8 +229,6 @@ export default {
 
     let declinedFieldsCheck = ref(false);
     let acceptedFieldsCheck = ref(false);
-
-    let documentMessage = ref("");
 
     let passport = ref("");
     let healthExamCert = ref("");
@@ -253,7 +253,7 @@ export default {
     const reset = () => {
       showUpload.value = true;
       showPreview.value = false;
-      DiplomaFile.value = "";
+      PhdFile.value = "";
       filePreview.value = "";
       isImage.value = true;
       fileSize.value = "";
@@ -263,10 +263,10 @@ export default {
     const handleFileUpload = () => {
       dataChanged.value = true;
       showUpload.value = false;
-      DiplomaFile.value = DiplomaFileP.value.files[0];
+      PhdFile.value = PhdFileP.value.files[0];
       let reader = new FileReader();
       isImage.value = true;
-      let fileS = DiplomaFile.value.size;
+      let fileS = PhdFile.value.size;
       if (fileS > 0 && fileS < 1000) {
         fileSize.value += "B";
       } else if (fileS > 1000 && fileS < 1000000) {
@@ -283,24 +283,24 @@ export default {
         false
       );
 
-      if (DiplomaFile.value) {
-        if (/\.(jpe?g|png|gif)$/i.test(DiplomaFile.value.name)) {
+      if (PhdFile.value) {
+        if (/\.(jpe?g|png|gif)$/i.test(PhdFile.value.name)) {
           isImage.value = true;
-          reader.readAsDataURL(DiplomaFile.value);
-        } else if (/\.(pdf)$/i.test(DiplomaFile.value.name)) {
+          reader.readAsDataURL(PhdFile.value);
+        } else if (/\.(pdf)$/i.test(PhdFile.value.name)) {
           isImage.value = false;
           isPdf.value = true;
-          reader.readAsDataURL(DiplomaFile.value);
+          reader.readAsDataURL(PhdFile.value);
         }
       }
     };
     const submit = () => {
       emit("changeActiveState");
-      store.dispatch("renewal/setDiploma", DiplomaFile);
+      store.dispatch("renewal/setPhd", PhdFile);
     };
     const submitBack = () => {
       emit("changeActiveStateMinus");
-      store.dispatch("renewal/setDiploma", DiplomaFile);
+      store.dispatch("renewal/setPhd", PhdFile);
     };
     buttons = store.getters["renewal/getButtons"];
     documentSpecs = store.getters["renewal/getDocumentSpec"];
@@ -342,8 +342,8 @@ export default {
               let licenseId = route.params.id;
               let formData = new FormData();
               formData.append(
-                documentSpecs[25].documentType.code,
-                DiplomaFile.value
+                documentSpecs[29].documentType.code,
+                PhdFile.value
               );
               let payload = { document: formData, id: licenseId };
               store
@@ -409,10 +409,7 @@ export default {
             formData.append(documentSpecs[2].documentType.code, healthExamCert);
             formData.append(documentSpecs[11].documentType.code, coc);
             formData.append(documentSpecs[24].documentType.code, degree);
-            formData.append(
-              documentSpecs[25].documentType.code,
-              DiplomaFile.value
-            );
+            formData.append(documentSpecs[25].documentType.code, diploma);
             if (educationDoc != undefined) {
               formData.append(
                 documentSpecs[12].documentType.code,
@@ -453,9 +450,8 @@ export default {
               documentSpecs[28].documentType.code,
               mastersTranscript
             );
-            formData.append(documentSpecs[29].documentType.code, phd);
+            formData.append(documentSpecs[29].documentType.code, PhdFile.value);
             formData.append(documentSpecs[30].documentType.code, phdTranscript);
-
             let payload = { document: formData, id: licenseId };
             store
               .dispatch("renewal/uploadDocuments", payload)
@@ -491,8 +487,8 @@ export default {
               let licenseId = route.params.id;
               let formData = new FormData();
               formData.append(
-                documentSpecs[25].documentType.code,
-                DiplomaFile.value
+                documentSpecs[29].documentType.code,
+                PhdFile.value
               );
               let payload = { document: formData, id: licenseId };
               store
@@ -554,10 +550,7 @@ export default {
           if (res.data.status == "Success") {
             let licenseId = res.data.data.id;
             let formData = new FormData();
-            formData.append(
-              documentSpecs[25].documentType.code,
-              DiplomaFile.value
-            );
+            formData.append(documentSpecs[29].documentType.code, PhdFile.value);
             let payload = { document: formData, id: licenseId };
             store
               .dispatch("renewal/uploadDocuments", payload)
@@ -602,18 +595,18 @@ export default {
 
     onMounted(() => {
       documentMessage.value = MESSAGE.DOC_MESSAGE;
-      diplomaBack = store.getters["renewal/getDiploma"];
+      phdBack = store.getters["renewal/getPhd"];
       if (
-        diplomaBack &&
-        diplomaBack !== undefined &&
-        diplomaBack !== null &&
-        diplomaBack !== ""
+        phdBack &&
+        phdBack !== undefined &&
+        phdBack !== null &&
+        phdBack !== ""
       ) {
         dataChanged.value = true;
         showUpload.value = false;
-        DiplomaFile.value = diplomaBack;
+        PhdFile.value = phdBack;
         let reader = new FileReader();
-        let fileS = DiplomaFile.value.size;
+        let fileS = PhdFile.value.size;
         if (fileS > 0 && fileS < 1000) {
           fileSize.value += "B";
         } else if (fileS > 1000 && fileS < 1000000) {
@@ -629,24 +622,24 @@ export default {
           },
           false
         );
-        if (DiplomaFile.value) {
-          if (/\.(jpe?g|png|gif)$/i.test(DiplomaFile.value.name)) {
+        if (PhdFile.value) {
+          if (/\.(jpe?g|png|gif)$/i.test(PhdFile.value.name)) {
             isImage.value = true;
-            reader.readAsDataURL(DiplomaFile.value);
-          } else if (/\.(pdf)$/i.test(DiplomaFile.value.name)) {
+            reader.readAsDataURL(PhdFile.value);
+          } else if (/\.(pdf)$/i.test(PhdFile.value.name)) {
             isImage.value = false;
             isPdf.value = true;
-            reader.readAsDataURL(DiplomaFile.value);
+            reader.readAsDataURL(PhdFile.value);
           }
         }
       }
       declinedFields = store.getters["renewal/getDeclinedFields"];
       acceptedFields = store.getters["renewal/getAcceptedFields"];
       remark = store.getters["renewal/getRemark"];
-      if (declinedFields != undefined && declinedFields.includes("DIPL")) {
+      if (declinedFields != undefined && declinedFields.includes("PHD")) {
         declinedFieldsCheck.value = true;
       }
-      if (acceptedFields != undefined && acceptedFields.includes("DIPL")) {
+      if (acceptedFields != undefined && acceptedFields.includes("PHD")) {
         acceptedFieldsCheck.value = true;
       }
       buttons = store.getters["renewal/getButtons"];
@@ -654,14 +647,15 @@ export default {
       if (route.params.id) {
         draftStatus.value = route.params.status;
         for (let i = 0; i < draftData.documents.length; i++) {
-          if (draftData.documents[i].documentTypeCode == "DIPL") {
+          if (draftData.documents[i].documentTypeCode == "PHD") {
             showUpload.value = false;
             if (draftData.documents[i].fileName.split(".")[1] == "pdf") {
               isPdf.value = true;
             } else {
               isImage.value = true;
             }
-            DiplomaFile.value = draftData.documents[i];
+
+            PhdFile.value = draftData.documents[i];
             showPreview.value = true;
             filePreview.value = basePath + draftData.documents[i].filePath;
           }
@@ -669,9 +663,9 @@ export default {
       }
     });
     return {
-      DiplomaFile,
-      DiplomaFileP,
-      diplomaBack,
+      PhdFile,
+      PhdFileP,
+      phdBack,
       showPreview,
       filePreview,
       showUpload,

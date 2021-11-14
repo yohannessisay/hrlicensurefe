@@ -36,6 +36,10 @@ import {
   SET_PRO_CERTIFICATE,
   SET_PRO_DIPLOMA,
   SET_PRO_TRANSCRIPT,
+  SET_MASTERS,
+  SET_MASTERS_TRANSCRIPT,
+  SET_PHD,
+  SET_PHD_TRANSCRIPT,
 } from "./mutation-types";
 
 export default {
@@ -149,5 +153,17 @@ export default {
   },
   [SET_PRO_TRANSCRIPT](state, proTranscript) {
     state.proTranscript = proTranscript;
+  },
+  [SET_MASTERS](state, masters) {
+    state.masters = masters;
+  },
+  [SET_MASTERS_TRANSCRIPT](state, mastersTranscript) {
+    state.mastersTranscript = mastersTranscript;
+  },
+  [SET_PHD](state, phd) {
+    state.phd = phd;
+  },
+  [SET_PHD_TRANSCRIPT](state, phdTranscript) {
+    state.phdTranscript = phdTranscript;
   },
 };

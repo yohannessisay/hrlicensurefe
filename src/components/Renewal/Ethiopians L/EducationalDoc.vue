@@ -564,6 +564,10 @@ export default {
       previousLicense: "",
       cpd: "",
       letterFromHiringOrganization: "",
+      masters: "",
+      mastersTranscript: "",
+      phd: "",
+      phdTranscript: "",
 
       documentMessage: "",
 
@@ -603,6 +607,10 @@ export default {
       getPreviousLicense: "renewal/getPreviousLicense",
       getCpd: "renewal/getRenewalCpd",
       getLetterFromHiringInstitution: "renewal/getRenewalLicense",
+      getMasters: "renewal/getMasters",
+      getMastersTranscript: "renewal/getMastersTranscript",
+      getPhd: "renewal/getPhd",
+      getPhdTranscript: "renewal/getPhdTranscript",
 
       getDraftData: "renewal/getDraft",
     }),
@@ -922,6 +930,10 @@ export default {
     this.previousLicense = this.getPreviousLicense;
     this.cpd = this.getCpd;
     this.letterFromHiringOrganization = this.getLetterFromHiringInstitution;
+    this.masters = this.getMasters;
+    this.mastersTranscript = this.getMastersTranscript;
+    this.phd = this.getPhd;
+    this.phdTranscript = this.getPhdTranscript;
   },
   methods: {
     ...mapActions(["setProfessionalDoc"]),
@@ -1283,7 +1295,19 @@ export default {
               this.documentSpec[19].documentType.code,
               this.letterFromHiringOrganization
             );
-
+            formData.append(
+              this.documentSpec[27].documentType.code,
+              this.masters
+            );
+            formData.append(
+              this.documentSpec[28].documentType.code,
+              this.mastersTranscript
+            );
+            formData.append(this.documentSpec[29].documentType.code, this.phd);
+            formData.append(
+              this.documentSpec[30].documentType.code,
+              this.phdTranscript
+            );
             let payload = { document: formData, id: licenseId };
             this.$store
               .dispatch("renewal/uploadDocuments", payload)
