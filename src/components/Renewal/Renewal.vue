@@ -1469,7 +1469,6 @@ export default {
       }
     },
     diplomaSet: function(params) {
-      console.log(params)
       if (params == 2) {
         this.eduLevel = "diploma";
       }
@@ -1482,13 +1481,12 @@ export default {
       if (params == 7) {
         this.eduLevel = "phd";
       }
-      console.log(this.eduLevel);
     },
     firstTimeUserSet: function(params) {
       if (params) {
-        this.firstTimeUser = false;
-      } else {
         this.firstTimeUser = true;
+      } else {
+        this.firstTimeUser = false;
       }
     },
     submit(n) {

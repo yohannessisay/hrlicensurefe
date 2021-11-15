@@ -539,12 +539,12 @@ export default {
         this.nativeEnglishSpeaker = true;
       }
     },
-    setEducationLevel(educationalLevelId) {
-      if (educationalLevelId == 1) {
+    setEducationLevel(educationLevelId) {
+      if (educationLevelId == 2) {
         window.localStorage.setItem("educationalLevel", "diploma");
-      } else if (educationalLevelId == 2) {
+      } else if (educationLevelId == 1) {
         window.localStorage.setItem("educationalLevel", "degree");
-      } else if (educationalLevelId == 3) {
+      } else if (educationLevelId == 5) {
         window.localStorage.setItem("educationalLevel", "masters");
       } else {
         window.localStorage.setItem("educationalLevel", "phd");
@@ -691,6 +691,9 @@ export default {
         nativeLanguageId: this.licenseInfo.nativeLanguageId,
         expertLevelId: this.licenseInfo.expertLevelId,
       };
+      if (this.licenseInfo.educationalLevelId == null) {
+        this.licenseInfo.educationalLevelId = 7;
+      }
       this.$emit("changeActiveState");
       this.$emit("applicantTypeValue", this.licenseInfo.applicantTypeId);
       this.$emit("nativeLanguageSet", this.licenseInfo.nativeLanguageId);

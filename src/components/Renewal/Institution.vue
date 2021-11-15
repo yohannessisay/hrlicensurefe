@@ -496,11 +496,11 @@ export default {
       }
     },
     setEducationLevel(educationLevelId) {
-      if (educationLevelId == 1) {
+      if (educationLevelId == 2) {
         window.localStorage.setItem("educationalLevel", "diploma");
-      } else if (educationLevelId == 2) {
+      } else if (educationLevelId == 1) {
         window.localStorage.setItem("educationalLevel", "degree");
-      } else if (educationLevelId == 3) {
+      } else if (educationLevelId == 5) {
         window.localStorage.setItem("educationalLevel", "masters");
       } else {
         window.localStorage.setItem("educationalLevel", "phd");
@@ -644,8 +644,12 @@ export default {
         occupationTypeId: this.licenseInfo.occupationTypeId,
         expertLevelId: this.licenseInfo.expertLevelId,
       };
+      console.log(this.licenseInfo.educationalLevelId);
+      if (this.licenseInfo.educationalLevelId == null) {
+        this.licenseInfo.educationalLevelId = 7;
+      }
+      console.log(this.licenseInfo.educationalLevelId);
       this.$store.dispatch("renewal/searchNewLicense").then((res) => {
-        console.log(res.data.data);
         if (res.data.data == true) {
           this.firstTimeUser = false;
           this.$emit("changeActiveState");
@@ -660,7 +664,7 @@ export default {
           this.$emit("applicantTypeValue", this.licenseInfo.applicantTypeId);
           this.$emit("payrollDocumentSet", this.licenseInfo.occupationTypeId);
           this.$emit("firstTimeUserSet", this.firstTimeUser);
-          this.$emit("diplomaSet", this.licenseInfo.educationLevelId);
+          this.$emit("diplomaSet", this.licenseInfo.educationalLevelId);
           this.$store.dispatch("renewal/setLicense", license);
         }
       });
@@ -750,7 +754,6 @@ export default {
       this.licenseInfo.professionalTypeIds = draftData.professionalTypeIds;
       this.licenseInfo.occupationTypeId = draftData.occupationTypeId;
       this.licenseInfo.educationalLevelId = draftData.educationalLevelId;
-      console.log(draftData)
       this.setEducationLevel(this.licenseInfo.educationalLevelId);
       this.payrollData = draftData.occupationTypes;
       if (this.licenseInfo.applicantTypeId == 1) {
