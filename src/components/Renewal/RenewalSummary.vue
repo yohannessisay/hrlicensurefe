@@ -9,7 +9,7 @@
     <div v-if="this.show && !this.showLoading2">
       <div class="flex justify-center"><Title message="Summary" /></div>
       <div class="flex justify-start">
-        <Title message="Personal Info" />
+        <Title message="Personal Information" />
       </div>
       <div class="flex flex-row">
         <div
@@ -188,7 +188,8 @@
         <label class="inline-flex items-center">
           <input @change="checkBox()" type="checkbox" class="form-checkbox" />
           <span style="font-size: 16px" class="ml-2"
-            >All attached documents are legal.</span
+            >This is to verify that all the attached documents are legitimate
+            and not forgery.</span
           >
         </label>
       </div>
@@ -363,6 +364,11 @@ export default {
     this.eduTwelveth = this.getEduTwelveth;
     this.eduTranscript1 = this.getEduTranscript1;
     this.eduTranscript2 = this.getEduTranscript2;
+
+    this.masters = this.getMasters;
+    this.mastersTranscript = this.getMastersTranscript;
+    this.phd = this.getPhd;
+    this.phdTranscript = this.getPhdTranscript;
 
     if (this.passport != "" && this.passport != undefined) {
       if ("name" in this.passport) {
@@ -731,6 +737,66 @@ export default {
         this.docList.push(this.eduTranscript2);
       }
     }
+    if (this.masters != "" && this.masters != undefined) {
+      if ("name" in this.masters) {
+        if (this.draftId != undefined) {
+          this.documentsArray.splice(
+            this.documentsArray.findIndex((e) => e.documentTypeCode === "MAST"),
+            1
+          );
+        }
+        var filePreview = await this.blobToBase64(this.masters);
+        this.masters.docFile = filePreview;
+        this.masters.title = "Masters";
+        this.docList.push(this.masters);
+      }
+    }
+    if (this.mastersTranscript != "" && this.mastersTranscript != undefined) {
+      if ("name" in this.mastersTranscript) {
+        if (this.draftId != undefined) {
+          this.documentsArray.splice(
+            this.documentsArray.findIndex(
+              (e) => e.documentTypeCode === "MASTRAN"
+            ),
+            1
+          );
+        }
+        var filePreview = await this.blobToBase64(this.mastersTranscript);
+        this.mastersTranscript.docFile = filePreview;
+        this.mastersTranscript.title = "Masters Transcript";
+        this.docList.push(this.mastersTranscript);
+      }
+    }
+    if (this.phd != "" && this.phd != undefined) {
+      if ("name" in this.phd) {
+        if (this.draftId != undefined) {
+          this.documentsArray.splice(
+            this.documentsArray.findIndex((e) => e.documentTypeCode === "PHD"),
+            1
+          );
+        }
+        var filePreview = await this.blobToBase64(this.phd);
+        this.phd.docFile = filePreview;
+        this.phd.title = "PhD";
+        this.docList.push(this.phd);
+      }
+    }
+    if (this.phdTranscript != "" && this.phdTranscript != undefined) {
+      if ("name" in this.phdTranscript) {
+        if (this.draftId != undefined) {
+          this.documentsArray.splice(
+            this.documentsArray.findIndex(
+              (e) => e.documentTypeCode === "PHDTRAN"
+            ),
+            1
+          );
+        }
+        var filePreview = await this.blobToBase64(this.phdTranscript);
+        this.phdTranscript.docFile = filePreview;
+        this.phdTranscript.title = "PhD Transcript";
+        this.docList.push(this.phdTranscript);
+      }
+    }
     this.buttons = this.getButtons;
     this.fetchProfileInfo();
     this.setDocs();
@@ -741,7 +807,7 @@ export default {
     this.education.departmentId = this.license.education.departmentId;
     this.education.institutionId = this.license.education.institutionId;
     this.residenceWoredaId = this.license.residenceWoredaId;
-    this.professionalTypeID = this.license.professionalTypeId;
+    this.professionalTypeIds = this.license.professionalTypeIds;
     this.occupationTypeId = this.license.occupationTypeId;
     this.expertLevelId = this.license.expertLevelId;
   },
@@ -758,7 +824,7 @@ export default {
       institutionId: null,
     },
     residenceWoredaId: null,
-    professionalTypeID: null,
+    professionalTypeIds: [],
     occupationTypeId: null,
     expertLevelId: null,
     draftId: "",
@@ -791,6 +857,10 @@ export default {
     professionalLicense: "",
     renewedLicense: "",
     letterOrg: "",
+    masters: "",
+    mastersTranscript: "",
+    phd: "",
+    phdTranscript: "",
 
     proCertificate: "",
     proTranscript: "",
@@ -845,6 +915,11 @@ export default {
       getEduTwelveth: "renewal/getEduTwelveth",
       getEduTranscript1: "renewal/getEduTranscript1",
       getEduTranscript2: "renewal/getEduTranscript2",
+
+      getMasters: "renewal/getMasters",
+      getMastersTranscript: "renewal/getMastersTranscript",
+      getPhd: "renewal/getPhd",
+      getPhdTranscript: "renewal/getPhdTranscript",
     }),
   },
   methods: {
@@ -1017,7 +1092,22 @@ export default {
                 this.documentTypes[20].documentType.code,
                 this.letterOrg
               );
-
+              formData.append(
+                this.documentTypes[27].documentType.code,
+                this.masters
+              );
+              formData.append(
+                this.documentTypes[28].documentType.code,
+                this.mastersTranscript
+              );
+              formData.append(
+                this.documentTypes[29].documentType.code,
+                this.phd
+              );
+              formData.append(
+                this.documentTypes[30].documentType.code,
+                this.phdTranscript
+              );
               let payload = { document: formData, id: licenseId };
               this.$store
                 .dispatch("renewal/uploadDocuments", payload)
@@ -1121,7 +1211,16 @@ export default {
           this.documentTypes[20].documentType.code,
           this.letterOrg
         );
-
+        formData.append(this.documentTypes[27].documentType.code, this.masters);
+        formData.append(
+          this.documentTypes[28].documentType.code,
+          this.mastersTranscript
+        );
+        formData.append(this.documentTypes[29].documentType.code, this.phd);
+        formData.append(
+          this.documentTypes[30].documentType.code,
+          this.phdTranscript
+        );
         let license = {
           action: action,
           data: {
@@ -1132,7 +1231,7 @@ export default {
               departmentId: this.education.departmentId,
             },
             residenceWoredaId: this.residenceWoredaId,
-            professionalTypeId: this.professionalTypeID,
+            professionalTypeIds: this.professionalTypeIds,
             paymentSlip: null,
             occupationTypeId: this.occupationTypeId,
             expertLevelId: this.expertLevelId,
@@ -1176,7 +1275,7 @@ export default {
               institutionId: this.license.education.institutionId,
             },
             residenceWoredaId: this.residenceWoredaId,
-            professionalTypeId: this.professionalTypeID,
+            professionalTypeIds: this.professionalTypeIds,
             paymentSlip: null,
             occupationTypeId: this.occupationTypeId,
             expertLevelId: this.expertLevelId,
@@ -1336,6 +1435,22 @@ export default {
                 this.documentTypes[20].documentType.code,
                 this.letterOrg
               );
+              formData.append(
+                this.documentTypes[27].documentType.code,
+                this.masters
+              );
+              formData.append(
+                this.documentTypes[28].documentType.code,
+                this.mastersTranscript
+              );
+              formData.append(
+                this.documentTypes[29].documentType.code,
+                this.phd
+              );
+              formData.append(
+                this.documentTypes[30].documentType.code,
+                this.phdTranscript
+              );
               let payload = { document: formData, id: licenseId };
               this.$store
                 .dispatch("renewal/uploadDocuments", payload)
@@ -1443,6 +1558,16 @@ export default {
           this.documentTypes[20].documentType.code,
           this.letterOrg
         );
+        formData.append(this.documentTypes[27].documentType.code, this.masters);
+        formData.append(
+          this.documentTypes[28].documentType.code,
+          this.mastersTranscript
+        );
+        formData.append(this.documentTypes[29].documentType.code, this.phd);
+        formData.append(
+          this.documentTypes[30].documentType.code,
+          this.phdTranscript
+        );
         let license = {
           action: action,
           data: {
@@ -1453,7 +1578,7 @@ export default {
               departmentId: this.education.departmentId,
             },
             residenceWoredaId: this.residenceWoredaId,
-            professionalTypeId: this.professionalTypeID,
+            professionalTypeIds: this.professionalTypeIds,
             paymentSlip: null,
             occupationTypeId: this.occupationTypeId,
             expertLevelId: this.expertLevelId,

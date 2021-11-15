@@ -41,6 +41,9 @@
               <span v-if="showCertificate1Upload">
                 <label class="text-primary-700 text-lg"
                   >Upload 8th Grade Certificate:
+                  <span style="color: red; font-weight: bold; font-size:16px"
+                    >(*)</span
+                  >
                   <div class="dropbox">
                     <input
                       type="file"
@@ -57,7 +60,6 @@
                   </div>
                 </label>
               </span>
-
               <picture v-if="!showCertificate1Upload && isCertificate1">
                 <p>
                   <a href="javascript:void(0)" @click="resetCert1()"
@@ -80,7 +82,6 @@
                   v-show="showCertificate1Preview"
                 />
               </div>
-
               <span
                 v-if="!showCertificate1Upload && !isCertificate1 && !isPdf1"
               >
@@ -111,6 +112,9 @@
               <span v-if="showCertificate2Upload">
                 <label class="text-primary-700 text-lg"
                   >Upload 10th Grade Certificate:
+                  <span style="color: red; font-weight: bold; font-size:16px"
+                    >(*)</span
+                  >
                   <div class="dropbox">
                     <input
                       type="file"
@@ -182,6 +186,11 @@
               <span v-if="showCertificate3Upload">
                 <label class="text-primary-700 text-lg"
                   >Upload 12th Grade Certificate:
+                  <span
+                    v-if="this.eduLevel !== 'diploma'"
+                    style="color: red; font-weight: bold; font-size:16px"
+                    >(*)</span
+                  >
                   <div class="dropbox">
                     <input
                       type="file"
@@ -254,6 +263,9 @@
               <span v-if="showCertificate4Upload">
                 <label class="text-primary-700 text-lg"
                   >Upload Transcript 9-10:
+                  <span style="color: red; font-weight: bold; font-size:16px"
+                    >(*)</span
+                  >
                   <div class="dropbox">
                     <input
                       type="file"
@@ -324,6 +336,11 @@
               <span v-if="showCertificate5Upload">
                 <label class="text-primary-700 text-lg"
                   >Upload Transcript 11-12:
+                  <span
+                    v-if="this.eduLevel !== 'diploma'"
+                    style="color: red; font-weight: bold; font-size:16px"
+                    >(*)</span
+                  >
                   <div class="dropbox">
                     <input
                       type="file"
@@ -461,7 +478,6 @@
     <ErrorFlashMessage message="Operation Failed!" />
   </div>
 </template>
-
 <script>
 import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
 import { mapGetters, mapActions } from "vuex";
@@ -559,6 +575,10 @@ export default {
       diploma: "",
       transcript: "",
       degree: "",
+      masters: "",
+      mastersTranscript: "",
+      phd: "",
+      phdTranscript: "",
 
       documentMessage: "",
 
@@ -575,6 +595,8 @@ export default {
       certificate3Size: "",
       certificate4Size: "",
       certificate5Size: "",
+
+      eduLevel: "",
     };
   },
   computed: {
@@ -595,6 +617,10 @@ export default {
       getDiploma: "newlicense/getDiploma",
       getTranscript: "newlicense/getTranscript",
       getDegree: "newlicense/getDegree",
+      getMasters: "newlicense/getMasters",
+      getMastersTranscript: "newlicense/getMastersTranscript",
+      getPhd: "newlicense/getPhd",
+      getPhdTranscript: "newlicense/getPhdTranscript",
 
       getProfessionalDoc: "newlicense/getProfessionalDocuments",
       getWorkExperience: "newlicense/getWorkExperience",
@@ -606,6 +632,7 @@ export default {
   },
   created() {
     this.documentMessage = MESSAGE.DOC_MESSAGE;
+    this.eduLevel = localStorage.getItem("educationalLevel");
     let eduEighth = this.$store.getters["newlicense/getEduEighth"];
     let eduTenth = this.$store.getters["newlicense/getEduTenth"];
     let eduTwelveth = this.$store.getters["newlicense/getEduTwelveth"];
@@ -921,6 +948,9 @@ export default {
     this.diploma = this.getDiploma;
     this.transcript = this.getTranscript;
     this.degree = this.getDegree;
+    this.masters = this.getMasters;
+    this.mastersTranscript = this.getMastersTranscript;
+    this.phd = this.getPhdTranscript;
   },
   methods: {
     ...mapActions(["setProfessionalDoc"]),
@@ -1221,7 +1251,7 @@ export default {
               departmentId: this.license.education.institutionId,
             },
             residenceWoredaId: this.license.residenceWoredaId,
-            professionalTypeId: this.licenseInfo.professionalTypeId,
+            professionalTypeIds: this.licenseInfo.professionalTypeIds,
             paymentSlip: null,
             occupationTypeId: this.licenseInfo.occupationTypeId,
             nativeLanguageId: this.licenseInfo.nativeLanguageId,
@@ -1324,6 +1354,19 @@ export default {
             formData.append(
               this.documentSpec[20].documentType.code,
               this.payroll
+            );
+            formData.append(
+              this.documentSpec[24].documentType.code,
+              this.masters
+            );
+            formData.append(
+              this.documentSpec[25].documentType.code,
+              this.mastersTranscript
+            );
+            formData.append(this.documentSpec[26].documentType.code, this.phd);
+            formData.append(
+              this.documentSpec[27].documentType.code,
+              this.phdTranscript
             );
             let payload = { document: formData, id: licenseId };
             this.$store

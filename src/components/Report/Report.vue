@@ -644,6 +644,7 @@ export default {
         loader.value = false;
       });
     };
+    
     const fetchVerificationReport = () => {
       loader.value = true;
       store.dispatch("report/getVerificationReport").then((res) => {

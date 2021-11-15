@@ -41,6 +41,11 @@
               <span v-if="showUpload">
                 <label class="text-primary-700"
                   >Upload image:
+                  <span
+                    v-if="eduLevel == 'diploma'"
+                    style="color: red; font-weight: bold; font-size:16px"
+                    >(*)</span
+                  >
                   <div class="dropbox">
                     <input
                       type="file"
@@ -238,6 +243,12 @@ export default {
     let previousLicense = ref("");
     let cpd = ref("");
     let letterFromHiringManager = ref("");
+    let masters = ref("");
+    let mastersTranscript = ref("");
+    let phd = ref("");
+    let phdTranscript = ref("");
+
+    let eduLevel = ref("");
 
     const reset = () => {
       showUpload.value = true;
@@ -308,6 +319,12 @@ export default {
     previousLicense = store.getters["renewal/getPreviousLicense"];
     cpd = store.getters["renewal/getRenewalCpd"];
     letterFromHiringManager = store.getters["renewal/getRenewalLicense"];
+    masters = store.getters["renewal/getMasters"];
+    mastersTranscript = store.getters["renewal/getMastersTranscript"];
+    phd = store.getters["renewal/getPhd"];
+    phdTranscript = store.getters["renewal/getPhdTranscript"];
+
+    eduLevel = localStorage.getItem("educationalLevel");
 
     const draft = (action) => {
       message.value.showLoading = true;
@@ -376,7 +393,7 @@ export default {
               departmentId: licenseInfo.education.departmentId,
               institutionId: licenseInfo.education.institutionId,
             },
-            professionalTypeId: licenseInfo.professionalTypeId,
+            professionalTypeIds: licenseInfo.professionalTypeIds,
             residenceWoredaId: licenseInfo.residenceWoredaId,
             paymentSlip: null,
             occupationTypeId: licenseInfo.occupationTypeId,
@@ -431,6 +448,13 @@ export default {
               documentSpecs[19].documentType.code,
               letterFromHiringManager
             );
+            formData.append(documentSpecs[27].documentType.code, masters);
+            formData.append(
+              documentSpecs[28].documentType.code,
+              mastersTranscript
+            );
+            formData.append(documentSpecs[29].documentType.code, phd);
+            formData.append(documentSpecs[30].documentType.code, phdTranscript);
 
             let payload = { document: formData, id: licenseId };
             store
@@ -518,7 +542,7 @@ export default {
               departmentId: licenseInfo.education.departmentId,
               institutionId: licenseInfo.education.institutionId,
             },
-            professionalTypeId: licenseInfo.professionalTypeId,
+            professionalTypeIds: licenseInfo.professionalTypeIds,
             residenceWoredaId: licenseInfo.residenceWoredaId,
             paymentSlip: null,
             occupationTypeId: licenseInfo.occupationTypeId,
@@ -686,8 +710,13 @@ export default {
       previousLicense,
       cpd,
       letterFromHiringManager,
+      masters,
+      mastersTranscript,
+      phd,
+      phdTranscript,
 
       documentMessage,
+      eduLevel,
     };
   },
 };

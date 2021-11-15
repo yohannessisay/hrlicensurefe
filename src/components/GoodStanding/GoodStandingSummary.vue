@@ -9,7 +9,7 @@
     <div v-if="this.show && !this.showLoading2">
       <div class="flex justify-center"><Title message="Summary" /></div>
       <div class="flex justify-start">
-        <Title message="Personal Info" />
+        <Title message="Personal Information" />
       </div>
       <div class="flex flex-row">
         <div
@@ -206,7 +206,8 @@
         <label class="inline-flex items-center">
           <input @change="checkBox()" type="checkbox" class="form-checkbox" />
           <span style="font-size: 16px" class="ml-2"
-            >All attached documents are legal.</span
+            >This is to verify that all the attached documents are legitimate
+            and not forgery.</span
           >
         </label>
       </div>

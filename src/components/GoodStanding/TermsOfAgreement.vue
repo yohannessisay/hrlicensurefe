@@ -19,9 +19,10 @@
       </svg>
     </button>
     <div>
-      <span class="flex justify-center mt-small mb-small text-lg font-semibold">{{
-        documentMessage
-      }}</span>
+      <span
+        class="flex justify-center mt-small mb-small text-lg font-semibold"
+        >{{ documentMessage }}</span
+      >
       <div class="ml-8">
         <h2>For All Applicants</h2>
         <ul>

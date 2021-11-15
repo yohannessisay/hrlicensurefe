@@ -41,6 +41,11 @@
               <span v-if="showUpload">
                 <label class="text-primary-700"
                   >Upload image:
+                  <span
+                    v-if="required"
+                    style="color: red; font-weight: bold; font-size:16px"
+                    >(*)</span
+                  >
                   <div class="dropbox">
                     <input
                       type="file"
@@ -235,6 +240,12 @@ export default {
     let professionalLicense = ref("");
     let renewedLicense = ref("");
     let letterOrg = ref("");
+    let masters = ref("");
+    let mastersTranscript = ref("");
+    let phd = ref("");
+    let phdTranscript = ref("");
+
+    let required = ref(false);
 
     const reset = () => {
       showUpload.value = true;
@@ -302,6 +313,10 @@ export default {
     professionalLicense = store.getters["renewal/getProfessionalLicense"];
     renewedLicense = store.getters["renewal/getRenewedLicense"];
     letterOrg = store.getters["renewal/getLetterfromOrg"];
+    masters = store.getters["renewal/getMasters"];
+    mastersTranscript = store.getters["renewal/getMastersTranscript"];
+    phd = store.getters["renewal/getPhd"];
+    phdTranscript = store.getters["renewal/getPhdTranscript"];
 
     const submit = () => {
       emit("changeActiveState");
@@ -313,6 +328,9 @@ export default {
     };
 
     onMounted(() => {
+      if (licenseInfo.applicantTypeId == 2) {
+        required.value = true;
+      }
       documentMessage.value = MESSAGE.DOC_MESSAGE;
       workExperienceBack = store.getters["renewal/getRenewalWorkExperience"];
       if (
@@ -449,7 +467,7 @@ export default {
               departmentId: licenseInfo.education.departmentId,
               institutionId: licenseInfo.education.institutionId,
             },
-            professionalTypeId: licenseInfo.professionalTypeId,
+            professionalTypeIds: licenseInfo.professionalTypeIds,
             residenceWoredaId: licenseInfo.residenceWoredaId,
             paymentSlip: null,
             occupationTypeId: licenseInfo.occupationTypeId,
@@ -528,6 +546,13 @@ export default {
               renewedLicense
             );
             formData.append(documentSpecs[20].documentType.code, letterOrg);
+            formData.append(documentSpecs[27].documentType.code, masters);
+            formData.append(
+              documentSpecs[28].documentType.code,
+              mastersTranscript
+            );
+            formData.append(documentSpecs[29].documentType.code, phd);
+            formData.append(documentSpecs[30].documentType.code, phdTranscript);
             let payload = { document: formData, id: licenseId };
             store
               .dispatch("renewal/uploadDocuments", payload)
@@ -614,7 +639,7 @@ export default {
               departmentId: licenseInfo.education.departmentId,
               institutionId: licenseInfo.education.institutionId,
             },
-            professionalTypeId: licenseInfo.professionalTypeId,
+            professionalTypeIds: licenseInfo.professionalTypeIds,
             residenceWoredaId: licenseInfo.residenceWoredaId,
             paymentSlip: null,
             occupationTypeId: licenseInfo.occupationTypeId,
@@ -714,8 +739,13 @@ export default {
       professionalLicense,
       renewedLicense,
       letterOrg,
+      masters,
+      mastersTranscript,
+      phd,
+      phdTranscript,
 
       documentMessage,
+      required,
     };
   },
 };

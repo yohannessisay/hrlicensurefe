@@ -181,7 +181,11 @@
               </span>
               <span v-if="showCertificate3Upload">
                 <label class="text-primary-700 text-lg"
-                  >Upload 12th Grade Certificate:
+                  >Upload 12th Grade Certificate:<span
+                    v-if="this.eduLevel !== 'diploma'"
+                    style="color: red; font-weight: bold; font-size:16px"
+                    >(*)</span
+                  >
                   <div class="dropbox">
                     <input
                       type="file"
@@ -323,7 +327,11 @@
               </span>
               <span v-if="showCertificate5Upload">
                 <label class="text-primary-700 text-lg"
-                  >Upload Transcript 11-12:
+                  >Upload Transcript 11-12:<span
+                    v-if="this.eduLevel !== 'diploma'"
+                    style="color: red; font-weight: bold; font-size:16px"
+                    >(*)</span
+                  >
                   <div class="dropbox">
                     <input
                       type="file"
@@ -556,6 +564,10 @@ export default {
       previousLicense: "",
       cpd: "",
       letterFromHiringOrganization: "",
+      masters: "",
+      mastersTranscript: "",
+      phd: "",
+      phdTranscript: "",
 
       documentMessage: "",
 
@@ -572,6 +584,8 @@ export default {
       certificate3Size: "",
       certificate4Size: "",
       certificate5Size: "",
+
+      eduLevel: "",
     };
   },
   computed: {
@@ -593,12 +607,17 @@ export default {
       getPreviousLicense: "renewal/getPreviousLicense",
       getCpd: "renewal/getRenewalCpd",
       getLetterFromHiringInstitution: "renewal/getRenewalLicense",
+      getMasters: "renewal/getMasters",
+      getMastersTranscript: "renewal/getMastersTranscript",
+      getPhd: "renewal/getPhd",
+      getPhdTranscript: "renewal/getPhdTranscript",
 
       getDraftData: "renewal/getDraft",
     }),
   },
   created() {
     this.documentMessage = MESSAGE.DOC_MESSAGE;
+    this.eduLevel = localStorage.getItem("educationalLevel");
     let eduEighth = this.$store.getters["renewal/getEduEighth"];
     let eduTenth = this.$store.getters["renewal/getEduTenth"];
     let eduTwelveth = this.$store.getters["renewal/getEduTwelveth"];
@@ -911,6 +930,10 @@ export default {
     this.previousLicense = this.getPreviousLicense;
     this.cpd = this.getCpd;
     this.letterFromHiringOrganization = this.getLetterFromHiringInstitution;
+    this.masters = this.getMasters;
+    this.mastersTranscript = this.getMastersTranscript;
+    this.phd = this.getPhd;
+    this.phdTranscript = this.getPhdTranscript;
   },
   methods: {
     ...mapActions(["setProfessionalDoc"]),
@@ -1197,7 +1220,7 @@ export default {
               departmentId: this.license.education.institutionId,
             },
             residenceWoredaId: this.license.residenceWoredaId,
-            professionalTypeId: this.licenseInfo.professionalTypeId,
+            professionalTypeIds: this.licenseInfo.professionalTypeIds,
             paymentSlip: null,
             occupationTypeId: this.licenseInfo.occupationTypeId,
             nativeLanguageId: this.licenseInfo.nativeLanguageId,
@@ -1272,7 +1295,19 @@ export default {
               this.documentSpec[19].documentType.code,
               this.letterFromHiringOrganization
             );
-
+            formData.append(
+              this.documentSpec[27].documentType.code,
+              this.masters
+            );
+            formData.append(
+              this.documentSpec[28].documentType.code,
+              this.mastersTranscript
+            );
+            formData.append(this.documentSpec[29].documentType.code, this.phd);
+            formData.append(
+              this.documentSpec[30].documentType.code,
+              this.phdTranscript
+            );
             let payload = { document: formData, id: licenseId };
             this.$store
               .dispatch("renewal/uploadDocuments", payload)

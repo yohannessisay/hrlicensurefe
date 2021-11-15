@@ -376,6 +376,10 @@ export default {
       professionalLicense: "",
       renewedLicense: "",
       letterOrg: "",
+      masters: "",
+      mastersTranscript: "",
+      phd: "",
+      phdTranscript: "",
 
       declinedFields: [],
       acceptedFields: [],
@@ -426,6 +430,10 @@ export default {
       getProfessionalLicense: "renewal/getProfessionalLicense",
       getRenewedLicense: "renewal/getPreviousLicense",
       getLetterFromOrg: "renewal/getLetterfromOrg",
+      getMasters: "renewal/getMasters",
+      getMastersTranscript: "renewal/getMastersTranscript",
+      getPhd: "renewal/getPhd",
+      getPhdTranscript: "renewal/getPhdTranscript",
 
       getDraftData: "renewal/getDraft",
       getDeclinedFields: "renewal/getDeclinedFields",
@@ -641,6 +649,10 @@ export default {
     this.professionalLicense = this.getProfessionalLicense;
     this.renewedLicense = this.getRenewedLicense;
     this.letterOrg = this.getLetterFromOrg;
+    this.masters = this.getMasters;
+    this.mastersTranscript = this.getMastersTranscript;
+    this.phd = this.getPhd;
+    this.phdTranscript = this.getPhdTranscript;
   },
   methods: {
     ...mapActions(["setProfessionalDoc"]),
@@ -822,7 +834,7 @@ export default {
               departmentId: this.license.education.institutionId,
             },
             residenceWoredaId: this.license.residenceWoredaId,
-            professionalTypeId: this.licenseInfo.professionalTypeId,
+            professionalTypeIds: this.licenseInfo.professionalTypeIds,
             paymentSlip: null,
             occupationTypeId: this.licenseInfo.occupationTypeId,
             expertLevelId: this.licenseInfo.expertLevelId,
@@ -927,6 +939,19 @@ export default {
             formData.append(
               this.documentSpec[20].documentType.code,
               this.letterOrg
+            );
+            formData.append(
+              this.documentSpec[27].documentType.code,
+              this.masters
+            );
+            formData.append(
+              this.documentSpec[28].documentType.code,
+              this.mastersTranscript
+            );
+            formData.append(this.documentSpec[29].documentType.code, this.phd);
+            formData.append(
+              this.documentSpec[30].documentType.code,
+              this.phdTranscript
             );
             let payload = { document: formData, id: licenseId };
             this.$store

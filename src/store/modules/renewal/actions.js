@@ -37,6 +37,10 @@ import {
   SET_PRO_CERTIFICATE,
   SET_PRO_DIPLOMA,
   SET_PRO_TRANSCRIPT,
+  SET_MASTERS,
+  SET_MASTERS_TRANSCRIPT,
+  SET_PHD,
+  SET_PHD_TRANSCRIPT,
 } from "./mutation-types";
 
 const url = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api/";
@@ -143,6 +147,18 @@ export default {
   },
   setProTranscript({ commit }, proTranscript) {
     commit(SET_PRO_TRANSCRIPT, proTranscript);
+  },
+  setMasters({ commit }, masters) {
+    commit(SET_MASTERS, masters);
+  },
+  setMastersTranscript({ commit }, mastersTranscript) {
+    commit(SET_MASTERS_TRANSCRIPT, mastersTranscript);
+  },
+  setPhd({ commit }, phd) {
+    commit(SET_PHD, phd);
+  },
+  setPhdTranscript({ commit }, phdTranscript) {
+    commit(SET_PHD_TRANSCRIPT, phdTranscript);
   },
   async addRenewalLicense({ commit }, license) {
     try {
@@ -313,9 +329,11 @@ export default {
       return error;
     }
   },
-  async getProfessionalTypes() {
+  async getProfessionalTypes(context, deptId) {
     try {
-      const resp = await ApiService.get(url + "lookups/professionalTypes");
+      const resp = await ApiService.get(
+        url + "lookups/professionalTypes/" + deptId
+      );
       return resp;
     } catch (error) {
       return error;

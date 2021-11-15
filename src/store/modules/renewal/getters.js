@@ -36,4 +36,8 @@ export default {
   getProCertificate: (state) => state.proCertificate,
   getProTranscript: (state) => state.proTranscript,
   getProDiploma: (state) => state.proDiploma,
+  getMasters: (state) => state.masters,
+  getMastersTranscript: (state) => state.mastersTranscript,
+  getPhd: (state) => state.phd,
+  getPhdTranscript: (state) => state.phdTranscript,
 };

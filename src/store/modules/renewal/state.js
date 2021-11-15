@@ -41,6 +41,10 @@ export default {
     proCertificate: "",
     proDiploma: "",
     proTranscript: "",
+    masters: "",
+    mastersTranscript: "",
+    phd: "",
+    phdTranscript: "",
 
     buttons: [],
     applicationId: 0,

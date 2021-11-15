@@ -64,6 +64,9 @@
               <select
                 class="max-w-3xl"
                 v-model="licenseInfo.education.departmentId"
+                @change="
+                  fetchProfessionalType(licenseInfo.education.departmentId)
+                "
               >
                 <option
                   v-for="department in departments"
@@ -155,7 +158,7 @@
               <label class="text-primary-700">Professional Type</label>
               <select
                 class="max-w-3xl"
-                v-model="licenseInfo.professionalTypeID"
+                v-model="licenseInfo.professionalTypeIds"
               >
                 <option
                   v-for="types in professionalTypes"
@@ -165,14 +168,29 @@
                   {{ types.name }}
                 </option>
               </select>
-              <span style="color: red">{{
-                licenseInfoErrors.professionalTypeID
-              }}</span>
+              <!-- <span style="color: red">{{
+                licenseInfoErrors.professionalTypeIds
+              }}</span> -->
             </div>
-            <div
-              v-if="this.displayPayrollDoc"
-              class="flex flex-col mb-medium w-2/5 mr-12 mr-12"
-            >
+            <div class="flex flex-col mb-medium w-2/5 mr-12">
+              <label class="text-primary-700">Education Level </label>
+              <select
+                class="max-w-3xl"
+                @change="setEducationLevel(licenseInfo.educationLevelId)"
+                v-model="licenseInfo.educationLevelId"
+              >
+                <option
+                  v-for="types in this.educationData"
+                  v-bind:key="types.name"
+                  v-bind:value="types.id"
+                >
+                  {{ types.name }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div v-if="this.displayPayrollDoc" id="main" class="flex pt-8 mt-4">
+            <div class="flex flex-col mb-medium w-2/5 mr-12 ml-medium">
               <label class="text-primary-700">Occupation Type</label>
               <select
                 class="max-w-3xl"
@@ -300,7 +318,7 @@ export default {
         draftData.education.departmentId;
       this.licenseInfo.education.institutionId =
         draftData.education.institutionId;
-      this.licenseInfo.professionalTypeID = draftData.professionalTypeId;
+      this.licenseInfo.professionalTypeIds = draftData.professionalTypeIds;
       this.licenseInfo.expertLevelId = draftData.expertLevelId;
       if (this.licenseInfo.applicantTypeId == 1) {
         this.$store.dispatch("renewal/getExpertLevel").then((res) => {
@@ -339,6 +357,7 @@ export default {
     this.fetchRegions();
     this.fetchFirstTimeUser();
     this.fetchPayrollData();
+    this.fetchProfessionalType();
 
     this.showLoading = true;
     setTimeout(() => {
@@ -369,7 +388,7 @@ export default {
         institutionId: null,
       },
       residenceWoredaId: null,
-      professionalTypeID: null,
+      professionalTypeIds: [],
       occupationTypeId: null,
       expertLevelId: null,
     },
@@ -382,7 +401,7 @@ export default {
       residenceWoredaId: "",
       regionID: "",
       zoneID: "",
-      professionalTypeID: "",
+      professionalTypeIds: [],
       expertLevelId: null,
     },
     regionID: "",
@@ -410,6 +429,37 @@ export default {
 
     payrollData: "",
     firstTimeUser: false,
+
+    educationData: [
+      {
+        id: 1,
+        name: "Diploma",
+        code: "DIP",
+        createdAt: "2021-08-04T15:01:00.533Z",
+        updatedAt: "2021-08-04T15:01:00.533Z",
+      },
+      {
+        id: 2,
+        name: "Degree",
+        code: "DEGR",
+        createdAt: "2021-08-04T15:01:00.533Z",
+        updatedAt: "2021-08-04T15:01:00.533Z",
+      },
+      {
+        id: 3,
+        name: "Masters",
+        code: "MAS",
+        createdAt: "2021-08-04T15:01:00.533Z",
+        updatedAt: "2021-08-04T15:01:00.533Z",
+      },
+      {
+        id: 4,
+        name: "PhD",
+        code: "PHD",
+        createdAt: "2021-08-04T15:01:00.533Z",
+        updatedAt: "2021-08-04T15:01:00.533Z",
+      },
+    ],
   }),
 
   methods: {
@@ -451,6 +501,17 @@ export default {
         this.displayPayrollDoc = false;
       }
     },
+    setEducationLevel(educationLevelId) {
+      if (educationLevelId == 1) {
+        window.localStorage.setItem("educationalLevel", "diploma");
+      } else if (educationLevelId == 2) {
+        window.localStorage.setItem("educationalLevel", "degree");
+      } else if (educationLevelId == 3) {
+        window.localStorage.setItem("educationalLevel", "masters");
+      } else {
+        window.localStorage.setItem("educationalLevel", "phd");
+      }
+    },
     setPayrollDoc() {},
     draft(action) {
       this.showLoading = true;
@@ -465,7 +526,7 @@ export default {
               institutionId: this.licenseInfo.education.institutionId,
             },
             residenceWoredaId: this.licenseInfo.residenceWoredaId,
-            professionalTypeId: this.licenseInfo.professionalTypeID,
+            professionalTypeIds: this.licenseInfo.professionalTypeIds,
             paymentSlip: null,
             occupationTypeId: this.licenseInfo.occupationTypeId,
             expertLevelId: this.licenseInfo.expertLevelId,
@@ -513,7 +574,7 @@ export default {
               institutionId: this.licenseInfo.education.institutionId,
             },
             residenceWoredaId: this.licenseInfo.residenceWoredaId,
-            professionalTypeId: this.licenseInfo.professionalTypeID,
+            professionalTypeIds: [this.licenseInfo.professionalTypeIds],
             paymentSlip: null,
             occupationTypeId: this.licenseInfo.occupationTypeId,
             expertLevelId: this.licenseInfo.expertLevelId,
@@ -581,18 +642,20 @@ export default {
         regionId: this.regionID,
         zoneId: this.zoneID,
         residenceWoredaId: this.licenseInfo.residenceWoredaId,
-        professionalTypeId: this.licenseInfo.professionalTypeID,
+        professionalTypeIds: [this.licenseInfo.professionalTypeIds],
         paymentSlip: null,
         occupationTypeId: this.licenseInfo.occupationTypeId,
         expertLevelId: this.licenseInfo.expertLevelId,
       };
       this.$store.dispatch("renewal/searchNewLicense").then((res) => {
+        console.log(res.data.data);
         if (res.data.data == true) {
           this.firstTimeUser = false;
           this.$emit("changeActiveState");
           this.$emit("applicantTypeValue", this.licenseInfo.applicantTypeId);
           this.$emit("payrollDocumentSet", this.licenseInfo.occupationTypeId);
           this.$emit("firstTimeUserSet", this.firstTimeUser);
+          this.$emit("diplomaSet", this.licenseInfo.educationLevelId);
           this.$store.dispatch("renewal/setLicense", license);
         } else {
           this.firstTimeUser = true;
@@ -600,6 +663,7 @@ export default {
           this.$emit("applicantTypeValue", this.licenseInfo.applicantTypeId);
           this.$emit("payrollDocumentSet", this.licenseInfo.occupationTypeId);
           this.$emit("firstTimeUserSet", this.firstTimeUser);
+          this.$emit("diplomaSet", this.licenseInfo.educationLevelId);
           this.$store.dispatch("renewal/setLicense", license);
         }
       });
@@ -647,6 +711,12 @@ export default {
         this.professionalTypes = res.data.data;
       });
     },
+    fetchProfessionalType(id) {
+      this.professionalTypes = [];
+      this.$store.dispatch("renewal/getProfessionalTypes", id).then((res) => {
+        this.professionalTypes = res.data.data;
+      });
+    },
 
     woredaChanged() {},
     validateForm(formData) {
@@ -680,7 +750,7 @@ export default {
         draftData.education.departmentId;
       this.licenseInfo.education.institutionId =
         draftData.education.institutionId;
-      this.licenseInfo.professionalTypeID = draftData.professionalTypeId;
+      this.licenseInfo.professionalTypeIds = draftData.professionalTypeIds;
       this.licenseInfo.occupationTypeId = draftData.occupationTypeId;
       this.payrollData = draftData.occupationTypes;
       if (this.licenseInfo.applicantTypeId == 1) {

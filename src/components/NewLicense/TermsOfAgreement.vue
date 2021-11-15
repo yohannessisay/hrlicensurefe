@@ -25,17 +25,56 @@
       <div class="ml-8">
         <h2>Foreigner</h2>
         <ul>
-          <li>Passport(Identification Card)</li>
           <li>Health Exam Certificate</li>
-          <li>English Language Certificate</li>
+          <div class="tooltip">
+            English Language Proficiency Certificate
+            <span class="tooltiptext ml-4">
+              For non-English speaking countries only
+            </span>
+          </div>
           <li>Higher Education Relevance and Quality Agency center(HERQA)</li>
           <li>Letter from Organization</li>
-          <li>Authenticated Professional Document Certificate</li>
-          <li>Authenticated Professional Document Diploma</li>
-          <li>Authenticated Professional Document Transcript</li>
-          <li>Authenticated Professional License from Country of Origin</li>
-          <li>Renewed License of the Organization</li>
-          <li>Authenticated Work Experience</li>
+          <div class="tooltip">
+            Authenticated Professional Document Certificate
+            <span class="tooltiptext ml-4">
+              Diploma, Transcript for both Under and Post-Graduate Certificate
+            </span>
+          </div>
+          <br />
+          <div class="tooltip">
+            Authenticated Professional Document Diploma
+            <span class="tooltiptext ml-4">
+              Diploma, Transcript for both Under and Post-Graduate Certificate
+            </span>
+          </div>
+          <br />
+          <div class="tooltip">
+            Authenticated Professional Document Transcript
+            <span class="tooltiptext ml-4">
+              Diploma, Transcript for both Under and Post-Graduate Certificate
+            </span>
+          </div>
+          <br />
+          <div class="tooltip">
+            Authenticated Professional License from Country of Origin
+            <span class="tooltiptext ml-4">
+              Organizations found in Ethiopia
+            </span>
+          </div>
+          <br />
+          <div class="tooltip">
+            Renewed License of the Organization
+            <span class="tooltiptext ml-4">
+              Organizations found in Ethiopia
+            </span>
+          </div>
+          <br />
+          <div class="tooltip">
+            Authenticated Work Experience
+            <span class="tooltiptext ml-4">
+              More than 2 years.
+            </span>
+          </div>
         </ul>
       </div>
       <div class="ml-8">
@@ -43,7 +82,13 @@
         <ul>
           <li>Passport(Identification Card)</li>
           <li>Health Exam Certificate</li>
-          <li>COC</li>
+          <div class="tooltip">
+            COC
+            <span class="tooltiptext ml-4">
+              Only for Diploma Graduates
+            </span>
+          </div>
+          <br />
           <li>Degree</li>
           <li>Diploma</li>
           <li>8<sup>th</sup> Grade Certificate</li>
@@ -51,8 +96,20 @@
           <li>12<sup>th</sup> Grade Certificate</li>
           <li>9<sup>th</sup> - 10<sup>th</sup> Transcript</li>
           <li>11<sup>th</sup> - 12<sup>th</sup> Transcript</li>
-          <li>Payroll Document</li>
-          <li>Suppport Letter</li>
+          <div class="tooltip">
+            Payroll Document
+            <span class="tooltiptext ml-4">
+              If private Institution Work Experience
+            </span>
+          </div>
+          <br />
+          <div class="tooltip">
+            Support Letter
+            <span class="tooltiptext ml-4">
+              For those upgraded by the sponsorship of an Institution
+            </span>
+          </div>
+          <br />
           <li>Transcript</li>
           <li>Work Experience</li>
         </ul>
@@ -60,14 +117,49 @@
       <div class="ml-8">
         <h2>Foreigner Ethiopian</h2>
         <ul>
-          <li>Passport(Identification Card)</li>
+          <div class="tooltip">
+            Passport(Identification Card)
+            <span class="tooltiptext ml-4">
+              Proof of Ethiopian decent
+            </span>
+          </div>
+          <br />
           <li>Health Exam Certificate</li>
           <li>Higher Education Relevance and Quality Agency center(HERQA)</li>
-          <li>Authenticated Professional Document Certificate</li>
-          <li>Authenticated Professional Document Diploma</li>
-          <li>Authenticated Professional Document Transcript</li>
-          <li>Support Letter</li>
-          <li>Authenticated Work Experience</li>
+          <div class="tooltip">
+            Authenticated Professional Document Diploma
+            <span class="tooltiptext ml-4">
+              Diploma, Transcript for both Under and Post-Graduate Certificate
+            </span>
+          </div>
+          <br />
+          <div class="tooltip">
+            Authenticated Professional Document Transcript
+            <span class="tooltiptext ml-4">
+              Diploma, Transcript for both Under and Post-Graduate Certificate
+            </span>
+          </div>
+          <br />
+          <div class="tooltip">
+            Authenticated Professional License from Country of Origin
+            <span class="tooltiptext ml-4">
+              Organizations found in Ethiopia
+            </span>
+          </div>
+          <br />
+          <div class="tooltip">
+            Support Letter
+            <span class="tooltiptext ml-4">
+              For those upgraded by the sponsorship of an Institution
+            </span>
+          </div>
+          <br />
+          <div class="tooltip">
+            Authenticated Work Experience
+            <span class="tooltiptext ml-4">
+              If he/she was working abroad
+            </span>
+          </div>
         </ul>
       </div>
     </div>
@@ -111,5 +203,28 @@ export default {
   .card-wrapper {
     box-shadow: 0px 3px 6px #1e40af82;
   }
+}
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #1e40af82;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+
+  /* Position the tooltip text - see examples below! */
+  position: absolute;
+  z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted white; /* If you want dots under the hoverable text */
 }
 </style>

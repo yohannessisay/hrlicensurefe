@@ -41,6 +41,9 @@
               <span v-if="showUpload">
                 <label class="text-primary-700"
                   >Upload image:
+                  <span style="color: red; font-weight: bold; font-size:16px"
+                    >(*)</span
+                  >
                   <div class="dropbox">
                     <input
                       type="file"
@@ -239,6 +242,10 @@ export default {
     let diploma = ref("");
     let transcript = ref("");
     let degree = ref("");
+    let masters = ref("");
+    let mastersTranscript = ref("");
+    let phd = ref("");
+    let phdTranscript = ref("");
 
     const reset = () => {
       showUpload.value = true;
@@ -311,6 +318,10 @@ export default {
     diploma = store.getters["newlicense/getDiploma"];
     degree = store.getters["newlicense/getDegree"];
     transcript = store.getters["newlicense/getTranscript"];
+    masters = store.getters["newlicense/getMasters"];
+    mastersTranscript = store.getters["newlicense/getMastersTranscript"];
+    phd = store.getters["newlicense/getPhd"];
+    phdTranscript = store.getters["newlicense/getPhdTranscript"];
 
     const draft = (action) => {
       message.value.showLoading = true;
@@ -379,7 +390,7 @@ export default {
               departmentId: licenseInfo.education.departmentId,
               institutionId: licenseInfo.education.institutionId,
             },
-            professionalTypeId: licenseInfo.professionalTypeId,
+            professionalTypeIds: licenseInfo.professionalTypeIds,
             residenceWoredaId: licenseInfo.residenceWoredaId,
             paymentSlip: null,
             occupationTypeId: licenseInfo.occupationTypeId,
@@ -453,6 +464,13 @@ export default {
               professionalLicense
             );
             formData.append(documentSpecs[20].documentType.code, payroll);
+            formData.append(documentSpecs[24].documentType.code, masters);
+            formData.append(
+              documentSpecs[25].documentType.code,
+              mastersTranscript
+            );
+            formData.append(documentSpecs[26].documentType.code, phd);
+            formData.append(documentSpecs[27].documentType.code, phdTranscript);
             let payload = { document: formData, id: licenseId };
             store
               .dispatch("newlicense/uploadDocuments", payload)
@@ -539,7 +557,7 @@ export default {
               departmentId: licenseInfo.education.departmentId,
               institutionId: licenseInfo.education.institutionId,
             },
-            professionalTypeId: licenseInfo.professionalTypeId,
+            professionalTypeIds: licenseInfo.professionalTypeIds,
             residenceWoredaId: licenseInfo.residenceWoredaId,
             paymentSlip: null,
             occupationTypeId: licenseInfo.occupationTypeId,
