@@ -403,23 +403,35 @@
                     </h5>
                   </div>
                 </div>
-                <div v-if="newLicense.professionalTypes.name">
+                <div v-if="newLicense.professionalTypes.length > 0">
                   <div class="flex justify-start">
                     <Title message="Professional Type" />
                   </div>
                   <div class="flex flex-col mb-medium w-1/2 mr-12">
-                    <select v-model="newLicense.professionalTypeId">
+                    <div>
+                      <ul v-for="professionName in newLicense.professionalTypes"
+                          v-bind:key="professionName.professionalTypes.name"
+                          v-bind:value="professionName.professionalTypes.id">
+                          <li>
+                            {{professionName.professionalTypes.name}} | {{professionName.professionalTypes.amharicProfessionalType}}
+                            </li>
+                        </ul>
+                      <!-- {{newLicense.professionalTypes[0].professionalTypes.name}} | {{newLicense.professionalTypes[0].professionalTypes.amharicProfessionalType}} -->
+                    </div>
+                  </div>
+                  <div class="flex flex-col mb-medium w-1/2 mr-12">
+                    <select v-model="newLicense.professionalTypeId" class="select" multiple>
                       <option
                         v-for="profession in professionalTypes"
                         v-bind:key="profession.name"
                         v-bind:value="profession.id"
                       >
-                        {{ profession.name }}
+                        {{ profession.name }} 
                       </option>
                     </select>
                   </div>
                 </div>
-                <div v-if="newLicense.professionalTypes.name">
+                <div>
                   <div class="flex justify-start">
                     <Title message="License Expiration Date" />
                   </div>
@@ -767,6 +779,7 @@ export default {
     let showNameChangeErrorFlash = ref(false);
 
     let showLicenseDateRequirementError = ref(false);
+    let departmentId = ref(0);
 
     const newLicense = ref({
       applicant: { profile: { name: "", fatherName: "" } },
@@ -832,6 +845,8 @@ export default {
           .dispatch("reviewer/getNewLicenseApplication", applicationId)
           .then((res) => {
             newLicense.value = res.data.data;
+            departmentId.value = res.data.data.education.department.id;
+            getProfessionalTypesByDepartmentId(departmentId.value);
             profileInfo.value = newLicense.value.applicant.profile;
             console.log("newLLLLLLLLLLLLLLLL", newLicense.value);
             buttons.value = res.data.data.applicationStatus.buttons;
@@ -875,6 +890,8 @@ export default {
           .dispatch("reviewer/getGoodStandingApplication", applicationId)
           .then((res) => {
             newLicense.value = res.data.data;
+            departmentId.value = res.data.data.education.department.id;
+            getProfessionalTypesByDepartmentId(departmentId.value);
             profileInfo.value = newLicense.value.applicant.profile;
             applicantId.value = res.data.data.applicantId;
             // newLicense.value.applicantType.name = "-";
@@ -934,6 +951,8 @@ export default {
           .dispatch("reviewer/getVerificationApplication", applicationId)
           .then((res) => {
             newLicense.value = res.data.data;
+            departmentId.value = res.data.data.education.department.id;
+            getProfessionalTypesByDepartmentId(departmentId.value);
             profileInfo.value = newLicense.value.applicant.profile;
             // buttons.value = res.data.data.applicationStatus.buttons;
             buttons.value = res.data.data.applicationStatus.buttons.filter(
@@ -985,6 +1004,8 @@ export default {
           .dispatch("reviewer/getRenewalApplication", applicationId)
           .then((res) => {
             newLicense.value = res.data.data;
+            departmentId.value = res.data.data.education.department.id;
+            getProfessionalTypesByDepartmentId(departmentId.value);
             console.log("rennnnnnnnnn", newLicense.value);
             profileInfo.value = newLicense.value.applicant.profile;
             buttons.value = res.data.data.applicationStatus.buttons;
@@ -1350,8 +1371,14 @@ export default {
 
     const getProfessionalTypes = () => {
       store.dispatch("reviewer/getProfessionalType").then((res) => {
-        professionalTypes.value = res.data.data;
+        // professionalTypes.value = res.data.data;
         console.log("professional types", professionalTypes.value);
+      });
+    };
+    const getProfessionalTypesByDepartmentId = (id) => {
+      store.dispatch("reviewer/getProfessionalTypeByDepartmentId", id).then((res) => {
+        professionalTypes.value = res.data.data;
+        console.log("professional types iss", res);
       });
     };
     const allowChangeName = () => {

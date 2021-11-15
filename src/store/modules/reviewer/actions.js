@@ -1312,6 +1312,16 @@ export default {
     }
   },
 
+  async getProfessionalTypeByDepartmentId({commit}, id) {
+    try {
+      const url = baseUrl + "/lookups/professionalTypes/"+10;
+      const resp = await ApiService.get(url);
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+
   async getQrCode ({commit}, url) {
     try {
       const resp = await ApiService.post(baseUrl + "/generateQrCode/scan", url);
