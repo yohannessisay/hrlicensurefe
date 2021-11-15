@@ -559,6 +559,7 @@ export default {
             },
             professionalTypeIds: licenseInfo.professionalTypeIds,
             residenceWoredaId: licenseInfo.residenceWoredaId,
+            educationalLevelId: licenseInfo.educationalLevelId,
             paymentSlip: null,
             occupationTypeId: licenseInfo.occupationTypeId,
             nativeLanguageId: licenseInfo.nativeLanguageId,

@@ -306,6 +306,286 @@
           <div
             v-if="
               this.applicantType == 1 &&
+                this.displayPayrollOption &&
+                this.firstTimeUser &&
+                this.eduLevel == 'masters'
+            "
+          >
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 3">
+                <Passport
+                  :activeState="3"
+                  @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
+                />
+              </div>
+            </transition>
+            <!-- <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 4">
+                <COC
+                  :activeState="4"
+                  @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
+                />
+              </div>
+            </transition> -->
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 4">
+                <Degree
+                  :activeState="4"
+                  @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
+                />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 5">
+                <Diploma
+                  :activeState="5"
+                  @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
+                />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 6">
+                <EducationalDoc
+                  :activeState="6"
+                  @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
+                />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 7">
+                <PayrollDoc
+                  :activeState="7"
+                  @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
+                />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 8">
+                <SupportLetterEthiopian
+                  :activeState="8"
+                  @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
+                />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 9">
+                <Transcript
+                  :activeState="9"
+                  @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
+                />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 10">
+                <WorkExperience
+                  :activeState="10"
+                  @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
+                />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 11">
+                <PreviousLicenseL
+                  :activeState="11"
+                  @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
+                />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 12">
+                <CPDF
+                  :activeState="12"
+                  @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
+                /></div
+            ></transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 13">
+                <Masters
+                  :activeState="13"
+                  @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
+                /></div
+            ></transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 14">
+                <MastersTranscript
+                  :activeState="14"
+                  @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
+                /></div
+            ></transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 15">
+                <LicenseSummary
+                  :activeState="15"
+                  @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
+                />
+              </div>
+            </transition>
+          </div>
+          <div
+            v-if="
+              this.applicantType == 1 &&
+                this.displayPayrollOption &&
+                this.firstTimeUser &&
+                this.eduLevel == 'phd'
+            "
+          >
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 3">
+                <Passport
+                  :activeState="3"
+                  @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
+                />
+              </div>
+            </transition>
+            <!-- <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 4">
+                <COC
+                  :activeState="4"
+                  @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
+                />
+              </div>
+            </transition> -->
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 4">
+                <Degree
+                  :activeState="4"
+                  @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
+                />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 5">
+                <Diploma
+                  :activeState="5"
+                  @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
+                />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 6">
+                <EducationalDoc
+                  :activeState="6"
+                  @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
+                />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 7">
+                <PayrollDoc
+                  :activeState="7"
+                  @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
+                />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 8">
+                <SupportLetterEthiopian
+                  :activeState="8"
+                  @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
+                />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 9">
+                <Transcript
+                  :activeState="9"
+                  @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
+                />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 10">
+                <WorkExperience
+                  :activeState="10"
+                  @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
+                />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 11">
+                <PreviousLicenseL
+                  :activeState="11"
+                  @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
+                />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 12">
+                <CPDF
+                  :activeState="12"
+                  @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
+                /></div
+            ></transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 13">
+                <Masters
+                  :activeState="13"
+                  @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
+                /></div
+            ></transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 14">
+                <MastersTranscript
+                  :activeState="14"
+                  @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
+                /></div
+            ></transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 15">
+                <PhD
+                  :activeState="15"
+                  @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
+                /></div
+            ></transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 16">
+                <PhDTranscript
+                  :activeState="16"
+                  @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
+                /></div
+            ></transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 17">
+                <LicenseSummary
+                  :activeState="17"
+                  @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
+                />
+              </div>
+            </transition>
+          </div>
+          <div
+            v-if="
+              this.applicantType == 1 &&
                 !this.displayPayrollOption &&
                 !this.firstTimeUser
             "
@@ -348,6 +628,193 @@
               <div v-if="this.activeState == 7">
                 <LicenseSummary
                   :activeState="7"
+                  @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
+                />
+              </div>
+            </transition>
+          </div>
+          <div
+            v-if="
+              this.applicantType == 1 &&
+                !this.displayPayrollOption &&
+                this.firstTimeUser &&
+                this.eduLevel == 'diploma'
+            "
+          >
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 3">
+                <Passport
+                  :activeState="3"
+                  @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
+                />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 4">
+                <Diploma
+                  :activeState="4"
+                  @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
+                />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 5">
+                <EducationalDoc
+                  :activeState="5"
+                  @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
+                />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 6">
+                <SupportLetterEthiopian
+                  :activeState="6"
+                  @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
+                />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 7">
+                <Transcript
+                  :activeState="7"
+                  @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
+                />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 8">
+                <WorkExperience
+                  :activeState="8"
+                  @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
+                />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 9">
+                <PreviousLicenseL
+                  :activeState="9"
+                  @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
+                />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 10">
+                <CPDF
+                  :activeState="10"
+                  @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
+                /></div
+            ></transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 11">
+                <LicenseSummary
+                  :activeState="11"
+                  @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
+                />
+              </div>
+            </transition>
+          </div>
+          <div
+            v-if="
+              this.applicantType == 1 &&
+                !this.displayPayrollOption &&
+                this.firstTimeUser &&
+                this.eduLevel == 'degree'
+            "
+          >
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 3">
+                <Passport
+                  :activeState="3"
+                  @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
+                />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 4">
+                <Diploma
+                  :activeState="4"
+                  @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
+                />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 5">
+                <Degree
+                  :activeState="5"
+                  @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
+                />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 6">
+                <EducationalDoc
+                  :activeState="6"
+                  @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
+                />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 7">
+                <SupportLetterEthiopian
+                  :activeState="7"
+                  @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
+                />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 8">
+                <Transcript
+                  :activeState="8"
+                  @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
+                />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 9">
+                <WorkExperience
+                  :activeState="9"
+                  @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
+                />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 10">
+                <PreviousLicenseL
+                  :activeState="10"
+                  @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
+                />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 11">
+                <CPDF
+                  :activeState="11"
+                  @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
+                /></div
+            ></transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 12">
+                <LicenseSummary
+                  :activeState="12"
                   @changeActiveState="activeState++"
                   @changeActiveStateMinus="activeState--"
                 />
@@ -1002,22 +1469,26 @@ export default {
       }
     },
     diplomaSet: function(params) {
-      console.log(params);
-      if (params == 1) {
+      console.log(params)
+      if (params == 2) {
         this.eduLevel = "diploma";
-      } else if (params == 2) {
+      }
+      if (params == 1) {
         this.eduLevel = "degree";
-      } else if (params == 3) {
+      }
+      if (params == 5) {
         this.eduLevel = "masters";
-      } else {
+      }
+      if (params == 7) {
         this.eduLevel = "phd";
       }
+      console.log(this.eduLevel);
     },
     firstTimeUserSet: function(params) {
       if (params) {
-        this.firstTimeUser = true;
-      } else {
         this.firstTimeUser = false;
+      } else {
+        this.firstTimeUser = true;
       }
     },
     submit(n) {
@@ -1096,7 +1567,6 @@ export default {
         .then((res) => {
           const results = res.data.data;
           this.documentSpecs = results;
-          console.log(this.documentSpecs);
           this.$store
             .dispatch("renewal/setDocumentSpecs", this.documentSpecs)
             .then((res) => {});

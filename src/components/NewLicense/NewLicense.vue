@@ -1168,13 +1168,16 @@ export default {
       }
     },
     diplomaSet: function(params) {
-      if (params == 1) {
+      if (params == 2) {
         this.eduLevel = "diploma";
-      } else if (params == 2) {
+      }
+      if (params == 1) {
         this.eduLevel = "degree";
-      } else if (params == 3) {
+      }
+      if (params == 5) {
         this.eduLevel = "masters";
-      } else {
+      }
+      if (params == 7) {
         this.eduLevel = "phd";
       }
     },

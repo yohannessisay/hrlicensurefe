@@ -776,6 +776,7 @@ export default {
     this.residenceWoredaId = this.license.residenceWoredaId;
     this.professionalTypeIds = this.license.professionalTypeIds;
     this.occupationTypeId = this.license.occupationTypeId;
+    this.educationalLevelId = this.licenseInfo.educationalLevelId;
     this.nativeLanguageId = this.license.nativeLanguageId;
     this.expertLevelId = this.license.expertLevelId;
     this.buttons = this.getButtons;
@@ -797,6 +798,7 @@ export default {
     nativeLanguageId: null,
     expertLevelId: null,
     occupationTypeId: null,
+    educationalLevelId: null,
     draftId: "",
     draftData: "",
     draftStatus: "",
@@ -1181,6 +1183,7 @@ export default {
             professionalTypeIds: this.professionalTypeIds,
             paymentSlip: null,
             occupationTypeId: this.occupationTypeId,
+            educationalLevelId: this.educationalLevelId,
             nativeLanguageId: this.nativeLanguageId,
             expertLevelId: this.expertLevelId,
             isLegal: this.checkBoxValue,
@@ -1460,6 +1463,7 @@ export default {
             professionalTypeIds: this.professionalTypeIds,
             paymentSlip: null,
             occupationTypeId: this.occupationTypeId,
+            educationalLevelId: this.educationalLevelId,
             nativeLanguageId: this.nativeLanguageId,
             expertLevelId: this.expertLevelId,
             isLegal: this.checkBoxValue,
@@ -1505,6 +1509,7 @@ export default {
             professionalTypeIds: this.professionalTypeIds,
             paymentSlip: null,
             occupationTypeId: this.occupationTypeId,
+            educationalLevelId: this.educationalLevelId,
             nativeLanguageId: this.nativeLanguageId,
             expertLevelId: this.expertLevelId,
             isLegal: this.checkBoxValue,

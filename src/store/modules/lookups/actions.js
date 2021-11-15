@@ -38,4 +38,12 @@ export default {
       return error;
     }
   },
+  async getEducationalLevel({ commit }) {
+    try {
+      const resp = await ApiService.get(url + "lookups/educationalLevels");
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
 };
