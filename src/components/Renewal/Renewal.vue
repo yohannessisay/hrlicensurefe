@@ -1002,6 +1002,7 @@ export default {
       }
     },
     diplomaSet: function(params) {
+      console.log(params);
       if (params == 1) {
         this.eduLevel = "diploma";
       } else if (params == 2) {

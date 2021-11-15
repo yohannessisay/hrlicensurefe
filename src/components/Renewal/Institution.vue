@@ -158,7 +158,7 @@
               <label class="text-primary-700">Professional Type</label>
               <select
                 class="max-w-3xl"
-                v-model="licenseInfo.professionalTypeID"
+                v-model="licenseInfo.professionalTypeIds"
               >
                 <option
                   v-for="types in professionalTypes"
@@ -168,9 +168,9 @@
                   {{ types.name }}
                 </option>
               </select>
-              <span style="color: red">{{
-                licenseInfoErrors.professionalTypeID
-              }}</span>
+              <!-- <span style="color: red">{{
+                licenseInfoErrors.professionalTypeIds
+              }}</span> -->
             </div>
             <div class="flex flex-col mb-medium w-2/5 mr-12">
               <label class="text-primary-700">Education Level </label>
@@ -318,7 +318,7 @@ export default {
         draftData.education.departmentId;
       this.licenseInfo.education.institutionId =
         draftData.education.institutionId;
-      this.licenseInfo.professionalTypeID = draftData.professionalTypeId;
+      this.licenseInfo.professionalTypeIds = draftData.professionalTypeIds;
       this.licenseInfo.expertLevelId = draftData.expertLevelId;
       if (this.licenseInfo.applicantTypeId == 1) {
         this.$store.dispatch("renewal/getExpertLevel").then((res) => {
@@ -388,7 +388,7 @@ export default {
         institutionId: null,
       },
       residenceWoredaId: null,
-      professionalTypeID: null,
+      professionalTypeIds: [],
       occupationTypeId: null,
       expertLevelId: null,
     },
@@ -401,7 +401,7 @@ export default {
       residenceWoredaId: "",
       regionID: "",
       zoneID: "",
-      professionalTypeID: "",
+      professionalTypeIds: [],
       expertLevelId: null,
     },
     regionID: "",
@@ -526,7 +526,7 @@ export default {
               institutionId: this.licenseInfo.education.institutionId,
             },
             residenceWoredaId: this.licenseInfo.residenceWoredaId,
-            professionalTypeId: this.licenseInfo.professionalTypeID,
+            professionalTypeIds: this.licenseInfo.professionalTypeIds,
             paymentSlip: null,
             occupationTypeId: this.licenseInfo.occupationTypeId,
             expertLevelId: this.licenseInfo.expertLevelId,
@@ -574,7 +574,7 @@ export default {
               institutionId: this.licenseInfo.education.institutionId,
             },
             residenceWoredaId: this.licenseInfo.residenceWoredaId,
-            professionalTypeId: this.licenseInfo.professionalTypeID,
+            professionalTypeIds: [this.licenseInfo.professionalTypeIds],
             paymentSlip: null,
             occupationTypeId: this.licenseInfo.occupationTypeId,
             expertLevelId: this.licenseInfo.expertLevelId,
@@ -642,7 +642,7 @@ export default {
         regionId: this.regionID,
         zoneId: this.zoneID,
         residenceWoredaId: this.licenseInfo.residenceWoredaId,
-        professionalTypeId: this.licenseInfo.professionalTypeID,
+        professionalTypeIds: [this.licenseInfo.professionalTypeIds],
         paymentSlip: null,
         occupationTypeId: this.licenseInfo.occupationTypeId,
         expertLevelId: this.licenseInfo.expertLevelId,
@@ -750,7 +750,7 @@ export default {
         draftData.education.departmentId;
       this.licenseInfo.education.institutionId =
         draftData.education.institutionId;
-      this.licenseInfo.professionalTypeID = draftData.professionalTypeId;
+      this.licenseInfo.professionalTypeIds = draftData.professionalTypeIds;
       this.licenseInfo.occupationTypeId = draftData.occupationTypeId;
       this.payrollData = draftData.occupationTypes;
       if (this.licenseInfo.applicantTypeId == 1) {

@@ -793,7 +793,7 @@ export default {
         }
         var filePreview = await this.blobToBase64(this.phdTranscript);
         this.phdTranscript.docFile = filePreview;
-        this.phdTranscript.title = "PhD";
+        this.phdTranscript.title = "PhD Transcript";
         this.docList.push(this.phdTranscript);
       }
     }
@@ -807,7 +807,7 @@ export default {
     this.education.departmentId = this.license.education.departmentId;
     this.education.institutionId = this.license.education.institutionId;
     this.residenceWoredaId = this.license.residenceWoredaId;
-    this.professionalTypeID = this.license.professionalTypeId;
+    this.professionalTypeIds = this.license.professionalTypeIds;
     this.occupationTypeId = this.license.occupationTypeId;
     this.expertLevelId = this.license.expertLevelId;
   },
@@ -824,7 +824,7 @@ export default {
       institutionId: null,
     },
     residenceWoredaId: null,
-    professionalTypeID: null,
+    professionalTypeIds: [],
     occupationTypeId: null,
     expertLevelId: null,
     draftId: "",
@@ -1231,7 +1231,7 @@ export default {
               departmentId: this.education.departmentId,
             },
             residenceWoredaId: this.residenceWoredaId,
-            professionalTypeId: this.professionalTypeID,
+            professionalTypeIds: this.professionalTypeIds,
             paymentSlip: null,
             occupationTypeId: this.occupationTypeId,
             expertLevelId: this.expertLevelId,
@@ -1275,7 +1275,7 @@ export default {
               institutionId: this.license.education.institutionId,
             },
             residenceWoredaId: this.residenceWoredaId,
-            professionalTypeId: this.professionalTypeID,
+            professionalTypeIds: this.professionalTypeIds,
             paymentSlip: null,
             occupationTypeId: this.occupationTypeId,
             expertLevelId: this.expertLevelId,
@@ -1578,7 +1578,7 @@ export default {
               departmentId: this.education.departmentId,
             },
             residenceWoredaId: this.residenceWoredaId,
-            professionalTypeId: this.professionalTypeID,
+            professionalTypeIds: this.professionalTypeIds,
             paymentSlip: null,
             occupationTypeId: this.occupationTypeId,
             expertLevelId: this.expertLevelId,

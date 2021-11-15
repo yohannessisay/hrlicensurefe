@@ -709,7 +709,6 @@ export default {
       this.$emit("applicantTypeValue", this.licenseInfo.applicantTypeId);
       this.$emit("nativeLanguageSet", this.licenseInfo.nativeLanguageId);
       this.$emit("payrollDocumentSet", this.licenseInfo.occupationTypeId);
-      console.log(this.licenseInfo.educationLevelId);
       this.$emit("diplomaSet", this.licenseInfo.educationLevelId);
       this.$store.dispatch("newlicense/setLicense", license);
     },
