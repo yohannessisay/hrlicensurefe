@@ -379,7 +379,7 @@ export default {
     await this.fetchRegions();
     await this.fetchEnglishSpeaker();
     await this.fetchPayrollData();
-    // await this.fetchEducationLevel();
+    await this.fetchEducationLevel();
     this.showLoading = true;
     setTimeout(() => {
       this.buttons = this.getButtons;
@@ -457,36 +457,7 @@ export default {
 
     englishData: "",
     payrollData: "",
-    educationData: [
-      {
-        id: 1,
-        name: "Diploma",
-        code: "DIP",
-        createdAt: "2021-08-04T15:01:00.533Z",
-        updatedAt: "2021-08-04T15:01:00.533Z",
-      },
-      {
-        id: 2,
-        name: "Degree",
-        code: "DEGR",
-        createdAt: "2021-08-04T15:01:00.533Z",
-        updatedAt: "2021-08-04T15:01:00.533Z",
-      },
-      {
-        id: 3,
-        name: "Masters",
-        code: "MAS",
-        createdAt: "2021-08-04T15:01:00.533Z",
-        updatedAt: "2021-08-04T15:01:00.533Z",
-      },
-      {
-        id: 4,
-        name: "PhD",
-        code: "PHD",
-        createdAt: "2021-08-04T15:01:00.533Z",
-        updatedAt: "2021-08-04T15:01:00.533Z",
-      },
-    ],
+    educationData: [],
   }),
 
   methods: {
@@ -498,14 +469,24 @@ export default {
         }
       });
     },
-    // fetchEducationLevel() {
-    //   this.$store.dispatch("lookups/getNativeLanguage").then((res) => {
-    //     if (res.data.status == "Success") {
-    //       this.educationData = res.data;
-    //     } else {
-    //     }
-    //   });
-    // },
+    spliceArray(array, id) {
+      array.splice(
+        array.findIndex((e) => e.id == id),
+        1
+      );
+      return array;
+    },
+    fetchEducationLevel() {
+      this.$store.dispatch("lookups/getEducationalLevel").then((res) => {
+        if (res.data.status == "Success") {
+          this.educationData = res.data.data;
+          this.educationData = this.spliceArray(this.educationData, 3);
+          this.educationData = this.spliceArray(this.educationData, 4);
+          this.educationData = this.spliceArray(this.educationData, 6);
+        } else {
+        }
+      });
+    },
     fetchPayrollData() {
       this.$store.dispatch("lookups/getGovernment").then((res) => {
         if (res.data.status == "Success") {
@@ -583,6 +564,7 @@ export default {
             },
             residenceWoredaId: this.licenseInfo.residenceWoredaId,
             professionalTypeIds: this.licenseInfo.professionalTypeIds,
+            educationalLevelId: this.licenseInfo.educationLevelId,
             paymentSlip: null,
             occupationTypeId: this.licenseInfo.occupationTypeId,
             nativeLanguageId: this.licenseInfo.nativeLanguageId,
@@ -631,6 +613,7 @@ export default {
             },
             residenceWoredaId: this.licenseInfo.residenceWoredaId,
             professionalTypeIds: [this.licenseInfo.professionalTypeIds],
+            educationalLevelId: this.licenseInfo.educationLevelId,
             paymentSlip: null,
             occupationTypeId: this.licenseInfo.occupationTypeId,
             nativeLanguageId: this.licenseInfo.nativeLanguageId,
@@ -700,6 +683,7 @@ export default {
         zoneId: this.zoneID,
         residenceWoredaId: this.licenseInfo.residenceWoredaId,
         professionalTypeIds: [this.licenseInfo.professionalTypeIds],
+        educationalLevelId: this.licenseInfo.educationLevelId,
         paymentSlip: null,
         occupationTypeId: this.licenseInfo.occupationTypeId,
         nativeLanguageId: this.licenseInfo.nativeLanguageId,
@@ -794,6 +778,7 @@ export default {
       this.licenseInfo.professionalTypeIds = draftData.professionalTypeIds;
       this.payrollData = draftData.occupationTypes;
       this.licenseInfo.expertLevelId = draftData.expertLevelId;
+      this.licenseInfo.educationLevelId = draftData.educationalLevelId;
       if (this.licenseInfo.applicantTypeId == 1) {
         this.displayPayrollDoc = true;
         this.$store.dispatch("newlicense/getExpertLevel").then((res) => {

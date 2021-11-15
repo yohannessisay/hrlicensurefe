@@ -13,6 +13,7 @@ export default {
     occupationTypeId: "",
     nativeLanguageId: "",
     expertLevelId: "",
+    educationalLevelId: "",
     paymentSlip: null,
     passport: "",
     healthExamCert: "",
