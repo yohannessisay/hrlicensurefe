@@ -645,7 +645,6 @@ export default {
         expertLevelId: this.licenseInfo.expertLevelId,
       };
       this.$store.dispatch("renewal/searchNewLicense").then((res) => {
-        console.log(res.data.data);
         if (res.data.data == true) {
           this.firstTimeUser = false;
           this.$emit("changeActiveState");
@@ -750,7 +749,6 @@ export default {
       this.licenseInfo.professionalTypeIds = draftData.professionalTypeIds;
       this.licenseInfo.occupationTypeId = draftData.occupationTypeId;
       this.licenseInfo.educationalLevelId = draftData.educationalLevelId;
-      console.log(draftData)
       this.setEducationLevel(this.licenseInfo.educationalLevelId);
       this.payrollData = draftData.occupationTypes;
       if (this.licenseInfo.applicantTypeId == 1) {
