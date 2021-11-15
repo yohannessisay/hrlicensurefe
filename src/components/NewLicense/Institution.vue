@@ -539,12 +539,12 @@ export default {
         this.nativeEnglishSpeaker = true;
       }
     },
-    setEducationLevel(educationalLevelId) {
-      if (educationalLevelId == 1) {
+    setEducationLevel(educationLevelId) {
+      if (educationLevelId == 2) {
         window.localStorage.setItem("educationalLevel", "diploma");
-      } else if (educationalLevelId == 2) {
+      } else if (educationLevelId == 1) {
         window.localStorage.setItem("educationalLevel", "degree");
-      } else if (educationalLevelId == 3) {
+      } else if (educationLevelId == 5) {
         window.localStorage.setItem("educationalLevel", "masters");
       } else {
         window.localStorage.setItem("educationalLevel", "phd");

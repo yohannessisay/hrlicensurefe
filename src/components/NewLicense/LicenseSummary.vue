@@ -776,7 +776,7 @@ export default {
     this.residenceWoredaId = this.license.residenceWoredaId;
     this.professionalTypeIds = this.license.professionalTypeIds;
     this.occupationTypeId = this.license.occupationTypeId;
-    this.educationalLevelId = this.licenseInfo.educationalLevelId;
+    this.educationalLevelId = this.license.educationalLevelId;
     this.nativeLanguageId = this.license.nativeLanguageId;
     this.expertLevelId = this.license.expertLevelId;
     this.buttons = this.getButtons;
