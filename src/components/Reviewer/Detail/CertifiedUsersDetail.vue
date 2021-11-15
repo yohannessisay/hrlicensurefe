@@ -267,8 +267,8 @@ import Spinner from "@/sharedComponents/Spinner";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import backgroundImage from "../../../assets/Federal_Certificate.jpg";
-import oromiaCertificateBackground from "../../../assets/oromia_background_certificate.jpg";
-import addisAbabaCertificateBackground from "../../../assets/AA_certificate.jpg";
+import oromiaCertificateBackground from "../../../assets/OROMMIA_Certificate.jpg";
+import addisAbabaCertificateBackground from "../../../assets/AA_Certificate.jpg";
 import qrcode_image from "../../../assets/qrcode_image.jpg";
 import certifiedUserImage from "../../../assets/certified_user.jpg";
 import AmharicFont from "../Configurations/amharicFont.js";
@@ -487,9 +487,9 @@ export default {
       }
 
       // doc.addImage(backgroundImage, "JPEG", 0, 0, 298, 213, undefined, "FAST");
-      doc.addImage(imageSrc.value, "JPG", 250, 8, 40, 40);
+      doc.addImage(imageSrc.value, "JPG", 246, 14, 40, 40);
       if (userImage !== null) {
-        doc.addImage(userImage, "JPEG", 8, 8, 30, 30);
+        doc.addImage(userImage, "JPEG", 33, 20, 30, 30);
       }
       doc.setFontSize(25);
       // doc.addFileToVFS("Amiri-Regular.ttf", AmiriRegular);
@@ -497,31 +497,31 @@ export default {
 
       doc.addFont("Tera-Regular-normal.ttf", "Tera-Regular", "normal");
 
-      doc.text(80, 25, "Federal Democratic Republic Ethiopia");
-      doc.setFontSize(17);
-      doc.text(110, 50, "MINSTRY OF HEALTH");
+      // doc.text(80, 25, "Federal Democratic Republic Ethiopia");
+      // doc.setFontSize(17);
+      // doc.text(110, 50, "MINSTRY OF HEALTH");
 
-      doc.setFontSize(14);
-      doc.text(150, 60, "HEALTH PROFFESSIONALS REGISTRATION AND");
-      doc.text(190, 70, "LICENSING CERTIFICATE");
+      // doc.setFontSize(14);
+      // doc.text(150, 60, "HEALTH PROFFESSIONALS REGISTRATION AND");
+      // doc.text(190, 70, "LICENSING CERTIFICATE");
 
-      doc.setFontSize(13);
-      doc.text(
-        150,
-        90,
-        "Under the Federal Democratic Republic of Ethiopia the Ministry"
-      );
-      doc.text(
-        150,
-        100,
-        "of Health by virtue of Proclamation No.916/2015 Article 33(13)"
-      );
-      doc.text(190, 110, "is given the authority to issue");
+      // doc.setFontSize(13);
+      // doc.text(
+      //   150,
+      //   90,
+      //   "Under the Federal Democratic Republic of Ethiopia the Ministry"
+      // );
+      // doc.text(
+      //   150,
+      //   100,
+      //   "of Health by virtue of Proclamation No.916/2015 Article 33(13)"
+      // );
+      // doc.text(190, 110, "is given the authority to issue");
 
       doc.setFontSize(17);
       doc.text(
         190,
-        123,
+        100,
         `${certifiedUser.value.name} ${certifiedUser.value.fatherName} ${
           certifiedUser.value.grandFatherName
             ? certifiedUser.value.grandFatherName
@@ -529,31 +529,25 @@ export default {
         }`
       );
       // doc.text(60, 123, `${certifiedUser.value.alternativeName ? certifiedUser.value.alternativeName : ''} ${certifiedUser.value.alternativeFatherName ? certifiedUser.value.alternativeFatherName : ''} ${certifiedUser.value.alternativeGrandFatherName ? certifiedUser.value.alternativeGrandFatherName : ''}`)
-      doc.setFontSize(13);
-      doc.text(
-        155,
-        140,
-        "Having duly satisfied the requirements of the Ministry"
-      );
-      doc.text(180, 147, "hereby registered and licensed as");
-      doc.setFontSize(15);
+      // doc.setFontSize(13);
+      // doc.text(
+      //   155,
+      //   140,
+      //   "Having duly satisfied the requirements of the Ministry"
+      // );
+      // doc.text(180, 147, "hereby registered and licensed as");
+      doc.setFontSize(14);
 
       doc.text(
         200,
-        160,
+        122,
         `${certificateDetail.value.professionalTypes[0].professionalTypes.name}`
       );
       // doc.text(190, 170, 'DENTAL SURGON')
       doc.text(
-        160,
-        173,
-        `This license is valid: ${
-          certificateDetail.value.certifiedDate
-            ? moment(certificateDetail.value.certifiedDate).format(
-                "MMM DD, YYYY"
-              )
-            : ""
-        } - ${
+        205,
+        164,
+        `${
           certificateDetail.value.licenseExpirationDate
             ? moment(certificateDetail.value.licenseExpirationDate).format(
                 "MMM DD, YYYY"
@@ -561,41 +555,41 @@ export default {
             : "Not Specified"
         }`
       );
-      doc.setFontSize(7);
-      doc.text(150, 193, "Signature of the Authorized Personel");
-      doc.text(150, 196, "Date: " + moment(new Date()).format("MMM DD, YYYY"));
-      doc.text(200, 193, "NB:- This Certificate");
-      doc.text(200, 196, "1. Shall be renewed every five years.");
-      doc.text(
-        200,
-        199,
-        "2. Unlawful if it is found being used by another person."
-      );
-      doc.text(
-        200,
-        202,
-        "3. The holder is required to notify as soon as the certificate is lost or missed."
-      );
+      // doc.setFontSize(7);
+      // doc.text(150, 193, "Signature of the Authorized Personel");
+      // doc.text(150, 196, "Date: " + moment(new Date()).format("MMM DD, YYYY"));
+      // doc.text(200, 193, "NB:- This Certificate");
+      // doc.text(200, 196, "1. Shall be renewed every five years.");
+      // doc.text(
+      //   200,
+      //   199,
+      //   "2. Unlawful if it is found being used by another person."
+      // );
+      // doc.text(
+      //   200,
+      //   202,
+      //   "3. The holder is required to notify as soon as the certificate is lost or missed."
+      // );
 
       // doc.text(100, 30, 'የጤና ጥበቃ ሚኒስቴር')
       // doc.setFontSize(15)
       // doc.text(100, 35, 'Ministry of Health')
       doc.setFont("Tera-Regular"); // set font
-      doc.setFontSize(25);
-      doc.text(90, 15, "በኢትዮፕያ ፌደራላዊ ዴሞክራሲያዊ ሪፐብሊክ");
-      doc.setFontSize(20);
-      doc.text(115, 40, "የጤና ጥበቃ ሚኒስቴር");
-      doc.setFontSize(17);
-      doc.text(20, 60, "የጤና ባለሙያዎች የሙያ ምዝገባና ፈቃድ የምስከር ወረቀት");
+      // doc.setFontSize(25);
+      // doc.text(90, 15, "በኢትዮፕያ ፌደራላዊ ዴሞክራሲያዊ ሪፐብሊክ");
+      // doc.setFontSize(20);
+      // doc.text(115, 40, "የጤና ጥበቃ ሚኒስቴር");
+      // doc.setFontSize(17);
+      // doc.text(20, 60, "የጤና ባለሙያዎች የሙያ ምዝገባና ፈቃድ የምስከር ወረቀት");
 
-      doc.setFontSize(13);
-      doc.text(20, 90, "በኢትዮጵያ ፌዴራላዊ ዴሞክራሲያዊ ረፐብሊክ የጤና ጥበቃ ሚንስቴር");
-      doc.text(20, 100, "በአዋጅ ቁጥር 916/2008 አንቀጽ 33(13)በተሰጠው ስልጣን መሰረት");
+      // doc.setFontSize(13);
+      // doc.text(20, 90, "በኢትዮጵያ ፌዴራላዊ ዴሞክራሲያዊ ረፐብሊክ የጤና ጥበቃ ሚንስቴር");
+      // doc.text(20, 100, "በአዋጅ ቁጥር 916/2008 አንቀጽ 33(13)በተሰጠው ስልጣን መሰረት");
 
       doc.setFontSize(17);
       doc.text(
         60,
-        123,
+        100,
         `${
           certifiedUser.value.alternativeName
             ? certifiedUser.value.alternativeName
@@ -610,28 +604,21 @@ export default {
             : ""
         }`
       );
-      doc.setFontSize(13);
-      doc.text(20, 133, "ተገቢውን መስፈርት አሟልተው ስለተገኙ ሚኒስቴር መስሪያ ቤቱ");
-      doc.setFontSize(15);
+      // doc.setFontSize(13);
+      // doc.text(20, 133, "ተገቢውን መስፈርት አሟልተው ስለተገኙ ሚኒስቴር መስሪያ ቤቱ");
+      doc.setFontSize(14);
       // doc.text(65, 143, "ጁኒየር")
       // doc.text(55, 153, "ጀነራልሜዲካል ፕራክቲሽነር")
       doc.text(
         65,
-        143,
+        117,
         `${certificateDetail.value.professionalTypes[0].professionalTypes.amharicProfessionalType}`
       );
-      doc.text(40, 163, "ሙያ መዝግቦ ይህን የሙያ ስራ ፈቃድ ሰጥቷል።");
+      // doc.text(40, 163, "ሙያ መዝግቦ ይህን የሙያ ስራ ፈቃድ ሰጥቷል።");
       doc.text(
-        15,
-        173,
-        `ይህ የሙያ የስራ ፈቃድ የሚያገለግለው ${
-          certificateDetail.certifiedDate
-            ? toEthiopian(
-                moment(certificateDetail.value.certifiedDate)._d.toISOString(),
-                false
-              )
-            : ""
-        }-${
+        80,
+        164,
+        `${
           certificateDetail.value.licenseExpirationDate
             ? toEthiopian(
                 moment(
@@ -644,25 +631,25 @@ export default {
       );
       // doc.text(10, 203, `ቀን: ${toEthiopian(new Date().toISOString(), false)}`)
       doc.setFontSize(10);
-      doc.text(10, 193, "የኃላፊ ፊርማ");
+      // doc.text(10, 193, "የኃላፊ ፊርማ");
       // doc.text(10, 203, `ቀን: ${toEthiopian(new Date().toISOString(), false)}`)
-      doc.text(10, 196, `ቀን ${toEthiopian(new Date().toISOString(), false)}`);
-      doc.text(35, 193, "ማሳሰቢያ ይህ የምስክር ወረቀት");
-      doc.text(35, 196, "1. በየአምስት አመቱ መታደስ አለበት።");
-      doc.text(35, 199, "2. ሰምና ፎቶግራፍ ከተገለጸው ሰው በስተቀር ሌላ አካል ሊገለገልበት አይገባም።");
-      doc.text(35, 202, "3. በማንኛውም ምክንኛት ቢጠፋ የማሳወቅ ግዴታ አላብዎ።");
+      // doc.text(10, 196, `ቀን ${toEthiopian(new Date().toISOString(), false)}`);
+      // doc.text(35, 193, "ማሳሰቢያ ይህ የምስክር ወረቀት");
+      // doc.text(35, 196, "1. በየአምስት አመቱ መታደስ አለበት።");
+      // doc.text(35, 199, "2. ሰምና ፎቶግራፍ ከተገለጸው ሰው በስተቀር ሌላ አካል ሊገለገልበት አይገባም።");
+      // doc.text(35, 202, "3. በማንኛውም ምክንኛት ቢጠፋ የማሳወቅ ግዴታ አላብዎ።");
 
       // add underline here
-      doc.setLineWidth(0.3);
-      doc.line(20, 63, 140, 63);
-      doc.line(150, 63, 290, 63);
-      doc.line(190, 73, 265, 73);
-      doc.line(50, 126, 120, 126);
-      doc.line(180, 126, 260, 126);
+      // doc.setLineWidth(0.3);
+      // doc.line(20, 63, 140, 63);
+      // doc.line(150, 63, 290, 63);
+      // doc.line(190, 73, 265, 73);
+      // doc.line(50, 126, 120, 126);
+      // doc.line(180, 126, 260, 126);
 
-      doc.line(10, 188, 100, 188);
-      doc.line(170, 188, 265, 188);
-      doc.line(35, 200, 45, 200);
+      // doc.line(10, 188, 100, 188);
+      // doc.line(170, 188, 265, 188);
+      // doc.line(35, 200, 45, 200);
 
       window.open(doc.output("bloburl"));
     };
