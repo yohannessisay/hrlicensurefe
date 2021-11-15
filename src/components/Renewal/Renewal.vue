@@ -1484,9 +1484,9 @@ export default {
     },
     firstTimeUserSet: function(params) {
       if (params) {
-        this.firstTimeUser = false;
-      } else {
         this.firstTimeUser = true;
+      } else {
+        this.firstTimeUser = false;
       }
     },
     submit(n) {

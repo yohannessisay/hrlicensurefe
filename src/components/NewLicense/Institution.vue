@@ -691,6 +691,9 @@ export default {
         nativeLanguageId: this.licenseInfo.nativeLanguageId,
         expertLevelId: this.licenseInfo.expertLevelId,
       };
+      if (this.licenseInfo.educationalLevelId == null) {
+        this.licenseInfo.educationalLevelId = 7;
+      }
       this.$emit("changeActiveState");
       this.$emit("applicantTypeValue", this.licenseInfo.applicantTypeId);
       this.$emit("nativeLanguageSet", this.licenseInfo.nativeLanguageId);
