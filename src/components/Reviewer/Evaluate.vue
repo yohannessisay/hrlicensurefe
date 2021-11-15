@@ -420,13 +420,13 @@
                     </div>
                   </div>
                   <div class="flex flex-col mb-medium w-1/2 mr-12">
-                    <select v-model="newLicense.professionalTypeId" class="select" multiple>
+                    <select v-model="newLicense.professionalTypeIds" class="select" multiple>
                       <option
                         v-for="profession in professionalTypes"
                         v-bind:key="profession.name"
                         v-bind:value="profession.id"
                       >
-                        {{ profession.name }} 
+                        {{ profession.name }} | {{ profession.amharicProfessionalType }}
                       </option>
                     </select>
                   </div>

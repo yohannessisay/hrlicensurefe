@@ -133,8 +133,8 @@
                     <h4>
                       <b>{{
                         certificateDetail.professionalTypes
-                          ? certificateDetail.professionalTypes.name != null
-                            ? certificateDetail.professionalTypes.name
+                          ? certificateDetail.professionalTypes[0].professionalTypes.amharicProfessionalType != null
+                            ? certificateDetail.professionalTypes.[0].professionalTypes.amharicProfessionalType
                             : " "
                           : " "
                       }}</b>
@@ -195,8 +195,8 @@
                     <h4>
                       <b>{{
                         certificateDetail.professionalTypes
-                          ? certificateDetail.professionalTypes.name != null
-                            ? certificateDetail.professionalTypes.name
+                          ? certificateDetail.professionalTypes[0].professionalTypes.name != null
+                            ? certificateDetail.professionalTypes[0].professionalTypes.name
                             : " "
                           : " "
                       }}</b>
@@ -495,8 +495,8 @@ export default {
       );
       doc.text(180, 147, "hereby registered and licensed as");
       doc.setFontSize(15);
-      doc.text(65, 143, `${certificateDetail.value.professionalTypes.name}`);
-      doc.text(200, 160, `${certificateDetail.value.professionalTypes.name}`);
+      
+      doc.text(200, 160, `${certificateDetail.value.professionalTypes[0].professionalTypes.name}`);
       // doc.text(190, 170, 'DENTAL SURGON')
       doc.text(
         160,
@@ -562,6 +562,7 @@ export default {
       doc.setFontSize(15);
       // doc.text(65, 143, "ጁኒየር")
       // doc.text(55, 153, "ጀነራልሜዲካል ፕራክቲሽነር")
+      doc.text(65, 143, `${certificateDetail.value.professionalTypes[0].professionalTypes.amharicProfessionalType}`);
       doc.text(40, 163, "ሙያ መዝግቦ ይህን የሙያ ስራ ፈቃድ ሰጥቷል።");
       doc.text(
         15,
