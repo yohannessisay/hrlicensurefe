@@ -144,19 +144,25 @@
                     <h3>
                       ይህ የሙያ የስራ ፈቃድ የሚያገለግለው
                       <b>
-                        {{ certificateDetail.certifiedDate ?
-                          toEthiopian(
-                            moment(
-                              certificateDetail.certifiedDate
-                            )._d.toISOString(),
-                            false
-                          ) : ""
+                        {{
+                          certificateDetail.certifiedDate
+                            ? toEthiopian(
+                                moment(
+                                  certificateDetail.certifiedDate
+                                )._d.toISOString(),
+                                false
+                              )
+                            : ""
                         }}
-                        -{{ certificateDetail.licenseExpirationDate !== null ?
-                          toEthiopian(
-                            moment(certificateDetail.licenseExpirationDate)._d.toISOString(),
-                            false
-                          ) : " አልተገለጸም"
+                        -{{
+                          certificateDetail.licenseExpirationDate !== null
+                            ? toEthiopian(
+                                moment(
+                                  certificateDetail.licenseExpirationDate
+                                )._d.toISOString(),
+                                false
+                              )
+                            : " አልተገለጸም"
                         }}
                       </b>
                     </h3>
@@ -195,8 +201,10 @@
                     <h4>
                       <b>{{
                         certificateDetail.professionalTypes
-                          ? certificateDetail.professionalTypes[0].professionalTypes.name != null
-                            ? certificateDetail.professionalTypes[0].professionalTypes.name
+                          ? certificateDetail.professionalTypes[0]
+                              .professionalTypes.name != null
+                            ? certificateDetail.professionalTypes[0]
+                                .professionalTypes.name
                             : " "
                           : " "
                       }}</b>
@@ -204,16 +212,20 @@
                     <br />
                     <h3>
                       The license is valid:<b
-                        >{{ certificateDetail.certifiedDate ? 
-                          moment(certificateDetail.certifiedDate).format(
-                            "MMM DD, YYYY"
-                          ) : ""
+                        >{{
+                          certificateDetail.certifiedDate
+                            ? moment(certificateDetail.certifiedDate).format(
+                                "MMM DD, YYYY"
+                              )
+                            : ""
                         }}
                         -
                         {{
-                         certificateDetail.licenseExpirationDate ?
-                          moment(certificateDetail.licenseExpirationDate).format("MMM DD, YYYY")
-                          : " Not specified"
+                          certificateDetail.licenseExpirationDate
+                            ? moment(
+                                certificateDetail.licenseExpirationDate
+                              ).format("MMM DD, YYYY")
+                            : " Not specified"
                         }}</b
                       >
                     </h3>
@@ -254,7 +266,7 @@ import Spinner from "@/sharedComponents/Spinner";
 
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
-import backgroundImage from "../../../assets/hrl_background_certificate.jpg";
+import backgroundImage from "../../../assets/Federal_Certificate.jpg";
 import oromiaCertificateBackground from "../../../assets/oromia_background_certificate.jpg";
 import addisAbabaCertificateBackground from "../../../assets/AA_certificate.jpg";
 import qrcode_image from "../../../assets/qrcode_image.jpg";
@@ -318,7 +330,8 @@ export default {
 
       const qrParam = { url: null };
 
-      qrParam.url = staticUrl + "/" + applicationType + "/" + userId + "/" + applicationId;
+      qrParam.url =
+        staticUrl + "/" + applicationType + "/" + userId + "/" + applicationId;
       store
         .dispatch("reviewer/getQrCode", qrParam)
         .then((res) => {
@@ -432,17 +445,46 @@ export default {
         orientation: "landscape",
         filters: ["ASCIIHexEncode"],
       });
-      console.log("expiration date", certificateDetail.value.licenseExpirationDate === null)
+      console.log(
+        "expiration date",
+        certificateDetail.value.licenseExpirationDate === null
+      );
 
       const userImage = certifiedUser.value.photo;
       if (certificateDetail.value.reviewer.expertLevel.code === "FED") {
-        doc.addImage(backgroundImage, "JPEG", 0, 0, 298, 213, undefined, "FAST");
-      } else if(certificateDetail.value.reviewer.region.code === "ORO") {
-        doc.addImage(oromiaCertificateBackground, "JPEG", 0, 0, 298, 213, undefined, "FAST");
-      } else if(certificateDetail.value.reviewer.region.code === "AA") {
-        doc.addImage(addisAbabaCertificateBackground, "JPEG", 0, 0, 298, 213, undefined, "FAST");
+        doc.addImage(
+          backgroundImage,
+          "JPEG",
+          0,
+          0,
+          298,
+          213,
+          undefined,
+          "FAST"
+        );
+      } else if (certificateDetail.value.reviewer.region.code === "ORO") {
+        doc.addImage(
+          oromiaCertificateBackground,
+          "JPEG",
+          0,
+          0,
+          298,
+          213,
+          undefined,
+          "FAST"
+        );
+      } else if (certificateDetail.value.reviewer.region.code === "AA") {
+        doc.addImage(
+          addisAbabaCertificateBackground,
+          "JPEG",
+          0,
+          0,
+          298,
+          213,
+          undefined,
+          "FAST"
+        );
       }
-
 
       // doc.addImage(backgroundImage, "JPEG", 0, 0, 298, 213, undefined, "FAST");
       doc.addImage(imageSrc.value, "JPG", 250, 8, 40, 40);
@@ -495,18 +537,29 @@ export default {
       );
       doc.text(180, 147, "hereby registered and licensed as");
       doc.setFontSize(15);
-      
-      doc.text(200, 160, `${certificateDetail.value.professionalTypes[0].professionalTypes.name}`);
+
+      doc.text(
+        200,
+        160,
+        `${certificateDetail.value.professionalTypes[0].professionalTypes.name}`
+      );
       // doc.text(190, 170, 'DENTAL SURGON')
       doc.text(
         160,
         173,
-        `This license is valid: ${ certificateDetail.value.certifiedDate ? moment(
+        `This license is valid: ${
           certificateDetail.value.certifiedDate
-        ).format("MMM DD, YYYY") : ""} - ${ certificateDetail.value.licenseExpirationDate ?
-         moment(certificateDetail.value.licenseExpirationDate).format(
-          "MMM DD, YYYY"
-        ) : "Not Specified"}`
+            ? moment(certificateDetail.value.certifiedDate).format(
+                "MMM DD, YYYY"
+              )
+            : ""
+        } - ${
+          certificateDetail.value.licenseExpirationDate
+            ? moment(certificateDetail.value.licenseExpirationDate).format(
+                "MMM DD, YYYY"
+              )
+            : "Not Specified"
+        }`
       );
       doc.setFontSize(7);
       doc.text(150, 193, "Signature of the Authorized Personel");
@@ -562,18 +615,32 @@ export default {
       doc.setFontSize(15);
       // doc.text(65, 143, "ጁኒየር")
       // doc.text(55, 153, "ጀነራልሜዲካል ፕራክቲሽነር")
-      doc.text(65, 143, `${certificateDetail.value.professionalTypes[0].professionalTypes.amharicProfessionalType}`);
+      doc.text(
+        65,
+        143,
+        `${certificateDetail.value.professionalTypes[0].professionalTypes.amharicProfessionalType}`
+      );
       doc.text(40, 163, "ሙያ መዝግቦ ይህን የሙያ ስራ ፈቃድ ሰጥቷል።");
       doc.text(
         15,
         173,
-        `ይህ የሙያ የስራ ፈቃድ የሚያገለግለው ${certificateDetail.certifiedDate ? toEthiopian(
-          moment(certificateDetail.value.certifiedDate)._d.toISOString(),
-          false
-        ) : ""}-${ certificateDetail.value.licenseExpirationDate ? toEthiopian(
-          moment(certificateDetail.value.licenseExpirationDate)._d.toISOString(),
-          false
-        ) : " አልተገለጸም"}`
+        `ይህ የሙያ የስራ ፈቃድ የሚያገለግለው ${
+          certificateDetail.certifiedDate
+            ? toEthiopian(
+                moment(certificateDetail.value.certifiedDate)._d.toISOString(),
+                false
+              )
+            : ""
+        }-${
+          certificateDetail.value.licenseExpirationDate
+            ? toEthiopian(
+                moment(
+                  certificateDetail.value.licenseExpirationDate
+                )._d.toISOString(),
+                false
+              )
+            : " አልተገለጸም"
+        }`
       );
       // doc.text(10, 203, `ቀን: ${toEthiopian(new Date().toISOString(), false)}`)
       doc.setFontSize(10);
