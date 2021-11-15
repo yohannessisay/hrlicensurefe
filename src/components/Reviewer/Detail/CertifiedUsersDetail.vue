@@ -268,7 +268,7 @@ import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import backgroundImage from "../../../assets/Federal_Certificate.jpg";
 import oromiaCertificateBackground from "../../../assets/OROMMIA_Certificate.jpg";
-import addisAbabaCertificateBackground from "../../../assets/AA_Certificate.jpg";
+import addisAbabaCertificateBackground from "../../../assets/AA_certificate.jpg";
 import qrcode_image from "../../../assets/qrcode_image.jpg";
 import certifiedUserImage from "../../../assets/certified_user.jpg";
 import AmharicFont from "../Configurations/amharicFont.js";
