@@ -10,6 +10,7 @@ export default {
     professionalTypeId: "",
     occupationTypeId: "",
     expertLevelId: "",
+    educationalLevelId: "",
     paymentSlip: null,
     healthExamCert: "",
     workExperience: "",

@@ -177,8 +177,8 @@
               <label class="text-primary-700">Education Level </label>
               <select
                 class="max-w-3xl"
-                @change="setEducationLevel(licenseInfo.educationLevelId)"
-                v-model="licenseInfo.educationLevelId"
+                @change="setEducationLevel(licenseInfo.educationalLevelId)"
+                v-model="licenseInfo.educationalLevelId"
               >
                 <option
                   v-for="types in this.educationData"
@@ -341,6 +341,8 @@ export default {
       this.licenseInfo.education.institutionId =
         draftData.education.institutionId;
       this.licenseInfo.professionalTypeIds = draftData.professionalTypeIds;
+      this.licenseInfo.educationalLevelId = draftData.educationalLevelId;
+      this.setEducationLevel(this.licenseInfo.educationalLevelId);
       this.licenseInfo.expertLevelId = draftData.expertLevelId;
       if (this.licenseInfo.applicantTypeId == 1) {
         this.$store.dispatch("newlicense/getExpertLevel").then((res) => {
@@ -413,7 +415,7 @@ export default {
       nativeLanguageId: null,
       occupationTypeId: null,
       expertLevelId: null,
-      educationLevelId: null,
+      educationalLevelId: null,
     },
     licenseInfoErrors: {
       applicantTypeId: "",
@@ -426,7 +428,7 @@ export default {
       zoneID: "",
       professionalTypeIds: [],
       expertLevelId: null,
-      educationLevelId: null,
+      educationalLevelId: null,
     },
     regionID: "",
     zoneID: "",
@@ -537,12 +539,12 @@ export default {
         this.nativeEnglishSpeaker = true;
       }
     },
-    setEducationLevel(educationLevelId) {
-      if (educationLevelId == 1) {
+    setEducationLevel(educationalLevelId) {
+      if (educationalLevelId == 1) {
         window.localStorage.setItem("educationalLevel", "diploma");
-      } else if (educationLevelId == 2) {
+      } else if (educationalLevelId == 2) {
         window.localStorage.setItem("educationalLevel", "degree");
-      } else if (educationLevelId == 3) {
+      } else if (educationalLevelId == 3) {
         window.localStorage.setItem("educationalLevel", "masters");
       } else {
         window.localStorage.setItem("educationalLevel", "phd");
@@ -563,8 +565,8 @@ export default {
               institutionId: this.licenseInfo.education.institutionId,
             },
             residenceWoredaId: this.licenseInfo.residenceWoredaId,
-            professionalTypeIds: this.licenseInfo.professionalTypeIds,
-            educationalLevelId: this.licenseInfo.educationLevelId,
+            professionalTypeIds: [this.licenseInfo.professionalTypeIds],
+            educationalLevelId: this.licenseInfo.educationalLevelId,
             paymentSlip: null,
             occupationTypeId: this.licenseInfo.occupationTypeId,
             nativeLanguageId: this.licenseInfo.nativeLanguageId,
@@ -613,7 +615,7 @@ export default {
             },
             residenceWoredaId: this.licenseInfo.residenceWoredaId,
             professionalTypeIds: [this.licenseInfo.professionalTypeIds],
-            educationalLevelId: this.licenseInfo.educationLevelId,
+            educationalLevelId: this.licenseInfo.educationalLevelId,
             paymentSlip: null,
             occupationTypeId: this.licenseInfo.occupationTypeId,
             nativeLanguageId: this.licenseInfo.nativeLanguageId,
@@ -683,7 +685,7 @@ export default {
         zoneId: this.zoneID,
         residenceWoredaId: this.licenseInfo.residenceWoredaId,
         professionalTypeIds: [this.licenseInfo.professionalTypeIds],
-        educationalLevelId: this.licenseInfo.educationLevelId,
+        educationalLevelId: this.licenseInfo.educationalLevelId,
         paymentSlip: null,
         occupationTypeId: this.licenseInfo.occupationTypeId,
         nativeLanguageId: this.licenseInfo.nativeLanguageId,
@@ -693,7 +695,7 @@ export default {
       this.$emit("applicantTypeValue", this.licenseInfo.applicantTypeId);
       this.$emit("nativeLanguageSet", this.licenseInfo.nativeLanguageId);
       this.$emit("payrollDocumentSet", this.licenseInfo.occupationTypeId);
-      this.$emit("diplomaSet", this.licenseInfo.educationLevelId);
+      this.$emit("diplomaSet", this.licenseInfo.educationalLevelId);
       this.$store.dispatch("newlicense/setLicense", license);
     },
     fetchApplicantType() {
@@ -778,7 +780,8 @@ export default {
       this.licenseInfo.professionalTypeIds = draftData.professionalTypeIds;
       this.payrollData = draftData.occupationTypes;
       this.licenseInfo.expertLevelId = draftData.expertLevelId;
-      this.licenseInfo.educationLevelId = draftData.educationalLevelId;
+      this.licenseInfo.educationalLevelId = draftData.educationalLevelId;
+      this.setEducationLevel(this.licenseInfo.educationalLevelId);
       if (this.licenseInfo.applicantTypeId == 1) {
         this.displayPayrollDoc = true;
         this.$store.dispatch("newlicense/getExpertLevel").then((res) => {

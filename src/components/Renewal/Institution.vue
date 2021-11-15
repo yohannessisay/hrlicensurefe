@@ -176,8 +176,8 @@
               <label class="text-primary-700">Education Level </label>
               <select
                 class="max-w-3xl"
-                @change="setEducationLevel(licenseInfo.educationLevelId)"
-                v-model="licenseInfo.educationLevelId"
+                @change="setEducationLevel(licenseInfo.educationalLevelId)"
+                v-model="licenseInfo.educationalLevelId"
               >
                 <option
                   v-for="types in this.educationData"
@@ -319,6 +319,8 @@ export default {
       this.licenseInfo.education.institutionId =
         draftData.education.institutionId;
       this.licenseInfo.professionalTypeIds = draftData.professionalTypeIds;
+      this.licenseInfo.educationalLevelId = draftData.educationalLevelId;
+      this.setEducationLevel(this.licenseInfo.educationalLevelId);
       this.licenseInfo.expertLevelId = draftData.expertLevelId;
       if (this.licenseInfo.applicantTypeId == 1) {
         this.$store.dispatch("renewal/getExpertLevel").then((res) => {
@@ -358,6 +360,7 @@ export default {
     this.fetchFirstTimeUser();
     this.fetchPayrollData();
     this.fetchProfessionalType();
+    this.fetchEducationLevel();
 
     this.showLoading = true;
     setTimeout(() => {
@@ -391,6 +394,7 @@ export default {
       professionalTypeIds: [],
       occupationTypeId: null,
       expertLevelId: null,
+      educationalLevelId: null,
     },
     licenseInfoErrors: {
       applicantTypeId: "",
@@ -403,6 +407,7 @@ export default {
       zoneID: "",
       professionalTypeIds: [],
       expertLevelId: null,
+      educationalLevelId: null,
     },
     regionID: "",
     zoneID: "",
@@ -430,36 +435,7 @@ export default {
     payrollData: "",
     firstTimeUser: false,
 
-    educationData: [
-      {
-        id: 1,
-        name: "Diploma",
-        code: "DIP",
-        createdAt: "2021-08-04T15:01:00.533Z",
-        updatedAt: "2021-08-04T15:01:00.533Z",
-      },
-      {
-        id: 2,
-        name: "Degree",
-        code: "DEGR",
-        createdAt: "2021-08-04T15:01:00.533Z",
-        updatedAt: "2021-08-04T15:01:00.533Z",
-      },
-      {
-        id: 3,
-        name: "Masters",
-        code: "MAS",
-        createdAt: "2021-08-04T15:01:00.533Z",
-        updatedAt: "2021-08-04T15:01:00.533Z",
-      },
-      {
-        id: 4,
-        name: "PhD",
-        code: "PHD",
-        createdAt: "2021-08-04T15:01:00.533Z",
-        updatedAt: "2021-08-04T15:01:00.533Z",
-      },
-    ],
+    educationData: [],
   }),
 
   methods: {
@@ -467,6 +443,24 @@ export default {
       this.$store.dispatch("lookups/getGovernment").then((res) => {
         if (res.data.status == "Success") {
           this.payrollData = res.data;
+        } else {
+        }
+      });
+    },
+    spliceArray(array, id) {
+      array.splice(
+        array.findIndex((e) => e.id == id),
+        1
+      );
+      return array;
+    },
+    fetchEducationLevel() {
+      this.$store.dispatch("lookups/getEducationalLevel").then((res) => {
+        if (res.data.status == "Success") {
+          this.educationData = res.data.data;
+          this.educationData = this.spliceArray(this.educationData, 3);
+          this.educationData = this.spliceArray(this.educationData, 4);
+          this.educationData = this.spliceArray(this.educationData, 6);
         } else {
         }
       });
@@ -527,6 +521,7 @@ export default {
             },
             residenceWoredaId: this.licenseInfo.residenceWoredaId,
             professionalTypeIds: this.licenseInfo.professionalTypeIds,
+            educationalLevelId: this.licenseInfo.educationalLevelId,
             paymentSlip: null,
             occupationTypeId: this.licenseInfo.occupationTypeId,
             expertLevelId: this.licenseInfo.expertLevelId,
@@ -575,6 +570,7 @@ export default {
             },
             residenceWoredaId: this.licenseInfo.residenceWoredaId,
             professionalTypeIds: [this.licenseInfo.professionalTypeIds],
+            educationalLevelId: this.licenseInfo.educationalLevelId,
             paymentSlip: null,
             occupationTypeId: this.licenseInfo.occupationTypeId,
             expertLevelId: this.licenseInfo.expertLevelId,
@@ -643,6 +639,7 @@ export default {
         zoneId: this.zoneID,
         residenceWoredaId: this.licenseInfo.residenceWoredaId,
         professionalTypeIds: [this.licenseInfo.professionalTypeIds],
+        educationalLevelId: this.licenseInfo.educationalLevelId,
         paymentSlip: null,
         occupationTypeId: this.licenseInfo.occupationTypeId,
         expertLevelId: this.licenseInfo.expertLevelId,
@@ -655,7 +652,7 @@ export default {
           this.$emit("applicantTypeValue", this.licenseInfo.applicantTypeId);
           this.$emit("payrollDocumentSet", this.licenseInfo.occupationTypeId);
           this.$emit("firstTimeUserSet", this.firstTimeUser);
-          this.$emit("diplomaSet", this.licenseInfo.educationLevelId);
+          this.$emit("diplomaSet", this.licenseInfo.educationalLevelId);
           this.$store.dispatch("renewal/setLicense", license);
         } else {
           this.firstTimeUser = true;
@@ -752,6 +749,9 @@ export default {
         draftData.education.institutionId;
       this.licenseInfo.professionalTypeIds = draftData.professionalTypeIds;
       this.licenseInfo.occupationTypeId = draftData.occupationTypeId;
+      this.licenseInfo.educationalLevelId = draftData.educationalLevelId;
+      console.log(draftData)
+      this.setEducationLevel(this.licenseInfo.educationalLevelId);
       this.payrollData = draftData.occupationTypes;
       if (this.licenseInfo.applicantTypeId == 1) {
         this.displayPayrollDoc = true;

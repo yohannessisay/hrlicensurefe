@@ -40,7 +40,9 @@
               <span v-if="showUpload">
                 <label class="text-primary-700"
                   >Upload image:
-                  <span style="color: red; font-weight: bold; font-size:16px">(*)</span>
+                  <span style="color: red; font-weight: bold; font-size:16px"
+                    >(*)</span
+                  >
                   <div class="dropbox">
                     <input
                       type="file"
@@ -433,6 +435,7 @@ export default {
               institutionId: licenseInfo.education.institutionId,
             },
             professionalTypeIds: licenseInfo.professionalTypeIds,
+            educationalLevelId: licenseInfo.educationalLevelId,
             residenceWoredaId: licenseInfo.residenceWoredaId,
             paymentSlip: null,
             occupationTypeId: licenseInfo.occupationTypeId,
@@ -560,6 +563,8 @@ export default {
               institutionId: licenseInfo.education.institutionId,
             },
             professionalTypeIds: licenseInfo.professionalTypeIds,
+            educationalLevelId: licenseInfo.educationalLevelId,
+
             residenceWoredaId: licenseInfo.residenceWoredaId,
             paymentSlip: null,
             occupationTypeId: licenseInfo.occupationTypeId,
