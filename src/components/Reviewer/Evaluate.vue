@@ -409,24 +409,35 @@
                   </div>
                   <div class="flex flex-col mb-medium w-1/2 mr-12">
                     <div>
-                      <ul v-for="professionName in newLicense.professionalTypes"
-                          v-bind:key="professionName.professionalTypes.name"
-                          v-bind:value="professionName.professionalTypes.id">
-                          <li>
-                            {{professionName.professionalTypes.name}} | {{professionName.professionalTypes.amharicProfessionalType}}
-                            </li>
-                        </ul>
+                      <ul
+                        v-for="professionName in newLicense.professionalTypes"
+                        v-bind:key="professionName.professionalTypes.name"
+                        v-bind:value="professionName.professionalTypes.id"
+                      >
+                        <li>
+                          {{ professionName.professionalTypes.name }} |
+                          {{
+                            professionName.professionalTypes
+                              .amharicProfessionalType
+                          }}
+                        </li>
+                      </ul>
                       <!-- {{newLicense.professionalTypes[0].professionalTypes.name}} | {{newLicense.professionalTypes[0].professionalTypes.amharicProfessionalType}} -->
                     </div>
                   </div>
                   <div class="flex flex-col mb-medium w-1/2 mr-12">
-                    <select v-model="newLicense.professionalTypeIds" class="select" multiple>
+                    <select
+                      v-model="newLicense.professionalTypeIds"
+                      class="select"
+                      multiple
+                    >
                       <option
                         v-for="profession in professionalTypes"
                         v-bind:key="profession.name"
                         v-bind:value="profession.id"
                       >
-                        {{ profession.name }} | {{ profession.amharicProfessionalType }}
+                        {{ profession.name }} |
+                        {{ profession.amharicProfessionalType }}
                       </option>
                     </select>
                   </div>
@@ -1221,12 +1232,12 @@ export default {
     };
 
     const action = (actionValue) => {
-      if(actionValue === "ApproveEvent") {
-        if(newLicense.value.licenseExpirationDate === null ) {
+      if (actionValue === "ApproveEvent") {
+        if (newLicense.value.licenseExpirationDate === null) {
           showLicenseDateRequirementError.value = true;
           setTimeout(() => {
             showLicenseDateRequirementError.value = false;
-          }, 4000)
+          }, 4000);
           return;
         }
       }
@@ -1376,10 +1387,12 @@ export default {
       });
     };
     const getProfessionalTypesByDepartmentId = (id) => {
-      store.dispatch("reviewer/getProfessionalTypeByDepartmentId", id).then((res) => {
-        professionalTypes.value = res.data.data;
-        console.log("professional types iss", res);
-      });
+      store
+        .dispatch("reviewer/getProfessionalTypeByDepartmentId", id)
+        .then((res) => {
+          professionalTypes.value = res.data.data;
+          console.log("professional types iss", res);
+        });
     };
     const allowChangeName = () => {
       canChangeName.value = true;
