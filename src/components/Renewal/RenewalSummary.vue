@@ -673,7 +673,7 @@ export default {
         }
         var filePreview = await this.blobToBase64(this.eduEighth);
         this.eduEighth.docFile = filePreview;
-        this.eduEighth = "Eighth Grade Certificate";
+        this.eduEighth.title = "Eighth Grade Certificate";
         this.docList.push(this.eduEighth);
       }
     }

@@ -662,7 +662,7 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 5">
-                <EducationalDoc
+                <COC
                   :activeState="5"
                   @changeActiveState="activeState++"
                   @changeActiveStateMinus="activeState--"
@@ -671,7 +671,7 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 6">
-                <SupportLetterEthiopian
+                <EducationalDoc
                   :activeState="6"
                   @changeActiveState="activeState++"
                   @changeActiveStateMinus="activeState--"
@@ -680,7 +680,7 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 7">
-                <Transcript
+                <SupportLetterEthiopian
                   :activeState="7"
                   @changeActiveState="activeState++"
                   @changeActiveStateMinus="activeState--"
@@ -689,7 +689,7 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 8">
-                <WorkExperience
+                <Transcript
                   :activeState="8"
                   @changeActiveState="activeState++"
                   @changeActiveStateMinus="activeState--"
@@ -698,7 +698,7 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 9">
-                <PreviousLicenseL
+                <WorkExperience
                   :activeState="9"
                   @changeActiveState="activeState++"
                   @changeActiveStateMinus="activeState--"
@@ -707,16 +707,25 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 10">
-                <CPDF
+                <PreviousLicenseL
                   :activeState="10"
+                  @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
+                />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 11">
+                <CPDF
+                  :activeState="11"
                   @changeActiveState="activeState++"
                   @changeActiveStateMinus="activeState--"
                 /></div
             ></transition>
             <transition name="fade" mode="out-in">
-              <div v-if="this.activeState == 11">
+              <div v-if="this.activeState == 12">
                 <LicenseSummary
-                  :activeState="11"
+                  :activeState="12"
                   @changeActiveState="activeState++"
                   @changeActiveStateMinus="activeState--"
                 />
@@ -1481,6 +1490,7 @@ export default {
       if (params == 7) {
         this.eduLevel = "phd";
       }
+      console.log(this.eduLevel);
     },
     firstTimeUserSet: function(params) {
       if (params) {

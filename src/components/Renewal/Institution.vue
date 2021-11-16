@@ -644,11 +644,9 @@ export default {
         occupationTypeId: this.licenseInfo.occupationTypeId,
         expertLevelId: this.licenseInfo.expertLevelId,
       };
-      console.log(this.licenseInfo.educationalLevelId);
       if (this.licenseInfo.educationalLevelId == null) {
         this.licenseInfo.educationalLevelId = 7;
       }
-      console.log(this.licenseInfo.educationalLevelId);
       this.$store.dispatch("renewal/searchNewLicense").then((res) => {
         if (res.data.data == true) {
           this.firstTimeUser = false;

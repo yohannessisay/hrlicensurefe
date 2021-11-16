@@ -611,7 +611,7 @@ export default {
       getDocumentSpec: "renewal/getDocumentSpec",
 
       getPassport: "renewal/getPassport",
-      getHealthExamCert: "renewal/getHealthExamCert",
+      getHealthExamCert: "renewal/getRenewalHealthExamCert",
       getCoc: "renewal/getCoc",
       getDegree: "renewal/getDegree",
       getDiploma: "renewal/getDiploma",
