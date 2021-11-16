@@ -180,7 +180,6 @@ export default {
       return error;
     }
   },
-
   async getApplicantType() {
     try {
       const resp = await ApiService.get(url + "lookups/applicantTypes");
@@ -253,7 +252,6 @@ export default {
       return error;
     }
   },
-
   async withdraw({ commit }, payload) {
     try {
       const resp = await ApiService.put(
@@ -265,7 +263,6 @@ export default {
       return error;
     }
   },
-
   async updateDraft({ commit }, payload) {
     try {
       const resp = await ApiService.put(
