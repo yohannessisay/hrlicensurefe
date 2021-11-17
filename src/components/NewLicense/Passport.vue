@@ -35,11 +35,11 @@
           <div class="flex justify-center">
             <div>
               <span>
-                <h2>{{ passportFile.name }}</h2>
-                <h2>{{ fileSize }}</h2>
-                <h2 style="color: red" v-if="fileSizeExceed">
-                  File size must be less than {{ maxSizeMB }}
-                </h2>
+                <h2 v-if="!fileSizeExceed">{{ passportFile.name }}</h2>
+                <h2 v-if="!fileSizeExceed">{{ fileSize }}</h2>
+                <h3 style="color: red" v-if="fileSizeExceed">
+                  File size must be less than {{ maxSizeMB }} MB
+                </h3>
               </span>
               <span v-if="showUpload">
                 <label class="text-primary-700"
@@ -226,6 +226,7 @@ export default {
     let documentMessage = ref("");
     let maxFileSize = ref("");
     let maxSizeMB = ref("");
+    let fileSizeExceed = ref(false);
 
     let declinedFields = ref([]);
     let acceptedFields = ref([]);
@@ -233,8 +234,6 @@ export default {
 
     let declinedFieldsCheck = ref(false);
     let acceptedFieldsCheck = ref(false);
-
-    let fileSizeExceed = ref(false);
 
     let healthExamCert = ref("");
     let englishLanguage = ref("");
@@ -265,13 +264,13 @@ export default {
       fileSize.value = "";
       isPdf.value = false;
     };
-
     const handleFileUpload = () => {
       passportFile.value = passportFileP.value.files[0];
       let reader = new FileReader();
       isImage.value = true;
       let fileS = passportFile.value.size;
-      if (fileS <= maxFileSize) {
+      if (fileS <= maxFileSize.value / 1000) {
+        fileSizeExceed.value = false;
         dataChanged.value = true;
         showUpload.value = false;
         if (fileS > 0 && fileS < 1000) {
@@ -301,8 +300,8 @@ export default {
         }
       } else {
         fileSizeExceed.value = true;
-        console.log(fileSizeExceed.value);
-        console.log(maxSizeMB.value);
+        passportFile.value = "";
+        isImage.value = true;
       }
     };
     const submit = () => {
@@ -732,6 +731,9 @@ export default {
       declinedFieldsCheck,
       acceptedFieldsCheck,
       documentMessage,
+      fileSizeExceed,
+      maxFileSize,
+      maxSizeMB,
     };
   },
 };

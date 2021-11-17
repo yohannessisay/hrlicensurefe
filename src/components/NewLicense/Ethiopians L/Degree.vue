@@ -35,8 +35,11 @@
           <div class="flex justify-center">
             <div>
               <span>
-                <h2>{{ DegreeFile.name }}</h2>
-                <h2>{{ fileSize }}</h2>
+                <h2 v-if="!fileSizeExceed">{{ DegreeFile.name }}</h2>
+                <h2 v-if="!fileSizeExceed">{{ fileSize }}</h2>
+                <h3 style="color: red" v-if="fileSizeExceed">
+                  File size must be less than {{ maxSizeMB }} MB
+                </h3>
               </span>
               <span v-if="showUpload">
                 <label class="text-primary-700"
@@ -177,6 +180,8 @@ import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import Spinner from "@/sharedComponents/Spinner";
 import MESSAGE from "../../../composables/documentMessage";
+import MAX_FILE_SIZE from "../../../composables/documentMessage";
+import MAX_SIZE_MB from "../../../composables/documentMessage";
 
 export default {
   components: {
@@ -220,6 +225,9 @@ export default {
     let degreeBack = ref("");
 
     let documentMessage = ref("");
+    let maxFileSize = ref("");
+    let maxSizeMB = ref("");
+    let fileSizeExceed = ref(false);
 
     let declinedFields = ref([]);
     let acceptedFields = ref([]);
@@ -259,37 +267,44 @@ export default {
     };
 
     const handleFileUpload = () => {
-      dataChanged.value = true;
-      showUpload.value = false;
       DegreeFile.value = DegreeFileP.value.files[0];
       let reader = new FileReader();
       isImage.value = true;
       let fileS = DegreeFile.value.size;
-      if (fileS > 0 && fileS < 1000) {
-        fileSize.value += "B";
-      } else if (fileS > 1000 && fileS < 1000000) {
-        fileSize.value = fileS / 1000 + "kB";
-      } else {
-        fileSize.value = fileS / 1000000 + "MB";
-      }
-      reader.addEventListener(
-        "load",
-        function() {
-          showPreview.value = true;
-          filePreview.value = reader.result;
-        },
-        false
-      );
-
-      if (DegreeFile.value) {
-        if (/\.(jpe?g|png|gif)$/i.test(DegreeFile.value.name)) {
-          isImage.value = true;
-          reader.readAsDataURL(DegreeFile.value);
-        } else if (/\.(pdf)$/i.test(DegreeFile.value.name)) {
-          isImage.value = false;
-          isPdf.value = true;
-          reader.readAsDataURL(DegreeFile.value);
+      if (fileS <= maxFileSize.value / 1000) {
+        dataChanged.value = true;
+        showUpload.value = false;
+        fileSizeExceed.value = false;
+        if (fileS > 0 && fileS < 1000) {
+          fileSize.value += "B";
+        } else if (fileS > 1000 && fileS < 1000000) {
+          fileSize.value = fileS / 1000 + "kB";
+        } else {
+          fileSize.value = fileS / 1000000 + "MB";
         }
+        reader.addEventListener(
+          "load",
+          function() {
+            showPreview.value = true;
+            filePreview.value = reader.result;
+          },
+          false
+        );
+
+        if (DegreeFile.value) {
+          if (/\.(jpe?g|png|gif)$/i.test(DegreeFile.value.name)) {
+            isImage.value = true;
+            reader.readAsDataURL(DegreeFile.value);
+          } else if (/\.(pdf)$/i.test(DegreeFile.value.name)) {
+            isImage.value = false;
+            isPdf.value = true;
+            reader.readAsDataURL(DegreeFile.value);
+          }
+        }
+      } else {
+        fileSizeExceed.value = true;
+        DegreeFile.value = "";
+        isImage.value = true;
       }
     };
     const submit = () => {
@@ -621,6 +636,8 @@ export default {
 
     onMounted(() => {
       documentMessage.value = MESSAGE.DOC_MESSAGE;
+      maxFileSize.value = MAX_FILE_SIZE.MAX_FILE_SIZE;
+      maxSizeMB.value = MAX_SIZE_MB.MAX_SIZE_MB;
       degreeBack = store.getters["newlicense/getDegree"];
       if (
         degreeBack &&
@@ -717,6 +734,9 @@ export default {
       declinedFieldsCheck,
       acceptedFieldsCheck,
       documentMessage,
+      fileSizeExceed,
+      maxFileSize,
+      maxSizeMB,
     };
   },
 };

@@ -35,8 +35,11 @@
           <div class="flex justify-center">
             <div>
               <span>
-                <h2>{{ supportLetterFile.name }}</h2>
-                <h2>{{ fileSize }}</h2>
+                <h2 v-if="!fileSizeExceed">{{ supportLetterFile.name }}</h2>
+                <h2 v-if="!fileSizeExceed">{{ fileSize }}</h2>
+                <h3 style="color: red" v-if="fileSizeExceed">
+                  File size must be less than {{ maxSizeMB }} MB
+                </h3>
               </span>
               <span v-if="showUpload">
                 <label class="text-primary-700"
@@ -174,6 +177,8 @@ import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import Spinner from "@/sharedComponents/Spinner";
 import MESSAGE from "../../../composables/documentMessage";
+import MAX_FILE_SIZE from "../../../composables/documentMessage";
+import MAX_SIZE_MB from "../../../composables/documentMessage";
 
 export default {
   components: {
@@ -214,6 +219,9 @@ export default {
     let remark = ref("");
 
     let documentMessage = ref("");
+    let maxFileSize = ref("");
+    let maxSizeMB = ref("");
+    let fileSizeExceed = ref(false);
 
     let declinedFieldsCheck = ref(false);
     let acceptedFieldsCheck = ref(false);
@@ -255,36 +263,42 @@ export default {
     };
 
     const handleFileUpload = () => {
-      showUpload.value = false;
       supportLetterFile.value = supportLetterFileP.value.files[0];
       let reader = new FileReader();
       isImage.value = true;
       let fileS = supportLetterFile.value.size;
-      if (fileS > 0 && fileS < 1000) {
-        fileSize.value += "B";
-      } else if (fileS > 1000 && fileS < 1000000) {
-        fileSize.value = fileS / 1000 + "kB";
-      } else {
-        fileSize.value = fileS / 1000000 + "MB";
-      }
-      reader.addEventListener(
-        "load",
-        function() {
-          showPreview.value = true;
-          filePreview.value = reader.result;
-        },
-        false
-      );
-
-      if (supportLetterFile.value) {
-        if (/\.(jpe?g|png|gif)$/i.test(supportLetterFile.value.name)) {
-          isImage.value = true;
-          reader.readAsDataURL(supportLetterFile.value);
-        } else if (/\.(pdf)$/i.test(supportLetterFile.value.name)) {
-          isImage.value = false;
-          isPdf.value = true;
-          reader.readAsDataURL(supportLetterFile.value);
+      if (fileS <= maxFileSize.value / 1000) {
+        fileSizeExceed.value = false;
+        showUpload.value = false;
+        if (fileS > 0 && fileS < 1000) {
+          fileSize.value += "B";
+        } else if (fileS > 1000 && fileS < 1000000) {
+          fileSize.value = fileS / 1000 + "kB";
+        } else {
+          fileSize.value = fileS / 1000000 + "MB";
         }
+        reader.addEventListener(
+          "load",
+          function() {
+            showPreview.value = true;
+            filePreview.value = reader.result;
+          },
+          false
+        );
+        if (supportLetterFile.value) {
+          if (/\.(jpe?g|png|gif)$/i.test(supportLetterFile.value.name)) {
+            isImage.value = true;
+            reader.readAsDataURL(supportLetterFile.value);
+          } else if (/\.(pdf)$/i.test(supportLetterFile.value.name)) {
+            isImage.value = false;
+            isPdf.value = true;
+            reader.readAsDataURL(supportLetterFile.value);
+          }
+        }
+      } else {
+        fileSizeExceed.value = true;
+        supportLetterFile.value = "";
+        isImage.value = true;
       }
     };
     const submit = () => {
@@ -616,6 +630,8 @@ export default {
     };
     onMounted(() => {
       documentMessage.value = MESSAGE.DOC_MESSAGE;
+      maxFileSize.value = MAX_FILE_SIZE.MAX_FILE_SIZE;
+      maxSizeMB.value = MAX_SIZE_MB.MAX_SIZE_MB;
       supportLetterBack = store.getters["newlicense/getSupportLetter"];
       if (
         supportLetterBack &&
@@ -711,6 +727,9 @@ export default {
       declinedFieldsCheck,
       acceptedFieldsCheck,
       documentMessage,
+      fileSizeExceed,
+      maxFileSize,
+      maxSizeMB,
     };
   },
 };
