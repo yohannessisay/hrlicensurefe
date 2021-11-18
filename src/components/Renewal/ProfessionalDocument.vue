@@ -17,6 +17,13 @@
           class="mt-8"
         />
         <span class="flex justify-center">{{ this.documentMessage }}</span>
+        <h3
+          class="flex justify-center"
+          style="color: red"
+          v-if="this.fileSizeExceed"
+        >
+          File size must be less than {{ this.maxSizeMB }} MB
+        </h3>
         <div class="flex flex-row justify-center px-8 py-4">
           <div>
             <h2
@@ -35,8 +42,8 @@
             </h2>
             <div class="ml-4" style="width: 250px">
               <span>
-                <h2>{{ this.photoFile.name }}</h2>
-                <h2>{{ this.photoFileSize }}</h2>
+                <h2 v-if="!this.fileSizeExceed">{{ this.photoFile.name }}</h2>
+                <h2 v-if="!this.fileSizeExceed">{{ this.photoFileSize }}</h2>
               </span>
               <span v-if="showUpload">
                 <label class="text-primary-700 text-lg"
@@ -93,8 +100,8 @@
 
             <div class="ml-4" style="width: 250px">
               <span>
-                <h2>{{ this.diplomaFile.name }}</h2>
-                <h2>{{ this.diplomaFileSize }}</h2>
+                <h2 v-if="!this.fileSizeExceed">{{ this.diplomaFile.name }}</h2>
+                <h2 v-if="!this.fileSizeExceed">{{ this.diplomaFileSize }}</h2>
               </span>
               <span v-if="showDiplomaUpload">
                 <label class="text-primary-700 text-lg"
@@ -157,8 +164,12 @@
             </h2>
             <div class="ml-4" style="width: 250px">
               <span>
-                <h2>{{ this.transcriptFile.name }}</h2>
-                <h2>{{ this.transcriptFileSize }}</h2>
+                <h2 v-if="!this.fileSizeExceed">
+                  {{ this.transcriptFile.name }}
+                </h2>
+                <h2 v-if="!this.fileSizeExceed">
+                  {{ this.transcriptFileSize }}
+                </h2>
               </span>
               <span v-if="showTranscriptUpload">
                 <label class="text-primary-700 text-lg"
@@ -308,6 +319,8 @@ import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import Spinner from "@/sharedComponents/Spinner";
 import MESSAGE from "../../composables/documentMessage";
+import MAX_FILE_SIZE from "../../composables/documentMessage";
+import MAX_SIZE_MB from "../../composables/documentMessage";
 
 export default {
   components: {
@@ -386,6 +399,9 @@ export default {
       remark: "",
 
       documentMessage: "",
+      maxFileSize: "",
+      maxSizeMB: "",
+      fileSizeExceed: "",
 
       declinedFieldsCheck1: false,
       acceptedFieldsCheck1: false,
@@ -443,6 +459,8 @@ export default {
   },
   created() {
     this.documentMessage = MESSAGE.DOC_MESSAGE;
+    this.maxFileSize = MAX_FILE_SIZE.MAX_FILE_SIZE;
+    this.maxSizeMB = MAX_SIZE_MB.MAX_SIZE_MB;
     let certificate = this.$store.getters["renewal/getCertificate"];
     let diploma = this.$store.getters["renewal/getDiploma"];
     let transcript = this.$store.getters["renewal/getTranscript"];
@@ -684,68 +702,81 @@ export default {
       this.transcriptFileSize = "";
     },
     handleCertificateUpload() {
-      this.showUpload = false;
       this.photoFile = this.$refs.photoFile.files[0];
       let reader = new FileReader();
       let fileS = this.photoFile.size;
-      if (fileS > 0 && fileS < 1000) {
-        this.photoFileSize = fileS + " " + "B";
-      } else if (fileS > 1000 && fileS < 1000000) {
-        this.photoFileSize = fileS / 1000 + "kB";
-      } else {
-        this.photoFileSize = fileS / 1000000 + "MB";
-      }
-      reader.addEventListener(
-        "load",
-        function() {
-          this.showPreview = true;
-          this.filePreview = reader.result;
-        }.bind(this),
-        false
-      );
-
-      if (this.photoFile) {
-        if (/\.(jpe?g|png|gif)$/i.test(this.photoFile.name)) {
-          this.isImage = true;
-          reader.readAsDataURL(this.photoFile);
-        } else if (/\.(pdf)$/i.test(this.photoFile.name)) {
-          this.isImage = false;
-          this.isPdf = true;
-          reader.readAsDataURL(this.photoFile);
+      if (fileS <= this.maxFileSize / 1000) {
+        this.showUpload = false;
+        this.fileSizeExceed = false;
+        if (fileS > 0 && fileS < 1000) {
+          this.photoFileSize = fileS + " " + "B";
+        } else if (fileS > 1000 && fileS < 1000000) {
+          this.photoFileSize = fileS / 1000 + "kB";
+        } else {
+          this.photoFileSize = fileS / 1000000 + "MB";
         }
+        reader.addEventListener(
+          "load",
+          function() {
+            this.showPreview = true;
+            this.filePreview = reader.result;
+          }.bind(this),
+          false
+        );
+        if (this.photoFile) {
+          if (/\.(jpe?g|png|gif)$/i.test(this.photoFile.name)) {
+            this.isImage = true;
+            reader.readAsDataURL(this.photoFile);
+          } else if (/\.(pdf)$/i.test(this.photoFile.name)) {
+            this.isImage = false;
+            this.isPdf = true;
+            reader.readAsDataURL(this.photoFile);
+          }
+        }
+      } else {
+        this.fileSizeExceed = true;
+        this.photoFile = "";
+        this.showUpload = true;
+        this.isImage = false;
       }
     },
     handleDiplomaUpload() {
-      this.showDiplomaUpload = false;
       this.diplomaFile = this.$refs.diplomaFile.files[0];
       let reader = new FileReader();
       let fileS = this.diplomaFile.size;
-      if (fileS > 0 && fileS < 1000) {
-        this.diplomaFileSize += "B";
-      } else if (fileS > 1000 && fileS < 1000000) {
-        this.diplomaFileSize = fileS / 1000 + "kB";
-      } else {
-        this.diplomaFileSize = fileS / 1000000 + "MB";
-      }
-
-      reader.addEventListener(
-        "load",
-        function() {
-          this.showDiplomaPreview = true;
-          this.diplomaPreview = reader.result;
-        }.bind(this),
-        false
-      );
-
-      if (this.diplomaFile) {
-        if (/\.(jpe?g|png|gif)$/i.test(this.diplomaFile.name)) {
-          this.isDiplomaImage = true;
-          reader.readAsDataURL(this.diplomaFile);
-        } else if (/\.(pdf)$/i.test(this.diplomaFile.name)) {
-          this.isDiplomaImage = false;
-          this.isUDPdf = true;
-          reader.readAsDataURL(this.diplomaFile);
+      if (fileS <= this.maxFileSize / 1000) {
+        this.fileSizeExceed = false;
+        this.showDiplomaUpload = false;
+        if (fileS > 0 && fileS < 1000) {
+          this.diplomaFileSize += "B";
+        } else if (fileS > 1000 && fileS < 1000000) {
+          this.diplomaFileSize = fileS / 1000 + "kB";
+        } else {
+          this.diplomaFileSize = fileS / 1000000 + "MB";
         }
+        reader.addEventListener(
+          "load",
+          function() {
+            this.showDiplomaPreview = true;
+            this.diplomaPreview = reader.result;
+          }.bind(this),
+          false
+        );
+        if (this.diplomaFile) {
+          if (/\.(jpe?g|png|gif)$/i.test(this.diplomaFile.name)) {
+            this.isDiplomaImage = true;
+            reader.readAsDataURL(this.diplomaFile);
+          } else if (/\.(pdf)$/i.test(this.diplomaFile.name)) {
+            this.isDiplomaImage = false;
+            this.isUDPdf = true;
+            reader.readAsDataURL(this.diplomaFile);
+          }
+        }
+      } else {
+        this.fileSizeExceed = true;
+        this.diplomaFile = "";
+        this.showDiplomaUpload = true;
+        this.isDiplomaImage = false;
       }
     },
     handleTranscriptUpload() {
@@ -753,32 +784,39 @@ export default {
       this.transcriptFile = this.$refs.transcriptFile.files[0];
       let reader = new FileReader();
       let fileS = this.transcriptFile.size;
-      if (fileS > 0 && fileS < 1000) {
-        this.transcriptFileSize += "B";
-      } else if (fileS > 1000 && fileS < 1000000) {
-        this.transcriptFileSize = fileS / 1000 + "kB";
-      } else {
-        this.transcriptFileSize = fileS / 1000000 + "MB";
-      }
-
-      reader.addEventListener(
-        "load",
-        function() {
-          this.showTranscriptPreview = true;
-          this.transcriptPreview = reader.result;
-        }.bind(this),
-        false
-      );
-
-      if (this.transcriptFile) {
-        if (/\.(jpe?g|png|gif)$/i.test(this.transcriptFile.name)) {
-          this.isTranscriptImage = true;
-          reader.readAsDataURL(this.transcriptFile);
-        } else if (/\.(pdf)$/i.test(this.transcriptFile.name)) {
-          this.isTranscriptImage = false;
-          this.isUTPdf = true;
-          reader.readAsDataURL(this.transcriptFile);
+      if (fileS <= this.maxFileSize / 1000) {
+        this.fileSizeExceed = false;
+        this.showTranscriptUpload = false;
+        if (fileS > 0 && fileS < 1000) {
+          this.transcriptFileSize += "B";
+        } else if (fileS > 1000 && fileS < 1000000) {
+          this.transcriptFileSize = fileS / 1000 + "kB";
+        } else {
+          this.transcriptFileSize = fileS / 1000000 + "MB";
         }
+        reader.addEventListener(
+          "load",
+          function() {
+            this.showTranscriptPreview = true;
+            this.transcriptPreview = reader.result;
+          }.bind(this),
+          false
+        );
+        if (this.transcriptFile) {
+          if (/\.(jpe?g|png|gif)$/i.test(this.transcriptFile.name)) {
+            this.isTranscriptImage = true;
+            reader.readAsDataURL(this.transcriptFile);
+          } else if (/\.(pdf)$/i.test(this.transcriptFile.name)) {
+            this.isTranscriptImage = false;
+            this.isUTPdf = true;
+            reader.readAsDataURL(this.transcriptFile);
+          }
+        }
+      } else {
+        this.fileSizeExceed = true;
+        this.transcriptFile = "";
+        this.showTranscriptUpload = true;
+        this.isTranscriptImage = false;
       }
     },
     submit() {
