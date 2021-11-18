@@ -13,7 +13,8 @@
         {{
           certifiedUser.grandFatherName ? certifiedUser.grandFatherName : ""
         }}</span
-      > &#160;
+      >
+      &#160;
       <span class="underline">
         {{ certifiedUser.alternativeName ? certifiedUser.alternativeName : "" }}
         {{

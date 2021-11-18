@@ -427,7 +427,7 @@
                   </div>
                   <div class="flex flex-col mb-medium w-1/2 mr-12">
                     <select
-                      v-model="newLicense.professionalTypeIds"
+                      v-model="professionalTypeIds"
                       class="select"
                       multiple
                     >
@@ -743,6 +743,9 @@
       <div v-if="showLicenseDateRequirementError">
         <ErrorFlashMessage message="Please add Expiration date!" />
       </div>
+      <div v-if="showProfessionChangeError">
+        <ErrorFlashMessage message="you can't change profession if you are not approving" />
+        </div>
     </div>
   </div>
 </template>
@@ -783,7 +786,9 @@ export default {
 
     let pdfFilePath = ref("");
 
+    let professionalTypeIds = ref([]);
     let canChangeName = ref(false);
+    let showProfessionChangeError = ref(false);
     let showSpinner = ref(false);
 
     let showNameChangeFlash = ref(false);
@@ -1240,6 +1245,18 @@ export default {
           }, 4000);
           return;
         }
+        if (professionalTypeIds.value.length > 0) {
+          newLicense.value.professionalTypeIds = professionalTypeIds.value;
+        }
+      } else {
+        if(professionalTypeIds.value.length > 0) {
+          showProfessionChangeError.value = true;
+          setTimeout(() => {
+            showProfessionChangeError.value = false;
+          }, 4000)
+          professionalTypeIds.value = [];
+          return;
+        }
       }
       if (actionValue == "DeclineEvent") {
         showRemark.value = true;
@@ -1259,7 +1276,6 @@ export default {
         data: newLicense.value,
       };
 
-      console.log("req value ", req);
       if (
         applicationType.value == "New License" &&
         sendDeclinedData.value == true
@@ -1494,6 +1510,8 @@ export default {
       showNameChangeFlash,
       showNameChangeErrorFlash,
       showLicenseDateRequirementError,
+      professionalTypeIds,
+      showProfessionChangeError,
     };
   },
 };
