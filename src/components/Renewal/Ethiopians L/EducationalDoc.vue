@@ -41,9 +41,7 @@
               <span v-if="showCertificate1Upload">
                 <label class="text-primary-700 text-lg"
                   >Upload 8th Grade Certificate:
-                  <span
-                    v-if="this.eduLevel == 'diploma'"
-                    style="color: red; font-weight: bold; font-size:16px"
+                  <span style="color: red; font-weight: bold; font-size:16px"
                     >(*)</span
                   >
                   <div class="dropbox">
@@ -116,9 +114,7 @@
               <span v-if="showCertificate2Upload">
                 <label class="text-primary-700 text-lg"
                   >Upload 10th Grade Certificate:
-                  <span
-                    v-if="this.eduLevel == 'diploma'"
-                    style="color: red; font-weight: bold; font-size:16px"
+                  <span style="color: red; font-weight: bold; font-size:16px"
                     >(*)</span
                   >
                   <div class="dropbox">
@@ -268,9 +264,7 @@
               <span v-if="showCertificate4Upload">
                 <label class="text-primary-700 text-lg"
                   >Upload Transcript 9-10:
-                  <span
-                    v-if="this.eduLevel == 'diploma'"
-                    style="color: red; font-weight: bold; font-size:16px"
+                  <span style="color: red; font-weight: bold; font-size:16px"
                     >(*)</span
                   >
                   <div class="dropbox">
@@ -611,7 +605,7 @@ export default {
       getDocumentSpec: "renewal/getDocumentSpec",
 
       getPassport: "renewal/getPassport",
-      getHealthExamCert: "renewal/getHealthExamCert",
+      getHealthExamCert: "renewal/getRenewalHealthExamCert",
       getCoc: "renewal/getCoc",
       getDegree: "renewal/getDegree",
       getDiploma: "renewal/getDiploma",

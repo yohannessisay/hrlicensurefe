@@ -28,8 +28,11 @@
           <div class="flex justify-center">
             <div>
               <span>
-                <h2>{{ licenseFile.name }}</h2>
-                <h2>{{ fileSize }}</h2>
+                <h2 v-if="!fileSizeExceed">{{ licenseFile.name }}</h2>
+                <h2 v-if="!fileSizeExceed">{{ fileSize }}</h2>
+                <h3 style="color: red" v-if="fileSizeExceed">
+                  File size must be less than {{ maxSizeMB }} MB
+                </h3>
               </span>
               <span v-if="showUpload">
                 <label class="text-primary-700"
@@ -171,6 +174,8 @@ import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import Spinner from "@/sharedComponents/Spinner";
 import MESSAGE from "../../composables/documentMessage";
+import MAX_FILE_SIZE from "../../composables/documentMessage";
+import MAX_SIZE_MB from "../../composables/documentMessage";
 
 export default {
   components: {
@@ -213,6 +218,9 @@ export default {
     let licenseCopyBack = ref("");
 
     let documentMessage = ref("");
+    let maxFileSize = ref("");
+    let maxSizeMB = ref("");
+    let fileSizeExceed = ref(false);
 
     let declinedFields = ref([]);
     let acceptedFields = ref([]);
@@ -233,37 +241,43 @@ export default {
       isPdf.value = false;
     };
     const handleFileUpload = () => {
-      dataChanged.value = true;
-      showUpload.value = false;
       licenseFile.value = licenseFileP.value.files[0];
       let reader = new FileReader();
+      isImage.value = true;
       let fileS = licenseFile.value.size;
-      if (fileS > 0 && fileS < 1000) {
-        fileSize.value += "B";
-      } else if (fileS > 1000 && fileS < 1000000) {
-        fileSize.value = fileS / 1000 + "kB";
-      } else {
-        fileSize.value = fileS / 1000000 + "MB";
-      }
-
-      reader.addEventListener(
-        "load",
-        function() {
-          showPreview.value = true;
-          filePreview.value = reader.result;
-        },
-        false
-      );
-
-      if (licenseFile.value) {
-        if (/\.(jpe?g|png|gif)$/i.test(licenseFile.value.name)) {
-          isImage.value = true;
-          reader.readAsDataURL(licenseFile.value);
-        } else if (/\.(pdf)$/i.test(licenseFile.value.name)) {
-          isImage.value = false;
-          isPdf.value = true;
-          reader.readAsDataURL(licenseFile.value);
+      if (fileS <= maxFileSize.value / 1000) {
+        fileSizeExceed.value = false;
+        dataChanged.value = true;
+        showUpload.value = false;
+        if (fileS > 0 && fileS < 1000) {
+          fileSize.value += "B";
+        } else if (fileS > 1000 && fileS < 1000000) {
+          fileSize.value = fileS / 1000 + "kB";
+        } else {
+          fileSize.value = fileS / 1000000 + "MB";
         }
+        reader.addEventListener(
+          "load",
+          function() {
+            showPreview.value = true;
+            filePreview.value = reader.result;
+          },
+          false
+        );
+        if (licenseFile.value) {
+          if (/\.(jpe?g|png|gif)$/i.test(licenseFile.value.name)) {
+            isImage.value = true;
+            reader.readAsDataURL(licenseFile.value);
+          } else if (/\.(pdf)$/i.test(licenseFile.value.name)) {
+            isImage.value = false;
+            isPdf.value = true;
+            reader.readAsDataURL(licenseFile.value);
+          }
+        }
+      } else {
+        fileSizeExceed.value = true;
+        licenseFile.value = "";
+        isImage.value = true;
       }
     };
     buttons = store.getters["goodstanding/getButtons"];
@@ -284,6 +298,8 @@ export default {
 
     onMounted(() => {
       documentMessage.value = MESSAGE.DOC_MESSAGE;
+      maxFileSize.value = MAX_FILE_SIZE.MAX_FILE_SIZE;
+      maxSizeMB.value = MAX_SIZE_MB.MAX_SIZE_MB;
       licenseCopyBack = store.getters["goodstanding/getLicenseCopy"];
       if (
         licenseCopyBack &&
@@ -623,7 +639,10 @@ export default {
       remark,
       declinedFieldsCheck,
       acceptedFieldsCheck,
-      documentMessage
+      documentMessage,
+      fileSizeExceed,
+      maxFileSize,
+      maxSizeMB,
     };
   },
 };

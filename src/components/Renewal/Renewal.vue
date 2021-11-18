@@ -179,8 +179,17 @@
             ></transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 13">
-                <LicenseSummary
+                <LetterFromHiringManagerEthiopianLocal
                   :activeState="13"
+                  @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
+                />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 14">
+                <LicenseSummary
+                  :activeState="14"
                   @changeActiveState="activeState++"
                   @changeActiveStateMinus="activeState--"
                 />
@@ -295,8 +304,17 @@
             ></transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 13">
-                <LicenseSummary
+                <LetterFromHiringManagerEthiopianLocal
                   :activeState="13"
+                  @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
+                />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 14">
+                <LicenseSummary
+                  :activeState="14"
                   @changeActiveState="activeState++"
                   @changeActiveStateMinus="activeState--"
                 />
@@ -427,8 +445,17 @@
             ></transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 15">
-                <LicenseSummary
+                <LetterFromHiringManagerEthiopianLocal
                   :activeState="15"
+                  @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
+                />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 16">
+                <LicenseSummary
+                  :activeState="16"
                   @changeActiveState="activeState++"
                   @changeActiveStateMinus="activeState--"
                 />
@@ -575,8 +602,17 @@
             ></transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 17">
-                <LicenseSummary
+                <LetterFromHiringManagerEthiopianLocal
                   :activeState="17"
+                  @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
+                />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 18">
+                <LicenseSummary
+                  :activeState="18"
                   @changeActiveState="activeState++"
                   @changeActiveStateMinus="activeState--"
                 />
@@ -662,7 +698,7 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 5">
-                <EducationalDoc
+                <COC
                   :activeState="5"
                   @changeActiveState="activeState++"
                   @changeActiveStateMinus="activeState--"
@@ -671,7 +707,7 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 6">
-                <SupportLetterEthiopian
+                <EducationalDoc
                   :activeState="6"
                   @changeActiveState="activeState++"
                   @changeActiveStateMinus="activeState--"
@@ -680,7 +716,7 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 7">
-                <Transcript
+                <SupportLetterEthiopian
                   :activeState="7"
                   @changeActiveState="activeState++"
                   @changeActiveStateMinus="activeState--"
@@ -689,7 +725,7 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 8">
-                <WorkExperience
+                <Transcript
                   :activeState="8"
                   @changeActiveState="activeState++"
                   @changeActiveStateMinus="activeState--"
@@ -698,7 +734,7 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 9">
-                <PreviousLicenseL
+                <WorkExperience
                   :activeState="9"
                   @changeActiveState="activeState++"
                   @changeActiveStateMinus="activeState--"
@@ -707,16 +743,34 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 10">
-                <CPDF
+                <PreviousLicenseL
                   :activeState="10"
+                  @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
+                />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 11">
+                <CPDF
+                  :activeState="11"
                   @changeActiveState="activeState++"
                   @changeActiveStateMinus="activeState--"
                 /></div
             ></transition>
             <transition name="fade" mode="out-in">
-              <div v-if="this.activeState == 11">
+              <div v-if="this.activeState == 12">
+                <LetterFromHiringManagerEthiopianLocal
+                  :activeState="12"
+                  @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
+                />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 13">
                 <LicenseSummary
-                  :activeState="11"
+                  :activeState="13"
                   @changeActiveState="activeState++"
                   @changeActiveStateMinus="activeState--"
                 />
@@ -813,8 +867,17 @@
             ></transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 12">
-                <LicenseSummary
+                <LetterFromHiringManagerEthiopianLocal
                   :activeState="12"
+                  @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
+                />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 13">
+                <LicenseSummary
+                  :activeState="13"
                   @changeActiveState="activeState++"
                   @changeActiveStateMinus="activeState--"
                 />
@@ -929,8 +992,17 @@
             ></transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 14">
-                <LicenseSummary
+                <LetterFromHiringManagerEthiopianLocal
                   :activeState="14"
+                  @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
+                />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 15">
+                <LicenseSummary
+                  :activeState="15"
                   @changeActiveState="activeState++"
                   @changeActiveStateMinus="activeState--"
                 />
@@ -1054,8 +1126,17 @@
             ></transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 15">
-                <LicenseSummary
+                <LetterFromHiringManagerEthiopianLocal
                   :activeState="15"
+                  @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
+                />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 16">
+                <LicenseSummary
+                  :activeState="16"
                   @changeActiveState="activeState++"
                   @changeActiveStateMinus="activeState--"
                 />

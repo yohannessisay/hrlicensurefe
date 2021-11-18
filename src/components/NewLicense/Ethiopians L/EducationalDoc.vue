@@ -17,6 +17,13 @@
           class="mt-8"
         />
         <span class="flex justify-center">{{ this.documentMessage }}</span>
+        <h3
+          class="flex justify-center"
+          style="color: red"
+          v-if="this.fileSizeExceed"
+        >
+          File size must be less than {{ this.maxSizeMB }} MB
+        </h3>
         <div class="flex flex-row justify-center px-8 py-4">
           <div>
             <h2
@@ -35,15 +42,15 @@
             </h2>
             <div class="ml-4" style="width: 250px">
               <span>
-                <h2>{{ this.certificateFile1.name }}</h2>
-                <h2>{{ this.certificate1Size }}</h2>
+                <h2 v-if="!this.fileSizeExceed">
+                  {{ this.certificateFile1.name }}
+                </h2>
+                <h2 v-if="!this.fileSizeExceed">{{ this.certificate1Size }}</h2>
               </span>
               <span v-if="showCertificate1Upload">
                 <label class="text-primary-700 text-lg"
                   >Upload 8th Grade Certificate:
-                  <span
-                    v-if="this.eduLevel == 'diploma'"
-                    style="color: red; font-weight: bold; font-size:16px"
+                  <span style="color: red; font-weight: bold; font-size:16px"
                     >(*)</span
                   >
                   <div class="dropbox">
@@ -108,15 +115,15 @@
             </h2>
             <div class="ml-4" style="width: 250px">
               <span>
-                <h2>{{ this.certificateFile2.name }}</h2>
-                <h2>{{ this.certificate2Size }}</h2>
+                <h2 v-if="!this.fileSizeExceed">
+                  {{ this.certificateFile2.name }}
+                </h2>
+                <h2 v-if="!this.fileSizeExceed">{{ this.certificate2Size }}</h2>
               </span>
               <span v-if="showCertificate2Upload">
                 <label class="text-primary-700 text-lg"
                   >Upload 10th Grade Certificate:
-                  <span
-                    v-if="this.eduLevel == 'diploma'"
-                    style="color: red; font-weight: bold; font-size:16px"
+                  <span style="color: red; font-weight: bold; font-size:16px"
                     >(*)</span
                   >
                   <div class="dropbox">
@@ -184,8 +191,10 @@
 
             <div class="ml-4" style="width: 250px">
               <span>
-                <h2>{{ this.certificateFile3.name }}</h2>
-                <h2>{{ this.certificate3Size }}</h2>
+                <h2 v-if="!this.fileSizeExceed">
+                  {{ this.certificateFile3.name }}
+                </h2>
+                <h2 v-if="!this.fileSizeExceed">{{ this.certificate3Size }}</h2>
               </span>
               <span v-if="showCertificate3Upload">
                 <label class="text-primary-700 text-lg"
@@ -261,15 +270,15 @@
             </h2>
             <div class="ml-4" style="width: 250px">
               <span>
-                <h2>{{ this.certificateFile4.name }}</h2>
-                <h2>{{ this.certificate4Size }}</h2>
+                <h2 v-if="!this.fileSizeExceed">
+                  {{ this.certificateFile4.name }}
+                </h2>
+                <h2 v-if="!this.fileSizeExceed">{{ this.certificate4Size }}</h2>
               </span>
               <span v-if="showCertificate4Upload">
                 <label class="text-primary-700 text-lg"
                   >Upload Transcript 9-10:
-                  <span
-                    v-if="this.eduLevel == 'diploma'"
-                    style="color: red; font-weight: bold; font-size:16px"
+                  <span style="color: red; font-weight: bold; font-size:16px"
                     >(*)</span
                   >
                   <div class="dropbox">
@@ -336,8 +345,10 @@
             </h2>
             <div class="ml-4" style="width: 250px">
               <span>
-                <h2>{{ this.certificateFile5.name }}</h2>
-                <h2>{{ this.certificate5Size }}</h2>
+                <h2 v-if="!this.fileSizeExceed">
+                  {{ this.certificateFile5.name }}
+                </h2>
+                <h2 v-if="!this.fileSizeExceed">{{ this.certificate5Size }}</h2>
               </span>
               <span v-if="showCertificate5Upload">
                 <label class="text-primary-700 text-lg"
@@ -491,6 +502,8 @@ import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import Spinner from "@/sharedComponents/Spinner";
 import MESSAGE from "../../../composables/documentMessage";
+import MAX_FILE_SIZE from "../../../composables/documentMessage";
+import MAX_SIZE_MB from "../../../composables/documentMessage";
 
 export default {
   components: {
@@ -587,6 +600,9 @@ export default {
       phdTranscript: "",
 
       documentMessage: "",
+      maxFileSize: "",
+      maxSizeMB: "",
+      fileSizeExceed: "",
 
       draftId: "",
       draftData: "",
@@ -638,6 +654,8 @@ export default {
   },
   created() {
     this.documentMessage = MESSAGE.DOC_MESSAGE;
+    this.maxFileSize = MAX_FILE_SIZE.MAX_FILE_SIZE;
+    this.maxSizeMB = MAX_SIZE_MB.MAX_SIZE_MB;
     this.eduLevel = localStorage.getItem("educationalLevel");
     let eduEighth = this.$store.getters["newlicense/getEduEighth"];
     let eduTenth = this.$store.getters["newlicense/getEduTenth"];
@@ -1006,167 +1024,202 @@ export default {
       this.certificate5Size = "";
     },
     handleCertificate1Upload() {
-      this.showCertificate1Upload = false;
       this.certificateFile1 = this.$refs.certificateFile1.files[0];
       let reader = new FileReader();
       let fileS = this.certificateFile1.size;
-      if (fileS > 0 && fileS < 1000) {
-        this.certificate1Size = fileS + " " + "B";
-      } else if (fileS > 1000 && fileS < 1000000) {
-        this.certificate1Size = fileS / 1000 + "kB";
-      } else {
-        this.certificate1Size = fileS / 1000000 + "MB";
-      }
-
-      reader.addEventListener(
-        "load",
-        function() {
-          this.showCertificate1Preview = true;
-          this.certificate1Preview = reader.result;
-        }.bind(this),
-        false
-      );
-
-      if (this.certificateFile1) {
-        if (/\.(jpe?g|png|gif)$/i.test(this.certificateFile1.name)) {
-          this.isCertificate1 = true;
-          reader.readAsDataURL(this.certificateFile1);
-        } else if (/\.(pdf)$/i.test(this.certificateFile1.name)) {
-          this.isCertificate1 = false;
-          this.isPdf1 = true;
-          reader.readAsDataURL(this.certificateFile1);
+      if (fileS <= this.maxFileSize / 1000) {
+        this.fileSizeExceed = false;
+        this.showCertificate1Upload = false;
+        if (fileS > 0 && fileS < 1000) {
+          this.certificate1Size = fileS + " " + "B";
+        } else if (fileS > 1000 && fileS < 1000000) {
+          this.certificate1Size = fileS / 1000 + "kB";
+        } else {
+          this.certificate1Size = fileS / 1000000 + "MB";
         }
+        reader.addEventListener(
+          "load",
+          function() {
+            this.showCertificate1Preview = true;
+            this.certificate1Preview = reader.result;
+          }.bind(this),
+          false
+        );
+        if (this.certificateFile1) {
+          if (/\.(jpe?g|png|gif)$/i.test(this.certificateFile1.name)) {
+            this.isCertificate1 = true;
+            reader.readAsDataURL(this.certificateFile1);
+          } else if (/\.(pdf)$/i.test(this.certificateFile1.name)) {
+            this.isCertificate1 = false;
+            this.isPdf1 = true;
+            reader.readAsDataURL(this.certificateFile1);
+          }
+        }
+      } else {
+        this.fileSizeExceed = true;
+        this.certificateFile1 = "";
+        this.showCertificate1Upload = true;
+        this.isCertificate1 = false;
       }
     },
 
     handleCertificate2Upload() {
-      this.showCertificate2Upload = false;
       this.certificateFile2 = this.$refs.certificateFile2.files[0];
       let reader = new FileReader();
       let fileS = this.certificateFile2.size;
-      if (fileS > 0 && fileS < 1000) {
-        this.certificate2Size = fileS + " " + "B";
-      } else if (fileS > 1000 && fileS < 1000000) {
-        this.certificate2Size = fileS / 1000 + "kB";
-      } else {
-        this.certificate2Size = fileS / 1000000 + "MB";
-      }
-
-      reader.addEventListener(
-        "load",
-        function() {
-          this.showCertificate2Preview = true;
-          this.certificate2Preview = reader.result;
-        }.bind(this),
-        false
-      );
-
-      if (this.certificateFile2) {
-        if (/\.(jpe?g|png|gif)$/i.test(this.certificateFile2.name)) {
-          this.isCertificate2 = true;
-          reader.readAsDataURL(this.certificateFile2);
-        } else if (/\.(pdf)$/i.test(this.certificateFile2.name)) {
-          this.isCertificate2 = false;
-          this.isPdf2 = true;
-          reader.readAsDataURL(this.certificateFile2);
+      if (fileS <= this.maxFileSize / 1000) {
+        this.fileSizeExceed = false;
+        this.showCertificate2Upload = false;
+        if (fileS > 0 && fileS < 1000) {
+          this.certificate2Size = fileS + " " + "B";
+        } else if (fileS > 1000 && fileS < 1000000) {
+          this.certificate2Size = fileS / 1000 + "kB";
+        } else {
+          this.certificate2Size = fileS / 1000000 + "MB";
         }
+        reader.addEventListener(
+          "load",
+          function() {
+            this.showCertificate2Preview = true;
+            this.certificate2Preview = reader.result;
+          }.bind(this),
+          false
+        );
+        if (this.certificateFile2) {
+          if (/\.(jpe?g|png|gif)$/i.test(this.certificateFile2.name)) {
+            this.isCertificate2 = true;
+            reader.readAsDataURL(this.certificateFile2);
+          } else if (/\.(pdf)$/i.test(this.certificateFile2.name)) {
+            this.isCertificate2 = false;
+            this.isPdf2 = true;
+            reader.readAsDataURL(this.certificateFile2);
+          }
+        }
+      } else {
+        this.fileSizeExceed = true;
+        this.certificateFile2 = "";
+        this.showCertificate2Upload = true;
+        this.isCertificate2 = false;
       }
     },
 
     handleCertificate3Upload() {
-      this.showCertificate3Upload = false;
       this.certificateFile3 = this.$refs.certificateFile3.files[0];
       let reader = new FileReader();
       let fileS = this.certificateFile3.size;
-      if (fileS > 0 && fileS < 1000) {
-        this.certificate3Size = fileS + " " + "B";
-      } else if (fileS > 1000 && fileS < 1000000) {
-        this.certificate3Size = fileS / 1000 + "kB";
-      } else {
-        this.certificate3Size = fileS / 1000000 + "MB";
-      }
-      reader.addEventListener(
-        "load",
-        function() {
-          this.showCertificate3Preview = true;
-          this.certificate3Preview = reader.result;
-        }.bind(this),
-        false
-      );
-
-      if (this.certificateFile3) {
-        if (/\.(jpe?g|png|gif)$/i.test(this.certificateFile3.name)) {
-          this.isCertificate3 = true;
-          reader.readAsDataURL(this.certificateFile3);
-        } else if (/\.(pdf)$/i.test(this.certificateFile3.name)) {
-          this.isCertificate3 = false;
-          this.isPdf3 = true;
-          reader.readAsDataURL(this.certificateFile3);
+      if (fileS <= this.maxFileSize / 1000) {
+        this.fileSizeExceed = false;
+        this.showCertificate3Upload = false;
+        if (fileS > 0 && fileS < 1000) {
+          this.certificate3Size = fileS + " " + "B";
+        } else if (fileS > 1000 && fileS < 1000000) {
+          this.certificate3Size = fileS / 1000 + "kB";
+        } else {
+          this.certificate3Size = fileS / 1000000 + "MB";
         }
+        reader.addEventListener(
+          "load",
+          function() {
+            this.showCertificate3Preview = true;
+            this.certificate3Preview = reader.result;
+          }.bind(this),
+          false
+        );
+        if (this.certificateFile3) {
+          if (/\.(jpe?g|png|gif)$/i.test(this.certificateFile3.name)) {
+            this.isCertificate3 = true;
+            reader.readAsDataURL(this.certificateFile3);
+          } else if (/\.(pdf)$/i.test(this.certificateFile3.name)) {
+            this.isCertificate3 = false;
+            this.isPdf3 = true;
+            reader.readAsDataURL(this.certificateFile3);
+          }
+        }
+      } else {
+        this.fileSizeExceed = true;
+        this.certificateFile3 = "";
+        this.showCertificate3Upload = true;
+        this.isCertificate3 = false;
       }
     },
 
     handleCertificate4Upload() {
-      this.showCertificate4Upload = false;
       this.certificateFile4 = this.$refs.certificateFile4.files[0];
       let reader = new FileReader();
       let fileS = this.certificateFile4.size;
-      if (fileS > 0 && fileS < 1000) {
-        this.certificate4Size = fileS + " " + "B";
-      } else if (fileS > 1000 && fileS < 1000000) {
-        this.certificate4Size = fileS / 1000 + "kB";
-      } else {
-        this.certificate4Size = fileS / 1000000 + "MB";
-      }
-      reader.addEventListener(
-        "load",
-        function() {
-          this.showCertificate4Preview = true;
-          this.certificate4Preview = reader.result;
-        }.bind(this),
-        false
-      );
-      if (this.certificateFile4) {
-        if (/\.(jpe?g|png|gif)$/i.test(this.certificateFile4.name)) {
-          this.isCertificate4 = true;
-          reader.readAsDataURL(this.certificateFile4);
-        } else if (/\.(pdf)$/i.test(this.certificateFile4.name)) {
-          this.isCertificate4 = false;
-          this.isPdf4 = true;
-          reader.readAsDataURL(this.certificateFile4);
+      if (fileS <= this.maxFileSize / 1000) {
+        this.fileSizeExceed = false;
+        this.showCertificate4Upload = false;
+        if (fileS > 0 && fileS < 1000) {
+          this.certificate4Size = fileS + " " + "B";
+        } else if (fileS > 1000 && fileS < 1000000) {
+          this.certificate4Size = fileS / 1000 + "kB";
+        } else {
+          this.certificate4Size = fileS / 1000000 + "MB";
         }
+        reader.addEventListener(
+          "load",
+          function() {
+            this.showCertificate4Preview = true;
+            this.certificate4Preview = reader.result;
+          }.bind(this),
+          false
+        );
+        if (this.certificateFile4) {
+          if (/\.(jpe?g|png|gif)$/i.test(this.certificateFile4.name)) {
+            this.isCertificate4 = true;
+            reader.readAsDataURL(this.certificateFile4);
+          } else if (/\.(pdf)$/i.test(this.certificateFile4.name)) {
+            this.isCertificate4 = false;
+            this.isPdf4 = true;
+            reader.readAsDataURL(this.certificateFile4);
+          }
+        }
+      } else {
+        this.fileSizeExceed = true;
+        this.certificateFile4 = "";
+        this.showCertificate4Upload = true;
+        this.isCertificate4 = false;
       }
     },
 
     handleCertificate5Upload() {
-      this.showCertificate5Upload = false;
       this.certificateFile5 = this.$refs.certificateFile5.files[0];
       let reader = new FileReader();
       let fileS = this.certificateFile5.size;
-      if (fileS > 0 && fileS < 1000) {
-        this.certificate5Size = fileS + " " + "B";
-      } else if (fileS > 1000 && fileS < 1000000) {
-        this.certificate5Size = fileS / 1000 + "kB";
-      } else {
-        this.certificate5Size = fileS / 1000000 + "MB";
-      }
-      reader.addEventListener(
-        "load",
-        function() {
-          this.showCertificate5Preview = true;
-          this.certificate5Preview = reader.result;
-        }.bind(this),
-        false
-      );
-      if (this.certificateFile5) {
-        if (/\.(jpe?g|png|gif)$/i.test(this.certificateFile5.name)) {
-          this.isCertificate5 = true;
-          reader.readAsDataURL(this.certificateFile5);
-        } else if (/\.(pdf)$/i.test(this.certificateFile5.name)) {
-          this.isCertificate5 = false;
-          this.isPdf5 = true;
-          reader.readAsDataURL(this.certificateFile5);
+      if (fileS <= this.maxFileSize / 1000) {
+        this.fileSizeExceed = false;
+        this.showCertificate5Upload = false;
+        if (fileS > 0 && fileS < 1000) {
+          this.certificate5Size = fileS + " " + "B";
+        } else if (fileS > 1000 && fileS < 1000000) {
+          this.certificate5Size = fileS / 1000 + "kB";
+        } else {
+          this.certificate5Size = fileS / 1000000 + "MB";
         }
+        reader.addEventListener(
+          "load",
+          function() {
+            this.showCertificate5Preview = true;
+            this.certificate5Preview = reader.result;
+          }.bind(this),
+          false
+        );
+        if (this.certificateFile5) {
+          if (/\.(jpe?g|png|gif)$/i.test(this.certificateFile5.name)) {
+            this.isCertificate5 = true;
+            reader.readAsDataURL(this.certificateFile5);
+          } else if (/\.(pdf)$/i.test(this.certificateFile5.name)) {
+            this.isCertificate5 = false;
+            this.isPdf5 = true;
+            reader.readAsDataURL(this.certificateFile5);
+          }
+        }
+      } else {
+        this.fileSizeExceed = true;
+        this.certificateFile5 = "";
+        this.showCertificate5Upload = true;
+        this.isCertificate5 = false;
       }
     },
     submit() {

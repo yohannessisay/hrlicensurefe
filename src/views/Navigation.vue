@@ -135,6 +135,7 @@ export default {
       location.reload();
       localStorage.removeItem("token");
       localStorage.removeItem("userId");
+      localStorage.removeItem("educationalLevel");
       this.$router.push({ path: "/" });
     },
     showDropDown() {
