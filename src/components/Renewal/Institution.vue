@@ -447,21 +447,10 @@ export default {
         }
       });
     },
-    spliceArray(array, id) {
-      array.splice(
-        array.findIndex((e) => e.id == id),
-        1
-      );
-      return array;
-    },
     fetchEducationLevel() {
       this.$store.dispatch("lookups/getEducationalLevel").then((res) => {
         if (res.data.status == "Success") {
           this.educationData = res.data.data;
-          this.educationData = this.spliceArray(this.educationData, 3);
-          this.educationData = this.spliceArray(this.educationData, 4);
-          this.educationData = this.spliceArray(this.educationData, 6);
-        } else {
         }
       });
     },
@@ -496,11 +485,11 @@ export default {
       }
     },
     setEducationLevel(educationLevelId) {
-      if (educationLevelId == 2) {
+      if (educationLevelId == 1) {
         window.localStorage.setItem("educationalLevel", "diploma");
-      } else if (educationLevelId == 1) {
+      } else if (educationLevelId == 2) {
         window.localStorage.setItem("educationalLevel", "degree");
-      } else if (educationLevelId == 5) {
+      } else if (educationLevelId == 3) {
         window.localStorage.setItem("educationalLevel", "masters");
       } else {
         window.localStorage.setItem("educationalLevel", "phd");
@@ -645,7 +634,7 @@ export default {
         expertLevelId: this.licenseInfo.expertLevelId,
       };
       if (this.licenseInfo.educationalLevelId == null) {
-        this.licenseInfo.educationalLevelId = 7;
+        this.licenseInfo.educationalLevelId = 4;
       }
       this.$store.dispatch("renewal/searchNewLicense").then((res) => {
         if (res.data.data == true) {
