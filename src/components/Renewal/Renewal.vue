@@ -1550,16 +1550,16 @@ export default {
       }
     },
     diplomaSet: function(params) {
-      if (params == 2) {
+      if (params == 1) {
         this.eduLevel = "diploma";
       }
-      if (params == 1) {
+      if (params == 2) {
         this.eduLevel = "degree";
       }
-      if (params == 5) {
+      if (params == 3) {
         this.eduLevel = "masters";
       }
-      if (params == 7) {
+      if (params == 4) {
         this.eduLevel = "phd";
       }
     },
