@@ -446,7 +446,7 @@ export default {
               institutionId: licenseInfo.education.institutionId,
             },
             residenceWoredaId: licenseInfo.residenceWoredaId,
-            professionalTypeId: licenseInfo.professionalTypeId,
+            professionalTypeIds: licenseInfo.professionalTypeIds,
             expertLevelId: licenseInfo.expertLevelId,
           },
         };
@@ -555,7 +555,7 @@ export default {
               institutionId: licenseInfo.education.institutionId,
             },
             residenceWoredaId: licenseInfo.residenceWoredaId,
-            professionalTypeId: licenseInfo.professionalTypeId,
+            professionalTypeIds: licenseInfo.professionalTypeIds,
             expertLevelId: licenseInfo.expertLevelId,
           },
         };

@@ -155,24 +155,6 @@
           </div>
           <div id="main" class="flex pt-8 mt-4">
             <div class="flex flex-col mb-medium w-2/5 mr-12 ml-medium">
-              <label class="text-primary-700">Professional Type</label>
-              <select
-                class="max-w-3xl"
-                v-model="licenseInfo.professionalTypeIds"
-              >
-                <option
-                  v-for="types in professionalTypes"
-                  v-bind:key="types.name"
-                  v-bind:value="types.id"
-                >
-                  {{ types.name }}
-                </option>
-              </select>
-              <!-- <span style="color: red">{{
-                licenseInfoErrors.professionalTypeIds
-              }}</span> -->
-            </div>
-            <div class="flex flex-col mb-medium w-2/5 mr-12">
               <label class="text-primary-700">Education Level </label>
               <select
                 class="max-w-3xl"
@@ -187,6 +169,28 @@
                   {{ types.name }}
                 </option>
               </select>
+            </div>
+            <div
+              v-if="showProfessionalTypes"
+              class="flex flex-col mb-medium w-2/5 mr-12"
+            >
+              <label class="text-primary-700">Professional Type</label>
+              <select
+                class="max-w-3xl select"
+                multiple
+                v-model="licenseInfo.professionalTypeIds"
+              >
+                <option
+                  v-for="types in professionalTypes"
+                  v-bind:key="types.name"
+                  v-bind:value="types.id"
+                >
+                  {{ types.name }}
+                </option>
+              </select>
+              <!-- <span style="color: red">{{
+                licenseInfoErrors.professionalTypeIds
+              }}</span> -->
             </div>
           </div>
           <div v-if="this.displayPayrollDoc" id="main" class="flex pt-8 mt-4">
@@ -289,7 +293,7 @@
 
 <script>
 import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters } from "vuex";
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import Spinner from "@/sharedComponents/Spinner";
@@ -436,6 +440,7 @@ export default {
     firstTimeUser: false,
 
     educationData: [],
+    showProfessionalTypes: false,
   }),
 
   methods: {
@@ -558,7 +563,7 @@ export default {
               institutionId: this.licenseInfo.education.institutionId,
             },
             residenceWoredaId: this.licenseInfo.residenceWoredaId,
-            professionalTypeIds: [this.licenseInfo.professionalTypeIds],
+            professionalTypeIds: this.licenseInfo.professionalTypeIds,
             educationalLevelId: this.licenseInfo.educationalLevelId,
             paymentSlip: null,
             occupationTypeId: this.licenseInfo.occupationTypeId,
@@ -627,7 +632,7 @@ export default {
         regionId: this.regionID,
         zoneId: this.zoneID,
         residenceWoredaId: this.licenseInfo.residenceWoredaId,
-        professionalTypeIds: [this.licenseInfo.professionalTypeIds],
+        professionalTypeIds: this.licenseInfo.professionalTypeIds,
         educationalLevelId: this.licenseInfo.educationalLevelId,
         paymentSlip: null,
         occupationTypeId: this.licenseInfo.occupationTypeId,
@@ -701,6 +706,7 @@ export default {
     },
     fetchProfessionalType(id) {
       this.professionalTypes = [];
+      this.showProfessionalTypes = true;
       this.$store.dispatch("renewal/getProfessionalTypes", id).then((res) => {
         this.professionalTypes = res.data.data;
       });

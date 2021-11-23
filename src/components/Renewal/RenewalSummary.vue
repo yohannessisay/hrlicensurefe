@@ -172,7 +172,7 @@
             v-bind="item"
             v-bind:value="item"
           >
-            <Title class="" :message="item.documentTypeCode" />
+            <Title class="" :message="item.documentType.name" />
             <picture>
               <img
                 :src="

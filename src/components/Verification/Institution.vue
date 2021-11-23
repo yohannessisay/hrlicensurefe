@@ -145,12 +145,13 @@
               </div>
             </div>
           </div>
-          <div id="main" class="flex pt-8 mt-4">
+          <div v-if="showProfessionalTypes" id="main" class="flex pt-8 mt-4">
             <div class="flex flex-col mb-medium w-2/5 mr-12 ml-medium">
               <label class="text-primary-700">Professional Type</label>
               <select
-                class="max-w-3xl"
-                v-model="licenseInfo.professionalTypeID"
+                class="max-w-3xl select"
+                multiple
+                v-model="licenseInfo.professionalTypeIds"
               >
                 <option
                   v-for="types in professionalTypes"
@@ -160,9 +161,9 @@
                   {{ types.name }}
                 </option>
               </select>
-              <span style="color: red">{{
-                licenseInfoErrors.professionalTypeID
-              }}</span>
+              <!-- <span style="color: red">{{
+                licenseInfoErrors.professionalTypeIds
+              }}</span> -->
             </div>
           </div>
         </form>
@@ -281,7 +282,7 @@ export default {
         draftData.education.departmentId;
       this.licenseInfo.education.institutionId =
         draftData.education.institutionId;
-      this.licenseInfo.professionalTypeID = draftData.professionalTypeId;
+      this.licenseInfo.professionalTypeIds = draftData.professionalTypeIds;
       this.licenseInfo.expertLevelId = draftData.expertLevelId;
       if (this.licenseInfo.applicantTypeId == 1) {
         this.$store.dispatch("verification/getExpertLevel").then((res) => {
@@ -347,7 +348,7 @@ export default {
         institutionId: null,
       },
       residenceWoredaId: null,
-      professionalTypeID: null,
+      professionalTypeIds: [],
       expertLevelId: null,
     },
     licenseInfoErrors: {
@@ -359,7 +360,7 @@ export default {
       residenceWoredaId: "",
       regionId: "",
       zoneId: "",
-      professionalTypeID: "",
+      professionalTypeIds: [],
     },
     regionID: "",
     zoneID: "",
@@ -380,6 +381,7 @@ export default {
     showRegion: false,
 
     professionalTypes: [],
+    showProfessionalTypes: false,
   }),
 
   methods: {
@@ -421,7 +423,7 @@ export default {
               institutionId: this.licenseInfo.education.institutionId,
             },
             residenceWoredaId: this.licenseInfo.residenceWoredaId,
-            professionalTypeId: this.licenseInfo.professionalTypeID,
+            professionalTypeIds: this.licenseInfo.professionalTypeIds,
             expertLevelId: this.licenseInfo.expertLevelId,
           },
         },
@@ -466,7 +468,7 @@ export default {
               institutionId: this.licenseInfo.education.institutionId,
             },
             residenceWoredaId: this.licenseInfo.residenceWoredaId,
-            professionalTypeId: this.licenseInfo.professionalTypeID,
+            professionalTypeIds: this.licenseInfo.professionalTypeIds,
             expertLevelId: this.licenseInfo.expertLevelId,
           },
         },
@@ -532,7 +534,7 @@ export default {
         regionId: this.regionID,
         zoneId: this.zoneID,
         residenceWoredaId: this.licenseInfo.residenceWoredaId,
-        professionalTypeId: this.licenseInfo.professionalTypeID,
+        professionalTypeIds: this.licenseInfo.professionalTypeIds,
         expertLevelId: this.licenseInfo.expertLevelId,
       };
       this.$emit("changeActiveState");
@@ -583,6 +585,7 @@ export default {
     },
     fetchProfessionalType(id) {
       this.professionalTypes = [];
+      this.showProfessionalTypes = true;
       this.$store
         .dispatch("verification/getProfessionalTypes", id)
         .then((res) => {
@@ -623,7 +626,7 @@ export default {
         draftData.education.departmentId;
       this.licenseInfo.education.institutionId =
         draftData.education.institutionId;
-      this.licenseInfo.professionalTypeID = draftData.professionalTypeId;
+      this.licenseInfo.professionalTypeIds = draftData.professionalTypeIds;
       this.licenseInfo.expertLevelId = draftData.expertLevelId;
       if (this.licenseInfo.applicantTypeId == 1) {
         this.$store.dispatch("verification/getExpertLevel").then((res) => {
