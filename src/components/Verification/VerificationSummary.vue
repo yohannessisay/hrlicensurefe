@@ -172,7 +172,7 @@
             v-bind="item"
             v-bind:value="item"
           >
-            <Title class="" :message="item.documentTypeCode" />
+            <Title class="" :message="item.documentType.name" />
             <picture>
               <img
                 :src="
@@ -374,7 +374,7 @@ export default {
     this.education.departmentId = this.license.education.departmentId;
     this.education.institutionId = this.license.education.institutionId;
     this.residenceWoredaId = this.license.residenceWoredaId;
-    this.professionalTypeID = this.license.professionalTypeId;
+    this.professionalTypeIds = this.license.professionalTypeIds;
     this.expertLevelId = this.license.expertLevelId;
     this.buttons = this.getButtons;
   },
@@ -394,7 +394,7 @@ export default {
       institutionId: "",
     },
     residenceWoredaId: "",
-    professionalTypeID: "",
+    professionalTypeIds: [],
     expertLevelId: "",
     draftId: "",
     draftData: "",
@@ -528,7 +528,7 @@ export default {
               departmentId: this.education.departmentId,
             },
             residenceWoredaId: this.residenceWoredaId,
-            professionalTypeId: this.professionalTypeID,
+            professionalTypeIds: this.professionalTypeIds,
             expertLevelId: this.expertLevelId,
             islegal: this.checkBoxValue,
           },
@@ -619,7 +619,7 @@ export default {
               departmentId: this.education.departmentId,
             },
             residenceWoredaId: this.residenceWoredaId,
-            professionalTypeId: this.professionalTypeID,
+            professionalTypeIds: this.professionalTypeIds,
             expertLevelId: this.expertLevelId,
             islegal: this.checkBoxValue,
           },
@@ -661,7 +661,7 @@ export default {
               institutionId: this.licenseInfo.education.institutionId,
             },
             residenceWoredaId: this.residenceWoredaId,
-            professionalTypeId: this.professionalTypeID,
+            professionalTypeIds: this.professionalTypeIds,
             expertLevelId: this.expertLevelId,
             islegal: this.checkBoxValue,
           },

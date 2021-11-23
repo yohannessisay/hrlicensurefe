@@ -190,7 +190,7 @@
             v-bind="item"
             v-bind:value="item"
           >
-            <Title class="" :message="item.documentTypeCode" />
+            <Title class="" :message="item.documentType.name" />
             <picture>
               <img
                 :src="
@@ -389,7 +389,7 @@ export default {
     this.license = this.getLicense;
     this.applicantId = this.license.applicantId;
     this.applicantTypeId = this.license.applicantTypeId;
-    this.professionalTypeID = this.license.professionalTypeId;
+    this.professionalTypeIds = this.license.professionalTypeIds;
     this.expertLevelId = this.license.expertLevelId;
     this.buttons = this.getButtons;
   },
@@ -408,7 +408,7 @@ export default {
       departmentId: "",
       institutionId: "",
     },
-    professionalTypeID: "",
+    professionalTypeIds: "",
     expertLevelId: "",
     draftId: "",
     draftData: "",
@@ -545,7 +545,7 @@ export default {
             licenseRegistrationNumber: this.licenseInfo
               .licenseRegistrationNumber,
             applicantPositionId: this.licenseInfo.applicantPositionId,
-            professionalTypeId: this.professionalTypeID,
+            professionalTypeIds: this.professionalTypeIds,
             expertLevelId: this.expertLevelId,
             islegal: this.checkBoxValue,
           },
@@ -639,7 +639,7 @@ export default {
             licenseRegistrationNumber: this.licenseInfo
               .licenseRegistrationNumber,
             applicantPositionId: this.licenseInfo.applicantPositionId,
-            professionalTypeId: this.professionalTypeID,
+            professionalTypeIds: this.professionalTypeIds,
             expertLevelId: this.licenseInfo.expertLevel,
             islegal: this.checkBoxValue,
           },
@@ -684,7 +684,7 @@ export default {
             licenseRegistrationNumber: this.licenseInfo
               .licenseRegistrationNumber,
             applicantPositionId: this.licenseInfo.applicantPositionId,
-            professionalTypeId: this.professionalTypeID,
+            professionalTypeIds: this.professionalTypeIds,
             expertLevelId: this.licenseInfo.expertLevel,
             islegal: this.checkBoxValue,
           },

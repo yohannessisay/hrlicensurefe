@@ -155,24 +155,6 @@
           </div>
           <div id="main" class="flex pt-8 mt-4">
             <div class="flex flex-col mb-medium w-2/5 mr-12 ml-medium">
-              <label class="text-primary-700">Professional Type</label>
-              <select
-                class="max-w-3xl"
-                v-model="licenseInfo.professionalTypeIds"
-              >
-                <option
-                  v-for="types in professionalTypes"
-                  v-bind:key="types.name"
-                  v-bind:value="types.id"
-                >
-                  {{ types.name }}
-                </option>
-              </select>
-              <!-- <span style="color: red">{{
-                licenseInfoErrors.professionalTypeIds
-              }}</span> -->
-            </div>
-            <div class="flex flex-col mb-medium w-2/5 mr-12">
               <label class="text-primary-700">Education Level </label>
               <select
                 class="max-w-3xl"
@@ -187,6 +169,28 @@
                   {{ types.name }}
                 </option>
               </select>
+            </div>
+            <div
+              v-if="showProfessionalTypes"
+              class="flex flex-col mb-medium w-2/5 mr-12"
+            >
+              <label class="text-primary-700">Professional Type</label>
+              <select
+                class="max-w-3xl select"
+                multiple
+                v-model="licenseInfo.professionalTypeIds"
+              >
+                <option
+                  v-for="types in professionalTypes"
+                  v-bind:key="types.name"
+                  v-bind:value="types.id"
+                >
+                  {{ types.name }}
+                </option>
+              </select>
+              <!-- <span style="color: red">{{
+                licenseInfoErrors.professionalTypeIds
+              }}</span> -->
             </div>
           </div>
           <div v-if="this.displayPayrollDoc" id="main" class="flex pt-8 mt-4">
@@ -289,7 +293,7 @@
 
 <script>
 import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters } from "vuex";
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import Spinner from "@/sharedComponents/Spinner";
@@ -436,6 +440,7 @@ export default {
     firstTimeUser: false,
 
     educationData: [],
+    showProfessionalTypes: false,
   }),
 
   methods: {
@@ -447,21 +452,10 @@ export default {
         }
       });
     },
-    spliceArray(array, id) {
-      array.splice(
-        array.findIndex((e) => e.id == id),
-        1
-      );
-      return array;
-    },
     fetchEducationLevel() {
       this.$store.dispatch("lookups/getEducationalLevel").then((res) => {
         if (res.data.status == "Success") {
           this.educationData = res.data.data;
-          this.educationData = this.spliceArray(this.educationData, 3);
-          this.educationData = this.spliceArray(this.educationData, 4);
-          this.educationData = this.spliceArray(this.educationData, 6);
-        } else {
         }
       });
     },
@@ -496,11 +490,11 @@ export default {
       }
     },
     setEducationLevel(educationLevelId) {
-      if (educationLevelId == 2) {
+      if (educationLevelId == 1) {
         window.localStorage.setItem("educationalLevel", "diploma");
-      } else if (educationLevelId == 1) {
+      } else if (educationLevelId == 2) {
         window.localStorage.setItem("educationalLevel", "degree");
-      } else if (educationLevelId == 5) {
+      } else if (educationLevelId == 3) {
         window.localStorage.setItem("educationalLevel", "masters");
       } else {
         window.localStorage.setItem("educationalLevel", "phd");
@@ -569,7 +563,7 @@ export default {
               institutionId: this.licenseInfo.education.institutionId,
             },
             residenceWoredaId: this.licenseInfo.residenceWoredaId,
-            professionalTypeIds: [this.licenseInfo.professionalTypeIds],
+            professionalTypeIds: this.licenseInfo.professionalTypeIds,
             educationalLevelId: this.licenseInfo.educationalLevelId,
             paymentSlip: null,
             occupationTypeId: this.licenseInfo.occupationTypeId,
@@ -638,14 +632,14 @@ export default {
         regionId: this.regionID,
         zoneId: this.zoneID,
         residenceWoredaId: this.licenseInfo.residenceWoredaId,
-        professionalTypeIds: [this.licenseInfo.professionalTypeIds],
+        professionalTypeIds: this.licenseInfo.professionalTypeIds,
         educationalLevelId: this.licenseInfo.educationalLevelId,
         paymentSlip: null,
         occupationTypeId: this.licenseInfo.occupationTypeId,
         expertLevelId: this.licenseInfo.expertLevelId,
       };
       if (this.licenseInfo.educationalLevelId == null) {
-        this.licenseInfo.educationalLevelId = 7;
+        this.licenseInfo.educationalLevelId = 4;
       }
       this.$store.dispatch("renewal/searchNewLicense").then((res) => {
         if (res.data.data == true) {
@@ -712,6 +706,7 @@ export default {
     },
     fetchProfessionalType(id) {
       this.professionalTypes = [];
+      this.showProfessionalTypes = true;
       this.$store.dispatch("renewal/getProfessionalTypes", id).then((res) => {
         this.professionalTypes = res.data.data;
       });
