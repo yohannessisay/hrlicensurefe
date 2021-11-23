@@ -31,13 +31,9 @@
           @applicationTypeSelected="applicationTypeHandler"
           @selectGoodStandingMenu="selectMenu"
         />
-        <report-side-nav
-        @selectReportMenu="selectMenu" />
+        <report-side-nav @selectReportMenu="selectMenu" />
 
-        <dashboard-side-nav
-        @selectDashboardMenu="selectMenu" />
-
-
+        <dashboard-side-nav @selectDashboardMenu="selectMenu" />
       </ul>
     </div>
   </div>
@@ -48,8 +44,8 @@ import NewLicenseSideNav from "./ReviewerSideNavComponents/NewLicenseSideNav.vue
 import RenewalSideNav from "./ReviewerSideNavComponents/RenewalSideNav.vue";
 import VerificationSideNav from "./ReviewerSideNavComponents/VerificationSideNav.vue";
 import GoodStandingSideNav from "./ReviewerSideNavComponents/GoodStandingSideNav.vue";
-import ReportSideNav from "./ReviewerSideNavComponents/ReportSideNav.vue"
-import DashboardSideNav from "./ReviewerSideNavComponents/DashboardSideNav.vue"
+import ReportSideNav from "./ReviewerSideNavComponents/ReportSideNav.vue";
+import DashboardSideNav from "./ReviewerSideNavComponents/DashboardSideNav.vue";
 import {
   dropdown,
   applicationTypeDD,

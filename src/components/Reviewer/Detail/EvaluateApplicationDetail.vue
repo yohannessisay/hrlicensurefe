@@ -93,9 +93,11 @@
           <div class="flex flex-row">
             <div
               :class="[
-                license.woreda === null ? errorClass :
-                license.woreda.zone === null ? errorClass :
-                license.woreda.zone.region === null
+                license.woreda === null
+                  ? errorClass
+                  : license.woreda.zone === null
+                  ? errorClass
+                  : license.woreda.zone.region === null
                   ? errorClass
                   : activeClass,
               ]"
@@ -103,9 +105,11 @@
               <label class="ml-8"> Region</label>
               <h5 class="ml-8">
                 {{
-                  license.woreda === null ? "-" :
-                  license.woreda.zone === null ? "-" :
-                  license.woreda.zone.region
+                  license.woreda === null
+                    ? "-"
+                    : license.woreda.zone === null
+                    ? "-"
+                    : license.woreda.zone.region
                     ? license.woreda.zone.region.name
                     : "-"
                 }}
@@ -113,15 +117,21 @@
             </div>
             <div
               :class="[
-                license.woreda === null ?
-                errorClass : license.woreda.zone === null ? 
-                errorClass : activeClass,
+                license.woreda === null
+                  ? errorClass
+                  : license.woreda.zone === null
+                  ? errorClass
+                  : activeClass,
               ]"
             >
               <label class="ml-8"> Zone</label>
               <h5 class="ml-8">
                 {{
-                  license.woreda === null ? "-" : license.woreda.zone ? license.woreda.zone.name : "-"
+                  license.woreda === null
+                    ? "-"
+                    : license.woreda.zone
+                    ? license.woreda.zone.name
+                    : "-"
                 }}
               </h5>
             </div>
@@ -228,12 +238,18 @@
             </div>
             <div>
               <label class="ml-8">
-                {{ license.previousApplicationStatus ?
-                 license.previousApplicationStatus.name : '-' }}
+                {{
+                  license.previousApplicationStatus
+                    ? license.previousApplicationStatus.name
+                    : "-"
+                }}
               </label>
               <label
                 class="ml-8"
-                v-if="license.previousApplicationStatus && license.previousApplicationStatus.remark !== null"
+                v-if="
+                  license.previousApplicationStatus &&
+                    license.previousApplicationStatus.remark !== null
+                "
               >
                 {{ license.previousApplicationStatus.remark }}
               </label>
@@ -381,7 +397,7 @@ export default {
         store
           .dispatch("reviewer/getVerificationApplication", applicationId)
           .then((res) => {
-            console.log("resssss", res)
+            console.log("resssss", res);
             isAdminEvaluator(res.data.data.evaluators);
             showLoading.value = false;
             license.value = res.data.data;

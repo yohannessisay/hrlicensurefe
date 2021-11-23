@@ -744,8 +744,15 @@
         <ErrorFlashMessage message="Please add Expiration date!" />
       </div>
       <div v-if="showProfessionChangeError">
-        <ErrorFlashMessage message="you can't change profession if you are not approving" />
-        </div>
+        <ErrorFlashMessage
+          message="you can't change profession if you are not approving"
+        />
+      </div>
+      <div v-if="expirationDateExceedTodayError">
+        <ErrorFlashMessage
+          message="Error! license expiration date must exceed today"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -786,9 +793,11 @@ export default {
 
     let pdfFilePath = ref("");
 
+    let expirationDateExceedTodayError = ref(false);
+
     let professionalTypeIds = ref([]);
     let canChangeName = ref(false);
-    let showProfessionChangeError = ref(false);
+    let showProfessionChangeError = ref(false); 
     let showSpinner = ref(false);
 
     let showNameChangeFlash = ref(false);
@@ -1245,15 +1254,22 @@ export default {
           }, 4000);
           return;
         }
+        else if (!moment(newLicense.value.licenseExpirationDate).isAfter(new Date())) {
+          expirationDateExceedTodayError.value = true;
+          setTimeout(() => {
+            expirationDateExceedTodayError.value = false;
+          }, 4000);
+          return;
+        }
         if (professionalTypeIds.value.length > 0) {
           newLicense.value.professionalTypeIds = professionalTypeIds.value;
         }
       } else {
-        if(professionalTypeIds.value.length > 0) {
+        if (professionalTypeIds.value.length > 0) {
           showProfessionChangeError.value = true;
           setTimeout(() => {
             showProfessionChangeError.value = false;
-          }, 4000)
+          }, 4000);
           professionalTypeIds.value = [];
           return;
         }
@@ -1512,6 +1528,7 @@ export default {
       showLicenseDateRequirementError,
       professionalTypeIds,
       showProfessionChangeError,
+      expirationDateExceedTodayError,
     };
   },
 };

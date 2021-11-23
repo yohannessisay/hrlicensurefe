@@ -544,8 +544,20 @@ export default {
         `${certificateDetail.value.professionalTypes[0].professionalTypes.name}`
       );
       // doc.text(190, 170, 'DENTAL SURGON')
+      doc.setFontSize(12);
       doc.text(
-        205,
+        197,
+        164,
+        `${
+          certificateDetail.value.certifiedDate
+            ? moment(certificateDetail.value.certifiedDate).format(
+                "MMM DD, YYYY"
+              ) + " - "
+            : "Not Specified"
+        }`
+      );
+      doc.text(
+        226,
         164,
         `${
           certificateDetail.value.licenseExpirationDate
@@ -615,8 +627,22 @@ export default {
         `${certificateDetail.value.professionalTypes[0].professionalTypes.amharicProfessionalType}`
       );
       // doc.text(40, 163, "ሙያ መዝግቦ ይህን የሙያ ስራ ፈቃድ ሰጥቷል።");
+      doc.setFontSize(12);
+      // doc.text(80)
       doc.text(
-        80,
+        77,
+        164,
+        `${
+          certificateDetail.value.certifiedDate
+            ? toEthiopian(
+                moment(certificateDetail.value.certifiedDate)._d.toISOString(),
+                false
+              ) + " - "
+            : ""
+        }`
+      );
+      doc.text(
+        105,
         164,
         `${
           certificateDetail.value.licenseExpirationDate

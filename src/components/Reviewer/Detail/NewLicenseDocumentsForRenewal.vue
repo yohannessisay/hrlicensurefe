@@ -118,7 +118,11 @@ export default {
         });
     };
     const navigateToEvaluation = () => {
-      const url = "/admin/detail/Renewal/" + route.params.renewalApplicationId + "/" + route.params.renewalApplicantId;
+      const url =
+        "/admin/detail/Renewal/" +
+        route.params.renewalApplicationId +
+        "/" +
+        route.params.renewalApplicantId;
       router.push(url);
     };
 
