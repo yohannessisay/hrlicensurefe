@@ -689,12 +689,24 @@ export default {
       if (this.licenseInfo.educationalLevelId == null) {
         this.licenseInfo.educationalLevelId = 4;
       }
-      this.$emit("changeActiveState");
-      this.$emit("applicantTypeValue", this.licenseInfo.applicantTypeId);
-      this.$emit("nativeLanguageSet", this.licenseInfo.nativeLanguageId);
-      this.$emit("payrollDocumentSet", this.licenseInfo.occupationTypeId);
-      this.$emit("diplomaSet", this.licenseInfo.educationalLevelId);
-      this.$store.dispatch("newlicense/setLicense", license);
+      // let professionalTypeArray = [];
+      // for (let i = 0; i < this.licenseInfo.professionalTypeIds.length; i++) {
+      //   professionalTypeArray.push(this.licenseInfo.professionalTypeIds[i]);
+      // }
+      let profTypes = {
+        professionalTypeIds: this.licenseInfo.professionalTypeIds,
+      };
+      this.$store
+        .dispatch("newlicense/searchProfessionalType", profTypes)
+        .then((res) => {
+          console.log(res);
+        });
+      // this.$emit("changeActiveState");
+      // this.$emit("applicantTypeValue", this.licenseInfo.applicantTypeId);
+      // this.$emit("nativeLanguageSet", this.licenseInfo.nativeLanguageId);
+      // this.$emit("payrollDocumentSet", this.licenseInfo.occupationTypeId);
+      // this.$emit("diplomaSet", this.licenseInfo.educationalLevelId);
+      // this.$store.dispatch("newlicense/setLicense", license);
     },
     fetchApplicantType() {
       this.$store.dispatch("newlicense/getApplicantType").then((res) => {
