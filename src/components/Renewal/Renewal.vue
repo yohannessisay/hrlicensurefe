@@ -1366,9 +1366,18 @@
                 />
               </div>
             </transition>
-            <transition name="fade" mode="out-in">
+            <!-- <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 6">
                 <SupportLetterForeign
+                  :activeState="6"
+                  @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
+                />
+              </div>
+            </transition> -->
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 6">
+                <WorkExperience
                   :activeState="6"
                   @changeActiveState="activeState++"
                   @changeActiveStateMinus="activeState--"
@@ -1377,7 +1386,7 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 7">
-                <WorkExperience
+                <PreviousLicenseE
                   :activeState="7"
                   @changeActiveState="activeState++"
                   @changeActiveStateMinus="activeState--"
@@ -1386,7 +1395,7 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 8">
-                <PreviousLicenseE
+                <CPDL
                   :activeState="8"
                   @changeActiveState="activeState++"
                   @changeActiveStateMinus="activeState--"
@@ -1395,17 +1404,8 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 9">
-                <CPDL
-                  :activeState="9"
-                  @changeActiveState="activeState++"
-                  @changeActiveStateMinus="activeState--"
-                />
-              </div>
-            </transition>
-            <transition name="fade" mode="out-in">
-              <div v-if="this.activeState == 10">
                 <LicenseSummary
-                  :activeState="10"
+                  :activeState="9"
                   @changeActiveState="activeState++"
                   @changeActiveStateMinus="activeState--"
                 />

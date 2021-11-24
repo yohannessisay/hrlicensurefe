@@ -984,7 +984,6 @@
                 />
               </div>
             </transition>
-
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 3">
                 <HealthExamCert
@@ -994,7 +993,6 @@
                 />
               </div>
             </transition>
-
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 4">
                 <HERQA
@@ -1013,9 +1011,18 @@
                 />
               </div>
             </transition>
-            <transition name="fade" mode="out-in">
+            <!-- <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 6">
                 <SupportLetterForeign
+                  :activeState="6"
+                  @changeActiveStateMinus="activeState--"
+                  @changeActiveState="activeState++"
+                />
+              </div>
+            </transition> -->
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 6">
+                <WorkExperienceFF
                   :activeState="6"
                   @changeActiveStateMinus="activeState--"
                   @changeActiveState="activeState++"
@@ -1024,17 +1031,8 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 7">
-                <WorkExperienceFF
-                  :activeState="7"
-                  @changeActiveStateMinus="activeState--"
-                  @changeActiveState="activeState++"
-                />
-              </div>
-            </transition>
-            <transition name="fade" mode="out-in">
-              <div v-if="this.activeState == 8">
                 <LicenseSummary
-                  :activeState="8"
+                  :activeState="7"
                   @changeActiveStateMinus="activeState--"
                   @changeActiveState="activeState++"
                 />
