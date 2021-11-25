@@ -331,11 +331,15 @@ export default {
     }
   },
   async searchProfessionalType({ commit }, profTypes) {
-    console.log(profTypes);
     try {
       const resp = await ApiService.get(
         url + "newLicenses/search/professionalType",
-        profTypes
+        profTypes,
+        {
+          headers: {
+            "Content-Type": "text/plain",
+          },
+        }
       );
       return resp;
     } catch (error) {

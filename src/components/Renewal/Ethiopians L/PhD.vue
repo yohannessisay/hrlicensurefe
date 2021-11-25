@@ -47,7 +47,7 @@
                   <span
                     v-if="eduLevel !== 'diploma'"
                     style="color: red; font-weight: bold; font-size:16px"
-                    >(*)</span
+                    >Required</span
                   >
                   <div class="dropbox">
                     <input
