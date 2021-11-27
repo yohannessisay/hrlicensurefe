@@ -791,7 +791,7 @@
             </transition>
           </div>
           <div
-            v-if="this.applicantType == 2 && this.displayEnglishLanguageOption"
+            v-if="this.applicantType == 3 && this.displayEnglishLanguageOption"
           >
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 2">
@@ -887,7 +887,7 @@
           </div>
 
           <div
-            v-if="this.applicantType == 2 && !this.displayEnglishLanguageOption"
+            v-if="this.applicantType == 3 && !this.displayEnglishLanguageOption"
           >
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 2">
@@ -974,7 +974,7 @@
             </transition>
           </div>
 
-          <div v-if="this.applicantType == 3">
+          <div v-if="this.applicantType == 2">
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 2">
                 <Passport
