@@ -49,7 +49,7 @@
                 <label class="text-primary-700 text-lg"
                   >Authenticated Professional Document Certificate:
                   <span style="color: red; font-weight: bold; font-size:16px"
-                    >(*)</span
+                    >Required</span
                   >
                   <div class="dropbox">
                     <input
@@ -110,7 +110,7 @@
                 <label class="text-primary-700 text-lg"
                   >Authenticated Professional Document Diploma:
                   <span style="color: red; font-weight: bold; font-size:16px"
-                    >(*)</span
+                    >Required</span
                   >
                   <div class="dropbox">
                     <input
@@ -177,7 +177,7 @@
                 <label class="text-primary-700 text-lg"
                   >Authenticated Professional Document Transcript:
                   <span style="color: red; font-weight: bold; font-size:16px"
-                    >(*)</span
+                    >Required</span
                   >
                   <div class="dropbox">
                     <input

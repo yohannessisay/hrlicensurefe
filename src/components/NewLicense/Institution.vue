@@ -689,6 +689,14 @@ export default {
       if (this.licenseInfo.educationalLevelId == null) {
         this.licenseInfo.educationalLevelId = 4;
       }
+      let profTypes = {
+        professionalTypeIds: this.licenseInfo.professionalTypeIds,
+      };
+      // console.log(profTypes);
+      // this.$store
+      //   .dispatch("newlicense/searchProfessionalType", profTypes)
+      //   .then((res) => {
+      //   });
       this.$emit("changeActiveState");
       this.$emit("applicantTypeValue", this.licenseInfo.applicantTypeId);
       this.$emit("nativeLanguageSet", this.licenseInfo.nativeLanguageId);

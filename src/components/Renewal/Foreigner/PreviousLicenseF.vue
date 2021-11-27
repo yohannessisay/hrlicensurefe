@@ -38,7 +38,7 @@
                 <label class="text-primary-700"
                   >Upload image:
                   <span style="color: red; font-weight: bold; font-size:16px"
-                    >(*)</span
+                    >Required</span
                   >
                   <div class="dropbox">
                     <input

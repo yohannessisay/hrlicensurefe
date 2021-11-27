@@ -145,6 +145,15 @@ export default {
   setDraft({ commit }, draft) {
     commit(SET_DRAFT, draft);
   },
+  async storeDeclinedFields({ commit }, fields) {
+    commit(SET_DECLINED_FIELDS, fields);
+  },
+  async storeAcceptedFields({ commit }, fields) {
+    commit(SET_ACCEPTED_FIELDS, fields);
+  },
+  async storeRemark({ commit }, remark) {
+    commit(SET_REMARK, remark);
+  },
   async addNewLicense({ commit }, license) {
     try {
       const resp = await ApiService.post(url + "newLicenses/add", license);
@@ -321,13 +330,20 @@ export default {
       return error;
     }
   },
-  async storeDeclinedFields({ commit }, fields) {
-    commit(SET_DECLINED_FIELDS, fields);
-  },
-  async storeAcceptedFields({ commit }, fields) {
-    commit(SET_ACCEPTED_FIELDS, fields);
-  },
-  async storeRemark({ commit }, remark) {
-    commit(SET_REMARK, remark);
+  async searchProfessionalType({ commit }, profTypes) {
+    try {
+      const resp = await ApiService.get(
+        url + "newLicenses/search/professionalType",
+        profTypes,
+        {
+          headers: {
+            "Content-Type": "text/plain",
+          },
+        }
+      );
+      return resp;
+    } catch (error) {
+      return error;
+    }
   },
 };

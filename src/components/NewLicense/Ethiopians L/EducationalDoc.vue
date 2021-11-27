@@ -51,7 +51,7 @@
                 <label class="text-primary-700 text-lg"
                   >Upload 8th Grade Certificate:
                   <span style="color: red; font-weight: bold; font-size:16px"
-                    >(*)</span
+                    >Required</span
                   >
                   <div class="dropbox">
                     <input
@@ -124,7 +124,7 @@
                 <label class="text-primary-700 text-lg"
                   >Upload 10th Grade Certificate:
                   <span style="color: red; font-weight: bold; font-size:16px"
-                    >(*)</span
+                    >Required</span
                   >
                   <div class="dropbox">
                     <input
@@ -202,7 +202,7 @@
                   <span
                     v-if="this.eduLevel !== 'diploma'"
                     style="color: red; font-weight: bold; font-size:16px"
-                    >(*)</span
+                    >Required</span
                   >
                   <div class="dropbox">
                     <input
@@ -279,7 +279,7 @@
                 <label class="text-primary-700 text-lg"
                   >Upload Transcript 9-10:
                   <span style="color: red; font-weight: bold; font-size:16px"
-                    >(*)</span
+                    >Required</span
                   >
                   <div class="dropbox">
                     <input
@@ -356,7 +356,7 @@
                   <span
                     v-if="this.eduLevel !== 'diploma'"
                     style="color: red; font-weight: bold; font-size:16px"
-                    >(*)</span
+                    >Required</span
                   >
                   <div class="dropbox">
                     <input
