@@ -422,10 +422,20 @@
                           }}
                         </li>
                       </ul>
-                      <!-- {{newLicense.professionalTypes[0].professionalTypes.name}} | {{newLicense.professionalTypes[0].professionalTypes.amharicProfessionalType}} -->
                     </div>
                   </div>
-                  <div class="flex flex-col mb-medium w-1/2 mr-12">
+                  <div class="flex flex-row mb-medium w-1/2 mr-2">
+                    <input
+                      @change="checkBox()"
+                      type="checkbox"
+                      class="form-checkbox"
+                    />
+                    <label>change profession?</label>
+                  </div>
+                  <div
+                    class="flex flex-col mb-medium w-1/2 mr-12"
+                    v-if="isCheckboxActive"
+                  >
                     <select
                       v-model="professionalTypeIds"
                       class="select"
@@ -526,45 +536,12 @@
             </div>
           </div>
         </div>
-
-        <!-- <div class="ml-large">
-          <svg
-            width="40"
-            height="60"
-            xmlns="http://www.w3.org/2000/svg"
-            version="1.1"
-            @click="next(docs[index + 1])"
-            v-if="index != docs.length - 1"
-            class="hover:text-primary-60"
-          >
-            <polyline
-              points="10 10 30 30 10 50"
-              stroke="rgba(103,128,159,1)"
-              stroke-width="3"
-              stroke-linecap="butt"
-              fill="none"
-              stroke-linejoin="round"
-            >
-              &gt;
-            </polyline>
-          </svg>
-        </div> -->
       </div>
 
       <div
         class="flex justify-center items-center mb-medium"
         v-if="showButtons"
       >
-        <!-- <div class="flex">
-          <button  class="" variant="outline" @click="action(buttons[0].action)">{{buttons[0].name}}</button>
-          <button class="" variant="outline" @click="action(buttons[2].action)">{{buttons[2].name}}</button>
-          <div>
-            <div class="flex"> 
-              <button class="" @click="action(buttons[3].action)">{{buttons[3].name}}</button>
-              <button class="decline display bg-red-200" @click="action(buttons[1].action)">{{buttons[1].name}}</button>
-            </div>
-          </div>
-        </div> -->
         <div
           v-for="button in buttons"
           v-bind:key="button.name"
@@ -797,7 +774,7 @@ export default {
 
     let professionalTypeIds = ref([]);
     let canChangeName = ref(false);
-    let showProfessionChangeError = ref(false); 
+    let showProfessionChangeError = ref(false);
     let showSpinner = ref(false);
 
     let showNameChangeFlash = ref(false);
@@ -854,6 +831,8 @@ export default {
     let showDeclineFlash = ref(false);
     let sendDeclinedData = ref(true);
     let fromModalSendDeclinedData = ref(false);
+
+    let isCheckboxActive = ref(false);
 
     let professionalTypes = ref([]);
     let evaluateRoute = ref(
@@ -1253,8 +1232,9 @@ export default {
             showLicenseDateRequirementError.value = false;
           }, 4000);
           return;
-        }
-        else if (!moment(newLicense.value.licenseExpirationDate).isAfter(new Date())) {
+        } else if (
+          !moment(newLicense.value.licenseExpirationDate).isAfter(new Date())
+        ) {
           expirationDateExceedTodayError.value = true;
           setTimeout(() => {
             expirationDateExceedTodayError.value = false;
@@ -1463,6 +1443,10 @@ export default {
         });
     };
 
+    const checkBox = () => {
+      isCheckboxActive.value = !isCheckboxActive.value;
+    };
+
     onMounted(() => {
       created(route.params.applicationType, route.params.applicationId);
       fetchDocumentTypes();
@@ -1529,6 +1513,8 @@ export default {
       professionalTypeIds,
       showProfessionChangeError,
       expirationDateExceedTodayError,
+      isCheckboxActive,
+      checkBox,
     };
   },
 };
