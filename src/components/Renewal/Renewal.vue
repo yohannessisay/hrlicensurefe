@@ -1143,7 +1143,7 @@
               </div>
             </transition>
           </div>
-          <div v-if="this.applicantType == 2 && !this.firstTimeUser">
+          <div v-if="this.applicantType == 3 && !this.firstTimeUser">
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 3">
                 <LetterFromInstitution
@@ -1190,7 +1190,7 @@
               </div>
             </transition>
           </div>
-          <div v-if="this.applicantType == 2 && this.firstTimeUser">
+          <div v-if="this.applicantType == 3 && this.firstTimeUser">
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 3">
                 <Passport
@@ -1291,7 +1291,7 @@
               </div>
             </transition>
           </div>
-          <div v-if="this.applicantType == 3 && !this.firstTimeUser">
+          <div v-if="this.applicantType == 2 && !this.firstTimeUser">
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 3">
                 <LetterFromHiringManagerForeignerEthiopian
@@ -1338,7 +1338,7 @@
               </div>
             </transition>
           </div>
-          <div v-if="this.applicantType == 3 && this.firstTimeUser">
+          <div v-if="this.applicantType == 2 && this.firstTimeUser">
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 3">
                 <Passport

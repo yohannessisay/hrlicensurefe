@@ -334,10 +334,9 @@ export default {
     try {
       const resp = await ApiService.get(
         url + "newLicenses/search/professionalType",
-        profTypes,
         {
-          headers: {
-            "Content-Type": "text/plain",
+          params: {
+            professionalTypeIds: profTypes,
           },
         }
       );
