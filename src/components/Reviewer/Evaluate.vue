@@ -430,7 +430,20 @@
                       type="checkbox"
                       class="form-checkbox"
                     />
-                    <label>change profession?</label>
+                    <label class="ml-2">change profession?</label>
+                    <label class="ml-12 titleColors"> Prefix</label>
+                    <select
+                      v-model="prefix"
+                      class="select ml-3"
+                    >
+                      <option
+                        v-for="prefix in prefixList"
+                        v-bind:key="prefix.name"
+                        v-bind:value="prefix.name"
+                      >
+                        {{ prefix.name }}
+                      </option>
+                    </select>
                   </div>
                   <div
                     class="flex flex-col mb-medium w-1/2 mr-12"
@@ -773,6 +786,14 @@ export default {
     let expirationDateExceedTodayError = ref(false);
 
     let professionalTypeIds = ref([]);
+    let prefixList = ref([{name: 'Consultant', id: 1},
+                          {name: 'Expert', id: 2},
+                          {name: 'Junior', id: 3},
+                          {name: 'Senior', id: 4},
+                          {name: 'Senior expert', id: 5},
+                          {name: 'Chief', id: 6},
+                          {name: 'Chief expert', id: 7}]);
+    let prefix = ref();
     let canChangeName = ref(false);
     let showProfessionChangeError = ref(false);
     let showSpinner = ref(false);
@@ -1261,6 +1282,9 @@ export default {
           sendDeclinedData.value = true;
         }
       }
+      if (prefix.value !== undefined) {
+        newLicense.value.prefix = prefix.value
+      }
       newLicense.value.declinedFields = rejected.value;
       newLicense.value.acceptedFields = accepted.value;
       newLicense.value.certified = true;
@@ -1271,7 +1295,6 @@ export default {
         action: actionValue,
         data: newLicense.value,
       };
-
       if (
         applicationType.value == "New License" &&
         sendDeclinedData.value == true
@@ -1515,6 +1538,8 @@ export default {
       expirationDateExceedTodayError,
       isCheckboxActive,
       checkBox,
+      prefixList,
+      prefix,
     };
   },
 };

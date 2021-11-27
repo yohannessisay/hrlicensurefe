@@ -130,14 +130,21 @@
                       >
                     </h3>
                     <h4>ተገቢውን መስፈርት አሟልተው ስለተገኙ ሚኒስቴር መስሪያ ቤቱ</h4>
-                    <h4>
-                      <b>{{
-                        certificateDetail.professionalTypes
-                          ? certificateDetail.professionalTypes[0].professionalTypes.amharicProfessionalType != null
-                            ? certificateDetail.professionalTypes.[0].professionalTypes.amharicProfessionalType
-                            : " "
-                          : " "
-                      }}</b>
+                    <h4
+                      v-if="
+                        certificateDetail.professionalTypes &&
+                          certificateDetail.professionalTypes[0]
+                            .professionalTypes.amharicProfessionalType
+                      "
+                    >
+                      <div
+                        v-for="professions in certificateDetail.professionalTypes"
+                        class="flex flex-row"
+                      >
+                        <b>{{
+                          professions.professionalTypes.amharicProfessionalType
+                        }}</b>
+                      </div>
                     </h4>
                     <br />
                     <h3>ሙያ መዝግቦ ይህን የሙያ ስራ ፈቃድ ሰጥቷል።</h3>
@@ -198,16 +205,19 @@
                       Having duly satisfied the requirements of the Ministry
                     </h4>
                     <h4>hereby registered and licensed as</h4>
-                    <h4>
-                      <b>{{
-                        certificateDetail.professionalTypes
-                          ? certificateDetail.professionalTypes[0]
-                              .professionalTypes.name != null
-                            ? certificateDetail.professionalTypes[0]
-                                .professionalTypes.name
-                            : " "
-                          : " "
-                      }}</b>
+                    <h4
+                      v-if="
+                        certificateDetail.professionalTypes &&
+                          certificateDetail.professionalTypes[0]
+                            .professionalTypes.name
+                      "
+                    >
+                      <div
+                        v-for="professions in certificateDetail.professionalTypes"
+                        class="flex flex-row"
+                      >
+                        <b>{{ professions.professionalTypes.name }}</b>
+                      </div>
                     </h4>
                     <br />
                     <h3>
@@ -445,10 +455,6 @@ export default {
         orientation: "landscape",
         filters: ["ASCIIHexEncode"],
       });
-      console.log(
-        "expiration date",
-        certificateDetail.value.licenseExpirationDate === null
-      );
 
       const userImage = certifiedUser.value.photo;
       if (certificateDetail.value.reviewer.expertLevel.code === "FED") {
@@ -538,11 +544,72 @@ export default {
       // doc.text(180, 147, "hereby registered and licensed as");
       doc.setFontSize(14);
 
-      doc.text(
-        200,
-        122,
-        `${certificateDetail.value.professionalTypes[0].professionalTypes.name}`
-      );
+      // doc.text(
+      //   200,
+      //   122,
+      //   `${certificateDetail.value.professionalTypes[0].professionalTypes.name}`
+      // );
+      if (certificateDetail.value.professionalTypes.length === 1) {
+        doc.text(
+          185,
+          122,
+          `${
+            certificateDetail.value.professionalTypes[0].professionalTypes
+              .name
+              ? certificateDetail.value.professionalTypes[0].professionalTypes
+                  .name
+              : ""
+          }`
+        );
+      } else if (certificateDetail.value.professionalTypes.length === 2) {
+        let firstTextWidth = doc.getTextWidth(
+          certificateDetail.value.professionalTypes[0].professionalTypes
+            .name
+        );
+        console.log("");
+        doc.setFontSize(12);
+        doc.text(
+          175,
+          122,
+          `${certificateDetail.value.professionalTypes[0].professionalTypes.name}`
+        );
+        doc.text(
+          168 + firstTextWidth,
+          122,
+          `, ${certificateDetail.value.professionalTypes[1].professionalTypes.name}`
+        );
+      } else if (certificateDetail.value.professionalTypes.length === 3) {
+        let firstTextWidth = doc.getTextWidth(
+          certificateDetail.value.professionalTypes[0].professionalTypes
+            .name
+        );
+        let secondTextWidth = doc.getTextWidth(
+          certificateDetail.value.professionalTypes[1].professionalTypes
+            .name
+        );
+        console.log(
+          "first width",
+          firstTextWidth,
+          "second text width",
+          secondTextWidth
+        );
+        doc.setFontSize(10);
+        doc.text(
+          175,
+          122,
+          `${certificateDetail.value.professionalTypes[0].professionalTypes.name}`
+        );
+        doc.text(
+          168 + firstTextWidth,
+          122,
+          `, ${certificateDetail.value.professionalTypes[1].professionalTypes.name}`
+        );
+        doc.text(
+          160 + firstTextWidth + secondTextWidth,
+          122,
+          `, ${certificateDetail.value.professionalTypes[1].professionalTypes.name}`
+        );
+      }
       // doc.text(190, 170, 'DENTAL SURGON')
       doc.setFontSize(12);
       doc.text(
@@ -621,11 +688,67 @@ export default {
       doc.setFontSize(14);
       // doc.text(65, 143, "ጁኒየር")
       // doc.text(55, 153, "ጀነራልሜዲካል ፕራክቲሽነር")
-      doc.text(
-        65,
-        117,
-        `${certificateDetail.value.professionalTypes[0].professionalTypes.amharicProfessionalType}`
-      );
+      if (certificateDetail.value.professionalTypes.length === 1) {
+        doc.text(
+          65,
+          117,
+          `${
+            certificateDetail.value.professionalTypes[0].professionalTypes
+              .amharicProfessionalType
+              ? certificateDetail.value.professionalTypes[0].professionalTypes
+                  .amharicProfessionalType
+              : ""
+          }`
+        );
+      } else if (certificateDetail.value.professionalTypes.length === 2) {
+        let firstTextWidth = doc.getTextWidth(
+          certificateDetail.value.professionalTypes[0].professionalTypes
+            .amharicProfessionalType
+        );
+        console.log("");
+        doc.setFontSize(12);
+        doc.text(
+          44,
+          117,
+          `${certificateDetail.value.professionalTypes[0].professionalTypes.amharicProfessionalType}`
+        );
+        doc.text(
+          38 + firstTextWidth,
+          117,
+          `, ${certificateDetail.value.professionalTypes[1].professionalTypes.amharicProfessionalType}`
+        );
+      } else if (certificateDetail.value.professionalTypes.length === 3) {
+        let firstTextWidth = doc.getTextWidth(
+          certificateDetail.value.professionalTypes[0].professionalTypes
+            .amharicProfessionalType
+        );
+        let secondTextWidth = doc.getTextWidth(
+          certificateDetail.value.professionalTypes[1].professionalTypes
+            .amharicProfessionalType
+        );
+        console.log(
+          "first width",
+          firstTextWidth,
+          "second text width",
+          secondTextWidth
+        );
+        doc.setFontSize(10);
+        doc.text(
+          44,
+          117,
+          `${certificateDetail.value.professionalTypes[0].professionalTypes.amharicProfessionalType}`
+        );
+        doc.text(
+          38 + firstTextWidth,
+          117,
+          `, ${certificateDetail.value.professionalTypes[1].professionalTypes.amharicProfessionalType}`
+        );
+        doc.text(
+          35 + firstTextWidth + secondTextWidth,
+          117,
+          `, ${certificateDetail.value.professionalTypes[1].professionalTypes.amharicProfessionalType}`
+        );
+      }
       // doc.text(40, 163, "ሙያ መዝግቦ ይህን የሙያ ስራ ፈቃድ ሰጥቷል።");
       doc.setFontSize(12);
       // doc.text(80)
