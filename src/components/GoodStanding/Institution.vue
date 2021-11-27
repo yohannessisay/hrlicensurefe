@@ -33,7 +33,7 @@
                 }}</span>
               </div>
               <div class="flex flex-col mb-small w-2/5 mr-12 ml-medium">
-                <label class="text-primary-700">Expert Level</label>
+                <!-- <label class="text-primary-700">Expert Level</label>
                 <select
                   class="max-w-3xl"
                   @change="checkExpertLevel(licenseInfo.expertLevelId)"
@@ -49,7 +49,7 @@
                 </select>
                 <span style="color: red">{{
                   licenseInfoErrors.expertLevelId
-                }}</span>
+                }}</span> -->
               </div>
             </div>
             <div class="flex">
@@ -477,17 +477,25 @@ export default {
   }),
 
   methods: {
-    checkExpertLevel(expertLevel) {
+    // checkExpertLevel(expertLevel) {
+    //   this.regionID = null;
+    //   this.zoneID = null;
+    //   this.licenseInfo.residenceWoredaId = null;
+    //   if (expertLevel == 4) {
+    //     this.showRegion = true;
+    //   } else {
+    //     this.showRegion = false;
+    //   }
+    // },
+    checkApplicantType(applicantType) {
       this.regionID = null;
       this.zoneID = null;
       this.licenseInfo.residenceWoredaId = null;
-      if (expertLevel == 4) {
+      if (expertLevel == 1) {
         this.showRegion = true;
       } else {
         this.showRegion = false;
       }
-    },
-    checkApplicantType(applicantType) {
       if (applicantType == 1) {
         this.$store.dispatch("goodstanding/getExpertLevel").then((res) => {
           this.expertLevels = res.data.data.filter(function(e) {
