@@ -239,8 +239,7 @@
         </div>
         <div class="flex justify-center mt-4">
           <h6>
-            If you don't have all the required informations you can come back
-            and finish later.
+            You need to check the box to be able to submit.
           </h6>
         </div>
         <div class="flex justify-center mt-4 mb-8">
