@@ -495,7 +495,7 @@
                 @dropDownListHandler="dropDownListHandler"
               />
 
-              <li
+              <!-- <li
                 class="mb-2"
               >
                 <a href="https://hrdelk.sandboxaddis.com/s/hrl/app/kibana#/dashboard/68d0dcc0-388f-11ec-9b4d-1fc6319d2633?_a=(description:'',filters:!(),fullScreenMode:!f,options:(hidePanelTitles:!f,useMargins:!t),panels:!((embeddableConfig:(title:'Applications%20'),gridData:(h:7,i:'8fc21afc-1a94-403f-8bcd-4d15ae519476',w:16,x:0,y:0),id:'94615bd0-388f-11ec-9b4d-1fc6319d2633',panelIndex:'8fc21afc-1a94-403f-8bcd-4d15ae519476',title:'Applications%20',type:visualization,version:'7.7.0'),(embeddableConfig:(title:'Experts%20Engaged'),gridData:(h:7,i:'5db0f6df-f913-458f-a68d-30f7de85b289',w:16,x:16,y:0),id:c1b66e40-388f-11ec-9b4d-1fc6319d2633,panelIndex:'5db0f6df-f913-458f-a68d-30f7de85b289',title:'Experts%20Engaged',type:visualization,version:'7.7.0'),(embeddableConfig:(),gridData:(h:15,i:'1e044244-3873-495d-89f3-2a878d180356',w:27,x:0,y:7),id:'127b3300-3891-11ec-9b4d-1fc6319d2633',panelIndex:'1e044244-3873-495d-89f3-2a878d180356',type:visualization,version:'7.7.0'),(embeddableConfig:(),gridData:(h:15,i:fc0ffdec-9390-441f-a625-9acecd0413f4,w:21,x:27,y:7),id:'52bb1b10-3891-11ec-9b4d-1fc6319d2633',panelIndex:fc0ffdec-9390-441f-a625-9acecd0413f4,type:visualization,version:'7.7.0'),(embeddableConfig:(title:'Application%20by%20Profession'),gridData:(h:15,i:a9cc645b-e836-4e56-890d-d86ed6553326,w:25,x:0,y:22),id:d8497970-3891-11ec-9b4d-1fc6319d2633,panelIndex:a9cc645b-e836-4e56-890d-d86ed6553326,title:'Application%20by%20Profession',type:visualization,version:'7.7.0'),(embeddableConfig:(title:'Application%20by%20Region'),gridData:(h:15,i:'60525430-455c-481b-a083-d8df9e6d905d',w:23,x:25,y:22),id:'62ba1800-3868-11ec-9b4d-1fc6319d2633',panelIndex:'60525430-455c-481b-a083-d8df9e6d905d',title:'Application%20by%20Region',type:visualization,version:'7.7.0')),query:(language:kuery,query:''),timeRestore:!f,title:'good%20standing',viewMode:view)&_g=(filters:!(),refreshInterval:(pause:!t,value:0),time:(from:now-30d,to:now))" 
@@ -503,7 +503,7 @@
                   <i class="mr-2 far fa-address-book fa-x fa-light"></i>
                   Dashboard
                 </a>
-              </li>
+              </li> -->
 
               <!-- All Licensed Applications starts here -->
 
