@@ -200,6 +200,8 @@
               Back
             </button>
             <button
+              id="subButton"
+              style="opacity: 0.3"
               :disabled="this.checkBoxValue == true"
               v-if="this.buttons.length < 3"
               @click="submitRequest(this.buttons[0].action)"
@@ -207,6 +209,8 @@
               {{ this.buttons[0].name }}
             </button>
             <button
+              id="subButton"
+              style="opacity: 0.3"
               :disabled="this.checkBoxValue == true"
               v-if="this.buttons.length > 2"
               @click="submitRequest(this.buttons[0].action)"
@@ -781,6 +785,7 @@ export default {
     this.expertLevelId = this.license.expertLevelId;
     this.buttons = this.getButtons;
   },
+
   data: () => ({
     basePath: "https://storage.googleapis.com/hris-lisence-dev/",
     docList: [],
@@ -889,6 +894,13 @@ export default {
   methods: {
     checkBox: function() {
       this.checkBoxValue = !this.checkBoxValue;
+      if (this.checkBoxValue) {
+        var element = document.getElementById("subButton");
+        element.style.opacity = 0.3;
+      } else {
+        var element = document.getElementById("subButton");
+        element.style.opacity = 1;
+      }
     },
     moment: function(date) {
       return moment(date);
@@ -1588,5 +1600,9 @@ export default {
   background-image: linear-gradient(to right, #d63232, #e63636) !important;
   color: white;
   border-color: tomato;
+}
+.disabled {
+  pointer-events: none;
+  opacity: 0.3;
 }
 </style>

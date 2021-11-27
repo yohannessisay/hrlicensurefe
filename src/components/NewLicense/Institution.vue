@@ -689,13 +689,16 @@ export default {
       if (this.licenseInfo.educationalLevelId == null) {
         this.licenseInfo.educationalLevelId = 4;
       }
-      let profTypes = {
-        professionalTypeIds: this.licenseInfo.professionalTypeIds,
-      };
-      // console.log(profTypes);
+      // let profTypes = {
+      //   professionalTypeIds: this.licenseInfo.professionalTypeIds,
+      // };
       // this.$store
-      //   .dispatch("newlicense/searchProfessionalType", profTypes)
+      //   .dispatch(
+      //     "newlicense/searchProfessionalType",
+      //     this.licenseInfo.professionalTypeIds
+      //   )
       //   .then((res) => {
+      //     console.log(res);
       //   });
       this.$emit("changeActiveState");
       this.$emit("applicantTypeValue", this.licenseInfo.applicantTypeId);
