@@ -191,11 +191,12 @@
               </select>
               <div v-if="professionalTypeRepeat">
                 <span
+                  style="font-size: 18px; color: red"
                   v-for="prof in this.repeatedProfArray"
                   v-bind:key="prof.name"
                   v-bind:value="prof.id"
                 >
-                  {{ prof.name }} is previously saved.
+                  {{ prof.name }} was previously saved.
                 </span>
               </div>
             </div>
