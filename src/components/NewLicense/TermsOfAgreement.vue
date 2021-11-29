@@ -25,6 +25,8 @@
       <div class="ml-8">
         <h2>Foreigner</h2>
         <ul>
+          <li>Passport</li>
+          <li>Medical Certificate</li>
           <li>Health Exam Certificate</li>
           <div class="tooltip">
             English Language Proficiency Certificate
@@ -32,24 +34,15 @@
               For non-English speaking countries only
             </span>
           </div>
-          <li>Higher Education Relevance and Quality Agency center(HERQA)</li>
+          <div class="tooltip">
+            Higher Education Relevance and Quality Agency center
+            <span class="tooltiptext ml-4">
+              HERQA
+            </span>
+          </div>
           <li>Letter from Organization</li>
           <div class="tooltip">
-            Authenticated Professional Document Certificate
-            <span class="tooltiptext ml-4">
-              Diploma, Transcript for both Under and Post-Graduate Certificate
-            </span>
-          </div>
-          <br />
-          <div class="tooltip">
-            Authenticated Professional Document Diploma
-            <span class="tooltiptext ml-4">
-              Diploma, Transcript for both Under and Post-Graduate Certificate
-            </span>
-          </div>
-          <br />
-          <div class="tooltip">
-            Authenticated Professional Document Transcript
+            Authenticated Academic Document
             <span class="tooltiptext ml-4">
               Diploma, Transcript for both Under and Post-Graduate Certificate
             </span>
@@ -58,21 +51,21 @@
           <div class="tooltip">
             Authenticated Professional License from Country of Origin
             <span class="tooltiptext ml-4">
-              Organizations found in Ethiopia
+              Found in Ethiopia
             </span>
           </div>
           <br />
           <div class="tooltip">
-            Renewed License of the Organization
+            Request Letter from Health Facility
             <span class="tooltiptext ml-4">
-              Organizations found in Ethiopia
+              Found in Ethiopia
             </span>
           </div>
           <br />
           <div class="tooltip">
-            Authenticated Work Experience
+            Current Work Experience / Goodstanding Letter
             <span class="tooltiptext ml-4">
-              More than 2 years.
+              More than two years.
             </span>
           </div>
         </ul>
@@ -80,22 +73,27 @@
       <div class="ml-8">
         <h2>Ethiopian</h2>
         <ul>
-          <li>Passport(Identification Card)</li>
+          <li>Residence ID</li>
           <li>Health Exam Certificate</li>
           <div class="tooltip">
-            COC
+            COC Certificate
             <span class="tooltiptext ml-4">
               Only for Diploma Graduates
             </span>
           </div>
           <br />
-          <li>Degree</li>
-          <li>Diploma</li>
-          <li>8<sup>th</sup> Grade Certificate</li>
-          <li>10<sup>th</sup> Grade Certificate</li>
-          <li>12<sup>th</sup> Grade Certificate</li>
-          <li>9<sup>th</sup> - 10<sup>th</sup> Transcript</li>
-          <li>11<sup>th</sup> - 12<sup>th</sup> Transcript</li>
+          <div class="tooltip">
+            Academic Document
+            <span class="tooltiptext ml-4">
+              Diploma, Bachelor or MD, Masters or specialists, PhD
+            </span>
+          </div>
+          <br />
+          <li>
+            8<sup>th</sup>, 10<sup>th</sup>, 12<sup>th</sup> Grade Certificate
+          </li>
+          <li>9<sup>th</sup> - 10<sup>th</sup></li>
+          <li>11<sup>th</sup> - 12<sup>th</sup></li>
           <div class="tooltip">
             Payroll Document
             <span class="tooltiptext ml-4">
@@ -104,60 +102,61 @@
           </div>
           <br />
           <div class="tooltip">
-            Support Letter
+            Support Letter from Sponsored Institution
             <span class="tooltiptext ml-4">
               For those upgraded by the sponsorship of an Institution
             </span>
           </div>
           <br />
-          <li>Transcript</li>
           <li>Work Experience</li>
+          <li>Academic Transcript</li>
         </ul>
       </div>
       <div class="ml-8">
-        <h2>Foreigner Ethiopian</h2>
+        <h2>Ethiopians from Abroad</h2>
         <ul>
           <div class="tooltip">
-            Passport(Identification Card)
+            Residence ID or Passport or Yellow Card
             <span class="tooltiptext ml-4">
               Proof of Ethiopian decent
             </span>
           </div>
           <br />
-          <li>Health Exam Certificate</li>
-          <li>Higher Education Relevance and Quality Agency center(HERQA)</li>
+          <li>Medical Certificate</li>
           <div class="tooltip">
-            Authenticated Professional Document Diploma
+            Higher Education Relevance and Quality Agency center
+            <span class="tooltiptext ml-4">
+              HERQA
+            </span>
+          </div>
+          <div class="tooltip">
+            Authenticated Academic Document
             <span class="tooltiptext ml-4">
               Diploma, Transcript for both Under and Post-Graduate Certificate
             </span>
           </div>
           <br />
-          <div class="tooltip">
-            Authenticated Professional Document Transcript
-            <span class="tooltiptext ml-4">
-              Diploma, Transcript for both Under and Post-Graduate Certificate
-            </span>
-          </div>
-          <br />
-          <div class="tooltip">
+          <li>
             Authenticated Professional License from Country of Origin
+          </li>
+          <div class="tooltip">
+            Renewed License of the Health Facility/Organization
             <span class="tooltiptext ml-4">
-              Organizations found in Ethiopia
+              Found in Ethiopia
             </span>
           </div>
           <br />
           <div class="tooltip">
-            Support Letter
+            Request Letter from health Facility
             <span class="tooltiptext ml-4">
-              For those upgraded by the sponsorship of an Institution
+              Found in Ethiopia
             </span>
           </div>
           <br />
           <div class="tooltip">
-            Authenticated Work Experience
+            Current Work Experience/ Goodstanding Letter
             <span class="tooltiptext ml-4">
-              If he/she was working abroad
+              More than two years
             </span>
           </div>
         </ul>

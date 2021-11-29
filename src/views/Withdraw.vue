@@ -154,7 +154,7 @@
           </div>
         </div>
       </div>
-      <div v-if="!this.showLoading" class="bg-lightBlueB-200 h-full">
+      <!-- <div v-if="!this.showLoading" class="bg-lightBlueB-200 h-full">
         <div class="flex pl-12 pt-medium">
           <Title message="Verification Withdrawn Applications" />
         </div>
@@ -234,7 +234,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
       <div v-if="!this.showLoading" class="bg-lightBlueB-200 h-full">
         <div class="flex pl-12 pt-medium">
           <Title message="Good Standing Withdrawn Applications" />

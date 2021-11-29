@@ -330,13 +330,14 @@ export default {
       return error;
     }
   },
-  async searchProfessionalType({ commit }, profTypes) {
+  async searchProfessionalType({ commit }, professionalTypeIds) {
+    console.log(professionalTypeIds);
     try {
       const resp = await ApiService.get(
         url + "newLicenses/search/professionalType",
         {
           params: {
-            professionalTypeIds: profTypes,
+            professionalTypeIds,
           },
         }
       );
