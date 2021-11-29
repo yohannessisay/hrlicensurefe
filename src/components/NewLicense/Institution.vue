@@ -697,9 +697,9 @@ export default {
       if (this.licenseInfo.educationalLevelId == null) {
         this.licenseInfo.educationalLevelId = 4;
       }
-      // let profTypes = {
-      //   professionalTypeIds: this.licenseInfo.professionalTypeIds,
-      // };
+      let profTypes = {
+        professionalTypeIds: this.licenseInfo.professionalTypeIds,
+      };
       // this.$store
       //   .dispatch(
       //     "newlicense/searchProfessionalType",

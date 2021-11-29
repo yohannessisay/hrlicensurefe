@@ -49,7 +49,7 @@
         </ul>
       </div>
       <div class="ml-8">
-        <h2>Foreigner Ethiopian</h2>
+        <h2>Ethiopians from Abroad</h2>
         <ul>
           <li>Health Exam Certificate</li>
           <li>CPD</li>
