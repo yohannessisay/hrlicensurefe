@@ -189,9 +189,15 @@
                   {{ types.name }}
                 </option>
               </select>
-              <!-- <span style="color: red">{{
-                licenseInfoErrors.professionalTypeIds
-              }}</span> -->
+              <div v-if="professionalTypeRepeat">
+                <span
+                  v-for="prof in this.repeatedProfArray"
+                  v-bind:key="prof.name"
+                  v-bind:value="prof.id"
+                >
+                  {{ prof.name }} is previously saved.
+                </span>
+              </div>
             </div>
           </div>
           <div
@@ -465,6 +471,9 @@ export default {
     payrollData: "",
     educationData: [],
     showProfessionalTypes: false,
+
+    professionalTypeRepeat: false,
+    repeatedProfArray: [],
   }),
 
   methods: {
@@ -700,20 +709,21 @@ export default {
       let profTypes = {
         professionalTypeIds: this.licenseInfo.professionalTypeIds,
       };
-      // this.$store
-      //   .dispatch(
-      //     "newlicense/searchProfessionalType",
-      //     this.licenseInfo.professionalTypeIds
-      //   )
-      //   .then((res) => {
-      //     console.log(res);
-      //   });
-      this.$emit("changeActiveState");
-      this.$emit("applicantTypeValue", this.licenseInfo.applicantTypeId);
-      this.$emit("nativeLanguageSet", this.licenseInfo.nativeLanguageId);
-      this.$emit("payrollDocumentSet", this.licenseInfo.occupationTypeId);
-      this.$emit("diplomaSet", this.licenseInfo.educationalLevelId);
-      this.$store.dispatch("newlicense/setLicense", license);
+      this.$store
+        .dispatch("newlicense/searchProfessionalType", profTypes)
+        .then((res) => {
+          if (res.data.data.length > 0) {
+            this.professionalTypeRepeat = true;
+            this.repeatedProfArray = res.data.data;
+          } else {
+            this.$emit("changeActiveState");
+            this.$emit("applicantTypeValue", this.licenseInfo.applicantTypeId);
+            this.$emit("nativeLanguageSet", this.licenseInfo.nativeLanguageId);
+            this.$emit("payrollDocumentSet", this.licenseInfo.occupationTypeId);
+            this.$emit("diplomaSet", this.licenseInfo.educationalLevelId);
+            this.$store.dispatch("newlicense/setLicense", license);
+          }
+        });
     },
     fetchApplicantType() {
       this.$store.dispatch("newlicense/getApplicantType").then((res) => {

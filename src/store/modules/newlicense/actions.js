@@ -330,16 +330,11 @@ export default {
       return error;
     }
   },
-  async searchProfessionalType({ commit }, professionalTypeIds) {
-    console.log(professionalTypeIds);
+  async searchProfessionalType({ commit }, profTypes) {
     try {
-      const resp = await ApiService.get(
+      const resp = await ApiService.post(
         url + "newLicenses/search/professionalType",
-        {
-          params: {
-            professionalTypeIds,
-          },
-        }
+        profTypes
       );
       return resp;
     } catch (error) {

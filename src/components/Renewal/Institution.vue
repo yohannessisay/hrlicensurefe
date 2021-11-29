@@ -473,7 +473,7 @@ export default {
       this.regionID = null;
       this.zoneID = null;
       this.licenseInfo.residenceWoredaId = null;
-      if (expertLevel == 1) {
+      if (applicantType == 1) {
         this.showRegion = true;
       } else {
         this.showRegion = false;
