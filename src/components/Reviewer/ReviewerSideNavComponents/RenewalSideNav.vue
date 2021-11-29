@@ -38,10 +38,7 @@
                 ]"
                 name="Unassigned"
                 dropDownHandlerValue="RenewalUnassigned"
-                :dropDownMenus="[
-                  'RenewalUnassigned',
-                  'renewalReSubmitted',
-                ]"
+                :dropDownMenus="['RenewalUnassigned', 'renewalReSubmitted']"
                 :isDropDownIconUp="renewalDDIcon.isUnassignedUp"
                 :adminRole="adminRole"
                 :yoursAndOthersApplication="['Unassigned', 'Re Submitted']"
@@ -788,7 +785,8 @@ export default {
       } else if (applicationValue == "RenewalLicensed") {
         renewalDDIcon.value.isLicensedUp = !renewalDDIcon.value.isLicensedUp;
       } else if (applicationValue == "RenewalUnassigned") {
-        renewalDDIcon.value.isUnassignedUp = !renewalDDIcon.value.isUnassignedUp;
+        renewalDDIcon.value.isUnassignedUp = !renewalDDIcon.value
+          .isUnassignedUp;
       }
       emit("applicationTypeSelected", applicationValue);
     };

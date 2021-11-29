@@ -417,7 +417,7 @@ export default {
           .isUnassignedUp;
       }
       emit("applicationTypeSelected", applicationValue);
-    }
+    };
     const dropDownListHandler = (menu) => {
       emit("selectVerificationMenu", menu);
     };

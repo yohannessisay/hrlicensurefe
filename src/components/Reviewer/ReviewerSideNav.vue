@@ -19,12 +19,12 @@
           @applicationTypeSelected="applicationTypeHandler"
           @selectRenewalMenu="selectMenu"
         />
-        <verification-side-nav
+        <!-- <verification-side-nav
           :dropdownValue="dropdownValue"
           :adminRole="adminRole"
           @applicationTypeSelected="applicationTypeHandler"
           @selectVerificationMenu="selectMenu"
-        />
+        /> -->
         <good-standing-side-nav
           :dropdownValue="dropdownValue"
           :adminRole="adminRole"
