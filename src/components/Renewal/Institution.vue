@@ -188,9 +188,16 @@
                   {{ types.name }}
                 </option>
               </select>
-              <!-- <span style="color: red">{{
-                licenseInfoErrors.professionalTypeIds
-              }}</span> -->
+              <div v-if="professionalTypeRepeat">
+                <span
+                  style="font-size: 28px; color: red"
+                  v-for="prof in this.repeatedProfArray"
+                  v-bind:key="prof.name"
+                  v-bind:value="prof.id"
+                >
+                  {{ prof.name }} is previously saved.
+                </span>
+              </div>
             </div>
           </div>
           <div v-if="this.displayPayrollDoc" id="main" class="flex pt-8 mt-4">
@@ -441,6 +448,9 @@ export default {
 
     educationData: [],
     showProfessionalTypes: false,
+
+    professionalTypeRepeat: false,
+    repeatedProfArray: [],
   }),
 
   methods: {
@@ -649,25 +659,46 @@ export default {
       if (this.licenseInfo.educationalLevelId == null) {
         this.licenseInfo.educationalLevelId = 4;
       }
-      this.$store.dispatch("renewal/searchNewLicense").then((res) => {
-        if (res.data.data == true) {
-          this.firstTimeUser = false;
-          this.$emit("changeActiveState");
-          this.$emit("applicantTypeValue", this.licenseInfo.applicantTypeId);
-          this.$emit("payrollDocumentSet", this.licenseInfo.occupationTypeId);
-          this.$emit("firstTimeUserSet", this.firstTimeUser);
-          this.$emit("diplomaSet", this.licenseInfo.educationalLevelId);
-          this.$store.dispatch("renewal/setLicense", license);
-        } else {
-          this.firstTimeUser = true;
-          this.$emit("changeActiveState");
-          this.$emit("applicantTypeValue", this.licenseInfo.applicantTypeId);
-          this.$emit("payrollDocumentSet", this.licenseInfo.occupationTypeId);
-          this.$emit("firstTimeUserSet", this.firstTimeUser);
-          this.$emit("diplomaSet", this.licenseInfo.educationalLevelId);
-          this.$store.dispatch("renewal/setLicense", license);
-        }
-      });
+      this.$store
+        .dispatch("newlicense/searchProfessionalType", profTypes)
+        .then((res) => {
+          if (res.data.data.length > 0) {
+            this.professionalTypeRepeat = true;
+            this.repeatedProfArray = res.data.data;
+          } else {
+            this.$store.dispatch("renewal/searchNewLicense").then((res) => {
+              if (res.data.data == true) {
+                this.firstTimeUser = false;
+                this.$emit("changeActiveState");
+                this.$emit(
+                  "applicantTypeValue",
+                  this.licenseInfo.applicantTypeId
+                );
+                this.$emit(
+                  "payrollDocumentSet",
+                  this.licenseInfo.occupationTypeId
+                );
+                this.$emit("firstTimeUserSet", this.firstTimeUser);
+                this.$emit("diplomaSet", this.licenseInfo.educationalLevelId);
+                this.$store.dispatch("renewal/setLicense", license);
+              } else {
+                this.firstTimeUser = true;
+                this.$emit("changeActiveState");
+                this.$emit(
+                  "applicantTypeValue",
+                  this.licenseInfo.applicantTypeId
+                );
+                this.$emit(
+                  "payrollDocumentSet",
+                  this.licenseInfo.occupationTypeId
+                );
+                this.$emit("firstTimeUserSet", this.firstTimeUser);
+                this.$emit("diplomaSet", this.licenseInfo.educationalLevelId);
+                this.$store.dispatch("renewal/setLicense", license);
+              }
+            });
+          }
+        });
     },
     fetchApplicantType() {
       this.$store.dispatch("renewal/getApplicantType").then((res) => {
