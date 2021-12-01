@@ -160,6 +160,15 @@ export default {
   setPhdTranscript({ commit }, phdTranscript) {
     commit(SET_PHD_TRANSCRIPT, phdTranscript);
   },
+  async storeDeclinedFields({ commit }, fields) {
+    commit(SET_DECLINED_FIELDS, fields);
+  },
+  async storeAcceptedFields({ commit }, fields) {
+    commit(SET_ACCEPTED_FIELDS, fields);
+  },
+  async storeRemark({ commit }, remark) {
+    commit(SET_REMARK, remark);
+  },
   async addRenewalLicense({ commit }, license) {
     try {
       const resp = await ApiService.post(url + "renewals/add", license);
@@ -347,13 +356,15 @@ export default {
       return resp;
     }
   },
-  async storeDeclinedFields({ commit }, fields) {
-    commit(SET_DECLINED_FIELDS, fields);
-  },
-  async storeAcceptedFields({ commit }, fields) {
-    commit(SET_ACCEPTED_FIELDS, fields);
-  },
-  async storeRemark({ commit }, remark) {
-    commit(SET_REMARK, remark);
+  async searchProfessionalType({ commit }, profTypes) {
+    try {
+      const resp = await ApiService.post(
+        url + "renewals/search/professionalType",
+        profTypes
+      );
+      return resp;
+    } catch (error) {
+      return error;
+    }
   },
 };
