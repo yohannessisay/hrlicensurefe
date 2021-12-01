@@ -720,7 +720,6 @@ export default {
           }.bind(this),
           false
         );
-
         if (this.photoFile) {
           if (/\.(jpe?g|png|gif)$/i.test(this.photoFile.name)) {
             this.isImage = true;
@@ -877,6 +876,8 @@ export default {
             occupationTypeId: this.licenseInfo.occupationTypeId,
             nativeLanguageId: this.licenseInfo.nativeLanguageId,
             expertLevelId: this.licenseInfo.expertLevelId,
+            otherEducationalInstitution: this.licenseInfo
+              .otherEducationalInstitution,
           },
         };
         this.$store

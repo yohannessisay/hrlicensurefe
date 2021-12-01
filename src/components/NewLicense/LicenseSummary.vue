@@ -782,6 +782,7 @@ export default {
     this.educationalLevelId = this.license.educationalLevelId;
     this.nativeLanguageId = this.license.nativeLanguageId;
     this.expertLevelId = this.license.expertLevelId;
+    this.otherEducationalInstitution = this.license.otherEducationalInstitution;
     this.buttons = this.getButtons;
   },
 
@@ -803,6 +804,7 @@ export default {
     expertLevelId: null,
     occupationTypeId: null,
     educationalLevelId: null,
+    otherEducationalInstitution: null,
     draftId: "",
     draftData: "",
     draftStatus: "",
@@ -1198,6 +1200,7 @@ export default {
             nativeLanguageId: this.nativeLanguageId,
             expertLevelId: this.expertLevelId,
             isLegal: this.checkBoxValue,
+            otherEducationalInstitution: this.otherEducationalInstitution,
           },
         };
         this.$store
@@ -1478,6 +1481,7 @@ export default {
             nativeLanguageId: this.nativeLanguageId,
             expertLevelId: this.expertLevelId,
             isLegal: this.checkBoxValue,
+            otherEducationalInstitution: this.otherEducationalInstitution,
           },
         };
         this.$store
@@ -1524,6 +1528,7 @@ export default {
             nativeLanguageId: this.nativeLanguageId,
             expertLevelId: this.expertLevelId,
             isLegal: this.checkBoxValue,
+            otherEducationalInstitution: this.otherEducationalInstitution,
           },
         },
         id: this.draftId,

@@ -408,6 +408,8 @@ export default {
             occupationTypeId: licenseInfo.occupationTypeId,
             nativeLanguageId: licenseInfo.nativeLanguageId,
             expertLevelId: licenseInfo.expertLevelId,
+            otherEducationalInstitution:
+              licenseInfo.otherEducationalInstitution,
           },
         };
         store.dispatch("renewal/addRenewalLicense", license).then((res) => {
@@ -557,6 +559,8 @@ export default {
             occupationTypeId: licenseInfo.occupationTypeId,
             nativeLanguageId: licenseInfo.nativeLanguageId,
             expertLevelId: licenseInfo.expertLevelId,
+            otherEducationalInstitution:
+              licenseInfo.otherEducationalInstitution,
           },
         };
         store.dispatch("renewal/addRenewalLicense", license).then((res) => {

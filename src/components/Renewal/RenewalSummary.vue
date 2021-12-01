@@ -814,6 +814,7 @@ export default {
     this.occupationTypeId = this.license.occupationTypeId;
     this.expertLevelId = this.license.expertLevelId;
     this.educationalLevelId = this.license.educationalLevelId;
+    this.otherEducationalInstitution = this.license.otherEducationalInstitution;
   },
   data: () => ({
     basePath: "https://storage.googleapis.com/hris-lisence-dev/",
@@ -832,6 +833,7 @@ export default {
     occupationTypeId: null,
     educationalLevelId: null,
     expertLevelId: null,
+    otherEducationalInstitution: null,
     draftId: "",
     draftData: "",
     draftStatus: "",
@@ -1249,6 +1251,7 @@ export default {
             occupationTypeId: this.occupationTypeId,
             expertLevelId: this.expertLevelId,
             islegal: this.checkBoxValue,
+            otherEducationalInstitution: this.otherEducationalInstitution,
           },
         };
         this.$store
@@ -1294,6 +1297,7 @@ export default {
             occupationTypeId: this.occupationTypeId,
             expertLevelId: this.expertLevelId,
             islegal: this.checkBoxValue,
+            otherEducationalInstitution: this.otherEducationalInstitution,
           },
         },
         id: this.draftId,
@@ -1598,6 +1602,7 @@ export default {
             occupationTypeId: this.occupationTypeId,
             expertLevelId: this.expertLevelId,
             islegal: this.checkBoxValue,
+            otherEducationalInstitution: this.otherEducationalInstitution,
           },
         };
         this.$store

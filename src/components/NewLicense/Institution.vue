@@ -82,11 +82,14 @@
             </div>
             <div class="flex flex-col mb-medium w-2/5 mr-12">
               <label class="text-primary-700">Educational Institution</label>
-              <select v-model="licenseInfo.education.institutionId">
+              <select
+                v-model="institution"
+                @change="checkOtherEducation(institution)"
+              >
                 <option
                   v-for="institution in institutions"
                   v-bind:key="institution.name"
-                  v-bind:value="institution.id"
+                  v-bind:value="institution"
                 >
                   {{ institution.name }}
                 </option>
@@ -94,6 +97,13 @@
               <span style="color: red">{{
                 licenseInfoErrors.education.institutionId
               }}</span>
+              <input
+                v-model="licenseInfo.otherEducationalInstitution"
+                v-if="showOtherEducation"
+                class="mt-2"
+                placeholder="Write Education Level"
+                type="text"
+              />
             </div>
           </div>
           <div v-if="this.showRegion" id="main" class="pt-8 mt-4">
@@ -387,7 +397,6 @@ export default {
       }
     }
     await this.fetchApplicantType();
-    await this.fetchInstitutions();
     await this.fetchDepartments();
     await this.fetchRegions();
     await this.fetchEnglishSpeaker();
@@ -427,6 +436,7 @@ export default {
       occupationTypeId: null,
       expertLevelId: null,
       educationalLevelId: null,
+      otherEducationalInstitution: null,
     },
     licenseInfoErrors: {
       applicantTypeId: "",
@@ -440,6 +450,7 @@ export default {
       professionalTypeIds: [],
       expertLevelId: null,
       educationalLevelId: null,
+      otherEducationalInstitution: null,
     },
     regionID: "",
     zoneID: "",
@@ -475,6 +486,9 @@ export default {
 
     professionalTypeRepeat: false,
     repeatedProfArray: [],
+
+    institution: "",
+    showOtherEducation: false,
   }),
 
   methods: {
@@ -512,13 +526,22 @@ export default {
     //     this.showRegion = false;
     //   }
     // },
+
+    checkOtherEducation(institution) {
+      this.licenseInfo.education.institutionId = institution.id;
+      if (institution.name == "Other") {
+        this.showOtherEducation = true;
+      }
+    },
     checkApplicantType(applicantType) {
       this.regionID = null;
       this.zoneID = null;
       this.licenseInfo.residenceWoredaId = null;
       if (applicantType == 1) {
+        this.fetchInstitutions(true);
         this.showRegion = true;
       } else {
+        this.fetchInstitutions(false);
         this.showRegion = false;
       }
       if (applicantType == 1) {
@@ -584,6 +607,8 @@ export default {
             occupationTypeId: this.licenseInfo.occupationTypeId,
             nativeLanguageId: this.licenseInfo.nativeLanguageId,
             expertLevelId: this.licenseInfo.expertLevelId,
+            otherEducationalInstitution: this.licenseInfo
+              .otherEducationalInstitution,
           },
         },
         id: this.draftId,
@@ -632,6 +657,8 @@ export default {
             paymentSlip: null,
             occupationTypeId: this.licenseInfo.occupationTypeId,
             nativeLanguageId: this.licenseInfo.nativeLanguageId,
+            otherEducationalInstitution: this.licenseInfo
+              .otherEducationalInstitution,
             expertLevelId: this.licenseInfo.expertLevelId,
           },
         },
@@ -732,8 +759,8 @@ export default {
         this.applicantTypes = results;
       });
     },
-    fetchInstitutions() {
-      this.$store.dispatch("newlicense/getInstitution").then((res) => {
+    fetchInstitutions(value) {
+      this.$store.dispatch("newlicense/getInstitution", value).then((res) => {
         const results = res.data.data;
         this.institutions = results;
       });

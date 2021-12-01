@@ -876,6 +876,8 @@ export default {
             occupationTypeId: this.licenseInfo.occupationTypeId,
             nativeLanguageId: this.licenseInfo.nativeLanguageId,
             expertLevelId: this.licenseInfo.expertLevelId,
+            otherEducationalInstitution: this.licenseInfo
+              .otherEducationalInstitution,
           },
         };
         this.$store
