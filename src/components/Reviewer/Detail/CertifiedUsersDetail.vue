@@ -554,8 +554,7 @@ export default {
           185,
           122,
           `${
-            certificateDetail.value.professionalTypes[0].professionalTypes
-              .name
+            certificateDetail.value.professionalTypes[0].professionalTypes.name
               ? certificateDetail.value.professionalTypes[0].professionalTypes
                   .name
               : ""
@@ -563,8 +562,7 @@ export default {
         );
       } else if (certificateDetail.value.professionalTypes.length === 2) {
         let firstTextWidth = doc.getTextWidth(
-          certificateDetail.value.professionalTypes[0].professionalTypes
-            .name
+          certificateDetail.value.professionalTypes[0].professionalTypes.name
         );
         console.log("");
         doc.setFontSize(12);
@@ -580,12 +578,10 @@ export default {
         );
       } else if (certificateDetail.value.professionalTypes.length === 3) {
         let firstTextWidth = doc.getTextWidth(
-          certificateDetail.value.professionalTypes[0].professionalTypes
-            .name
+          certificateDetail.value.professionalTypes[0].professionalTypes.name
         );
         let secondTextWidth = doc.getTextWidth(
-          certificateDetail.value.professionalTypes[1].professionalTypes
-            .name
+          certificateDetail.value.professionalTypes[1].professionalTypes.name
         );
         console.log(
           "first width",

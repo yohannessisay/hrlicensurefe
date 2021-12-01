@@ -90,8 +90,6 @@
             <Title message="Address" />
           </div>
           <div class="flex flex-row">
-
-
             <div
               :class="[
                 profileInfo.houseNumber === null ? errorClass : activeClass,
@@ -223,7 +221,7 @@ export default {
       reviewersId: [],
       licenseId: "",
       createdByAdminId: "",
-    })
+    });
     let license = ref({
       applicant: {},
       applicantType: {},
@@ -255,9 +253,7 @@ export default {
     let profile = ref({});
     let applicationType = ref("");
 
-
-    onMounted(() => {
-    });
+    onMounted(() => {});
 
     return {
       userId,
