@@ -213,9 +213,11 @@ export default {
       return error;
     }
   },
-  async getInstitution() {
+  async getInstitution({ commit }, value) {
     try {
-      const resp = await ApiService.get(url + "lookups/institutions");
+      const resp = await ApiService.get(
+        url + "lookups/appTypeInstitutions/" + value
+      );
       return resp;
     } catch (error) {
       return error;

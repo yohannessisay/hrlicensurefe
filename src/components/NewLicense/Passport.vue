@@ -411,6 +411,8 @@ export default {
             occupationTypeId: licenseInfo.occupationTypeId,
             nativeLanguageId: licenseInfo.nativeLanguageId,
             expertLevelId: licenseInfo.expertLevelId,
+            otherEducationalInstitution:
+              licenseInfo.otherEducationalInstitution,
           },
         };
         store.dispatch("newlicense/addNewLicense", license).then((res) => {
@@ -579,6 +581,8 @@ export default {
             occupationTypeId: licenseInfo.occupationTypeId,
             nativeLanguageId: licenseInfo.nativeLanguageId,
             expertLevelId: licenseInfo.expertLevelId,
+            otherEducationalInstitution:
+              licenseInfo.otherEducationalInstitution,
           },
         };
         store.dispatch("newlicense/addNewLicense", license).then((res) => {

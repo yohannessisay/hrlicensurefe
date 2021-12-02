@@ -877,6 +877,8 @@ export default {
             paymentSlip: null,
             occupationTypeId: this.licenseInfo.occupationTypeId,
             expertLevelId: this.licenseInfo.expertLevelId,
+            otherEducationalInstitution: this.licenseInfo
+              .otherEducationalInstitution,
           },
         };
         this.$store
