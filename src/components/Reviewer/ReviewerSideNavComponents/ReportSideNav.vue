@@ -4,7 +4,7 @@
       <transition name="slide-fade-to-left">
         <div class="">
           <div
-          @click="reportMenuHandler('report')"
+            @click="reportMenuHandler('report')"
             class=" justify-center items-center "
           >
             <div class="p-1 ">
@@ -12,9 +12,7 @@
                 <span style="color: white;">
                   <i class="mr-2 fa fa-file-text"></i>
                 </span>
-                <span class="text-lg" style="color: white; "
-                  >Report</span
-                >
+                <span class="text-lg" style="color: white; ">Report</span>
               </h3>
             </div>
           </div>
@@ -26,15 +24,14 @@
 
 <script>
 export default {
-    
-    setup(props, {emit}) {
-        const reportMenuHandler = (menu) => {
-            emit("selectReportMenu", menu);
-        }
+  setup(props, { emit }) {
+    const reportMenuHandler = (menu) => {
+      emit("selectReportMenu", menu);
+    };
 
-        return {
-            reportMenuHandler,
-        }
-    }
-}
+    return {
+      reportMenuHandler,
+    };
+  },
+};
 </script>

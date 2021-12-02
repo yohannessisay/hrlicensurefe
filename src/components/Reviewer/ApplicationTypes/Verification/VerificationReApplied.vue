@@ -28,7 +28,10 @@
       </div>
       <div class="flex flex-wrap pb-medium rounded h-full" v-if="!showLoading">
         <nothing-to-show :nothingToShow="nothingToShow" />
-        <re-applied-applications :reappliedApplication="getVerificationReApply" app_type="Verification"/>
+        <re-applied-applications
+          :reappliedApplication="getVerificationReApply"
+          app_type="Verification"
+        />
       </div>
     </div>
     <div
@@ -40,10 +43,13 @@
     <div class="bg-lightBlueB-200 h-full" v-if="allInfo.searchByInput">
       <div class="flex pl-12 pt-tiny">
         <Title
-        :message="
-          'Reapplied Applicants on Date Range ' + moment(allInfo.searchFromDate).format('MMM D, YYYY') + ' To ' + moment(allInfo.searchUpToDate).format('MMM D, YYYY')
-        "
-      />
+          :message="
+            'Reapplied Applicants on Date Range ' +
+              moment(allInfo.searchFromDate).format('MMM D, YYYY') +
+              ' To ' +
+              moment(allInfo.searchUpToDate).format('MMM D, YYYY')
+          "
+        />
         <button @click="backClicked">back</button>
       </div>
       <filtered-info
@@ -64,7 +70,7 @@
 import { ref, onMounted } from "vue";
 import Title from "@/sharedComponents/TitleWithIllustration";
 import ReviewerNavBar from "../../ReviewerNavBar.vue";
-import ReAppliedApplications from "../ChildApplicationTypes/ReAppliedApplications.vue"
+import ReAppliedApplications from "../ChildApplicationTypes/ReAppliedApplications.vue";
 import NothingToShow from "../../ChildComponents/NothingToShow.vue";
 import { useStore } from "vuex";
 import store from "../../../../store";
@@ -75,12 +81,13 @@ import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import FilteredInfo from "../../ChildComponents/FilteredDatas/FilteredInfo.vue";
 import applicationStatus from "../../Configurations/getApplicationStatus.js";
 
-
 export default {
   computed: {
     moment: () => moment,
     getVerificationReApply() {
-      return store.getters["reviewerVerification/getVerificationReApplySearched"];
+      return store.getters[
+        "reviewerVerification/getVerificationReApplySearched"
+      ];
     },
   },
   components: {
@@ -129,30 +136,36 @@ export default {
 
     const fetchVerificationReApplied = () => {
       showLoading.value = true;
-      const statusId = applicationStatus(store, 'UPD');
+      const statusId = applicationStatus(store, "UPD");
       const adminStatus = [statusId, adminId];
-      store.dispatch("reviewerVerification/getVerificationReApply", adminStatus).then((res) => {
-        showLoading.value = false;
-        verificationReapplied.value =
-          store.getters["reviewerVerification/getVerificationReApplySearched"];
-        allInfo.value.assignApplication =
-          store.getters["reviewerVerification/getVerificationReApplySearched"];
-        for (let applicant in allInfo.value.assignApplication) {
-          allInfo.value.assignApplication[applicant].createdAt = moment(
-            allInfo.value.assignApplication[applicant].createdAt
-          ).format("MMMM D, YYYY");
-          if (
-            allInfo.value.assignApplication[applicant].applicationType ===
-            undefined
-          ) {
-            allInfo.value.assignApplication[applicant].applicationType =
-              allInfo.value.assignApplication[applicant].applicantType;
+      store
+        .dispatch("reviewerVerification/getVerificationReApply", adminStatus)
+        .then((res) => {
+          showLoading.value = false;
+          verificationReapplied.value =
+            store.getters[
+              "reviewerVerification/getVerificationReApplySearched"
+            ];
+          allInfo.value.assignApplication =
+            store.getters[
+              "reviewerVerification/getVerificationReApplySearched"
+            ];
+          for (let applicant in allInfo.value.assignApplication) {
+            allInfo.value.assignApplication[applicant].createdAt = moment(
+              allInfo.value.assignApplication[applicant].createdAt
+            ).format("MMMM D, YYYY");
+            if (
+              allInfo.value.assignApplication[applicant].applicationType ===
+              undefined
+            ) {
+              allInfo.value.assignApplication[applicant].applicationType =
+                allInfo.value.assignApplication[applicant].applicantType;
+            }
           }
-        }
-        if (verificationReapplied.value.length === 0) {
-          nothingToShow.value = true;
-        }
-      });
+          if (verificationReapplied.value.length === 0) {
+            nothingToShow.value = true;
+          }
+        });
     };
 
     onMounted(() => {

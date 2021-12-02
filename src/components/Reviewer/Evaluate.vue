@@ -415,6 +415,10 @@
                         v-bind:value="professionName.professionalTypes.id"
                       >
                         <li>
+                          <input @change="professionTypeCheckBox(professionName.professionalTypes.id)"
+                          type="checkbox"
+                          class="form-checkbox"
+                          />
                           {{ professionName.professionalTypes.name }} |
                           {{
                             professionName.professionalTypes
@@ -919,10 +923,6 @@ export default {
             getProfessionalTypesByDepartmentId(departmentId.value);
             profileInfo.value = newLicense.value.applicant.profile;
             applicantId.value = res.data.data.applicantId;
-            // newLicense.value.applicantType.name = "-";
-            // newLicense.value.education.department.name = "-";
-            // newLicense.value.education.institution.name = "-";
-            // newLicense.value.education.institution.institutionType.name = "-";
             newLicense.value = {
               ...newLicense.value,
               ...res.data.data,
@@ -1469,6 +1469,9 @@ export default {
     const checkBox = () => {
       isCheckboxActive.value = !isCheckboxActive.value;
     };
+    const professionTypeCheckBox = (id) => {
+      console.log("id is found", id)
+    }
 
     onMounted(() => {
       created(route.params.applicationType, route.params.applicationId);
@@ -1540,6 +1543,7 @@ export default {
       checkBox,
       prefixList,
       prefix,
+      professionTypeCheckBox,
     };
   },
 };

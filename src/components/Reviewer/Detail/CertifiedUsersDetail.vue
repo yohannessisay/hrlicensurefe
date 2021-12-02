@@ -549,63 +549,75 @@ export default {
       //   122,
       //   `${certificateDetail.value.professionalTypes[0].professionalTypes.name}`
       // );
-      if (certificateDetail.value.professionalTypes.length === 1) {
+      for(let i = 0; i < certificateDetail.value.professionalTypes.length; i++) {
         doc.text(
           185,
-          122,
+          125 + (i * 7),
           `${
-            certificateDetail.value.professionalTypes[0].professionalTypes.name
-              ? certificateDetail.value.professionalTypes[0].professionalTypes
+            certificateDetail.value.professionalTypes[i].professionalTypes.name
+              ? certificateDetail.value.professionalTypes[i].professionalTypes
                   .name
               : ""
           }`
-        );
-      } else if (certificateDetail.value.professionalTypes.length === 2) {
-        let firstTextWidth = doc.getTextWidth(
-          certificateDetail.value.professionalTypes[0].professionalTypes.name
-        );
-        console.log("");
-        doc.setFontSize(12);
-        doc.text(
-          175,
-          122,
-          `${certificateDetail.value.professionalTypes[0].professionalTypes.name}`
-        );
-        doc.text(
-          168 + firstTextWidth,
-          122,
-          `, ${certificateDetail.value.professionalTypes[1].professionalTypes.name}`
-        );
-      } else if (certificateDetail.value.professionalTypes.length === 3) {
-        let firstTextWidth = doc.getTextWidth(
-          certificateDetail.value.professionalTypes[0].professionalTypes.name
-        );
-        let secondTextWidth = doc.getTextWidth(
-          certificateDetail.value.professionalTypes[1].professionalTypes.name
-        );
-        console.log(
-          "first width",
-          firstTextWidth,
-          "second text width",
-          secondTextWidth
-        );
-        doc.setFontSize(10);
-        doc.text(
-          175,
-          122,
-          `${certificateDetail.value.professionalTypes[0].professionalTypes.name}`
-        );
-        doc.text(
-          168 + firstTextWidth,
-          122,
-          `, ${certificateDetail.value.professionalTypes[1].professionalTypes.name}`
-        );
-        doc.text(
-          160 + firstTextWidth + secondTextWidth,
-          122,
-          `, ${certificateDetail.value.professionalTypes[1].professionalTypes.name}`
-        );
+        )
       }
+      // if (certificateDetail.value.professionalTypes.length === 1) {
+      //   doc.text(
+      //     185,
+      //     122,
+      //     `${
+      //       certificateDetail.value.professionalTypes[0].professionalTypes.name
+      //         ? certificateDetail.value.professionalTypes[0].professionalTypes
+      //             .name
+      //         : ""
+      //     }`
+      //   );
+      // } else if (certificateDetail.value.professionalTypes.length === 2) {
+      //   let firstTextWidth = doc.getTextWidth(
+      //     certificateDetail.value.professionalTypes[0].professionalTypes.name
+      //   );
+      //   console.log("");
+      //   doc.setFontSize(12);
+      //   doc.text(
+      //     175,
+      //     122,
+      //     `${certificateDetail.value.professionalTypes[0].professionalTypes.name}`
+      //   );
+      //   doc.text(
+      //     168 + firstTextWidth,
+      //     122,
+      //     `, ${certificateDetail.value.professionalTypes[1].professionalTypes.name}`
+      //   );
+      // } else if (certificateDetail.value.professionalTypes.length === 3) {
+      //   let firstTextWidth = doc.getTextWidth(
+      //     certificateDetail.value.professionalTypes[0].professionalTypes.name
+      //   );
+      //   let secondTextWidth = doc.getTextWidth(
+      //     certificateDetail.value.professionalTypes[1].professionalTypes.name
+      //   );
+      //   console.log(
+      //     "first width",
+      //     firstTextWidth,
+      //     "second text width",
+      //     secondTextWidth
+      //   );
+      //   doc.setFontSize(10);
+      //   doc.text(
+      //     175,
+      //     122,
+      //     `${certificateDetail.value.professionalTypes[0].professionalTypes.name}`
+      //   );
+      //   doc.text(
+      //     168 + firstTextWidth,
+      //     122,
+      //     `, ${certificateDetail.value.professionalTypes[1].professionalTypes.name}`
+      //   );
+      //   doc.text(
+      //     160 + firstTextWidth + secondTextWidth,
+      //     122,
+      //     `, ${certificateDetail.value.professionalTypes[1].professionalTypes.name}`
+      //   );
+      // }
       // doc.text(190, 170, 'DENTAL SURGON')
       doc.setFontSize(12);
       doc.text(
@@ -684,67 +696,79 @@ export default {
       doc.setFontSize(14);
       // doc.text(65, 143, "ጁኒየር")
       // doc.text(55, 153, "ጀነራልሜዲካል ፕራክቲሽነር")
-      if (certificateDetail.value.professionalTypes.length === 1) {
+      for(let i = 0; i < certificateDetail.value.professionalTypes.length; i++) {
         doc.text(
           65,
-          117,
+          125 + (i * 7),
           `${
-            certificateDetail.value.professionalTypes[0].professionalTypes
-              .amharicProfessionalType
-              ? certificateDetail.value.professionalTypes[0].professionalTypes
+            certificateDetail.value.professionalTypes[i].professionalTypes.name
+              ? certificateDetail.value.professionalTypes[i].professionalTypes
                   .amharicProfessionalType
               : ""
           }`
-        );
-      } else if (certificateDetail.value.professionalTypes.length === 2) {
-        let firstTextWidth = doc.getTextWidth(
-          certificateDetail.value.professionalTypes[0].professionalTypes
-            .amharicProfessionalType
-        );
-        console.log("");
-        doc.setFontSize(12);
-        doc.text(
-          44,
-          117,
-          `${certificateDetail.value.professionalTypes[0].professionalTypes.amharicProfessionalType}`
-        );
-        doc.text(
-          38 + firstTextWidth,
-          117,
-          `, ${certificateDetail.value.professionalTypes[1].professionalTypes.amharicProfessionalType}`
-        );
-      } else if (certificateDetail.value.professionalTypes.length === 3) {
-        let firstTextWidth = doc.getTextWidth(
-          certificateDetail.value.professionalTypes[0].professionalTypes
-            .amharicProfessionalType
-        );
-        let secondTextWidth = doc.getTextWidth(
-          certificateDetail.value.professionalTypes[1].professionalTypes
-            .amharicProfessionalType
-        );
-        console.log(
-          "first width",
-          firstTextWidth,
-          "second text width",
-          secondTextWidth
-        );
-        doc.setFontSize(10);
-        doc.text(
-          44,
-          117,
-          `${certificateDetail.value.professionalTypes[0].professionalTypes.amharicProfessionalType}`
-        );
-        doc.text(
-          38 + firstTextWidth,
-          117,
-          `, ${certificateDetail.value.professionalTypes[1].professionalTypes.amharicProfessionalType}`
-        );
-        doc.text(
-          35 + firstTextWidth + secondTextWidth,
-          117,
-          `, ${certificateDetail.value.professionalTypes[1].professionalTypes.amharicProfessionalType}`
-        );
+        )
       }
+      // if (certificateDetail.value.professionalTypes.length === 1) {
+      //   doc.text(
+      //     65,
+      //     117,
+      //     `${
+      //       certificateDetail.value.professionalTypes[0].professionalTypes
+      //         .amharicProfessionalType
+      //         ? certificateDetail.value.professionalTypes[0].professionalTypes
+      //             .amharicProfessionalType
+      //         : ""
+      //     }`
+      //   );
+      // } else if (certificateDetail.value.professionalTypes.length === 2) {
+      //   let firstTextWidth = doc.getTextWidth(
+      //     certificateDetail.value.professionalTypes[0].professionalTypes
+      //       .amharicProfessionalType
+      //   );
+      //   console.log("");
+      //   doc.setFontSize(12);
+      //   doc.text(
+      //     44,
+      //     117,
+      //     `${certificateDetail.value.professionalTypes[0].professionalTypes.amharicProfessionalType}`
+      //   );
+      //   doc.text(
+      //     38 + firstTextWidth,
+      //     117,
+      //     `, ${certificateDetail.value.professionalTypes[1].professionalTypes.amharicProfessionalType}`
+      //   );
+      // } else if (certificateDetail.value.professionalTypes.length === 3) {
+      //   let firstTextWidth = doc.getTextWidth(
+      //     certificateDetail.value.professionalTypes[0].professionalTypes
+      //       .amharicProfessionalType
+      //   );
+      //   let secondTextWidth = doc.getTextWidth(
+      //     certificateDetail.value.professionalTypes[1].professionalTypes
+      //       .amharicProfessionalType
+      //   );
+      //   console.log(
+      //     "first width",
+      //     firstTextWidth,
+      //     "second text width",
+      //     secondTextWidth
+      //   );
+      //   doc.setFontSize(10);
+      //   doc.text(
+      //     44,
+      //     117,
+      //     `${certificateDetail.value.professionalTypes[0].professionalTypes.amharicProfessionalType}`
+      //   );
+      //   doc.text(
+      //     38 + firstTextWidth,
+      //     117,
+      //     `, ${certificateDetail.value.professionalTypes[1].professionalTypes.amharicProfessionalType}`
+      //   );
+      //   doc.text(
+      //     35 + firstTextWidth + secondTextWidth,
+      //     117,
+      //     `, ${certificateDetail.value.professionalTypes[1].professionalTypes.amharicProfessionalType}`
+      //   );
+      // }
       // doc.text(40, 163, "ሙያ መዝግቦ ይህን የሙያ ስራ ፈቃድ ሰጥቷል።");
       doc.setFontSize(12);
       // doc.text(80)
