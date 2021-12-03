@@ -64,7 +64,10 @@
                 {{ "Department:  " + newLicense.education.department.name }}
               </h4>
               <h4 class="mt-2 ml-small w-1/2">
-                {{ "Institution:  " + newLicense.education.institution.name }}
+                Institution: {{newLicense.otherEducationalInstitution
+                    ? newLicense.otherEducationalInstitution
+                    : newLicense.education.institution.name
+                }}
               </h4>
             </div>
             <div
@@ -375,10 +378,15 @@
                     <label class="ml-8 titleColors"> Institution Name</label>
                     <h5
                       class="ml-8"
-                      v-if="newLicense.education.institution.name"
+                      v-if="newLicense.otherEducationalInstitution"
                     >
-                      {{ newLicense.education.institution.name }}
+                      {{ newLicense.otherEducationalInstitution }}
                     </h5>
+                    <h5
+                      class="ml-8"
+                      v-else-if="newLicense.education.institution.name">
+                      {{ newLicense.education.institution.name }}
+                      </h5>
                   </div>
                   <div>
                     <label class="ml-8 titleColors"> Department</label>
@@ -408,16 +416,22 @@
                     <Title message="Professional Type" />
                   </div>
                   <div class="flex flex-col mb-medium w-1/2 mr-12">
-                    <div>
-                      <ul
+                    <!-- <div v-model="professionalTypeIds"> -->
+                      <!-- <ul
                         v-for="professionName in newLicense.professionalTypes"
                         v-bind:key="professionName.professionalTypes.name"
                         v-bind:value="professionName.professionalTypes.id"
                       >
                         <li>
-                          <input @change="professionTypeCheckBox(professionName.professionalTypes.id)"
-                          type="checkbox"
-                          class="form-checkbox"
+                          <input
+                            @change="
+                              professionTypeCheckBox(
+                                professionName.professionalTypes.id
+                              )
+                            "
+                            type="checkbox"
+                            class="form-checkbox"
+                            :checked="true"
                           />
                           {{ professionName.professionalTypes.name }} |
                           {{
@@ -425,6 +439,30 @@
                               .amharicProfessionalType
                           }}
                         </li>
+                      </ul> -->
+                    <div>
+                      <ul
+                        v-for="professionName in professionalTypes"
+                        v-bind:key="professionName.name"
+                        v-bind:value="professionName.id"
+                      >
+                        <li>
+                          <input
+                          v-on:click="checkBoxClicked(professionName.id, $event)"
+                            
+                            type="checkbox"
+                            class="form-checkbox"
+                            :checked="choosedProfession(professionName.id)"
+                          />
+                          {{ professionName.name }} |
+                          {{
+                            professionName
+                              .amharicProfessionalType
+                          }}
+                        </li>
+                        <div v-if="isActive">
+                          <a @click="addPrefix">prefix?</a>
+                        </div>
                       </ul>
                     </div>
                   </div>
@@ -436,10 +474,7 @@
                     />
                     <label class="ml-2">change profession?</label>
                     <label class="ml-12 titleColors"> Prefix</label>
-                    <select
-                      v-model="prefix"
-                      class="select ml-3"
-                    >
+                    <select v-model="prefix" class="select ml-3">
                       <option
                         v-for="prefix in prefixList"
                         v-bind:key="prefix.name"
@@ -790,13 +825,16 @@ export default {
     let expirationDateExceedTodayError = ref(false);
 
     let professionalTypeIds = ref([]);
-    let prefixList = ref([{name: 'Consultant', id: 1},
-                          {name: 'Expert', id: 2},
-                          {name: 'Junior', id: 3},
-                          {name: 'Senior', id: 4},
-                          {name: 'Senior expert', id: 5},
-                          {name: 'Chief', id: 6},
-                          {name: 'Chief expert', id: 7}]);
+    let professionalTypeIdss = ref([]);
+    let prefixList = ref([
+      { name: "Consultant", id: 1 },
+      { name: "Expert", id: 2 },
+      { name: "Junior", id: 3 },
+      { name: "Senior", id: 4 },
+      { name: "Senior expert", id: 5 },
+      { name: "Chief", id: 6 },
+      { name: "Chief expert", id: 7 },
+    ]);
     let prefix = ref();
     let canChangeName = ref(false);
     let showProfessionChangeError = ref(false);
@@ -1283,7 +1321,7 @@ export default {
         }
       }
       if (prefix.value !== undefined) {
-        newLicense.value.prefix = prefix.value
+        newLicense.value.prefix = prefix.value;
       }
       newLicense.value.declinedFields = rejected.value;
       newLicense.value.acceptedFields = accepted.value;
@@ -1295,6 +1333,9 @@ export default {
         action: actionValue,
         data: newLicense.value,
       };
+
+      console.log("profeef", professionalTypeIdss.value)
+      return;
       if (
         applicationType.value == "New License" &&
         sendDeclinedData.value == true
@@ -1469,9 +1510,37 @@ export default {
     const checkBox = () => {
       isCheckboxActive.value = !isCheckboxActive.value;
     };
-    const professionTypeCheckBox = (id) => {
-      console.log("id is found", id)
+
+    const checkBoxClicked = (id, event) => {
+      if(event.target.checked) {
+        console.log("alet is selected", id)
+      } else {
+        console.log("don't selected", id)
+      }
     }
+
+    const choosedProfession = (id) => {
+      for (let i = 0; i < newLicense.value.professionalTypes; i++) {
+        if(id === newLicense.value.professionalTypes[i].id) {
+          console.log("id is the best", id, "new license is the best", newLicense.value.professionalTypes[i].id)
+          return true;
+        }
+        console.log("id is the best", id, "new license is the best", newLicense.value.professionalTypes[i].id)
+      }
+    }
+
+    let selected = ref();
+    // const professionTypeCheckBox = (id) => {
+    //   console.log("selectedd?", selected.value)
+      
+    //   professionalTypeIdss.value.push(id);
+    //   for(let i = 0; i < newLicense.value.professionalTypes; i++) {
+    //     if(id === newLicense.value.professionalTypes.id) {
+    //       console.log("id is ", id, "prff_Id", newLicense.value.professionalTypes.id)
+    //       return true;
+    //     }
+    //   }
+    // };
 
     onMounted(() => {
       created(route.params.applicationType, route.params.applicationId);
@@ -1480,6 +1549,7 @@ export default {
       getProfessionalTypes();
     });
     return {
+      selected,
       isPdf,
       newLicense,
       index,
@@ -1543,7 +1613,9 @@ export default {
       checkBox,
       prefixList,
       prefix,
-      professionTypeCheckBox,
+      professionalTypeIdss,
+      checkBoxClicked,
+      choosedProfession,
     };
   },
 };

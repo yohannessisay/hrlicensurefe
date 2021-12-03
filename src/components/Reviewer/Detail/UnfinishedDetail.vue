@@ -7,7 +7,7 @@
         style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);"
         class="ml-8  mr-8 mb-12"
       >
-        <div class="mt-large bg-white"> 
+        <div class="mt-large bg-white">
           <div v-if="getReviewId == loggedInAdminId" class="flex">
             <div class="flex flex-col mb-medium w-2/3 ml-small mt-small"></div>
             <div class="flex flex-col mb-medium w-1/3 mr-small mt-small">
@@ -62,7 +62,7 @@
             </div>
             <div
               :class="[
-                profileInfo.nationality === null ? errorClass : activeClass
+                profileInfo.nationality === null ? errorClass : activeClass,
               ]"
             >
               <label class="ml-8"> Nationality</label>
@@ -72,7 +72,8 @@
             </div>
             <div
               :class="[
-                profileInfo.placeOfBirth === null ? errorClass : activeClass]"
+                profileInfo.placeOfBirth === null ? errorClass : activeClass,
+              ]"
             >
               <label class="ml-8"> Place of Birth</label>
               <h5 class="ml-8">
@@ -81,19 +82,23 @@
             </div>
             <div
               :class="[
-                profileInfo.dateOfBirth === null ? errorClass : activeClass
+                profileInfo.dateOfBirth === null ? errorClass : activeClass,
               ]"
             >
               <label class="ml-8"> Date of Birth</label>
               <h5 class="ml-8">
-                {{ profileInfo.dateOfBirth ? moment(profileInfo.dateOfBirth).format("MMM D, YYYY") : "-" }}
+                {{
+                  profileInfo.dateOfBirth
+                    ? moment(profileInfo.dateOfBirth).format("MMM D, YYYY")
+                    : "-"
+                }}
               </h5>
             </div>
             <div
               :class="[
                 profileInfo.maritalStatus.name === null
                   ? errorClass
-                  : activeClass
+                  : activeClass,
               ]"
             >
               <label class="ml-8"> Marital Status</label>
@@ -113,37 +118,37 @@
           <div class="flex flex-row">
             <div
               :class="[
-                license.woreda.zone.region === null
-                  ? errorClass
-                  : activeClass
+                license.woreda.zone.region === null ? errorClass : activeClass,
               ]"
             >
               <label class="ml-8"> Region</label>
               <h5 class="ml-8">
                 {{
-                  license.woreda === null ? "-" :
-                  license.woreda.zone === null ? "-" :
-                  license.woreda.zone.region
+                  license.woreda === null
+                    ? "-"
+                    : license.woreda.zone === null
+                    ? "-"
+                    : license.woreda.zone.region
                     ? license.woreda.zone.region.name
                     : "-"
                 }}
               </h5>
             </div>
             <div
-              :class="[
-                license.woreda.zone === null ? errorClass : activeClass
-              ]"
+              :class="[license.woreda.zone === null ? errorClass : activeClass]"
             >
               <label class="ml-8"> Zone</label>
               <h5 class="ml-8">
                 {{
-                  license.woreda === null ? "-" : license.woreda.zone ? license.woreda.zone.name : "-"
+                  license.woreda === null
+                    ? "-"
+                    : license.woreda.zone
+                    ? license.woreda.zone.name
+                    : "-"
                 }}
               </h5>
             </div>
-            <div
-              :class="[license.woreda === null ? errorClass : activeClass]"
-            >
+            <div :class="[license.woreda === null ? errorClass : activeClass]">
               <label class="ml-8"> Wereda</label>
               <h5 class="ml-8">
                 {{ license.woreda ? license.woreda.name : "-" }}
@@ -159,7 +164,7 @@
             </div>
             <div
               :class="[
-                profileInfo.houseNumber === null ? errorClass : activeClass
+                profileInfo.houseNumber === null ? errorClass : activeClass,
               ]"
             >
               <label class="ml-8"> House Number</label>
@@ -169,7 +174,7 @@
             </div>
             <div
               :class="[
-                profileInfo.residence === null ? errorClass : activeClass
+                profileInfo.residence === null ? errorClass : activeClass,
               ]"
             >
               <label class="ml-8"> Residence</label>
@@ -184,7 +189,9 @@
           <div class="flex flex-row">
             <div
               :class="[
-                profileInfo.user.phoneNumber === null ? errorClass : activeClass,
+                profileInfo.user.phoneNumber === null
+                  ? errorClass
+                  : activeClass,
               ]"
             >
               <label class="ml-8"> Mobile Number</label>
@@ -201,7 +208,7 @@
               :class="[
                 profileInfo.user.emailAddress === null
                   ? errorClass
-                  : activeClass
+                  : activeClass,
               ]"
             >
               <label class="ml-8"> Email</label>
@@ -253,8 +260,8 @@
             </div>
             <div class="flex justify-center mt-8">
               <h6>
-                If you don't have all the required informations you can come back
-                and finish later.
+                If you don't have all the required informations you can come
+                back and finish later.
               </h6>
             </div>
             <div class="flex justify-center mt-8 mb-8">
@@ -317,24 +324,24 @@ export default {
       applicantType: {},
       education: {
         institution: {
-          institutionType: {}
+          institutionType: {},
         },
-        department: {}
-      }
+        department: {},
+      },
     });
     let profileInfo = ref({
       maritalStatus: {},
       woreda: {
-        zone: {}
+        zone: {},
       },
       user: {},
-      userType: {}
+      userType: {},
     });
     let applicantId = ref("");
     let applicantTypeId = ref("");
     let education = ref({
       institution: { name: "", institutionType: { name: "" } },
-      department: { name: "" }
+      department: { name: "" },
     });
     let licenseId = ref("");
     let activeClass = ref("active");
@@ -350,59 +357,56 @@ export default {
     let loggedInAdminId = +localStorage.getItem("adminId");
 
     const fetchRole = (id) => {
-      store.dispatch("reviewer/getRoles", id).then(res => {
+      store.dispatch("reviewer/getRoles", id).then((res) => {
         role.value = res.data.data.role;
-      })
-    }
+      });
+    };
 
     const fetchAdmins = () => {
-      store.dispatch("reviewer/getAdmins").then(res => {
-        
-        admins.value = res.data.data
-      })
-    }
+      store.dispatch("reviewer/getAdmins").then((res) => {
+        admins.value = res.data.data;
+      });
+    };
 
     const fetchAdminsByRegion = (regionId) => {
-      store.dispatch("reviewer/getAdminsByRegion", regionId)
-      .then(res => {
+      store.dispatch("reviewer/getAdminsByRegion", regionId).then((res) => {
         admins.value = res.data.data;
-        console.log("regional admin", admins.value)
-      })
-    }
+        console.log("regional admin", admins.value);
+      });
+    };
 
-    const gen = () => {
-    }
+    const gen = () => {};
 
     const transferReview = () => {
       // if (role.value.code === "TL" || role.value.code === "SA") {
-        if (applicationType.value == "Good Standing") {
-          transfer.value = {
-            goodStandingId: route.params.applicationId,
-            reviewerId: transfer.value.reviewerId,
-            createdByAdminId: +localStorage.getItem("adminId"),
-          };
-        }
-        if (applicationType.value == "Verification") {
-          transfer.value = {
-            verificationId: route.params.applicationId,
-            reviewerId: transfer.value.reviewerId,
-            createdByAdminId: +localStorage.getItem("adminId"),
-          };
-        }
-        if (applicationType.value == "Renewal") {
-          transfer.value = {
-            renewalId: route.params.applicationId,
-            reviewerId: transfer.value.reviewerId,
-            createdByAdminId: +localStorage.getItem("adminId"),
-          };
-        }
-        if (applicationType.value == "New License") {
-          transfer.value = {
-            licenseId: route.params.applicationId,
-            reviewerId: transfer.value.reviewerId,
-            createdByAdminId: +localStorage.getItem("adminId"),
-          };
-        }
+      if (applicationType.value == "Good Standing") {
+        transfer.value = {
+          goodStandingId: route.params.applicationId,
+          reviewerId: transfer.value.reviewerId,
+          createdByAdminId: +localStorage.getItem("adminId"),
+        };
+      }
+      if (applicationType.value == "Verification") {
+        transfer.value = {
+          verificationId: route.params.applicationId,
+          reviewerId: transfer.value.reviewerId,
+          createdByAdminId: +localStorage.getItem("adminId"),
+        };
+      }
+      if (applicationType.value == "Renewal") {
+        transfer.value = {
+          renewalId: route.params.applicationId,
+          reviewerId: transfer.value.reviewerId,
+          createdByAdminId: +localStorage.getItem("adminId"),
+        };
+      }
+      if (applicationType.value == "New License") {
+        transfer.value = {
+          licenseId: route.params.applicationId,
+          reviewerId: transfer.value.reviewerId,
+          createdByAdminId: +localStorage.getItem("adminId"),
+        };
+      }
       // }
       if (applicationType.value == "New License") {
         store
@@ -448,7 +452,7 @@ export default {
             }
           });
       }
-    }
+    };
 
     const created = async (applicationTypeName, applicationId, applicantId) => {
       licenseId.value = applicationId;
@@ -457,73 +461,93 @@ export default {
       if (applicationType.value == "New License") {
         store
           .dispatch("reviewer/getNewLicenseApplication", applicationId)
-          .then(res => {
+          .then((res) => {
             showLoading.value = false;
             license.value = res.data.data;
-            getReviewId.value = license.value.reviewerId
+            getReviewId.value = license.value.reviewerId;
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
             // applicantId.value = license.value.applicantId;
             education.value.departmentName =
               license.value.education.department.name;
-            education.value.institutionName =
-              license.value.education.institution.name;
-            education.value.institutionTypeName =
-              license.value.education.institution.institutionType.name;
+            if (license.value.otherEducationalInstitution) {
+              education.value.institutionName =
+                license.value.otherEducationalInstitution;
+            } else {
+              education.value.institutionName =
+                license.value.education.institution.name;
+              education.value.institutionTypeName =
+                license.value.education.institution.institutionType.name;
+            }
           });
       }
       if (applicationType.value == "Good Standing") {
         store
           .dispatch("reviewer/getGoodStandingApplication", applicationId)
-          .then(res => {
+          .then((res) => {
             showLoading.value = false;
             license.value = res.data.data;
-            getReviewId.value = license.value.reviewerId
+            getReviewId.value = license.value.reviewerId;
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
             // applicantId.value = license.value.applicantId;
             education.value.departmentName =
               license.value.education.department.name;
-            education.value.institutionName =
-              license.value.education.institution.name;
-            education.value.institutionTypeName =
-              license.value.education.institution.institutionType.name;
+            if (license.value.otherEducationalInstitution) {
+              education.value.institutionName =
+                license.value.otherEducationalInstitution;
+            } else {
+              education.value.institutionName =
+                license.value.education.institution.name;
+              education.value.institutionTypeName =
+                license.value.education.institution.institutionType.name;
+            }
           });
       }
       if (applicationType.value == "Verification") {
         store
           .dispatch("reviewer/getVerificationApplication", applicationId)
-          .then(res => {
+          .then((res) => {
             showLoading.value = false;
             license.value = res.data.data;
-            getReviewId.value = license.value.reviewerId
+            getReviewId.value = license.value.reviewerId;
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
             // applicantId.value = license.value.applicantId;
             education.value.departmentName =
               license.value.education.department.name;
-            education.value.institutionName =
-              license.value.education.institution.name;
-            education.value.institutionTypeName =
-              license.value.education.institution.institutionType.name;
+            if (license.value.otherEducationalInstitution) {
+              education.value.institutionName =
+                license.value.otherEducationalInstitution;
+            } else {
+              education.value.institutionName =
+                license.value.education.institution.name;
+              education.value.institutionTypeName =
+                license.value.education.institution.institutionType.name;
+            }
           });
       }
       if (applicationType.value == "Renewal") {
         store
           .dispatch("reviewer/getRenewalApplication", applicationId)
-          .then(res => {
+          .then((res) => {
             showLoading.value = false;
             license.value = res.data.data;
-            getReviewId.value = license.value.reviewerId
+            getReviewId.value = license.value.reviewerId;
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
             // applicantId.value = license.value.applicantId;
             education.value.departmentName =
               license.value.education.department.name;
-            education.value.institutionName =
-              license.value.education.institution.name;
-            education.value.institutionTypeName =
-              license.value.education.institution.institutionType.name;
+            if (license.value.otherEducationalInstitution) {
+              education.value.institutionName =
+                license.value.otherEducationalInstitution;
+            } else {
+              education.value.institutionName =
+                license.value.education.institution.name;
+              education.value.institutionTypeName =
+                license.value.education.institution.institutionType.name;
+            }
           });
       }
     };
@@ -542,9 +566,9 @@ export default {
         route.params.applicationId,
         route.params.applicantId
       );
-      
-      fetchRole(loggedInAdminId)
-      if(regionId !== null) {
+
+      fetchRole(loggedInAdminId);
+      if (regionId !== null) {
         fetchAdminsByRegion(regionId);
       } else {
         fetchAdmins();
@@ -576,9 +600,9 @@ export default {
       role,
       transfer,
       gen,
-      transferReview
+      transferReview,
     };
-  }
+  },
 
   //   this.license = this.getLicense;
   //   this.applicantId = this.license.applicantId;

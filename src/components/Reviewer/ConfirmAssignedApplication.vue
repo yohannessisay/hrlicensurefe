@@ -52,7 +52,10 @@
                 {{ "Department:  " + newLicense.education.department.name }}
               </h4>
               <h4 class="mt-2 ml-small w-1/2">
-                {{ "Institution:  " + newLicense.education.institution.name }}
+                Institution: {{newLicense.otherEducationalInstitution
+                    ? newLicense.otherEducationalInstitution
+                    : newLicense.education.institution.name
+                }}
               </h4>
               <!-- <h4 class="mt-2">{{ "Institution:  " + newLicense.education.institution.name }}</h4> -->
             </div>

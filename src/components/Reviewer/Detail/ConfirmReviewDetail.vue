@@ -93,9 +93,11 @@
           <div class="flex flex-row">
             <div
               :class="[
-                license.woreda === null ? errorClass :
-                license.woreda.zone === null ? errorClass :
-                license.woreda.zone.region === null
+                license.woreda === null
+                  ? errorClass
+                  : license.woreda.zone === null
+                  ? errorClass
+                  : license.woreda.zone.region === null
                   ? errorClass
                   : activeClass,
               ]"
@@ -103,9 +105,11 @@
               <label class="ml-8"> Region</label>
               <h5 class="ml-8">
                 {{
-                  license.woreda === null ? "-" :
-                  license.woreda.zone === null ? "-" :
-                  license.woreda.zone.region
+                  license.woreda === null
+                    ? "-"
+                    : license.woreda.zone === null
+                    ? "-"
+                    : license.woreda.zone.region
                     ? license.woreda.zone.region.name
                     : "-"
                 }}
@@ -113,15 +117,21 @@
             </div>
             <div
               :class="[
-                license.woreda === null ?
-                errorClass : license.woreda.zone === null ? 
-                errorClass : activeClass,
+                license.woreda === null
+                  ? errorClass
+                  : license.woreda.zone === null
+                  ? errorClass
+                  : activeClass,
               ]"
             >
               <label class="ml-8"> Zone</label>
               <h5 class="ml-8">
                 {{
-                  license.woreda === null ? "-" : license.woreda.zone ? license.woreda.zone.name : "-"
+                  license.woreda === null
+                    ? "-"
+                    : license.woreda.zone
+                    ? license.woreda.zone.name
+                    : "-"
                 }}
               </h5>
             </div>
@@ -221,38 +231,34 @@
               </h5>
             </div>
           </div>
-            <div class="flex justify-start">
-              <Title message="Evaluators Info" />
-            </div>
-            <span
-               v-for="(evaluator, index) in evaluators" 
-              :key ="index">
-              <div class="flex flex-row">
-                <div>
-                  <h5 class="ml-8">
-                    {{ index + 1 }}.
-                  </h5>
-                </div>
-                <div>
-                  <h5 class="ml-8" v-if="evaluator.evaluator.name">
-                    {{ evaluator.evaluator.name }}
-                  </h5>
-                </div>
-                <div>
-                  <h5 class="ml-8" v-if="evaluator.actionEvent">
-                    {{ evaluator.actionEvent }}
-                  </h5>
-                  <h5 class="ml-8" v-else>
-                    Not Evaluated Yet
-                  </h5>
-                </div>
-                <div>
-                  <h5 class="ml-8" v-if="evaluator.remark">
-                    {{ evaluator.remark }}
-                  </h5>
-                </div>
+          <div class="flex justify-start">
+            <Title message="Evaluators Info" />
+          </div>
+          <span v-for="(evaluator, index) in evaluators" :key="index">
+            <div class="flex flex-row">
+              <div>
+                <h5 class="ml-8">{{ index + 1 }}.</h5>
               </div>
-            </span>
+              <div>
+                <h5 class="ml-8" v-if="evaluator.evaluator.name">
+                  {{ evaluator.evaluator.name }}
+                </h5>
+              </div>
+              <div>
+                <h5 class="ml-8" v-if="evaluator.actionEvent">
+                  {{ evaluator.actionEvent }}
+                </h5>
+                <h5 class="ml-8" v-else>
+                  Not Evaluated Yet
+                </h5>
+              </div>
+              <div>
+                <h5 class="ml-8" v-if="evaluator.remark">
+                  {{ evaluator.remark }}
+                </h5>
+              </div>
+            </div>
+          </span>
         </div>
       </div>
     </div>
@@ -355,10 +361,15 @@ export default {
             // applicantId.value = license.value.applicantId;
             education.value.departmentName =
               license.value.education.department.name;
-            education.value.institutionName =
-              license.value.education.institution.name;
-            education.value.institutionTypeName =
-              license.value.education.institution.institutionType.name;
+            if (license.value.otherEducationalInstitution) {
+              education.value.institutionName =
+                license.value.otherEducationalInstitution;
+            } else {
+              education.value.institutionName =
+                license.value.education.institution.name;
+              education.value.institutionTypeName =
+                license.value.education.institution.institutionType.name;
+            }
           });
       }
       if (applicationType.value == "Good Standing") {
@@ -374,10 +385,15 @@ export default {
             // applicantId.value = license.value.applicantId;
             education.value.departmentName =
               license.value.education.department.name;
-            education.value.institutionName =
-              license.value.education.institution.name;
-            education.value.institutionTypeName =
-              license.value.education.institution.institutionType.name;
+            if (license.value.otherEducationalInstitution) {
+              education.value.institutionName =
+                license.value.otherEducationalInstitution;
+            } else {
+              education.value.institutionName =
+                license.value.education.institution.name;
+              education.value.institutionTypeName =
+                license.value.education.institution.institutionType.name;
+            }
           });
       }
       if (applicationType.value == "Verification") {
@@ -393,10 +409,15 @@ export default {
             // applicantId.value = license.value.applicantId;
             education.value.departmentName =
               license.value.education.department.name;
-            education.value.institutionName =
-              license.value.education.institution.name;
-            education.value.institutionTypeName =
-              license.value.education.institution.institutionType.name;
+            if (license.value.otherEducationalInstitution) {
+              education.value.institutionName =
+                license.value.otherEducationalInstitution;
+            } else {
+              education.value.institutionName =
+                license.value.education.institution.name;
+              education.value.institutionTypeName =
+                license.value.education.institution.institutionType.name;
+            }
           });
       }
       if (applicationType.value == "Renewal") {
@@ -414,10 +435,15 @@ export default {
             // applicantId.value = license.value.applicantId;
             education.value.departmentName =
               license.value.education.department.name;
-            education.value.institutionName =
-              license.value.education.institution.name;
-            education.value.institutionTypeName =
-              license.value.education.institution.institutionType.name;
+            if (license.value.otherEducationalInstitution) {
+              education.value.institutionName =
+                license.value.otherEducationalInstitution;
+            } else {
+              education.value.institutionName =
+                license.value.education.institution.name;
+              education.value.institutionTypeName =
+                license.value.education.institution.institutionType.name;
+            }
           });
       }
     };
