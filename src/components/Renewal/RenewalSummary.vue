@@ -193,6 +193,14 @@
           >
         </label>
       </div>
+      <div class="flex justify-center mt-8">
+        <span
+          v-if="showAllAttachements"
+          style="font-size: 16px; color: red"
+          class="ml-2"
+          >Please attach all required documents.</span
+        >
+      </div>
       <div v-if="this.draftStatus == 'DRA' || !this.draftStatus">
         <div class="mt-12 flex justify-center">
           <div>
@@ -885,6 +893,7 @@ export default {
     docs: [],
 
     checkBoxValue: true,
+    showAllAttachements: false,
   }),
   computed: {
     ...mapGetters({
@@ -1254,28 +1263,51 @@ export default {
             otherEducationalInstitution: this.otherEducationalInstitution,
           },
         };
-        this.$store
-          .dispatch("renewal/addRenewalLicense", license)
-          .then((res) => {
-            let licenseId = res.data.data.id;
-            let payload = { document: formData, id: licenseId };
-            this.$store
-              .dispatch("renewal/uploadDocuments", payload)
-              .then((res) => {
-                this.showLoading = false;
-                if (res.data.status == "Success") {
-                  this.showFlash = true;
-                  setTimeout(() => {
-                    this.$router.push({ path: "/menu" });
-                  }, 1500);
-                } else {
+        if (
+          this.herqa == null ||
+          this.proCertificate == null ||
+          this.proDiploma == null ||
+          this.proTranscript == null ||
+          this.coc == null ||
+          this.degree == null ||
+          this.diploma == null ||
+          this.eduEighth == null ||
+          this.eduTenth == null ||
+          this.eduTwelveth == null ||
+          this.eduTranscript1 == null ||
+          this.eduTranscript2 == null ||
+          this.englishLanguage == null ||
+          this.letterfromOrg == null ||
+          this.professionalLicense == null ||
+          this.healthExamCert == null ||
+          this.passport == null
+        ) {
+          this.showAllAttachements = true;
+          this.showLoading = false;
+        } else {
+          this.$store
+            .dispatch("renewal/addRenewalLicense", license)
+            .then((res) => {
+              let licenseId = res.data.data.id;
+              let payload = { document: formData, id: licenseId };
+              this.$store
+                .dispatch("renewal/uploadDocuments", payload)
+                .then((res) => {
+                  this.showLoading = false;
+                  if (res.data.status == "Success") {
+                    this.showFlash = true;
+                    setTimeout(() => {
+                      this.$router.push({ path: "/menu" });
+                    }, 1500);
+                  } else {
+                    this.showErrorFlash = true;
+                  }
+                })
+                .catch((err) => {
                   this.showErrorFlash = true;
-                }
-              })
-              .catch((err) => {
-                this.showErrorFlash = true;
-              });
-          });
+                });
+            });
+        }
       }
     },
     update(action) {
