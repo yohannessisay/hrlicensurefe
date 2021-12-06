@@ -111,8 +111,6 @@ export default {
   setup(props) {
     const router = useRouter();
 
-    console.log("props value: ", props.allRegionLicensedByDate);
-
     let searchedApplicantsLength = props.allRegionLicensedByDate.length;
 
     const detail = (data, applicationType, applicationId, applicantId) => {

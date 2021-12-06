@@ -381,13 +381,11 @@ export default {
         store
           .dispatch("reviewer/getNewLicenseApplication", applicationId)
           .then((res) => {
-            console.log("unassigned new license", res);
             showLoading.value = false;
             showLoading.value = false;
             license.value = res.data.data;
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
-            console.log("profile info new license", profileInfo.value);
             // applicantId.value = license.value.applicantId;
             education.value.departmentName =
               license.value.education.department.name;
@@ -453,7 +451,6 @@ export default {
             license.value = res.data.data;
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
-            console.log("profile info is", profileInfo.value);
             education.value.departmentName =
               license.value.education.department.name;
             if (license.value.otherEducationalInstitution) {
@@ -472,14 +469,12 @@ export default {
     const fetchAdmins = () => {
       store.dispatch("reviewer/getAdmins").then((res) => {
         admins.value = res.data.data;
-        console.log("federal admin", admins.value);
       });
     };
 
     const fetchAdminsByRegion = (regionId) => {
       store.dispatch("reviewer/getAdminsByRegion", regionId).then((res) => {
         admins.value = res.data.data;
-        console.log("regional admin", admins.value);
       });
     };
 
@@ -506,7 +501,6 @@ export default {
           };
         }
         if (applicationType.value == "Renewal") {
-          console.log("is renewal");
           assign.value = {
             renewalId: route.params.applicationId,
             reviewerId: assign.value.reviewerId,
@@ -514,13 +508,11 @@ export default {
           };
         }
         if (applicationType.value == "New License") {
-          console.log("is new license");
           assign.value = {
             licenseId: route.params.applicationId,
             reviewerId: assign.value.reviewerId,
             createdByAdminId: +localStorage.getItem("adminId"),
           };
-          console.log("assigne value is ", assign.value);
         }
       }
 
@@ -612,7 +604,6 @@ export default {
           //   action: "InReview",
           //   data: license.value,
           // };
-          // console.log('req body', req);
           // store
           // .dispatch("reviewer/editRenewal", req)
           // .then((res) => {
@@ -631,7 +622,6 @@ export default {
           // })
           // .catch((err) => {
           //   return;
-          //   console.log("error while evaluating", err);
           // });
         } else {
           showAdminAssignLoading.value = true;

@@ -141,7 +141,6 @@ export default {
           store.getters["reviewerNewLicense/getNewLicensePendingPaymentSearched"];
         allInfo.value.assignApplication =
           store.getters["reviewerNewLicense/getNewLicensePendingPaymentSearched"];
-          console.log("new licensss pending payment", store.getters["reviewerNewLicense/getNewLicensePendingPaymentSearched"])
 
         for (let applicant in allInfo.value.assignApplication) {
           allInfo.value.assignApplication[applicant].createdAt = moment(

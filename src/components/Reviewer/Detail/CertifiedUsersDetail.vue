@@ -346,10 +346,8 @@ export default {
         .dispatch("reviewer/getQrCode", qrParam)
         .then((res) => {
           imageSrc.value = res.data.data;
-          console.log("response", res);
         })
         .catch((err) => {
-          console.log("err", err);
         });
     };
     const fetchApplication = () => {
@@ -412,7 +410,6 @@ export default {
             route.params.applicationId
           )
           .then((res) => {
-            console.log("renewalal detail", res.data.data);
             showApplicationLoading.value = false;
             certificateDetail.value = res.data.data;
             if (
@@ -433,7 +430,6 @@ export default {
             route.params.applicationId
           )
           .then((res) => {
-            console.log("renewalal detail", res.data.data);
             showApplicationLoading.value = false;
             certificateDetail.value = res.data.data;
             if (
@@ -576,7 +572,6 @@ export default {
       //   let firstTextWidth = doc.getTextWidth(
       //     certificateDetail.value.professionalTypes[0].professionalTypes.name
       //   );
-      //   console.log("");
       //   doc.setFontSize(12);
       //   doc.text(
       //     175,
@@ -595,12 +590,7 @@ export default {
       //   let secondTextWidth = doc.getTextWidth(
       //     certificateDetail.value.professionalTypes[1].professionalTypes.name
       //   );
-      //   console.log(
-      //     "first width",
-      //     firstTextWidth,
-      //     "second text width",
-      //     secondTextWidth
-      //   );
+  
       //   doc.setFontSize(10);
       //   doc.text(
       //     175,
@@ -725,7 +715,6 @@ export default {
       //     certificateDetail.value.professionalTypes[0].professionalTypes
       //       .amharicProfessionalType
       //   );
-      //   console.log("");
       //   doc.setFontSize(12);
       //   doc.text(
       //     44,
@@ -745,12 +734,6 @@ export default {
       //   let secondTextWidth = doc.getTextWidth(
       //     certificateDetail.value.professionalTypes[1].professionalTypes
       //       .amharicProfessionalType
-      //   );
-      //   console.log(
-      //     "first width",
-      //     firstTextWidth,
-      //     "second text width",
-      //     secondTextWidth
       //   );
       //   doc.setFontSize(10);
       //   doc.text(

@@ -453,7 +453,6 @@ export default {
           .then((res) => {
             showLoading.value = false;
             license.value = res.data.data;
-            console.log("approved good standing", res.data.data);
             goodStandingUser.value = res.data.data;
             if (
               goodStandingUser.value.woreda != null &&

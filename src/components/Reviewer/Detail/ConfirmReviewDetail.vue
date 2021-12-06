@@ -351,7 +351,6 @@ export default {
         store
           .dispatch("reviewer/getNewLicenseApplication", applicationId)
           .then((res) => {
-            console.log("newlicense response", res);
             showLoading.value = false;
             license.value = res.data.data;
             evaluators.value = license.value.evaluators;
@@ -424,11 +423,9 @@ export default {
         store
           .dispatch("reviewer/getRenewalApplication", applicationId)
           .then((res) => {
-            console.log("renewal response value ", res);
             showLoading.value = false;
             license.value = res.data.data;
             evaluators.value = license.value.evaluators;
-            console.log("evaluators is ", evaluators.value);
             getReviewId.value = license.value.reviewerId;
             show.value = true;
             profileInfo.value = license.value.applicant.profile;

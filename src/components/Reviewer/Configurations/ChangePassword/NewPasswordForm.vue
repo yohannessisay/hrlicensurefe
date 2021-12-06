@@ -157,7 +157,6 @@ export default {
         .catch((err) => {
           showLoading.value = false;
           oldPasswordError.value = true;
-          console.log("something went wrong mmm");
         });
     };
 

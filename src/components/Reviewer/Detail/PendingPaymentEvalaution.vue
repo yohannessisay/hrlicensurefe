@@ -301,7 +301,6 @@ export default {
             }
           })
           .catch((err) => {
-            console.log("error while evaluating payment", err);
           });
       } else if (applicationType.value == "Renewal") {
         store
@@ -321,7 +320,6 @@ export default {
             }
           })
           .catch((err) => {
-            console.log("error while evaluating payment", err);
           });
       } else if (applicationType.value == "Verification") {
         store
@@ -341,7 +339,6 @@ export default {
             }
           })
           .catch((err) => {
-            console.log("error while evaluating payment", err);
           });
       } else if (applicationType.value == "Good Standing") {
         store
@@ -371,7 +368,6 @@ export default {
             }
           })
           .catch((err) => {
-            console.log("error while evaluating payment", err);
           });
       }
     };

@@ -946,7 +946,6 @@ export default {
             departmentId.value = res.data.data.education.department.id;
             getProfessionalTypesByDepartmentId(departmentId.value);
             profileInfo.value = newLicense.value.applicant.profile;
-            console.log("newLLLLLLLLLLLLLLLL", newLicense.value);
             buttons.value = res.data.data.applicationStatus.buttons;
             docs.value = res.data.data.documents;
             for (
@@ -1126,7 +1125,6 @@ export default {
             newLicense.value = res.data.data;
             departmentId.value = res.data.data.education.department.id;
             getProfessionalTypesByDepartmentId(departmentId.value);
-            console.log("rennnnnnnnnn", newLicense.value);
             profileInfo.value = newLicense.value.applicant.profile;
             buttons.value = res.data.data.applicationStatus.buttons;
             docs.value = res.data.data.documents;
@@ -1362,7 +1360,8 @@ export default {
         }
         if (professionalTypeIdss.value.length > 0) {
           newLicense.value.professionalTypeIds = professionalTypeIdss.value;
-          newLicense.value.professionalTypePrefixes = professionalTypePrefixes.value
+          newLicense.value.professionalTypePrefixes =
+            professionalTypePrefixes.value;
         }
       } else {
         if (professionalTypeIdss.value.length > 0) {
@@ -1395,7 +1394,6 @@ export default {
         action: actionValue,
         data: newLicense.value,
       };
-      console.log("wow ferenj", req);
       if (
         applicationType.value == "New License" &&
         sendDeclinedData.value == true
@@ -1416,9 +1414,7 @@ export default {
               }, 3000);
             }
           })
-          .catch((err) => {
-            console.log("error while evaluating", err);
-          });
+          .catch((err) => {});
       }
       if (
         applicationType.value == "Verification" &&
@@ -1572,17 +1568,13 @@ export default {
       choosedProfession(id);
       if (event.target.checked) {
         professionalTypeIdss.value.push(id);
-        for (let i = 0; i < professionalTypeIdss.value.length; i++) {
-        }
+        for (let i = 0; i < professionalTypeIdss.value.length; i++) {}
       } else {
         professionalTypeIdss.value.splice(
           professionalTypeIdss.value.indexOf(id),
           1
         );
-        for (let i = 0; i < professionalTypeIdss.value.length; i++) {
-          console.log("splice", professionalTypeIdss.value[i]);
-        }
-        console.log("don't selected", id);
+        for (let i = 0; i < professionalTypeIdss.value.length; i++) {}
       }
     };
 
@@ -1607,52 +1599,42 @@ export default {
 
     let countProLength = ref(0);
     const addPrefix = (professionId, prefixName, event) => {
-      if(professionalTypePrefixes.value.length === 0) {
+      if (professionalTypePrefixes.value.length === 0) {
         professionalTypePrefixes.value.push({
-            professionalTypeId: professionId,
-            prefix: event.target.value,
-          });
-          console.log("waka", professionalTypePrefixes.value);
-          return;
+          professionalTypeId: professionId,
+          prefix: event.target.value,
+        });
+        return;
       }
       for (let i = 0; i < professionalTypePrefixes.value.length; i++) {
         if (
           professionId !== professionalTypePrefixes.value[i].professionalTypeId
         ) {
           countProLength.value++;
-          if(countProLength.value === professionalTypePrefixes.value.length) {
-          professionalTypePrefixes.value.push({
-            professionalTypeId: professionId,
-            prefix: event.target.value,
-          });
-          console.log("sagerewa", professionalTypePrefixes.value, countProLength.value);
-          return;
+          if (countProLength.value === professionalTypePrefixes.value.length) {
+            professionalTypePrefixes.value.push({
+              professionalTypeId: professionId,
+              prefix: event.target.value,
+            });
+            return;
           }
-      
         } else {
           professionalTypePrefixes.value.splice(
-            professionalTypePrefixes.value.indexOf(
-              {professionalTypeId: professionId}
-            ),
+            professionalTypePrefixes.value.indexOf({
+              professionalTypeId: professionId,
+            }),
             1
           );
           professionalTypePrefixes.value.push({
             professionalTypeId: professionId,
             prefix: event.target.value,
           });
-          console.log("ee", professionalTypePrefixes.value);
           return;
         }
       }
-
-
-      
     };
-
     // const isProfessionSelected = (professionId) => {
-
     // }
-
     onMounted(() => {
       created(route.params.applicationType, route.params.applicationId);
       fetchDocumentTypes();

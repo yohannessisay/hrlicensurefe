@@ -154,7 +154,6 @@ export default {
             store.getters["reviewerNewLicense/getNewLicenseLicensedSearched"];
           allInfo.value.assignApplication =
             store.getters["reviewerNewLicense/getNewLicenseLicensedSearched"];
-          console.log("all new license licensed is ", newLicenseLicensed.value);
           for (let applicant in allInfo.value.assignApplication) {
             allInfo.value.assignApplication[applicant].createdAt = moment(
               allInfo.value.assignApplication[applicant].createdAt

@@ -202,7 +202,6 @@ export default {
               return;
             }
             certificateDetail.value = res.data.data;
-            console.log("cerdet", certificateDetail.value);
             if (
               route.params.userId != certificateDetail.value.applicantId ||
               certificateDetail.value.certified === false

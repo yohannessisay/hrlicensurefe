@@ -135,10 +135,6 @@ export default {
             showLoading.value = false;
             newLicenseForRenewal.value =
               store.getters["reviewerNewLicense/getNewLicenseForSpecificUser"];
-            console.log(
-              "response value isp ",
-              store.getters["reviewerNewLicense/getNewLicenseForSpecificUser"]
-            );
             if (newLicenseForRenewal.value === undefined) {
               // redirectPage(data + "/detail/" + props.app_type + "/" + applicationId + "/" + applicantId)
               const url =

@@ -635,7 +635,6 @@ export default {
     };
 
     onMounted(() => {
-      console.log("we here");
       documentMessage.value = MESSAGE.DOC_MESSAGE;
       maxFileSize.value = MAX_FILE_SIZE.MAX_FILE_SIZE;
       maxSizeMB.value = MAX_SIZE_MB.MAX_SIZE_MB;
