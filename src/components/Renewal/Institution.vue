@@ -341,6 +341,7 @@ export default {
         draftData.education.institutionId;
       this.licenseInfo.professionalTypeIds = draftData.professionalTypeIds;
       this.licenseInfo.educationalLevelId = draftData.educationalLevelId;
+      this.licenseInfo.nativeLanguageId = draftData.nativeLanguageId;
       this.setEducationLevel(this.licenseInfo.educationalLevelId);
       this.licenseInfo.expertLevelId = draftData.expertLevelId;
       if (this.licenseInfo.applicantTypeId == 1) {
@@ -356,10 +357,11 @@ export default {
           });
         });
       }
-      if (this.licenseInfo.expertLevelId == 3) {
-        this.showRegion = false;
-      } else {
+      if (this.licenseInfo.expertLevelId == 1) {
         this.showRegion = true;
+      } else {
+        this.showRegion = false;
+        this.displayEnglishLanguageOption = true;
       }
       if (draftData.regionId != undefined || draftData.regionId) {
         this.regionID = draftData.regionId;

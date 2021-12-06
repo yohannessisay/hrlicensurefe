@@ -202,7 +202,6 @@ export default {
       const resp = await ApiService.get(
         url + "lookups/appTypeInstitutions/" + value
       );
-      console.log(resp);
       return resp;
     } catch (error) {
       return error;
