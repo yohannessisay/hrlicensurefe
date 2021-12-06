@@ -447,7 +447,6 @@ export default {
               }
             });
           }
-          console.log("new license", this.newlicense);
         })
         .then(() => {
           this.$store.dispatch("renewal/getRenewalLicense").then((res) => {

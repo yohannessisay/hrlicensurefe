@@ -249,7 +249,6 @@ export default {
     const fetchExpertLevels = () => {
       store.dispatch("admin/getExpertLevels").then((res) => {
         expertLevels.value = res.data.data;
-        // console.log("expert level in", res);
       });
     };
 
@@ -282,7 +281,6 @@ export default {
           .dispatch("admin/registerAdmin", admin)
           .then((res) => {
             showLoading.value = false;
-            console.log("registration information is ", res);
             if (res.data === undefined) {
               message.value.showErrorFlash = !message.value.showErrorFlash;
               setTimeout(() => {

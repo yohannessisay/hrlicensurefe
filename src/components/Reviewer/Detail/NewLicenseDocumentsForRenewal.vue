@@ -112,8 +112,6 @@ export default {
           showLoading.value = false;
           license.value = res.data.data;
           docs.value = license.value.documents;
-          console.log("docs _ value", docs.value);
-
           show.value = true;
         });
     };

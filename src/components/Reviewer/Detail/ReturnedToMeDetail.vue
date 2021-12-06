@@ -319,7 +319,6 @@ export default {
         store
           .dispatch("reviewer/getNewLicenseApplication", applicationId)
           .then((res) => {
-            console.log("license value", res.data.data);
             showLoading.value = false;
             license.value = res.data.data;
             getReviewId.value = license.value.reviewerId;

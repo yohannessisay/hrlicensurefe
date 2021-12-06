@@ -371,7 +371,6 @@ export default {
     const fetchAdminsByRegion = (regionId) => {
       store.dispatch("reviewer/getAdminsByRegion", regionId).then((res) => {
         admins.value = res.data.data;
-        console.log("regional admin", admins.value);
       });
     };
 

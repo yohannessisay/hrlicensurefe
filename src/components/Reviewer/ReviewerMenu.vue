@@ -611,7 +611,6 @@ export default {
 
     const expertLevelId = JSON.parse(localStorage.getItem("allAdminData"))
       .expertLevelId;
-    console.log("expert level id is ", expertLevelId);
     let display = ref("newLicenseUnassigned");
     let selectedValue = ref("");
 

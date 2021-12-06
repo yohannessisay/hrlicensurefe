@@ -141,7 +141,6 @@ export default {
           store.getters["reviewerGoodStanding/getGoodStandingOthersPendingPaymentSearched"];
         allInfo.value.assignApplication =
           store.getters["reviewerGoodStanding/getGoodStandingOthersPendingPaymentSearched"];
-          console.log("good standing pending payment", store.getters["reviewerGoodStanding/getGoodStandingOthersPendingPaymentSearched"])
 
         for (let applicant in allInfo.value.assignApplication) {
           allInfo.value.assignApplication[applicant].createdAt = moment(

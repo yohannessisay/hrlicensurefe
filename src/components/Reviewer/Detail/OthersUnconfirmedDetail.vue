@@ -426,7 +426,6 @@ export default {
     };
 
     const gen = () => {
-      console.log("selected val", assignConfirmAdmin.value.evaluatorIds);
     };
 
     const assignAdminToConfirm = () => {
@@ -470,7 +469,6 @@ export default {
           };
         }
       }
-      console.log("assigned data is for admins is ", assignConfirmAdmin.value);
       if (applicationType.value == "New License") {
         store
           .dispatch(
@@ -511,7 +509,6 @@ export default {
 
           .then((response) => {
             showAssignLoading.value = false;
-            console.log("responses", response);
             if (response.statusText == "Created") {
               showFlash.value = true;
               setTimeout(() => {
@@ -547,9 +544,7 @@ export default {
         store
           .dispatch("reviewer/getNewLicenseApplication", applicationId)
           .then((res) => {
-            console.log("ffffound newlicense dddata", res);
             previousEvaluators.value = res.data.data.evaluators;
-            console.log("previous evaluators is ", previousEvaluators.value);
             showLoading.value = false;
             license.value = res.data.data;
             getReviewId.value = license.value.reviewerId;
@@ -573,7 +568,6 @@ export default {
         store
           .dispatch("reviewer/getGoodStandingApplication", applicationId)
           .then((res) => {
-            console.log("ffffound good standing dddata", res);
             showLoading.value = false;
             license.value = res.data.data;
             getReviewId.value = license.value.reviewerId;
@@ -597,7 +591,6 @@ export default {
         store
           .dispatch("reviewer/getVerificationApplication", applicationId)
           .then((res) => {
-            console.log("ffffound verification dddata", res);
             showLoading.value = false;
             license.value = res.data.data;
             getReviewId.value = license.value.reviewerId;
@@ -621,9 +614,7 @@ export default {
         store
           .dispatch("reviewer/getRenewalApplication", applicationId)
           .then((res) => {
-            console.log("ffffound renewal dddata", res);
             previousEvaluators.value = res.data.data.evaluators;
-            console.log("previous evaluators is ", previousEvaluators.value);
             showLoading.value = false;
             license.value = res.data.data;
             getReviewId.value = license.value.reviewerId;

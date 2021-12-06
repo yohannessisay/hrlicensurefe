@@ -80,10 +80,7 @@ export default {
     let applicationId = ref([]);
 
     let evaluationsList = props.evaluateReview;
-    // console.log("evaluations list", evaluationsList)
-
     const getProfileInfo = () => {
-      console.log("evaluations list,,", evaluationsList);
       for (let evaluation in evaluationsList) {
         if (evaluationsList[evaluation].renewal !== undefined) {
           evaluationsList[evaluation].applicant =

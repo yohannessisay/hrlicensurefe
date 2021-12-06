@@ -67,7 +67,6 @@ export default {
     try {
       const url = baseUrl + "/applicationStatuses";
       const resp = await ApiService.get(url);
-      console.log("response is applicationStaues", resp.data)
     } catch(error) {
       
     }
@@ -159,7 +158,6 @@ export default {
       // const url = baseUrl + "/newLicenses/user/" + id;
       const url = baseUrl + "/applications/returnedApps/" + id;
       const resp = await ApiService.get(url);
-      console.log("response isss", resp)
       commit(SET_CONFIRMED, resp.data.data)
       // return resp;
     } catch (error) {
@@ -503,7 +501,6 @@ export default {
       // const resp = await ApiService.get("https://randomuser.me/api/?results=10");
       // const resp = await ApiService.get(baseUrl + "/newLicenses/status/3");
       const resp = await ApiService.get(baseUrl + "/applications/unassigned");
-      console.log("unassigned _ is ", resp.data)
       commit(SET_UNASSIGNED, resp.data.data)
     } catch (error) {
       const resp = error;
@@ -978,7 +975,6 @@ export default {
     try {
       const url = baseUrl + "/goodStandings/" + id;
       const resp = await ApiService.get(url);
-      console.log("here response is ", resp)
       return resp;
     } catch (error) {
       return error;
@@ -995,7 +991,6 @@ export default {
   },
   async getVerificationApplication(context, id) {
     try {
-      console.log("verification id is ", id)
       const url = baseUrl + "/verifications/" + id;
       const resp = await ApiService.get(url);
       return resp;
@@ -1147,7 +1142,6 @@ export default {
   },
   async confirmRenewalReview({commit}, confirm) {
     try {
-      console.log("renewal confirm admin", confirm)
       const resp = await ApiService.post(
         baseUrl + "/renewalEvaluators/assign",
         confirm
@@ -1194,13 +1188,11 @@ export default {
   
   async evaluatVerification({ commit }, license) {
     try {
-      console.log("confirm verification detail", license)
       return;
       const resp = await ApiService.put(
         baseUrl + "/verificationEvaluators/" + license.id,
         license
       );
-      console.log("after response is", resp)
       return resp;
     } catch (error) {
       return error;
@@ -1209,12 +1201,10 @@ export default {
 
   async evaluateGoodStanding({ commit }, license) {
     try {
-      console.log("confirm verification detail", license)
       const resp = await ApiService.put(
         baseUrl + "/goodStandingEvaluators/" + license.id,
         license
       );
-      console.log("after response is", resp)
       return resp;
     } catch (error) {
       return error;
@@ -1223,12 +1213,10 @@ export default {
 
   async evaluateRenewal({ commit }, license) {
     try {
-      console.log("confirm verification detail", license)
       const resp = await ApiService.put(
         baseUrl + "/renewalEvaluators/" + license.id,
         license
       );
-      console.log("after response is", resp)
       return resp;
     } catch (error) {
       return error;
@@ -1237,12 +1225,10 @@ export default {
 
   async evaluateNewLicense({ commit }, license) {
     try {
-      console.log("confirm verification detail", license)
       const resp = await ApiService.put(
         baseUrl + "/licenseEvaluators/" + license.id,
         license
       );
-      console.log("after response is", resp)
       return resp;
     } catch (error) {
       return error;
@@ -1251,7 +1237,6 @@ export default {
 
   async editNewLicense({ commit }, license) {
     try {
-      console.log("data is - ", license);
       const resp = await ApiService.put(
         baseUrl + "/newlicenses/" + license.data.id,
         license
@@ -1264,12 +1249,10 @@ export default {
 
   async editVerification({ commit }, license) {
     try {
-      console.log("license detail", license)
       const resp = await ApiService.put(
         baseUrl + "/verifications/" + license.data.id,
         license
       );
-      console.log("after response is")
       return resp;
     } catch (error) {
       return error;
@@ -1288,17 +1271,14 @@ export default {
     }
   },
   async editRenewal({ commit }, license) {
-    console.log("comming here", license);
     try {
       const resp = await ApiService.put(
         baseUrl + "/renewals/" + license.data.id,
         license
       );
-      console.log("response of renewal is ", resp)
       // const resp = await ApiService.put(url + "newLicenses/" + license);
       return resp;
     } catch (error) {
-      console.log("but error comming", error)
       return error;
     }
   },

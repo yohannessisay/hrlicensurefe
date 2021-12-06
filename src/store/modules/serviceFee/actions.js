@@ -7,11 +7,9 @@ const userId = +localStorage.getItem("userId");
 
 export default {
   setItemID({ commit }, id) {
-    console.log(id);
     commit(SET_ITEM_ID, id);
   },
   setApplicationType({ commit }, applicationType) {
-    console.log(applicationType);
     commit(SET_APPLICATION_TYPE, applicationType);
   },
   async getApplicationStatuses() {

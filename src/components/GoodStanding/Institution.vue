@@ -361,6 +361,7 @@ export default {
       this.licenseInfo.licenseRegistrationNumber =
         draftData.licenseRegistrationNumber;
       this.licenseInfo.applicantPositionId = draftData.applicantPositionId;
+      this.licenseInfo.nativeLanguageId = draftData.nativeLanguageId;
       this.licenseInfo.professionalTypeIds = draftData.professionalTypeIds;
       this.licenseInfo.expertLevelId = draftData.expertLevelId;
       if (this.licenseInfo.applicantTypeId == 1) {
@@ -376,10 +377,11 @@ export default {
           });
         });
       }
-      if (this.licenseInfo.expertLevelId == 3) {
-        this.showRegion = false;
-      } else {
+      if (this.licenseInfo.expertLevelId == 1) {
         this.showRegion = true;
+      } else {
+        this.showRegion = false;
+        this.displayEnglishLanguageOption = true;
       }
       if (draftData.woreda || draftData.woreda != undefined) {
         this.licenseInfo.residenceWoredaId = draftData.woreda.id;

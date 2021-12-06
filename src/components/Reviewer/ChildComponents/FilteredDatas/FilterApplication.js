@@ -65,7 +65,6 @@ const searchByInput = (startingFrom, upTo, app_type, allInfo, moment) => {
           }
         }
       }  else if (app_type != "notSearched") {
-          console.log("application type only")
         if (
             allInfo.assignApplication[applicant].applicationType ==
           app_type
@@ -94,7 +93,6 @@ const searchByInput = (startingFrom, upTo, app_type, allInfo, moment) => {
       }
     }
     allInfo.alreadyPushed = true;
-    console.log("all info is ", allInfo)
   };
 
 export default filterApplication;

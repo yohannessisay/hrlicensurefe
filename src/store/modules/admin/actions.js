@@ -29,7 +29,6 @@ export default {
       const AppStatuses = await ApiService.get(url+"applicationStatuses");
       commit(SET_APPLICATION_STATUSES, AppStatuses.data.data)
     } catch(error) {
-      console.log("error");
     }
   },
   async getRole({ commit }) {

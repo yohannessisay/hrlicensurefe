@@ -36,18 +36,15 @@
 // import DropDownLists from "./DropDownLists.vue";
 
 export default {
-//   components: {
-//       DropDownLists,
-//   },
+  //   components: {
+  //       DropDownLists,
+  //   },
   name: "DropDownContainers",
 
   setup() {
-    const dropDownHandler = (applicationValue) => {
-      console.log("drop down value", applicationValue);
-    };
+    const dropDownHandler = (applicationValue) => {};
 
-    const dropDownListHandler = (menu) => {
-    };
+    const dropDownListHandler = (menu) => {};
 
     return {
       dropDownHandler,

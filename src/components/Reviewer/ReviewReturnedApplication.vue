@@ -477,7 +477,6 @@ export default {
         .dispatch("reviewer/" + applicationType, applicationId)
         .then((res) => {
           newLicense.value = res.data.data;
-          console.log("new license", newLicense.value);
           buttons.value = res.data.data.applicationStatus.buttons;
           if (applicationType == "getVerificationApplication") {
             buttons.value = res.data.data.applicationStatus.buttons.filter(
@@ -492,7 +491,6 @@ export default {
             });
           }
           docs.value = res.data.data.documents;
-          console.log("docs value ", docs.value);
           if ((newLicense.value.applicationStatus.code = "APP")) {
             accepted.value = newLicense.value.acceptedFields;
             rejected.value = newLicense.value.declinedFields;
@@ -631,8 +629,6 @@ export default {
         if (fromModalSendDeclinedData.value == true) {
           sendDeclinedData.value = true;
         }
-        console.log("rejected val", rejected.value);
-        console.log("rejectedObj val", rejectedObj.value);
       }
       newLicense.value.declinedFields = rejected.value;
       newLicense.value.acceptedFields = accepted.value;
@@ -659,12 +655,9 @@ export default {
 
     const editApplication = (applicationType, req) => {
       store.dispatch("reviewer/" + applicationType, req).then((res) => {
-        console.log("ieie resp", res);
-        console.log("ieie request", req);
         return;
         if (res.statusText == "Created") {
           showFlash.value = true;
-          console.log("successful");
           setTimeout(() => {
             router.push("/admin/review");
           }, 3000);
@@ -708,7 +701,6 @@ export default {
       approvedColor.value = "lightBlueB-500";
       for (var prop in obj) {
         if (obj[prop].code == ab.documentTypeCode) {
-          console.log("object value is ", obj[prop]);
           documentTypeName.value = obj[prop].name;
         }
         for (var rejected in rejectedObj.value) {
