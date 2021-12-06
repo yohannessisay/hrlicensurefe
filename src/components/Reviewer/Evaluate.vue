@@ -1362,7 +1362,8 @@ export default {
         }
         if (professionalTypeIdss.value.length > 0) {
           newLicense.value.professionalTypeIds = professionalTypeIdss.value;
-          newLicense.value.professionalTypePrefixes = professionalTypePrefixes.value
+          newLicense.value.professionalTypePrefixes =
+            professionalTypePrefixes.value;
         }
       } else {
         if (professionalTypeIdss.value.length > 0) {
@@ -1572,8 +1573,7 @@ export default {
       choosedProfession(id);
       if (event.target.checked) {
         professionalTypeIdss.value.push(id);
-        for (let i = 0; i < professionalTypeIdss.value.length; i++) {
-        }
+        for (let i = 0; i < professionalTypeIdss.value.length; i++) {}
       } else {
         professionalTypeIdss.value.splice(
           professionalTypeIdss.value.indexOf(id),
@@ -1607,33 +1607,36 @@ export default {
 
     let countProLength = ref(0);
     const addPrefix = (professionId, prefixName, event) => {
-      if(professionalTypePrefixes.value.length === 0) {
+      if (professionalTypePrefixes.value.length === 0) {
         professionalTypePrefixes.value.push({
-            professionalTypeId: professionId,
-            prefix: event.target.value,
-          });
-          console.log("waka", professionalTypePrefixes.value);
-          return;
+          professionalTypeId: professionId,
+          prefix: event.target.value,
+        });
+        console.log("waka", professionalTypePrefixes.value);
+        return;
       }
       for (let i = 0; i < professionalTypePrefixes.value.length; i++) {
         if (
           professionId !== professionalTypePrefixes.value[i].professionalTypeId
         ) {
           countProLength.value++;
-          if(countProLength.value === professionalTypePrefixes.value.length) {
-          professionalTypePrefixes.value.push({
-            professionalTypeId: professionId,
-            prefix: event.target.value,
-          });
-          console.log("sagerewa", professionalTypePrefixes.value, countProLength.value);
-          return;
+          if (countProLength.value === professionalTypePrefixes.value.length) {
+            professionalTypePrefixes.value.push({
+              professionalTypeId: professionId,
+              prefix: event.target.value,
+            });
+            console.log(
+              "sagerewa",
+              professionalTypePrefixes.value,
+              countProLength.value
+            );
+            return;
           }
-      
         } else {
           professionalTypePrefixes.value.splice(
-            professionalTypePrefixes.value.indexOf(
-              {professionalTypeId: professionId}
-            ),
+            professionalTypePrefixes.value.indexOf({
+              professionalTypeId: professionId,
+            }),
             1
           );
           professionalTypePrefixes.value.push({
@@ -1644,9 +1647,6 @@ export default {
           return;
         }
       }
-
-
-      
     };
 
     // const isProfessionSelected = (professionId) => {

@@ -1314,7 +1314,7 @@ export default {
 
   async getProfessionalTypeByDepartmentId({commit}, id) {
     try {
-      const url = baseUrl + "/lookups/professionalTypes/"+10;
+      const url = baseUrl + "/lookups/professionalTypes/"+id;
       const resp = await ApiService.get(url);
       return resp;
     } catch (error) {
