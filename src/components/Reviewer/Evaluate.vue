@@ -979,7 +979,6 @@ export default {
           .dispatch("reviewer/getNewLicenseApplication", applicationId)
           .then((res) => {
             newLicense.value = res.data.data;
-            console.log("new license is ", newLicense.value);
             departmentId.value = res.data.data.education.department.id;
             getProfessionalTypesByDepartmentId(departmentId.value);
             profileInfo.value = newLicense.value.applicant.profile;
@@ -1431,9 +1430,6 @@ export default {
         action: actionValue,
         data: newLicense.value,
       };
-
-      console.log("req", req)
-      return;
       if (
         applicationType.value == "New License" &&
         sendDeclinedData.value == true
@@ -1575,7 +1571,6 @@ export default {
               professionalTypes.value.push(e);
             }
             professionSelected.value = false;
-            console.log("pr", professionalTypes.value)
           });
         });
     };
