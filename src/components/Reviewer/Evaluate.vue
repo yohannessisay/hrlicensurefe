@@ -424,23 +424,59 @@
                       <p>Previous Profession type</p>
                     </div>
                     <div>
-                      <p>-------------------------------------------</p>
+                      <p>----------------------------------------</p>
                     </div>
                     <ul
                       v-for="professionName in newLicense.professionalTypes"
                       v-bind:key="professionName.professionalTypes.name"
                       v-bind:value="professionName.professionalTypes.id"
                     >
-                      <li>
-                        {{ professionName.professionalTypes.name }} |
-                        {{
-                          professionName.professionalTypes
-                            .amharicProfessionalType
-                        }}
-                      </li>
+                      <div class="flex flex-row">
+                        <li>
+                          <input
+                            v-on:click="
+                                checkBoxClicked(professionName.professionalTypes.id, true,$event)
+                              "
+                            type="checkbox"
+                            class="form-checkbox"
+                            :checked="true"
+                          />
+                          {{ professionName.professionalTypes.name }} |
+                          {{
+                            professionName.professionalTypes
+                              .amharicProfessionalType
+                          }}
+                        </li>
+                        <a
+                          class="ml-5"
+                          @click="showPrefix(professionName.professionalTypes.id, $event)"
+                          v-if="choosedProfession(professionName.professionalTypes.id, true)"
+                          >prefix?</a
+                        >
+                      </div>
+                      <div
+                          class="ml-12"
+                          v-if="show_prefix_list(professionName.professionalTypes.id)"
+                          :v-model="prefix"
+                        >
+                          <select
+                            class="select ml-3"
+                            @change="
+                              addPrefix(professionName.professionalTypes.id, prefix, $event)
+                            "
+                          >
+                            <option
+                              v-for="prefix in prefixList"
+                              v-bind:key="prefix.name"
+                              v-bind:value="prefix.name"
+                            >
+                              {{ prefix.name }}
+                            </option>
+                          </select>
+                        </div>
                     </ul>
                     <div>
-                      <p>-------------------------------------------</p>
+                      <p>----------------------------------------</p>
                     </div>
                     <div>
                       <ul
@@ -452,11 +488,11 @@
                           <li>
                             <input
                               v-on:click="
-                                checkBoxClicked(professionName.id, $event)
+                                checkBoxClicked(professionName.id, false,$event)
                               "
                               type="checkbox"
                               class="form-checkbox"
-                              :checked="choosedProfession(professionName.id)"
+                              :checked="choosedProfession(professionName.id, false)"
                             />
                             {{ professionName.name }} |
                             {{ professionName.amharicProfessionalType }}
@@ -464,7 +500,7 @@
                           <a
                             class="ml-5"
                             @click="showPrefix(professionName.id, $event)"
-                            v-if="choosedProfession(professionName.id)"
+                            v-if="choosedProfession(professionName.id, false)"
                             >prefix?</a
                           >
                         </div>
@@ -854,6 +890,7 @@ export default {
     let professionalTypeIds = ref([]);
     let professionalTypeIdss = ref([]);
     let prefixList = ref([
+      {name: "", id: 0},
       { name: "Consultant", id: 1 },
       { name: "Expert", id: 2 },
       { name: "Junior", id: 3 },
@@ -942,6 +979,7 @@ export default {
           .dispatch("reviewer/getNewLicenseApplication", applicationId)
           .then((res) => {
             newLicense.value = res.data.data;
+            console.log("new license is ", newLicense.value);
             departmentId.value = res.data.data.education.department.id;
             getProfessionalTypesByDepartmentId(departmentId.value);
             profileInfo.value = newLicense.value.applicant.profile;
@@ -1393,6 +1431,9 @@ export default {
         action: actionValue,
         data: newLicense.value,
       };
+
+      console.log("req", req)
+      return;
       if (
         applicationType.value == "New License" &&
         sendDeclinedData.value == true
@@ -1517,10 +1558,25 @@ export default {
       });
     };
     const getProfessionalTypesByDepartmentId = (id) => {
+      let professionSelected = ref(false);
       store
         .dispatch("reviewer/getProfessionalTypeByDepartmentId", id)
         .then((res) => {
-          professionalTypes.value = res.data.data;
+          res.data.data.filter(function(e) {
+            for (let i in newLicense.value.professionalTypes) {
+              if (
+                e.code ===
+                newLicense.value.professionalTypes[i].professionalTypes.code
+              ) {
+                professionSelected.value = true;
+              }
+            }
+            if (!professionSelected.value) {
+              professionalTypes.value.push(e);
+            }
+            professionSelected.value = false;
+            console.log("pr", professionalTypes.value)
+          });
         });
     };
     const allowChangeName = () => {
@@ -1563,8 +1619,8 @@ export default {
       isCheckboxActive.value = !isCheckboxActive.value;
     };
 
-    const checkBoxClicked = (id, event) => {
-      choosedProfession(id);
+    const checkBoxClicked = (id, previousProfession,event) => {
+      choosedProfession(id, previousProfession);
       if (event.target.checked) {
         professionalTypeIdss.value.push(id);
         for (let i = 0; i < professionalTypeIdss.value.length; i++) {}
@@ -1577,10 +1633,18 @@ export default {
       }
     };
 
-    const choosedProfession = (id) => {
-      for (let i = 0; i < professionalTypeIdss.value.length; i++) {
-        if (id === professionalTypeIdss.value[i]) {
-          return true;
+    const choosedProfession = (id, previousProfession) => {
+      if(previousProfession) {
+        for (let i = 0; i < professionalTypes.value.length; i++) {
+          if (id === professionalTypes.value[i].id) {
+            return true;
+          }
+        }
+      } else {
+        for (let i = 0; i < professionalTypeIdss.value.length; i++) {
+          if (id === professionalTypeIdss.value[i]) {
+            return true;
+          }
         }
       }
     };
@@ -1624,6 +1688,9 @@ export default {
             }),
             1
           );
+          if(event.target.value === "") {
+            return;
+          }
           professionalTypePrefixes.value.push({
             professionalTypeId: professionId,
             prefix: event.target.value,
