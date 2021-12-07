@@ -1,4 +1,4 @@
-7<template>
+<template>
   <div>
     <Navigation />
     <div
@@ -546,8 +546,8 @@
               <div v-if="this.activeState == 6">
                 <SupportLetterEthiopian
                   :activeState="6"
-                  @changeActiveStateMinus="activeState--"
                   @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
                 />
               </div>
             </transition>
@@ -565,6 +565,7 @@
                 <Transcript
                   :activeState="8"
                   @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
                 />
               </div>
             </transition>
@@ -791,7 +792,7 @@
             </transition>
           </div>
           <div
-            v-if="this.applicantType == 3 && this.displayEnglishLanguageOption"
+            v-if="this.applicantType == 2 && this.displayEnglishLanguageOption"
           >
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 2">
@@ -887,7 +888,7 @@
           </div>
 
           <div
-            v-if="this.applicantType == 3 && !this.displayEnglishLanguageOption"
+            v-if="this.applicantType == 2 && !this.displayEnglishLanguageOption"
           >
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 2">
@@ -973,8 +974,7 @@
               </div>
             </transition>
           </div>
-
-          <div v-if="this.applicantType == 2">
+          <div v-if="this.applicantType == 3">
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 2">
                 <Passport

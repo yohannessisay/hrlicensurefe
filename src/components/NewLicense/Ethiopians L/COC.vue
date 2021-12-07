@@ -275,7 +275,7 @@ export default {
       let reader = new FileReader();
       isImage.value = true;
       let fileS = COCFile.value.size;
-      if (fileS <= maxFileSize / 1000) {
+      if (fileS <= maxFileSize.value / 1000) {
         dataChanged.value = true;
         showUpload.value = false;
         fileSizeExceed.value = false;
