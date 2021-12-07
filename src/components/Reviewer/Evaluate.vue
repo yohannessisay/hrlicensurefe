@@ -420,29 +420,28 @@
                   </div>
                   <div class="flex flex-col mb-medium w-1/2 mr-12">
                     <!-- <div v-model="professionalTypeIds"> -->
-                    <!-- <ul
-                        v-for="professionName in newLicense.professionalTypes"
-                        v-bind:key="professionName.professionalTypes.name"
-                        v-bind:value="professionName.professionalTypes.id"
-                      >
-                        <li>
-                          <input
-                            @change="
-                              professionTypeCheckBox(
-                                professionName.professionalTypes.id
-                              )
-                            "
-                            type="checkbox"
-                            class="form-checkbox"
-                            :checked="true"
-                          />
-                          {{ professionName.professionalTypes.name }} |
-                          {{
-                            professionName.professionalTypes
-                              .amharicProfessionalType
-                          }}
-                        </li>
-                      </ul> -->
+                    <div>
+                      <p>Previous Profession type</p>
+                    </div>
+                    <div>
+                      <p>-------------------------------------------</p>
+                    </div>
+                    <ul
+                      v-for="professionName in newLicense.professionalTypes"
+                      v-bind:key="professionName.professionalTypes.name"
+                      v-bind:value="professionName.professionalTypes.id"
+                    >
+                      <li>
+                        {{ professionName.professionalTypes.name }} |
+                        {{
+                          professionName.professionalTypes
+                            .amharicProfessionalType
+                        }}
+                      </li>
+                    </ul>
+                    <div>
+                      <p>-------------------------------------------</p>
+                    </div>
                     <div>
                       <ul
                         v-for="professionName in professionalTypes"
