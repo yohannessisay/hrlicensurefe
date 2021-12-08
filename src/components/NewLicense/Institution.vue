@@ -189,16 +189,24 @@
               <select
                 class="max-w-3xl select"
                 multiple
-                v-model="licenseInfo.professionalTypeIds"
+                v-model="professional"
+                @change="checkOtherProfession(professional)"
               >
                 <option
                   v-for="types in this.professionalTypes"
                   v-bind:key="types.name"
-                  v-bind:value="types.id"
+                  v-bind:value="types"
                 >
                   {{ types.name }}
                 </option>
               </select>
+              <input
+                v-model="licenseInfo.otherProfessionalType"
+                v-if="showOtherProfession"
+                class="mt-2"
+                placeholder="Write Other Profession"
+                type="text"
+              />
               <div v-if="professionalTypeRepeat">
                 <span
                   style="font-size: 18px; color: red"
@@ -439,6 +447,7 @@ export default {
       expertLevelId: null,
       educationalLevelId: null,
       otherEducationalInstitution: null,
+      otherProfessionalType: null,
     },
     licenseInfoErrors: {
       applicantTypeId: "",
@@ -453,6 +462,7 @@ export default {
       expertLevelId: null,
       educationalLevelId: null,
       otherEducationalInstitution: null,
+      otherProfessionalType: null,
     },
     regionID: "",
     zoneID: "",
@@ -491,6 +501,9 @@ export default {
 
     institution: "",
     showOtherEducation: false,
+
+    profession: "",
+    showOtherProfession: false,
   }),
 
   methods: {
@@ -533,6 +546,16 @@ export default {
       this.licenseInfo.education.institutionId = institution.id;
       if (institution.name == "Other") {
         this.showOtherEducation = true;
+      }
+    },
+    checkOtherProfession(profession) {
+      for (let i = 0; i < profession.length; i++) {
+        if (profession[i].name == "Other") {
+          this.showOtherProfession = true;
+        }
+      }
+      for (let j = 0; j < profession.length; j++) {
+        this.licenseInfo.professionalTypeIds.push(profession[j].id);
       }
     },
     checkApplicantType(applicantType) {
@@ -611,6 +634,7 @@ export default {
             expertLevelId: this.licenseInfo.expertLevelId,
             otherEducationalInstitution: this.licenseInfo
               .otherEducationalInstitution,
+            otherProfessionalType: this.licenseInfo.otherProfessionalType,
           },
         },
         id: this.draftId,
@@ -662,6 +686,7 @@ export default {
             otherEducationalInstitution: this.licenseInfo
               .otherEducationalInstitution,
             expertLevelId: this.licenseInfo.expertLevelId,
+            otherProfessionalType: this.licenseInfo.otherProfessionalType,
           },
         },
         id: this.draftId,
@@ -732,6 +757,7 @@ export default {
         occupationTypeId: this.licenseInfo.occupationTypeId,
         nativeLanguageId: this.licenseInfo.nativeLanguageId,
         expertLevelId: this.licenseInfo.expertLevelId,
+        otherProfessionalType: this.licenseInfo.otherProfessionalType,
       };
       if (this.licenseInfo.educationalLevelId == null) {
         this.licenseInfo.educationalLevelId = 4;

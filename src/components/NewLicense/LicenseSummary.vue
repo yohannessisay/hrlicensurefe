@@ -792,6 +792,7 @@ export default {
     this.nativeLanguageId = this.license.nativeLanguageId;
     this.expertLevelId = this.license.expertLevelId;
     this.otherEducationalInstitution = this.license.otherEducationalInstitution;
+    this.otherProfessionalType = this.license.otherProfessionalType;
     this.buttons = this.getButtons;
   },
 
@@ -814,6 +815,7 @@ export default {
     occupationTypeId: null,
     educationalLevelId: null,
     otherEducationalInstitution: null,
+    otherProfessionalType: null,
     draftId: "",
     draftData: "",
     draftStatus: "",
@@ -1211,6 +1213,7 @@ export default {
             expertLevelId: this.expertLevelId,
             isLegal: this.checkBoxValue,
             otherEducationalInstitution: this.otherEducationalInstitution,
+            otherProfessionalType: this.otherProfessionalType,
           },
         };
         let educationLevel = localStorage.getItem("educationLevel");
@@ -1702,6 +1705,7 @@ export default {
             expertLevelId: this.expertLevelId,
             isLegal: this.checkBoxValue,
             otherEducationalInstitution: this.otherEducationalInstitution,
+            otherProfessionalType: this.otherProfessionalType,
           },
         };
         this.$store
@@ -1749,6 +1753,7 @@ export default {
             expertLevelId: this.expertLevelId,
             isLegal: this.checkBoxValue,
             otherEducationalInstitution: this.otherEducationalInstitution,
+            otherProfessionalType: this.otherProfessionalType,
           },
         },
         id: this.draftId,
