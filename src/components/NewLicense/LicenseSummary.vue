@@ -1214,19 +1214,16 @@ export default {
           },
         };
         let educationLevel = localStorage.getItem("educationLevel");
-
         if (educationLevel == "diploma" && license.data.applicantTypeId == 1) {
           if (
             this.passport == null ||
             this.healthExamCert == null ||
-            this.diploma == null ||
-            this.herqa == null ||
+            this.coc == null ||
             this.educationalDocs[0] == null ||
             this.educationalDocs[1] == null ||
             this.educationalDocs[3] == null ||
-            this.workExperience == null ||
-            this.payroll == null ||
-            this.coc == null
+            this.transcript == null ||
+            this.diploma == null
           ) {
             this.showAllAttachements = true;
             this.showLoading = false;
@@ -1329,7 +1326,6 @@ export default {
             this.showLoading = false;
           }
         }
-
         if (educationLevel == "masters" && license.data.applicantTypeId == 2) {
           if (
             this.passport == null ||
@@ -1348,7 +1344,6 @@ export default {
             this.showLoading = false;
           }
         }
-
         if (educationLevel == "phd" && license.data.applicantTypeId == 2) {
           if (
             this.passport == null ||
