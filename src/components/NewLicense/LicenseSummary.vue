@@ -1301,7 +1301,6 @@ export default {
             this.letterfromOrg == null ||
             this.professionalLicense == null ||
             this.renewedLicense == null ||
-            this.workExperience == null ||
             this.supportLetter == null
           ) {
             this.showAllAttachements = true;
@@ -1319,8 +1318,7 @@ export default {
             this.proTranscript == null ||
             this.letterfromOrg == null ||
             this.professionalLicense == null ||
-            this.renewedLicense == null ||
-            this.workExperience == null
+            this.renewedLicense == null
           ) {
             this.showAllAttachements = true;
             this.showLoading = false;
@@ -1337,8 +1335,7 @@ export default {
             this.mastersTranscript == null ||
             this.letterfromOrg == null ||
             this.professionalLicense == null ||
-            this.renewedLicense == null ||
-            this.workExperience == null
+            this.renewedLicense == null
           ) {
             this.showAllAttachements = true;
             this.showLoading = false;
@@ -1355,8 +1352,7 @@ export default {
             this.phdTranscript == null ||
             this.letterfromOrg == null ||
             this.professionalLicense == null ||
-            this.renewedLicense == null ||
-            this.workExperience == null
+            this.renewedLicense == null
           ) {
             this.showAllAttachements = true;
             this.showLoading = false;
