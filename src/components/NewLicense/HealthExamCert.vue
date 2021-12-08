@@ -288,7 +288,6 @@ export default {
           },
           false
         );
-
         if (healthExamFile.value) {
           if (/\.(jpe?g|png|gif)$/i.test(healthExamFile.value.name)) {
             isImage.value = true;
