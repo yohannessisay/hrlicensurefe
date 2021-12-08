@@ -435,8 +435,12 @@
                         <li>
                           <input
                             v-on:click="
-                                checkBoxClicked(professionName.professionalTypes.id, true,$event)
-                              "
+                              checkBoxClicked(
+                                professionName.professionalTypes.id,
+                                true,
+                                $event
+                              )
+                            "
                             type="checkbox"
                             class="form-checkbox"
                             :checked="true"
@@ -449,31 +453,47 @@
                         </li>
                         <a
                           class="ml-5"
-                          @click="showPrefix(professionName.professionalTypes.id, $event)"
-                          v-if="choosedProfession(professionName.professionalTypes.id, true)"
+                          @click="
+                            showPrefix(
+                              professionName.professionalTypes.id,
+                              $event
+                            )
+                          "
+                          v-if="
+                            choosedProfession(
+                              professionName.professionalTypes.id,
+                              true
+                            )
+                          "
                           >prefix?</a
                         >
                       </div>
                       <div
-                          class="ml-12"
-                          v-if="show_prefix_list(professionName.professionalTypes.id)"
-                          :v-model="prefix"
+                        class="ml-12"
+                        v-if="
+                          show_prefix_list(professionName.professionalTypes.id)
+                        "
+                        :v-model="prefix"
+                      >
+                        <select
+                          class="select ml-3"
+                          @change="
+                            addPrefix(
+                              professionName.professionalTypes.id,
+                              prefix,
+                              $event
+                            )
+                          "
                         >
-                          <select
-                            class="select ml-3"
-                            @change="
-                              addPrefix(professionName.professionalTypes.id, prefix, $event)
-                            "
+                          <option
+                            v-for="prefix in prefixList"
+                            v-bind:key="prefix.name"
+                            v-bind:value="prefix.name"
                           >
-                            <option
-                              v-for="prefix in prefixList"
-                              v-bind:key="prefix.name"
-                              v-bind:value="prefix.name"
-                            >
-                              {{ prefix.name }}
-                            </option>
-                          </select>
-                        </div>
+                            {{ prefix.name }}
+                          </option>
+                        </select>
+                      </div>
                     </ul>
                     <div>
                       <p>----------------------------------------</p>
@@ -488,11 +508,17 @@
                           <li>
                             <input
                               v-on:click="
-                                checkBoxClicked(professionName.id, false,$event)
+                                checkBoxClicked(
+                                  professionName.id,
+                                  false,
+                                  $event
+                                )
                               "
                               type="checkbox"
                               class="form-checkbox"
-                              :checked="choosedProfession(professionName.id, false)"
+                              :checked="
+                                choosedProfession(professionName.id, false)
+                              "
                             />
                             {{ professionName.name }} |
                             {{ professionName.amharicProfessionalType }}
@@ -504,25 +530,30 @@
                             >prefix?</a
                           >
                         </div>
-                        <div
-                          class="ml-12"
-                          v-if="show_prefix_list(professionName.id)"
-                          :v-model="prefix"
-                        >
-                          <select
-                            class="select ml-3"
-                            @change="
-                              addPrefix(professionName.id, prefix, $event)
-                            "
+                        <div class="flex flex-row"
+                        v-if="show_prefix_list(professionName.id)">
+                          <div
+                            class="ml-12"
+                            :v-model="prefix"
                           >
-                            <option
-                              v-for="prefix in prefixList"
-                              v-bind:key="prefix.name"
-                              v-bind:value="prefix.name"
+                            <select
+                              class="select ml-3"
+                              @change="
+                                addPrefix(professionName.id, prefix, $event)
+                              "
                             >
-                              {{ prefix.name }}
-                            </option>
-                          </select>
+                              <option
+                                v-for="prefix in prefixList"
+                                v-bind:key="prefix.name"
+                                v-bind:value="prefix.name"
+                              >
+                                {{ prefix.name }}
+                              </option>
+                            </select>
+                          </div>
+                          <div class="flex flex-row ml-3">
+                            <p>consumer</p> <a class="ml-3 red">x</a>
+                          </div>
                         </div>
                       </ul>
                     </div>
@@ -890,7 +921,7 @@ export default {
     let professionalTypeIds = ref([]);
     let professionalTypeIdss = ref([]);
     let prefixList = ref([
-      {name: "", id: 0},
+      { name: "", id: 0 },
       { name: "Consultant", id: 1 },
       { name: "Expert", id: 2 },
       { name: "Junior", id: 3 },
@@ -1614,7 +1645,7 @@ export default {
       isCheckboxActive.value = !isCheckboxActive.value;
     };
 
-    const checkBoxClicked = (id, previousProfession,event) => {
+    const checkBoxClicked = (id, previousProfession, event) => {
       choosedProfession(id, previousProfession);
       if (event.target.checked) {
         professionalTypeIdss.value.push(id);
@@ -1629,7 +1660,7 @@ export default {
     };
 
     const choosedProfession = (id, previousProfession) => {
-      if(previousProfession) {
+      if (previousProfession) {
         for (let i = 0; i < professionalTypes.value.length; i++) {
           if (id === professionalTypes.value[i].id) {
             return true;
@@ -1683,7 +1714,7 @@ export default {
             }),
             1
           );
-          if(event.target.value === "") {
+          if (event.target.value === "") {
             return;
           }
           professionalTypePrefixes.value.push({
