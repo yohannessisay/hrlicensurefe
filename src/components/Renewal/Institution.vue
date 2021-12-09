@@ -566,8 +566,13 @@ export default {
       }
     },
     setPayrollDoc(id) {
-      console.log(id);
+      if (id == 2) {
+        window.localStorage.setItem("payroll", "payroll");
+      } else {
+        window.localStorage.setItem("payroll", "non-payroll");
+      }
     },
+
     draft(action) {
       this.showLoading = true;
       let license = {
@@ -730,6 +735,10 @@ export default {
             this.$store.dispatch("renewal/searchNewLicense").then((res) => {
               if (res.data.data == true) {
                 this.firstTimeUser = false;
+                window.localStorage.setItem(
+                  "firstTimeUser",
+                  this.firstTimeUser
+                );
                 this.$emit("changeActiveState");
                 this.$emit(
                   "applicantTypeValue",
@@ -744,6 +753,10 @@ export default {
                 this.$store.dispatch("renewal/setLicense", license);
               } else {
                 this.firstTimeUser = true;
+                window.localStorage.setItem(
+                  "firstTimeUser",
+                  this.firstTimeUser
+                );
                 this.$emit("changeActiveState");
                 this.$emit(
                   "applicantTypeValue",
