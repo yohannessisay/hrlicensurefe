@@ -250,7 +250,7 @@
               <label class="text-primary-700">Occupation Type</label>
               <select
                 class="max-w-3xl"
-                @change="setPayrollDoc()"
+                @change="setPayrollDoc(licenseInfo.occupationTypeId)"
                 v-model="licenseInfo.occupationTypeId"
               >
                 <option
@@ -596,8 +596,10 @@ export default {
     setEnglishLanguage() {
       if (this.languageID == 1) {
         this.nativeEnglishSpeaker = false;
+        window.localStorage.setItem("language", "english");
       } else {
         this.nativeEnglishSpeaker = true;
+        window.localStorage.setItem("language", "non-english");
       }
     },
     setEducationLevel(educationLevelId) {
@@ -611,7 +613,13 @@ export default {
         window.localStorage.setItem("educationalLevel", "phd");
       }
     },
-    setPayrollDoc() {},
+    setPayrollDoc(id) {
+      if (id == 2) {
+        window.localStorage.setItem("payroll", "payroll");
+      } else {
+        window.localStorage.setItem("payroll", "non-payroll");
+      }
+    },
 
     draft(action) {
       this.showLoading = true;
