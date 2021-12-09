@@ -547,12 +547,12 @@
                                 v-bind:key="prefix.name"
                                 v-bind:value="prefix.name"
                               >
-                                {{ prefix.name }}
+                                {{ prefix.name }} 
                               </option>
                             </select>
                           </div>
-                          <div class="flex flex-row ml-3">
-                            <p>consumer</p> <a class="ml-3 red">x</a>
+                          <div class="flex flex-row ml-3" v-if="selectedPrefix(professionName.id) && choosedProfession(professionName.id, false)">
+                            <p>{{selectedPrefix(professionName.id)}}</p> <a class="ml-3 red">x</a>
                           </div>
                         </div>
                       </ul>
@@ -1675,6 +1675,15 @@ export default {
       }
     };
 
+    const selectedPrefix = id => {
+      for(let i = 0; i < professionalTypePrefixes.value.length; i++) {
+        if(id === professionalTypePrefixes.value[i].professionalTypeId) {
+          return professionalTypePrefixes.value[i].prefix;
+        }
+      }
+      return false;
+    }
+
     let professionIdForPrefix = ref();
     const showPrefix = (id, event) => {
       professionIdForPrefix.value = id;
@@ -1803,6 +1812,7 @@ export default {
       show_prefix_list,
       showPrefix,
       addPrefix,
+      selectedPrefix,
     };
   },
 };

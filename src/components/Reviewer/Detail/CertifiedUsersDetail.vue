@@ -538,16 +538,28 @@ export default {
       //   "Having duly satisfied the requirements of the Ministry"
       // );
       // doc.text(180, 147, "hereby registered and licensed as");
-      doc.setFontSize(14);
-
-      // doc.text(
-      //   200,
-      //   122,
-      //   `${certificateDetail.value.professionalTypes[0].professionalTypes.name}`
-      // );
+      let changeWidth = ref(false);
+      let xPosition = ref(185);
+      for(let i = 0; i < certificateDetail.value.professionalTypes.length; i++) {
+        console.log("length is ",doc.getTextWidth(
+          certificateDetail.value.professionalTypes[i].professionalTypes.name
+        ));
+        let getLength = doc.getTextWidth(
+          certificateDetail.value.professionalTypes[i].professionalTypes.name
+        );
+        if(getLength > 135) {
+          changeWidth.value = true;
+        }
+      }
+      if(changeWidth.value) {
+        doc.setFontSize(10);
+        xPosition.value = 153;
+      } else {
+        doc.setFontSize(14);
+      }
       for(let i = 0; i < certificateDetail.value.professionalTypes.length; i++) {
         doc.text(
-          185,
+          xPosition.value,
           125 + (i * 7),
           `${
             certificateDetail.value.professionalTypes[i].professionalTypes.name
@@ -681,14 +693,18 @@ export default {
             : ""
         }`
       );
-      // doc.setFontSize(13);
-      // doc.text(20, 133, "ተገቢውን መስፈርት አሟልተው ስለተገኙ ሚኒስቴር መስሪያ ቤቱ");
-      doc.setFontSize(14);
-      // doc.text(65, 143, "ጁኒየር")
-      // doc.text(55, 153, "ጀነራልሜዲካል ፕራክቲሽነር")
+
+      if(changeWidth.value) {
+        doc.setFontSize(11);
+        xPosition.value = 28;
+      } else {
+        doc.setFontSize(14);
+        xPosition.value = 65;
+      }
+
       for(let i = 0; i < certificateDetail.value.professionalTypes.length; i++) {
         doc.text(
-          65,
+          xPosition.value,
           125 + (i * 7),
           `${
             certificateDetail.value.professionalTypes[i].professionalTypes.name
