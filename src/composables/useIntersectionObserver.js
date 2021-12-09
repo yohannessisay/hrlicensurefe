@@ -24,4 +24,5 @@ export default function useIntesectionObserver(rootMargin) {
     showElement,
     wrapperRef,
   };
+  
 }
