@@ -223,7 +223,7 @@
               <label class="text-primary-700">Occupation Type</label>
               <select
                 class="max-w-3xl"
-                @change="setPayrollDoc()"
+                @change="setPayrollDoc(licenseInfo.occupationTypeId)"
                 v-model="licenseInfo.occupationTypeId"
               >
                 <option
@@ -565,7 +565,9 @@ export default {
         window.localStorage.setItem("educationalLevel", "phd");
       }
     },
-    setPayrollDoc() {},
+    setPayrollDoc(id) {
+      console.log(id);
+    },
     draft(action) {
       this.showLoading = true;
       let license = {

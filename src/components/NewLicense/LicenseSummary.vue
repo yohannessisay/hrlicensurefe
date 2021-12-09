@@ -960,7 +960,7 @@ export default {
     submitBack() {
       this.$emit("changeActiveStateMinus");
     },
-    checkRequiredDocs(id, educationLevel) {
+    checkRequiredDocs(id, educationLevel, payroll, language) {
       if (
         educationLevel == "diploma" &&
         id == 1 &&
@@ -973,6 +973,12 @@ export default {
         this.transcript !== "" &&
         this.diploma !== ""
       ) {
+        if (payroll == "payroll" && this.payroll !== "") {
+          return true;
+        }
+        if (payroll == "payroll" && this.payroll == "") {
+          return false;
+        }
         return true;
       } else if (
         educationLevel == "degree" &&
@@ -987,6 +993,12 @@ export default {
         this.degree !== "" &&
         this.transcript !== ""
       ) {
+        if (payroll == "payroll" && this.payroll !== "") {
+          return true;
+        }
+        if (payroll == "payroll" && this.payroll == "") {
+          return false;
+        }
         return true;
       } else if (
         educationLevel == "masters" &&
@@ -1003,6 +1015,12 @@ export default {
         this.masters !== "" &&
         this.mastersTranscript !== ""
       ) {
+        if (payroll == "payroll" && this.payroll !== "") {
+          return true;
+        }
+        if (payroll == "payroll" && this.payroll == "") {
+          return false;
+        }
         return true;
       } else if (
         educationLevel == "phd" &&
@@ -1021,6 +1039,12 @@ export default {
         this.phd !== "" &&
         this.phdTranscript !== ""
       ) {
+        if (payroll == "payroll" && this.payroll !== "") {
+          return true;
+        }
+        if (payroll == "payroll" && this.payroll == "") {
+          return false;
+        }
         return true;
       } else if (
         educationLevel == "diploma" &&
@@ -1035,6 +1059,12 @@ export default {
         this.professionalLicense !== "" &&
         this.renewedLicense !== ""
       ) {
+        if (language == "non-english" && this.englishLanguage !== "") {
+          return true;
+        }
+        if (language == "non-english" && this.englishLanguage == "") {
+          return false;
+        }
         return true;
       } else if (
         educationLevel == "degree" &&
@@ -1049,6 +1079,12 @@ export default {
         this.professionalLicense !== "" &&
         this.renewedLicense !== ""
       ) {
+        if (language == "non-english" && this.englishLanguage !== "") {
+          return true;
+        }
+        if (language == "non-english" && this.englishLanguage == "") {
+          return false;
+        }
         return true;
       } else if (
         educationLevel == "masters" &&
@@ -1063,6 +1099,12 @@ export default {
         this.professionalLicense !== "" &&
         this.renewedLicense !== ""
       ) {
+        if (language == "non-english" && this.englishLanguage !== "") {
+          return true;
+        }
+        if (language == "non-english" && this.englishLanguage == "") {
+          return false;
+        }
         return true;
       } else if (
         educationLevel == "phd" &&
@@ -1077,6 +1119,12 @@ export default {
         this.professionalLicense !== "" &&
         this.renewedLicense !== ""
       ) {
+        if (language == "non-english" && this.englishLanguage !== "") {
+          return true;
+        }
+        if (language == "non-english" && this.englishLanguage == "") {
+          return false;
+        }
         return true;
       } else if (
         educationLevel == "diploma" &&
@@ -1388,8 +1436,15 @@ export default {
           },
         };
         let educationLevel = localStorage.getItem("educationalLevel");
+        let payroll = localStorage.getItem("payroll");
+        let language = localStorage.getItem("language");
         if (
-          !this.checkRequiredDocs(license.data.applicantTypeId, educationLevel)
+          !this.checkRequiredDocs(
+            license.data.applicantTypeId,
+            educationLevel,
+            payroll,
+            language
+          )
         ) {
           this.showLoading = false;
           this.showAllAttachements = true;
