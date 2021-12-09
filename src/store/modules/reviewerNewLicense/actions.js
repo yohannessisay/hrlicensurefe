@@ -79,6 +79,7 @@ export default {
   async getNewLicenseUnassigned({ commit }, statusId) {
     const url = baseUrl + "/newLicenses/status/" + statusId;
     const resp = await ApiService.get(url);
+    console.log("response", resp)
     commit(SET_NEW_LICENSE_UNASSIGNED, resp.data.data);
   },
   async getNewLicenseReport({ commit }) {

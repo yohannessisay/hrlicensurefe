@@ -347,8 +347,7 @@ export default {
         .then((res) => {
           imageSrc.value = res.data.data;
         })
-        .catch((err) => {
-        });
+        .catch((err) => {});
     };
     const fetchApplication = () => {
       showApplicationLoading.value = true;
@@ -540,34 +539,45 @@ export default {
       // doc.text(180, 147, "hereby registered and licensed as");
       let changeWidth = ref(false);
       let xPosition = ref(185);
-      for(let i = 0; i < certificateDetail.value.professionalTypes.length; i++) {
-        console.log("length is ",doc.getTextWidth(
-          certificateDetail.value.professionalTypes[i].professionalTypes.name
-        ));
+      for (
+        let i = 0;
+        i < certificateDetail.value.professionalTypes.length;
+        i++
+      ) {
+        console.log(
+          "length is ",
+          doc.getTextWidth(
+            certificateDetail.value.professionalTypes[i].professionalTypes.name
+          )
+        );
         let getLength = doc.getTextWidth(
           certificateDetail.value.professionalTypes[i].professionalTypes.name
         );
-        if(getLength > 135) {
+        if (getLength > 135) {
           changeWidth.value = true;
         }
       }
-      if(changeWidth.value) {
+      if (changeWidth.value) {
         doc.setFontSize(10);
         xPosition.value = 153;
       } else {
         doc.setFontSize(14);
       }
-      for(let i = 0; i < certificateDetail.value.professionalTypes.length; i++) {
+      for (
+        let i = 0;
+        i < certificateDetail.value.professionalTypes.length;
+        i++
+      ) {
         doc.text(
           xPosition.value,
-          125 + (i * 7),
+          125 + i * 7,
           `${
             certificateDetail.value.professionalTypes[i].professionalTypes.name
               ? certificateDetail.value.professionalTypes[i].professionalTypes
                   .name
               : ""
           }`
-        )
+        );
       }
       // if (certificateDetail.value.professionalTypes.length === 1) {
       //   doc.text(
@@ -602,7 +612,7 @@ export default {
       //   let secondTextWidth = doc.getTextWidth(
       //     certificateDetail.value.professionalTypes[1].professionalTypes.name
       //   );
-  
+
       //   doc.setFontSize(10);
       //   doc.text(
       //     175,
@@ -694,7 +704,7 @@ export default {
         }`
       );
 
-      if(changeWidth.value) {
+      if (changeWidth.value) {
         doc.setFontSize(11);
         xPosition.value = 28;
       } else {
@@ -702,17 +712,21 @@ export default {
         xPosition.value = 65;
       }
 
-      for(let i = 0; i < certificateDetail.value.professionalTypes.length; i++) {
+      for (
+        let i = 0;
+        i < certificateDetail.value.professionalTypes.length;
+        i++
+      ) {
         doc.text(
           xPosition.value,
-          125 + (i * 7),
+          125 + i * 7,
           `${
             certificateDetail.value.professionalTypes[i].professionalTypes.name
               ? certificateDetail.value.professionalTypes[i].professionalTypes
                   .amharicProfessionalType
               : ""
           }`
-        )
+        );
       }
       // if (certificateDetail.value.professionalTypes.length === 1) {
       //   doc.text(

@@ -530,12 +530,11 @@
                             >prefix?</a
                           >
                         </div>
-                        <div class="flex flex-row"
-                        v-if="show_prefix_list(professionName.id)">
-                          <div
-                            class="ml-12"
-                            :v-model="prefix"
-                          >
+                        <div
+                          class="flex flex-row"
+                          v-if="show_prefix_list(professionName.id)"
+                        >
+                          <div class="ml-12" :v-model="prefix">
                             <select
                               class="select ml-3"
                               @change="
@@ -547,12 +546,19 @@
                                 v-bind:key="prefix.name"
                                 v-bind:value="prefix.name"
                               >
-                                {{ prefix.name }} 
+                                {{ prefix.name }}
                               </option>
                             </select>
                           </div>
-                          <div class="flex flex-row ml-3" v-if="selectedPrefix(professionName.id) && choosedProfession(professionName.id, false)">
-                            <p>{{selectedPrefix(professionName.id)}}</p> <a class="ml-3 red">x</a>
+                          <div
+                            class="flex flex-row ml-3"
+                            v-if="
+                              selectedPrefix(professionName.id) &&
+                                choosedProfession(professionName.id, false)
+                            "
+                          >
+                            <p>{{ selectedPrefix(professionName.id) }}</p>
+                            <a class="ml-3 red">x</a>
                           </div>
                         </div>
                       </ul>
@@ -566,6 +572,9 @@
                     />
                     <label class="ml-2">change profession?</label>
                     <label class="ml-12 titleColors"> Prefix</label>
+                    <div>
+                    <vue-select v-model="selectedOptions" :options="options" multiple :min="1" :max="3" close-on-select></vue-select>
+                  </div>
                     <select v-model="prefix" class="select ml-3">
                       <option
                         v-for="prefix in prefixList"
@@ -576,6 +585,7 @@
                       </option>
                     </select>
                   </div>
+                  
                   <div
                     class="flex flex-col mb-medium w-1/2 mr-12"
                     v-if="isCheckboxActive"
@@ -882,6 +892,8 @@
 import { useStore } from "vuex";
 import { useRoute } from "vue-router";
 import { ref, onMounted } from "vue";
+import VueNextSelect from 'vue-next-select'
+import "vue-next-select/dist/index.min.css";
 
 import { useRouter } from "vue-router";
 
@@ -901,6 +913,9 @@ export default {
     ReviewerNavBar,
     Title,
     Spinner,
+    'vue-select': VueNextSelect,
+    // VueNextSelect,
+    // VueSelect,
   },
   computed: {
     moment: () => moment,
@@ -909,6 +924,9 @@ export default {
     const route = useRoute();
     const store = useStore();
     const router = useRouter();
+
+    const options = ref([0, 1, 2]);
+    const selectedOptions = ref([0]);
 
     let isPdf = ref(false);
 
@@ -1675,14 +1693,14 @@ export default {
       }
     };
 
-    const selectedPrefix = id => {
-      for(let i = 0; i < professionalTypePrefixes.value.length; i++) {
-        if(id === professionalTypePrefixes.value[i].professionalTypeId) {
+    const selectedPrefix = (id) => {
+      for (let i = 0; i < professionalTypePrefixes.value.length; i++) {
+        if (id === professionalTypePrefixes.value[i].professionalTypeId) {
           return professionalTypePrefixes.value[i].prefix;
         }
       }
       return false;
-    }
+    };
 
     let professionIdForPrefix = ref();
     const showPrefix = (id, event) => {
@@ -1813,6 +1831,8 @@ export default {
       showPrefix,
       addPrefix,
       selectedPrefix,
+      options,
+      selectedOptions,
     };
   },
 };
