@@ -792,6 +792,7 @@ export default {
     this.nativeLanguageId = this.license.nativeLanguageId;
     this.expertLevelId = this.license.expertLevelId;
     this.otherEducationalInstitution = this.license.otherEducationalInstitution;
+    this.otherProfessionalType = this.license.otherProfessionalType;
     this.buttons = this.getButtons;
   },
 
@@ -814,6 +815,7 @@ export default {
     occupationTypeId: null,
     educationalLevelId: null,
     otherEducationalInstitution: null,
+    otherProfessionalType: null,
     draftId: "",
     draftData: "",
     draftStatus: "",
@@ -1211,9 +1213,10 @@ export default {
             expertLevelId: this.expertLevelId,
             isLegal: this.checkBoxValue,
             otherEducationalInstitution: this.otherEducationalInstitution,
+            otherProfessionalType: this.otherProfessionalType,
           },
         };
-        let educationLevel = localStorage.getItem("educationLevel");
+        let educationLevel = localStorage.getItem("educationalLevel");
         if (educationLevel == "diploma" && license.data.applicantTypeId == 1) {
           if (
             this.passport == null ||
@@ -1228,8 +1231,10 @@ export default {
             this.showAllAttachements = true;
             this.showLoading = false;
           }
-        }
-        if (educationLevel == "degree" && license.data.applicantTypeId == 1) {
+        } else if (
+          educationLevel == "degree" &&
+          license.data.applicantTypeId == 1
+        ) {
           if (
             this.passport == null ||
             this.healthExamCert == null ||
@@ -1248,8 +1253,10 @@ export default {
             this.showAllAttachements = true;
             this.showLoading = false;
           }
-        }
-        if (educationLevel == "masters" && license.data.applicantTypeId == 1) {
+        } else if (
+          educationLevel == "masters" &&
+          license.data.applicantTypeId == 1
+        ) {
           if (
             this.passport == null ||
             this.healthExamCert == null ||
@@ -1268,8 +1275,10 @@ export default {
             this.showAllAttachements = true;
             this.showLoading = false;
           }
-        }
-        if (educationLevel == "phd" && license.data.applicantTypeId == 1) {
+        } else if (
+          educationLevel == "phd" &&
+          license.data.applicantTypeId == 1
+        ) {
           if (
             this.passport == null ||
             this.healthExamCert == null ||
@@ -1288,8 +1297,10 @@ export default {
             this.showAllAttachements = true;
             this.showLoading = false;
           }
-        }
-        if (educationLevel == "diploma" && license.data.applicantTypeId == 2) {
+        } else if (
+          educationLevel == "diploma" &&
+          license.data.applicantTypeId == 2
+        ) {
           if (
             this.passport == null ||
             this.healthExamCert == null ||
@@ -1301,14 +1312,15 @@ export default {
             this.letterfromOrg == null ||
             this.professionalLicense == null ||
             this.renewedLicense == null ||
-            this.workExperience == null ||
             this.supportLetter == null
           ) {
             this.showAllAttachements = true;
             this.showLoading = false;
           }
-        }
-        if (educationLevel == "degree" && license.data.applicantTypeId == 2) {
+        } else if (
+          educationLevel == "degree" &&
+          license.data.applicantTypeId == 2
+        ) {
           if (
             this.passport == null ||
             this.healthExamCert == null ||
@@ -1319,14 +1331,15 @@ export default {
             this.proTranscript == null ||
             this.letterfromOrg == null ||
             this.professionalLicense == null ||
-            this.renewedLicense == null ||
-            this.workExperience == null
+            this.renewedLicense == null
           ) {
             this.showAllAttachements = true;
             this.showLoading = false;
           }
-        }
-        if (educationLevel == "masters" && license.data.applicantTypeId == 2) {
+        } else if (
+          educationLevel == "masters" &&
+          license.data.applicantTypeId == 2
+        ) {
           if (
             this.passport == null ||
             this.healthExamCert == null ||
@@ -1337,14 +1350,15 @@ export default {
             this.mastersTranscript == null ||
             this.letterfromOrg == null ||
             this.professionalLicense == null ||
-            this.renewedLicense == null ||
-            this.workExperience == null
+            this.renewedLicense == null
           ) {
             this.showAllAttachements = true;
             this.showLoading = false;
           }
-        }
-        if (educationLevel == "phd" && license.data.applicantTypeId == 2) {
+        } else if (
+          educationLevel == "phd" &&
+          license.data.applicantTypeId == 2
+        ) {
           if (
             this.passport == null ||
             this.healthExamCert == null ||
@@ -1355,14 +1369,15 @@ export default {
             this.phdTranscript == null ||
             this.letterfromOrg == null ||
             this.professionalLicense == null ||
-            this.renewedLicense == null ||
-            this.workExperience == null
+            this.renewedLicense == null
           ) {
             this.showAllAttachements = true;
             this.showLoading = false;
           }
-        }
-        if (educationLevel == "diploma" && license.data.applicantTypeId == 3) {
+        } else if (
+          educationLevel == "diploma" &&
+          license.data.applicantTypeId == 3
+        ) {
           if (
             this.passport == null ||
             this.healthExamCert == null ||
@@ -1376,8 +1391,10 @@ export default {
             this.showAllAttachements = true;
             this.showLoading = false;
           }
-        }
-        if (educationLevel == "degree" && license.data.applicantTypeId == 3) {
+        } else if (
+          educationLevel == "degree" &&
+          license.data.applicantTypeId == 3
+        ) {
           if (
             this.passport == null ||
             this.healthExamCert == null ||
@@ -1391,8 +1408,10 @@ export default {
             this.showAllAttachements = true;
             this.showLoading = false;
           }
-        }
-        if (educationLevel == "masters" && license.data.applicantTypeId == 3) {
+        } else if (
+          educationLevel == "masters" &&
+          license.data.applicantTypeId == 3
+        ) {
           if (
             this.passport == null ||
             this.healthExamCert == null ||
@@ -1406,8 +1425,10 @@ export default {
             this.showAllAttachements = true;
             this.showLoading = false;
           }
-        }
-        if (educationLevel == "phd" && license.data.applicantTypeId == 3) {
+        } else if (
+          educationLevel == "phd" &&
+          license.data.applicantTypeId == 3
+        ) {
           if (
             this.passport == null ||
             this.healthExamCert == null ||
@@ -1702,6 +1723,7 @@ export default {
             expertLevelId: this.expertLevelId,
             isLegal: this.checkBoxValue,
             otherEducationalInstitution: this.otherEducationalInstitution,
+            otherProfessionalType: this.otherProfessionalType,
           },
         };
         this.$store
@@ -1749,6 +1771,7 @@ export default {
             expertLevelId: this.expertLevelId,
             isLegal: this.checkBoxValue,
             otherEducationalInstitution: this.otherEducationalInstitution,
+            otherProfessionalType: this.otherProfessionalType,
           },
         },
         id: this.draftId,

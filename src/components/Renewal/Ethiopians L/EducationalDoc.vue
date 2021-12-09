@@ -1295,6 +1295,7 @@ export default {
             expertLevelId: this.licenseInfo.expertLevelId,
             otherEducationalInstitution: this.licenseInfo
               .otherEducationalInstitution,
+            otherProfessionalType: this.licenseInfo.otherProfessionalType,
           },
         };
         this.$store
