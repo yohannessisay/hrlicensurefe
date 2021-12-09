@@ -1023,24 +1023,199 @@ export default {
       } else if (
         educationLevel == "diploma" &&
         id == 1 &&
-        !firstTimeUser &&
+        firstTimeUser != true &&
         this.healthExamCert !== "" &&
         this.letterFromOrg !== "" &&
         this.previousLicense !== "" &&
         this.cpd !== "" &&
         this.workExperience !== ""
       ) {
-        console.log(this.healthExamCert);
-        console.log(this.letterFromOrg);
-        console.log(this.previousLicense);
-        console.log(this.cpd);
-        console.log(this.workExperience);
         if (payroll == "payroll" && this.payroll !== "") {
           return true;
         }
         if (payroll == "payroll" && this.payroll == "") {
           return false;
         }
+        return true;
+      } else if (
+        educationLevel == "degree" &&
+        id == 1 &&
+        firstTimeUser &&
+        this.healthExamCert !== "" &&
+        this.passport !== "" &&
+        this.degree !== "" &&
+        this.educationalDocs !== undefined &&
+        this.educationalDocs[0] !== "" &&
+        this.educationalDocs[1] !== "" &&
+        this.educationalDocs[2] !== "" &&
+        this.educationalDocs[3] !== "" &&
+        this.educationalDocs[4] !== "" &&
+        this.transcript !== "" &&
+        this.workExperience !== "" &&
+        this.previousLicense !== "" &&
+        this.cpd !== "" &&
+        this.letterFromOrg !== ""
+      ) {
+        if (payroll == "payroll" && this.payroll !== "") {
+          return true;
+        }
+        if (payroll == "payroll" && this.payroll == "") {
+          return false;
+        }
+        return true;
+      } else if (
+        educationLevel == "degree" &&
+        id == 1 &&
+        firstTimeUser != true &&
+        this.healthExamCert !== "" &&
+        this.letterFromOrg !== "" &&
+        this.previousLicense !== "" &&
+        this.cpd !== "" &&
+        this.workExperience !== ""
+      ) {
+        if (payroll == "payroll" && this.payroll !== "") {
+          return true;
+        }
+        if (payroll == "payroll" && this.payroll == "") {
+          return false;
+        }
+        return true;
+      } else if (
+        educationLevel == "masters" &&
+        id == 1 &&
+        firstTimeUser &&
+        this.healthExamCert !== "" &&
+        this.passport !== "" &&
+        this.degree !== "" &&
+        this.masters !== "" &&
+        this.mastersTranscript !== "" &&
+        this.educationalDocs !== undefined &&
+        this.educationalDocs[0] !== "" &&
+        this.educationalDocs[1] !== "" &&
+        this.educationalDocs[2] !== "" &&
+        this.educationalDocs[3] !== "" &&
+        this.educationalDocs[4] !== "" &&
+        this.transcript !== "" &&
+        this.workExperience !== "" &&
+        this.previousLicense !== "" &&
+        this.cpd !== "" &&
+        this.letterFromOrg !== ""
+      ) {
+        if (payroll == "payroll" && this.payroll !== "") {
+          return true;
+        }
+        if (payroll == "payroll" && this.payroll == "") {
+          return false;
+        }
+        return true;
+      } else if (
+        educationLevel == "masters" &&
+        id == 1 &&
+        firstTimeUser != true &&
+        this.healthExamCert !== "" &&
+        this.letterFromOrg !== "" &&
+        this.previousLicense !== "" &&
+        this.cpd !== "" &&
+        this.workExperience !== ""
+      ) {
+        if (payroll == "payroll" && this.payroll !== "") {
+          return true;
+        }
+        if (payroll == "payroll" && this.payroll == "") {
+          return false;
+        }
+        return true;
+      } else if (
+        educationLevel == "phd" &&
+        id == 1 &&
+        firstTimeUser &&
+        this.healthExamCert !== "" &&
+        this.passport !== "" &&
+        this.degree !== "" &&
+        this.masters !== "" &&
+        this.mastersTranscript !== "" &&
+        this.phd !== "" &&
+        this.phdTranscript !== "" &&
+        this.educationalDocs !== undefined &&
+        this.educationalDocs[0] !== "" &&
+        this.educationalDocs[1] !== "" &&
+        this.educationalDocs[2] !== "" &&
+        this.educationalDocs[3] !== "" &&
+        this.educationalDocs[4] !== "" &&
+        this.transcript !== "" &&
+        this.workExperience !== "" &&
+        this.previousLicense !== "" &&
+        this.cpd !== "" &&
+        this.letterFromOrg !== ""
+      ) {
+        if (payroll == "payroll" && this.payroll !== "") {
+          return true;
+        }
+        if (payroll == "payroll" && this.payroll == "") {
+          return false;
+        }
+        return true;
+      } else if (
+        educationLevel == "phd" &&
+        id == 1 &&
+        firstTimeUser != true &&
+        this.healthExamCert !== "" &&
+        this.letterFromOrg !== "" &&
+        this.previousLicense !== "" &&
+        this.cpd !== "" &&
+        this.workExperience !== ""
+      ) {
+        if (payroll == "payroll" && this.payroll !== "") {
+          return true;
+        }
+        if (payroll == "payroll" && this.payroll == "") {
+          return false;
+        }
+        return true;
+      } else if (
+        id == 2 &&
+        firstTimeUser &&
+        this.healthExamCert !== "" &&
+        this.passport !== "" &&
+        this.herqa !== "" &&
+        this.workExperience !== "" &&
+        this.previousLicense !== "" &&
+        this.cpd !== ""
+      ) {
+        return true;
+      } else if (
+        id == 2 &&
+        firstTimeUser != true &&
+        this.healthExamCert !== "" &&
+        this.letterFromOrg !== "" &&
+        this.previousLicense !== "" &&
+        this.cpd !== "" &&
+        this.workExperience !== ""
+      ) {
+        return true;
+      } else if (
+        id == 3 &&
+        firstTimeUser &&
+        this.healthExamCert !== "" &&
+        this.passport !== "" &&
+        this.englishLanguage !== "" &&
+        this.herqa !== "" &&
+        this.letterFromOrg !== "" &&
+        this.professionalLicense !== "" &&
+        this.renewedLicense !== "" &&
+        this.workExperience !== "" &&
+        this.cpd !== ""
+      ) {
+        return true;
+      } else if (
+        id == 3 &&
+        firstTimeUser != true &&
+        this.healthExamCert !== "" &&
+        this.letterFromOrg !== "" &&
+        this.previousLicense !== "" &&
+        this.cpd !== "" &&
+        this.workExperience !== ""
+      ) {
         return true;
       } else {
         return false;
