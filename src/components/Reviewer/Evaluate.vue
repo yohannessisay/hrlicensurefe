@@ -573,7 +573,7 @@
                     <label class="ml-2">change profession?</label>
                     <label class="ml-12 titleColors"> Prefix</label>
                     <div>
-                    <vue-select v-model="selectedOptions" :options="options" multiple :min="1" :max="3" close-on-select></vue-select>
+                    <!-- <vue-select v-model="selectedOptions" :options="options" multiple :min="1" :max="3" close-on-select></vue-select> -->
                   </div>
                     <select v-model="prefix" class="select ml-3">
                       <option
@@ -892,8 +892,6 @@
 import { useStore } from "vuex";
 import { useRoute } from "vue-router";
 import { ref, onMounted } from "vue";
-import VueNextSelect from 'vue-next-select'
-import "vue-next-select/dist/index.min.css";
 
 import { useRouter } from "vue-router";
 
@@ -913,9 +911,7 @@ export default {
     ReviewerNavBar,
     Title,
     Spinner,
-    'vue-select': VueNextSelect,
-    // VueNextSelect,
-    // VueSelect,
+
   },
   computed: {
     moment: () => moment,
