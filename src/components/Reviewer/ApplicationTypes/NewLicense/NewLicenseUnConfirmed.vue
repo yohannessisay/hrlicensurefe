@@ -23,7 +23,7 @@
           Filter
         </button>
       </div>
-      
+
       <div class="flex pl-12 pt-tiny" v-if="expertLevel === 3">
         <Title message="New License Approved" />
       </div>
@@ -86,14 +86,11 @@ import store from "../../../../store";
 import Title from "@/sharedComponents/TitleWithIllustration";
 import UnconfirmedApplications from "../ChildApplicationTypes/UnconfirmedApplications.vue";
 
-
 export default {
   computed: {
     moment: () => moment,
     getNewLicenseUnconfirmed() {
-      return store.getters[
-        "reviewerNewLicense/getNewLicenseApprovedSearched"
-      ];
+      return store.getters["reviewerNewLicense/getNewLicenseApprovedSearched"];
     },
   },
   components: {
@@ -107,7 +104,8 @@ export default {
   setup() {
     const store = useStore();
 
-    let expertLevel = JSON.parse(localStorage.getItem("allAdminData")).expertLevelId
+    let expertLevel = JSON.parse(localStorage.getItem("allAdminData"))
+      .expertLevelId;
 
     let newLicenseUnconfirmed = ref([]);
 
@@ -144,20 +142,16 @@ export default {
 
     const fetchNewLicenseUnconfirmed = () => {
       showLoading.value = true;
-      const statusId = applicationStatus(store, 'APP');
+      const statusId = applicationStatus(store, "APP");
       const adminStatus = [statusId, adminId];
       store
         .dispatch("reviewerNewLicense/getNewLicenseApproved", adminStatus)
         .then((res) => {
           showLoading.value = false;
           newLicenseUnconfirmed.value =
-            store.getters[
-              "reviewerNewLicense/getNewLicenseApprovedSearched"
-            ];
+            store.getters["reviewerNewLicense/getNewLicenseApprovedSearched"];
           allInfo.value.assignApplication =
-            store.getters[
-              "reviewerNewLicense/getNewLicenseApprovedSearched"
-            ];
+            store.getters["reviewerNewLicense/getNewLicenseApprovedSearched"];
 
           for (let applicant in allInfo.value.assignApplication) {
             allInfo.value.assignApplication[applicant].createdAt = moment(
@@ -172,8 +166,8 @@ export default {
             }
           }
           if (
-            store.getters["reviewerNewLicense/getNewLicenseApproved"]
-              .length === 0
+            store.getters["reviewerNewLicense/getNewLicenseApproved"].length ===
+            0
           ) {
             nothingToShow.value = true;
           }

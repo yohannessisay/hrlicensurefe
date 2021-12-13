@@ -28,7 +28,10 @@
       </div>
       <div class="flex flex-wrap pb-medium rounded h-full" v-if="!showLoading">
         <nothing-to-show :nothingToShow="nothingToShow" />
-        <unassigned-applications :unassignedApplication="getNewLicenseUnassigned" app_type="New License"/>
+        <unassigned-applications
+          :unassignedApplication="getNewLicenseUnassigned"
+          app_type="New License"
+        />
       </div>
     </div>
     <div
@@ -40,10 +43,13 @@
     <div class="bg-lightBlueB-200 h-full" v-if="allInfo.searchByInput">
       <div class="flex pl-12 pt-tiny">
         <Title
-        :message="
-          'Unassigned Applicants on Date Range ' + moment(allInfo.searchFromDate).format('MMM D, YYYY') + ' To ' + moment(allInfo.searchUpToDate).format('MMM D, YYYY')
-        "
-      />
+          :message="
+            'Unassigned Applicants on Date Range ' +
+              moment(allInfo.searchFromDate).format('MMM D, YYYY') +
+              ' To ' +
+              moment(allInfo.searchUpToDate).format('MMM D, YYYY')
+          "
+        />
         <button @click="backClicked">back</button>
       </div>
       <filtered-info
@@ -64,7 +70,7 @@
 import { ref, onMounted } from "vue";
 import Title from "@/sharedComponents/TitleWithIllustration";
 import ReviewerNavBar from "../../ReviewerNavBar.vue";
-import UnassignedApplications from "../ChildApplicationTypes/UnassignedApplications.vue"
+import UnassignedApplications from "../ChildApplicationTypes/UnassignedApplications.vue";
 import NothingToShow from "../../ChildComponents/NothingToShow.vue";
 import { useStore } from "vuex";
 import store from "../../../../store";
@@ -75,12 +81,13 @@ import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import FilteredInfo from "../../ChildComponents/FilteredDatas/FilteredInfo.vue";
 import applicationStatus from "../../Configurations/getApplicationStatus.js";
 
-
 export default {
   computed: {
     moment: () => moment,
     getNewLicenseUnassigned() {
-      return store.getters["reviewerNewLicense/getNewLicenseUnassignedSearched"];
+      return store.getters[
+        "reviewerNewLicense/getNewLicenseUnassignedSearched"
+      ];
     },
   },
   components: {
@@ -127,29 +134,34 @@ export default {
 
     const fetchNewLicenseUnassigned = () => {
       showLoading.value = true;
-      const statusId = applicationStatus(store, 'SUB');
-      store.dispatch("reviewerNewLicense/getNewLicenseUnassigned", statusId).then((res) => {
-        showLoading.value = false;
-        newLicenseUnassigned.value =
-          store.getters["reviewerNewLicense/getNewLicenseUnassignedSearched"];
-        allInfo.value.assignApplication =
-          store.getters["reviewerNewLicense/getNewLicenseUnassignedSearched"];
-        for (let applicant in allInfo.value.assignApplication) {
-          allInfo.value.assignApplication[applicant].createdAt = moment(
-            allInfo.value.assignApplication[applicant].createdAt
-          ).format("MMMM D, YYYY");
-          if (
-            allInfo.value.assignApplication[applicant].applicationType ===
-            undefined
-          ) {
-            allInfo.value.assignApplication[applicant].applicationType =
-              allInfo.value.assignApplication[applicant].applicantType;
+      const statusId = applicationStatus(store, "SUB");
+      store
+        .dispatch("reviewerNewLicense/getNewLicenseUnassigned", statusId)
+        .then((res) => {
+          showLoading.value = false;
+          newLicenseUnassigned.value =
+            store.getters["reviewerNewLicense/getNewLicenseUnassignedSearched"];
+          allInfo.value.assignApplication =
+            store.getters["reviewerNewLicense/getNewLicenseUnassignedSearched"];
+          for (let applicant in allInfo.value.assignApplication) {
+            allInfo.value.assignApplication[applicant].createdAt = moment(
+              allInfo.value.assignApplication[applicant].createdAt
+            ).format("MMMM D, YYYY");
+            if (
+              allInfo.value.assignApplication[applicant].applicationType ===
+              undefined
+            ) {
+              allInfo.value.assignApplication[applicant].applicationType =
+                allInfo.value.assignApplication[applicant].applicantType;
+            }
           }
-        }
-        if (store.getters["reviewerNewLicense/getNewLicenseUnassigned"].length === 0) {
-          nothingToShow.value = true;
-        }
-      });
+          if (
+            store.getters["reviewerNewLicense/getNewLicenseUnassigned"]
+              .length === 0
+          ) {
+            nothingToShow.value = true;
+          }
+        });
     };
 
     onMounted(() => {
