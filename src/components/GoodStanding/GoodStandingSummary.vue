@@ -395,6 +395,8 @@ export default {
     this.professionalTypeIds = this.license.professionalTypeIds;
     this.expertLevelId = this.license.expertLevelId;
     this.buttons = this.getButtons;
+
+    this.otherProfessionalType = this.license.otherProfessionalType;
   },
   data: () => ({
     basePath: "https://storage.googleapis.com/hris-lisence-dev/",
@@ -413,6 +415,7 @@ export default {
     },
     professionalTypeIds: "",
     expertLevelId: "",
+    otherProfessionalType: null,
     draftId: "",
     draftData: "",
     draftStatus: "",
@@ -558,6 +561,7 @@ export default {
             professionalTypeIds: this.professionalTypeIds,
             expertLevelId: this.expertLevelId,
             islegal: this.checkBoxValue,
+            otherProfessionalType: this.otherProfessionalType,
           },
         };
         this.$store
@@ -652,6 +656,7 @@ export default {
             professionalTypeIds: this.professionalTypeIds,
             expertLevelId: this.licenseInfo.expertLevel,
             islegal: this.checkBoxValue,
+            otherProfessionalType: this.otherProfessionalType,
           },
         };
         this.$store
@@ -697,6 +702,7 @@ export default {
             professionalTypeIds: this.professionalTypeIds,
             expertLevelId: this.licenseInfo.expertLevel,
             islegal: this.checkBoxValue,
+            otherProfessionalType: this.otherProfessionalType,
           },
         },
         id: this.draftId,
