@@ -443,7 +443,7 @@
                             "
                             type="checkbox"
                             class="form-checkbox"
-                            :checked="true"
+                            :checked="choosedProfession(professionName.id, true)"
                           />
                           {{ professionName.professionalTypes.name }} |
                           {{
@@ -550,16 +550,6 @@
                               </option>
                             </select>
                           </div>
-                          <div
-                            class="flex flex-row ml-3"
-                            v-if="
-                              selectedPrefix(professionName.id) &&
-                                choosedProfession(professionName.id, false)
-                            "
-                          >
-                            <p>{{ selectedPrefix(professionName.id) }}</p>
-                            <a class="ml-3 red">x</a>
-                          </div>
                         </div>
                       </ul>
                     </div>
@@ -573,8 +563,8 @@
                     <label class="ml-2">change profession?</label>
                     <label class="ml-12 titleColors"> Prefix</label>
                     <div>
-                    <!-- <vue-select v-model="selectedOptions" :options="options" multiple :min="1" :max="3" close-on-select></vue-select> -->
-                  </div>
+                      <!-- <vue-select v-model="selectedOptions" :options="options" multiple :min="1" :max="3" close-on-select></vue-select> -->
+                    </div>
                     <select v-model="prefix" class="select ml-3">
                       <option
                         v-for="prefix in prefixList"
@@ -585,7 +575,7 @@
                       </option>
                     </select>
                   </div>
-                  
+
                   <div
                     class="flex flex-col mb-medium w-1/2 mr-12"
                     v-if="isCheckboxActive"
@@ -911,7 +901,6 @@ export default {
     ReviewerNavBar,
     Title,
     Spinner,
-
   },
   computed: {
     moment: () => moment,
@@ -1475,6 +1464,9 @@ export default {
         action: actionValue,
         data: newLicense.value,
       };
+
+      console.log("req is ", req)
+      return;
       if (
         applicationType.value == "New License" &&
         sendDeclinedData.value == true
@@ -1675,6 +1667,7 @@ export default {
 
     const choosedProfession = (id, previousProfession) => {
       if (previousProfession) {
+        console.log("professional types is ", professionalTypeIdss.value[0], "and id is ", id);
         for (let i = 0; i < professionalTypes.value.length; i++) {
           if (id === professionalTypes.value[i].id) {
             return true;
@@ -1687,15 +1680,6 @@ export default {
           }
         }
       }
-    };
-
-    const selectedPrefix = (id) => {
-      for (let i = 0; i < professionalTypePrefixes.value.length; i++) {
-        if (id === professionalTypePrefixes.value[i].professionalTypeId) {
-          return professionalTypePrefixes.value[i].prefix;
-        }
-      }
-      return false;
     };
 
     let professionIdForPrefix = ref();
@@ -1826,7 +1810,6 @@ export default {
       show_prefix_list,
       showPrefix,
       addPrefix,
-      selectedPrefix,
       options,
       selectedOptions,
     };
