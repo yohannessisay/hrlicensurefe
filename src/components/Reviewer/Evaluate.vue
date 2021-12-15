@@ -461,7 +461,7 @@
                           "
                           v-if="
                             choosedProfession(
-                              professionName.professionalTypes.id,
+                              professionName.id,
                               true
                             )
                           "
@@ -924,7 +924,7 @@ export default {
     let professionalTypeIds = ref([]);
     let professionalTypeIdss = ref([]);
     let prefixList = ref([
-      { name: "", id: 0 },
+      { name: "None", id: 0 },
       { name: "Consultant", id: 1 },
       { name: "Expert", id: 2 },
       { name: "Junior", id: 3 },
@@ -1668,9 +1668,12 @@ export default {
     const choosedProfession = (id, previousProfession) => {
       if (previousProfession) {
         console.log("professional types is ", professionalTypeIdss.value[0], "and id is ", id);
-        for (let i = 0; i < professionalTypes.value.length; i++) {
-          if (id === professionalTypes.value[i].id) {
+        for (let i = 0; i < professionalTypeIdss.value.length; i++) {
+          if (id === professionalTypeIdss.value[i]) {
+            console.log("comming here?", id, "and", professionalTypeIdss.value[i])
             return true;
+          } else {
+            console.log("comming ok?", id, "fine", professionalTypeIdss.value[i])
           }
         }
       } else {
@@ -1703,9 +1706,11 @@ export default {
         return;
       }
       for (let i = 0; i < professionalTypePrefixes.value.length; i++) {
+        
         if (
           professionId !== professionalTypePrefixes.value[i].professionalTypeId
         ) {
+          
           countProLength.value++;
           if (countProLength.value === professionalTypePrefixes.value.length) {
             professionalTypePrefixes.value.push({
@@ -1721,7 +1726,7 @@ export default {
             }),
             1
           );
-          if (event.target.value === "") {
+          if (event.target.value === "None") {
             return;
           }
           professionalTypePrefixes.value.push({
