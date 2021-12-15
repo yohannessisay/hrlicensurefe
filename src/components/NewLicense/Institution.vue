@@ -183,30 +183,27 @@
             </div>
             <div
               v-if="showProfessionalTypes"
-              class="flex flex-col mb-medium w-2/5 mr-12"
+              class="flex flex-col items-start mb-6"
             >
-              <label class="text-primary-700">Professional Type</label>
-              <select
-                class="max-w-3xl select"
-                multiple
-                v-model="professional"
-                @change="checkOtherProfession(professional)"
+              <label class="text-primary-700">Professional Type </label>
+              <div
+                class="flex"
+                v-for="types in this.professionalTypes"
+                v-bind:key="types.name"
+                v-bind:value="types"
               >
-                <option
-                  v-for="types in this.professionalTypes"
-                  v-bind:key="types.name"
-                  v-bind:value="types"
+                <input
+                  v-on:click="checkOtherProfession(types)"
+                  type="checkbox"
+                  class="bg-gray-50 mr-4 border border-gray-300 focus:ring-3 focus:ring-blue-300 h-4 w-4 rounded dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
+                  required
+                />
+                <label
+                  for="remember"
+                  class="font-medium text-gray-900 dark:text-gray-300"
+                  >{{ types.name }}</label
                 >
-                  {{ types.name }}
-                </option>
-              </select>
-              <input
-                v-model="licenseInfo.otherProfessionalType"
-                v-if="showOtherProfession"
-                class="mt-2"
-                placeholder="Write Other Profession"
-                type="text"
-              />
+              </div>
               <div v-if="professionalTypeRepeat">
                 <span
                   style="font-size: 18px; color: red"
@@ -216,6 +213,15 @@
                 >
                   {{ prof.name }} was previously saved.
                 </span>
+              </div>
+              <div>
+                <input
+                  v-model="licenseInfo.otherProfessionalType"
+                  v-if="showOtherProfession"
+                  class="mt-2"
+                  placeholder="Write Other Profession"
+                  type="text"
+                />
               </div>
             </div>
           </div>
@@ -365,11 +371,23 @@ export default {
       let draftData = this.getLicense;
       this.licenseInfo.applicantId = draftData.applicantId;
       this.licenseInfo.applicantTypeId = draftData.applicantTypeId;
+      if (this.licenseInfo.applicantTypeId == 1) {
+        this.fetchInstitutions(true);
+      } else {
+        this.fetchInstitutions(false);
+      }
       this.licenseInfo.education.departmentId =
         draftData.education.departmentId;
+      if (this.licenseInfo.education.departmentId != "") {
+        this.showProfessionalTypes = true;
+        this.fetchProfessionalType(this.licenseInfo.education.departmentId);
+      }
       this.licenseInfo.education.institutionId =
         draftData.education.institutionId;
-      this.licenseInfo.professionalTypeIds = draftData.professionalTypeIds;
+      for (var i = 0; i < draftData.professionalTypeIds.length; i++) {
+        this.licenseInfo.professionalTypeIds[i] =
+          draftData.professionalTypeIds[i];
+      }
       this.licenseInfo.educationalLevelId = draftData.educationalLevelId;
       this.licenseInfo.nativeLanguageId = draftData.nativeLanguageId;
       this.setEducationLevel(this.licenseInfo.educationalLevelId);
@@ -393,10 +411,16 @@ export default {
         this.showRegion = false;
         this.displayEnglishLanguageOption = true;
       }
-      if (draftData.regionId != undefined || draftData.regionId) {
+      if (
+        draftData.regionId != undefined ||
+        draftData.regionId ||
+        draftData.regionId != ""
+      ) {
         this.regionID = draftData.regionId;
+        this.fetchZones();
         if (draftData.zoneId != undefined || draftData.zoneId) {
           this.zoneID = draftData.zoneId;
+          this.fetchWoredas();
           if (
             draftData.residenceWoredaId != undefined ||
             draftData.residenceWoredaId
@@ -549,13 +573,17 @@ export default {
       }
     },
     checkOtherProfession(profession) {
-      for (let i = 0; i < profession.length; i++) {
-        if (profession[i].name == "Other") {
-          this.showOtherProfession = true;
-        }
+      if (profession.name == "Other") {
+        this.showOtherProfession = !this.showOtherProfession;
       }
-      for (let j = 0; j < profession.length; j++) {
-        this.licenseInfo.professionalTypeIds.push(profession[j].id);
+      if (!this.licenseInfo.professionalTypeIds.includes(profession.id)) {
+        this.licenseInfo.professionalTypeIds.push(profession.id);
+      } else {
+        for (var i = 0; i < this.licenseInfo.professionalTypeIds.length; i++) {
+          if (this.licenseInfo.professionalTypeIds[i] == profession.id) {
+            this.licenseInfo.professionalTypeIds.splice(i, 1);
+          }
+        }
       }
     },
     checkApplicantType(applicantType) {
@@ -766,6 +794,8 @@ export default {
         nativeLanguageId: this.licenseInfo.nativeLanguageId,
         expertLevelId: this.licenseInfo.expertLevelId,
         otherProfessionalType: this.licenseInfo.otherProfessionalType,
+        otherEducationalInstitution: this.licenseInfo
+          .otherEducationalInstitution,
       };
       if (this.licenseInfo.educationalLevelId == null) {
         this.licenseInfo.educationalLevelId = 4;
@@ -799,6 +829,24 @@ export default {
       this.$store.dispatch("newlicense/getInstitution", value).then((res) => {
         const results = res.data.data;
         this.institutions = results;
+        let draftData = this.getLicense;
+        if (draftData.education.institutionId != null) {
+          this.licenseInfo.education.institutionId =
+            draftData.education.institutionId;
+          for (var i = 0; i < this.institutions.length; i++) {
+            if (
+              this.institutions[i].id ==
+              this.licenseInfo.education.institutionId
+            ) {
+              this.institution = this.institutions[i];
+            }
+          }
+          if (this.institution.name == "Other") {
+            this.showOtherEducation = true;
+            this.licenseInfo.otherEducationalInstitution =
+              draftData.otherEducationalInstitution;
+          }
+        }
       });
     },
     fetchDepartments() {
@@ -829,12 +877,23 @@ export default {
     },
     fetchProfessionalType(id) {
       this.professionalTypes = [];
+      this.repeatedProfArray = "";
+      this.licenseInfo.professionalTypeIds = [];
       this.showProfessionalTypes = true;
       this.$store
         .dispatch("newlicense/getProfessionalTypes", id)
         .then((res) => {
           this.professionalTypes = res.data.data;
         });
+      let draftData = this.getLicense;
+      if (
+        draftData.otherProfessionalType != null ||
+        draftData.otherProfessionalType != ""
+      ) {
+        this.showOtherProfession = true;
+        this.licenseInfo.otherProfessionalType =
+          draftData.otherProfessionalType;
+      }
     },
     woredaChanged() {},
     validateForm(formData) {
