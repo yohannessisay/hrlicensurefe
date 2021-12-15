@@ -86,23 +86,40 @@
                 }}</span>
               </div>
             </div>
-            <div v-if="showProfessionalTypes" class="flex">
-              <div class="flex flex-col mb-medium w-2/5 mr-12">
-                <label class="text-primary-700">Professional Type</label>
-                <select
-                  class="max-w-3xl select"
-                  multiple
-                  v-model="professional"
-                  @change="checkOtherProfession(professional)"
+            <div
+              v-if="showProfessionalTypes"
+              class="flex flex-col items-start mb-6"
+            >
+              <label class="text-primary-700">Professional Type </label>
+              <div
+                class="flex"
+                v-for="types in this.professionalTypes"
+                v-bind:key="types.name"
+                v-bind:value="types"
+              >
+                <input
+                  v-on:click="checkOtherProfession(types)"
+                  type="checkbox"
+                  class="bg-gray-50 mr-4 border border-gray-300 focus:ring-3 focus:ring-blue-300 h-4 w-4 rounded dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
+                  required
+                />
+                <label
+                  for="remember"
+                  class="font-medium text-gray-900 dark:text-gray-300"
+                  >{{ types.name }}</label
                 >
-                  <option
-                    v-for="types in professionalTypes"
-                    v-bind:key="types.name"
-                    v-bind:value="types"
-                  >
-                    {{ types.name }}
-                  </option>
-                </select>
+              </div>
+              <div v-if="professionalTypeRepeat">
+                <span
+                  style="font-size: 18px; color: red"
+                  v-for="prof in this.repeatedProfArray"
+                  v-bind:key="prof.name"
+                  v-bind:value="prof.id"
+                >
+                  {{ prof.name }} was previously saved.
+                </span>
+              </div>
+              <div>
                 <input
                   v-model="licenseInfo.otherProfessionalType"
                   v-if="showOtherProfession"
@@ -528,13 +545,17 @@ export default {
       }
     },
     checkOtherProfession(profession) {
-      for (let i = 0; i < profession.length; i++) {
-        if (profession[i].name == "Other") {
-          this.showOtherProfession = true;
-        }
+      if (profession.name == "Other") {
+        this.showOtherProfession = !this.showOtherProfession;
       }
-      for (let j = 0; j < profession.length; j++) {
-        this.licenseInfo.professionalTypeIds.push(profession[j].id);
+      if (!this.licenseInfo.professionalTypeIds.includes(profession.id)) {
+        this.licenseInfo.professionalTypeIds.push(profession.id);
+      } else {
+        for (var i = 0; i < this.licenseInfo.professionalTypeIds.length; i++) {
+          if (this.licenseInfo.professionalTypeIds[i] == profession.id) {
+            this.licenseInfo.professionalTypeIds.splice(i, 1);
+          }
+        }
       }
     },
     draft(action) {

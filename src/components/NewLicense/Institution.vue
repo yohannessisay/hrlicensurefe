@@ -185,6 +185,7 @@
               v-if="showProfessionalTypes"
               class="flex flex-col items-start mb-6"
             >
+              <label class="text-primary-700">Professional Type </label>
               <div
                 class="flex"
                 v-for="types in this.professionalTypes"
