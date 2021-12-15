@@ -15,6 +15,8 @@ export default {
     expertLevelId: "",
     educationalLevelId: "",
     paymentSlip: null,
+    otherEducationalInstitution: "",
+    otherProfessionalType: "",
     passport: "",
     healthExamCert: "",
     englishLanguage: "",
