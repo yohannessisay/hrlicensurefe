@@ -1,11 +1,11 @@
 <template>
-  <div class="overlay" v-if="token !== null">
+  <div class="overlay" v-if="token && token !== null">
     <div class="modal">
       <div class="modal__title">
         <span>Session Expired</span>
       </div>
       <div class="p-3">
-        <p>You have left this browser idle for 10 minutes.</p>
+        <p>You have left this browser idle for 30 minutes.</p>
         <p>{{ time }} second left</p>
       </div>
     </div>
@@ -25,16 +25,16 @@ export default {
   },
   data() {
     return {
-      time: 10000,
+      time: 10,
       showFlash: false,
       token: null
     };
   },
   created() {
-    this.token = localStorage.getItem("token");
-    if (this.token !== null) {
+    this.token = localStorage.getItem('token') ? localStorage.getItem('token') : null;
+    if (this.token && this.token !== null) {
       let timerId = setInterval(() => {
-        this.time -= 1000;
+        this.time -= 1;
         if (!this.$store.state.idleVue.isIdle) clearInterval(timerId);
 
         if (this.time < 1) {

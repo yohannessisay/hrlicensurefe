@@ -8,7 +8,7 @@
         class="ml-8  mr-8 mb-12"
       >
         <div class="mt-large bg-white">
-          <div class="flex justify-center">
+          <div class="flex justify-center newLicenseDocs">
             <Title message="New License Documents" />
           </div>
           <picture v-if="docs.length > 0">
@@ -31,10 +31,10 @@
                   "
                 />
                 </div> -->
-            <div class="flex justify-start flex-wrap">
-              <div v-for="file in docs" v-bind:key="file.documentTypeCode">
-                <Title class="" :message="file.documentTypeCode" />
-                <picture>
+            <div class="grid grid-cols-3 gap-4 auto-cols-max p-5 m-5 text-center">
+              <div v-for="file in docs" v-bind:key="file.documentTypeCode" class="pt-5">
+                <Title :message="file.documentType.name" />
+                <picture class="flex flex-col justify-center items-center m-tiny">
                   <img
                     :src="
                       'https://storage.googleapis.com/hris-lisence-dev/' +
@@ -46,7 +46,7 @@
             </div>
           </picture>
 
-          <div class="flex justify-center">
+          <div class="flex justify-center p-5">
             <button @click="navigateToEvaluation">Go To Evaluation</button>
           </div>
         </div>
@@ -150,5 +150,11 @@ export default {
 img {
   width: 300px;
   height: 300px;
+}
+.newLicenseDocs {
+    background: aliceblue;
+    padding: 1%;
+    margin-bottom: 2%;
+    border-bottom: 1px solid lightgray;
 }
 </style>

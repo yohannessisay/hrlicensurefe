@@ -16,7 +16,7 @@ app.use(store);
 app.use(IdleVue, {
   // eventEmitter: eventsHub,
   store,
-  idleTime: 5000,
+  idleTime: 1800000,
   startAtIdle: false
 });
 app.use(VueApexCharts);
