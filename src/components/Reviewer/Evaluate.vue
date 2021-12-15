@@ -554,7 +554,7 @@
                       </ul>
                     </div>
                   </div>
-                  <div class="flex flex-row mb-medium w-1/2 mr-2">
+                  <!-- <div class="flex flex-row mb-medium w-1/2 mr-2">
                     <input
                       @change="checkBox()"
                       type="checkbox"
@@ -563,7 +563,6 @@
                     <label class="ml-2">change profession?</label>
                     <label class="ml-12 titleColors"> Prefix</label>
                     <div>
-                      <!-- <vue-select v-model="selectedOptions" :options="options" multiple :min="1" :max="3" close-on-select></vue-select> -->
                     </div>
                     <select v-model="prefix" class="select ml-3">
                       <option
@@ -594,7 +593,7 @@
                         {{ profession.amharicProfessionalType }}
                       </option>
                     </select>
-                  </div>
+                  </div> -->
                 </div>
                 <div>
                   <div class="flex justify-start">
@@ -995,8 +994,6 @@ export default {
     let showDeclineFlash = ref(false);
     let sendDeclinedData = ref(true);
     let fromModalSendDeclinedData = ref(false);
-
-    let isCheckboxActive = ref(false);
 
     let professionalTypes = ref([]);
     let evaluateRoute = ref(
@@ -1647,10 +1644,6 @@ export default {
         });
     };
 
-    const checkBox = () => {
-      isCheckboxActive.value = !isCheckboxActive.value;
-    };
-
     const checkBoxClicked = (id, previousProfession, event) => {
       choosedProfession(id, previousProfession);
       if (event.target.checked) {
@@ -1805,8 +1798,6 @@ export default {
       professionalTypeIds,
       showProfessionChangeError,
       expirationDateExceedTodayError,
-      isCheckboxActive,
-      checkBox,
       prefixList,
       prefix,
       professionalTypeIdss,
