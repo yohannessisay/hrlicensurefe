@@ -12,6 +12,7 @@ export default {
     professionalTypeId: "",
     licenseCopy: "",
     serviceFee: "",
+    otherProfessionalType: "",
     goodStandingLetter: "",
     buttons: [],
     applicationId: 0,

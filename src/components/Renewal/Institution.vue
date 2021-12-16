@@ -181,7 +181,7 @@
               </select>
             </div>
             <div
-              v-if="showProfessionalTypes"
+              v-if="this.showProfessionalTypes"
               class="flex flex-col items-start mb-6"
             >
               <label class="text-primary-700">Professional Type </label>
@@ -349,10 +349,26 @@ export default {
       let draftData = this.getLicense;
       this.licenseInfo.applicantId = draftData.applicantId;
       this.licenseInfo.applicantTypeId = draftData.applicantTypeId;
+      if (this.licenseInfo.applicantTypeId == 1) {
+        this.fetchInstitutions(true);
+        this.showRegion = true;
+      } else {
+        this.fetchInstitutions(false);
+        this.showRegion = false;
+      }
       this.licenseInfo.education.departmentId =
         draftData.education.departmentId;
+      if (this.licenseInfo.education.departmentId != "") {
+        this.showProfessionalTypes = true;
+        this.fetchProfessionalType(this.licenseInfo.education.departmentId);
+      }
       this.licenseInfo.education.institutionId =
         draftData.education.institutionId;
+
+      for (var i = 0; i < draftData.professionalTypeIds.length; i++) {
+        this.licenseInfo.professionalTypeIds[i] =
+          draftData.professionalTypeIds[i];
+      }
       this.licenseInfo.professionalTypeIds = draftData.professionalTypeIds;
       this.licenseInfo.educationalLevelId = draftData.educationalLevelId;
       this.licenseInfo.nativeLanguageId = draftData.nativeLanguageId;
@@ -371,16 +387,16 @@ export default {
           });
         });
       }
-      if (this.licenseInfo.expertLevelId == 1) {
-        this.showRegion = true;
-      } else {
-        this.showRegion = false;
-        this.displayEnglishLanguageOption = true;
-      }
-      if (draftData.regionId != undefined || draftData.regionId) {
+      if (
+        draftData.regionId != undefined ||
+        draftData.regionId ||
+        draftData.regionId != ""
+      ) {
         this.regionID = draftData.regionId;
+        this.fetchZones();
         if (draftData.zoneId != undefined || draftData.zoneId) {
           this.zoneID = draftData.zoneId;
+          this.fetchWoredas();
           if (
             draftData.residenceWoredaId != undefined ||
             draftData.residenceWoredaId
@@ -395,7 +411,6 @@ export default {
     this.fetchRegions();
     this.fetchFirstTimeUser();
     this.fetchPayrollData();
-    this.fetchProfessionalType();
     this.fetchEducationLevel();
 
     this.showLoading = true;
@@ -794,6 +809,24 @@ export default {
       this.$store.dispatch("renewal/getInstitution", value).then((res) => {
         const results = res.data.data;
         this.institutions = results;
+        let draftData = this.getLicense;
+        if (draftData.education.institutionId != null) {
+          this.licenseInfo.education.institutionId =
+            draftData.education.institutionId;
+          for (var i = 0; i < this.institutions.length; i++) {
+            if (
+              this.institutions[i].id ==
+              this.licenseInfo.education.institutionId
+            ) {
+              this.institution = this.institutions[i];
+            }
+          }
+          if (this.institution.name == "Other") {
+            this.showOtherEducation = true;
+            this.licenseInfo.otherEducationalInstitution =
+              draftData.otherEducationalInstitution;
+          }
+        }
       });
     },
     fetchDepartments() {
@@ -829,10 +862,23 @@ export default {
     },
     fetchProfessionalType(id) {
       this.professionalTypes = [];
+      this.repeatedProfArray = "";
+      this.licenseInfo.professionalTypeIds = [];
       this.showProfessionalTypes = true;
       this.$store.dispatch("renewal/getProfessionalTypes", id).then((res) => {
         this.professionalTypes = res.data.data;
       });
+      let draftData = this.getLicense;
+      if (draftData != undefined) {
+        if (
+          draftData.otherProfessionalType != null ||
+          draftData.otherProfessionalType != ""
+        ) {
+          this.showOtherProfession = true;
+          this.licenseInfo.otherProfessionalType =
+            draftData.otherProfessionalType;
+        }
+      }
     },
 
     woredaChanged() {},
