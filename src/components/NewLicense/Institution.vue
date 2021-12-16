@@ -384,10 +384,6 @@ export default {
       }
       this.licenseInfo.education.institutionId =
         draftData.education.institutionId;
-      for (var i = 0; i < draftData.professionalTypeIds.length; i++) {
-        this.licenseInfo.professionalTypeIds[i] =
-          draftData.professionalTypeIds[i];
-      }
       this.licenseInfo.educationalLevelId = draftData.educationalLevelId;
       this.licenseInfo.nativeLanguageId = draftData.nativeLanguageId;
       this.setEducationLevel(this.licenseInfo.educationalLevelId);
@@ -803,21 +799,40 @@ export default {
       let profTypes = {
         professionalTypeIds: this.licenseInfo.professionalTypeIds,
       };
-      this.$store
-        .dispatch("newlicense/searchProfessionalType", profTypes)
-        .then((res) => {
-          if (res.data.data.length > 0) {
-            this.professionalTypeRepeat = true;
-            this.repeatedProfArray = res.data.data;
-          } else {
-            this.$emit("changeActiveState");
-            this.$emit("applicantTypeValue", this.licenseInfo.applicantTypeId);
-            this.$emit("nativeLanguageSet", this.licenseInfo.nativeLanguageId);
-            this.$emit("payrollDocumentSet", this.licenseInfo.occupationTypeId);
-            this.$emit("diplomaSet", this.licenseInfo.educationalLevelId);
-            this.$store.dispatch("newlicense/setLicense", license);
-          }
-        });
+      if (this.$route.params.status != undefined) {
+        this.$store
+          .dispatch("newlicense/searchProfessionalType", profTypes)
+          .then((res) => {
+            console.log(res.data.data);
+            if (res.data.data.length > 0) {
+              this.professionalTypeRepeat = true;
+              this.repeatedProfArray = res.data.data;
+            } else {
+              this.$emit("changeActiveState");
+              this.$emit(
+                "applicantTypeValue",
+                this.licenseInfo.applicantTypeId
+              );
+              this.$emit(
+                "nativeLanguageSet",
+                this.licenseInfo.nativeLanguageId
+              );
+              this.$emit(
+                "payrollDocumentSet",
+                this.licenseInfo.occupationTypeId
+              );
+              this.$emit("diplomaSet", this.licenseInfo.educationalLevelId);
+              this.$store.dispatch("newlicense/setLicense", license);
+            }
+          });
+      } else {
+        this.$emit("changeActiveState");
+        this.$emit("applicantTypeValue", this.licenseInfo.applicantTypeId);
+        this.$emit("nativeLanguageSet", this.licenseInfo.nativeLanguageId);
+        this.$emit("payrollDocumentSet", this.licenseInfo.occupationTypeId);
+        this.$emit("diplomaSet", this.licenseInfo.educationalLevelId);
+        this.$store.dispatch("newlicense/setLicense", license);
+      }
     },
     fetchApplicantType() {
       this.$store.dispatch("newlicense/getApplicantType").then((res) => {
@@ -829,22 +844,47 @@ export default {
       this.$store.dispatch("newlicense/getInstitution", value).then((res) => {
         const results = res.data.data;
         this.institutions = results;
-        let draftData = this.getLicense;
-        if (draftData.education.institutionId != null) {
-          this.licenseInfo.education.institutionId =
-            draftData.education.institutionId;
-          for (var i = 0; i < this.institutions.length; i++) {
-            if (
-              this.institutions[i].id ==
-              this.licenseInfo.education.institutionId
-            ) {
-              this.institution = this.institutions[i];
+        if (
+          this.getLicense ||
+          this.getLicense != undefined ||
+          this.getLicense != null
+        ) {
+          let draftData = this.getLicense;
+          if (draftData.education.institutionId != null) {
+            this.licenseInfo.education.institutionId =
+              draftData.education.institutionId;
+            for (var i = 0; i < this.institutions.length; i++) {
+              if (
+                this.institutions[i].id ==
+                this.licenseInfo.education.institutionId
+              ) {
+                this.institution = this.institutions[i];
+              }
+            }
+            if (this.institution.name == "Other") {
+              this.showOtherEducation = true;
+              this.licenseInfo.otherEducationalInstitution =
+                draftData.otherEducationalInstitution;
             }
           }
-          if (this.institution.name == "Other") {
-            this.showOtherEducation = true;
-            this.licenseInfo.otherEducationalInstitution =
-              draftData.otherEducationalInstitution;
+        } else {
+          let draftData = this.getDraft;
+          if (draftData.education.institutionId != null) {
+            this.licenseInfo.education.institutionId =
+              draftData.education.institutionId;
+            for (var i = 0; i < this.institutions.length; i++) {
+              if (
+                this.institutions[i].id ==
+                this.licenseInfo.education.institutionId
+              ) {
+                this.institution = this.institutions[i];
+              }
+            }
+            if (this.institution.name == "Other") {
+              this.showOtherEducation = true;
+              this.licenseInfo.otherEducationalInstitution =
+                draftData.otherEducationalInstitution;
+            }
           }
         }
       });
@@ -885,14 +925,30 @@ export default {
         .then((res) => {
           this.professionalTypes = res.data.data;
         });
-      let draftData = this.getLicense;
       if (
-        draftData.otherProfessionalType != null ||
-        draftData.otherProfessionalType != ""
+        this.getLicense ||
+        this.getLicense != undefined ||
+        this.getLicense != null
       ) {
-        this.showOtherProfession = true;
-        this.licenseInfo.otherProfessionalType =
-          draftData.otherProfessionalType;
+        let draftData = this.getLicense;
+        if (
+          draftData.otherProfessionalType != null ||
+          draftData.otherProfessionalType != ""
+        ) {
+          this.showOtherProfession = true;
+          this.licenseInfo.otherProfessionalType =
+            draftData.otherProfessionalType;
+        }
+      } else {
+        let draftData = this.getDraft;
+        if (
+          draftData.otherProfessionalType != null ||
+          draftData.otherProfessionalType != ""
+        ) {
+          this.showOtherProfession = true;
+          this.licenseInfo.otherProfessionalType =
+            draftData.otherProfessionalType;
+        }
       }
     },
     woredaChanged() {},
@@ -922,13 +978,22 @@ export default {
     },
     fetchDraft() {
       let draftData = this.getDraft;
+      console.log(draftData);
       this.licenseInfo.applicantId = draftData.applicantId;
       this.licenseInfo.applicantTypeId = draftData.applicantTypeId;
+      if (this.licenseInfo.applicantTypeId == 1) {
+        this.fetchInstitutions(true);
+      } else {
+        this.fetchInstitutions(false);
+      }
       this.licenseInfo.education.departmentId =
         draftData.education.departmentId;
+      if (this.licenseInfo.education.departmentId != "") {
+        this.showProfessionalTypes = true;
+        this.fetchProfessionalType(this.licenseInfo.education.departmentId);
+      }
       this.licenseInfo.education.institutionId =
         draftData.education.institutionId;
-      this.licenseInfo.professionalTypeIds = draftData.professionalTypeIds;
       this.payrollData = draftData.occupationTypes;
       this.licenseInfo.expertLevelId = draftData.expertLevelId;
       this.licenseInfo.educationalLevelId = draftData.educationalLevelId;
