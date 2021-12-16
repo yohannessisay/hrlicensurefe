@@ -1,12 +1,16 @@
-import { createApp, Vue } from "vue";
+import {
+  createApp
+} from "vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import VueApexCharts from "vue3-apexcharts";
 
+// const eventsHub = new Vue();
 
-createApp(App)
-  .use(store)
-  .use(VueApexCharts)
-  .use(router)
-  .mount("#app");
+const app = createApp(App);
+
+app.use(store);
+app.use(VueApexCharts);
+app.use(router);
+app.mount("#app");

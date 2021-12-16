@@ -387,6 +387,13 @@ export default {
       this.licenseInfo.professionalTypeIds = draftData.professionalTypeIds;
       this.licenseInfo.expertLevelId = draftData.expertLevelId;
       if (this.licenseInfo.applicantTypeId == 1) {
+        this.fetchInstitutions(true);
+        this.showRegion = true;
+      } else {
+        this.fetchInstitutions(false);
+        this.showRegion = false;
+      }
+      if (this.licenseInfo.applicantTypeId == 1) {
         this.$store.dispatch("goodstanding/getExpertLevel").then((res) => {
           this.expertLevels = res.data.data.filter(function(e) {
             return e.code.includes("REG");
@@ -399,27 +406,26 @@ export default {
           });
         });
       }
-      if (this.licenseInfo.expertLevelId == 1) {
-        this.showRegion = true;
-      } else {
-        this.showRegion = false;
-        this.displayEnglishLanguageOption = true;
-      }
-      if (draftData.woreda || draftData.woreda != undefined) {
-        this.licenseInfo.residenceWoredaId = draftData.woreda.id;
-        if (draftData.woreda.zone || draftData.woreda.zone != undefined) {
-          this.zoneID = draftData.woreda.zone.id;
+      if (
+        draftData.regionId != undefined ||
+        draftData.regionId ||
+        draftData.regionId != ""
+      ) {
+        this.regionID = draftData.regionId;
+        this.fetchZones();
+        if (draftData.zoneId != undefined || draftData.zoneId) {
+          this.zoneID = draftData.zoneId;
+          this.fetchWoredas();
           if (
-            draftData.woreda.zone.region ||
-            draftData.woreda.zone.region != undefined
+            draftData.residenceWoredaId != undefined ||
+            draftData.residenceWoredaId
           ) {
-            this.regionID = draftData.woreda.zone.region.id;
+            this.licenseInfo.residenceWoredaId = draftData.residenceWoredaId;
           }
         }
       }
     }
     this.fetchApplicantType();
-    this.fetchInstitutions();
     this.fetchDepartments();
     this.fetchRegions();
     this.fetchApplicationPositions();
@@ -520,7 +526,7 @@ export default {
       this.regionID = null;
       this.zoneID = null;
       this.licenseInfo.residenceWoredaId = null;
-      if (expertLevel == 1) {
+      if (applicantType == 1) {
         this.showRegion = true;
       } else {
         this.showRegion = false;
@@ -696,6 +702,8 @@ export default {
         professionalTypeIds: this.licenseInfo.professionalTypeIds,
         expertLevelId: this.licenseInfo.expertLevelId,
         otherProfessionalType: this.licenseInfo.otherProfessionalType,
+        regionId: this.regionID,
+        zoneId: this.zoneID,
       };
       this.addressErrors = this.validateForm(license);
       let empty = true;
@@ -720,6 +728,23 @@ export default {
         const results = res.data.data;
         this.institutions = results;
       });
+      let draftData = this.getLicense;
+      // if (draftData.education.institutionId != null) {
+      //   this.licenseInfo.education.institutionId =
+      //     draftData.education.institutionId;
+      //   for (var i = 0; i < this.institutions.length; i++) {
+      //     if (
+      //       this.institutions[i].id == this.licenseInfo.education.institutionId
+      //     ) {
+      //       this.institution = this.institutions[i];
+      //     }
+      //   }
+      //   if (this.institution.name == "Other") {
+      //     this.showOtherEducation = true;
+      //     this.licenseInfo.otherEducationalInstitution =
+      //       draftData.otherEducationalInstitution;
+      //   }
+      // }
     },
     fetchDepartments() {
       this.$store.dispatch("goodstanding/getDepartmentType").then((res) => {

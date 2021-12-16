@@ -5,6 +5,7 @@
     <!-- </transition> -->
   </router-view>
 </template>
+
 <style>
 @import "styles/tailwind.postcss";
 @import "styles/fonts.css";
