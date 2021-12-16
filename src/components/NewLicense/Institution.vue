@@ -803,7 +803,6 @@ export default {
         this.$store
           .dispatch("newlicense/searchProfessionalType", profTypes)
           .then((res) => {
-            console.log(res.data.data);
             if (res.data.data.length > 0) {
               this.professionalTypeRepeat = true;
               this.repeatedProfArray = res.data.data;
@@ -978,7 +977,6 @@ export default {
     },
     fetchDraft() {
       let draftData = this.getDraft;
-      console.log(draftData);
       this.licenseInfo.applicantId = draftData.applicantId;
       this.licenseInfo.applicantTypeId = draftData.applicantTypeId;
       if (this.licenseInfo.applicantTypeId == 1) {
