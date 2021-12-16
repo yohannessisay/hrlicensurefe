@@ -1401,7 +1401,7 @@ export default {
               showOtherProfessionError.value = true;
               setTimeout(() => {
                 showOtherProfessionError.value = false;
-              }, 4000)
+              }, 4000);
               return;
             }
           }
