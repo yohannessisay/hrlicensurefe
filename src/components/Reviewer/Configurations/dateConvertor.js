@@ -23,7 +23,7 @@ const getMonthName = (monthNumber) => {
       case 10:
         return "ሰኔ";
       case 11:
-        return "ሰኔ";
+        return "ሐምሌ";
       case 12:
         return "ነሐሴ";
       default:

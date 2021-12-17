@@ -307,7 +307,8 @@ export default {
     let userId = +localStorage.getItem("userId");
     let regionId = JSON.parse(localStorage.getItem("allAdminData")).regionId;
 
-    let expertLevelId = JSON.parse(localStorage.getItem("allAdminData")).expertLevelId;
+    let expertLevelId = JSON.parse(localStorage.getItem("allAdminData"))
+      .expertLevelId;
 
     let role = ref({});
 
