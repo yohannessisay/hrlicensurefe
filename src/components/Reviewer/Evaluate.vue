@@ -1406,21 +1406,22 @@ export default {
             }
           }
         }
-        if (otherProfessionSelected.value)
+        if (otherProfessionSelected.value) {
           if (professionalTypeIdss.value.length > 0) {
             newLicense.value.professionalTypeIds = professionalTypeIdss.value;
             newLicense.value.professionalTypePrefixes =
               professionalTypePrefixes.value;
           }
-      } else {
-        if (professionalTypeIdss.value.length > 0) {
-          showProfessionChangeError.value = true;
-          setTimeout(() => {
-            showProfessionChangeError.value = false;
-          }, 4000);
-          professionalTypeIdss.value = [];
-          professionalTypePrefixes.value = [];
-          return;
+        } else {
+          if (professionalTypeIdss.value.length > 0) {
+            showProfessionChangeError.value = true;
+            setTimeout(() => {
+              showProfessionChangeError.value = false;
+            }, 4000);
+            professionalTypeIdss.value = [];
+            professionalTypePrefixes.value = [];
+            return;
+          }
         }
       }
       if (actionValue == "DeclineEvent") {
@@ -1443,7 +1444,6 @@ export default {
         action: actionValue,
         data: newLicense.value,
       };
-      console.log("req", req, "professionalTypePrefixes", professionalTypePrefixes.value, "idss", professionalTypeIds.value)
       if (
         applicationType.value == "New License" &&
         sendDeclinedData.value == true
@@ -1454,13 +1454,11 @@ export default {
             if (res.statusText == "Created") {
               showFlash.value = true;
               showDeclineFlash.value = true;
-              return;
               setTimeout(() => {
                 router.push("/admin/review");
               }, 3000);
             } else {
               showErrorFlash.value = true;
-              return;
               setTimeout(() => {
                 router.go();
               }, 3000);
