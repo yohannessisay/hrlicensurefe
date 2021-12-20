@@ -527,8 +527,10 @@ export default {
       this.zoneID = null;
       this.licenseInfo.residenceWoredaId = null;
       if (applicantType == 1) {
+        this.licenseInfo.expertLevelId = 4;
         this.showRegion = true;
       } else {
+        this.licenseInfo.expertLevelId = 3;
         this.showRegion = false;
       }
       if (applicantType == 1) {
