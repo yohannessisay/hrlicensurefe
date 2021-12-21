@@ -2,7 +2,14 @@
   <ReviewerNavBar tab="Evaluation" />
   <div class="w-screen bg-white flex items-center justify-center">
     <div
-      class="w-screen max-w-6xl mt-medium mb-large box-shadow-pop bg-lightGrey-100"
+      class="
+        w-screen
+        max-w-6xl
+        mt-medium
+        mb-large
+        box-shadow-pop
+        bg-lightGrey-100
+      "
     >
       <div class="flex mb-large mt-medium justify-center">
         <div class="w-64 h-40 container box-shadow-pop rounded-lg">
@@ -13,7 +20,7 @@
               </h2>
             </div>
             <div class="flex justify-center items-center">
-              <h2 class=" text-lightBlueB-500 text-2xl">Accepted</h2>
+              <h2 class="text-lightBlueB-500 text-2xl">Accepted</h2>
             </div>
           </div>
         </div>
@@ -26,7 +33,7 @@
               <span
                 v-if="
                   newLicense.applicant.profile.photo !== '' &&
-                    newLicense.applicant.profile.photo !== null
+                  newLicense.applicant.profile.photo !== null
                 "
               >
                 <img
@@ -43,57 +50,83 @@
               </span>
             </picture>
             <div class="flex justify-center items-center">
-              <h4 class="mt-2 mr-small w-1/2">
-                {{
-                  "Name: " +
-                    newLicense.applicant.profile.name +
-                    " " +
-                    newLicense.applicant.profile.fatherName
-                }}
-              </h4>
+              <div class="mt-2 mr-small w-1/2">
+                <h4 class="text-left detailTitle">Applicant Name:</h4>
+                <h4 class="text-left ml-3">
+                  {{
+                    newLicense.applicant.profile
+                      ? newLicense.applicant.profile.name
+                        ? newLicense.applicant.profile.name +
+                          " " +
+                          (newLicense.applicant.profile.fatherName
+                            ? newLicense.applicant.profile.fatherName
+                            : "-")
+                        : "-"
+                      : "-"
+                  }}
+                </h4>
+              </div>
+              <div class="mt-2 ml-small w-1/2">
+                <!-- <h4 class="text-left detailTitle">Applicant Type:</h4>
 
-              <!-- <h4 class="mt-2 ml-small w-1/2" v-if="newLicense.applicantType !== null">
-                {{ "Applicant Type:  " + newLicense.applicantType.name }}
-              </h4> -->
+                <h4 class="text-left ml-3">
+                  {{
+                    newLicense.applicantType
+                      ? newLicense.applicantType.name
+                      : "-"
+                  }}
+                </h4> -->
+                <h4 class="text-left detailTitle">Department:</h4>
+                <h4 class="text-left ml-3">
+                  {{
+                    newLicense.education
+                      ? newLicense.education.department
+                        ? newLicense.education.department.name
+                        : "-"
+                      : "-"
+                  }}
+                </h4>
+              </div>
             </div>
-            <div
-              class="flex justify-center items-cente"
-              v-if="newLicense.education !== undefined"
-            >
-              <h4 class="mt-2 mr-tiny w-1/2">
-                {{ "Department:  " + newLicense.education.department.name }}
-              </h4>
-              <h4 class="mt-2 ml-small w-1/2">
-                Institution:
-                {{
-                  newLicense.otherEducationalInstitution
-                    ? newLicense.otherEducationalInstitution
-                    : newLicense.education.institution.name
-                }}
-              </h4>
-            </div>
-            <div
-              class="flex justify-center items-center"
-              v-if="newLicense.education !== undefined"
-            >
-              <div class="mt-2 ml-small w-1/2"></div>
-              <h4 class="mt-2 ml-small w-1/2">
-                {{
-                  "Institution Type:  " + newLicense.education.institution
-                    ? newLicense.education.institution.institutionType.name
-                    : "-"
-                }}
-              </h4>
+            <div class="flex justify-center items-center">
+              <div class="mt-2 mr-small w-1/2">
+                <h4 class="text-left detailTitle">Institution:</h4>
+                <h4 class="text-left ml-3">
+                  {{
+                    newLicense.education
+                      ? newLicense.otherEducationalInstitution
+                        ? newLicense.otherEducationalInstitution
+                        : newLicense.education.institution.name
+                      : "-"
+                  }}
+                </h4>
+              </div>
+
+              <div class="mt-2 ml-small w-1/2">
+                <h4 class="text-left detailTitle">Institution Type:</h4>
+                <h4 class="text-left ml-3">
+                  {{
+                    newLicense.education
+                      ? newLicense.education.institution
+                        ? newLicense.education.institution.institutionType
+                          ? newLicense.education.institution.institutionType
+                              .name
+                          : "-"
+                        : "-"
+                      : "-"
+                  }}
+                </h4>
+              </div>
             </div>
           </div>
         </div>
-        <div class="ml-12 w-64 h-40  container box-shadow-pop rounded-lg">
+        <div class="ml-12 w-64 h-40 container box-shadow-pop rounded-lg">
           <div class="mt-8">
             <div class="my-auto flex justify-center items-center">
               <h2 class="text-red-200 text-2xl">{{ rejected.length }}</h2>
             </div>
             <div class="flex justify-center items-center">
-              <h2 class=" text-red-200 text-2xl">Rejected</h2>
+              <h2 class="text-red-200 text-2xl">Rejected</h2>
             </div>
           </div>
         </div>
@@ -121,11 +154,16 @@
           </svg>
         </div>
 
-        <div class="flex flex-col justify-center items-center ml-large ">
+        <div class="flex flex-col justify-center items-center ml-large">
           <div class="ml-medium">
             <label
               v-if="!showButtons"
-              class="justify-center items-center ml-large text-grey-200 text-2xl"
+              class="
+                justify-center
+                items-center
+                ml-large
+                text-grey-200 text-2xl
+              "
             >
               {{ documentTypeName }}
             </label>
@@ -155,11 +193,15 @@
                     <label class="ml-8 titleColors"> Full Name </label>
                     <h5 class="ml-8">
                       {{
-                        profileInfo.name +
-                          " " +
-                          profileInfo.fatherName +
-                          " " +
-                          profileInfo.grandFatherName
+                        (profileInfo.name ? profileInfo.name : "-") +
+                        " " +
+                        (profileInfo.fatherName
+                          ? profileInfo.fatherName
+                          : "-") +
+                        " " +
+                        (profileInfo.grandFatherName
+                          ? profileInfo.grandFatherName
+                          : "-")
                       }}
                     </h5>
                   </div>
@@ -178,11 +220,17 @@
                       <div>
                         <h5 class="ml-8">
                           {{
-                            profileInfo.alternativeName +
-                              " " +
-                              profileInfo.alternativeFatherName +
-                              " " +
-                              profileInfo.alternativeGrandFatherName
+                            (profileInfo.alternativeName
+                              ? profileInfo.alternativeName
+                              : "-") +
+                            " " +
+                            (profileInfo.alternativeFatherName
+                              ? profileInfo.alternativeFatherName
+                              : "-") +
+                            " " +
+                            (profileInfo.alternativeGrandFatherName
+                              ? profileInfo.alternativeGrandFatherName
+                              : "-")
                           }}
                         </h5>
                       </div>
@@ -240,7 +288,7 @@
                 <div class="flex flex-row justify-center" v-if="canChangeName">
                   <div>
                     <button
-                      style="backgroundColor: red"
+                      style="backgroundcolor: red"
                       @click="changeAmharicName"
                     >
                       Save
@@ -270,7 +318,7 @@
                   </div>
                   <div
                     :class="[
-                      profileInfo.nationality === null
+                      profileInfo.nationality == null
                         ? errorClass
                         : activeClass,
                     ]"
@@ -377,39 +425,43 @@
                 </div>
                 <div class="flex flex-row">
                   <div>
-                    <label class="ml-8 titleColors"> Institution Name</label>
-                    <h5
-                      class="ml-8"
-                      v-if="newLicense.otherEducationalInstitution"
-                    >
-                      {{ newLicense.otherEducationalInstitution }}
-                    </h5>
-                    <h5
-                      class="ml-8"
-                      v-else-if="newLicense.education.institution.name"
-                    >
-                      {{ newLicense.education.institution.name }}
+                    <label class="ml-8 titleColors"> Department</label>
+                    <h5 class="ml-8">
+                      {{
+                        newLicense.education
+                          ? newLicense.education.department
+                            ? newLicense.education.department.name
+                            : "-"
+                          : "-"
+                      }}
                     </h5>
                   </div>
                   <div>
-                    <label class="ml-8 titleColors"> Department</label>
-                    <h5
-                      class="ml-8"
-                      v-if="newLicense.education.department.name"
-                    >
-                      {{ newLicense.education.department.name }}
+                    <label class="ml-8 titleColors"> Institution Name</label>
+                    <h5 class="ml-8">
+                      {{
+                        newLicense.otherEducationalInstitution
+                          ? newLicense.otherEducationalInstitution
+                          : newLicense.education
+                          ? newLicense.education.institution
+                            ? newLicense.education.institution.name
+                            : "-"
+                          : "-"
+                      }}
                     </h5>
                   </div>
                   <div>
                     <label class="ml-8 titleColors"> Institution Type</label>
-                    <h5
-                      class="ml-8"
-                      v-if="
-                        newLicense.education.institution.institutionType.name
-                      "
-                    >
+                    <h5 class="ml-8">
                       {{
-                        newLicense.education.institution.institutionType.name
+                        newLicense.education
+                          ? newLicense.education.institution
+                            ? newLicense.education.institution.institutionType
+                              ? newLicense.education.institution.institutionType
+                                  .name
+                              : "-"
+                            : "-"
+                          : "-"
                       }}
                     </h5>
                   </div>
@@ -521,7 +573,7 @@
                           class="flex flex-row"
                           v-if="
                             show_prefix_list(professionName.id) &&
-                              choosedProfession(professionName.id, false)
+                            choosedProfession(professionName.id, false)
                           "
                         >
                           <div class="flex flex-column">
@@ -576,7 +628,7 @@
                       <iframe
                         v-bind:src="
                           'https://storage.googleapis.com/hris-lisence-dev/' +
-                            docs[index].filePath
+                          docs[index].filePath
                         "
                       ></iframe>
                     </div>
@@ -590,7 +642,7 @@
                     <img
                       v-bind:src="
                         'https://storage.googleapis.com/hris-lisence-dev/' +
-                          docs[index].filePath
+                        docs[index].filePath
                       "
                     />
                   </div>
@@ -620,11 +672,28 @@
           </div>
           <div class="relative pt-1 mt-medium">
             <div
-              class="overflow-hidden h-2 mb-4 text-xs flex rounded bg-grey-100 w-screen max-w-2xl"
+              class="
+                overflow-hidden
+                h-2
+                mb-4
+                text-xs
+                flex
+                rounded
+                bg-grey-100
+                w-screen
+                max-w-2xl
+              "
             >
               <div
                 :style="width"
-                class="shadow-none flex flex-col text-center whitespace-nowrap  justify-center bg-primary-400"
+                class="
+                  shadow-none
+                  flex flex-col
+                  text-center
+                  whitespace-nowrap
+                  justify-center
+                  bg-primary-400
+                "
               ></div>
             </div>
           </div>
@@ -635,7 +704,15 @@
               <div class="w-full h-full absolute"></div>
               <div
                 id="bar"
-                class="transition-all ease-out duration-1000 h-full bg-green-500 relative w-0"
+                class="
+                  transition-all
+                  ease-out
+                  duration-1000
+                  h-full
+                  bg-green-500
+                  relative
+                  w-0
+                "
               ></div>
             </div>
           </div>
@@ -663,24 +740,60 @@
       <Modal v-if="showRemark">
         <div>
           <div
-            class="card-wrapper bg-white sm:rounded-lg w-full flex justify-center relative mb-xl mt-large"
+            class="
+              card-wrapper
+              bg-white
+              sm:rounded-lg
+              w-full
+              flex
+              justify-center
+              relative
+              mb-xl
+              mt-large
+            "
           >
             <div class="">
               <!--content-->
               <div class="w-full">
                 <!--header-->
                 <div
-                  class="flex items-start justify-between border-b border-solid border-blueGray-200 mt-medium rounded-t"
+                  class="
+                    flex
+                    items-start
+                    justify-between
+                    border-b border-solid border-blueGray-200
+                    mt-medium
+                    rounded-t
+                  "
                 >
-                  <h3 class="text-3xl font-semibold">
-                    Remark
-                  </h3>
+                  <h3 class="text-3xl font-semibold">Remark</h3>
                   <div
-                    class=" bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+                    class="
+                      bg-transparent
+                      border-0
+                      text-black
+                      opacity-5
+                      float-right
+                      text-3xl
+                      leading-none
+                      font-semibold
+                      outline-none
+                      focus:outline-none
+                    "
                     v-on:click="toggleModal()"
                   >
                     <span
-                      class="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none"
+                      class="
+                        bg-transparent
+                        text-black
+                        opacity-5
+                        h-6
+                        w-6
+                        text-2xl
+                        block
+                        outline-none
+                        focus:outline-none
+                      "
                     >
                       ×
                     </span>
@@ -714,11 +827,21 @@
                       </div>
 
                       <div
-                        class="flex flex-col justify-center items-center ml-large"
+                        class="
+                          flex flex-col
+                          justify-center
+                          items-center
+                          ml-large
+                        "
                       >
                         <div class="ml-medium">
                           <label
-                            class="justify-center items-center ml-large text-grey-200 text-2xl"
+                            class="
+                              justify-center
+                              items-center
+                              ml-large
+                              text-grey-200 text-2xl
+                            "
                           >
                             {{ modalDocumentTypeName }}
                           </label>
@@ -726,7 +849,14 @@
                             Addis Ababa
                           </h5> -->
                           <div
-                            class="flex justify-center flex-wrap max-w-sm rounded overflow-hidden"
+                            class="
+                              flex
+                              justify-center
+                              flex-wrap
+                              max-w-sm
+                              rounded
+                              overflow-hidden
+                            "
                           >
                             <!-- <div v-for="file in docs" v-bind:key="file.name">
                               <Title class="" :message="file.name" />
@@ -741,7 +871,7 @@
                               <img
                                 v-bind:src="
                                   'https://storage.googleapis.com/hris-lisence-dev/' +
-                                    rejectedObj[ind].filePath
+                                  rejectedObj[ind].filePath
                                 "
                               />
                             </picture>
@@ -778,10 +908,25 @@
                 <!--footer-->
                 <textarea
                   v-model="newLicense.remark"
-                  class="resize-none tArea border rounded-md flex mb-small w-full"
+                  class="
+                    resize-none
+                    tArea
+                    border
+                    rounded-md
+                    flex
+                    mb-small
+                    w-full
+                  "
                 ></textarea>
                 <div
-                  class="flex items-center justify-center p-6 border-t border-solid border-blueGray-200 rounded-b"
+                  class="
+                    flex
+                    items-center
+                    justify-center
+                    p-6
+                    border-t border-solid border-blueGray-200
+                    rounded-b
+                  "
                 >
                   <button
                     class="md-danger"
@@ -1572,7 +1717,7 @@ export default {
       store
         .dispatch("reviewer/getProfessionalTypeByDepartmentId", id)
         .then((res) => {
-          res.data.data.filter(function(e) {
+          res.data.data.filter(function (e) {
             for (let i in newLicense.value.professionalTypes) {
               if (
                 e.code ===
@@ -1848,6 +1993,9 @@ svg:hover {
 }
 .decline {
   background-image: linear-gradient(to right, #d63232, #e63636) !important;
+}
+.detailTitle {
+  color: dimgray;
 }
 @media only screen and (max-height: 1081px) {
   .card-wrapper {
