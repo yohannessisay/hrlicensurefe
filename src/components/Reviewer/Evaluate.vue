@@ -193,11 +193,15 @@
                     <label class="ml-8 titleColors"> Full Name </label>
                     <h5 class="ml-8">
                       {{
-                        profileInfo.name +
+                        (profileInfo.name ? profileInfo.name : "-") +
                         " " +
-                        profileInfo.fatherName +
+                        (profileInfo.fatherName
+                          ? profileInfo.fatherName
+                          : "-") +
                         " " +
-                        profileInfo.grandFatherName
+                        (profileInfo.grandFatherName
+                          ? profileInfo.grandFatherName
+                          : "-")
                       }}
                     </h5>
                   </div>
@@ -216,11 +220,17 @@
                       <div>
                         <h5 class="ml-8">
                           {{
-                            profileInfo.alternativeName +
+                            (profileInfo.alternativeName
+                              ? profileInfo.alternativeName
+                              : "-") +
                             " " +
-                            profileInfo.alternativeFatherName +
+                            (profileInfo.alternativeFatherName
+                              ? profileInfo.alternativeFatherName
+                              : "-") +
                             " " +
-                            profileInfo.alternativeGrandFatherName
+                            (profileInfo.alternativeGrandFatherName
+                              ? profileInfo.alternativeGrandFatherName
+                              : "-")
                           }}
                         </h5>
                       </div>
@@ -308,7 +318,7 @@
                   </div>
                   <div
                     :class="[
-                      profileInfo.nationality === null
+                      profileInfo.nationality == null
                         ? errorClass
                         : activeClass,
                     ]"
@@ -415,39 +425,43 @@
                 </div>
                 <div class="flex flex-row">
                   <div>
-                    <label class="ml-8 titleColors"> Institution Name</label>
-                    <h5
-                      class="ml-8"
-                      v-if="newLicense.otherEducationalInstitution"
-                    >
-                      {{ newLicense.otherEducationalInstitution }}
-                    </h5>
-                    <h5
-                      class="ml-8"
-                      v-else-if="newLicense.education.institution.name"
-                    >
-                      {{ newLicense.education.institution.name }}
+                    <label class="ml-8 titleColors"> Department</label>
+                    <h5 class="ml-8">
+                      {{
+                        newLicense.education
+                          ? newLicense.education.department
+                            ? newLicense.education.department.name
+                            : "-"
+                          : "-"
+                      }}
                     </h5>
                   </div>
                   <div>
-                    <label class="ml-8 titleColors"> Department</label>
-                    <h5
-                      class="ml-8"
-                      v-if="newLicense.education.department.name"
-                    >
-                      {{ newLicense.education.department.name }}
+                    <label class="ml-8 titleColors"> Institution Name</label>
+                    <h5 class="ml-8">
+                      {{
+                        newLicense.otherEducationalInstitution
+                          ? newLicense.otherEducationalInstitution
+                          : newLicense.education
+                          ? newLicense.education.institution
+                            ? newLicense.education.institution.name
+                            : "-"
+                          : "-"
+                      }}
                     </h5>
                   </div>
                   <div>
                     <label class="ml-8 titleColors"> Institution Type</label>
-                    <h5
-                      class="ml-8"
-                      v-if="
-                        newLicense.education.institution.institutionType.name
-                      "
-                    >
+                    <h5 class="ml-8">
                       {{
-                        newLicense.education.institution.institutionType.name
+                        newLicense.education
+                          ? newLicense.education.institution
+                            ? newLicense.education.institution.institutionType
+                              ? newLicense.education.institution.institutionType
+                                  .name
+                              : "-"
+                            : "-"
+                          : "-"
                       }}
                     </h5>
                   </div>
