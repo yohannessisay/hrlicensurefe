@@ -569,6 +569,7 @@ export default {
       }
     },
     checkOtherProfession(profession) {
+      this.repeatedProfArray = [];
       if (profession.name == "Other") {
         this.showOtherProfession = !this.showOtherProfession;
       }
@@ -801,10 +802,14 @@ export default {
       let profTypes = {
         professionalTypeIds: this.licenseInfo.professionalTypeIds,
       };
-      if (this.$route.params.status != undefined) {
+      console.log(this.$route.params.status);
+      console.log(profTypes);
+      if (this.$route.params.status == undefined) {
         this.$store
           .dispatch("newlicense/searchProfessionalType", profTypes)
           .then((res) => {
+            console.log("we here");
+            console.log(profTypes);
             if (res.data.data.length > 0) {
               this.professionalTypeRepeat = true;
               this.repeatedProfArray = res.data.data;
