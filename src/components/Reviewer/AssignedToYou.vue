@@ -52,10 +52,7 @@
         <Title :message="'Assigned To You Applicants'" />
         <button @click="backClicked">back</button>
       </div>
-      <filtered-info
-        :filteredData="allInfo.filteredByDate"
-        type="detail"
-      />
+      <filtered-info :filteredData="allInfo.filteredByDate" type="detail" />
     </div>
   </div>
   <div v-if="allInfo.message.showErrorFlash">
