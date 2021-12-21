@@ -1,7 +1,7 @@
 <template>
   <div>
     <Navigation :display="menu" @changeDisplay="displaySet" />
-    <div style="width:100%" class="flex flex-row bg-lightBlueB-200">
+    <div style="width: 100%" class="flex flex-row bg-lightBlueB-200">
       <div class="sidenav">
         <SideNav :display="menu" @changeDisplay="displaySet" />
       </div>
@@ -74,19 +74,12 @@ export default {
     DeclinedPayment,
     PendingPayment,
   },
-  created() {
-    this.$store.replaceState({
-      newlicense: {},
-      renewal: {},
-      verification: {},
-      goodstanding: {},
-    });
-  },
+  created() {},
   data: () => ({
     display: 0,
   }),
   methods: {
-    displaySet: function(display) {
+    displaySet: function (display) {
       this.display = display;
     },
   },
