@@ -550,9 +550,11 @@ export default {
       this.zoneID = null;
       this.licenseInfo.residenceWoredaId = null;
       if (applicantType == 1) {
+        this.licenseInfo.expertLevelId = 4;
         this.fetchInstitutions(true);
         this.showRegion = true;
       } else {
+        this.licenseInfo.expertLevelId = 3;
         this.fetchInstitutions(false);
         this.showRegion = false;
       }
