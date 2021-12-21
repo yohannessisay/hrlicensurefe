@@ -193,7 +193,7 @@
                 v-bind:value="types"
               >
                 <input
-                  v-on:click="checkOtherProfession(types)"
+                  v-on:click="checkOtherProfession(types, $event)"
                   type="checkbox"
                   class="bg-gray-50 mr-4 border border-gray-300 focus:ring-3 focus:ring-blue-300 h-4 w-4 rounded dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
                   required
@@ -212,6 +212,11 @@
                   v-bind:value="prof.id"
                 >
                   {{ prof.name }} was previously saved.
+                </span>
+              </div>
+              <div v-if="professionalTypeLimit">
+                <span style="font-size: 14px; color: red">
+                  You can't select more than 3 professional types.
                 </span>
               </div>
               <div>
@@ -517,6 +522,7 @@ export default {
     showProfessionalTypes: false,
 
     professionalTypeRepeat: false,
+    professionalTypeLimit: false,
     repeatedProfArray: [],
 
     institution: "",
@@ -568,16 +574,32 @@ export default {
         this.showOtherEducation = true;
       }
     },
-    checkOtherProfession(profession) {
-      if (profession.name == "Other") {
-        this.showOtherProfession = !this.showOtherProfession;
-      }
-      if (!this.licenseInfo.professionalTypeIds.includes(profession.id)) {
-        this.licenseInfo.professionalTypeIds.push(profession.id);
-      } else {
+    checkOtherProfession(profession, event) {
+      if (this.licenseInfo.professionalTypeIds.length + 1 > 3) {
+        this.professionalTypeLimit = true;
+        event.target.checked = false;
         for (var i = 0; i < this.licenseInfo.professionalTypeIds.length; i++) {
           if (this.licenseInfo.professionalTypeIds[i] == profession.id) {
             this.licenseInfo.professionalTypeIds.splice(i, 1);
+          }
+        }
+      } else {
+        this.professionalTypeLimit = false;
+        this.repeatedProfArray = [];
+        if (profession.name == "Other") {
+          this.showOtherProfession = !this.showOtherProfession;
+        }
+        if (!this.licenseInfo.professionalTypeIds.includes(profession.id)) {
+          this.licenseInfo.professionalTypeIds.push(profession.id);
+        } else {
+          for (
+            var i = 0;
+            i < this.licenseInfo.professionalTypeIds.length;
+            i++
+          ) {
+            if (this.licenseInfo.professionalTypeIds[i] == profession.id) {
+              this.licenseInfo.professionalTypeIds.splice(i, 1);
+            }
           }
         }
       }
@@ -587,9 +609,11 @@ export default {
       this.zoneID = null;
       this.licenseInfo.residenceWoredaId = null;
       if (applicantType == 1) {
+        this.licenseInfo.expertLevelId = 4;
         this.fetchInstitutions(true);
         this.showRegion = true;
       } else {
+        this.licenseInfo.expertLevelId = 3;
         this.fetchInstitutions(false);
         this.showRegion = false;
       }
@@ -799,7 +823,7 @@ export default {
       let profTypes = {
         professionalTypeIds: this.licenseInfo.professionalTypeIds,
       };
-      if (this.$route.params.status != undefined) {
+      if (this.$route.params.status == undefined) {
         this.$store
           .dispatch("newlicense/searchProfessionalType", profTypes)
           .then((res) => {
