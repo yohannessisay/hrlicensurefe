@@ -531,6 +531,7 @@ export default {
       }
     },
     checkOtherProfession(profession) {
+      this.repeatedProfArray = [];
       if (profession.name == "Other") {
         this.showOtherProfession = !this.showOtherProfession;
       }
@@ -745,7 +746,7 @@ export default {
       let profTypes = {
         professionalTypeIds: this.licenseInfo.professionalTypeIds,
       };
-      if (this.$route.params.status != undefined) {
+      if (this.$route.params.status == undefined) {
         this.$store
           .dispatch("newlicense/searchProfessionalType", profTypes)
           .then((res) => {
