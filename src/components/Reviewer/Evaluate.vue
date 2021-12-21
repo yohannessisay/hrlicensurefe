@@ -466,145 +466,153 @@
                     </h5>
                   </div>
                 </div>
-                <div v-if="newLicense.professionalTypes.length > 0">
-                  <div class="flex justify-start">
-                    <Title message="Professional Type" />
-                  </div>
-                  <div class="flex flex-col mb-medium w-1/2 mr-12">
-                    <!-- <div v-model="professionalTypeIds"> -->
-                    <div>
-                      <p>Previous Profession type</p>
-                    </div>
-                    <div>
-                      <p>----------------------------------------</p>
-                    </div>
-                    <ul
-                      v-for="professionName in newLicense.professionalTypes"
-                      v-bind:key="professionName.professionalTypes.name"
-                      v-bind:value="professionName.professionalTypes.id"
-                    >
-                      <div class="flex flex-row">
-                        <li>
-                          <input
-                            v-on:click="
-                              checkBoxClicked(
-                                professionName.professionalTypes,
-                                true,
-                                $event
-                              )
-                            "
-                            type="checkbox"
-                            class="form-checkbox"
-                            :checked="
-                              choosedProfession(professionName.id, true)
-                            "
-                          />
-                          {{ professionName.professionalTypes.name }} |
-                          {{
-                            professionName.professionalTypes
-                              .amharicProfessionalType
-                          }}
-                        </li>
-                        <a
-                          class="ml-5"
-                          @click="
-                            showPrefix(
-                              professionName.professionalTypes.id,
-                              $event
-                            )
-                          "
-                          v-if="choosedProfession(professionName.id, true)"
-                          >prefix?</a
-                        >
+                <div class="flex justify-start">
+                  <Title message="Professional Type" />
+                </div>
+                <div class="flex flex-row">
+                  <div v-if="newLicense.professionalTypes.length > 0">
+                    <div class="flex flex-col mb-medium w-1/2 mr-12 ml-8">
+                      <!-- <div v-model="professionalTypeIds"> -->
+                      <div>
+                        <p>Previous Profession type</p>
                       </div>
-                      <div
-                        class="ml-12"
-                        v-if="
-                          show_prefix_list(professionName.professionalTypes.id)
-                        "
-                        :v-model="prefix"
-                      >
-                        <select
-                          class="select ml-3"
-                          @change="addPrefix(professionName.id, prefix, $event)"
-                        >
-                          <option
-                            v-for="prefix in prefixList"
-                            v-bind:key="prefix.name"
-                            v-bind:value="prefix.name"
-                          >
-                            {{ prefix.name }}
-                          </option>
-                        </select>
+                      <div>
+                        <p>----------------------------------------</p>
                       </div>
-                    </ul>
-                    <div>
-                      <p>----------------------------------------</p>
-                    </div>
-                    <div>
                       <ul
-                        v-for="professionName in professionalTypes"
-                        v-bind:key="professionName.name"
-                        v-bind:value="professionName.id"
+                        v-for="professionName in newLicense.professionalTypes"
+                        v-bind:key="professionName.professionalTypes.name"
+                        v-bind:value="professionName.professionalTypes.id"
                       >
                         <div class="flex flex-row">
                           <li>
                             <input
                               v-on:click="
-                                checkBoxClicked(professionName, false, $event)
+                                checkBoxClicked(
+                                  professionName.professionalTypes,
+                                  true,
+                                  $event
+                                )
                               "
                               type="checkbox"
                               class="form-checkbox"
                               :checked="
-                                choosedProfession(professionName.id, false)
+                                choosedProfession(professionName.id, true)
                               "
                             />
-                            {{ professionName.name }} |
-                            {{ professionName.amharicProfessionalType }}
+                            {{ professionName.professionalTypes.name }} |
+                            {{
+                              professionName.professionalTypes
+                                .amharicProfessionalType
+                            }}
                           </li>
                           <a
-                            class="ml-5"
-                            @click="showPrefix(professionName.id, $event)"
-                            v-if="choosedProfession(professionName.id, false)"
+                            class="ml-5" style="text-decoration: underline"
+                            @click="
+                              showPrefix(
+                                professionName.professionalTypes.id,
+                                $event
+                              )
+                            "
+                            v-if="choosedProfession(professionName.id, true)"
                             >prefix?</a
                           >
                         </div>
                         <div
-                          class="flex flex-row"
+                          class="ml-12"
                           v-if="
-                            show_prefix_list(professionName.id) &&
-                            choosedProfession(professionName.id, false)
+                            show_prefix_list(
+                              professionName.professionalTypes.id
+                            )
                           "
+                          :v-model="prefix"
                         >
-                          <div class="flex flex-column">
-                            <div class="ml-12" :v-model="prefix">
-                              <select
-                                class="select ml-3"
-                                @change="
-                                  addPrefix(professionName.id, prefix, $event)
-                                "
-                              >
-                                <option
-                                  v-for="prefix in prefixList"
-                                  v-bind:key="prefix.name"
-                                  v-bind:value="prefix.name"
-                                >
-                                  {{ prefix.name }}
-                                </option>
-                              </select>
-                            </div>
-                            <br />
-                            <div v-if="professionName.name == 'Other'">
-                              <label class="ml-8">other profession name</label>
-                              <input
-                                class="max-w-3xl ml-8"
-                                type="text"
-                                v-model="newLicense.otherProfessionalType"
-                              />
-                            </div>
-                          </div>
+                          <select
+                            class="select ml-3"
+                            @change="
+                              addPrefix(professionName.id, prefix, $event)
+                            "
+                          >
+                            <option
+                              v-for="prefix in prefixList"
+                              v-bind:key="prefix.name"
+                              v-bind:value="prefix.name"
+                            >
+                              {{ prefix.name }}
+                            </option>
+                          </select>
                         </div>
                       </ul>
+                      <div>
+                        <p>----------------------------------------</p>
+                      </div>
+                      <div>
+                        <ul
+                          v-for="professionName in professionalTypes"
+                          v-bind:key="professionName.name"
+                          v-bind:value="professionName.id"
+                        >
+                          <div class="flex flex-row">
+                            <li>
+                              <input
+                                v-on:click="
+                                  checkBoxClicked(professionName, false, $event)
+                                "
+                                type="checkbox"
+                                class="form-checkbox"
+                                :checked="
+                                  choosedProfession(professionName.id, false)
+                                "
+                              />
+                              {{ professionName.name }} |
+                              {{ professionName.amharicProfessionalType }}
+                            </li>
+                            <a
+                              class="ml-5" style="text-decoration: underline"
+                              @click="showPrefix(professionName.id, $event)"
+                              v-if="choosedProfession(professionName.id, false)"
+                              >prefix?</a
+                            >
+                          </div>
+                          <div
+                            class="flex flex-row"
+                            v-if="
+                              show_prefix_list(professionName.id) &&
+                              choosedProfession(professionName.id, false)
+                            "
+                          >
+                            <div class="flex flex-column">
+                              <div class="ml-12" :v-model="prefix">
+                                <select
+                                  class="select ml-3"
+                                  @change="
+                                    addPrefix(professionName.id, prefix, $event)
+                                  "
+                                >
+                                  <option
+                                    v-for="prefix in prefixList"
+                                    v-bind:key="prefix.name"
+                                    v-bind:value="prefix.name"
+                                  >
+                                    {{ prefix.name }}
+                                  </option>
+                                </select>
+                              </div>
+                              <br />
+                              <div v-if="professionName.name == 'Other'">
+                                <label class="ml-8"
+                                  >other profession name</label
+                                >
+                                <input
+                                  class="max-w-3xl ml-8"
+                                  type="text"
+                                  v-model="newLicense.otherProfessionalType"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </ul>
+                      </div>
                     </div>
                   </div>
                 </div>
