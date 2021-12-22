@@ -446,7 +446,7 @@ export default {
       }
     };
 
-    const handleRegionsLayout = (doc, code, namePosition, professionPossition) => {
+    const handleRegionsLayout = (doc, code, namePosition, professionPossition, professionListGap) => {
       doc.setFontSize(17);
       doc.text(
         190,
@@ -459,6 +459,7 @@ export default {
       );
 
       let changeWidth = ref(false);
+      let changeWidthTooSmall = ref(false);
       let xPosition = ref(185);
       for (
         let i = 0;
@@ -474,11 +475,19 @@ export default {
         let getLength = doc.getTextWidth(
           certificateDetail.value.professionalTypes[i].professionalTypes.name
         );
-        if (getLength > 125) {
+        if (getLength > 125 && getLength <= 132) {
+          if(!changeWidthTooSmall.value) {
           changeWidth.value = true;
+          }
+        } if (getLength > 132) {
+          changeWidthTooSmall.value = true;
+          changeWidth.value = false;
         }
       }
       if (changeWidth.value) {
+        doc.setFontSize(10);
+        xPosition.value = 167;
+      } else if(changeWidthTooSmall.value) {
         doc.setFontSize(10);
         xPosition.value = 153;
       } else {
@@ -491,7 +500,7 @@ export default {
       ) {
         doc.text(
           xPosition.value,
-          professionPossition + i * 7,
+          professionPossition + i * professionListGap,
           `${
             certificateDetail.value.professionalTypes[i].professionalTypes.name
               ? certificateDetail.value.professionalTypes[i].professionalTypes
@@ -511,7 +520,7 @@ export default {
       doc.setFontSize(17);
       doc.text(
         60,
-        100,
+        namePosition,
         `${
           certifiedUser.value.alternativeName
             ? certifiedUser.value.alternativeName
@@ -529,6 +538,9 @@ export default {
 
       if (changeWidth.value) {
         doc.setFontSize(11);
+        xPosition.value = 40;
+      } else if(changeWidthTooSmall.value) {
+        doc.setFontSize(11);
         xPosition.value = 28;
       } else {
         doc.setFontSize(14);
@@ -542,7 +554,7 @@ export default {
       ) {
         doc.text(
           xPosition.value,
-          professionPossition + i * 7,
+          professionPossition + i * professionListGap,
           `${
             certificateDetail.value.professionalTypes[i].professionalTypes.name
               ? certificateDetail.value.professionalTypes[i].professionalTypes
@@ -571,7 +583,7 @@ export default {
           undefined,
           "FAST"
         );
-        handleRegionsLayout(doc, "FED", 100, 125)
+        handleRegionsLayout(doc, "FED", 100, 125, 7)
       } else if (certificateDetail.value.reviewer.region.code === "ORO") {
         doc.addImage(
           oromiaCertificateBackground,
@@ -583,7 +595,7 @@ export default {
           undefined,
           "FAST"
         );
-        handleRegionsLayout(doc, "ORO", 120, 140)
+        handleRegionsLayout(doc, "ORO", 110, 133, 4)
       } else if (certificateDetail.value.reviewer.region.code === "AA") {
         doc.addImage(
           addisAbabaCertificateBackground,
@@ -595,7 +607,7 @@ export default {
           undefined,
           "FAST"
         );
-        handleRegionsLayout(doc, "AA", 120, 140)
+        handleRegionsLayout(doc, "AA", 110, 133, 4)
       }
 
       // doc.addImage(backgroundImage, "JPEG", 0, 0, 298, 213, undefined, "FAST");
