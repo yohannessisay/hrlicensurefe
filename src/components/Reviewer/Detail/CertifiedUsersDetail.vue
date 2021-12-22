@@ -411,7 +411,7 @@ export default {
           .then((res) => {
             showApplicationLoading.value = false;
             certificateDetail.value = res.data.data;
-            console.log("certificate detail is ", certificateDetail.value)
+            console.log("certificate detail is ", certificateDetail.value);
             if (
               route.params.applicantId != certificateDetail.value.applicantId
             ) {
@@ -446,7 +446,13 @@ export default {
       }
     };
 
-    const handleRegionsLayout = (doc, code, namePosition, professionPossition, professionListGap) => {
+    const handleRegionsLayout = (
+      doc,
+      code,
+      namePosition,
+      professionPossition,
+      professionListGap
+    ) => {
       doc.setFontSize(17);
       doc.text(
         190,
@@ -476,10 +482,11 @@ export default {
           certificateDetail.value.professionalTypes[i].professionalTypes.name
         );
         if (getLength > 125 && getLength <= 132) {
-          if(!changeWidthTooSmall.value) {
-          changeWidth.value = true;
+          if (!changeWidthTooSmall.value) {
+            changeWidth.value = true;
           }
-        } if (getLength > 132) {
+        }
+        if (getLength > 132) {
           changeWidthTooSmall.value = true;
           changeWidth.value = false;
         }
@@ -487,7 +494,7 @@ export default {
       if (changeWidth.value) {
         doc.setFontSize(10);
         xPosition.value = 167;
-      } else if(changeWidthTooSmall.value) {
+      } else if (changeWidthTooSmall.value) {
         doc.setFontSize(10);
         xPosition.value = 153;
       } else {
@@ -539,7 +546,7 @@ export default {
       if (changeWidth.value) {
         doc.setFontSize(11);
         xPosition.value = 40;
-      } else if(changeWidthTooSmall.value) {
+      } else if (changeWidthTooSmall.value) {
         doc.setFontSize(11);
         xPosition.value = 28;
       } else {
@@ -563,7 +570,7 @@ export default {
           }`
         );
       }
-    }
+    };
 
     const downloadPdf = () => {
       const doc = new jsPDF({
@@ -583,7 +590,7 @@ export default {
           undefined,
           "FAST"
         );
-        handleRegionsLayout(doc, "FED", 100, 125, 7)
+        handleRegionsLayout(doc, "FED", 100, 125, 7);
       } else if (certificateDetail.value.reviewer.region.code === "ORO") {
         doc.addImage(
           oromiaCertificateBackground,
@@ -595,7 +602,7 @@ export default {
           undefined,
           "FAST"
         );
-        handleRegionsLayout(doc, "ORO", 110, 133, 4)
+        handleRegionsLayout(doc, "ORO", 110, 133, 4);
       } else if (certificateDetail.value.reviewer.region.code === "AA") {
         doc.addImage(
           addisAbabaCertificateBackground,
@@ -607,7 +614,7 @@ export default {
           undefined,
           "FAST"
         );
-        handleRegionsLayout(doc, "AA", 110, 133, 4)
+        handleRegionsLayout(doc, "AA", 110, 133, 4);
       }
 
       // doc.addImage(backgroundImage, "JPEG", 0, 0, 298, 213, undefined, "FAST");
@@ -616,9 +623,7 @@ export default {
         doc.addImage(userImage, "JPEG", 33, 20, 30, 30);
       }
       doc.setFontSize(25);
-      
 
-      
       // if (certificateDetail.value.professionalTypes.length === 1) {
       //   doc.text(
       //     185,
@@ -694,7 +699,7 @@ export default {
             : "Not Specified"
         }`
       );
-      
+
       // if (certificateDetail.value.professionalTypes.length === 1) {
       //   doc.text(
       //     65,

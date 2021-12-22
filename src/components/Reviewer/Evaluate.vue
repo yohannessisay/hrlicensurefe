@@ -33,7 +33,7 @@
               <span
                 v-if="
                   newLicense.applicant.profile.photo !== '' &&
-                  newLicense.applicant.profile.photo !== null
+                    newLicense.applicant.profile.photo !== null
                 "
               >
                 <img
@@ -194,14 +194,14 @@
                     <h5 class="ml-8">
                       {{
                         (profileInfo.name ? profileInfo.name : "-") +
-                        " " +
-                        (profileInfo.fatherName
-                          ? profileInfo.fatherName
-                          : "-") +
-                        " " +
-                        (profileInfo.grandFatherName
-                          ? profileInfo.grandFatherName
-                          : "-")
+                          " " +
+                          (profileInfo.fatherName
+                            ? profileInfo.fatherName
+                            : "-") +
+                          " " +
+                          (profileInfo.grandFatherName
+                            ? profileInfo.grandFatherName
+                            : "-")
                       }}
                     </h5>
                   </div>
@@ -223,14 +223,14 @@
                             (profileInfo.alternativeName
                               ? profileInfo.alternativeName
                               : "-") +
-                            " " +
-                            (profileInfo.alternativeFatherName
-                              ? profileInfo.alternativeFatherName
-                              : "-") +
-                            " " +
-                            (profileInfo.alternativeGrandFatherName
-                              ? profileInfo.alternativeGrandFatherName
-                              : "-")
+                              " " +
+                              (profileInfo.alternativeFatherName
+                                ? profileInfo.alternativeFatherName
+                                : "-") +
+                              " " +
+                              (profileInfo.alternativeGrandFatherName
+                                ? profileInfo.alternativeGrandFatherName
+                                : "-")
                           }}
                         </h5>
                       </div>
@@ -573,7 +573,7 @@
                           class="flex flex-row"
                           v-if="
                             show_prefix_list(professionName.id) &&
-                            choosedProfession(professionName.id, false)
+                              choosedProfession(professionName.id, false)
                           "
                         >
                           <div class="flex flex-column">
@@ -628,7 +628,7 @@
                       <iframe
                         v-bind:src="
                           'https://storage.googleapis.com/hris-lisence-dev/' +
-                          docs[index].filePath
+                            docs[index].filePath
                         "
                       ></iframe>
                     </div>
@@ -642,7 +642,7 @@
                     <img
                       v-bind:src="
                         'https://storage.googleapis.com/hris-lisence-dev/' +
-                        docs[index].filePath
+                          docs[index].filePath
                       "
                     />
                   </div>
@@ -871,7 +871,7 @@
                               <img
                                 v-bind:src="
                                   'https://storage.googleapis.com/hris-lisence-dev/' +
-                                  rejectedObj[ind].filePath
+                                    rejectedObj[ind].filePath
                                 "
                               />
                             </picture>
@@ -1569,15 +1569,62 @@ export default {
           }
         }
       }
+      const allowProfessionChange = (action) => {
+        if (action == "DeclineEventn") {
+          if (newLicense.value.isProfessionChanged.value == true) {
+            if (professionalTypeIdss.value.length > 0) {
+              newLicense.value.professionalTypeIds = professionalTypeIdss.value;
+              newLicense.value.professionalTypePrefixes =
+                professionalTypePrefixes.value;
+            }
+          } else {
+            if (professionalTypeIdss.value.length > 0) {
+              showProfessionChangeError.value = true;
+              setTimeout(() => {
+                showProfessionChangeError.value = false;
+              }, 4000);
+              professionalTypeIdss.value = [];
+              professionalTypePrefixes.value = [];
+              return;
+            }
+          }
+        } else if(action == "SaveAsDraft") {
+          newLicense.value.isProfessionChanged.value = true;
+        }
+      };
+      console.log("aa", actionValue)
+      if(actionValue == "ReviewerDraftEvent") {
+        console.log("mmmmmmm")
+        if (professionalTypeIdss.value.length > 0) {
+          newLicense.value.isProfessionChanged = true;
+        }
+      }
       if (actionValue == "DeclineEvent") {
         showRemark.value = true;
         sendDeclinedData.value = false;
+        if (!newLicense.value.isProfessionChanged) {
+            if (professionalTypeIdss.value.length > 0) {
+              showProfessionChangeError.value = true;
+              setTimeout(() => {
+                showProfessionChangeError.value = false;
+              }, 4000);
+              professionalTypeIdss.value = [];
+              professionalTypePrefixes.value = [];
+              console.log("mmmm")
+              return;
+            }
+          }
         if (fromModalSendDeclinedData.value == true) {
           sendDeclinedData.value = true;
         }
       }
       if (prefix.value !== undefined) {
         newLicense.value.prefix = prefix.value;
+      }
+      if (professionalTypeIdss.value.length > 0) {
+        newLicense.value.professionalTypeIds = professionalTypeIdss.value;
+        newLicense.value.professionalTypePrefixes =
+          professionalTypePrefixes.value;
       }
       newLicense.value.declinedFields = rejected.value;
       newLicense.value.acceptedFields = accepted.value;
@@ -1589,6 +1636,8 @@ export default {
         action: actionValue,
         data: newLicense.value,
       };
+      console.log("req", req)
+      return;
       if (
         applicationType.value == "New License" &&
         sendDeclinedData.value == true
@@ -1717,7 +1766,7 @@ export default {
       store
         .dispatch("reviewer/getProfessionalTypeByDepartmentId", id)
         .then((res) => {
-          res.data.data.filter(function (e) {
+          res.data.data.filter(function(e) {
             for (let i in newLicense.value.professionalTypes) {
               if (
                 e.code ===
@@ -1805,6 +1854,7 @@ export default {
 
     let professionIdForPrefix = ref();
     const showPrefix = (id, event) => {
+      console.log("prefix clicked", id);
       let countPrefixClicked = ref(0);
       if (countPrefixClicked.value % 2 == 0) {
         professionIdForPrefix.value = id;
