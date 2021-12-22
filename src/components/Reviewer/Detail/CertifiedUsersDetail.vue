@@ -446,11 +446,11 @@ export default {
       }
     };
 
-    const handleRegionsLayout = (code, namePosition, professionPossition) => {
+    const handleRegionsLayout = (doc, code, namePosition, professionPossition) => {
       doc.setFontSize(17);
       doc.text(
         190,
-        100,
+        namePosition,
         `${certifiedUser.value.name} ${certifiedUser.value.fatherName} ${
           certifiedUser.value.grandFatherName
             ? certifiedUser.value.grandFatherName
@@ -491,11 +491,62 @@ export default {
       ) {
         doc.text(
           xPosition.value,
-          125 + i * 7,
+          professionPossition + i * 7,
           `${
             certificateDetail.value.professionalTypes[i].professionalTypes.name
               ? certificateDetail.value.professionalTypes[i].professionalTypes
                   .name
+              : ""
+          }`
+        );
+      }
+
+      // doc.addFileToVFS("Amiri-Regular.ttf", AmiriRegular);
+      doc.addFileToVFS("Tera-Regular-normal.ttf", AmharicFont);
+
+      doc.addFont("Tera-Regular-normal.ttf", "Tera-Regular", "normal");
+
+      doc.setFont("Tera-Regular"); // set font
+
+      doc.setFontSize(17);
+      doc.text(
+        60,
+        100,
+        `${
+          certifiedUser.value.alternativeName
+            ? certifiedUser.value.alternativeName
+            : ""
+        } ${
+          certifiedUser.value.alternativeFatherName
+            ? certifiedUser.value.alternativeFatherName
+            : ""
+        } ${
+          certifiedUser.value.alternativeGrandFatherName
+            ? certifiedUser.value.alternativeGrandFatherName
+            : ""
+        }`
+      );
+
+      if (changeWidth.value) {
+        doc.setFontSize(11);
+        xPosition.value = 28;
+      } else {
+        doc.setFontSize(14);
+        xPosition.value = 65;
+      }
+
+      for (
+        let i = 0;
+        i < certificateDetail.value.professionalTypes.length;
+        i++
+      ) {
+        doc.text(
+          xPosition.value,
+          professionPossition + i * 7,
+          `${
+            certificateDetail.value.professionalTypes[i].professionalTypes.name
+              ? certificateDetail.value.professionalTypes[i].professionalTypes
+                  .amharicProfessionalType
               : ""
           }`
         );
@@ -520,6 +571,7 @@ export default {
           undefined,
           "FAST"
         );
+        handleRegionsLayout(doc, "FED", 100, 125)
       } else if (certificateDetail.value.reviewer.region.code === "ORO") {
         doc.addImage(
           oromiaCertificateBackground,
@@ -531,6 +583,7 @@ export default {
           undefined,
           "FAST"
         );
+        handleRegionsLayout(doc, "ORO", 120, 140)
       } else if (certificateDetail.value.reviewer.region.code === "AA") {
         doc.addImage(
           addisAbabaCertificateBackground,
@@ -542,6 +595,7 @@ export default {
           undefined,
           "FAST"
         );
+        handleRegionsLayout(doc, "AA", 120, 140)
       }
 
       // doc.addImage(backgroundImage, "JPEG", 0, 0, 298, 213, undefined, "FAST");
@@ -550,10 +604,7 @@ export default {
         doc.addImage(userImage, "JPEG", 33, 20, 30, 30);
       }
       doc.setFontSize(25);
-      // doc.addFileToVFS("Amiri-Regular.ttf", AmiriRegular);
-      doc.addFileToVFS("Tera-Regular-normal.ttf", AmharicFont);
-
-      doc.addFont("Tera-Regular-normal.ttf", "Tera-Regular", "normal");
+      
 
       
       // if (certificateDetail.value.professionalTypes.length === 1) {
@@ -631,51 +682,7 @@ export default {
             : "Not Specified"
         }`
       );
-      doc.setFont("Tera-Regular"); // set font
-
-      doc.setFontSize(17);
-      doc.text(
-        60,
-        100,
-        `${
-          certifiedUser.value.alternativeName
-            ? certifiedUser.value.alternativeName
-            : ""
-        } ${
-          certifiedUser.value.alternativeFatherName
-            ? certifiedUser.value.alternativeFatherName
-            : ""
-        } ${
-          certifiedUser.value.alternativeGrandFatherName
-            ? certifiedUser.value.alternativeGrandFatherName
-            : ""
-        }`
-      );
-
-      if (changeWidth.value) {
-        doc.setFontSize(11);
-        xPosition.value = 28;
-      } else {
-        doc.setFontSize(14);
-        xPosition.value = 65;
-      }
-
-      for (
-        let i = 0;
-        i < certificateDetail.value.professionalTypes.length;
-        i++
-      ) {
-        doc.text(
-          xPosition.value,
-          125 + i * 7,
-          `${
-            certificateDetail.value.professionalTypes[i].professionalTypes.name
-              ? certificateDetail.value.professionalTypes[i].professionalTypes
-                  .amharicProfessionalType
-              : ""
-          }`
-        );
-      }
+      
       // if (certificateDetail.value.professionalTypes.length === 1) {
       //   doc.text(
       //     65,
