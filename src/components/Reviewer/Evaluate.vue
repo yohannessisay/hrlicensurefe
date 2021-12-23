@@ -499,6 +499,7 @@
                               "
                               type="checkbox"
                               class="form-checkbox"
+                              name="ckb"
                               :checked="professionName.showPrefixLink"
                             />
                             {{ professionName.professionalTypes.name }} |
@@ -602,6 +603,7 @@
                               "
                               type="checkbox"
                               class="form-checkbox"
+                              name="nckb"
                             />
                             {{ newProfessionName.name }} |
                             {{ newProfessionName.amharicProfessionalType }}
@@ -1845,51 +1847,77 @@ export default {
         });
     };
 
+    const checkResult = ref(false);
     const checkBoxClicked = (profession, previousProfession, index, event) => {
-      if (event.target.checked) {
-        previousProfession
-          ? (newLicense.value.professionalTypes[index].showPrefixLink = true)
-          : (professionalTypes.value[index].showPrefixLink = true);
-        previousProfession
-          ? professionalTypeIdss.value.push(profession.professionalTypes.id)
-          : professionalTypeIdss.value.push(profession.id);
-      } else {
-        previousProfession
-          ? (newLicense.value.professionalTypes[index].showPrefixLink = false)
-          : (professionalTypes.value[index].showPrefixLink = false);
-        previousProfession
-          ? professionalTypeIdss.value.splice(
-              professionalTypeIdss.value.indexOf(
-                profession.professionalTypes.id
-              ),
-              1
-            )
-          : professionalTypeIdss.value.splice(
-              professionalTypeIdss.value.indexOf(profession.id),
-              1
-            );
-
-        if (previousProfession) {
-          professionalTypePrefixes.value =
-            professionalTypePrefixes.value.filter((data) => {
-              return data.professionalTypeId != profession.professionalTypes.id;
-            });
+      checkResult.value = chkcontrol(index, previousProfession, event);
+      if (checkResult.value) {
+        if (event.target.checked) {
+          previousProfession
+            ? (newLicense.value.professionalTypes[index].showPrefixLink = true)
+            : (professionalTypes.value[index].showPrefixLink = true);
+          previousProfession
+            ? professionalTypeIdss.value.push(profession.professionalTypes.id)
+            : professionalTypeIdss.value.push(profession.id);
         } else {
-          professionalTypePrefixes.value =
-            professionalTypePrefixes.value.filter((data) => {
-              return data.professionalTypeId != profession.id;
-            });
-        }
+          previousProfession
+            ? (newLicense.value.professionalTypes[index].showPrefixLink = false)
+            : (professionalTypes.value[index].showPrefixLink = false);
+          previousProfession
+            ? professionalTypeIdss.value.splice(
+                professionalTypeIdss.value.indexOf(
+                  profession.professionalTypes.id
+                ),
+                1
+              )
+            : professionalTypeIdss.value.splice(
+                professionalTypeIdss.value.indexOf(profession.id),
+                1
+              );
 
-        if (
-          previousProfession &&
-          profession.professionalTypes.name == "Other"
-        ) {
-          newLicense.value.otherProfessionalType = null;
-        } else if (!previousProfession && profession.name == "Other") {
-          newLicense.value.otherProfessionalType = null;
+          if (previousProfession) {
+            professionalTypePrefixes.value =
+              professionalTypePrefixes.value.filter((data) => {
+                return (
+                  data.professionalTypeId != profession.professionalTypes.id
+                );
+              });
+          } else {
+            professionalTypePrefixes.value =
+              professionalTypePrefixes.value.filter((data) => {
+                return data.professionalTypeId != profession.id;
+              });
+          }
+
+          if (
+            previousProfession &&
+            profession.professionalTypes.name == "Other"
+          ) {
+            newLicense.value.otherProfessionalType = null;
+          } else if (!previousProfession && profession.name == "Other") {
+            newLicense.value.otherProfessionalType = null;
+          }
         }
       }
+    };
+
+    const chkcontrol = (j, previousProfession, event) => {
+      if (event.target.checked) {
+        if (professionalTypeIdss.value.length == 4) {
+          alert("You can only select 4 professional types. Please Select only four!");
+          if (previousProfession) {
+            document.getElementsByName("ckb")[j].checked = false;
+            return false;
+          } else {
+            document.getElementsByName("nckb")[j].checked = false;
+            return false;
+          }
+        }
+
+        return true;
+      }
+
+      return true;
+      // }
     };
 
     let countProLength = ref(0);
@@ -2011,6 +2039,8 @@ export default {
       otherProfessionalType,
       // otherProfessionSelected,
       showOtherProfessionError,
+      chkcontrol,
+      checkResult,
     };
   },
 };
