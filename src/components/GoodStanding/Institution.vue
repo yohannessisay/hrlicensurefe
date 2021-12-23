@@ -618,8 +618,9 @@ export default {
             if (res.data.status == "Success") {
               this.showFlash = true;
               this.showLoading = false;
-              setTimeout(() => {}, 1500);
-              this.$router.push({ path: "/menu" });
+              setTimeout(() => {
+                this.$router.push({ path: "/menu" });
+              }, 1500);
             } else {
               this.showErrorFlash = true;
             }
