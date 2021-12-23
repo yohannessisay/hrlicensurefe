@@ -1028,6 +1028,7 @@ export default {
     let pdfFilePath = ref("");
 
     let expirationDateExceedTodayError = ref(false);
+    let isProfessionalTypeChanged = ref(false);
 
     let otherProfessionalType = ref();
     let otherProfessionSelected = ref();
@@ -1523,6 +1524,26 @@ export default {
       // }
     };
 
+    const checkProfessionChanged = (newProfessionType) => {
+      let count = 0;
+      if(newProfessionType.length !== professionalTypeIdss.length) {
+        isProfessionalTypeChanged.value = true;
+      } else {
+        for(let i = 0; i <= newProfessionType.length; i++) {
+          for(let j = 0; j <= newProfessionType.length; j++) {
+            if(newProfessionType[i].id != professionalTypeIdss.value[i]) {
+              count++;
+            }
+          }
+          if(count == newProfessionType.length) {
+            isProfessionalTypeChanged.value = true;
+            return;
+          } else {
+            count = 0;
+          }
+        }
+      }
+    }
     const action = (actionValue) => {
       if (actionValue === "ApproveEvent") {
         if (newLicense.value.licenseExpirationDate === null) {
@@ -1569,39 +1590,13 @@ export default {
           }
         }
       }
-      const allowProfessionChange = (action) => {
-        if (action == "DeclineEventn") {
-          if (newLicense.value.isProfessionChanged.value == true) {
-            if (professionalTypeIdss.value.length > 0) {
-              newLicense.value.professionalTypeIds = professionalTypeIdss.value;
-              newLicense.value.professionalTypePrefixes =
-                professionalTypePrefixes.value;
-            }
-          } else {
-            if (professionalTypeIdss.value.length > 0) {
-              showProfessionChangeError.value = true;
-              setTimeout(() => {
-                showProfessionChangeError.value = false;
-              }, 4000);
-              professionalTypeIdss.value = [];
-              professionalTypePrefixes.value = [];
-              return;
-            }
-          }
-        } else if(action == "SaveAsDraft") {
-          newLicense.value.isProfessionChanged.value = true;
-        }
-      };
-      console.log("aa", actionValue)
       if(actionValue == "ReviewerDraftEvent") {
-        console.log("mmmmmmm")
         if (professionalTypeIdss.value.length > 0) {
           newLicense.value.isProfessionChanged = true;
         }
       }
       if (actionValue == "DeclineEvent") {
-        showRemark.value = true;
-        sendDeclinedData.value = false;
+        
         if (!newLicense.value.isProfessionChanged) {
             if (professionalTypeIdss.value.length > 0) {
               showProfessionChangeError.value = true;
@@ -1610,13 +1605,16 @@ export default {
               }, 4000);
               professionalTypeIdss.value = [];
               professionalTypePrefixes.value = [];
-              console.log("mmmm")
               return;
             }
-          }
-        if (fromModalSendDeclinedData.value == true) {
+          } else {
+            showRemark.value = true;
+          sendDeclinedData.value = false;
+          if (fromModalSendDeclinedData.value) {
           sendDeclinedData.value = true;
         }
+          }
+        
       }
       if (prefix.value !== undefined) {
         newLicense.value.prefix = prefix.value;
