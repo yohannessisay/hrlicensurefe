@@ -183,6 +183,13 @@
                 </div>
                 <div class="flex justify-start">
                   <Title message="Personal Info" />
+                  <div>
+                    <button @click="allowChangeName">change name?</button>
+                    <i
+                      class="fas fa-chevron-edit float-right mt-2"
+                      @click="allowChangeName"
+                    ></i>
+                  </div>
                 </div>
                 <div class="flex flex-row">
                   <div
@@ -234,13 +241,6 @@
                           }}
                         </h5>
                       </div>
-                    </div>
-                    <div>
-                      <button @click="allowChangeName">change name?</button>
-                      <i
-                        class="fas fa-chevron-edit float-right mt-2"
-                        @click="allowChangeName"
-                      ></i>
                     </div>
                   </div>
                   <div v-if="canChangeName" class="flex flex-row">
@@ -471,14 +471,14 @@
                 </div>
                 <div class="flex flex-row">
                   <div v-if="newLicense.professionalTypes.length > 0">
-                    <div class="flex flex-col mb-medium w-1/2 mr-12 ml-8">
+                    <div class="flex flex-col mb-medium mr-12 ml-8">
                       <!-- <div v-model="professionalTypeIds"> -->
-                      <div>
-                        <p>Previous Profession type</p>
+                      <div style="background: lightgray; padding: 8px">
+                        <p style="color: blue">Previous Professional Types</p>
                       </div>
-                      <div>
+                      <!-- <div>
                         <p>----------------------------------------</p>
-                      </div>
+                      </div> -->
                       <ul
                         v-for="(
                           professionName, index
@@ -486,7 +486,7 @@
                         v-bind:key="professionName.professionalTypes.name"
                         v-bind:value="professionName.professionalTypes.id"
                       >
-                        <div class="flex flex-row">
+                        <div class="grid grid-cols-1">
                           <li>
                             <input
                               v-on:click="
@@ -500,6 +500,7 @@
                               type="checkbox"
                               class="form-checkbox"
                               :checked="professionName.showPrefixLink"
+                              :disabled="disableCheckbox"
                             />
                             {{ professionName.professionalTypes.name }} |
                             {{
@@ -509,23 +510,54 @@
                           </li>
                           <a
                             class="ml-5"
-                            style="text-decoration: underline"
+                            style="
+                              text-decoration: underline;
+                              font-style: italic;
+                            "
                             @click="
                               professionName.showPrefix =
                                 !professionName.showPrefix
                             "
                             v-show="professionName.showPrefixLink"
-                            >prefix?</a
+                            >{{
+                              professionName.showPrefix
+                                ? "Hide Prefix?"
+                                : "Show Prefix?"
+                            }}</a
                           >
+                        </div>
+                        <div class="grid grid-cols-2 gap-4 mb-4 ml-8 mt-2">
+                          <!-- <div class="flex flex-row ml-16 mr-8 mt-3 mb-3">
+                            <div class="flex flex-col"> -->
                           <div
-                            class="ml-12"
+                            style="
+                              float: left;
+                              border-right: 1px solid lightgray;
+                            "
+                            v-if="
+                              professionName.professionalTypes.name == 'Other'
+                            "
+                          >
+                            <label style="display: block"
+                              >Other professional Type Name:</label
+                            >
+                            <input
+                              style="display: block"
+                              type="text"
+                              v-model="newLicense.otherProfessionalType"
+                            />
+                          </div>
+                          <div
+                            style="float: left"
                             v-show="
                               professionName.showPrefixLink &&
                               professionName.showPrefix
                             "
                           >
+                            <label style="display: block">Prefix:</label>
                             <select
-                              class="select ml-3"
+                              style="display: block"
+                              class="select"
                               @change="addPrefix(professionName.id, $event)"
                               v-model="professionName.professionalTypes.id"
                             >
@@ -538,20 +570,16 @@
                               </option>
                             </select>
                           </div>
-                          <br />
-                          <div v-if="professionName.professionalTypes.name == 'Other'">
-                            <label class="ml-8">other profession name</label>
-                            <input
-                              class="max-w-3xl ml-8"
-                              type="text"
-                              v-model="newLicense.otherProfessionalType"
-                            />
-                          </div>
+                          <!-- </div>
+                          </div> -->
                         </div>
                       </ul>
-                      <div>
-                        <p>----------------------------------------</p>
+                      <div style="background: lightgray; padding: 8px">
+                        <p style="color: blue">New Professional Types</p>
                       </div>
+                      <!-- <div>
+                        <p>----------------------------------------</p>
+                      </div> -->
                       <div>
                         <ul
                           v-for="(
@@ -560,7 +588,7 @@
                           v-bind:key="newProfessionName.name"
                           v-bind:value="newProfessionName.id"
                         >
-                          <div class="flex flex-row">
+                          <div class="grid grid-cols-1">
                             <li>
                               <input
                                 v-on:click="
@@ -579,51 +607,65 @@
                             </li>
                             <a
                               class="ml-5"
-                              style="text-decoration: underline"
+                              style="
+                                text-decoration: underline;
+                                font-style: italic;
+                              "
                               @click="
                                 newProfessionName.showPrefix =
                                   !newProfessionName.showPrefix
                               "
                               v-show="newProfessionName.showPrefixLink"
-                              >prefix?</a
+                              >{{
+                                newProfessionName.showPrefix
+                                  ? "Hide Prefix?"
+                                  : "Show Prefix?"
+                              }}</a
                             >
+                          </div>
+                          <div class="grid grid-cols-2 gap-4 mb-4 ml-8 mt-2">
                             <div
-                              class="flex flex-row"
+                              style="
+                                float: left;
+                                border-right: 1px solid lightgray;
+                              "
+                              v-if="
+                                newProfessionName.showPrefixLink &&
+                                newProfessionName.name == 'Other'
+                              "
+                            >
+                              <label style="display: block"
+                                >other profession name</label
+                              >
+                              <input
+                                style="display: block"
+                                type="text"
+                                v-model="newLicense.otherProfessionalType"
+                              />
+                            </div>
+                            <div
+                              style="float: left"
                               v-show="
                                 newProfessionName.showPrefixLink &&
                                 newProfessionName.showPrefix
                               "
                             >
-                              <div class="flex flex-column">
-                                <div class="ml-12">
-                                  <select
-                                    class="select ml-3"
-                                    @change="
-                                      addPrefix(newProfessionName.id, $event)
-                                    "
-                                    v-model="newProfessionName.id"
-                                  >
-                                    <option
-                                      v-for="prefix in prefixList"
-                                      v-bind:key="prefix.name"
-                                      v-bind:value="prefix.name"
-                                    >
-                                      {{ prefix.name }}
-                                    </option>
-                                  </select>
-                                </div>
-                                <br />
-                                <div v-if="newProfessionName.name == 'Other'">
-                                  <label class="ml-8"
-                                    >other profession name</label
-                                  >
-                                  <input
-                                    class="max-w-3xl ml-8"
-                                    type="text"
-                                    v-model="newLicense.otherProfessionalType"
-                                  />
-                                </div>
-                              </div>
+                              <label style="display: block">Prefix:</label>
+                              <select
+                                style="display: block"
+                                @change="
+                                  addPrefix(newProfessionName.id, $event)
+                                "
+                                v-model="newProfessionName.id"
+                              >
+                                <option
+                                  v-for="prefix in prefixList"
+                                  v-bind:key="prefix.name"
+                                  v-bind:value="prefix.name"
+                                >
+                                  {{ prefix.name }}
+                                </option>
+                              </select>
                             </div>
                           </div>
                         </ul>
@@ -1565,6 +1607,7 @@ export default {
           }, 4000);
           return;
         }
+        console.log('professional idss', professionalTypeIdss.value)
         for (let i = 0; i < professionalTypeIdss.value.length; i++) {
           if (otherProfessionSelected.value == professionalTypeIdss.value[i]) {
             if (newLicense.value.otherProfessionalType == null) {
@@ -1608,101 +1651,102 @@ export default {
       newLicense.value.acceptedFields = accepted.value;
       newLicense.value.certified = true;
       newLicense.value.certifiedDate = new Date();
-
       let appId = newLicense.value.id;
       let req = {
         action: actionValue,
         data: newLicense.value,
       };
-      if (
-        applicationType.value == "New License" &&
-        sendDeclinedData.value == true
-      ) {
-        store
-          .dispatch("reviewer/editNewLicense", req)
-          .then((res) => {
-            if (res.statusText == "Created") {
-              showFlash.value = true;
-              showDeclineFlash.value = true;
-              setTimeout(() => {
-                router.push("/admin/review");
-              }, 3000);
-            } else {
-              showErrorFlash.value = true;
-              setTimeout(() => {
-                router.go();
-              }, 3000);
-            }
-          })
-          .catch((err) => {});
-      }
-      if (
-        applicationType.value == "Verification" &&
-        sendDeclinedData.value == true
-      ) {
-        store.dispatch("reviewer/editVerification", req).then((res) => {
-          if (res.statusText == "Created") {
-            showFlash.value = true;
-            showDeclineFlash.value = true;
-            setTimeout(() => {
-              router.push("/admin/review");
-            }, 3000);
-          } else {
-            showErrorFlash.value = true;
-            setTimeout(() => {
-              router.go();
-            }, 3000);
-          }
-        });
-      }
-      if (
-        applicationType.value == "Good Standing" &&
-        sendDeclinedData.value == true
-      ) {
-        store.dispatch("reviewer/editGoodStanding", req).then((res) => {
-          if (res.statusText == "Created") {
-            showFlash.value = true;
-            showDeclineFlash.value = true;
-            let redirectUrl = "/admin/review";
-            // if (req.action == "ApproveEvent") {
-            //   redirectUrl =
-            //     "/admin/finishedDetail/" +
-            //     route.params.applicationType +
-            //     "/" +
-            //     route.params.applicationId +
-            //     "/" +
-            //     applicantId.value;
-            // }
-            setTimeout(() => {
-              router.push("/admin/review");
-            }, 3000);
-          } else {
-            showErrorFlash.value = true;
-            setTimeout(() => {
-              router.go();
-            }, 3000);
-          }
-        });
-      }
-      if (
-        applicationType.value == "Renewal" &&
-        sendDeclinedData.value == true
-      ) {
-        store.dispatch("reviewer/editRenewal", req).then((res) => {
-          if (res.statusText == "Created") {
-            showFlash.value = true;
-            showDeclineFlash.value = true;
-            setTimeout(() => {
-              router.push("/admin/review");
-            }, 3000);
-          } else {
-            showErrorFlash.value = true;
-            setTimeout(() => {
-              router.go();
-            }, 3000);
-          }
-        });
-      }
+      console.log('app id', appId);
+      console.log('req', req);
+      //   if (
+      //     applicationType.value == "New License" &&
+      //     sendDeclinedData.value == true
+      //   ) {
+      //     store
+      //       .dispatch("reviewer/editNewLicense", req)
+      //       .then((res) => {
+      //         if (res.statusText == "Created") {
+      //           showFlash.value = true;
+      //           showDeclineFlash.value = true;
+      //           setTimeout(() => {
+      //             router.push("/admin/review");
+      //           }, 3000);
+      //         } else {
+      //           showErrorFlash.value = true;
+      //           setTimeout(() => {
+      //             router.go();
+      //           }, 3000);
+      //         }
+      //       })
+      //       .catch((err) => {});
+      //   }
+      //   if (
+      //     applicationType.value == "Verification" &&
+      //     sendDeclinedData.value == true
+      //   ) {
+      //     store.dispatch("reviewer/editVerification", req).then((res) => {
+      //       if (res.statusText == "Created") {
+      //         showFlash.value = true;
+      //         showDeclineFlash.value = true;
+      //         setTimeout(() => {
+      //           router.push("/admin/review");
+      //         }, 3000);
+      //       } else {
+      //         showErrorFlash.value = true;
+      //         setTimeout(() => {
+      //           router.go();
+      //         }, 3000);
+      //       }
+      //     });
+      //   }
+      //   if (
+      //     applicationType.value == "Good Standing" &&
+      //     sendDeclinedData.value == true
+      //   ) {
+      //     store.dispatch("reviewer/editGoodStanding", req).then((res) => {
+      //       if (res.statusText == "Created") {
+      //         showFlash.value = true;
+      //         showDeclineFlash.value = true;
+      //         let redirectUrl = "/admin/review";
+      //         // if (req.action == "ApproveEvent") {
+      //         //   redirectUrl =
+      //         //     "/admin/finishedDetail/" +
+      //         //     route.params.applicationType +
+      //         //     "/" +
+      //         //     route.params.applicationId +
+      //         //     "/" +
+      //         //     applicantId.value;
+      //         // }
+      //         setTimeout(() => {
+      //           router.push("/admin/review");
+      //         }, 3000);
+      //       } else {
+      //         showErrorFlash.value = true;
+      //         setTimeout(() => {
+      //           router.go();
+      //         }, 3000);
+      //       }
+      //     });
+      //   }
+      //   if (
+      //     applicationType.value == "Renewal" &&
+      //     sendDeclinedData.value == true
+      //   ) {
+      //     store.dispatch("reviewer/editRenewal", req).then((res) => {
+      //       if (res.statusText == "Created") {
+      //         showFlash.value = true;
+      //         showDeclineFlash.value = true;
+      //         setTimeout(() => {
+      //           router.push("/admin/review");
+      //         }, 3000);
+      //       } else {
+      //         showErrorFlash.value = true;
+      //         setTimeout(() => {
+      //           router.go();
+      //         }, 3000);
+      //       }
+      //     });
+      //   }
     };
 
     const submitRemark = () => {
@@ -1800,7 +1844,12 @@ export default {
         });
     };
 
+    let disableCheckbox = ref(false);
     const checkBoxClicked = (profession, previousProfession, index, event) => {
+      // disableCheckbox.value = checkboxLimitReached();
+
+      console.log(disableCheckbox.value);
+      // if (disableCheckbox.value == false) {
       if (profession.name == "Other") {
         otherProfessionSelected.value = profession.id;
       }
@@ -1821,39 +1870,21 @@ export default {
           newLicense.value.otherProfessionalType = null;
         }
       }
+      // }
     };
 
-    // const choosedProfession = (id, previousProfession) => {
-    //   if (previousProfession) {
-    //     for (let i = 0; i < professionalTypeIdss.value.length; i++) {
-    //       if (id === professionalTypeIdss.value[i]) {
-    //         return true;
-    //       }
-    //     }
-    //   } else {
-    //     for (let i = 0; i < professionalTypeIdss.value.length; i++) {
-    //       if (id === professionalTypeIdss.value[i]) {
-    //         return true;
-    //       }
-    //     }
-    //   }
-    // };
-
-    // let showPrefixes = ref(false);
-    // const showPrefix = (id, event) => {
-    //   let countPrefixClicked = ref(0);
-    //   if (countPrefixClicked.value % 2 == 0) {
-    //     professionIdForPrefix.value = id;
-    //   } else {
-    //     professionIdForPrefix.value = null;
-    //   }
-    //   countPrefixClicked.value++;
-    // };
-
-    // const showPrefix = (index) => {
-    // console.log(index);
-    // newLicense.value.professionalTypes[index] = true
-    // };
+    const checkboxLimitReached = (currentEvent) => {
+      console.log("jfi", professionalTypeIdss.value.length);
+      if (currentEvent) {
+        if (professionalTypeIdss.value.length <= 3) {
+          console.log("satisfied");
+          return true;
+        }
+        return false;
+      } else {
+        return true;
+      }
+    };
 
     let countProLength = ref(0);
     const addPrefix = (professionId, event) => {
@@ -1974,6 +2005,8 @@ export default {
       otherProfessionalType,
       otherProfessionSelected,
       showOtherProfessionError,
+      checkboxLimitReached,
+      disableCheckbox,
     };
   },
 };
