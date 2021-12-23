@@ -869,10 +869,10 @@ export default {
           });
         });
       }
-      if (this.licenseInfo.expertLevelId == 3) {
-        this.showRegion = false;
-      } else {
+      if (this.licenseInfo.expertLevelId == 4) {
         this.showRegion = true;
+      } else {
+        this.showRegion = false;
       }
       if (draftData.woreda || draftData.woreda != undefined) {
         this.licenseInfo.residenceWoredaId = draftData.woreda.id;
