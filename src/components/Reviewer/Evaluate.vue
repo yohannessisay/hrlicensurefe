@@ -675,7 +675,7 @@
                   <div class="flex justify-start">
                     <Title message="License Expiration Date" />
                   </div>
-                  <div class="flex flex-col mb-medium w-1/2 mr-12">
+                  <div class="flex flex-col mb-medium w-1/2 ml-8 mr-12">
                     <input
                       class="max-w-3xl mr-5"
                       type="date"
@@ -1259,7 +1259,7 @@ export default {
             buttons.value.forEach((button) => {
               button.name === "Approve"
                 ? (button.name = "Verify")
-                : (button.name = '-');
+                : (button.name = "-");
             });
             docs.value = res.data.data.documents;
             for (
@@ -1323,7 +1323,7 @@ export default {
             buttons.value.forEach((button) => {
               button.name === "Approve"
                 ? (button.name = "Verify")
-                : (button.name = '-');
+                : (button.name = "-");
             });
             docs.value = res.data.data.documents;
             for (
@@ -1676,7 +1676,9 @@ export default {
               }, 3000);
             }
           })
-          .catch((err) => {console.log(err)});
+          .catch((err) => {
+            console.log(err);
+          });
       }
       if (
         applicationType.value == "Verification" &&
@@ -1834,7 +1836,7 @@ export default {
           }, 3000);
         })
         .catch((err) => {
-          console.log(err)
+          console.log(err);
           canChangeName.value = false;
           showNameChangeErrorFlash.value = true;
           setTimeout(() => {
@@ -1880,9 +1882,11 @@ export default {
         }
 
         if (
-          profession.name == "Other" ||
+          previousProfession &&
           profession.professionalTypes.name == "Other"
         ) {
+          newLicense.value.otherProfessionalType = null;
+        } else if (!previousProfession && profession.name == "Other") {
           newLicense.value.otherProfessionalType = null;
         }
       }
