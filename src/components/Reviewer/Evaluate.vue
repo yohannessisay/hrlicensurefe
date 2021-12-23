@@ -483,15 +483,15 @@
                         v-for="(
                           professionName, index
                         ) in newLicense.professionalTypes"
-                        v-bind:key="professionName.professionalTypes.name"
-                        v-bind:value="professionName.professionalTypes.id"
+                        v-bind:key="professionName.professionalTypeId"
+                        v-bind:value="professionName.professionalTypeId"
                       >
                         <div class="grid grid-cols-1">
                           <li>
                             <input
                               v-on:click="
                                 checkBoxClicked(
-                                  professionName.professionalTypes,
+                                  professionName,
                                   true,
                                   index,
                                   $event
@@ -500,7 +500,6 @@
                               type="checkbox"
                               class="form-checkbox"
                               :checked="professionName.showPrefixLink"
-                              :disabled="disableCheckbox"
                             />
                             {{ professionName.professionalTypes.name }} |
                             {{
@@ -558,12 +557,17 @@
                             <select
                               style="display: block"
                               class="select"
-                              @change="addPrefix(professionName.id, $event)"
-                              v-model="professionName.professionalTypes.id"
+                              @change="
+                                addPrefix(
+                                  professionName.professionalTypeId,
+                                  $event
+                                )
+                              "
+                              :v-model="selectedOption + `${index}`"
                             >
                               <option
                                 v-for="prefix in prefixList"
-                                v-bind:key="prefix.name"
+                                v-bind:key="prefix.id"
                                 v-bind:value="prefix.name"
                               >
                                 {{ prefix.name }}
@@ -580,96 +584,90 @@
                       <!-- <div>
                         <p>----------------------------------------</p>
                       </div> -->
-                      <div>
-                        <ul
-                          v-for="(
-                            newProfessionName, index
-                          ) in professionalTypes"
-                          v-bind:key="newProfessionName.name"
-                          v-bind:value="newProfessionName.id"
-                        >
-                          <div class="grid grid-cols-1">
-                            <li>
-                              <input
-                                v-on:click="
-                                  checkBoxClicked(
-                                    newProfessionName,
-                                    false,
-                                    index,
-                                    $event
-                                  )
-                                "
-                                type="checkbox"
-                                class="form-checkbox"
-                              />
-                              {{ newProfessionName.name }} |
-                              {{ newProfessionName.amharicProfessionalType }}
-                            </li>
-                            <a
-                              class="ml-5"
-                              style="
-                                text-decoration: underline;
-                                font-style: italic;
+                      <ul
+                        v-for="(newProfessionName, index) in professionalTypes"
+                        v-bind:key="newProfessionName.id"
+                        v-bind:value="newProfessionName.id"
+                      >
+                        <div class="grid grid-cols-1">
+                          <li>
+                            <input
+                              v-on:click="
+                                checkBoxClicked(
+                                  newProfessionName,
+                                  false,
+                                  index,
+                                  $event
+                                )
                               "
-                              @click="
-                                newProfessionName.showPrefix =
-                                  !newProfessionName.showPrefix
-                              "
-                              v-show="newProfessionName.showPrefixLink"
-                              >{{
-                                newProfessionName.showPrefix
-                                  ? "Hide Prefix?"
-                                  : "Show Prefix?"
-                              }}</a
+                              type="checkbox"
+                              class="form-checkbox"
+                            />
+                            {{ newProfessionName.name }} |
+                            {{ newProfessionName.amharicProfessionalType }}
+                          </li>
+                          <a
+                            class="ml-5"
+                            style="
+                              text-decoration: underline;
+                              font-style: italic;
+                            "
+                            @click="
+                              newProfessionName.showPrefix =
+                                !newProfessionName.showPrefix
+                            "
+                            v-show="newProfessionName.showPrefixLink"
+                            >{{
+                              newProfessionName.showPrefix
+                                ? "Hide Prefix?"
+                                : "Show Prefix?"
+                            }}</a
+                          >
+                        </div>
+                        <div class="grid grid-cols-2 gap-4 mb-4 ml-8 mt-2">
+                          <div
+                            style="
+                              float: left;
+                              border-right: 1px solid lightgray;
+                            "
+                            v-if="
+                              newProfessionName.showPrefixLink &&
+                              newProfessionName.name == 'Other'
+                            "
+                          >
+                            <label style="display: block"
+                              >other profession name</label
                             >
+                            <input
+                              style="display: block"
+                              type="text"
+                              v-model="newLicense.otherProfessionalType"
+                            />
                           </div>
-                          <div class="grid grid-cols-2 gap-4 mb-4 ml-8 mt-2">
-                            <div
-                              style="
-                                float: left;
-                                border-right: 1px solid lightgray;
-                              "
-                              v-if="
-                                newProfessionName.showPrefixLink &&
-                                newProfessionName.name == 'Other'
-                              "
+                          <div
+                            style="float: left"
+                            v-show="
+                              newProfessionName.showPrefixLink &&
+                              newProfessionName.showPrefix
+                            "
+                          >
+                            <label style="display: block">Prefix:</label>
+                            <select
+                              style="display: block"
+                              @change="addPrefix(newProfessionName.id, $event)"
+                              :v-model="newSelectedOptions + `${index}`"
                             >
-                              <label style="display: block"
-                                >other profession name</label
+                              <option
+                                v-for="prefix in prefixList"
+                                v-bind:key="prefix.name"
+                                v-bind:value="prefix.name"
                               >
-                              <input
-                                style="display: block"
-                                type="text"
-                                v-model="newLicense.otherProfessionalType"
-                              />
-                            </div>
-                            <div
-                              style="float: left"
-                              v-show="
-                                newProfessionName.showPrefixLink &&
-                                newProfessionName.showPrefix
-                              "
-                            >
-                              <label style="display: block">Prefix:</label>
-                              <select
-                                style="display: block"
-                                @change="
-                                  addPrefix(newProfessionName.id, $event)
-                                "
-                                v-model="newProfessionName.id"
-                              >
-                                <option
-                                  v-for="prefix in prefixList"
-                                  v-bind:key="prefix.name"
-                                  v-bind:value="prefix.name"
-                                >
-                                  {{ prefix.name }}
-                                </option>
-                              </select>
-                            </div>
+                                {{ prefix.name }}
+                              </option>
+                            </select>
                           </div>
-                        </ul>
-                      </div>
+                        </div>
+                      </ul>
                     </div>
                   </div>
                 </div>
@@ -1087,6 +1085,7 @@ export default {
 
     const options = ref([0, 1, 2]);
     const selectedOptions = ref([0]);
+    const newSelectedOptions = ref([0]);
 
     let isPdf = ref(false);
 
@@ -1095,7 +1094,7 @@ export default {
     let expirationDateExceedTodayError = ref(false);
 
     let otherProfessionalType = ref();
-    let otherProfessionSelected = ref();
+    // let otherProfessionSelected = ref();
     let showOtherProfessionError = ref(false);
 
     // let show_prefix_list = ref(false);
@@ -1203,7 +1202,7 @@ export default {
               newLicense.value.professionalTypes[i].showPrefix = false;
               newLicense.value.professionalTypes[i].showPrefixLink = true;
               professionalTypeIdss.value.push(
-                newLicense.value.professionalTypes[i].id
+                newLicense.value.professionalTypes[i].professionalTypeId
               );
             }
             if (newLicense.value.applicationStatus.code == "REVDRA") {
@@ -1260,7 +1259,7 @@ export default {
             buttons.value.forEach((button) => {
               button.name === "Approve"
                 ? (button.name = "Verify")
-                : (button.name = button.name);
+                : (button.name = '-');
             });
             docs.value = res.data.data.documents;
             for (
@@ -1268,8 +1267,10 @@ export default {
               i < newLicense.value.professionalTypes.length;
               i++
             ) {
+              newLicense.value.professionalTypes[i].showPrefix = false;
+              newLicense.value.professionalTypes[i].showPrefixLink = true;
               professionalTypeIdss.value.push(
-                newLicense.value.professionalTypes[i].id
+                newLicense.value.professionalTypes[i].professionalTypeId
               );
             }
             if (newLicense.value.applicationStatus.code == "REVDRA") {
@@ -1322,7 +1323,7 @@ export default {
             buttons.value.forEach((button) => {
               button.name === "Approve"
                 ? (button.name = "Verify")
-                : (button.name = button.name);
+                : (button.name = '-');
             });
             docs.value = res.data.data.documents;
             for (
@@ -1382,8 +1383,10 @@ export default {
               i < newLicense.value.professionalTypes.length;
               i++
             ) {
+              newLicense.value.professionalTypes[i].showPrefix = false;
+              newLicense.value.professionalTypes[i].showPrefixLink = true;
               professionalTypeIdss.value.push(
-                newLicense.value.professionalTypes[i].id
+                newLicense.value.professionalTypes[i].professionalTypeId
               );
             }
             if (newLicense.value.applicationStatus.code == "REVDRA") {
@@ -1607,34 +1610,32 @@ export default {
           }, 4000);
           return;
         }
-        console.log('professional idss', professionalTypeIdss.value)
-        for (let i = 0; i < professionalTypeIdss.value.length; i++) {
-          if (otherProfessionSelected.value == professionalTypeIdss.value[i]) {
-            if (newLicense.value.otherProfessionalType == null) {
-              showOtherProfessionError.value = true;
-              setTimeout(() => {
-                showOtherProfessionError.value = false;
-              }, 4000);
-              return;
-            }
-          }
-        }
-        if (otherProfessionSelected.value) {
-          if (professionalTypeIdss.value.length > 0) {
-            newLicense.value.professionalTypeIds = professionalTypeIdss.value;
-            newLicense.value.professionalTypePrefixes =
-              professionalTypePrefixes.value;
-          }
+        // for (let i = 0; i < professionalTypeIdss.value.length; i++) {
+        //   if (otherProfessionSelected.value == professionalTypeIdss.value[i]) {
+        //     if (newLicense.value.otherProfessionalType == null) {
+        //       showOtherProfessionError.value = true;
+        //       setTimeout(() => {
+        //         showOtherProfessionError.value = false;
+        //       }, 4000);
+        //       return;
+        //     }
+        //   }
+        // }
+        // if (otherProfessionSelected.value) {
+        if (professionalTypeIdss.value.length > 0) {
+          newLicense.value.professionalTypeIds = professionalTypeIdss.value;
+          newLicense.value.professionalTypePrefixes =
+            professionalTypePrefixes.value;
         } else {
-          if (professionalTypeIdss.value.length > 0) {
-            showProfessionChangeError.value = true;
-            setTimeout(() => {
-              showProfessionChangeError.value = false;
-            }, 4000);
-            professionalTypeIdss.value = [];
-            professionalTypePrefixes.value = [];
-            return;
-          }
+          // if (professionalTypeIdss.value.length > 0) {
+          showProfessionChangeError.value = true;
+          setTimeout(() => {
+            showProfessionChangeError.value = false;
+          }, 4000);
+          professionalTypeIdss.value = [];
+          professionalTypePrefixes.value = [];
+          return;
+          // }
         }
       }
       if (actionValue == "DeclineEvent") {
@@ -1651,102 +1652,99 @@ export default {
       newLicense.value.acceptedFields = accepted.value;
       newLicense.value.certified = true;
       newLicense.value.certifiedDate = new Date();
-      let appId = newLicense.value.id;
       let req = {
         action: actionValue,
         data: newLicense.value,
       };
-      console.log('app id', appId);
-      console.log('req', req);
-      //   if (
-      //     applicationType.value == "New License" &&
-      //     sendDeclinedData.value == true
-      //   ) {
-      //     store
-      //       .dispatch("reviewer/editNewLicense", req)
-      //       .then((res) => {
-      //         if (res.statusText == "Created") {
-      //           showFlash.value = true;
-      //           showDeclineFlash.value = true;
-      //           setTimeout(() => {
-      //             router.push("/admin/review");
-      //           }, 3000);
-      //         } else {
-      //           showErrorFlash.value = true;
-      //           setTimeout(() => {
-      //             router.go();
-      //           }, 3000);
-      //         }
-      //       })
-      //       .catch((err) => {});
-      //   }
-      //   if (
-      //     applicationType.value == "Verification" &&
-      //     sendDeclinedData.value == true
-      //   ) {
-      //     store.dispatch("reviewer/editVerification", req).then((res) => {
-      //       if (res.statusText == "Created") {
-      //         showFlash.value = true;
-      //         showDeclineFlash.value = true;
-      //         setTimeout(() => {
-      //           router.push("/admin/review");
-      //         }, 3000);
-      //       } else {
-      //         showErrorFlash.value = true;
-      //         setTimeout(() => {
-      //           router.go();
-      //         }, 3000);
-      //       }
-      //     });
-      //   }
-      //   if (
-      //     applicationType.value == "Good Standing" &&
-      //     sendDeclinedData.value == true
-      //   ) {
-      //     store.dispatch("reviewer/editGoodStanding", req).then((res) => {
-      //       if (res.statusText == "Created") {
-      //         showFlash.value = true;
-      //         showDeclineFlash.value = true;
-      //         let redirectUrl = "/admin/review";
-      //         // if (req.action == "ApproveEvent") {
-      //         //   redirectUrl =
-      //         //     "/admin/finishedDetail/" +
-      //         //     route.params.applicationType +
-      //         //     "/" +
-      //         //     route.params.applicationId +
-      //         //     "/" +
-      //         //     applicantId.value;
-      //         // }
-      //         setTimeout(() => {
-      //           router.push("/admin/review");
-      //         }, 3000);
-      //       } else {
-      //         showErrorFlash.value = true;
-      //         setTimeout(() => {
-      //           router.go();
-      //         }, 3000);
-      //       }
-      //     });
-      //   }
-      //   if (
-      //     applicationType.value == "Renewal" &&
-      //     sendDeclinedData.value == true
-      //   ) {
-      //     store.dispatch("reviewer/editRenewal", req).then((res) => {
-      //       if (res.statusText == "Created") {
-      //         showFlash.value = true;
-      //         showDeclineFlash.value = true;
-      //         setTimeout(() => {
-      //           router.push("/admin/review");
-      //         }, 3000);
-      //       } else {
-      //         showErrorFlash.value = true;
-      //         setTimeout(() => {
-      //           router.go();
-      //         }, 3000);
-      //       }
-      //     });
-      //   }
+      if (
+        applicationType.value == "New License" &&
+        sendDeclinedData.value == true
+      ) {
+        store
+          .dispatch("reviewer/editNewLicense", req)
+          .then((res) => {
+            if (res.statusText == "Created") {
+              showFlash.value = true;
+              showDeclineFlash.value = true;
+              setTimeout(() => {
+                router.push("/admin/review");
+              }, 3000);
+            } else {
+              showErrorFlash.value = true;
+              setTimeout(() => {
+                router.go();
+              }, 3000);
+            }
+          })
+          .catch((err) => {console.log(err)});
+      }
+      if (
+        applicationType.value == "Verification" &&
+        sendDeclinedData.value == true
+      ) {
+        store.dispatch("reviewer/editVerification", req).then((res) => {
+          if (res.statusText == "Created") {
+            showFlash.value = true;
+            showDeclineFlash.value = true;
+            setTimeout(() => {
+              router.push("/admin/review");
+            }, 3000);
+          } else {
+            showErrorFlash.value = true;
+            setTimeout(() => {
+              router.go();
+            }, 3000);
+          }
+        });
+      }
+      if (
+        applicationType.value == "Good Standing" &&
+        sendDeclinedData.value == true
+      ) {
+        store.dispatch("reviewer/editGoodStanding", req).then((res) => {
+          if (res.statusText == "Created") {
+            showFlash.value = true;
+            showDeclineFlash.value = true;
+            // let redirectUrl = "/admin/review";
+            // if (req.action == "ApproveEvent") {
+            //   redirectUrl =
+            //     "/admin/finishedDetail/" +
+            //     route.params.applicationType +
+            //     "/" +
+            //     route.params.applicationId +
+            //     "/" +
+            //     applicantId.value;
+            // }
+            setTimeout(() => {
+              router.push("/admin/review");
+            }, 3000);
+          } else {
+            showErrorFlash.value = true;
+            setTimeout(() => {
+              router.go();
+            }, 3000);
+          }
+        });
+      }
+      if (
+        applicationType.value == "Renewal" &&
+        sendDeclinedData.value == true
+      ) {
+        store.dispatch("reviewer/editRenewal", req).then((res) => {
+          if (res.statusText == "Created") {
+            showFlash.value = true;
+            showDeclineFlash.value = true;
+            setTimeout(() => {
+              router.push("/admin/review");
+            }, 3000);
+          } else {
+            showErrorFlash.value = true;
+            setTimeout(() => {
+              router.go();
+            }, 3000);
+          }
+        });
+      }
     };
 
     const submitRemark = () => {
@@ -1776,11 +1774,11 @@ export default {
     };
     const changeProfession = () => {};
 
-    const getProfessionalTypes = () => {
-      store.dispatch("reviewer/getProfessionalType").then((res) => {
-        // professionalTypes.value = res.data.data;
-      });
-    };
+    // const getProfessionalTypes = () => {
+    //   store.dispatch("reviewer/getProfessionalType").then((res) => {
+    //     // professionalTypes.value = res.data.data;
+    //   });
+    // };
     const getProfessionalTypesByDepartmentId = (id) => {
       let professionSelected = ref(false);
       store
@@ -1827,7 +1825,7 @@ export default {
       const profileData = [id, newProfile];
       store
         .dispatch("profile/changeUserProfile", profileData)
-        .then((res) => {
+        .then(() => {
           showSpinner.value = false;
           canChangeName.value = false;
           showNameChangeFlash.value = true;
@@ -1836,6 +1834,7 @@ export default {
           }, 3000);
         })
         .catch((err) => {
+          console.log(err)
           canChangeName.value = false;
           showNameChangeErrorFlash.value = true;
           setTimeout(() => {
@@ -1844,45 +1843,48 @@ export default {
         });
     };
 
-    let disableCheckbox = ref(false);
     const checkBoxClicked = (profession, previousProfession, index, event) => {
-      // disableCheckbox.value = checkboxLimitReached();
-
-      console.log(disableCheckbox.value);
-      // if (disableCheckbox.value == false) {
-      if (profession.name == "Other") {
-        otherProfessionSelected.value = profession.id;
-      }
       if (event.target.checked) {
         previousProfession
           ? (newLicense.value.professionalTypes[index].showPrefixLink = true)
           : (professionalTypes.value[index].showPrefixLink = true);
-        professionalTypeIdss.value.push(profession.id);
+        previousProfession
+          ? professionalTypeIdss.value.push(profession.professionalTypes.id)
+          : professionalTypeIdss.value.push(profession.id);
       } else {
         previousProfession
           ? (newLicense.value.professionalTypes[index].showPrefixLink = false)
           : (professionalTypes.value[index].showPrefixLink = false);
-        professionalTypeIdss.value.splice(
-          professionalTypeIdss.value.indexOf(profession.id),
-          1
-        );
-        if (profession.name == "Other") {
+        previousProfession
+          ? professionalTypeIdss.value.splice(
+              professionalTypeIdss.value.indexOf(
+                profession.professionalTypes.id
+              ),
+              1
+            )
+          : professionalTypeIdss.value.splice(
+              professionalTypeIdss.value.indexOf(profession.id),
+              1
+            );
+
+        if (previousProfession) {
+          professionalTypePrefixes.value =
+            professionalTypePrefixes.value.filter((data) => {
+              return data.professionalTypeId != profession.professionalTypes.id;
+            });
+        } else {
+          professionalTypePrefixes.value =
+            professionalTypePrefixes.value.filter((data) => {
+              return data.professionalTypeId != profession.id;
+            });
+        }
+
+        if (
+          profession.name == "Other" ||
+          profession.professionalTypes.name == "Other"
+        ) {
           newLicense.value.otherProfessionalType = null;
         }
-      }
-      // }
-    };
-
-    const checkboxLimitReached = (currentEvent) => {
-      console.log("jfi", professionalTypeIdss.value.length);
-      if (currentEvent) {
-        if (professionalTypeIdss.value.length <= 3) {
-          console.log("satisfied");
-          return true;
-        }
-        return false;
-      } else {
-        return true;
       }
     };
 
@@ -1927,13 +1929,12 @@ export default {
         }
       }
     };
-    // const isProfessionSelected = (professionId) => {
-    // }
+
     onMounted(() => {
       created(route.params.applicationType, route.params.applicationId);
       fetchDocumentTypes();
       findDocumentType(documentTypes.value, docs.value[0]);
-      getProfessionalTypes();
+      // getProfessionalTypes();
     });
     return {
       isPdf,
@@ -2002,11 +2003,10 @@ export default {
       addPrefix,
       options,
       selectedOptions,
+      newSelectedOptions,
       otherProfessionalType,
-      otherProfessionSelected,
+      // otherProfessionSelected,
       showOtherProfessionError,
-      checkboxLimitReached,
-      disableCheckbox,
     };
   },
 };
