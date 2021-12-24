@@ -411,6 +411,7 @@ export default {
           .then((res) => {
             showApplicationLoading.value = false;
             certificateDetail.value = res.data.data;
+            console.log("certificate detail is ", certificateDetail.value);
             if (
               route.params.applicantId != certificateDetail.value.applicantId
             ) {
@@ -445,6 +446,132 @@ export default {
       }
     };
 
+    const handleRegionsLayout = (
+      doc,
+      code,
+      namePosition,
+      professionPossition,
+      professionListGap
+    ) => {
+      doc.setFontSize(17);
+      doc.text(
+        190,
+        namePosition,
+        `${certifiedUser.value.name} ${certifiedUser.value.fatherName} ${
+          certifiedUser.value.grandFatherName
+            ? certifiedUser.value.grandFatherName
+            : ""
+        }`
+      );
+
+      let changeWidth = ref(false);
+      let changeWidthTooSmall = ref(false);
+      let xPosition = ref(185);
+      for (
+        let i = 0;
+        i < certificateDetail.value.professionalTypes.length;
+        i++
+      ) {
+        console.log(
+          "length is ",
+          doc.getTextWidth(
+            certificateDetail.value.professionalTypes[i].professionalTypes.name
+          )
+        );
+        let getLength = doc.getTextWidth(
+          certificateDetail.value.professionalTypes[i].professionalTypes.name
+        );
+        if (getLength > 125 && getLength <= 132) {
+          if (!changeWidthTooSmall.value) {
+            changeWidth.value = true;
+          }
+        }
+        if (getLength > 132) {
+          changeWidthTooSmall.value = true;
+          changeWidth.value = false;
+        }
+      }
+      if (changeWidth.value) {
+        doc.setFontSize(10);
+        xPosition.value = 167;
+      } else if (changeWidthTooSmall.value) {
+        doc.setFontSize(10);
+        xPosition.value = 153;
+      } else {
+        doc.setFontSize(14);
+      }
+      for (
+        let i = 0;
+        i < certificateDetail.value.professionalTypes.length;
+        i++
+      ) {
+        doc.text(
+          xPosition.value,
+          professionPossition + i * professionListGap,
+          `${
+            certificateDetail.value.professionalTypes[i].professionalTypes.name
+              ? certificateDetail.value.professionalTypes[i].professionalTypes
+                  .name
+              : ""
+          }`
+        );
+      }
+
+      // doc.addFileToVFS("Amiri-Regular.ttf", AmiriRegular);
+      doc.addFileToVFS("Tera-Regular-normal.ttf", AmharicFont);
+
+      doc.addFont("Tera-Regular-normal.ttf", "Tera-Regular", "normal");
+
+      doc.setFont("Tera-Regular"); // set font
+
+      doc.setFontSize(17);
+      doc.text(
+        60,
+        namePosition,
+        `${
+          certifiedUser.value.alternativeName
+            ? certifiedUser.value.alternativeName
+            : ""
+        } ${
+          certifiedUser.value.alternativeFatherName
+            ? certifiedUser.value.alternativeFatherName
+            : ""
+        } ${
+          certifiedUser.value.alternativeGrandFatherName
+            ? certifiedUser.value.alternativeGrandFatherName
+            : ""
+        }`
+      );
+
+      if (changeWidth.value) {
+        doc.setFontSize(11);
+        xPosition.value = 40;
+      } else if (changeWidthTooSmall.value) {
+        doc.setFontSize(11);
+        xPosition.value = 28;
+      } else {
+        doc.setFontSize(14);
+        xPosition.value = 65;
+      }
+
+      for (
+        let i = 0;
+        i < certificateDetail.value.professionalTypes.length;
+        i++
+      ) {
+        doc.text(
+          xPosition.value,
+          professionPossition + i * professionListGap,
+          `${
+            certificateDetail.value.professionalTypes[i].professionalTypes.name
+              ? certificateDetail.value.professionalTypes[i].professionalTypes
+                  .amharicProfessionalType
+              : ""
+          }`
+        );
+      }
+    };
+
     const downloadPdf = () => {
       const doc = new jsPDF({
         orientation: "landscape",
@@ -463,6 +590,7 @@ export default {
           undefined,
           "FAST"
         );
+        handleRegionsLayout(doc, "FED", 100, 125, 7);
       } else if (certificateDetail.value.reviewer.region.code === "ORO") {
         doc.addImage(
           oromiaCertificateBackground,
@@ -474,6 +602,7 @@ export default {
           undefined,
           "FAST"
         );
+        handleRegionsLayout(doc, "ORO", 110, 133, 4);
       } else if (certificateDetail.value.reviewer.region.code === "AA") {
         doc.addImage(
           addisAbabaCertificateBackground,
@@ -485,6 +614,7 @@ export default {
           undefined,
           "FAST"
         );
+        handleRegionsLayout(doc, "AA", 110, 133, 4);
       }
 
       // doc.addImage(backgroundImage, "JPEG", 0, 0, 298, 213, undefined, "FAST");
@@ -493,92 +623,7 @@ export default {
         doc.addImage(userImage, "JPEG", 33, 20, 30, 30);
       }
       doc.setFontSize(25);
-      // doc.addFileToVFS("Amiri-Regular.ttf", AmiriRegular);
-      doc.addFileToVFS("Tera-Regular-normal.ttf", AmharicFont);
 
-      doc.addFont("Tera-Regular-normal.ttf", "Tera-Regular", "normal");
-
-      // doc.text(80, 25, "Federal Democratic Republic Ethiopia");
-      // doc.setFontSize(17);
-      // doc.text(110, 50, "MINSTRY OF HEALTH");
-
-      // doc.setFontSize(14);
-      // doc.text(150, 60, "HEALTH PROFFESSIONALS REGISTRATION AND");
-      // doc.text(190, 70, "LICENSING CERTIFICATE");
-
-      // doc.setFontSize(13);
-      // doc.text(
-      //   150,
-      //   90,
-      //   "Under the Federal Democratic Republic of Ethiopia the Ministry"
-      // );
-      // doc.text(
-      //   150,
-      //   100,
-      //   "of Health by virtue of Proclamation No.916/2015 Article 33(13)"
-      // );
-      // doc.text(190, 110, "is given the authority to issue");
-
-      doc.setFontSize(17);
-      doc.text(
-        190,
-        100,
-        `${certifiedUser.value.name} ${certifiedUser.value.fatherName} ${
-          certifiedUser.value.grandFatherName
-            ? certifiedUser.value.grandFatherName
-            : ""
-        }`
-      );
-      // doc.text(60, 123, `${certifiedUser.value.alternativeName ? certifiedUser.value.alternativeName : ''} ${certifiedUser.value.alternativeFatherName ? certifiedUser.value.alternativeFatherName : ''} ${certifiedUser.value.alternativeGrandFatherName ? certifiedUser.value.alternativeGrandFatherName : ''}`)
-      // doc.setFontSize(13);
-      // doc.text(
-      //   155,
-      //   140,
-      //   "Having duly satisfied the requirements of the Ministry"
-      // );
-      // doc.text(180, 147, "hereby registered and licensed as");
-      let changeWidth = ref(false);
-      let xPosition = ref(185);
-      for (
-        let i = 0;
-        i < certificateDetail.value.professionalTypes.length;
-        i++
-      ) {
-        console.log(
-          "length is ",
-          doc.getTextWidth(
-            certificateDetail.value.professionalTypes[i].professionalTypes.name
-          )
-        );
-        let getLength = doc.getTextWidth(
-          certificateDetail.value.professionalTypes[i].professionalTypes.name
-        );
-        if (getLength > 135) {
-          changeWidth.value = true;
-        }
-      }
-      if (changeWidth.value) {
-        doc.setFontSize(10);
-        xPosition.value = 153;
-      } else {
-        doc.setFontSize(14);
-      }
-      for (
-        let i = 0;
-        i < certificateDetail.value.professionalTypes.length;
-        i++
-      ) {
-        doc.text(
-          xPosition.value,
-          125 + i * 7,
-          `${
-            certificateDetail.value.professionalTypes[i].professionalTypes.name
-              ? certificateDetail.value.professionalTypes[i].professionalTypes
-                  .name
-              : ""
-          }`
-        );
-      }
       // if (certificateDetail.value.professionalTypes.length === 1) {
       //   doc.text(
       //     185,
@@ -654,80 +699,7 @@ export default {
             : "Not Specified"
         }`
       );
-      // doc.setFontSize(7);
-      // doc.text(150, 193, "Signature of the Authorized Personel");
-      // doc.text(150, 196, "Date: " + moment(new Date()).format("MMM DD, YYYY"));
-      // doc.text(200, 193, "NB:- This Certificate");
-      // doc.text(200, 196, "1. Shall be renewed every five years.");
-      // doc.text(
-      //   200,
-      //   199,
-      //   "2. Unlawful if it is found being used by another person."
-      // );
-      // doc.text(
-      //   200,
-      //   202,
-      //   "3. The holder is required to notify as soon as the certificate is lost or missed."
-      // );
 
-      // doc.text(100, 30, 'የጤና ጥበቃ ሚኒስቴር')
-      // doc.setFontSize(15)
-      // doc.text(100, 35, 'Ministry of Health')
-      doc.setFont("Tera-Regular"); // set font
-      // doc.setFontSize(25);
-      // doc.text(90, 15, "በኢትዮፕያ ፌደራላዊ ዴሞክራሲያዊ ሪፐብሊክ");
-      // doc.setFontSize(20);
-      // doc.text(115, 40, "የጤና ጥበቃ ሚኒስቴር");
-      // doc.setFontSize(17);
-      // doc.text(20, 60, "የጤና ባለሙያዎች የሙያ ምዝገባና ፈቃድ የምስከር ወረቀት");
-
-      // doc.setFontSize(13);
-      // doc.text(20, 90, "በኢትዮጵያ ፌዴራላዊ ዴሞክራሲያዊ ረፐብሊክ የጤና ጥበቃ ሚንስቴር");
-      // doc.text(20, 100, "በአዋጅ ቁጥር 916/2008 አንቀጽ 33(13)በተሰጠው ስልጣን መሰረት");
-
-      doc.setFontSize(17);
-      doc.text(
-        60,
-        100,
-        `${
-          certifiedUser.value.alternativeName
-            ? certifiedUser.value.alternativeName
-            : ""
-        } ${
-          certifiedUser.value.alternativeFatherName
-            ? certifiedUser.value.alternativeFatherName
-            : ""
-        } ${
-          certifiedUser.value.alternativeGrandFatherName
-            ? certifiedUser.value.alternativeGrandFatherName
-            : ""
-        }`
-      );
-
-      if (changeWidth.value) {
-        doc.setFontSize(11);
-        xPosition.value = 28;
-      } else {
-        doc.setFontSize(14);
-        xPosition.value = 65;
-      }
-
-      for (
-        let i = 0;
-        i < certificateDetail.value.professionalTypes.length;
-        i++
-      ) {
-        doc.text(
-          xPosition.value,
-          125 + i * 7,
-          `${
-            certificateDetail.value.professionalTypes[i].professionalTypes.name
-              ? certificateDetail.value.professionalTypes[i].professionalTypes
-                  .amharicProfessionalType
-              : ""
-          }`
-        );
-      }
       // if (certificateDetail.value.professionalTypes.length === 1) {
       //   doc.text(
       //     65,
@@ -813,25 +785,6 @@ export default {
       );
       // doc.text(10, 203, `ቀን: ${toEthiopian(new Date().toISOString(), false)}`)
       doc.setFontSize(10);
-      // doc.text(10, 193, "የኃላፊ ፊርማ");
-      // doc.text(10, 203, `ቀን: ${toEthiopian(new Date().toISOString(), false)}`)
-      // doc.text(10, 196, `ቀን ${toEthiopian(new Date().toISOString(), false)}`);
-      // doc.text(35, 193, "ማሳሰቢያ ይህ የምስክር ወረቀት");
-      // doc.text(35, 196, "1. በየአምስት አመቱ መታደስ አለበት።");
-      // doc.text(35, 199, "2. ሰምና ፎቶግራፍ ከተገለጸው ሰው በስተቀር ሌላ አካል ሊገለገልበት አይገባም።");
-      // doc.text(35, 202, "3. በማንኛውም ምክንኛት ቢጠፋ የማሳወቅ ግዴታ አላብዎ።");
-
-      // add underline here
-      // doc.setLineWidth(0.3);
-      // doc.line(20, 63, 140, 63);
-      // doc.line(150, 63, 290, 63);
-      // doc.line(190, 73, 265, 73);
-      // doc.line(50, 126, 120, 126);
-      // doc.line(180, 126, 260, 126);
-
-      // doc.line(10, 188, 100, 188);
-      // doc.line(170, 188, 265, 188);
-      // doc.line(35, 200, 45, 200);
 
       window.open(doc.output("bloburl"));
     };
