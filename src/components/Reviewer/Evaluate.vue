@@ -1170,7 +1170,6 @@ export default {
     let showDeclineFlash = ref(false);
     let sendDeclinedData = ref(true);
     let fromModalSendDeclinedData = ref(false);
-    let isProfessionalTypeChanged = ref(false);
 
     let professionalTypes = ref([]);
     let evaluateRoute = ref(
@@ -1582,26 +1581,6 @@ export default {
       }
     };
 
-    const checkProfessionChanged = (newProfessionType) => {
-      let count = 0;
-      if(newProfessionType.length !== professionalTypeIdss.length) {
-        isProfessionalTypeChanged.value = true;
-      } else {
-        for(let i = 0; i <= newProfessionType.length; i++) {
-          for(let j = 0; j <= newProfessionType.length; j++) {
-            if(newProfessionType[i].id != professionalTypeIdss.value[i]) {
-              count++;
-            }
-          }
-          if(count == newProfessionType.length) {
-            isProfessionalTypeChanged.value = true;
-            return;
-          } else {
-            count = 0;
-          }
-        }
-      }
-    }
     const action = (actionValue) => {
       if (professionalTypeIdss.value.length > 0) {
         newLicense.value.professionalTypeIds = professionalTypeIdss.value;
@@ -1618,34 +1597,52 @@ export default {
       }
 
       let loopCounter = 0;
-      newLicense.value.professionalTypePrefixes =
-        newLicense.value.professionalTypeIds.map((data) => {
-          for (
-            let index = 0;
-            index < newLicense.value.professionalTypePrefixes.length;
-            index++
+
+      for(let i = 0; i < professionalTypeIdss.value.length; i++) {
+        let professionId = professionalTypeIdss.value[i]
+        for(let j = 0; j < newLicense.value.professionalTypePrefixes.length; j++) {
+          if(newLicense.value.professionalTypePrefixes[j].professionalTypeId != 
+          professionId
           ) {
-            const element =
-              newLicense.value.professionalTypePrefixes[index]
-                .professionalTypeId;
-
-            if (data != element) {
-              loopCounter++;
-            }
+            loopCounter++;
           }
+        }
+        if(loopCounter == newLicense.value.professionalTypePrefixes.length) {
+          newLicense.value.professionalTypePrefixes.push({
+            professionalTypeId: professionId,
+            prefix: null,
+          })
+        }
+        loopCounter = 0;
+      }
+      // newLicense.value.professionalTypePrefixes =
+      //   newLicense.value.professionalTypeIds.map((data) => {
+      //     for (
+      //       let index = 0;
+      //       index < newLicense.value.professionalTypePrefixes.length;
+      //       index++
+      //     ) {
+      //       const element =
+      //         newLicense.value.professionalTypePrefixes[index]
+      //           .professionalTypeId;
 
-          if (loopCounter == newLicense.value.professionalTypeIds.length) {
-            newLicense.value.professionalTypePrefixes.push({
-              professionalTypeId: data,
-              prefix: null
-            });
-            return true;
-          }
+      //       if (data != element) {
+      //         loopCounter++;
+      //       }
+      //     }
 
-          loopCounter = 0;
+      //     if (loopCounter == newLicense.value.professionalTypeIds.length) {
+      //       newLicense.value.professionalTypePrefixes.push({
+      //         professionalTypeId: data,
+      //         prefix: null
+      //       });
+      //       return true;
+      //     }
 
-          return newLicense.value.professionalTypePrefixes;
-        })[0];
+      //     loopCounter = 0;
+
+      //     return newLicense.value.professionalTypePrefixes;
+      //   })[0];
 
       if (actionValue === "ApproveEvent") {
         if (newLicense.value.licenseExpirationDate === null) {
@@ -2019,18 +2016,18 @@ export default {
       }
     };
 
-    const checkProfessionChanged = (newProfessionType) => {
+    const checkProfessionChanged = (previousProfessionType) => {
       let count = 0;
-      if (newProfessionType.length !== professionalTypeIdss.value.length) {
+      if (previousProfessionType.length !== professionalTypeIdss.value.length) {
         return true;
       } else {
-        for (let i = 0; i <= newProfessionType.length; i++) {
-          for (let j = 0; j <= newProfessionType.length; j++) {
-            if (newProfessionType[i].id != professionalTypeIdss.value[i]) {
+        for (let i = 0; i <= previousProfessionType.length; i++) {
+          for (let j = 0; j <= previousProfessionType.length; j++) {
+            if (previousProfessionType[i].id != professionalTypeIdss.value[i]) {
               count++;
             }
           }
-          if (count == newProfessionType.length) {
+          if (count == previousProfessionType.length) {
             return true;
           } else {
             count = 0;
