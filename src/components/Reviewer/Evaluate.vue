@@ -183,6 +183,13 @@
                 </div>
                 <div class="flex justify-start">
                   <Title message="Personal Info" />
+                  <div>
+                    <button @click="allowChangeName">change name?</button>
+                    <i
+                      class="fas fa-chevron-edit float-right mt-2"
+                      @click="allowChangeName"
+                    ></i>
+                  </div>
                 </div>
                 <div class="flex flex-row">
                   <div
@@ -234,13 +241,6 @@
                           }}
                         </h5>
                       </div>
-                    </div>
-                    <div>
-                      <button @click="allowChangeName">change name?</button>
-                      <i
-                        class="fas fa-chevron-edit float-right mt-2"
-                        @click="allowChangeName"
-                      ></i>
                     </div>
                   </div>
                   <div v-if="canChangeName" class="flex flex-row">
@@ -466,142 +466,207 @@
                     </h5>
                   </div>
                 </div>
-                <div v-if="newLicense.professionalTypes.length > 0">
-                  <div class="flex justify-start">
-                    <Title message="Professional Type" />
-                  </div>
-                  <div class="flex flex-col mb-medium w-1/2 mr-12">
-                    <!-- <div v-model="professionalTypeIds"> -->
-                    <div>
-                      <p>Previous Profession type</p>
-                    </div>
-                    <div>
-                      <p>----------------------------------------</p>
-                    </div>
-                    <ul
-                      v-for="professionName in newLicense.professionalTypes"
-                      v-bind:key="professionName.professionalTypes.name"
-                      v-bind:value="professionName.professionalTypes.id"
-                    >
-                      <div class="flex flex-row">
-                        <li>
-                          <input
-                            v-on:click="
-                              checkBoxClicked(
-                                professionName.professionalTypes,
-                                true,
-                                $event
-                              )
-                            "
-                            type="checkbox"
-                            class="form-checkbox"
-                            :checked="
-                              choosedProfession(professionName.id, true)
-                            "
-                          />
-                          {{ professionName.professionalTypes.name }} |
-                          {{
-                            professionName.professionalTypes
-                              .amharicProfessionalType
-                          }}
-                        </li>
-                        <a
-                          class="ml-5"
-                          @click="
-                            showPrefix(
-                              professionName.professionalTypes.id,
-                              $event
-                            )
-                          "
-                          v-if="choosedProfession(professionName.id, true)"
-                          >prefix?</a
-                        >
+                <div class="flex justify-start">
+                  <Title message="Professional Type" />
+                </div>
+                <div class="flex flex-row">
+                  <div v-if="newLicense.professionalTypes.length > 0">
+                    <div class="flex flex-col mb-medium mr-12 ml-8">
+                      <!-- <div v-model="professionalTypeIds"> -->
+                      <div style="background: lightgray; padding: 8px">
+                        <p style="color: blue">Previous Professional Types</p>
                       </div>
-                      <div
-                        class="ml-12"
-                        v-if="
-                          show_prefix_list(professionName.professionalTypes.id)
-                        "
-                        :v-model="prefix"
-                      >
-                        <select
-                          class="select ml-3"
-                          @change="addPrefix(professionName.id, prefix, $event)"
-                        >
-                          <option
-                            v-for="prefix in prefixList"
-                            v-bind:key="prefix.name"
-                            v-bind:value="prefix.name"
-                          >
-                            {{ prefix.name }}
-                          </option>
-                        </select>
-                      </div>
-                    </ul>
-                    <div>
-                      <p>----------------------------------------</p>
-                    </div>
-                    <div>
+                      <!-- <div>
+                        <p>----------------------------------------</p>
+                      </div> -->
                       <ul
-                        v-for="professionName in professionalTypes"
-                        v-bind:key="professionName.name"
-                        v-bind:value="professionName.id"
+                        v-for="(
+                          professionName, index
+                        ) in newLicense.professionalTypes"
+                        v-bind:key="professionName.professionalTypeId"
+                        v-bind:value="professionName.professionalTypeId"
                       >
-                        <div class="flex flex-row">
+                        <div class="grid grid-cols-1">
                           <li>
                             <input
                               v-on:click="
-                                checkBoxClicked(professionName, false, $event)
+                                checkBoxClicked(
+                                  professionName,
+                                  true,
+                                  index,
+                                  $event
+                                )
                               "
                               type="checkbox"
                               class="form-checkbox"
-                              :checked="
-                                choosedProfession(professionName.id, false)
-                              "
+                              name="ckb"
+                              :checked="professionName.showPrefixLink"
                             />
-                            {{ professionName.name }} |
-                            {{ professionName.amharicProfessionalType }}
+                            {{ professionName.professionalTypes.name }} |
+                            {{
+                              professionName.professionalTypes
+                                .amharicProfessionalType
+                            }}
                           </li>
                           <a
                             class="ml-5"
-                            @click="showPrefix(professionName.id, $event)"
-                            v-if="choosedProfession(professionName.id, false)"
-                            >prefix?</a
+                            style="
+                              text-decoration: underline;
+                              font-style: italic;
+                            "
+                            @click="
+                              professionName.showPrefix =
+                                !professionName.showPrefix
+                            "
+                            v-show="professionName.showPrefixLink"
+                            >{{
+                              professionName.showPrefix
+                                ? "Hide Prefix?"
+                                : "Show Prefix?"
+                            }}</a
                           >
                         </div>
-                        <div
-                          class="flex flex-row"
-                          v-if="
-                            show_prefix_list(professionName.id) &&
-                              choosedProfession(professionName.id, false)
-                          "
-                        >
-                          <div class="flex flex-column">
-                            <div class="ml-12" :v-model="prefix">
-                              <select
-                                class="select ml-3"
-                                @change="
-                                  addPrefix(professionName.id, prefix, $event)
-                                "
+                        <div class="grid grid-cols-2 gap-4 mb-4 ml-8 mt-2">
+                          <!-- <div class="flex flex-row ml-16 mr-8 mt-3 mb-3">
+                            <div class="flex flex-col"> -->
+                          <div
+                            style="
+                              float: left;
+                              border-right: 1px solid lightgray;
+                            "
+                            v-if="
+                              professionName.professionalTypes.name == 'Other'
+                            "
+                          >
+                            <label style="display: block"
+                              >Other professional Type Name:</label
+                            >
+                            <input
+                              style="display: block"
+                              type="text"
+                              v-model="newLicense.otherProfessionalType"
+                            />
+                          </div>
+                          <div
+                            style="float: left"
+                            v-show="
+                              professionName.showPrefixLink &&
+                              professionName.showPrefix
+                            "
+                          >
+                            <label style="display: block">Prefix:</label>
+                            <select
+                              style="display: block"
+                              class="select"
+                              @change="
+                                addPrefix(
+                                  professionName.professionalTypeId,
+                                  $event
+                                )
+                              "
+                              :v-model="selectedOption + `${index}`"
+                            >
+                              <option
+                                v-for="prefix in prefixList"
+                                v-bind:key="prefix.id"
+                                v-bind:value="prefix.name"
                               >
-                                <option
-                                  v-for="prefix in prefixList"
-                                  v-bind:key="prefix.name"
-                                  v-bind:value="prefix.name"
-                                >
-                                  {{ prefix.name }}
-                                </option>
-                              </select>
-                            </div>
-                            <br />
-                            <div v-if="professionName.name == 'Other'">
-                              <label class="ml-8">other profession name</label>
-                              <input
-                                class="max-w-3xl ml-8"
-                                type="text"
-                                v-model="newLicense.otherProfessionalType"
-                              />
-                            </div>
+                                {{ prefix.name }}
+                              </option>
+                            </select>
+                          </div>
+                          <!-- </div>
+                          </div> -->
+                        </div>
+                      </ul>
+                      <div style="background: lightgray; padding: 8px">
+                        <p style="color: blue">New Professional Types</p>
+                      </div>
+                      <!-- <div>
+                        <p>----------------------------------------</p>
+                      </div> -->
+                      <ul
+                        v-for="(newProfessionName, index) in professionalTypes"
+                        v-bind:key="newProfessionName.id"
+                        v-bind:value="newProfessionName.id"
+                      >
+                        <div class="grid grid-cols-1">
+                          <li>
+                            <input
+                              v-on:click="
+                                checkBoxClicked(
+                                  newProfessionName,
+                                  false,
+                                  index,
+                                  $event
+                                )
+                              "
+                              type="checkbox"
+                              class="form-checkbox"
+                              name="nckb"
+                            />
+                            {{ newProfessionName.name }} |
+                            {{ newProfessionName.amharicProfessionalType }}
+                          </li>
+                          <a
+                            class="ml-5"
+                            style="
+                              text-decoration: underline;
+                              font-style: italic;
+                            "
+                            @click="
+                              newProfessionName.showPrefix =
+                                !newProfessionName.showPrefix
+                            "
+                            v-show="newProfessionName.showPrefixLink"
+                            >{{
+                              newProfessionName.showPrefix
+                                ? "Hide Prefix?"
+                                : "Show Prefix?"
+                            }}</a
+                          >
+                        </div>
+                        <div class="grid grid-cols-2 gap-4 mb-4 ml-8 mt-2">
+                          <div
+                            style="
+                              float: left;
+                              border-right: 1px solid lightgray;
+                            "
+                            v-if="
+                              newProfessionName.showPrefixLink &&
+                              newProfessionName.name == 'Other'
+                            "
+                          >
+                            <label style="display: block"
+                              >other profession name</label
+                            >
+                            <input
+                              style="display: block"
+                              type="text"
+                              v-model="newLicense.otherProfessionalType"
+                            />
+                          </div>
+                          <div
+                            style="float: left"
+                            v-show="
+                              newProfessionName.showPrefixLink &&
+                              newProfessionName.showPrefix
+                            "
+                          >
+                            <label style="display: block">Prefix:</label>
+                            <select
+                              style="display: block"
+                              @change="addPrefix(newProfessionName.id, $event)"
+                              :v-model="newSelectedOptions + `${index}`"
+                            >
+                              <option
+                                v-for="prefix in prefixList"
+                                v-bind:key="prefix.name"
+                                v-bind:value="prefix.name"
+                              >
+                                {{ prefix.name }}
+                              </option>
+                            </select>
                           </div>
                         </div>
                       </ul>
@@ -612,7 +677,7 @@
                   <div class="flex justify-start">
                     <Title message="License Expiration Date" />
                   </div>
-                  <div class="flex flex-col mb-medium w-1/2 mr-12">
+                  <div class="flex flex-col mb-medium w-1/2 ml-8 mr-12">
                     <input
                       class="max-w-3xl mr-5"
                       type="date"
@@ -845,9 +910,6 @@
                           >
                             {{ modalDocumentTypeName }}
                           </label>
-                          <!-- <h5 class="ml-8 text-black-100 text-3xl">
-                            Addis Ababa
-                          </h5> -->
                           <div
                             class="
                               flex
@@ -1022,6 +1084,7 @@ export default {
 
     const options = ref([0, 1, 2]);
     const selectedOptions = ref([0]);
+    const newSelectedOptions = ref([0]);
 
     let isPdf = ref(false);
 
@@ -1031,10 +1094,7 @@ export default {
     let isProfessionalTypeChanged = ref(false);
 
     let otherProfessionalType = ref();
-    let otherProfessionSelected = ref();
     let showOtherProfessionError = ref(false);
-
-    // let show_prefix_list = ref(false);
 
     let professionalTypeIds = ref([]);
     let professionalTypeIdss = ref([]);
@@ -1110,6 +1170,7 @@ export default {
     let showDeclineFlash = ref(false);
     let sendDeclinedData = ref(true);
     let fromModalSendDeclinedData = ref(false);
+    let isProfessionalTypeChanged = ref(false);
 
     let professionalTypes = ref([]);
     let evaluateRoute = ref(
@@ -1136,8 +1197,10 @@ export default {
               i < newLicense.value.professionalTypes.length;
               i++
             ) {
+              newLicense.value.professionalTypes[i].showPrefix = false;
+              newLicense.value.professionalTypes[i].showPrefixLink = true;
               professionalTypeIdss.value.push(
-                newLicense.value.professionalTypes[i].id
+                newLicense.value.professionalTypes[i].professionalTypeId
               );
             }
             if (newLicense.value.applicationStatus.code == "REVDRA") {
@@ -1194,7 +1257,7 @@ export default {
             buttons.value.forEach((button) => {
               button.name === "Approve"
                 ? (button.name = "Verify")
-                : (button.name = button.name);
+                : (button.name = "-");
             });
             docs.value = res.data.data.documents;
             for (
@@ -1202,8 +1265,10 @@ export default {
               i < newLicense.value.professionalTypes.length;
               i++
             ) {
+              newLicense.value.professionalTypes[i].showPrefix = false;
+              newLicense.value.professionalTypes[i].showPrefixLink = true;
               professionalTypeIdss.value.push(
-                newLicense.value.professionalTypes[i].id
+                newLicense.value.professionalTypes[i].professionalTypeId
               );
             }
             if (newLicense.value.applicationStatus.code == "REVDRA") {
@@ -1256,7 +1321,7 @@ export default {
             buttons.value.forEach((button) => {
               button.name === "Approve"
                 ? (button.name = "Verify")
-                : (button.name = button.name);
+                : (button.name = "-");
             });
             docs.value = res.data.data.documents;
             for (
@@ -1316,8 +1381,10 @@ export default {
               i < newLicense.value.professionalTypes.length;
               i++
             ) {
+              newLicense.value.professionalTypes[i].showPrefix = false;
+              newLicense.value.professionalTypes[i].showPrefixLink = true;
               professionalTypeIdss.value.push(
-                newLicense.value.professionalTypes[i].id
+                newLicense.value.professionalTypes[i].professionalTypeId
               );
             }
             if (newLicense.value.applicationStatus.code == "REVDRA") {
@@ -1463,10 +1530,6 @@ export default {
           rejectedObj.value.splice(rejectedObj.value.indexOf(doc), 1);
         }
       }
-      // accepted.value.push(doc.documentTypeCode);
-      // if (index.value == docs.value.length - 1) {
-      //   showButtons.value = true;
-      // }
     };
 
     const reject = (doc) => {
@@ -1517,11 +1580,6 @@ export default {
           );
         }
       }
-      // nextClickable.value = true;
-      // rejected.value.push(doc.documentTypeCode);
-      // if (index.value == docs.value.length - 1) {
-      //   showButtons.value = true;
-      // }
     };
 
     const checkProfessionChanged = (newProfessionType) => {
@@ -1545,6 +1603,50 @@ export default {
       }
     }
     const action = (actionValue) => {
+      if (professionalTypeIdss.value.length > 0) {
+        newLicense.value.professionalTypeIds = professionalTypeIdss.value;
+        newLicense.value.professionalTypePrefixes =
+          professionalTypePrefixes.value;
+      } else {
+        showProfessionChangeError.value = true;
+        setTimeout(() => {
+          showProfessionChangeError.value = false;
+        }, 4000);
+        professionalTypeIdss.value = [];
+        professionalTypePrefixes.value = [];
+        return;
+      }
+
+      let loopCounter = 0;
+      newLicense.value.professionalTypePrefixes =
+        newLicense.value.professionalTypeIds.map((data) => {
+          for (
+            let index = 0;
+            index < newLicense.value.professionalTypePrefixes.length;
+            index++
+          ) {
+            const element =
+              newLicense.value.professionalTypePrefixes[index]
+                .professionalTypeId;
+
+            if (data != element) {
+              loopCounter++;
+            }
+          }
+
+          if (loopCounter == newLicense.value.professionalTypeIds.length) {
+            newLicense.value.professionalTypePrefixes.push({
+              professionalTypeId: data,
+              prefix: null
+            });
+            return true;
+          }
+
+          loopCounter = 0;
+
+          return newLicense.value.professionalTypePrefixes;
+        })[0];
+
       if (actionValue === "ApproveEvent") {
         if (newLicense.value.licenseExpirationDate === null) {
           showLicenseDateRequirementError.value = true;
@@ -1561,61 +1663,46 @@ export default {
           }, 4000);
           return;
         }
-        for (let i = 0; i < professionalTypeIdss.value.length; i++) {
-          if (otherProfessionSelected.value == professionalTypeIdss.value[i]) {
-            if (newLicense.value.otherProfessionalType == null) {
-              showOtherProfessionError.value = true;
-              setTimeout(() => {
-                showOtherProfessionError.value = false;
-              }, 4000);
-              return;
-            }
-          }
-        }
-        if (otherProfessionSelected.value) {
-          if (professionalTypeIdss.value.length > 0) {
-            newLicense.value.professionalTypeIds = professionalTypeIdss.value;
-            newLicense.value.professionalTypePrefixes =
-              professionalTypePrefixes.value;
-          }
+      }
+
+      if (actionValue == "DeclineEvent") {
+        let checkProfessionResult = false;
+        newLicense.value.isProfessionChanged == false
+          ? (checkProfessionResult = checkProfessionChanged(
+              professionalTypes.value
+            ))
+          : (checkProfessionResult = true);
+
+        if (checkProfessionResult) {
+          showProfessionChangeError.value = true;
+          setTimeout(() => {
+            showProfessionChangeError.value = false;
+          }, 4000);
+          professionalTypeIdss.value = [];
+          professionalTypePrefixes.value = [];
+          return;
         } else {
-          if (professionalTypeIdss.value.length > 0) {
-            showProfessionChangeError.value = true;
-            setTimeout(() => {
-              showProfessionChangeError.value = false;
-            }, 4000);
-            professionalTypeIdss.value = [];
-            professionalTypePrefixes.value = [];
-            return;
+          showRemark.value = true;
+          sendDeclinedData.value = false;
+          if (fromModalSendDeclinedData.value == true) {
+            sendDeclinedData.value = true;
           }
         }
       }
-      if(actionValue == "ReviewerDraftEvent") {
-        if (professionalTypeIdss.value.length > 0) {
+
+      if (actionValue == "ReviewerDraftEvent") {
+        let checkProfessionResult = false;
+        newLicense.value.isProfessionChanged == false
+          ? (checkProfessionResult = checkProfessionChanged(
+              professionalTypes.value
+            ))
+          : (checkProfessionResult = true);
+
+        if (checkProfessionResult) {
           newLicense.value.isProfessionChanged = true;
         }
       }
-      if (actionValue == "DeclineEvent") {
-        
-        if (!newLicense.value.isProfessionChanged) {
-            if (professionalTypeIdss.value.length > 0) {
-              showProfessionChangeError.value = true;
-              setTimeout(() => {
-                showProfessionChangeError.value = false;
-              }, 4000);
-              professionalTypeIdss.value = [];
-              professionalTypePrefixes.value = [];
-              return;
-            }
-          } else {
-            showRemark.value = true;
-          sendDeclinedData.value = false;
-          if (fromModalSendDeclinedData.value) {
-          sendDeclinedData.value = true;
-        }
-          }
-        
-      }
+
       if (prefix.value !== undefined) {
         newLicense.value.prefix = prefix.value;
       }
@@ -1628,14 +1715,10 @@ export default {
       newLicense.value.acceptedFields = accepted.value;
       newLicense.value.certified = true;
       newLicense.value.certifiedDate = new Date();
-
-      let appId = newLicense.value.id;
       let req = {
         action: actionValue,
         data: newLicense.value,
       };
-      console.log("req", req)
-      return;
       if (
         applicationType.value == "New License" &&
         sendDeclinedData.value == true
@@ -1656,7 +1739,9 @@ export default {
               }, 3000);
             }
           })
-          .catch((err) => {});
+          .catch((err) => {
+            console.log(err);
+          });
       }
       if (
         applicationType.value == "Verification" &&
@@ -1685,7 +1770,7 @@ export default {
           if (res.statusText == "Created") {
             showFlash.value = true;
             showDeclineFlash.value = true;
-            let redirectUrl = "/admin/review";
+            // let redirectUrl = "/admin/review";
             // if (req.action == "ApproveEvent") {
             //   redirectUrl =
             //     "/admin/finishedDetail/" +
@@ -1754,30 +1839,31 @@ export default {
     };
     const changeProfession = () => {};
 
-    const getProfessionalTypes = () => {
-      store.dispatch("reviewer/getProfessionalType").then((res) => {
-        // professionalTypes.value = res.data.data;
-      });
-    };
     const getProfessionalTypesByDepartmentId = (id) => {
       let professionSelected = ref(false);
       store
         .dispatch("reviewer/getProfessionalTypeByDepartmentId", id)
         .then((res) => {
-          res.data.data.filter(function(e) {
-            for (let i in newLicense.value.professionalTypes) {
-              if (
-                e.code ===
-                newLicense.value.professionalTypes[i].professionalTypes.code
-              ) {
-                professionSelected.value = true;
+          res.data.data
+            .filter(function (e) {
+              for (let i in newLicense.value.professionalTypes) {
+                if (
+                  e.code ===
+                  newLicense.value.professionalTypes[i].professionalTypes.code
+                ) {
+                  professionSelected.value = true;
+                }
               }
-            }
-            if (!professionSelected.value) {
-              professionalTypes.value.push(e);
-            }
-            professionSelected.value = false;
-          });
+              if (!professionSelected.value) {
+                professionalTypes.value.push(e);
+              }
+              professionSelected.value = false;
+            })
+            .map((mapData) => {
+              mapData.showPrefix = false;
+              mapData.showPrefixLink = false;
+              return mapData;
+            });
         });
     };
     const allowChangeName = () => {
@@ -1799,7 +1885,7 @@ export default {
       const profileData = [id, newProfile];
       store
         .dispatch("profile/changeUserProfile", profileData)
-        .then((res) => {
+        .then(() => {
           showSpinner.value = false;
           canChangeName.value = false;
           showNameChangeFlash.value = true;
@@ -1808,6 +1894,7 @@ export default {
           }, 3000);
         })
         .catch((err) => {
+          console.log(err);
           canChangeName.value = false;
           showNameChangeErrorFlash.value = true;
           setTimeout(() => {
@@ -1816,60 +1903,82 @@ export default {
         });
     };
 
-    const checkBoxClicked = (profession, previousProfession, event) => {
-      choosedProfession(profession.id, previousProfession);
-      if (profession.name == "Other") {
-        otherProfessionSelected.value = profession.id;
+    const checkResult = ref(false);
+    const checkBoxClicked = (profession, previousProfession, index, event) => {
+      checkResult.value = chkcontrol(index, previousProfession, event);
+      if (checkResult.value) {
+        if (event.target.checked) {
+          previousProfession
+            ? (newLicense.value.professionalTypes[index].showPrefixLink = true)
+            : (professionalTypes.value[index].showPrefixLink = true);
+          previousProfession
+            ? professionalTypeIdss.value.push(profession.professionalTypes.id)
+            : professionalTypeIdss.value.push(profession.id);
+        } else {
+          previousProfession
+            ? (newLicense.value.professionalTypes[index].showPrefixLink = false)
+            : (professionalTypes.value[index].showPrefixLink = false);
+          previousProfession
+            ? professionalTypeIdss.value.splice(
+                professionalTypeIdss.value.indexOf(
+                  profession.professionalTypes.id
+                ),
+                1
+              )
+            : professionalTypeIdss.value.splice(
+                professionalTypeIdss.value.indexOf(profession.id),
+                1
+              );
+
+          if (previousProfession) {
+            professionalTypePrefixes.value =
+              professionalTypePrefixes.value.filter((data) => {
+                return (
+                  data.professionalTypeId != profession.professionalTypes.id
+                );
+              });
+          } else {
+            professionalTypePrefixes.value =
+              professionalTypePrefixes.value.filter((data) => {
+                return data.professionalTypeId != profession.id;
+              });
+          }
+
+          if (
+            previousProfession &&
+            profession.professionalTypes.name == "Other"
+          ) {
+            newLicense.value.otherProfessionalType = null;
+          } else if (!previousProfession && profession.name == "Other") {
+            newLicense.value.otherProfessionalType = null;
+          }
+        }
       }
+    };
+
+    const chkcontrol = (j, previousProfession, event) => {
       if (event.target.checked) {
-        professionalTypeIdss.value.push(profession.id);
-      } else {
-        professionalTypeIdss.value.splice(
-          professionalTypeIdss.value.indexOf(profession.id),
-          1
-        );
-        if (profession.name == "Other") {
-          newLicense.value.otherProfessionalType = null;
-        }
-      }
-    };
-
-    const choosedProfession = (id, previousProfession) => {
-      if (previousProfession) {
-        for (let i = 0; i < professionalTypeIdss.value.length; i++) {
-          if (id === professionalTypeIdss.value[i]) {
-            return true;
+        if (professionalTypeIdss.value.length == 4) {
+          alert(
+            "You can only select 4 professional types. Please Select only four!"
+          );
+          if (previousProfession) {
+            document.getElementsByName("ckb")[j].checked = false;
+            return false;
+          } else {
+            document.getElementsByName("nckb")[j].checked = false;
+            return false;
           }
         }
-      } else {
-        for (let i = 0; i < professionalTypeIdss.value.length; i++) {
-          if (id === professionalTypeIdss.value[i]) {
-            return true;
-          }
-        }
-      }
-    };
 
-    let professionIdForPrefix = ref();
-    const showPrefix = (id, event) => {
-      console.log("prefix clicked", id);
-      let countPrefixClicked = ref(0);
-      if (countPrefixClicked.value % 2 == 0) {
-        professionIdForPrefix.value = id;
-      } else {
-        professionIdForPrefix.value = null;
-      }
-      countPrefixClicked.value++;
-    };
-
-    const show_prefix_list = (id) => {
-      if (id === professionIdForPrefix.value) {
         return true;
       }
+
+      return true;
     };
 
     let countProLength = ref(0);
-    const addPrefix = (professionId, prefixName, event) => {
+    const addPrefix = (professionId, event) => {
       if (professionalTypePrefixes.value.length === 0) {
         professionalTypePrefixes.value.push({
           professionalTypeId: professionId,
@@ -1909,13 +2018,32 @@ export default {
         }
       }
     };
-    // const isProfessionSelected = (professionId) => {
-    // }
+
+    const checkProfessionChanged = (newProfessionType) => {
+      let count = 0;
+      if (newProfessionType.length !== professionalTypeIdss.value.length) {
+        return true;
+      } else {
+        for (let i = 0; i <= newProfessionType.length; i++) {
+          for (let j = 0; j <= newProfessionType.length; j++) {
+            if (newProfessionType[i].id != professionalTypeIdss.value[i]) {
+              count++;
+            }
+          }
+          if (count == newProfessionType.length) {
+            return true;
+          } else {
+            count = 0;
+          }
+        }
+      }
+      return false;
+    };
+
     onMounted(() => {
       created(route.params.applicationType, route.params.applicationId);
       fetchDocumentTypes();
       findDocumentType(documentTypes.value, docs.value[0]);
-      getProfessionalTypes();
     });
     return {
       isPdf,
@@ -1981,24 +2109,21 @@ export default {
       prefix,
       professionalTypeIdss,
       checkBoxClicked,
-      choosedProfession,
-      show_prefix_list,
-      showPrefix,
       addPrefix,
       options,
       selectedOptions,
+      newSelectedOptions,
       otherProfessionalType,
-      otherProfessionSelected,
       showOtherProfessionError,
+      chkcontrol,
+      checkResult,
+      isProfessionalTypeChanged,
+      checkProfessionChanged,
     };
   },
 };
 </script>
 <style>
-/* .pdfSize {
-  width: 400px;
-  height: 400px;
-} */
 .md-danger {
   background-image: linear-gradient(to right, #d63232, #e63636) !important;
   color: white;

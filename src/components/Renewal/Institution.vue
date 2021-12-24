@@ -650,8 +650,9 @@ export default {
             if (res.data.status == "Success") {
               this.showFlash = true;
               this.showLoading = false;
-              setTimeout(() => {}, 1500);
-              this.$router.push({ path: "/menu" });
+              setTimeout(() => {
+                this.$router.push({ path: "/menu" });
+              }, 1500);
             } else {
               this.showErrorFlash = true;
             }
@@ -1025,10 +1026,10 @@ export default {
         });
       }
       this.licenseInfo.expertLevelId = draftData.expertLevelId;
-      if (this.licenseInfo.expertLevelId == 3) {
-        this.showRegion = false;
-      } else {
+      if (this.licenseInfo.expertLevelId == 4) {
         this.showRegion = true;
+      } else {
+        this.showRegion = false;
       }
       if (draftData.woreda || draftData.woreda != undefined) {
         this.licenseInfo.residenceWoredaId = draftData.woreda.id;

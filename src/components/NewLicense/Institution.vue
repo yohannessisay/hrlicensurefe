@@ -194,6 +194,7 @@
               >
                 <input
                   v-on:click="checkOtherProfession(types, $event)"
+                  :id="`types.id`"
                   type="checkbox"
                   class="bg-gray-50 mr-4 border border-gray-300 focus:ring-3 focus:ring-blue-300 h-4 w-4 rounded dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
                   required
@@ -702,8 +703,9 @@ export default {
             if (res.data.status == "Success") {
               this.showFlash = true;
               this.showLoading = false;
-              setTimeout(() => {}, 1500);
-              this.$router.push({ path: "/menu" });
+              setTimeout(() => {
+                this.$router.push({ path: "/menu" });
+              }, 1500);
             } else {
               this.showErrorFlash = true;
             }
@@ -1020,6 +1022,11 @@ export default {
       this.licenseInfo.expertLevelId = draftData.expertLevelId;
       this.licenseInfo.educationalLevelId = draftData.educationalLevelId;
       this.setEducationLevel(this.licenseInfo.educationalLevelId);
+      for (var i = 0; i < draftData.professionalTypes.length; i++) {
+        console.log(draftData.professionalTypes[i]);
+        var id = draftData.professionalTypes[i].professionalTypeId;
+        document.getElementById(id).checked = true;
+      }
       if (this.licenseInfo.applicantTypeId == 1) {
         this.displayPayrollDoc = true;
         this.$store.dispatch("newlicense/getExpertLevel").then((res) => {
@@ -1040,10 +1047,10 @@ export default {
         this.licenseInfo.nativeLanguageId = draftData.nativeLanguageId;
       }
       this.licenseInfo.expertLevelId = draftData.expertLevelId;
-      if (this.licenseInfo.expertLevelId == 3) {
-        this.showRegion = false;
-      } else {
+      if (this.licenseInfo.expertLevelId == 4) {
         this.showRegion = true;
+      } else {
+        this.showRegion = false;
       }
       if (draftData.woreda || draftData.woreda != undefined) {
         this.licenseInfo.residenceWoredaId = draftData.woreda.id;

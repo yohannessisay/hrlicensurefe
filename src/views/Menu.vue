@@ -74,12 +74,21 @@ export default {
     DeclinedPayment,
     PendingPayment,
   },
-  created() {},
+  created() {
+    this.$store.dispatch("newlicense/storeAcceptedFields", []);
+    this.$store.dispatch("newlicense/storeDeclinedFields", []);
+
+    this.$store.dispatch("renewal/storeAcceptedFields", []);
+    this.$store.dispatch("renewal/storeDeclinedFields", []);
+
+    this.$store.dispatch("goodstanding/storeAcceptedFields", []);
+    this.$store.dispatch("goodstanding/storeDeclinedFields", []);
+  },
   data: () => ({
     display: 0,
   }),
   methods: {
-    displaySet: function (display) {
+    displaySet: function(display) {
       this.display = display;
     },
   },
