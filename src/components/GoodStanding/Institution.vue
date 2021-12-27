@@ -102,6 +102,7 @@
                   type="checkbox"
                   class="bg-gray-50 mr-4 border border-gray-300 focus:ring-3 focus:ring-blue-300 h-4 w-4 rounded dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
                   required
+                  :checked="types.checked"
                 />
                 <label
                   for="remember"
@@ -509,6 +510,9 @@ export default {
     showLoading: false,
     showRegion: false,
 
+     professionalTypeRepeat: false,
+    repeatedProfArray: [],
+
     professionalTypes: [],
     showProfessionalTypes: false,
     professionalTypeLimit: false,
@@ -569,6 +573,7 @@ export default {
         }
       } else {
         this.professionalTypeLimit = false;
+        this.repeatedProfArray = [];
         if (profession.name == "Other") {
           this.showOtherProfession = !this.showOtherProfession;
         }
@@ -804,14 +809,41 @@ export default {
           this.woredaArray = woredasResult.data;
         });
     },
-    fetchProfessionalType(id) {
+    async fetchProfessionalType(id) {
       this.professionalTypes = [];
+      this.repeatedProfArray = "";
+      this.licenseInfo.professionalTypeIds = [];
       this.showProfessionalTypes = true;
-      this.$store
+      await this.$store
         .dispatch("goodstanding/getProfessionalTypes", id)
         .then((res) => {
           this.professionalTypes = res.data.data;
         });
+      if (
+        this.getLicense ||
+        this.getLicense != undefined ||
+        this.getLicense != null
+      ) {
+        let draftData = this.getLicense;
+        if (
+          draftData.otherProfessionalType != null ||
+          draftData.otherProfessionalType != ""
+        ) {
+          this.showOtherProfession = true;
+          this.licenseInfo.otherProfessionalType =
+            draftData.otherProfessionalType;
+        }
+      } else {
+        let draftData = this.getDraft;
+        if (
+          draftData.otherProfessionalType != null ||
+          draftData.otherProfessionalType != ""
+        ) {
+          this.showOtherProfession = true;
+          this.licenseInfo.otherProfessionalType =
+            draftData.otherProfessionalType;
+        }
+      }
     },
     validateForm(formData) {
       const errors = {};
@@ -843,7 +875,7 @@ export default {
 
       return true;
     },
-    fetchDraft() {
+    async fetchDraft() {
       let draftData = this.getDraft;
       this.licenseInfo.applicantId = draftData.applicantId;
       this.licenseInfo.applicantTitle = draftData.applicantTitle;
@@ -855,7 +887,25 @@ export default {
         draftData.licenseRegistrationNumber;
       this.licenseInfo.applicantPositionId = draftData.applicantPositionId;
       this.licenseInfo.professionalTypeIds = draftData.professionalTypeIds;
+       this.licenseInfo.education.departmentId =
+        draftData.education.departmentId;
       this.licenseInfo.expertLevelId = draftData.expertLevelId;
+      if (this.licenseInfo.education.departmentId != "") {
+        this.showProfessionalTypes = true;
+        await this.fetchProfessionalType(
+          this.licenseInfo.education.departmentId
+        );
+        this.professionalTypes.map((profData) => {
+          for (var j = 0; j < draftData.professionalTypes.length; j++) {
+            if (
+              profData.id == draftData.professionalTypes[j].professionalTypeId
+            ) {
+              profData.checked = true;
+            }
+          }
+          return profData;
+        });
+      }
       if (this.licenseInfo.applicantTypeId == 1) {
         this.$store.dispatch("goodstanding/getExpertLevel").then((res) => {
           this.expertLevels = res.data.data.filter(function(e) {

@@ -196,6 +196,7 @@
                   type="checkbox"
                   class="bg-gray-50 mr-4 border border-gray-300 focus:ring-3 focus:ring-blue-300 h-4 w-4 rounded dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
                   required
+                  :checked="types.checked"
                 />
                 <label
                   for="remember"
@@ -929,14 +930,16 @@ export default {
         this.professionalTypes = res.data.data;
       });
     },
-    fetchProfessionalType(id) {
+    async fetchProfessionalType(id) {
       this.professionalTypes = [];
       this.repeatedProfArray = "";
       this.licenseInfo.professionalTypeIds = [];
       this.showProfessionalTypes = true;
-      this.$store.dispatch("renewal/getProfessionalTypes", id).then((res) => {
-        this.professionalTypes = res.data.data;
-      });
+      await this.$store
+        .dispatch("renewal/getProfessionalTypes", id)
+        .then((res) => {
+          this.professionalTypes = res.data.data;
+        });
       if (
         this.getLicense ||
         this.getLicense != undefined ||
@@ -988,7 +991,7 @@ export default {
 
       return true;
     },
-    fetchDraft() {
+    async fetchDraft() {
       let draftData = this.getDraft;
       this.licenseInfo.applicantId = draftData.applicantId;
       this.licenseInfo.applicantTypeId = draftData.applicantTypeId;
@@ -1001,7 +1004,19 @@ export default {
         draftData.education.departmentId;
       if (this.licenseInfo.education.departmentId != "") {
         this.showProfessionalTypes = true;
-        this.fetchProfessionalType(this.licenseInfo.education.departmentId);
+        await this.fetchProfessionalType(
+          this.licenseInfo.education.departmentId
+        );
+        this.professionalTypes.map((profData) => {
+          for (var j = 0; j < draftData.professionalTypes.length; j++) {
+            if (
+              profData.id == draftData.professionalTypes[j].professionalTypeId
+            ) {
+              profData.checked = true;
+            }
+          }
+          return profData;
+        });
       }
       this.licenseInfo.education.institutionId =
         draftData.education.institutionId;

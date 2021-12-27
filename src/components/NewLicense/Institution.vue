@@ -194,10 +194,10 @@
               >
                 <input
                   v-on:click="checkOtherProfession(types, $event)"
-                  :id="`types.id`"
                   type="checkbox"
                   class="bg-gray-50 mr-4 border border-gray-300 focus:ring-3 focus:ring-blue-300 h-4 w-4 rounded dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
                   required
+                  :checked="types.checked"
                 />
                 <label
                   for="remember"
@@ -531,6 +531,7 @@ export default {
 
     profession: "",
     showOtherProfession: false,
+    checkedProfessionalTypes: [],
   }),
 
   methods: {
@@ -940,12 +941,12 @@ export default {
         this.woredaArray = woredasResult.data;
       });
     },
-    fetchProfessionalType(id) {
+    async fetchProfessionalType(id) {
       this.professionalTypes = [];
       this.repeatedProfArray = "";
       this.licenseInfo.professionalTypeIds = [];
       this.showProfessionalTypes = true;
-      this.$store
+      await this.$store
         .dispatch("newlicense/getProfessionalTypes", id)
         .then((res) => {
           this.professionalTypes = res.data.data;
@@ -1001,7 +1002,7 @@ export default {
 
       return true;
     },
-    fetchDraft() {
+    async fetchDraft() {
       let draftData = this.getDraft;
       this.licenseInfo.applicantId = draftData.applicantId;
       this.licenseInfo.applicantTypeId = draftData.applicantTypeId;
@@ -1014,7 +1015,19 @@ export default {
         draftData.education.departmentId;
       if (this.licenseInfo.education.departmentId != "") {
         this.showProfessionalTypes = true;
-        this.fetchProfessionalType(this.licenseInfo.education.departmentId);
+        await this.fetchProfessionalType(
+          this.licenseInfo.education.departmentId
+        );
+        this.professionalTypes.map((profData) => {
+          for (var j = 0; j < draftData.professionalTypes.length; j++) {
+            if (
+              profData.id == draftData.professionalTypes[j].professionalTypeId
+            ) {
+              profData.checked = true;
+            }
+          }
+          return profData;
+        });
       }
       this.licenseInfo.education.institutionId =
         draftData.education.institutionId;
@@ -1022,11 +1035,6 @@ export default {
       this.licenseInfo.expertLevelId = draftData.expertLevelId;
       this.licenseInfo.educationalLevelId = draftData.educationalLevelId;
       this.setEducationLevel(this.licenseInfo.educationalLevelId);
-      for (var i = 0; i < draftData.professionalTypes.length; i++) {
-        console.log(draftData.professionalTypes[i]);
-        var id = draftData.professionalTypes[i].professionalTypeId;
-        document.getElementById(id).checked = true;
-      }
       if (this.licenseInfo.applicantTypeId == 1) {
         this.displayPayrollDoc = true;
         this.$store.dispatch("newlicense/getExpertLevel").then((res) => {
