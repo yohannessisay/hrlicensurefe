@@ -16,66 +16,6 @@
             style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2)"
             class="ml-8 mr-8 mb-12"
           >
-            <!-- <div class="flex justify-center">
-            <div
-              style="
-                width: 800px;
-                height: 600px;
-                padding: 20px;
-                text-align: center;
-                border: 10px solid #787878;
-              "
-              id="main"
-            >
-              <div
-                style="
-                  width: 750px;
-                  height: 550px;
-                  padding: 20px;
-                  text-align: center;
-                  border: 5px solid #787878;
-                "
-              >
-                <span style="font-size: 50px; font-weight: bold"
-                  >Certificate of Completion</span
-                >
-                <br /><br />
-                <span style="font-size: 25px"
-                  ><i>This is to certify that</i></span
-                >
-                <br /><br />
-                <span style="font-size: 30px"
-                  ><b
-                    >{{ certifiedUser.name }} {{ certifiedUser.fatherName }}
-                    {{
-                      certifiedUser.grandFatherName != null
-                        ? certifiedUser.grandFatherName
-                        : ""
-                    }}</b
-                  ></span
-                ><br /><br />
-                <span style="font-size: 25px"
-                  ><i>has completed the course</i></span
-                >
-                <br /><br />
-                <span style="font-size: 30px">Health and Social Care</span>
-                <br /><br />
-                <span style="font-size: 20px"
-                  ><b>with great distinction</b></span
-                >
-                <br /><br /><br /><br />
-                <span style="font-size: 25px"
-                  ><i
-                    >on
-                    {{
-                        moment(certificateDetail.certifiedDate).format(
-                        "MMM D, YYYY"
-                      ) }}</i
-                  ></span
-                ><br>
-              </div>
-            </div>
-          </div> -->
 
             <div class="container">
               <img
@@ -502,16 +442,15 @@ export default {
       }
       for (
         let i = 0;
-        i < certificateDetail.value.professionalTypes.length;
+        i < certificateDetail.value.professionalTypePrefixes.length;
         i++
       ) {
         doc.text(
           xPosition.value,
           professionPossition + i * professionListGap,
           `${
-            certificateDetail.value.professionalTypes[i].professionalTypes.name
-              ? certificateDetail.value.professionalTypes[i].professionalTypes
-                  .name
+            certificateDetail.value.professionalTypePrefixes[i].professionalTypes.name
+              ? `${certificateDetail.value.professionalTypePrefixes[i].prefix ? '(' + certificateDetail.value.professionalTypePrefixes[i].prefix + ')' : ""}   ${certificateDetail.value.professionalTypePrefixes[i].professionalTypes.name}`
               : ""
           }`
         );
@@ -622,60 +561,6 @@ export default {
       if (userImage !== null) {
         doc.addImage(userImage, "JPEG", 33, 20, 30, 30);
       }
-      doc.setFontSize(25);
-
-      // if (certificateDetail.value.professionalTypes.length === 1) {
-      //   doc.text(
-      //     185,
-      //     122,
-      //     `${
-      //       certificateDetail.value.professionalTypes[0].professionalTypes.name
-      //         ? certificateDetail.value.professionalTypes[0].professionalTypes
-      //             .name
-      //         : ""
-      //     }`
-      //   );
-      // } else if (certificateDetail.value.professionalTypes.length === 2) {
-      //   let firstTextWidth = doc.getTextWidth(
-      //     certificateDetail.value.professionalTypes[0].professionalTypes.name
-      //   );
-      //   doc.setFontSize(12);
-      //   doc.text(
-      //     175,
-      //     122,
-      //     `${certificateDetail.value.professionalTypes[0].professionalTypes.name}`
-      //   );
-      //   doc.text(
-      //     168 + firstTextWidth,
-      //     122,
-      //     `, ${certificateDetail.value.professionalTypes[1].professionalTypes.name}`
-      //   );
-      // } else if (certificateDetail.value.professionalTypes.length === 3) {
-      //   let firstTextWidth = doc.getTextWidth(
-      //     certificateDetail.value.professionalTypes[0].professionalTypes.name
-      //   );
-      //   let secondTextWidth = doc.getTextWidth(
-      //     certificateDetail.value.professionalTypes[1].professionalTypes.name
-      //   );
-
-      //   doc.setFontSize(10);
-      //   doc.text(
-      //     175,
-      //     122,
-      //     `${certificateDetail.value.professionalTypes[0].professionalTypes.name}`
-      //   );
-      //   doc.text(
-      //     168 + firstTextWidth,
-      //     122,
-      //     `, ${certificateDetail.value.professionalTypes[1].professionalTypes.name}`
-      //   );
-      //   doc.text(
-      //     160 + firstTextWidth + secondTextWidth,
-      //     122,
-      //     `, ${certificateDetail.value.professionalTypes[1].professionalTypes.name}`
-      //   );
-      // }
-      // doc.text(190, 170, 'DENTAL SURGON')
       doc.setFontSize(12);
       doc.text(
         197,
@@ -700,61 +585,6 @@ export default {
         }`
       );
 
-      // if (certificateDetail.value.professionalTypes.length === 1) {
-      //   doc.text(
-      //     65,
-      //     117,
-      //     `${
-      //       certificateDetail.value.professionalTypes[0].professionalTypes
-      //         .amharicProfessionalType
-      //         ? certificateDetail.value.professionalTypes[0].professionalTypes
-      //             .amharicProfessionalType
-      //         : ""
-      //     }`
-      //   );
-      // } else if (certificateDetail.value.professionalTypes.length === 2) {
-      //   let firstTextWidth = doc.getTextWidth(
-      //     certificateDetail.value.professionalTypes[0].professionalTypes
-      //       .amharicProfessionalType
-      //   );
-      //   doc.setFontSize(12);
-      //   doc.text(
-      //     44,
-      //     117,
-      //     `${certificateDetail.value.professionalTypes[0].professionalTypes.amharicProfessionalType}`
-      //   );
-      //   doc.text(
-      //     38 + firstTextWidth,
-      //     117,
-      //     `, ${certificateDetail.value.professionalTypes[1].professionalTypes.amharicProfessionalType}`
-      //   );
-      // } else if (certificateDetail.value.professionalTypes.length === 3) {
-      //   let firstTextWidth = doc.getTextWidth(
-      //     certificateDetail.value.professionalTypes[0].professionalTypes
-      //       .amharicProfessionalType
-      //   );
-      //   let secondTextWidth = doc.getTextWidth(
-      //     certificateDetail.value.professionalTypes[1].professionalTypes
-      //       .amharicProfessionalType
-      //   );
-      //   doc.setFontSize(10);
-      //   doc.text(
-      //     44,
-      //     117,
-      //     `${certificateDetail.value.professionalTypes[0].professionalTypes.amharicProfessionalType}`
-      //   );
-      //   doc.text(
-      //     38 + firstTextWidth,
-      //     117,
-      //     `, ${certificateDetail.value.professionalTypes[1].professionalTypes.amharicProfessionalType}`
-      //   );
-      //   doc.text(
-      //     35 + firstTextWidth + secondTextWidth,
-      //     117,
-      //     `, ${certificateDetail.value.professionalTypes[1].professionalTypes.amharicProfessionalType}`
-      //   );
-      // }
-      // doc.text(40, 163, "ሙያ መዝግቦ ይህን የሙያ ስራ ፈቃድ ሰጥቷል።");
       doc.setFontSize(12);
       // doc.text(80)
       doc.text(

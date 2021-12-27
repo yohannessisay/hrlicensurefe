@@ -480,9 +480,8 @@
                         <p>----------------------------------------</p>
                       </div> -->
                       <ul
-                        v-for="(
-                          professionName, index
-                        ) in newLicense.professionalTypes"
+                        v-for="(professionName,
+                        index) in newLicense.professionalTypes"
                         v-bind:key="professionName.professionalTypeId"
                         v-bind:value="professionName.professionalTypeId"
                       >
@@ -515,8 +514,7 @@
                               font-style: italic;
                             "
                             @click="
-                              professionName.showPrefix =
-                                !professionName.showPrefix
+                              professionName.showPrefix = !professionName.showPrefix
                             "
                             v-show="professionName.showPrefixLink"
                             >{{
@@ -551,7 +549,7 @@
                             style="float: left"
                             v-show="
                               professionName.showPrefixLink &&
-                              professionName.showPrefix
+                                professionName.showPrefix
                             "
                           >
                             <label style="display: block">Prefix:</label>
@@ -615,8 +613,7 @@
                               font-style: italic;
                             "
                             @click="
-                              newProfessionName.showPrefix =
-                                !newProfessionName.showPrefix
+                              newProfessionName.showPrefix = !newProfessionName.showPrefix
                             "
                             v-show="newProfessionName.showPrefixLink"
                             >{{
@@ -634,7 +631,7 @@
                             "
                             v-if="
                               newProfessionName.showPrefixLink &&
-                              newProfessionName.name == 'Other'
+                                newProfessionName.name == 'Other'
                             "
                           >
                             <label style="display: block"
@@ -650,7 +647,7 @@
                             style="float: left"
                             v-show="
                               newProfessionName.showPrefixLink &&
-                              newProfessionName.showPrefix
+                                newProfessionName.showPrefix
                             "
                           >
                             <label style="display: block">Prefix:</label>
@@ -1598,20 +1595,25 @@ export default {
 
       let loopCounter = 0;
 
-      for(let i = 0; i < professionalTypeIdss.value.length; i++) {
-        let professionId = professionalTypeIdss.value[i]
-        for(let j = 0; j < newLicense.value.professionalTypePrefixes.length; j++) {
-          if(newLicense.value.professionalTypePrefixes[j].professionalTypeId != 
-          professionId
+      for (let i = 0; i < professionalTypeIdss.value.length; i++) {
+        let professionId = professionalTypeIdss.value[i];
+        for (
+          let j = 0;
+          j < newLicense.value.professionalTypePrefixes.length;
+          j++
+        ) {
+          if (
+            newLicense.value.professionalTypePrefixes[j].professionalTypeId !=
+            professionId
           ) {
             loopCounter++;
           }
         }
-        if(loopCounter == newLicense.value.professionalTypePrefixes.length) {
+        if (loopCounter == newLicense.value.professionalTypePrefixes.length) {
           newLicense.value.professionalTypePrefixes.push({
             professionalTypeId: professionId,
             prefix: null,
-          })
+          });
         }
         loopCounter = 0;
       }
@@ -1842,7 +1844,7 @@ export default {
         .dispatch("reviewer/getProfessionalTypeByDepartmentId", id)
         .then((res) => {
           res.data.data
-            .filter(function (e) {
+            .filter(function(e) {
               for (let i in newLicense.value.professionalTypes) {
                 if (
                   e.code ===
@@ -1928,17 +1930,19 @@ export default {
               );
 
           if (previousProfession) {
-            professionalTypePrefixes.value =
-              professionalTypePrefixes.value.filter((data) => {
+            professionalTypePrefixes.value = professionalTypePrefixes.value.filter(
+              (data) => {
                 return (
                   data.professionalTypeId != profession.professionalTypes.id
                 );
-              });
+              }
+            );
           } else {
-            professionalTypePrefixes.value =
-              professionalTypePrefixes.value.filter((data) => {
+            professionalTypePrefixes.value = professionalTypePrefixes.value.filter(
+              (data) => {
                 return data.professionalTypeId != profession.id;
-              });
+              }
+            );
           }
 
           if (
