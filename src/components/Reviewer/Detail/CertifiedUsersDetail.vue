@@ -16,7 +16,6 @@
             style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2)"
             class="ml-8 mr-8 mb-12"
           >
-
             <div class="container">
               <img
                 src="../../../assets/certeficate_Background_image.jpg"
@@ -153,10 +152,10 @@
                       "
                     >
                       <div
-                        v-for="professions in certificateDetail.professionalTypes"
+                        v-for="professions in certificateDetail.professionalTypePrefixes"
                         class="flex flex-row"
                       >
-                        <b>{{ professions.professionalTypes.name }}</b>
+                        <b>{{professions.prefix ? '('+professions.prefix+')' : ""}} {{ professions.professionalTypes.name }}</b>
                       </div>
                     </h4>
                     <br />
@@ -258,6 +257,8 @@ export default {
     const expertLevelId = JSON.parse(localStorage.getItem("allAdminData"))
       .expertLevelId;
 
+    const expertLevelCode = JSON.parse(localStorage.getItem("allAdminData")).expertLevel.code;
+
     const fetchCertifiedUser = () => {
       showLoading.value = true;
       store
@@ -336,10 +337,12 @@ export default {
             ) {
               isUserCertified.value = false;
             }
-            if (
-              adminRegionId != certificateDetail.value.woreda.zone.region.id
-            ) {
+            if (expertLevelCode !== certificateDetail.value.expertLevels.code) {
               myRegion.value = false;
+            } else {
+              if(expertLevelCode === "REG" && adminRegionId != certificateDetail.value.woreda.zone.region.id) {
+                myRegion.value = false;
+              }
             }
           });
       } else if (route.params.applicationType === "New License") {
@@ -357,10 +360,12 @@ export default {
             ) {
               isUserCertified.value = false;
             }
-            if (
-              adminRegionId != certificateDetail.value.woreda.zone.region.id
-            ) {
+            if (expertLevelCode !== certificateDetail.value.expertLevels.code) {
               myRegion.value = false;
+            } else {
+              if(expertLevelCode === "REG" && adminRegionId != certificateDetail.value.woreda.zone.region.id) {
+                myRegion.value = false;
+              }
             }
           });
       } else if (route.params.applicationType === "Renewal") {
@@ -377,10 +382,12 @@ export default {
             ) {
               isUserCertified.value = false;
             }
-            if (
-              adminRegionId != certificateDetail.value.woreda.zone.region.id
-            ) {
+            if (expertLevelCode !== certificateDetail.value.expertLevels.code) {
               myRegion.value = false;
+            } else {
+              if(expertLevelCode === "REG" && adminRegionId != certificateDetail.value.woreda.zone.region.id) {
+                myRegion.value = false;
+              }
             }
           });
       }
@@ -409,17 +416,18 @@ export default {
       let xPosition = ref(185);
       for (
         let i = 0;
-        i < certificateDetail.value.professionalTypes.length;
+        i < certificateDetail.value.professionalTypePrefixes.length;
         i++
       ) {
+        let professionPrefix = `${certificateDetail.value.professionalTypePrefixes[i].prefix ? certificateDetail.value.professionalTypePrefixes[i].prefix : ""}  ${certificateDetail.value.professionalTypePrefixes[i].professionalTypes.name}`;
         console.log(
           "length is ",
           doc.getTextWidth(
-            certificateDetail.value.professionalTypes[i].professionalTypes.name
+            professionPrefix
           )
         );
         let getLength = doc.getTextWidth(
-          certificateDetail.value.professionalTypes[i].professionalTypes.name
+          professionPrefix
         );
         if (getLength > 125 && getLength <= 132) {
           if (!changeWidthTooSmall.value) {
@@ -449,8 +457,19 @@ export default {
           xPosition.value,
           professionPossition + i * professionListGap,
           `${
-            certificateDetail.value.professionalTypePrefixes[i].professionalTypes.name
-              ? `${certificateDetail.value.professionalTypePrefixes[i].prefix ? '(' + certificateDetail.value.professionalTypePrefixes[i].prefix + ')' : ""}   ${certificateDetail.value.professionalTypePrefixes[i].professionalTypes.name}`
+            certificateDetail.value.professionalTypePrefixes[i]
+              .professionalTypes.name
+              ? `${
+                  certificateDetail.value.professionalTypePrefixes[i].prefix
+                    ? "(" +
+                      certificateDetail.value.professionalTypePrefixes[i]
+                        .prefix +
+                      ")"
+                    : ""
+                }   ${
+                  certificateDetail.value.professionalTypePrefixes[i]
+                    .professionalTypes.name
+                }`
               : ""
           }`
         );
