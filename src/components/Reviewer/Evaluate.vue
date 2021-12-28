@@ -1588,8 +1588,9 @@ export default {
         setTimeout(() => {
           showProfessionChangeError.value = false;
         }, 4000);
-        professionalTypeIdss.value = [];
-        professionalTypePrefixes.value = [];
+        // professionalTypeIdss.value = [];
+        // professionalTypePrefixes.value = [];
+        console.log("new license", newLicense.value)
         return;
       }
 
@@ -1718,6 +1719,8 @@ export default {
         action: actionValue,
         data: newLicense.value,
       };
+      console.log("req", req);
+      return;
       if (
         applicationType.value == "New License" &&
         sendDeclinedData.value == true
@@ -2025,9 +2028,9 @@ export default {
       if (previousProfessionType.length !== professionalTypeIdss.value.length) {
         return true;
       } else {
-        for (let i = 0; i <= previousProfessionType.length; i++) {
+        for (let i = 0; i <= professionalTypeIdss.length; i++) {
           for (let j = 0; j <= previousProfessionType.length; j++) {
-            if (previousProfessionType[i].id != professionalTypeIdss.value[i]) {
+            if (previousProfessionType[j].id != professionalTypeIdss.value[i]) {
               count++;
             }
           }

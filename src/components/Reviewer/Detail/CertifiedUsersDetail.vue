@@ -155,7 +155,14 @@
                         v-for="professions in certificateDetail.professionalTypePrefixes"
                         class="flex flex-row"
                       >
-                        <b>{{professions.prefix ? '('+professions.prefix+')' : ""}} {{ professions.professionalTypes.name }}</b>
+                        <b
+                          >{{
+                            professions.prefix
+                              ? "(" + professions.prefix + ")"
+                              : ""
+                          }}
+                          {{ professions.professionalTypes.name }}</b
+                        >
                       </div>
                     </h4>
                     <br />
@@ -257,7 +264,8 @@ export default {
     const expertLevelId = JSON.parse(localStorage.getItem("allAdminData"))
       .expertLevelId;
 
-    const expertLevelCode = JSON.parse(localStorage.getItem("allAdminData")).expertLevel.code;
+    const expertLevelCode = JSON.parse(localStorage.getItem("allAdminData"))
+      .expertLevel.code;
 
     const fetchCertifiedUser = () => {
       showLoading.value = true;
@@ -340,7 +348,10 @@ export default {
             if (expertLevelCode !== certificateDetail.value.expertLevels.code) {
               myRegion.value = false;
             } else {
-              if(expertLevelCode === "REG" && adminRegionId != certificateDetail.value.woreda.zone.region.id) {
+              if (
+                expertLevelCode === "REG" &&
+                adminRegionId != certificateDetail.value.woreda.zone.region.id
+              ) {
                 myRegion.value = false;
               }
             }
@@ -363,7 +374,10 @@ export default {
             if (expertLevelCode !== certificateDetail.value.expertLevels.code) {
               myRegion.value = false;
             } else {
-              if(expertLevelCode === "REG" && adminRegionId != certificateDetail.value.woreda.zone.region.id) {
+              if (
+                expertLevelCode === "REG" &&
+                adminRegionId != certificateDetail.value.woreda.zone.region.id
+              ) {
                 myRegion.value = false;
               }
             }
@@ -385,7 +399,10 @@ export default {
             if (expertLevelCode !== certificateDetail.value.expertLevels.code) {
               myRegion.value = false;
             } else {
-              if(expertLevelCode === "REG" && adminRegionId != certificateDetail.value.woreda.zone.region.id) {
+              if (
+                expertLevelCode === "REG" &&
+                adminRegionId != certificateDetail.value.woreda.zone.region.id
+              ) {
                 myRegion.value = false;
               }
             }
@@ -419,16 +436,16 @@ export default {
         i < certificateDetail.value.professionalTypePrefixes.length;
         i++
       ) {
-        let professionPrefix = `${certificateDetail.value.professionalTypePrefixes[i].prefix ? certificateDetail.value.professionalTypePrefixes[i].prefix : ""}  ${certificateDetail.value.professionalTypePrefixes[i].professionalTypes.name}`;
-        console.log(
-          "length is ",
-          doc.getTextWidth(
-            professionPrefix
-          )
-        );
-        let getLength = doc.getTextWidth(
-          professionPrefix
-        );
+        let professionPrefix = `${
+          certificateDetail.value.professionalTypePrefixes[i].prefix
+            ? certificateDetail.value.professionalTypePrefixes[i].prefix
+            : ""
+        }  ${
+          certificateDetail.value.professionalTypePrefixes[i].professionalTypes
+            .name
+        }`;
+        console.log("length is ", doc.getTextWidth(professionPrefix));
+        let getLength = doc.getTextWidth(professionPrefix);
         if (getLength > 125 && getLength <= 132) {
           if (!changeWidthTooSmall.value) {
             changeWidth.value = true;
