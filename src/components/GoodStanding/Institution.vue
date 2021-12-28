@@ -68,10 +68,8 @@
                 <label class="text-primary-700">Department</label>
                 <select
                   class="max-w-3xl"
-                  v-model="licenseInfo.education.departmentId"
-                  @change="
-                    fetchProfessionalType(licenseInfo.education.departmentId)
-                  "
+                  v-model="licenseInfo.departmentId"
+                  @change="fetchProfessionalType(licenseInfo.departmentId)"
                 >
                   <option
                     v-for="department in departments"
@@ -82,7 +80,7 @@
                   </option>
                 </select>
                 <span style="color: red">{{
-                  licenseInfoErrors.education.departmentId
+                  licenseInfoErrors.departmentId
                 }}</span>
               </div>
             </div>
@@ -383,6 +381,11 @@ export default {
       this.licenseInfo.applicantId = draftData.applicantId;
       this.licenseInfo.applicantTitle = draftData.applicantTitle;
       this.licenseInfo.applicantTypeId = draftData.applicantTypeId;
+      if (this.licenseInfo.applicantTypeId == 1) {
+        this.fetchInstitutions(true);
+      } else {
+        this.fetchInstitutions(false);
+      }
       this.licenseInfo.whomGoodStandingFor = draftData.whomGoodStandingFor;
       this.licenseInfo.licenseIssuedDate = draftData.licenseIssuedDate;
       this.licenseInfo.whoIssued = draftData.whoIssued;
@@ -392,13 +395,7 @@ export default {
       this.licenseInfo.nativeLanguageId = draftData.nativeLanguageId;
       this.licenseInfo.professionalTypeIds = draftData.professionalTypeIds;
       this.licenseInfo.expertLevelId = draftData.expertLevelId;
-      if (this.licenseInfo.applicantTypeId == 1) {
-        this.fetchInstitutions(true);
-        this.showRegion = true;
-      } else {
-        this.fetchInstitutions(false);
-        this.showRegion = false;
-      }
+      this.licenseInfo.departmentId = draftData.departmentId;
       if (this.licenseInfo.applicantTypeId == 1) {
         this.$store.dispatch("goodstanding/getExpertLevel").then((res) => {
           this.expertLevels = res.data.data.filter(function(e) {
@@ -430,6 +427,31 @@ export default {
           }
         }
       }
+      if (this.licenseInfo.departmentId != "") {
+        this.showProfessionalTypes = true;
+        await this.fetchProfessionalType(this.licenseInfo.departmentId);
+        for (var j = 0; j < this.professionalTypes.length; j++) {
+          for (var i = 0; i < draftData.professionalTypeIds.length; i++) {
+            if (
+              this.professionalTypes[j].id == draftData.professionalTypeIds[i]
+            ) {
+              this.professionalTypes[j].checked = true;
+            }
+          }
+        }
+        for (var k = 0; k < draftData.professionalTypeIds.length; k++) {
+          this.licenseInfo.professionalTypeIds.push(
+            draftData.professionalTypeIds[k]
+          );
+        }
+      }
+    } else {
+      this.draftId = this.$route.params.id;
+      if (this.draftId != undefined) {
+        setTimeout(() => {
+          this.fetchDraft();
+        }, 6500);
+      }
     }
     this.fetchApplicantType();
     this.fetchDepartments();
@@ -442,12 +464,6 @@ export default {
       this.showButtons = true;
       this.showLoading = false;
     }, 5000);
-    this.draftId = this.$route.params.id;
-    if (this.draftId != undefined) {
-      setTimeout(() => {
-        this.fetchDraft();
-      }, 6500);
-    }
   },
   computed: {
     ...mapGetters({
@@ -460,9 +476,7 @@ export default {
     licenseInfo: {
       applicantId: +localStorage.getItem("userId"),
       applicantTypeId: null,
-      education: {
-        departmentId: null,
-      },
+      departmentId: null,
       residenceWoredaId: null,
       applicantTitle: null,
       whomGoodStandingFor: null,
@@ -476,9 +490,7 @@ export default {
 
     licenseInfoErrors: {
       applicantTypeId: null,
-      education: {
-        departmentId: null,
-      },
+      departmentId: null,
       applicantTitle: null,
       whomGoodStandingFor: null,
       licenseIssuedDate: null,
@@ -510,7 +522,7 @@ export default {
     showLoading: false,
     showRegion: false,
 
-     professionalTypeRepeat: false,
+    professionalTypeRepeat: false,
     repeatedProfArray: [],
 
     professionalTypes: [],
@@ -612,6 +624,7 @@ export default {
             professionalTypeIds: this.licenseInfo.professionalTypeIds,
             expertLevelId: this.licenseInfo.expertLevelId,
             otherProfessionalType: this.licenseInfo.otherProfessionalType,
+            departmentId: this.licenseInfo.departmentId,
           },
         },
         id: this.draftId,
@@ -663,6 +676,7 @@ export default {
             professionalTypeIds: this.licenseInfo.professionalTypeIds,
             expertLevelId: this.licenseInfo.expertLevelId,
             otherProfessionalType: this.licenseInfo.otherProfessionalType,
+            departmentId: this.licenseInfo.departmentId,
           },
         },
         id: this.draftId,
@@ -733,6 +747,7 @@ export default {
         otherProfessionalType: this.licenseInfo.otherProfessionalType,
         regionId: this.regionID,
         zoneId: this.zoneID,
+        departmentId: this.licenseInfo.departmentId,
       };
       this.addressErrors = this.validateForm(license);
       let empty = true;
@@ -887,14 +902,11 @@ export default {
         draftData.licenseRegistrationNumber;
       this.licenseInfo.applicantPositionId = draftData.applicantPositionId;
       this.licenseInfo.professionalTypeIds = draftData.professionalTypeIds;
-       this.licenseInfo.education.departmentId =
-        draftData.education.departmentId;
+      this.licenseInfo.departmentId = draftData.departmentId;
       this.licenseInfo.expertLevelId = draftData.expertLevelId;
-      if (this.licenseInfo.education.departmentId != "") {
+      if (this.licenseInfo.departmentId != "") {
         this.showProfessionalTypes = true;
-        await this.fetchProfessionalType(
-          this.licenseInfo.education.departmentId
-        );
+        await this.fetchProfessionalType(this.licenseInfo.departmentId);
         this.professionalTypes.map((profData) => {
           for (var j = 0; j < draftData.professionalTypes.length; j++) {
             if (
