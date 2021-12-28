@@ -377,16 +377,12 @@ export default {
       let draftData = this.getLicense;
       this.licenseInfo.applicantId = draftData.applicantId;
       this.licenseInfo.applicantTypeId = draftData.applicantTypeId;
+      this.licenseInfo.education.departmentId =
+        draftData.education.departmentId;
       if (this.licenseInfo.applicantTypeId == 1) {
         this.fetchInstitutions(true);
       } else {
         this.fetchInstitutions(false);
-      }
-      this.licenseInfo.education.departmentId =
-        draftData.education.departmentId;
-      if (this.licenseInfo.education.departmentId != "") {
-        this.showProfessionalTypes = true;
-        this.fetchProfessionalType(this.licenseInfo.education.departmentId);
       }
       this.licenseInfo.education.institutionId =
         draftData.education.institutionId;
@@ -429,6 +425,26 @@ export default {
           ) {
             this.licenseInfo.residenceWoredaId = draftData.residenceWoredaId;
           }
+        }
+      }
+      if (this.licenseInfo.education.departmentId != "") {
+        this.showProfessionalTypes = true;
+        await this.fetchProfessionalType(
+          this.licenseInfo.education.departmentId
+        );
+        for (var j = 0; j < this.professionalTypes.length; j++) {
+          for (var i = 0; i < draftData.professionalTypeIds.length; i++) {
+            if (
+              this.professionalTypes[j].id == draftData.professionalTypeIds[i]
+            ) {
+              this.professionalTypes[j].checked = true;
+            }
+          }
+        }
+        for (var k = 0; k < draftData.professionalTypeIds.length; k++) {
+          this.licenseInfo.professionalTypeIds.push(
+            draftData.professionalTypeIds[k]
+          );
         }
       }
     }
@@ -673,6 +689,9 @@ export default {
 
     draft(action) {
       this.showLoading = true;
+      // if (this.licenseInfo.professionalTypesIds == undefined) {
+      //   this.licenseInfo.professionalTypeIds = null;
+      // }
       let license = {
         data: {
           action: action,
@@ -713,7 +732,7 @@ export default {
           });
       } else {
         this.$store
-          .dispatch("newlicense/addNewLicense", license.data)
+          .dispatch("newlicense/addNewLicense", license)
           .then((res) => {
             if (res.data.status == "Success") {
               this.showFlash = true;
@@ -1011,24 +1030,13 @@ export default {
       } else {
         this.fetchInstitutions(false);
       }
+      this.licenseInfo.education.institutionId =
+        draftData.education.institutionId;
+      this.payrollData = draftData.occupationTypes;
+      this.licenseInfo.expertLevelId = draftData.expertLevelId;
+      this.licenseInfo.educationalLevelId = draftData.educationalLevelId;
       this.licenseInfo.education.departmentId =
         draftData.education.departmentId;
-      if (this.licenseInfo.education.departmentId != "") {
-        this.showProfessionalTypes = true;
-        await this.fetchProfessionalType(
-          this.licenseInfo.education.departmentId
-        );
-        this.professionalTypes.map((profData) => {
-          for (var j = 0; j < draftData.professionalTypes.length; j++) {
-            if (
-              profData.id == draftData.professionalTypes[j].professionalTypeId
-            ) {
-              profData.checked = true;
-            }
-          }
-          return profData;
-        });
-      }
       this.licenseInfo.education.institutionId =
         draftData.education.institutionId;
       this.payrollData = draftData.occupationTypes;
@@ -1096,6 +1104,27 @@ export default {
               this.woredaArray = woredasResult.data;
             });
         });
+      if (this.licenseInfo.education.departmentId != "") {
+        this.showProfessionalTypes = true;
+        await this.fetchProfessionalType(
+          this.licenseInfo.education.departmentId
+        );
+        this.professionalTypes.map((profData) => {
+          for (var j = 0; j < draftData.professionalTypes.length; j++) {
+            if (
+              profData.id == draftData.professionalTypes[j].professionalTypeId
+            ) {
+              profData.checked = true;
+            }
+          }
+          return profData;
+        });
+        for (var k = 0; k <= draftData.professionalTypes.length; k++) {
+          this.licenseInfo.professionalTypeIds.push(
+            draftData.professionalTypes[k].professionalTypeId
+          );
+        }
+      }
     },
   },
 };
