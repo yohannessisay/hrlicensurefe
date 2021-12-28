@@ -1588,8 +1588,8 @@ export default {
         setTimeout(() => {
           showProfessionChangeError.value = false;
         }, 4000);
-        // professionalTypeIdss.value = [];
-        // professionalTypePrefixes.value = [];
+        professionalTypeIdss.value = [];
+        professionalTypePrefixes.value = [];
         console.log("new license", newLicense.value)
         return;
       }
@@ -1669,7 +1669,7 @@ export default {
         let checkProfessionResult = false;
         newLicense.value.isProfessionChanged == false
           ? (checkProfessionResult = checkProfessionChanged(
-              professionalTypes.value
+              newLicense.value.professionalTypes
             ))
           : (checkProfessionResult = true);
 
@@ -1678,8 +1678,8 @@ export default {
           setTimeout(() => {
             showProfessionChangeError.value = false;
           }, 4000);
-          professionalTypeIdss.value = [];
-          professionalTypePrefixes.value = [];
+          // professionalTypeIdss.value = [];
+          // professionalTypePrefixes.value = [];
           return;
         } else {
           showRemark.value = true;
@@ -1694,7 +1694,7 @@ export default {
         let checkProfessionResult = false;
         newLicense.value.isProfessionChanged == false
           ? (checkProfessionResult = checkProfessionChanged(
-              professionalTypes.value
+              newLicense.value.professionalTypes
             ))
           : (checkProfessionResult = true);
 
@@ -1719,8 +1719,6 @@ export default {
         action: actionValue,
         data: newLicense.value,
       };
-      console.log("req", req);
-      return;
       if (
         applicationType.value == "New License" &&
         sendDeclinedData.value == true
@@ -1962,9 +1960,9 @@ export default {
 
     const chkcontrol = (j, previousProfession, event) => {
       if (event.target.checked) {
-        if (professionalTypeIdss.value.length == 4) {
+        if (professionalTypeIdss.value.length == 3) {
           alert(
-            "You can only select 4 professional types. Please Select only four!"
+            "You can only select 3 professional types. Please Select only four!"
           );
           if (previousProfession) {
             document.getElementsByName("ckb")[j].checked = false;
@@ -2025,12 +2023,13 @@ export default {
 
     const checkProfessionChanged = (previousProfessionType) => {
       let count = 0;
+      console.log(".length", previousProfessionType.length,"hanfe", professionalTypeIdss.value, "kasu eref", previousProfessionType, "sss", professionalTypeIdss.value.length)
       if (previousProfessionType.length !== professionalTypeIdss.value.length) {
         return true;
       } else {
-        for (let i = 0; i <= professionalTypeIdss.length; i++) {
-          for (let j = 0; j <= previousProfessionType.length; j++) {
-            if (previousProfessionType[j].id != professionalTypeIdss.value[i]) {
+        for (let i = 0; i < previousProfessionType.length; i++) {
+          for (let j = 0; j < previousProfessionType.length; j++) {
+            if (previousProfessionType[i].professionalTypeId != professionalTypeIdss.value[j]) {
               count++;
             }
           }
