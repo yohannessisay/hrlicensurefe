@@ -424,6 +424,13 @@ export default {
           );
         }
       }
+    } else {
+      this.draftId = this.$route.params.id;
+      if (this.draftId != undefined) {
+        setTimeout(() => {
+          this.fetchDraft();
+        }, 6500);
+      }
     }
     this.fetchApplicantType();
     this.fetchDepartments();
@@ -438,12 +445,6 @@ export default {
       this.showButtons = true;
       this.showLoading = false;
     }, 5000);
-    this.draftId = this.$route.params.id;
-    if (this.draftId != undefined) {
-      setTimeout(() => {
-        this.fetchDraft();
-      }, 6500);
-    }
   },
   computed: {
     ...mapGetters({
@@ -789,11 +790,13 @@ export default {
       let profTypes = {
         professionalTypeIds: this.licenseInfo.professionalTypeIds,
       };
+      
       if (this.$route.params.status == undefined) {
         this.$store
-          .dispatch("newlicense/searchProfessionalType", profTypes)
+          .dispatch("renewal/searchProfessionalType", profTypes)
           .then((res) => {
             if (res.data.data.length > 0) {
+              console.log(res.data.data);
               this.professionalTypeRepeat = true;
               this.repeatedProfArray = res.data.data;
             } else {

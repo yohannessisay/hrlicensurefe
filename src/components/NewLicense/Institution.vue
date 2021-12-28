@@ -447,6 +447,13 @@ export default {
           );
         }
       }
+    } else {
+      this.draftId = this.$route.params.id;
+      if (this.draftId != undefined) {
+        setTimeout(() => {
+          this.fetchDraft();
+        }, 6500);
+      }
     }
     await this.fetchApplicantType();
     await this.fetchDepartments();
@@ -460,12 +467,6 @@ export default {
       this.showButtons = true;
       this.showLoading = false;
     }, 5000);
-    this.draftId = this.$route.params.id;
-    if (this.draftId != undefined) {
-      setTimeout(() => {
-        this.fetchDraft();
-      }, 6500);
-    }
   },
   computed: {
     ...mapGetters({
@@ -689,12 +690,15 @@ export default {
 
     draft(action) {
       this.showLoading = true;
-      // if (this.licenseInfo.professionalTypesIds == undefined) {
-      //   this.licenseInfo.professionalTypeIds = null;
-      // }
+      let actionEvent = "";
+      if (this.draftStatus != undefined) {
+        actionEvent = "UpdateEvent";
+      } else {
+        actionEvent = "DraftEvent";
+      }
       let license = {
         data: {
-          action: action,
+          action: actionEvent,
           data: {
             applicantId: this.licenseInfo.applicantId,
             applicantTypeId: this.licenseInfo.applicantTypeId,
