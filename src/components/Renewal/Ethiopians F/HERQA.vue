@@ -261,7 +261,7 @@ export default {
       isImage.value = true;
       let fileS = herqaFile.value.size;
       if (fileS <= maxFileSize.value / 1000) {
-        fileSizeExceed.value = true;
+        fileSizeExceed.value = false;
         dataChanged.value = true;
         showUpload.value = false;
         if (fileS > 0 && fileS < 1000) {
