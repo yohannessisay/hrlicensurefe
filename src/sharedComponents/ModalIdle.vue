@@ -27,11 +27,15 @@ export default {
     return {
       time: 10,
       showFlash: false,
-      token: null
+      token: null,
     };
   },
   created() {
-    this.token = localStorage.getItem('token') ? localStorage.getItem('token') : null;
+    this.token = localStorage.getItem("token")
+      ? localStorage.getItem("token")
+      : null;
+    const isLoggedinUser = localStorage.getItem("userId") ? true : false;
+
     if (this.token && this.token !== null) {
       let timerId = setInterval(() => {
         this.time -= 1;
@@ -46,9 +50,14 @@ export default {
           localStorage.removeItem("role");
           localStorage.removeItem("userId");
           localStorage.removeItem("educationalLevel");
-
-          this.$router.push("/");
-          this.showFlash = true;
+          localStorage.removeItem("applicationType");
+          if (isLoggedinUser == true) {
+            this.$router.push("/");
+            this.showFlash = true;
+          } else {
+            this.$router.push("/admin");
+            this.showFlash = true;
+          }
         }
       }, 1000);
     }
