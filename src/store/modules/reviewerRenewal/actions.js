@@ -120,11 +120,11 @@ export default {
     commit(SET_RENEWAL_UNASSIGNED_SEARCHED, searchedVal);
   },
 
-  async getRenewalUnfinished({ commit }, adminId) {
-    const url = baseUrl + "/renewals/status/10";
+  async getRenewalUnfinished({ commit }, adminStatus) {
+    const url = baseUrl + "/renewals/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
     const myUnfinished = resp.data.data.filter(function(e) {
-      return e.reviewerId === adminId;
+      return e.reviewerId === adminStatus[1];
     });
     commit(SET_RENEWAL_UNFINISHED, myUnfinished);
   },
@@ -150,11 +150,11 @@ export default {
     commit(SET_RENEWAL_UNFINISHED_SEARCHED, searchedVal);
   },
 
-  async getRenewalOthersUnfinished({ commit }, adminId) {
-    const url = baseUrl + "/renewals/status/10";
+  async getRenewalOthersUnfinished({ commit }, adminStatus) {
+    const url = baseUrl + "/renewals/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
     const othresUnfinished = resp.data.data.filter(function(e) {
-      return e.reviewerId !== adminId;
+      return e.reviewerId !== adminStatus[1];
     });
     commit(SET_RENEWAL_OTHERS_UNFINISHED, othresUnfinished);
   },
