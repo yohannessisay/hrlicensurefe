@@ -608,6 +608,9 @@ export default {
         if (profession.name == "Other") {
           this.showOtherProfession = !this.showOtherProfession;
         }
+        if (this.licenseInfo.professionalTypeIds.includes(null)) {
+          this.licenseInfo.professionalTypeIds.splice(0, 1);
+        }
         if (!this.licenseInfo.professionalTypeIds.includes(profession.id)) {
           this.licenseInfo.professionalTypeIds.push(profession.id);
         } else {
@@ -691,6 +694,9 @@ export default {
     draft(action) {
       this.showLoading = true;
       let actionEvent = "";
+      if (this.licenseInfo.professionalTypeIds.length <= 0) {
+        this.licenseInfo.professionalTypeIds = [null];
+      }
       if (this.draftStatus != undefined) {
         actionEvent = "UpdateEvent";
       } else {
@@ -736,7 +742,7 @@ export default {
           });
       } else {
         this.$store
-          .dispatch("newlicense/addNewLicense", license)
+          .dispatch("newlicense/addNewLicense", license.data)
           .then((res) => {
             if (res.data.status == "Success") {
               this.showFlash = true;
