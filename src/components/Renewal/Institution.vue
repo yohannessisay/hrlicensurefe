@@ -639,6 +639,15 @@ export default {
 
     draft(action) {
       this.showLoading = true;
+      let actionEvent = "";
+      if (this.licenseInfo.professionalTypeIds.length <= 0) {
+        this.licenseInfo.professionalTypeIds = [null];
+      }
+      if (this.draftStatus != undefined) {
+        actionEvent = "UpdateEvent";
+      } else {
+        actionEvent = "DraftEvent";
+      }
       let license = {
         data: {
           action: action,
@@ -790,13 +799,12 @@ export default {
       let profTypes = {
         professionalTypeIds: this.licenseInfo.professionalTypeIds,
       };
-      
+
       if (this.$route.params.status == undefined) {
         this.$store
           .dispatch("renewal/searchProfessionalType", profTypes)
           .then((res) => {
             if (res.data.data.length > 0) {
-              console.log(res.data.data);
               this.professionalTypeRepeat = true;
               this.repeatedProfArray = res.data.data;
             } else {

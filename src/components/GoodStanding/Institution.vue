@@ -606,6 +606,15 @@ export default {
     },
     draft(action) {
       this.showLoading = true;
+      let actionEvent = "";
+      if (this.licenseInfo.professionalTypeIds.length <= 0) {
+        this.licenseInfo.professionalTypeIds = [null];
+      }
+      if (this.draftStatus != undefined) {
+        actionEvent = "UpdateEvent";
+      } else {
+        actionEvent = "DraftEvent";
+      }
       let license = {
         data: {
           action: action,
