@@ -28,9 +28,11 @@
                     {{ applicant.name }}
                   </option>
                 </select>
-                <span style="color: red">{{
-                  licenseInfoErrors.applicantTypeId
-                }}</span>
+                <span
+                  v-if="licenseInfoErrors.applicantTypeId !== null"
+                  style="color: red"
+                  >{{ licenseInfoErrors.applicantTypeId }}</span
+                >
               </div>
               <div class="flex flex-col mb-small w-2/5 mr-12 ml-medium">
                 <!-- <label class="text-primary-700">Expert Level</label>
@@ -60,9 +62,6 @@
                   type="text"
                   v-model="licenseInfo.applicantTitle"
                 />
-                <span style="color: red">{{
-                  licenseInfoErrors.applicantTitle
-                }}</span>
               </div>
               <div class="flex flex-col mb-medium w-2/5 mr-12 ml-medium">
                 <label class="text-primary-700">Department</label>
@@ -79,9 +78,11 @@
                     {{ department.name }}
                   </option>
                 </select>
-                <span style="color: red">{{
-                  licenseInfoErrors.departmentId
-                }}</span>
+                <span
+                  v-if="licenseInfoErrors.departmentId !== null"
+                  style="color: red"
+                  >{{ licenseInfoErrors.departmentId }}</span
+                >
               </div>
             </div>
             <div
@@ -491,17 +492,6 @@ export default {
     licenseInfoErrors: {
       applicantTypeId: null,
       departmentId: null,
-      applicantTitle: null,
-      whomGoodStandingFor: null,
-      licenseIssuedDate: null,
-      whoIssued: null,
-      licenseRegistrationNumber: null,
-      applicantPositionId: null,
-      residenceWoredaId: null,
-      regionID: null,
-      zoneID: null,
-      professionalTypeIds: [],
-      otherProfessionalType: null,
     },
     regionID: "",
     zoneID: "",
@@ -575,7 +565,16 @@ export default {
       }
     },
     checkOtherProfession(profession, event) {
-      if (this.licenseInfo.professionalTypeIds.length + 1 > 3) {
+      if (!event.target.checked) {
+        for (var i = 0; i < this.licenseInfo.professionalTypeIds.length; i++) {
+          if (this.licenseInfo.professionalTypeIds[i] == profession.id) {
+            this.licenseInfo.professionalTypeIds.splice(i, 1);
+          }
+        }
+        if (profession.name == "Other") {
+          this.showOtherProfession = false;
+        }
+      } else if (this.licenseInfo.professionalTypeIds.length + 1 > 3) {
         this.professionalTypeLimit = true;
         event.target.checked = false;
         for (var i = 0; i < this.licenseInfo.professionalTypeIds.length; i++) {
@@ -587,7 +586,7 @@ export default {
         this.professionalTypeLimit = false;
         this.repeatedProfArray = [];
         if (profession.name == "Other") {
-          this.showOtherProfession = !this.showOtherProfession;
+          this.showOtherProfession = true;
         }
         if (!this.licenseInfo.professionalTypeIds.includes(profession.id)) {
           this.licenseInfo.professionalTypeIds.push(profession.id);
@@ -605,64 +604,71 @@ export default {
       }
     },
     draft(action) {
-      this.showLoading = true;
-      let actionEvent = "";
-      if (this.licenseInfo.professionalTypeIds.length <= 0) {
-        this.licenseInfo.professionalTypeIds = [null];
-      }
-      if (this.draftStatus != undefined) {
-        actionEvent = "UpdateEvent";
-      } else {
-        actionEvent = "DraftEvent";
-      }
-      let license = {
-        data: {
-          action: action,
+      this.licenseInfoErrors = this.validateForm(this.licenseInfo);
+      if (
+        this.licenseInfoErrors &&
+        Object.keys(this.licenseInfoErrors).length === 0 &&
+        Object.getPrototypeOf(this.licenseInfoErrors) === Object.prototype
+      ) {
+        this.showLoading = true;
+        let actionEvent = "";
+        if (this.licenseInfo.professionalTypeIds.length <= 0) {
+          this.licenseInfo.professionalTypeIds = [null];
+        }
+        if (this.draftStatus != undefined) {
+          actionEvent = "UpdateEvent";
+        } else {
+          actionEvent = "DraftEvent";
+        }
+        let license = {
           data: {
-            applicantId: this.licenseInfo.applicantId,
-            applicantTypeId: this.licenseInfo.applicantTypeId,
-            residenceWoredaId: this.licenseInfo.residenceWoredaId,
-            applicantTitle: this.licenseInfo.applicantTitle,
-            whomGoodStandingFor: this.licenseInfo.whomGoodStandingFor,
-            licenseIssuedDate:
-              this.licenseInfo.licenseIssuedDate + " 17:23:50.228+01",
-            whoIssued: this.licenseInfo.whoIssued,
-            licenseRegistrationNumber: this.licenseInfo
-              .licenseRegistrationNumber,
-            applicantPositionId: this.licenseInfo.applicantPositionId,
-            professionalTypeIds: this.licenseInfo.professionalTypeIds,
-            expertLevelId: this.licenseInfo.expertLevelId,
-            otherProfessionalType: this.licenseInfo.otherProfessionalType,
-            departmentId: this.licenseInfo.departmentId,
+            action: action,
+            data: {
+              applicantId: this.licenseInfo.applicantId,
+              applicantTypeId: this.licenseInfo.applicantTypeId,
+              residenceWoredaId: this.licenseInfo.residenceWoredaId,
+              applicantTitle: this.licenseInfo.applicantTitle,
+              whomGoodStandingFor: this.licenseInfo.whomGoodStandingFor,
+              licenseIssuedDate:
+                this.licenseInfo.licenseIssuedDate + " 17:23:50.228+01",
+              whoIssued: this.licenseInfo.whoIssued,
+              licenseRegistrationNumber: this.licenseInfo
+                .licenseRegistrationNumber,
+              applicantPositionId: this.licenseInfo.applicantPositionId,
+              professionalTypeIds: this.licenseInfo.professionalTypeIds,
+              expertLevelId: this.licenseInfo.expertLevelId,
+              otherProfessionalType: this.licenseInfo.otherProfessionalType,
+              departmentId: this.licenseInfo.departmentId,
+            },
           },
-        },
-        id: this.draftId,
-      };
-      if (this.draftId != undefined) {
-        this.$store
-          .dispatch("goodstanding/editGoodstandingLicense", license)
-          .then((res) => {
-            if (res.data.status == "Success") {
-              this.showFlash = true;
-              this.showLoading = false;
-              setTimeout(() => {
+          id: this.draftId,
+        };
+        if (this.draftId != undefined) {
+          this.$store
+            .dispatch("goodstanding/editGoodstandingLicense", license)
+            .then((res) => {
+              if (res.data.status == "Success") {
+                this.showFlash = true;
+                this.showLoading = false;
+                setTimeout(() => {
+                  this.$router.push({ path: "/menu" });
+                }, 1500);
+              } else {
+                this.showErrorFlash = true;
+              }
+            });
+        } else {
+          this.$store
+            .dispatch("goodstanding/addGoodstandingLicense", license.data)
+            .then((res) => {
+              if (res.data.status == "Success") {
+                this.showFlash = true;
+                this.showLoading = false;
+                setTimeout(() => {}, 1500);
                 this.$router.push({ path: "/menu" });
-              }, 1500);
-            } else {
-              this.showErrorFlash = true;
-            }
-          });
-      } else {
-        this.$store
-          .dispatch("goodstanding/addGoodstandingLicense", license.data)
-          .then((res) => {
-            if (res.data.status == "Success") {
-              this.showFlash = true;
-              this.showLoading = false;
-              setTimeout(() => {}, 1500);
-              this.$router.push({ path: "/menu" });
-            }
-          });
+              }
+            });
+        }
       }
     },
     update(action) {
@@ -740,34 +746,41 @@ export default {
       });
     },
     submit() {
-      let license = {
-        applicantId: this.licenseInfo.applicantId,
-        applicantTypeId: this.licenseInfo.applicantTypeId,
-        residenceWoredaId: this.licenseInfo.residenceWoredaId,
-        applicantTitle: this.licenseInfo.applicantTitle,
-        whomGoodStandingFor: this.licenseInfo.whomGoodStandingFor,
-        licenseIssuedDate:
-          this.licenseInfo.licenseIssuedDate + " 17:23:50.228+01",
-        whoIssued: this.licenseInfo.whoIssued,
-        licenseRegistrationNumber: this.licenseInfo.licenseRegistrationNumber,
-        applicantPositionId: this.licenseInfo.applicantPositionId,
-        professionalTypeIds: this.licenseInfo.professionalTypeIds,
-        expertLevelId: this.licenseInfo.expertLevelId,
-        otherProfessionalType: this.licenseInfo.otherProfessionalType,
-        regionId: this.regionID,
-        zoneId: this.zoneID,
-        departmentId: this.licenseInfo.departmentId,
-      };
-      this.addressErrors = this.validateForm(license);
-      let empty = true;
-      // let empty = this.isEmpty(this.addressErrors);
-      // if (empty == false) {
-      //   return;
-      // }
-      if (empty == true) {
-        this.$emit("changeActiveState");
-        this.$emit("applicantTypeValue", this.licenseInfo.applicantTypeId);
-        this.$store.dispatch("goodstanding/setLicense", license);
+      this.licenseInfoErrors = this.validateForm(this.licenseInfo);
+      if (
+        this.licenseInfoErrors &&
+        Object.keys(this.licenseInfoErrors).length === 0 &&
+        Object.getPrototypeOf(this.licenseInfoErrors) === Object.prototype
+      ) {
+        let license = {
+          applicantId: this.licenseInfo.applicantId,
+          applicantTypeId: this.licenseInfo.applicantTypeId,
+          residenceWoredaId: this.licenseInfo.residenceWoredaId,
+          applicantTitle: this.licenseInfo.applicantTitle,
+          whomGoodStandingFor: this.licenseInfo.whomGoodStandingFor,
+          licenseIssuedDate:
+            this.licenseInfo.licenseIssuedDate + " 17:23:50.228+01",
+          whoIssued: this.licenseInfo.whoIssued,
+          licenseRegistrationNumber: this.licenseInfo.licenseRegistrationNumber,
+          applicantPositionId: this.licenseInfo.applicantPositionId,
+          professionalTypeIds: this.licenseInfo.professionalTypeIds,
+          expertLevelId: this.licenseInfo.expertLevelId,
+          otherProfessionalType: this.licenseInfo.otherProfessionalType,
+          regionId: this.regionID,
+          zoneId: this.zoneID,
+          departmentId: this.licenseInfo.departmentId,
+        };
+        this.addressErrors = this.validateForm(license);
+        let empty = true;
+        // let empty = this.isEmpty(this.addressErrors);
+        // if (empty == false) {
+        //   return;
+        // }
+        if (empty == true) {
+          this.$emit("changeActiveState");
+          this.$emit("applicantTypeValue", this.licenseInfo.applicantTypeId);
+          this.$store.dispatch("goodstanding/setLicense", license);
+        }
       }
     },
     fetchApplicantType() {
@@ -871,22 +884,15 @@ export default {
     },
     validateForm(formData) {
       const errors = {};
-      if (!formData.residenceWoredaId) errors.woreda = "Woreda Required";
-      if (!formData.applicantTitle)
-        errors.applicantTitle = "Applicant Title Required";
-      if (!formData.whomGoodStandingFor)
-        errors.whomGoodStandingFor = "Whom Goodstanding Required";
-      if (!formData.licenseIssuedDate)
-        errors.licenseIssuedDate = "License Issued Date Required";
-      if (!formData.whoIssued) errors.whoIssued = "Issuer Required";
-      if (!formData.licenseRegistrationNumber)
-        errors.licenseRegistrationNumber =
-          "License Registration Number Required";
-      if (!formData.applicantPositionId)
-        errors.applicantPositionId = "Applicant Position Required";
-      if (!formData.residenceWoredaId)
-        errors.residenceWoredaId = "Woreda Required";
-
+      if (formData.applicantTypeId == null) {
+        errors.applicantTypeId = "Applicant Type Required";
+      }
+      if (formData.departmentId == null) {
+        errors.departmentId = "Department Required";
+      }
+      if (formData.institutionId == null) {
+        errors.institutionId = "Institution Required";
+      }
       return errors;
     },
 
@@ -913,20 +919,6 @@ export default {
       this.licenseInfo.professionalTypeIds = draftData.professionalTypeIds;
       this.licenseInfo.departmentId = draftData.departmentId;
       this.licenseInfo.expertLevelId = draftData.expertLevelId;
-      if (this.licenseInfo.departmentId != "") {
-        this.showProfessionalTypes = true;
-        await this.fetchProfessionalType(this.licenseInfo.departmentId);
-        this.professionalTypes.map((profData) => {
-          for (var j = 0; j < draftData.professionalTypes.length; j++) {
-            if (
-              profData.id == draftData.professionalTypes[j].professionalTypeId
-            ) {
-              profData.checked = true;
-            }
-          }
-          return profData;
-        });
-      }
       if (this.licenseInfo.applicantTypeId == 1) {
         this.$store.dispatch("goodstanding/getExpertLevel").then((res) => {
           this.expertLevels = res.data.data.filter(function(e) {
@@ -955,6 +947,41 @@ export default {
           ) {
             this.regionID = draftData.woreda.zone.region.id;
           }
+        }
+      }
+      if (this.licenseInfo.departmentId != "") {
+        this.showProfessionalTypes = true;
+        await this.fetchProfessionalType(this.licenseInfo.departmentId);
+        this.showOtherProfession = false;
+        for (var k = 0; k < draftData.professionalTypes.length; k++) {
+          if (
+            draftData.professionalTypes[k].professionalTypes.name == "Other"
+          ) {
+            this.showOtherProfession = true;
+            break;
+          }
+        }
+        this.professionalTypes.map((profData) => {
+          for (var j = 0; j < draftData.professionalTypes.length; j++) {
+            if (
+              profData.id == draftData.professionalTypes[j].professionalTypeId
+            ) {
+              profData.checked = true;
+            }
+            if (profData.name == "Other") {
+              this.showOtherProfession = true;
+            } else {
+              this.showOtherProfession = false;
+            }
+          }
+          return profData;
+        });
+      }
+      if (draftData.professionalTypes.length > 0) {
+        for (var k = 0; k <= draftData.professionalTypes.length; k++) {
+          this.licenseInfo.professionalTypeIds.push(
+            draftData.professionalTypes[k].professionalTypeId
+          );
         }
       }
       this.$store
