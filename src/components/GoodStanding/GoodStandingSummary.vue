@@ -304,7 +304,14 @@
         <button @click="submitBack">
           Back
         </button>
-        <button disabled @click="draft('UpdateEvent')" variant="outline">
+        <button
+          id="reapplyButton"
+          style="opacity: 0.3"
+          :disabled="this.checkBoxValue == true"
+          disabled
+          @click="draft('UpdateEvent')"
+          variant="outline"
+        >
           Re-apply
         </button>
         <button @click="update(this.buttons[1].action)" variant="outline">
@@ -451,12 +458,22 @@ export default {
   methods: {
     checkBox: function() {
       this.checkBoxValue = !this.checkBoxValue;
-      if (this.checkBoxValue) {
-        var element = document.getElementById("subButton");
-        element.style.opacity = 0.3;
+      if (this.draftStatus == "DEC" || this.draftStatus == "CONF") {
+        if (this.checkBoxValue) {
+          var element = document.getElementById("reapplyButton");
+          element.style.opacity = 0.3;
+        } else {
+          var element = document.getElementById("reapplyButton");
+          element.style.opacity = 1;
+        }
       } else {
-        var element = document.getElementById("subButton");
-        element.style.opacity = 1;
+        if (this.checkBoxValue) {
+          var element = document.getElementById("subButton");
+          element.style.opacity = 0.3;
+        } else {
+          var element = document.getElementById("subButton");
+          element.style.opacity = 1;
+        }
       }
     },
     moment: function(date) {
