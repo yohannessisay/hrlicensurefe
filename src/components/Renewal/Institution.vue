@@ -427,13 +427,14 @@ export default {
           );
         }
       }
-    } else {
+    } else if (this.$route.params.id != undefined) {
       this.draftId = this.$route.params.id;
       if (this.draftId != undefined) {
         setTimeout(() => {
           this.fetchDraft();
         }, 6500);
       }
+    } else {
     }
     this.fetchApplicantType();
     this.fetchDepartments();
