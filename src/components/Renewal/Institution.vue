@@ -640,6 +640,7 @@ export default {
     },
 
     draft(action) {
+      console.log(this.licenseInfo);
       this.licenseInfoErrors = this.validateForm(this.licenseInfo);
       if (
         this.licenseInfoErrors &&
@@ -1036,10 +1037,10 @@ export default {
       if (formData.applicantTypeId == null) {
         errors.applicantTypeId = "Applicant Type Required";
       }
-      if (formData.departmentId == null) {
+      if (formData.education.departmentId == null) {
         errors.departmentId = "Department Required";
       }
-      if (formData.institutionId == null) {
+      if (formData.education.institutionId == null) {
         errors.institutionId = "Institution Required";
       }
       return errors;
@@ -1051,7 +1052,6 @@ export default {
           return false;
         }
       }
-
       return true;
     },
     async fetchDraft() {

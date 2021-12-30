@@ -887,10 +887,10 @@ export default {
       if (formData.applicantTypeId == null) {
         errors.applicantTypeId = "Applicant Type Required";
       }
-      if (formData.departmentId == null) {
+      if (formData.education.departmentId == null) {
         errors.departmentId = "Department Required";
       }
-      if (formData.institutionId == null) {
+      if (formData.education.institutionId == null) {
         errors.institutionId = "Institution Required";
       }
       return errors;
