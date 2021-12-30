@@ -265,7 +265,7 @@
               </h6>
             </div>
             <div class="flex justify-center mt-8 mb-8">
-              <button variant="outline">I will finish Later</button>
+              <button variant="outline" @click="backButton">back</button>
             </div>
           </div>
         </div>
@@ -559,6 +559,11 @@ export default {
         "/admin/evaluate/" + applicationType.value + "/" + licenseId.value
       );
     };
+    const backButton = () => {
+      router.push(
+        "/admin/review"
+      )
+    }
 
     onMounted(() => {
       loggedInAdminId = +localStorage.getItem("adminId");
@@ -604,6 +609,7 @@ export default {
       gen,
       transferReview,
       expertLevelId,
+      backButton,
     };
   },
 
