@@ -888,11 +888,8 @@ export default {
       if (formData.applicantTypeId == null) {
         errors.applicantTypeId = "Applicant Type Required";
       }
-      if (formData.education.departmentId == null) {
+      if (formData.departmentId == null) {
         errors.departmentId = "Department Required";
-      }
-      if (formData.education.institutionId == null) {
-        errors.institutionId = "Institution Required";
       }
       return errors;
     },
