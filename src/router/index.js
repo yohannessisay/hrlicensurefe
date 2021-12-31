@@ -875,12 +875,6 @@ const router = createRouter({
 });
 router.beforeEach(async (to, from, next) => {
   const auth = localStorage.getItem("token");
-  const routerUse = useRouter()
-  console.log("to.path = ", to.path, "from.path=", from.path, "this.route", routerUse)
-  // if (to.path !== "/admin/create" && from.path == "/admin/create") {
-    
-  //   next("/admin")
-  // }
   if (to.matched.some((record) => record.meta.RedirectExternalUrl)) {
     const url = to.meta.RedirectExternalUrl;
     window.open(url, "_blank");

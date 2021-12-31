@@ -81,7 +81,11 @@
                         class="flex flex-row"
                       >
                         <b>{{
-                          professions.professionalTypes.amharicProfessionalType
+                          professions.professionalTypes
+                            .amharicProfessionalType === "ሌላ"
+                            ? ""
+                            : professions.professionalTypes
+                                .amharicProfessionalType
                         }}</b>
                       </div>
                     </h4>
@@ -161,7 +165,13 @@
                               ? "(" + professions.prefix + ")"
                               : ""
                           }}
-                          {{ professions.professionalTypes.name }}</b
+                          {{
+                            professions.professionalTypes.code === "OTH"
+                              ? certificateDetail.otherProfessionalType
+                                ? certificateDetail.otherProfessionalType
+                                : ""
+                              : professions.professionalTypes.name
+                          }}</b
                         >
                       </div>
                     </h4>
@@ -444,7 +454,6 @@ export default {
           certificateDetail.value.professionalTypePrefixes[i].professionalTypes
             .name
         }`;
-        console.log("length is ", doc.getTextWidth(professionPrefix));
         let getLength = doc.getTextWidth(professionPrefix);
         if (getLength > 125 && getLength <= 132) {
           if (!changeWidthTooSmall.value) {
@@ -485,7 +494,12 @@ export default {
                     : ""
                 }   ${
                   certificateDetail.value.professionalTypePrefixes[i]
-                    .professionalTypes.name
+                    .professionalTypes.code === "OTH"
+                    ? certificateDetail.value.otherProfessionalType
+                      ? certificateDetail.value.otherProfessionalType
+                      : ""
+                    : certificateDetail.value.professionalTypePrefixes[i]
+                        .professionalTypes.name
                 }`
               : ""
           }`
@@ -538,9 +552,13 @@ export default {
           xPosition.value,
           professionPossition + i * professionListGap,
           `${
-            certificateDetail.value.professionalTypes[i].professionalTypes.name
+            certificateDetail.value.professionalTypes[i].professionalTypes
+              .amharicProfessionalType
               ? certificateDetail.value.professionalTypes[i].professionalTypes
-                  .amharicProfessionalType
+                  .amharicProfessionalType === "ሌላ"
+                ? ""
+                : certificateDetail.value.professionalTypes[i].professionalTypes
+                    .amharicProfessionalType
               : ""
           }`
         );
