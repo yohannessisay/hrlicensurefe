@@ -446,13 +446,14 @@ export default {
           );
         }
       }
-    } else {
+    } else if (this.$route.params.id != undefined) {
       this.draftId = this.$route.params.id;
       if (this.draftId != undefined) {
         setTimeout(() => {
           this.fetchDraft();
         }, 6500);
       }
+    } else {
     }
     this.fetchApplicantType();
     this.fetchDepartments();
@@ -887,11 +888,8 @@ export default {
       if (formData.applicantTypeId == null) {
         errors.applicantTypeId = "Applicant Type Required";
       }
-      if (formData.education.departmentId == null) {
+      if (formData.departmentId == null) {
         errors.departmentId = "Department Required";
-      }
-      if (formData.education.institutionId == null) {
-        errors.institutionId = "Institution Required";
       }
       return errors;
     },
