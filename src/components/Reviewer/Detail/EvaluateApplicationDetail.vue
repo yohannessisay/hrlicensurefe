@@ -305,6 +305,8 @@ export default {
       .expertLevelId;
 
     let isCurrentAdminEvaluator = ref(false);
+    let expertLevelId = JSON.parse(localStorage.getItem("allAdminData"))
+      .expertLevelId;
 
     let evaluators = ref({
       actionEvent: "",
@@ -508,7 +510,11 @@ export default {
       licenseId,
       showLoading,
       evaluators,
+<<<<<<< HEAD
       expertLevelId
+=======
+      expertLevelId,
+>>>>>>> ce0c407bea0b81019faec618ac37ed4cbecdd556
     };
   },
 

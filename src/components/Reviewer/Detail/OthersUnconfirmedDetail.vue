@@ -350,6 +350,9 @@ export default {
     let userId = +localStorage.getItem("userId");
 
     let regionId = JSON.parse(localStorage.getItem("allAdminData")).regionId;
+    
+    let expertLevelId = JSON.parse(localStorage.getItem("allAdminData"))
+          .expertLevelId;
 
     let expertLevelId = JSON.parse(localStorage.getItem("allAdminData"))
       .expertLevelId;
@@ -683,7 +686,11 @@ export default {
       gen,
       assignAdminToConfirm,
       previousEvaluators,
+<<<<<<< HEAD
       expertLevelId,
+=======
+      expertLevelId
+>>>>>>> ce0c407bea0b81019faec618ac37ed4cbecdd556
     };
   },
 
