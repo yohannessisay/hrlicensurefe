@@ -1188,6 +1188,7 @@ export default {
             profileInfo.value = newLicense.value.applicant.profile;
             buttons.value = res.data.data.applicationStatus.buttons;
             docs.value = res.data.data.documents;
+            fetchDocumentTypes();
             for (
               let i = 0;
               i < newLicense.value.professionalTypes.length;
@@ -1256,6 +1257,7 @@ export default {
                 : (button.name = "-");
             });
             docs.value = res.data.data.documents;
+            fetchDocumentTypes();
             for (
               let i = 0;
               i < newLicense.value.professionalTypes.length;
@@ -1320,6 +1322,7 @@ export default {
                 : (button.name = "-");
             });
             docs.value = res.data.data.documents;
+            fetchDocumentTypes();
             for (
               let i = 0;
               i < newLicense.value.professionalTypes.length;
@@ -1372,6 +1375,7 @@ export default {
             profileInfo.value = newLicense.value.applicant.profile;
             buttons.value = res.data.data.applicationStatus.buttons;
             docs.value = res.data.data.documents;
+            fetchDocumentTypes();
             for (
               let i = 0;
               i < newLicense.value.professionalTypes.length;
@@ -1421,6 +1425,7 @@ export default {
     const fetchDocumentTypes = async () => {
       store.dispatch("reviewer/getDocumentTypes").then((res) => {
         documentTypes.value = res.data.data;
+        findDocumentType(documentTypes.value, docs.value[0]);
       });
     };
     const next = (doc) => {
@@ -2045,8 +2050,6 @@ export default {
 
     onMounted(() => {
       created(route.params.applicationType, route.params.applicationId);
-      fetchDocumentTypes();
-      findDocumentType(documentTypes.value, docs.value[0]);
     });
     return {
       isPdf,
