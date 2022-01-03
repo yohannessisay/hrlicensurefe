@@ -125,10 +125,10 @@
             </div>
           </div>
 
-          <div class="flex justify-start">
+          <div class="flex justify-start" v-if="expertLevelId != 3">
             <Title message="Address" />
           </div>
-          <div class="flex flex-row">
+          <div class="flex flex-row" v-if="expertLevelId != 3">
             <div
               :class="[
                 license.woreda === null
@@ -350,6 +350,9 @@ export default {
     let userId = +localStorage.getItem("userId");
 
     let regionId = JSON.parse(localStorage.getItem("allAdminData")).regionId;
+    
+    let expertLevelId = JSON.parse(localStorage.getItem("allAdminData"))
+          .expertLevelId;
 
     let role = ref({});
 
@@ -680,6 +683,7 @@ export default {
       gen,
       assignAdminToConfirm,
       previousEvaluators,
+      expertLevelId
     };
   },
 

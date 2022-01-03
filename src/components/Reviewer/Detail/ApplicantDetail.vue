@@ -86,10 +86,10 @@
               </h5>
             </div>
           </div>
-          <div class="flex justify-start">
+          <div class="flex justify-start" v-if="expertLevelId != 3">
             <Title message="Address" />
           </div>
-          <div class="flex flex-row">
+          <div class="flex flex-row" v-if="expertLevelId != 3">
             <div
               :class="[
                 license.woreda === null
@@ -312,6 +312,8 @@ export default {
     let getReviewId = ref(0);
 
     let loggedInAdminId = +localStorage.getItem("adminId");
+    let expertLevelId = JSON.parse(localStorage.getItem("allAdminData"))
+      .expertLevelId;
 
     const created = async (applicationTypeName, applicationId, applicantId) => {
       licenseId.value = applicationId;
@@ -435,6 +437,7 @@ export default {
       applicationType,
       licenseId,
       showLoading,
+      expertLevelId,
     };
   },
 
