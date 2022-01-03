@@ -87,10 +87,10 @@
             </div>
           </div>
 
-          <div class="flex justify-start">
+          <div class="flex justify-start" v-if="expertLevelId != 3">
             <Title message="Address" />
           </div>
-          <div class="flex flex-row">
+          <div class="flex flex-row" v-if="expertLevelId != 3">
             <div
               :class="[
                 license.woreda === null
@@ -267,6 +267,9 @@ export default {
     let showLoading = ref(false);
     let isUserApproved = ref(false);
 
+    const expertLevelId = JSON.parse(localStorage.getItem("allAdminData"))
+      .expertLevelId;
+
     let license = ref({
       applicant: {},
       applicantType: {},
@@ -428,6 +431,7 @@ export default {
       applicationType,
       licenseId,
       isUserApproved,
+      expertLevelId,
     };
   },
 };
