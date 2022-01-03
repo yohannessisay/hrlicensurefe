@@ -129,10 +129,10 @@
             </div>
           </div>
 
-          <div class="flex justify-start">
+          <div class="flex justify-start" v-if="expertLevelId != 3">
             <Title message="Address" />
           </div>
-          <div class="flex flex-row">
+          <div class="flex flex-row" v-if="expertLevelId != 3">
             <div
               :class="[
                 license.woreda === null
@@ -351,6 +351,8 @@ export default {
     let admins = ref({});
 
     let regionId = JSON.parse(localStorage.getItem("allAdminData")).regionId;
+    let expertLevelId = JSON.parse(localStorage.getItem("allAdminData"))
+      .expertLevelId;
 
     let transfer = ref({
       reviewerId: "",
@@ -647,6 +649,7 @@ export default {
       transferReview,
       created,
       evaluate,
+      expertLevelId,
     };
   },
 };

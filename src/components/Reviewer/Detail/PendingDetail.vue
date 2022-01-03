@@ -87,10 +87,10 @@
             </div>
           </div>
 
-          <div class="flex justify-start">
+          <div class="flex justify-start" v-if="expertLevelId != 3">
             <Title message="Address" />
           </div>
-          <div class="flex flex-row">
+          <div class="flex flex-row" v-if="expertLevelId != 3">
             <div
               :class="[
                 profileInfo.woreda.zone.region === null
@@ -280,6 +280,10 @@ export default {
     const route = useRoute();
 
     let userId = +localStorage.getItem("userId");
+
+    let expertLevelId = JSON.parse(localStorage.getItem("allAdminData"))
+      .expertLevelId;
+
     let show = ref(false);
     let showLoading = ref(false);
     let license = ref({
@@ -464,6 +468,7 @@ export default {
       applicationType,
       licenseId,
       showLoading,
+      expertLevelId,
     };
   },
 
