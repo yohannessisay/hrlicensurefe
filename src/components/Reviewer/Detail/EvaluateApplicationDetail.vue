@@ -305,8 +305,6 @@ export default {
       .expertLevelId;
 
     let isCurrentAdminEvaluator = ref(false);
-    let expertLevelId = JSON.parse(localStorage.getItem("allAdminData"))
-      .expertLevelId;
 
     let evaluators = ref({
       actionEvent: "",

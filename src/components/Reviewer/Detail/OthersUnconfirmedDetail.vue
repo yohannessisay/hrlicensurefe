@@ -354,9 +354,6 @@ export default {
     let expertLevelId = JSON.parse(localStorage.getItem("allAdminData"))
           .expertLevelId;
 
-    let expertLevelId = JSON.parse(localStorage.getItem("allAdminData"))
-      .expertLevelId;
-
     let role = ref({});
 
     let admins = ref({});
