@@ -86,7 +86,6 @@
               </h5>
             </div>
           </div>
-
           <div class="flex justify-start">
             <Title message="Address" />
           </div>
