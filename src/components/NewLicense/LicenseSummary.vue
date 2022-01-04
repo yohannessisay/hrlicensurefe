@@ -54,7 +54,9 @@
           <label class="ml-4 text-primary-300"> Nationality</label>
           <h5 class="ml-4">
             {{
-              this.profileInfo.nationality ? this.profileInfo.nationality.name : "-"
+              this.profileInfo.nationality
+                ? this.profileInfo.nationality.name
+                : "-"
             }}
           </h5>
         </div>
@@ -978,6 +980,12 @@ export default {
       this.$emit("changeActiveStateMinus");
     },
     checkRequiredDocs(id, educationLevel, payroll, language) {
+      console.log("id", id);
+      console.log("educationLevel", educationLevel);
+      console.log("payroll", payroll);
+      console.log("language", language);
+      console.log(this.passport !== null);
+
       if (
         educationLevel == "diploma" &&
         id == 1 &&
@@ -1076,12 +1084,15 @@ export default {
         this.professionalLicense !== "" &&
         this.renewedLicense !== ""
       ) {
-        if (language == "non-english" && this.englishLanguage !== "") {
-          return true;
-        }
-        if (language == "non-english" && this.englishLanguage == "") {
+        console.log("this.englishLanguage", this.englishLanguage);
+        if (language == "english" && this.englishLanguage !== "") {
           return false;
         }
+        // if (language == "english" && this.englishLanguage == "") {
+        //   console.log("second if");
+        //   return false;
+        // }
+        console.log("third if");
         return true;
       } else if (
         educationLevel == "degree" &&
@@ -1096,10 +1107,8 @@ export default {
         this.professionalLicense !== "" &&
         this.renewedLicense !== ""
       ) {
-        if (language == "non-english" && this.englishLanguage !== "") {
-          return true;
-        }
-        if (language == "non-english" && this.englishLanguage == "") {
+        
+        if (language == "english" && this.englishLanguage !== "") {
           return false;
         }
         return true;
@@ -1116,10 +1125,8 @@ export default {
         this.professionalLicense !== "" &&
         this.renewedLicense !== ""
       ) {
-        if (language == "non-english" && this.englishLanguage !== "") {
-          return true;
-        }
-        if (language == "non-english" && this.englishLanguage == "") {
+        
+        if (language == "english" && this.englishLanguage !== "") {
           return false;
         }
         return true;
@@ -1136,10 +1143,8 @@ export default {
         this.professionalLicense !== "" &&
         this.renewedLicense !== ""
       ) {
-        if (language == "non-english" && this.englishLanguage !== "") {
-          return true;
-        }
-        if (language == "non-english" && this.englishLanguage == "") {
+        
+        if (language == "english" && this.englishLanguage !== "") {
           return false;
         }
         return true;

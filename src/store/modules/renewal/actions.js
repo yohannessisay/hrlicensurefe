@@ -82,18 +82,7 @@ export default {
   setPayroll({ commit }, payroll) {
     commit(SET_PAYROLL, payroll);
   },
-  setButtons({ commit }, buttons) {
-    commit(SET_BUTTONS, buttons);
-  },
-  setApplicationId({ commit }, id) {
-    commit(SET_APPLICATION_ID, id);
-  },
-  setDocumentSpecs({ commit }, documentSpecs) {
-    commit(SET_DOCUMENT_SPEC, documentSpecs);
-  },
-  setDraft({ commit }, draft) {
-    commit(SET_DRAFT, draft);
-  },
+
   setPassport({ commit }, passport) {
     commit(SET_PASSPORT, passport);
   },
@@ -159,6 +148,18 @@ export default {
   },
   setPhdTranscript({ commit }, phdTranscript) {
     commit(SET_PHD_TRANSCRIPT, phdTranscript);
+  },
+  setButtons({ commit }, buttons) {
+    commit(SET_BUTTONS, buttons);
+  },
+  setApplicationId({ commit }, id) {
+    commit(SET_APPLICATION_ID, id);
+  },
+  setDocumentSpecs({ commit }, documentSpecs) {
+    commit(SET_DOCUMENT_SPEC, documentSpecs);
+  },
+  setDraft({ commit }, draft) {
+    commit(SET_DRAFT, draft);
   },
   async storeDeclinedFields({ commit }, fields) {
     commit(SET_DECLINED_FIELDS, fields);
