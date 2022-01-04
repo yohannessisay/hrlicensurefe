@@ -54,7 +54,7 @@
           <label class="ml-4 text-primary-300"> Nationality</label>
           <h5 class="ml-4">
             {{
-              this.profileInfo.nationality ? this.profileInfo.nationality : "-"
+              this.profileInfo.nationality ? this.profileInfo.nationality.name : "-"
             }}
           </h5>
         </div>

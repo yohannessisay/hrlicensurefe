@@ -176,7 +176,7 @@ export default {
           alternativeGrandFatherName: personalInfo.alternativeGrandFatherName,
           gender: personalInfo.gender,
           dateOfBirth: personalInfo.dateOfBirth,
-          nationality: personalInfo.nationalityId,
+          nationalityId: personalInfo.nationalityId,
           maritalStatusId: personalInfo.maritalStatusId,
           poBox: personalInfo.poBox,
           photo: personalInfo.photo,
