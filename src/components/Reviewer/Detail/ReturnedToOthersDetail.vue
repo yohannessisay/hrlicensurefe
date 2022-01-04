@@ -311,7 +311,7 @@ export default {
               education.value.institutionName =
                 license.value.education.institution.name;
               education.value.institutionTypeName =
-                license.value.education.institution.institutionType.name;
+                license.value.education.institution.name;
             }
           });
       }
@@ -334,7 +334,7 @@ export default {
               education.value.institutionName =
                 license.value.education.institution.name;
               education.value.institutionTypeName =
-                license.value.education.institution.institutionType.name;
+                license.value.education.institution.name;
             }
           });
       }
@@ -357,7 +357,7 @@ export default {
               education.value.institutionName =
                 license.value.education.institution.name;
               education.value.institutionTypeName =
-                license.value.education.institution.institutionType.name;
+                license.value.education.institution.name;
             }
           });
       }
@@ -380,7 +380,7 @@ export default {
               education.value.institutionName =
                 license.value.education.institution.name;
               education.value.institutionTypeName =
-                license.value.education.institution.institutionType.name;
+                license.value.education.institution.name;
             }
           });
       }

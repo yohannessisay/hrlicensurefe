@@ -64,7 +64,7 @@
               <h4 class="mt-2 ml-small w-1/2">
                 {{
                   "Institution Type:  " +
-                    newLicense.education.institution.institutionType.name
+                    newLicense.education.institution.name
                 }}
               </h4>
             </div>
