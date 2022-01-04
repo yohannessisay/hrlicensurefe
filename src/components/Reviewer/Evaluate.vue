@@ -326,7 +326,7 @@
                     <label class="ml-8 titleColors"> Nationality</label>
                     <h5 class="ml-8">
                       {{
-                        profileInfo.nationality ? profileInfo.nationality : "-"
+                        profileInfo.nationality ? profileInfo.nationality.name : "-"
                       }}
                     </h5>
                   </div>
@@ -1310,7 +1310,6 @@ export default {
             departmentId.value = res.data.data.education.department.id;
             getProfessionalTypesByDepartmentId(departmentId.value);
             profileInfo.value = newLicense.value.applicant.profile;
-            // buttons.value = res.data.data.applicationStatus.buttons;
             buttons.value = res.data.data.applicationStatus.buttons.filter(
               (allButtons) => {
                 return allButtons.name != "Under supervision";
@@ -1595,7 +1594,7 @@ export default {
         }, 4000);
         professionalTypeIdss.value = [];
         professionalTypePrefixes.value = [];
-        console.log("new license", newLicense.value)
+        console.log("new license", newLicense.value);
         return;
       }
 
@@ -1623,34 +1622,6 @@ export default {
         }
         loopCounter = 0;
       }
-      // newLicense.value.professionalTypePrefixes =
-      //   newLicense.value.professionalTypeIds.map((data) => {
-      //     for (
-      //       let index = 0;
-      //       index < newLicense.value.professionalTypePrefixes.length;
-      //       index++
-      //     ) {
-      //       const element =
-      //         newLicense.value.professionalTypePrefixes[index]
-      //           .professionalTypeId;
-
-      //       if (data != element) {
-      //         loopCounter++;
-      //       }
-      //     }
-
-      //     if (loopCounter == newLicense.value.professionalTypeIds.length) {
-      //       newLicense.value.professionalTypePrefixes.push({
-      //         professionalTypeId: data,
-      //         prefix: null
-      //       });
-      //       return true;
-      //     }
-
-      //     loopCounter = 0;
-
-      //     return newLicense.value.professionalTypePrefixes;
-      //   })[0];
 
       if (actionValue === "ApproveEvent") {
         if (newLicense.value.licenseExpirationDate === null) {
@@ -2028,13 +1999,25 @@ export default {
 
     const checkProfessionChanged = (previousProfessionType) => {
       let count = 0;
-      console.log(".length", previousProfessionType.length,"hanfe", professionalTypeIdss.value, "kasu eref", previousProfessionType, "sss", professionalTypeIdss.value.length)
+      console.log(
+        ".length",
+        previousProfessionType.length,
+        "hanfe",
+        professionalTypeIdss.value,
+        "kasu eref",
+        previousProfessionType,
+        "sss",
+        professionalTypeIdss.value.length
+      );
       if (previousProfessionType.length !== professionalTypeIdss.value.length) {
         return true;
       } else {
         for (let i = 0; i < previousProfessionType.length; i++) {
           for (let j = 0; j < previousProfessionType.length; j++) {
-            if (previousProfessionType[i].professionalTypeId != professionalTypeIdss.value[j]) {
+            if (
+              previousProfessionType[i].professionalTypeId !=
+              professionalTypeIdss.value[j]
+            ) {
               count++;
             }
           }

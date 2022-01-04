@@ -42,7 +42,7 @@
             >
               <label class="ml-8"> Nationality</label>
               <h5 class="ml-8">
-                {{ profileInfo.nationality ? profileInfo.nationality : "-" }}
+                {{ profileInfo.nationality ? profileInfo.nationality.name : "-" }}
               </h5>
             </div>
             <div
@@ -139,34 +139,6 @@
               <label class="ml-8"> Wereda</label>
               <h5 class="ml-8">
                 {{ license.woreda ? license.woreda.name : "-" }}
-              </h5>
-            </div>
-            <div
-              :class="[profileInfo.kebele === null ? errorClass : activeClass]"
-            >
-              <label class="ml-8"> Kebele</label>
-              <h5 class="ml-8">
-                {{ profileInfo.kebele ? profileInfo.kebele : "-" }}
-              </h5>
-            </div>
-            <div
-              :class="[
-                profileInfo.houseNumber === null ? errorClass : activeClass,
-              ]"
-            >
-              <label class="ml-8"> House Number</label>
-              <h5 class="ml-8">
-                {{ profileInfo.houseNumber ? profileInfo.houseNumber : "-" }}
-              </h5>
-            </div>
-            <div
-              :class="[
-                profileInfo.residence === null ? errorClass : activeClass,
-              ]"
-            >
-              <label class="ml-8"> Residence</label>
-              <h5 class="ml-8">
-                {{ profileInfo.residence ? profileInfo.residence : "-" }}
               </h5>
             </div>
           </div>

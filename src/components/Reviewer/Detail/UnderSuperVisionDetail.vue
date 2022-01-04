@@ -42,7 +42,7 @@
             >
               <label class="ml-8"> Nationality</label>
               <h5 class="ml-8">
-                {{ profileInfo.nationality ? profileInfo.nationality : "-" }}
+                {{ profileInfo.nationality ? profileInfo.nationality.name : "-" }}
               </h5>
             </div>
             <div
