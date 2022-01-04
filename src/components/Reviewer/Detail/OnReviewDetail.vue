@@ -208,6 +208,12 @@
                 {{ evaluator.actionEvent ?  evaluator.actionEvent: "Not Started"}}
               </h5>
             </div>
+            <div>
+              <label class="ml-8"> Remark? </label>
+              <h5 class="ml-8" v-for="evaluator in evaluators">
+                {{ evaluator.remark ?  evaluator.remark: ""}}
+              </h5>
+            </div>
           </div>
           <div class="flex justify-start flex-wrap"></div>
         </div>

@@ -235,13 +235,32 @@
               </h5>
             </div>
           </div>
+          <div v-if="license.applicationStatus.code === 'RETREV'">
+          <div class="flex justify-start">
+            <Title message="Status" />
+          </div>
+          <div class="flex flex-row" >
+            <div>
+              <label class="ml-8"> Evaluator's Name</label>
+              <h5 class="ml-8" v-for="evaluator in evaluators">
+                {{ evaluator.evaluator.name ?  evaluator.evaluator.name: "Not Found"}}
+              </h5>
+            </div>
+            <div>
+              <label class="ml-8"> Action</label>
+              <h5 class="ml-8" v-for="evaluator in evaluators">
+                {{ evaluator.actionEvent ?  evaluator.actionEvent: "Not Started"}}
+              </h5>
+            </div>
+            <div>
+              <label class="ml-8"> Remark? </label>
+              <h5 class="ml-8" v-for="evaluator in evaluators">
+                {{ evaluator.remark ?  evaluator.remark: ""}}
+              </h5>
+            </div>
+          </div>
+          </div>
           <div class="flex justify-start flex-wrap">
-            <!-- <div v-for="file in docs" v-bind:key="file.id">
-              <Title class="" :message="file.fieldName" />
-              <picture>
-                <img :src="basePath + file.filePath" />
-              </picture>
-            </div> -->
           </div>
           <div v-if="reviewerId == loggedInAdminId">
             <div class="mt-12 flex justify-center">
@@ -315,6 +334,8 @@ export default {
     let regionId = JSON.parse(localStorage.getItem("allAdminData")).regionId;
     let expertLevelId = JSON.parse(localStorage.getItem("allAdminData"))
       .expertLevelId;
+
+    let evaluators = ref([]);
 
     let transfer = ref({
       reviewerId: "",
@@ -479,6 +500,7 @@ export default {
             showLoading.value = false;
             license.value = res.data.data;
             reviewerId.value = license.value.reviewerId;
+            evaluators.value = license.value.evaluators;
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
             // applicantId.value = license.value.applicantId;
@@ -502,6 +524,7 @@ export default {
             showLoading.value = false;
             license.value = res.data.data;
             reviewerId.value = license.value.reviewerId;
+            evaluators.value = license.value.evaluators;
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
             // applicantId.value = license.value.applicantId;
@@ -517,6 +540,7 @@ export default {
             showLoading.value = false;
             license.value = res.data.data;
             reviewerId.value = license.value.reviewerId;
+            evaluators.value = license.value.evaluators;
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
             // applicantId.value = license.value.applicantId.toString();
@@ -541,6 +565,7 @@ export default {
             showLoading.value = false;
             license.value = res.data.data;
             reviewerId.value = license.value.reviewerId;
+            evaluators.value = license.value.evaluators;
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
             // applicantId.value = license.value.applicantId;
@@ -611,7 +636,8 @@ export default {
       transferReview,
       created,
       evaluate,
-      expertLevelId
+      expertLevelId,
+      evaluators
     };
   },
 };
