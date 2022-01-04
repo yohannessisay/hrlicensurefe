@@ -370,6 +370,13 @@ const routes = [
   },
   {
     path:
+      "/admin/on-review-detail/:applicationType/:applicationId/:applicantId",
+    name: "onReviewDetail",
+    component: () =>
+      import("../components/Reviewer/Detail/OnReviewDetail.vue"),
+  },
+  {
+    path:
       "/admin/newlicense-document/:newLicenseApplicationId/:newLicenseApplicantId/:renewalApplicationId/:renewalApplicantId",
     name: "newlicenseDocuments",
     component: () =>
