@@ -72,7 +72,9 @@
           <label class="ml-4 text-primary-300"> Nationality</label>
           <h5 class="ml-4">
             {{
-              this.profileInfo.nationality ? this.profileInfo.nationality.name : "-"
+              this.profileInfo.nationality
+                ? this.profileInfo.nationality.name
+                : "-"
             }}
           </h5>
         </div>
@@ -404,6 +406,7 @@ export default {
     this.buttons = this.getButtons;
 
     this.otherProfessionalType = this.license.otherProfessionalType;
+    this.departmentId = this.license.departmentId;
   },
   data: () => ({
     basePath: "https://storage.googleapis.com/hris-lisence-dev/",
@@ -416,10 +419,7 @@ export default {
     profileInfo: {},
     applicantId: "",
     applicantTypeId: "",
-    education: {
-      departmentId: "",
-      institutionId: "",
-    },
+    departmentId: "",
     professionalTypeIds: "",
     expertLevelId: "",
     otherProfessionalType: null,
@@ -493,7 +493,7 @@ export default {
         .then((res) => {
           setTimeout(() => {
             this.profileInfo = res.data.data;
-            
+
             this.show = true;
             this.showLoading2 = false;
           }, 10000);
@@ -568,6 +568,7 @@ export default {
           action: action,
           data: {
             applicantId: this.licenseInfo.applicantId,
+            applicantTypeId: this.license.applicantTypeId,
             residenceWoredaId: this.licenseInfo.residenceWoredaId,
             applicantTitle: this.licenseInfo.applicantTitle,
             whomGoodStandingFor: this.licenseInfo.whomGoodStandingFor,
@@ -580,6 +581,7 @@ export default {
             expertLevelId: this.expertLevelId,
             islegal: this.checkBoxValue,
             otherProfessionalType: this.otherProfessionalType,
+            departmentId: this.departmentId,
           },
         };
         this.$store
@@ -663,6 +665,7 @@ export default {
           action: action,
           data: {
             applicantId: this.licenseInfo.applicantId,
+            applicantTypeId: this.license.applicantTypeId,
             residenceWoredaId: this.licenseInfo.residenceWoredaId,
             applicantTitle: this.licenseInfo.applicantTitle,
             whomGoodStandingFor: this.licenseInfo.whomGoodStandingFor,
@@ -675,6 +678,7 @@ export default {
             expertLevelId: this.licenseInfo.expertLevel,
             islegal: this.checkBoxValue,
             otherProfessionalType: this.otherProfessionalType,
+            departmentId: this.departmentId,
           },
         };
         this.$store
@@ -709,6 +713,7 @@ export default {
           action: action,
           data: {
             applicantId: this.licenseInfo.applicantId,
+            applicantTypeId: this.license.applicantTypeId,
             residenceWoredaId: this.licenseInfo.residenceWoredaId,
             applicantTitle: this.licenseInfo.applicantTitle,
             whomGoodStandingFor: this.licenseInfo.whomGoodStandingFor,
@@ -721,6 +726,7 @@ export default {
             expertLevelId: this.licenseInfo.expertLevel,
             islegal: this.checkBoxValue,
             otherProfessionalType: this.otherProfessionalType,
+            departmentId: this.departmentId,
           },
         },
         id: this.draftId,
