@@ -320,6 +320,7 @@ export default {
     const route = useRoute();
 
     let userId = +localStorage.getItem("userId");
+    let loggedInAdminId = +localStorage.getItem("adminId");
 
     let regionId = JSON.parse(localStorage.getItem("allAdminData")).regionId;
     
@@ -377,8 +378,6 @@ export default {
 
     let getReviewId = ref(0);
 
-    let loggedInAdminId = +localStorage.getItem("adminId");
-
     const fetchRole = (id) => {
       store.dispatch("reviewer/getRoles", id).then((res) => {
         role.value = res.data.data.role;
@@ -387,16 +386,17 @@ export default {
 
     const fetchAdmins = () => {
       store.dispatch("reviewer/getAdmins").then((res) => {
-        admins.value = res.data.data;
+        admins.value = res.data.data.filter(e => {
+          return e.id !== loggedInAdminId;
+        });
       });
     };
 
     const fetchAdminsByRegion = (regionId) => {
       store.dispatch("reviewer/getAdminsByRegion", regionId).then((res) => {
-        admins.value = res.data.data;
-        // admins.value = res.data.data.filter((admins) => {
-        //   return admins.id != loggedInAdminId;
-        // });
+        admins.value = res.data.data.filter(e => {
+          return e.id !== loggedInAdminId;
+        });
       });
     };
 
@@ -535,7 +535,7 @@ export default {
               education.value.institutionName =
                 license.value.education.institution.name;
               education.value.institutionTypeName =
-                license.value.education.institution.name;
+                license.value.education.institution.institutionType.name;
             }
           });
       }
@@ -558,7 +558,7 @@ export default {
               education.value.institutionName =
                 license.value.education.institution.name;
               education.value.institutionTypeName =
-                license.value.education.institution.name;
+                license.value.education.institution.institutionType.name;
             }
           });
       }
@@ -581,7 +581,7 @@ export default {
               education.value.institutionName =
                 license.value.education.institution.name;
               education.value.institutionTypeName =
-                license.value.education.institution.name;
+                license.value.education.institution.institutionType.name;
             }
           });
       }
@@ -605,7 +605,7 @@ export default {
               education.value.institutionName =
                 license.value.education.institution.name;
               education.value.institutionTypeName =
-                license.value.education.institution.name;
+                license.value.education.institution.institutionType.name;
             }
           });
       }
