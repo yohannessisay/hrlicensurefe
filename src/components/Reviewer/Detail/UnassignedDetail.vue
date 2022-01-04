@@ -87,16 +87,6 @@
             </div>
             <div
               :class="[
-                profileInfo.placeOfBirth === null ? errorClass : activeClass,
-              ]"
-            >
-              <label class="ml-8"> Place of Birth</label>
-              <h5 class="ml-8">
-                {{ profileInfo.placeOfBirth ? profileInfo.placeOfBirth : "-" }}
-              </h5>
-            </div>
-            <div
-              :class="[
                 profileInfo.dateOfBirth === null ? errorClass : activeClass,
               ]"
             >
