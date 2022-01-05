@@ -624,7 +624,11 @@ export default {
 
     draft(action) {
       this.licenseInfoErrors = this.validateForm(this.licenseInfo);
-      if (this.getLicense && Object.keys(this.getLicense).length != 0) {
+      if (
+        this.licenseInfoErrors &&
+        Object.keys(this.licenseInfoErrors).length === 0 &&
+        Object.getPrototypeOf(this.licenseInfoErrors) === Object.prototype
+      ) {
         this.showLoading = true;
         let actionEvent = "";
         if (this.licenseInfo.professionalTypeIds.length <= 0) {
@@ -658,6 +662,7 @@ export default {
           },
           id: this.draftId,
         };
+        console.log(license);
 
         if (this.draftId != undefined) {
           this.$store
