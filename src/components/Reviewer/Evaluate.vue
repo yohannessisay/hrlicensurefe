@@ -79,6 +79,7 @@
                 <h4 class="text-left detailTitle">Department:</h4>
                 <h4 class="text-left ml-3">
                   {{
+                    newLicense.department ? newLicense.department.name :
                     newLicense.education
                       ? newLicense.education.department
                         ? newLicense.education.department.name
@@ -89,7 +90,7 @@
               </div>
             </div>
             <div class="flex justify-center items-center">
-              <div class="mt-2 mr-small w-1/2">
+              <div class="mt-2 mr-small w-1/2" v-if="!isGoodStanding">
                 <h4 class="text-left detailTitle">Institution:</h4>
                 <h4 class="text-left ml-3">
                   {{
@@ -102,7 +103,7 @@
                 </h4>
               </div>
 
-              <div class="mt-2 ml-small w-1/2">
+              <div class="mt-2 ml-small w-1/2" v-if="!isGoodStanding">
                 <h4 class="text-left detailTitle">Institution Type:</h4>
                 <h4 class="text-left ml-3">
                   {{
@@ -393,6 +394,7 @@
                     <label class="ml-8 titleColors"> Department</label>
                     <h5 class="ml-8">
                       {{
+                        newLicense.department ? newLicense.department.name :
                         newLicense.education
                           ? newLicense.education.department
                             ? newLicense.education.department.name
@@ -401,7 +403,7 @@
                       }}
                     </h5>
                   </div>
-                  <div>
+                  <div v-if="!isGoodStanding">
                     <label class="ml-8 titleColors"> Institution Name</label>
                     <h5 class="ml-8">
                       {{
@@ -415,7 +417,7 @@
                       }}
                     </h5>
                   </div>
-                  <div>
+                  <div v-if="!isGoodStanding">
                     <label class="ml-8 titleColors"> Institution Type</label>
                     <h5 class="ml-8">
                       {{
@@ -1052,6 +1054,8 @@ export default {
 
     let pdfFilePath = ref("");
 
+    let isGoodStanding = ref(false);
+
     let expirationDateExceedTodayError = ref(false);
     let isProfessionalTypeChanged = ref(false);
 
@@ -1081,7 +1085,7 @@ export default {
     let showLicenseDateRequirementError = ref(false);
     let departmentId = ref(0);
 
-    const newLicense = ref({
+    let newLicense = ref({
       applicant: { profile: { name: "", fatherName: "" } },
       applicantType: { name: "" },
       education: {
@@ -1202,8 +1206,9 @@ export default {
         store
           .dispatch("reviewer/getGoodStandingApplication", applicationId)
           .then((res) => {
+            isGoodStanding.value = true;
             newLicense.value = res.data.data;
-            departmentId.value = res.data.data.education.department.id;
+            departmentId.value = res.data.data.departmentId;
             getProfessionalTypesByDepartmentId(departmentId.value);
             profileInfo.value = newLicense.value.applicant.profile;
             applicantId.value = res.data.data.applicantId;
@@ -1211,6 +1216,7 @@ export default {
               ...newLicense.value,
               ...res.data.data,
             };
+            console.log("new", newLicense.value)
             buttons.value = res.data.data.applicationStatus.buttons.filter(
               (allButtons) => {
                 return allButtons.name != "Under supervision";
@@ -1219,7 +1225,7 @@ export default {
             buttons.value.forEach((button) => {
               button.name === "Approve"
                 ? (button.name = "Verify")
-                : (button.name = "-");
+                : (button.name = button.name);
             });
             docs.value = res.data.data.documents;
             fetchDocumentTypes();
@@ -2073,6 +2079,7 @@ export default {
       checkResult,
       isProfessionalTypeChanged,
       checkProfessionChanged,
+      isGoodStanding,
     };
   },
 };
