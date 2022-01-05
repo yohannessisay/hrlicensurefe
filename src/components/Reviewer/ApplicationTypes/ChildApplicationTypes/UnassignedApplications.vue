@@ -64,7 +64,7 @@
         <span
           class="text-lightBlueB-500 mt-tiny flex justify-end content-center"
         >
-          {{ item.createdAt ? moment(item.createdAt).fromNow() : "-" }}
+          {{ item.updatedAt ? moment(item.updatedAt).fromNow() : "-" }}
         </span>
       </div>
     </div>
