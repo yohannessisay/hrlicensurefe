@@ -506,6 +506,30 @@ export default {
         );
       }
 
+      doc.setFontSize(12);
+      doc.text(
+        197,
+        164,
+        `${
+          certificateDetail.value.certifiedDate
+            ? moment(certificateDetail.value.certifiedDate).format(
+                "MMM DD, YYYY"
+              ) + " - "
+            : "Not Specified"
+        }`
+      );
+      doc.text(
+        226,
+        164,
+        `${
+          certificateDetail.value.licenseExpirationDate
+            ? moment(certificateDetail.value.licenseExpirationDate).format(
+                "MMM DD, YYYY"
+              )
+            : "Not Specified"
+        }`
+      );
+
       // doc.addFileToVFS("Amiri-Regular.ttf", AmiriRegular);
       doc.addFileToVFS("Tera-Regular-normal.ttf", AmharicFont);
 
@@ -563,6 +587,35 @@ export default {
           }`
         );
       }
+
+      doc.setFontSize(12);
+      // doc.text(80)
+      doc.text(
+        77,
+        164,
+        `${
+          certificateDetail.value.certifiedDate
+            ? toEthiopian(
+                moment(certificateDetail.value.certifiedDate)._d.toISOString(),
+                false
+              ) + " - "
+            : ""
+        }`
+      );
+      doc.text(
+        105,
+        164,
+        `${
+          certificateDetail.value.licenseExpirationDate
+            ? toEthiopian(
+                moment(
+                  certificateDetail.value.licenseExpirationDate
+                )._d.toISOString(),
+                false
+              )
+            : " አልተገለጸም"
+        }`
+      );
     };
 
     const downloadPdf = () => {
@@ -615,58 +668,6 @@ export default {
       if (userImage !== null) {
         doc.addImage(userImage, "JPEG", 33, 20, 30, 30);
       }
-      doc.setFontSize(12);
-      doc.text(
-        197,
-        164,
-        `${
-          certificateDetail.value.certifiedDate
-            ? moment(certificateDetail.value.certifiedDate).format(
-                "MMM DD, YYYY"
-              ) + " - "
-            : "Not Specified"
-        }`
-      );
-      doc.text(
-        226,
-        164,
-        `${
-          certificateDetail.value.licenseExpirationDate
-            ? moment(certificateDetail.value.licenseExpirationDate).format(
-                "MMM DD, YYYY"
-              )
-            : "Not Specified"
-        }`
-      );
-
-      doc.setFontSize(12);
-      // doc.text(80)
-      doc.text(
-        77,
-        164,
-        `${
-          certificateDetail.value.certifiedDate
-            ? toEthiopian(
-                moment(certificateDetail.value.certifiedDate)._d.toISOString(),
-                false
-              ) + " - "
-            : ""
-        }`
-      );
-      doc.text(
-        105,
-        164,
-        `${
-          certificateDetail.value.licenseExpirationDate
-            ? toEthiopian(
-                moment(
-                  certificateDetail.value.licenseExpirationDate
-                )._d.toISOString(),
-                false
-              )
-            : " አልተገለጸም"
-        }`
-      );
       // doc.text(10, 203, `ቀን: ${toEthiopian(new Date().toISOString(), false)}`)
       doc.setFontSize(10);
 
