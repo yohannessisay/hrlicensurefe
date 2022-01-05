@@ -130,6 +130,9 @@ export default {
       .code;
 
     const navigateToHomePage = () => {
+      if(loggedInAdminRole === "UM") {
+        return;
+      }
       if (router.currentRoute._value.path === "/admin/review") {
         emit("navigateToHome", "newLicenseUnassigned");
       } else {
