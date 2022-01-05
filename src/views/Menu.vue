@@ -75,7 +75,7 @@ export default {
     PendingPayment,
   },
   created() {
-    // reseting new license store
+    // resetting new license store
     this.$store.dispatch("newlicense/storeAcceptedFields", []);
     this.$store.dispatch("newlicense/storeDeclinedFields", []);
     this.$store.dispatch("newlicense/setLicense", {});
@@ -109,7 +109,7 @@ export default {
     this.$store.dispatch("newlicense/setPhd", "");
     this.$store.dispatch("newlicense/setPhdTranscript", "");
 
-    // reseting renewal store
+    // resetting renewal store
     this.$store.dispatch("renewal/storeAcceptedFields", []);
     this.$store.dispatch("renewal/storeDeclinedFields", []);
     this.$store.dispatch("renewal/setLicense", {});
@@ -118,6 +118,7 @@ export default {
     this.$store.dispatch("renewal/setRenewalCpd", "");
     this.$store.dispatch("renewal/setProfessionalDoc", []);
     this.$store.dispatch("renewal/setRenewalWorkExperience", "");
+    this.$store.dispatch("renewal/setRenewalHealthExamCert", "");
     this.$store.dispatch("renewal/setPreviousLicense", "");
     this.$store.dispatch("renewal/setCertificate", "");
     this.$store.dispatch("renewal/setDiploma", "");
@@ -146,13 +147,18 @@ export default {
     this.$store.dispatch("renewal/setPhd", "");
     this.$store.dispatch("renewal/setPhdTranscript", "");
 
-    // reseting good standing store
+    // resetting good standing store
     this.$store.dispatch("goodstanding/storeAcceptedFields", []);
     this.$store.dispatch("goodstanding/storeDeclinedFields", []);
     this.$store.dispatch("goodstanding/setLicense", {});
     this.$store.dispatch("goodstanding/set_License_Copy", "");
     this.$store.dispatch("goodstanding/set_Service_Fee", "");
     this.$store.dispatch("goodstanding/set_Goodstanding_Letter", "");
+
+    // resetting payroll and language
+    localStorage.removeItem("educationalLevel");
+    localStorage.removeItem("language");
+    localStorage.removeItem("payroll");
   },
   data: () => ({
     display: 0,
