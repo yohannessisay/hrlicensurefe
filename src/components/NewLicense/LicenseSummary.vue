@@ -980,12 +980,6 @@ export default {
       this.$emit("changeActiveStateMinus");
     },
     checkRequiredDocs(id, educationLevel, payroll, language) {
-      console.log("id", id);
-      console.log("educationLevel", educationLevel);
-      console.log("payroll", payroll);
-      console.log("language", language);
-      console.log(this.passport !== null);
-
       if (
         educationLevel == "diploma" &&
         id == 1 &&
@@ -1084,15 +1078,9 @@ export default {
         this.professionalLicense !== "" &&
         this.renewedLicense !== ""
       ) {
-        console.log("this.englishLanguage", this.englishLanguage);
         if (language == "english" && this.englishLanguage !== "") {
           return false;
         }
-        // if (language == "english" && this.englishLanguage == "") {
-        //   console.log("second if");
-        //   return false;
-        // }
-        console.log("third if");
         return true;
       } else if (
         educationLevel == "degree" &&
@@ -1107,7 +1095,6 @@ export default {
         this.professionalLicense !== "" &&
         this.renewedLicense !== ""
       ) {
-        
         if (language == "english" && this.englishLanguage !== "") {
           return false;
         }
@@ -1125,7 +1112,6 @@ export default {
         this.professionalLicense !== "" &&
         this.renewedLicense !== ""
       ) {
-        
         if (language == "english" && this.englishLanguage !== "") {
           return false;
         }
@@ -1143,7 +1129,6 @@ export default {
         this.professionalLicense !== "" &&
         this.renewedLicense !== ""
       ) {
-        
         if (language == "english" && this.englishLanguage !== "") {
           return false;
         }

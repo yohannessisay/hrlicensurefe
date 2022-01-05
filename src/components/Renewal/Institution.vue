@@ -542,7 +542,7 @@ export default {
         if (profession.name == "Other") {
           this.showOtherProfession = false;
         }
-      } else if (this.licenseInfo.professionalTypeIds.length + 1 > 3) {
+      } else if (this.licenseInfo.professionalTypeIds.length + 1 > 4) {
         this.professionalTypeLimit = true;
         event.target.checked = false;
         for (var i = 0; i < this.licenseInfo.professionalTypeIds.length; i++) {
@@ -790,7 +790,6 @@ export default {
         let profTypes = {
           professionalTypeIds: this.licenseInfo.professionalTypeIds,
         };
-
         if (this.$route.params.status == undefined) {
           this.$store
             .dispatch("renewal/searchProfessionalType", profTypes)
@@ -989,7 +988,7 @@ export default {
       if (formData.education.institutionId == null) {
         errors.institutionId = "Institution Required";
       }
-       if (formData.educationalLevelId == null) {
+      if (formData.educationalLevelId == null) {
         errors.educationalLevelId = "Education Level Required";
       }
       return errors;
