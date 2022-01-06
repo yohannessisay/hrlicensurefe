@@ -384,6 +384,13 @@ const routes = [
   },
   {
     path:
+      "/admin/others-re-evaluate-detail/:applicationType/:applicationId/:applicantId",
+    name: "othersReEvaluateDetail",
+    component: () =>
+      import("../components/Reviewer/Detail/OthersReEvaluateDetail.vue"),
+  },
+  {
+    path:
       "/admin/newlicense-document/:newLicenseApplicationId/:newLicenseApplicantId/:renewalApplicationId/:renewalApplicantId",
     name: "newlicenseDocuments",
     component: () =>

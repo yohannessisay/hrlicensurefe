@@ -42,7 +42,6 @@
         </h4>
         <span
           class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-          v-if="all_re_evaluate == 'true'"
         >
           <i class="fas fa-user-cog"></i> &nbsp;
           {{ item.reviewer.name ? item.reviewer.name : "-" }}
@@ -105,7 +104,7 @@ export default {
     const detail = (applicationId, applicantId) => {
       if (props.all_re_evaluate == "true") {
         const url =
-          "/admin/detail/" +
+          "/admin/others-re-evaluate-detail/" +
           props.app_type +
           "/" +
           applicationId +

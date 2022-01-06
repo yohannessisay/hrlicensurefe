@@ -80,7 +80,6 @@ export default {
   props: ["unassignedApplication", "app_type"],
   name: "UnassignedApplications",
   setup(props) {
-    console.log("proes va", props.unassignedApplication)
     let router = useRouter();
     const detail = (data, applicationId, applicantId) => {
       const url =

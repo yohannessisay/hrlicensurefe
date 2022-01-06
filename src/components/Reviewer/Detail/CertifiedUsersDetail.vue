@@ -375,7 +375,6 @@ export default {
           .then((res) => {
             showApplicationLoading.value = false;
             certificateDetail.value = res.data.data;
-            console.log("certificate detail is ", certificateDetail.value);
             if (
               route.params.applicantId != certificateDetail.value.applicantId
             ) {
@@ -591,7 +590,7 @@ export default {
       doc.setFontSize(12);
       // doc.text(80)
       doc.text(
-        77,
+        75,
         164,
         `${
           certificateDetail.value.certifiedDate

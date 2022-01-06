@@ -1216,7 +1216,6 @@ export default {
               ...newLicense.value,
               ...res.data.data,
             };
-            console.log("new", newLicense.value)
             buttons.value = res.data.data.applicationStatus.buttons.filter(
               (allButtons) => {
                 return allButtons.name != "Under supervision";
@@ -1565,7 +1564,6 @@ export default {
         }, 4000);
         professionalTypeIdss.value = [];
         professionalTypePrefixes.value = [];
-        console.log("new license", newLicense.value);
         return;
       }
 
@@ -1970,16 +1968,6 @@ export default {
 
     const checkProfessionChanged = (previousProfessionType) => {
       let count = 0;
-      console.log(
-        ".length",
-        previousProfessionType.length,
-        "hanfe",
-        professionalTypeIdss.value,
-        "kasu eref",
-        previousProfessionType,
-        "sss",
-        professionalTypeIdss.value.length
-      );
       if (previousProfessionType.length !== professionalTypeIdss.value.length) {
         return true;
       } else {

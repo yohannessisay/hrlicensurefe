@@ -115,7 +115,15 @@
                     accepted[index]
                 "
               > -->
-              {{ documentTypeName }}
+              {{ documentTypeName }} | </label>
+              <label
+                :class="
+                  'justify-center items-center text-' + 
+                  approvedColor + 
+                  ' text-2x1'
+                "
+              >
+                {{ approvedOrRejected }}
               <!-- </div> -->
               <!-- <div
                 v-else-if="
@@ -411,7 +419,10 @@ export default {
 
     const adminId = +localStorage.getItem("adminId");
 
+    let approvedOrRejected = ref("");
+
     let evaluationSuccess = ref(false);
+    let approvedColor = ref("lightBlueB-500");
     let showLoadingconfirmed = ref(false);
     let accepted = ref([]);
     let req = ref({});
@@ -616,9 +627,17 @@ export default {
       modalFindDocumentType(documentTypes.value, rejectedObj.value[ind.value]);
     };
     const findDocumentType = (obj, ab) => {
+      approvedOrRejected.value = "Approved";
+      approvedColor.value = "lightBlueB-500";
       for (var prop in obj) {
         if (obj[prop].code == ab.documentTypeCode) {
           documentTypeName.value = obj[prop].name;
+        }
+        for (var rejected in rejectedObj.value) {
+          if (ab.documentTypeCode == rejectedObj.value[rejected]) {
+            approvedColor.value = "red-200";
+            approvedOrRejected.value = "Rejected";
+          }
         }
       }
     };
@@ -669,6 +688,8 @@ export default {
       previousRemark,
       findDocumentType,
       modalFindDocumentType,
+      approvedColor,
+      approvedOrRejected,
     };
   },
 };
