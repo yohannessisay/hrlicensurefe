@@ -44,7 +44,7 @@
           class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
         >
           On
-          {{ item.createdAt }}
+          {{ moment(item.createdAt).format("DD MMMM, YYYY") }}
         </span>
         <span
           class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
@@ -64,7 +64,7 @@
         <span
           class="text-lightBlueB-500 mt-tiny flex justify-end content-center"
         >
-          {{ item.updatedAt ? moment(item.updatedAt).fromNow() : "-" }}
+          {{ item.createdAt ? moment(item.createdAt).fromNow() : "-" }}
         </span>
       </div>
     </div>
@@ -80,6 +80,7 @@ export default {
   props: ["unassignedApplication", "app_type"],
   name: "UnassignedApplications",
   setup(props) {
+    console.log("proes va", props.unassignedApplication)
     let router = useRouter();
     const detail = (data, applicationId, applicantId) => {
       const url =

@@ -84,6 +84,7 @@ export default {
       const url = baseUrl + "/renewals/status/"+statusId;
       const resp = await ApiService.get(url);
       commit(SET_RENEWAL_UNASSIGNED, resp.data.data);
+      console.log("response unassigned is ", resp.data.data)
     } catch (err) {
       return error;
     }
