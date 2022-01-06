@@ -164,11 +164,6 @@ export default {
         unfinished.value = store.getters["reviewer/getUnfinishedSearched"];
         allInfo.value.assignApplication =
           store.getters["reviewer/getUnfinishedSearched"];
-        for (let applicant in allInfo.value.assignApplication) {
-          allInfo.value.assignApplication[applicant].createdAt = moment(
-            allInfo.value.assignApplication[applicant].createdAt
-          ).format("MMMM D, YYYY");
-        }
         if (store.getters["reviewer/getUnfinished"].length !== 0) {
           for (var prop in store.getters["reviewer/getUnfinishedSearched"]) {
             if (

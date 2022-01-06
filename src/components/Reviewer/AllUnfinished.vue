@@ -88,7 +88,7 @@
               </span>
               <!-- <h6
                 class="text-lightBlueB-500 mt-tiny flex justify-center content-center">
-                {{ item.createdAt ? item.createdAt : "-" }}
+                {{ item.createdAt ? moment(item.createdAt).format("MMMM DD, YYYY") : "-" }}
               </h6> -->
               <span
                 class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
@@ -235,11 +235,6 @@ export default {
             store.getters["reviewer/getEveryOneUnfinishedSearched"];
           allInfo.value.assignApplication =
             store.getters["reviewer/getEveryOneUnfinishedSearched"];
-          for (let applicant in allInfo.value.assignApplication) {
-            allInfo.value.assignApplication[applicant].createdAt = moment(
-              allInfo.value.assignApplication[applicant].createdAt
-            ).format("MMMM D, YYYY");
-          }
           if (
             store.getters["reviewer/getEveryOneUnfinishedSearched"].length !== 0
           ) {

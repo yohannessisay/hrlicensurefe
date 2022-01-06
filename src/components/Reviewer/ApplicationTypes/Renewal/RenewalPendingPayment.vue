@@ -142,9 +142,6 @@ export default {
         allInfo.value.assignApplication =
           store.getters["reviewerRenewal/getRenewalPendingPaymentSearched"];
         for (let applicant in allInfo.value.assignApplication) {
-          allInfo.value.assignApplication[applicant].createdAt = moment(
-            allInfo.value.assignApplication[applicant].createdAt
-          ).format("MMMM D, YYYY");
           if (
             allInfo.value.assignApplication[applicant].applicationType ===
             undefined

@@ -162,11 +162,6 @@ export default {
           store.getters["reviewer/getAssignedToYouSearched"];
         allInfo.value.assignApplication =
           store.getters["reviewer/getAssignedToYouSearched"];
-        for (let applicant in allInfo.value.assignApplication) {
-          allInfo.value.assignApplication[applicant].createdAt = moment(
-            allInfo.value.assignApplication[applicant].createdAt
-          ).format("MMMM D, YYYY");
-        }
         if (assignedToyou.value.length !== 0) {
           for (var prop in store.getters["reviewer/getAssignedToYouSearched"]) {
             if (
