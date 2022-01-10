@@ -637,7 +637,7 @@
                     </div>
                   </div>
                 </div>
-                <div>
+                <div v-if="!isGoodStanding">
                   <div class="flex justify-start">
                     <Title message="License Expiration Date" />
                   </div>
@@ -1593,14 +1593,14 @@ export default {
       }
 
       if (actionValue === "ApproveEvent") {
-        if (newLicense.value.licenseExpirationDate === null) {
+        if (newLicense.value.licenseExpirationDate === null && !isGoodStanding.value) {
           showLicenseDateRequirementError.value = true;
           setTimeout(() => {
             showLicenseDateRequirementError.value = false;
           }, 4000);
           return;
         } else if (
-          !moment(newLicense.value.licenseExpirationDate).isAfter(new Date())
+          !moment(newLicense.value.licenseExpirationDate).isAfter(new Date()) && !isGoodStanding.value
         ) {
           expirationDateExceedTodayError.value = true;
           setTimeout(() => {

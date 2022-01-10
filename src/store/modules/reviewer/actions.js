@@ -1264,6 +1264,7 @@ export default {
         baseUrl + "/goodStandings/" + license.data.id,
         license
       );
+      console.log("ressss", resp)
       // const resp = await ApiService.put(url + "newLicenses/" + license);
       return resp;
     } catch (error) {
