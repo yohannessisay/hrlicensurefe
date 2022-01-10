@@ -420,8 +420,6 @@ export default {
           };
         }
         if (applicationType.value == "Renewal") {
-          console.log("route.params", route.params.applicationId);
-          console.log("admin id", +localStorage.getItem("adminId"))
           assignConfirmAdmin.value = {
             licenseId: route.params.applicationId,
             evaluatorIds: assignConfirmAdmin.value.evaluatorIds,
@@ -471,8 +469,6 @@ export default {
           });
       }
       if (applicationType.value == "Renewal") {
-        console.log("assign confirm admin", assignConfirmAdmin.value)
-        return;
         store
           .dispatch("reviewer/confirmRenewalReview", assignConfirmAdmin.value)
 
@@ -508,7 +504,6 @@ export default {
     const created = async (applicationTypeName, applicationId, applicantId) => {
       licenseId.value = applicationId;
       applicationType.value = applicationTypeName;
-      console.log("applicationType", applicationType.value === "Renewal")
       showLoading.value = true;
       if (applicationType.value == "New License") {
         store

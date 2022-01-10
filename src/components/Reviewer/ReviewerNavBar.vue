@@ -636,6 +636,7 @@ export default {
       localStorage.removeItem("allAdminData");
       localStorage.removeItem("adminId");
       localStorage.removeItem("role");
+      store.dispatch("admin/logout");
       router.push({ path: "/admin" });
     };
     return {

@@ -109,7 +109,6 @@ export default {
       };
       store.dispatch("admin/login", credentialData).then((res) => {
         loggedInData.value = store.getters["admin/getAdmin"];
-        console.log("admin data", store.getters["admin/getAdmin"])
         showLoading.value = false;
         if (loggedInData.value !== undefined) {
           if (loggedInData.value.isFirstTime) {

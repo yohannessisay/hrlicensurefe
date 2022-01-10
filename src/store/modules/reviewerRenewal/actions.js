@@ -569,7 +569,6 @@ export default {
   async getRenewalOnReview({ commit }, adminStatus) {
     const url = baseUrl + "/renewals/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
-    console.log("on rev", resp.data.data)
     const onReview = resp.data.data.filter(function(e) {
       return e.reviewerId === adminStatus[1];
     });
@@ -630,7 +629,6 @@ export default {
   async getRenewalReEvaluate({ commit }, adminStatus) {
     const url = baseUrl + "/renewals/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
-    console.log("all app", resp.data.data)
     let evaluator = [];
     const allApplications = resp.data.data.forEach(function (e) {
       const myApplications = e.evaluators.forEach(function (ee) {
@@ -676,7 +674,6 @@ export default {
           counter++;
         }
         if(counter === e.evaluators.length) {
-          console.log("is it true", e)
           othersReEvaluate.push(e)
         }
       })

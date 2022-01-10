@@ -151,7 +151,6 @@ export default {
             store.getters[
               "reviewerRenewal/getRenewalReEvaluateSearched"
             ];
-            console.log("mikk", store.getters["reviewerRenewal/getRenewalReEvaluateSearched"])
           allInfo.value.assignApplication =
             store.getters[
               "reviewerRenewal/getRenewalReEvaluateSearched"

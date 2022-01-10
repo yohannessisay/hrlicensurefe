@@ -17,13 +17,16 @@ export default {
       window.localStorage.setItem("role", resp.data.data["role"]["code"]);
       window.localStorage.setItem("adminEmail", resp.data.data["email"]);
       window.localStorage.setItem("allAdminData", JSON.stringify(resp.data.data))
-      console.log("response admin",resp);
       commit(SET_ADMIN, resp.data.data);
       commit(ADD_ADMIN_SUCCESS);
       return resp;
     } catch (error) {
       commit(ADD_ADMIN_ERROR);
     }
+  },
+
+  logout({commit}) {
+    commit(SET_ADMIN, undefined);
   },
   async getApplicationStatus({commit}) {
     try {
