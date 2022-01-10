@@ -109,9 +109,11 @@ export default {
       };
       store.dispatch("admin/login", credentialData).then((res) => {
         loggedInData.value = store.getters["admin/getAdmin"];
+        console.log("admin data", store.getters["admin/getAdmin"])
         showLoading.value = false;
         if (loggedInData.value !== undefined) {
           if (loggedInData.value.isFirstTime) {
+            loggedInData.value = undefined;
             message.value.showFlash = !message.value.showFlash;
             setTimeout(() => {
               router.push({ path: "/admin/changePassword" });
@@ -119,12 +121,14 @@ export default {
           }
           else if (loggedInData.value.role.code == "UM") {
             message.value.showErrorFlash = !message.value.showFlash
+            loggedInData.value = undefined;
             setTimeout(() => {
               router.push({ path: "/admin/create"})
             })
           }
            else {
             message.value.showFlash = !message.value.showFlash;
+            loggedInData.value = undefined;
             setTimeout(() => {
               router.push({ path: "/admin/review" });
             }, 3000);

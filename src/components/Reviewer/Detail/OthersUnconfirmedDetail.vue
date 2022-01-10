@@ -8,7 +8,7 @@
         class="ml-8  mr-8 mb-12"
       >
         <div class="mt-large bg-white">
-          <div v-if="role.code === `ADM`" class="flex">
+          <div class="flex">
             <div class="flex flex-col mb-medium w-2/3 ml-small mt-small"></div>
             <div class="flex flex-col mb-medium w-1/3 mr-small mt-small">
               <label class="text-primary-700">Admins To Confirm</label>
@@ -407,21 +407,23 @@ export default {
         showAdminCountError.value = false;
         if (applicationType.value == "Good Standing") {
           assignConfirmAdmin.value = {
-            goodStandingId: route.params.applicationId,
+            licenseId: route.params.applicationId,
             evaluatorIds: assignConfirmAdmin.value.evaluatorIds,
             createdByAdminId: +localStorage.getItem("adminId"),
           };
         }
         if (applicationType.value == "Verification") {
           assignConfirmAdmin.value = {
-            verificationId: route.params.applicationId,
+            licenseId: route.params.applicationId,
             evaluatorIds: assignConfirmAdmin.value.evaluatorIds,
             createdByAdminId: +localStorage.getItem("adminId"),
           };
         }
         if (applicationType.value == "Renewal") {
+          console.log("route.params", route.params.applicationId);
+          console.log("admin id", +localStorage.getItem("adminId"))
           assignConfirmAdmin.value = {
-            renewalId: route.params.applicationId,
+            licenseId: route.params.applicationId,
             evaluatorIds: assignConfirmAdmin.value.evaluatorIds,
             createdByAdminId: +localStorage.getItem("adminId"),
           };
@@ -469,6 +471,8 @@ export default {
           });
       }
       if (applicationType.value == "Renewal") {
+        console.log("assign confirm admin", assignConfirmAdmin.value)
+        return;
         store
           .dispatch("reviewer/confirmRenewalReview", assignConfirmAdmin.value)
 
@@ -504,6 +508,7 @@ export default {
     const created = async (applicationTypeName, applicationId, applicantId) => {
       licenseId.value = applicationId;
       applicationType.value = applicationTypeName;
+      console.log("applicationType", applicationType.value === "Renewal")
       showLoading.value = true;
       if (applicationType.value == "New License") {
         store

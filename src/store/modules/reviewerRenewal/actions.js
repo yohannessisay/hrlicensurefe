@@ -442,9 +442,6 @@ export default {
     commit(SET_RENEWAL_OTHERS_UNDER_SUPERVISION_SEARCHED, searchedVal);
   },
 
-  /* 
-  /* approved payment status is wrong for the time (status/7) is placeholder
-  */
   async getRenewalApprovedPayment({ commit }, adminStatus) {
     const url = baseUrl + "/renewals/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
@@ -475,9 +472,6 @@ export default {
     commit(SET_RENEWAL_APPROVED_PAYMENT_SEARCHED, searchedVal);
   },
 
-  /* 
-  /* others approved payment status is wrong for the time (status/7) is placeholder
-  */
   async getRenewalOthersApprovedPayment({ commit }, adminStatus) {
     const url = baseUrl + "/renewals/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
@@ -575,6 +569,7 @@ export default {
   async getRenewalOnReview({ commit }, adminStatus) {
     const url = baseUrl + "/renewals/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
+    console.log("on rev", resp.data.data)
     const onReview = resp.data.data.filter(function(e) {
       return e.reviewerId === adminStatus[1];
     });
@@ -602,9 +597,6 @@ export default {
     commit(SET_RENEWAL_ON_REVIEW_SEARCHED, searchedVal);
   },
 
-  /* 
-  /* on review status is wrong for the time (status/7) is placeholder
-  */
   async getRenewalOthersOnReview({ commit }, adminStatus) {
     const url = baseUrl + "/renewals/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
@@ -635,12 +627,10 @@ export default {
     commit(SET_RENEWAL_OTHERS_ON_REVIEW_SEARCHED, searchedVal);
   },
 
-  /* 
-  /* on re evaluate status is wrong for the time (status/7) is placeholder
-  */
   async getRenewalReEvaluate({ commit }, adminStatus) {
     const url = baseUrl + "/renewals/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
+    console.log("all app", resp.data.data)
     let evaluator = [];
     const allApplications = resp.data.data.forEach(function (e) {
       const myApplications = e.evaluators.forEach(function (ee) {
@@ -650,6 +640,7 @@ export default {
       })
       
     })
+    
     commit(SET_RENEWAL_RE_EVALUATE, evaluator);
   },
 
@@ -674,9 +665,6 @@ export default {
     commit(SET_RENEWAL_RE_EVALUATE_SEARCHED, searchedVal);
   },
 
-  /* 
-  /* on re evaluate status is wrong for the time (status/7) is placeholder
-  */
   async getRenewalOthersReEvaluate({ commit }, adminStatus) {
     const url = baseUrl + "/renewals/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
@@ -718,9 +706,6 @@ export default {
     commit(SET_RENEWAL_OTHERS_RE_EVALUATE_SEARCHED, searchedVal);
   },
 
-  /* 
-  /* confirmed status is wrong for the time (status/7) is placeholder
-  */
   async getRenewalConfirmed({ commit }, adminStatus) {
     const url = baseUrl + "/renewals/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
@@ -751,9 +736,6 @@ export default {
     commit(SET_RENEWAL_CONFIRMED_SEARCHED, searchedVal);
   },
 
-  /* 
-  /* confirmed status is wrong for the time (status/7) is placeholder
-  */
   async getRenewalOthersConfirmed({ commit }, adminStatus) {
     const url = baseUrl + "/renewals/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
