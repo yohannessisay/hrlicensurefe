@@ -243,7 +243,7 @@
           v-if="this.showButtons && !this.draftStatus"
           class="flex justify-center mb-8"
         >
-          <button @click="submit">Next</button>
+          <button @click="submit">Apply</button>
           <button @click="draft(this.buttons[1].action)" variant="outline">
             {{ this.buttons[1]["name"] }}
           </button>
@@ -252,7 +252,7 @@
           v-if="this.showButtons && this.draftStatus == 'DRA'"
           class="flex justify-center mb-8"
         >
-          <button @click="submit">Next</button>
+          <button @click="submit">Apply</button>
           <button @click="draft(this.buttons[2].action)" variant="outline">
             {{ this.buttons[2]["name"] }}
           </button>
@@ -268,7 +268,7 @@
           v-if="this.showButtons && this.draftStatus == 'SUB'"
           class="flex justify-center mb-8"
         >
-          <button @click="submit">Next</button>
+          <button @click="submit">Apply</button>
           <button
             class="withdraw"
             @click="withdraw(this.buttons[1].action)"
@@ -281,7 +281,7 @@
           v-if="this.showButtons && this.draftStatus == 'USUP'"
           class="flex justify-center mb-8"
         >
-          <button @click="submit">Next</button>
+          <button @click="submit">Apply</button>
           <button @click="draft(this.buttons[0].action)" variant="outline">
             {{ this.buttons[0]["name"] }}
           </button>
@@ -296,7 +296,7 @@
           "
           class="flex justify-center mb-8"
         >
-          <button @click="submit">Next</button>
+          <button @click="submit">Apply</button>
           <!-- <button @click="draft(this.buttons[0].action)" variant="outline">
             {{ this.buttons[0]["name"] }}
           </button> -->
