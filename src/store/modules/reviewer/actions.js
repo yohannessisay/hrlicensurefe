@@ -1141,11 +1141,13 @@ export default {
     }
   },
   async confirmRenewalReview({commit}, confirm) {
+    console.log("confirm", confirm)
     try {
       const resp = await ApiService.post(
         baseUrl + "/renewalEvaluators/assign",
         confirm
       );
+      console.log("resp", resp)
       // return;
       return resp;
     } catch(error) {

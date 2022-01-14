@@ -403,7 +403,7 @@ export default {
         showAdminCountError.value = true;
         return;
       }
-      if (role.value.code === "ADM") {
+      // if (role.value.code === "ADM") {
         showAdminCountError.value = false;
         if (applicationType.value == "Good Standing") {
           assignConfirmAdmin.value = {
@@ -421,7 +421,7 @@ export default {
         }
         if (applicationType.value == "Renewal") {
           assignConfirmAdmin.value = {
-            licenseId: route.params.applicationId,
+            licenseId: parseInt(route.params.applicationId),
             evaluatorIds: assignConfirmAdmin.value.evaluatorIds,
             createdByAdminId: +localStorage.getItem("adminId"),
           };
@@ -433,7 +433,7 @@ export default {
             createdByAdminId: +localStorage.getItem("adminId"),
           };
         }
-      }
+      // }
       if (applicationType.value == "New License") {
         store
           .dispatch(
