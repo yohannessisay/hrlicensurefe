@@ -388,7 +388,7 @@ export default {
     const fetchAdmins = () => {
       store.dispatch("reviewer/getAdmins").then((res) => {
         admins.value = res.data.data.filter((e) => {
-          return e.id !== loggedInAdminId;
+          return e.id !== loggedInAdminId && e.role.code !== "UM";
         });
       });
     };
@@ -396,7 +396,7 @@ export default {
     const fetchAdminsByRegion = (regionId) => {
       store.dispatch("reviewer/getAdminsByRegion", regionId).then((res) => {
         admins.value = res.data.data.filter((e) => {
-          return e.id !== loggedInAdminId;
+          return e.id !== loggedInAdminId && e.role.code !== "UM";
         });
       });
     };
