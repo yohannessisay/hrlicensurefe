@@ -257,7 +257,7 @@
           class="flex justify-center mb-8"
         >
           <button @click="submit">
-            Next
+            Apply
           </button>
           <button @click="draft(this.buttons[1].action)" variant="outline">
             {{ this.buttons[1]["name"] }}
@@ -268,7 +268,7 @@
           class="flex justify-center mb-8"
         >
           <button @click="submit">
-            Next
+            Apply
           </button>
           <button @click="draft(this.buttons[2].action)" variant="outline">
             {{ this.buttons[2]["name"] }}
@@ -286,7 +286,7 @@
           class="flex justify-center mb-8"
         >
           <button @click="submit">
-            Next
+            Apply
           </button>
           <button
             class="withdraw"
@@ -301,7 +301,7 @@
           class="flex justify-center mb-8"
         >
           <button @click="submit">
-            Next
+            Apply
           </button>
           <button @click="draft(this.buttons[0].action)" variant="outline">
             {{ this.buttons[0]["name"] }}
@@ -315,7 +315,7 @@
           class="flex justify-center mb-8"
         >
           <button @click="submit">
-            Next
+            Apply
           </button>
           <!-- <button @click="draft(this.buttons[0].action)" variant="outline">
             {{ this.buttons[0]["name"] }}
