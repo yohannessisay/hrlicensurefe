@@ -80,7 +80,9 @@
             >
               <label class="ml-8"> Nationality</label>
               <h5 class="ml-8">
-                {{ profileInfo.nationality ? profileInfo.nationality.name : "-" }}
+                {{
+                  profileInfo.nationality ? profileInfo.nationality.name : "-"
+                }}
               </h5>
             </div>
             <div
@@ -276,6 +278,9 @@
         </div>
       </div>
     </div>
+    <div v-if="showFlash">
+      <FlashMessage message="Operation Successful!" />
+    </div>
     <div
       v-if="showLoading"
       class="flex justify-center justify-items-center mt-24"
@@ -288,9 +293,10 @@
 <script>
 import { useStore } from "vuex";
 import { useRouter, useRoute } from "vue-router";
+import { ref, onMounted } from "vue";
 import Title from "@/sharedComponents/Title";
 import ReviewerNavBar from "@/components/Reviewer/ReviewerNavBar";
-import { ref, onMounted } from "vue";
+import FlashMessage from "@/sharedComponents/FlashMessage";
 import Spinner from "@/sharedComponents/Spinner";
 import moment from "moment";
 
@@ -299,6 +305,7 @@ export default {
   components: {
     Title,
     ReviewerNavBar,
+    FlashMessage,
     Spinner,
   },
   computed: {
@@ -313,9 +320,9 @@ export default {
     let loggedInAdminId = +localStorage.getItem("adminId");
 
     let regionId = JSON.parse(localStorage.getItem("allAdminData")).regionId;
-    
+
     let expertLevelId = JSON.parse(localStorage.getItem("allAdminData"))
-          .expertLevelId;
+      .expertLevelId;
 
     let role = ref({});
 
@@ -327,7 +334,6 @@ export default {
 
     let assignConfirmAdmin = ref({
       evaluatorIds: [],
-      licenseId: "",
       createdByAdminId: "",
     });
     let show = ref(false);
@@ -376,7 +382,7 @@ export default {
 
     const fetchAdmins = () => {
       store.dispatch("reviewer/getAdmins").then((res) => {
-        admins.value = res.data.data.filter(e => {
+        admins.value = res.data.data.filter((e) => {
           return e.id !== loggedInAdminId;
         });
       });
@@ -384,14 +390,13 @@ export default {
 
     const fetchAdminsByRegion = (regionId) => {
       store.dispatch("reviewer/getAdminsByRegion", regionId).then((res) => {
-        admins.value = res.data.data.filter(e => {
+        admins.value = res.data.data.filter((e) => {
           return e.id !== loggedInAdminId;
         });
       });
     };
 
-    const gen = () => {
-    };
+    const gen = () => {};
 
     const assignAdminToConfirm = () => {
       showAssignLoading.value = true;
@@ -404,35 +409,35 @@ export default {
         return;
       }
       // if (role.value.code === "ADM") {
-        showAdminCountError.value = false;
-        if (applicationType.value == "Good Standing") {
-          assignConfirmAdmin.value = {
-            licenseId: route.params.applicationId,
-            evaluatorIds: assignConfirmAdmin.value.evaluatorIds,
-            createdByAdminId: +localStorage.getItem("adminId"),
-          };
-        }
-        if (applicationType.value == "Verification") {
-          assignConfirmAdmin.value = {
-            licenseId: route.params.applicationId,
-            evaluatorIds: assignConfirmAdmin.value.evaluatorIds,
-            createdByAdminId: +localStorage.getItem("adminId"),
-          };
-        }
-        if (applicationType.value == "Renewal") {
-          assignConfirmAdmin.value = {
-            licenseId: parseInt(route.params.applicationId),
-            evaluatorIds: assignConfirmAdmin.value.evaluatorIds,
-            createdByAdminId: +localStorage.getItem("adminId"),
-          };
-        }
-        if (applicationType.value == "New License") {
-          assignConfirmAdmin.value = {
-            licenseId: route.params.applicationId,
-            evaluatorIds: assignConfirmAdmin.value.evaluatorIds,
-            createdByAdminId: +localStorage.getItem("adminId"),
-          };
-        }
+      showAdminCountError.value = false;
+      if (applicationType.value == "Good Standing") {
+        assignConfirmAdmin.value = {
+          licenseId: route.params.applicationId,
+          evaluatorIds: assignConfirmAdmin.value.evaluatorIds,
+          createdByAdminId: +localStorage.getItem("adminId"),
+        };
+      }
+      if (applicationType.value == "Verification") {
+        assignConfirmAdmin.value = {
+          licenseId: route.params.applicationId,
+          evaluatorIds: assignConfirmAdmin.value.evaluatorIds,
+          createdByAdminId: +localStorage.getItem("adminId"),
+        };
+      }
+      if (applicationType.value == "Renewal") {
+        assignConfirmAdmin.value = {
+          renewalId: parseInt(route.params.applicationId),
+          evaluatorIds: assignConfirmAdmin.value.evaluatorIds,
+          createdByAdminId: +localStorage.getItem("adminId"),
+        };
+      }
+      if (applicationType.value == "New License") {
+        assignConfirmAdmin.value = {
+          licenseId: route.params.applicationId,
+          evaluatorIds: assignConfirmAdmin.value.evaluatorIds,
+          createdByAdminId: +localStorage.getItem("adminId"),
+        };
+      }
       // }
       if (applicationType.value == "New License") {
         store
@@ -645,7 +650,7 @@ export default {
       gen,
       assignAdminToConfirm,
       previousEvaluators,
-      expertLevelId
+      expertLevelId,
     };
   },
 
