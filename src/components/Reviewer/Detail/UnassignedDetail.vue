@@ -433,13 +433,17 @@ export default {
 
     const fetchAdmins = () => {
       store.dispatch("reviewer/getAdmins").then((res) => {
-        admins.value = res.data.data;
+        admins.value = res.data.data.filter(e => {
+          return e.role.code !== "UM";
+        });
       });
     };
 
     const fetchAdminsByRegion = (regionId) => {
       store.dispatch("reviewer/getAdminsByRegion", regionId).then((res) => {
-        admins.value = res.data.data;
+        admins.value = res.data.data.filter(e => {
+          return e.role.code !== "UM";
+        });
       });
     };
 
