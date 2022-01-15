@@ -79,8 +79,9 @@
                 <h4 class="text-left detailTitle">Department:</h4>
                 <h4 class="text-left ml-3">
                   {{
-                    newLicense.department ? newLicense.department.name :
-                    newLicense.education
+                    newLicense.department
+                      ? newLicense.department.name
+                      : newLicense.education
                       ? newLicense.education.department
                         ? newLicense.education.department.name
                         : "-"
@@ -327,7 +328,9 @@
                     <label class="ml-8 titleColors"> Nationality</label>
                     <h5 class="ml-8">
                       {{
-                        profileInfo.nationality ? profileInfo.nationality.name : "-"
+                        profileInfo.nationality
+                          ? profileInfo.nationality.name
+                          : "-"
                       }}
                     </h5>
                   </div>
@@ -394,8 +397,9 @@
                     <label class="ml-8 titleColors"> Department</label>
                     <h5 class="ml-8">
                       {{
-                        newLicense.department ? newLicense.department.name :
-                        newLicense.education
+                        newLicense.department
+                          ? newLicense.department.name
+                          : newLicense.education
                           ? newLicense.education.department
                             ? newLicense.education.department.name
                             : "-"
@@ -1593,14 +1597,18 @@ export default {
       }
 
       if (actionValue === "ApproveEvent") {
-        if (newLicense.value.licenseExpirationDate === null && !isGoodStanding.value) {
+        if (
+          newLicense.value.licenseExpirationDate === null &&
+          !isGoodStanding.value
+        ) {
           showLicenseDateRequirementError.value = true;
           setTimeout(() => {
             showLicenseDateRequirementError.value = false;
           }, 4000);
           return;
         } else if (
-          !moment(newLicense.value.licenseExpirationDate).isAfter(new Date()) && !isGoodStanding.value
+          !moment(newLicense.value.licenseExpirationDate).isAfter(new Date()) &&
+          !isGoodStanding.value
         ) {
           expirationDateExceedTodayError.value = true;
           setTimeout(() => {
