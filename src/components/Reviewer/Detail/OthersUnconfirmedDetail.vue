@@ -281,6 +281,9 @@
     <div v-if="showFlash">
       <FlashMessage message="Operation Successful!" />
     </div>
+    <div v-if="showErrorFlash">
+      <ErrorFlashMessage message="something went wrong!" />
+    </div>
     <div
       v-if="showLoading"
       class="flex justify-center justify-items-center mt-24"
@@ -297,6 +300,7 @@ import { ref, onMounted } from "vue";
 import Title from "@/sharedComponents/Title";
 import ReviewerNavBar from "@/components/Reviewer/ReviewerNavBar";
 import FlashMessage from "@/sharedComponents/FlashMessage";
+import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import Spinner from "@/sharedComponents/Spinner";
 import moment from "moment";
 
@@ -306,6 +310,7 @@ export default {
     Title,
     ReviewerNavBar,
     FlashMessage,
+    ErrorFlashMessage,
     Spinner,
   },
   computed: {
@@ -453,7 +458,18 @@ export default {
               setTimeout(() => {
                 router.push("/admin/review");
               }, 3000);
+            } else {
+              showErrorFlash.value = true;
+              setTimeout(() => {
+                router.go();
+              }, 3000);
             }
+          })
+          .catch((e) => {
+            showErrorFlash.value = true;
+            setTimeout(() => {
+              router.go();
+            }, 3000);
           });
       }
       if (applicationType.value == "Verification") {
@@ -470,7 +486,18 @@ export default {
               setTimeout(() => {
                 router.push("/admin/review");
               }, 3000);
+            } else {
+              showErrorFlash.value = true;
+              setTimeout(() => {
+                router.go();
+              }, 3000);
             }
+          })
+          .catch((e) => {
+            showErrorFlash.value = true;
+            setTimeout(() => {
+              router.go();
+            }, 3000);
           });
       }
       if (applicationType.value == "Renewal") {
@@ -484,7 +511,18 @@ export default {
               setTimeout(() => {
                 router.push("/admin/review");
               }, 3000);
+            } else {
+              showErrorFlash.value = true;
+              setTimeout(() => {
+                router.go();
+              }, 3000);
             }
+          })
+          .catch((e) => {
+            showErrorFlash.value = true;
+            setTimeout(() => {
+              router.go();
+            }, 3000);
           });
       }
       if (applicationType.value == "Good Standing") {
@@ -501,7 +539,18 @@ export default {
               setTimeout(() => {
                 router.push("/admin/review");
               }, 3000);
+            } else {
+              showErrorFlash.value = true;
+              setTimeout(() => {
+                router.go();
+              }, 3000);
             }
+          })
+          .catch((e) => {
+            showErrorFlash.value = true;
+            setTimeout(() => {
+              router.go();
+            }, 3000);
           });
       }
     };
