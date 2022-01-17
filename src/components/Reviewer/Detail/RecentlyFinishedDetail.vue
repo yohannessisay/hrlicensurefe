@@ -11,7 +11,7 @@
           <span
             v-if="
               isGoodStanding &&
-                license.applicationStatus.code === 'AP' &&
+                (license.applicationStatus.code === 'AP' || license.applicationStatus.code === 'APP') &&
                 myRegion
             "
           >
@@ -288,7 +288,7 @@ export default {
     let getReviewId = ref(0);
 
     const GenerateLetter = () => {
-      if (license.value.applicationStatus.code !== "AP") {
+      if (license.value.applicationStatus.code !== "AP" && license.value.applicationStatus.code !== "APP") {
         // if user is not approved don't generate a good standing letter
         return;
       }
@@ -341,15 +341,14 @@ export default {
           license.value.applicantPosition.name +
           " " +
           moment(license.value.licenseIssuedDate).format("MMMM D, YYYY") +
-          " by"
+          " by " + license.value.whoIssued + ","
       );
-      doc.text(40, 110, license.value.whoIssued + ", which is the responsible");
+      doc.text(40, 110, `which is the responsible organ for registration and licensing of health professionals and ${gender.value == "male" ? "his": "her"} registration`
+        );
       doc.text(
         40,
         120,
-        `organ for registration and licensing of health professinals and ${
-          gender.value == "male" ? "his" : "her"
-        } registration number is ${license.value.licenseRegistrationNumber}.`
+        `number is ${license.value.licenseRegistrationNumber}.`
       );
       doc.text(
         40,

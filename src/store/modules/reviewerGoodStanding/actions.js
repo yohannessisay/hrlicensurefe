@@ -522,12 +522,18 @@ export default {
   },
 
   async getGoodStandingOtherLicensed({ commit }, adminStatus) {
-    const url = baseUrl + "/goodstandings/status/" + adminStatus[0];
+    const url = baseUrl + "/goodstandings/status/" + adminStatus[1];
+    const approvedURL = baseUrl + "/goodstandings/status/" + adminStatus[2];
     const resp = await ApiService.get(url);
+    const approvedResp = await ApiService.get(approvedURL);
     const othersLicensed = resp.data.data.filter(function(e) {
-      return e.reviewerId !== adminStatus[1];
+      return e.reviewerId !== adminStatus[0];
     });
-    commit(SET_GOOD_STANDING_OTHERS_LICENSED, othersLicensed);
+    const othersApprovedLicensed = approvedResp.data.data.filter(function(e) {
+      return e.reviewerId !== adminStatus[0];
+    });
+    const othersConcateLicensedUsers = othersLicensed.concat(othersApprovedLicensed)
+    commit(SET_GOOD_STANDING_OTHERS_LICENSED, othersConcateLicensedUsers);
   },
 
   getGoodStandingOthersLicensedSearched({ commit, getters }, searchKey) {
@@ -554,11 +560,18 @@ export default {
     commit(SET_GOOD_STANDING_OTHERS_LICENSED_SEARCHED, searchedVal);
   },
 
-  async getGoodStandingAllLicensed({ commit }) {
-    const url = baseUrl + "/goodstandings/all/licensed ";
+  async getGoodStandingAllLicensed({ commit }, adminStatus) {
+    // const url = baseUrl + "/goodstandings/all/licensed ";
+    // const resp = await ApiService.get(url);
+    // const licensed = resp.data.data;
+    const url = baseUrl + "/goodstandings/status/" + adminStatus[1];
+    const approvedURL = baseUrl + "/goodstandings/status/" + adminStatus[2];
     const resp = await ApiService.get(url);
-    const licensed = resp.data.data;
-    commit(SET_GOOD_STANDING_ALL_LICENSED, licensed);
+    const approvedResp = await ApiService.get(approvedURL);
+    const allLicensed = resp.data.data;
+    const allApprovedLicensed = approvedResp.data.data;
+    const concateAllLicensedUsers = allLicensed.concat(allApprovedLicensed)
+    commit(SET_GOOD_STANDING_ALL_LICENSED, concateAllLicensedUsers);
   },
 
   getGoodStandingAllLicensedSearched({ commit, getters }, searchKey) {

@@ -102,7 +102,7 @@ export default {
       if (
         props.app_type == "Verification" || props.app_type == "Good Standing"
       ) {
-        routeValue.value = "finishedDetail";
+        routeValue.value = "applicant-detail";
       }
       if (adminExpertId == 3) {
         routeValue.value = "applicant-detail"

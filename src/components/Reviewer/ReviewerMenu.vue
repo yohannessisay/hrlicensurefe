@@ -385,7 +385,7 @@
           <good-standing-others-licensed />
         </div>
         <div v-if="this.display == 'goodStandingAllLicensed'">
-          <good-standing-licensed />
+          <good-standing-all-licensed />
         </div>
         <!-- end goodstanding -->
 

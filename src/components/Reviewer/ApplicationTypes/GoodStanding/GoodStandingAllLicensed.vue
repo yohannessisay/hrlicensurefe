@@ -64,7 +64,8 @@
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
 
-import AllLicensedApplications from "../ChildApplicationTypes/AllLicensedApplications.vue"
+import AllLicensedApplications from "../ChildApplicationTypes/AllLicensedApplications.vue";
+import applicationStatus from "../../Configurations/getApplicationStatus.js";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import filterApplication from "../../ChildComponents/FilteredDatas/FilterApplication.js";
 import FilteredInfo from "../../ChildComponents/FilteredDatas/FilteredInfo.vue";
@@ -132,7 +133,10 @@ export default {
 
     const fetchGoodStandingAllLicensed = () => {
       showLoading.value = true;
-      store.dispatch("reviewerGoodStanding/getGoodStandingAllLicensed").then((res) => {
+      const statusId = applicationStatus(store, 'AP');
+      const approvedStatus = applicationStatus(store, 'APP');
+      const adminStatus = [adminId, statusId, approvedStatus];
+      store.dispatch("reviewerGoodStanding/getGoodStandingAllLicensed", adminStatus).then((res) => {
         showLoading.value = false;
         goodStandingAllLicensed.value =
           store.getters["reviewerGoodStanding/getGoodStandingAllLicensedSearched"];
