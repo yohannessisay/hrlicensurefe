@@ -693,18 +693,12 @@ export default {
         Object.getPrototypeOf(this.licenseInfoErrors) === Object.prototype
       ) {
         this.showLoading = true;
-        let actionEvent = "";
         if (this.licenseInfo.professionalTypeIds.length <= 0) {
           this.licenseInfo.professionalTypeIds = [null];
         }
-        if (this.draftStatus != undefined) {
-          actionEvent = "UpdateEvent";
-        } else {
-          actionEvent = "DraftEvent";
-        }
         let license = {
           data: {
-            action: actionEvent,
+            action: action,
             data: {
               applicantId: this.licenseInfo.applicantId,
               applicantTypeId: this.licenseInfo.applicantTypeId,
