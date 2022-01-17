@@ -474,6 +474,7 @@ export default {
       applicantPositionId: null,
       professionalTypeIds: [],
       otherProfessionalType: null,
+      applicationStatusId: null,
     },
 
     licenseInfoErrors: {
@@ -616,6 +617,7 @@ export default {
               expertLevelId: this.licenseInfo.expertLevelId,
               otherProfessionalType: this.licenseInfo.otherProfessionalType,
               departmentId: this.licenseInfo.departmentId,
+              applicationStatusId: this.licenseInfo.applicationStatusId,
             },
           },
           id: this.draftId,
@@ -636,7 +638,7 @@ export default {
             });
         } else {
           this.$store
-            .dispatch("goodstanding/addGoodstandingLicense", license.data)
+            .dispatch("goodstanding/editGoodstandingLicense", license.data)
             .then((res) => {
               if (res.data.status == "Success") {
                 this.showFlash = true;
@@ -669,6 +671,7 @@ export default {
             expertLevelId: this.licenseInfo.expertLevelId,
             otherProfessionalType: this.licenseInfo.otherProfessionalType,
             departmentId: this.licenseInfo.departmentId,
+            applicationStatusId: this.licenseInfo.applicationStatusId,
           },
         },
         id: this.draftId,
@@ -689,7 +692,7 @@ export default {
           });
       } else {
         this.$store
-          .dispatch("goodstanding/addGoodstandingLicense", license.data)
+          .dispatch("goodstanding/editGoodstandingLicense", license.data)
           .then((res) => {
             if (res.data.status == "Success") {
               this.showFlash = true;
@@ -847,6 +850,7 @@ export default {
       this.licenseInfo.professionalTypeIds = draftData.professionalTypeIds;
       this.licenseInfo.departmentId = draftData.departmentId;
       this.licenseInfo.expertLevelId = draftData.expertLevelId;
+      this.licenseInfo.applicationStatusId = draftData.applicationStatusId;
       if (this.licenseInfo.applicantTypeId == 1) {
         this.$store.dispatch("goodstanding/getExpertLevel").then((res) => {
           this.expertLevels = res.data.data.filter(function(e) {
