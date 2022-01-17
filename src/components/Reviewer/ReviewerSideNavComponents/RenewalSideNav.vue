@@ -373,7 +373,7 @@
                           </li>
                         </ul>
                       </div>
-                      <div
+                      <!-- <div
                         v-if="dropdownValue.renewalUnderReview"
                         class="dropdown-menu relative  shadow-md mb-12 ml-4"
                         style="color: #648ea3; width: 200px;"
@@ -463,7 +463,7 @@
                             </div>
                           </li>
                         </ul>
-                      </div>
+                      </div> -->
                     </div>
                   </transition>
                 </li>
@@ -578,7 +578,7 @@
                   @dropDownListHandler="dropDownListHandler"
                 />
               </div>
-              <div
+              <!-- <div
                 v-if="dropdownValue.renewal && expertLevelId == 3"
                 class="dropdown-menu relative  shadow-md mb-12"
                 style="color: #648ea3; width: 200px;"
@@ -666,7 +666,7 @@
                     </div>
                   </li>
                 </ul>
-              </div>
+              </div> -->
               <!-- Federal Expert side nav ends here -->
               <drop-down-lists
                 :dropdownValue="[

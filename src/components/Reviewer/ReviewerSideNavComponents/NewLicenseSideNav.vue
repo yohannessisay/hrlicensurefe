@@ -380,7 +380,7 @@
                           </li>
                         </ul>
                       </div>
-                      <div
+                      <!-- <div
                         v-if="dropdownValue.newLicenseUnderReview"
                         class="dropdown-menu relative  shadow-md mb-12 ml-4"
                         style="color: #648ea3; width: 200px;"
@@ -472,7 +472,7 @@
                             </div>
                           </li>
                         </ul>
-                      </div>
+                      </div> -->
                     </div>
                   </transition>
                 </li>
@@ -589,7 +589,7 @@
                   @dropDownListHandler="dropDownListHandler"
                 />
               </div>
-              <div
+              <!-- <div
                 v-if="dropdownValue.newLicense && expertLevelId == 3"
                 class="dropdown-menu relative  shadow-md mb-12"
                 style="color: #648ea3; width: 200px;"
@@ -679,7 +679,7 @@
                     </div>
                   </li>
                 </ul>
-              </div>
+              </div> -->
               <!-- Expert Sidenav ends here -->
               <!-- under review end here -->
               <drop-down-lists

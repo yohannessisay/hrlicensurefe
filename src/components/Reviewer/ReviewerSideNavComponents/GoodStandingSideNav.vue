@@ -385,7 +385,7 @@
               </div>
               <!-- Declined ends here -->
               <!-- Pending Payment starts here -->
-              <div
+              <!-- <div
                 v-if="dropdownValue.goodStanding"
                 class="dropdown-menu relative  shadow-md mb-12"
                 style="color: #648ea3; width: 200px;"
@@ -475,7 +475,7 @@
                     </div>
                   </li>
                 </ul>
-              </div>
+              </div> -->
               <!-- Pending Payment Ends here -->
               <drop-down-lists
                 :dropdownValue="[

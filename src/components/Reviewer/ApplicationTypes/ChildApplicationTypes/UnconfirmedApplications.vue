@@ -100,7 +100,7 @@ export default {
     const adminExpertId = JSON.parse(localStorage.getItem('allAdminData')).expertLevelId;
     const detail = (data, applicationId, applicantId) => {
       if (
-        props.app_type == "Verification"
+        props.app_type == "Verification" || props.app_type == "Good Standing"
       ) {
         routeValue.value = "finishedDetail";
       }
