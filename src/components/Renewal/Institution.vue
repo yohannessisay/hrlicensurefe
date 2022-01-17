@@ -455,6 +455,7 @@ export default {
       education: {
         departmentId: null,
         institutionId: null,
+        id: null,
       },
       residenceWoredaId: null,
       professionalTypeIds: [],
@@ -463,6 +464,7 @@ export default {
       educationalLevelId: null,
       otherEducationalInstitution: null,
       otherProfessionalType: null,
+      applicationStatusId: null,
     },
     licenseInfoErrors: {
       applicantTypeId: null,
@@ -630,14 +632,8 @@ export default {
         Object.getPrototypeOf(this.licenseInfoErrors) === Object.prototype
       ) {
         this.showLoading = true;
-        let actionEvent = "";
         if (this.licenseInfo.professionalTypeIds.length <= 0) {
           this.licenseInfo.professionalTypeIds = [null];
-        }
-        if (this.draftStatus != undefined) {
-          actionEvent = "UpdateEvent";
-        } else {
-          actionEvent = "DraftEvent";
         }
         let license = {
           data: {
@@ -648,6 +644,7 @@ export default {
               education: {
                 departmentId: this.licenseInfo.education.departmentId,
                 institutionId: this.licenseInfo.education.institutionId,
+                id: this.licenseInfo.education.id,
               },
               residenceWoredaId: this.licenseInfo.residenceWoredaId,
               professionalTypeIds: this.licenseInfo.professionalTypeIds,
@@ -658,11 +655,11 @@ export default {
               otherEducationalInstitution: this.licenseInfo
                 .otherEducationalInstitution,
               otherProfessionalType: this.licenseInfo.otherProfessionalType,
+              applicationStatusId: this.licenseInfo.applicationStatusId,
             },
           },
           id: this.draftId,
         };
-        console.log(license);
 
         if (this.draftId != undefined) {
           this.$store
@@ -703,6 +700,7 @@ export default {
             education: {
               departmentId: this.licenseInfo.education.departmentId,
               institutionId: this.licenseInfo.education.institutionId,
+              id: this.licenseInfo.education.id,
             },
             residenceWoredaId: this.licenseInfo.residenceWoredaId,
             professionalTypeIds: this.licenseInfo.professionalTypeIds,
@@ -713,6 +711,7 @@ export default {
             otherEducationalInstitution: this.licenseInfo
               .otherEducationalInstitution,
             otherProfessionalType: this.licenseInfo.otherProfessionalType,
+            applicationStatusId: this.licenseInfo.applicationStatusId,
           },
         },
         id: this.draftId,
@@ -1022,6 +1021,8 @@ export default {
         draftData.education.institutionId;
       this.licenseInfo.occupationTypeId = draftData.occupationTypeId;
       this.licenseInfo.educationalLevelId = draftData.educationalLevelId;
+      this.licenseInfo.education.id = draftData.education.id;
+      this.licenseInfo.applicationStatusId = draftData.applicationStatusId;
       this.setEducationLevel(this.licenseInfo.educationalLevelId);
       this.payrollData = draftData.occupationTypes;
       if (this.licenseInfo.applicantTypeId == 1) {
