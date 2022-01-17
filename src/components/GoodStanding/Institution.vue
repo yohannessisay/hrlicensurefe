@@ -602,7 +602,7 @@ export default {
               applicantTitle: this.licenseInfo.applicantTitle,
               whomGoodStandingFor: this.licenseInfo.whomGoodStandingFor,
               licenseIssuedDate:
-                this.licenseInfo.licenseIssuedDate + " 17:23:50.228+01",
+                this.licenseInfo.licenseIssuedDate,
               whoIssued: this.licenseInfo.whoIssued,
               licenseRegistrationNumber: this.licenseInfo
                 .licenseRegistrationNumber,
@@ -656,7 +656,7 @@ export default {
             applicantTitle: this.licenseInfo.applicantTitle,
             whomGoodStandingFor: this.licenseInfo.whomGoodStandingFor,
             licenseIssuedDate:
-              this.licenseInfo.licenseIssuedDate + " 17:23:50.228+01",
+              this.licenseInfo.licenseIssuedDate,
             whoIssued: this.licenseInfo.whoIssued,
             licenseRegistrationNumber: this.licenseInfo
               .licenseRegistrationNumber,
