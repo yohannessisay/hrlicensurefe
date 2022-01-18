@@ -409,7 +409,7 @@ export default {
     this.departmentId = this.license.departmentId;
   },
   data: () => ({
-    basePath: "https://storage.googleapis.com/hris-lisence-dev/",
+    basePath: "https://ihris.moh.gov.et/hrl/",
 
     filePreview: "",
     letterPreview: "",

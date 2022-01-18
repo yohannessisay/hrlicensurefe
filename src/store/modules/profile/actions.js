@@ -8,8 +8,7 @@ import {
   SET_MARITAL_STATUS,
 } from "./mutation-types";
 
-const url = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api/";
-
+const url = "https://ihris.moh.gov.et/hrl/api";
 export default {
   async setProfile({ commit }, profile) {
     try {

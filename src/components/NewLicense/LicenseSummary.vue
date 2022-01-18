@@ -807,7 +807,7 @@ export default {
   },
 
   data: () => ({
-    basePath: "https://storage.googleapis.com/hris-lisence-dev/",
+    basePath: "https://ihris.moh.gov.et/hrl/",
     docList: [],
     documentsArray: [],
     show: false,

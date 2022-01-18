@@ -6,7 +6,7 @@ import {
   ADD_ADMIN_ERROR,
   SET_APPLICATION_STATUSES,
 } from "./mutation-types";
-const url = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api/";
+const url = "https://ihris.moh.gov.et/hrl/api/";
 export default {
   async login({ commit }, admin) {
     commit(ADD_ADMIN_LOADING);

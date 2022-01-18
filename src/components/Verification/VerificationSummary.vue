@@ -382,7 +382,7 @@ export default {
     this.buttons = this.getButtons;
   },
   data: () => ({
-    basePath: "https://storage.googleapis.com/hris-lisence-dev/",
+    basePath: "https://ihris.moh.gov.et/hrl/",
 
     filePreview: "",
     letterPreview: "",

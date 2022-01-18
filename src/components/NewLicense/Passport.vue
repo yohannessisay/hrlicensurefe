@@ -196,7 +196,7 @@ export default {
     const route = useRoute();
     const router = useRouter();
 
-    const basePath = "https://storage.googleapis.com/hris-lisence-dev/";
+    const basePath = "https://ihris.moh.gov.et/hrl/";
 
     let message = ref({
       showFlash: false,

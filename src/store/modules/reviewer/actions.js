@@ -45,7 +45,7 @@ import {
   SET_MY_REGION_CERTIFIED_USERS_SEARCHED,
   SET_PROFESSIONAL_TYPES,
 } from "./mutation-types";
-const baseUrl = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api";
+const baseUrl = "https://ihris.moh.gov.et/hrl/api";
 const adminId = +localStorage.getItem("adminId");
 const adminRole = localStorage.getItem("role");
 // let headers = new Headers({'Bearer Token': bearerToken});

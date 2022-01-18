@@ -515,8 +515,7 @@ export default {
   props: ["activeState"],
   data() {
     return {
-      basePath: "https://storage.googleapis.com/hris-lisence-dev/",
-
+      basePath: "https://ihris.moh.gov.et/hrl/",
       dataChanged: false,
       showFlash: false,
       showErrorFlash: false,

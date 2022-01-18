@@ -1,6 +1,8 @@
 import ApiService from "../../../services/api.service";
-import { SET_PROFILE } from "./mutation-types";
-const url = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api/";
+import {
+  SET_PROFILE,
+} from "./mutation-types";
+const url = "https://ihris.moh.gov.et/hrl/api/";
 export default {
   async login({ commit }, profile) {
     try {

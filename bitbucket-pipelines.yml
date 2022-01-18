@@ -2,7 +2,7 @@ pipelines:
   branches:
     master:
         - step:
-            size: 2x
+           # size: 2x
             name: Build
             image: google/cloud-sdk:latest
             script:
@@ -16,7 +16,7 @@ pipelines:
             services:
               - docker
         - step:
-            size: 2x
+            #size: 2x
             name: Deploy
             image: google/cloud-sdk:latest
             script:
@@ -39,7 +39,7 @@ pipelines:
               - docker
     development:
         - step:
-            size: 2x
+            #size: 2x
             name: Build
             image: google/cloud-sdk:latest
             script:
@@ -52,7 +52,7 @@ pipelines:
             services:
               - docker
         - step:
-            size: 2x
+            #size: 2x
             name: Deploy
             image: google/cloud-sdk:latest
             script:
@@ -75,7 +75,7 @@ pipelines:
               - docker
     staging:
         - step:
-            size: 2x
+            #size: 2x
             name: Build
             image: google/cloud-sdk:latest
             script:
@@ -88,7 +88,7 @@ pipelines:
             services:
               - docker
         - step:
-            size: 2x
+            #size: 2x
             name: Deploy
             image: google/cloud-sdk:latest
             script:
@@ -109,7 +109,21 @@ pipelines:
             - echo "all done please visit https://$DNS"
             services:
               - docker
-definitions:
-  services:
-    docker:
-      memory: 6104
+              
+    moh:
+      - step:
+          #size: 2x
+          name: Build & Deploy
+          #runs-on: ihris.apps
+          script:
+          - 'echo ''cd HRLicensureFE'' >  ihrisscript.sh'
+          - 'echo ''docker build -t hrl-fe:moh .'' >> ihrisscript.sh'
+          - 'echo ''docker stop hrl-fe-moh || true && docker rm hrl-fe-moh || true'' >> ihrisscript.sh'
+          - 'echo ''docker run -d --restart=always -p 1236:80 --name hrl-fe-moh hrl-fe:moh'' >> ihrisscript.sh'
+          - pipe: atlassian/ssh-run:0.3.0
+            variables:
+              SSH_USER: $SSH_IHRIS_USER
+              SERVER: $MOH_IHRIS_APPS
+              SSH_KEY: $MOH_IHRIS_APPS_SSH_KEY
+              MODE: 'script'
+              COMMAND: 'ihrisscript.sh' 

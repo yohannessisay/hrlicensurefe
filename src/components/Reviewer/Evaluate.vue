@@ -660,7 +660,7 @@
                     <div>
                       <iframe
                         v-bind:src="
-                          'https://storage.googleapis.com/hris-lisence-dev/' +
+                          'https://ihris.moh.gov.et/hrl/' +
                             docs[index].filePath
                         "
                       ></iframe>
@@ -674,7 +674,7 @@
                   <div v-else>
                     <img
                       v-bind:src="
-                        'https://storage.googleapis.com/hris-lisence-dev/' +
+                        'https://ihris.moh.gov.et/hrl/' +
                           docs[index].filePath
                       "
                     />
@@ -900,7 +900,7 @@
                             >
                               <img
                                 v-bind:src="
-                                  'https://storage.googleapis.com/hris-lisence-dev/' +
+                                  'https://ihris.moh.gov.et/hrl/' +
                                     rejectedObj[ind].filePath
                                 "
                               />

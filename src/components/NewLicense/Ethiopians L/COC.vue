@@ -203,10 +203,8 @@ export default {
       showErrorFlash: false,
       showLoading: false,
     });
-
     let fileSize = ref("");
-
-    const basePath = "https://storage.googleapis.com/hris-lisence-dev/";
+    const basePath = "https://ihris.moh.gov.et/hrl/";
 
     let dataChanged = ref(false);
 

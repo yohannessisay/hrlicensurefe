@@ -833,9 +833,10 @@ export default {
     this.otherProfessionalType = this.license.otherProfessionalType;
   },
   data: () => ({
-    basePath: "https://storage.googleapis.com/hris-lisence-dev/",
     docList: [],
     documentsArray: [],
+    basePath: "https://ihris.moh.gov.et/hrl/",
+    
     show: false,
     profileInfo: {},
     applicantId: null,

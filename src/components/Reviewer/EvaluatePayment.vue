@@ -22,8 +22,8 @@
                 <img
                   style="border-radius: 100%"
                   v-bind:src="
-                    'https://storage.googleapis.com/hris-lisence-dev/' +
-                      paymentImage
+                    'https://ihris.moh.gov.et/hrl/' +
+                    paymentImage
                   "
                   class="img"
                 />
@@ -97,8 +97,13 @@
               <picture>
                 <img
                   v-bind:src="
+<<<<<<< HEAD
                     'https://storage.googleapis.com/hris-lisence-dev/' +
                       paymentImage
+=======
+                    'https://ihris.moh.gov.et/hrl/' +
+                    paymentImage
+>>>>>>> 7cccdd4129825ebb9b40f7359b893af2b22393d3
                   "
                 />
               </picture>
