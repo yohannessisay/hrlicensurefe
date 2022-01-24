@@ -595,7 +595,6 @@ export default {
           false
         ) + " - "
       );
-      console.log("get amharic licensed date", getAmharicLicensedDate);
       doc.text(
         75,
         164,

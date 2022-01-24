@@ -84,7 +84,9 @@
             >
               <label class="ml-8"> Nationality</label>
               <h5 class="ml-8">
-                {{ profileInfo.nationality ? profileInfo.nationality.name : "-" }}
+                {{
+                  profileInfo.nationality ? profileInfo.nationality.name : "-"
+                }}
               </h5>
             </div>
             <div
@@ -236,32 +238,39 @@
             </div>
           </div>
           <div v-if="license.applicationStatus.code === 'RETREV'">
-          <div class="flex justify-start">
-            <Title message="Status" />
-          </div>
-          <div class="flex flex-row" >
-            <div>
-              <label class="ml-8"> Evaluator's Name</label>
-              <h5 class="ml-8" v-for="evaluator in evaluators">
-                {{ evaluator.evaluator.name ?  evaluator.evaluator.name: "Not Found"}}
-              </h5>
+            <div class="flex justify-start">
+              <Title message="Status" />
             </div>
-            <div>
-              <label class="ml-8"> Action</label>
-              <h5 class="ml-8" v-for="evaluator in evaluators">
-                {{ evaluator.actionEvent ?  evaluator.actionEvent: "Not Started"}}
-              </h5>
+            <div class="flex flex-row">
+              <div>
+                <label class="ml-8"> Evaluator's Name</label>
+                <h5 class="ml-8" v-for="evaluator in evaluators">
+                  {{
+                    evaluator.evaluator.name
+                      ? evaluator.evaluator.name
+                      : "Not Found"
+                  }}
+                </h5>
+              </div>
+              <div>
+                <label class="ml-8"> Action</label>
+                <h5 class="ml-8" v-for="evaluator in evaluators">
+                  {{
+                    evaluator.actionEvent
+                      ? evaluator.actionEvent
+                      : "Not Started"
+                  }}
+                </h5>
+              </div>
+              <div>
+                <label class="ml-8"> Remark? </label>
+                <h5 class="ml-8" v-for="evaluator in evaluators">
+                  {{ evaluator.remark ? evaluator.remark : "" }}
+                </h5>
+              </div>
             </div>
-            <div>
-              <label class="ml-8"> Remark? </label>
-              <h5 class="ml-8" v-for="evaluator in evaluators">
-                {{ evaluator.remark ?  evaluator.remark: ""}}
-              </h5>
-            </div>
           </div>
-          </div>
-          <div class="flex justify-start flex-wrap">
-          </div>
+          <div class="flex justify-start flex-wrap"></div>
           <div v-if="reviewerId == loggedInAdminId">
             <div class="mt-12 flex justify-center">
               <div>
@@ -637,7 +646,7 @@ export default {
       created,
       evaluate,
       expertLevelId,
-      evaluators
+      evaluators,
     };
   },
 };
