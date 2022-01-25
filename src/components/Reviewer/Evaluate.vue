@@ -770,6 +770,12 @@
           </button>
         </div>
       </div>
+      <div
+        v-if="showActionLoading"
+        class="flex justify-center justify-items-center mt-2"
+      >
+        <Spinner />
+      </div>
       <Modal v-if="showRemark">
         <div>
           <div
@@ -1140,6 +1146,8 @@ export default {
     let showDeclineFlash = ref(false);
     let sendDeclinedData = ref(true);
     let fromModalSendDeclinedData = ref(false);
+
+    let showActionLoading = ref(false);
 
     let professionalTypes = ref([]);
     let evaluateRoute = ref(
@@ -1557,6 +1565,7 @@ export default {
     };
 
     const action = (actionValue) => {
+      showActionLoading.value = true;
       if (professionalTypeIdss.value.length > 0) {
         newLicense.value.professionalTypeIds = professionalTypeIdss.value;
         newLicense.value.professionalTypePrefixes =
@@ -1568,6 +1577,7 @@ export default {
         }, 4000);
         professionalTypeIdss.value = [];
         professionalTypePrefixes.value = [];
+        showActionLoading.value = false;
         return;
       }
 
@@ -1605,6 +1615,7 @@ export default {
           setTimeout(() => {
             showLicenseDateRequirementError.value = false;
           }, 4000);
+          showActionLoading.value = false;
           return;
         } else if (
           !moment(newLicense.value.licenseExpirationDate).isAfter(new Date()) &&
@@ -1614,11 +1625,13 @@ export default {
           setTimeout(() => {
             expirationDateExceedTodayError.value = false;
           }, 4000);
+          showActionLoading.value = false;
           return;
         }
       }
 
       if (actionValue == "DeclineEvent") {
+        showActionLoading.value = false;
         let checkProfessionResult = false;
         newLicense.value.isProfessionChanged == false
           ? (checkProfessionResult = checkProfessionChanged(
@@ -1633,6 +1646,7 @@ export default {
           }, 4000);
           // professionalTypeIdss.value = [];
           // professionalTypePrefixes.value = [];
+          showActionLoading.value = false;
           return;
         } else {
           showRemark.value = true;
@@ -1679,6 +1693,7 @@ export default {
         store
           .dispatch("reviewer/editNewLicense", req)
           .then((res) => {
+            showActionLoading.value = false;
             if (res.statusText == "Created") {
               showFlash.value = true;
               showDeclineFlash.value = true;
@@ -1701,6 +1716,7 @@ export default {
         sendDeclinedData.value == true
       ) {
         store.dispatch("reviewer/editVerification", req).then((res) => {
+          showActionLoading.value = false;
           if (res.statusText == "Created") {
             showFlash.value = true;
             showDeclineFlash.value = true;
@@ -1720,6 +1736,7 @@ export default {
         sendDeclinedData.value == true
       ) {
         store.dispatch("reviewer/editGoodStanding", req).then((res) => {
+          showActionLoading.value = false;
           if (res.statusText == "Created") {
             showFlash.value = true;
             showDeclineFlash.value = true;
@@ -1749,6 +1766,7 @@ export default {
         sendDeclinedData.value == true
       ) {
         store.dispatch("reviewer/editRenewal", req).then((res) => {
+          showActionLoading.value = false;
           if (res.statusText == "Created") {
             showFlash.value = true;
             showDeclineFlash.value = true;
@@ -2076,6 +2094,7 @@ export default {
       isProfessionalTypeChanged,
       checkProfessionChanged,
       isGoodStanding,
+      showActionLoading,
     };
   },
 };
