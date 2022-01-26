@@ -2,7 +2,6 @@
   <div>
     <ReviewerNavBar tab="AssignedToYou" />
     <div class="bg-lightBlueB-200 h-full" v-if="!allInfo.searchByInput">
-      <ReviewerSideNav />
       <div class="pl-12">
         <div>Filter By</div>
       </div>
@@ -66,7 +65,6 @@
 <script>
 import Title from "@/sharedComponents/TitleWithIllustration";
 import ReviewerNavBar from "@/components/Reviewer/ReviewerNavBar";
-import ReviewerSideNav from "@/components/Reviewer/ReviewerSideNav";
 import NothingToShow from "@/components/Reviewer/ChildComponents/NothingToShow";
 import MyAssigned from "@/components/Reviewer/ChildComponents/MyAssigned";
 import { useStore } from "vuex";
@@ -83,7 +81,6 @@ import FilteredInfo from "./ChildComponents/FilteredDatas/FilteredInfo.vue";
 export default {
   components: {
     ReviewerNavBar,
-    ReviewerSideNav,
     Title,
     Spinner,
     NothingToShow,

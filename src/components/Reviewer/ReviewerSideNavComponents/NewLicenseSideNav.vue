@@ -805,7 +805,6 @@ export default {
         newLicenseDDIcon.value.isInReviewPaymentUp = !newLicenseDDIcon.value
           .isInReviewPaymentUp;
       } else if (applicationValue == "NewLicenseLicensed") {
-        router.push("/admin/review/newlicenselicensed")
         newLicenseDDIcon.value.isLicensedUp = !newLicenseDDIcon.value
           .isLicensedUp;
       } else if (applicationValue == "NewLicenseUnassigned") {
