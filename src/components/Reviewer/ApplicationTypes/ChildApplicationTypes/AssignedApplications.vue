@@ -111,7 +111,7 @@ export default {
     moment: () => moment,
   },
   components: {
-    Spinner
+    Spinner,
   },
   props: ["assignedApplication", "app_type", "assigned_to_others"],
   name: "AssignedApplications",
@@ -146,6 +146,7 @@ export default {
                 "/" +
                 applicantId;
               router.push(url);
+              return;
             }
             const url =
               data +
