@@ -70,5 +70,20 @@ export default {
 
     renewalAllLicensed: [],
     renewalAllLicensedSearched: [],
+
+    renewalReApply: [],
+    renewalReApplySearched: [],
+    renewalOthersReApply: [],
+    renewalOthersReApplySearched: [],
+
+    renewalDeclineConfirmed: [],
+    renewalDeclineConfirmedSearched: [],
+    renewalOthersDeclineConfirmed: [],
+    renewalOthersDeclineConfirmedSearched: [],
+
+    renewalUnderSuperVisionConfirmed: [],
+    renewalUnderSuperVisionConfirmedSearched: [],
+    renewalOthersUnderSuperVisionConfirmed: [],
+    renewalOthersUnderSuperVisionConfirmedSearched: [],
   },
 };

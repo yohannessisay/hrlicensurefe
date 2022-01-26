@@ -1,747 +1,3 @@
-<!-- <div class="mb-2">
-    <li class=" justify-start static">
-      <transition name="slide-fade-to-left">
-        <div class="">
-          <div
-            @click="renewalDDHandler('Renewal')"
-            class=" justify-center items-center "
-          >
-            <div class="p-1 ">
-              <h3 class="text-lightBlueB-500 mt-tiny">
-                <span style="color: white;">
-                  <i class="mr-2 far fa-thumbs-up fa-x fa-light"></i>
-                  <i
-                    v-if="renewalDDIcon.isRenewalUp"
-                    class="fas fa-chevron-circle-up float-right mt-2"
-                  ></i>
-                  <i
-                    v-else
-                    class="fas fa-chevron-circle-down float-right mt-2"
-                  ></i>
-                </span>
-                <span class="text-lg" style="color: white; ">Renewal</span>
-              </h3>
-            </div>
-          </div>
-
-          <div
-            v-if="dropdownValue.renewal"
-            class="dropdown-menu   mb-12 ml-4 "
-            style="color: #648ea3; width: 200px;"
-          >
-            <ul class="block w-full shadow float-right" style="color: #648ea3;">
-              <li @click="renewalMenuHandler('RenewalUnassigned')" class="mb-2">
-                <p class=" text-base" style="color: white; ">
-                  <i class="far fa-thumbs-up fa-x fa-light"></i>
-                  Unassigned
-                </p>
-              </li>
-              <div>
-                <li
-                  @click="renewalDDHandler('RenewalAssigned')"
-                  class=" justify-start "
-                  v-if="adminRole == 'ADM'"
-                >
-                  <transition name="slide-fade-to-left">
-                    <div class="">
-                      <div class=" justify-center items-center ">
-                        <div class="p-1 ">
-                          <h3 class="text-lightBlueB-500 mt-tiny">
-                            <span style="color: white;">
-                              <i
-                                v-if="renewalDDIcon.isAssignedUp"
-                                class="fas fa-chevron-circle-up float-right mt-2"
-                              ></i>
-                              <i
-                                v-else
-                                class="fas fa-chevron-circle-down float-right mt-2"
-                              ></i>
-
-                              <i
-                                class="mr-2 far fa-address-book fa-x fa-light"
-                              ></i>
-                            </span>
-                            <span class="text-base" style="color: white; "
-                              >Assigned</span
-                            >
-                          </h3>
-                        </div>
-                      </div>
-                      <div
-                        v-if="dropdownValue.renewalAssigned"
-                        class="dropdown-menu relative  shadow-md mb-12 ml-4"
-                        style="color: #648ea3; width: 200px;"
-                      >
-                        <ul class="block w-full  shadow float-right ">
-                          <li
-                            @click="renewalMenuHandler('renewalAssigned')"
-                            class="mb-2"
-                          >
-                            <p class=" text-sm" style="color: white; ">
-                              <i
-                                class="mr-2 far fa-address-book fa-x fa-light"
-                              ></i>
-                              Assigned To You
-                            </p>
-                          </li>
-                          <li
-                            @click="
-                              renewalMenuHandler('renewalAssignedToOthers')
-                            "
-                          >
-                            <p class=" text-sm" style="color: white; ">
-                              <i class="mr-2 far fa-id-card fa-x"></i>
-                              Assigned To Others
-                            </p>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </transition>
-                </li>
-                <li
-                  @click="renewalMenuHandler('renewalAssigned')"
-                  class="mb-2"
-                  v-else
-                >
-                  <p class=" text-sm" style="color: white; ">
-                    <i class="mr-2 far fa-address-book fa-x fa-light"></i>
-                    Assigned To You
-                  </p>
-                </li>
-              </div>
-              <div>
-                <li
-                  @click="renewalDDHandler('RenewalUnfinished')"
-                  class=" justify-start "
-                  v-if="adminRole == 'ADM'"
-                >
-                  <transition name="slide-fade-to-left">
-                    <div class="">
-                      <div class=" justify-center items-center ">
-                        <div class="p-1 ">
-                          <h3 class="text-lightBlueB-500 mt-tiny">
-                            <span style="color: white;">
-                              <i
-                                v-if="renewalDDIcon.isUnfinishedUp"
-                                class="fas fa-chevron-circle-up float-right mt-2"
-                              ></i>
-                              <i
-                                v-else
-                                class="fas fa-chevron-circle-down float-right mt-2"
-                              ></i>
-
-                              <i
-                                class="mr-2 far fa-address-book fa-x fa-light"
-                              ></i>
-                            </span>
-                            <span class="text-base" style="color: white; "
-                              >Unfinished</span
-                            >
-                          </h3>
-                        </div>
-                      </div>
-                      <div
-                        v-if="dropdownValue.renewalUnfinished"
-                        class="dropdown-menu relative  shadow-md mb-12 ml-4"
-                        style="color: #648ea3; width: 200px;"
-                      >
-                        <ul class="block w-full  shadow float-right ">
-                          <li
-                            @click="renewalMenuHandler('renewalUnfinished')"
-                            class="mb-2"
-                          >
-                            <p class=" text-sm" style="color: white; ">
-                              <i
-                                class="mr-2 far fa-address-book fa-x fa-light"
-                              ></i>
-                              My Unfinished
-                            </p>
-                          </li>
-                          <li
-                            @click="
-                              renewalMenuHandler('renewalOthersUnfinished')
-                            "
-                          >
-                            <p class=" text-sm" style="color: white; ">
-                              <i class="mr-2 far fa-id-card fa-x"></i>
-                              Others Unfinished
-                            </p>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </transition>
-                </li>
-                <li
-                  @click="renewalMenuHandler('renewalUnfinished')"
-                  class="mb-2"
-                  v-else
-                >
-                  <p class=" text-sm" style="color: white; ">
-                    <i class="mr-2 far fa-address-book fa-x fa-light"></i>
-                    Unfinished
-                  </p>
-                </li>
-              </div>
-              <div>
-                <li
-                  @click="renewalDDHandler('RenewalUnconfirmed')"
-                  class=" justify-start "
-                  v-if="adminRole == 'ADM'"
-                >
-                  <transition name="slide-fade-to-left">
-                    <div class="">
-                      <div class=" justify-center items-center ">
-                        <div class="p-1 ">
-                          <h3 class="text-lightBlueB-500 mt-tiny">
-                            <span style="color: white;">
-                              <i
-                                v-if="renewalDDIcon.isUnconfirmedUp"
-                                class="fas fa-chevron-circle-up float-right mt-2"
-                              ></i>
-                              <i
-                                v-else
-                                class="fas fa-chevron-circle-down float-right mt-2"
-                              ></i>
-
-                              <i
-                                class="mr-2 far fa-address-book fa-x fa-light"
-                              ></i>
-                            </span>
-                            <span class="text-base" style="color: white; ">{{
-                              expertLevelId == 4 ? "Unconfirmed" : "Approved"
-                            }}</span>
-                          </h3>
-                        </div>
-                      </div>
-                      <div
-                        v-if="dropdownValue.renewalUnconfirmed"
-                        class="dropdown-menu relative  shadow-md mb-12 ml-4"
-                        style="color: #648ea3; width: 200px;"
-                      >
-                        <ul class="block w-full  shadow float-right ">
-                          <li
-                            @click="renewalMenuHandler('renewalUnconfirmed')"
-                            class="mb-2"
-                          >
-                            <p class=" text-sm" style="color: white; ">
-                              <i
-                                class="mr-2 far fa-address-book fa-x fa-light"
-                              ></i>
-                              {{
-                                expertLevelId == 4
-                                  ? "My Unconfirmed"
-                                  : "My Approved"
-                              }}
-                            </p>
-                          </li>
-                          <li
-                            @click="renewalMenuHandler('allRenewalUnconfirmed')"
-                          >
-                            <p class=" text-sm" style="color: white; ">
-                              <i class="mr-2 far fa-id-card fa-x"></i>
-                              {{
-                                expertLevelId == 4
-                                  ? "Others Unconfirmed"
-                                  : "Others Approved"
-                              }}
-                            </p>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </transition>
-                </li>
-                <li
-                  @click="renewalMenuHandler('renewalUnconfirmed')"
-                  class="mb-2"
-                  v-else
-                >
-                  <p class=" text-sm" style="color: white; ">
-                    <i class="mr-2 far fa-address-book fa-x fa-light"></i>
-                    {{ expertLevelId == 4 ? "Unconfirmed" : "Approved" }}
-                  </p>
-                </li>
-              </div>
-              <div v-if="expertLevelId == 4">
-                <li
-                  @click="renewalDDHandler('RenewalOnReview')"
-                  class=" justify-start "
-                  v-if="adminRole == 'ADM'"
-                >
-                  <transition name="slide-fade-to-left">
-                    <div class="">
-                      <div class=" justify-center items-center ">
-                        <div class="p-1 ">
-                          <h3 class="text-lightBlueB-500 mt-tiny">
-                            <span style="color: white;">
-                              <i
-                                v-if="renewalDDIcon.isOnReivewUp"
-                                class="fas fa-chevron-circle-up float-right mt-2"
-                              ></i>
-                              <i
-                                v-else
-                                class="fas fa-chevron-circle-down float-right mt-2"
-                              ></i>
-
-                              <i
-                                class="mr-2 far fa-address-book fa-x fa-light"
-                              ></i>
-                            </span>
-                            <span class="text-base" style="color: white; "
-                              >On Review</span
-                            >
-                          </h3>
-                        </div>
-                      </div>
-                      <div
-                        v-if="dropdownValue.renewalOnReview"
-                        class="dropdown-menu relative  shadow-md mb-12 ml-4"
-                        style="color: #648ea3; width: 200px;"
-                      >
-                        <ul class="block w-full  shadow float-right ">
-                          <li
-                            @click="renewalMenuHandler('renewalOnReview')"
-                            class="mb-2"
-                          >
-                            <p class=" text-sm" style="color: white; ">
-                              <i
-                                class="mr-2 far fa-address-book fa-x fa-light"
-                              ></i>
-                              My On Review
-                            </p>
-                          </li>
-                          <li
-                            @click="renewalMenuHandler('othersRenewalOnReview')"
-                          >
-                            <p class=" text-sm" style="color: white; ">
-                              <i class="mr-2 far fa-id-card fa-x"></i>
-                              Others On Review
-                            </p>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </transition>
-                </li>
-                <li
-                  @click="renewalMenuHandler('renewalOnReview')"
-                  class="mb-2"
-                  v-else
-                >
-                  <p class=" text-sm" style="color: white; ">
-                    <i class="mr-2 far fa-address-book fa-x fa-light"></i>
-                    On Review
-                  </p>
-                </li>
-              </div>
-              <div v-if="expertLevelId == 4">
-                <li
-                  @click="renewalDDHandler('RenewalReEvaluate')"
-                  class=" justify-start "
-                  v-if="adminRole == 'ADM'"
-                >
-                  <transition name="slide-fade-to-left">
-                    <div class="">
-                      <div class=" justify-center items-center ">
-                        <div class="p-1 ">
-                          <h3 class="text-lightBlueB-500 mt-tiny">
-                            <span style="color: white;">
-                              <i
-                                v-if="renewalDDIcon.isReEvaluateUp"
-                                class="fas fa-chevron-circle-up float-right mt-2"
-                              ></i>
-                              <i
-                                v-else
-                                class="fas fa-chevron-circle-down float-right mt-2"
-                              ></i>
-
-                              <i
-                                class="mr-2 far fa-address-book fa-x fa-light"
-                              ></i>
-                            </span>
-                            <span class="text-base" style="color: white; "
-                              >Re Evaluate</span
-                            >
-                          </h3>
-                        </div>
-                      </div>
-                      <div
-                        v-if="dropdownValue.renewalReEvaluate"
-                        class="dropdown-menu relative  shadow-md mb-12 ml-4"
-                        style="color: #648ea3; width: 200px;"
-                      >
-                        <ul class="block w-full  shadow float-right ">
-                          <li
-                            @click="renewalMenuHandler('renewalReEvaluate')"
-                            class="mb-2"
-                          >
-                            <p class=" text-sm" style="color: white; ">
-                              <i
-                                class="mr-2 far fa-address-book fa-x fa-light"
-                              ></i>
-                              My Re Evaluate
-                            </p>
-                          </li>
-                          <li
-                            @click="
-                              renewalMenuHandler('othersRenewalReEvaluate')
-                            "
-                          >
-                            <p class=" text-sm" style="color: white; ">
-                              <i class="mr-2 far fa-id-card fa-x"></i>
-                              Others Re Evaluate
-                            </p>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </transition>
-                </li>
-                <li
-                  @click="renewalMenuHandler('renewalReEvaluate')"
-                  class="mb-2"
-                  v-else
-                >
-                  <p class=" text-sm" style="color: white; ">
-                    <i class="mr-2 far fa-address-book fa-x fa-light"></i>
-                    Re Evaluate
-                  </p>
-                </li>
-              </div>
-              <div>
-                <li
-                  @click="renewalDDHandler('RenewalDeclined')"
-                  class=" justify-start "
-                >
-                  <transition name="slide-fade-to-left">
-                    <div class="">
-                      <div class=" justify-center items-center ">
-                        <div class="p-1 ">
-                          <h3 class="text-lightBlueB-500 mt-tiny">
-                            <span style="color: white;">
-                              <i
-                                v-if="renewalDDIcon.isDeclinedUp"
-                                class="fas fa-chevron-circle-up float-right mt-2"
-                              ></i>
-                              <i
-                                v-else
-                                class="fas fa-chevron-circle-down float-right mt-2"
-                              ></i>
-
-                              <i
-                                class="mr-2 far fa-address-book fa-x fa-light"
-                              ></i>
-                            </span>
-                            <span class="text-base" style="color: white; "
-                              >Declined</span
-                            >
-                          </h3>
-                        </div>
-                      </div>
-                      <div
-                        v-if="dropdownValue.renewalDeclined"
-                        class="dropdown-menu relative  shadow-md mb-12 ml-4"
-                        style="color: #648ea3; width: 200px;"
-                      >
-                        <ul class="block w-full  shadow float-right ">
-                          <li
-                            @click="renewalMenuHandler('renewalDeclined')"
-                            class="mb-2"
-                          >
-                            <p class=" text-sm" style="color: white; ">
-                              <i
-                                class="mr-2 far fa-address-book fa-x fa-light"
-                              ></i>
-                              {{
-                                adminRole == "ADM" ? "My Declined" : "Declined"
-                              }}
-                            </p>
-                          </li>
-                          <li
-                            @click="renewalMenuHandler('allRenewalDeclined')"
-                            v-if="adminRole == 'ADM'"
-                          >
-                            <p class=" text-sm" style="color: white; ">
-                              <i class="mr-2 far fa-id-card fa-x"></i>
-                              Others Declined
-                            </p>
-                          </li>
-                          <li
-                            @click="
-                              renewalMenuHandler('renewalDeclinedPayment')
-                            "
-                            class="mb-2"
-                          >
-                            <p class=" text-sm" style="color: white; ">
-                              <i
-                                class="mr-2 far fa-address-book fa-x fa-light"
-                              ></i>
-                              {{
-                                adminRole == "ADM"
-                                  ? "My Declined Payment"
-                                  : "Declined Payment"
-                              }}
-                            </p>
-                          </li>
-                          <li
-                            @click="
-                              renewalMenuHandler('othersRenewalDeclinedPayment')
-                            "
-                            v-if="adminRole == 'ADM'"
-                          >
-                            <p class=" text-sm" style="color: white; ">
-                              <i class="mr-2 far fa-id-card fa-x"></i>
-                              Others Declined Payment
-                            </p>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </transition>
-                </li>
-              </div>
-              <div>
-                <li
-                  @click="renewalDDHandler('RenewalUnderSuperVision')"
-                  class=" justify-start "
-                  v-if="adminRole == 'ADM'"
-                >
-                  <transition name="slide-fade-to-left">
-                    <div class="">
-                      <div class=" justify-center items-center ">
-                        <div class="p-1 ">
-                          <h3 class="text-lightBlueB-500 mt-tiny">
-                            <span style="color: white;">
-                              <i
-                                v-if="renewalDDIcon.isUnderSuperVisionUp"
-                                class="fas fa-chevron-circle-up float-right mt-2"
-                              ></i>
-                              <i
-                                v-else
-                                class="fas fa-chevron-circle-down float-right mt-2"
-                              ></i>
-
-                              <i
-                                class="mr-2 far fa-address-book fa-x fa-light"
-                              ></i>
-                            </span>
-                            <span class="text-base" style="color: white; "
-                              >Under Super Vision</span
-                            >
-                          </h3>
-                        </div>
-                      </div>
-                      <div
-                        v-if="dropdownValue.renewalUnderSuperViesion"
-                        class="dropdown-menu relative  shadow-md mb-12 ml-4"
-                        style="color: #648ea3; width: 200px;"
-                      >
-                        <ul class="block w-full  shadow float-right ">
-                          <li
-                            @click="
-                              renewalMenuHandler('renewalUnderSuperVision')
-                            "
-                            class="mb-2"
-                          >
-                            <p class=" text-sm" style="color: white; ">
-                              <i
-                                class="mr-2 far fa-address-book fa-x fa-light"
-                              ></i>
-                              My Under Super Vision
-                            </p>
-                          </li>
-                          <li
-                            @click="
-                              renewalMenuHandler(
-                                'renewalOthersUnderSuperVision'
-                              )
-                            "
-                          >
-                            <p class=" text-sm" style="color: white; ">
-                              <i class="mr-2 far fa-id-card fa-x"></i>
-                              Others Under Super Vision
-                            </p>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </transition>
-                </li>
-              </div>
-              <div v-if="expertLevelId == 4">
-                <li
-                  @click="renewalDDHandler('RenewalConfirmed')"
-                  class=" justify-start "
-                >
-                  <transition name="slide-fade-to-left">
-                    <div class="">
-                      <div class=" justify-center items-center ">
-                        <div class="p-1 ">
-                          <h3 class="text-lightBlueB-500 mt-tiny">
-                            <span style="color: white;">
-                              <i
-                                v-if="renewalDDIcon.isConfirmedUp"
-                                class="fas fa-chevron-circle-up float-right mt-2"
-                              ></i>
-                              <i
-                                v-else
-                                class="fas fa-chevron-circle-down float-right mt-2"
-                              ></i>
-
-                              <i
-                                class="mr-2 far fa-address-book fa-x fa-light"
-                              ></i>
-                            </span>
-                            <span class="text-base" style="color: white; "
-                              >Confirmed</span
-                            >
-                          </h3>
-                        </div>
-                      </div>
-                      <div
-                        v-if="dropdownValue.renewalConfirmed"
-                        class="dropdown-menu relative  shadow-md mb-12 ml-4"
-                        style="color: #648ea3; width: 200px;"
-                      >
-                        <ul class="block w-full  shadow float-right ">
-                          <li
-                            @click="renewalMenuHandler('renewalConfirmed')"
-                            class="mb-2"
-                          >
-                            <p class=" text-sm" style="color: white; ">
-                              <i
-                                class="mr-2 far fa-address-book fa-x fa-light"
-                              ></i>
-
-                              {{
-                                adminRole == "ADM"
-                                  ? "My Confirmed"
-                                  : "Confirmed"
-                              }}
-                            </p>
-                          </li>
-                          <li
-                            @click="
-                              renewalMenuHandler('renewalOthersConfirmed')
-                            "
-                            v-if="adminRole == 'ADM'"
-                          >
-                            <p class=" text-sm" style="color: white; ">
-                              <i class="mr-2 far fa-id-card fa-x"></i>
-                              Others Confirmed
-                            </p>
-                          </li>
-                          <li
-                            @click="
-                              renewalMenuHandler('renewalApprovedPayment')
-                            "
-                            class="mb-2"
-                          >
-                            <p class=" text-sm" style="color: white; ">
-                              <i
-                                class="mr-2 far fa-address-book fa-x fa-light"
-                              ></i>
-                              {{
-                                adminRole == "ADM"
-                                  ? "My Approved Payment"
-                                  : "Approved Payment"
-                              }}
-                            </p>
-                          </li>
-                          <li
-                            @click="
-                              renewalMenuHandler('othersRenewalApprovedPayment')
-                            "
-                            v-if="adminRole == 'ADM'"
-                          >
-                            <p class=" text-sm" style="color: white; ">
-                              <i class="mr-2 far fa-id-card fa-x"></i>
-                              Others Approved Payment
-                            </p>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </transition>
-                </li>
-              </div>
-              <div v-if="expertLevelId == 4">
-                <li
-                  @click="renewalDDHandler('RenewalReturned')"
-                  class=" justify-start "
-                >
-                  <transition name="slide-fade-to-left">
-                    <div class="">
-                      <div class=" justify-center items-center ">
-                        <div class="p-1 ">
-                          <h3 class="text-lightBlueB-500 mt-tiny">
-                            <span style="color: white;">
-                              <i
-                                v-if="renewalDDIcon.isReturnedUp"
-                                class="fas fa-chevron-circle-up float-right mt-2"
-                              ></i>
-                              <i
-                                v-else
-                                class="fas fa-chevron-circle-down float-right mt-2"
-                              ></i>
-
-                              <i
-                                class="mr-2 far fa-address-book fa-x fa-light"
-                              ></i>
-                            </span>
-                            <span class="text-base" style="color: white; "
-                              >Returned Applications</span
-                            >
-                          </h3>
-                        </div>
-                      </div>
-                      <div
-                        v-if="dropdownValue.renewalReturned"
-                        class="dropdown-menu relative  shadow-md mb-12 ml-4"
-                        style="color: #648ea3; width: 200px;"
-                      >
-                        <ul class="block w-full  shadow float-right ">
-                          <li
-                            @click="renewalMenuHandler('renewalReturnedToMe')"
-                            class="mb-2"
-                          >
-                            <p class=" text-sm" style="color: white; ">
-                              <i
-                                class="mr-2 far fa-address-book fa-x fa-light"
-                              ></i>
-                              {{
-                                adminRole == "ADM"
-                                  ? "Returned To Me"
-                                  : "Returned Applications"
-                              }}
-                            </p>
-                          </li>
-                          <li
-                            @click="
-                              renewalMenuHandler('renewalReturnedToOthers')
-                            "
-                            v-if="adminRole == 'ADM'"
-                          >
-                            <p class=" text-sm" style="color: white; ">
-                              <i class="mr-2 far fa-id-card fa-x"></i>
-                              Returned To Others
-                            </p>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </transition>
-                </li>
-              </div>
-            </ul>
-          </div>
-        </div>
-      </transition>
-    </li>
-  </div> -->
-
 <template>
   <div class="mb-2">
     <li class=" justify-start static">
@@ -775,12 +31,20 @@
             style="color: #648ea3; width: 200px;"
           >
             <ul class="block w-full shadow float-right" style="color: #648ea3;">
-              <li @click="renewalMenuHandler('RenewalUnassigned')" class="mb-2">
-                <p class=" text-base" style="color: white; ">
-                  <i class="far fa-thumbs-up fa-x fa-light"></i>
-                  Unassigned
-                </p>
-              </li>
+              <drop-down-lists
+                :dropdownValue="[
+                  dropdownValue.renewal,
+                  dropdownValue.renewalUnassigned,
+                ]"
+                name="Unassigned"
+                dropDownHandlerValue="RenewalUnassigned"
+                :dropDownMenus="['RenewalUnassigned', 'renewalReSubmitted']"
+                :isDropDownIconUp="renewalDDIcon.isUnassignedUp"
+                :adminRole="adminRole"
+                :yoursAndOthersApplication="['Unassigned', 'Re Submitted']"
+                @dropDownHandler="dropDownHandler"
+                @dropDownListHandler="dropDownListHandler"
+              />
 
               <!-- under review started here -->
               <div v-if="expertLevelId == 4">
@@ -819,7 +83,7 @@
                             dropdownValue.renewalUnderReview,
                             dropdownValue.renewalAssigned,
                           ]"
-                          name="In Review"
+                          name="Assigned"
                           dropDownHandlerValue="RenewalAssigned"
                           :dropDownMenus="[
                             'renewalAssigned',
@@ -1062,16 +326,16 @@
                                   <drop-down-lists
                                     :dropdownValue="[
                                       dropdownValue.renewalConfirmedEvaluation,
-                                      dropdownValue.renewalDeclined,
+                                      dropdownValue.renewalDeclineConfirmed,
                                     ]"
                                     name="Declined"
-                                    dropDownHandlerValue="RenewalDeclined"
+                                    dropDownHandlerValue="RenewalDeclineConfirmed"
                                     :dropDownMenus="[
-                                      'renewalDeclined',
-                                      'allRenewalDeclined',
+                                      'renewalDeclineConfirmed',
+                                      'othersRenewalDeclineConfirmed',
                                     ]"
                                     :isDropDownIconUp="
-                                      renewalDDIcon.isUnderEvaluationUp
+                                      renewalDDIcon.isDeclineConfirmedUp
                                     "
                                     :adminRole="adminRole"
                                     :yoursAndOthersApplication="[
@@ -1084,16 +348,16 @@
                                   <drop-down-lists
                                     :dropdownValue="[
                                       dropdownValue.renewalConfirmedEvaluation,
-                                      dropdownValue.renewalUnderSuperVision,
+                                      dropdownValue.renewalUnderSuperVisionConfirmed,
                                     ]"
                                     name="Under Super Vision"
-                                    dropDownHandlerValue="RenewalUnderSuperVision"
+                                    dropDownHandlerValue="RenewalUnderSuperVisionConfirmed"
                                     :dropDownMenus="[
-                                      'renewalUnderSuperVision',
-                                      'renewalOthersUnderSuperVision',
+                                      'renewalUnderSuperVisionConfirmed',
+                                      'renewalOthersUnderSuperVisionConfirmed',
                                     ]"
                                     :isDropDownIconUp="
-                                      renewalDDIcon.isUnderSuperVisionUp
+                                      renewalDDIcon.isUnderSuperVisionConfirmedUp
                                     "
                                     :adminRole="adminRole"
                                     :yoursAndOthersApplication="[
@@ -1109,7 +373,7 @@
                           </li>
                         </ul>
                       </div>
-                      <div
+                      <!-- <div
                         v-if="dropdownValue.renewalUnderReview"
                         class="dropdown-menu relative  shadow-md mb-12 ml-4"
                         style="color: #648ea3; width: 200px;"
@@ -1199,7 +463,7 @@
                             </div>
                           </li>
                         </ul>
-                      </div>
+                      </div> -->
                     </div>
                   </transition>
                 </li>
@@ -1213,7 +477,7 @@
                     dropdownValue.renewal,
                     dropdownValue.renewalAssigned,
                   ]"
-                  name="In Review"
+                  name="Assigned"
                   dropDownHandlerValue="RenewalAssigned"
                   :dropDownMenus="[
                     'renewalAssigned',
@@ -1282,7 +546,7 @@
                   name="Declined"
                   dropDownHandlerValue="RenewalDeclined"
                   :dropDownMenus="['renewalDeclined', 'allRenewalDeclined']"
-                  :isDropDownIconUp="renewalDDIcon.isUnderEvaluationUp"
+                  :isDropDownIconUp="renewalDDIcon.isDeclinedUp"
                   :adminRole="adminRole"
                   :yoursAndOthersApplication="[
                     'My Declined',
@@ -1314,7 +578,7 @@
                   @dropDownListHandler="dropDownListHandler"
                 />
               </div>
-              <div
+              <!-- <div
                 v-if="dropdownValue.renewal && expertLevelId == 3"
                 class="dropdown-menu relative  shadow-md mb-12"
                 style="color: #648ea3; width: 200px;"
@@ -1402,7 +666,7 @@
                     </div>
                   </li>
                 </ul>
-              </div>
+              </div> -->
               <!-- Federal Expert side nav ends here -->
               <drop-down-lists
                 :dropdownValue="[
@@ -1418,6 +682,16 @@
                 @dropDownHandler="dropDownHandler"
                 @dropDownListHandler="dropDownListHandler"
               />
+
+              <!-- <li
+                class="mb-2"
+              >
+                <a href="https://hrdelk.sandboxaddis.com/s/hrl/app/kibana#/dashboard/c1cd0480-3884-11ec-9b4d-1fc6319d2633?_a=(description:'',filters:!(),fullScreenMode:!f,options:(hidePanelTitles:!f,useMargins:!t),panels:!((embeddableConfig:(title:Applications),gridData:(h:7,i:'6fc0fb76-a9ea-49a2-82ec-029cdcf67de7',w:16,x:0,y:0),id:def43e70-3884-11ec-9b4d-1fc6319d2633,panelIndex:'6fc0fb76-a9ea-49a2-82ec-029cdcf67de7',title:Applications,type:visualization,version:'7.7.0'),(embeddableConfig:(title:'Experts%20Engaged'),gridData:(h:7,i:'4751f4c8-812c-4990-8489-426b96729d70',w:14,x:16,y:0),id:'267a5540-3885-11ec-9b4d-1fc6319d2633',panelIndex:'4751f4c8-812c-4990-8489-426b96729d70',title:'Experts%20Engaged',type:visualization,version:'7.7.0'),(embeddableConfig:(title:'Application%20by%20Status'),gridData:(h:15,i:'2725aa8d-8fcf-4dd2-80fc-3397e908a9c4',w:27,x:0,y:7),id:f91a6600-3887-11ec-9b4d-1fc6319d2633,panelIndex:'2725aa8d-8fcf-4dd2-80fc-3397e908a9c4',title:'Application%20by%20Status',type:visualization,version:'7.7.0'),(embeddableConfig:(title:'Application%20by%20Gender'),gridData:(h:15,i:a909e9a8-0986-4105-9a0a-5584b4fbb079,w:21,x:27,y:7),id:'935f39a0-3885-11ec-9b4d-1fc6319d2633',panelIndex:a909e9a8-0986-4105-9a0a-5584b4fbb079,title:'Application%20by%20Gender',type:visualization,version:'7.7.0'),(embeddableConfig:(title:'Application%20by%20Profession'),gridData:(h:15,i:'0cf63039-863b-4f18-93e5-2a2e2a41733b',w:24,x:0,y:22),id:'8e6f9320-3887-11ec-9b4d-1fc6319d2633',panelIndex:'0cf63039-863b-4f18-93e5-2a2e2a41733b',title:'Application%20by%20Profession',type:visualization,version:'7.7.0'),(embeddableConfig:(title:'Application%20by%20Region'),gridData:(h:15,i:'5bb96718-de8c-40f2-8a97-2329bd7bef2f',w:24,x:24,y:22),id:'9f7eb170-3867-11ec-9b4d-1fc6319d2633',panelIndex:'5bb96718-de8c-40f2-8a97-2329bd7bef2f',title:'Application%20by%20Region',type:visualization,version:'7.7.0')),query:(language:kuery,query:''),timeRestore:!f,title:renewal,viewMode:view)&_g=(filters:!(),refreshInterval:(pause:!t,value:0),time:(from:now-7d,to:now))" 
+                target ="_blank" class=" text-base" style="color: white; ">
+                  <i class="mr-2 far fa-address-book fa-x fa-light"></i>
+                  Dashboard
+                </a>
+              </li> -->
 
               <!-- All Licensed Applications starts here -->
 
@@ -1455,6 +729,8 @@ export default {
       isOnReivewUp: false,
       isReEvaluateUp: false,
       isDeclinedUp: false,
+      isDeclineConfirmedUp: false,
+      isUnderSuperVisionConfirmedUp: false,
       isUnderSuperVisionUp: false,
       isConfirmedUp: false,
       isReturnedUp: false,
@@ -1468,6 +744,7 @@ export default {
       isDeclinedPaymentUp: false,
       isFinishedUp: false,
       isLicensedUp: false,
+      isUnassignedUp: false,
     });
 
     const renewalMenuHandler = (menu) => {
@@ -1490,6 +767,12 @@ export default {
       } else if (applicationValue == "RenewalConfirmedEvaluation") {
         renewalDDIcon.value.isConfirmedEvaluationUp = !renewalDDIcon.value
           .isConfirmedEvaluationUp;
+      } else if (applicationValue == "RenewalDeclineConfirmed") {
+        renewalDDIcon.value.isDeclineConfirmedUp = !renewalDDIcon.value
+          .isDeclineConfirmedUp;
+      } else if (applicationValue == "RenewalUnderSuperVisionConfirmed") {
+        renewalDDIcon.value.isUnderSuperVisionConfirmedUp = !renewalDDIcon.value
+          .isUnderSuperVisionConfirmedUp;
       } else if (applicationValue == "RenewalPaymentReview") {
         renewalDDIcon.value.isPaymentReviewnUp = !renewalDDIcon.value
           .isPaymentReviewnUp;
@@ -1501,6 +784,9 @@ export default {
           .isDeclinedPaymentUp;
       } else if (applicationValue == "RenewalLicensed") {
         renewalDDIcon.value.isLicensedUp = !renewalDDIcon.value.isLicensedUp;
+      } else if (applicationValue == "RenewalUnassigned") {
+        renewalDDIcon.value.isUnassignedUp = !renewalDDIcon.value
+          .isUnassignedUp;
       }
       emit("applicationTypeSelected", applicationValue);
     };

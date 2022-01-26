@@ -32,7 +32,7 @@
         <confirmed-applications
           :confirmedApplication="getRenewalConfirmed"
           app_type="Renewal"
-          all_confirmed="false"
+          others_confirmed="false"
         />
       </div>
     </div>
@@ -156,9 +156,6 @@ export default {
             ];
 
           for (let applicant in allInfo.value.assignApplication) {
-            allInfo.value.assignApplication[applicant].createdAt = moment(
-              allInfo.value.assignApplication[applicant].createdAt
-            ).format("MMMM D, YYYY");
             if (
               allInfo.value.assignApplication[applicant].applicationType ===
               undefined

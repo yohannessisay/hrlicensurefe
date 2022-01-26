@@ -18,6 +18,18 @@ import {
   SET_DEGREE,
   SET_TRANSCRIPT,
   SET_DIPLOMA,
+  SET_PRO_CERTIFICATE,
+  SET_PRO_DIPLOMA,
+  SET_PRO_TRANSCRIPT,
+  SET_EDU_EIGHTH,
+  SET_EDU_TENTH,
+  SET_EDU_TWELVETH,
+  SET_EDU_TRANSCRIPT1,
+  SET_EDU_TRANSCRIPT2,
+  SET_MASTERS,
+  SET_MASTERS_TRANSCRIPT,
+  SET_PHD,
+  SET_PHD_TRANSCRIPT,
   SET_BUTTONS,
   SET_APPLICATION_ID,
   SET_DOCUMENT_SPEC,
@@ -85,6 +97,42 @@ export default {
   setDiploma({ commit }, diploma) {
     commit(SET_DIPLOMA, diploma);
   },
+  setProCertificate({ commit }, proCertificate) {
+    commit(SET_PRO_CERTIFICATE, proCertificate);
+  },
+  setProDiploma({ commit }, proDiploma) {
+    commit(SET_PRO_DIPLOMA, proDiploma);
+  },
+  setProTranscript({ commit }, proTranscript) {
+    commit(SET_PRO_TRANSCRIPT, proTranscript);
+  },
+  setEduEighth({ commit }, eduEighth) {
+    commit(SET_EDU_EIGHTH, eduEighth);
+  },
+  setEduTenth({ commit }, eduTenth) {
+    commit(SET_EDU_TENTH, eduTenth);
+  },
+  setEduTwelveth({ commit }, eduTwelveth) {
+    commit(SET_EDU_TWELVETH, eduTwelveth);
+  },
+  setEduTranscript1({ commit }, eduTranscript1) {
+    commit(SET_EDU_TRANSCRIPT1, eduTranscript1);
+  },
+  setEduTranscript2({ commit }, eduTranscript2) {
+    commit(SET_EDU_TRANSCRIPT2, eduTranscript2);
+  },
+  setMasters({ commit }, masters) {
+    commit(SET_MASTERS, masters);
+  },
+  setMastersTranscript({ commit }, mastersTranscript) {
+    commit(SET_MASTERS_TRANSCRIPT, mastersTranscript);
+  },
+  setPhd({ commit }, phd) {
+    commit(SET_PHD, phd);
+  },
+  setPhdTranscript({ commit }, phdTranscript) {
+    commit(SET_PHD_TRANSCRIPT, phdTranscript);
+  },
   setButtons({ commit }, buttons) {
     commit(SET_BUTTONS, buttons);
   },
@@ -97,6 +145,15 @@ export default {
   setDraft({ commit }, draft) {
     commit(SET_DRAFT, draft);
   },
+  async storeDeclinedFields({ commit }, fields) {
+    commit(SET_DECLINED_FIELDS, fields);
+  },
+  async storeAcceptedFields({ commit }, fields) {
+    commit(SET_ACCEPTED_FIELDS, fields);
+  },
+  async storeRemark({ commit }, remark) {
+    commit(SET_REMARK, remark);
+  },
   async addNewLicense({ commit }, license) {
     try {
       const resp = await ApiService.post(url + "newLicenses/add", license);
@@ -108,7 +165,7 @@ export default {
   async editNewLicense({ commit }, license) {
     try {
       const resp = await ApiService.put(
-        url + "newLicenses/" + license.data.data.id,
+        url + "newLicenses/" + license.id,
         license.data
       );
       return resp;
@@ -132,7 +189,6 @@ export default {
       return error;
     }
   },
-
   async getApplicantType() {
     try {
       const resp = await ApiService.get(url + "lookups/applicantTypes");
@@ -141,9 +197,11 @@ export default {
       return error;
     }
   },
-  async getInstitution() {
+  async getInstitution({ commit }, value) {
     try {
-      const resp = await ApiService.get(url + "lookups/institutions");
+      const resp = await ApiService.get(
+        url + "lookups/appTypeInstitutions/" + value
+      );
       return resp;
     } catch (error) {
       return error;
@@ -205,7 +263,6 @@ export default {
       return error;
     }
   },
-
   async withdraw({ commit }, payload) {
     try {
       const resp = await ApiService.put(
@@ -217,7 +274,6 @@ export default {
       return error;
     }
   },
-
   async updateDraft({ commit }, payload) {
     try {
       const resp = await ApiService.put(
@@ -258,9 +314,11 @@ export default {
       return resp;
     }
   },
-  async getProfessionalTypes() {
+  async getProfessionalTypes(context, deptId) {
     try {
-      const resp = await ApiService.get(url + "lookups/professionalTypes");
+      const resp = await ApiService.get(
+        url + "lookups/professionalTypes/" + deptId
+      );
       return resp;
     } catch (error) {
       return error;
@@ -274,13 +332,15 @@ export default {
       return error;
     }
   },
-  async storeDeclinedFields({ commit }, fields) {
-    commit(SET_DECLINED_FIELDS, fields);
-  },
-  async storeAcceptedFields({ commit }, fields) {
-    commit(SET_ACCEPTED_FIELDS, fields);
-  },
-  async storeRemark({ commit }, remark) {
-    commit(SET_REMARK, remark);
+  async searchProfessionalType({ commit }, profTypes) {
+    try {
+      const resp = await ApiService.post(
+        url + "newLicenses/search/professionalType",
+        profTypes
+      );
+      return resp;
+    } catch (error) {
+      return error;
+    }
   },
 };

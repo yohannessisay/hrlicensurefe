@@ -65,6 +65,7 @@ import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
 
 import AllLicensedApplications from "../ChildApplicationTypes/AllLicensedApplications.vue"
+import applicationStatus from "../../Configurations/getApplicationStatus.js";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import filterApplication from "../../ChildComponents/FilteredDatas/FilterApplication.js";
 import FilteredInfo from "../../ChildComponents/FilteredDatas/FilteredInfo.vue";
@@ -132,16 +133,23 @@ export default {
 
     const fetchNewLicenseAllLicensed = () => {
       showLoading.value = true;
-      store.dispatch("reviewerNewLicense/getNewLicenseAllLicensed").then((res) => {
+      const approvedPaymentStatus = applicationStatus(store, "AP");
+      const confirmedStatus = applicationStatus(store, "CONF");
+
+      const approvedStatus = applicationStatus(store, "APP");
+      const adminStatus = [
+        adminId,
+        approvedPaymentStatus,
+        confirmedStatus,
+        approvedStatus,
+      ];
+      store.dispatch("reviewerNewLicense/getNewLicenseAllLicensed", adminStatus).then((res) => {
         showLoading.value = false;
         newLicenseAllLicensed.value =
           store.getters["reviewerNewLicense/getNewLicenseAllLicensedSearched"];
         allInfo.value.assignApplication =
           store.getters["reviewerNewLicense/getNewLicenseAllLicensedSearched"];
         for (let applicant in allInfo.value.assignApplication) {
-          allInfo.value.assignApplication[applicant].createdAt = moment(
-            allInfo.value.assignApplication[applicant].createdAt
-          ).format("MMMM D, YYYY");
           if (
             allInfo.value.assignApplication[applicant].applicationType ===
             undefined

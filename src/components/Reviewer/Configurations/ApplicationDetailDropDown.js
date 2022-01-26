@@ -6,17 +6,18 @@ export let dropdown = {
   newLicenseUnconfirmed: false,
   newLicenseOnReview: false,
   newLicenseReEvaluate: false,
-  newLicenseDeclined: false,
+  newLicenseDeclineConfirmed: false,
   newLicenseUnderSuperVision: false,
+  newLicenseUnderSuperVisionConfirmed: false,
   newLicenseConfirmed: false,
   newLicenseEvaluation: false,
   newLicenseReturnedEvaluation: false,
   newLicenseUnderEvaluation: false,
   newLicenseUnassignedEvaluation: false,
-  newLicenseUnassignedEvaluation: false,
   newLicenseInReviewPayment: false,
   newLicenseDeclinedPayment: false,
   newLicenseLicensed: false,
+  newLicenseUnassigned: false,
   
   
   renewal: false,
@@ -28,20 +29,23 @@ export let dropdown = {
   renewalDeclined: false,
   renewalUnderSuperViesion: false,
   renewalConfirmed: false,
+  renewalDeclineConfirmed: false,
+  renewalUnderSuperVisionConfirmed: false,
   renewalEvaluation: false,
   renewalReturnedEvaluation: false,
   renewalUnderEvaluation: false,
   renewalUnassignedEvaluation: false,
-  renewalUnassignedEvaluation: false,
   renewalInReviewPayment: false,
   renewalDeclinedPayment: false,
   renewalLicensed: false,
+  renewalUnassigned: false,
 
   verification: false,
   verificationAssigned: false,
   verificationUnfinished: false,
   verificationApproved: false,
   verificationDeclined: false,
+  verificationUnassigned: false,
 
   goodStanding: false,
   goodStandingAssigned: false,
@@ -52,6 +56,7 @@ export let dropdown = {
   goodStandingInReviewPayment: false,
   goodStandingDeclinedPayment: false,
   goodStandingLicensed: false,
+  goodStandingUnassigned: false,
   
 };
 
@@ -127,6 +132,16 @@ export const applicationTypeDD = (applicationDetail, dropdown) => {
     dropdown.renewalDeclined = false;
     dropdown.renewalUnderSuperVision = false;
   }
+  if (applicationDetail == "RenewalDeclineConfirmed") {
+    dropdown.renewalDeclineConfirmed = !dropdown.renewalDeclineConfirmed;
+    dropdown.renewalConfirmed = false;
+    dropdown.renewalUnderSuperVisionConfirmed = false;
+  }
+  if (applicationDetail == "RenewalUnderSuperVisionConfirmed") {
+    dropdown.renewalUnderSuperVisionConfirmed = !dropdown.renewalUnderSuperVisionConfirmed;
+    dropdown.renewalConfirmed = false;
+    dropdown.renewalDeclineConfirmed = false;
+  }
   if (applicationDetail == "RenewalUnassignedEvaluation") {
     dropdown.renewalUnassignedEvaluation = !dropdown.renewalUnassignedEvaluation;
     dropdown.renewalUnderEvaluation = false;
@@ -191,6 +206,7 @@ export const applicationTypeDD = (applicationDetail, dropdown) => {
   if (applicationDetail == "RenewalLicensed") {
     dropdown.renewalLicensed = !dropdown.renewalLicensed;
     dropdown.renewalUnderReview = false;
+    dropdown.renewalUnassigned = false;
   }
 
   if (applicationDetail == "RenewalUnderReview") {
@@ -201,6 +217,13 @@ export const applicationTypeDD = (applicationDetail, dropdown) => {
     dropdown.renewalEvaluation = false;
     dropdown.renewalPaymentReview = false;
     dropdown.renewalConfirmedEvaluation = false;
+    dropdown.renewalUnassigned = false;
+  }
+
+  if (applicationDetail == "RenewalUnassigned") {
+    dropdown.renewalUnassigned = !dropdown.renewalUnassigned;
+    dropdown.renewalUnderReview = false;
+    dropdown.renewalLicensed = false;
   }
 
   if (applicationDetail == "NewLicenseAssigned") {
@@ -217,9 +240,19 @@ export const applicationTypeDD = (applicationDetail, dropdown) => {
     dropdown.newLicensePaymentReview = false;
     dropdown.newLicenseConfirmedEvaluation = false;
   }
+  if (applicationDetail == "NewLicenseDeclineConfirmed") {
+    dropdown.newLicenseDeclineConfirmed = !dropdown.newLicenseDeclineConfirmed;
+    dropdown.newLicenseUnderSuperVisionConfirmed = false;
+    dropdown.newLicenseConfirmed = false;
+  }
   if (applicationDetail == "NewLicenseDeclined") {
     dropdown.newLicenseDeclined = !dropdown.newLicenseDeclined;
     dropdown.newLicenseUnderSuperVision = false;
+    dropdown.newLicenseConfirmed = false;
+  }
+  if (applicationDetail == "NewLicenseUnderSuperVisionConfirmed") {
+    dropdown.newLicenseUnderSuperVisionConfirmed = !dropdown.newLicenseUnderSuperVisionConfirmed;
+    dropdown.newLicenseDeclineConfirmed = false;
     dropdown.newLicenseConfirmed = false;
   }
   if (applicationDetail == "NewLicenseUnderSuperVision") {
@@ -229,7 +262,7 @@ export const applicationTypeDD = (applicationDetail, dropdown) => {
   }
   if (applicationDetail == "NewLicenseConfirmed") {
     dropdown.newLicenseConfirmed = !dropdown.newLicenseConfirmed;
-    dropdown.newLicenseDeclined = false;
+    dropdown.newLicenseDeclineConfirmed = false;
     dropdown.newLicenseUnderSuperVision = false;
   }
   if (applicationDetail == "NewLicenseUnassignedEvaluation") {
@@ -273,7 +306,7 @@ export const applicationTypeDD = (applicationDetail, dropdown) => {
     dropdown.newLicenseUnfinished = false;
     dropdown.newLicenseEvaluation = false;
     dropdown.newLicenseConfirmed = false;
-    dropdown.newLicenseDeclined = false;
+    dropdown.newLicenseDeclineConfirmed = false;
     dropdown.newLicenseUnderSuperVision = false;
   }
   if (applicationDetail == "NewLicensePaymentReview") {
@@ -301,35 +334,63 @@ export const applicationTypeDD = (applicationDetail, dropdown) => {
     dropdown.newLicenseEvaluation = false;
     dropdown.newLicensePaymentReview = false;
     dropdown.newLicenseConfirmedEvaluation = false;
+    dropdown.newLicenseUnassigned = false;
+  }
+  if (applicationDetail == "NewLicenseUnassigned") {
+    dropdown.newLicenseUnassigned = !dropdown.newLicenseUnassigned;
+    dropdown.newLicenseUnderReview = false;
+    dropdown.newLicenseLicensed = false;
   }
   if (applicationDetail == "NewLicenseLicensed") {
     dropdown.newLicenseLicensed = !dropdown.newLicenseLicensed;
     dropdown.newLicenseUnderReview = false;
+    dropdown.newLicenseUnassigned = false;
   }
 
+  if (applicationDetail == "VerificationUnassigned") {
+    dropdown.verificationUnassigned = !dropdown.verificationUnassigned;
+    dropdown.verificationAssigned = false;
+    dropdown.verificationUnfinished = false;
+    dropdown.verificationApproved = false;
+    dropdown.verificationDeclined = false;
+  }
   if (applicationDetail == "VerificationAssigned") {
     dropdown.verificationAssigned = !dropdown.verificationAssigned;
     dropdown.verificationUnfinished = false;
     dropdown.verificationApproved = false;
     dropdown.verificationDeclined = false;
+    dropdown.verificationUnassigned = false;
   }
   if (applicationDetail == "VerificationUnfinished") {
     dropdown.verificationUnfinished = !dropdown.verificationUnfinished;
     dropdown.verificationAssigned = false;
     dropdown.verificationApproved = false;
     dropdown.verificationDeclined = false;
+    dropdown.verificationUnassigned = false;
   }
   if (applicationDetail == "VerificationApproved") {
     dropdown.verificationApproved = !dropdown.verificationApproved;
     dropdown.verificationUnfinished = false;
     dropdown.verificationAssigned = false;
     dropdown.verificationDeclined = false;
+    dropdown.verificationUnassigned = false;
   }
   if (applicationDetail == "VerificationDeclined") {
     dropdown.verificationDeclined = !dropdown.verificationDeclined;
     dropdown.verificationApproved = false;
     dropdown.verificationUnfinished = false;
     dropdown.verificationAssigned = false;
+    dropdown.verificationUnassigned = false;
+  }
+
+  if (applicationDetail == "GoodStandingUnassigned") {
+    dropdown.goodStandingUnassigned = !dropdown.goodStandingUnassigned;
+    dropdown.goodStandingAssigned = false;
+    dropdown.goodStandingUnfinished = false;
+    dropdown.goodStandingApproved = false;
+    dropdown.goodStandingDeclined = false;
+    dropdown.goodStandingLicensed = false;
+    dropdown.goodStandingPaymentReview = false;
   }
 
   if (applicationDetail == "GoodStandingAssigned") {
@@ -339,6 +400,7 @@ export const applicationTypeDD = (applicationDetail, dropdown) => {
     dropdown.goodStandingDeclined = false;
     dropdown.goodStandingLicensed = false;
     dropdown.goodStandingPaymentReview = false;
+    dropdown.goodStandingUnassigned = false;
   }
   if (applicationDetail == "GoodStandingUnfinished") {
     dropdown.goodStandingUnfinished = !dropdown.goodStandingUnfinished;
@@ -347,6 +409,7 @@ export const applicationTypeDD = (applicationDetail, dropdown) => {
     dropdown.goodStandingDeclined = false;
     dropdown.goodStandingLicensed = false;
     dropdown.goodStandingPaymentReview = false;
+    dropdown.goodStandingUnassigned = false;
   }
   if (applicationDetail == "GoodStandingApproved") {
     dropdown.goodStandingApproved = !dropdown.goodStandingApproved;
@@ -355,6 +418,7 @@ export const applicationTypeDD = (applicationDetail, dropdown) => {
     dropdown.goodStandingDeclined = false;
     dropdown.goodStandingLicensed = false;
     dropdown.goodStandingPaymentReview = false;
+    dropdown.goodStandingUnassigned = false;
   }
   if (applicationDetail == "GoodStandingDeclined") {
     dropdown.goodStandingDeclined = !dropdown.goodStandingDeclined;
@@ -363,6 +427,7 @@ export const applicationTypeDD = (applicationDetail, dropdown) => {
     dropdown.goodStandingAssigned = false;
     dropdown.goodStandingLicensed = false;
     dropdown.goodStandingPaymentReview = false;
+    dropdown.goodStandingUnassigned = false;
   }
   if (applicationDetail == "GoodStandingPaymentReview") {
     dropdown.goodStandingPaymentReview = !dropdown.goodStandingPaymentReview;
@@ -373,6 +438,7 @@ export const applicationTypeDD = (applicationDetail, dropdown) => {
     dropdown.goodStandingLicensed = false;
     dropdown.goodStandingInReviewPayment = false;
     dropdown.goodStandingDeclinedPayment = false;
+    dropdown.goodStandingUnassigned = false;
   }
   if (applicationDetail == "GoodStandingInReviewPayment") {
     dropdown.goodStandingInReviewPayment = !dropdown.goodStandingInReviewPayment;
@@ -389,5 +455,6 @@ export const applicationTypeDD = (applicationDetail, dropdown) => {
     dropdown.goodStandingUnfinished = false;
     dropdown.goodStandingAssigned = false;
     dropdown.goodStandingPaymentReview = false;
+    dropdown.goodStandingUnassigned = false;
   }
 };

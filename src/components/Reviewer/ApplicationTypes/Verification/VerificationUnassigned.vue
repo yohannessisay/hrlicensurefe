@@ -151,8 +151,6 @@ export default {
       allInfo.value.searchUpToDate = "";
       allInfo.value.app_type = "";
     };
-    console.log("value of value")
-
     const fetchUnassignedVerification = () => {
       showLoading.value = true;
       const statusId = applicationStatus(store, 'SUB');
@@ -164,16 +162,12 @@ export default {
             store.getters[
               "reviewerVerification/getVerificationUnassignedSearched"
             ];
-            console.log("verification unassigned", verificationUnassigned.value)
           allInfo.value.assignApplication =
             store.getters[
               "reviewerVerification/getVerificationUnassignedSearched"
             ];
 
           for (let applicant in allInfo.value.assignApplication) {
-            allInfo.value.assignApplication[applicant].createdAt = moment(
-              allInfo.value.assignApplication[applicant].createdAt
-            ).format("MMMM D, YYYY");
             if (
               allInfo.value.assignApplication[applicant].applicationType ===
               undefined
@@ -189,7 +183,6 @@ export default {
     };
 
     onMounted(() => {
-      console.log("veerriiffccaattiioonn", verificationUnassigned.value)
       fetchUnassignedVerification();
     });
     return {

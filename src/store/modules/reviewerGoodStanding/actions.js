@@ -2,54 +2,49 @@ import ApiService from "../../../services/api.service";
 import {
   SET_GOOD_STANDING_UNASSIGNED,
   SET_GOOD_STANDING_UNASSIGNED_SEARCHED,
-
   SET_GOOD_STANDING_UNFINISHED,
   SET_GOOD_STANDING_UNFINISHED_SEARCHED,
   SET_GOOD_STANDING_OTHERS_UNFINISHED,
   SET_GOOD_STANDING_OTHERS_UNFINISHED_SEARCHED,
-
   SET_GOOD_STANDING_ASSIGNED_TO_YOU,
   SET_GOOD_STANDING_ASSIGNED_TO_YOU_SEARCHED,
   SET_GOOD_STANDING_ASSIGNED_TO_OTHERS,
   SET_GOOD_STANDING_ASSIGNED_TO_OTHERS_SEARCHED,
-
   SET_GOOD_STANDING_APPROVED,
   SET_GOOD_STANDING_APPROVED_SEARCHED,
   SET_GOOD_STANDING_ALL_APPROVED,
   SET_GOOD_STANDING_ALL_APPROVED_SEARCHED,
-
   SET_GOOD_STANDING_DECLINED,
   SET_GOOD_STANDING_DECLINED_SEARCHED,
   SET_GOOD_STANDING_ALL_DECLINED,
   SET_GOOD_STANDING_ALL_DECLINED_SEARCHED,
-
   SET_GOOD_STANDING_PENDING_PAYMENT,
   SET_GOOD_STANDING_PENDING_PAYMENT_SEARCHED,
   SET_GOOD_STANDING_OTHERS_PENDING_PAYMENT,
   SET_GOOD_STANDING_OTHERS_PENDING_PAYMENT_SEARCHED,
-
   SET_GOOD_STANDING_DECLINED_PAYMENT,
   SET_GOOD_STANDING_DECLINED_PAYMENT_SEARCHED,
   SET_GOOD_STANDING_OTHERS_DECLINED_PAYMENT,
   SET_GOOD_STANDING_OTHERS_DECLINED_PAYMENT_SEARCHED,
-
   SET_GOOD_STANDING_LICENSED,
   SET_GOOD_STANDING_LICENSED_SEARCHED,
   SET_GOOD_STANDING_OTHERS_LICENSED,
   SET_GOOD_STANDING_OTHERS_LICENSED_SEARCHED,
-
   SET_GOOD_STANDING_ALL_LICENSED,
   SET_GOOD_STANDING_ALL_LICENSED_SEARCHED,
+  SET_GOOD_STANDING_RE_APPLY,
+  SET_GOOD_STANDING_RE_APPLY_SEARCHED,
+  SET_GOOD_STANDING_OTHERS_RE_APPLY,
+  SET_GOOD_STANDING_OTHERS_RE_APPLY_SEARCHED,
 } from "./mutation-types";
 const baseUrl = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api";
 
 export default {
   async getUnassignedGoodStanding({ commit }, statusId) {
     try {
-      const url = baseUrl + "/goodStandings/status/"+statusId;
+      const url = baseUrl + "/goodStandings/status/" + statusId;
       const resp = await ApiService.get(url);
       commit(SET_GOOD_STANDING_UNASSIGNED, resp.data.data);
-      console.log("good standing unassigned is ", resp.data.data)
     } catch (err) {
       return error;
     }
@@ -63,8 +58,8 @@ export default {
         baseUrl + "/goodStandings/status/6"
       );
       const review = await ApiService.get(baseUrl + "/goodStandings/status/7");
-    
-   return [approved,declined,review];
+
+      return [approved, declined, review];
     } catch (err) {
       return err;
     }
@@ -92,7 +87,7 @@ export default {
   },
 
   async getGoodStandingUnfinished({ commit }, adminStatus) {
-    const url = baseUrl + "/goodstandings/status/"+adminStatus[0];
+    const url = baseUrl + "/goodstandings/status/" + adminStatus[0];
     const resp = await ApiService.get(url);
     const myUnfinished = resp.data.data.filter(function(e) {
       return e.reviewerId === adminStatus[1];
@@ -122,9 +117,8 @@ export default {
   },
 
   async getGoodStandingOthersUnfinished({ commit }, adminStatus) {
-    const url = baseUrl + "/goodstandings/status/"+adminStatus[0];
+    const url = baseUrl + "/goodstandings/status/" + adminStatus[0];
     const resp = await ApiService.get(url);
-    console.log("good standing unfinished", resp.data.data);
     const othresUnfinished = resp.data.data.filter(function(e) {
       return e.reviewerId !== adminStatus[1];
     });
@@ -134,7 +128,9 @@ export default {
     if (getters.getGoodStandingOthersUnfinished === undefined) {
       return;
     }
-    const searchedVal = getters.getGoodStandingOthersUnfinished.filter(function(e) {
+    const searchedVal = getters.getGoodStandingOthersUnfinished.filter(function(
+      e
+    ) {
       return e.goodStandingCode === undefined
         ? ""
         : e.goodStandingCode.toLowerCase().includes(searchKey.toLowerCase()) ||
@@ -153,7 +149,7 @@ export default {
   },
 
   async getGoodStandingAssigned({ commit }, adminStatus) {
-    const url = baseUrl + "/goodstandings/status/"+adminStatus[0];
+    const url = baseUrl + "/goodstandings/status/" + adminStatus[0];
     const resp = await ApiService.get(url);
     const assignedToMe = resp.data.data.filter(function(e) {
       return e.reviewerId === adminStatus[1];
@@ -165,7 +161,9 @@ export default {
     if (getters.getGoodStandingAssignedToYou === undefined) {
       return;
     }
-    const searchedVal = getters.getGoodStandingAssignedToYou.filter(function(e) {
+    const searchedVal = getters.getGoodStandingAssignedToYou.filter(function(
+      e
+    ) {
       return e.goodStandingCode === undefined
         ? ""
         : e.goodStandingCode.toLowerCase().includes(searchKey.toLowerCase()) ||
@@ -183,7 +181,7 @@ export default {
   },
 
   async getGoodStandingOthersAssigned({ commit }, adminStatus) {
-    const url = baseUrl + "/goodstandings/status/"+adminStatus[0];
+    const url = baseUrl + "/goodstandings/status/" + adminStatus[0];
     const resp = await ApiService.get(url);
     const othresUnfinished = resp.data.data.filter(function(e) {
       return e.reviewerId !== adminStatus[1];
@@ -215,17 +213,16 @@ export default {
   },
 
   async getGoodStandingApproved({ commit }, adminStatus) {
-    const url = baseUrl + "/goodstandings/status/"+adminStatus[0];
+    const url = baseUrl + "/goodstandings/status/" + adminStatus[0];
     const resp = await ApiService.get(url);
-    console.log("response is ", resp)
-    if(resp.data.data === undefined) {
+    if (resp.data.data === undefined) {
       const myApproved = [];
       commit(SET_GOOD_STANDING_APPROVED, myApproved);
       return;
     }
     const myApproved = resp.data.data.filter(function(e) {
-        return e.reviewerId === adminStatus[1];
-      });
+      return e.reviewerId === adminStatus[1];
+    });
     commit(SET_GOOD_STANDING_APPROVED, myApproved);
   },
 
@@ -251,12 +248,12 @@ export default {
   },
 
   async getGoodStandingAllApproved({ commit }, adminStatus) {
-    const url = baseUrl + "/goodstandings/status/"+adminStatus[0];
+    const url = baseUrl + "/goodstandings/status/" + adminStatus[0];
     const resp = await ApiService.get(url);
-    if(resp.data.data === undefined) {
+    if (resp.data.data === undefined) {
       const othersApproved = [];
       commit(SET_GOOD_STANDING_ALL_APPROVED, othersApproved);
-      return
+      return;
     }
     const othersApproved = resp.data.data.filter(function(e) {
       return e.reviewerId !== adminStatus[1];
@@ -267,9 +264,7 @@ export default {
     if (getters.getGoodStandingAllApproved === undefined) {
       return;
     }
-    const searchedVal = getters.getGoodStandingAllApproved.filter(function(
-      e
-    ) {
+    const searchedVal = getters.getGoodStandingAllApproved.filter(function(e) {
       return e.goodStandingCode === undefined
         ? ""
         : e.goodStandingCode.toLowerCase().includes(searchKey.toLowerCase()) ||
@@ -288,11 +283,11 @@ export default {
   },
 
   async getGoodStandingDeclined({ commit }, adminStatus) {
-    const url = baseUrl + "/goodstandings/status/"+adminStatus[0];
+    const url = baseUrl + "/goodstandings/status/" + adminStatus[0];
     const resp = await ApiService.get(url);
-    if(resp.data.data === undefined) {
-      const declined = []
-      commit(SET_GOOD_STANDING_DECLINED, declined)
+    if (resp.data.data === undefined) {
+      const declined = [];
+      commit(SET_GOOD_STANDING_DECLINED, declined);
       return;
     }
     const declined = resp.data.data.filter(function(e) {
@@ -323,9 +318,9 @@ export default {
   },
 
   async getGoodStandingAllDeclined({ commit }, adminStatus) {
-    const url = baseUrl + "/goodstandings/status/"+adminStatus[0];
+    const url = baseUrl + "/goodstandings/status/" + adminStatus[0];
     const resp = await ApiService.get(url);
-    if(resp.data.data === undefined) {
+    if (resp.data.data === undefined) {
       const othersDeclined = [];
       commit(SET_GOOD_STANDING_ALL_DECLINED, othersDeclined);
       return;
@@ -339,9 +334,7 @@ export default {
     if (getters.getGoodStandingAllDeclined === undefined) {
       return;
     }
-    const searchedVal = getters.getGoodStandingAllDeclined.filter(function(
-      e
-    ) {
+    const searchedVal = getters.getGoodStandingAllDeclined.filter(function(e) {
       return e.goodStandingCode === undefined
         ? ""
         : e.goodStandingCode.toLowerCase().includes(searchKey.toLowerCase()) ||
@@ -360,7 +353,7 @@ export default {
   },
 
   async getGoodStandingPendingPayment({ commit }, adminStatus) {
-    const url = baseUrl + "/goodstandings/status/"+adminStatus[0];
+    const url = baseUrl + "/goodstandings/status/" + adminStatus[0];
     const resp = await ApiService.get(url);
     const pendingPayment = resp.data.data.filter(function(e) {
       return e.reviewerId === adminStatus[1];
@@ -372,7 +365,9 @@ export default {
     if (getters.getGoodStandingPendingPayment === undefined) {
       return;
     }
-    const searchedVal = getters.getGoodStandingPendingPayment.filter(function(e) {
+    const searchedVal = getters.getGoodStandingPendingPayment.filter(function(
+      e
+    ) {
       return e.goodStandingCode === undefined
         ? ""
         : e.goodStandingCode.toLowerCase().includes(searchKey.toLowerCase()) ||
@@ -390,11 +385,11 @@ export default {
   },
 
   async getGoodStandingOthersPendingPayment({ commit }, adminStatus) {
-    const url = baseUrl + "/goodstandings/status/"+adminStatus[0];
+    const url = baseUrl + "/goodstandings/status/" + adminStatus[0];
     const resp = await ApiService.get(url);
     const AllPendingPayments = resp.data.data.filter(function(e) {
-      return e.reviewerId !== adminStatus[1]
-    })
+      return e.reviewerId !== adminStatus[1];
+    });
     commit(SET_GOOD_STANDING_OTHERS_PENDING_PAYMENT, AllPendingPayments);
   },
 
@@ -402,28 +397,30 @@ export default {
     if (getters.getGoodStandingOthersPendingPayment === undefined) {
       return;
     }
-    const searchedVal = getters.getGoodStandingOthersPendingPayment.filter(function(
-      e
-    ) {
-      return e.goodStandingCode === undefined
-        ? ""
-        : e.goodStandingCode.toLowerCase().includes(searchKey.toLowerCase()) ||
-            (e.applicant.profile.name + " " + e.applicant.profile.fatherName)
+    const searchedVal = getters.getGoodStandingOthersPendingPayment.filter(
+      function(e) {
+        return e.goodStandingCode === undefined
+          ? ""
+          : e.goodStandingCode
               .toLowerCase()
               .includes(searchKey.toLowerCase()) ||
-            e.applicant.profile.name
-              .toLowerCase()
-              .includes(searchKey.toLowerCase()) ||
-            e.applicant.profile.fatherName
-              .toLowerCase()
-              .includes(searchKey.toLowerCase()) ||
-            e.reviewer.name.toLowerCase().includes(searchKey.toLowerCase());
-    });
+              (e.applicant.profile.name + " " + e.applicant.profile.fatherName)
+                .toLowerCase()
+                .includes(searchKey.toLowerCase()) ||
+              e.applicant.profile.name
+                .toLowerCase()
+                .includes(searchKey.toLowerCase()) ||
+              e.applicant.profile.fatherName
+                .toLowerCase()
+                .includes(searchKey.toLowerCase()) ||
+              e.reviewer.name.toLowerCase().includes(searchKey.toLowerCase());
+      }
+    );
     commit(SET_GOOD_STANDING_OTHERS_PENDING_PAYMENT_SEARCHED, searchedVal);
   },
 
   async getGoodStandingDeclinedPayment({ commit }, adminStatus) {
-    const url = baseUrl + "/goodstandings/status/"+adminStatus[0];
+    const url = baseUrl + "/goodstandings/status/" + adminStatus[0];
     const resp = await ApiService.get(url);
     const declinedPayment = resp.data.data.filter(function(e) {
       return e.reviewerId === adminStatus[1];
@@ -435,7 +432,9 @@ export default {
     if (getters.getGoodStandingDeclinedPayment === undefined) {
       return;
     }
-    const searchedVal = getters.getGoodStandingDeclinedPayment.filter(function(e) {
+    const searchedVal = getters.getGoodStandingDeclinedPayment.filter(function(
+      e
+    ) {
       return e.goodStandingCode === undefined
         ? ""
         : e.goodStandingCode.toLowerCase().includes(searchKey.toLowerCase()) ||
@@ -453,7 +452,7 @@ export default {
   },
 
   async getGoodStandingOthersDeclinedPayment({ commit }, adminStatus) {
-    const url = baseUrl + "/goodstandings/status/"+adminStatus[0];
+    const url = baseUrl + "/goodstandings/status/" + adminStatus[0];
     const resp = await ApiService.get(url);
     const othersDeclinedPayments = resp.data.data.filter(function(e) {
       return e.reviewerId !== adminStatus[1];
@@ -464,34 +463,41 @@ export default {
     if (getters.getGoodStandingOthersDeclinedPayment === undefined) {
       return;
     }
-    const searchedVal = getters.getGoodStandingOthersDeclinedPayment.filter(function(
-      e
-    ) {
-      return e.goodStandingCode === undefined
-        ? ""
-        : e.goodStandingCode.toLowerCase().includes(searchKey.toLowerCase()) ||
-            (e.applicant.profile.name + " " + e.applicant.profile.fatherName)
+    const searchedVal = getters.getGoodStandingOthersDeclinedPayment.filter(
+      function(e) {
+        return e.goodStandingCode === undefined
+          ? ""
+          : e.goodStandingCode
               .toLowerCase()
               .includes(searchKey.toLowerCase()) ||
-            e.applicant.profile.name
-              .toLowerCase()
-              .includes(searchKey.toLowerCase()) ||
-            e.applicant.profile.fatherName
-              .toLowerCase()
-              .includes(searchKey.toLowerCase()) ||
-            e.reviewer.name.toLowerCase().includes(searchKey.toLowerCase());
-    });
+              (e.applicant.profile.name + " " + e.applicant.profile.fatherName)
+                .toLowerCase()
+                .includes(searchKey.toLowerCase()) ||
+              e.applicant.profile.name
+                .toLowerCase()
+                .includes(searchKey.toLowerCase()) ||
+              e.applicant.profile.fatherName
+                .toLowerCase()
+                .includes(searchKey.toLowerCase()) ||
+              e.reviewer.name.toLowerCase().includes(searchKey.toLowerCase());
+      }
+    );
     commit(SET_GOOD_STANDING_OTHERS_DECLINED_PAYMENT_SEARCHED, searchedVal);
   },
 
-
   async getGoodStandingLicensed({ commit }, adminStatus) {
-    const url = baseUrl + "/goodstandings/status/"+adminStatus[0];
+    const url = baseUrl + "/goodstandings/status/" + adminStatus[1];
+    const approvedURL = baseUrl + "/goodstandings/status/" + adminStatus[2];
     const resp = await ApiService.get(url);
+    const approvedResp = await ApiService.get(approvedURL);
     const licensed = resp.data.data.filter(function(e) {
-      return e.reviewerId === adminStatus[1];
+      return e.reviewerId === adminStatus[0];
     });
-    commit(SET_GOOD_STANDING_LICENSED, licensed);
+    const approvedLicensed = approvedResp.data.data.filter(function(e) {
+      return e.reviewerId === adminStatus[0];
+    });
+    const concateLicensedUsers = licensed.concat(approvedLicensed)
+    commit(SET_GOOD_STANDING_LICENSED, concateLicensedUsers);
   },
 
   getGoodStandingLicensedSearched({ commit, getters }, searchKey) {
@@ -516,12 +522,18 @@ export default {
   },
 
   async getGoodStandingOtherLicensed({ commit }, adminStatus) {
-    const url = baseUrl + "/goodstandings/status/"+adminStatus[0];
+    const url = baseUrl + "/goodstandings/status/" + adminStatus[1];
+    const approvedURL = baseUrl + "/goodstandings/status/" + adminStatus[2];
     const resp = await ApiService.get(url);
+    const approvedResp = await ApiService.get(approvedURL);
     const othersLicensed = resp.data.data.filter(function(e) {
-      return e.reviewerId !== adminStatus[1];
+      return e.reviewerId !== adminStatus[0];
     });
-    commit(SET_GOOD_STANDING_OTHERS_LICENSED, othersLicensed);
+    const othersApprovedLicensed = approvedResp.data.data.filter(function(e) {
+      return e.reviewerId !== adminStatus[0];
+    });
+    const othersConcateLicensedUsers = othersLicensed.concat(othersApprovedLicensed)
+    commit(SET_GOOD_STANDING_OTHERS_LICENSED, othersConcateLicensedUsers);
   },
 
   getGoodStandingOthersLicensedSearched({ commit, getters }, searchKey) {
@@ -548,11 +560,18 @@ export default {
     commit(SET_GOOD_STANDING_OTHERS_LICENSED_SEARCHED, searchedVal);
   },
 
-  async getGoodStandingAllLicensed({ commit }) {
-    const url = baseUrl + "/goodstandings/all/licensed ";
+  async getGoodStandingAllLicensed({ commit }, adminStatus) {
+    // const url = baseUrl + "/goodstandings/all/licensed ";
+    // const resp = await ApiService.get(url);
+    // const licensed = resp.data.data;
+    const url = baseUrl + "/goodstandings/status/" + adminStatus[1];
+    const approvedURL = baseUrl + "/goodstandings/status/" + adminStatus[2];
     const resp = await ApiService.get(url);
-    const licensed = resp.data.data;
-    commit(SET_GOOD_STANDING_ALL_LICENSED, licensed);
+    const approvedResp = await ApiService.get(approvedURL);
+    const allLicensed = resp.data.data;
+    const allApprovedLicensed = approvedResp.data.data;
+    const concateAllLicensedUsers = allLicensed.concat(allApprovedLicensed)
+    commit(SET_GOOD_STANDING_ALL_LICENSED, concateAllLicensedUsers);
   },
 
   getGoodStandingAllLicensedSearched({ commit, getters }, searchKey) {
@@ -574,5 +593,68 @@ export default {
               .includes(searchKey.toLowerCase());
     });
     commit(SET_GOOD_STANDING_ALL_LICENSED_SEARCHED, searchedVal);
+  },
+
+  async getGoodStandingReApply({ commit }, adminStatus) {
+    const url = baseUrl + "/goodstandings/status/" + adminStatus[0];
+    const resp = await ApiService.get(url);
+    const reApply = resp.data.data.filter(function(e) {
+      return e.reviewerId === adminStatus[1];
+    });
+    commit(SET_GOOD_STANDING_RE_APPLY, reApply);
+  },
+
+  getGoodStandingReApplySearched({ commit, getters }, searchKey) {
+    if (getters.getGoodStandingReApply === undefined) {
+      return;
+    }
+    const searchedVal = getters.getGoodStandingReApply.filter(function(e) {
+      return e.goodStandingCode === undefined
+        ? ""
+        : e.goodStandingCode.toLowerCase().includes(searchKey.toLowerCase()) ||
+            (e.applicant.profile.name + " " + e.applicant.profile.fatherName)
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.name
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.fatherName
+              .toLowerCase()
+              .includes(searchKey.toLowerCase());
+    });
+    commit(SET_GOOD_STANDING_RE_APPLY_SEARCHED, searchedVal);
+  },
+
+  async getGoodStandingOtherReApply({ commit }, adminStatus) {
+    const url = baseUrl + "/goodstandings/status/" + adminStatus[0];
+    const resp = await ApiService.get(url);
+    const othersReApply = resp.data.data.filter(function(e) {
+      return e.reviewerId !== adminStatus[1];
+    });
+    commit(SET_GOOD_STANDING_OTHERS_RE_APPLY, othersReApply);
+  },
+
+  getGoodStandingOthersReApplySearched({ commit, getters }, searchKey) {
+    if (getters.getGoodStandingOthersReApply === undefined) {
+      return;
+    }
+    const searchedVal = getters.getGoodStandingOthersReApply.filter(function(
+      e
+    ) {
+      return e.goodStandingCode === undefined
+        ? ""
+        : e.goodStandingCode.toLowerCase().includes(searchKey.toLowerCase()) ||
+            (e.applicant.profile.name + " " + e.applicant.profile.fatherName)
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.name
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.fatherName
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.reviewer.name.toLowerCase().includes(searchKey.toLowerCase());
+    });
+    commit(SET_GOOD_STANDING_OTHERS_RE_APPLY_SEARCHED, searchedVal);
   },
 };

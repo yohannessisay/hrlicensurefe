@@ -64,9 +64,27 @@ export default {
 
   getNewLicenseLicensed: (state) => state.newLicenseLicensed,
   getNewLicenseLicensedSearched: (state) => state.newLicenseLicensedSearched,
-  getNewLicenseOthersLicensed: (state) => state.newLicenseOthersPendingPayment,
-  getNewLicenseOthersLicensedSearched: (state) => state.newLicenseOthersLicensed,
+  getNewLicenseOthersLicensed: (state) => state.newLicenseOthersLicensed,
+  getNewLicenseOthersLicensedSearched: (state) => state.newLicenseOthersLicensedSearched,
 
   getNewLicenseAllLicensed: (state) => state.newLicenseAllLicensed,
   getNewLicenseAllLicensedSearched: (state) => state.newLicenseAllLicensedSearched,
+
+  getNewLicenseReApply: (state) => state.newLicenseReApply,
+  getNewLicenseReApplySearched: (state) => state.newLicenseReApplySearched,
+  getNewLicenseOthersReApply: (state) => state.newLicenseOthersReApply,
+  getNewLicenseOthersReApplySearched: (state) => state.newLicenseOthersReApplySearched,
+
+  getNewLicenseDeclineConfirmed: (state) => state.newLicenseDeclineConfirmed,
+  getNewLicenseDeclineConfirmedSearched: (state) => state.newLicenseDeclineConfirmedSearched,
+  getNewLicenseOthersDeclineConfirmed: (state) => state.newLicenseOthersDeclineConfirmed,
+  getNewLicenseOthersDeclineConfirmedSearched: (state) => state.newLicenseOthersDeclineConfirmedSearched,
+
+  getNewLicenseUnderSuperVisionConfirmed: (state) => state.newLicenseUnderSuperVisionConfirmed,
+  getNewLicenseUnderSuperVisionConfirmedSearched: (state) => state.newLicenseUnderSuperVisionConfirmedSearched,
+  getNewLicenseOthersUnderSuperVisionConfirmed: (state) => state.newLicenseOthersUnderSuperVisionConfirmed,
+  getNewLicenseOthersUnderSuperVisionConfirmedSearched: (state) => state.newLicenseOthersUnderSuperVisionConfirmedSearched,
+
+  getNewLicenseForSpecificUser: (state) => state.newLicenseForSpecificUser,
+  getNewLicenseForSpecificUserSearched: (state) => state.newLicenseForSpecificUserSearched,
 };

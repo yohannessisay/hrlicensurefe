@@ -23,7 +23,7 @@
           Filter
         </button>
       </div>
-    
+
       <div class="flex pl-12 pt-tiny">
         <Title message="New License On Review" />
       </div>
@@ -88,9 +88,7 @@ export default {
   computed: {
     moment: () => moment,
     getNewLicenseOnReview() {
-      return store.getters[
-        "reviewerNewLicense/getNewLicenseOnReviewSearched"
-      ];
+      return store.getters["reviewerNewLicense/getNewLicenseOnReviewSearched"];
     },
   },
   components: {
@@ -140,25 +138,18 @@ export default {
 
     const fetchNewLicenseOnReview = () => {
       showLoading.value = true;
-      const statusId = applicationStatus(store, 'EVAASS');
+      const statusId = applicationStatus(store, "EVAASS");
       const adminStatus = [statusId, adminId];
       store
         .dispatch("reviewerNewLicense/getNewLicenseOnReview", adminStatus)
         .then((res) => {
           showLoading.value = false;
           newLicenseOnReview.value =
-            store.getters[
-              "reviewerNewLicense/getNewLicenseOnReviewSearched"
-            ];
+            store.getters["reviewerNewLicense/getNewLicenseOnReviewSearched"];
           allInfo.value.assignApplication =
-            store.getters[
-              "reviewerNewLicense/getNewLicenseOnReviewSearched"
-            ];
+            store.getters["reviewerNewLicense/getNewLicenseOnReviewSearched"];
 
           for (let applicant in allInfo.value.assignApplication) {
-            allInfo.value.assignApplication[applicant].createdAt = moment(
-              allInfo.value.assignApplication[applicant].createdAt
-            ).format("MMMM D, YYYY");
             if (
               allInfo.value.assignApplication[applicant].applicationType ===
               undefined
@@ -167,9 +158,7 @@ export default {
                 allInfo.value.assignApplication[applicant].applicantType;
             }
           }
-          if (
-            newLicenseOnReview.value.length === 0
-          ) {
+          if (newLicenseOnReview.value.length === 0) {
             nothingToShow.value = true;
           }
         });

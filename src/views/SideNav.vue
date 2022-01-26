@@ -58,7 +58,7 @@
         </div>
 
         <div class="mb-4">
-          <li @click="submittedDD" class=" justify-start ">
+          <li class=" justify-start ">
             <transition name="slide-fade-to-left">
               <div class="">
                 <div class=" justify-center items-center ">
@@ -71,7 +71,9 @@
 
                         <i class="mr-2 far fa-address-book fa-x fa-light"></i>
                       </span>
-                      <span style="color: white; ">Submitted</span>
+                      <span @click="submittedDD" style="color: white; "
+                        >Submitted</span
+                      >
                     </h3>
                   </div>
                 </div>
@@ -82,16 +84,14 @@
                 >
                   <ul class="block w-full  shadow float-right ">
                     <li @click="selectMenu(3)" class=" mt-2">
-                      <!-- <span style="color: #648ea3;"> -->
                       <p class=" text-sm" style="color: white; ">
                         <i class="mr-2 far fa-address-book fa-x fa-light"></i>
                         Submitted
                       </p>
                     </li>
                     <li @click="selectMenu(4)" class="mt-4">
-                      <!-- <span style="color: #648ea3;"> -->
                       <p class=" text-sm" style="color: white; ">
-                        <i class="mr-2 far fa-id-card fa-x"></i>In Review
+                        <i class="mr-2 mb-4 far fa-id-card fa-x"></i>In Review
                       </p>
                     </li>
                   </ul>
@@ -102,7 +102,7 @@
         </div>
 
         <div class="mb-4">
-          <li @click="approvedDD" class=" justify-start static">
+          <li class=" justify-start static">
             <transition name="slide-fade-to-left">
               <div class=" ">
                 <div class=" justify-center items-center ">
@@ -111,7 +111,9 @@
                       <span style="color: white;">
                         <i class="mr-2 far fa-thumbs-up fa-x fa-light"></i>
                       </span>
-                      <span style="color: white; ">Approved</span>
+                      <span @click="approvedDD" style="color: white; "
+                        >Approved</span
+                      >
                       <span style="color: white;">
                         <i
                           class="fas fa-chevron-circle-down float-right mt-2"
@@ -131,16 +133,14 @@
                     style="color: #648ea3;"
                   >
                     <li @click="selectMenu(5)" class=" mt-2">
-                      <!-- <span style="color: #648ea3;"> -->
                       <p class=" text-sm" style="color: white; ">
                         <i class="mr-2 far fa-thumbs-up fa-x fa-light"></i>
                         Approved
                       </p>
                     </li>
                     <li @click="selectMenu(6)" class="mt-4">
-                      <!-- <span style="color: #648ea3;"> -->
                       <p class=" text-sm" style="color: white; ">
-                        <i class="mr-2 fa fa-money-bill fa-x fa-light"></i
+                        <i class="mr-2 mb-4 fa fa-money-bill fa-x fa-light"></i
                         >Approved Payment
                       </p>
                     </li>
@@ -150,33 +150,8 @@
             </transition>
           </li>
         </div>
-
-        <!-- <div>
-          <li @click="selectMenu(4)" class="w-1/2 flex justify-start mb-6">
-            <transition name="slide-fade-to-left">
-              <div
-                class="container mr-12 box-shadow-pop rounded-lg bg-lightGrey-100 "
-              >
-                <div class="flex justify-center items-center w-48 h-20">
-                  <div class="p-1">
-                    <div class="flex content-center justify-center"></div>
-
-                    <h3 class="text-lightBlueB-500 mt-tiny">
-                      <span style="color: #648ea3;">
-                        <i
-                          class="mr-2 far fa-id-card fa-3x fa-light"
-                        ></i> </span
-                      >In Review
-                    </h3>
-                  </div>
-                </div>
-              </div>
-            </transition>
-          </li>
-        </div> -->
-
         <div class="mb-4">
-          <li @click="declinedDD" class=" justify-start ">
+          <li class=" justify-start ">
             <transition name="slide-fade-to-left">
               <div class=" ">
                 <div class=" justify-center items-center ">
@@ -186,7 +161,9 @@
                         <i class="mr-2 far fa-thumbs-down fa-x fa-light"></i>
                       </span>
 
-                      <span style="color: white; ">Declined </span>
+                      <span @click="declinedDD" style="color: white; "
+                        >Declined
+                      </span>
                       <span style="color: white;">
                         <i
                           class="fas fa-chevron-circle-down float-right mt-2"
@@ -203,16 +180,16 @@
                 >
                   <ul class="block w-full  shadow float-right">
                     <li @click="selectMenu(7)" class="mt-2">
-                      <!-- <span style="color: #648ea3;"> -->
                       <p class=" text-sm" style="color: white; ">
                         <i class="mr-2 far fa-thumbs-down fa-x fa-light"></i>
                         Declined
                       </p>
                     </li>
                     <li @click="selectMenu(8)" class="mt-4">
-                      <!-- <span style="color: #648ea3;"> -->
                       <p class=" text-sm" style="color: white; ">
-                        <i class="mr-2 fa fa-credit-card-alt fa-x fa-light"></i
+                        <i
+                          class="mr-2 mb-4 fa fa-credit-card-alt fa-x fa-light"
+                        ></i
                         >Declined Payment
                       </p>
                     </li>
@@ -222,31 +199,6 @@
             </transition>
           </li>
         </div>
-
-        <!-- <div>
-          <li @click="selectMenu(6)" class="w-1/2 flex justify-start mb-6">
-            <transition name="slide-fade-to-left">
-              <div
-                class="container mr-12 box-shadow-pop rounded-lg bg-lightGrey-100 "
-              >
-                <div class="flex justify-center items-center w-48 h-20">
-                  <div class="p-1">
-                    <div class="flex content-center justify-center"></div>
-
-                    <h3 class="text-lightBlueB-500 mt-tiny">
-                      <span style="color: #648ea3;">
-                        <i
-                          class="mr-2 fa fa-money-bill fa-3x fa-light"
-                        ></i> </span
-                      >Approved Payment
-                    </h3>
-                  </div>
-                </div>
-              </div>
-            </transition>
-          </li>
-        </div> -->
-
         <div class="mb-4">
           <li @click="selectMenu(9)" class=" justify-start ">
             <transition name="slide-fade-to-left">
@@ -283,31 +235,7 @@
             </transition>
           </li>
         </div>
-        <!-- <div>
-          <li @click="selectMenu(8)" class="w-1/2 flex justify-start mb-6">
-            <transition name="slide-fade-to-left">
-              <div
-                class="container mr-12 box-shadow-pop rounded-lg bg-lightGrey-100 "
-              >
-                <div class="flex justify-center items-center w-48 h-20">
-                  <div class="p-1">
-                    <div class="flex content-center justify-center"></div>
-
-                    <h3 class="text-lightBlueB-500 mt-tiny">
-                      <span style="color: #648ea3;">
-                        <i
-                          class="mr-2 fa fa-credit-card-alt fa-3x fa-light"
-                        ></i> </span
-                      >Declined Payment
-                    </h3>
-                  </div>
-                </div>
-              </div>
-            </transition>
-          </li>
-        </div> -->
       </ul>
-      <!--  -->
     </div>
   </div>
 </template>

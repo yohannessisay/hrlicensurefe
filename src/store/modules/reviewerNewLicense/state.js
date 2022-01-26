@@ -70,5 +70,24 @@ export default {
 
     newLicenseAllLicensed: [],
     newLicenseAllLicensedSearched: [],
+
+    newLicenseReApply: [],
+    newLicenseReApplySearched: [],
+    newLicenseOthersReApply: [],
+    newLicenseOthersReApplySearched: [],
+
+    newLicenseDeclineConfirmed: [],
+    newLicenseDeclineConfirmedSearched: [],
+    newLicenseOthersDeclineConfirmed: [],
+    newLicenseOthersDeclineConfirmedSearched: [],
+
+    newLicenseUnderSuperVisionConfirmed: [],
+    newLicenseUnderSuperVisionConfirmedSearched: [],
+    newLicenseOthersUnderSuperVisionConfirmed: [],
+    newLicenseOthersUnderSuperVisionConfirmedSearched: [],
+
+    newLicenseForSpecificUser: [],
+    newLicenseForSpecificUserSearched: [],
+
   },
 };

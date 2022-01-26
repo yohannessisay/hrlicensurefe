@@ -28,7 +28,11 @@
       </div>
       <div class="flex flex-wrap pb-medium rounded h-full" v-if="!showLoading">
         <nothing-to-show :nothingToShow="nothingToShow" />
-        <unfinished-applications :unfinishedApplication="getVerificationOthersUnfinished" app_type="Verification" others_unfinished="true"/>
+        <unfinished-applications
+          :unfinishedApplication="getVerificationOthersUnfinished"
+          app_type="Verification"
+          others_unfinished="true"
+        />
       </div>
     </div>
     <div
@@ -40,10 +44,13 @@
     <div class="bg-lightBlueB-200 h-full" v-if="allInfo.searchByInput">
       <div class="flex pl-12 pt-tiny">
         <Title
-        :message="
-          'Unfinished Applicants on Date Range ' + moment(allInfo.searchFromDate).format('MMM D, YYYY') + ' To ' + moment(allInfo.searchUpToDate).format('MMM D, YYYY')
-        "
-      />
+          :message="
+            'Unfinished Applicants on Date Range ' +
+              moment(allInfo.searchFromDate).format('MMM D, YYYY') +
+              ' To ' +
+              moment(allInfo.searchUpToDate).format('MMM D, YYYY')
+          "
+        />
         <button @click="backClicked">back</button>
       </div>
       <filtered-info
@@ -63,8 +70,10 @@
 <script>
 import { ref, onMounted } from "vue";
 import Title from "@/sharedComponents/TitleWithIllustration";
+
+import applicationStatus from "../../Configurations/getApplicationStatus.js";
 import ReviewerNavBar from "../../ReviewerNavBar.vue";
-import UnfinishedApplications from "../ChildApplicationTypes/UnfinishedApplications.vue"
+import UnfinishedApplications from "../ChildApplicationTypes/UnfinishedApplications.vue";
 import NothingToShow from "../../ChildComponents/NothingToShow.vue";
 import { useStore } from "vuex";
 import store from "../../../../store";
@@ -74,12 +83,13 @@ import filterApplication from "../../ChildComponents/FilteredDatas/FilterApplica
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import FilteredInfo from "../../ChildComponents/FilteredDatas/FilteredInfo.vue";
 
-
 export default {
   computed: {
     moment: () => moment,
     getVerificationOthersUnfinished() {
-      return store.getters["reviewerVerification/getVerificationOthersUnfinishedSearched"];
+      return store.getters[
+        "reviewerVerification/getVerificationOthersUnfinishedSearched"
+      ];
     },
   },
   components: {
@@ -94,7 +104,7 @@ export default {
   setup() {
     const store = useStore();
     let verificationUnfinished = ref([]);
-    
+
     const adminId = +localStorage.getItem("adminId");
 
     let nothingToShow = ref(false);
@@ -128,31 +138,41 @@ export default {
 
     const fetchVerificationUnfinished = () => {
       showLoading.value = true;
-      const statusId = applicationStatus(store, 'REVDRA');
+      const statusId = applicationStatus(store, "REVDRA");
       const adminStatus = [statusId, adminId];
-      store.dispatch("reviewerVerification/getVerificationOthersUnfinished", adminStatus).then((res) => {
-        showLoading.value = false;
-        verificationUnfinished.value =
-          store.getters["reviewerVerification/getVerificationOthersUnfinishedSearched"];
-        allInfo.value.assignApplication =
-          store.getters["reviewerVerification/getVerificationOthersUnfinishedSearched"];
+      store
+        .dispatch(
+          "reviewerVerification/getVerificationOthersUnfinished",
+          adminStatus
+        )
+        .then((res) => {
+          showLoading.value = false;
+          verificationUnfinished.value =
+            store.getters[
+              "reviewerVerification/getVerificationOthersUnfinishedSearched"
+            ];
+          allInfo.value.assignApplication =
+            store.getters[
+              "reviewerVerification/getVerificationOthersUnfinishedSearched"
+            ];
 
-        for (let applicant in allInfo.value.assignApplication) {
-          allInfo.value.assignApplication[applicant].createdAt = moment(
-            allInfo.value.assignApplication[applicant].createdAt
-          ).format("MMMM D, YYYY");
-          if (
-            allInfo.value.assignApplication[applicant].applicationType ===
-            undefined
-          ) {
-            allInfo.value.assignApplication[applicant].applicationType =
-              allInfo.value.assignApplication[applicant].applicantType;
+          for (let applicant in allInfo.value.assignApplication) {
+            if (
+              allInfo.value.assignApplication[applicant].applicationType ===
+              undefined
+            ) {
+              allInfo.value.assignApplication[applicant].applicationType =
+                allInfo.value.assignApplication[applicant].applicantType;
+            }
           }
-        }
-        if (store.getters["reviewerVerification/getVerificationOthersUnfinished"].length === 0) {
-          nothingToShow.value = true;
-        }
-      });
+          if (
+            store.getters[
+              "reviewerVerification/getVerificationOthersUnfinished"
+            ].length === 0
+          ) {
+            nothingToShow.value = true;
+          }
+        });
     };
     onMounted(() => {
       fetchVerificationUnfinished();

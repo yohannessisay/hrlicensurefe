@@ -42,17 +42,7 @@
             >
               <label class="ml-8"> Nationality</label>
               <h5 class="ml-8">
-                {{ profileInfo.nationality ? profileInfo.nationality : "-" }}
-              </h5>
-            </div>
-            <div
-              :class="[
-                profileInfo.placeOfBirth === null ? errorClass : activeClass,
-              ]"
-            >
-              <label class="ml-8"> Place of Birth</label>
-              <h5 class="ml-8">
-                {{ profileInfo.placeOfBirth ? profileInfo.placeOfBirth : "-" }}
+                {{ profileInfo.nationality ? profileInfo.nationality.name : "-" }}
               </h5>
             </div>
             <div
@@ -87,13 +77,17 @@
             </div>
           </div>
 
-          <div class="flex justify-start">
+          <div class="flex justify-start" v-if="expertLevelId != 3">
             <Title message="Address" />
           </div>
-          <div class="flex flex-row">
+          <div class="flex flex-row" v-if="expertLevelId != 3">
             <div
               :class="[
-                profileInfo.woreda.zone.region === null
+                license.woreda === null
+                  ? errorClass
+                  : license.woreda.zone === null
+                  ? errorClass
+                  : license.woreda.zone.region === null
                   ? errorClass
                   : activeClass,
               ]"
@@ -101,58 +95,40 @@
               <label class="ml-8"> Region</label>
               <h5 class="ml-8">
                 {{
-                  profileInfo.woreda.zone.region
-                    ? profileInfo.woreda.zone.region.name
+                  license.woreda === null
+                    ? "-"
+                    : license.woreda.zone === null
+                    ? "-"
+                    : license.woreda.zone.region
+                    ? license.woreda.zone.region.name
                     : "-"
                 }}
               </h5>
             </div>
             <div
               :class="[
-                profileInfo.woreda.zone === null ? errorClass : activeClass,
+                license.woreda === null
+                  ? errorClass
+                  : license.woreda.zone === null
+                  ? errorClass
+                  : activeClass,
               ]"
             >
               <label class="ml-8"> Zone</label>
               <h5 class="ml-8">
                 {{
-                  profileInfo.woreda.zone ? profileInfo.woreda.zone.name : "-"
+                  license.woreda === null
+                    ? "-"
+                    : license.woreda.zone
+                    ? license.woreda.zone.name
+                    : "-"
                 }}
               </h5>
             </div>
-            <div
-              :class="[profileInfo.woreda === null ? errorClass : activeClass]"
-            >
+            <div :class="[license.woreda === null ? errorClass : activeClass]">
               <label class="ml-8"> Wereda</label>
               <h5 class="ml-8">
-                {{ profileInfo.woreda ? profileInfo.woreda.name : "-" }}
-              </h5>
-            </div>
-            <div
-              :class="[profileInfo.kebele === null ? errorClass : activeClass]"
-            >
-              <label class="ml-8"> Kebele</label>
-              <h5 class="ml-8">
-                {{ profileInfo.kebele ? profileInfo.kebele : "-" }}
-              </h5>
-            </div>
-            <div
-              :class="[
-                profileInfo.houseNumber === null ? errorClass : activeClass,
-              ]"
-            >
-              <label class="ml-8"> House Number</label>
-              <h5 class="ml-8">
-                {{ profileInfo.houseNumber ? profileInfo.houseNumber : "-" }}
-              </h5>
-            </div>
-            <div
-              :class="[
-                profileInfo.residence === null ? errorClass : activeClass,
-              ]"
-            >
-              <label class="ml-8"> Residence</label>
-              <h5 class="ml-8">
-                {{ profileInfo.residence ? profileInfo.residence : "-" }}
+                {{ license.woreda ? license.woreda.name : "-" }}
               </h5>
             </div>
           </div>
@@ -190,18 +166,6 @@
                   profileInfo.user.emailAddress
                     ? profileInfo.user.emailAddress
                     : "-"
-                }}
-              </h5>
-            </div>
-            <div
-              :class="[
-                profileInfo.userType.name === null ? errorClass : activeClass,
-              ]"
-            >
-              <label class="ml-8"> User Type</label>
-              <h5 class="ml-8">
-                {{
-                  profileInfo.userType.name ? profileInfo.userType.name : "-"
                 }}
               </h5>
             </div>
@@ -267,12 +231,14 @@ export default {
     const route = useRoute();
 
     let userId = +localStorage.getItem("userId");
+    const expertLevelId = JSON.parse(localStorage.getItem("allAdminData"))
+      .expertLevelId;
 
     let assignConfirmAdmin = ref({
       reviewersId: [],
       licenseId: "",
       createdByAdminId: "",
-    })
+    });
     let show = ref(false);
     let showLoading = ref(false);
     let license = ref({
@@ -312,7 +278,6 @@ export default {
 
     let loggedInAdminId = +localStorage.getItem("adminId");
 
-
     const created = async (applicationTypeName, applicationId, applicantId) => {
       licenseId.value = applicationId;
       applicationType.value = applicationTypeName;
@@ -329,10 +294,15 @@ export default {
             // applicantId.value = license.value.applicantId;
             education.value.departmentName =
               license.value.education.department.name;
-            education.value.institutionName =
-              license.value.education.institution.name;
-            education.value.institutionTypeName =
-              license.value.education.institution.institutionType.name;
+            if (license.value.otherEducationalInstitution) {
+              education.value.institutionName =
+                license.value.otherEducationalInstitution;
+            } else {
+              education.value.institutionName =
+                license.value.education.institution.name;
+              education.value.institutionTypeName =
+                license.value.education.institution.name;
+            }
           });
       }
       if (applicationType.value == "Good Standing") {
@@ -347,10 +317,15 @@ export default {
             // applicantId.value = license.value.applicantId;
             education.value.departmentName =
               license.value.education.department.name;
-            education.value.institutionName =
-              license.value.education.institution.name;
-            education.value.institutionTypeName =
-              license.value.education.institution.institutionType.name;
+            if (license.value.otherEducationalInstitution) {
+              education.value.institutionName =
+                license.value.otherEducationalInstitution;
+            } else {
+              education.value.institutionName =
+                license.value.education.institution.name;
+              education.value.institutionTypeName =
+                license.value.education.institution.name;
+            }
           });
       }
       if (applicationType.value == "Verification") {
@@ -365,10 +340,15 @@ export default {
             // applicantId.value = license.value.applicantId;
             education.value.departmentName =
               license.value.education.department.name;
-            education.value.institutionName =
-              license.value.education.institution.name;
-            education.value.institutionTypeName =
-              license.value.education.institution.institutionType.name;
+            if (license.value.otherEducationalInstitution) {
+              education.value.institutionName =
+                license.value.otherEducationalInstitution;
+            } else {
+              education.value.institutionName =
+                license.value.education.institution.name;
+              education.value.institutionTypeName =
+                license.value.education.institution.name;
+            }
           });
       }
       if (applicationType.value == "Renewal") {
@@ -383,10 +363,15 @@ export default {
             // applicantId.value = license.value.applicantId;
             education.value.departmentName =
               license.value.education.department.name;
-            education.value.institutionName =
-              license.value.education.institution.name;
-            education.value.institutionTypeName =
-              license.value.education.institution.institutionType.name;
+            if (license.value.otherEducationalInstitution) {
+              education.value.institutionName =
+                license.value.otherEducationalInstitution;
+            } else {
+              education.value.institutionName =
+                license.value.education.institution.name;
+              education.value.institutionTypeName =
+                license.value.education.institution.name;
+            }
           });
       }
     };
@@ -419,6 +404,7 @@ export default {
       applicationType,
       licenseId,
       showLoading,
+      expertLevelId,
     };
   },
 

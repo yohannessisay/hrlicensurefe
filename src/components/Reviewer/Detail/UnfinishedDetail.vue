@@ -7,7 +7,7 @@
         style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);"
         class="ml-8  mr-8 mb-12"
       >
-        <div class="mt-large bg-white"> 
+        <div class="mt-large bg-white">
           <div v-if="getReviewId == loggedInAdminId" class="flex">
             <div class="flex flex-col mb-medium w-2/3 ml-small mt-small"></div>
             <div class="flex flex-col mb-medium w-1/3 mr-small mt-small">
@@ -62,38 +62,33 @@
             </div>
             <div
               :class="[
-                profileInfo.nationality === null ? errorClass : activeClass
+                profileInfo.nationality === null ? errorClass : activeClass,
               ]"
             >
               <label class="ml-8"> Nationality</label>
               <h5 class="ml-8">
-                {{ profileInfo.nationality ? profileInfo.nationality : "-" }}
+                {{ profileInfo.nationality ? profileInfo.nationality.name : "-" }}
               </h5>
             </div>
             <div
               :class="[
-                profileInfo.placeOfBirth === null ? errorClass : activeClass]"
-            >
-              <label class="ml-8"> Place of Birth</label>
-              <h5 class="ml-8">
-                {{ profileInfo.placeOfBirth ? profileInfo.placeOfBirth : "-" }}
-              </h5>
-            </div>
-            <div
-              :class="[
-                profileInfo.dateOfBirth === null ? errorClass : activeClass
+                profileInfo.dateOfBirth === null ? errorClass : activeClass,
               ]"
             >
               <label class="ml-8"> Date of Birth</label>
               <h5 class="ml-8">
-                {{ profileInfo.dateOfBirth ? moment(profileInfo.dateOfBirth).format("MMM D, YYYY") : "-" }}
+                {{
+                  profileInfo.dateOfBirth
+                    ? moment(profileInfo.dateOfBirth).format("MMM D, YYYY")
+                    : "-"
+                }}
               </h5>
             </div>
             <div
               :class="[
                 profileInfo.maritalStatus.name === null
                   ? errorClass
-                  : activeClass
+                  : activeClass,
               ]"
             >
               <label class="ml-8"> Marital Status</label>
@@ -107,23 +102,29 @@
             </div>
           </div>
 
-          <div class="flex justify-start">
+          <div class="flex justify-start" v-if="expertLevelId != 3">
             <Title message="Address" />
           </div>
-          <div class="flex flex-row">
+          <div class="flex flex-row" v-if="expertLevelId != 3">
             <div
               :class="[
-                license.woreda.zone.region === null
+                license.woreda === null
                   ? errorClass
-                  : activeClass
+                  : license.woreda.zone === null
+                  ? errorClass
+                  : license.woreda.zone.region === null
+                  ? errorClass
+                  : activeClass,
               ]"
             >
               <label class="ml-8"> Region</label>
               <h5 class="ml-8">
                 {{
-                  license.woreda === null ? "-" :
-                  license.woreda.zone === null ? "-" :
-                  license.woreda.zone.region
+                  license.woreda === null
+                    ? "-"
+                    : license.woreda.zone === null
+                    ? "-"
+                    : license.woreda.zone.region
                     ? license.woreda.zone.region.name
                     : "-"
                 }}
@@ -131,50 +132,28 @@
             </div>
             <div
               :class="[
-                license.woreda.zone === null ? errorClass : activeClass
+                license.woreda === null
+                  ? errorClass
+                  : license.woreda.zone === null
+                  ? errorClass
+                  : activeClass,
               ]"
             >
               <label class="ml-8"> Zone</label>
               <h5 class="ml-8">
                 {{
-                  license.woreda === null ? "-" : license.woreda.zone ? license.woreda.zone.name : "-"
+                  license.woreda === null
+                    ? "-"
+                    : license.woreda.zone
+                    ? license.woreda.zone.name
+                    : "-"
                 }}
               </h5>
             </div>
-            <div
-              :class="[license.woreda === null ? errorClass : activeClass]"
-            >
+            <div :class="[license.woreda === null ? errorClass : activeClass]">
               <label class="ml-8"> Wereda</label>
               <h5 class="ml-8">
                 {{ license.woreda ? license.woreda.name : "-" }}
-              </h5>
-            </div>
-            <div
-              :class="[profileInfo.kebele === null ? errorClass : activeClass]"
-            >
-              <label class="ml-8"> Kebele</label>
-              <h5 class="ml-8">
-                {{ profileInfo.kebele ? profileInfo.kebele : "-" }}
-              </h5>
-            </div>
-            <div
-              :class="[
-                profileInfo.houseNumber === null ? errorClass : activeClass
-              ]"
-            >
-              <label class="ml-8"> House Number</label>
-              <h5 class="ml-8">
-                {{ profileInfo.houseNumber ? profileInfo.houseNumber : "-" }}
-              </h5>
-            </div>
-            <div
-              :class="[
-                profileInfo.residence === null ? errorClass : activeClass
-              ]"
-            >
-              <label class="ml-8"> Residence</label>
-              <h5 class="ml-8">
-                {{ profileInfo.residence ? profileInfo.residence : "-" }}
               </h5>
             </div>
           </div>
@@ -184,7 +163,9 @@
           <div class="flex flex-row">
             <div
               :class="[
-                profileInfo.user.phoneNumber === null ? errorClass : activeClass,
+                profileInfo.user.phoneNumber === null
+                  ? errorClass
+                  : activeClass,
               ]"
             >
               <label class="ml-8"> Mobile Number</label>
@@ -201,7 +182,7 @@
               :class="[
                 profileInfo.user.emailAddress === null
                   ? errorClass
-                  : activeClass
+                  : activeClass,
               ]"
             >
               <label class="ml-8"> Email</label>
@@ -210,18 +191,6 @@
                   profileInfo.user.emailAddress
                     ? profileInfo.user.emailAddress
                     : "-"
-                }}
-              </h5>
-            </div>
-            <div
-              :class="[
-                profileInfo.userType.name === null ? errorClass : activeClass
-              ]"
-            >
-              <label class="ml-8"> User Type</label>
-              <h5 class="ml-8">
-                {{
-                  profileInfo.userType.name ? profileInfo.userType.name : "-"
                 }}
               </h5>
             </div>
@@ -265,12 +234,12 @@
             </div>
             <div class="flex justify-center mt-8">
               <h6>
-                If you don't have all the required informations you can come back
-                and finish later.
+                If you don't have all the required informations you can come
+                back and finish later.
               </h6>
             </div>
             <div class="flex justify-center mt-8 mb-8">
-              <button variant="outline">I will finish Later</button>
+              <button variant="outline" @click="backButton">back</button>
             </div>
           </div>
         </div>
@@ -312,6 +281,9 @@ export default {
     let userId = +localStorage.getItem("userId");
     let regionId = JSON.parse(localStorage.getItem("allAdminData")).regionId;
 
+    let expertLevelId = JSON.parse(localStorage.getItem("allAdminData"))
+      .expertLevelId;
+
     let role = ref({});
 
     let admins = ref({});
@@ -329,24 +301,24 @@ export default {
       applicantType: {},
       education: {
         institution: {
-          institutionType: {}
+          institutionType: {},
         },
-        department: {}
-      }
+        department: {},
+      },
     });
     let profileInfo = ref({
       maritalStatus: {},
       woreda: {
-        zone: {}
+        zone: {},
       },
       user: {},
-      userType: {}
+      userType: {},
     });
     let applicantId = ref("");
     let applicantTypeId = ref("");
     let education = ref({
       institution: { name: "", institutionType: { name: "" } },
-      department: { name: "" }
+      department: { name: "" },
     });
     let licenseId = ref("");
     let activeClass = ref("active");
@@ -362,59 +334,55 @@ export default {
     let loggedInAdminId = +localStorage.getItem("adminId");
 
     const fetchRole = (id) => {
-      store.dispatch("reviewer/getRoles", id).then(res => {
+      store.dispatch("reviewer/getRoles", id).then((res) => {
         role.value = res.data.data.role;
-      })
-    }
+      });
+    };
 
     const fetchAdmins = () => {
-      store.dispatch("reviewer/getAdmins").then(res => {
-        
-        admins.value = res.data.data
-      })
-    }
+      store.dispatch("reviewer/getAdmins").then((res) => {
+        admins.value = res.data.data;
+      });
+    };
 
     const fetchAdminsByRegion = (regionId) => {
-      store.dispatch("reviewer/getAdminsByRegion", regionId)
-      .then(res => {
+      store.dispatch("reviewer/getAdminsByRegion", regionId).then((res) => {
         admins.value = res.data.data;
-        console.log("regional admin", admins.value)
-      })
-    }
+      });
+    };
 
-    const gen = () => {
-    }
+    const gen = () => {};
 
     const transferReview = () => {
       // if (role.value.code === "TL" || role.value.code === "SA") {
-        if (applicationType.value == "Good Standing") {
-          transfer.value = {
-            goodStandingId: route.params.applicationId,
-            reviewerId: transfer.value.reviewerId,
-            createdByAdminId: +localStorage.getItem("adminId"),
-          };
-        }
-        if (applicationType.value == "Verification") {
-          transfer.value = {
-            verificationId: route.params.applicationId,
-            reviewerId: transfer.value.reviewerId,
-            createdByAdminId: +localStorage.getItem("adminId"),
-          };
-        }
-        if (applicationType.value == "Renewal") {
-          transfer.value = {
-            renewalId: route.params.applicationId,
-            reviewerId: transfer.value.reviewerId,
-            createdByAdminId: +localStorage.getItem("adminId"),
-          };
-        }
-        if (applicationType.value == "New License") {
-          transfer.value = {
-            licenseId: route.params.applicationId,
-            reviewerId: transfer.value.reviewerId,
-            createdByAdminId: +localStorage.getItem("adminId"),
-          };
-        }
+      if (applicationType.value == "Good Standing") {
+        transfer.value = {
+          goodStandingId: route.params.applicationId,
+          reviewerId: transfer.value.reviewerId,
+          createdByAdminId: +localStorage.getItem("adminId"),
+        };
+      }
+      if (applicationType.value == "Verification") {
+        transfer.value = {
+          verificationId: route.params.applicationId,
+          reviewerId: transfer.value.reviewerId,
+          createdByAdminId: +localStorage.getItem("adminId"),
+        };
+      }
+      if (applicationType.value == "Renewal") {
+        transfer.value = {
+          renewalId: route.params.applicationId,
+          reviewerId: transfer.value.reviewerId,
+          createdByAdminId: +localStorage.getItem("adminId"),
+        };
+      }
+      if (applicationType.value == "New License") {
+        transfer.value = {
+          licenseId: route.params.applicationId,
+          reviewerId: transfer.value.reviewerId,
+          createdByAdminId: +localStorage.getItem("adminId"),
+        };
+      }
       // }
       if (applicationType.value == "New License") {
         store
@@ -460,7 +428,7 @@ export default {
             }
           });
       }
-    }
+    };
 
     const created = async (applicationTypeName, applicationId, applicantId) => {
       licenseId.value = applicationId;
@@ -469,73 +437,93 @@ export default {
       if (applicationType.value == "New License") {
         store
           .dispatch("reviewer/getNewLicenseApplication", applicationId)
-          .then(res => {
+          .then((res) => {
             showLoading.value = false;
             license.value = res.data.data;
-            getReviewId.value = license.value.reviewerId
+            getReviewId.value = license.value.reviewerId;
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
             // applicantId.value = license.value.applicantId;
             education.value.departmentName =
               license.value.education.department.name;
-            education.value.institutionName =
-              license.value.education.institution.name;
-            education.value.institutionTypeName =
-              license.value.education.institution.institutionType.name;
+            if (license.value.otherEducationalInstitution) {
+              education.value.institutionName =
+                license.value.otherEducationalInstitution;
+            } else {
+              education.value.institutionName =
+                license.value.education.institution.name;
+              education.value.institutionTypeName =
+                license.value.education.institution.name;
+            }
           });
       }
       if (applicationType.value == "Good Standing") {
         store
           .dispatch("reviewer/getGoodStandingApplication", applicationId)
-          .then(res => {
+          .then((res) => {
             showLoading.value = false;
             license.value = res.data.data;
-            getReviewId.value = license.value.reviewerId
+            getReviewId.value = license.value.reviewerId;
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
             // applicantId.value = license.value.applicantId;
             education.value.departmentName =
               license.value.education.department.name;
-            education.value.institutionName =
-              license.value.education.institution.name;
-            education.value.institutionTypeName =
-              license.value.education.institution.institutionType.name;
+            if (license.value.otherEducationalInstitution) {
+              education.value.institutionName =
+                license.value.otherEducationalInstitution;
+            } else {
+              education.value.institutionName =
+                license.value.education.institution.name;
+              education.value.institutionTypeName =
+                license.value.education.institution.name;
+            }
           });
       }
       if (applicationType.value == "Verification") {
         store
           .dispatch("reviewer/getVerificationApplication", applicationId)
-          .then(res => {
+          .then((res) => {
             showLoading.value = false;
             license.value = res.data.data;
-            getReviewId.value = license.value.reviewerId
+            getReviewId.value = license.value.reviewerId;
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
             // applicantId.value = license.value.applicantId;
             education.value.departmentName =
               license.value.education.department.name;
-            education.value.institutionName =
-              license.value.education.institution.name;
-            education.value.institutionTypeName =
-              license.value.education.institution.institutionType.name;
+            if (license.value.otherEducationalInstitution) {
+              education.value.institutionName =
+                license.value.otherEducationalInstitution;
+            } else {
+              education.value.institutionName =
+                license.value.education.institution.name;
+              education.value.institutionTypeName =
+                license.value.education.institution.name;
+            }
           });
       }
       if (applicationType.value == "Renewal") {
         store
           .dispatch("reviewer/getRenewalApplication", applicationId)
-          .then(res => {
+          .then((res) => {
             showLoading.value = false;
             license.value = res.data.data;
-            getReviewId.value = license.value.reviewerId
+            getReviewId.value = license.value.reviewerId;
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
             // applicantId.value = license.value.applicantId;
             education.value.departmentName =
               license.value.education.department.name;
-            education.value.institutionName =
-              license.value.education.institution.name;
-            education.value.institutionTypeName =
-              license.value.education.institution.institutionType.name;
+            if (license.value.otherEducationalInstitution) {
+              education.value.institutionName =
+                license.value.otherEducationalInstitution;
+            } else {
+              education.value.institutionName =
+                license.value.education.institution.name;
+              education.value.institutionTypeName =
+                license.value.education.institution.name;
+            }
           });
       }
     };
@@ -545,6 +533,11 @@ export default {
         "/admin/evaluate/" + applicationType.value + "/" + licenseId.value
       );
     };
+    const backButton = () => {
+      router.push(
+        "/admin/review"
+      )
+    }
 
     onMounted(() => {
       loggedInAdminId = +localStorage.getItem("adminId");
@@ -554,9 +547,9 @@ export default {
         route.params.applicationId,
         route.params.applicantId
       );
-      
-      fetchRole(loggedInAdminId)
-      if(regionId !== null) {
+
+      fetchRole(loggedInAdminId);
+      if (regionId !== null) {
         fetchAdminsByRegion(regionId);
       } else {
         fetchAdmins();
@@ -588,9 +581,11 @@ export default {
       role,
       transfer,
       gen,
-      transferReview
+      transferReview,
+      expertLevelId,
+      backButton,
     };
-  }
+  },
 
   //   this.license = this.getLicense;
   //   this.applicantId = this.license.applicantId;

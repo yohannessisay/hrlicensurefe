@@ -17,7 +17,7 @@
 
         <i class="mr-2 far fa-address-book fa-x fa-light"></i>
       </span>
-      <span class="text-base" style="color: white; ">Under Review ++ </span>
+      <span class="text-base" style="color: white; ">Under Review </span>
     </h3>
   </div>
   <!-- <drop-down-lists
@@ -36,19 +36,15 @@
 // import DropDownLists from "./DropDownLists.vue";
 
 export default {
-//   components: {
-//       DropDownLists,
-//   },
+  //   components: {
+  //       DropDownLists,
+  //   },
   name: "DropDownContainers",
 
   setup() {
-    const dropDownHandler = (applicationValue) => {
-      console.log("drop down value", applicationValue);
-    };
+    const dropDownHandler = (applicationValue) => {};
 
-    const dropDownListHandler = (menu) => {
-      console.log("menu is ", menu);
-    };
+    const dropDownListHandler = (menu) => {};
 
     return {
       dropDownHandler,

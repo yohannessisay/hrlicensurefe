@@ -8,7 +8,7 @@
         class="ml-8  mr-8 mb-12"
       >
         <div class="mt-large bg-white">
-          <div v-if="role.code === `ADM`" class="flex">
+          <div class="flex">
             <div class="flex flex-col mb-medium w-2/3 ml-small mt-small"></div>
             <div class="flex flex-col mb-medium w-1/3 mr-small mt-small">
               <label class="text-primary-700">Admins To Confirm</label>
@@ -80,17 +80,9 @@
             >
               <label class="ml-8"> Nationality</label>
               <h5 class="ml-8">
-                {{ profileInfo.nationality ? profileInfo.nationality : "-" }}
-              </h5>
-            </div>
-            <div
-              :class="[
-                profileInfo.placeOfBirth === null ? errorClass : activeClass,
-              ]"
-            >
-              <label class="ml-8"> Place of Birth</label>
-              <h5 class="ml-8">
-                {{ profileInfo.placeOfBirth ? profileInfo.placeOfBirth : "-" }}
+                {{
+                  profileInfo.nationality ? profileInfo.nationality.name : "-"
+                }}
               </h5>
             </div>
             <div
@@ -125,10 +117,10 @@
             </div>
           </div>
 
-          <div class="flex justify-start">
+          <div class="flex justify-start" v-if="expertLevelId != 3">
             <Title message="Address" />
           </div>
-          <div class="flex flex-row">
+          <div class="flex flex-row" v-if="expertLevelId != 3">
             <div
               :class="[
                 license.woreda === null
@@ -179,34 +171,6 @@
                 {{ license.woreda ? license.woreda.name : "-" }}
               </h5>
             </div>
-            <div
-              :class="[profileInfo.kebele === null ? errorClass : activeClass]"
-            >
-              <label class="ml-8"> Kebele</label>
-              <h5 class="ml-8">
-                {{ profileInfo.kebele ? profileInfo.kebele : "-" }}
-              </h5>
-            </div>
-            <div
-              :class="[
-                profileInfo.houseNumber === null ? errorClass : activeClass,
-              ]"
-            >
-              <label class="ml-8"> House Number</label>
-              <h5 class="ml-8">
-                {{ profileInfo.houseNumber ? profileInfo.houseNumber : "-" }}
-              </h5>
-            </div>
-            <div
-              :class="[
-                profileInfo.residence === null ? errorClass : activeClass,
-              ]"
-            >
-              <label class="ml-8"> Residence</label>
-              <h5 class="ml-8">
-                {{ profileInfo.residence ? profileInfo.residence : "-" }}
-              </h5>
-            </div>
           </div>
           <div class="flex justify-start">
             <Title message="Contact" />
@@ -242,18 +206,6 @@
                   profileInfo.user.emailAddress
                     ? profileInfo.user.emailAddress
                     : "-"
-                }}
-              </h5>
-            </div>
-            <div
-              :class="[
-                profileInfo.userType.name === null ? errorClass : activeClass,
-              ]"
-            >
-              <label class="ml-8"> User Type</label>
-              <h5 class="ml-8">
-                {{
-                  profileInfo.userType.name ? profileInfo.userType.name : "-"
                 }}
               </h5>
             </div>
@@ -326,6 +278,12 @@
         </div>
       </div>
     </div>
+    <div v-if="showFlash">
+      <FlashMessage message="Operation Successful!" />
+    </div>
+    <div v-if="showErrorFlash">
+      <ErrorFlashMessage message="something went wrong!" />
+    </div>
     <div
       v-if="showLoading"
       class="flex justify-center justify-items-center mt-24"
@@ -338,9 +296,11 @@
 <script>
 import { useStore } from "vuex";
 import { useRouter, useRoute } from "vue-router";
+import { ref, onMounted } from "vue";
 import Title from "@/sharedComponents/Title";
 import ReviewerNavBar from "@/components/Reviewer/ReviewerNavBar";
-import { ref, onMounted } from "vue";
+import FlashMessage from "@/sharedComponents/FlashMessage";
+import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import Spinner from "@/sharedComponents/Spinner";
 import moment from "moment";
 
@@ -349,6 +309,8 @@ export default {
   components: {
     Title,
     ReviewerNavBar,
+    FlashMessage,
+    ErrorFlashMessage,
     Spinner,
   },
   computed: {
@@ -360,8 +322,12 @@ export default {
     const route = useRoute();
 
     let userId = +localStorage.getItem("userId");
+    let loggedInAdminId = +localStorage.getItem("adminId");
 
     let regionId = JSON.parse(localStorage.getItem("allAdminData")).regionId;
+
+    let expertLevelId = JSON.parse(localStorage.getItem("allAdminData"))
+      .expertLevelId;
 
     let role = ref({});
 
@@ -373,7 +339,6 @@ export default {
 
     let assignConfirmAdmin = ref({
       evaluatorIds: [],
-      licenseId: "",
       createdByAdminId: "",
     });
     let show = ref(false);
@@ -414,8 +379,6 @@ export default {
 
     let getReviewId = ref(0);
 
-    let loggedInAdminId = +localStorage.getItem("adminId");
-
     const fetchRole = (id) => {
       store.dispatch("reviewer/getRoles", id).then((res) => {
         role.value = res.data.data.role;
@@ -424,22 +387,21 @@ export default {
 
     const fetchAdmins = () => {
       store.dispatch("reviewer/getAdmins").then((res) => {
-        admins.value = res.data.data;
+        admins.value = res.data.data.filter((e) => {
+          return e.id !== loggedInAdminId && e.role.code !== "UM";
+        });
       });
     };
 
     const fetchAdminsByRegion = (regionId) => {
       store.dispatch("reviewer/getAdminsByRegion", regionId).then((res) => {
-        admins.value = res.data.data;
-        // admins.value = res.data.data.filter((admins) => {
-        //   return admins.id != loggedInAdminId;
-        // });
+        admins.value = res.data.data.filter((e) => {
+          return e.id !== loggedInAdminId && e.role.code !== "UM";
+        });
       });
     };
 
-    const gen = () => {
-      console.log("selected val", assignConfirmAdmin.value.evaluatorIds);
-    };
+    const gen = () => {};
 
     const assignAdminToConfirm = () => {
       showAssignLoading.value = true;
@@ -451,38 +413,37 @@ export default {
         showAdminCountError.value = true;
         return;
       }
-      if (role.value.code === "ADM") {
-        showAdminCountError.value = false;
-        if (applicationType.value == "Good Standing") {
-          assignConfirmAdmin.value = {
-            goodStandingId: route.params.applicationId,
-            evaluatorIds: assignConfirmAdmin.value.evaluatorIds,
-            createdByAdminId: +localStorage.getItem("adminId"),
-          };
-        }
-        if (applicationType.value == "Verification") {
-          assignConfirmAdmin.value = {
-            verificationId: route.params.applicationId,
-            evaluatorIds: assignConfirmAdmin.value.evaluatorIds,
-            createdByAdminId: +localStorage.getItem("adminId"),
-          };
-        }
-        if (applicationType.value == "Renewal") {
-          assignConfirmAdmin.value = {
-            renewalId: route.params.applicationId,
-            evaluatorIds: assignConfirmAdmin.value.evaluatorIds,
-            createdByAdminId: +localStorage.getItem("adminId"),
-          };
-        }
-        if (applicationType.value == "New License") {
-          assignConfirmAdmin.value = {
-            licenseId: route.params.applicationId,
-            evaluatorIds: assignConfirmAdmin.value.evaluatorIds,
-            createdByAdminId: +localStorage.getItem("adminId"),
-          };
-        }
+      // if (role.value.code === "ADM") {
+      showAdminCountError.value = false;
+      if (applicationType.value == "Good Standing") {
+        assignConfirmAdmin.value = {
+          licenseId: route.params.applicationId,
+          evaluatorIds: assignConfirmAdmin.value.evaluatorIds,
+          createdByAdminId: +localStorage.getItem("adminId"),
+        };
       }
-      console.log("assigned data is for admins is ", assignConfirmAdmin.value);
+      if (applicationType.value == "Verification") {
+        assignConfirmAdmin.value = {
+          licenseId: route.params.applicationId,
+          evaluatorIds: assignConfirmAdmin.value.evaluatorIds,
+          createdByAdminId: +localStorage.getItem("adminId"),
+        };
+      }
+      if (applicationType.value == "Renewal") {
+        assignConfirmAdmin.value = {
+          renewalId: parseInt(route.params.applicationId),
+          evaluatorIds: assignConfirmAdmin.value.evaluatorIds,
+          createdByAdminId: +localStorage.getItem("adminId"),
+        };
+      }
+      if (applicationType.value == "New License") {
+        assignConfirmAdmin.value = {
+          licenseId: route.params.applicationId,
+          evaluatorIds: assignConfirmAdmin.value.evaluatorIds,
+          createdByAdminId: +localStorage.getItem("adminId"),
+        };
+      }
+      // }
       if (applicationType.value == "New License") {
         store
           .dispatch(
@@ -497,7 +458,18 @@ export default {
               setTimeout(() => {
                 router.push("/admin/review");
               }, 3000);
+            } else {
+              showErrorFlash.value = true;
+              setTimeout(() => {
+                router.go();
+              }, 3000);
             }
+          })
+          .catch((e) => {
+            showErrorFlash.value = true;
+            setTimeout(() => {
+              router.go();
+            }, 3000);
           });
       }
       if (applicationType.value == "Verification") {
@@ -514,7 +486,18 @@ export default {
               setTimeout(() => {
                 router.push("/admin/review");
               }, 3000);
+            } else {
+              showErrorFlash.value = true;
+              setTimeout(() => {
+                router.go();
+              }, 3000);
             }
+          })
+          .catch((e) => {
+            showErrorFlash.value = true;
+            setTimeout(() => {
+              router.go();
+            }, 3000);
           });
       }
       if (applicationType.value == "Renewal") {
@@ -523,13 +506,23 @@ export default {
 
           .then((response) => {
             showAssignLoading.value = false;
-            console.log("responses", response);
             if (response.statusText == "Created") {
               showFlash.value = true;
               setTimeout(() => {
                 router.push("/admin/review");
               }, 3000);
+            } else {
+              showErrorFlash.value = true;
+              setTimeout(() => {
+                router.go();
+              }, 3000);
             }
+          })
+          .catch((e) => {
+            showErrorFlash.value = true;
+            setTimeout(() => {
+              router.go();
+            }, 3000);
           });
       }
       if (applicationType.value == "Good Standing") {
@@ -546,7 +539,18 @@ export default {
               setTimeout(() => {
                 router.push("/admin/review");
               }, 3000);
+            } else {
+              showErrorFlash.value = true;
+              setTimeout(() => {
+                router.go();
+              }, 3000);
             }
+          })
+          .catch((e) => {
+            showErrorFlash.value = true;
+            setTimeout(() => {
+              router.go();
+            }, 3000);
           });
       }
     };
@@ -559,9 +563,7 @@ export default {
         store
           .dispatch("reviewer/getNewLicenseApplication", applicationId)
           .then((res) => {
-            console.log("ffffound newlicense dddata", res);
             previousEvaluators.value = res.data.data.evaluators;
-            console.log("previous evaluators is ", previousEvaluators.value);
             showLoading.value = false;
             license.value = res.data.data;
             getReviewId.value = license.value.reviewerId;
@@ -570,17 +572,21 @@ export default {
             // applicantId.value = license.value.applicantId;
             education.value.departmentName =
               license.value.education.department.name;
-            education.value.institutionName =
-              license.value.education.institution.name;
-            education.value.institutionTypeName =
-              license.value.education.institution.institutionType.name;
+            if (license.value.otherEducationalInstitution) {
+              education.value.institutionName =
+                license.value.otherEducationalInstitution;
+            } else {
+              education.value.institutionName =
+                license.value.education.institution.name;
+              education.value.institutionTypeName =
+                license.value.education.institution.institutionType.name;
+            }
           });
       }
       if (applicationType.value == "Good Standing") {
         store
           .dispatch("reviewer/getGoodStandingApplication", applicationId)
           .then((res) => {
-            console.log("ffffound good standing dddata", res);
             showLoading.value = false;
             license.value = res.data.data;
             getReviewId.value = license.value.reviewerId;
@@ -589,17 +595,21 @@ export default {
             // applicantId.value = license.value.applicantId;
             education.value.departmentName =
               license.value.education.department.name;
-            education.value.institutionName =
-              license.value.education.institution.name;
-            education.value.institutionTypeName =
-              license.value.education.institution.institutionType.name;
+            if (license.value.otherEducationalInstitution) {
+              education.value.institutionName =
+                license.value.otherEducationalInstitution;
+            } else {
+              education.value.institutionName =
+                license.value.education.institution.name;
+              education.value.institutionTypeName =
+                license.value.education.institution.institutionType.name;
+            }
           });
       }
       if (applicationType.value == "Verification") {
         store
           .dispatch("reviewer/getVerificationApplication", applicationId)
           .then((res) => {
-            console.log("ffffound verification dddata", res);
             showLoading.value = false;
             license.value = res.data.data;
             getReviewId.value = license.value.reviewerId;
@@ -608,19 +618,22 @@ export default {
             // applicantId.value = license.value.applicantId;
             education.value.departmentName =
               license.value.education.department.name;
-            education.value.institutionName =
-              license.value.education.institution.name;
-            education.value.institutionTypeName =
-              license.value.education.institution.institutionType.name;
+            if (license.value.otherEducationalInstitution) {
+              education.value.institutionName =
+                license.value.otherEducationalInstitution;
+            } else {
+              education.value.institutionName =
+                license.value.education.institution.name;
+              education.value.institutionTypeName =
+                license.value.education.institution.institutionType.name;
+            }
           });
       }
       if (applicationType.value == "Renewal") {
         store
           .dispatch("reviewer/getRenewalApplication", applicationId)
           .then((res) => {
-            console.log("ffffound renewal dddata", res);
             previousEvaluators.value = res.data.data.evaluators;
-            console.log("previous evaluators is ", previousEvaluators.value);
             showLoading.value = false;
             license.value = res.data.data;
             getReviewId.value = license.value.reviewerId;
@@ -629,10 +642,15 @@ export default {
             // applicantId.value = license.value.applicantId;
             education.value.departmentName =
               license.value.education.department.name;
-            education.value.institutionName =
-              license.value.education.institution.name;
-            education.value.institutionTypeName =
-              license.value.education.institution.institutionType.name;
+            if (license.value.otherEducationalInstitution) {
+              education.value.institutionName =
+                license.value.otherEducationalInstitution;
+            } else {
+              education.value.institutionName =
+                license.value.education.institution.name;
+              education.value.institutionTypeName =
+                license.value.education.institution.institutionType.name;
+            }
           });
       }
     };
@@ -681,6 +699,7 @@ export default {
       gen,
       assignAdminToConfirm,
       previousEvaluators,
+      expertLevelId,
     };
   },
 

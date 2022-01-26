@@ -70,7 +70,6 @@ import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import filterApplication from "../../ChildComponents/FilteredDatas/FilterApplication.js";
 import FilteredInfo from "../../ChildComponents/FilteredDatas/FilteredInfo.vue";
 import NothingToShow from "../../ChildComponents/NothingToShow.vue";
-import ReviewerNavBar from "../../ReviewerNavBar.vue";
 import Spinner from "@/sharedComponents/Spinner";
 import store from "../../../../store";
 import Title from "@/sharedComponents/TitleWithIllustration";
@@ -85,7 +84,6 @@ export default {
     },
   },
   components: {
-    ReviewerNavBar,
     ErrorFlashMessage,
     FilteredInfo,
     Spinner,
@@ -140,9 +138,6 @@ export default {
           store.getters["reviewerRenewal/getRenewalOthersUnfinishedSearched"];
 
         for (let applicant in allInfo.value.assignApplication) {
-          allInfo.value.assignApplication[applicant].createdAt = moment(
-            allInfo.value.assignApplication[applicant].createdAt
-          ).format("MMMM D, YYYY");
           if (
             allInfo.value.assignApplication[applicant].applicationType ===
             undefined

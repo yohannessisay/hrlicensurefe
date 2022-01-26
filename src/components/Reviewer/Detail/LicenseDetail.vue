@@ -84,17 +84,9 @@
             >
               <label class="ml-8"> Nationality</label>
               <h5 class="ml-8">
-                {{ profileInfo.nationality ? profileInfo.nationality : "-" }}
-              </h5>
-            </div>
-            <div
-              :class="[
-                profileInfo.placeOfBirth === null ? errorClass : activeClass,
-              ]"
-            >
-              <label class="ml-8"> Place of Birth</label>
-              <h5 class="ml-8">
-                {{ profileInfo.placeOfBirth ? profileInfo.placeOfBirth : "-" }}
+                {{
+                  profileInfo.nationality ? profileInfo.nationality.name : "-"
+                }}
               </h5>
             </div>
             <div
@@ -129,15 +121,17 @@
             </div>
           </div>
 
-          <div class="flex justify-start">
+          <div class="flex justify-start" v-if="expertLevelId != 3">
             <Title message="Address" />
           </div>
-          <div class="flex flex-row">
+          <div class="flex flex-row" v-if="expertLevelId != 3">
             <div
               :class="[
-                license.woreda === null ? errorClass :
-                license.woreda.zone === null ? errorClass :
-                license.woreda.zone.region === null
+                license.woreda === null
+                  ? errorClass
+                  : license.woreda.zone === null
+                  ? errorClass
+                  : license.woreda.zone.region === null
                   ? errorClass
                   : activeClass,
               ]"
@@ -145,9 +139,11 @@
               <label class="ml-8"> Region</label>
               <h5 class="ml-8">
                 {{
-                  license.woreda === null ? "-" :
-                  license.woreda.zone === null ? "-" :
-                  license.woreda.zone.region
+                  license.woreda === null
+                    ? "-"
+                    : license.woreda.zone === null
+                    ? "-"
+                    : license.woreda.zone.region
                     ? license.woreda.zone.region.name
                     : "-"
                 }}
@@ -155,15 +151,21 @@
             </div>
             <div
               :class="[
-                license.woreda === null ?
-                errorClass : license.woreda.zone === null ? 
-                errorClass : activeClass,
+                license.woreda === null
+                  ? errorClass
+                  : license.woreda.zone === null
+                  ? errorClass
+                  : activeClass,
               ]"
             >
               <label class="ml-8"> Zone</label>
               <h5 class="ml-8">
                 {{
-                  license.woreda === null ? "-" : license.woreda.zone ? license.woreda.zone.name : "-"
+                  license.woreda === null
+                    ? "-"
+                    : license.woreda.zone
+                    ? license.woreda.zone.name
+                    : "-"
                 }}
               </h5>
             </div>
@@ -171,34 +173,6 @@
               <label class="ml-8"> Wereda</label>
               <h5 class="ml-8">
                 {{ license.woreda ? license.woreda.name : "-" }}
-              </h5>
-            </div>
-            <div
-              :class="[profileInfo.kebele === null ? errorClass : activeClass]"
-            >
-              <label class="ml-8"> Kebele</label>
-              <h5 class="ml-8">
-                {{ profileInfo.kebele ? profileInfo.kebele : "-" }}
-              </h5>
-            </div>
-            <div
-              :class="[
-                profileInfo.houseNumber === null ? errorClass : activeClass,
-              ]"
-            >
-              <label class="ml-8"> House Number</label>
-              <h5 class="ml-8">
-                {{ profileInfo.houseNumber ? profileInfo.houseNumber : "-" }}
-              </h5>
-            </div>
-            <div
-              :class="[
-                profileInfo.residence === null ? errorClass : activeClass,
-              ]"
-            >
-              <label class="ml-8"> Residence</label>
-              <h5 class="ml-8">
-                {{ profileInfo.residence ? profileInfo.residence : "-" }}
               </h5>
             </div>
           </div>
@@ -239,18 +213,6 @@
                 }}
               </h5>
             </div>
-            <div
-              :class="[
-                profileInfo.userType.name === null ? errorClass : activeClass,
-              ]"
-            >
-              <label class="ml-8"> User Type</label>
-              <h5 class="ml-8">
-                {{
-                  profileInfo.userType.name ? profileInfo.userType.name : "-"
-                }}
-              </h5>
-            </div>
           </div>
           <div class="flex justify-start">
             <Title message="Institution" />
@@ -275,14 +237,40 @@
               </h5>
             </div>
           </div>
-          <div class="flex justify-start flex-wrap">
-            <!-- <div v-for="file in docs" v-bind:key="file.id">
-              <Title class="" :message="file.fieldName" />
-              <picture>
-                <img :src="basePath + file.filePath" />
-              </picture>
-            </div> -->
+          <div v-if="license.applicationStatus.code === 'RETREV'">
+            <div class="flex justify-start">
+              <Title message="Status" />
+            </div>
+            <div class="flex flex-row">
+              <div>
+                <label class="ml-8"> Evaluator's Name</label>
+                <h5 class="ml-8" v-for="evaluator in evaluators">
+                  {{
+                    evaluator.evaluator.name
+                      ? evaluator.evaluator.name
+                      : "Not Found"
+                  }}
+                </h5>
+              </div>
+              <div>
+                <label class="ml-8"> Action</label>
+                <h5 class="ml-8" v-for="evaluator in evaluators">
+                  {{
+                    evaluator.actionEvent
+                      ? evaluator.actionEvent
+                      : "Not Started"
+                  }}
+                </h5>
+              </div>
+              <div>
+                <label class="ml-8"> Remark? </label>
+                <h5 class="ml-8" v-for="evaluator in evaluators">
+                  {{ evaluator.remark ? evaluator.remark : "" }}
+                </h5>
+              </div>
+            </div>
           </div>
+          <div class="flex justify-start flex-wrap"></div>
           <div v-if="reviewerId == loggedInAdminId">
             <div class="mt-12 flex justify-center">
               <div>
@@ -353,6 +341,10 @@ export default {
     let admins = ref({});
 
     let regionId = JSON.parse(localStorage.getItem("allAdminData")).regionId;
+    let expertLevelId = JSON.parse(localStorage.getItem("allAdminData"))
+      .expertLevelId;
+
+    let evaluators = ref([]);
 
     let transfer = ref({
       reviewerId: "",
@@ -517,15 +509,21 @@ export default {
             showLoading.value = false;
             license.value = res.data.data;
             reviewerId.value = license.value.reviewerId;
+            evaluators.value = license.value.evaluators;
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
             // applicantId.value = license.value.applicantId;
             education.value.departmentName =
               license.value.education.department.name;
-            education.value.institutionName =
-              license.value.education.institution.name;
-            education.value.institutionTypeName =
-              license.value.education.institution.institutionType.name;
+            if (license.value.otherEducationalInstitution) {
+              education.value.institutionName =
+                license.value.otherEducationalInstitution;
+            } else {
+              education.value.institutionName =
+                license.value.education.institution.name;
+              education.value.institutionTypeName =
+                license.value.education.institution.name;
+            }
           });
       }
       if (applicationType.value == "Good Standing") {
@@ -535,15 +533,13 @@ export default {
             showLoading.value = false;
             license.value = res.data.data;
             reviewerId.value = license.value.reviewerId;
+            evaluators.value = license.value.evaluators;
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
             // applicantId.value = license.value.applicantId;
-            education.value.departmentName =
-              "-";
-            education.value.institutionName =
-              "-";
-            education.value.institutionTypeName =
-              "-";
+            education.value.departmentName = "-";
+            education.value.institutionName = "-";
+            education.value.institutionTypeName = "-";
           });
       }
       if (applicationType.value == "Verification") {
@@ -553,15 +549,21 @@ export default {
             showLoading.value = false;
             license.value = res.data.data;
             reviewerId.value = license.value.reviewerId;
+            evaluators.value = license.value.evaluators;
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
             // applicantId.value = license.value.applicantId.toString();
             education.value.departmentName =
               license.value.education.department.name;
-            education.value.institutionName =
-              license.value.education.institution.name;
-            education.value.institutionTypeName =
-              license.value.education.institution.institutionType.name;
+            if (license.value.otherEducationalInstitution) {
+              education.value.institutionName =
+                license.value.otherEducationalInstitution;
+            } else {
+              education.value.institutionName =
+                license.value.education.institution.name;
+              education.value.institutionTypeName =
+                license.value.education.institution.name;
+            }
           });
       }
       if (applicationType.value == "Renewal") {
@@ -572,15 +574,21 @@ export default {
             showLoading.value = false;
             license.value = res.data.data;
             reviewerId.value = license.value.reviewerId;
+            evaluators.value = license.value.evaluators;
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
             // applicantId.value = license.value.applicantId;
             education.value.departmentName =
               license.value.education.department.name;
-            education.value.institutionName =
-              license.value.education.institution.name;
-            education.value.institutionTypeName =
-              license.value.education.institution.institutionType.name;
+            if (license.value.otherEducationalInstitution) {
+              education.value.institutionName =
+                license.value.otherEducationalInstitution;
+            } else {
+              education.value.institutionName =
+                license.value.education.institution.name;
+              education.value.institutionTypeName =
+                license.value.education.institution.name;
+            }
           });
       }
     };
@@ -637,6 +645,8 @@ export default {
       transferReview,
       created,
       evaluate,
+      expertLevelId,
+      evaluators,
     };
   },
 };

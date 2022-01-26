@@ -30,16 +30,23 @@
           message="CPD"
           class="mt-8"
         />
+        <span class="flex justify-center">{{ documentMessage }}</span>
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
           <div class="flex justify-center mb-10">
             <div>
               <span>
-                <h2>{{ cpdFile.name }}</h2>
-                <h2>{{ fileSize }}</h2>
+                <h2 v-if="!fileSizeExceed">{{ cpdFile.name }}</h2>
+                <h2 v-if="!fileSizeExceed">{{ fileSize }}</h2>
+                <h3 style="color: red" v-if="fileSizeExceed">
+                  File size must be less than {{ maxSizeMB }} MB
+                </h3>
               </span>
               <span v-if="showUpload">
                 <label class="text-primary-700"
                   >Upload image:
+                  <span style="color: red; font-weight: bold; font-size:16px"
+                    >Required</span
+                  >
                   <div class="dropbox">
                     <input
                       type="file"
@@ -57,14 +64,12 @@
                   </div>
                 </label>
               </span>
-
               <picture v-if="!showUpload && isImage">
                 <p>
                   <a href="javascript:void(0)" @click="reset()">Upload again</a>
                 </p>
                 <img v-bind:src="filePreview" v-show="showPreview" />
               </picture>
-              <!--  -->
               <div v-if="!showUpload && isPdf">
                 <p>
                   <a href="javascript:void(0)" @click="reset()">Upload again</a>
@@ -173,6 +178,9 @@ import { useRoute, useRouter } from "vue-router";
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import Spinner from "@/sharedComponents/Spinner";
+import MESSAGE from "../../../composables/documentMessage";
+import MAX_FILE_SIZE from "../../../composables/documentMessage";
+import MAX_SIZE_MB from "../../../composables/documentMessage";
 
 export default {
   props: ["activeState"],
@@ -220,15 +228,23 @@ export default {
     let acceptedFields = ref([]);
     let remark = ref("");
 
+    let documentMessage = ref("");
+    let maxFileSize = ref("");
+    let maxSizeMB = ref("");
+    let fileSizeExceed = ref(false);
+
     let declinedFieldsCheck = ref(false);
     let acceptedFieldsCheck = ref(false);
 
-    let workExperience = ref("");
+    let passport = ref("");
     let healthExamCert = ref("");
-    let renewalLetter = ref("");
-    let previousLicense = ref("");
-    let payroll = ref("");
+    let herqa = ref("");
     let professionalDoc = ref([]);
+    let supportLetter = ref("");
+    let previousLicense = ref("");
+    let cpd = ref("");
+    let letterFromHiringManager = ref("");
+    let workExperience = ref("");
 
     const reset = () => {
       showUpload.value = true;
@@ -240,48 +256,58 @@ export default {
       isPdf.value = false;
     };
     const handleFileUpload = () => {
-      dataChanged.value = true;
-      showUpload.value = false;
       cpdFile.value = cpdFileP.value.files[0];
       let reader = new FileReader();
+      isImage.value = true;
       let fileS = cpdFile.value.size;
-      if (fileS > 0 && fileS < 1000) {
-        fileSize.value += "B";
-      } else if (fileS > 1000 && fileS < 1000000) {
-        fileSize.value = fileS / 1000 + "kB";
-      } else {
-        fileSize.value = fileS / 1000000 + "MB";
-      }
-      reader.addEventListener(
-        "load",
-        function() {
-          showPreview.value = true;
-          filePreview.value = reader.result;
-        },
-        false
-      );
-
-      if (cpdFile.value) {
-        if (/\.(jpe?g|png|gif)$/i.test(cpdFile.value.name)) {
-          isImage.value = true;
-          reader.readAsDataURL(cpdFile.value);
-        } else if (/\.(pdf)$/i.test(cpdFile.value.name)) {
-          isImage.value = false;
-          isPdf.value = true;
-          reader.readAsDataURL(cpdFile.value);
+      if (fileS <= maxFileSize.value / 1000) {
+        fileSizeExceed.value = false;
+        dataChanged.value = true;
+        showUpload.value = false;
+        if (fileS > 0 && fileS < 1000) {
+          fileSize.value += "B";
+        } else if (fileS > 1000 && fileS < 1000000) {
+          fileSize.value = fileS / 1000 + "kB";
+        } else {
+          fileSize.value = fileS / 1000000 + "MB";
         }
+        reader.addEventListener(
+          "load",
+          function() {
+            showPreview.value = true;
+            filePreview.value = reader.result;
+          },
+          false
+        );
+        if (cpdFile.value) {
+          if (/\.(jpe?g|png|gif)$/i.test(cpdFile.value.name)) {
+            isImage.value = true;
+            reader.readAsDataURL(cpdFile.value);
+          } else if (/\.(pdf)$/i.test(cpdFile.value.name)) {
+            isImage.value = false;
+            isPdf.value = true;
+            reader.readAsDataURL(cpdFile.value);
+          }
+        }
+      } else {
+        fileSizeExceed.value = true;
+        cpdFile.value = "";
+        isImage.value = true;
       }
     };
     buttons = store.getters["renewal/getButtons"];
     documentSpecs = store.getters["renewal/getDocumentSpec"];
     licenseInfo = store.getters["renewal/getLicense"];
 
+    passport = store.getters["renewal/getPassport"];
     healthExamCert = store.getters["renewal/getRenewalHealthExamCert"];
-    workExperience = store.getters["renewal/getRenewalWorkExperience"];
-    renewalLetter = store.getters["renewal/getRenewalLicense"];
+    herqa = store.getters["renewal/getHerqa"];
+    professionalDoc = store.getters["renewal/getProfessionalDocuments"];
+    supportLetter = store.getters["renewal/getSupportLetter"];
     previousLicense = store.getters["renewal/getPreviousLicense"];
-    payroll = store.getters["renewal/getPayroll"];
-    professionalDoc = store.getters["newlicense/getProfessionalDocuments"];
+    cpd = store.getters["renewal/getRenewalCpd"];
+    letterFromHiringManager = store.getters["renewal/getRenewalLicense"];
+    workExperience = store.getters["renewal/getRenewalWorkExperience"];
 
     const submit = () => {
       emit("changeActiveState");
@@ -294,6 +320,9 @@ export default {
 
     onMounted(() => {
       cpdBack = store.getters["renewal/getRenewalCpd"];
+      documentMessage.value = MESSAGE.DOC_MESSAGE;
+      maxFileSize.value = MAX_FILE_SIZE.MAX_FILE_SIZE;
+      maxSizeMB.value = MAX_SIZE_MB.MAX_SIZE_MB;
       if (
         cpdBack &&
         cpdBack !== undefined &&
@@ -427,26 +456,25 @@ export default {
               departmentId: licenseInfo.education.departmentId,
               institutionId: licenseInfo.education.institutionId,
             },
-            professionalTypeId: licenseInfo.professionalTypeId,
+            professionalTypeIds: licenseInfo.professionalTypeIds,
+            educationalLevelId: licenseInfo.educationalLevelId,
             residenceWoredaId: licenseInfo.residenceWoredaId,
             paymentSlip: null,
             occupationTypeId: licenseInfo.occupationTypeId,
             occupationTypeId: licenseInfo.occupationTypeId,
             expertLevelId: licenseInfo.expertLevelId,
+            otherEducationalInstitution:
+              licenseInfo.otherEducationalInstitution,
+            otherProfessionalType: licenseInfo.otherProfessionalType,
           },
         };
         store.dispatch("renewal/addRenewalLicense", license).then((res) => {
           if (res.data.status == "Success") {
             let licenseId = res.data.data.id;
             let formData = new FormData();
+            formData.append(documentSpecs[0].documentTypeCode, passport);
             formData.append(documentSpecs[2].documentType.code, healthExamCert);
-            formData.append(documentSpecs[4].documentType.code, cpdFile.value);
-            formData.append(documentSpecs[5].documentType.code, workExperience);
-            formData.append(
-              documentSpecs[6].documentType.code,
-              previousLicense
-            );
-            formData.append(documentSpecs[7].documentType.code, renewalLetter);
+            formData.append(documentSpecs[18].documentTypeCode, herqa);
             if (professionalDoc != undefined) {
               formData.append(
                 documentSpecs[8].documentType.code,
@@ -461,7 +489,18 @@ export default {
                 professionalDoc[2]
               );
             }
-            formData.append(documentSpecs[11].documentType, payroll);
+            formData.append(documentSpecs[17].documentTypeCode, supportLetter);
+            formData.append(
+              documentSpecs[6].documentType.code,
+              previousLicense
+            );
+            formData.append(documentSpecs[4].documentType.code, cpdFile.value);
+            formData.append(
+              documentSpecs[7].documentType.code,
+              letterFromHiringManager
+            );
+            formData.append(documentSpecs[5].documentType.code, workExperience);
+
             let payload = { document: formData, id: licenseId };
             store
               .dispatch("renewal/uploadDocuments", payload)
@@ -548,11 +587,16 @@ export default {
               departmentId: licenseInfo.education.departmentId,
               institutionId: licenseInfo.education.institutionId,
             },
-            professionalTypeId: licenseInfo.professionalTypeId,
+            professionalTypeIds: licenseInfo.professionalTypeIds,
+            educationalLevelId: licenseInfo.educationalLevelId,
+
             residenceWoredaId: licenseInfo.residenceWoredaId,
             paymentSlip: null,
             occupationTypeId: licenseInfo.occupationTypeId,
             expertLevelId: licenseInfo.expertLevelId,
+            otherEducationalInstitution:
+              licenseInfo.otherEducationalInstitution,
+            otherProfessionalType: licenseInfo.otherProfessionalType,
           },
         };
         store.dispatch("renewal/addRenewalLicense", license).then((res) => {
@@ -630,6 +674,21 @@ export default {
       remark,
       declinedFieldsCheck,
       acceptedFieldsCheck,
+
+      passport,
+      healthExamCert,
+      herqa,
+      professionalDoc,
+      supportLetter,
+      previousLicense,
+      cpd,
+      letterFromHiringManager,
+      workExperience,
+
+      documentMessage,
+      fileSizeExceed,
+      maxFileSize,
+      maxSizeMB,
     };
   },
 };

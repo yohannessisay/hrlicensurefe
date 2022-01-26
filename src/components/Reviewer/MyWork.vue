@@ -256,11 +256,6 @@ export default {
           approved.value = store.getters["reviewer/getConfirmedSearched"];
           allInfo.value.assignApplication =
             store.getters["reviewer/getConfirmedSearched"];
-          for (let applicant in allInfo.value.assignApplication) {
-            allInfo.value.assignApplication[applicant].createdAt = moment(
-              allInfo.value.assignApplication[applicant].createdAt
-            ).format("MMMM D, YYYY");
-          }
           for (var prop in store.getters["reviewer/getConfirmedSearched"]) {
             if (approved.value[prop].applicationType == "Renewal") {
               approved.value[prop].newLicenseCode =

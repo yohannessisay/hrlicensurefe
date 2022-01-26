@@ -2,6 +2,13 @@
   <div>
     <div>
       <div v-if="!this.showLoading" class="bg-lightBlueB-200 h-full">
+        <h3
+          style="color: #b30000; font-weight: bold"
+          class="flex justify-center mt-medium"
+        >
+          Applicants are required to bring all original documents to licensing
+          office.
+        </h3>
         <div class="flex pl-12 pt-medium">
           <Title message="New License Approved Applications" />
         </div>
@@ -14,7 +21,6 @@
         >
           <div class="flex" v-for="i in this.newlicense.length" v-bind:key="i">
             <div
-              @click="openServiceFeeModal(item)"
               class="container mb-medium"
               v-for="item in this.newlicense.slice((i - 1) * 4, i * 4)"
               v-bind:key="item"
@@ -95,7 +101,6 @@
         <div v-if="this.renewal.length != 0" class="mt-medium rounded ml-large">
           <div class="flex" v-for="i in this.renewal.length" v-bind:key="i">
             <div
-              @click="openServiceFeeModal(item)"
               class="container mb-medium"
               v-for="item in this.renewal.slice((i - 1) * 4, i * 4)"
               v-bind:key="item"
@@ -166,7 +171,7 @@
           </div>
         </div>
       </div>
-      <div v-if="!this.showLoading" class="bg-lightBlueB-200 h-full">
+      <!-- <div v-if="!this.showLoading" class="bg-lightBlueB-200 h-full">
         <div class="flex pl-12 pt-medium">
           <Title message="Verification Approved Applications" />
         </div>
@@ -252,7 +257,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
       <div v-if="!this.showLoading" class="bg-lightBlueB-200 h-full">
         <div class="flex pl-12 pt-medium">
           <Title message="Good Standing Approved Applications" />
@@ -273,7 +278,6 @@
             v-bind:key="i"
           >
             <div
-              @click="openServiceFeeModal(item)"
               class="container mb-medium"
               v-for="item in this.goodstanding.slice((i - 1) * 4, i * 4)"
               v-bind:key="item"
@@ -440,7 +444,6 @@ export default {
               }
             });
           }
-          console.log("new license", this.newlicense);
         })
         .then(() => {
           this.$store.dispatch("renewal/getRenewalLicense").then((res) => {

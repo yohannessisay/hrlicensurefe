@@ -63,6 +63,8 @@
 <script>
 import { ref, onMounted } from "vue";
 import Title from "@/sharedComponents/TitleWithIllustration";
+
+import applicationStatus from "../../Configurations/getApplicationStatus.js";
 import ReviewerNavBar from "../../ReviewerNavBar.vue";
 import AssignedApplications from "../ChildApplicationTypes/AssignedApplications.vue"
 import NothingToShow from "../../ChildComponents/NothingToShow.vue";
@@ -138,9 +140,6 @@ export default {
           store.getters["reviewerNewLicense/getNewLicenseAssignedToOthersSearched"];
 
         for (let applicant in allInfo.value.assignApplication) {
-          allInfo.value.assignApplication[applicant].createdAt = moment(
-            allInfo.value.assignApplication[applicant].createdAt
-          ).format("MMMM D, YYYY");
           if (
             allInfo.value.assignApplication[applicant].applicationType ===
             undefined

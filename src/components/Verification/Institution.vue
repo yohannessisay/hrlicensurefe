@@ -32,7 +32,7 @@
               }}</span>
             </div>
             <div class="flex flex-col mb-small w-2/5 mr-12">
-              <label class="text-primary-700">Expert Level</label>
+              <!-- <label class="text-primary-700">Expert Level</label>
               <select
                 class="max-w-3xl"
                 @change="checkExpertLevel(licenseInfo.expertLevelId)"
@@ -48,7 +48,7 @@
               </select>
               <span style="color: red">{{
                 licenseInfoErrors.expertLevelId
-              }}</span>
+              }}</span> -->
             </div>
           </div>
           <div id="main" class="flex pt-8 mt-4">
@@ -57,6 +57,9 @@
               <select
                 class="max-w-3xl"
                 v-model="licenseInfo.education.departmentId"
+                @change="
+                  fetchProfessionalType(licenseInfo.education.departmentId)
+                "
               >
                 <option
                   v-for="department in departments"
@@ -142,13 +145,13 @@
               </div>
             </div>
           </div>
-          <div id="main" class="flex pt-8 mt-4">
+          <div v-if="showProfessionalTypes" id="main" class="flex pt-8 mt-4">
             <div class="flex flex-col mb-medium w-2/5 mr-12 ml-medium">
               <label class="text-primary-700">Professional Type</label>
               <select
-                class="max-w-3xl"
-                @change="fetchProfessionalType()"
-                v-model="licenseInfo.professionalTypeID"
+                class="max-w-3xl select"
+                multiple
+                v-model="licenseInfo.professionalTypeIds"
               >
                 <option
                   v-for="types in professionalTypes"
@@ -158,9 +161,9 @@
                   {{ types.name }}
                 </option>
               </select>
-              <span style="color: red">{{
-                licenseInfoErrors.professionalTypeID
-              }}</span>
+              <!-- <span style="color: red">{{
+                licenseInfoErrors.professionalTypeIds
+              }}</span> -->
             </div>
           </div>
         </form>
@@ -202,10 +205,10 @@
           </button>
           <button
             class="withdraw"
-            @click="withdraw(this.buttons[0].action)"
+            @click="withdraw(this.buttons[1].action)"
             variant="outline"
           >
-            {{ this.buttons[0]["name"] }}
+            {{ this.buttons[1]["name"] }}
           </button>
         </div>
         <div
@@ -279,7 +282,7 @@ export default {
         draftData.education.departmentId;
       this.licenseInfo.education.institutionId =
         draftData.education.institutionId;
-      this.licenseInfo.professionalTypeID = draftData.professionalTypeId;
+      this.licenseInfo.professionalTypeIds = draftData.professionalTypeIds;
       this.licenseInfo.expertLevelId = draftData.expertLevelId;
       if (this.licenseInfo.applicantTypeId == 1) {
         this.$store.dispatch("verification/getExpertLevel").then((res) => {
@@ -316,7 +319,6 @@ export default {
     this.fetchInstitutions();
     this.fetchDepartments();
     this.fetchRegions();
-    this.fetchProfessionalType();
     this.showLoading = true;
     setTimeout(() => {
       this.buttons = this.getButtons;
@@ -346,7 +348,7 @@ export default {
         institutionId: null,
       },
       residenceWoredaId: null,
-      professionalTypeID: null,
+      professionalTypeIds: [],
       expertLevelId: null,
     },
     licenseInfoErrors: {
@@ -358,7 +360,7 @@ export default {
       residenceWoredaId: "",
       regionId: "",
       zoneId: "",
-      professionalTypeID: "",
+      professionalTypeIds: [],
     },
     regionID: "",
     zoneID: "",
@@ -379,20 +381,29 @@ export default {
     showRegion: false,
 
     professionalTypes: [],
+    showProfessionalTypes: false,
   }),
 
   methods: {
-    checkExpertLevel(expertLevel) {
+    // checkExpertLevel(expertLevel) {
+    //   this.regionID = null;
+    //   this.zoneID = null;
+    //   this.licenseInfo.residenceWoredaId = null;
+    //   if (expertLevel == 4) {
+    //     this.showRegion = true;
+    //   } else {
+    //     this.showRegion = false;
+    //   }
+    // },
+    checkApplicantType(applicantType) {
       this.regionID = null;
       this.zoneID = null;
       this.licenseInfo.residenceWoredaId = null;
-      if (expertLevel == 4) {
+      if (expertLevel == 1) {
         this.showRegion = true;
       } else {
         this.showRegion = false;
       }
-    },
-    checkApplicantType(applicantType) {
       if (applicantType == 1) {
         this.$store.dispatch("verification/getExpertLevel").then((res) => {
           this.expertLevels = res.data.data.filter(function(e) {
@@ -420,7 +431,7 @@ export default {
               institutionId: this.licenseInfo.education.institutionId,
             },
             residenceWoredaId: this.licenseInfo.residenceWoredaId,
-            professionalTypeId: this.licenseInfo.professionalTypeID,
+            professionalTypeIds: this.licenseInfo.professionalTypeIds,
             expertLevelId: this.licenseInfo.expertLevelId,
           },
         },
@@ -465,7 +476,7 @@ export default {
               institutionId: this.licenseInfo.education.institutionId,
             },
             residenceWoredaId: this.licenseInfo.residenceWoredaId,
-            professionalTypeId: this.licenseInfo.professionalTypeID,
+            professionalTypeIds: this.licenseInfo.professionalTypeIds,
             expertLevelId: this.licenseInfo.expertLevelId,
           },
         },
@@ -531,7 +542,7 @@ export default {
         regionId: this.regionID,
         zoneId: this.zoneID,
         residenceWoredaId: this.licenseInfo.residenceWoredaId,
-        professionalTypeId: this.licenseInfo.professionalTypeID,
+        professionalTypeIds: this.licenseInfo.professionalTypeIds,
         expertLevelId: this.licenseInfo.expertLevelId,
       };
       this.$emit("changeActiveState");
@@ -580,10 +591,14 @@ export default {
           this.woredaArray = woredasResult.data;
         });
     },
-    fetchProfessionalType() {
-      this.$store.dispatch("verification/getProfessionalTypes").then((res) => {
-        this.professionalTypes = res.data.data;
-      });
+    fetchProfessionalType(id) {
+      this.professionalTypes = [];
+      this.showProfessionalTypes = true;
+      this.$store
+        .dispatch("verification/getProfessionalTypes", id)
+        .then((res) => {
+          this.professionalTypes = res.data.data;
+        });
     },
 
     validateForm(formData) {
@@ -619,7 +634,7 @@ export default {
         draftData.education.departmentId;
       this.licenseInfo.education.institutionId =
         draftData.education.institutionId;
-      this.licenseInfo.professionalTypeID = draftData.professionalTypeId;
+      this.licenseInfo.professionalTypeIds = draftData.professionalTypeIds;
       this.licenseInfo.expertLevelId = draftData.expertLevelId;
       if (this.licenseInfo.applicantTypeId == 1) {
         this.$store.dispatch("verification/getExpertLevel").then((res) => {

@@ -70,6 +70,21 @@ import {
   SET_RENEWAL_ALL_LICENSED,
   SET_RENEWAL_ALL_LICENSED_SEARCHED,
 
+  SET_RENEWAL_RE_APPLY,
+  SET_RENEWAL_RE_APPLY_SEARCHED,
+  SET_RENEWAL_OTHERS_RE_APPLY,
+  SET_RENEWAL_OTHERS_RE_APPLY_SEARCHED,
+
+  SET_RENEWAL_DECLINE_CONFIRMED,
+  SET_RENEWAL_DECLINE_CONFIRMED_SEARCHED,
+  SET_RENEWAL_OTHERS_DECLINE_CONFIRMED,
+  SET_RENEWAL_OTHERS_DECLINE_CONFIRMED_SEARCHED,
+
+  SET_RENEWAL_UNDER_SUPER_VISION_CONFIRMED,
+  SET_RENEWAL_UNDER_SUPER_VISION_CONFIRMED_SEARCHED,
+  SET_RENEWAL_OTHERS_UNDER_SUPER_VISION_CONFIRMED,
+  SET_RENEWAL_OTHERS_UNDER_SUPER_VISION_CONFIRMED_SEARCHED,
+
 } from "./mutation-types";
 
 export default {
@@ -283,5 +298,50 @@ export default {
   },
   [SET_RENEWAL_ALL_LICENSED_SEARCHED](state, searchedVal) {
     state.renewalAllLicensedSearched = searchedVal;
+  },
+
+  [SET_RENEWAL_RE_APPLY](state, data) {
+    state.renewalReApply = data;
+    state.renewalReApplySearched = data;
+  },
+  [SET_RENEWAL_RE_APPLY_SEARCHED](state, searchedVal) {
+    state.renewalReApplySearched = searchedVal;
+  },
+  [SET_RENEWAL_OTHERS_RE_APPLY](state, data) {
+    state.renewalOthersReApply = data;
+    state.renewalOthersReApplySearched = data;
+  },
+  [SET_RENEWAL_OTHERS_RE_APPLY_SEARCHED](state, searchedVal) {
+    state.renewalOthersReApplySearched = searchedVal;
+  },
+
+  [SET_RENEWAL_DECLINE_CONFIRMED](state, data) {
+    state.renewalDeclineConfirmed = data;
+    state.renewalDeclineConfirmedSearched = data;
+  },
+  [SET_RENEWAL_DECLINE_CONFIRMED_SEARCHED](state, searchedVal) {
+    state.renewalDeclineConfirmedSearched = searchedVal;
+  },
+  [SET_RENEWAL_OTHERS_DECLINE_CONFIRMED](state, data) {
+    state.renewalOthersDeclineConfirmed = data;
+    state.renewalOthersDeclineConfirmedSearched = data;
+  },
+  [SET_RENEWAL_OTHERS_DECLINE_CONFIRMED_SEARCHED](state, searchedVal) {
+    state.renewalOthersDeclineConfirmedSearched = searchedVal;
+  },
+
+  [SET_RENEWAL_UNDER_SUPER_VISION_CONFIRMED](state, data) {
+    state.renewalUnderSuperVisionConfirmed = data;
+    state.renewalUnderSuperVisionConfirmedSearched = data;
+  },
+  [SET_RENEWAL_UNDER_SUPER_VISION_CONFIRMED_SEARCHED](state, searchedVal) {
+    state.renewalUnderSuperVisionConfirmedSearched = searchedVal;
+  },
+  [SET_RENEWAL_OTHERS_UNDER_SUPER_VISION_CONFIRMED](state, data) {
+    state.renewalOthersUnderSuperVisionConfirmed = data;
+    state.renewalOthersUnderSuperVisionConfirmedSearched = data;
+  },
+  [SET_RENEWAL_OTHERS_UNDER_SUPER_VISION_CONFIRMED_SEARCHED](state, searchedVal) {
+    state.renewalOthersUnderSuperVisionConfirmedSearched = searchedVal;
   },
 };

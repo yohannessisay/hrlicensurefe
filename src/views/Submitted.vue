@@ -173,7 +173,7 @@
           </div>
         </div>
       </div>
-      <div v-if="!this.showLoading" class="bg-lightBlueB-200 h-full">
+      <!-- <div v-if="!this.showLoading" class="bg-lightBlueB-200 h-full">
         <div class="flex pl-12 pt-medium">
           <Title message="Verification Submitted Applications" />
         </div>
@@ -261,7 +261,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
       <div v-if="!this.showLoading" class="bg-lightBlueB-200 h-full">
         <div class="flex pl-12 pt-medium">
           <Title message="Good Standing Submitted Applications" />
@@ -404,26 +404,26 @@ export default {
     fetchLicensebyId() {
       this.showLoading = !this.showLoading;
       this.$store
-        .dispatch("newlicense/getNewLicense")
+        .dispatch("renewal/getRenewalLicense")
         .then((res) => {
           this.license = res.data.data;
           if (this.license) {
-            this.newlicense = this.license.filter(function(e) {
+            this.renewal = this.license.filter(function(e) {
               return (
-                e.applicationStatus.code.includes("SUB") ||
-                e.applicationStatus.code.includes("UPD")
+                e.applicationStatus.code.includes("UPD") ||
+                e.applicationStatus.code.includes("SUB")
               );
             });
           }
         })
         .then(() => {
-          this.$store.dispatch("renewal/getRenewalLicense").then((res) => {
+          this.$store.dispatch("newlicense/getNewLicense").then((res) => {
             this.license = res.data.data;
             if (this.license) {
-              this.renewal = this.license.filter(function(e) {
+              this.newlicense = this.license.filter(function(e) {
                 return (
-                  e.applicationStatus.code.includes("SUB") ||
-                  e.applicationStatus.code.includes("UPD")
+                  e.applicationStatus.code.includes("UPD") ||
+                  e.applicationStatus.code.includes("SUB")
                 );
               });
             }
@@ -437,8 +437,8 @@ export default {
               if (this.license) {
                 this.verification = this.license.filter(function(e) {
                   return (
-                    e.applicationStatus.code.includes("SUB") ||
-                    e.applicationStatus.code.includes("UPD")
+                    e.applicationStatus.code.includes("UPD") ||
+                    e.applicationStatus.code.includes("SUB")
                   );
                 });
               }
@@ -453,8 +453,8 @@ export default {
               if (this.license) {
                 this.goodstanding = this.license.filter(function(e) {
                   return (
-                    e.applicationStatus.code.includes("SUB") ||
-                    e.applicationStatus.code.includes("UPD")
+                    e.applicationStatus.code.includes("UPD") ||
+                    e.applicationStatus.code.includes("SUB")
                   );
                 });
               }

@@ -49,7 +49,7 @@
           class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
         >
           On
-          {{ item.createdAt }}
+          {{ moment(item.createdAt).format("MMMM DD, YYYY") }}
         </span>
         <span
           class="text-lightBlueB-500 mt-tiny flex justify-start content-center"

@@ -133,20 +133,23 @@ export default {
 
     const fetchRenewalLicensed = () => {
       showLoading.value = true;
-      const statusId = applicationStatus(store, 'AP');
-      const adminStatus = [statusId, adminId];
+      const approvedPaymentStatus = applicationStatus(store, "AP");
+      const confirmedStatus = applicationStatus(store, "CONF");
+
+      const approvedStatus = applicationStatus(store, "APP");
+      const adminStatus = [
+        adminId,
+        approvedPaymentStatus,
+        confirmedStatus,
+        approvedStatus,
+      ];
       store.dispatch("reviewerRenewal/getRenewalLicensed", adminStatus).then((res) => {
         showLoading.value = false;
         renewalLicensed.value =
           store.getters["reviewerRenewal/getRenewalLicensedSearched"];
         allInfo.value.assignApplication =
           store.getters["reviewerRenewal/getRenewalLicensedSearched"];
-          console.log("renewals", store.getters["reviewerRenewal/getRenewalLicensedSearched"])
-
         for (let applicant in allInfo.value.assignApplication) {
-          allInfo.value.assignApplication[applicant].createdAt = moment(
-            allInfo.value.assignApplication[applicant].createdAt
-          ).format("MMMM D, YYYY");
           if (
             allInfo.value.assignApplication[applicant].applicationType ===
             undefined

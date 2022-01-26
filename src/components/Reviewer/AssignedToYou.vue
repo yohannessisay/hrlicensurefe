@@ -52,10 +52,7 @@
         <Title :message="'Assigned To You Applicants'" />
         <button @click="backClicked">back</button>
       </div>
-      <filtered-info
-        :filteredData="allInfo.filteredByDate"
-        type="detail"
-      />
+      <filtered-info :filteredData="allInfo.filteredByDate" type="detail" />
     </div>
   </div>
   <div v-if="allInfo.message.showErrorFlash">
@@ -163,14 +160,8 @@ export default {
         showLoading.value = false;
         assignedToyou.value =
           store.getters["reviewer/getAssignedToYouSearched"];
-          console.log("assigned to you", assignedToYou.value)
         allInfo.value.assignApplication =
           store.getters["reviewer/getAssignedToYouSearched"];
-        for (let applicant in allInfo.value.assignApplication) {
-          allInfo.value.assignApplication[applicant].createdAt = moment(
-            allInfo.value.assignApplication[applicant].createdAt
-          ).format("MMMM D, YYYY");
-        }
         if (assignedToyou.value.length !== 0) {
           for (var prop in store.getters["reviewer/getAssignedToYouSearched"]) {
             if (

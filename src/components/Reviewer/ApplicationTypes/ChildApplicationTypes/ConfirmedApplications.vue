@@ -36,7 +36,7 @@
         </h4>
         <span
           class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-          v-if="all_confirmed == 'true'"
+          v-if="others_confirmed == 'true'"
         >
           <i class="fas fa-user-cog"></i> &nbsp;
           {{ item.reviewer.name ? item.reviewer.name : "-" }}
@@ -50,7 +50,7 @@
           class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
         >
           On
-          {{ item.createdAt }}
+          {{ moment(item.createdAt).format("MMMM DD, YYYY") }}
         </span>
         <span
           class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
@@ -87,12 +87,11 @@
 <script>
 import moment from "moment";
 import { useRouter } from "vue-router";
-import { ref } from 'vue';
 export default {
   computed: {
     moment: () => moment,
   },
-  props: ["confirmedApplication", "app_type", "all_confirmed"],
+  props: ["confirmedApplication", "app_type", "others_confirmed"],
   name: "ConfirmedApplication",
   setup(props) {
     let router = useRouter();

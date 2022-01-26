@@ -86,7 +86,10 @@
               </div>
             </div>
             <div class="flex">
-              <div class="flex flex-col mb-medium w-1/2 mr-12" v-if="adminExpertId == 3">
+              <div
+                class="flex flex-col mb-medium w-1/2 mr-12"
+                v-if="adminExpertId == 3"
+              >
                 <label class="text-primary-700">Expert Type</label>
                 <select
                   class="max-w-3xl"
@@ -149,7 +152,6 @@
                 Create User
               </button>
             </div>
-            
           </form>
         </div>
       </div>
@@ -186,7 +188,8 @@ export default {
     const store = useStore();
     const router = useRouter();
 
-    const adminExpertId = JSON.parse(localStorage.getItem('allAdminData')).expertLevelId;
+    const adminExpertId = JSON.parse(localStorage.getItem("allAdminData"))
+      .expertLevelId;
     let errorMessage = ref("");
     let admin = {
       firstName: null,
@@ -246,7 +249,6 @@ export default {
     const fetchExpertLevels = () => {
       store.dispatch("admin/getExpertLevels").then((res) => {
         expertLevels.value = res.data.data;
-        // console.log("expert level in", res);
       });
     };
 
@@ -273,30 +275,33 @@ export default {
           " " +
           admin.grandfatherName;
 
-        store.dispatch("admin/registerAdmin", admin).then((res) => {
-          showLoading.value = false;
-          console.log("registration information is ", res)
-          if(res.data === undefined) {
-            message.value.showErrorFlash = !message.value.showErrorFlash;
-            setTimeout(() => {
+        admin.email = admin.email.toLowerCase();
+
+        store
+          .dispatch("admin/registerAdmin", admin)
+          .then((res) => {
+            showLoading.value = false;
+            if (res.data === undefined) {
               message.value.showErrorFlash = !message.value.showErrorFlash;
-            }, 3000);
-          }
-          else if (res.data.status == "Success") {
-            message.value.showFlash = !message.value.showFlash;
-            setTimeout(() => {
-              location.reload(true);
-            }, 3000);
-          } else if(res.data.status = "Error") {
-            errorMessage.value = res.data.message
-            message.value.showErrorFlash = !message.value.showErrorFlash;
-            setTimeout(() => {
-              location.reload(true);
-            })
-          }
-        }).catch(err => {
-          showLoading.value = false;
-        });
+              setTimeout(() => {
+                message.value.showErrorFlash = !message.value.showErrorFlash;
+              }, 3000);
+            } else if (res.data.status == "Success") {
+              message.value.showFlash = !message.value.showFlash;
+              setTimeout(() => {
+                location.reload(true);
+              }, 3000);
+            } else if ((res.data.status = "Error")) {
+              errorMessage.value = res.data.message;
+              message.value.showErrorFlash = !message.value.showErrorFlash;
+              setTimeout(() => {
+                location.reload(true);
+              });
+            }
+          })
+          .catch((err) => {
+            showLoading.value = false;
+          });
       }
     };
 

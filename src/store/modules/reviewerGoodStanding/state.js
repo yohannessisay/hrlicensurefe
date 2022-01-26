@@ -40,6 +40,12 @@ export default {
 
         goodStandingAllLicensed: [],
         goodStandingAllLicensedSearched: [],
+
+        goodStandingReApply: [],
+        goodStandingReApplySearched: [],
+        goodStandingOthersReApply: [],
+        goodStandingOthersReApplySearched: [],
+        
         
     }
 }

@@ -223,7 +223,6 @@ export default {
           }
         }
         alreadyPushed.value = true;
-        console.log("pfor assign", filteredByDate.value);
       }
     };
 

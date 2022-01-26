@@ -137,12 +137,8 @@ export default {
           store.getters["reviewerNewLicense/getNewLicenseOthersPendingPaymentSearched"];
         allInfo.value.assignApplication =
           store.getters["reviewerNewLicense/getNewLicenseOthersPendingPaymentSearched"];
-          console.log("new licensss pending payment", store.getters["reviewerNewLicense/getNewLicenseOthersPendingPaymentSearched"])
 
         for (let applicant in allInfo.value.assignApplication) {
-          allInfo.value.assignApplication[applicant].createdAt = moment(
-            allInfo.value.assignApplication[applicant].createdAt
-          ).format("MMMM D, YYYY");
           if (
             allInfo.value.assignApplication[applicant].applicationType ===
             undefined

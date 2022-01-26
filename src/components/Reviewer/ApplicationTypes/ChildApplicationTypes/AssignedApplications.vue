@@ -10,11 +10,27 @@
     >
       <div
         class="p-4 w-48 h-64"
-        @Click="detail(`/admin/detail`, item.id, item.applicant.id)"
+        @Click="
+          detail(
+            `/admin`,
+            item.id,
+            item.applicant.id,
+            item.professionalTypes.code
+          )
+        "
       >
         <div class="flex content-center justify-center">
-          <span v-if="item.applicant.profile.photo !== '' && item.applicant.profile.photo !== null">
-                <img  :src="item.applicant.profile.photo" alt="profile picture"  class="w-20 h-12" />
+          <span
+            v-if="
+              item.applicant.profile.photo !== '' &&
+                item.applicant.profile.photo !== null
+            "
+          >
+            <img
+              :src="item.applicant.profile.photo"
+              alt="profile picture"
+              class="w-20 h-12"
+            />
           </span>
           <span v-else>
             <img
@@ -36,7 +52,8 @@
         </h4>
         <span
           class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-        v-if="assigned_to_others == 'true'">
+          v-if="assigned_to_others == 'true'"
+        >
           <i class="fas fa-user-cog"></i> &nbsp;
           {{ item.reviewer.name ? item.reviewer.name : "-" }}
         </span>
@@ -49,20 +66,28 @@
           class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
         >
           On
-          {{ item.createdAt }}
+          {{ moment(item.createdAt).format("MMMM DD, YYYY") }}
         </span>
         <span
           class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
         >
           {{
             app_type == "New License"
-              ? item.newLicenseCode ? item.newLicenseCode : "-"
+              ? item.newLicenseCode
+                ? item.newLicenseCode
+                : "-"
               : app_type == "Verification"
-              ? item.verificationCode ? item.verificationCode : "-"
+              ? item.verificationCode
+                ? item.verificationCode
+                : "-"
               : app_type == "Good Standing"
-              ? item.goodStandingCode ? item.goodStandingCode : "-"
+              ? item.goodStandingCode
+                ? item.goodStandingCode
+                : "-"
               : app_type == "Renewal"
-              ? item.renewalCode ? item.renewalCode : "-"
+              ? item.renewalCode
+                ? item.renewalCode
+                : "-"
               : "-"
           }}
         </span>
@@ -76,19 +101,77 @@
   </div>
 </template>
 <script>
+import { ref, onMounted } from "vue";
 import moment from "moment";
 import { useRouter } from "vue-router";
+import { useStore } from "vuex";
+import Spinner from "@/sharedComponents/Spinner";
 export default {
   computed: {
     moment: () => moment,
+  },
+  components: {
+    Spinner
   },
   props: ["assignedApplication", "app_type", "assigned_to_others"],
   name: "AssignedApplications",
   setup(props) {
     let router = useRouter();
-    const detail = (data, applicationId, applicantId) => {
-      const url =
-        data + "/" + props.app_type + "/" + applicationId + "/" + applicantId;
+    const store = useStore();
+
+    let showLoading = ref(false);
+
+    let newLicenseForRenewal = ref([]);
+    const detail = (data, applicationId, applicantId, professionalType) => {
+      if (props.app_type == "Renewal") {
+        showLoading.value = true;
+        const userStatus = [applicantId, professionalType];
+        store
+          .dispatch(
+            "reviewerNewLicense/getNewLicenseForSpecificUser",
+            userStatus
+          )
+          .then((res) => {
+            showLoading.value = false;
+            newLicenseForRenewal.value =
+              store.getters["reviewerNewLicense/getNewLicenseForSpecificUser"];
+            if (newLicenseForRenewal.value === undefined) {
+              // redirectPage(data + "/detail/" + props.app_type + "/" + applicationId + "/" + applicantId)
+              const url =
+                data +
+                "/detail/" +
+                props.app_type +
+                "/" +
+                applicationId +
+                "/" +
+                applicantId;
+              router.push(url);
+            }
+            const url =
+              data +
+              "/newlicense-document/" +
+              newLicenseForRenewal.value.id +
+              "/" +
+              newLicenseForRenewal.value.applicantId +
+              "/" +
+              applicationId +
+              "/" +
+              applicantId;
+            router.push(url);
+          });
+      } else {
+        const url =
+          data +
+          "/detail/" +
+          props.app_type +
+          "/" +
+          applicationId +
+          "/" +
+          applicantId;
+        router.push(url);
+      }
+    };
+    const redirectPage = (url) => {
       router.push(url);
     };
     return {

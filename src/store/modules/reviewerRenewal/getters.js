@@ -69,4 +69,19 @@ export default {
 
     getRenewalAllLicensed: (state) => state.renewalAllLicensed,
     getRenewalAllLicensedSearched: (state) => state.renewalAllLicensedSearched,
+
+    getRenewalReApply: (state) => state.renewalReApply,
+    getRenewalReApplySearched: (state) => state.renewalReApplySearched,
+    getRenewalOthersReApply: (state) => state.renewalOthersReApply,
+    getRenewalOthersReApplySearched: (state) => state.renewalOthersReApplySearched,
+
+    getRenewalDeclineConfirmed: (state) => state.renewalDeclineConfirmed,
+    getRenewalDeclineConfirmedSearched: (state) => state.renewalDeclineConfirmedSearched,
+    getRenewalOthersDeclineConfirmed: (state) => state.renewalOthersDeclineConfirmed,
+    getRenewalOthersDeclineConfirmedSearched: (state) => state.renewalOthersDeclineConfirmedSearched,
+  
+    getRenewalUnderSuperVisionConfirmed: (state) => state.renewalUnderSuperVisionConfirmed,
+    getRenewalUnderSuperVisionConfirmedSearched: (state) => state.renewalUnderSuperVisionConfirmedSearched,
+    getRenewalOthersUnderSuperVisionConfirmed: (state) => state.renewalOthersUnderSuperVisionConfirmed,
+    getRenewalOthersUnderSuperVisionConfirmedSearched: (state) => state.renewalOthersUnderSuperVisionConfirmedSearched,
 }

@@ -18,6 +18,28 @@ import {
   SET_ACCEPTED_FIELDS,
   SET_PROFESSIONAL_DOCUMENT,
   SET_PAYROLL,
+  SET_PASSPORT,
+  SET_LANGUAGE,
+  SET_HERQA,
+  SET_LETTER_FROM_ORG,
+  SET_PROFESSIONAL_LICENSE,
+  SET_RENEWED_LICENSE,
+  SET_COC,
+  SET_DEGREE,
+  SET_EDUCATIONAL_DOCUMENT,
+  SET_EDU_EIGHTH,
+  SET_EDU_TENTH,
+  SET_EDU_TWELVETH,
+  SET_EDU_TRANSCRIPT1,
+  SET_EDU_TRANSCRIPT2,
+  SET_SUPPORT_LETTER,
+  SET_PRO_CERTIFICATE,
+  SET_PRO_DIPLOMA,
+  SET_PRO_TRANSCRIPT,
+  SET_MASTERS,
+  SET_MASTERS_TRANSCRIPT,
+  SET_PHD,
+  SET_PHD_TRANSCRIPT,
 } from "./mutation-types";
 
 export default {
@@ -77,5 +99,71 @@ export default {
   },
   [SET_ACCEPTED_FIELDS](state, field) {
     state.acceptedFields = field;
+  },
+  [SET_PASSPORT](state, passport) {
+    state.passport = passport;
+  },
+  [SET_LANGUAGE](state, englishLanguage) {
+    state.englishLanguage = englishLanguage;
+  },
+  [SET_HERQA](state, herqa) {
+    state.herqa = herqa;
+  },
+  [SET_LETTER_FROM_ORG](state, letter) {
+    state.letterfromOrg = letter;
+  },
+  [SET_PROFESSIONAL_LICENSE](state, license) {
+    state.professionalLicense = license;
+  },
+  [SET_RENEWED_LICENSE](state, license) {
+    state.renewedLicense = license;
+  },
+  [SET_COC](state, coc) {
+    state.coc = coc;
+  },
+  [SET_DEGREE](state, degree) {
+    state.degree = degree;
+  },
+  [SET_EDUCATIONAL_DOCUMENT](state, educationalDocuments) {
+    state.educationalDocuments = educationalDocuments;
+  },
+  [SET_EDU_EIGHTH](state, eduEighthGrade) {
+    state.eduEighthGrade = eduEighthGrade;
+  },
+  [SET_EDU_TENTH](state, eduTenthGrade) {
+    state.eduTenthGrade = eduTenthGrade;
+  },
+  [SET_EDU_TWELVETH](state, eduTwelvethGrade) {
+    state.eduTwelvethGrade = eduTwelvethGrade;
+  },
+  [SET_EDU_TRANSCRIPT1](state, eduTranscript1) {
+    state.eduTranscript1 = eduTranscript1;
+  },
+  [SET_EDU_TRANSCRIPT2](state, eduTranscript2) {
+    state.eduTranscript2 = eduTranscript2;
+  },
+  [SET_SUPPORT_LETTER](state, supportLetter) {
+    state.supportLetter = supportLetter;
+  },
+  [SET_PRO_CERTIFICATE](state, proCertificate) {
+    state.proCertificate = proCertificate;
+  },
+  [SET_PRO_DIPLOMA](state, proDiploma) {
+    state.proDiploma = proDiploma;
+  },
+  [SET_PRO_TRANSCRIPT](state, proTranscript) {
+    state.proTranscript = proTranscript;
+  },
+  [SET_MASTERS](state, masters) {
+    state.masters = masters;
+  },
+  [SET_MASTERS_TRANSCRIPT](state, mastersTranscript) {
+    state.mastersTranscript = mastersTranscript;
+  },
+  [SET_PHD](state, phd) {
+    state.phd = phd;
+  },
+  [SET_PHD_TRANSCRIPT](state, phdTranscript) {
+    state.phdTranscript = phdTranscript;
   },
 };

@@ -134,7 +134,8 @@ export default {
     const fetchGoodStandingLicensed = () => {
       showLoading.value = true;
       const statusId = applicationStatus(store, 'AP');
-      const adminStatus = [statusId, adminId];
+      const approvedStatus = applicationStatus(store, 'APP');
+      const adminStatus = [adminId, statusId, approvedStatus];
       store.dispatch("reviewerGoodStanding/getGoodStandingLicensed", adminStatus).then((res) => {
         showLoading.value = false;
         goodStandingLicensed.value =
@@ -143,9 +144,6 @@ export default {
           store.getters["reviewerGoodStanding/getGoodStandingLicensedSearched"];
 
         for (let applicant in allInfo.value.assignApplication) {
-          allInfo.value.assignApplication[applicant].createdAt = moment(
-            allInfo.value.assignApplication[applicant].createdAt
-          ).format("MMMM D, YYYY");
           if (
             allInfo.value.assignApplication[applicant].applicationType ===
             undefined

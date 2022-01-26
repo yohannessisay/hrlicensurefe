@@ -4,7 +4,7 @@
     <div class="bg-lightBlueB-200 h-full">
       <div class="flex pl-12 pt-medium">
         <div v-if="myTitleMessage">
-          <Title message="My Unfinished" illustration="My Unfinished"/>
+          <Title message="My Unfinished" illustration="My Unfinished" />
         </div>
         <div v-else>
           <Title message="Unfinished" illustration="Unfinished" />
@@ -46,7 +46,9 @@
         </div>
         <div class="flex ml-small mt-medium rounded">
           <nothing-to-show :nothingToShow="nothingToShowAllUnfinished" />
-          <others-unfinished :othersUnfinished="unFinishedForEveryOneSearched" />
+          <others-unfinished
+            :othersUnfinished="unFinishedForEveryOneSearched"
+          />
         </div>
         <!-- spelling error -->
         <div
@@ -58,7 +60,7 @@
       </div>
 
       <div class="flex pl-12 mt-medium">
-        <Title message="Assigned to You" illustration="Assigned to You"/>
+        <Title message="Assigned to You" illustration="Assigned to You" />
         <div class="flex ml-small" v-if="assignedToyou.length >= 5">
           <router-link to="/admin/assignedToyou">
             <button
@@ -81,7 +83,10 @@
       </div>
       <div v-if="adminRole === 'ADM'">
         <div class="flex pl-12 mt-medium">
-          <Title message="Assigned to Others" illustration="Assigned to Others" />
+          <Title
+            message="Assigned to Others"
+            illustration="Assigned to Others"
+          />
           <div class="flex ml-small" v-if="assignedToEveryone.length >= 5">
             <router-link to="/admin/assignedToAll">
               <button
@@ -205,7 +210,7 @@ import MyAssigned from "./ChildComponents/MyAssigned.vue";
 import NothingToShow from "./ChildComponents/NothingToShow.vue";
 import MyPendingPayments from "./HomeComponents/MyPendingPayments.vue";
 import OthersPendingPayments from "./HomeComponents/OthersPendingPayments.vue";
-import OthersUnfinished from './ChildComponents/OthersUnfinished.vue';
+import OthersUnfinished from "./ChildComponents/OthersUnfinished.vue";
 import AssignedToOthers from "./ChildComponents/AssignedToOthers.vue";
 import AllUnassigned from "./ChildComponents/AllUnassigned.vue";
 

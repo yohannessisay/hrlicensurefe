@@ -26,12 +26,16 @@
         <span class="flex justify-center mt-2"
           >Request Letter from Federal or Regional</span
         >
+        <span class="flex justify-center">{{ documentMessage }}</span>
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
           <div class="flex justify-center">
             <div>
               <span>
-                <h2>{{ letterFile.name }}</h2>
-                <h2>{{ fileSize }}</h2>
+                <h2 v-if="!fileSizeExceed">{{ letterFile.name }}</h2>
+                <h2 v-if="!fileSizeExceed">{{ fileSize }}</h2>
+                <h3 style="color: red" v-if="fileSizeExceed">
+                  File size must be less than {{ maxSizeMB }} MB
+                </h3>
               </span>
               <span v-if="showUpload">
                 <label class="text-primary-700"
@@ -53,14 +57,12 @@
                   </div>
                 </label>
               </span>
-
               <picture v-if="!showUpload && isImage">
                 <p>
                   <a href="javascript:void(0)" @click="reset()">Upload again</a>
                 </p>
                 <img v-bind:src="filePreview" v-show="showPreview" />
               </picture>
-              <!--  -->
               <div v-if="!showUpload && isPdf">
                 <p>
                   <a href="javascript:void(0)" @click="reset()">Upload again</a>
@@ -74,6 +76,9 @@
           </div>
         </form>
         <div v-if="buttons && !draftStatus" class="flex justify-center mb-8">
+          <button @click="submitBack">
+            Back
+          </button>
           <button @click="submit">
             Next
           </button>
@@ -85,6 +90,9 @@
           v-if="buttons && draftStatus == 'DRA'"
           class="flex justify-center mb-8"
         >
+          <button @click="submitBack">
+            Back
+          </button>
           <button @click="submit">
             Next
           </button>
@@ -103,21 +111,27 @@
           v-if="buttons && draftStatus == 'SUB'"
           class="flex justify-center mb-8"
         >
+          <button @click="submitBack">
+            Back
+          </button>
           <button @click="submit">
             Next
           </button>
           <button
             class="withdraw"
-            @click="withdraw(buttons[0].action)"
+            @click="withdraw(buttons[1].action)"
             variant="outline"
           >
-            {{ buttons[0]["name"] }}
+            {{ buttons[1]["name"] }}
           </button>
         </div>
         <div
           v-if="buttons && draftStatus == 'USUP'"
           class="flex justify-center mb-8"
         >
+          <button @click="submitBack">
+            Back
+          </button>
           <button @click="submit">
             Next
           </button>
@@ -132,6 +146,9 @@
           v-if="buttons && draftStatus == 'DEC'"
           class="flex justify-center mb-8"
         >
+          <button @click="submitBack">
+            Back
+          </button>
           <button @click="submit">
             Next
           </button>
@@ -164,6 +181,9 @@ import { useRoute, useRouter } from "vue-router";
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import Spinner from "@/sharedComponents/Spinner";
+import MESSAGE from "../../composables/documentMessage";
+import MAX_FILE_SIZE from "../../composables/documentMessage";
+import MAX_SIZE_MB from "../../composables/documentMessage";
 
 export default {
   components: {
@@ -197,6 +217,13 @@ export default {
     let isPdf = ref(false);
     let draftStatus = ref("");
 
+    let letterBack = ref("");
+
+    let documentMessage = ref("");
+    let maxFileSize = ref("");
+    let maxSizeMB = ref("");
+    let fileSizeExceed = ref(false);
+
     let dataChanged = ref(false);
     let buttons = ref([]);
     let documentSpecs = ref([]);
@@ -222,38 +249,43 @@ export default {
       isPdf.value = false;
     };
     const handleFileUpload = () => {
-      dataChanged.value = true;
-      showUpload.value = false;
       letterFile.value = letterFileP.value.files[0];
       let reader = new FileReader();
-
+      isImage.value = true;
       let fileS = letterFile.value.size;
-      if (fileS > 0 && fileS < 1000) {
-        fileSize.value += "B";
-      } else if (fileS > 1000 && fileS < 1000000) {
-        fileSize.value = fileS / 1000 + "kB";
-      } else {
-        fileSize.value = fileS / 1000000 + "MB";
-      }
-
-      reader.addEventListener(
-        "load",
-        function() {
-          showPreview.value = true;
-          filePreview.value = reader.result;
-        },
-        false
-      );
-
-      if (letterFile.value) {
-        if (/\.(jpe?g|png|gif)$/i.test(letterFile.value.name)) {
-          isImage.value = true;
-          reader.readAsDataURL(letterFile.value);
-        } else if (/\.(pdf)$/i.test(letterFile.value.name)) {
-          isImage.value = false;
-          isPdf.value = true;
-          reader.readAsDataURL(letterFile.value);
+      if (fileS <= maxFileSize.value / 1000) {
+        fileSizeExceed.value = false;
+        dataChanged.value = true;
+        showUpload.value = false;
+        if (fileS > 0 && fileS < 1000) {
+          fileSize.value += "B";
+        } else if (fileS > 1000 && fileS < 1000000) {
+          fileSize.value = fileS / 1000 + "kB";
+        } else {
+          fileSize.value = fileS / 1000000 + "MB";
         }
+        reader.addEventListener(
+          "load",
+          function() {
+            showPreview.value = true;
+            filePreview.value = reader.result;
+          },
+          false
+        );
+        if (letterFile.value) {
+          if (/\.(jpe?g|png|gif)$/i.test(letterFile.value.name)) {
+            isImage.value = true;
+            reader.readAsDataURL(letterFile.value);
+          } else if (/\.(pdf)$/i.test(letterFile.value.name)) {
+            isImage.value = false;
+            isPdf.value = true;
+            reader.readAsDataURL(letterFile.value);
+          }
+        }
+      } else {
+        fileSizeExceed.value = true;
+        letterFile.value = "";
+        isImage.value = true;
       }
     };
     buttons = store.getters["goodstanding/getButtons"];
@@ -266,8 +298,53 @@ export default {
       emit("changeActiveState");
       store.dispatch("goodstanding/set_Goodstanding_Letter", letterFile);
     };
+    const submitBack = () => {
+      emit("changeActiveStateMinus");
+      store.dispatch("goodstanding/set_Goodstanding_Letter", letterFile);
+    };
 
     onMounted(() => {
+      documentMessage.value = MESSAGE.DOC_MESSAGE;
+      maxFileSize.value = MAX_FILE_SIZE.MAX_FILE_SIZE;
+      maxSizeMB.value = MAX_SIZE_MB.MAX_SIZE_MB;
+      letterBack = store.getters["goodstanding/getGoodStandingLetter"];
+      if (
+        letterBack &&
+        letterBack !== undefined &&
+        letterBack !== null &&
+        letterBack !== ""
+      ) {
+        dataChanged.value = true;
+        showUpload.value = false;
+        letterFile.value = letterBack;
+        let reader = new FileReader();
+        let fileS = letterFile.value.size;
+        if (fileS > 0 && fileS < 1000) {
+          fileSize.value += "B";
+        } else if (fileS > 1000 && fileS < 1000000) {
+          fileSize.value = fileS / 1000 + "kB";
+        } else {
+          fileSize.value = fileS / 1000000 + "MB";
+        }
+        reader.addEventListener(
+          "load",
+          function() {
+            showPreview.value = true;
+            filePreview.value = reader.result;
+          },
+          false
+        );
+        if (letterFile.value) {
+          if (/\.(jpe?g|png|gif)$/i.test(letterFile.value.name)) {
+            isImage.value = true;
+            reader.readAsDataURL(letterFile.value);
+          } else if (/\.(pdf)$/i.test(letterFile.value.name)) {
+            isImage.value = false;
+            isPdf.value = true;
+            reader.readAsDataURL(letterFile.value);
+          }
+        }
+      }
       declinedFields = store.getters["goodstanding/getDeclinedFields"];
       acceptedFields = store.getters["goodstanding/getAcceptedFields"];
       remark = store.getters["goodstanding/getRemark"];
@@ -369,8 +446,9 @@ export default {
             whoIssued: licenseInfo.whoIssued,
             licenseRegistrationNumber: licenseInfo.licenseRegistrationNumber,
             applicantPositionId: licenseInfo.applicantPositionId,
-            professionalTypeId: licenseInfo.professionalTypeId,
+            professionalTypeIds: licenseInfo.professionalTypeIds,
             expertLevelId: licenseInfo.expertLevelId,
+            otherProfessionalType: licenseInfo.otherProfessionalType,
           },
         };
         store
@@ -477,8 +555,9 @@ export default {
             whoIssued: licenseInfo.whoIssued,
             licenseRegistrationNumber: licenseInfo.licenseRegistrationNumber,
             applicantPositionId: licenseInfo.applicantPositionId,
-            professionalTypeId: licenseInfo.professionalTypeId,
+            professionalTypeIds: licenseInfo.professionalTypeIds,
             expertLevelId: licenseInfo.expertLevelId,
+            otherProfessionalType: licenseInfo.otherProfessionalType,
           },
         };
         store
@@ -538,6 +617,7 @@ export default {
     return {
       letterFile,
       letterFileP,
+      letterBack,
       showPreview,
       filePreview,
       showUpload,
@@ -546,6 +626,7 @@ export default {
       handleFileUpload,
       reset,
       submit,
+      submitBack,
       draft,
       withdraw,
       update,
@@ -562,6 +643,10 @@ export default {
       remark,
       declinedFieldsCheck,
       acceptedFieldsCheck,
+      documentMessage,
+      fileSizeExceed,
+      maxFileSize,
+      maxSizeMB,
     };
   },
 };

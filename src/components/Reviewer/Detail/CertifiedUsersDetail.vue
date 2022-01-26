@@ -8,150 +8,200 @@
       <Spinner />
     </span>
     <span v-else>
-      
       <span v-if="isUserCertified && myRegion">
-      <button @click="downloadPdf">Download PDF</button>
-      <div class="bg-lightBlueB-200 h-full">
-        <div
-          v-if="show"
-          style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2)"
-          class="ml-8 mr-8 mb-12"
-        >
-          <!-- <div class="flex justify-center">
-            <div
-              style="
-                width: 800px;
-                height: 600px;
-                padding: 20px;
-                text-align: center;
-                border: 10px solid #787878;
-              "
-              id="main"
-            >
-              <div
-                style="
-                  width: 750px;
-                  height: 550px;
-                  padding: 20px;
-                  text-align: center;
-                  border: 5px solid #787878;
-                "
-              >
-                <span style="font-size: 50px; font-weight: bold"
-                  >Certificate of Completion</span
-                >
-                <br /><br />
-                <span style="font-size: 25px"
-                  ><i>This is to certify that</i></span
-                >
-                <br /><br />
-                <span style="font-size: 30px"
-                  ><b
-                    >{{ certifiedUser.name }} {{ certifiedUser.fatherName }}
-                    {{
-                      certifiedUser.grandFatherName != null
-                        ? certifiedUser.grandFatherName
-                        : ""
-                    }}</b
-                  ></span
-                ><br /><br />
-                <span style="font-size: 25px"
-                  ><i>has completed the course</i></span
-                >
-                <br /><br />
-                <span style="font-size: 30px">Health and Social Care</span>
-                <br /><br />
-                <span style="font-size: 20px"
-                  ><b>with great distinction</b></span
-                >
-                <br /><br /><br /><br />
-                <span style="font-size: 25px"
-                  ><i
-                    >on
-                    {{
-                        moment(certificateDetail.certifiedDate).format(
-                        "MMM D, YYYY"
-                      ) }}</i
-                  ></span
-                ><br>
-              </div>
-            </div>
-          </div> -->
-
-          <div class="container">
-            <img
-              src="../../../assets/certeficate_Background_image.jpg"
-              alt="Notebook"
-              style="width: 100%"
-            />
-            <div class="content">
-            </div>
-            <span id="main">
-            <div class="flex-container">
-              <div><h4><b>No Photo<br/> Available</b></h4></div>
-              <div class="inner-flex">
-                <h2><b>በኢትዮፕያ ፌደራላዊ ዴሞክራሲያዊ ሪፐብሊክ</b></h2>
-                <h2><b>Federal Democratic Republic Ethiopia</b></h2>
-                 <br/> 
-                <div class="flex-center">
-                  <h2>የጤና ጥበቃ ሚኒስቴር</h2>
-                  <h2>Ministry of Health</h2>
+        <button @click="downloadPdf">Download PDF</button>
+        <div class="bg-lightBlueB-200 h-full">
+          <div
+            v-if="show"
+            style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2)"
+            class="ml-8 mr-8 mb-12"
+          >
+            <div class="container">
+              <img
+                src="../../../assets/certeficate_Background_image.jpg"
+                alt="Notebook"
+                style="width: 100%"
+              />
+              <div class="content"></div>
+              <span id="main">
+                <div class="flex-container">
+                  <div></div>
+                  <!-- <div><h4><b>No Photo<br/> Available</b></h4></div> -->
+                  <div class="inner-flex">
+                    <h2><b>በኢትዮፕያ ፌደራላዊ ዴሞክራሲያዊ ሪፐብሊክ</b></h2>
+                    <h2><b>Federal Democratic Republic Ethiopia</b></h2>
+                    <br />
+                    <div class="flex-center">
+                      <h2>የጤና ጥበቃ ሚኒስቴር</h2>
+                      <h2>Ministry of Health</h2>
+                    </div>
+                  </div>
+                  <div>
+                    <h6>የምዝገባ ቁጥር: {{ certifiedUser.newLicenseCode }}</h6>
+                  </div>
                 </div>
-              </div>
-              <div>
-                <h6>የምዝገባ ቁጥር: {{certifiedUser.newLicenseCode}}</h6>
-              </div>
-            </div>
-            <div class="flex-second-container">
-              <div>
-                <h3 class="underline"><b>የጤና ባለሙያዎች የሙያ ምዝገባና ፈቃድ የምስከር ወረቀት</b></h3>
-                <br>
-                <h4>በኢትዮጵያ ፌዴራላዊ ዴሞክራሲያዊ ረፐብሊክ የጤና ጥበቃ ሚንስቴር </h4>
-                <h4>በአዋጅ ቁጥር 916/2008 አንቀጽ 33(13)በተሰጠው ስልጣን መሰረት</h4>
-                <br><br><br><br>
-                <h3 class="underline">
-                  <b>{{ certifiedUser.alternativeName }} {{ certifiedUser.alternativeFatherName }}
-                    {{
-                      certifiedUser.alternativeGrandFatherName != null
-                        ? certifiedUser.alternativeGrandFatherName
-                        : ""}}</b>
+                <div class="flex-second-container">
+                  <div>
+                    <h3 class="underline">
+                      <b>የጤና ባለሙያዎች የሙያ ምዝገባና ፈቃድ የምስከር ወረቀት</b>
+                    </h3>
+                    <br />
+                    <h4>በኢትዮጵያ ፌዴራላዊ ዴሞክራሲያዊ ረፐብሊክ የጤና ጥበቃ ሚንስቴር</h4>
+                    <h4>በአዋጅ ቁጥር 916/2008 አንቀጽ 33(13)በተሰጠው ስልጣን መሰረት</h4>
+                    <br /><br /><br /><br />
+                    <h3 class="underline">
+                      <b
+                        >{{
+                          certifiedUser.alternativeName != null
+                            ? certifiedUser.alternativeName
+                            : ""
+                        }}
+                        {{
+                          certifiedUser.alternativeFatherName != null
+                            ? certifiedUser.alternativeFatherName
+                            : ""
+                        }}
+                        {{
+                          certifiedUser.alternativeGrandFatherName != null
+                            ? certifiedUser.alternativeGrandFatherName
+                            : ""
+                        }}</b
+                      >
                     </h3>
                     <h4>ተገቢውን መስፈርት አሟልተው ስለተገኙ ሚኒስቴር መስሪያ ቤቱ</h4>
-                    <h4><b>{{certificateDetail.professionalTypes.name}}</b></h4>
-                    <br>
+                    <h4
+                      v-if="
+                        certificateDetail.professionalTypes &&
+                          certificateDetail.professionalTypes[0]
+                            .professionalTypes.amharicProfessionalType
+                      "
+                    >
+                      <div
+                        v-for="professions in certificateDetail.professionalTypes"
+                        class="flex flex-row"
+                      >
+                        <b>{{
+                          professions.professionalTypes
+                            .amharicProfessionalType === "ሌላ"
+                            ? ""
+                            : professions.professionalTypes
+                                .amharicProfessionalType
+                        }}</b>
+                      </div>
+                    </h4>
+                    <br />
                     <h3>ሙያ መዝግቦ ይህን የሙያ ስራ ፈቃድ ሰጥቷል።</h3>
-                    <h3>ይህ የሙያ የስራ ፈቃድ የሚያገለግለው <b>
-                      {{toEthiopian(moment(certificateDetail.certifiedDate)._d.toISOString(), false)}}
-                      -{{toEthiopian(moment(licenseExpireDate)._d.toISOString(), false)}}
-                      </b></h3>
-              </div>
-              <div>
-                <h3 class="underline"><b>HEALTH PROFFESSIONALS REGISTRATION AND</b></h3>
-                <h3 class="underline"><b>LICENSING CERTEFICATE</b></h3>
-                <br>
-                <h4>Under the Federal Democratic Republic of Ethiopiathe Minstry</h4>
-                <h4>of Health by Virtue of proclamation No. 916/2015 Article 33(13)</h4>
-                <h4>is given the authority to issue</h4>
-                <br>
-                <h3 class="underline">
-                  <b>{{ certifiedUser.name }} {{ certifiedUser.fatherName }}
-                    {{
-                      certifiedUser.grandFatherName != null
-                        ? certifiedUser.grandFatherName
-                        : ""}}</b>
+                    <h3>
+                      ይህ የሙያ የስራ ፈቃድ የሚያገለግለው
+                      <b>
+                        {{
+                          certificateDetail.certifiedDate
+                            ? toEthiopian(
+                                moment(
+                                  certificateDetail.certifiedDate
+                                )._d.toISOString(),
+                                false
+                              )
+                            : ""
+                        }}
+                        -{{
+                          certificateDetail.licenseExpirationDate !== null
+                            ? toEthiopian(
+                                moment(
+                                  certificateDetail.licenseExpirationDate
+                                )._d.toISOString(),
+                                false
+                              )
+                            : " አልተገለጸም"
+                        }}
+                      </b>
                     </h3>
-                    <h4>Having duly satisfied the requirements of the Ministry</h4>
+                  </div>
+                  <div>
+                    <h3 class="underline">
+                      <b>HEALTH PROFFESSIONALS REGISTRATION AND</b>
+                    </h3>
+                    <h3 class="underline"><b>LICENSING CERTEFICATE</b></h3>
+                    <br />
+                    <h4>
+                      Under the Federal Democratic Republic of Ethiopiathe
+                      Minstry
+                    </h4>
+                    <h4>
+                      of Health by Virtue of proclamation No. 916/2015 Article
+                      33(13)
+                    </h4>
+                    <h4>is given the authority to issue</h4>
+                    <br />
+                    <h3 class="underline">
+                      <b
+                        >{{ certifiedUser.name }}
+                        {{ certifiedUser.fatherName }}
+                        {{
+                          certifiedUser.grandFatherName != null
+                            ? certifiedUser.grandFatherName
+                            : ""
+                        }}</b
+                      >
+                    </h3>
+                    <h4>
+                      Having duly satisfied the requirements of the Ministry
+                    </h4>
                     <h4>hereby registered and licensed as</h4>
-                    <h4><b>{{certificateDetail.professionalTypes.name}}</b></h4>
-                    <br>
-                    <h3>The license is valid:<b>{{moment(certificateDetail.certifiedDate).format("MMM DD, YYYY")}} - {{moment(licenseExpireDate).format("MMM DD, YYYY")}}</b></h3>
-              </div>
-
+                    <h4
+                      v-if="
+                        certificateDetail.professionalTypes &&
+                          certificateDetail.professionalTypes[0]
+                            .professionalTypes.name
+                      "
+                    >
+                      <div
+                        v-for="professions in certificateDetail.professionalTypePrefixes"
+                        class="flex flex-row"
+                      >
+                        <b
+                          >{{
+                            professions.prefix
+                              ? "(" + professions.prefix + ")"
+                              : ""
+                          }}
+                          {{
+                            professions.professionalTypes.code === "OTH"
+                              ? certificateDetail.otherProfessionalType
+                                ? certificateDetail.otherProfessionalType
+                                : ""
+                              : professions.professionalTypes.name
+                          }}</b
+                        >
+                      </div>
+                    </h4>
+                    <br />
+                    <h3>
+                      The license is valid:<b
+                        >{{
+                          certificateDetail.certifiedDate
+                            ? moment(certificateDetail.certifiedDate).format(
+                                "MMM DD, YYYY"
+                              )
+                            : ""
+                        }}
+                        -
+                        {{
+                          certificateDetail.licenseExpirationDate
+                            ? moment(
+                                certificateDetail.licenseExpirationDate
+                              ).format("MMM DD, YYYY")
+                            : " Not specified"
+                        }}</b
+                      >
+                    </h3>
+                  </div>
+                </div>
+              </span>
             </div>
-            </span> 
           </div>
         </div>
-      </div>
+        <div></div>
       </span>
       <span v-else-if="!isUserCertified && isUserFound">
         <div class="flex justify-center content-center userNotFound">
@@ -169,7 +219,6 @@
         </div>
       </span>
     </span>
-    
   </div>
 </template>
 <script>
@@ -183,10 +232,14 @@ import Spinner from "@/sharedComponents/Spinner";
 
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
-import backgroundImage from "../../../assets/hrl_background_certificate.jpg";
+import backgroundImage from "../../../assets/Federal_Certificate.jpg";
+import oromiaCertificateBackground from "../../../assets/OROMMIA_Certificate.jpg";
+import addisAbabaCertificateBackground from "../../../assets/AA_certificate.jpg";
+import qrcode_image from "../../../assets/qrcode_image.jpg";
 import certifiedUserImage from "../../../assets/certified_user.jpg";
 import AmharicFont from "../Configurations/amharicFont.js";
 import { toEthiopian } from "../Configurations/dateConvertor";
+import STATIC_CERTIFICATE_URL from "../../../sharedComponents/constants/message.js";
 
 import moment from "moment";
 export default {
@@ -194,6 +247,7 @@ export default {
     moment: () => moment,
     AmharicFont: () => AmharicFont,
     toEthiopian: () => toEthiopian,
+    STATIC_CERTIFICATE_URL: () => STATIC_CERTIFICATE_URL,
     // getCertifiedUser() {
     //   return store.getters['reviewer/getUnassigned'][0]
     // }
@@ -209,15 +263,19 @@ export default {
     let show = ref(false);
     let certifiedUser = ref({});
     let certificateDetail = ref({});
-    let licenseExpireDate = ref({});
     let showLoading = ref(false);
     let showApplicationLoading = ref(false);
     let isUserCertified = ref(true);
     let isUserFound = ref(true);
     let myRegion = ref(true);
+    let imageSrc = ref("");
+    const adminRegionId = JSON.parse(localStorage.getItem("allAdminData"))
+      .regionId;
+    const expertLevelId = JSON.parse(localStorage.getItem("allAdminData"))
+      .expertLevelId;
 
-    const adminRegionId = JSON.parse(localStorage.getItem("allAdminData")).regionId
-    console.log("adminREgion id", adminRegionId, "type", typeof adminRegionId)
+    const expertLevelCode = JSON.parse(localStorage.getItem("allAdminData"))
+      .expertLevel.code;
 
     const fetchCertifiedUser = () => {
       showLoading.value = true;
@@ -227,204 +285,401 @@ export default {
           showLoading.value = false;
           certifiedUser.value = res.data.data;
           show.value = true;
-        }).catch(error => {
+        })
+        .catch((error) => {
           isUserFound.value = false;
         });
     };
 
-    
+    const fetchQrCode = () => {
+      const staticUrl = STATIC_CERTIFICATE_URL;
+      const userId = route.params.applicantId;
+      const applicationId = route.params.applicationId;
+      const applicationType = route.params.applicationType;
+
+      const qrParam = { url: null };
+
+      qrParam.url =
+        staticUrl + "/" + applicationType + "/" + userId + "/" + applicationId;
+      store
+        .dispatch("reviewer/getQrCode", qrParam)
+        .then((res) => {
+          imageSrc.value = res.data.data;
+        })
+        .catch((err) => {});
+    };
     const fetchApplication = () => {
       showApplicationLoading.value = true;
-      if(route.params.applicationType === "Verification") {
+      if (route.params.applicationType === "Verification") {
         store
-        .dispatch(
-          "reviewer/getVerificationApplication",
-          route.params.applicationId
-        )
-        .then((res) => {
-          showApplicationLoading.value = false;
-          certificateDetail.value = res.data.data;
-          if(route.params.applicantId != certificateDetail.value.applicantId) {
-            isUserCertified.value = false;
-          }
-          if(adminRegionId != certificateDetail.value.woreda.zone.region.id) {
-            myRegion.value = false
-          } 
-          licenseExpireDate.value = moment(certificateDetail.value.certifiedDate)._d;
-          licenseExpireDate.value.setFullYear(licenseExpireDate.value.getFullYear() + 5);
-        }).catch(error => {
-        });
+          .dispatch(
+            "reviewer/getVerificationApplication",
+            route.params.applicationId
+          )
+          .then((res) => {
+            showApplicationLoading.value = false;
+            certificateDetail.value = res.data.data;
+            if (
+              route.params.applicantId != certificateDetail.value.applicantId
+            ) {
+              isUserCertified.value = false;
+            }
+            if (
+              certificateDetail.value.woreda !== null &&
+              certificateDetail.value.woreda.zone !== null &&
+              certificateDetail.value.woreda.zone.region !== null
+            ) {
+              if (
+                adminRegionId != certificateDetail.value.woreda.zone.region.id
+              ) {
+                myRegion.value = false;
+              }
+            } else {
+              if (expertLevelId != goodStandingUser.value.expertLevelId) {
+                myRegion.value = false;
+              }
+            }
+          })
+          .catch((error) => {});
+      } else if (route.params.applicationType === "Good Standing") {
+        store
+          .dispatch(
+            "reviewer/getGoodStandingApplication",
+            route.params.applicationId
+          )
+          .then((res) => {
+            showApplicationLoading.value = false;
+            certificateDetail.value = res.data.data;
+            if (
+              route.params.applicantId != certificateDetail.value.applicantId
+            ) {
+              isUserCertified.value = false;
+            }
+            if (expertLevelCode !== certificateDetail.value.expertLevels.code) {
+              myRegion.value = false;
+            } else {
+              if (
+                expertLevelCode === "REG" &&
+                adminRegionId != certificateDetail.value.woreda.zone.region.id
+              ) {
+                myRegion.value = false;
+              }
+            }
+          });
+      } else if (route.params.applicationType === "New License") {
+        store
+          .dispatch(
+            "reviewer/getNewLicenseApplication",
+            route.params.applicationId
+          )
+          .then((res) => {
+            showApplicationLoading.value = false;
+            certificateDetail.value = res.data.data;
+            if (
+              route.params.applicantId != certificateDetail.value.applicantId
+            ) {
+              isUserCertified.value = false;
+            }
+            if (expertLevelCode !== certificateDetail.value.expertLevels.code) {
+              myRegion.value = false;
+            } else {
+              if (
+                expertLevelCode === "REG" &&
+                adminRegionId != certificateDetail.value.woreda.zone.region.id
+              ) {
+                myRegion.value = false;
+              }
+            }
+          });
+      } else if (route.params.applicationType === "Renewal") {
+        store
+          .dispatch(
+            "reviewer/getRenewalApplication",
+            route.params.applicationId
+          )
+          .then((res) => {
+            showApplicationLoading.value = false;
+            certificateDetail.value = res.data.data;
+            if (
+              route.params.applicantId != certificateDetail.value.applicantId
+            ) {
+              isUserCertified.value = false;
+            }
+            if (expertLevelCode !== certificateDetail.value.expertLevels.code) {
+              myRegion.value = false;
+            } else {
+              if (
+                expertLevelCode === "REG" &&
+                adminRegionId != certificateDetail.value.woreda.zone.region.id
+              ) {
+                myRegion.value = false;
+              }
+            }
+          });
       }
-      else if(route.params.applicationType === "Good Standing") {
-        store
-        .dispatch(
-          "reviewer/getGoodStandingApplication",
-          route.params.applicationId
-        )
-        .then((res) => {
-          showApplicationLoading.value = false;
-          certificateDetail.value = res.data.data;
-          if(route.params.applicantId != certificateDetail.value.applicantId) {
-            isUserCertified.value = false;
-          }
-          if(adminRegionId != certificateDetail.value.woreda.zone.region.id) {
-            myRegion.value = false
-          }
-          licenseExpireDate.value = moment(certificateDetail.value.certifiedDate)._d;
-          licenseExpireDate.value.setFullYear(licenseExpireDate.value.getFullYear() + 5);
-        });
-      }
-      else if(route.params.applicationType === "New License") {
-        store
-        .dispatch(
-          "reviewer/getNewLicenseApplication",
-          route.params.applicationId
-        )
-        .then((res) => {
-          console.log("renewalal detail", res.data.data)
-          showApplicationLoading.value = false
-          certificateDetail.value = res.data.data;
-          if(route.params.applicantId != certificateDetail.value.applicantId) {
-            isUserCertified.value = false;
-          }
-          if(adminRegionId != certificateDetail.value.woreda.zone.region.id) {
-            myRegion.value = false
-          }
-          licenseExpireDate.value = moment(certificateDetail.value.certifiedDate)._d;
-          licenseExpireDate.value.setFullYear(licenseExpireDate.value.getFullYear() + 5);
-        });
+    };
 
-      } else if(route.params.applicationType === "Renewal") {
-        store
-        .dispatch(
-          "reviewer/getRenewalApplication",
-          route.params.applicationId
-        )
-        .then((res) => {
-          console.log("renewalal detail", res.data.data)
-          showApplicationLoading.value = false;
-          certificateDetail.value = res.data.data;
-          if(route.params.applicantId != certificateDetail.value.applicantId) {
-            isUserCertified.value = false;
+    const handleRegionsLayout = (
+      doc,
+      code,
+      namePosition,
+      professionPossition,
+      professionListGap
+    ) => {
+      doc.setFontSize(17);
+      doc.text(
+        190,
+        namePosition,
+        `${certifiedUser.value.name} ${certifiedUser.value.fatherName} ${
+          certifiedUser.value.grandFatherName
+            ? certifiedUser.value.grandFatherName
+            : ""
+        }`
+      );
+
+      let changeWidth = ref(false);
+      let changeWidthTooSmall = ref(false);
+      let xPosition = ref(185);
+      for (
+        let i = 0;
+        i < certificateDetail.value.professionalTypePrefixes.length;
+        i++
+      ) {
+        let professionPrefix = `${
+          certificateDetail.value.professionalTypePrefixes[i].prefix
+            ? certificateDetail.value.professionalTypePrefixes[i].prefix
+            : ""
+        }  ${
+          certificateDetail.value.professionalTypePrefixes[i].professionalTypes
+            .name
+        }`;
+        let getLength = doc.getTextWidth(professionPrefix);
+        if (getLength > 125 && getLength <= 132) {
+          if (!changeWidthTooSmall.value) {
+            changeWidth.value = true;
           }
-          if(adminRegionId != certificateDetail.value.woreda.zone.region.id) {
-            myRegion.value = false
-          }
-          licenseExpireDate.value = moment(certificateDetail.value.certifiedDate)._d;
-          licenseExpireDate.value.setFullYear(licenseExpireDate.value.getFullYear() + 5);
-          console.log("application ++++ ", certificateDetail.value)
-        });
+        }
+        if (getLength > 132) {
+          changeWidthTooSmall.value = true;
+          changeWidth.value = false;
+        }
       }
-      
+      if (changeWidth.value) {
+        doc.setFontSize(10);
+        xPosition.value = 167;
+      } else if (changeWidthTooSmall.value) {
+        doc.setFontSize(10);
+        xPosition.value = 153;
+      } else {
+        doc.setFontSize(14);
+      }
+      for (
+        let i = 0;
+        i < certificateDetail.value.professionalTypePrefixes.length;
+        i++
+      ) {
+        doc.text(
+          xPosition.value,
+          professionPossition + i * professionListGap,
+          `${
+            certificateDetail.value.professionalTypePrefixes[i]
+              .professionalTypes.name
+              ? `${
+                  certificateDetail.value.professionalTypePrefixes[i].prefix
+                    ? "(" +
+                      certificateDetail.value.professionalTypePrefixes[i]
+                        .prefix +
+                      ")"
+                    : ""
+                }   ${
+                  certificateDetail.value.professionalTypePrefixes[i]
+                    .professionalTypes.code === "OTH"
+                    ? certificateDetail.value.otherProfessionalType
+                      ? certificateDetail.value.otherProfessionalType
+                      : ""
+                    : certificateDetail.value.professionalTypePrefixes[i]
+                        .professionalTypes.name
+                }`
+              : ""
+          }`
+        );
+      }
+
+      doc.setFontSize(12);
+      doc.text(
+        197,
+        164,
+        `${
+          certificateDetail.value.certifiedDate
+            ? moment(certificateDetail.value.certifiedDate).format(
+                "MMM DD, YYYY"
+              ) + " - "
+            : "Not Specified"
+        }`
+      );
+      doc.text(
+        226,
+        164,
+        `${
+          certificateDetail.value.licenseExpirationDate
+            ? moment(certificateDetail.value.licenseExpirationDate).format(
+                "MMM DD, YYYY"
+              )
+            : "Not Specified"
+        }`
+      );
+
+      // doc.addFileToVFS("Amiri-Regular.ttf", AmiriRegular);
+      doc.addFileToVFS("Tera-Regular-normal.ttf", AmharicFont);
+
+      doc.addFont("Tera-Regular-normal.ttf", "Tera-Regular", "normal");
+
+      doc.setFont("Tera-Regular"); // set font
+
+      doc.setFontSize(17);
+      doc.text(
+        60,
+        namePosition,
+        `${
+          certifiedUser.value.alternativeName
+            ? certifiedUser.value.alternativeName
+            : ""
+        } ${
+          certifiedUser.value.alternativeFatherName
+            ? certifiedUser.value.alternativeFatherName
+            : ""
+        } ${
+          certifiedUser.value.alternativeGrandFatherName
+            ? certifiedUser.value.alternativeGrandFatherName
+            : ""
+        }`
+      );
+
+      if (changeWidth.value) {
+        doc.setFontSize(11);
+        xPosition.value = 40;
+      } else if (changeWidthTooSmall.value) {
+        doc.setFontSize(11);
+        xPosition.value = 28;
+      } else {
+        doc.setFontSize(14);
+        xPosition.value = 65;
+      }
+
+      for (
+        let i = 0;
+        i < certificateDetail.value.professionalTypes.length;
+        i++
+      ) {
+        doc.text(
+          xPosition.value,
+          professionPossition + i * professionListGap,
+          `${
+            certificateDetail.value.professionalTypes[i].professionalTypes
+              .amharicProfessionalType
+              ? certificateDetail.value.professionalTypes[i].professionalTypes
+                  .amharicProfessionalType === "ሌላ"
+                ? ""
+                : certificateDetail.value.professionalTypes[i].professionalTypes
+                    .amharicProfessionalType
+              : ""
+          }`
+        );
+      }
+
+      doc.setFontSize(12);
+      // doc.text(80)
+      let getAmharicLicensedDate = doc.getTextWidth(
+        toEthiopian(
+          moment(certificateDetail.value.certifiedDate)._d.toISOString(),
+          false
+        ) + " - "
+      );
+      doc.text(
+        75,
+        164,
+        `${
+          certificateDetail.value.certifiedDate
+            ? toEthiopian(
+                moment(certificateDetail.value.certifiedDate)._d.toISOString(),
+                false
+              ) + " - "
+            : ""
+        }`
+      );
+      doc.text(
+        75 + getAmharicLicensedDate,
+        164,
+        `${
+          certificateDetail.value.licenseExpirationDate
+            ? toEthiopian(
+                moment(
+                  certificateDetail.value.licenseExpirationDate
+                )._d.toISOString(),
+                false
+              )
+            : " አልተገለጸም"
+        }`
+      );
     };
 
     const downloadPdf = () => {
       const doc = new jsPDF({
-        orientation: 'landscape',
-        filters: ["ASCIIHexEncode"]
+        orientation: "landscape",
+        filters: ["ASCIIHexEncode"],
       });
-      
 
-      
-      
-      doc.addImage(backgroundImage, 'JPEG', 0, 0, 298, 213, undefined, 'FAST')
-      // doc.addImage(certifiedUserImage, 'JPG', 10, 10, 20, 30)
-      doc.setFontSize(25)
-      // doc.addFileToVFS("Amiri-Regular.ttf", AmiriRegular);
-      doc.addFileToVFS("Tera-Regular-normal.ttf", AmharicFont);
-      
-      doc.addFont('Tera-Regular-normal.ttf', 'Tera-Regular', 'normal');
+      const userImage = certifiedUser.value.photo;
+      if (certificateDetail.value.reviewer.expertLevel.code === "FED") {
+        doc.addImage(
+          backgroundImage,
+          "JPEG",
+          0,
+          0,
+          298,
+          213,
+          undefined,
+          "FAST"
+        );
+        handleRegionsLayout(doc, "FED", 100, 125, 7);
+      } else if (certificateDetail.value.reviewer.region.code === "ORO") {
+        doc.addImage(
+          oromiaCertificateBackground,
+          "JPEG",
+          0,
+          0,
+          298,
+          213,
+          undefined,
+          "FAST"
+        );
+        handleRegionsLayout(doc, "ORO", 110, 133, 4);
+      } else if (certificateDetail.value.reviewer.region.code === "AA") {
+        doc.addImage(
+          addisAbabaCertificateBackground,
+          "JPEG",
+          0,
+          0,
+          298,
+          213,
+          undefined,
+          "FAST"
+        );
+        handleRegionsLayout(doc, "AA", 110, 133, 4);
+      }
 
-      
-      // doc.text(100, 60, ["إذا لم تستح فاصنع ما شئت", "إذا لم تستح فاصنع ما شئت"], {lang: 'ar', align: 'right'});
-      // doc.text(100, 20, 'በኢትዮፕያ ፌደራላዊ ዴሞክራሲያዊ ሪፐብሊክ', {lang: 'amh', align: 'right'})
-      // doc.setFontStyle('bold')
-      doc.text(80, 25, 'Federal Democratic Republic Ethiopia')
-      doc.setFontSize(17)
-      // doc.setFontStyle('normal')
-      doc.text(110, 50, 'MINSTRY OF HEALTH')
-
-      doc.setFontSize(14)
-      doc.text(150, 60, 'HEALTH PROFFESSIONALS REGISTRATION AND')
-      doc.text(190, 70, 'LICENSING CERTIFICATE')
-
-      doc.setFontSize(13)
-      doc.text(150, 90, 'Under the Federal Democratic Republic of Ethiopia the Ministry')
-      doc.text(150, 100, 'of Health by virtue of Proclamation No.916/2015 Article 33(13)')
-      doc.text(190, 110, 'is given the authority to issue')
-
-      doc.setFontSize(17)
-      doc.text(190, 123, `${certifiedUser.value.name} ${certifiedUser.value.fatherName} ${certifiedUser.value.grandFatherName ? certifiedUser.value.grandFatherName : ''}`)
-      // doc.text(60, 123, `${certifiedUser.value.alternativeName ? certifiedUser.value.alternativeName : ''} ${certifiedUser.value.alternativeFatherName ? certifiedUser.value.alternativeFatherName : ''} ${certifiedUser.value.alternativeGrandFatherName ? certifiedUser.value.alternativeGrandFatherName : ''}`)
-      doc.setFontSize(13)
-      doc.text(155, 140, 'Having duly satisfied the requirements of the Ministry')
-      doc.text(180, 147, 'hereby registered and licensed as')
-      doc.setFontSize(15)
-      doc.text(65, 143, `${certificateDetail.value.professionalTypes.name}`)
-      doc.text(200, 160, `${certificateDetail.value.professionalTypes.name}`)
-      // doc.text(190, 170, 'DENTAL SURGON')
-      doc.text(160, 173, `This license is valid: ${moment(certificateDetail.value.certifiedDate).format("MMM DD, YYYY")} - ${moment(licenseExpireDate.value).format("MMM DD, YYYY")}`)
-      doc.setFontSize(7)
-      doc.text(150, 193, 'Signature of the Authorized Personel')
-      doc.text(150, 196, 'Date: ' + moment(new Date()).format("MMM DD, YYYY"))
-      doc.text(200, 193, 'NB:- This Certificate')
-      doc.text(200, 196, '1. Shall be renewed every five years.')
-      doc.text(200, 199, '2. Unlawful if it is found being used by another person.')
-      doc.text(200, 202, '3. The holder is required to notify as soon as the certificate is lost or missed.')
-
-      // doc.text(100, 30, 'የጤና ጥበቃ ሚኒስቴር')
-      // doc.setFontSize(15)
-      // doc.text(100, 35, 'Ministry of Health')
-      doc.setFont("Tera-Regular"); // set font
-      doc.setFontSize(25);
-      doc.text(90, 15, "በኢትዮፕያ ፌደራላዊ ዴሞክራሲያዊ ሪፐብሊክ")
-      doc.setFontSize(20)
-      doc.text(115, 40, "የጤና ጥበቃ ሚኒስቴር")
-      doc.setFontSize(17)
-      doc.text(20, 60, "የጤና ባለሙያዎች የሙያ ምዝገባና ፈቃድ የምስከር ወረቀት")
-
-      doc.setFontSize(13)
-      doc.text(20, 90, "በኢትዮጵያ ፌዴራላዊ ዴሞክራሲያዊ ረፐብሊክ የጤና ጥበቃ ሚንስቴር")
-      doc.text(20, 100, "በአዋጅ ቁጥር 916/2008 አንቀጽ 33(13)በተሰጠው ስልጣን መሰረት")
-
-      doc.setFontSize(17)
-      doc.text(60, 123, `${certifiedUser.value.alternativeName ? certifiedUser.value.alternativeName : ''} ${certifiedUser.value.alternativeFatherName ? certifiedUser.value.alternativeFatherName : ''} ${certifiedUser.value.alternativeGrandFatherName ? certifiedUser.value.alternativeGrandFatherName : ''}`)
-      doc.setFontSize(13)
-      doc.text(20, 133, "ተገቢውን መስፈርት አሟልተው ስለተገኙ ሚኒስቴር መስሪያ ቤቱ")
-      doc.setFontSize(15)
-      // doc.text(65, 143, "ጁኒየር")
-      // doc.text(55, 153, "ጀነራልሜዲካል ፕራክቲሽነር")
-      doc.text(40, 163, "ሙያ መዝግቦ ይህን የሙያ ስራ ፈቃድ ሰጥቷል።")
-      doc.text(15, 173, `ይህ የሙያ የስራ ፈቃድ የሚያገለግለው ${toEthiopian(moment(certificateDetail.value.certifiedDate)._d.toISOString(), false)}-${toEthiopian(moment(licenseExpireDate.value)._d.toISOString(), false)}`)
+      // doc.addImage(backgroundImage, "JPEG", 0, 0, 298, 213, undefined, "FAST");
+      doc.addImage(imageSrc.value, "JPG", 246, 14, 40, 40);
+      if (userImage !== null) {
+        doc.addImage(userImage, "JPEG", 33, 20, 30, 30);
+      }
       // doc.text(10, 203, `ቀን: ${toEthiopian(new Date().toISOString(), false)}`)
-      doc.setFontSize(10)
-      doc.text(10, 193, "የኃላፊ ፊርማ")
-      // doc.text(10, 203, `ቀን: ${toEthiopian(new Date().toISOString(), false)}`)
-      doc.text(10, 196, `ቀን ${toEthiopian(new Date().toISOString(), false)}`)
-      doc.text(35, 193, "ማሳሰቢያ ይህ የምስክር ወረቀት")
-      doc.text(35, 196, "1. በየአምስት አመቱ መታደስ አለበት።")
-      doc.text(35, 199, "2. ሰምና ፎቶግራፍ ከተገለጸው ሰው በስተቀር ሌላ አካል ሊገለገልበት አይገባም።")
-      doc.text(35, 202, "3. በማንኛውም ምክንኛት ቢጠፋ የማሳወቅ ግዴታ አላብዎ።")
+      doc.setFontSize(10);
 
-
-      // add underline here
-      doc.setLineWidth(0.3)
-      doc.line(20, 63, 140, 63)
-      doc.line(150, 63, 290, 63)
-      doc.line(190, 73, 265, 73)
-      doc.line(50, 126, 120, 126)
-      doc.line(180, 126, 260, 126)
-
-      doc.line(10, 188, 100, 188)
-      doc.line(170, 188, 265, 188)
-      doc.line(35, 200, 45, 200)
-
-
-      
-      window.open(doc.output('bloburl'))
-
+      window.open(doc.output("bloburl"));
     };
     onMounted(() => {
+      fetchQrCode();
       fetchCertifiedUser();
       fetchApplication();
     });
@@ -437,7 +692,6 @@ export default {
       isUserCertified,
       isUserFound,
       myRegion,
-      licenseExpireDate,
     };
   },
 };
@@ -472,16 +726,15 @@ body {
   width: 100%;
   padding: 20px;
 }
- .flex-container {
+.flex-container {
   /* margin-top: -500px; */
   display: flex;
   justify-content: center;
-  
 }
 .flex-container > div {
   margin: 40px;
   margin-top: -690px;
-  color: black
+  color: black;
 }
 .flex-center {
   padding-left: 25%;

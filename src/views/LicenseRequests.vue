@@ -44,7 +44,7 @@
           </transition>
         </div>
         <div class="flex justify-start mt-8 rounded ml-20">
-          <transition name="slide-fade-to-left">
+          <!-- <transition name="slide-fade-to-left">
             <div
               class="container mr-12 box-shadow-pop rounded-lg bg-lightGrey-100 "
             >
@@ -64,7 +64,7 @@
                 </div>
               </div>
             </div>
-          </transition>
+          </transition> -->
           <transition name="slide-fade-to-left">
             <div
               class="container mr-12 box-shadow-pop rounded-lg bg-lightGrey-100 "

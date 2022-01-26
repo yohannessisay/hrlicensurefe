@@ -72,7 +72,7 @@
               >
                 On
                 {{
-                  item.createdAt
+                  item.certifiedDate
                     ? moment(item.certifiedDate).format("MMM DD, YY")
                     : "-"
                 }}

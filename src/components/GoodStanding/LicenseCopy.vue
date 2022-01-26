@@ -23,12 +23,16 @@
           message="License Copy"
           class="mt-8"
         />
+        <span class="flex justify-center">{{ documentMessage }}</span>
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
           <div class="flex justify-center">
             <div>
               <span>
-                <h2>{{ licenseFile.name }}</h2>
-                <h2>{{ fileSize }}</h2>
+                <h2 v-if="!fileSizeExceed">{{ licenseFile.name }}</h2>
+                <h2 v-if="!fileSizeExceed">{{ fileSize }}</h2>
+                <h3 style="color: red" v-if="fileSizeExceed">
+                  File size must be less than {{ maxSizeMB }} MB
+                </h3>
               </span>
               <span v-if="showUpload">
                 <label class="text-primary-700"
@@ -64,6 +68,9 @@
           </div>
         </form>
         <div v-if="buttons && !draftStatus" class="flex justify-center mb-8">
+          <button @click="submitBack">
+            Back
+          </button>
           <button @click="submit">
             Next
           </button>
@@ -75,6 +82,9 @@
           v-if="buttons && draftStatus == 'DRA'"
           class="flex justify-center mb-8"
         >
+          <button @click="submitBack">
+            Back
+          </button>
           <button @click="submit">
             Next
           </button>
@@ -93,21 +103,27 @@
           v-if="buttons && draftStatus == 'SUB'"
           class="flex justify-center mb-8"
         >
+          <button @click="submitBack">
+            Back
+          </button>
           <button @click="submit">
             Next
           </button>
           <button
             class="withdraw"
-            @click="withdraw(buttons[0].action)"
+            @click="withdraw(buttons[1].action)"
             variant="outline"
           >
-            {{ buttons[0]["name"] }}
+            {{ buttons[1]["name"] }}
           </button>
         </div>
         <div
           v-if="buttons && draftStatus == 'USUP'"
           class="flex justify-center mb-8"
         >
+          <button @click="submitBack">
+            Back
+          </button>
           <button @click="submit">
             Next
           </button>
@@ -122,6 +138,9 @@
           v-if="buttons && draftStatus == 'DEC'"
           class="flex justify-center mb-8"
         >
+          <button @click="submitBack">
+            Back
+          </button>
           <button @click="submit">
             Next
           </button>
@@ -154,6 +173,9 @@ import { useRoute, useRouter } from "vue-router";
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import Spinner from "@/sharedComponents/Spinner";
+import MESSAGE from "../../composables/documentMessage";
+import MAX_FILE_SIZE from "../../composables/documentMessage";
+import MAX_SIZE_MB from "../../composables/documentMessage";
 
 export default {
   components: {
@@ -193,6 +215,13 @@ export default {
     let draftData = ref("");
     let draftStatus = ref("");
 
+    let licenseCopyBack = ref("");
+
+    let documentMessage = ref("");
+    let maxFileSize = ref("");
+    let maxSizeMB = ref("");
+    let fileSizeExceed = ref(false);
+
     let declinedFields = ref([]);
     let acceptedFields = ref([]);
     let remark = ref("");
@@ -212,37 +241,43 @@ export default {
       isPdf.value = false;
     };
     const handleFileUpload = () => {
-      dataChanged.value = true;
-      showUpload.value = false;
       licenseFile.value = licenseFileP.value.files[0];
       let reader = new FileReader();
+      isImage.value = true;
       let fileS = licenseFile.value.size;
-      if (fileS > 0 && fileS < 1000) {
-        fileSize.value += "B";
-      } else if (fileS > 1000 && fileS < 1000000) {
-        fileSize.value = fileS / 1000 + "kB";
-      } else {
-        fileSize.value = fileS / 1000000 + "MB";
-      }
-
-      reader.addEventListener(
-        "load",
-        function() {
-          showPreview.value = true;
-          filePreview.value = reader.result;
-        },
-        false
-      );
-
-      if (licenseFile.value) {
-        if (/\.(jpe?g|png|gif)$/i.test(licenseFile.value.name)) {
-          isImage.value = true;
-          reader.readAsDataURL(licenseFile.value);
-        } else if (/\.(pdf)$/i.test(licenseFile.value.name)) {
-          isImage.value = false;
-          isPdf.value = true;
-          reader.readAsDataURL(licenseFile.value);
+      if (fileS <= maxFileSize.value / 1000) {
+        fileSizeExceed.value = false;
+        dataChanged.value = true;
+        showUpload.value = false;
+        if (fileS > 0 && fileS < 1000) {
+          fileSize.value += "B";
+        } else if (fileS > 1000 && fileS < 1000000) {
+          fileSize.value = fileS / 1000 + "kB";
+        } else {
+          fileSize.value = fileS / 1000000 + "MB";
         }
+        reader.addEventListener(
+          "load",
+          function() {
+            showPreview.value = true;
+            filePreview.value = reader.result;
+          },
+          false
+        );
+        if (licenseFile.value) {
+          if (/\.(jpe?g|png|gif)$/i.test(licenseFile.value.name)) {
+            isImage.value = true;
+            reader.readAsDataURL(licenseFile.value);
+          } else if (/\.(pdf)$/i.test(licenseFile.value.name)) {
+            isImage.value = false;
+            isPdf.value = true;
+            reader.readAsDataURL(licenseFile.value);
+          }
+        }
+      } else {
+        fileSizeExceed.value = true;
+        licenseFile.value = "";
+        isImage.value = true;
       }
     };
     buttons = store.getters["goodstanding/getButtons"];
@@ -256,7 +291,53 @@ export default {
       store.dispatch("goodstanding/set_License_Copy", licenseFile);
     };
 
+    const submitBack = () => {
+      emit("changeActiveStateMinus");
+      store.dispatch("goodstanding/set_License_Copy", licenseFile);
+    };
+
     onMounted(() => {
+      documentMessage.value = MESSAGE.DOC_MESSAGE;
+      maxFileSize.value = MAX_FILE_SIZE.MAX_FILE_SIZE;
+      maxSizeMB.value = MAX_SIZE_MB.MAX_SIZE_MB;
+      licenseCopyBack = store.getters["goodstanding/getLicenseCopy"];
+      if (
+        licenseCopyBack &&
+        licenseCopyBack !== undefined &&
+        licenseCopyBack !== null &&
+        licenseCopyBack !== ""
+      ) {
+        dataChanged.value = true;
+        showUpload.value = false;
+        licenseFile.value = licenseCopyBack;
+        let reader = new FileReader();
+        let fileS = licenseFile.value.size;
+        if (fileS > 0 && fileS < 1000) {
+          fileSize.value += "B";
+        } else if (fileS > 1000 && fileS < 1000000) {
+          fileSize.value = fileS / 1000 + "kB";
+        } else {
+          fileSize.value = fileS / 1000000 + "MB";
+        }
+        reader.addEventListener(
+          "load",
+          function() {
+            showPreview.value = true;
+            filePreview.value = reader.result;
+          },
+          false
+        );
+        if (licenseFile.value) {
+          if (/\.(jpe?g|png|gif)$/i.test(licenseFile.value.name)) {
+            isImage.value = true;
+            reader.readAsDataURL(licenseFile.value);
+          } else if (/\.(pdf)$/i.test(licenseFile.value.name)) {
+            isImage.value = false;
+            isPdf.value = true;
+            reader.readAsDataURL(licenseFile.value);
+          }
+        }
+      }
       declinedFields = store.getters["goodstanding/getDeclinedFields"];
       acceptedFields = store.getters["goodstanding/getAcceptedFields"];
       remark = store.getters["goodstanding/getRemark"];
@@ -359,8 +440,9 @@ export default {
             whoIssued: licenseInfo.whoIssued,
             licenseRegistrationNumber: licenseInfo.licenseRegistrationNumber,
             applicantPositionId: licenseInfo.applicantPositionId,
-            professionalTypeId: licenseInfo.professionalTypeId,
+            professionalTypeIds: licenseInfo.professionalTypeIds,
             expertLevelId: licenseInfo.expertLevelId,
+            otherProfessionalType: licenseInfo.otherProfessionalType,
           },
         };
         store
@@ -471,8 +553,9 @@ export default {
             whoIssued: licenseInfo.whoIssued,
             licenseRegistrationNumber: licenseInfo.licenseRegistrationNumber,
             applicantPositionId: licenseInfo.applicantPositionId,
-            professionalTypeId: licenseInfo.professionalTypeId,
+            professionalTypeIds: licenseInfo.professionalTypeIds,
             expertLevelId: licenseInfo.expertLevelId,
+            otherProfessionalType: licenseInfo.otherProfessionalType,
           },
         };
         store
@@ -532,6 +615,7 @@ export default {
     return {
       licenseFile,
       licenseFileP,
+      licenseCopyBack,
       showPreview,
       filePreview,
       showUpload,
@@ -540,6 +624,7 @@ export default {
       handleFileUpload,
       reset,
       submit,
+      submitBack,
       draft,
       fileSize,
       withdraw,
@@ -556,6 +641,10 @@ export default {
       remark,
       declinedFieldsCheck,
       acceptedFieldsCheck,
+      documentMessage,
+      fileSizeExceed,
+      maxFileSize,
+      maxSizeMB,
     };
   },
 };

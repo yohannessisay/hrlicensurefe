@@ -24,6 +24,18 @@ import {
   SET_DEGREE,
   SET_TRANSCRIPT,
   SET_DIPLOMA,
+  SET_PRO_CERTIFICATE,
+  SET_PRO_DIPLOMA,
+  SET_PRO_TRANSCRIPT,
+  SET_EDU_EIGHTH,
+  SET_EDU_TENTH,
+  SET_EDU_TWELVETH,
+  SET_EDU_TRANSCRIPT1,
+  SET_EDU_TRANSCRIPT2,
+  SET_MASTERS,
+  SET_MASTERS_TRANSCRIPT,
+  SET_PHD,
+  SET_PHD_TRANSCRIPT,
 } from "./mutation-types";
 
 export default {
@@ -71,6 +83,42 @@ export default {
   },
   [SET_PROFESSIONAL_LICENSE](state, license) {
     state.professionalLicense = license;
+  },
+  [SET_PRO_CERTIFICATE](state, proCertificate) {
+    state.proCertificate = proCertificate;
+  },
+  [SET_PRO_DIPLOMA](state, proDiploma) {
+    state.proDiploma = proDiploma;
+  },
+  [SET_PRO_TRANSCRIPT](state, proTranscript) {
+    state.proTranscript = proTranscript;
+  },
+  [SET_EDU_EIGHTH](state, eduEighthGrade) {
+    state.eduEighthGrade = eduEighthGrade;
+  },
+  [SET_EDU_TENTH](state, eduTenthGrade) {
+    state.eduTenthGrade = eduTenthGrade;
+  },
+  [SET_EDU_TWELVETH](state, eduTwelvethGrade) {
+    state.eduTwelvethGrade = eduTwelvethGrade;
+  },
+  [SET_EDU_TRANSCRIPT1](state, eduTranscript1) {
+    state.eduTranscript1 = eduTranscript1;
+  },
+  [SET_EDU_TRANSCRIPT2](state, eduTranscript2) {
+    state.eduTranscript2 = eduTranscript2;
+  },
+  [SET_MASTERS](state, masters) {
+    state.masters = masters;
+  },
+  [SET_MASTERS_TRANSCRIPT](state, mastersTranscript) {
+    state.mastersTranscript = mastersTranscript;
+  },
+  [SET_PHD](state, phd) {
+    state.phd = phd;
+  },
+  [SET_PHD_TRANSCRIPT](state, phdTranscript) {
+    state.phdTranscript = phdTranscript;
   },
   [SET_BUTTONS](state, buttons) {
     state.buttons = buttons;

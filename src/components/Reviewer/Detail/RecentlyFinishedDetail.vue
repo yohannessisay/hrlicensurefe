@@ -8,8 +8,14 @@
         class="ml-8 mr-8 mb-12"
       >
         <div class="mt-large bg-white">
-          <span v-if="isGoodStanding && license.applicationStatus.code === 'AP'">
-          <button @click="GenerateLetter">Generate Letter</button>
+          <span
+            v-if="
+              isGoodStanding &&
+                (license.applicationStatus.code === 'AP' || license.applicationStatus.code === 'APP') &&
+                myRegion
+            "
+          >
+            <button @click="GenerateLetter">Generate Letter</button>
           </span>
           <div class="flex justify-center"><Title message="Summary" /></div>
           <div class="flex justify-start">
@@ -23,10 +29,10 @@
               <h5 class="ml-8">
                 {{
                   profileInfo.name +
-                  " " +
-                  profileInfo.fatherName +
-                  " " +
-                  profileInfo.grandFatherName
+                    " " +
+                    profileInfo.fatherName +
+                    " " +
+                    profileInfo.grandFatherName
                 }}
               </h5>
             </div>
@@ -45,17 +51,7 @@
             >
               <label class="ml-8"> Nationality</label>
               <h5 class="ml-8">
-                {{ profileInfo.nationality ? profileInfo.nationality : "-" }}
-              </h5>
-            </div>
-            <div
-              :class="[
-                profileInfo.placeOfBirth === null ? errorClass : activeClass,
-              ]"
-            >
-              <label class="ml-8"> Place of Birth</label>
-              <h5 class="ml-8">
-                {{ profileInfo.placeOfBirth ? profileInfo.placeOfBirth : "-" }}
+                {{ profileInfo.nationality ? profileInfo.nationality.name : "-" }}
               </h5>
             </div>
             <div
@@ -65,7 +61,11 @@
             >
               <label class="ml-8"> Date of Birth</label>
               <h5 class="ml-8">
-                {{ profileInfo.dateOfBirth ? moment(profileInfo.dateOfBirth).format("MMM D, YYYY") : "-" }}
+                {{
+                  profileInfo.dateOfBirth
+                    ? moment(profileInfo.dateOfBirth).format("MMM D, YYYY")
+                    : "-"
+                }}
               </h5>
             </div>
             <div
@@ -86,15 +86,17 @@
             </div>
           </div>
 
-          <div class="flex justify-start">
+          <div class="flex justify-start" v-if="expertLevelId != 3">
             <Title message="Address" />
           </div>
-          <div class="flex flex-row">
+          <div class="flex flex-row" v-if="expertLevelId != 3">
             <div
               :class="[
-                license.woreda === null ? errorClass :
-                license.woreda.zone === null ? errorClass :
-                license.woreda.zone.region === null
+                license.woreda === null
+                  ? errorClass
+                  : license.woreda.zone === null
+                  ? errorClass
+                  : license.woreda.zone.region === null
                   ? errorClass
                   : activeClass,
               ]"
@@ -102,9 +104,11 @@
               <label class="ml-8"> Region</label>
               <h5 class="ml-8">
                 {{
-                  license.woreda === null ? "-" :
-                  license.woreda.zone === null ? "-" :
-                  license.woreda.zone.region
+                  license.woreda === null
+                    ? "-"
+                    : license.woreda.zone === null
+                    ? "-"
+                    : license.woreda.zone.region
                     ? license.woreda.zone.region.name
                     : "-"
                 }}
@@ -112,52 +116,28 @@
             </div>
             <div
               :class="[
-                license.woreda === null ?
-                errorClass : license.woreda.zone === null ? 
-                errorClass : activeClass,
+                license.woreda === null
+                  ? errorClass
+                  : license.woreda.zone === null
+                  ? errorClass
+                  : activeClass,
               ]"
             >
               <label class="ml-8"> Zone</label>
               <h5 class="ml-8">
                 {{
-                  license.woreda === null ? "-" : license.woreda.zone ? license.woreda.zone.name : "-"
+                  license.woreda === null
+                    ? "-"
+                    : license.woreda.zone
+                    ? license.woreda.zone.name
+                    : "-"
                 }}
               </h5>
             </div>
-            <div
-              :class="[license.woreda === null ? errorClass : activeClass]"
-            >
+            <div :class="[license.woreda === null ? errorClass : activeClass]">
               <label class="ml-8"> Wereda</label>
               <h5 class="ml-8">
                 {{ license.woreda ? license.woreda.name : "-" }}
-              </h5>
-            </div>
-            <div
-              :class="[profileInfo.kebele === null ? errorClass : activeClass]"
-            >
-              <label class="ml-8"> Kebele</label>
-              <h5 class="ml-8">
-                {{ profileInfo.kebele ? profileInfo.kebele : "-" }}
-              </h5>
-            </div>
-            <div
-              :class="[
-                profileInfo.houseNumber === null ? errorClass : activeClass,
-              ]"
-            >
-              <label class="ml-8"> House Number</label>
-              <h5 class="ml-8">
-                {{ profileInfo.houseNumber ? profileInfo.houseNumber : "-" }}
-              </h5>
-            </div>
-            <div
-              :class="[
-                profileInfo.residence === null ? errorClass : activeClass,
-              ]"
-            >
-              <label class="ml-8"> Residence</label>
-              <h5 class="ml-8">
-                {{ profileInfo.residence ? profileInfo.residence : "-" }}
               </h5>
             </div>
           </div>
@@ -198,18 +178,6 @@
                 }}
               </h5>
             </div>
-            <div
-              :class="[
-                profileInfo.userType.name === null ? errorClass : activeClass,
-              ]"
-            >
-              <label class="ml-8"> User Type</label>
-              <h5 class="ml-8">
-                {{
-                  profileInfo.userType.name ? profileInfo.userType.name : "-"
-                }}
-              </h5>
-            </div>
           </div>
           <!-- <div class="flex justify-start">
             <Title message="Institution" />
@@ -228,8 +196,7 @@
               <h5 class="ml-8">{{ education.institutionTypeName }}</h5>
             </div>
           </div> -->
-          <div class="flex justify-start flex-wrap">
-          </div>
+          <div class="flex justify-start flex-wrap"></div>
         </div>
       </div>
     </div>
@@ -250,8 +217,8 @@ import ReviewerNavBar from "@/components/Reviewer/ReviewerNavBar";
 import { mapGetters } from "vuex";
 import { ref, onMounted } from "vue";
 import Spinner from "@/sharedComponents/Spinner";
-import moment from 'moment';
-import jsPDF from 'jspdf';
+import moment from "moment";
+import jsPDF from "jspdf";
 
 export default {
   props: ["activeState"],
@@ -267,7 +234,12 @@ export default {
     const store = useStore();
     const router = useRouter();
     const route = useRoute();
-    
+    let myRegion = ref(true);
+    const expertLevelId = JSON.parse(localStorage.getItem("allAdminData"))
+      .expertLevelId;
+
+    const adminRegionId = JSON.parse(localStorage.getItem("allAdminData"))
+      .regionId;
 
     let show = ref(false);
 
@@ -316,47 +288,97 @@ export default {
     let getReviewId = ref(0);
 
     const GenerateLetter = () => {
-      if(license.value.applicationStatus.code !== "AP") {
+      if (license.value.applicationStatus.code !== "AP" && license.value.applicationStatus.code !== "APP") {
         // if user is not approved don't generate a good standing letter
         return;
       }
-      
-      const doc = new jsPDF({orientation: 'landscape'})
-      const pageWidth = doc.internal.pageSize.width || doc.internal.pageSize.getWidth;
-      doc.setFontSize(20);
-      doc.setFont('times', 'bold');
-      doc.text(40, 58, "To: "+ license.value.whomGoodStandingFor+ ".")
-      doc.setFontSize(14);
-      
-      const letter = "LETTER OF GOOD STANDING";
-      doc.text(letter, pageWidth / 2, 75, {align: 'center'});
-      const letterPosition = pageWidth /2 - doc.getTextWidth(letter) / 2;
-      doc.line(letterPosition, 77, letterPosition + doc.getTextWidth(letter), 77);
-      doc.setFontSize(15);
-      
-      doc.setFont('times', 'normal');
-      doc.text(40, 90, "This letter of good standing and " + 
-                        "confirmation of registration is written" +
-                        " upon request of " + license.value.applicantTitle + " " + goodStandingUser.value.applicant.profile.name
-                         + " " + goodStandingUser.value.applicant.profile.fatherName+ " " +
-                          grandFatherName.value+".");
-      doc.text(40, 100, goodStandingUser.value.applicant.profile.name + " " + 
-                        goodStandingUser.value.applicant.profile.fatherName + 
-                        " " +  grandFatherName. value + " " + 
-                         "was registered as " + license.value.applicantPosition.name + " " +
-                         moment(license.value.licenseIssuedDate).format("MMMM D, YYYY") + " by");
-      doc.text(40, 110, license.value.whoIssued + ", which is the responsible");
-      doc.text(40, 120, `organ for registration and licensing of health professinals and ${gender.value == "male"? "his": "her"} registration number is ${license.value.licenseRegistrationNumber}.`);
-      doc.text(40, 130, `${gender.value == "male" ? "he" : "she"} has no any reported medico legal records and malpractices while ${gender.value == "male"? "he" : "she"} has practiced ${gender.value == "male" ? 'his': 'her'} medical profession`);
-      doc.text(40, 140, `in Ethiopia till ${moment(new Date()).format("MMMM DD, YYYY")}.`);
-      doc.text(40, 165, `Hence we appreciate any assistance, which will be rendered to ${gender.value == "male" ? "him" : "her"}.`)
-      doc.text(40, 185, "With best regards")
-      window.open(doc.output('bloburl'));
 
-    }
+      const doc = new jsPDF({ orientation: "landscape" });
+      const pageWidth =
+        doc.internal.pageSize.width || doc.internal.pageSize.getWidth;
+      doc.setFontSize(20);
+      doc.setFont("times", "bold");
+      doc.text(40, 58, "To: " + license.value.whomGoodStandingFor + ".");
+      doc.setFontSize(14);
+
+      const letter = "LETTER OF GOOD STANDING";
+      doc.text(letter, pageWidth / 2, 75, { align: "center" });
+      const letterPosition = pageWidth / 2 - doc.getTextWidth(letter) / 2;
+      doc.line(
+        letterPosition,
+        77,
+        letterPosition + doc.getTextWidth(letter),
+        77
+      );
+      doc.setFontSize(15);
+
+      doc.setFont("times", "normal");
+      doc.text(
+        40,
+        90,
+        "This letter of good standing and " +
+          "confirmation of registration is written" +
+          " upon request of " +
+          license.value.applicantTitle +
+          " " +
+          goodStandingUser.value.applicant.profile.name +
+          " " +
+          goodStandingUser.value.applicant.profile.fatherName +
+          " " +
+          grandFatherName.value +
+          "."
+      );
+      doc.text(
+        40,
+        100,
+        goodStandingUser.value.applicant.profile.name +
+          " " +
+          goodStandingUser.value.applicant.profile.fatherName +
+          " " +
+          grandFatherName.value +
+          " " +
+          "was registered as " +
+          license.value.applicantPosition.name +
+          " " +
+          moment(license.value.licenseIssuedDate).format("MMMM D, YYYY") +
+          " by " + license.value.whoIssued + ","
+      );
+      doc.text(40, 110, `which is the responsible organ for registration and licensing of health professionals and ${gender.value == "male" ? "his": "her"} registration`
+        );
+      doc.text(
+        40,
+        120,
+        `number is ${license.value.licenseRegistrationNumber}.`
+      );
+      doc.text(
+        40,
+        130,
+        `${
+          gender.value == "male" ? "he" : "she"
+        } has no any reported medico legal records and malpractices while ${
+          gender.value == "male" ? "he" : "she"
+        } has practiced ${
+          gender.value == "male" ? "his" : "her"
+        } medical profession`
+      );
+      doc.text(
+        40,
+        140,
+        `in Ethiopia till ${moment(new Date()).format("MMMM DD, YYYY")}.`
+      );
+      doc.text(
+        40,
+        165,
+        `Hence we appreciate any assistance, which will be rendered to ${
+          gender.value == "male" ? "him" : "her"
+        }.`
+      );
+      doc.text(40, 185, "With best regards");
+      window.open(doc.output("bloburl"));
+    };
 
     const created = async (applicationTypeName, applicationId, status) => {
-      if(status === 'approved' && applicationTypeName === "Good Standing") {
+      if (status === "approved" && applicationTypeName === "Good Standing") {
         isUserApproved.value = true;
       }
       licenseId.value = applicationId;
@@ -374,10 +396,15 @@ export default {
             profileInfo.value = license.value.applicant.profile;
             education.value.departmentName =
               license.value.education.department.name;
-            education.value.institutionName =
-              license.value.education.institution.name;
-            education.value.institutionTypeName =
-              license.value.education.institution.institutionType.name;
+            if (license.value.otherEducationalInstitution) {
+              education.value.institutionName =
+                license.value.otherEducationalInstitution;
+            } else {
+              education.value.institutionName =
+                license.value.education.institution.name;
+              education.value.institutionTypeName =
+                license.value.education.institution.name;
+            }
           });
       }
       if (applicationType.value == "Good Standing") {
@@ -387,11 +414,26 @@ export default {
           .then((res) => {
             showLoading.value = false;
             license.value = res.data.data;
-            console.log("approved good standing", res.data.data)
             goodStandingUser.value = res.data.data;
+            if (
+              goodStandingUser.value.woreda != null &&
+              goodStandingUser.value.woreda.zone != null &&
+              goodStandingUser.value.woreda.zone.region != null
+            ) {
+              if (
+                adminRegionId != goodStandingUser.value.woreda.zone.region.id
+              ) {
+                myRegion.value = false;
+              }
+            } else {
+              if (expertLevelId != goodStandingUser.value.expertLevelId) {
+                myRegion.value = false;
+              }
+            }
             gender.value = res.data.data.applicant.profile.gender;
-            if(res.data.data.applicant.profile.grandFatherName) {
-              grandFatherName.value = res.data.data.applicant.profile.grandFatherName;
+            if (res.data.data.applicant.profile.grandFatherName) {
+              grandFatherName.value =
+                res.data.data.applicant.profile.grandFatherName;
             }
             getReviewId.value = license.value.reviewerId;
             show.value = true;
@@ -401,7 +443,7 @@ export default {
             // education.value.institutionName =
             //   license.value.education.institution.name;
             // education.value.institutionTypeName =
-            //   license.value.education.institution.institutionType.name;
+            //   license.value.education.institution.name;
           });
       }
       if (applicationType.value == "Verification") {
@@ -415,10 +457,15 @@ export default {
             profileInfo.value = license.value.applicant.profile;
             education.value.departmentName =
               license.value.education.department.name;
-            education.value.institutionName =
-              license.value.education.institution.name;
-            education.value.institutionTypeName =
-              license.value.education.institution.institutionType.name;
+            if (license.value.otherEducationalInstitution) {
+              education.value.institutionName =
+                license.value.otherEducationalInstitution;
+            } else {
+              education.value.institutionName =
+                license.value.education.institution.name;
+              education.value.institutionTypeName =
+                license.value.education.institution.name;
+            }
           });
       }
       if (applicationType.value == "Renewal") {
@@ -432,15 +479,24 @@ export default {
             profileInfo.value = license.value.applicant.profile;
             education.value.departmentName =
               license.value.education.department.name;
-            education.value.institutionName =
-              license.value.education.institution.name;
-            education.value.institutionTypeName =
-              license.value.education.institution.institutionType.name;
+            if (license.value.otherEducationalInstitution) {
+              education.value.institutionName =
+                license.value.otherEducationalInstitution;
+            } else {
+              education.value.institutionName =
+                license.value.education.institution.name;
+              education.value.institutionTypeName =
+                license.value.education.institution.name;
+            }
           });
       }
     };
     onMounted(() => {
-      created(route.params.applicationType, route.params.applicationId, route.params.status);
+      created(
+        route.params.applicationType,
+        route.params.applicationId,
+        route.params.status
+      );
     });
 
     return {
@@ -464,6 +520,8 @@ export default {
       isUserApproved,
       isGoodStanding,
       GenerateLetter,
+      myRegion,
+      expertLevelId,
     };
   },
 };

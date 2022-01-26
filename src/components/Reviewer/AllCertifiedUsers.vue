@@ -84,7 +84,11 @@
               <span
                 class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
               >
-                {{ item.applicationType ? item.applicationType : "-" }}
+                {{
+                  item.reviewer.expertLevel.code === "FED"
+                    ? "Federal"
+                    : item.reviewer.expertLevel.name
+                }}
               </span>
               <span
                 class="text-lightBlueB-500 mt-tiny flex justify-start content-center"

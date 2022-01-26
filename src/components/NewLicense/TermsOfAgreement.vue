@@ -18,53 +18,147 @@
         />
       </svg>
     </button>
+    <span class="flex justify-center mt-small mb-small text-lg font-semibold">{{
+      documentMessage
+    }}</span>
     <div class="flex flex-row">
       <div class="ml-8">
         <h2>Foreigner</h2>
         <ul>
-          <li>Passport(Identification Card)</li>
+          <li>Passport</li>
+          <li>Medical Certificate</li>
           <li>Health Exam Certificate</li>
-          <li>English Language Certificate</li>
-          <li>Higher Education Relevance and Quality Agency center(HERQA)</li>
+          <div class="tooltip">
+            English Language Proficiency Certificate
+            <span class="tooltiptext ml-4">
+              For non-English speaking countries only
+            </span>
+          </div>
+          <div class="tooltip">
+            Higher Education Relevance and Quality Agency center
+            <span class="tooltiptext ml-4">
+              HERQA
+            </span>
+          </div>
           <li>Letter from Organization</li>
-          <li>Authenticated Professional Document Certificate</li>
-          <li>Authenticated Professional Document Diploma</li>
-          <li>Authenticated Professional Document Transcript</li>
-          <li>Authenticated Professional License from Country of Origin</li>
-          <li>Renewed License of the Organization</li>
-          <li>Authenticated Work Experience</li>
+          <div class="tooltip">
+            Authenticated Academic Document
+            <span class="tooltiptext ml-4">
+              Diploma, Transcript for both Under and Post-Graduate Certificate
+            </span>
+          </div>
+          <br />
+          <div class="tooltip">
+            Authenticated Professional License from Country of Origin
+            <span class="tooltiptext ml-4">
+              Found in Ethiopia
+            </span>
+          </div>
+          <br />
+          <div class="tooltip">
+            Request Letter from Health Facility
+            <span class="tooltiptext ml-4">
+              Found in Ethiopia
+            </span>
+          </div>
+          <br />
+          <div class="tooltip">
+            Current Work Experience / Goodstanding Letter
+            <span class="tooltiptext ml-4">
+              More than two years.
+            </span>
+          </div>
         </ul>
       </div>
       <div class="ml-8">
         <h2>Ethiopian</h2>
         <ul>
-          <li>Passport(Identification Card)</li>
+          <li>Residence ID</li>
           <li>Health Exam Certificate</li>
-          <li>COC</li>
-          <li>Degree</li>
-          <li>Diploma</li>
-          <li>8<sup>th</sup> Grade Certificate</li>
-          <li>10<sup>th</sup> Grade Certificate</li>
-          <li>12<sup>th</sup> Grade Certificate</li>
-          <li>9<sup>th</sup> - 10<sup>th</sup> Transcript</li>
-          <li>11<sup>th</sup> - 12<sup>th</sup> Transcript</li>
-          <li>Payroll Document</li>
-          <li>Suppport Letter</li>
-          <li>Transcript</li>
-          <li>Authenticated Work Experience</li>
+          <div class="tooltip">
+            COC Certificate
+            <span class="tooltiptext ml-4">
+              Only for Diploma Graduates
+            </span>
+          </div>
+          <br />
+          <div class="tooltip">
+            Academic Document
+            <span class="tooltiptext ml-4">
+              Diploma, Bachelor or MD, Masters or specialists, PhD
+            </span>
+          </div>
+          <br />
+          <li>
+            8<sup>th</sup>, 10<sup>th</sup>, 12<sup>th</sup> Grade Certificate
+          </li>
+          <li>9<sup>th</sup> - 10<sup>th</sup></li>
+          <li>11<sup>th</sup> - 12<sup>th</sup></li>
+          <div class="tooltip">
+            Payroll Document
+            <span class="tooltiptext ml-4">
+              If private Institution Work Experience
+            </span>
+          </div>
+          <br />
+          <div class="tooltip">
+            Support Letter from Sponsored Institution
+            <span class="tooltiptext ml-4">
+              For those upgraded by the sponsorship of an Institution
+            </span>
+          </div>
+          <br />
+          <li>Work Experience</li>
+          <li>Academic Transcript</li>
         </ul>
       </div>
       <div class="ml-8">
-        <h2>Foreigner Ethiopian</h2>
+        <h2>Ethiopians from Abroad</h2>
         <ul>
-          <li>Passport(Identification Card)</li>
-          <li>Health Exam Certificate</li>
-          <li>Higher Education Relevance and Quality Agency center(HERQA)</li>
-          <li>Authenticated Professional Document Certificate</li>
-          <li>Authenticated Professional Document Diploma</li>
-          <li>Authenticated Professional Document Transcript</li>
-          <li>Support Letter</li>
-          <li>Authenticated Work Experience</li>
+          <div class="tooltip">
+            Residence ID or Passport or Yellow Card
+            <span class="tooltiptext ml-4">
+              Proof of Ethiopian decent
+            </span>
+          </div>
+          <br />
+          <li>Medical Certificate</li>
+          <div class="tooltip">
+            Higher Education Relevance and Quality Agency center
+            <span class="tooltiptext ml-4">
+              HERQA
+            </span>
+          </div>
+          <div class="tooltip">
+            Authenticated Academic Document
+            <span class="tooltiptext ml-4">
+              Diploma, Transcript for both Under and Post-Graduate Certificate
+            </span>
+          </div>
+          <br />
+          <li>
+            Authenticated Professional License from Country of Origin
+          </li>
+          <div class="tooltip">
+            Renewed License of the Health Facility/Organization
+            <span class="tooltiptext ml-4">
+              Found in Ethiopia
+            </span>
+          </div>
+          <br />
+          <div class="tooltip">
+            Request Letter from health Facility
+            <span class="tooltiptext ml-4">
+              Found in Ethiopia
+            </span>
+          </div>
+          <br />
+          <div class="tooltip">
+            Current Work Experience/ Goodstanding Letter
+            <span class="tooltiptext ml-4">
+              More than two years
+            </span>
+          </div>
         </ul>
       </div>
     </div>
@@ -75,12 +169,23 @@
   </div>
 </template>
 <script>
+import { ref } from "vue";
+import MESSAGE from "../../composables/documentMessage";
+import { onMounted } from "@vue/runtime-core";
 import Title from "@/sharedComponents/Title";
 
 export default {
   components: { Title },
 
-  setup() {},
+  setup() {
+    let documentMessage = ref("");
+    onMounted(() => {
+      documentMessage.value = MESSAGE.DOC_MESSAGE;
+    });
+    return {
+      documentMessage,
+    };
+  },
 };
 </script>
 <style lang="postcss" scoped>
@@ -97,5 +202,28 @@ export default {
   .card-wrapper {
     box-shadow: 0px 3px 6px #1e40af82;
   }
+}
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #1e40af82;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+
+  /* Position the tooltip text - see examples below! */
+  position: absolute;
+  z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted white; /* If you want dots under the hoverable text */
 }
 </style>

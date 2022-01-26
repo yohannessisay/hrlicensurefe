@@ -141,12 +141,8 @@ export default {
           store.getters["reviewerGoodStanding/getGoodStandingPendingPaymentSearched"];
         allInfo.value.assignApplication =
           store.getters["reviewerGoodStanding/getGoodStandingPendingPaymentSearched"];
-          console.log("good standing pending payment", store.getters["reviewerGoodStanding/getGoodStandingPendingPaymentSearched"])
 
         for (let applicant in allInfo.value.assignApplication) {
-          allInfo.value.assignApplication[applicant].createdAt = moment(
-            allInfo.value.assignApplication[applicant].createdAt
-          ).format("MMMM D, YYYY");
           if (
             allInfo.value.assignApplication[applicant].applicationType ===
             undefined

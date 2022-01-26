@@ -63,7 +63,7 @@
               <h4 class="mt-2 ml-small w-1/2">
                 {{
                   "Institution Type:  " + newLicense.education.institution
-                    ? newLicense.education.institution.institutionType.name
+                    ? newLicense.education.institution.name
                     : "-"
                 }}
               </h4>
@@ -77,7 +77,7 @@
             <label
               class="justify-center items-center ml-large text-grey-200 text-2xl"
             >
-              {{ documentTypeName }} Payment Slip
+              {{ documentTypeName }} Payment Slip => {{ newLicense.paymentSlip}} ETB
             </label>
 
             <div class="flex justify-start flex-wrap">
@@ -301,7 +301,6 @@ export default {
             }
           })
           .catch((err) => {
-            console.log("error while evaluating payment", err);
           });
       } else if (applicationType.value == "Renewal") {
         store
@@ -321,7 +320,6 @@ export default {
             }
           })
           .catch((err) => {
-            console.log("error while evaluating payment", err);
           });
       } else if (applicationType.value == "Verification") {
         store
@@ -341,7 +339,6 @@ export default {
             }
           })
           .catch((err) => {
-            console.log("error while evaluating payment", err);
           });
       } else if (applicationType.value == "Good Standing") {
         store
@@ -371,7 +368,6 @@ export default {
             }
           })
           .catch((err) => {
-            console.log("error while evaluating payment", err);
           });
       }
     };

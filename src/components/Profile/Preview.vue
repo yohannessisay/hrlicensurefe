@@ -1,12 +1,25 @@
 <template>
-  <div v-if="message.showLoading2" class="h-screen max-h-4xl mt-large">
+  <div v-if="message.showLoading2" class="h-screen mt-large pt-large">
     <Spinner class="bg-lightBlueB-200  " />
   </div>
-  <div class="bg-white mb-large rounded pr-20 pl-20 pb-12">
+  <div
+    style="width: 1000px"
+    class="bg-white mb-large rounded pr-20 pl-20 pb-12"
+  >
     <div v-if="!message.showLoading2">
       <div class="flex justify-center"><Title message="Summary" /></div>
+      <div class="flex justify-start flex-col mb-large mt-large">
+        <div class="flex justify-start mb-medium">
+          <Title message="Profile Picture" />
+        </div>
+        <div>
+          <picture>
+            <img :src="profilePic" />
+          </picture>
+        </div>
+      </div>
       <div class="flex justify-start">
-        <Title message="Personal Info" />
+        <Title message="Personal Info" class="mb-small" />
       </div>
       <div class="flex flex-row">
         <div>
@@ -42,51 +55,23 @@
           <h5 class="ml-8">{{ nationality }}</h5>
         </div>
         <div>
-          <label class="ml-8 text-primary-300"> Place of Birth</label>
-          <h5 v-if="personalInfo.placeOfBirth != 'undefined'" class="ml-8">
-            {{ personalInfo.placeOfBirth }}
-          </h5>
-        </div>
-        <!-- <div>
-          <label class="ml-8 text-primary-300"> Date of Birth</label>
-          <h5 v-if="personalInfo.dateOfBirth != 'undefined'" class="ml-8">
-            {{
-              profileInfo.dateOfBirth
-                ? moment(profileInfo.dateOfBirth).format("MMM D, YYYY")
-                : "-"
-            }}
-          </h5>
-        </div> -->
-        <div>
           <label class="ml-8 text-primary-300"> Marital Status</label>
           <h5 class="ml-8">{{ maritalStatus }}</h5>
         </div>
       </div>
       <div class="flex justify-start">
-        <Title message="Address" />
-      </div>
-      <div class="flex flex-row">
-        <div>
-          <label class="ml-8 text-primary-300"> Kebele</label>
-          <h5 class="ml-8">{{ address.kebele }}</h5>
-        </div>
-        <div>
-          <label class="ml-8 text-primary-300"> House Number</label>
-          <h5 class="ml-8">{{ address.houseNumber }}</h5>
-        </div>
-        <div>
-          <label class="ml-8 text-primary-300"> Residence</label>
-          <h5 class="ml-8">{{ address.residence }}</h5>
-        </div>
-      </div>
-      <div class="flex justify-start">
-        <Title message="Contact" />
+        <Title message="Address" class="mb-small" />
       </div>
       <div class="flex flex-row">
         <div>
           <label class="ml-8 text-primary-300"> PO Box</label>
-          <h5 class="ml-8">{{ address.poBox }}</h5>
+          <h5 class="ml-8">{{ personalInfo.poBox }}</h5>
         </div>
+      </div>
+      <div class="flex justify-start">
+        <Title message="Contact" class="mb-small" />
+      </div>
+      <div class="flex flex-row">
         <div>
           <label class="ml-8 text-primary-300"> Email Address</label>
           <h5 class="ml-8">{{ user.emailAddress }}</h5>
@@ -138,6 +123,7 @@ export default {
   setup(props, { emit }) {
     const store = useStore();
     const router = useRouter();
+    let profilePic = null;
     let message = ref({
       showFlash: false,
       showErrorFlash: false,
@@ -158,17 +144,13 @@ export default {
       alternativeFatherName: null,
       alternativeGrandFatherName: null,
       nationality: null,
-      placeOfBirth: null,
       dateOfBirth: null,
       gender: null,
       maritalStatusId: null,
       maritalStatus: null,
-      userTypeId: null,
+      poBox: null,
     };
     let address = {
-      kebele: null,
-      houseNumber: null,
-      residence: null,
       poBox: null,
     };
     let contact = {
@@ -194,14 +176,9 @@ export default {
           alternativeGrandFatherName: personalInfo.alternativeGrandFatherName,
           gender: personalInfo.gender,
           dateOfBirth: personalInfo.dateOfBirth,
-          placeOfBirth: personalInfo.placeOfBirth,
-          nationality: personalInfo.nationalityId,
-          userTypeId: personalInfo.userTypeId,
+          nationalityId: personalInfo.nationalityId,
           maritalStatusId: personalInfo.maritalStatusId,
-          kebele: address.kebele,
-          houseNumber: address.houseNumber,
-          residence: address.residence,
-          poBox: address.poBox,
+          poBox: personalInfo.poBox,
           photo: personalInfo.photo,
           userId: +localStorage.getItem("userId"),
         })
@@ -242,6 +219,13 @@ export default {
       emit("changeActiveStatePrevious");
     };
     personalInfo = store.getters["profile/getPersonalInfo"];
+    if (
+      personalInfo.photo != undefined ||
+      personalInfo.photo != null ||
+      personalInfo.photo != ""
+    ) {
+      profilePic = personalInfo.photo;
+    }
     address = store.getters["profile/getAddress"];
     contact = store.getters["profile/getContact"];
     nationality = store.getters["profile/getNationality"];
@@ -255,6 +239,7 @@ export default {
       });
     });
     return {
+      profilePic,
       personalInfo,
       address,
       contact,

@@ -50,7 +50,7 @@
           class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
         >
           On
-          {{ item.createdAt }}
+          {{ moment(item.createdAt).format("MMMM DD, YYYY") }}
         </span>
         <span
           class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
@@ -100,9 +100,9 @@ export default {
     const adminExpertId = JSON.parse(localStorage.getItem('allAdminData')).expertLevelId;
     const detail = (data, applicationId, applicantId) => {
       if (
-        props.app_type == "Verification"
+        props.app_type == "Verification" || props.app_type == "Good Standing"
       ) {
-        routeValue.value = "finishedDetail";
+        routeValue.value = "applicant-detail";
       }
       if (adminExpertId == 3) {
         routeValue.value = "applicant-detail"

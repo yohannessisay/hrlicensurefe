@@ -30,16 +30,23 @@
           message="Letter from Hiring Institution"
           class="mt-8"
         />
+        <span class="flex justify-center">{{ documentMessage }}</span>
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
           <div class="flex justify-center mb-10">
             <div>
               <span>
-                <h2>{{ letterFile.name }}</h2>
-                <h2>{{ fileSize }}</h2>
+                <h2 v-if="!fileSizeExceed">{{ letterFile.name }}</h2>
+                <h2 v-if="!fileSizeExceed">{{ fileSize }}</h2>
+                <h3 style="color: red" v-if="fileSizeExceed">
+                  File size must be less than {{ maxSizeMB }} MB
+                </h3>
               </span>
               <span v-if="showUpload">
                 <label class="text-primary-700"
                   >Upload image:
+                  <span style="color: red; font-weight: bold; font-size:16px"
+                    >Required</span
+                  >
                   <div class="dropbox">
                     <input
                       type="file"
@@ -114,10 +121,10 @@
           <button @click="submit">Next</button>
           <button
             class="withdraw"
-            @click="withdraw(buttons[0].action)"
+            @click="withdraw(buttons[1].action)"
             variant="outline"
           >
-            {{ buttons[0]["name"] }}
+            {{ buttons[1]["name"] }}
           </button>
         </div>
         <div
@@ -136,7 +143,7 @@
           </button>
         </div>
         <div
-          v-if="buttons && draftStatus == 'DEC'"
+          v-if="buttons && (draftStatus == 'DEC' || draftStatus == 'CONF')"
           class="flex justify-center mb-8"
         >
           <button @click="submitBack">
@@ -172,6 +179,9 @@ import { useRoute, useRouter } from "vue-router";
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import Spinner from "@/sharedComponents/Spinner";
+import MESSAGE from "../../../composables/documentMessage";
+import MAX_FILE_SIZE from "../../../composables/documentMessage";
+import MAX_SIZE_MB from "../../../composables/documentMessage";
 
 export default {
   props: ["activeState"],
@@ -222,12 +232,22 @@ export default {
     let declinedFieldsCheck = ref(false);
     let acceptedFieldsCheck = ref(false);
 
-    let workExperience = ref("");
+    let documentMessage = ref("");
+    let maxFileSize = ref("");
+    let maxSizeMB = ref("");
+    let fileSizeExceed = ref(false);
+
+    let passport = ref("");
     let healthExamCert = ref("");
+    let professionalDoc = ref("");
+    let workExperience = ref("");
+    let englishLanguage = ref("");
+    let herqa = ref("");
+    let letterOrg = ref("");
     let cpd = ref("");
     let previousLicense = ref("");
-    let professionalDoc = ref([]);
-    let payroll = ref("");
+    let professionalLicense = ref("");
+    let renewedLicense = ref("");
 
     const reset = () => {
       showUpload.value = true;
@@ -239,48 +259,60 @@ export default {
       isPdf.value = false;
     };
     const handleFileUpload = () => {
-      dataChanged.value = true;
-      showUpload.value = false;
       letterFile.value = letterFileP.value.files[0];
       let reader = new FileReader();
+      isImage.value = true;
       let fileS = letterFile.value.size;
-      if (fileS > 0 && fileS < 1000) {
-        fileSize.value += "B";
-      } else if (fileS > 1000 && fileS < 1000000) {
-        fileSize.value = fileS / 1000 + "kB";
-      } else {
-        fileSize.value = fileS / 1000000 + "MB";
-      }
-      reader.addEventListener(
-        "load",
-        function() {
-          showPreview.value = true;
-          filePreview.value = reader.result;
-        },
-        false
-      );
-
-      if (letterFile.value) {
-        if (/\.(jpe?g|png|gif)$/i.test(letterFile.value.name)) {
-          isImage.value = true;
-          reader.readAsDataURL(letterFile.value);
-        } else if (/\.(pdf)$/i.test(letterFile.value.name)) {
-          isImage.value = false;
-          isPdf.value = true;
-          reader.readAsDataURL(letterFile.value);
+      if (fileS <= maxFileSize.value / 1000) {
+        fileSizeExceed.value = false;
+        dataChanged.value = true;
+        showUpload.value = false;
+        if (fileS > 0 && fileS < 1000) {
+          fileSize.value += "B";
+        } else if (fileS > 1000 && fileS < 1000000) {
+          fileSize.value = fileS / 1000 + "kB";
+        } else {
+          fileSize.value = fileS / 1000000 + "MB";
         }
+        reader.addEventListener(
+          "load",
+          function() {
+            showPreview.value = true;
+            filePreview.value = reader.result;
+          },
+          false
+        );
+        if (letterFile.value) {
+          if (/\.(jpe?g|png|gif)$/i.test(letterFile.value.name)) {
+            isImage.value = true;
+            reader.readAsDataURL(letterFile.value);
+          } else if (/\.(pdf)$/i.test(letterFile.value.name)) {
+            isImage.value = false;
+            isPdf.value = true;
+            reader.readAsDataURL(letterFile.value);
+          }
+        }
+      } else {
+        fileSizeExceed.value = true;
+        letterFile.value = "";
+        isImage.value = true;
       }
     };
     buttons = store.getters["renewal/getButtons"];
     documentSpecs = store.getters["renewal/getDocumentSpec"];
     licenseInfo = store.getters["renewal/getLicense"];
 
+    passport = store.getters["renewal/getPassport"];
     healthExamCert = store.getters["renewal/getRenewalHealthExamCert"];
+    professionalDoc = store.getters["renewal/getProfessionalDocuments"];
     workExperience = store.getters["renewal/getRenewalWorkExperience"];
+    englishLanguage = store.getters["renewal/getEnglishLanguage"];
+    herqa = store.getters["renewal/getHerqa"];
     cpd = store.getters["renewal/getRenewalCpd"];
     previousLicense = store.getters["renewal/getPreviousLicense"];
-    payroll = store.getters["renewal/getPayroll"];
-    professionalDoc = store.getters["newlicense/getProfessionalDocuments"];
+    professionalLicense = store.getters["renewal/getProfessionalLicense"];
+    renewedLicense = store.getters["renewal/getRenewedLicense"];
+    letterOrg = store.getters["renewal/getLetterfromOrg"];
 
     const submit = () => {
       emit("changeActiveState");
@@ -292,6 +324,9 @@ export default {
     };
 
     onMounted(() => {
+      documentMessage.value = MESSAGE.DOC_MESSAGE;
+      maxFileSize.value = MAX_FILE_SIZE.MAX_FILE_SIZE;
+      maxSizeMB.value = MAX_SIZE_MB.MAX_SIZE_MB;
       letterFileBack = store.getters["renewal/getRenewalLicense"];
       if (
         letterFileBack &&
@@ -376,7 +411,7 @@ export default {
               let licenseId = route.params.id;
               let formData = new FormData();
               formData.append(
-                documentSpecs[7].documentType.code,
+                documentSpecs[19].documentType.code,
                 letterFile.value
               );
               let payload = { document: formData, id: licenseId };
@@ -426,28 +461,23 @@ export default {
               departmentId: licenseInfo.education.departmentId,
               institutionId: licenseInfo.education.institutionId,
             },
-            professionalTypeId: licenseInfo.professionalTypeId,
+            professionalTypeIds: licenseInfo.professionalTypeIds,
+            educationalLevelId: licenseInfo.educationalLevelId,
             residenceWoredaId: licenseInfo.residenceWoredaId,
             paymentSlip: null,
             occupationTypeId: licenseInfo.occupationTypeId,
             expertLevelId: licenseInfo.expertLevelId,
+            otherEducationalInstitution:
+              licenseInfo.otherEducationalInstitution,
+            otherProfessionalType: licenseInfo.otherProfessionalType,
           },
         };
         store.dispatch("renewal/addRenewalLicense", license).then((res) => {
           if (res.data.status == "Success") {
             let licenseId = res.data.data.id;
             let formData = new FormData();
+            formData.append(documentSpecs[0].documentType.code, passport);
             formData.append(documentSpecs[2].documentType.code, healthExamCert);
-            formData.append(documentSpecs[4].documentType.code, cpd);
-            formData.append(documentSpecs[5].documentType.code, workExperience);
-            formData.append(
-              documentSpecs[6].documentType.code,
-              previousLicense
-            );
-            formData.append(
-              documentSpecs[7].documentType.code,
-              letterFile.value
-            );
             if (professionalDoc != undefined) {
               formData.append(
                 documentSpecs[8].documentType.code,
@@ -462,7 +492,30 @@ export default {
                 professionalDoc[2]
               );
             }
-            formData.append(documentSpecs[11].documentType, payroll);
+            formData.append(documentSpecs[5].documentType.code, workExperience);
+            formData.append(documentSpecs[4].documentType.code, cpd);
+            formData.append(
+              documentSpecs[7].documentType.code,
+              englishLanguage
+            );
+            formData.append(documentSpecs[18].documentType.code, herqa);
+            formData.append(
+              documentSpecs[19].documentType.code,
+              letterFile.value
+            );
+            formData.append(
+              documentSpecs[6].documentType.code,
+              previousLicense
+            );
+            formData.append(
+              documentSpecs[22].documentType.code,
+              professionalLicense
+            );
+            formData.append(
+              documentSpecs[21].documentType.code,
+              renewedLicense
+            );
+            formData.append(documentSpecs[20].documentType.code, letterOrg);
             let payload = { document: formData, id: licenseId };
             store
               .dispatch("renewal/uploadDocuments", payload)
@@ -549,11 +602,15 @@ export default {
               departmentId: licenseInfo.education.departmentId,
               institutionId: licenseInfo.education.institutionId,
             },
-            professionalTypeId: licenseInfo.professionalTypeId,
+            professionalTypeIds: licenseInfo.professionalTypeIds,
+            educationalLevelId: licenseInfo.educationalLevelId,
             residenceWoredaId: licenseInfo.residenceWoredaId,
             paymentSlip: null,
             occupationTypeId: licenseInfo.occupationTypeId,
             expertLevelId: licenseInfo.expertLevelId,
+            otherEducationalInstitution:
+              licenseInfo.otherEducationalInstitution,
+            otherProfessionalType: licenseInfo.otherProfessionalType,
           },
         };
         store.dispatch("renewal/addRenewalLicense", license).then((res) => {
@@ -634,6 +691,23 @@ export default {
       remark,
       declinedFieldsCheck,
       acceptedFieldsCheck,
+
+      passport,
+      healthExamCert,
+      professionalDoc,
+      workExperience,
+      englishLanguage,
+      herqa,
+      cpd,
+      previousLicense,
+      professionalLicense,
+      renewedLicense,
+      letterOrg,
+
+      documentMessage,
+      fileSizeExceed,
+      maxFileSize,
+      maxSizeMB,
     };
   },
 };

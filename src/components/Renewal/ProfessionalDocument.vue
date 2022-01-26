@@ -12,10 +12,18 @@
         "
       >
         <TitleWithIllustration
-          illustration="User"
+          illustration="Certificate"
           message="Professional Documents"
           class="mt-8"
         />
+        <span class="flex justify-center">{{ this.documentMessage }}</span>
+        <h3
+          class="flex justify-center"
+          style="color: red"
+          v-if="this.fileSizeExceed"
+        >
+          File size must be less than {{ this.maxSizeMB }} MB
+        </h3>
         <div class="flex flex-row justify-center px-8 py-4">
           <div>
             <h2
@@ -34,8 +42,8 @@
             </h2>
             <div class="ml-4" style="width: 250px">
               <span>
-                <h2>{{ this.photoFile.name }}</h2>
-                <h2>{{ this.photoFileSize }}</h2>
+                <h2 v-if="!this.fileSizeExceed">{{ this.photoFile.name }}</h2>
+                <h2 v-if="!this.fileSizeExceed">{{ this.photoFileSize }}</h2>
               </span>
               <span v-if="showUpload">
                 <label class="text-primary-700 text-lg"
@@ -92,8 +100,8 @@
 
             <div class="ml-4" style="width: 250px">
               <span>
-                <h2>{{ this.diplomaFile.name }}</h2>
-                <h2>{{ this.diplomaFileSize }}</h2>
+                <h2 v-if="!this.fileSizeExceed">{{ this.diplomaFile.name }}</h2>
+                <h2 v-if="!this.fileSizeExceed">{{ this.diplomaFileSize }}</h2>
               </span>
               <span v-if="showDiplomaUpload">
                 <label class="text-primary-700 text-lg"
@@ -156,8 +164,12 @@
             </h2>
             <div class="ml-4" style="width: 250px">
               <span>
-                <h2>{{ this.transcriptFile.name }}</h2>
-                <h2>{{ this.transcriptFileSize }}</h2>
+                <h2 v-if="!this.fileSizeExceed">
+                  {{ this.transcriptFile.name }}
+                </h2>
+                <h2 v-if="!this.fileSizeExceed">
+                  {{ this.transcriptFileSize }}
+                </h2>
               </span>
               <span v-if="showTranscriptUpload">
                 <label class="text-primary-700 text-lg"
@@ -250,10 +262,10 @@
           <button @click="submit">Next</button>
           <button
             class="withdraw"
-            @click="withdraw(this.buttons[0].action)"
+            @click="withdraw(this.buttons[1].action)"
             variant="outline"
           >
-            {{ this.buttons[0]["name"] }}
+            {{ this.buttons[1]["name"] }}
           </button>
         </div>
         <div
@@ -272,7 +284,7 @@
           </button>
         </div>
         <div
-          v-if="this.draftStatus == 'DEC'"
+          v-if="this.draftStatus == 'DEC' || this.draftStatus == 'CONF'"
           class="flex justify-center mt-8 pb-12"
         >
           <button @click="submitBack">
@@ -306,6 +318,9 @@ import { mapGetters, mapActions } from "vuex";
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import Spinner from "@/sharedComponents/Spinner";
+import MESSAGE from "../../composables/documentMessage";
+import MAX_FILE_SIZE from "../../composables/documentMessage";
+import MAX_SIZE_MB from "../../composables/documentMessage";
 
 export default {
   components: {
@@ -356,17 +371,37 @@ export default {
       licenseInfo: "",
       userId: +localStorage.getItem("userId"),
 
-      workExperience: "",
-      renewalLetter: "",
-      cpd: "",
-      previousLicense: "",
-      professionalDoc: [],
+      passport: "",
       healthExamCert: "",
+      workExperience: "",
+      cpd: "",
+      herqa: "",
+      previousLicense: "",
+      supportLetter: "",
+      coc: "",
+      degree: "",
+      diploma: "",
+      educationalDocs: "",
       payroll: "",
+      transcript: "",
+      englishLanguage: "",
+      letterFromOrg: "",
+      professionalLicense: "",
+      renewedLicense: "",
+      letterOrg: "",
+      masters: "",
+      mastersTranscript: "",
+      phd: "",
+      phdTranscript: "",
 
       declinedFields: [],
       acceptedFields: [],
       remark: "",
+
+      documentMessage: "",
+      maxFileSize: "",
+      maxSizeMB: "",
+      fileSizeExceed: "",
 
       declinedFieldsCheck1: false,
       acceptedFieldsCheck1: false,
@@ -393,12 +428,29 @@ export default {
       getLicense: "renewal/getLicense",
       getDocumentSpec: "renewal/getDocumentSpec",
 
-      getWorkExperience: "renewal/getRenewalWorkExperience",
-      getRenewalLetter: "renewal/getRenewalLicense",
-      getcpd: "renewal/getRenewalCpd",
-      getPreviousLicense: "renewal/getPreviousLicense",
+      getPassport: "renewal/getPassport",
       getHealthExamCert: "renewal/getRenewalHealthExamCert",
+      getWorkExperience: "renewal/getRenewalWorkExperience",
+      getcpd: "renewal/getRenewalCpd",
+      getHerqa: "renewal/getHerqa",
+      getPreviousLicense: "renewal/getPreviousLicense",
+      getSupportLetter: "renewal/getSupportLetter",
+      getCoc: "renewal/getCoc",
+      getDegree: "renewal/getDegree",
+      getDiploma: "renewal/getDiploma",
+      getEducationalDocuments: "renewal/getEducationalDocuments",
       getPayroll: "renewal/getPayroll",
+      getTranscript: "renewal/getTranscript",
+      getEnglishLanguage: "renewal/getEnglishLanguage",
+      getLetterFromHiringInstitution: "renewal/getRenewalLicense",
+      getProfessionalLicense: "renewal/getProfessionalLicense",
+      getRenewedLicense: "renewal/getPreviousLicense",
+      getLetterFromOrg: "renewal/getLetterfromOrg",
+      getMasters: "renewal/getMasters",
+      getMastersTranscript: "renewal/getMastersTranscript",
+      getPhd: "renewal/getPhd",
+      getPhdTranscript: "renewal/getPhdTranscript",
+
       getDraftData: "renewal/getDraft",
       getDeclinedFields: "renewal/getDeclinedFields",
       getAcceptedFields: "renewal/getAcceptedFields",
@@ -406,6 +458,9 @@ export default {
     }),
   },
   created() {
+    this.documentMessage = MESSAGE.DOC_MESSAGE;
+    this.maxFileSize = MAX_FILE_SIZE.MAX_FILE_SIZE;
+    this.maxSizeMB = MAX_SIZE_MB.MAX_SIZE_MB;
     let certificate = this.$store.getters["renewal/getCertificate"];
     let diploma = this.$store.getters["renewal/getDiploma"];
     let transcript = this.$store.getters["renewal/getTranscript"];
@@ -593,13 +648,29 @@ export default {
     this.license = this.getLicense;
     this.buttons = this.getButtons;
     this.documentSpec = this.getDocumentSpec;
+
+    this.passport = this.getPassport;
+    this.healthExamCert = this.getHealthExamCert;
     this.workExperience = this.getWorkExperience;
     this.cpd = this.getcpd;
-    this.healthExamCert = this.getHealthExamCert;
+    this.herqa = this.getHerqa;
     this.previousLicense = this.getPreviousLicense;
-    this.renewalLetter = this.getRenewalLetter;
-    this.professionalDoc = this.getProfessionalDocuments;
+    this.supportLetter = this.getSupportLetter;
+    this.coc = this.getCoc;
+    this.degree = this.getDegree;
+    this.diploma = this.getDiploma;
+    this.educationalDocs = this.getEducationalDocuments;
     this.payroll = this.getPayroll;
+    this.transcript = this.getTranscript;
+    this.englishLanguage = this.getEnglishLanguage;
+    this.letterFromOrg = this.getLetterFromHiringInstitution;
+    this.professionalLicense = this.getProfessionalLicense;
+    this.renewedLicense = this.getRenewedLicense;
+    this.letterOrg = this.getLetterFromOrg;
+    this.masters = this.getMasters;
+    this.mastersTranscript = this.getMastersTranscript;
+    this.phd = this.getPhd;
+    this.phdTranscript = this.getPhdTranscript;
   },
   methods: {
     ...mapActions(["setProfessionalDoc"]),
@@ -631,68 +702,81 @@ export default {
       this.transcriptFileSize = "";
     },
     handleCertificateUpload() {
-      this.showUpload = false;
       this.photoFile = this.$refs.photoFile.files[0];
       let reader = new FileReader();
       let fileS = this.photoFile.size;
-      if (fileS > 0 && fileS < 1000) {
-        this.photoFileSize = fileS + " " + "B";
-      } else if (fileS > 1000 && fileS < 1000000) {
-        this.photoFileSize = fileS / 1000 + "kB";
-      } else {
-        this.photoFileSize = fileS / 1000000 + "MB";
-      }
-      reader.addEventListener(
-        "load",
-        function() {
-          this.showPreview = true;
-          this.filePreview = reader.result;
-        }.bind(this),
-        false
-      );
-
-      if (this.photoFile) {
-        if (/\.(jpe?g|png|gif)$/i.test(this.photoFile.name)) {
-          this.isImage = true;
-          reader.readAsDataURL(this.photoFile);
-        } else if (/\.(pdf)$/i.test(this.photoFile.name)) {
-          this.isImage = false;
-          this.isPdf = true;
-          reader.readAsDataURL(this.photoFile);
+      if (fileS <= this.maxFileSize / 1000) {
+        this.showUpload = false;
+        this.fileSizeExceed = false;
+        if (fileS > 0 && fileS < 1000) {
+          this.photoFileSize = fileS + " " + "B";
+        } else if (fileS > 1000 && fileS < 1000000) {
+          this.photoFileSize = fileS / 1000 + "kB";
+        } else {
+          this.photoFileSize = fileS / 1000000 + "MB";
         }
+        reader.addEventListener(
+          "load",
+          function() {
+            this.showPreview = true;
+            this.filePreview = reader.result;
+          }.bind(this),
+          false
+        );
+        if (this.photoFile) {
+          if (/\.(jpe?g|png|gif)$/i.test(this.photoFile.name)) {
+            this.isImage = true;
+            reader.readAsDataURL(this.photoFile);
+          } else if (/\.(pdf)$/i.test(this.photoFile.name)) {
+            this.isImage = false;
+            this.isPdf = true;
+            reader.readAsDataURL(this.photoFile);
+          }
+        }
+      } else {
+        this.fileSizeExceed = true;
+        this.photoFile = "";
+        this.showUpload = true;
+        this.isImage = false;
       }
     },
     handleDiplomaUpload() {
-      this.showDiplomaUpload = false;
       this.diplomaFile = this.$refs.diplomaFile.files[0];
       let reader = new FileReader();
       let fileS = this.diplomaFile.size;
-      if (fileS > 0 && fileS < 1000) {
-        this.diplomaFileSize += "B";
-      } else if (fileS > 1000 && fileS < 1000000) {
-        this.diplomaFileSize = fileS / 1000 + "kB";
-      } else {
-        this.diplomaFileSize = fileS / 1000000 + "MB";
-      }
-
-      reader.addEventListener(
-        "load",
-        function() {
-          this.showDiplomaPreview = true;
-          this.diplomaPreview = reader.result;
-        }.bind(this),
-        false
-      );
-
-      if (this.diplomaFile) {
-        if (/\.(jpe?g|png|gif)$/i.test(this.diplomaFile.name)) {
-          this.isDiplomaImage = true;
-          reader.readAsDataURL(this.diplomaFile);
-        } else if (/\.(pdf)$/i.test(this.diplomaFile.name)) {
-          this.isDiplomaImage = false;
-          this.isUDPdf = true;
-          reader.readAsDataURL(this.diplomaFile);
+      if (fileS <= this.maxFileSize / 1000) {
+        this.fileSizeExceed = false;
+        this.showDiplomaUpload = false;
+        if (fileS > 0 && fileS < 1000) {
+          this.diplomaFileSize += "B";
+        } else if (fileS > 1000 && fileS < 1000000) {
+          this.diplomaFileSize = fileS / 1000 + "kB";
+        } else {
+          this.diplomaFileSize = fileS / 1000000 + "MB";
         }
+        reader.addEventListener(
+          "load",
+          function() {
+            this.showDiplomaPreview = true;
+            this.diplomaPreview = reader.result;
+          }.bind(this),
+          false
+        );
+        if (this.diplomaFile) {
+          if (/\.(jpe?g|png|gif)$/i.test(this.diplomaFile.name)) {
+            this.isDiplomaImage = true;
+            reader.readAsDataURL(this.diplomaFile);
+          } else if (/\.(pdf)$/i.test(this.diplomaFile.name)) {
+            this.isDiplomaImage = false;
+            this.isUDPdf = true;
+            reader.readAsDataURL(this.diplomaFile);
+          }
+        }
+      } else {
+        this.fileSizeExceed = true;
+        this.diplomaFile = "";
+        this.showDiplomaUpload = true;
+        this.isDiplomaImage = false;
       }
     },
     handleTranscriptUpload() {
@@ -700,32 +784,39 @@ export default {
       this.transcriptFile = this.$refs.transcriptFile.files[0];
       let reader = new FileReader();
       let fileS = this.transcriptFile.size;
-      if (fileS > 0 && fileS < 1000) {
-        this.transcriptFileSize += "B";
-      } else if (fileS > 1000 && fileS < 1000000) {
-        this.transcriptFileSize = fileS / 1000 + "kB";
-      } else {
-        this.transcriptFileSize = fileS / 1000000 + "MB";
-      }
-
-      reader.addEventListener(
-        "load",
-        function() {
-          this.showTranscriptPreview = true;
-          this.transcriptPreview = reader.result;
-        }.bind(this),
-        false
-      );
-
-      if (this.transcriptFile) {
-        if (/\.(jpe?g|png|gif)$/i.test(this.transcriptFile.name)) {
-          this.isTranscriptImage = true;
-          reader.readAsDataURL(this.transcriptFile);
-        } else if (/\.(pdf)$/i.test(this.transcriptFile.name)) {
-          this.isTranscriptImage = false;
-          this.isUTPdf = true;
-          reader.readAsDataURL(this.transcriptFile);
+      if (fileS <= this.maxFileSize / 1000) {
+        this.fileSizeExceed = false;
+        this.showTranscriptUpload = false;
+        if (fileS > 0 && fileS < 1000) {
+          this.transcriptFileSize += "B";
+        } else if (fileS > 1000 && fileS < 1000000) {
+          this.transcriptFileSize = fileS / 1000 + "kB";
+        } else {
+          this.transcriptFileSize = fileS / 1000000 + "MB";
         }
+        reader.addEventListener(
+          "load",
+          function() {
+            this.showTranscriptPreview = true;
+            this.transcriptPreview = reader.result;
+          }.bind(this),
+          false
+        );
+        if (this.transcriptFile) {
+          if (/\.(jpe?g|png|gif)$/i.test(this.transcriptFile.name)) {
+            this.isTranscriptImage = true;
+            reader.readAsDataURL(this.transcriptFile);
+          } else if (/\.(pdf)$/i.test(this.transcriptFile.name)) {
+            this.isTranscriptImage = false;
+            this.isUTPdf = true;
+            reader.readAsDataURL(this.transcriptFile);
+          }
+        }
+      } else {
+        this.fileSizeExceed = true;
+        this.transcriptFile = "";
+        this.showTranscriptUpload = true;
+        this.isTranscriptImage = false;
       }
     },
     submit() {
@@ -781,10 +872,14 @@ export default {
               departmentId: this.license.education.institutionId,
             },
             residenceWoredaId: this.license.residenceWoredaId,
-            professionalTypeId: this.licenseInfo.professionalTypeId,
+            professionalTypeIds: this.licenseInfo.professionalTypeIds,
+            educationalLevelId: this.licenseInfo.educationalLevelId,
             paymentSlip: null,
             occupationTypeId: this.licenseInfo.occupationTypeId,
             expertLevelId: this.licenseInfo.expertLevelId,
+            otherEducationalInstitution: this.licenseInfo
+              .otherEducationalInstitution,
+            otherProfessionalType: this.licenseInfo.otherProfessionalType,
           },
         };
         this.$store
@@ -794,27 +889,18 @@ export default {
             let formData = new FormData();
 
             formData.append(
-              this.documentSpec[7].documentType.code,
-              this.letter
+              this.documentSpec[0].documentType.code,
+              this.passport
             );
             formData.append(
               this.documentSpec[2].documentType.code,
               this.healthExamCert
             );
-
-            formData.append(this.documentSpec[4].documentType.code, this.cpd);
-            formData.append(
-              this.documentSpec[5].documentType.code,
-              this.workExperience
-            );
-            formData.append(
-              this.documentSpec[6].documentType.code,
-              this.previousLicense
-            );
             formData.append(
               this.documentSpec[8].documentType.code,
               this.photoFile
             );
+
             formData.append(
               this.documentSpec[9].documentType.code,
               this.diplomaFile
@@ -824,8 +910,90 @@ export default {
               this.transcriptFile
             );
             formData.append(
-              this.documentSpec[11].documentType.code,
+              this.documentSpec[5].documentType.code,
+              this.workExperience
+            );
+            formData.append(this.documentSpec[4].documentType.code, this.cpd);
+            formData.append(this.documentSpec[18].documentTypeCode, this.herqa);
+            formData.append(
+              this.documentSpec[6].documentTypeCode,
+              this.previousLicense
+            );
+            formData.append(
+              this.documentSpec[17].documentTypeCode,
+              this.supportLetter
+            );
+            formData.append(this.documentSpec[11].documentType.code, this.coc);
+            formData.append(
+              this.documentSpec[24].documentType.code,
+              this.degree
+            );
+            formData.append(
+              this.documentSpec[25].documentType.code,
+              this.diploma
+            );
+            if (this.educationalDocs != undefined) {
+              formData.append(
+                this.documentSpec[12].documentType.code,
+                this.educationalDocs[0]
+              );
+              formData.append(
+                this.documentSpec[13].documentType.code,
+                this.educationalDocs[1]
+              );
+              formData.append(
+                this.documentSpec[14].documentType.code,
+                this.educationalDocs[2]
+              );
+              formData.append(
+                this.documentSpec[15].documentType.code,
+                this.educationalDocs[3]
+              );
+              formData.append(
+                this.documentSpec[16].documentType.code,
+                this.educationalDocs[4]
+              );
+            }
+            formData.append(
+              this.documentSpec[23].documentType.code,
               this.payroll
+            );
+            formData.append(
+              this.documentSpec[26].documentType.code,
+              this.transcript
+            );
+            formData.append(
+              this.documentSpec[7].documentType.code,
+              this.englishLanguage
+            );
+            formData.append(
+              this.documentSpec[19].documentType.code,
+              this.letterFromOrg
+            );
+            formData.append(
+              this.documentSpec[22].documentType.code,
+              this.professionalLicense
+            );
+            formData.append(
+              this.documentSpec[21].documentType.code,
+              this.renewedLicense
+            );
+            formData.append(
+              this.documentSpec[20].documentType.code,
+              this.letterOrg
+            );
+            formData.append(
+              this.documentSpec[27].documentType.code,
+              this.masters
+            );
+            formData.append(
+              this.documentSpec[28].documentType.code,
+              this.mastersTranscript
+            );
+            formData.append(this.documentSpec[29].documentType.code, this.phd);
+            formData.append(
+              this.documentSpec[30].documentType.code,
+              this.phdTranscript
             );
             let payload = { document: formData, id: licenseId };
             this.$store

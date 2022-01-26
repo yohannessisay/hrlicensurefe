@@ -52,7 +52,10 @@
                 {{ "Department:  " + newLicense.education.department.name }}
               </h4>
               <h4 class="mt-2 ml-small w-1/2">
-                {{ "Institution:  " + newLicense.education.institution.name }}
+                Institution: {{newLicense.otherEducationalInstitution
+                    ? newLicense.otherEducationalInstitution
+                    : newLicense.education.institution.name
+                }}
               </h4>
               <!-- <h4 class="mt-2">{{ "Institution:  " + newLicense.education.institution.name }}</h4> -->
             </div>
@@ -61,7 +64,7 @@
               <h4 class="mt-2 ml-small w-1/2">
                 {{
                   "Institution Type:  " +
-                    newLicense.education.institution.institutionType.name
+                    newLicense.education.institution.name
                 }}
               </h4>
             </div>
@@ -112,7 +115,15 @@
                     accepted[index]
                 "
               > -->
-              {{ documentTypeName }}
+              {{ documentTypeName }} | </label>
+              <label
+                :class="
+                  'justify-center items-center text-' + 
+                  approvedColor + 
+                  ' text-2x1'
+                "
+              >
+                {{ approvedOrRejected }}
               <!-- </div> -->
               <!-- <div
                 v-else-if="
@@ -408,7 +419,10 @@ export default {
 
     const adminId = +localStorage.getItem("adminId");
 
+    let approvedOrRejected = ref("");
+
     let evaluationSuccess = ref(false);
+    let approvedColor = ref("lightBlueB-500");
     let showLoadingconfirmed = ref(false);
     let accepted = ref([]);
     let req = ref({});
@@ -475,7 +489,6 @@ export default {
         .dispatch("reviewer/" + applicationType, applicationId)
         .then((res) => {
           newLicense.value = res.data.data;
-          console.log("new license", newLicense.value);
           buttons.value = res.data.data.applicationStatus.buttons;
           if (applicationType == "getVerificationApplication") {
             buttons.value = res.data.data.applicationStatus.buttons.filter(
@@ -490,7 +503,6 @@ export default {
             });
           }
           docs.value = res.data.data.documents;
-          console.log("docs value ", docs.value);
           if ((newLicense.value.applicationStatus.code = "APP")) {
             accepted.value = newLicense.value.acceptedFields;
             rejected.value = newLicense.value.declinedFields;
@@ -551,14 +563,12 @@ export default {
         if (fromModalSendDeclinedData.value == true) {
           sendDeclinedData.value = true;
         }
-        console.log("new license remark is ", newLicense.value.remark)
         evaluateData.value[0].remark = newLicense.value.remark;
       }
       
       req.value = {
         ...evaluateData.value[0],
       };
-      console.log("request value finally", req.value);
       if (sendDeclinedData.value == true) {
         if (applicationType.value == "Verification") {
           evaluateApplication("evaluatVerification", req.value);
@@ -577,19 +587,16 @@ export default {
 
     const evaluateApplication = (applicationType, req) => {
       showLoadingconfirmed.value = true;
-      console.log("request will be sent is ", req);
         store.dispatch("reviewer/" + applicationType, req).then((res) => {
           showLoadingconfirmed.value = false;
           if (res.statusText == "Created") {
             showFlash.value = true;
-            console.log("successful");
             evaluationSuccess.value = true;
             setTimeout(() => {
               router.push("/admin/review");
             }, 3000);
           } else {
             showErrorFlash.value = true;
-            console.log("something went wrong");
             setTimeout(() => {
               router.go();
             }, 3000);
@@ -599,14 +606,11 @@ export default {
 
     const toggleModal = () => {
       showRemark.value = !showRemark.value;
-      console.log("toggle modal");
     };
     const submitRemark = () => {
       showRemark.value = !showRemark.value;
       fromModalSendDeclinedData.value = true;
       action("ReturnToReviewerEvent");
-
-      console.log("submit remark");
     };
 
     const nextRemark = () => {
@@ -623,9 +627,17 @@ export default {
       modalFindDocumentType(documentTypes.value, rejectedObj.value[ind.value]);
     };
     const findDocumentType = (obj, ab) => {
+      approvedOrRejected.value = "Approved";
+      approvedColor.value = "lightBlueB-500";
       for (var prop in obj) {
         if (obj[prop].code == ab.documentTypeCode) {
           documentTypeName.value = obj[prop].name;
+        }
+        for (var rejected in rejectedObj.value) {
+          if (ab.documentTypeCode == rejectedObj.value[rejected]) {
+            approvedColor.value = "red-200";
+            approvedOrRejected.value = "Rejected";
+          }
         }
       }
     };
@@ -633,7 +645,6 @@ export default {
     const modalFindDocumentType = (obj, ab) => {
       for (var prop in obj) {
         if (obj[prop].code == ab) {
-          console.log("object name is ", obj[prop].name);
           modalDocumentTypeName.value = obj[prop].name;
         }
       }
@@ -677,6 +688,8 @@ export default {
       previousRemark,
       findDocumentType,
       modalFindDocumentType,
+      approvedColor,
+      approvedOrRejected,
     };
   },
 };

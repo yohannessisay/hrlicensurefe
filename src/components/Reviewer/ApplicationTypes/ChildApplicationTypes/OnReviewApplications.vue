@@ -10,11 +10,20 @@
     >
       <div
         class="p-4 w-48 h-64"
-        @Click="detail(`/admin/applicant-detail`, item.id, item.applicant.id)"
+        @Click="detail(`/admin/on-review-detail`, item.id, item.applicant.id)"
       >
         <div class="flex content-center justify-center">
-          <span v-if="item.applicant.profile.photo !== '' && item.applicant.profile.photo !== null">
-            <img :src="item.applicant.profile.photo" alt="profile picture"  class="w-20 h-12" />
+          <span
+            v-if="
+              item.applicant.profile.photo !== '' &&
+                item.applicant.profile.photo !== null
+            "
+          >
+            <img
+              :src="item.applicant.profile.photo"
+              alt="profile picture"
+              class="w-20 h-12"
+            />
           </span>
           <span v-else>
             <img
@@ -50,7 +59,7 @@
           class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
         >
           On
-          {{ item.createdAt }}
+          {{ moment(item.createdAt).format("MMMM DD, YYYY") }}
         </span>
         <span
           class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
@@ -87,7 +96,7 @@
 <script>
 import moment from "moment";
 import { useRouter } from "vue-router";
-import { ref } from 'vue';
+import { ref } from "vue";
 export default {
   computed: {
     moment: () => moment,

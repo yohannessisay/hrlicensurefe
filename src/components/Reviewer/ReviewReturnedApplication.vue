@@ -48,7 +48,10 @@
                 {{ "Department:  " + newLicense.education.department.name }}
               </h4>
               <h4 class="mt-2 ml-small w-1/2">
-                {{ "Institution:  " + newLicense.education.institution.name }}
+                Institution: {{newLicense.otherEducationalInstitution
+                    ? newLicense.otherEducationalInstitution
+                    : newLicense.education.institution.name
+                }}
               </h4>
               <!-- <h4 class="mt-2">{{ "Institution:  " + newLicense.education.institution.name }}</h4> -->
             </div>
@@ -57,7 +60,7 @@
               <h4 class="mt-2 ml-small w-1/2">
                 {{
                   "Institution Type:  " +
-                    newLicense.education.institution.institutionType.name
+                    newLicense.education.institution.name
                 }}
               </h4>
             </div>
@@ -108,8 +111,16 @@
                     accepted[index]
                 "
               > -->
-              
-              {{ documentTypeName }} | </label><label :class="'justify-center items-center text-'+approvedColor+' text-2xl'"> {{ approvedOrRejected }}
+
+              {{ documentTypeName }} | </label
+            ><label
+              :class="
+                'justify-center items-center text-' +
+                  approvedColor +
+                  ' text-2xl'
+              "
+            >
+              {{ approvedOrRejected }}
               <!-- </div> -->
               <!-- <div
                 v-else-if="
@@ -466,7 +477,6 @@ export default {
         .dispatch("reviewer/" + applicationType, applicationId)
         .then((res) => {
           newLicense.value = res.data.data;
-          console.log("new license", newLicense.value);
           buttons.value = res.data.data.applicationStatus.buttons;
           if (applicationType == "getVerificationApplication") {
             buttons.value = res.data.data.applicationStatus.buttons.filter(
@@ -481,7 +491,6 @@ export default {
             });
           }
           docs.value = res.data.data.documents;
-          console.log("docs value ", docs.value)
           if ((newLicense.value.applicationStatus.code = "APP")) {
             accepted.value = newLicense.value.acceptedFields;
             rejected.value = newLicense.value.declinedFields;
@@ -490,15 +499,13 @@ export default {
             amount.value = ((index.value + 1) / docs.value.length) * 100;
             width.value = "width: " + amount.value + "%";
             if (
-                accepted.value.includes(
-                  docs.value[index.value].documentTypeCode
-                ) ||
-                rejected.value.includes(
-                  docs.value[index.value].documentTypeCode
-                )
-              ) {
-                findDocumentType(documentTypes.value, docs.value[index.value]);
-              }
+              accepted.value.includes(
+                docs.value[index.value].documentTypeCode
+              ) ||
+              rejected.value.includes(docs.value[index.value].documentTypeCode)
+            ) {
+              findDocumentType(documentTypes.value, docs.value[index.value]);
+            }
           }
         });
     };
@@ -530,9 +537,9 @@ export default {
       lastIndex.value = false;
     };
 
-    /* 
-    * approve is not needed for re evaluation feature
-    */
+    /*
+     * approve is not needed for re evaluation feature
+     */
 
     // const accept = (doc) => {
     //   if (accepted.value.length > 0) {
@@ -576,9 +583,9 @@ export default {
     //   }
     // };
 
-    /* 
-    * reject is not needed for re evaluation feature
-    */
+    /*
+     * reject is not needed for re evaluation feature
+     */
 
     // const reject = (doc) => {
     //   if (rejected.value.length > 0) {
@@ -616,17 +623,12 @@ export default {
 
     const action = (actionValue) => {
       if (actionValue == "ReturnToReviewerEvent") {
-        modalFindDocumentType(
-          documentTypes.value,
-          rejectedObj.value[0]
-        );
+        modalFindDocumentType(documentTypes.value, rejectedObj.value[0]);
         showRemark.value = true;
         sendDeclinedData.value = false;
         if (fromModalSendDeclinedData.value == true) {
           sendDeclinedData.value = true;
         }
-        console.log("rejected val", rejected.value);
-        console.log("rejectedObj val", rejectedObj.value)
       }
       newLicense.value.declinedFields = rejected.value;
       newLicense.value.acceptedFields = accepted.value;
@@ -653,12 +655,9 @@ export default {
 
     const editApplication = (applicationType, req) => {
       store.dispatch("reviewer/" + applicationType, req).then((res) => {
-        console.log("ieie resp", res);
-        console.log("ieie request", req)
         return;
         if (res.statusText == "Created") {
           showFlash.value = true;
-          console.log("successful");
           setTimeout(() => {
             router.push("/admin/review");
           }, 3000);
@@ -675,18 +674,18 @@ export default {
       showRemark.value = !showRemark.value;
     };
     const submitRemark = () => {
-      if(newLicense.value.remark == null) {
+      if (newLicense.value.remark == null) {
         isRemarked.value = true;
       } else {
         showRemark.value = !showRemark.value;
-      fromModalSendDeclinedData.value = true;
+        fromModalSendDeclinedData.value = true;
         action("ReturnToReviewerEvent");
       }
     };
 
     const nextRemark = () => {
-      if(ind.value != rejectedObj.value.length - 1) {
-        ind.value = ind.value + 1
+      if (ind.value != rejectedObj.value.length - 1) {
+        ind.value = ind.value + 1;
         modalFindDocumentType(
           documentTypes.value,
           rejectedObj.value[ind.value]
@@ -702,12 +701,11 @@ export default {
       approvedColor.value = "lightBlueB-500";
       for (var prop in obj) {
         if (obj[prop].code == ab.documentTypeCode) {
-          console.log("object value is ", obj[prop])
           documentTypeName.value = obj[prop].name;
         }
-        for (var rejected in rejectedObj.value){
+        for (var rejected in rejectedObj.value) {
           if (ab.documentTypeCode == rejectedObj.value[rejected]) {
-            approvedColor.value = "red-200"
+            approvedColor.value = "red-200";
             approvedOrRejected.value = "Rejected";
           }
         }

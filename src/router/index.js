@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHistory, useRouter } from "vue-router";
 import Landing from "../components/Landing/Landing.vue";
 const routes = [
   {
@@ -152,9 +152,14 @@ const routes = [
       ),
   },
   {
-    path: "/admin/report",
+    path: "/admin/review/report",
     name: "report",
-    component: () => import("../components/Report/report.vue"),
+    component: () => import("../components/Report/Report.vue"),
+  },
+  {
+    path: "/admin/review/dashboard",
+    name: "dashboard",
+    component: () => import("../components/Reviewer/Dashboard.vue"),
   },
   {
     path: "/myWork",
@@ -228,6 +233,17 @@ const routes = [
     name: "certifiedUsersDetail",
     component: () =>
       import("../components/Reviewer/Detail/CertifiedUsersDetail.vue"),
+  },
+  {
+    path: "/scanned-certified-user/:applicationType/:userId/:applicationId",
+    name: "scannedCertifiedUser",
+    component: () =>
+      import("../components/Reviewer/Detail/ScannedCertifiedUsers.vue"),
+  },
+  {
+    path: "/qrcode-image",
+    name: "qrcodeImage",
+    component: () => import("../components/Reviewer/Detail/QrCodeImage.vue"),
   },
   {
     path: "/admin/pendingPayments",
@@ -351,6 +367,34 @@ const routes = [
     name: "applicantDetail",
     component: () =>
       import("../components/Reviewer/Detail/ApplicantDetail.vue"),
+  },
+  {
+    path:
+      "/admin/on-review-detail/:applicationType/:applicationId/:applicantId",
+    name: "onReviewDetail",
+    component: () =>
+      import("../components/Reviewer/Detail/OnReviewDetail.vue"),
+  },
+  {
+    path:
+      "/admin/returned-application-detail/:applicationType/:applicationId/:applicantId",
+    name: "returnedApplicationDetail",
+    component: () =>
+      import("../components/Reviewer/Detail/ReturnedApplicationDetail.vue"),
+  },
+  {
+    path:
+      "/admin/others-re-evaluate-detail/:applicationType/:applicationId/:applicantId",
+    name: "othersReEvaluateDetail",
+    component: () =>
+      import("../components/Reviewer/Detail/OthersReEvaluateDetail.vue"),
+  },
+  {
+    path:
+      "/admin/newlicense-document/:newLicenseApplicationId/:newLicenseApplicantId/:renewalApplicationId/:renewalApplicantId",
+    name: "newlicenseDocuments",
+    component: () =>
+      import("../components/Reviewer/Detail/NewLicenseDocumentsForRenewal.vue"),
   },
   {
     path: "/admin",
@@ -863,10 +907,10 @@ router.beforeEach(async (to, from, next) => {
     !auth &&
     to.path !== "/landing" &&
     to.path !== "/" &&
-    to.path !== "/admin"
+    to.path !== "/admin" &&
+    to.name !== "scannedCertifiedUser"
   )
     next("/landing");
-  // console.log(to.path.split("/")[2]);
   else next();
 });
 

@@ -139,9 +139,7 @@ export default {
           }, 3000);
         }
 
-        // console.log("status", res)
         // if (res.data.status == "Success") {
-        //   console.log("logged in user", res.data.data)
         //   router.push({ path: "/admin/review" });
         // const isFirstLoggin = res.data.data.id; // res.data.data.id is gonna be changed soon
         // if (isFirstLoggin != 1) {
@@ -163,7 +161,6 @@ export default {
         // setTimeout(() => {}, 3000);
         //   }
         // }).catch(err => {
-        //   console.log("error found", err)
       });
     };
 

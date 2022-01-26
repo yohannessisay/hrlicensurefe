@@ -20,10 +20,10 @@
               <h5 class="ml-8">
                 {{
                   profileInfo.name +
-                  " " +
-                  profileInfo.fatherName +
-                  " " +
-                  profileInfo.grandFatherName
+                    " " +
+                    profileInfo.fatherName +
+                    " " +
+                    profileInfo.grandFatherName
                 }}
               </h5>
             </div>
@@ -42,17 +42,7 @@
             >
               <label class="ml-8"> Nationality</label>
               <h5 class="ml-8">
-                {{ profileInfo.nationality ? profileInfo.nationality : "-" }}
-              </h5>
-            </div>
-            <div
-              :class="[
-                profileInfo.placeOfBirth === null ? errorClass : activeClass,
-              ]"
-            >
-              <label class="ml-8"> Place of Birth</label>
-              <h5 class="ml-8">
-                {{ profileInfo.placeOfBirth ? profileInfo.placeOfBirth : "-" }}
+                {{ profileInfo.nationality ? profileInfo.nationality.name : "-" }}
               </h5>
             </div>
             <div
@@ -62,7 +52,11 @@
             >
               <label class="ml-8"> Date of Birth</label>
               <h5 class="ml-8">
-                {{ profileInfo.dateOfBirth ? moment(profileInfo.dateOfBirth).format("MMM D, YYYY") : "-" }}
+                {{
+                  profileInfo.dateOfBirth
+                    ? moment(profileInfo.dateOfBirth).format("MMM D, YYYY")
+                    : "-"
+                }}
               </h5>
             </div>
             <div
@@ -83,15 +77,17 @@
             </div>
           </div>
 
-          <div class="flex justify-start">
+          <div class="flex justify-start" v-if="expertLevelId != 3">
             <Title message="Address" />
           </div>
-          <div class="flex flex-row">
+          <div class="flex flex-row" v-if="expertLevelId != 3">
             <div
               :class="[
-                license.woreda === null ? errorClass :
-                license.woreda.zone === null ? errorClass :
-                license.woreda.zone.region === null
+                license.woreda === null
+                  ? errorClass
+                  : license.woreda.zone === null
+                  ? errorClass
+                  : license.woreda.zone.region === null
                   ? errorClass
                   : activeClass,
               ]"
@@ -99,9 +95,11 @@
               <label class="ml-8"> Region</label>
               <h5 class="ml-8">
                 {{
-                  license.woreda === null ? "-" :
-                  license.woreda.zone === null ? "-" :
-                  license.woreda.zone.region
+                  license.woreda === null
+                    ? "-"
+                    : license.woreda.zone === null
+                    ? "-"
+                    : license.woreda.zone.region
                     ? license.woreda.zone.region.name
                     : "-"
                 }}
@@ -109,52 +107,28 @@
             </div>
             <div
               :class="[
-                license.woreda === null ?
-                errorClass : license.woreda.zone === null ? 
-                errorClass : activeClass,
+                license.woreda === null
+                  ? errorClass
+                  : license.woreda.zone === null
+                  ? errorClass
+                  : activeClass,
               ]"
             >
               <label class="ml-8"> Zone</label>
               <h5 class="ml-8">
                 {{
-                  license.woreda === null ? "-" : license.woreda.zone ? license.woreda.zone.name : "-"
+                  license.woreda === null
+                    ? "-"
+                    : license.woreda.zone
+                    ? license.woreda.zone.name
+                    : "-"
                 }}
               </h5>
             </div>
-            <div
-              :class="[license.woreda === null ? errorClass : activeClass]"
-            >
+            <div :class="[license.woreda === null ? errorClass : activeClass]">
               <label class="ml-8"> Wereda</label>
               <h5 class="ml-8">
                 {{ license.woreda ? license.woreda.name : "-" }}
-              </h5>
-            </div>
-            <div
-              :class="[profileInfo.kebele === null ? errorClass : activeClass]"
-            >
-              <label class="ml-8"> Kebele</label>
-              <h5 class="ml-8">
-                {{ profileInfo.kebele ? profileInfo.kebele : "-" }}
-              </h5>
-            </div>
-            <div
-              :class="[
-                profileInfo.houseNumber === null ? errorClass : activeClass,
-              ]"
-            >
-              <label class="ml-8"> House Number</label>
-              <h5 class="ml-8">
-                {{ profileInfo.houseNumber ? profileInfo.houseNumber : "-" }}
-              </h5>
-            </div>
-            <div
-              :class="[
-                profileInfo.residence === null ? errorClass : activeClass,
-              ]"
-            >
-              <label class="ml-8"> Residence</label>
-              <h5 class="ml-8">
-                {{ profileInfo.residence ? profileInfo.residence : "-" }}
               </h5>
             </div>
           </div>
@@ -195,18 +169,6 @@
                 }}
               </h5>
             </div>
-            <div
-              :class="[
-                profileInfo.userType.name === null ? errorClass : activeClass,
-              ]"
-            >
-              <label class="ml-8"> User Type</label>
-              <h5 class="ml-8">
-                {{
-                  profileInfo.userType.name ? profileInfo.userType.name : "-"
-                }}
-              </h5>
-            </div>
           </div>
           <div class="flex justify-start">
             <Title message="Institution" />
@@ -225,8 +187,7 @@
               <h5 class="ml-8">{{ education.institutionTypeName }}</h5>
             </div>
           </div>
-          <div class="flex justify-start flex-wrap">
-          </div>
+          <div class="flex justify-start flex-wrap"></div>
         </div>
       </div>
     </div>
@@ -246,7 +207,7 @@ import Title from "@/sharedComponents/Title";
 import ReviewerNavBar from "@/components/Reviewer/ReviewerNavBar";
 import { ref, onMounted } from "vue";
 import Spinner from "@/sharedComponents/Spinner";
-import moment from 'moment';
+import moment from "moment";
 
 export default {
   props: ["activeState"],
@@ -262,12 +223,14 @@ export default {
     const store = useStore();
     const router = useRouter();
     const route = useRoute();
-    
 
     let show = ref(false);
 
     let showLoading = ref(false);
     let isUserApproved = ref(false);
+
+    const expertLevelId = JSON.parse(localStorage.getItem("allAdminData"))
+      .expertLevelId;
 
     let license = ref({
       applicant: {},
@@ -305,7 +268,7 @@ export default {
     let getReviewId = ref(0);
 
     const created = async (applicationTypeName, applicationId, status) => {
-      if(status === 'approved' && applicationTypeName === "Good Standing") {
+      if (status === "approved" && applicationTypeName === "Good Standing") {
         isUserApproved.value = true;
       }
       licenseId.value = applicationId;
@@ -322,10 +285,15 @@ export default {
             profileInfo.value = license.value.applicant.profile;
             education.value.departmentName =
               license.value.education.department.name;
-            education.value.institutionName =
-              license.value.education.institution.name;
-            education.value.institutionTypeName =
-              license.value.education.institution.institutionType.name;
+            if (license.value.otherEducationalInstitution) {
+              education.value.institutionName =
+                license.value.otherEducationalInstitution;
+            } else {
+              education.value.institutionName =
+                license.value.education.institution.name;
+              education.value.institutionTypeName =
+                license.value.education.institution.name;
+            }
           });
       }
       if (applicationType.value == "Good Standing") {
@@ -340,10 +308,15 @@ export default {
             // applicantId.value = license.value.applicantId;
             education.value.departmentName =
               license.value.education.department.name;
-            education.value.institutionName =
-              license.value.education.institution.name;
-            education.value.institutionTypeName =
-              license.value.education.institution.institutionType.name;
+            if (license.value.otherEducationalInstitution) {
+              education.value.institutionName =
+                license.value.otherEducationalInstitution;
+            } else {
+              education.value.institutionName =
+                license.value.education.institution.name;
+              education.value.institutionTypeName =
+                license.value.education.institution.name;
+            }
           });
       }
       if (applicationType.value == "Verification") {
@@ -358,10 +331,15 @@ export default {
             // applicantId.value = license.value.applicantId;
             education.value.departmentName =
               license.value.education.department.name;
-            education.value.institutionName =
-              license.value.education.institution.name;
-            education.value.institutionTypeName =
-              license.value.education.institution.institutionType.name;
+            if (license.value.otherEducationalInstitution) {
+              education.value.institutionName =
+                license.value.otherEducationalInstitution;
+            } else {
+              education.value.institutionName =
+                license.value.education.institution.name;
+              education.value.institutionTypeName =
+                license.value.education.institution.name;
+            }
           });
       }
       if (applicationType.value == "Renewal") {
@@ -376,15 +354,24 @@ export default {
             // applicantId.value = license.value.applicantId;
             education.value.departmentName =
               license.value.education.department.name;
-            education.value.institutionName =
-              license.value.education.institution.name;
-            education.value.institutionTypeName =
-              license.value.education.institution.institutionType.name;
+            if (license.value.otherEducationalInstitution) {
+              education.value.institutionName =
+                license.value.otherEducationalInstitution;
+            } else {
+              education.value.institutionName =
+                license.value.education.institution.name;
+              education.value.institutionTypeName =
+                license.value.education.institution.name;
+            }
           });
       }
     };
     onMounted(() => {
-      created(route.params.applicationType, route.params.applicationId, route.params.status);
+      created(
+        route.params.applicationType,
+        route.params.applicationId,
+        route.params.status
+      );
     });
 
     return {
@@ -406,6 +393,7 @@ export default {
       applicationType,
       licenseId,
       isUserApproved,
+      expertLevelId,
     };
   },
 };

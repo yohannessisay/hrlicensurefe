@@ -141,12 +141,8 @@ export default {
           store.getters["reviewerNewLicense/getNewLicenseAssignedToYouSearched"];
         allInfo.value.assignApplication =
           store.getters["reviewerNewLicense/getNewLicenseAssignedToYouSearched"];
-          console.log("new licensss", store.getters["reviewerNewLicense/getNewLicenseAssignedToYouSearched"])
 
         for (let applicant in allInfo.value.assignApplication) {
-          allInfo.value.assignApplication[applicant].createdAt = moment(
-            allInfo.value.assignApplication[applicant].createdAt
-          ).format("MMMM D, YYYY");
           if (
             allInfo.value.assignApplication[applicant].applicationType ===
             undefined

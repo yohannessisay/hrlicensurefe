@@ -11,7 +11,7 @@
             <h2>Nothing To Show!</h2>
           </div>
         </div>
-          <my-pending-payments :myPendings="getPending" />
+        <my-pending-payments :myPendings="getPending" />
       </div>
     </div>
     <div
@@ -31,18 +31,18 @@ import { useStore } from "vuex";
 import { ref, onMounted, watch } from "vue";
 import { useRouter } from "vue-router";
 
-import store from '../../store'
+import store from "../../store";
 import Spinner from "@/sharedComponents/Spinner";
 import MyPendingPayments from "./HomeComponents/MyPendingPayments.vue";
-import moment from 'moment'
+import moment from "moment";
 
 export default {
   components: { ReviewerNavBar, Title, Spinner, MyPendingPayments },
   computed: {
     moment: () => moment,
     getPending() {
-      return store.getters['reviewer/getPendingPayments'];
-    }
+      return store.getters["reviewer/getPendingPayments"];
+    },
   },
   setup() {
     const store = useStore();
@@ -55,12 +55,12 @@ export default {
     let showLoading = ref(false);
 
     const fetchPendings = () => {
-      showLoading.value = true
-      store.dispatch("reviewer/getPendingPayments", adminId).then(res => {
-        showLoading.value = false
-          pending.value = store.getters['reviewer/getPendingPayments'];
-        if(store.getters['reviewer/getPendingPayments'].length !== 0) {
-          for (var prop in store.getters['reviewer/getPendingPayments']) {
+      showLoading.value = true;
+      store.dispatch("reviewer/getPendingPayments", adminId).then((res) => {
+        showLoading.value = false;
+        pending.value = store.getters["reviewer/getPendingPayments"];
+        if (store.getters["reviewer/getPendingPayments"].length !== 0) {
+          for (var prop in store.getters["reviewer/getPendingPayments"]) {
             if (pending.value[prop].applicationType == "Renewal") {
               pending.value[prop].newLicenseCode =
                 pending.value[prop].renewalCode;
@@ -86,7 +86,6 @@ export default {
       router.push(url);
     };
 
-
     onMounted(() => {
       fetchPendings();
     });
@@ -97,7 +96,7 @@ export default {
       nothingToShowPending,
       showLoading,
     };
-  }
+  },
 };
 </script>
 <style scoped>

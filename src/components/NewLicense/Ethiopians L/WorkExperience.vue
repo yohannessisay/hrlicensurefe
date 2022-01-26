@@ -26,16 +26,20 @@
           ACCEPTED
         </h2>
         <TitleWithIllustration
-          illustration="User"
-          message="Authenticated Work Experience"
+          illustration="Certificate"
+          message="Work Experience"
           class="mt-8"
         />
+        <span class="flex justify-center">{{ documentMessage }}</span>
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
           <div class="flex justify-center">
             <div>
               <span>
-                <h2>{{ workExperienceFile.name }}</h2>
-                <h2>{{ fileSize }}</h2>
+                <h2 v-if="!fileSizeExceed">{{ workExperienceFile.name }}</h2>
+                <h2 v-if="!fileSizeExceed">{{ fileSize }}</h2>
+                <h3 style="color: red" v-if="fileSizeExceed">
+                  File size must be less than {{ maxSizeMB }} MB
+                </h3>
               </span>
               <span v-if="showUpload">
                 <label class="text-primary-700"
@@ -64,7 +68,6 @@
                 </p>
                 <img v-bind:src="filePreview" v-show="showPreview" />
               </picture>
-              <!--  -->
               <div v-if="!showUpload && isPdf">
                 <p>
                   <a href="javascript:void(0)" @click="reset()">Upload again</a>
@@ -78,6 +81,9 @@
           </div>
         </form>
         <div v-if="buttons && !draftStatus" class="flex justify-center mb-8">
+          <button @click="submitBack">
+            Back
+          </button>
           <button @click="submit">Next</button>
           <button @click="draft(buttons[1].action)" variant="outline">
             {{ buttons[1]["name"] }}
@@ -87,6 +93,9 @@
           v-if="buttons && draftStatus == 'DRA'"
           class="flex justify-center mb-8"
         >
+          <button @click="submitBack">
+            Back
+          </button>
           <button @click="submit">Next</button>
           <button @click="draft(buttons[2].action)" variant="outline">
             {{ buttons[2]["name"] }}
@@ -103,19 +112,25 @@
           v-if="buttons && draftStatus == 'SUB'"
           class="flex justify-center mb-8"
         >
+          <button @click="submitBack">
+            Back
+          </button>
           <button @click="submit">Next</button>
           <button
             class="withdraw"
-            @click="withdraw(buttons[0].action)"
+            @click="withdraw(buttons[1].action)"
             variant="outline"
           >
-            {{ buttons[0]["name"] }}
+            {{ buttons[1]["name"] }}
           </button>
         </div>
         <div
           v-if="buttons && draftStatus == 'USUP'"
           class="flex justify-center mb-8"
         >
+          <button @click="submitBack">
+            Back
+          </button>
           <button @click="submit">Next</button>
           <button @click="draft(buttons[0].action)" variant="outline">
             {{ buttons[0]["name"] }}
@@ -128,6 +143,9 @@
           v-if="buttons && draftStatus == 'DEC'"
           class="flex justify-center mb-8"
         >
+          <button @click="submitBack">
+            Back
+          </button>
           <button @click="submit">Next</button>
           <!-- <button @click="draft(buttons[0].action)" variant="outline">
             {{ buttons[0]["name"] }}
@@ -158,6 +176,9 @@ import { useRoute, useRouter } from "vue-router";
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import Spinner from "@/sharedComponents/Spinner";
+import MESSAGE from "../../../composables/documentMessage";
+import MAX_FILE_SIZE from "../../../composables/documentMessage";
+import MAX_SIZE_MB from "../../../composables/documentMessage";
 
 export default {
   components: {
@@ -198,9 +219,16 @@ export default {
     let draftData = ref("");
     let draftStatus = ref("");
 
+    let workExperienceBack = ref("");
+
     let declinedFields = ref([]);
     let acceptedFields = ref([]);
     let remark = ref("");
+
+    let documentMessage = ref("");
+    let maxFileSize = ref("");
+    let maxSizeMB = ref("");
+    let fileSizeExceed = ref(false);
 
     let declinedFieldsCheck = ref(false);
     let acceptedFieldsCheck = ref(false);
@@ -220,6 +248,10 @@ export default {
     let diploma = ref("");
     let transcript = ref("");
     let degree = ref("");
+    let masters = ref("");
+    let mastersTranscript = ref("");
+    let phd = ref("");
+    let phdTranscript = ref("");
 
     const reset = () => {
       showUpload.value = true;
@@ -232,41 +264,50 @@ export default {
     };
 
     const handleFileUpload = () => {
-      dataChanged.value = true;
-      showUpload.value = false;
       workExperienceFile.value = workExperienceFileP.value.files[0];
       let reader = new FileReader();
       isImage.value = true;
       let fileS = workExperienceFile.value.size;
-      if (fileS > 0 && fileS < 1000) {
-        fileSize.value += "B";
-      } else if (fileS > 1000 && fileS < 1000000) {
-        fileSize.value = fileS / 1000 + "kB";
-      } else {
-        fileSize.value = fileS / 1000000 + "MB";
-      }
-      reader.addEventListener(
-        "load",
-        function() {
-          showPreview.value = true;
-          filePreview.value = reader.result;
-        },
-        false
-      );
-
-      if (workExperienceFile.value) {
-        if (/\.(jpe?g|png|gif)$/i.test(workExperienceFile.value.name)) {
-          isImage.value = true;
-          reader.readAsDataURL(workExperienceFile.value);
-        } else if (/\.(pdf)$/i.test(workExperienceFile.value.name)) {
-          isImage.value = false;
-          isPdf.value = true;
-          reader.readAsDataURL(workExperienceFile.value);
+      if (fileS <= maxFileSize.value / 1000) {
+        dataChanged.value = true;
+        showUpload.value = false;
+        if (fileS > 0 && fileS < 1000) {
+          fileSize.value += "B";
+        } else if (fileS > 1000 && fileS < 1000000) {
+          fileSize.value = fileS / 1000 + "kB";
+        } else {
+          fileSize.value = fileS / 1000000 + "MB";
         }
+        reader.addEventListener(
+          "load",
+          function() {
+            showPreview.value = true;
+            filePreview.value = reader.result;
+          },
+          false
+        );
+        if (workExperienceFile.value) {
+          if (/\.(jpe?g|png|gif)$/i.test(workExperienceFile.value.name)) {
+            isImage.value = true;
+            reader.readAsDataURL(workExperienceFile.value);
+          } else if (/\.(pdf)$/i.test(workExperienceFile.value.name)) {
+            isImage.value = false;
+            isPdf.value = true;
+            reader.readAsDataURL(workExperienceFile.value);
+          }
+        }
+      } else {
+        fileSizeExceed.value = true;
+        workExperienceFile.value = "";
+        isImage.value = true;
       }
     };
     const submit = () => {
       emit("changeActiveState");
+      store.dispatch("newlicense/setWorkExperience", workExperienceFile);
+    };
+    const submitBack = () => {
+      emit("changeActiveStateMinus");
       store.dispatch("newlicense/setWorkExperience", workExperienceFile);
     };
     buttons = store.getters["newlicense/getButtons"];
@@ -288,6 +329,10 @@ export default {
     diploma = store.getters["newlicense/getDiploma"];
     degree = store.getters["newlicense/getDegree"];
     transcript = store.getters["newlicense/getTranscript"];
+    masters = store.getters["newlicense/getMasters"];
+    mastersTranscript = store.getters["newlicense/getMastersTranscript"];
+    phd = store.getters["newlicense/getPhd"];
+    phdTranscript = store.getters["newlicense/getPhdTranscript"];
 
     const draft = (action) => {
       message.value.showLoading = true;
@@ -356,12 +401,16 @@ export default {
               departmentId: licenseInfo.education.departmentId,
               institutionId: licenseInfo.education.institutionId,
             },
-            professionalTypeId: licenseInfo.professionalTypeId,
+            professionalTypeIds: licenseInfo.professionalTypeIds,
             residenceWoredaId: licenseInfo.residenceWoredaId,
+            educationalLevelId: licenseInfo.educationalLevelId,
             paymentSlip: null,
             occupationTypeId: licenseInfo.occupationTypeId,
             nativeLanguageId: licenseInfo.nativeLanguageId,
             expertLevelId: licenseInfo.expertLevelId,
+            otherEducationalInstitution:
+              licenseInfo.otherEducationalInstitution,
+            otherProfessionalType: licenseInfo.otherProfessionalType,
           },
         };
         store.dispatch("newlicense/addNewLicense", license).then((res) => {
@@ -378,8 +427,8 @@ export default {
               documentSpecs[5].documentType.code,
               englishLanguage
             );
-            formData.append(documentSpecs[7].documentType.code, diploma);
-            formData.append(documentSpecs[8].documentType.code, transcript);
+            formData.append(documentSpecs[22].documentType.code, diploma);
+            formData.append(documentSpecs[23].documentType.code, transcript);
             formData.append(documentSpecs[21].documentType.code, degree);
             if (professionalDoc != undefined) {
               formData.append(
@@ -430,6 +479,13 @@ export default {
               professionalLicense
             );
             formData.append(documentSpecs[20].documentType.code, payroll);
+            formData.append(documentSpecs[24].documentType.code, masters);
+            formData.append(
+              documentSpecs[25].documentType.code,
+              mastersTranscript
+            );
+            formData.append(documentSpecs[26].documentType.code, phd);
+            formData.append(documentSpecs[27].documentType.code, phdTranscript);
             let payload = { document: formData, id: licenseId };
             store
               .dispatch("newlicense/uploadDocuments", payload)
@@ -465,7 +521,7 @@ export default {
               let licenseId = route.params.id;
               let formData = new FormData();
               formData.append(
-                documentSpecs[1].documentType.code,
+                documentSpecs[4].documentType.code,
                 workExperienceFile.value
               );
               let payload = { document: formData, id: licenseId };
@@ -516,11 +572,15 @@ export default {
               departmentId: licenseInfo.education.departmentId,
               institutionId: licenseInfo.education.institutionId,
             },
-            professionalTypeId: licenseInfo.professionalTypeId,
+            professionalTypeIds: licenseInfo.professionalTypeIds,
             residenceWoredaId: licenseInfo.residenceWoredaId,
+            educationalLevelId: licenseInfo.educationalLevelId,
             occupationTypeId: licenseInfo.occupationTypeId,
             nativeLanguageId: licenseInfo.nativeLanguageId,
             expertLevelId: licenseInfo.expertLevelId,
+            otherEducationalInstitution:
+              licenseInfo.otherEducationalInstitution,
+            otherProfessionalType: licenseInfo.otherProfessionalType,
           },
         };
         store.dispatch("newlicense/addNewLicense", license).then((res) => {
@@ -528,10 +588,9 @@ export default {
             let licenseId = res.data.data.id;
             let formData = new FormData();
             formData.append(
-              documentSpecs[1].documentType.code,
+              documentSpecs[4].documentType.code,
               workExperienceFile.value
             );
-            formData.append(documentSpecs[2].documentType.code, licenseCopy);
             let payload = { document: formData, id: licenseId };
             store
               .dispatch("newlicense/uploadDocuments", payload)
@@ -575,6 +634,47 @@ export default {
     };
 
     onMounted(() => {
+      documentMessage.value = MESSAGE.DOC_MESSAGE;
+      maxFileSize.value = MAX_FILE_SIZE.MAX_FILE_SIZE;
+      maxSizeMB.value = MAX_SIZE_MB.MAX_SIZE_MB;
+      workExperienceBack = store.getters["newlicense/getWorkExperience"];
+      if (
+        workExperienceBack &&
+        workExperienceBack !== undefined &&
+        workExperienceBack !== null &&
+        workExperienceBack !== ""
+      ) {
+        dataChanged.value = true;
+        showUpload.value = false;
+        workExperienceFile.value = workExperienceBack;
+        let reader = new FileReader();
+        let fileS = workExperienceFile.value.size;
+        if (fileS > 0 && fileS < 1000) {
+          fileSize.value += "B";
+        } else if (fileS > 1000 && fileS < 1000000) {
+          fileSize.value = fileS / 1000 + "kB";
+        } else {
+          fileSize.value = fileS / 1000000 + "MB";
+        }
+        reader.addEventListener(
+          "load",
+          function() {
+            showPreview.value = true;
+            filePreview.value = reader.result;
+          },
+          false
+        );
+        if (workExperienceFile.value) {
+          if (/\.(jpe?g|png|gif)$/i.test(workExperienceFile.value.name)) {
+            isImage.value = true;
+            reader.readAsDataURL(workExperienceFile.value);
+          } else if (/\.(pdf)$/i.test(workExperienceFile.value.name)) {
+            isImage.value = false;
+            isPdf.value = true;
+            reader.readAsDataURL(workExperienceFile.value);
+          }
+        }
+      }
       declinedFields = store.getters["newlicense/getDeclinedFields"];
       acceptedFields = store.getters["newlicense/getAcceptedFields"];
       remark = store.getters["newlicense/getRemark"];
@@ -606,6 +706,7 @@ export default {
     return {
       workExperienceFile,
       workExperienceFileP,
+      workExperienceBack,
       showPreview,
       filePreview,
       showUpload,
@@ -614,6 +715,7 @@ export default {
       handleFileUpload,
       reset,
       submit,
+      submitBack,
       draft,
       withdraw,
       fileSize,
@@ -629,6 +731,10 @@ export default {
       remark,
       declinedFieldsCheck,
       acceptedFieldsCheck,
+      documentMessage,
+      fileSizeExceed,
+      maxFileSize,
+      maxSizeMB,
     };
   },
 };

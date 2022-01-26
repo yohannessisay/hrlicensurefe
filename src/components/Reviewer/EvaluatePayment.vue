@@ -23,7 +23,7 @@
                   style="border-radius: 100%"
                   v-bind:src="
                     'https://storage.googleapis.com/hris-lisence-dev/' +
-                    paymentImage
+                      paymentImage
                   "
                   class="img"
                 />
@@ -98,7 +98,7 @@
                 <img
                   v-bind:src="
                     'https://storage.googleapis.com/hris-lisence-dev/' +
-                    paymentImage
+                      paymentImage
                   "
                 />
               </picture>
@@ -107,7 +107,10 @@
             </div>
           </div>
           <!-- <div class="mt-medium" v-if="!showButtons"> -->
-          <div class="flex justfy-center items-center mt-medium" v-if="!showLoading">
+          <div
+            class="flex justfy-center items-center mt-medium"
+            v-if="!showLoading"
+          >
             <div
               v-for="button in buttons"
               :key="button.name"
@@ -117,8 +120,8 @@
                 variant="outline"
                 :class="button.class"
                 @click="action(button.action)"
-                >
-                  {{button.name}}
+              >
+                {{ button.name }}
               </button>
             </div>
             <!-- <button class="mr-medium" @click="accept()">Accept</button>
@@ -167,7 +170,7 @@ export default {
     FlashMessage,
     ErrorFlashMessage,
     ReviewerNavBar,
-    Spinner
+    Spinner,
   },
   setup() {
     const route = useRoute();
@@ -178,7 +181,7 @@ export default {
     let paymentImage = ref("");
     let documents = ref({});
 
-    let responseDatas = ref({})
+    let responseDatas = ref({});
 
     let showLoading = ref(false);
 
@@ -193,12 +196,12 @@ export default {
           .dispatch("reviewer/getNewLicenseApplication", applicationId)
           .then((res) => {
             showLoading.value = false;
-            responseDatas.value = res.data.data
-            buttons.value = res.data.data.applicationStatus.buttons
+            responseDatas.value = res.data.data;
+            buttons.value = res.data.data.applicationStatus.buttons;
             documents.value = res.data.data.documents;
             for (let doc in documents.value) {
               if (documents.value[doc].documentTypeCode == "SF") {
-                SFValue.value = documents.value[doc].documentTypeCode
+                SFValue.value = documents.value[doc].documentTypeCode;
                 paymentImage.value = documents.value[doc].filePath;
               }
             }
@@ -209,12 +212,12 @@ export default {
           .dispatch("reviewer/getGoodStandingApplication", applicationId)
           .then((res) => {
             showLoading.value = false;
-            responseDatas.value = res.data.data
-            buttons.value = res.data.data.applicationStatus.buttons
+            responseDatas.value = res.data.data;
+            buttons.value = res.data.data.applicationStatus.buttons;
             documents.value = res.data.data.documents;
             for (let doc in documents.value) {
               if (documents.value[doc].documentTypeCode == "SF") {
-                SFValue.value = documents.value[doc].documentTypeCode
+                SFValue.value = documents.value[doc].documentTypeCode;
                 paymentImage.value = documents.value[doc].filePath;
               }
             }
@@ -225,12 +228,12 @@ export default {
           .dispatch("reviewer/getVerificationApplication", applicationId)
           .then((res) => {
             showLoading.value = false;
-            responseDatas.value = res.data.data
-            buttons.value = res.data.data.applicationStatus.buttons
+            responseDatas.value = res.data.data;
+            buttons.value = res.data.data.applicationStatus.buttons;
             documents.value = res.data.data.documents;
             for (let doc in documents.value) {
               if (documents.value[doc].documentTypeCode == "SF") {
-                SFValue.value = documents.value[doc].documentTypeCode
+                SFValue.value = documents.value[doc].documentTypeCode;
                 paymentImage.value = documents.value[doc].filePath;
               }
             }
@@ -241,12 +244,12 @@ export default {
           .dispatch("reviewer/getRenewalApplication", applicationId)
           .then((res) => {
             showLoading.value = false;
-            responseDatas.value = res.data.data
-            buttons.value = res.data.data.applicationStatus.buttons
+            responseDatas.value = res.data.data;
+            buttons.value = res.data.data.applicationStatus.buttons;
             documents.value = res.data.data.documents;
             for (let doc in documents.value) {
               if (documents.value[doc].documentTypeCode == "SF") {
-                SFValue.value = documents.value[doc].documentTypeCode
+                SFValue.value = documents.value[doc].documentTypeCode;
                 paymentImage.value = documents.value[doc].filePath;
               }
             }
@@ -255,20 +258,19 @@ export default {
     };
 
     const action = (actionValue) => {
-      
-      if(actionValue == "ApprovePaymentEvent") {
-        if(responseDatas.value.acceptedFields == null) {
-          responseDatas.value.acceptedFields = [SFValue.value]
-        } else {      
-          responseDatas.value.acceptedFields.push(SFValue.value)
+      if (actionValue == "ApprovePaymentEvent") {
+        if (responseDatas.value.acceptedFields == null) {
+          responseDatas.value.acceptedFields = [SFValue.value];
+        } else {
+          responseDatas.value.acceptedFields.push(SFValue.value);
         }
         responseDatas.value.certified = true;
         responseDatas.value.certifiedDate = new Date();
-      } else if(actionValue == "DeclinePaymentEvent") {
-        if(responseDatas.value.declinedFields == null) {
-          responseDatas.value.declinedFields = [SFValue.value]
+      } else if (actionValue == "DeclinePaymentEvent") {
+        if (responseDatas.value.declinedFields == null) {
+          responseDatas.value.declinedFields = [SFValue.value];
         } else {
-          responseDatas.value.declinedFields.push(SFValue.value)
+          responseDatas.value.declinedFields.push(SFValue.value);
         }
         responseDatas.value.certified = false;
         responseDatas.value.certifiedDate = null;
@@ -277,25 +279,24 @@ export default {
       let req = {
         action: actionValue,
         data: responseDatas.value,
-      }
-      
-      if(applicationTypeName.value == "New License") {
-        store.dispatch("reviewer/editNewLicense", req)
-        .then(res => {
-          if(res.statusText == "Created") {
-            alert("req updated successfully", res.statusText)
+      };
+
+      if (applicationTypeName.value == "New License") {
+        store.dispatch("reviewer/editNewLicense", req).then((res) => {
+          if (res.statusText == "Created") {
+            alert("req updated successfully", res.statusText);
             setTimeout(() => {
-              router.push("/admin/review")
-            }, 3000)
+              router.push("/admin/review");
+            }, 3000);
           } else {
             setTimeout(() => {
-              alert("something went wrong", res.statusText)
+              alert("something went wrong", res.statusText);
               router.go();
-            }, 3000)
+            }, 3000);
           }
-        })
+        });
       }
-    }
+    };
 
     onMounted(() => {
       created(route.params.applicationType, route.params.applicationId);

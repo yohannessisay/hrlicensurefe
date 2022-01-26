@@ -23,7 +23,7 @@
           Filter
         </button>
       </div>
-    
+
       <div class="flex pl-12 pt-tiny">
         <Title message="Others Re Evaluate New License" />
       </div>
@@ -84,7 +84,6 @@ import Spinner from "@/sharedComponents/Spinner";
 import store from "../../../../store";
 import Title from "@/sharedComponents/TitleWithIllustration";
 
-
 export default {
   computed: {
     moment: () => moment,
@@ -143,10 +142,13 @@ export default {
 
     const fetchNewLicenseReEvaluate = () => {
       showLoading.value = true;
-      const statusId = applicationStatus(store, 'EVAASS');
-      const adminStatus = [statusId, adminId]
+      const statusId = applicationStatus(store, "EVAASS");
+      const adminStatus = [statusId, adminId];
       store
-        .dispatch("reviewerNewLicense/getNewLicenseOthersReEvaluate", adminStatus)
+        .dispatch(
+          "reviewerNewLicense/getNewLicenseOthersReEvaluate",
+          adminStatus
+        )
         .then((res) => {
           showLoading.value = false;
           newLicenseReEvaluate.value =
@@ -158,12 +160,7 @@ export default {
               "reviewerNewLicense/getNewLicenseOthersReEvaluateSearched"
             ];
 
-            console.log("all values are", store.getters["reviewerNewLicense/getNewLicenseOthersReEvaluateSearched"])
-
           for (let applicant in allInfo.value.assignApplication) {
-            allInfo.value.assignApplication[applicant].createdAt = moment(
-              allInfo.value.assignApplication[applicant].createdAt
-            ).format("MMMM D, YYYY");
             if (
               allInfo.value.assignApplication[applicant].applicationType ===
               undefined
@@ -171,30 +168,18 @@ export default {
               allInfo.value.assignApplication[applicant].applicationType =
                 allInfo.value.assignApplication[applicant].applicantType;
             }
-            // allInfo.value.assignApplication[applicant].forEarch(e => {
-            //   console.log("gete all", e)
-            // })
-            // console.log("gete all", allInfo.value.assignApplication[applicant])
-            // if (allInfo.value.assignApplication[applicant].) 
-            // allInfo.value.assignApplication[applicant].evaluators.forEarch(e => {
-              // console.log("gete e", allInfo.value.assignApplication[applicant].evaluators.length)
-              let evaluatorsList = allInfo.value.assignApplication[applicant].evaluators
-              for(var evaluator in evaluatorsList) {
-                // otherEvaluators.value = evaluatorsList[evaluator].filter(function(e) {
-                //   otherEvaluators.value = e.evaluatorId !== adminId;
-                  if (evaluatorsList[evaluator].evaluatorId !== adminId) {
-                    otherEvaluators.value.push(evaluatorsList[evaluator])
-                  }
-                // })
+
+            let evaluatorsList =
+              allInfo.value.assignApplication[applicant].evaluators;
+            for (var evaluator in evaluatorsList) {
+              if (evaluatorsList[evaluator].evaluatorId !== adminId) {
+                otherEvaluators.value.push(evaluatorsList[evaluator]);
               }
-            // })
+            }
           }
-          if (
-            newLicenseReEvaluate.value.length === 0
-          ) {
+          if (newLicenseReEvaluate.value.length === 0) {
             nothingToShow.value = true;
           }
-          console.log("finally", otherEvaluators.value)
         });
     };
     onMounted(() => {
