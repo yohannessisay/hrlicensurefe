@@ -54,9 +54,11 @@
       >
         Forgot password
       </a>
-      <button click="submit()" class="mt-medium">
-        Login
-      </button>
+      <div v-if="!message.showLoading">
+        <button click="submit()" class="mt-medium">
+          Login
+        </button>
+      </div>
       <Spinner
         v-if="message.showLoading"
         class="mt-4 mb-4"

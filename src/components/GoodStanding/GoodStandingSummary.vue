@@ -213,113 +213,116 @@
           >
         </label>
       </div>
-      <div v-if="this.draftStatus == 'DRA' || !this.draftStatus">
-        <div class="mt-12 flex justify-center">
-          <div>
-            <button @click="submitBack">
-              Back
-            </button>
+      <div v-if="!showLoading">
+        <div v-if="this.draftStatus == 'DRA' || !this.draftStatus">
+          <div class="mt-12 flex justify-center">
+            <div>
+              <button @click="submitBack">
+                Back
+              </button>
+              <button
+                id="subButton"
+                style="opacity: 0.3"
+                :disabled="this.checkBoxValue == true"
+                v-if="this.buttons.length < 3"
+                @click="submitRequest(this.buttons[0].action)"
+              >
+                {{ this.buttons[0].name }}
+              </button>
+              <button
+                id="subButton"
+                style="opacity: 0.3"
+                :disabled="this.checkBoxValue == true"
+                v-if="this.buttons.length > 2"
+                @click="submitRequest(this.buttons[0].action)"
+              >
+                {{ this.buttons[0].name }}
+              </button>
+            </div>
+          </div>
+          <div class="flex justify-center mt-4">
+            <h6>
+              You need to check the box to be able to submit.
+            </h6>
+          </div>
+          <div class="flex justify-center mt-4 mb-8">
             <button
-              id="subButton"
-              style="opacity: 0.3"
-              :disabled="this.checkBoxValue == true"
               v-if="this.buttons.length < 3"
-              @click="submitRequest(this.buttons[0].action)"
+              @click="draft(this.buttons[1].action)"
+              variant="outline"
             >
-              {{ this.buttons[0].name }}
+              {{ this.buttons[1].name }}
             </button>
             <button
-              id="subButton"
-              style="opacity: 0.3"
-              :disabled="this.checkBoxValue == true"
               v-if="this.buttons.length > 2"
-              @click="submitRequest(this.buttons[0].action)"
+              @click="draft(this.buttons[2].action)"
+              variant="outline"
             >
-              {{ this.buttons[0].name }}
+              {{ this.buttons[2].name }}
+            </button>
+
+            <button
+              v-if="this.buttons.length > 2"
+              class="withdraw"
+              @click="withdraw(this.buttons[1].action)"
+              variant="outline"
+            >
+              {{ this.buttons[1].name }}
             </button>
           </div>
         </div>
-        <div class="flex justify-center mt-4">
-          <h6>
-            You need to check the box to be able to submit.
-          </h6>
-        </div>
-        <div class="flex justify-center mt-4 mb-8">
-          <button
-            v-if="this.buttons.length < 3"
-            @click="draft(this.buttons[1].action)"
-            variant="outline"
-          >
-            {{ this.buttons[1].name }}
+        <div
+          v-if="this.draftStatus == 'SUB'"
+          class="flex justify-center mt-8 pb-12"
+        >
+          <button @click="submitBack">
+            Back
           </button>
           <button
-            v-if="this.buttons.length > 2"
-            @click="draft(this.buttons[2].action)"
-            variant="outline"
-          >
-            {{ this.buttons[2].name }}
-          </button>
-
-          <button
-            v-if="this.buttons.length > 2"
             class="withdraw"
             @click="withdraw(this.buttons[1].action)"
             variant="outline"
           >
-            {{ this.buttons[1].name }}
+            {{ this.buttons[1]["name"] }}
+          </button>
+        </div>
+        <div
+          v-if="this.draftStatus == 'USUP'"
+          class="flex justify-center mt-8 pb-12"
+        >
+          <button @click="submitBack">
+            Back
+          </button>
+          <button @click="draft(this.buttons[0].action)" variant="outline">
+            {{ this.buttons[0]["name"] }}
+          </button>
+          <button @click="update(this.buttons[1].action)" variant="outline">
+            {{ this.buttons[1]["name"] }}
+          </button>
+        </div>
+        <div
+          v-if="this.draftStatus == 'DEC' || this.draftStatus == 'CONF'"
+          class="flex justify-center mt-8 pb-12"
+        >
+          <button @click="submitBack">
+            Back
+          </button>
+          <button
+            id="reapplyButton"
+            style="opacity: 0.3"
+            :disabled="this.checkBoxValue == true"
+            disabled
+            @click="draft('UpdateEvent')"
+            variant="outline"
+          >
+            Re-apply
+          </button>
+          <button @click="update(this.buttons[1].action)" variant="outline">
+            {{ this.buttons[1]["name"] }}
           </button>
         </div>
       </div>
-      <div
-        v-if="this.draftStatus == 'SUB'"
-        class="flex justify-center mt-8 pb-12"
-      >
-        <button @click="submitBack">
-          Back
-        </button>
-        <button
-          class="withdraw"
-          @click="withdraw(this.buttons[1].action)"
-          variant="outline"
-        >
-          {{ this.buttons[1]["name"] }}
-        </button>
-      </div>
-      <div
-        v-if="this.draftStatus == 'USUP'"
-        class="flex justify-center mt-8 pb-12"
-      >
-        <button @click="submitBack">
-          Back
-        </button>
-        <button @click="draft(this.buttons[0].action)" variant="outline">
-          {{ this.buttons[0]["name"] }}
-        </button>
-        <button @click="update(this.buttons[1].action)" variant="outline">
-          {{ this.buttons[1]["name"] }}
-        </button>
-      </div>
-      <div
-        v-if="this.draftStatus == 'DEC' || this.draftStatus == 'CONF'"
-        class="flex justify-center mt-8 pb-12"
-      >
-        <button @click="submitBack">
-          Back
-        </button>
-        <button
-          id="reapplyButton"
-          style="opacity: 0.3"
-          :disabled="this.checkBoxValue == true"
-          disabled
-          @click="draft('UpdateEvent')"
-          variant="outline"
-        >
-          Re-apply
-        </button>
-        <button @click="update(this.buttons[1].action)" variant="outline">
-          {{ this.buttons[1]["name"] }}
-        </button>
-      </div>
+
       <div
         class="flex justify-center justify-items-center mt-8 pb-8"
         v-if="showLoading"

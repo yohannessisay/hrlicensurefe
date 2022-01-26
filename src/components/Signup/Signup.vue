@@ -96,9 +96,11 @@
         <password-meter :password="credentials.repassword" />
         <span style="color: red">{{ credentialsErrors.repassword }}</span>
       </div>
-      <button click="submit()">
-        Sign up
-      </button>
+      <div v-if="!message.showLoading">
+        <button click="submit()">
+          Sign up
+        </button>
+      </div>
       <Spinner
         v-if="message.showLoading"
         class="mt-4 mb-4"
