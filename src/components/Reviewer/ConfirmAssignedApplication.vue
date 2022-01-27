@@ -553,7 +553,7 @@ export default {
     const action = (actionValue) => {
       if(!isNotSubmittedOnce.value) {
         // don't allow admin to confirm or reject more than once
-        return
+        return;
       }
       newLicense.value.declinedFields = rejected.value;
       newLicense.value.acceptedFields = accepted.value;

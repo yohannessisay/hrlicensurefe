@@ -285,6 +285,7 @@ export default {
     const expertLevelId = JSON.parse(localStorage.getItem("allAdminData"))
       .expertLevelId;
 
+    let isNotSubmittedOnce = ref(true);
     let show = ref(false);
     let license = ref({
       applicant: {},
@@ -454,6 +455,10 @@ export default {
     };
 
     const assignReviewer = () => {
+      if(!isNotSubmittedOnce.value) {
+        // don't allow admin to assign application more than once
+        return;
+      }
       if (role.value.code === "TL" || role.value.code === "ADM") {
         if (applicationType.value == "Good Standing") {
           assign.value = {
@@ -515,6 +520,7 @@ export default {
           };
         }
       }
+      isNotSubmittedOnce.value = false;
       if (applicationType.value == "New License") {
         showAdminAssignLoading.value = true;
         store
