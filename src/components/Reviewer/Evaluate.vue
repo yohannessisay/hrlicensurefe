@@ -1714,7 +1714,10 @@ export default {
             }
           })
           .catch((err) => {
-            console.log(err);
+            showErrorFlash.value = true;
+              setTimeout(() => {
+                router.go();
+              }, 3000);
           });
       }
       if (

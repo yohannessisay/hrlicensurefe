@@ -82,7 +82,9 @@
             >
               <label class="ml-8"> Nationality</label>
               <h5 class="ml-8">
-                {{ profileInfo.nationality ? profileInfo.nationality.name : "-" }}
+                {{
+                  profileInfo.nationality ? profileInfo.nationality.name : "-"
+                }}
               </h5>
             </div>
             <div
@@ -434,7 +436,7 @@ export default {
 
     const fetchAdmins = () => {
       store.dispatch("reviewer/getAdmins").then((res) => {
-        admins.value = res.data.data.filter(e => {
+        admins.value = res.data.data.filter((e) => {
           return e.role.code !== "UM";
         });
       });
@@ -442,7 +444,7 @@ export default {
 
     const fetchAdminsByRegion = (regionId) => {
       store.dispatch("reviewer/getAdminsByRegion", regionId).then((res) => {
-        admins.value = res.data.data.filter(e => {
+        admins.value = res.data.data.filter((e) => {
           return e.role.code !== "UM";
         });
       });
@@ -455,7 +457,7 @@ export default {
     };
 
     const assignReviewer = () => {
-      if(!isNotSubmittedOnce.value) {
+      if (!isNotSubmittedOnce.value) {
         // don't allow admin to assign application more than once
         return;
       }
@@ -536,6 +538,9 @@ export default {
           })
           .catch((err) => {
             showErrorFlash.value = true;
+            setTimeout(() => {
+              router.go();
+            }, 3000);
           });
       }
       if (applicationType.value == "Verification") {
@@ -553,6 +558,9 @@ export default {
           })
           .catch((err) => {
             showErrorFlash.value = true;
+            setTimeout(() => {
+              router.go();
+            }, 3000);
           });
       }
       if (applicationType.value == "Renewal") {
@@ -570,34 +578,17 @@ export default {
                 }, 3000);
               } else {
                 showErrorFlash.value = true;
+                setTimeout(() => {
+                  router.go();
+                }, 3000);
               }
             })
             .catch((err) => {
               showErrorFlash.value = true;
+              setTimeout(() => {
+                router.go();
+              }, 3000);
             });
-          // let req = {
-          //   action: "InReview",
-          //   data: license.value,
-          // };
-          // store
-          // .dispatch("reviewer/editRenewal", req)
-          // .then((res) => {
-          //   return;
-          //   if (res.statusText == "Created") {
-          //     showFlash.value = true;
-          //     setTimeout(() => {
-          //     router.push("/admin/review");
-          //     }, 3000);
-          //   } else {
-          //     showErrorFlash.value = true;
-          //     setTimeout(() => {
-          //       router.go();
-          //     }, 3000);
-          //   }
-          // })
-          // .catch((err) => {
-          //   return;
-          // });
         } else {
           showAdminAssignLoading.value = true;
           store
@@ -614,6 +605,9 @@ export default {
             })
             .catch((err) => {
               showErrorFlash.value = true;
+              setTimeout(() => {
+                router.go();
+              }, 3000);
             });
         }
       }
@@ -632,6 +626,9 @@ export default {
           })
           .catch((err) => {
             showErrorFlash.value = true;
+            setTimeout(() => {
+              router.go();
+            }, 3000);
           });
       }
     };
