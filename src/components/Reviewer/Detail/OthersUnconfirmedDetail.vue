@@ -334,6 +334,7 @@ export default {
     let admins = ref({});
 
     let showAdminCountError = ref(false);
+    let isNotSubmittedOnce = ref(true);
 
     let previousEvaluators = ref([]);
 
@@ -404,7 +405,10 @@ export default {
     const gen = () => {};
 
     const assignAdminToConfirm = () => {
-      showAssignLoading.value = true;
+      if(!isNotSubmittedOnce.value) {
+        // don't allow admin to assign evaluators more than once
+        return;
+      }
 
       if (
         assignConfirmAdmin.value.evaluatorIds.length > 3 ||
@@ -414,6 +418,7 @@ export default {
         return;
       }
       // if (role.value.code === "ADM") {
+      showAssignLoading.value = true;
       showAdminCountError.value = false;
       if (applicationType.value == "Good Standing") {
         assignConfirmAdmin.value = {
@@ -443,7 +448,8 @@ export default {
           createdByAdminId: +localStorage.getItem("adminId"),
         };
       }
-      // }
+      
+      isNotSubmittedOnce.value = false;
       if (applicationType.value == "New License") {
         store
           .dispatch(

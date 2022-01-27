@@ -1567,8 +1567,7 @@ export default {
 
     const action = (actionValue) => {
       if(!isNotSubmittedOnce.value) {
-        // don't allow user to submit more than once
-        console.log("working here","action value", actionValue)
+        // don't allow admin to submit evaluation more than once
         return;
       }
       showActionLoading.value = true;
