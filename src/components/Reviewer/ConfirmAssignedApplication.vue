@@ -421,6 +421,7 @@ export default {
 
     let approvedOrRejected = ref("");
 
+    let isNotSubmittedOnce = ref(true);
     let evaluationSuccess = ref(false);
     let approvedColor = ref("lightBlueB-500");
     let showLoadingconfirmed = ref(false);
@@ -550,6 +551,10 @@ export default {
     };
 
     const action = (actionValue) => {
+      if(!isNotSubmittedOnce.value) {
+        // don't allow admin to confirm or reject more than once
+        return
+      }
       newLicense.value.declinedFields = rejected.value;
       newLicense.value.acceptedFields = accepted.value;
       evaluateData.value = newLicense.value.evaluators;
@@ -586,6 +591,7 @@ export default {
     };
 
     const evaluateApplication = (applicationType, req) => {
+      isNotSubmittedOnce.value = false;
       showLoadingconfirmed.value = true;
         store.dispatch("reviewer/" + applicationType, req).then((res) => {
           showLoadingconfirmed.value = false;
