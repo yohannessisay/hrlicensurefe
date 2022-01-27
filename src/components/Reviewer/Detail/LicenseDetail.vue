@@ -344,6 +344,7 @@ export default {
     let expertLevelId = JSON.parse(localStorage.getItem("allAdminData"))
       .expertLevelId;
 
+    let isNotSubmittedOnce = ref(true);
     let evaluators = ref([]);
 
     let transfer = ref({
@@ -414,6 +415,9 @@ export default {
 
     const transferReview = () => {
       showtransferLoading.value = true;
+      if(!isNotSubmittedOnce.value) {
+        return;
+      }
       // if (role.value.code === "TL" || role.value.code === "SA") {
       if (applicationType.value == "Good Standing") {
         transfer.value = {
@@ -443,7 +447,7 @@ export default {
           createdByAdminId: +localStorage.getItem("adminId"),
         };
       }
-      // }
+      isNotSubmittedOnce.value = false;
       if (applicationType.value == "New License") {
         store
           .dispatch("reviewer/transferLicenseReview", transfer.value)
@@ -455,11 +459,17 @@ export default {
               setTimeout(() => {
                 router.push("/admin/review");
               }, 3000);
+            } else {
+              showErrorFlash.value = false;
+            setTimeOut(() => {
+              router.go();
+            });
             }
           })
           .catch((err) => {
+            showErrorFlash.value = false;
             setTimeOut(() => {
-              showErrorFlash.value = false;
+              router.go();
             });
           });
       }
@@ -470,8 +480,18 @@ export default {
             if (response.statusText == "Created") {
               showFlash.value = true;
               router.push("/admin/review");
+            } else {
+              showErrorFlash.value = false;
+            setTimeOut(() => {
+              router.go();
+            });
             }
-          });
+          }).catch(err => {
+            showErrorFlash.value = false;
+            setTimeOut(() => {
+              router.go();
+            });
+          })
       }
       if (applicationType.value == "Renewal") {
         store
@@ -481,8 +501,18 @@ export default {
             if (response.statusText == "Created") {
               showFlash.value = true;
               router.push("/admin/review");
+            } else {
+              showErrorFlash.value = false;
+            setTimeOut(() => {
+              router.go();
+            });
             }
-          });
+          }).catch(err => {
+            showErrorFlash.value = false;
+            setTimeOut(() => {
+              router.go();
+            });
+          })
       }
       if (applicationType.value == "Good Standing") {
         store
@@ -492,8 +522,18 @@ export default {
             if (response.statusText == "Created") {
               showFlash.value = true;
               router.push("/admin/review");
+            } else {
+              showErrorFlash.value = false;
+            setTimeOut(() => {
+              router.go();
+            });
             }
-          });
+          }).catch(err => {
+            showErrorFlash.value = false;
+            setTimeOut(() => {
+              router.go();
+            });
+          })
       }
     };
 
