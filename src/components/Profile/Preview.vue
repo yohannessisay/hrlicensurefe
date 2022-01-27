@@ -83,7 +83,7 @@
             Back
           </button>
         </div>
-        <div>
+        <div v-if="!message.showLoading">
           <button v-on:click="submit()">Save Profile</button>
         </div>
       </div>
