@@ -1065,6 +1065,7 @@ export default {
     let pdfFilePath = ref("");
 
     let isGoodStanding = ref(false);
+    let isNotSubmittedOnce = ref(true);
 
     let expirationDateExceedTodayError = ref(false);
     let isProfessionalTypeChanged = ref(false);
@@ -1565,6 +1566,11 @@ export default {
     };
 
     const action = (actionValue) => {
+      if(!isNotSubmittedOnce.value) {
+        // don't allow user to submit more than once
+        console.log("working here","action value", actionValue)
+        return;
+      }
       showActionLoading.value = true;
       if (professionalTypeIdss.value.length > 0) {
         newLicense.value.professionalTypeIds = professionalTypeIdss.value;
@@ -1686,6 +1692,7 @@ export default {
         action: actionValue,
         data: newLicense.value,
       };
+      isNotSubmittedOnce.value = false;
       if (
         applicationType.value == "New License" &&
         sendDeclinedData.value == true
@@ -2095,6 +2102,7 @@ export default {
       checkProfessionChanged,
       isGoodStanding,
       showActionLoading,
+      isNotSubmittedOnce,
     };
   },
 };
