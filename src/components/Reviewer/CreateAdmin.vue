@@ -191,6 +191,8 @@ export default {
     const adminExpertId = JSON.parse(localStorage.getItem("allAdminData"))
       .expertLevelId;
     let errorMessage = ref("");
+    let isNotSubmittedOnce = ref(true);
+
     let admin = {
       firstName: null,
       fatherName: null,
@@ -261,11 +263,16 @@ export default {
     };
 
     const registerAdmin = () => {
+      if(!isNotSubmittedOnce.value) {
+        //user manager can submit only once while creating admin
+        return;
+      }
       const isValidated = validateForm(admin);
       showLoading.value = true;
       if (isValidated) {
         state.value.validationErrors = isValidated;
         state.value.showErrorMessages = true;
+        showLoading.value = false;
       } else {
         state.value.showErrorMessages = false;
         admin.name =
@@ -276,7 +283,7 @@ export default {
           admin.grandfatherName;
 
         admin.email = admin.email.toLowerCase();
-
+        isNotSubmittedOnce.value = false;
         store
           .dispatch("admin/registerAdmin", admin)
           .then((res) => {
@@ -301,6 +308,9 @@ export default {
           })
           .catch((err) => {
             showLoading.value = false;
+            setTimeout(() => {
+              location.reload(true);
+            })
           });
       }
     };
