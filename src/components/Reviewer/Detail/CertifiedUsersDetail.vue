@@ -37,8 +37,13 @@
                     </div>
                   </div>
                   <div>
-                    <h6>የምዝገባ ቁጥር: {{ certifiedUser.newLicenseCode }}</h6>
+                    <h6>የምዝገባ ቁጥር: {{ certifiedUser.licenseNumber }}</h6>
+                    <h6>License Number: {{ certifiedUser.licenseNumber }}</h6>
                   </div>
+                  <!-- <br/>
+                  <div>
+                    <h6>LicenseNumber: {{ certifiedUser.newLicenseCode }}</h6>
+                  </div> -->
                 </div>
                 <div class="flex-second-container">
                   <div>
@@ -319,6 +324,8 @@ export default {
           .then((res) => {
             showApplicationLoading.value = false;
             certificateDetail.value = res.data.data;
+            certificateDetail.value = res.data.data;
+            certificateDetail.value.licenseNumber = certificateDetail.value.verificationCode
             if (
               route.params.applicantId != certificateDetail.value.applicantId
             ) {
@@ -350,6 +357,8 @@ export default {
           .then((res) => {
             showApplicationLoading.value = false;
             certificateDetail.value = res.data.data;
+            certificateDetail.value = res.data.data;
+            certificateDetail.value.licenseNumber = certificateDetail.value.goodStandingCode
             if (
               route.params.applicantId != certificateDetail.value.applicantId
             ) {
@@ -375,6 +384,7 @@ export default {
           .then((res) => {
             showApplicationLoading.value = false;
             certificateDetail.value = res.data.data;
+            certificateDetail.value.licenseNumber = certificateDetail.value.newLicenseCode
             if (
               route.params.applicantId != certificateDetail.value.applicantId
             ) {
@@ -400,6 +410,7 @@ export default {
           .then((res) => {
             showApplicationLoading.value = false;
             certificateDetail.value = res.data.data;
+            certificateDetail.value.licenseNumber = certificateDetail.value.renewalCode;
             if (
               route.params.applicantId != certificateDetail.value.applicantId
             ) {
@@ -528,6 +539,18 @@ export default {
             : "Not Specified"
         }`
       );
+      doc.text(
+        170,
+        190,
+        "License Number:"
+      );
+      doc.text(
+        205,
+        190,
+        `${
+          certificateDetail.value.licenseNumber
+        }`
+      );
 
       // doc.addFileToVFS("Amiri-Regular.ttf", AmiriRegular);
       doc.addFileToVFS("Tera-Regular-normal.ttf", AmharicFont);
@@ -621,6 +644,18 @@ export default {
             : " አልተገለጸም"
         }`
       );
+      doc.text(
+        30,
+        190,
+        "የምዝገባ ቁጥር:"
+      );
+      doc.text(
+        53,
+        190,
+        `${
+          certificateDetail.value.licenseNumber
+        }`
+      );
     };
 
     const downloadPdf = () => {
@@ -628,7 +663,6 @@ export default {
         orientation: "landscape",
         filters: ["ASCIIHexEncode"],
       });
-
       const userImage = certifiedUser.value.photo;
       if (certificateDetail.value.reviewer.expertLevel.code === "FED") {
         doc.addImage(
