@@ -13,7 +13,7 @@
           <div class="py-8">
             <div class="flex flex-row">
               <div class="ml-2 flex flex-row">
-                <div @click="fetchNewLicenseReport()">
+                <div @click="fetchNewLicenseReport()" :class="selectedApplication.newLicense ? 'applicationType': ''">
                   <a class="text-2xl font-semibold leading-tight">
                     New License Report
                   </a>
@@ -611,7 +611,101 @@ export default {
     const route = useRoute();
     const router = useRouter();
 
-    let report = ref([]);
+    let selectedApplication = ref({
+      newLicense: true,
+      renewal: false,
+      goodStanding: false,
+      verification: false,
+    })
+    let report = ref([{
+      name: "Eyosias",
+      fatherName: "Desta",
+      grandFatherName: "Langena",
+      dateOfBirth: "2002-01-25T09:55:23.494Z",
+      nationality: "Ethiopian",
+      gender: "Male",
+      applicant: {phoneNumber: "0990099909"},
+      professionalTypes: {name: "Medical Doctor"},
+      region: {name: "SNNPR"},
+      createdAt: "2022-01-25T09:55:23.494Z",
+      certifiedDate: null,
+      applicationStatus: {name: "Submitted"},
+      remark: null,
+      newLicenseCode: "NL099090",
+      renewalCode: null,
+      verificationCode: null,
+      goodStandingCode: null,
+      reviewer: {name: "Robel Ephraim RE"},
+      expertLevels: {name: "Regional"},
+      education: {department: {name: "Psychology"}, institution: {name: "AAU"}}
+
+    }, {
+      name: "Ermias",
+      fatherName: "Bitew",
+      grandFatherName: "Meles",
+      dateOfBirth: "2002-01-25T09:55:23.494Z",
+      nationality: "Ethiopian",
+      gender: "Male",
+      applicant: {phoneNumber: "0990099909"},
+      professionalTypes: {name: "Medical Doctor"},
+      region: {name: "SNNPR"},
+      createdAt: "2022-01-25T09:55:23.494Z",
+      certifiedDate: null,
+      applicationStatus: {name: "Submitted"},
+      remark: null,
+      newLicenseCode: "NL099090",
+      renewalCode: null,
+      verificationCode: null,
+      goodStandingCode: null,
+      reviewer: {name: "Robel Ephraim RE"},
+      expertLevels: {name: "Regional"},
+      education: {department: {name: "Psychology"}, institution: {name: "AAU"}}
+
+    }, {
+      name: "Robel",
+      fatherName: "Ephraim",
+      grandFatherName: "Abdisa",
+      dateOfBirth: "2002-01-25T09:55:23.494Z",
+      nationality: "Ethiopian",
+      gender: "Male",
+      applicant: {phoneNumber: "0990099909"},
+      professionalTypes: {name: "Medical Doctor"},
+      region: {name: "SNNPR"},
+      createdAt: "2022-01-25T09:55:23.494Z",
+      certifiedDate: null,
+      applicationStatus: {name: "Submitted"},
+      remark: null,
+      newLicenseCode: "NL099090",
+      renewalCode: null,
+      verificationCode: null,
+      goodStandingCode: null,
+      reviewer: {name: "Robel Ephraim RE"},
+      expertLevels: {name: "Regional"},
+      education: {department: {name: "Psychology"}, institution: {name: "AAU"}}
+
+    }, {
+      name: "Mahlet",
+      fatherName: "Samuel",
+      grandFatherName: "Akalu",
+      dateOfBirth: "2002-01-25T09:55:23.494Z",
+      nationality: "Ethiopian",
+      gender: "Female",
+      applicant: {phoneNumber: "0990099909"},
+      professionalTypes: {name: "Assistant nurse"},
+      region: {name: "Oromia"},
+      createdAt: "2022-01-25T09:55:23.494Z",
+      certifiedDate: null,
+      applicationStatus: {name: "Submitted"},
+      remark: null,
+      newLicenseCode: "NL099090",
+      renewalCode: null,
+      verificationCode: null,
+      goodStandingCode: null,
+      reviewer: {name: "Robel Ephraim RE"},
+      expertLevels: {name: "Regional"},
+      education: {department: {name: "Psychology"}, institution: {name: "AAU"}}
+
+    }]);
     let professions = ref([]);
     let regions = ref([]);
     let applicationStatuses = ref([]);
@@ -684,7 +778,7 @@ export default {
       saveAs(blob, "Report.xls");
     };
     const filterProfession = (profType) => {
-      report.value = store.getters["report/getReport"];
+      // report.value = store.getters["report/getReport"];
       var tableFilter = [];
       tableFilter = report.value;
       var tableFilter2 = [];
@@ -694,7 +788,7 @@ export default {
         }
       }
       if (profType == null) {
-        report.value = store.getter["report/getReport"];
+        // report.value = store.getter["report/getReport"];
       } else {
         report.value = tableFilter2.filter(function(e) {
           return e.professionalTypes.name == profType;
@@ -702,7 +796,7 @@ export default {
       }
     };
     const filterRegion = (region) => {
-      report.value = store.getters["report/getReport"];
+      // report.value = store.getters["report/getReport"];
       var tableFilter = [];
       tableFilter = report.value;
       var tableFilter2 = [];
@@ -762,7 +856,7 @@ export default {
       }
     };
     onMounted(() => {
-      fetchNewLicenseReport();
+      // fetchNewLicenseReport();
       fetchProfessionType();
       fetchRegion();
       fetchApplicationStatuses();
@@ -787,12 +881,16 @@ export default {
       filterAppStatus,
       filterDate,
       filterRegion,
+      selectedApplication,
     };
   },
 };
 </script>
 
 <style>
+.applicationType {
+  background-color: #300400
+},
 th {
   color: #648ea3;
   background-color: #eff6ff;

@@ -389,9 +389,9 @@
         </div>
         <!-- end goodstanding -->
 
-        <!-- <div v-if="this.display == 'report'">
+        <div v-if="this.display == 'report'">
           <report />
-        </div> -->
+        </div>
 
         <!-- <div v-if="this.display == 'dashboard'">
           <dashboard />

@@ -31,9 +31,9 @@
           @applicationTypeSelected="applicationTypeHandler"
           @selectGoodStandingMenu="selectMenu"
         />
-        <!-- <report-side-nav @selectReportMenu="selectMenu" />
+        <report-side-nav @selectReportMenu="selectMenu" />
 
-        <dashboard-side-nav @selectDashboardMenu="selectMenu" /> -->
+        <!-- <dashboard-side-nav @selectDashboardMenu="selectMenu" /> -->
       </ul>
     </div>
   </div>
