@@ -11,30 +11,30 @@
       <div v-else>
         <div class="px-4 sm:px-4">
           <div class="py-8">
-            <div class="flex flex-row">
+            <div class="flex flex-row titile-container">
               <div class="ml-2 flex flex-row">
                 <div @click="fetchNewLicenseReport()" :class="selectedApplication.newLicense ? 'applicationType': ''">
                   <a class="text-2xl font-semibold leading-tight">
                     New License Report
                   </a>
                 </div>
-                <div @click="fetchRenewalReport()">
-                  <a class="ml-8 text-2xl font-semibold leading-tight">
+                <div @click="fetchRenewalReport()" class="ml-8"  :class="selectedApplication.renewal ? 'applicationType': ''">
+                  <a class="text-2xl font-semibold leading-tight">
                     Renewal Report
                   </a>
                 </div>
-                <div @click="fetchVerificationReport()">
-                  <a class="ml-8 text-2xl font-semibold leading-tight">
+                <div @click="fetchVerificationReport()" class="ml-8" :class="selectedApplication.verification ? 'applicationType': ''">
+                  <a class="text-2xl font-semibold leading-tight">
                     Verification Report
                   </a>
                 </div>
-                <div @click="fetchGoodstandingReport()">
-                  <a class="ml-8 text-2xl font-semibold leading-tight">
+                <div @click="fetchGoodstandingReport()" class="ml-8" :class="selectedApplication.goodStanding ? 'applicationType': ''">
+                  <a class="text-2xl font-semibold leading-tight">
                     Goodstanding Report
                   </a>
                 </div>
               </div>
-              <div id="export" @click="exportTable()" style="margin-left:10%">
+              <div id="export" @click="exportTable()" class="mt-4">
                 <a class="text-2xl font-semibold leading-tight">
                   <i class="fa fa-file-text" aria-hidden="true"></i>
                   Export
@@ -44,7 +44,7 @@
             <div class="mt-8">
               <label>Filter By:</label>
             </div>
-            <div class="flex">
+            <div class="flex filter-container">
               <div class="flex flex-col mb-medium w-72 mr-4">
                 <label class="text-primary-700">Professional Type</label>
                 <select
@@ -66,6 +66,44 @@
               </div>
               <div class="flex flex-col mb-small w-72 mr-4">
                 <label class="text-primary-700">Region</label>
+                <select
+                  class="max-w-3xl"
+                  v-model="filter.region"
+                  @change="filterRegion(filter.region)"
+                >
+                  <option v-bind:key="filter.all" v-bind:value="filter.all"
+                    >All</option
+                  >
+                  <option
+                    v-for="region in regions"
+                    v-bind:key="region.name"
+                    v-bind:value="region.name"
+                  >
+                    {{ region.name }}
+                  </option>
+                </select>
+              </div>
+              <div class="flex flex-col mb-small w-72 mr-4">
+                <label class="text-primary-700">Zone</label>
+                <select
+                  class="max-w-3xl"
+                  v-model="filter.region"
+                  @change="filterRegion(filter.region)"
+                >
+                  <option v-bind:key="filter.all" v-bind:value="filter.all"
+                    >All</option
+                  >
+                  <option
+                    v-for="region in regions"
+                    v-bind:key="region.name"
+                    v-bind:value="region.name"
+                  >
+                    {{ region.name }}
+                  </option>
+                </select>
+              </div>
+              <div class="flex flex-col mb-small w-72 mr-4">
+                <label class="text-primary-700">Woreda</label>
                 <select
                   class="max-w-3xl"
                   v-model="filter.region"
@@ -228,6 +266,16 @@
                       <th
                         class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
                       >
+                        Zone
+                      </th>
+                      <th
+                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+                      >
+                        Woreda
+                      </th>
+                      <th
+                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+                      >
                         Start Date
                       </th>
                       <th
@@ -369,6 +417,30 @@
                           <div class="ml-3">
                             <p class="text-gray-900 whitespace-no-wrap">
                               {{ item.professionalTypes.name }}
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td
+                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
+                        v-if="item.region"
+                      >
+                        <div class="flex">
+                          <div class="ml-3">
+                            <p class="text-gray-900 whitespace-no-wrap">
+                              {{ item.region.name }}
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td
+                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
+                        v-if="item.region"
+                      >
+                        <div class="flex">
+                          <div class="ml-3">
+                            <p class="text-gray-900 whitespace-no-wrap">
+                              {{ item.region.name }}
                             </p>
                           </div>
                         </div>
@@ -722,8 +794,18 @@ export default {
 
     let loader = ref(false);
 
+    const changeBackgroundColor = (title) => {
+      selectedApplication.value = {
+        newLicense: title === "newLicense",
+        renewal: title === "renewal",
+        goodStanding: title === "goodStanding",
+        verification: title === "verification",
+      }
+    }
+
     const fetchNewLicenseReport = () => {
       loader.value = true;
+      changeBackgroundColor("newLicense");
       store.dispatch("report/getNewLicenseReport").then((res) => {
         report.value = res.data.data;
         store.dispatch("report/setReport", report.value);
@@ -732,6 +814,8 @@ export default {
     };
     const fetchRenewalReport = () => {
       loader.value = true;
+      changeBackgroundColor("renewal");
+      console.log("selected value", selectedApplication.value)
       store.dispatch("report/getRenewalReport").then((res) => {
         report.value = res.data.data;
         store.dispatch("report/setReport", report.value);
@@ -741,6 +825,7 @@ export default {
     
     const fetchVerificationReport = () => {
       loader.value = true;
+      changeBackgroundColor("verification");
       store.dispatch("report/getVerificationReport").then((res) => {
         report.value = res.data.data;
         store.dispatch("report/setReport", report.value);
@@ -749,6 +834,7 @@ export default {
     };
     const fetchGoodstandingReport = () => {
       loader.value = true;
+      changeBackgroundColor("goodStanding");
       store.dispatch("report/getGoodstandingReport").then((res) => {
         report.value = res.data.data;
         store.dispatch("report/setReport", report.value);
@@ -888,6 +974,12 @@ export default {
 </script>
 
 <style>
+.titile-container {
+  flex-wrap: wrap;
+}
+.filter-container {
+  flex-wrap: wrap;
+}
 .applicationType {
   background-color: #300400
 },
