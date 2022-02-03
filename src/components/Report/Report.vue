@@ -77,7 +77,7 @@
                   <option
                     v-for="region in regions"
                     v-bind:key="region.name"
-                    v-bind:value="region.name"
+                    v-bind:value="region"
                   >
                     {{ region.name }}
                   </option>
@@ -87,18 +87,18 @@
                 <label class="text-primary-700">Zone</label>
                 <select
                   class="max-w-3xl"
-                  v-model="filter.region"
-                  @change="filterRegion(filter.region)"
+                  v-model="filter.zone"
+                  @change="filterZone(filter.zone)"
                 >
                   <option v-bind:key="filter.all" v-bind:value="filter.all"
                     >All</option
                   >
                   <option
-                    v-for="region in regions"
-                    v-bind:key="region.name"
-                    v-bind:value="region.name"
+                    v-for="zone in zones"
+                    v-bind:key="zone.name"
+                    v-bind:value="zone"
                   >
-                    {{ region.name }}
+                    {{ zone.name }}
                   </option>
                 </select>
               </div>
@@ -106,18 +106,18 @@
                 <label class="text-primary-700">Woreda</label>
                 <select
                   class="max-w-3xl"
-                  v-model="filter.region"
-                  @change="filterRegion(filter.region)"
+                  v-model="filter.woreda"
+                  @change="filterWoreda(filter.woreda)"
                 >
                   <option v-bind:key="filter.all" v-bind:value="filter.all"
                     >All</option
                   >
                   <option
-                    v-for="region in regions"
-                    v-bind:key="region.name"
-                    v-bind:value="region.name"
+                    v-for="woreda in woredas"
+                    v-bind:key="woreda.name"
+                    v-bind:value="woreda"
                   >
-                    {{ region.name }}
+                    {{ woreda.name }}
                   </option>
                 </select>
               </div>
@@ -780,12 +780,16 @@ export default {
     }]);
     let professions = ref([]);
     let regions = ref([]);
+    let zones = ref([]);
+    let woredas = ref([]);
     let applicationStatuses = ref([]);
 
     let filter = ref({
       profType: "",
       gender: "",
       region: "",
+      zone: "",
+      woreda: "",
       status: "",
       startDate: "",
       endDate: "",
@@ -815,7 +819,6 @@ export default {
     const fetchRenewalReport = () => {
       loader.value = true;
       changeBackgroundColor("renewal");
-      console.log("selected value", selectedApplication.value)
       store.dispatch("report/getRenewalReport").then((res) => {
         report.value = res.data.data;
         store.dispatch("report/setReport", report.value);
@@ -851,6 +854,18 @@ export default {
         regions.value = res.data.data;
       });
     };
+    const  fetchZones = (regionID) =>  {
+      store.dispatch("report/getZones", regionID)
+        .then((res) => {
+          zones.value = res.data.data;
+        });
+    };
+    const  fetchWoredas = (zoneID) =>  {
+      store.dispatch("report/getWoredas", zoneID)
+        .then((res) => {
+          woredas.value = res.data.data;
+        });
+    };
     const fetchApplicationStatuses = () => {
       store.dispatch("report/getapplicationStatuses").then((res) => {
         applicationStatuses.value = res.data.data;
@@ -883,29 +898,64 @@ export default {
     };
     const filterRegion = (region) => {
       // report.value = store.getters["report/getReport"];
+      fetchZones(region.id);
       var tableFilter = [];
       tableFilter = report.value;
       var tableFilter2 = [];
       for (var i = 0; i < tableFilter.length; i++) {
-        if (tableFilter[i].region != null) {
+        if (tableFilter[i].region.name != null) {
           tableFilter2.push(tableFilter[i]);
         }
       }
-      if (region == null) {
+      if (region.name == null) {
         report.value = store.getter["report/getReport"];
       } else {
         report.value = tableFilter2.filter(function(e) {
-          return e.region.name == region;
+          return e.region.name == region.name;
         });
       }
     };
+
+    const filterZone = (zone) => {
+      fetchWoredas(zone.id);
+      var tableFilter = [];
+      tableFilter = report.value;
+      var tableFilter2 = [];
+      for (var i = 0; i < tableFilter.length; i++) {
+        if(tableFilter[i].zone.name != null) {
+          tableFilter2.push(tableFilter[i]);
+        }
+      }
+      if(zone.name == null) {
+        report.value = store.getter["report/getReport"];
+      } else {
+        report.value = tableFilter2.filter(function(e) {
+          return e.zone.name == zone.name
+        })
+      }
+    }
+    const filterWoreda = (woreda) => {
+      var tableFilter = [];
+      tableFilter = report.value;
+      var tableFilter2 = [];
+      for (var i = 0; i < tableFilter.length; i++) {
+        if(tableFilter[i].woreda.name != null) {
+          tableFilter2.push(tableFilter[i]);
+        }
+      }
+      if(woreda.name == null) {
+        report.value = store.getter["report/getReport"];
+      } else {
+        report.value = tableFilter2.filter(function(e) {
+          return e.woreda.name == woreda.name
+        })
+      }
+    }
     const filterDate = (startDate, endDate) => {
       report.value = store.getters["report/getReport"];
       var dateFilter = [];
       dateFilter = report.value;
       report.value = dateFilter.filter(function(date) {
-        // console.log(Date.parse(date.createdAt));
-        // console.log(Date.parse(date.certifiedDate));
         return (
           // !isNaN(Date.parse(date.applicant.createdAt)) &&
           Date.parse(date.applicant.createdAt) >= Date.parse(startDate) &&
@@ -918,7 +968,6 @@ export default {
       report.value = store.getters["report/getReport"];
       var gendertable = [];
       gendertable = report.value;
-      console.log(gender);
       if (gender == "both") {
         report.value = gendertable.filter(function(e) {
           return e.gender == "male" || e.gender == "female";
@@ -957,9 +1006,13 @@ export default {
       fetchGoodstandingReport,
       fetchProfessionType,
       fetchRegion,
+      fetchZones,
+      fetchWoredas,
       fetchApplicationStatuses,
       professions,
       regions,
+      zones,
+      woredas,
       applicationStatuses,
       filter,
       filterProfession,
@@ -967,6 +1020,7 @@ export default {
       filterAppStatus,
       filterDate,
       filterRegion,
+      filterZone,
       selectedApplication,
     };
   },
