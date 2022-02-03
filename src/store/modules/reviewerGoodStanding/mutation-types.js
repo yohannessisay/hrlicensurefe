@@ -74,7 +74,7 @@ export const SET_GOOD_STANDING_OTHERS_RE_APPLY_SEARCHED =
   "SET_GOOD_STANDING_OTHERS_RE_APPLY_SEARCHED";
 
 
-const baseUrl = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api";
+const baseUrl = "https://ihris.moh.gov.et/hrl/api";
 
 export default {
   SET_GOOD_STANDING_UNASSIGNED,

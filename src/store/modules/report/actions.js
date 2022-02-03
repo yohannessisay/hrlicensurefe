@@ -1,6 +1,6 @@
 import ApiService from "../../../services/api.service";
 import { SET_REPORT } from "./mutation-types";
-const url = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api/";
+const url = "https://ihris.moh.gov.et/hrl/api/";
 export default {
   setReport({ commit }, report) {
     commit(SET_REPORT, report);

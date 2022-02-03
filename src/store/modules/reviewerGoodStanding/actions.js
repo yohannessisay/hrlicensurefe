@@ -37,7 +37,7 @@ import {
   SET_GOOD_STANDING_OTHERS_RE_APPLY,
   SET_GOOD_STANDING_OTHERS_RE_APPLY_SEARCHED,
 } from "./mutation-types";
-const baseUrl = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api";
+const baseUrl = "https://ihris.moh.gov.et/hrl/api";
 
 export default {
   async getUnassignedGoodStanding({ commit }, statusId) {

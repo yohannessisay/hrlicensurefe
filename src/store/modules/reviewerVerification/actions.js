@@ -28,7 +28,7 @@ import {
   SET_VERIFICATION_OTHERS_RE_APPLY,
   SET_VERIFICATION_OTHERS_RE_APPLY_SEARCHED,
 } from "./mutation-types";
-const baseUrl = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api";
+const baseUrl = "https://ihris.moh.gov.et/hrl/api";
 
 export default {
   async getUnassignedVerification({ commit }, statusId) {

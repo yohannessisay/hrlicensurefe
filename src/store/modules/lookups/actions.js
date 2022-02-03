@@ -1,6 +1,6 @@
 import ApiService from "../../../services/api.service";
 import { SET_EDUCATION_LEVEL } from "./mutation-types";
-const url = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api/";
+const url = "https://ihris.moh.gov.et/hrl/api/";
 export default {
   setEducationalLevel({ commit }, educationalLevel) {
     commit(SET_EDUCATION_LEVEL, educationalLevel);
