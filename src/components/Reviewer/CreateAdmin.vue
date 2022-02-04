@@ -144,7 +144,7 @@
             >
               <Spinner />
             </div>
-            <div class="flex mb-medium w-full mt-medium">
+            <div class="flex mb-medium w-full mt-medium" v-if="!showLoading">
               <button
                 class="mx-auto w-1/2 blue-with-light-blue-gradient"
                 variant="block"
@@ -191,7 +191,6 @@ export default {
     const adminExpertId = JSON.parse(localStorage.getItem("allAdminData"))
       .expertLevelId;
     let errorMessage = ref("");
-    let isNotSubmittedOnce = ref(true);
 
     let admin = {
       firstName: null,
@@ -263,10 +262,6 @@ export default {
     };
 
     const registerAdmin = () => {
-      if(!isNotSubmittedOnce.value) {
-        //user manager can submit only once while creating admin
-        return;
-      }
       const isValidated = validateForm(admin);
       showLoading.value = true;
       if (isValidated) {
@@ -283,7 +278,6 @@ export default {
           admin.grandfatherName;
 
         admin.email = admin.email.toLowerCase();
-        isNotSubmittedOnce.value = false;
         store
           .dispatch("admin/registerAdmin", admin)
           .then((res) => {
@@ -292,12 +286,12 @@ export default {
               message.value.showErrorFlash = !message.value.showErrorFlash;
               setTimeout(() => {
                 message.value.showErrorFlash = !message.value.showErrorFlash;
-              }, 3000);
+              }, 2000);
             } else if (res.data.status == "Success") {
               message.value.showFlash = !message.value.showFlash;
               setTimeout(() => {
                 location.reload(true);
-              }, 3000);
+              }, 2000);
             } else if ((res.data.status = "Error")) {
               errorMessage.value = res.data.message;
               message.value.showErrorFlash = !message.value.showErrorFlash;

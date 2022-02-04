@@ -26,7 +26,7 @@
                   {{ types.name }}
                 </option>
               </select>
-              <button
+              <button v-if="!showAdminAssignLoading"
                 class="block mx-auto bg-lightBlue-300 hover:bg-lightBlue-600 hover:shadow-lg mt-small"
                 @click="assignReviewer()"
               >
@@ -287,7 +287,6 @@ export default {
     const expertLevelId = JSON.parse(localStorage.getItem("allAdminData"))
       .expertLevelId;
 
-    let isNotSubmittedOnce = ref(true);
     let show = ref(false);
     let license = ref({
       applicant: {},
@@ -457,10 +456,6 @@ export default {
     };
 
     const assignReviewer = () => {
-      if (!isNotSubmittedOnce.value) {
-        // don't allow admin to assign application more than once
-        return;
-      }
       if (role.value.code === "TL" || role.value.code === "ADM") {
         if (applicationType.value == "Good Standing") {
           assign.value = {
@@ -522,7 +517,6 @@ export default {
           };
         }
       }
-      isNotSubmittedOnce.value = false;
       if (applicationType.value == "New License") {
         showAdminAssignLoading.value = true;
         store
@@ -533,14 +527,14 @@ export default {
               showFlash.value = true;
               setTimeout(() => {
                 router.push("/admin/review");
-              }, 3000);
+              }, 2000);
             }
           })
           .catch((err) => {
             showErrorFlash.value = true;
             setTimeout(() => {
               router.go();
-            }, 3000);
+            }, 2000);
           });
       }
       if (applicationType.value == "Verification") {
@@ -553,14 +547,14 @@ export default {
               showFlash.value = true;
               setTimeout(() => {
                 router.push("/admin/review");
-              }, 3000);
+              }, 2000);
             }
           })
           .catch((err) => {
             showErrorFlash.value = true;
             setTimeout(() => {
               router.go();
-            }, 3000);
+            }, 2000);
           });
       }
       if (applicationType.value == "Renewal") {
@@ -575,19 +569,19 @@ export default {
                 showFlash.value = true;
                 setTimeout(() => {
                   router.push("/admin/review");
-                }, 3000);
+                }, 2000);
               } else {
                 showErrorFlash.value = true;
                 setTimeout(() => {
                   router.go();
-                }, 3000);
+                }, 2000);
               }
             })
             .catch((err) => {
               showErrorFlash.value = true;
               setTimeout(() => {
                 router.go();
-              }, 3000);
+              }, 2000);
             });
         } else {
           showAdminAssignLoading.value = true;
@@ -600,14 +594,14 @@ export default {
                 showFlash.value = true;
                 setTimeout(() => {
                   router.push("/admin/review");
-                }, 3000);
+                }, 2000);
               }
             })
             .catch((err) => {
               showErrorFlash.value = true;
               setTimeout(() => {
                 router.go();
-              }, 3000);
+              }, 2000);
             });
         }
       }
@@ -621,14 +615,14 @@ export default {
               showFlash.value = true;
               setTimeout(() => {
                 router.push("/admin/review");
-              }, 3000);
+              }, 2000);
             }
           })
           .catch((err) => {
             showErrorFlash.value = true;
             setTimeout(() => {
               router.go();
-            }, 3000);
+            }, 2000);
           });
       }
     };

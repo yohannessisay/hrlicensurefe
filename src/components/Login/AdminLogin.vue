@@ -54,7 +54,7 @@
       >
         Forgot password?
       </a>
-      <button click="submit()" class="mt-medium">Login</button>
+      <button v-if="!showLoading" click="submit()" class="mt-medium">Login</button>
     </form>
     <Spinner
       v-if="showLoading"
@@ -84,7 +84,6 @@ export default {
     const router = useRouter();
 
     let showLoading = ref(false);
-    let isNotSubmittedOnce = ref(true);
     let message = ref({
       showFlash: false,
       showErrorFlash: false,
@@ -103,16 +102,11 @@ export default {
     const loggedInData = ref({});
 
     const submit = () => {
-      if(!isNotSubmittedOnce.value) {
-        // login button works only once (admin can't send login credentials morethan once)
-        return;
-      }
       showLoading.value = true;
       let credentialData = {
         email: credentials.value.email,
         password: credentials.value.password,
       };
-      isNotSubmittedOnce.value = false;
       store.dispatch("admin/login", credentialData).then((res) => {
         loggedInData.value = store.getters["admin/getAdmin"];
         showLoading.value = false;
@@ -136,7 +130,6 @@ export default {
             }, 3000);
           }
         } else {
-          isNotSubmittedOnce.value = true;
           message.value.showErrorFlash = !message.value.showErrorFlash;
           setTimeout(() => {
             // context.emit("closeModal", true);

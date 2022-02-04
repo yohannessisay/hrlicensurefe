@@ -213,7 +213,7 @@
       </div>
       <div
         class="flex justify-center items-center mb-medium"
-        v-if="showButtons"
+        v-if="showButtons && !showLoadingconfirmed"
       >
         <!-- <div class="flex">
           <button  class="" variant="outline" @click="action(buttons[0].action)">{{buttons[0].name}}</button>
@@ -238,12 +238,12 @@
             {{ button.name }}
           </button>
         </div>
-        <div
+      </div>
+      <div
         v-if="showLoadingconfirmed"
         class="flex content-center justify-center"
       >
         <Spinner />
-      </div>
       </div>
       <Modal v-if="showRemark">
         <div>
@@ -421,7 +421,6 @@ export default {
 
     let approvedOrRejected = ref("");
 
-    let isNotSubmittedOnce = ref(true);
     let evaluationSuccess = ref(false);
     let approvedColor = ref("lightBlueB-500");
     let showLoadingconfirmed = ref(false);
@@ -551,10 +550,6 @@ export default {
     };
 
     const action = (actionValue) => {
-      if(!isNotSubmittedOnce.value) {
-        // don't allow admin to confirm or reject more than once
-        return;
-      }
       newLicense.value.declinedFields = rejected.value;
       newLicense.value.acceptedFields = accepted.value;
       evaluateData.value = newLicense.value.evaluators;
@@ -591,7 +586,6 @@ export default {
     };
 
     const evaluateApplication = (applicationType, req) => {
-      isNotSubmittedOnce.value = false;
       showLoadingconfirmed.value = true;
         store.dispatch("reviewer/" + applicationType, req).then((res) => {
           showLoadingconfirmed.value = false;
@@ -600,12 +594,12 @@ export default {
             evaluationSuccess.value = true;
             setTimeout(() => {
               router.push("/admin/review");
-            }, 3000);
+            }, 2000);
           } else {
             showErrorFlash.value = true;
             setTimeout(() => {
               router.go();
-            }, 3000);
+            }, 2000);
           }
         });
     };

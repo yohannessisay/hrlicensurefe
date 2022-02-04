@@ -26,6 +26,7 @@
                 </option>
               </select>
               <button
+              v-if="!showtransferLoading"
                 class="block mx-auto bg-lightBlue-300 hover:bg-lightBlue-600 hover:shadow-lg mt-small"
                 @click="transferReview()"
               >
@@ -344,7 +345,6 @@ export default {
     let expertLevelId = JSON.parse(localStorage.getItem("allAdminData"))
       .expertLevelId;
 
-    let isNotSubmittedOnce = ref(true);
     let evaluators = ref([]);
 
     let transfer = ref({
@@ -401,13 +401,17 @@ export default {
 
     const fetchAdmins = () => {
       store.dispatch("reviewer/getAdmins").then((res) => {
-        admins.value = res.data.data;
+        admins.value = res.data.data.filter(e => {
+          return e.id !== loggedInAdminId;
+        })
       });
     };
 
     const fetchAdminsByRegion = (regionId) => {
       store.dispatch("reviewer/getAdminsByRegion", regionId).then((res) => {
-        admins.value = res.data.data;
+        admins.value = res.data.data.filter(e => {
+          return e.id !== loggedInAdminId
+        });
       });
     };
 
@@ -415,9 +419,6 @@ export default {
 
     const transferReview = () => {
       showtransferLoading.value = true;
-      if(!isNotSubmittedOnce.value) {
-        return;
-      }
       // if (role.value.code === "TL" || role.value.code === "SA") {
       if (applicationType.value == "Good Standing") {
         transfer.value = {
@@ -447,7 +448,6 @@ export default {
           createdByAdminId: +localStorage.getItem("adminId"),
         };
       }
-      isNotSubmittedOnce.value = false;
       if (applicationType.value == "New License") {
         store
           .dispatch("reviewer/transferLicenseReview", transfer.value)
@@ -458,19 +458,19 @@ export default {
               showFlash.value = true;
               setTimeout(() => {
                 router.push("/admin/review");
-              }, 3000);
+              }, 2000);
             } else {
               showErrorFlash.value = false;
             setTimeOut(() => {
               router.go();
-            });
+            }, 2000);
             }
           })
           .catch((err) => {
             showErrorFlash.value = false;
             setTimeOut(() => {
               router.go();
-            });
+            }, 2000);
           });
       }
       if (applicationType.value == "Verification") {
@@ -479,18 +479,20 @@ export default {
           .then((response) => {
             if (response.statusText == "Created") {
               showFlash.value = true;
-              router.push("/admin/review");
+              setTimeout(() => {
+                router.push("/admin/review");
+              }, 2000)
             } else {
               showErrorFlash.value = false;
             setTimeOut(() => {
               router.go();
-            });
+            }, 2000);
             }
           }).catch(err => {
             showErrorFlash.value = false;
             setTimeOut(() => {
               router.go();
-            });
+            }, 2000);
           })
       }
       if (applicationType.value == "Renewal") {
@@ -500,18 +502,20 @@ export default {
           .then((response) => {
             if (response.statusText == "Created") {
               showFlash.value = true;
-              router.push("/admin/review");
+              setTimeout(() => {
+                router.push("/admin/review");
+              }, 2000)
             } else {
               showErrorFlash.value = false;
             setTimeOut(() => {
               router.go();
-            });
+            }, 2000);
             }
           }).catch(err => {
             showErrorFlash.value = false;
             setTimeOut(() => {
               router.go();
-            });
+            }, 2000);
           })
       }
       if (applicationType.value == "Good Standing") {
@@ -526,13 +530,13 @@ export default {
               showErrorFlash.value = false;
             setTimeOut(() => {
               router.go();
-            });
+            }, 2000);
             }
           }).catch(err => {
             showErrorFlash.value = false;
             setTimeOut(() => {
               router.go();
-            });
+            }, 2000);
           })
       }
     };
