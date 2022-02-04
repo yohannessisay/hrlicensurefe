@@ -754,7 +754,7 @@
 
       <div
         class="flex justify-center items-center mb-medium"
-        v-if="showButtons"
+        v-if="showButtons && !showActionLoading"
       >
         <div
           v-for="button in buttons"
@@ -1065,7 +1065,6 @@ export default {
     let pdfFilePath = ref("");
 
     let isGoodStanding = ref(false);
-    let isNotSubmittedOnce = ref(true);
 
     let expirationDateExceedTodayError = ref(false);
     let isProfessionalTypeChanged = ref(false);
@@ -1566,10 +1565,6 @@ export default {
     };
 
     const action = (actionValue) => {
-      if(!isNotSubmittedOnce.value) {
-        // don't allow admin to submit evaluation more than once
-        return;
-      }
       showActionLoading.value = true;
       if (professionalTypeIdss.value.length > 0) {
         newLicense.value.professionalTypeIds = professionalTypeIdss.value;
@@ -1691,7 +1686,6 @@ export default {
         action: actionValue,
         data: newLicense.value,
       };
-      isNotSubmittedOnce.value = false;
       if (
         applicationType.value == "New License" &&
         sendDeclinedData.value == true
@@ -2104,7 +2098,6 @@ export default {
       checkProfessionChanged,
       isGoodStanding,
       showActionLoading,
-      isNotSubmittedOnce,
     };
   },
 };
