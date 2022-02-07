@@ -144,7 +144,7 @@
             >
               <Spinner />
             </div>
-            <div class="flex mb-medium w-full mt-medium" v-if="!showLoading">
+            <div class="flex mb-medium w-full mt-medium" v-if="!showButtons">
               <button
                 class="mx-auto w-1/2 blue-with-light-blue-gradient"
                 variant="block"
@@ -205,6 +205,8 @@ export default {
     };
 
     let showLoading = ref(false);
+    let showButtons = ref(false);
+
     let expertLevels = ref([
       {
         id: null,
@@ -264,10 +266,12 @@ export default {
     const registerAdmin = () => {
       const isValidated = validateForm(admin);
       showLoading.value = true;
+      showButtons.value = true;
       if (isValidated) {
         state.value.validationErrors = isValidated;
         state.value.showErrorMessages = true;
         showLoading.value = false;
+        showButtons.value = false;
       } else {
         state.value.showErrorMessages = false;
         admin.name =
@@ -286,25 +290,27 @@ export default {
               message.value.showErrorFlash = !message.value.showErrorFlash;
               setTimeout(() => {
                 message.value.showErrorFlash = !message.value.showErrorFlash;
-              }, 2000);
+              }, 3000);
             } else if (res.data.status == "Success") {
               message.value.showFlash = !message.value.showFlash;
               setTimeout(() => {
                 location.reload(true);
-              }, 2000);
+              }, 3000);
             } else if ((res.data.status = "Error")) {
               errorMessage.value = res.data.message;
               message.value.showErrorFlash = !message.value.showErrorFlash;
               setTimeout(() => {
                 location.reload(true);
-              });
+              }, 3000);
             }
           })
           .catch((err) => {
             showLoading.value = false;
+            errorMessage.value = "Oops! Something went wrong, Admin is not created"
+            message.value.showErrorFlash = true;
             setTimeout(() => {
               location.reload(true);
-            })
+            }, 3000)
           });
       }
     };
@@ -368,6 +374,7 @@ export default {
       isValidEmail,
       selectedExpertLevel,
       selectedRegion,
+      showButtons,
     };
   },
 };

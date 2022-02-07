@@ -32,7 +32,7 @@
               <span v-show="showAdminCountError">
                 <label class="text-red-200">please select 2 or 3 admins</label>
               </span>
-              <button v-if="!showAssignLoading"
+              <button v-if="!showButtons"
                 class="block mx-auto bg-lightBlue-300 hover:bg-lightBlue-600 hover:shadow-lg mt-small"
                 @click="assignAdminToConfirm()"
               >
@@ -344,6 +344,8 @@ export default {
     let show = ref(false);
     let showLoading = ref(false);
     let showAssignLoading = ref(false);
+    let showButtons = ref(false);
+
     let license = ref({
       applicant: {},
       applicantType: {},
@@ -413,6 +415,7 @@ export default {
       }
       // if (role.value.code === "ADM") {
       showAssignLoading.value = true;
+      showButtons.value = true;
       showAdminCountError.value = false;
       if (applicationType.value == "Good Standing") {
         assignConfirmAdmin.value = {
@@ -455,19 +458,19 @@ export default {
               showFlash.value = true;
               setTimeout(() => {
                 router.push("/admin/review");
-              }, 2000);
+              }, 3000);
             } else {
               showErrorFlash.value = true;
               setTimeout(() => {
                 router.go();
-              }, 2000);
+              }, 3000);
             }
           })
           .catch((e) => {
             showErrorFlash.value = true;
             setTimeout(() => {
               router.go();
-            }, 2000);
+            }, 3000);
           });
       }
       if (applicationType.value == "Verification") {
@@ -483,19 +486,19 @@ export default {
               showFlash.value = true;
               setTimeout(() => {
                 router.push("/admin/review");
-              }, 2000);
+              }, 3000);
             } else {
               showErrorFlash.value = true;
               setTimeout(() => {
                 router.go();
-              }, 2000);
+              }, 3000);
             }
           })
           .catch((e) => {
             showErrorFlash.value = true;
             setTimeout(() => {
               router.go();
-            }, 2000);
+            }, 3000);
           });
       }
       if (applicationType.value == "Renewal") {
@@ -508,19 +511,19 @@ export default {
               showFlash.value = true;
               setTimeout(() => {
                 router.push("/admin/review");
-              }, 2000);
+              }, 3000);
             } else {
               showErrorFlash.value = true;
               setTimeout(() => {
                 router.go();
-              }, 2000);
+              }, 3000);
             }
           })
           .catch((e) => {
             showErrorFlash.value = true;
             setTimeout(() => {
               router.go();
-            }, 2000);
+            }, 3000);
           });
       }
       if (applicationType.value == "Good Standing") {
@@ -536,19 +539,19 @@ export default {
               showFlash.value = true;
               setTimeout(() => {
                 router.push("/admin/review");
-              }, 2000);
+              }, 3000);
             } else {
               showErrorFlash.value = true;
               setTimeout(() => {
                 router.go();
-              }, 2000);
+              }, 3000);
             }
           })
           .catch((e) => {
             showErrorFlash.value = true;
             setTimeout(() => {
               router.go();
-            }, 2000);
+            }, 3000);
           });
       }
     };
@@ -698,6 +701,7 @@ export default {
       assignAdminToConfirm,
       previousEvaluators,
       expertLevelId,
+      showButtons,
     };
   },
 

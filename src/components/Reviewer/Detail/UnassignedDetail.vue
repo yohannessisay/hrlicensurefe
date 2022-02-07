@@ -26,7 +26,7 @@
                   {{ types.name }}
                 </option>
               </select>
-              <button v-if="!showAdminAssignLoading"
+              <button v-if="!showButtons"
                 class="block mx-auto bg-lightBlue-300 hover:bg-lightBlue-600 hover:shadow-lg mt-small"
                 @click="assignReviewer()"
               >
@@ -331,6 +331,7 @@ export default {
 
     let showLoading = ref(false);
     let showAdminAssignLoading = ref(false);
+    let showButtons = ref(false);
 
     let reviewerAdminId = ref(0);
 
@@ -519,6 +520,7 @@ export default {
       }
       if (applicationType.value == "New License") {
         showAdminAssignLoading.value = true;
+        showButtons.value = true;
         store
           .dispatch("reviewer/assignReviewer", assign.value)
           .then((response) => {
@@ -527,18 +529,24 @@ export default {
               showFlash.value = true;
               setTimeout(() => {
                 router.push("/admin/review");
-              }, 2000);
+              }, 3000);
+            } else {
+              showErrorFlash.value = true;
+              setTimeout(() => {
+                router.go()
+              }, 3000)
             }
           })
           .catch((err) => {
             showErrorFlash.value = true;
             setTimeout(() => {
               router.go();
-            }, 2000);
+            }, 3000);
           });
       }
       if (applicationType.value == "Verification") {
         showAdminAssignLoading.value = true;
+        showButtons.value = true;
         store
           .dispatch("reviewer/assignVerificationReviewer", assign.value)
           .then((response) => {
@@ -547,20 +555,26 @@ export default {
               showFlash.value = true;
               setTimeout(() => {
                 router.push("/admin/review");
-              }, 2000);
+              }, 3000);
+            } else {
+              showErrorFlash.value = true;
+              setTimeout(() => {
+                router.go();
+              }, 3000)
             }
           })
           .catch((err) => {
             showErrorFlash.value = true;
             setTimeout(() => {
               router.go();
-            }, 2000);
+            }, 3000);
           });
       }
       if (applicationType.value == "Renewal") {
         if (license.value.applicationStatus.code === "UPD") {
           license.value.reviewerId = assign.value.reviewerId;
           showAdminAssignLoading.value = true;
+          showButtons.value = true;
           store
             .dispatch("reviewer/assignRenewalReviewer", assign.value)
             .then((response) => {
@@ -569,22 +583,23 @@ export default {
                 showFlash.value = true;
                 setTimeout(() => {
                   router.push("/admin/review");
-                }, 2000);
+                }, 3000);
               } else {
                 showErrorFlash.value = true;
                 setTimeout(() => {
                   router.go();
-                }, 2000);
+                }, 3000);
               }
             })
             .catch((err) => {
               showErrorFlash.value = true;
               setTimeout(() => {
                 router.go();
-              }, 2000);
+              }, 3000);
             });
         } else {
           showAdminAssignLoading.value = true;
+          showButtons.value = true;
           store
             .dispatch("reviewer/assignRenewalReviewer", assign.value)
 
@@ -594,19 +609,25 @@ export default {
                 showFlash.value = true;
                 setTimeout(() => {
                   router.push("/admin/review");
-                }, 2000);
+                }, 3000);
+              } else {
+                showErrorFlash.value = true;
+                setTimeout(() => {
+                  router.go();
+                }, 3000)
               }
             })
             .catch((err) => {
               showErrorFlash.value = true;
               setTimeout(() => {
                 router.go();
-              }, 2000);
+              }, 3000);
             });
         }
       }
       if (applicationType.value == "Good Standing") {
         showAdminAssignLoading.value = true;
+        showButtons.value = true;
         store
           .dispatch("reviewer/assignGoodStandingReviewer", assign.value)
           .then((response) => {
@@ -615,14 +636,14 @@ export default {
               showFlash.value = true;
               setTimeout(() => {
                 router.push("/admin/review");
-              }, 2000);
+              }, 3000);
             }
           })
           .catch((err) => {
             showErrorFlash.value = true;
             setTimeout(() => {
               router.go();
-            }, 2000);
+            }, 3000);
           });
       }
     };
@@ -674,6 +695,7 @@ export default {
       showLoading,
       showAdminAssignLoading,
       expertLevelId,
+      showButtons,
     };
   },
 };
