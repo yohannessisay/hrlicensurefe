@@ -75,6 +75,8 @@ export default {
     PendingPayment,
   },
   created() {
+    this.$route.params.status = undefined;
+    console.log(this.$route.params.status);
     // resetting new license store
     this.$store.dispatch("newlicense/storeAcceptedFields", []);
     this.$store.dispatch("newlicense/storeDeclinedFields", []);

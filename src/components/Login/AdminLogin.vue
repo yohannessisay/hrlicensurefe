@@ -54,7 +54,7 @@
       >
         Forgot password?
       </a>
-      <button click="submit()" class="mt-medium">Login</button>
+      <button v-if="!showLoading" click="submit()" class="mt-medium">Login</button>
     </form>
     <Spinner
       v-if="showLoading"

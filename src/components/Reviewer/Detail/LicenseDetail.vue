@@ -26,6 +26,7 @@
                 </option>
               </select>
               <button
+              v-if="!showButtons"
                 class="block mx-auto bg-lightBlue-300 hover:bg-lightBlue-600 hover:shadow-lg mt-small"
                 @click="transferReview()"
               >
@@ -84,7 +85,9 @@
             >
               <label class="ml-8"> Nationality</label>
               <h5 class="ml-8">
-                {{ profileInfo.nationality ? profileInfo.nationality.name : "-" }}
+                {{
+                  profileInfo.nationality ? profileInfo.nationality.name : "-"
+                }}
               </h5>
             </div>
             <div
@@ -236,32 +239,39 @@
             </div>
           </div>
           <div v-if="license.applicationStatus.code === 'RETREV'">
-          <div class="flex justify-start">
-            <Title message="Status" />
-          </div>
-          <div class="flex flex-row" >
-            <div>
-              <label class="ml-8"> Evaluator's Name</label>
-              <h5 class="ml-8" v-for="evaluator in evaluators">
-                {{ evaluator.evaluator.name ?  evaluator.evaluator.name: "Not Found"}}
-              </h5>
+            <div class="flex justify-start">
+              <Title message="Status" />
             </div>
-            <div>
-              <label class="ml-8"> Action</label>
-              <h5 class="ml-8" v-for="evaluator in evaluators">
-                {{ evaluator.actionEvent ?  evaluator.actionEvent: "Not Started"}}
-              </h5>
+            <div class="flex flex-row">
+              <div>
+                <label class="ml-8"> Evaluator's Name</label>
+                <h5 class="ml-8" v-for="evaluator in evaluators">
+                  {{
+                    evaluator.evaluator.name
+                      ? evaluator.evaluator.name
+                      : "Not Found"
+                  }}
+                </h5>
+              </div>
+              <div>
+                <label class="ml-8"> Action</label>
+                <h5 class="ml-8" v-for="evaluator in evaluators">
+                  {{
+                    evaluator.actionEvent
+                      ? evaluator.actionEvent
+                      : "Not Started"
+                  }}
+                </h5>
+              </div>
+              <div>
+                <label class="ml-8"> Remark? </label>
+                <h5 class="ml-8" v-for="evaluator in evaluators">
+                  {{ evaluator.remark ? evaluator.remark : "" }}
+                </h5>
+              </div>
             </div>
-            <div>
-              <label class="ml-8"> Remark? </label>
-              <h5 class="ml-8" v-for="evaluator in evaluators">
-                {{ evaluator.remark ?  evaluator.remark: ""}}
-              </h5>
-            </div>
           </div>
-          </div>
-          <div class="flex justify-start flex-wrap">
-          </div>
+          <div class="flex justify-start flex-wrap"></div>
           <div v-if="reviewerId == loggedInAdminId">
             <div class="mt-12 flex justify-center">
               <div>
@@ -326,6 +336,7 @@ export default {
 
     let loading = ref(false);
     let showtransferLoading = ref(false);
+    let showButtons = ref(false);
 
     let role = ref({});
 
@@ -391,13 +402,17 @@ export default {
 
     const fetchAdmins = () => {
       store.dispatch("reviewer/getAdmins").then((res) => {
-        admins.value = res.data.data;
+        admins.value = res.data.data.filter(e => {
+          return e.id !== loggedInAdminId;
+        })
       });
     };
 
     const fetchAdminsByRegion = (regionId) => {
       store.dispatch("reviewer/getAdminsByRegion", regionId).then((res) => {
-        admins.value = res.data.data;
+        admins.value = res.data.data.filter(e => {
+          return e.id !== loggedInAdminId
+        });
       });
     };
 
@@ -405,6 +420,7 @@ export default {
 
     const transferReview = () => {
       showtransferLoading.value = true;
+      showButtons.value = true;
       // if (role.value.code === "TL" || role.value.code === "SA") {
       if (applicationType.value == "Good Standing") {
         transfer.value = {
@@ -434,7 +450,6 @@ export default {
           createdByAdminId: +localStorage.getItem("adminId"),
         };
       }
-      // }
       if (applicationType.value == "New License") {
         store
           .dispatch("reviewer/transferLicenseReview", transfer.value)
@@ -446,45 +461,88 @@ export default {
               setTimeout(() => {
                 router.push("/admin/review");
               }, 3000);
+            } else {
+              showErrorFlash.value = false;
+            setTimeOut(() => {
+              router.go();
+            }, 3000);
             }
           })
           .catch((err) => {
+            showErrorFlash.value = false;
             setTimeOut(() => {
-              showErrorFlash.value = false;
-            });
+              router.go();
+            }, 3000);
           });
       }
       if (applicationType.value == "Verification") {
         store
           .dispatch("reviewer/transferVerificationReview", transfer.value)
           .then((response) => {
+            showtransferLoading.value = false;
             if (response.statusText == "Created") {
               showFlash.value = true;
-              router.push("/admin/review");
+              setTimeout(() => {
+                router.push("/admin/review");
+              }, 3000)
+            } else {
+              showErrorFlash.value = false;
+            setTimeOut(() => {
+              router.go();
+            }, 3000);
             }
-          });
+          }).catch(err => {
+            showErrorFlash.value = false;
+            setTimeOut(() => {
+              router.go();
+            }, 3000);
+          })
       }
       if (applicationType.value == "Renewal") {
         store
           .dispatch("reviewer/transferRenewalReview", transfer.value)
-
           .then((response) => {
+            showtransferLoading.value = false;
             if (response.statusText == "Created") {
               showFlash.value = true;
-              router.push("/admin/review");
+              setTimeout(() => {
+                router.push("/admin/review");
+              }, 3000)
+            } else {
+              showErrorFlash.value = false;
+            setTimeOut(() => {
+              router.go();
+            }, 3000);
             }
-          });
+          }).catch(err => {
+            showErrorFlash.value = false;
+            setTimeOut(() => {
+              router.go();
+            }, 3000);
+          })
       }
       if (applicationType.value == "Good Standing") {
         store
           .dispatch("reviewer/transferGoodStandingReview", transfer.value)
-
           .then((response) => {
+            showtransferLoading.value = false;
             if (response.statusText == "Created") {
               showFlash.value = true;
-              router.push("/admin/review");
+              setTimeout(() => {
+                router.push("/admin/review");
+              }, 3000)
+            } else {
+              showErrorFlash.value = false;
+            setTimeOut(() => {
+              router.go();
+            }, 3000);
             }
-          });
+          }).catch(err => {
+            showErrorFlash.value = false;
+            setTimeOut(() => {
+              router.go();
+            }, 3000);
+          })
       }
     };
 
@@ -637,7 +695,8 @@ export default {
       created,
       evaluate,
       expertLevelId,
-      evaluators
+      evaluators,
+      showButtons,
     };
   },
 };

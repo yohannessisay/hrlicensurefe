@@ -405,82 +405,84 @@
             </div>
           </div>
         </div>
-        <div v-if="this.draftStatus == 'DRA' || !this.draftStatus">
-          <div class="flex justify-center mt-4 mb-8">
+        <div v-if="!showLoading">
+          <div v-if="this.draftStatus == 'DRA' || !this.draftStatus">
+            <div class="flex justify-center mt-4 mb-8">
+              <button @click="submitBack">
+                Back
+              </button>
+              <button @click="submit">Next</button>
+              <button
+                v-if="this.buttons.length < 3"
+                @click="draft(this.buttons[1].action)"
+                variant="outline"
+              >
+                {{ this.buttons[1].name }}
+              </button>
+              <button
+                v-if="this.buttons.length > 2"
+                @click="draft(this.buttons[2].action)"
+                variant="outline"
+              >
+                {{ this.buttons[2].name }}
+              </button>
+
+              <button
+                v-if="this.buttons.length > 2"
+                class="withdraw"
+                @click="withdraw(this.buttons[1].action)"
+                variant="outline"
+              >
+                {{ this.buttons[1].name }}
+              </button>
+            </div>
+          </div>
+          <div
+            v-if="this.draftStatus == 'SUB'"
+            class="flex justify-center mt-8 pb-12"
+          >
             <button @click="submitBack">
               Back
             </button>
             <button @click="submit">Next</button>
             <button
-              v-if="this.buttons.length < 3"
-              @click="draft(this.buttons[1].action)"
-              variant="outline"
-            >
-              {{ this.buttons[1].name }}
-            </button>
-            <button
-              v-if="this.buttons.length > 2"
-              @click="draft(this.buttons[2].action)"
-              variant="outline"
-            >
-              {{ this.buttons[2].name }}
-            </button>
-
-            <button
-              v-if="this.buttons.length > 2"
               class="withdraw"
               @click="withdraw(this.buttons[1].action)"
               variant="outline"
             >
-              {{ this.buttons[1].name }}
+              {{ this.buttons[1]["name"] }}
             </button>
           </div>
-        </div>
-        <div
-          v-if="this.draftStatus == 'SUB'"
-          class="flex justify-center mt-8 pb-12"
-        >
-          <button @click="submitBack">
-            Back
-          </button>
-          <button @click="submit">Next</button>
-          <button
-            class="withdraw"
-            @click="withdraw(this.buttons[1].action)"
-            variant="outline"
+          <div
+            v-if="this.draftStatus == 'USUP'"
+            class="flex justify-center mt-8 pb-12"
           >
-            {{ this.buttons[1]["name"] }}
-          </button>
-        </div>
-        <div
-          v-if="this.draftStatus == 'USUP'"
-          class="flex justify-center mt-8 pb-12"
-        >
-          <button @click="submitBack">
-            Back
-          </button>
-          <button @click="submit">Next</button>
-          <button @click="draft(this.buttons[0].action)" variant="outline">
-            {{ this.buttons[0]["name"] }}
-          </button>
-          <button @click="update(this.buttons[1].action)" variant="outline">
-            {{ this.buttons[1]["name"] }}
-          </button>
-        </div>
-        <div
-          v-if="this.draftStatus == 'DEC'"
-          class="flex justify-center mt-8 pb-12"
-        >
-          <button @click="submitBack">
-            Back
-          </button>
-          <button @click="submit">Next</button>
-          <!-- <button @click="draft(this.buttons[0].action)" variant="outline">
+            <button @click="submitBack">
+              Back
+            </button>
+            <button @click="submit">Next</button>
+            <button @click="draft(this.buttons[0].action)" variant="outline">
+              {{ this.buttons[0]["name"] }}
+            </button>
+            <button @click="update(this.buttons[1].action)" variant="outline">
+              {{ this.buttons[1]["name"] }}
+            </button>
+          </div>
+          <div
+            v-if="this.draftStatus == 'DEC'"
+            class="flex justify-center mt-8 pb-12"
+          >
+            <button @click="submitBack">
+              Back
+            </button>
+            <button @click="submit">Next</button>
+            <!-- <button @click="draft(this.buttons[0].action)" variant="outline">
             {{ this.buttons[0]["name"] }}
           </button> -->
-          <button @click="update(this.buttons[1].action)" variant="outline">
-            {{ this.buttons[1]["name"] }}
-          </button>
+            <button @click="update(this.buttons[1].action)" variant="outline">
+              {{ this.buttons[1]["name"] }}
+            </button>
+          </div>
         </div>
         <div v-if="showLoading">
           <Spinner />

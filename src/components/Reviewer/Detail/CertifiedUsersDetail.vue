@@ -589,6 +589,12 @@ export default {
 
       doc.setFontSize(12);
       // doc.text(80)
+      let getAmharicLicensedDate = doc.getTextWidth(
+        toEthiopian(
+          moment(certificateDetail.value.certifiedDate)._d.toISOString(),
+          false
+        ) + " - "
+      );
       doc.text(
         75,
         164,
@@ -602,7 +608,7 @@ export default {
         }`
       );
       doc.text(
-        105,
+        75 + getAmharicLicensedDate,
         164,
         `${
           certificateDetail.value.licenseExpirationDate

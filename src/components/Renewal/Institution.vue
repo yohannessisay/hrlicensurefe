@@ -239,70 +239,72 @@
             </div>
           </div>
         </form>
-        <div
-          v-if="this.showButtons && !this.draftStatus"
-          class="flex justify-center mb-8"
-        >
-          <button @click="submit">Apply</button>
-          <button @click="draft(this.buttons[1].action)" variant="outline">
-            {{ this.buttons[1]["name"] }}
-          </button>
-        </div>
-        <div
-          v-if="this.showButtons && this.draftStatus == 'DRA'"
-          class="flex justify-center mb-8"
-        >
-          <button @click="submit">Apply</button>
-          <button @click="draft(this.buttons[2].action)" variant="outline">
-            {{ this.buttons[2]["name"] }}
-          </button>
-          <button
-            class="withdraw"
-            @click="withdraw(this.buttons[1].action)"
-            variant="outline"
+        <div v-if="!showLoading">
+          <div
+            v-if="this.showButtons && !this.draftStatus"
+            class="flex justify-center mb-8"
           >
-            {{ this.buttons[1]["name"] }}
-          </button>
-        </div>
-        <div
-          v-if="this.showButtons && this.draftStatus == 'SUB'"
-          class="flex justify-center mb-8"
-        >
-          <button @click="submit">Apply</button>
-          <button
-            class="withdraw"
-            @click="withdraw(this.buttons[1].action)"
-            variant="outline"
+            <button @click="submit">Apply</button>
+            <button @click="draft(this.buttons[1].action)" variant="outline">
+              {{ this.buttons[1]["name"] }}
+            </button>
+          </div>
+          <div
+            v-if="this.showButtons && this.draftStatus == 'DRA'"
+            class="flex justify-center mb-8"
           >
-            {{ this.buttons[1]["name"] }}
-          </button>
-        </div>
-        <div
-          v-if="this.showButtons && this.draftStatus == 'USUP'"
-          class="flex justify-center mb-8"
-        >
-          <button @click="submit">Apply</button>
-          <button @click="draft(this.buttons[0].action)" variant="outline">
-            {{ this.buttons[0]["name"] }}
-          </button>
-          <button @click="update(this.buttons[1].action)" variant="outline">
-            {{ this.buttons[1]["name"] }}
-          </button>
-        </div>
-        <div
-          v-if="
-            this.showButtons &&
-              (this.draftStatus == 'DEC' || this.draftStatus == 'CONF')
-          "
-          class="flex justify-center mb-8"
-        >
-          <button @click="submit">Apply</button>
-          <!-- <button @click="draft(this.buttons[0].action)" variant="outline">
+            <button @click="submit">Apply</button>
+            <button @click="draft(this.buttons[2].action)" variant="outline">
+              {{ this.buttons[2]["name"] }}
+            </button>
+            <button
+              class="withdraw"
+              @click="withdraw(this.buttons[1].action)"
+              variant="outline"
+            >
+              {{ this.buttons[1]["name"] }}
+            </button>
+          </div>
+          <div
+            v-if="this.showButtons && this.draftStatus == 'SUB'"
+            class="flex justify-center mb-8"
+          >
+            <button @click="submit">Apply</button>
+            <button
+              class="withdraw"
+              @click="withdraw(this.buttons[1].action)"
+              variant="outline"
+            >
+              {{ this.buttons[1]["name"] }}
+            </button>
+          </div>
+          <div
+            v-if="this.showButtons && this.draftStatus == 'USUP'"
+            class="flex justify-center mb-8"
+          >
+            <button @click="submit">Apply</button>
+            <button @click="draft(this.buttons[0].action)" variant="outline">
+              {{ this.buttons[0]["name"] }}
+            </button>
+            <button @click="update(this.buttons[1].action)" variant="outline">
+              {{ this.buttons[1]["name"] }}
+            </button>
+          </div>
+          <div
+            v-if="
+              this.showButtons &&
+                (this.draftStatus == 'DEC' || this.draftStatus == 'CONF')
+            "
+            class="flex justify-center mb-8"
+          >
+            <button @click="submit">Apply</button>
+            <!-- <button @click="draft(this.buttons[0].action)" variant="outline">
             {{ this.buttons[0]["name"] }}
           </button> -->
-          <button @click="update(this.buttons[1].action)" variant="outline">
-            {{ this.buttons[1]["name"] }}
-          </button>
+            <button @click="update(this.buttons[1].action)" variant="outline">
+              {{ this.buttons[1]["name"] }}
+            </button>
+          </div>
         </div>
         <div class="pt-8">
           <Spinner v-if="showLoading" />

@@ -733,6 +733,7 @@
 <script>
 import { ref } from "vue";
 import DropDownLists from "./DropDownLists.vue";
+import { useRouter } from 'vue-router';
 
 export default {
   name: "NewLicenseSideNav",
@@ -741,6 +742,8 @@ export default {
   },
   props: ["dropdownValue", "expertLevelId", "adminRole"],
   setup(props, { emit }) {
+    const router = useRouter();
+
     let newLicenseDDIcon = ref({
       isNewLicenseUp: false,
       isUnderReviewUp: false,
