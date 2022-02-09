@@ -539,14 +539,18 @@ export default {
             : "Not Specified"
         }`
       );
+      // License Number
       doc.text(
-        170,
-        190,
-        "License Number:"
+        245,
+        58,
+        `${
+          certificateDetail.value.licenseNumber
+        }`
       );
+      // License Number for amharic
       doc.text(
-        205,
-        190,
+        38,
+        58,
         `${
           certificateDetail.value.licenseNumber
         }`
@@ -644,18 +648,6 @@ export default {
             : " አልተገለጸም"
         }`
       );
-      doc.text(
-        30,
-        190,
-        "የምዝገባ ቁጥር:"
-      );
-      doc.text(
-        53,
-        190,
-        `${
-          certificateDetail.value.licenseNumber
-        }`
-      );
     };
 
     const downloadPdf = () => {
@@ -703,7 +695,7 @@ export default {
       }
 
       // doc.addImage(backgroundImage, "JPEG", 0, 0, 298, 213, undefined, "FAST");
-      doc.addImage(imageSrc.value, "JPG", 246, 14, 40, 40);
+      doc.addImage(imageSrc.value, "JPG", 246, 14, 35, 35);
       if (userImage !== null) {
         doc.addImage(userImage, "JPEG", 33, 20, 30, 30);
       }
