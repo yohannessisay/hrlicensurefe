@@ -240,8 +240,6 @@ import jsPDF from "jspdf";
 import backgroundImage from "../../../assets/Federal_Certificate.jpg";
 import oromiaCertificateBackground from "../../../assets/Oromia_Certificate.jpg";
 import addisAbabaCertificateBackground from "../../../assets/AA_Certificate.jpg";
-import qrcode_image from "../../../assets/qrcode_image.jpg";
-import certifiedUserImage from "../../../assets/certified_user.jpg";
 import AmharicFont from "../Configurations/amharicFont.js";
 import { toEthiopian } from "../Configurations/dateConvertor";
 import STATIC_CERTIFICATE_URL from "../../../sharedComponents/constants/message.js";
