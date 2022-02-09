@@ -41,6 +41,7 @@ export default {
         professionalLicense: "",
         degree: "",
         transcript: "",
+        transcript2: "",
         diploma: "",
         masters: "",
         phd: "",

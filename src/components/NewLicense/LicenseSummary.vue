@@ -383,6 +383,7 @@ export default {
     this.professionalLicense = this.getProfessionalLicense;
     this.diploma = this.getDiploma;
     this.transcript = this.getTranscript;
+    this.transcript2 = this.getTranscript2;
     this.degree = this.getDegree;
     this.payroll = this.getPayroll;
 
@@ -700,6 +701,22 @@ export default {
         this.docList.push(this.transcript);
       }
     }
+    if (this.transcript2 != "" && this.transcript2 != undefined) {
+      if ("name" in this.transcript2) {
+        if (this.draftId != undefined) {
+          this.documentsArray.splice(
+            this.documentsArray.findIndex(
+              (e) => e.documentTypeCode === "TRAN1"
+            ),
+            1
+          );
+        }
+        var filePreview = await this.blobToBase64(this.transcript2);
+        this.transcript2.docFile = filePreview;
+        this.transcript2.title = "Transcript 2";
+        this.docList.push(this.transcript2);
+      }
+    }
     if (this.degree != "" && this.degree != undefined) {
       if ("name" in this.degree) {
         if (this.draftId != undefined) {
@@ -853,6 +870,7 @@ export default {
     degree: "",
     diploma: "",
     transcript: "",
+    transcript2: "",
     payroll: "",
     masters: "",
     mastersTranscript: "",
@@ -912,6 +930,7 @@ export default {
       getProfessionalLicense: "newlicense/getProfessionalLicense",
       getDiploma: "newlicense/getDiploma",
       getTranscript: "newlicense/getTranscript",
+      getTranscript2: "newlicense/getTranscript2",
       getDegree: "newlicense/getDegree",
       getPayroll: "newlicense/getPayroll",
     }),
@@ -1231,6 +1250,10 @@ export default {
                 this.transcript
               );
               formData.append(
+                this.documentTypes[52].documentType.code,
+                this.transcript2
+              );
+              formData.append(
                 this.documentTypes[20].documentType.code,
                 this.payroll
               );
@@ -1354,6 +1377,10 @@ export default {
         formData.append(
           this.documentTypes[8].documentType.code,
           this.transcript
+        );
+        formData.append(
+          this.documentTypes[52].documentType.code,
+          this.transcript2
         );
         formData.append(this.documentTypes[20].documentType.code, this.payroll);
         formData.append(this.documentTypes[21].documentType.code, this.degree);
@@ -1528,6 +1555,10 @@ export default {
                 this.transcript
               );
               formData.append(
+                this.documentTypes[52].documentType.code,
+                this.transcript2
+              );
+              formData.append(
                 this.documentTypes[20].documentType.code,
                 this.payroll
               );
@@ -1651,6 +1682,10 @@ export default {
         formData.append(
           this.documentTypes[8].documentType.code,
           this.transcript
+        );
+        formData.append(
+          this.documentTypes[52].documentType.code,
+          this.transcript2
         );
         formData.append(this.documentTypes[20].documentType.code, this.payroll);
         formData.append(this.documentTypes[21].documentType.code, this.degree);

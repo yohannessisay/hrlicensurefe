@@ -416,10 +416,12 @@ export default {
     const submit = () => {
       emit("changeActiveState");
       store.dispatch("newlicense/setTranscript", TranscriptFile);
+      store.dispatch("newlicense/setTranscript2", TranscriptFile2);
     };
     const submitBack = () => {
       emit("changeActiveStateMinus");
       store.dispatch("newlicense/setTranscript", TranscriptFile);
+      store.dispatch("newlicense/setTranscript2", TranscriptFile2);
     };
     buttons = store.getters["newlicense/getButtons"];
     documentSpecs = store.getters["newlicense/getDocumentSpec"];
@@ -463,6 +465,10 @@ export default {
               formData.append(
                 documentSpecs[23].documentType.code,
                 TranscriptFile.value
+              );
+              formData.append(
+                documentSpecs[52].documentType.code,
+                TranscriptFile2.value
               );
               let payload = { document: formData, id: licenseId };
               store
@@ -553,8 +559,12 @@ export default {
               );
             }
             formData.append(
-              documentSpecs[8].documentType.code,
+              documentSpecs[23].documentType.code,
               TranscriptFile.value
+            );
+            formData.append(
+              documentSpecs[52].documentType.code,
+              TranscriptFile2.value
             );
             if (educationDoc != undefined) {
               formData.append(
@@ -597,7 +607,10 @@ export default {
             );
             formData.append(documentSpecs[26].documentType.code, phd);
             formData.append(documentSpecs[27].documentType.code, phdTranscript);
-
+            formData.append(
+              documentSpecs[52].documentType.code,
+              TranscriptFile2.value
+            );
             let payload = { document: formData, id: licenseId };
             store
               .dispatch("newlicense/uploadDocuments", payload)
@@ -635,6 +648,10 @@ export default {
               formData.append(
                 documentSpecs[23].documentType.code,
                 TranscriptFile.value
+              );
+              formData.append(
+                documentSpecs[52].documentType.code,
+                TranscriptFile2.value
               );
               let payload = { document: formData, id: licenseId };
               store
@@ -704,6 +721,10 @@ export default {
               documentSpecs[23].documentType.code,
               TranscriptFile.value
             );
+            formData.append(
+              documentSpecs[52].documentType.code,
+              TranscriptFile2.value
+            );
             let payload = { document: formData, id: licenseId };
             store
               .dispatch("newlicense/uploadDocuments", payload)
@@ -751,6 +772,7 @@ export default {
       maxFileSize.value = MAX_FILE_SIZE.MAX_FILE_SIZE;
       maxSizeMB.value = MAX_SIZE_MB.MAX_SIZE_MB;
       transcriptBack = store.getters["newlicense/getTranscript"];
+      transcriptBack2 = store.getters["newlicense/getTranscript2"];
       if (
         transcriptBack &&
         transcriptBack !== undefined &&
@@ -788,6 +810,35 @@ export default {
           }
         }
       }
+      if (
+        transcriptBack2 &&
+        transcriptBack2 !== undefined &&
+        transcriptBack2 !== null &&
+        transcriptBack2 !== ""
+      ) {
+        docCount.value++;
+        showUpload2.value = false;
+        TranscriptFile2.value = transcriptBack2;
+        let reader = new FileReader();
+        reader.addEventListener(
+          "load",
+          function() {
+            showPreview2.value = true;
+            filePreview2.value = reader.result;
+          },
+          false
+        );
+        if (TranscriptFile2.value) {
+          if (/\.(jpe?g|png|gif)$/i.test(TranscriptFile2.value.name)) {
+            isImage2.value = true;
+            reader.readAsDataURL(TranscriptFile2.value);
+          } else if (/\.(pdf)$/i.test(TranscriptFile2.value.name)) {
+            isImage2.value = false;
+            isPdf2.value = true;
+            reader.readAsDataURL(TranscriptFile2.value);
+          }
+        }
+      }
       declinedFields = store.getters["newlicense/getDeclinedFields"];
       acceptedFields = store.getters["newlicense/getAcceptedFields"];
       remark = store.getters["newlicense/getRemark"];
@@ -812,6 +863,18 @@ export default {
             TranscriptFile.value = draftData.documents[i];
             showPreview.value = true;
             filePreview.value = basePath + draftData.documents[i].filePath;
+          }
+          if (draftData.documents[i].documentTypeCode == "TRAN1") {
+            docCount.value++;
+            showUpload2.value = false;
+            if (draftData.documents[i].fileName.split(".")[1] == "pdf") {
+              isPdf2.value = true;
+            } else {
+              isImage2.value = true;
+            }
+            TranscriptFile2.value = draftData.documents[i];
+            showPreview2.value = true;
+            filePreview2.value = basePath + draftData.documents[i].filePath;
           }
         }
       }

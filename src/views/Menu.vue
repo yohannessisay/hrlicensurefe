@@ -97,6 +97,7 @@ export default {
     this.$store.dispatch("newlicense/setPayroll", "");
     this.$store.dispatch("newlicense/setDegree", "");
     this.$store.dispatch("newlicense/setTranscript", "");
+    this.$store.dispatch("newlicense/setTranscript2", "");
     this.$store.dispatch("newlicense/setDiploma", "");
     this.$store.dispatch("newlicense/setProCertificate", "");
     this.$store.dispatch("newlicense/setProDiploma", "");

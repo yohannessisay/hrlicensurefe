@@ -595,6 +595,7 @@ export default {
       payroll: "",
       diploma: "",
       transcript: "",
+      transcript2: "",
       degree: "",
       masters: "",
       mastersTranscript: "",
@@ -973,6 +974,7 @@ export default {
     this.payroll = this.getPayroll;
     this.diploma = this.getDiploma;
     this.transcript = this.getTranscript;
+    this.transcript2 = this.getTranscript2;
     this.degree = this.getDegree;
     this.masters = this.getMasters;
     this.mastersTranscript = this.getMastersTranscript;
@@ -1353,6 +1355,10 @@ export default {
             formData.append(
               this.documentSpec[23].documentType.code,
               this.transcript
+            );
+             formData.append(
+              this.documentSpec[52].documentType.code,
+              this.transcript2
             );
             formData.append(
               this.documentSpec[21].documentType.code,
