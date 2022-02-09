@@ -35,6 +35,7 @@ import {
     SET_EDU_TRANSCRIPT2,
     SET_MASTERS,
     SET_MASTERS_TRANSCRIPT,
+    SET_MASTERS_TRANSCRIPT2,
     SET_PHD,
     SET_PHD_TRANSCRIPT,
 } from "./mutation-types";
@@ -115,6 +116,9 @@ export default {
     [SET_MASTERS_TRANSCRIPT](state, mastersTranscript) {
         state.mastersTranscript = mastersTranscript;
     },
+    [SET_MASTERS_TRANSCRIPT2](state, mastersTranscript2) {
+        state.mastersTranscript2 = mastersTranscript2;
+    },
     [SET_PHD](state, phd) {
         state.phd = phd;
     },
@@ -138,7 +142,6 @@ export default {
     },
     [SET_TRANSCRIPT2](state, transcript2) {
         state.transcript2 = transcript2;
-        console.log(state.transcript2);
     },
     [SET_DIPLOMA](state, diploma) {
         state.diploma = diploma;

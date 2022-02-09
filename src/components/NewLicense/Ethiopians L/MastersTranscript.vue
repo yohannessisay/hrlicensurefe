@@ -89,9 +89,6 @@
               <span v-if="showUpload2">
                 <label class="text-primary-700"
                   >Upload image:
-                  <span style="color: red; font-weight: bold; font-size:16px"
-                    >Required</span
-                  >
                   <div class="dropbox">
                     <input
                       type="file"
@@ -422,10 +419,18 @@ export default {
     const submit = () => {
       emit("changeActiveState");
       store.dispatch("newlicense/setMastersTranscript", MastersTranscriptFile);
+      store.dispatch(
+        "newlicense/setMastersTranscript2",
+        MastersTranscriptFile2
+      );
     };
     const submitBack = () => {
       emit("changeActiveStateMinus");
       store.dispatch("newlicense/setMastersTranscript", MastersTranscriptFile);
+      store.dispatch(
+        "newlicense/setMastersTranscript2",
+        MastersTranscriptFile2
+      );
     };
     buttons = store.getters["newlicense/getButtons"];
     documentSpecs = store.getters["newlicense/getDocumentSpec"];
@@ -472,6 +477,10 @@ export default {
               formData.append(
                 documentSpecs[25].documentType.code,
                 MastersTranscriptFile.value
+              );
+              formData.append(
+                documentSpecs[57].documentType.code,
+                MastersTranscriptFile2.value
               );
               let payload = { document: formData, id: licenseId };
               store
@@ -602,6 +611,10 @@ export default {
               documentSpecs[25].documentType.code,
               MastersTranscriptFile.value
             );
+            formData.append(
+              documentSpecs[57].documentType.code,
+              MastersTranscriptFile2.value
+            );
             formData.append(documentSpecs[26].documentType.code, phd);
             formData.append(documentSpecs[27].documentType.code, phdTranscript);
 
@@ -642,6 +655,10 @@ export default {
               formData.append(
                 documentSpecs[25].documentType.code,
                 MastersTranscriptFile.value
+              );
+              formData.append(
+                documentSpecs[57].documentType.code,
+                MastersTranscriptFile2.value
               );
               let payload = { document: formData, id: licenseId };
               store
@@ -711,6 +728,10 @@ export default {
               documentSpecs[25].documentType.code,
               MastersTranscriptFile.value
             );
+            formData.append(
+              documentSpecs[57].documentType.code,
+              MastersTranscriptFile2.value
+            );
             let payload = { document: formData, id: licenseId };
             store
               .dispatch("newlicense/uploadDocuments", payload)
@@ -758,6 +779,8 @@ export default {
       maxFileSize.value = MAX_FILE_SIZE.MAX_FILE_SIZE;
       maxSizeMB.value = MAX_SIZE_MB.MAX_SIZE_MB;
       mastersTranscriptBack = store.getters["newlicense/getMastersTranscript"];
+      mastersTranscriptBack2 = store.getters["newlicense/getMastersTranscript2"];
+
       if (
         mastersTranscriptBack &&
         mastersTranscriptBack !== undefined &&
@@ -795,6 +818,35 @@ export default {
           }
         }
       }
+      if (
+        mastersTranscriptBack2 &&
+        mastersTranscriptBack2 !== undefined &&
+        mastersTranscriptBack2 !== null &&
+        mastersTranscriptBack2 !== ""
+      ) {
+        docCount.value++;
+        showUpload2.value = false;
+        MastersTranscriptFile2.value = mastersTranscriptBack2;
+        let reader = new FileReader();
+        reader.addEventListener(
+          "load",
+          function() {
+            showPreview2.value = true;
+            filePreview2.value = reader.result;
+          },
+          false
+        );
+        if (MastersTranscriptFile2.value) {
+          if (/\.(jpe?g|png|gif)$/i.test(MastersTranscriptFile2.value.name)) {
+            isImage2.value = true;
+            reader.readAsDataURL(MastersTranscriptFile2.value);
+          } else if (/\.(pdf)$/i.test(MastersTranscriptFile2.value.name)) {
+            isImage2.value = false;
+            isPdf2.value = true;
+            reader.readAsDataURL(MastersTranscriptFile2.value);
+          }
+        }
+      }
       declinedFields = store.getters["newlicense/getDeclinedFields"];
       acceptedFields = store.getters["newlicense/getAcceptedFields"];
       remark = store.getters["newlicense/getRemark"];
@@ -819,6 +871,18 @@ export default {
             MastersTranscriptFile.value = draftData.documents[i];
             showPreview.value = true;
             filePreview.value = basePath + draftData.documents[i].filePath;
+          }
+          if (draftData.documents[i].documentTypeCode == "MASTRAN1") {
+            docCount.value++;
+            showUpload2.value = false;
+            if (draftData.documents[i].fileName.split(".")[1] == "pdf") {
+              isPdf2.value = true;
+            } else {
+              isImage2.value = true;
+            }
+            MastersTranscriptFile2.value = draftData.documents[i];
+            showPreview2.value = true;
+            filePreview2.value = basePath + draftData.documents[i].filePath;
           }
         }
       }

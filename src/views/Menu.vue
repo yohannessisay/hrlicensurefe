@@ -76,7 +76,6 @@ export default {
   },
   created() {
     this.$route.params.status = undefined;
-    console.log(this.$route.params.status);
     // resetting new license store
     this.$store.dispatch("newlicense/storeAcceptedFields", []);
     this.$store.dispatch("newlicense/storeDeclinedFields", []);
@@ -109,6 +108,7 @@ export default {
     this.$store.dispatch("newlicense/setEduTranscript2", "");
     this.$store.dispatch("newlicense/setMasters", "");
     this.$store.dispatch("newlicense/setMastersTranscript", "");
+    this.$store.dispatch("newlicense/setMastersTranscript2", "");
     this.$store.dispatch("newlicense/setPhd", "");
     this.$store.dispatch("newlicense/setPhdTranscript", "");
 

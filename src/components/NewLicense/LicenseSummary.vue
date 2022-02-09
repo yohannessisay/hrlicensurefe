@@ -389,6 +389,7 @@ export default {
 
     this.masters = this.getMasters;
     this.mastersTranscript = this.getMastersTranscript;
+    this.mastersTranscript2 = this.getMastersTranscript2;
     this.phd = this.getPhd;
     this.phdTranscript = this.getPhdTranscript;
 
@@ -691,7 +692,7 @@ export default {
       if ("name" in this.transcript) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "PDT"),
+            this.documentsArray.findIndex((e) => e.documentTypeCode === "TRAN"),
             1
           );
         }
@@ -773,6 +774,22 @@ export default {
         this.mastersTranscript.docFile = filePreview;
         this.mastersTranscript.title = "Masters Transcript";
         this.docList.push(this.mastersTranscript);
+      }
+    }
+    if (this.mastersTranscript2 != "" && this.mastersTranscript2 != undefined) {
+      if ("name" in this.mastersTranscript2) {
+        if (this.draftId != undefined) {
+          this.documentsArray.splice(
+            this.documentsArray.findIndex(
+              (e) => e.documentTypeCode === "MASTRAN1"
+            ),
+            1
+          );
+        }
+        var filePreview = await this.blobToBase64(this.mastersTranscript2);
+        this.mastersTranscript2.docFile = filePreview;
+        this.mastersTranscript2.title = "Masters Transcript 2";
+        this.docList.push(this.mastersTranscript2);
       }
     }
     if (this.phd != "" && this.phd != undefined) {
@@ -874,6 +891,7 @@ export default {
     payroll: "",
     masters: "",
     mastersTranscript: "",
+    mastersTranscript2: "",
     phd: "",
     phdTranscript: "",
 
@@ -919,6 +937,8 @@ export default {
       getWorkExperience: "newlicense/getWorkExperience",
       getMasters: "newlicense/getMasters",
       getMastersTranscript: "newlicense/getMastersTranscript",
+      getMastersTranscript2: "newlicense/getMastersTranscript2",
+
       getPhd: "newlicense/getPhd",
       getPhdTranscript: "newlicense/getPhdTranscript",
 
@@ -1332,6 +1352,10 @@ export default {
                 this.mastersTranscript
               );
               formData.append(
+                this.documentTypes[57].documentType.code,
+                this.mastersTranscript2
+              );
+              formData.append(
                 this.documentTypes[26].documentType.code,
                 this.phd
               );
@@ -1444,6 +1468,10 @@ export default {
         formData.append(
           this.documentTypes[25].documentType.code,
           this.mastersTranscript
+        );
+        formData.append(
+          this.documentTypes[57].documentType.code,
+          this.mastersTranscript2
         );
         formData.append(this.documentTypes[26].documentType.code, this.phd);
         formData.append(
@@ -1637,6 +1665,10 @@ export default {
                 this.mastersTranscript
               );
               formData.append(
+                this.documentTypes[57].documentType.code,
+                this.mastersTranscript2
+              );
+              formData.append(
                 this.documentTypes[26].documentType.code,
                 this.phd
               );
@@ -1749,6 +1781,10 @@ export default {
         formData.append(
           this.documentTypes[25].documentType.code,
           this.mastersTranscript
+        );
+        formData.append(
+          this.documentTypes[57].documentType.code,
+          this.mastersTranscript2
         );
         formData.append(this.documentTypes[26].documentType.code, this.phd);
         formData.append(

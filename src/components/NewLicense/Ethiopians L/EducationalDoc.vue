@@ -599,6 +599,7 @@ export default {
       degree: "",
       masters: "",
       mastersTranscript: "",
+      mastersTranscript2: "",
       phd: "",
       phdTranscript: "",
 
@@ -978,6 +979,7 @@ export default {
     this.degree = this.getDegree;
     this.masters = this.getMasters;
     this.mastersTranscript = this.getMastersTranscript;
+    this.mastersTranscript2 = this.getMastersTranscript2;
     this.phd = this.getPhdTranscript;
   },
   methods: {
@@ -1433,6 +1435,10 @@ export default {
             formData.append(
               this.documentSpec[25].documentType.code,
               this.mastersTranscript
+            );
+              formData.append(
+              this.documentSpec[57].documentType.code,
+              this.mastersTranscript2
             );
             formData.append(this.documentSpec[26].documentType.code, this.phd);
             formData.append(

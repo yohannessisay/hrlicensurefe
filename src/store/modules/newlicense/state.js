@@ -46,6 +46,7 @@ export default {
         masters: "",
         phd: "",
         mastersTranscript: "",
+        mastersTranscript2: "",
         phdTranscript: "",
         buttons: [],
         applicationId: 0,

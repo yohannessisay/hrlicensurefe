@@ -251,9 +251,11 @@ export default {
     let payroll = ref("");
     let diploma = ref("");
     let transcript = ref("");
+    let transcript2 = ref("");
     let degree = ref("");
     let masters = ref("");
     let mastersTranscript = ref("");
+    let mastersTranscript2 = ref("");
     let phd = ref("");
     let phdTranscript = ref("");
 
@@ -333,8 +335,10 @@ export default {
     diploma = store.getters["newlicense/getDiploma"];
     degree = store.getters["newlicense/getDegree"];
     transcript = store.getters["newlicense/getTranscript"];
+    transcript2 = store.getters["newlicense/getTranscript2"];
     masters = store.getters["newlicense/getMasters"];
     mastersTranscript = store.getters["newlicense/getMastersTranscript"];
+    mastersTranscript2 = store.getters["newlicense/getMastersTranscript2"];
     phd = store.getters["newlicense/getPhd"];
     phdTranscript = store.getters["newlicense/getPhdTranscript"];
 
@@ -434,6 +438,7 @@ export default {
             );
             formData.append(documentSpecs[22].documentType.code, diploma);
             formData.append(documentSpecs[23].documentType.code, transcript);
+            formData.append(documentSpecs[52].documentType.code, transcript2);
             formData.append(documentSpecs[21].documentType.code, degree);
             if (professionalDoc != undefined) {
               formData.append(
@@ -488,6 +493,10 @@ export default {
             formData.append(
               documentSpecs[25].documentType.code,
               mastersTranscript
+            );
+             formData.append(
+              documentSpecs[57].documentType.code,
+              mastersTranscript2
             );
             formData.append(documentSpecs[26].documentType.code, phd);
             formData.append(documentSpecs[27].documentType.code, phdTranscript);

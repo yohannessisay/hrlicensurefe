@@ -87,9 +87,6 @@
               <span v-if="showUpload2">
                 <label class="text-primary-700"
                   >Upload image:
-                  <span style="color: red; font-weight: bold; font-size:16px"
-                    >Required</span
-                  >
                   <div class="dropbox">
                     <input
                       type="file"
@@ -311,6 +308,7 @@ export default {
     let diploma = ref("");
     let masters = ref("");
     let mastersTranscript = ref("");
+    let mastersTranscript2 = ref("");
     let phd = ref("");
     let phdTranscript = ref("");
 
@@ -444,6 +442,7 @@ export default {
     coc = store.getters["newlicense/getCoc"];
     masters = store.getters["newlicense/getMasters"];
     mastersTranscript = store.getters["newlicense/getMastersTranscript"];
+    mastersTranscript2 = store.getters["newlicense/getMastersTranscript2"];
     phd = store.getters["newlicense/getPhd"];
     phdTranscript = store.getters["newlicense/getPhdTranscript"];
 
@@ -604,6 +603,10 @@ export default {
             formData.append(
               documentSpecs[25].documentType.code,
               mastersTranscript
+            );
+            formData.append(
+              documentSpecs[57].documentType.code,
+              mastersTranscript2
             );
             formData.append(documentSpecs[26].documentType.code, phd);
             formData.append(documentSpecs[27].documentType.code, phdTranscript);
@@ -842,10 +845,10 @@ export default {
       declinedFields = store.getters["newlicense/getDeclinedFields"];
       acceptedFields = store.getters["newlicense/getAcceptedFields"];
       remark = store.getters["newlicense/getRemark"];
-      if (declinedFields != undefined && declinedFields.includes("PDT")) {
+      if (declinedFields != undefined && declinedFields.includes("TRAN")) {
         declinedFieldsCheck.value = true;
       }
-      if (acceptedFields != undefined && acceptedFields.includes("PDT")) {
+      if (acceptedFields != undefined && acceptedFields.includes("TRAN")) {
         acceptedFieldsCheck.value = true;
       }
       buttons = store.getters["newlicense/getButtons"];
@@ -853,7 +856,7 @@ export default {
       if (route.params.id) {
         draftStatus.value = route.params.status;
         for (let i = 0; i < draftData.documents.length; i++) {
-          if (draftData.documents[i].documentTypeCode == "PDT") {
+          if (draftData.documents[i].documentTypeCode == "TRAN") {
             showUpload.value = false;
             if (draftData.documents[i].fileName.split(".")[1] == "pdf") {
               isPdf.value = true;

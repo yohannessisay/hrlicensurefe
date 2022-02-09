@@ -29,6 +29,7 @@ import {
     SET_EDU_TRANSCRIPT2,
     SET_MASTERS,
     SET_MASTERS_TRANSCRIPT,
+    SET_MASTERS_TRANSCRIPT2,
     SET_PHD,
     SET_PHD_TRANSCRIPT,
     SET_BUTTONS,
@@ -130,6 +131,9 @@ export default {
     },
     setMastersTranscript({ commit }, mastersTranscript) {
         commit(SET_MASTERS_TRANSCRIPT, mastersTranscript);
+    },
+    setMastersTranscript2({ commit }, mastersTranscript2) {
+        commit(SET_MASTERS_TRANSCRIPT2, mastersTranscript2);
     },
     setPhd({ commit }, phd) {
         commit(SET_PHD, phd);

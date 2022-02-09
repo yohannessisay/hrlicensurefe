@@ -306,6 +306,7 @@ export default {
     let degree = ref("");
     let masters = ref("");
     let mastersTranscript = ref("");
+    let mastersTranscript2 = ref("");
     let phd = ref("");
     let phdTranscript = ref("");
 
@@ -437,6 +438,7 @@ export default {
     transcript2 = store.getters["newlicense/getTranscript2"];
     masters = store.getters["newlicense/getMasters"];
     mastersTranscript = store.getters["newlicense/getMastersTranscript"];
+    mastersTranscript2 = store.getters["newlicense/getMastersTranscript2"];
     phd = store.getters["newlicense/getPhd"];
     phdTranscript = store.getters["newlicense/getPhdTranscript"];
 
@@ -590,6 +592,10 @@ export default {
             formData.append(
               documentSpecs[25].documentType.code,
               mastersTranscript
+            );
+             formData.append(
+              documentSpecs[57].documentType.code,
+              mastersTranscript2
             );
             formData.append(documentSpecs[26].documentType.code, phd);
             formData.append(documentSpecs[27].documentType.code, phdTranscript);
