@@ -174,6 +174,11 @@ export default {
 };
 </script>
 <style>
+@media only screen and (max-width: 850px) {
+  .sidenav {
+    display: none;
+  }
+}
 .menu {
   width: 80%;
 }

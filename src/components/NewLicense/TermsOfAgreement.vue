@@ -22,7 +22,7 @@
       documentMessage
     }}</span>
     <div class="flex flex-row">
-      <div class="ml-8">
+      <div class="ml-2">
         <h2>Foreigner</h2>
         <ul>
           <li>Passport</li>
@@ -34,6 +34,7 @@
               For non-English speaking countries only
             </span>
           </div>
+          <br/>
           <div class="tooltip">
             Higher Education Relevance and Quality Agency center
             <span class="tooltiptext ml-4">
@@ -70,7 +71,7 @@
           </div>
         </ul>
       </div>
-      <div class="ml-8">
+      <div class="ml-2">
         <h2>Ethiopian</h2>
         <ul>
           <li>Residence ID</li>
@@ -112,7 +113,7 @@
           <li>Academic Transcript</li>
         </ul>
       </div>
-      <div class="ml-8">
+      <div class="ml-2">
         <h2>Ethiopians from Abroad</h2>
         <ul>
           <div class="tooltip">
@@ -129,6 +130,7 @@
               HERQA
             </span>
           </div>
+          <br/>
           <div class="tooltip">
             Authenticated Academic Document
             <span class="tooltiptext ml-4">
