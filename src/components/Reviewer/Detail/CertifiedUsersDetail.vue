@@ -37,8 +37,13 @@
                     </div>
                   </div>
                   <div>
-                    <h6>የምዝገባ ቁጥር: {{ certifiedUser.newLicenseCode }}</h6>
+                    <h6>የምዝገባ ቁጥር: {{ certifiedUser.licenseNumber }}</h6>
+                    <h6>License Number: {{ certifiedUser.licenseNumber }}</h6>
                   </div>
+                  <!-- <br/>
+                  <div>
+                    <h6>LicenseNumber: {{ certifiedUser.newLicenseCode }}</h6>
+                  </div> -->
                 </div>
                 <div class="flex-second-container">
                   <div>
@@ -233,8 +238,8 @@ import Spinner from "@/sharedComponents/Spinner";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import backgroundImage from "../../../assets/Federal_Certificate.jpg";
-import oromiaCertificateBackground from "../../../assets/OROMMIA_Certificate.jpg";
-import addisAbabaCertificateBackground from "../../../assets/AA_certificate.jpg";
+import oromiaCertificateBackground from "../../../assets/Oromia_Certificate.jpg";
+import addisAbabaCertificateBackground from "../../../assets/AA_Certificate.jpg";
 import qrcode_image from "../../../assets/qrcode_image.jpg";
 import certifiedUserImage from "../../../assets/certified_user.jpg";
 import AmharicFont from "../Configurations/amharicFont.js";
@@ -319,6 +324,8 @@ export default {
           .then((res) => {
             showApplicationLoading.value = false;
             certificateDetail.value = res.data.data;
+            certificateDetail.value = res.data.data;
+            certificateDetail.value.licenseNumber = certificateDetail.value.verificationCode
             if (
               route.params.applicantId != certificateDetail.value.applicantId
             ) {
@@ -350,6 +357,8 @@ export default {
           .then((res) => {
             showApplicationLoading.value = false;
             certificateDetail.value = res.data.data;
+            certificateDetail.value = res.data.data;
+            certificateDetail.value.licenseNumber = certificateDetail.value.goodStandingCode
             if (
               route.params.applicantId != certificateDetail.value.applicantId
             ) {
@@ -375,6 +384,7 @@ export default {
           .then((res) => {
             showApplicationLoading.value = false;
             certificateDetail.value = res.data.data;
+            certificateDetail.value.licenseNumber = certificateDetail.value.newLicenseCode
             if (
               route.params.applicantId != certificateDetail.value.applicantId
             ) {
@@ -400,6 +410,7 @@ export default {
           .then((res) => {
             showApplicationLoading.value = false;
             certificateDetail.value = res.data.data;
+            certificateDetail.value.licenseNumber = certificateDetail.value.renewalCode;
             if (
               route.params.applicantId != certificateDetail.value.applicantId
             ) {
@@ -528,6 +539,22 @@ export default {
             : "Not Specified"
         }`
       );
+      // License Number
+      doc.text(
+        245,
+        58,
+        `${
+          certificateDetail.value.licenseNumber
+        }`
+      );
+      // License Number for amharic
+      doc.text(
+        38,
+        58,
+        `${
+          certificateDetail.value.licenseNumber
+        }`
+      );
 
       // doc.addFileToVFS("Amiri-Regular.ttf", AmiriRegular);
       doc.addFileToVFS("Tera-Regular-normal.ttf", AmharicFont);
@@ -628,7 +655,6 @@ export default {
         orientation: "landscape",
         filters: ["ASCIIHexEncode"],
       });
-
       const userImage = certifiedUser.value.photo;
       if (certificateDetail.value.reviewer.expertLevel.code === "FED") {
         doc.addImage(
@@ -669,7 +695,7 @@ export default {
       }
 
       // doc.addImage(backgroundImage, "JPEG", 0, 0, 298, 213, undefined, "FAST");
-      doc.addImage(imageSrc.value, "JPG", 246, 14, 40, 40);
+      doc.addImage(imageSrc.value, "JPG", 246, 14, 35, 35);
       if (userImage !== null) {
         doc.addImage(userImage, "JPEG", 33, 20, 30, 30);
       }
