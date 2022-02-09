@@ -754,7 +754,7 @@
 
       <div
         class="flex justify-center items-center mb-medium"
-        v-if="showButtons && !showActionLoading"
+        v-if="showButtons && !showLoadingButtons"
       >
         <div
           v-for="button in buttons"
@@ -1148,6 +1148,7 @@ export default {
     let fromModalSendDeclinedData = ref(false);
 
     let showActionLoading = ref(false);
+    let showLoadingButtons = ref(false);
 
     let professionalTypes = ref([]);
     let evaluateRoute = ref(
@@ -1566,6 +1567,7 @@ export default {
 
     const action = (actionValue) => {
       showActionLoading.value = true;
+      showLoadingButtons.value = true;
       if (professionalTypeIdss.value.length > 0) {
         newLicense.value.professionalTypeIds = professionalTypeIdss.value;
         newLicense.value.professionalTypePrefixes =
@@ -1578,6 +1580,7 @@ export default {
         professionalTypeIdss.value = [];
         professionalTypePrefixes.value = [];
         showActionLoading.value = false;
+        showLoadingButtons.value = false;
         return;
       }
 
@@ -1616,6 +1619,7 @@ export default {
             showLicenseDateRequirementError.value = false;
           }, 4000);
           showActionLoading.value = false;
+          showLoadingButtons.value = false;
           return;
         } else if (
           !moment(newLicense.value.licenseExpirationDate).isAfter(new Date()) &&
@@ -1626,12 +1630,14 @@ export default {
             expirationDateExceedTodayError.value = false;
           }, 4000);
           showActionLoading.value = false;
+          showLoadingButtons.value = false;
           return;
         }
       }
 
       if (actionValue == "DeclineEvent") {
         showActionLoading.value = false;
+        showLoadingButtons.value = false;
         let checkProfessionResult = false;
         newLicense.value.isProfessionChanged == false
           ? (checkProfessionResult = checkProfessionChanged(
@@ -1647,6 +1653,7 @@ export default {
           // professionalTypeIdss.value = [];
           // professionalTypePrefixes.value = [];
           showActionLoading.value = false;
+          showLoadingButtons.value = false;
           return;
         } else {
           showRemark.value = true;
@@ -2098,6 +2105,7 @@ export default {
       checkProfessionChanged,
       isGoodStanding,
       showActionLoading,
+      showLoadingButtons,
     };
   },
 };

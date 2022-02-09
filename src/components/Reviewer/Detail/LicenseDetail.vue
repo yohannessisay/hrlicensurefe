@@ -26,7 +26,7 @@
                 </option>
               </select>
               <button
-              v-if="!showtransferLoading"
+              v-if="!showButtons"
                 class="block mx-auto bg-lightBlue-300 hover:bg-lightBlue-600 hover:shadow-lg mt-small"
                 @click="transferReview()"
               >
@@ -336,6 +336,7 @@ export default {
 
     let loading = ref(false);
     let showtransferLoading = ref(false);
+    let showButtons = ref(false);
 
     let role = ref({});
 
@@ -419,6 +420,7 @@ export default {
 
     const transferReview = () => {
       showtransferLoading.value = true;
+      showButtons.value = true;
       // if (role.value.code === "TL" || role.value.code === "SA") {
       if (applicationType.value == "Good Standing") {
         transfer.value = {
@@ -458,85 +460,88 @@ export default {
               showFlash.value = true;
               setTimeout(() => {
                 router.push("/admin/review");
-              }, 2000);
+              }, 3000);
             } else {
               showErrorFlash.value = false;
             setTimeOut(() => {
               router.go();
-            }, 2000);
+            }, 3000);
             }
           })
           .catch((err) => {
             showErrorFlash.value = false;
             setTimeOut(() => {
               router.go();
-            }, 2000);
+            }, 3000);
           });
       }
       if (applicationType.value == "Verification") {
         store
           .dispatch("reviewer/transferVerificationReview", transfer.value)
           .then((response) => {
+            showtransferLoading.value = false;
             if (response.statusText == "Created") {
               showFlash.value = true;
               setTimeout(() => {
                 router.push("/admin/review");
-              }, 2000)
+              }, 3000)
             } else {
               showErrorFlash.value = false;
             setTimeOut(() => {
               router.go();
-            }, 2000);
+            }, 3000);
             }
           }).catch(err => {
             showErrorFlash.value = false;
             setTimeOut(() => {
               router.go();
-            }, 2000);
+            }, 3000);
           })
       }
       if (applicationType.value == "Renewal") {
         store
           .dispatch("reviewer/transferRenewalReview", transfer.value)
-
           .then((response) => {
+            showtransferLoading.value = false;
             if (response.statusText == "Created") {
               showFlash.value = true;
               setTimeout(() => {
                 router.push("/admin/review");
-              }, 2000)
+              }, 3000)
             } else {
               showErrorFlash.value = false;
             setTimeOut(() => {
               router.go();
-            }, 2000);
+            }, 3000);
             }
           }).catch(err => {
             showErrorFlash.value = false;
             setTimeOut(() => {
               router.go();
-            }, 2000);
+            }, 3000);
           })
       }
       if (applicationType.value == "Good Standing") {
         store
           .dispatch("reviewer/transferGoodStandingReview", transfer.value)
-
           .then((response) => {
+            showtransferLoading.value = false;
             if (response.statusText == "Created") {
               showFlash.value = true;
-              router.push("/admin/review");
+              setTimeout(() => {
+                router.push("/admin/review");
+              }, 3000)
             } else {
               showErrorFlash.value = false;
             setTimeOut(() => {
               router.go();
-            }, 2000);
+            }, 3000);
             }
           }).catch(err => {
             showErrorFlash.value = false;
             setTimeOut(() => {
               router.go();
-            }, 2000);
+            }, 3000);
           })
       }
     };
@@ -691,6 +696,7 @@ export default {
       evaluate,
       expertLevelId,
       evaluators,
+      showButtons,
     };
   },
 };

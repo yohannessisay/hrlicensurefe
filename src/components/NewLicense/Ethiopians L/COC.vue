@@ -31,6 +31,9 @@
           class="mt-8"
         />
         <span class="flex justify-center">{{ documentMessage }}</span>
+        <div class="ml-4">
+          <button @click="addDocs()">Add Document</button>
+        </div>
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
           <div class="flex justify-center">
             <div>
@@ -66,7 +69,6 @@
                   </div>
                 </label>
               </span>
-
               <picture v-if="!showUpload && isImage">
                 <p>
                   <a href="javascript:void(0)" @click="reset()">Upload again</a>
@@ -81,6 +83,94 @@
               </div>
               <span v-if="!showUpload && !isImage && !isPdf">
                 <img :src="filePreview" alt="" class="preview" />
+              </span>
+            </div>
+            <div class="ml-8" v-if="docCount > 1">
+              <span v-if="showUpload2">
+                <label class="text-primary-700"
+                  >Upload image:
+                  <span style="color: red; font-weight: bold; font-size:16px"
+                    >Required</span
+                  >
+                  <div class="dropbox">
+                    <input
+                      type="file"
+                      id="COCFile2"
+                      class="photoFile"
+                      ref="COCFileP2"
+                      v-on:change="handleFileUpload2()"
+                      style="margin-bottom: 15px !important"
+                      accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
+                    />
+                    <p>
+                      Drag your file(s) here to begin<br />
+                      or click to browse
+                    </p>
+                  </div>
+                </label>
+              </span>
+              <picture v-if="!showUpload2 && isImage2">
+                <p>
+                  <a href="javascript:void(0)" @click="reset2()"
+                    >Upload again</a
+                  >
+                </p>
+                <img v-bind:src="filePreview2" v-show="showPreview2" />
+              </picture>
+              <div v-if="!showUpload2 && isPdf2">
+                <p>
+                  <a href="javascript:void(0)" @click="reset2()"
+                    >Upload again</a
+                  >
+                </p>
+                <embed v-bind:src="filePreview2" v-show="showPreview2" />
+              </div>
+              <span v-if="!showUpload2 && !isImage2 && !isPdf2">
+                <img :src="filePreview2" class="preview" />
+              </span>
+            </div>
+            <div class="ml-8" v-if="docCount > 2">
+              <span v-if="showUpload3">
+                <label class="text-primary-700"
+                  >Upload image:
+                  <span style="color: red; font-weight: bold; font-size:16px"
+                    >Required</span
+                  >
+                  <div class="dropbox">
+                    <input
+                      type="file"
+                      id="COCFile3"
+                      class="photoFile"
+                      ref="COCFileP3"
+                      v-on:change="handleFileUpload3()"
+                      style="margin-bottom: 15px !important"
+                      accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
+                    />
+                    <p>
+                      Drag your file(s) here to begin<br />
+                      or click to browse
+                    </p>
+                  </div>
+                </label>
+              </span>
+              <picture v-if="!showUpload3 && isImage3">
+                <p>
+                  <a href="javascript:void(0)" @click="reset3()"
+                    >Upload again</a
+                  >
+                </p>
+                <img v-bind:src="filePreview3" v-show="showPreview3" />
+              </picture>
+              <div v-if="!showUpload3 && isPdf3">
+                <p>
+                  <a href="javascript:void(0)" @click="reset3()"
+                    >Upload again</a
+                  >
+                </p>
+                <embed v-bind:src="filePreview3" v-show="showPreview3" />
+              </div>
+              <span v-if="!showUpload3 && !isImage3 && !isPdf3">
+                <img :src="filePreview3" class="preview" />
               </span>
             </div>
           </div>
@@ -219,6 +309,23 @@ export default {
     let showUpload = ref(true);
     let isImage = ref(false);
     let isPdf = ref(false);
+
+    let COCFile2 = ref("");
+    let COCFileP2 = ref("");
+    let showPreview2 = ref(false);
+    let filePreview2 = ref("");
+    let showUpload2 = ref(true);
+    let isImage2 = ref(false);
+    let isPdf2 = ref(false);
+
+    let COCFile3 = ref("");
+    let COCFileP3 = ref("");
+    let showPreview3 = ref(false);
+    let filePreview3 = ref("");
+    let showUpload3 = ref(true);
+    let isImage3 = ref(false);
+    let isPdf3 = ref(false);
+
     let buttons = [];
     let documentSpecs = ref([]);
     let userId = +localStorage.getItem("userId");
@@ -227,6 +334,8 @@ export default {
     let draftStatus = ref("");
 
     let cocBack = ref("");
+    let cocBack2 = ref("");
+    let cocBack3 = ref("");
 
     let declinedFields = ref([]);
     let acceptedFields = ref([]);
@@ -261,6 +370,14 @@ export default {
     let phdTranscript = ref("");
 
     let eduLevel = ref("");
+
+    let docCount = ref(0);
+
+    const addDocs = () => {
+      if (docCount.value < 3) {
+        docCount.value++;
+      }
+    };
 
     const reset = () => {
       showUpload.value = true;
@@ -312,6 +429,86 @@ export default {
         isImage.value = true;
       }
     };
+    const reset2 = () => {
+      showUpload2.value = true;
+      showPreview2.value = false;
+      COCFile2.value = "";
+      filePreview2.value = "";
+      isImage2.value = true;
+      isPdf2.value = false;
+    };
+
+    const handleFileUpload2 = () => {
+      COCFile2.value = COCFileP2.value.files[0];
+      let reader = new FileReader();
+      isImage2.value = true;
+      let fileS = COCFile2.value.size;
+      if (fileS <= maxFileSize.value / 1000) {
+        showUpload2.value = false;
+        reader.addEventListener(
+          "load",
+          function() {
+            showPreview2.value = true;
+            filePreview2.value = reader.result;
+          },
+          false
+        );
+        if (COCFile2.value) {
+          if (/\.(jpe?g|png|gif)$/i.test(COCFile2.value.name)) {
+            isImage2.value = true;
+            reader.readAsDataURL(COCFile2.value);
+          } else if (/\.(pdf)$/i.test(COCFile2.value.name)) {
+            isImage2.value = false;
+            isPdf2.value = true;
+            reader.readAsDataURL(COCFile2.value);
+          }
+        }
+      } else {
+        COCFile2.value = "";
+        isImage2.value = true;
+      }
+    };
+
+    const reset3 = () => {
+      showUpload3.value = true;
+      showPreview3.value = false;
+      COCFile3.value = "";
+      filePreview3.value = "";
+      isImage3.value = true;
+      isPdf3.value = false;
+    };
+
+    const handleFileUpload3 = () => {
+      COCFile3.value = COCFileP3.value.files[0];
+      let reader = new FileReader();
+      isImage3.value = true;
+      let fileS = COCFile3.value.size;
+      if (fileS <= maxFileSize.value / 1000) {
+        showUpload3.value = false;
+        reader.addEventListener(
+          "load",
+          function() {
+            showPreview3.value = true;
+            filePreview3.value = reader.result;
+          },
+          false
+        );
+        if (COCFile3.value) {
+          if (/\.(jpe?g|png|gif)$/i.test(COCFile3.value.name)) {
+            isImage3.value = true;
+            reader.readAsDataURL(COCFile3.value);
+          } else if (/\.(pdf)$/i.test(COCFile3.value.name)) {
+            isImage3.value = false;
+            isPdf3.value = true;
+            reader.readAsDataURL(COCFile3.value);
+          }
+        }
+      } else {
+        COCFile3.value = "";
+        isImage3.value = true;
+      }
+    };
+
     const submit = () => {
       emit("changeActiveState");
       store.dispatch("newlicense/setCOC", COCFile);
@@ -721,8 +918,33 @@ export default {
       showUpload,
       isImage,
       isPdf,
+
+      COCFile2,
+      COCFileP2,
+      cocBack2,
+      showPreview2,
+      filePreview2,
+      showUpload2,
+      isImage2,
+      isPdf2,
+
+      COCFile3,
+      COCFileP3,
+      cocBack3,
+      showPreview3,
+      filePreview3,
+      showUpload3,
+      isImage3,
+      isPdf3,
+
       handleFileUpload,
+      handleFileUpload2,
+      handleFileUpload3,
+
       reset,
+      reset2,
+      reset3,
+
       submit,
       submitBack,
       draft,
@@ -745,6 +967,8 @@ export default {
       fileSizeExceed,
       maxFileSize,
       maxSizeMB,
+      docCount,
+      addDocs,
     };
   },
 };

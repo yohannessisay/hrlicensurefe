@@ -213,7 +213,7 @@
       </div>
       <div
         class="flex justify-center items-center mb-medium"
-        v-if="showButtons && !showLoadingconfirmed"
+        v-if="showButtons && !showLoadingButtons"
       >
         <!-- <div class="flex">
           <button  class="" variant="outline" @click="action(buttons[0].action)">{{buttons[0].name}}</button>
@@ -424,6 +424,8 @@ export default {
     let evaluationSuccess = ref(false);
     let approvedColor = ref("lightBlueB-500");
     let showLoadingconfirmed = ref(false);
+    let showLoadingButtons = ref(false);
+
     let accepted = ref([]);
     let req = ref({});
     let rejected = ref([]);
@@ -587,6 +589,7 @@ export default {
 
     const evaluateApplication = (applicationType, req) => {
       showLoadingconfirmed.value = true;
+      showLoadingButtons.value = true;
         store.dispatch("reviewer/" + applicationType, req).then((res) => {
           showLoadingconfirmed.value = false;
           if (res.statusText == "Created") {
@@ -690,6 +693,7 @@ export default {
       modalFindDocumentType,
       approvedColor,
       approvedOrRejected,
+      showLoadingButtons,
     };
   },
 };
