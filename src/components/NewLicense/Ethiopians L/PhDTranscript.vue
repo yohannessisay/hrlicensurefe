@@ -31,6 +31,9 @@
           class="mt-8"
         />
         <span class="flex justify-center">{{ documentMessage }}</span>
+        <div class="ml-4">
+          <button @click="addDocs()">Add Document</button>
+        </div>
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
           <div class="flex justify-center">
             <div>
@@ -81,6 +84,50 @@
               </div>
               <span v-if="!showUpload && !isImage && !isPdf">
                 <img :src="filePreview" alt="" class="preview" />
+              </span>
+            </div>
+            <div class="ml-8" v-if="docCount > 0">
+              <span v-if="showUpload2">
+                <label class="text-primary-700"
+                  >Upload image:
+                  <span style="color: red; font-weight: bold; font-size:16px"
+                    >Required</span
+                  >
+                  <div class="dropbox">
+                    <input
+                      type="file"
+                      id="PhDTranscriptFile2"
+                      class="photoFile"
+                      ref="PhDTranscriptFileP2"
+                      v-on:change="handleFileUpload2()"
+                      style="margin-bottom: 15px !important"
+                      accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
+                    />
+                    <p>
+                      Drag your file(s) here to begin<br />
+                      or click to browse
+                    </p>
+                  </div>
+                </label>
+              </span>
+              <picture v-if="!showUpload2 && isImage2">
+                <p>
+                  <a href="javascript:void(0)" @click="reset2()"
+                    >Upload again</a
+                  >
+                </p>
+                <img v-bind:src="filePreview2" v-show="showPreview2" />
+              </picture>
+              <div v-if="!showUpload2 && isPdf2">
+                <p>
+                  <a href="javascript:void(0)" @click="reset2()"
+                    >Upload again</a
+                  >
+                </p>
+                <embed v-bind:src="filePreview2" v-show="showPreview2" />
+              </div>
+              <span v-if="!showUpload2 && !isImage2 && !isPdf2">
+                <img :src="filePreview2" class="preview" />
               </span>
             </div>
           </div>
@@ -219,6 +266,15 @@ export default {
     let showUpload = ref(true);
     let isImage = ref(false);
     let isPdf = ref(false);
+
+    let PhDTranscriptFile2 = ref("");
+    let PhDTranscriptFileP2 = ref("");
+    let showPreview2 = ref(false);
+    let filePreview2 = ref("");
+    let showUpload2 = ref(true);
+    let isImage2 = ref(false);
+    let isPdf2 = ref(false);
+
     let buttons = [];
     let documentSpecs = ref([]);
     let userId = +localStorage.getItem("userId");
@@ -227,6 +283,7 @@ export default {
     let draftStatus = ref("");
 
     let phdTranscriptBack = ref("");
+    let phdTranscriptBack2 = ref("");
 
     let declinedFields = ref([]);
     let acceptedFields = ref([]);
@@ -261,6 +318,14 @@ export default {
     let phd = ref("");
 
     let eduLevel = ref("");
+
+    let docCount = ref(0);
+
+    const addDocs = () => {
+      if (docCount.value < 2) {
+        docCount.value++;
+      }
+    };
 
     const reset = () => {
       showUpload.value = true;
@@ -312,6 +377,47 @@ export default {
         isImage.value = true;
       }
     };
+
+    const reset2 = () => {
+      showUpload2.value = true;
+      showPreview2.value = false;
+      PhDTranscriptFile2.value = "";
+      filePreview2.value = "";
+      isImage2.value = true;
+      isPdf2.value = false;
+    };
+
+    const handleFileUpload2 = () => {
+      PhDTranscriptFile2.value = PhDTranscriptFileP2.value.files[0];
+      let reader = new FileReader();
+      isImage2.value = true;
+      let fileS = PhDTranscriptFile2.value.size;
+      if (fileS <= maxFileSize.value / 1000) {
+        showUpload2.value = false;
+        reader.addEventListener(
+          "load",
+          function() {
+            showPreview2.value = true;
+            filePreview2.value = reader.result;
+          },
+          false
+        );
+        if (PhDTranscriptFile2.value) {
+          if (/\.(jpe?g|png|gif)$/i.test(PhDTranscriptFile2.value.name)) {
+            isImage2.value = true;
+            reader.readAsDataURL(PhDTranscriptFile2.value);
+          } else if (/\.(pdf)$/i.test(PhDTranscriptFile2.value.name)) {
+            isImage2.value = false;
+            isPdf2.value = true;
+            reader.readAsDataURL(PhDTranscriptFile2.value);
+          }
+        }
+      } else {
+        PhDTranscriptFile2.value = "";
+        isImage2.value = true;
+      }
+    };
+
     const submit = () => {
       emit("changeActiveState");
       store.dispatch("newlicense/setPhdTranscript", PhDTranscriptFile);
@@ -726,8 +832,22 @@ export default {
       showUpload,
       isImage,
       isPdf,
+
+      PhDTranscriptFile2,
+      PhDTranscriptFileP2,
+      phdTranscriptBack2,
+      showPreview2,
+      filePreview2,
+      showUpload2,
+      isImage2,
+      isPdf2,
+
       handleFileUpload,
+      handleFileUpload2,
+
       reset,
+      reset2,
+
       submit,
       submitBack,
       draft,
@@ -750,6 +870,8 @@ export default {
       fileSizeExceed,
       maxFileSize,
       maxSizeMB,
+      docCount,
+      addDocs,
     };
   },
 };

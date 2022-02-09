@@ -26,6 +26,7 @@
                 </option>
               </select>
               <button
+              v-if="!showButtons"
                 class="block mx-auto bg-lightBlue-300 hover:bg-lightBlue-600 hover:shadow-lg mt-small"
                 @click="transferReview()"
               >
@@ -335,6 +336,7 @@ export default {
 
     let loading = ref(false);
     let showtransferLoading = ref(false);
+    let showButtons = ref(false);
 
     let role = ref({});
 
@@ -344,7 +346,6 @@ export default {
     let expertLevelId = JSON.parse(localStorage.getItem("allAdminData"))
       .expertLevelId;
 
-    let isNotSubmittedOnce = ref(true);
     let evaluators = ref([]);
 
     let transfer = ref({
@@ -401,13 +402,17 @@ export default {
 
     const fetchAdmins = () => {
       store.dispatch("reviewer/getAdmins").then((res) => {
-        admins.value = res.data.data;
+        admins.value = res.data.data.filter(e => {
+          return e.id !== loggedInAdminId;
+        })
       });
     };
 
     const fetchAdminsByRegion = (regionId) => {
       store.dispatch("reviewer/getAdminsByRegion", regionId).then((res) => {
-        admins.value = res.data.data;
+        admins.value = res.data.data.filter(e => {
+          return e.id !== loggedInAdminId
+        });
       });
     };
 
@@ -415,9 +420,7 @@ export default {
 
     const transferReview = () => {
       showtransferLoading.value = true;
-      if(!isNotSubmittedOnce.value) {
-        return;
-      }
+      showButtons.value = true;
       // if (role.value.code === "TL" || role.value.code === "SA") {
       if (applicationType.value == "Good Standing") {
         transfer.value = {
@@ -447,7 +450,6 @@ export default {
           createdByAdminId: +localStorage.getItem("adminId"),
         };
       }
-      isNotSubmittedOnce.value = false;
       if (applicationType.value == "New License") {
         store
           .dispatch("reviewer/transferLicenseReview", transfer.value)
@@ -463,76 +465,83 @@ export default {
               showErrorFlash.value = false;
             setTimeOut(() => {
               router.go();
-            });
+            }, 3000);
             }
           })
           .catch((err) => {
             showErrorFlash.value = false;
             setTimeOut(() => {
               router.go();
-            });
+            }, 3000);
           });
       }
       if (applicationType.value == "Verification") {
         store
           .dispatch("reviewer/transferVerificationReview", transfer.value)
           .then((response) => {
+            showtransferLoading.value = false;
             if (response.statusText == "Created") {
               showFlash.value = true;
-              router.push("/admin/review");
+              setTimeout(() => {
+                router.push("/admin/review");
+              }, 3000)
             } else {
               showErrorFlash.value = false;
             setTimeOut(() => {
               router.go();
-            });
+            }, 3000);
             }
           }).catch(err => {
             showErrorFlash.value = false;
             setTimeOut(() => {
               router.go();
-            });
+            }, 3000);
           })
       }
       if (applicationType.value == "Renewal") {
         store
           .dispatch("reviewer/transferRenewalReview", transfer.value)
-
           .then((response) => {
+            showtransferLoading.value = false;
             if (response.statusText == "Created") {
               showFlash.value = true;
-              router.push("/admin/review");
+              setTimeout(() => {
+                router.push("/admin/review");
+              }, 3000)
             } else {
               showErrorFlash.value = false;
             setTimeOut(() => {
               router.go();
-            });
+            }, 3000);
             }
           }).catch(err => {
             showErrorFlash.value = false;
             setTimeOut(() => {
               router.go();
-            });
+            }, 3000);
           })
       }
       if (applicationType.value == "Good Standing") {
         store
           .dispatch("reviewer/transferGoodStandingReview", transfer.value)
-
           .then((response) => {
+            showtransferLoading.value = false;
             if (response.statusText == "Created") {
               showFlash.value = true;
-              router.push("/admin/review");
+              setTimeout(() => {
+                router.push("/admin/review");
+              }, 3000)
             } else {
               showErrorFlash.value = false;
             setTimeOut(() => {
               router.go();
-            });
+            }, 3000);
             }
           }).catch(err => {
             showErrorFlash.value = false;
             setTimeOut(() => {
               router.go();
-            });
+            }, 3000);
           })
       }
     };
@@ -687,6 +696,7 @@ export default {
       evaluate,
       expertLevelId,
       evaluators,
+      showButtons,
     };
   },
 };

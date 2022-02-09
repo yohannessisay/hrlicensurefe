@@ -754,7 +754,7 @@
 
       <div
         class="flex justify-center items-center mb-medium"
-        v-if="showButtons"
+        v-if="showButtons && !showLoadingButtons"
       >
         <div
           v-for="button in buttons"
@@ -1065,7 +1065,6 @@ export default {
     let pdfFilePath = ref("");
 
     let isGoodStanding = ref(false);
-    let isNotSubmittedOnce = ref(true);
 
     let expirationDateExceedTodayError = ref(false);
     let isProfessionalTypeChanged = ref(false);
@@ -1149,6 +1148,7 @@ export default {
     let fromModalSendDeclinedData = ref(false);
 
     let showActionLoading = ref(false);
+    let showLoadingButtons = ref(false);
 
     let professionalTypes = ref([]);
     let evaluateRoute = ref(
@@ -1566,11 +1566,8 @@ export default {
     };
 
     const action = (actionValue) => {
-      if(!isNotSubmittedOnce.value) {
-        // don't allow admin to submit evaluation more than once
-        return;
-      }
       showActionLoading.value = true;
+      showLoadingButtons.value = true;
       if (professionalTypeIdss.value.length > 0) {
         newLicense.value.professionalTypeIds = professionalTypeIdss.value;
         newLicense.value.professionalTypePrefixes =
@@ -1583,6 +1580,7 @@ export default {
         professionalTypeIdss.value = [];
         professionalTypePrefixes.value = [];
         showActionLoading.value = false;
+        showLoadingButtons.value = false;
         return;
       }
 
@@ -1621,6 +1619,7 @@ export default {
             showLicenseDateRequirementError.value = false;
           }, 4000);
           showActionLoading.value = false;
+          showLoadingButtons.value = false;
           return;
         } else if (
           !moment(newLicense.value.licenseExpirationDate).isAfter(new Date()) &&
@@ -1631,12 +1630,14 @@ export default {
             expirationDateExceedTodayError.value = false;
           }, 4000);
           showActionLoading.value = false;
+          showLoadingButtons.value = false;
           return;
         }
       }
 
       if (actionValue == "DeclineEvent") {
         showActionLoading.value = false;
+        showLoadingButtons.value = false;
         let checkProfessionResult = false;
         newLicense.value.isProfessionChanged == false
           ? (checkProfessionResult = checkProfessionChanged(
@@ -1652,6 +1653,7 @@ export default {
           // professionalTypeIdss.value = [];
           // professionalTypePrefixes.value = [];
           showActionLoading.value = false;
+          showLoadingButtons.value = false;
           return;
         } else {
           showRemark.value = true;
@@ -1691,7 +1693,6 @@ export default {
         action: actionValue,
         data: newLicense.value,
       };
-      isNotSubmittedOnce.value = false;
       if (
         applicationType.value == "New License" &&
         sendDeclinedData.value == true
@@ -2104,7 +2105,7 @@ export default {
       checkProfessionChanged,
       isGoodStanding,
       showActionLoading,
-      isNotSubmittedOnce,
+      showLoadingButtons,
     };
   },
 };

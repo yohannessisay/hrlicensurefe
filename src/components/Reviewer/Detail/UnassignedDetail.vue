@@ -26,7 +26,7 @@
                   {{ types.name }}
                 </option>
               </select>
-              <button
+              <button v-if="!showButtons"
                 class="block mx-auto bg-lightBlue-300 hover:bg-lightBlue-600 hover:shadow-lg mt-small"
                 @click="assignReviewer()"
               >
@@ -287,7 +287,6 @@ export default {
     const expertLevelId = JSON.parse(localStorage.getItem("allAdminData"))
       .expertLevelId;
 
-    let isNotSubmittedOnce = ref(true);
     let show = ref(false);
     let license = ref({
       applicant: {},
@@ -332,6 +331,7 @@ export default {
 
     let showLoading = ref(false);
     let showAdminAssignLoading = ref(false);
+    let showButtons = ref(false);
 
     let reviewerAdminId = ref(0);
 
@@ -457,10 +457,6 @@ export default {
     };
 
     const assignReviewer = () => {
-      if (!isNotSubmittedOnce.value) {
-        // don't allow admin to assign application more than once
-        return;
-      }
       if (role.value.code === "TL" || role.value.code === "ADM") {
         if (applicationType.value == "Good Standing") {
           assign.value = {
@@ -522,9 +518,9 @@ export default {
           };
         }
       }
-      isNotSubmittedOnce.value = false;
       if (applicationType.value == "New License") {
         showAdminAssignLoading.value = true;
+        showButtons.value = true;
         store
           .dispatch("reviewer/assignReviewer", assign.value)
           .then((response) => {
@@ -534,6 +530,11 @@ export default {
               setTimeout(() => {
                 router.push("/admin/review");
               }, 3000);
+            } else {
+              showErrorFlash.value = true;
+              setTimeout(() => {
+                router.go()
+              }, 3000)
             }
           })
           .catch((err) => {
@@ -545,6 +546,7 @@ export default {
       }
       if (applicationType.value == "Verification") {
         showAdminAssignLoading.value = true;
+        showButtons.value = true;
         store
           .dispatch("reviewer/assignVerificationReviewer", assign.value)
           .then((response) => {
@@ -554,6 +556,11 @@ export default {
               setTimeout(() => {
                 router.push("/admin/review");
               }, 3000);
+            } else {
+              showErrorFlash.value = true;
+              setTimeout(() => {
+                router.go();
+              }, 3000)
             }
           })
           .catch((err) => {
@@ -567,6 +574,7 @@ export default {
         if (license.value.applicationStatus.code === "UPD") {
           license.value.reviewerId = assign.value.reviewerId;
           showAdminAssignLoading.value = true;
+          showButtons.value = true;
           store
             .dispatch("reviewer/assignRenewalReviewer", assign.value)
             .then((response) => {
@@ -591,6 +599,7 @@ export default {
             });
         } else {
           showAdminAssignLoading.value = true;
+          showButtons.value = true;
           store
             .dispatch("reviewer/assignRenewalReviewer", assign.value)
 
@@ -601,6 +610,11 @@ export default {
                 setTimeout(() => {
                   router.push("/admin/review");
                 }, 3000);
+              } else {
+                showErrorFlash.value = true;
+                setTimeout(() => {
+                  router.go();
+                }, 3000)
               }
             })
             .catch((err) => {
@@ -613,6 +627,7 @@ export default {
       }
       if (applicationType.value == "Good Standing") {
         showAdminAssignLoading.value = true;
+        showButtons.value = true;
         store
           .dispatch("reviewer/assignGoodStandingReviewer", assign.value)
           .then((response) => {
@@ -680,6 +695,7 @@ export default {
       showLoading,
       showAdminAssignLoading,
       expertLevelId,
+      showButtons,
     };
   },
 };

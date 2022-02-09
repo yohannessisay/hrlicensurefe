@@ -144,7 +144,7 @@
             >
               <Spinner />
             </div>
-            <div class="flex mb-medium w-full mt-medium">
+            <div class="flex mb-medium w-full mt-medium" v-if="!showButtons">
               <button
                 class="mx-auto w-1/2 blue-with-light-blue-gradient"
                 variant="block"
@@ -191,7 +191,6 @@ export default {
     const adminExpertId = JSON.parse(localStorage.getItem("allAdminData"))
       .expertLevelId;
     let errorMessage = ref("");
-    let isNotSubmittedOnce = ref(true);
 
     let admin = {
       firstName: null,
@@ -206,6 +205,8 @@ export default {
     };
 
     let showLoading = ref(false);
+    let showButtons = ref(false);
+
     let expertLevels = ref([
       {
         id: null,
@@ -263,16 +264,14 @@ export default {
     };
 
     const registerAdmin = () => {
-      if(!isNotSubmittedOnce.value) {
-        //user manager can submit only once while creating admin
-        return;
-      }
       const isValidated = validateForm(admin);
       showLoading.value = true;
+      showButtons.value = true;
       if (isValidated) {
         state.value.validationErrors = isValidated;
         state.value.showErrorMessages = true;
         showLoading.value = false;
+        showButtons.value = false;
       } else {
         state.value.showErrorMessages = false;
         admin.name =
@@ -283,7 +282,6 @@ export default {
           admin.grandfatherName;
 
         admin.email = admin.email.toLowerCase();
-        isNotSubmittedOnce.value = false;
         store
           .dispatch("admin/registerAdmin", admin)
           .then((res) => {
@@ -303,14 +301,16 @@ export default {
               message.value.showErrorFlash = !message.value.showErrorFlash;
               setTimeout(() => {
                 location.reload(true);
-              });
+              }, 3000);
             }
           })
           .catch((err) => {
             showLoading.value = false;
+            errorMessage.value = "Oops! Something went wrong, Admin is not created"
+            message.value.showErrorFlash = true;
             setTimeout(() => {
               location.reload(true);
-            })
+            }, 3000)
           });
       }
     };
@@ -374,6 +374,7 @@ export default {
       isValidEmail,
       selectedExpertLevel,
       selectedRegion,
+      showButtons,
     };
   },
 };
