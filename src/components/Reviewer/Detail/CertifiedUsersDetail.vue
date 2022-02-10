@@ -235,13 +235,10 @@ import { useRouter, useRoute } from "vue-router";
 import store from "../../../store";
 import Spinner from "@/sharedComponents/Spinner";
 
-import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import backgroundImage from "../../../assets/Federal_Certificate.jpg";
 import oromiaCertificateBackground from "../../../assets/Oromia_Certificate.jpg";
-import addisAbabaCertificateBackground from "../../../assets/AA_Certificate.jpg";
-import qrcode_image from "../../../assets/qrcode_image.jpg";
-import certifiedUserImage from "../../../assets/certified_user.jpg";
+import addisAbabaCertificateBackground from "../../../assets/A_A_Certificate.jpg";
 import AmharicFont from "../Configurations/amharicFont.js";
 import { toEthiopian } from "../Configurations/dateConvertor";
 import STATIC_CERTIFICATE_URL from "../../../sharedComponents/constants/message.js";
@@ -564,7 +561,26 @@ export default {
       doc.setFont("Tera-Regular"); // set font
 
       doc.setFontSize(17);
-      doc.text(
+      if(code === "AA") {
+        doc.text(
+        60,
+        namePosition - 5,
+        `${
+          certifiedUser.value.alternativeName
+            ? certifiedUser.value.alternativeName
+            : ""
+        } ${
+          certifiedUser.value.alternativeFatherName
+            ? certifiedUser.value.alternativeFatherName
+            : ""
+        } ${
+          certifiedUser.value.alternativeGrandFatherName
+            ? certifiedUser.value.alternativeGrandFatherName
+            : ""
+        }`
+      );
+      } else {
+        doc.text(
         60,
         namePosition,
         `${
@@ -581,6 +597,8 @@ export default {
             : ""
         }`
       );
+      }
+      
 
       if (changeWidth.value) {
         doc.setFontSize(11);
