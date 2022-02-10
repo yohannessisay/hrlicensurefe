@@ -6,6 +6,9 @@
         <SideNav :display="menu" @changeDisplay="displaySet" />
       </div>
       <div class="menu">
+        <div>
+          <!-- <FlashMessage/> -->
+        </div>
         <div v-if="this.display == 0">
           <LicenseRequests />
         </div>
@@ -57,6 +60,7 @@ import InReview from "@/views/InReview";
 import ApprovedPayment from "@/views/ApprovedPayment";
 import DeclinedPayment from "@/views/DeclinedPayment";
 import PendingPayment from "@/views/PendingPayment";
+import FlashMessage from "@/sharedComponents/FlashMessage";
 
 export default {
   components: {
@@ -73,6 +77,7 @@ export default {
     ApprovedPayment,
     DeclinedPayment,
     PendingPayment,
+    FlashMessage
   },
   created() {
     this.$route.params.status = undefined;
@@ -174,7 +179,7 @@ export default {
 };
 </script>
 <style>
-@media only screen and (max-width: 850px) {
+@media only screen and (max-width: 1024px) {
   .sidenav {
     display: none;
   }
