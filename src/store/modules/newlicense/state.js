@@ -48,6 +48,7 @@ export default {
         mastersTranscript: "",
         mastersTranscript2: "",
         phdTranscript: "",
+        phdTranscript2: "",
         buttons: [],
         applicationId: 0,
         documentSpec: [],

@@ -392,6 +392,7 @@ export default {
     this.mastersTranscript2 = this.getMastersTranscript2;
     this.phd = this.getPhd;
     this.phdTranscript = this.getPhdTranscript;
+    this.phdTranscript2 = this.getPhdTranscript2;
 
     if (this.passport != "" && this.passport != undefined) {
       if ("name" in this.passport) {
@@ -822,6 +823,22 @@ export default {
         this.docList.push(this.phdTranscript);
       }
     }
+    if (this.phdTranscript2 != "" && this.phdTranscript2 != undefined) {
+      if ("name" in this.phdTranscript2) {
+        if (this.draftId != undefined) {
+          this.documentsArray.splice(
+            this.documentsArray.findIndex(
+              (e) => e.documentTypeCode === "PHDTRAN1"
+            ),
+            1
+          );
+        }
+        var filePreview = await this.blobToBase64(this.phdTranscript2);
+        this.phdTranscript2.docFile = filePreview;
+        this.phdTranscript2.title = "PhD Transcript 2";
+        this.docList.push(this.phdTranscript2);
+      }
+    }
     this.buttons = this.getButtons;
     this.fetchProfileInfo();
     this.setDocs();
@@ -894,6 +911,7 @@ export default {
     mastersTranscript2: "",
     phd: "",
     phdTranscript: "",
+    phdTranscript2: "",
 
     eduEighth: "",
     eduTenth: "",
@@ -941,6 +959,7 @@ export default {
 
       getPhd: "newlicense/getPhd",
       getPhdTranscript: "newlicense/getPhdTranscript",
+      getPhdTranscript2: "newlicense/getPhdTranscript2",
 
       getButtons: "newlicense/getButtons",
       getApplicationId: "newlicense/getApplicationId",
@@ -1363,6 +1382,10 @@ export default {
                 this.documentTypes[27].documentType.code,
                 this.phdTranscript
               );
+              formData.append(
+                this.documentTypes[58].documentType.code,
+                this.phdTranscript2
+              );
               let payload = { document: formData, id: licenseId };
 
               this.$store
@@ -1477,6 +1500,10 @@ export default {
         formData.append(
           this.documentTypes[27].documentType.code,
           this.phdTranscript
+        );
+        formData.append(
+          this.documentTypes[58].documentType.code,
+          this.phdTranscript2
         );
         let license = {
           action: action,
@@ -1676,6 +1703,10 @@ export default {
                 this.documentTypes[27].documentType.code,
                 this.phdTranscript
               );
+              formData.append(
+                this.documentTypes[58].documentType.code,
+                this.phdTranscript2
+              );
               let payload = { document: formData, id: licenseId };
               this.$store
                 .dispatch("newlicense/uploadDocuments", payload)
@@ -1790,6 +1821,10 @@ export default {
         formData.append(
           this.documentTypes[27].documentType.code,
           this.phdTranscript
+        );
+        formData.append(
+          this.documentTypes[58].documentType.code,
+          this.phdTranscript2
         );
         let license = {
           action: action,

@@ -32,6 +32,7 @@ import {
     SET_MASTERS_TRANSCRIPT2,
     SET_PHD,
     SET_PHD_TRANSCRIPT,
+    SET_PHD_TRANSCRIPT2,
     SET_BUTTONS,
     SET_APPLICATION_ID,
     SET_DOCUMENT_SPEC,
@@ -140,6 +141,9 @@ export default {
     },
     setPhdTranscript({ commit }, phdTranscript) {
         commit(SET_PHD_TRANSCRIPT, phdTranscript);
+    },
+    setPhdTranscript2({ commit }, phdTranscript2) {
+        commit(SET_PHD_TRANSCRIPT2, phdTranscript2);
     },
     setButtons({ commit }, buttons) {
         commit(SET_BUTTONS, buttons);

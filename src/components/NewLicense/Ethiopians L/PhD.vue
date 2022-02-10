@@ -260,6 +260,7 @@ export default {
     let mastersTranscript = ref("");
     let mastersTranscript2 = ref("");
     let phdTranscript = ref("");
+    let phdTranscript2 = ref("");
 
     let eduLevel = ref("");
 
@@ -346,6 +347,7 @@ export default {
     mastersTranscript = store.getters["newlicense/getMastersTranscript"];
     mastersTranscript2 = store.getters["newlicense/getMastersTranscript2"];
     phdTranscript = store.getters["newlicense/getPhdTranscript"];
+    phdTranscript2 = store.getters["newlicense/getPhdTranscript2"];
 
     eduLevel = localStorage.getItem("educationalLevel");
 
@@ -503,6 +505,7 @@ export default {
             );
             formData.append(documentSpecs[26].documentType.code, PhDFile.value);
             formData.append(documentSpecs[27].documentType.code, phdTranscript);
+            formData.append(documentSpecs[58].documentType.code, phdTranscript2);
 
             let payload = { document: formData, id: licenseId };
             store

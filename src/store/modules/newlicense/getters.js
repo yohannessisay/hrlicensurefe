@@ -31,6 +31,7 @@ export default {
     getMastersTranscript2: (state) => state.mastersTranscript2,
     getPhd: (state) => state.phd,
     getPhdTranscript: (state) => state.phdTranscript,
+    getPhdTranscript2: (state) => state.phdTranscript2,
     getButtons: (state) => state.buttons,
     getApplicationId: (state) => state.applicationId,
     getDocumentSpec: (state) => state.documentSpec,

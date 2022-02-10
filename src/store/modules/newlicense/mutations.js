@@ -38,6 +38,7 @@ import {
     SET_MASTERS_TRANSCRIPT2,
     SET_PHD,
     SET_PHD_TRANSCRIPT,
+    SET_PHD_TRANSCRIPT2,
 } from "./mutation-types";
 
 export default {
@@ -124,6 +125,9 @@ export default {
     },
     [SET_PHD_TRANSCRIPT](state, phdTranscript) {
         state.phdTranscript = phdTranscript;
+    },
+    [SET_PHD_TRANSCRIPT2](state, phdTranscript2) {
+        state.phdTranscript2 = phdTranscript2;
     },
     [SET_BUTTONS](state, buttons) {
         state.buttons = buttons;
