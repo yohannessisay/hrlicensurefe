@@ -312,9 +312,11 @@ export default {
     let coc = ref("");
     let diploma = ref("");
     let transcript = ref("");
+    let transcript2 = ref("");
     let degree = ref("");
     let masters = ref("");
     let mastersTranscript = ref("");
+    let mastersTranscript2 = ref("");
     let phd = ref("");
 
     let eduLevel = ref("");
@@ -421,10 +423,12 @@ export default {
     const submit = () => {
       emit("changeActiveState");
       store.dispatch("newlicense/setPhdTranscript", PhDTranscriptFile);
+      store.dispatch("newlicense/setPhdTranscript2", PhDTranscriptFile2);
     };
     const submitBack = () => {
       emit("changeActiveStateMinus");
       store.dispatch("newlicense/setPhdTranscript", PhDTranscriptFile);
+      store.dispatch("newlicense/setPhdTranscript2", PhDTranscriptFile2);
     };
     buttons = store.getters["newlicense/getButtons"];
     documentSpecs = store.getters["newlicense/getDocumentSpec"];
@@ -446,8 +450,10 @@ export default {
     diploma = store.getters["newlicense/getDiploma"];
     degree = store.getters["newlicense/getDegree"];
     transcript = store.getters["newlicense/getTranscript"];
+    transcript2 = store.getters["newlicense/getTranscript2"];
     masters = store.getters["newlicense/getMasters"];
     mastersTranscript = store.getters["newlicense/getMastersTranscript"];
+    mastersTranscript2 = store.getters["newlicense/getMastersTranscript2"];
     phd = store.getters["newlicense/getPhd"];
 
     eduLevel = localStorage.getItem("educationalLevel");
@@ -470,6 +476,10 @@ export default {
               formData.append(
                 documentSpecs[27].documentType.code,
                 PhDTranscriptFile.value
+              );
+              formData.append(
+                documentSpecs[58].documentType.code,
+                PhDTranscriptFile2.value
               );
               let payload = { document: formData, id: licenseId };
               store
@@ -544,6 +554,7 @@ export default {
             );
             formData.append(documentSpecs[22].documentType.code, diploma);
             formData.append(documentSpecs[23].documentType.code, transcript);
+            formData.append(documentSpecs[52].documentType.code, transcript2);
             formData.append(documentSpecs[9].documentType.code, coc);
             formData.append(documentSpecs[21].documentType.code, degree);
             if (professionalDoc != undefined) {
@@ -599,12 +610,19 @@ export default {
               documentSpecs[25].documentType.code,
               mastersTranscript
             );
+            formData.append(
+              documentSpecs[57].documentType.code,
+              mastersTranscript2
+            );
             formData.append(documentSpecs[26].documentType.code, phd);
             formData.append(
               documentSpecs[27].documentType.code,
               PhDTranscriptFile.value
             );
-
+            formData.append(
+              documentSpecs[58].documentType.code,
+              PhDTranscriptFile2.value
+            );
             let payload = { document: formData, id: licenseId };
             store
               .dispatch("newlicense/uploadDocuments", payload)
@@ -642,6 +660,10 @@ export default {
               formData.append(
                 documentSpecs[27].documentType.code,
                 PhDTranscriptFile.value
+              );
+              formData.append(
+                documentSpecs[58].documentType.code,
+                PhDTranscriptFile2.value
               );
               let payload = { document: formData, id: licenseId };
               store
@@ -711,6 +733,10 @@ export default {
               documentSpecs[27].documentType.code,
               PhDTranscriptFile.value
             );
+            formData.append(
+              documentSpecs[58].documentType.code,
+              PhDTranscriptFile2.value
+            );
             let payload = { document: formData, id: licenseId };
             store
               .dispatch("newlicense/uploadDocuments", payload)
@@ -758,6 +784,7 @@ export default {
       maxFileSize.value = MAX_FILE_SIZE.MAX_FILE_SIZE;
       maxSizeMB.value = MAX_SIZE_MB.MAX_SIZE_MB;
       phdTranscriptBack = store.getters["newlicense/getPhdTranscript"];
+      phdTranscriptBack2 = store.getters["newlicense/getPhdTranscript2"];
       if (
         phdTranscriptBack &&
         phdTranscriptBack !== undefined &&
@@ -795,6 +822,35 @@ export default {
           }
         }
       }
+      if (
+        phdTranscriptBack2 &&
+        phdTranscriptBack2 !== undefined &&
+        phdTranscriptBack2 !== null &&
+        phdTranscriptBack2 !== ""
+      ) {
+        docCount.value++;
+        showUpload2.value = false;
+        PhDTranscriptFile2.value = phdTranscriptBack2;
+        let reader = new FileReader();
+        reader.addEventListener(
+          "load",
+          function() {
+            showPreview2.value = true;
+            filePreview2.value = reader.result;
+          },
+          false
+        );
+        if (PhDTranscriptFile2.value) {
+          if (/\.(jpe?g|png|gif)$/i.test(PhDTranscriptFile2.value.name)) {
+            isImage2.value = true;
+            reader.readAsDataURL(PhDTranscriptFile2.value);
+          } else if (/\.(pdf)$/i.test(PhDTranscriptFile2.value.name)) {
+            isImage2.value = false;
+            isPdf2.value = true;
+            reader.readAsDataURL(PhDTranscriptFile2.value);
+          }
+        }
+      }
       declinedFields = store.getters["newlicense/getDeclinedFields"];
       acceptedFields = store.getters["newlicense/getAcceptedFields"];
       remark = store.getters["newlicense/getRemark"];
@@ -819,6 +875,18 @@ export default {
             PhDTranscriptFile.value = draftData.documents[i];
             showPreview.value = true;
             filePreview.value = basePath + draftData.documents[i].filePath;
+          }
+          if (draftData.documents[i].documentTypeCode == "PHDTRAN1") {
+            docCount.value++;
+            showUpload2.value = false;
+            if (draftData.documents[i].fileName.split(".")[1] == "pdf") {
+              isPdf2.value = true;
+            } else {
+              isImage2.value = true;
+            }
+            PhDTranscriptFile2.value = draftData.documents[i];
+            showPreview2.value = true;
+            filePreview2.value = basePath + draftData.documents[i].filePath;
           }
         }
       }
