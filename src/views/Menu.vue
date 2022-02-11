@@ -6,6 +6,9 @@
         <SideNav :display="menu" @changeDisplay="displaySet" />
       </div>
       <div class="menu">
+        <div>
+          <!-- <FlashMessage/> -->
+        </div>
         <div v-if="this.display == 0">
           <LicenseRequests />
         </div>
@@ -57,6 +60,7 @@ import InReview from "@/views/InReview";
 import ApprovedPayment from "@/views/ApprovedPayment";
 import DeclinedPayment from "@/views/DeclinedPayment";
 import PendingPayment from "@/views/PendingPayment";
+import FlashMessage from "@/sharedComponents/FlashMessage";
 
 export default {
   components: {
@@ -73,10 +77,10 @@ export default {
     ApprovedPayment,
     DeclinedPayment,
     PendingPayment,
+    FlashMessage
   },
   created() {
     this.$route.params.status = undefined;
-    console.log(this.$route.params.status);
     // resetting new license store
     this.$store.dispatch("newlicense/storeAcceptedFields", []);
     this.$store.dispatch("newlicense/storeDeclinedFields", []);
@@ -97,6 +101,7 @@ export default {
     this.$store.dispatch("newlicense/setPayroll", "");
     this.$store.dispatch("newlicense/setDegree", "");
     this.$store.dispatch("newlicense/setTranscript", "");
+    this.$store.dispatch("newlicense/setTranscript2", "");
     this.$store.dispatch("newlicense/setDiploma", "");
     this.$store.dispatch("newlicense/setProCertificate", "");
     this.$store.dispatch("newlicense/setProDiploma", "");
@@ -108,6 +113,7 @@ export default {
     this.$store.dispatch("newlicense/setEduTranscript2", "");
     this.$store.dispatch("newlicense/setMasters", "");
     this.$store.dispatch("newlicense/setMastersTranscript", "");
+    this.$store.dispatch("newlicense/setMastersTranscript2", "");
     this.$store.dispatch("newlicense/setPhd", "");
     this.$store.dispatch("newlicense/setPhdTranscript", "");
 
@@ -173,6 +179,11 @@ export default {
 };
 </script>
 <style>
+@media only screen and (max-width: 1024px) {
+  .sidenav {
+    display: none;
+  }
+}
 .menu {
   width: 80%;
 }

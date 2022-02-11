@@ -87,9 +87,6 @@
               <span v-if="showUpload2">
                 <label class="text-primary-700"
                   >Upload image:
-                  <span style="color: red; font-weight: bold; font-size:16px"
-                    >Required</span
-                  >
                   <div class="dropbox">
                     <input
                       type="file"
@@ -311,8 +308,10 @@ export default {
     let diploma = ref("");
     let masters = ref("");
     let mastersTranscript = ref("");
+    let mastersTranscript2 = ref("");
     let phd = ref("");
     let phdTranscript = ref("");
+    let phdTranscript2 = ref("");
 
     let docCount = ref(0);
 
@@ -416,10 +415,12 @@ export default {
     const submit = () => {
       emit("changeActiveState");
       store.dispatch("newlicense/setTranscript", TranscriptFile);
+      store.dispatch("newlicense/setTranscript2", TranscriptFile2);
     };
     const submitBack = () => {
       emit("changeActiveStateMinus");
       store.dispatch("newlicense/setTranscript", TranscriptFile);
+      store.dispatch("newlicense/setTranscript2", TranscriptFile2);
     };
     buttons = store.getters["newlicense/getButtons"];
     documentSpecs = store.getters["newlicense/getDocumentSpec"];
@@ -442,8 +443,10 @@ export default {
     coc = store.getters["newlicense/getCoc"];
     masters = store.getters["newlicense/getMasters"];
     mastersTranscript = store.getters["newlicense/getMastersTranscript"];
+    mastersTranscript2 = store.getters["newlicense/getMastersTranscript2"];
     phd = store.getters["newlicense/getPhd"];
     phdTranscript = store.getters["newlicense/getPhdTranscript"];
+    phdTranscript2 = store.getters["newlicense/getPhdTranscript2"];
 
     const draft = (action) => {
       message.value.showLoading = true;
@@ -463,6 +466,10 @@ export default {
               formData.append(
                 documentSpecs[23].documentType.code,
                 TranscriptFile.value
+              );
+              formData.append(
+                documentSpecs[52].documentType.code,
+                TranscriptFile2.value
               );
               let payload = { document: formData, id: licenseId };
               store
@@ -553,8 +560,12 @@ export default {
               );
             }
             formData.append(
-              documentSpecs[8].documentType.code,
+              documentSpecs[23].documentType.code,
               TranscriptFile.value
+            );
+            formData.append(
+              documentSpecs[52].documentType.code,
+              TranscriptFile2.value
             );
             if (educationDoc != undefined) {
               formData.append(
@@ -595,9 +606,17 @@ export default {
               documentSpecs[25].documentType.code,
               mastersTranscript
             );
+            formData.append(
+              documentSpecs[57].documentType.code,
+              mastersTranscript2
+            );
             formData.append(documentSpecs[26].documentType.code, phd);
             formData.append(documentSpecs[27].documentType.code, phdTranscript);
-
+            formData.append(documentSpecs[58].documentType.code, phdTranscript2);
+            formData.append(
+              documentSpecs[52].documentType.code,
+              TranscriptFile2.value
+            );
             let payload = { document: formData, id: licenseId };
             store
               .dispatch("newlicense/uploadDocuments", payload)
@@ -635,6 +654,10 @@ export default {
               formData.append(
                 documentSpecs[23].documentType.code,
                 TranscriptFile.value
+              );
+              formData.append(
+                documentSpecs[52].documentType.code,
+                TranscriptFile2.value
               );
               let payload = { document: formData, id: licenseId };
               store
@@ -704,6 +727,10 @@ export default {
               documentSpecs[23].documentType.code,
               TranscriptFile.value
             );
+            formData.append(
+              documentSpecs[52].documentType.code,
+              TranscriptFile2.value
+            );
             let payload = { document: formData, id: licenseId };
             store
               .dispatch("newlicense/uploadDocuments", payload)
@@ -751,6 +778,7 @@ export default {
       maxFileSize.value = MAX_FILE_SIZE.MAX_FILE_SIZE;
       maxSizeMB.value = MAX_SIZE_MB.MAX_SIZE_MB;
       transcriptBack = store.getters["newlicense/getTranscript"];
+      transcriptBack2 = store.getters["newlicense/getTranscript2"];
       if (
         transcriptBack &&
         transcriptBack !== undefined &&
@@ -788,13 +816,42 @@ export default {
           }
         }
       }
+      if (
+        transcriptBack2 &&
+        transcriptBack2 !== undefined &&
+        transcriptBack2 !== null &&
+        transcriptBack2 !== ""
+      ) {
+        docCount.value++;
+        showUpload2.value = false;
+        TranscriptFile2.value = transcriptBack2;
+        let reader = new FileReader();
+        reader.addEventListener(
+          "load",
+          function() {
+            showPreview2.value = true;
+            filePreview2.value = reader.result;
+          },
+          false
+        );
+        if (TranscriptFile2.value) {
+          if (/\.(jpe?g|png|gif)$/i.test(TranscriptFile2.value.name)) {
+            isImage2.value = true;
+            reader.readAsDataURL(TranscriptFile2.value);
+          } else if (/\.(pdf)$/i.test(TranscriptFile2.value.name)) {
+            isImage2.value = false;
+            isPdf2.value = true;
+            reader.readAsDataURL(TranscriptFile2.value);
+          }
+        }
+      }
       declinedFields = store.getters["newlicense/getDeclinedFields"];
       acceptedFields = store.getters["newlicense/getAcceptedFields"];
       remark = store.getters["newlicense/getRemark"];
-      if (declinedFields != undefined && declinedFields.includes("PDT")) {
+      if (declinedFields != undefined && declinedFields.includes("TRAN")) {
         declinedFieldsCheck.value = true;
       }
-      if (acceptedFields != undefined && acceptedFields.includes("PDT")) {
+      if (acceptedFields != undefined && acceptedFields.includes("TRAN")) {
         acceptedFieldsCheck.value = true;
       }
       buttons = store.getters["newlicense/getButtons"];
@@ -802,7 +859,7 @@ export default {
       if (route.params.id) {
         draftStatus.value = route.params.status;
         for (let i = 0; i < draftData.documents.length; i++) {
-          if (draftData.documents[i].documentTypeCode == "PDT") {
+          if (draftData.documents[i].documentTypeCode == "TRAN") {
             showUpload.value = false;
             if (draftData.documents[i].fileName.split(".")[1] == "pdf") {
               isPdf.value = true;
@@ -812,6 +869,18 @@ export default {
             TranscriptFile.value = draftData.documents[i];
             showPreview.value = true;
             filePreview.value = basePath + draftData.documents[i].filePath;
+          }
+          if (draftData.documents[i].documentTypeCode == "TRAN1") {
+            docCount.value++;
+            showUpload2.value = false;
+            if (draftData.documents[i].fileName.split(".")[1] == "pdf") {
+              isPdf2.value = true;
+            } else {
+              isImage2.value = true;
+            }
+            TranscriptFile2.value = draftData.documents[i];
+            showPreview2.value = true;
+            filePreview2.value = basePath + draftData.documents[i].filePath;
           }
         }
       }

@@ -12,7 +12,7 @@
           v-if="this.newlicense.length != 0"
           class=" mt-medium rounded ml-large"
         >
-          <div class="flex " v-for="i in this.newlicense.length" v-bind:key="i">
+          <div class="flex flex-wrap" v-for="i in this.newlicense.length" v-bind:key="i">
             <div
               class="container mb-medium"
               v-for="item in this.newlicense.slice((i - 1) * 5, i * 5)"
@@ -87,7 +87,7 @@
           v-if="this.renewal.length != 0"
           class=" mt-medium rounded ml-large"
         >
-          <div class="flex " v-for="i in this.renewal.length" v-bind:key="i">
+          <div class="flex flex-wrap" v-for="i in this.renewal.length" v-bind:key="i">
             <div
               class="container mb-medium"
               v-for="item in this.renewal.slice((i - 1) * 5, i * 5)"
@@ -245,7 +245,7 @@
           class=" mt-medium rounded ml-large"
         >
           <div
-            class="flex "
+            class="flex flex-wrap"
             v-for="i in this.goodstanding.length"
             v-bind:key="i"
           >
