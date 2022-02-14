@@ -11,6 +11,7 @@ import {
     SET_COC3,
     SET_EDUCATIONAL_DOCUMENT,
     SET_WORK_EXPERIENCE,
+    SET_WORK_EXPERIENCE2,
     SET_SERVICE_FEE,
     SET_LETTER_FROM_ORG,
     SET_RENEWED_LICENSE,
@@ -82,6 +83,9 @@ export default {
     },
     [SET_WORK_EXPERIENCE](state, workExperience) {
         state.workExperience = workExperience;
+    },
+    [SET_WORK_EXPERIENCE2](state, workExperience2) {
+        state.workExperience2 = workExperience2;
     },
     [SET_PAYROLL](state, payroll) {
         state.payroll = payroll;

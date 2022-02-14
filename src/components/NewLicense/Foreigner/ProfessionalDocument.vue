@@ -386,6 +386,7 @@ export default {
       passport: "",
       healthExamCert: "",
       workExperience: "",
+      workExperience2: "",
       englishLanguage: "",
       professionalDoc: [],
       herqa: "",
@@ -442,6 +443,7 @@ export default {
       getCoc: "newlicense/getCoc",
       getEducationalDocuments: "newlicense/getEducationalDocuments",
       getWorkExperience: "newlicense/getWorkExperience",
+      getWorkExperience2: "newlicense/getWorkExperience2",
       getLetterfromOrg: "newlicense/getLetterfromOrg",
       getRenewedLicense: "newlicense/getRenewedLicense",
       getPayroll: "renewal/getPayroll",
@@ -658,6 +660,7 @@ export default {
     this.coc = this.getCoc;
     this.educationalDocs = this.getEducationalDocuments;
     this.workExperience = this.getWorkExperience;
+    this.workExperience2 = this.getWorkExperience2;
     this.letterfromOrg = this.getLetterfromOrg;
     this.renewedLicense = this.getRenewedLicense;
     this.professionalLicense = this.getProfessionalLicense;
@@ -899,6 +902,10 @@ export default {
             formData.append(
               this.documentSpec[4].documentType.code,
               this.workExperience
+            );
+            formData.append(
+              this.documentSpec[28].documentType.code,
+              this.workExperience2
             );
             formData.append(
               this.documentSpec[5].documentType.code,

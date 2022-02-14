@@ -379,6 +379,7 @@ export default {
     this.coc2 = this.getCoc3;
     this.educationalDocs = this.getEducationalDocuments;
     this.workExperience = this.getWorkExperience;
+    this.workExperience2 = this.getWorkExperience2;
     this.serviceFee = this.getServiceFee;
     this.letterfromOrg = this.getLetterfromOrg;
     this.renewedLicense = this.getRenewedLicense;
@@ -644,6 +645,20 @@ export default {
         this.workExperience.docFile = filePreview;
         this.workExperience.title = "Work Experience";
         this.docList.push(this.workExperience);
+      }
+    }
+    if (this.workExperience2 != "" && this.workExperience2 != undefined) {
+      if ("name" in this.workExperience2) {
+        if (this.draftId != undefined) {
+          this.documentsArray.splice(
+            this.documentsArray.findIndex((e) => e.documentTypeCode === "WE2"),
+            1
+          );
+        }
+        var filePreview = await this.blobToBase64(this.workExperience2);
+        this.workExperience2.docFile = filePreview;
+        this.workExperience2.title = "Work Experience 2";
+        this.docList.push(this.workExperience2);
       }
     }
     if (this.serviceFee != "" && this.serviceFee != undefined) {
@@ -934,6 +949,7 @@ export default {
     coc3: "",
     educationalDocs: [],
     workExperience: "",
+    workExperience2: "",
     letterfromOrg: "",
     renewedLicense: "",
     professionalLicense: "",
@@ -991,6 +1007,7 @@ export default {
       getCoc3: "newlicense/getCoc3",
       getEducationalDocuments: "newlicense/getEducationalDocuments",
       getWorkExperience: "newlicense/getWorkExperience",
+      getWorkExperience2: "newlicense/getWorkExperience2",
       getMasters: "newlicense/getMasters",
       getMastersTranscript: "newlicense/getMastersTranscript",
       getMastersTranscript2: "newlicense/getMastersTranscript2",
@@ -1314,6 +1331,10 @@ export default {
                 this.workExperience
               );
               formData.append(
+                this.documentTypes[28].documentType.code,
+                this.workExperience2
+              );
+              formData.append(
                 this.documentTypes[5].documentType.code,
                 this.englishLanguage
               );
@@ -1460,6 +1481,10 @@ export default {
         formData.append(
           this.documentTypes[4].documentType.code,
           this.workExperience
+        );
+        formData.append(
+          this.documentTypes[28].documentType.code,
+          this.workExperience2
         );
         formData.append(
           this.documentTypes[5].documentType.code,
@@ -1645,6 +1670,10 @@ export default {
                 this.workExperience
               );
               formData.append(
+                this.documentTypes[28].documentType.code,
+                this.workExperience2
+              );
+              formData.append(
                 this.documentTypes[5].documentType.code,
                 this.englishLanguage
               );
@@ -1791,6 +1820,10 @@ export default {
         formData.append(
           this.documentTypes[4].documentType.code,
           this.workExperience
+        );
+        formData.append(
+          this.documentTypes[28].documentType.code,
+          this.workExperience2
         );
         formData.append(
           this.documentTypes[5].documentType.code,

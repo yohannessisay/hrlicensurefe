@@ -240,6 +240,7 @@ export default {
     let coc3 = ref("");
     let educationDoc = ref([]);
     let workExperience = ref("");
+    let workExperience2 = ref("");
     let professionalLicense = ref("");
     let letterfromOrg = ref("");
     let renewedLicense = ref("");
@@ -335,6 +336,7 @@ export default {
     coc3 = store.getters["newlicense/getCoc3"];
     educationDoc = store.getters["newlicense/getEducationalDocuments"];
     workExperience = store.getters["newlicense/getWorkExperience"];
+    workExperience2 = store.getters["newlicense/getWorkExperience2"];
     renewedLicense = store.getters["newlicense/getRenewedLicense"];
     professionalLicense = store.getters["newlicense/getProfessionalLicense"];
     letterfromOrg = store.getters["newlicense/getLetterfromOrg"];
@@ -439,6 +441,7 @@ export default {
               healthExamFile.value
             );
             formData.append(documentSpecs[4].documentType.code, workExperience);
+            formData.append(documentSpecs[28].documentType.code, workExperience2);
             formData.append(
               documentSpecs[5].documentType.code,
               englishLanguage

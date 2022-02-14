@@ -409,10 +409,12 @@ export default {
     const submit = () => {
       emit("changeActiveState");
       store.dispatch("newlicense/setWorkExperience", workExperienceFile);
+      store.dispatch("newlicense/setWorkExperience2", workExperienceFile2);
     };
     const submitBack = () => {
       emit("changeActiveStateMinus");
       store.dispatch("newlicense/setWorkExperience", workExperienceFile);
+      store.dispatch("newlicense/setWorkExperience2", workExperienceFile2);
     };
     buttons = store.getters["newlicense/getButtons"];
     documentSpecs = store.getters["newlicense/getDocumentSpec"];
@@ -456,6 +458,10 @@ export default {
               formData.append(
                 documentSpecs[4].documentType.code,
                 workExperienceFile.value
+              );
+              formData.append(
+                documentSpecs[28].documentType.code,
+                workExperienceFile2.value
               );
               let payload = { document: formData, id: licenseId };
               store
@@ -526,6 +532,10 @@ export default {
             formData.append(
               documentSpecs[4].documentType.code,
               workExperienceFile.value
+            );
+            formData.append(
+              documentSpecs[28].documentType.code,
+              workExperienceFile2.value
             );
             formData.append(
               documentSpecs[5].documentType.code,
@@ -628,6 +638,10 @@ export default {
                 documentSpecs[4].documentType.code,
                 workExperienceFile.value
               );
+              formData.append(
+                documentSpecs[28].documentType.code,
+                workExperienceFile2.value
+              );
               let payload = { document: formData, id: licenseId };
               store
                 .dispatch("newlicense/uploadDocuments", payload)
@@ -695,6 +709,10 @@ export default {
               documentSpecs[4].documentType.code,
               workExperienceFile.value
             );
+            formData.append(
+              documentSpecs[28].documentType.code,
+              workExperienceFile2.value
+            );
             let payload = { document: formData, id: licenseId };
             store
               .dispatch("newlicense/uploadDocuments", payload)
@@ -742,6 +760,7 @@ export default {
       maxFileSize.value = MAX_FILE_SIZE.MAX_FILE_SIZE;
       maxSizeMB.value = MAX_SIZE_MB.MAX_SIZE_MB;
       workExperienceBack = store.getters["newlicense/getWorkExperience"];
+      workExperienceBack2 = store.getters["newlicense/getWorkExperience2"];
       if (
         workExperienceBack &&
         workExperienceBack !== undefined &&
@@ -779,6 +798,35 @@ export default {
           }
         }
       }
+      if (
+        workExperienceBack2 &&
+        workExperienceBack2 !== undefined &&
+        workExperienceBack2 !== null &&
+        workExperienceBack2 !== ""
+      ) {
+        docCount.value++;
+        showUpload2.value = false;
+        workExperienceFile2.value = workExperienceBack2;
+        let reader = new FileReader();
+        reader.addEventListener(
+          "load",
+          function() {
+            showPreview2.value = true;
+            filePreview2.value = reader.result;
+          },
+          false
+        );
+        if (workExperienceFile2.value) {
+          if (/\.(jpe?g|png|gif)$/i.test(workExperienceFile2.value.name)) {
+            isImage2.value = true;
+            reader.readAsDataURL(workExperienceFile2.value);
+          } else if (/\.(pdf)$/i.test(workExperienceFile2.value.name)) {
+            isImage2.value = false;
+            isPdf2.value = true;
+            reader.readAsDataURL(workExperienceFile2.value);
+          }
+        }
+      }
       declinedFields = store.getters["newlicense/getDeclinedFields"];
       acceptedFields = store.getters["newlicense/getAcceptedFields"];
       remark = store.getters["newlicense/getRemark"];
@@ -803,6 +851,18 @@ export default {
             workExperienceFile.value = draftData.documents[i];
             showPreview.value = true;
             filePreview.value = basePath + draftData.documents[i].filePath;
+          }
+          if (draftData.documents[i].documentTypeCode == "WE1") {
+            docCount.value++;
+            showUpload2.value = false;
+            if (draftData.documents[i].fileName.split(".")[1] == "pdf") {
+              isPdf2.value = true;
+            } else {
+              isImage2.value = true;
+            }
+            workExperienceFile2.value = draftData.documents[i];
+            showPreview2.value = true;
+            filePreview2.value = basePath + draftData.documents[i].filePath;
           }
         }
       }

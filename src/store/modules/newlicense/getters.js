@@ -11,6 +11,7 @@ export default {
     getCoc3: (state) => state.coc3,
     getEducationalDocuments: (state) => state.educationalDocuments,
     getWorkExperience: (state) => state.workExperience,
+    getWorkExperience2: (state) => state.workExperience2,
     getServiceFee: (state) => state.serviceFee,
     getLetterfromOrg: (state) => state.letterfromOrg,
     getRenewedLicense: (state) => state.renewedLicense,

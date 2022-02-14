@@ -588,6 +588,8 @@ export default {
       herqa: "",
       professionalDoc: [],
       coc: "",
+      coc2: "",
+      coc3: "",
       supportLetter: "",
       letterfromOrg: "",
       renewedLicense: "",
@@ -640,6 +642,8 @@ export default {
       getHerqa: "newlicense/getHerqa",
       getSupportLetter: "newlicense/getSupportLetter",
       getCoc: "newlicense/getCoc",
+      getCoc2: "newlicense/getCoc2",
+      getCoc3: "newlicense/getCoc3",
       getPayroll: "renewal/getPayroll",
       getDiploma: "newlicense/getDiploma",
       getTranscript: "newlicense/getTranscript",
@@ -972,6 +976,8 @@ export default {
     this.herqa = this.getHerqa;
     this.supportLetter = this.getSupportLetter;
     this.coc = this.getCoc;
+    this.coc2 = this.getCoc2;
+    this.coc3 = this.getCoc3;
     this.workExperience = this.getWorkExperience;
     this.letterfromOrg = this.getLetterfromOrg;
     this.renewedLicense = this.getRenewedLicense;
@@ -1389,6 +1395,8 @@ export default {
             }
 
             formData.append(this.documentSpec[9].documentType.code, this.coc);
+            formData.append(this.documentSpec[41].documentType.code, this.coc2);
+            formData.append(this.documentSpec[42].documentType.code, this.coc3);
             formData.append(
               this.documentSpec[10].documentType.code,
               this.certificateFile1

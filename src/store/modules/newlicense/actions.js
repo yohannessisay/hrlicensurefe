@@ -13,6 +13,7 @@ import {
     SET_COC3,
     SET_EDUCATIONAL_DOCUMENT,
     SET_WORK_EXPERIENCE,
+    SET_WORK_EXPERIENCE2,
     SET_LETTER_FROM_ORG,
     SET_RENEWED_LICENSE,
     SET_PROFESSIONAL_LICENSE,
@@ -83,6 +84,9 @@ export default {
     },
     setWorkExperience({ commit }, workExperience) {
         commit(SET_WORK_EXPERIENCE, workExperience);
+    },
+    setWorkExperience2({ commit }, workExperience2) {
+        commit(SET_WORK_EXPERIENCE2, workExperience2);
     },
     setServiceFee({ commit }, serviceFee) {
         commit(SET_SERVICE_FEE, serviceFee);

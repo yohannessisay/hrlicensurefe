@@ -36,6 +36,7 @@ export default {
         coc3: "",
         educationalDocuments: [],
         workExperience: "",
+        workExperience2: "",
         serviceFee: "",
         letterfromOrg: "",
         payroll: "",
