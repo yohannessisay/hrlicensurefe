@@ -6,9 +6,6 @@
         <SideNav :display="menu" @changeDisplay="displaySet" />
       </div>
       <div class="menu">
-        <div>
-          <!-- <FlashMessage/> -->
-        </div>
         <div v-if="this.display == 0">
           <LicenseRequests />
         </div>
@@ -92,8 +89,11 @@ export default {
     this.$store.dispatch("newlicense/setHerqa", "");
     this.$store.dispatch("newlicense/setSupportLetter", "");
     this.$store.dispatch("newlicense/setCOC", "");
+    this.$store.dispatch("newlicense/setCOC2", "");
+    this.$store.dispatch("newlicense/setCOC3", "");
     this.$store.dispatch("newlicense/setEducationalDocument", []);
     this.$store.dispatch("newlicense/setWorkExperience", "");
+    this.$store.dispatch("newlicense/setWorkExperience2", "");
     this.$store.dispatch("newlicense/setServiceFee", "");
     this.$store.dispatch("newlicense/setLetterfromOrg", "");
     this.$store.dispatch("newlicense/setRenewedLicense", "");
