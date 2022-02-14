@@ -310,6 +310,8 @@ export default {
     let renewedLicense = ref("");
     let payroll = ref("");
     let coc = ref("");
+    let coc2 = ref("");
+    let coc3 = ref("");
     let diploma = ref("");
     let transcript = ref("");
     let transcript2 = ref("");
@@ -447,6 +449,8 @@ export default {
     letterfromOrg = store.getters["newlicense/getLetterfromOrg"];
     payroll = store.getters["newlicense/getPayroll"];
     coc = store.getters["newlicense/getCoc"];
+    coc2 = store.getters["newlicense/getCoc2"];
+    coc3 = store.getters["newlicense/getCoc3"];
     diploma = store.getters["newlicense/getDiploma"];
     degree = store.getters["newlicense/getDegree"];
     transcript = store.getters["newlicense/getTranscript"];
@@ -556,6 +560,8 @@ export default {
             formData.append(documentSpecs[23].documentType.code, transcript);
             formData.append(documentSpecs[52].documentType.code, transcript2);
             formData.append(documentSpecs[9].documentType.code, coc);
+            formData.append(documentSpecs[41].documentType.code, coc2);
+            formData.append(documentSpecs[42].documentType.code, coc3);
             formData.append(documentSpecs[21].documentType.code, degree);
             if (professionalDoc != undefined) {
               formData.append(

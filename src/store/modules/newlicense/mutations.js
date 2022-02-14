@@ -7,6 +7,8 @@ import {
     SET_HERQA,
     SET_SUPPORT_LETTER,
     SET_COC,
+    SET_COC2,
+    SET_COC3,
     SET_EDUCATIONAL_DOCUMENT,
     SET_WORK_EXPERIENCE,
     SET_SERVICE_FEE,
@@ -68,6 +70,12 @@ export default {
     },
     [SET_COC](state, coc) {
         state.coc = coc;
+    },
+    [SET_COC2](state, coc2) {
+        state.coc2 = coc2;
+    },
+    [SET_COC3](state, coc3) {
+        state.coc3 = coc3;
     },
     [SET_EDUCATIONAL_DOCUMENT](state, educationalDocuments) {
         state.educationalDocuments = educationalDocuments;

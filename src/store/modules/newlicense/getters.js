@@ -7,6 +7,8 @@ export default {
     getHerqa: (state) => state.herqa,
     getSupportLetter: (state) => state.supportLetter,
     getCoc: (state) => state.coc,
+    getCoc2: (state) => state.coc2,
+    getCoc3: (state) => state.coc3,
     getEducationalDocuments: (state) => state.educationalDocuments,
     getWorkExperience: (state) => state.workExperience,
     getServiceFee: (state) => state.serviceFee,

@@ -375,6 +375,8 @@ export default {
     this.herqa = this.getHerqa;
     this.supportLetter = this.getSupportLetter;
     this.coc = this.getCoc;
+    this.coc3 = this.getCoc2;
+    this.coc2 = this.getCoc3;
     this.educationalDocs = this.getEducationalDocuments;
     this.workExperience = this.getWorkExperience;
     this.serviceFee = this.getServiceFee;
@@ -596,6 +598,38 @@ export default {
         this.coc.docFile = filePreview;
         this.coc.title = "COC";
         this.docList.push(this.coc);
+      }
+    }
+    if (this.coc2 != "" && this.coc2 != undefined) {
+      if ("name" in this.coc2) {
+        if (this.draftId != undefined) {
+          this.documentsArray.splice(
+            this.documentsArray.findIndex(
+              (e) => e.documentTypeCode === "COC 2"
+            ),
+            1
+          );
+        }
+        var filePreview = await this.blobToBase64(this.coc2);
+        this.coc2.docFile = filePreview;
+        this.coc2.title = "COC 2";
+        this.docList.push(this.coc2);
+      }
+    }
+    if (this.coc3 != "" && this.coc3 != undefined) {
+      if ("name" in this.coc3) {
+        if (this.draftId != undefined) {
+          this.documentsArray.splice(
+            this.documentsArray.findIndex(
+              (e) => e.documentTypeCode === "COC 3"
+            ),
+            1
+          );
+        }
+        var filePreview = await this.blobToBase64(this.coc3);
+        this.coc3.docFile = filePreview;
+        this.coc3.title = "COC 3";
+        this.docList.push(this.coc3);
       }
     }
     if (this.workExperience != "" && this.workExperience != undefined) {
@@ -896,6 +930,8 @@ export default {
     herqa: "",
     supportLetter: "",
     coc: "",
+    coc2: "",
+    coc3: "",
     educationalDocs: [],
     workExperience: "",
     letterfromOrg: "",
@@ -951,6 +987,8 @@ export default {
       getHerqa: "newlicense/getHerqa",
       getSupportLetter: "newlicense/getSupportLetter",
       getCoc: "newlicense/getCoc",
+      getCoc2: "newlicense/getCoc2",
+      getCoc3: "newlicense/getCoc3",
       getEducationalDocuments: "newlicense/getEducationalDocuments",
       getWorkExperience: "newlicense/getWorkExperience",
       getMasters: "newlicense/getMasters",
@@ -1319,6 +1357,14 @@ export default {
                 this.documentTypes[9].documentType.code,
                 this.coc
               );
+              formData.append(
+                this.documentTypes[41].documentType.code,
+                this.coc2
+              );
+              formData.append(
+                this.documentTypes[42].documentType.code,
+                this.coc3
+              );
               if (this.educationalDocs != undefined) {
                 formData.append(
                   this.documentTypes[10].documentType.code,
@@ -1447,6 +1493,8 @@ export default {
         }
 
         formData.append(this.documentTypes[9].documentType.code, this.coc);
+        formData.append(this.documentTypes[41].documentType.code, this.coc2);
+        formData.append(this.documentTypes[42].documentType.code, this.coc3);
         if (this.educationalDocs != undefined) {
           formData.append(
             this.documentTypes[10].documentType.code,
@@ -1640,6 +1688,14 @@ export default {
                 this.documentTypes[9].documentType.code,
                 this.coc
               );
+              formData.append(
+                this.documentTypes[41].documentType.code,
+                this.coc2
+              );
+              formData.append(
+                this.documentTypes[42].documentType.code,
+                this.coc3
+              );
               if (this.educationalDocs != undefined) {
                 formData.append(
                   this.documentTypes[10].documentType.code,
@@ -1768,6 +1824,8 @@ export default {
         }
 
         formData.append(this.documentTypes[9].documentType.code, this.coc);
+        formData.append(this.documentTypes[41].documentType.code, this.coc2);
+        formData.append(this.documentTypes[42].documentType.code, this.coc3);
         if (this.educationalDocs != undefined) {
           formData.append(
             this.documentTypes[10].documentType.code,

@@ -9,6 +9,8 @@ import {
     SET_HERQA,
     SET_SUPPORT_LETTER,
     SET_COC,
+    SET_COC2,
+    SET_COC3,
     SET_EDUCATIONAL_DOCUMENT,
     SET_WORK_EXPERIENCE,
     SET_LETTER_FROM_ORG,
@@ -69,6 +71,12 @@ export default {
     },
     setCOC({ commit }, coc) {
         commit(SET_COC, coc);
+    },
+    setCOC2({ commit }, coc2) {
+        commit(SET_COC2, coc2);
+    },
+    setCOC3({ commit }, coc3) {
+        commit(SET_COC3, coc3);
     },
     setEducationalDocument({ commit }, educationalDoc) {
         commit(SET_EDUCATIONAL_DOCUMENT, educationalDoc);

@@ -234,6 +234,8 @@ export default {
     let herqa = ref("");
     let englishLanguage = ref("");
     let coc = ref("");
+    let coc2 = ref("");
+    let coc3 = ref("");
     let educationDoc = ref([]);
     let workExperience = ref("");
     let professionalLicense = ref("");
@@ -324,6 +326,8 @@ export default {
     herqa = store.getters["newlicense/getHerqa"];
     healthExamCert = store.getters["newlicense/getHealthExamCert"];
     coc = store.getters["newlicense/getCoc"];
+    coc2 = store.getters["newlicense/getCoc2"];
+    coc3 = store.getters["newlicense/getCoc3"];
     educationDoc = store.getters["newlicense/getEducationalDocuments"];
     workExperience = store.getters["newlicense/getWorkExperience"];
     renewedLicense = store.getters["newlicense/getRenewedLicense"];
@@ -451,6 +455,8 @@ export default {
               );
             }
             formData.append(documentSpecs[9].documentType.code, coc);
+            formData.append(documentSpecs[41].documentType.code, coc2);
+            formData.append(documentSpecs[42].documentType.code, coc3);
             if (educationDoc != undefined) {
               formData.append(
                 documentSpecs[10].documentType.code,

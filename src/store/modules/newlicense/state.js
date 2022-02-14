@@ -32,6 +32,8 @@ export default {
         herqa: "",
         supportLetter: "",
         coc: "",
+        coc2: "",
+        coc3: "",
         educationalDocuments: [],
         workExperience: "",
         serviceFee: "",
