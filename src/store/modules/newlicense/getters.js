@@ -21,6 +21,7 @@ export default {
     getTranscript2: (state) => state.transcript2,
     getDiploma: (state) => state.diploma,
     getProfessionalLicense: (state) => state.professionalLicense,
+    getProfessionalLicense2: (state) => state.professionalLicense2,
     getProCertificate: (state) => state.proCertificate,
     getProTranscript: (state) => state.proTranscript,
     getProDiploma: (state) => state.proDiploma,

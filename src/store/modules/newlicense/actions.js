@@ -17,6 +17,7 @@ import {
     SET_LETTER_FROM_ORG,
     SET_RENEWED_LICENSE,
     SET_PROFESSIONAL_LICENSE,
+    SET_PROFESSIONAL_LICENSE2,
     SET_PAYROLL,
     SET_DEGREE,
     SET_TRANSCRIPT,
@@ -99,6 +100,9 @@ export default {
     },
     setProfessionalLicense({ commit }, license) {
         commit(SET_PROFESSIONAL_LICENSE, license);
+    },
+    setProfessionalLicense2({ commit }, license2) {
+        commit(SET_PROFESSIONAL_LICENSE2, license2);
     },
     setPayroll({ commit }, payroll) {
         commit(SET_PAYROLL, payroll);

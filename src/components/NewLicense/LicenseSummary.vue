@@ -384,6 +384,7 @@ export default {
     this.letterfromOrg = this.getLetterfromOrg;
     this.renewedLicense = this.getRenewedLicense;
     this.professionalLicense = this.getProfessionalLicense;
+    this.professionalLicense2 = this.getProfessionalLicense2;
     this.diploma = this.getDiploma;
     this.transcript = this.getTranscript;
     this.transcript2 = this.getTranscript2;
@@ -724,6 +725,26 @@ export default {
         this.docList.push(this.professionalLicense);
       }
     }
+    if (
+      this.professionalLicense2 != "" &&
+      this.professionalLicense2 != undefined
+    ) {
+      if ("name" in this.professionalLicense2) {
+        if (this.draftId != undefined) {
+          this.documentsArray.splice(
+            this.documentsArray.findIndex(
+              (e) => e.documentTypeCode === "APLFCO1"
+            ),
+            1
+          );
+        }
+        var filePreview = await this.blobToBase64(this.professionalLicense2);
+        this.professionalLicense2.docFile = filePreview;
+        this.professionalLicense2.title =
+          "Authenticated Professional License 2";
+        this.docList.push(this.professionalLicense2);
+      }
+    }
     if (this.diploma != "" && this.diploma != undefined) {
       if ("name" in this.diploma) {
         if (this.draftId != undefined) {
@@ -953,6 +974,7 @@ export default {
     letterfromOrg: "",
     renewedLicense: "",
     professionalLicense: "",
+    professionalLicense2: "",
     degree: "",
     diploma: "",
     transcript: "",
@@ -1022,6 +1044,7 @@ export default {
       getLetterfromOrg: "newlicense/getLetterfromOrg",
       getRenewedLicense: "newlicense/getRenewedLicense",
       getProfessionalLicense: "newlicense/getProfessionalLicense",
+      getProfessionalLicense2: "newlicense/getProfessionalLicense2",
       getDiploma: "newlicense/getDiploma",
       getTranscript: "newlicense/getTranscript",
       getTranscript2: "newlicense/getTranscript2",
@@ -1430,6 +1453,10 @@ export default {
                 this.professionalLicense
               );
               formData.append(
+                this.documentTypes[52].documentType.code,
+                this.professionalLicense2
+              );
+              formData.append(
                 this.documentTypes[24].documentType.code,
                 this.masters
               );
@@ -1559,6 +1586,10 @@ export default {
         formData.append(
           this.documentTypes[19].documentType.code,
           this.professionalLicense
+        );
+        formData.append(
+          this.documentTypes[52].documentType.code,
+          this.professionalLicense2
         );
         formData.append(this.documentTypes[24].documentType.code, this.masters);
         formData.append(
@@ -1769,6 +1800,10 @@ export default {
                 this.professionalLicense
               );
               formData.append(
+                this.documentTypes[52].documentType.code,
+                this.professionalLicense2
+              );
+              formData.append(
                 this.documentTypes[24].documentType.code,
                 this.masters
               );
@@ -1898,6 +1933,10 @@ export default {
         formData.append(
           this.documentTypes[19].documentType.code,
           this.professionalLicense
+        );
+        formData.append(
+          this.documentTypes[52].documentType.code,
+          this.professionalLicense2
         );
         formData.append(this.documentTypes[24].documentType.code, this.masters);
         formData.append(

@@ -16,6 +16,7 @@ import {
     SET_LETTER_FROM_ORG,
     SET_RENEWED_LICENSE,
     SET_PROFESSIONAL_LICENSE,
+    SET_PROFESSIONAL_LICENSE2,
     SET_BUTTONS,
     SET_APPLICATION_ID,
     SET_DOCUMENT_SPEC,
@@ -98,6 +99,9 @@ export default {
     },
     [SET_PROFESSIONAL_LICENSE](state, license) {
         state.professionalLicense = license;
+    },
+    [SET_PROFESSIONAL_LICENSE2](state, license2) {
+        state.professionalLicense2 = license2;
     },
     [SET_PRO_CERTIFICATE](state, proCertificate) {
         state.proCertificate = proCertificate;

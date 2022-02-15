@@ -396,6 +396,7 @@ export default {
       letterfromOrg: "",
       renewedLicense: "",
       professionalLicense: "",
+      professionalLicense2: "",
       payroll: "",
       diploma: "",
       transcript: "",
@@ -448,6 +449,7 @@ export default {
       getRenewedLicense: "newlicense/getRenewedLicense",
       getPayroll: "renewal/getPayroll",
       getProfessionalLicense: "newlicense/getProfessionalLicense",
+      getProfessionalLicense2: "newlicense/getProfessionalLicense2",
       getDiploma: "newlicense/getDiploma",
       getTranscript: "newlicense/getTranscript",
       getDegree: "newlicense/getDegree",
@@ -664,6 +666,7 @@ export default {
     this.letterfromOrg = this.getLetterfromOrg;
     this.renewedLicense = this.getRenewedLicense;
     this.professionalLicense = this.getProfessionalLicense;
+    this.professionalLicense2 = this.getProfessionalLicense2;
     this.payroll = this.getPayroll;
     this.diploma = this.getDiploma;
     this.transcript = this.getTranscript;
@@ -968,6 +971,10 @@ export default {
             formData.append(
               this.documentSpec[19].documentType.code,
               this.professionalLicense
+            );
+             formData.append(
+              this.documentSpec[52].documentType.code,
+              this.professionalLicense2
             );
             formData.append(
               this.documentSpec[20].documentType.code,

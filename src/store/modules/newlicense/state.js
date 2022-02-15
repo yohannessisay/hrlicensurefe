@@ -42,6 +42,7 @@ export default {
         payroll: "",
         renewedLicense: "",
         professionalLicense: "",
+        professionalLicense2: "",
         degree: "",
         transcript: "",
         transcript2: "",

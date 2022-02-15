@@ -416,10 +416,12 @@ export default {
     const submit = () => {
       emit("changeActiveState");
       store.dispatch("newlicense/setProfessionalLicense", letterFile);
+      store.dispatch("newlicense/setProfessionalLicense2", letterFile2);
     };
     const submitBack = () => {
       emit("changeActiveStateMinus");
       store.dispatch("newlicense/setProfessionalLicense", letterFile);
+      store.dispatch("newlicense/setProfessionalLicense2", letterFile2);
     };
     buttons = store.getters["newlicense/getButtons"];
     documentSpecs = store.getters["newlicense/getDocumentSpec"];
@@ -465,7 +467,10 @@ export default {
                 documentSpecs[19].documentType.code,
                 letterFile.value
               );
-
+              formData.append(
+                documentSpecs[52].documentType.code,
+                letterFile2.value
+              );
               let payload = { document: formData, id: licenseId };
               store
                 .dispatch("newlicense/uploadDocuments", payload)
@@ -533,7 +538,10 @@ export default {
             formData.append(documentSpecs[1].documentType.code, passport);
             formData.append(documentSpecs[2].documentType.code, healthExamCert);
             formData.append(documentSpecs[4].documentType.code, workExperience);
-            formData.append(documentSpecs[28].documentType.code, workExperience2);
+            formData.append(
+              documentSpecs[28].documentType.code,
+              workExperience2
+            );
             formData.append(
               documentSpecs[5].documentType.code,
               englishLanguage
@@ -590,6 +598,10 @@ export default {
               documentSpecs[19].documentType.code,
               letterFile.value
             );
+            formData.append(
+              documentSpecs[52].documentType.code,
+              letterFile2.value
+            );
             formData.append(documentSpecs[20].documentType.code, payroll);
             formData.append(documentSpecs[24].documentType.code, masters);
             formData.append(
@@ -635,6 +647,10 @@ export default {
               formData.append(
                 documentSpecs[19].documentType.code,
                 letterFile.value
+              );
+              formData.append(
+                documentSpecs[52].documentType.code,
+                letterFile2.value
               );
               let payload = { document: formData, id: licenseId };
               store
@@ -704,6 +720,10 @@ export default {
               documentSpecs[19].documentType.code,
               letterFile.value
             );
+            formData.append(
+              documentSpecs[52].documentType.code,
+              letterFile2.value
+            );
             let payload = { document: formData, id: licenseId };
             store
               .dispatch("newlicense/uploadDocuments", payload)
@@ -751,6 +771,7 @@ export default {
       maxFileSize.value = MAX_FILE_SIZE.MAX_FILE_SIZE;
       maxSizeMB.value = MAX_SIZE_MB.MAX_SIZE_MB;
       letterFileBack = store.getters["newlicense/getProfessionalLicense"];
+      letterFileBack2 = store.getters["newlicense/getProfessionalLicense2"];
       if (
         letterFileBack &&
         letterFileBack !== undefined &&
@@ -788,6 +809,34 @@ export default {
           }
         }
       }
+      if (
+        letterFileBack2 &&
+        letterFileBack2 !== undefined &&
+        letterFileBack2 !== null &&
+        letterFileBack2 !== ""
+      ) {
+        showUpload2.value = false;
+        letterFile2.value = letterFileBack2;
+        let reader = new FileReader();
+        reader.addEventListener(
+          "load",
+          function() {
+            showPreview2.value = true;
+            filePreview2.value = reader.result;
+          },
+          false
+        );
+        if (letterFile2.value) {
+          if (/\.(jpe?g|png|gif)$/i.test(letterFile2.value.name)) {
+            isImage2.value = true;
+            reader.readAsDataURL(letterFile2.value);
+          } else if (/\.(pdf)$/i.test(letterFile2.value.name)) {
+            isImage2.value = false;
+            isPdf2.value = true;
+            reader.readAsDataURL(letterFile2.value);
+          }
+        }
+      }
       declinedFields = store.getters["newlicense/getDeclinedFields"];
       acceptedFields = store.getters["newlicense/getAcceptedFields"];
       remark = store.getters["newlicense/getRemark"];
@@ -812,6 +861,17 @@ export default {
             letterFile.value = draftData.documents[i];
             showPreview.value = true;
             filePreview.value = basePath + draftData.documents[i].filePath;
+          }
+          if (draftData.documents[i].documentTypeCode == "APLFCO1") {
+            showUpload2.value = false;
+            if (draftData.documents[i].fileName.split(".")[1] == "pdf") {
+              isPdf2.value = true;
+            } else {
+              isImage2.value = true;
+            }
+            letterFile2.value = draftData.documents[i];
+            showPreview2.value = true;
+            filePreview2.value = basePath + draftData.documents[i].filePath;
           }
         }
       }
