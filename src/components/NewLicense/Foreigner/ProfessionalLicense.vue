@@ -815,6 +815,7 @@ export default {
         letterFileBack2 !== null &&
         letterFileBack2 !== ""
       ) {
+        docCount.value++;
         showUpload2.value = false;
         letterFile2.value = letterFileBack2;
         let reader = new FileReader();
@@ -863,6 +864,7 @@ export default {
             filePreview.value = basePath + draftData.documents[i].filePath;
           }
           if (draftData.documents[i].documentTypeCode == "APLFCO1") {
+            docCount.value++;
             showUpload2.value = false;
             if (draftData.documents[i].fileName.split(".")[1] == "pdf") {
               isPdf2.value = true;
