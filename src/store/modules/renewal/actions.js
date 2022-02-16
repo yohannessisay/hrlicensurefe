@@ -4,6 +4,7 @@ import {
     SET_RENEWAL_HEALTH_EXAM_CERT,
     SET_RENEWAL_LETTER,
     SET_RENEWAL_WORK_EXPERIENCE,
+    SET_RENEWAL_WORK_EXPERIENCE2,
     SET_RENEWAL_SERVICE_FEE,
     SET_RENEWAL_CPD,
     SET_RENEWAL_CPD2,
@@ -82,6 +83,9 @@ export default {
     },
     setRenewalWorkExperience({ commit }, renewalWorkExperience) {
         commit(SET_RENEWAL_WORK_EXPERIENCE, renewalWorkExperience);
+    },
+    setRenewalWorkExperience2({ commit }, renewalWorkExperience2) {
+        commit(SET_RENEWAL_WORK_EXPERIENCE2, renewalWorkExperience2);
     },
     setPreviousLicense({ commit }, license) {
         commit(SET_PREVIOUS_LICEENSE, license);

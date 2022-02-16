@@ -16,6 +16,7 @@ export default {
         paymentSlip: null,
         healthExamCert: "",
         workExperience: "",
+        workExperience2: "",
         letterFromHiringInstitution: "",
         professionalDocuments: [],
         certificate: "",

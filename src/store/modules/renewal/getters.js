@@ -8,6 +8,7 @@ export default {
     getRenewalCpd4: (state) => state.cpd4,
     getRenewalCpd5: (state) => state.cpd5,
     getRenewalWorkExperience: (state) => state.workExperience,
+    getRenewalWorkExperience2: (state) => state.workExperience2,
     getRenewalLicense: (state) => state.letterFromHiringInstitution,
     getProfessionalDocuments: (state) => state.professionalDocuments,
     getCertificate: (state) => state.certificate,

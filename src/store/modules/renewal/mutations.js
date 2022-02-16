@@ -3,6 +3,7 @@ import {
     SET_RENEWAL_HEALTH_EXAM_CERT,
     SET_RENEWAL_LETTER,
     SET_RENEWAL_WORK_EXPERIENCE,
+    SET_RENEWAL_WORK_EXPERIENCE2,
     SET_RENEWAL_SERVICE_FEE,
     SET_RENEWAL_CPD,
     SET_RENEWAL_CPD2,
@@ -82,6 +83,9 @@ export default {
     },
     [SET_RENEWAL_WORK_EXPERIENCE](state, renewalWorkExperience) {
         state.workExperience = renewalWorkExperience;
+    },
+    [SET_RENEWAL_WORK_EXPERIENCE2](state, renewalWorkExperience2) {
+        state.workExperience2 = renewalWorkExperience2;
     },
     [SET_CERTIFICATE](state, certificate) {
         state.certificate = certificate;
