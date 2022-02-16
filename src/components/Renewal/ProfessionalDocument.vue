@@ -377,6 +377,10 @@ export default {
       healthExamCert: "",
       workExperience: "",
       cpd: "",
+      cpd2: "",
+      cpd3: "",
+      cpd4: "",
+      cpd5: "",
       herqa: "",
       previousLicense: "",
       supportLetter: "",
@@ -434,6 +438,10 @@ export default {
       getHealthExamCert: "renewal/getRenewalHealthExamCert",
       getWorkExperience: "renewal/getRenewalWorkExperience",
       getcpd: "renewal/getRenewalCpd",
+      getcpd2: "renewal/getRenewalCpd2",
+      getcpd3: "renewal/getRenewalCpd3",
+      getcpd4: "renewal/getRenewalCpd4",
+      getcpd5: "renewal/getRenewalCpd5",
       getHerqa: "renewal/getHerqa",
       getPreviousLicense: "renewal/getPreviousLicense",
       getSupportLetter: "renewal/getSupportLetter",
@@ -655,6 +663,10 @@ export default {
     this.healthExamCert = this.getHealthExamCert;
     this.workExperience = this.getWorkExperience;
     this.cpd = this.getcpd;
+    this.cpd2 = this.getcpd2;
+    this.cpd3 = this.getcpd3;
+    this.cpd4 = this.getcpd4;
+    this.cpd5 = this.getcpd5;
     this.herqa = this.getHerqa;
     this.previousLicense = this.getPreviousLicense;
     this.supportLetter = this.getSupportLetter;
@@ -916,6 +928,10 @@ export default {
               this.workExperience
             );
             formData.append(this.documentSpec[4].documentType.code, this.cpd);
+            formData.append(this.documentSpec[31].documentType.code, this.cpd2);
+            formData.append(this.documentSpec[32].documentType.code, this.cpd3);
+            formData.append(this.documentSpec[33].documentType.code, this.cpd4);
+            formData.append(this.documentSpec[34].documentType.code, this.cpd5);
             formData.append(this.documentSpec[18].documentTypeCode, this.herqa);
             formData.append(
               this.documentSpec[6].documentTypeCode,

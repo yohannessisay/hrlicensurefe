@@ -593,6 +593,10 @@ export default {
       workExperience: "",
       previousLicense: "",
       cpd: "",
+      cpd2: "",
+      cpd3: "",
+      cpd4: "",
+      cpd5: "",
       letterFromHiringOrganization: "",
       masters: "",
       mastersTranscript: "",
@@ -639,6 +643,10 @@ export default {
       getWorkExperience: "renewal/getRenewalWorkExperience",
       getPreviousLicense: "renewal/getPreviousLicense",
       getCpd: "renewal/getRenewalCpd",
+      getCpd2: "renewal/getRenewalCpd2",
+      getCpd3: "renewal/getRenewalCpd3",
+      getCpd4: "renewal/getRenewalCpd4",
+      getCpd5: "renewal/getRenewalCpd5",
       getLetterFromHiringInstitution: "renewal/getRenewalLicense",
       getMasters: "renewal/getMasters",
       getMastersTranscript: "renewal/getMastersTranscript",
@@ -964,6 +972,10 @@ export default {
     this.workExperience = this.getWorkExperience;
     this.previousLicense = this.getPreviousLicense;
     this.cpd = this.getCpd;
+    this.cpd2 = this.getCpd2;
+    this.cpd3 = this.getCpd3;
+    this.cpd4 = this.getCpd4;
+    this.cpd5 = this.getCpd5;
     this.letterFromHiringOrganization = this.getLetterFromHiringInstitution;
     this.masters = this.getMasters;
     this.mastersTranscript = this.getMastersTranscript;
@@ -1364,6 +1376,10 @@ export default {
               this.previousLicense
             );
             formData.append(this.documentSpec[4].documentType.code, this.cpd);
+            formData.append(this.documentSpec[31].documentType.code, this.cpd2);
+            formData.append(this.documentSpec[32].documentType.code, this.cpd3);
+            formData.append(this.documentSpec[33].documentType.code, this.cpd4);
+            formData.append(this.documentSpec[34].documentType.code, this.cpd5);
             formData.append(
               this.documentSpec[19].documentType.code,
               this.letterFromHiringOrganization

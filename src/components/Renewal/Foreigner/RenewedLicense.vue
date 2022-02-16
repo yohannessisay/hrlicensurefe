@@ -240,6 +240,10 @@ export default {
     let previousLicense = ref("");
     let professionalLicense = ref("");
     let cpd = ref("");
+    let cpd2 = ref("");
+    let cpd3 = ref("");
+    let cpd4 = ref("");
+    let cpd5 = ref("");
 
     let declinedFields = ref([]);
     let acceptedFields = ref([]);
@@ -320,6 +324,10 @@ export default {
     previousLicense = store.getters["renewal/getPreviousLicense"];
     professionalLicense = store.getters["renewal/getProfessionalLicense"];
     cpd = store.getters["renewal/getRenewalCpd"];
+    cpd2 = store.getters["renewal/getRenewalCpd2"];
+    cpd3 = store.getters["renewal/getRenewalCpd3"];
+    cpd4 = store.getters["renewal/getRenewalCpd4"];
+    cpd5 = store.getters["renewal/getRenewalCpd5"];
     letterOrg = store.getters["renewal/getLetterfromOrg"];
 
     const draft = (action) => {
@@ -423,6 +431,10 @@ export default {
             }
             formData.append(documentSpecs[5].documentType.code, workExperience);
             formData.append(documentSpecs[4].documentType.code, cpd);
+            formData.append(documentSpecs[31].documentType.code, cpd2);
+            formData.append(documentSpecs[32].documentType.code, cpd3);
+            formData.append(documentSpecs[33].documentType.code, cpd4);
+            formData.append(documentSpecs[34].documentType.code, cpd5);
             formData.append(
               documentSpecs[7].documentType.code,
               englishLanguage
