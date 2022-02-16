@@ -453,6 +453,7 @@ export default {
     let supportLetter = ref("");
     let transcript = ref("");
     let workExperience = ref("");
+    let workExperience2 = ref("");
     let previousLicense = ref("");
     let cpd = ref("");
     let letterFromHiringManager = ref("");
@@ -681,6 +682,7 @@ export default {
     supportLetter = store.getters["renewal/getSupportLetter"];
     transcript = store.getters["renewal/getTranscript"];
     workExperience = store.getters["renewal/getRenewalWorkExperience"];
+    workExperience2 = store.getters["renewal/getRenewalWorkExperience2"];
     previousLicense = store.getters["renewal/getPreviousLicense"];
     cpd = store.getters["renewal/getRenewalCpd"];
     letterFromHiringManager = store.getters["renewal/getRenewalLicense"];
@@ -1080,6 +1082,7 @@ export default {
             formData.append(documentSpecs[17].documentType.code, supportLetter);
             formData.append(documentSpecs[26].documentType.code, transcript);
             formData.append(documentSpecs[5].documentType.code, workExperience);
+            formData.append(documentSpecs[35].documentType.code, workExperience2);
             formData.append(
               documentSpecs[6].documentType.code,
               previousLicense

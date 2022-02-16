@@ -244,6 +244,7 @@ export default {
     let cpd5 = ref("");
     let letterFromHiringManager = ref("");
     let workExperience = ref("");
+    let workExperience2 = ref("");
 
     let message = ref({
       showFlash: false,
@@ -326,6 +327,7 @@ export default {
     cpd5 = store.getters["renewal/getRenewalCpd5"];
     letterFromHiringManager = store.getters["renewal/getRenewalLicense"];
     workExperience = store.getters["renewal/getRenewalWorkExperience"];
+    workExperience2 = store.getters["renewal/getRenewalWorkExperience2"];
 
     const draft = (action) => {
       message.value.showLoading = true;
@@ -446,6 +448,7 @@ export default {
               letterFromHiringManager
             );
             formData.append(documentSpecs[5].documentType.code, workExperience);
+            formData.append(documentSpecs[35].documentType.code, workExperience2);
 
             let payload = { document: formData, id: licenseId };
             store

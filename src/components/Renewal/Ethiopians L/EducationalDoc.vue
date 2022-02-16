@@ -591,6 +591,7 @@ export default {
       supportLetter: "",
       transcript: "",
       workExperience: "",
+      workExperience2: "",
       previousLicense: "",
       cpd: "",
       cpd2: "",
@@ -641,6 +642,7 @@ export default {
       getSupportLetter: "renewal/getSupportLetter",
       getTranscript: "renewal/getTranscript",
       getWorkExperience: "renewal/getRenewalWorkExperience",
+      getWorkExperience2: "renewal/getRenewalWorkExperience2",
       getPreviousLicense: "renewal/getPreviousLicense",
       getCpd: "renewal/getRenewalCpd",
       getCpd2: "renewal/getRenewalCpd2",
@@ -970,6 +972,7 @@ export default {
     this.supportLetter = this.getSupportLetter;
     this.transcript = this.getTranscript;
     this.workExperience = this.getWorkExperience;
+    this.workExperience2 = this.getWorkExperience2;
     this.previousLicense = this.getPreviousLicense;
     this.cpd = this.getCpd;
     this.cpd2 = this.getCpd2;
@@ -1370,6 +1373,10 @@ export default {
             formData.append(
               this.documentSpec[5].documentType.code,
               this.workExperience
+            );
+            formData.append(
+              this.documentSpec[35].documentType.code,
+              this.workExperience2
             );
             formData.append(
               this.documentSpec[6].documentType.code,

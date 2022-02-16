@@ -452,6 +452,7 @@ export default {
     let cpd = ref("");
     let letterFromHiringManager = ref("");
     let workExperience = ref("");
+    let workExperience2 = ref("");
 
     let docCount = ref(0);
 
@@ -680,6 +681,7 @@ export default {
     cpd = store.getters["renewal/getRenewalCpd"];
     letterFromHiringManager = store.getters["renewal/getRenewalLicense"];
     workExperience = store.getters["renewal/getRenewalWorkExperience"];
+    workExperience2 = store.getters["renewal/getRenewalWorkExperience2"];
 
     const submit = () => {
       emit("changeActiveState");
@@ -1085,6 +1087,7 @@ export default {
               letterFromHiringManager
             );
             formData.append(documentSpecs[5].documentType.code, workExperience);
+            formData.append(documentSpecs[35].documentType.code, workExperience2);
 
             let payload = { document: formData, id: licenseId };
             store

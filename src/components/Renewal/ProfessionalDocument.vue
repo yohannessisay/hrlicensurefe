@@ -376,6 +376,7 @@ export default {
       passport: "",
       healthExamCert: "",
       workExperience: "",
+      workExperience2: "",
       cpd: "",
       cpd2: "",
       cpd3: "",
@@ -437,6 +438,7 @@ export default {
       getPassport: "renewal/getPassport",
       getHealthExamCert: "renewal/getRenewalHealthExamCert",
       getWorkExperience: "renewal/getRenewalWorkExperience",
+      getWorkExperience2: "renewal/getRenewalWorkExperience2",
       getcpd: "renewal/getRenewalCpd",
       getcpd2: "renewal/getRenewalCpd2",
       getcpd3: "renewal/getRenewalCpd3",
@@ -662,6 +664,7 @@ export default {
     this.passport = this.getPassport;
     this.healthExamCert = this.getHealthExamCert;
     this.workExperience = this.getWorkExperience;
+    this.workExperience2 = this.getWorkExperience2;
     this.cpd = this.getcpd;
     this.cpd2 = this.getcpd2;
     this.cpd3 = this.getcpd3;
@@ -926,6 +929,10 @@ export default {
             formData.append(
               this.documentSpec[5].documentType.code,
               this.workExperience
+            );
+              formData.append(
+              this.documentSpec[35].documentType.code,
+              this.workExperience2
             );
             formData.append(this.documentSpec[4].documentType.code, this.cpd);
             formData.append(this.documentSpec[31].documentType.code, this.cpd2);

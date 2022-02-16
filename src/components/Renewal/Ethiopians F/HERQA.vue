@@ -250,6 +250,7 @@ export default {
     let cpd5 = ref("");
     let letterFromHiringManager = ref("");
     let workExperience = ref("");
+    let workExperience2 = ref("");
 
     const reset = () => {
       showUpload.value = true;
@@ -327,6 +328,7 @@ export default {
 
     letterFromHiringManager = store.getters["renewal/getRenewalLicense"];
     workExperience = store.getters["renewal/getRenewalWorkExperience"];
+    workExperience2 = store.getters["renewal/getRenewalWorkExperience2"];
 
     const draft = (action) => {
       message.value.showLoading = true;
@@ -446,6 +448,7 @@ export default {
               letterFromHiringManager
             );
             formData.append(documentSpecs[5].documentType.code, workExperience);
+            formData.append(documentSpecs[35].documentType.code, workExperience2);
             store
               .dispatch("renewal/uploadDocuments", payload)
               .then((res) => {

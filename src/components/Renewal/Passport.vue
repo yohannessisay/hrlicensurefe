@@ -239,6 +239,7 @@ export default {
     let healthExamCert = ref("");
     let professionalDoc = [];
     let workExperience = ref("");
+    let workExperience2 = ref("");
     let cpd = ref("");
     let cpd2 = ref("");
     let cpd3 = ref("");
@@ -328,6 +329,7 @@ export default {
     healthExamCert = store.getters["renewal/getHealthExamCert"];
     professionalDoc = store.getters["renewal/getProfessionalDocuments"];
     workExperience = store.getters["renewal/getRenewalWorkExperience"];
+    workExperience2 = store.getters["renewal/getRenewalWorkExperience2"];
     cpd = store.getters["renewal/getRenewalCpd"];
     cpd2 = store.getters["renewal/getRenewalCpd2"];
     cpd3 = store.getters["renewal/getRenewalCpd3"];
@@ -456,6 +458,7 @@ export default {
               );
             }
             formData.append(documentSpecs[5].documentType.code, workExperience);
+            formData.append(documentSpecs[35].documentType.code, workExperience2);
             formData.append(documentSpecs[4].documentType.code, cpd);
             formData.append(documentSpecs[31].documentType.code, cpd2);
             formData.append(documentSpecs[32].documentType.code, cpd3);
