@@ -27,8 +27,7 @@
         <ul>
           <li>Passport</li>
           <li>Medical Certificate</li>
-          <li>Health Exam Certificate</li>
-          <div class="tooltip">
+            <div class="tooltip">
             English Language Proficiency Certificate
             <span class="tooltiptext ml-4">
               For non-English speaking countries only
@@ -36,9 +35,9 @@
           </div>
           <br/>
           <div class="tooltip">
-            Higher Education Relevance and Quality Agency center
+            Higher Education Relevance and Quality Agency
             <span class="tooltiptext ml-4">
-              HERQA
+              Equivalence Letter
             </span>
           </div>
           <li>Letter from Organization</li>
@@ -57,7 +56,7 @@
           </div>
           <br />
           <div class="tooltip">
-            Request Letter from Health Facility
+            Request Letter from hiring Health Facility
             <span class="tooltiptext ml-4">
               Found in Ethiopia
             </span>
@@ -93,12 +92,12 @@
           <li>
             8<sup>th</sup>, 10<sup>th</sup>, 12<sup>th</sup> Grade Certificate
           </li>
-          <li>9<sup>th</sup> - 10<sup>th</sup></li>
-          <li>11<sup>th</sup> - 12<sup>th</sup></li>
+          <li>9<sup>th</sup> - 10<sup>th</sup> Grade Transcript</li>
+          <li>11<sup>th</sup> - 12<sup>th</sup> Grade Transcript</li>
           <div class="tooltip">
             Payroll Document
             <span class="tooltiptext ml-4">
-              If private Institution Work Experience
+              Non-government Institutions
             </span>
           </div>
           <br />

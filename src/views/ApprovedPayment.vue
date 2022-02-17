@@ -12,7 +12,11 @@
           v-if="this.newlicense.length != 0"
           class=" mt-medium rounded ml-large"
         >
-          <div class="flex flex-wrap" v-for="i in this.newlicense.length" v-bind:key="i">
+          <div
+            class="flex flex-wrap"
+            v-for="i in this.newlicense.length"
+            v-bind:key="i"
+          >
             <div
               class="container mb-medium"
               v-for="item in this.newlicense.slice((i - 1) * 4, i * 4)"
@@ -52,12 +56,6 @@
                     <b>Certified: &nbsp;</b>No
                   </span>
                   <span
-                    v-if="item.reviewer != null || item.reviewer != undefined"
-                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                  >
-                    <b>Reviewer: &nbsp;</b>{{ item.reviewer.name }}
-                  </span>
-                  <span
                     class="
                       mt-medium
                       text-lightBlueB-500
@@ -87,7 +85,11 @@
           v-if="this.renewal.length != 0"
           class=" mt-medium rounded ml-large"
         >
-          <div class="flex flex-wrap" v-for="i in this.renewal.length" v-bind:key="i">
+          <div
+            class="flex flex-wrap"
+            v-for="i in this.renewal.length"
+            v-bind:key="i"
+          >
             <div
               class="container mb-medium"
               v-for="item in this.renewal.slice((i - 1) * 4, i * 4)"
@@ -125,12 +127,6 @@
                     class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
                     <b>Certified: &nbsp;</b>No
-                  </span>
-                  <span
-                    v-if="item.reviewer != null || item.reviewer != undefined"
-                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                  >
-                    <b>Reviewer: &nbsp;</b>{{ item.reviewer.name }}
                   </span>
                   <span
                     class="
@@ -286,12 +282,6 @@
                     class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
                     <b>Certified: &nbsp;</b>No
-                  </span>
-                  <span
-                    v-if="item.reviewer != null || item.reviewer != undefined"
-                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                  >
-                    <b>Reviewer: &nbsp;</b>{{ item.reviewer.name }}
                   </span>
                   <span
                     class="

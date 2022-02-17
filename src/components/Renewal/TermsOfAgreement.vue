@@ -26,13 +26,19 @@
         <h2>Foreigner</h2>
         <ul>
           <li>Health Exam Certificate</li>
-          <li>Letter from Hiring Organization</li>
+          <div class="tooltip">
+            Letter from Hiring Organization
+            <span class="tooltiptext ml-4">
+              Found in Ethiopia
+            </span>
+          </div>
+          <br />
           <li>Previous License</li>
-          <li>CPD</li>
+          <li>CPD Certificate</li>
           <li>Authenticated Professional Document Certificate</li>
           <li>Authenticated Professional Document Diploma</li>
           <li>Authenticated Professional Document Transcript</li>
-          <li>Authenticated Work Experience</li>
+          <li>Work Experience</li>
         </ul>
       </div>
       <div class="ml-8">
@@ -40,24 +46,24 @@
         <ul>
           <li>Health Exam Certificate</li>
           <li>Previous License</li>
-          <li>CPD</li>
+          <li>CPD Certificate</li>
           <li>Payroll Document</li>
           <li>Authenticated Professional Document Certificate</li>
           <li>Authenticated Professional Document Diploma</li>
           <li>Authenticated Professional Document Transcript</li>
-          <li>Authenticated Work Experience</li>
+          <li>Work Experience</li>
         </ul>
       </div>
       <div class="ml-8">
         <h2>Ethiopians from Abroad</h2>
         <ul>
           <li>Health Exam Certificate</li>
-          <li>CPD</li>
+          <li>CPD Certificate</li>
           <li>Previous License</li>
           <li>Authenticated Professional Document Certificate</li>
           <li>Authenticated Professional Document Diploma</li>
           <li>Authenticated Professional Document Transcript</li>
-          <li>Authenticated Work Experience</li>
+          <li>Work Experience</li>
         </ul>
       </div>
     </div>
@@ -101,5 +107,28 @@ export default {
   .card-wrapper {
     box-shadow: 0px 3px 6px #1e40af82;
   }
+}
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #1e40af82;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+
+  /* Position the tooltip text - see examples below! */
+  position: absolute;
+  z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted white; /* If you want dots under the hoverable text */
 }
 </style>
