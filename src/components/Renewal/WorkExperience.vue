@@ -27,7 +27,7 @@
         </h2>
         <TitleWithIllustration
           illustration="Certificate"
-          message="Authenticated Work Experience(3 to 4 years)"
+          message="Work Experience(3 to 4 years)"
           class="mt-8"
         />
         <span class="flex justify-center">{{ documentMessage }}</span>

@@ -2,9 +2,9 @@
   <div>
     <Navigation />
     <div
-      class="w-screen h-full pb-xl bg-lightBlueB-200 flex items-center justify-center"
+      class="h-full pb-xl bg-lightBlueB-200 flex items-center justify-center"
     >
-      <div class="w-screen max-w-4xl mt-medium">
+      <div class="max-w-4xl mt-medium">
         <div class="flex flex-col w-full rounded mb-large">
           <h2 class="flex justify-center pb-medium">
             Good standing
