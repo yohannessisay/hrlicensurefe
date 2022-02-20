@@ -13,22 +13,43 @@
           <div class="py-8">
             <div class="flex flex-row titile-container">
               <div class="ml-2 flex flex-row">
-                <div @click="fetchNewLicenseReport()" :class="selectedApplication.newLicense ? 'applicationType': ''">
+                <div
+                  @click="fetchNewLicenseReport()"
+                  :class="
+                    selectedApplication.newLicense ? 'applicationType' : ''
+                  "
+                >
                   <a class="text-2xl font-semibold leading-tight">
                     New License Report
                   </a>
                 </div>
-                <div @click="fetchRenewalReport()" class="ml-8"  :class="selectedApplication.renewal ? 'applicationType': ''">
+                <div
+                  @click="fetchRenewalReport()"
+                  class="ml-8"
+                  :class="selectedApplication.renewal ? 'applicationType' : ''"
+                >
                   <a class="text-2xl font-semibold leading-tight">
                     Renewal Report
                   </a>
                 </div>
-                <div @click="fetchVerificationReport()" class="ml-8" :class="selectedApplication.verification ? 'applicationType': ''">
+                <div
+                  @click="fetchVerificationReport()"
+                  class="ml-8"
+                  :class="
+                    selectedApplication.verification ? 'applicationType' : ''
+                  "
+                >
                   <a class="text-2xl font-semibold leading-tight">
                     Verification Report
                   </a>
                 </div>
-                <div @click="fetchGoodstandingReport()" class="ml-8" :class="selectedApplication.goodStanding ? 'applicationType': ''">
+                <div
+                  @click="fetchGoodstandingReport()"
+                  class="ml-8"
+                  :class="
+                    selectedApplication.goodStanding ? 'applicationType' : ''
+                  "
+                >
                   <a class="text-2xl font-semibold leading-tight">
                     Goodstanding Report
                   </a>
@@ -688,96 +709,109 @@ export default {
       renewal: false,
       goodStanding: false,
       verification: false,
-    })
-    let report = ref([{
-      name: "Eyosias",
-      fatherName: "Desta",
-      grandFatherName: "Langena",
-      dateOfBirth: "2002-01-25T09:55:23.494Z",
-      nationality: "Ethiopian",
-      gender: "Male",
-      applicant: {phoneNumber: "0990099909"},
-      professionalTypes: {name: "Medical Doctor"},
-      region: {name: "SNNPR"},
-      createdAt: "2022-01-25T09:55:23.494Z",
-      certifiedDate: null,
-      applicationStatus: {name: "Submitted"},
-      remark: null,
-      newLicenseCode: "NL099090",
-      renewalCode: null,
-      verificationCode: null,
-      goodStandingCode: null,
-      reviewer: {name: "Robel Ephraim RE"},
-      expertLevels: {name: "Regional"},
-      education: {department: {name: "Psychology"}, institution: {name: "AAU"}}
-
-    }, {
-      name: "Ermias",
-      fatherName: "Bitew",
-      grandFatherName: "Meles",
-      dateOfBirth: "2002-01-25T09:55:23.494Z",
-      nationality: "Ethiopian",
-      gender: "Male",
-      applicant: {phoneNumber: "0990099909"},
-      professionalTypes: {name: "Medical Doctor"},
-      region: {name: "SNNPR"},
-      createdAt: "2022-01-25T09:55:23.494Z",
-      certifiedDate: null,
-      applicationStatus: {name: "Submitted"},
-      remark: null,
-      newLicenseCode: "NL099090",
-      renewalCode: null,
-      verificationCode: null,
-      goodStandingCode: null,
-      reviewer: {name: "Robel Ephraim RE"},
-      expertLevels: {name: "Regional"},
-      education: {department: {name: "Psychology"}, institution: {name: "AAU"}}
-
-    }, {
-      name: "Robel",
-      fatherName: "Ephraim",
-      grandFatherName: "Abdisa",
-      dateOfBirth: "2002-01-25T09:55:23.494Z",
-      nationality: "Ethiopian",
-      gender: "Male",
-      applicant: {phoneNumber: "0990099909"},
-      professionalTypes: {name: "Medical Doctor"},
-      region: {name: "SNNPR"},
-      createdAt: "2022-01-25T09:55:23.494Z",
-      certifiedDate: null,
-      applicationStatus: {name: "Submitted"},
-      remark: null,
-      newLicenseCode: "NL099090",
-      renewalCode: null,
-      verificationCode: null,
-      goodStandingCode: null,
-      reviewer: {name: "Robel Ephraim RE"},
-      expertLevels: {name: "Regional"},
-      education: {department: {name: "Psychology"}, institution: {name: "AAU"}}
-
-    }, {
-      name: "Mahlet",
-      fatherName: "Samuel",
-      grandFatherName: "Akalu",
-      dateOfBirth: "2002-01-25T09:55:23.494Z",
-      nationality: "Ethiopian",
-      gender: "Female",
-      applicant: {phoneNumber: "0990099909"},
-      professionalTypes: {name: "Assistant nurse"},
-      region: {name: "Oromia"},
-      createdAt: "2022-01-25T09:55:23.494Z",
-      certifiedDate: null,
-      applicationStatus: {name: "Submitted"},
-      remark: null,
-      newLicenseCode: "NL099090",
-      renewalCode: null,
-      verificationCode: null,
-      goodStandingCode: null,
-      reviewer: {name: "Robel Ephraim RE"},
-      expertLevels: {name: "Regional"},
-      education: {department: {name: "Psychology"}, institution: {name: "AAU"}}
-
-    }]);
+    });
+    let report = ref([
+      {
+        name: "Eyosias",
+        fatherName: "Desta",
+        grandFatherName: "Langena",
+        dateOfBirth: "2002-01-25T09:55:23.494Z",
+        nationality: "Ethiopian",
+        gender: "Male",
+        applicant: { phoneNumber: "0990099909" },
+        professionalTypes: { name: "Medical Doctor" },
+        region: { name: "SNNPR" },
+        createdAt: "2022-01-25T09:55:23.494Z",
+        certifiedDate: null,
+        applicationStatus: { name: "Submitted" },
+        remark: null,
+        newLicenseCode: "NL099090",
+        renewalCode: null,
+        verificationCode: null,
+        goodStandingCode: null,
+        reviewer: { name: "Robel Ephraim RE" },
+        expertLevels: { name: "Regional" },
+        education: {
+          department: { name: "Psychology" },
+          institution: { name: "AAU" },
+        },
+      },
+      {
+        name: "Ermias",
+        fatherName: "Bitew",
+        grandFatherName: "Meles",
+        dateOfBirth: "2002-01-25T09:55:23.494Z",
+        nationality: "Ethiopian",
+        gender: "Male",
+        applicant: { phoneNumber: "0990099909" },
+        professionalTypes: { name: "Medical Doctor" },
+        region: { name: "SNNPR" },
+        createdAt: "2022-01-25T09:55:23.494Z",
+        certifiedDate: null,
+        applicationStatus: { name: "Submitted" },
+        remark: null,
+        newLicenseCode: "NL099090",
+        renewalCode: null,
+        verificationCode: null,
+        goodStandingCode: null,
+        reviewer: { name: "Robel Ephraim RE" },
+        expertLevels: { name: "Regional" },
+        education: {
+          department: { name: "Psychology" },
+          institution: { name: "AAU" },
+        },
+      },
+      {
+        name: "Robel",
+        fatherName: "Ephraim",
+        grandFatherName: "Abdisa",
+        dateOfBirth: "2002-01-25T09:55:23.494Z",
+        nationality: "Ethiopian",
+        gender: "Male",
+        applicant: { phoneNumber: "0990099909" },
+        professionalTypes: { name: "Medical Doctor" },
+        region: { name: "SNNPR" },
+        createdAt: "2022-01-25T09:55:23.494Z",
+        certifiedDate: null,
+        applicationStatus: { name: "Submitted" },
+        remark: null,
+        newLicenseCode: "NL099090",
+        renewalCode: null,
+        verificationCode: null,
+        goodStandingCode: null,
+        reviewer: { name: "Robel Ephraim RE" },
+        expertLevels: { name: "Regional" },
+        education: {
+          department: { name: "Psychology" },
+          institution: { name: "AAU" },
+        },
+      },
+      {
+        name: "Mahlet",
+        fatherName: "Samuel",
+        grandFatherName: "Akalu",
+        dateOfBirth: "2002-01-25T09:55:23.494Z",
+        nationality: "Ethiopian",
+        gender: "Female",
+        applicant: { phoneNumber: "0990099909" },
+        professionalTypes: { name: "Assistant nurse" },
+        region: { name: "Oromia" },
+        createdAt: "2022-01-25T09:55:23.494Z",
+        certifiedDate: null,
+        applicationStatus: { name: "Submitted" },
+        remark: null,
+        newLicenseCode: "NL099090",
+        renewalCode: null,
+        verificationCode: null,
+        goodStandingCode: null,
+        reviewer: { name: "Robel Ephraim RE" },
+        expertLevels: { name: "Regional" },
+        education: {
+          department: { name: "Psychology" },
+          institution: { name: "AAU" },
+        },
+      },
+    ]);
     let professions = ref([]);
     let regions = ref([]);
     let zones = ref([]);
@@ -804,8 +838,8 @@ export default {
         renewal: title === "renewal",
         goodStanding: title === "goodStanding",
         verification: title === "verification",
-      }
-    }
+      };
+    };
 
     const fetchNewLicenseReport = () => {
       loader.value = true;
@@ -825,7 +859,7 @@ export default {
         loader.value = false;
       });
     };
-    
+
     const fetchVerificationReport = () => {
       loader.value = true;
       changeBackgroundColor("verification");
@@ -854,17 +888,15 @@ export default {
         regions.value = res.data.data;
       });
     };
-    const  fetchZones = (regionID) =>  {
-      store.dispatch("report/getZones", regionID)
-        .then((res) => {
-          zones.value = res.data.data;
-        });
+    const fetchZones = (regionID) => {
+      store.dispatch("report/getZones", regionID).then((res) => {
+        zones.value = res.data.data;
+      });
     };
-    const  fetchWoredas = (zoneID) =>  {
-      store.dispatch("report/getWoredas", zoneID)
-        .then((res) => {
-          woredas.value = res.data.data;
-        });
+    const fetchWoredas = (zoneID) => {
+      store.dispatch("report/getWoredas", zoneID).then((res) => {
+        woredas.value = res.data.data;
+      });
     };
     const fetchApplicationStatuses = () => {
       store.dispatch("report/getapplicationStatuses").then((res) => {
@@ -922,35 +954,35 @@ export default {
       tableFilter = report.value;
       var tableFilter2 = [];
       for (var i = 0; i < tableFilter.length; i++) {
-        if(tableFilter[i].zone.name != null) {
+        if (tableFilter[i].zone.name != null) {
           tableFilter2.push(tableFilter[i]);
         }
       }
-      if(zone.name == null) {
+      if (zone.name == null) {
         report.value = store.getter["report/getReport"];
       } else {
         report.value = tableFilter2.filter(function(e) {
-          return e.zone.name == zone.name
-        })
+          return e.zone.name == zone.name;
+        });
       }
-    }
+    };
     const filterWoreda = (woreda) => {
       var tableFilter = [];
       tableFilter = report.value;
       var tableFilter2 = [];
       for (var i = 0; i < tableFilter.length; i++) {
-        if(tableFilter[i].woreda.name != null) {
+        if (tableFilter[i].woreda.name != null) {
           tableFilter2.push(tableFilter[i]);
         }
       }
-      if(woreda.name == null) {
+      if (woreda.name == null) {
         report.value = store.getter["report/getReport"];
       } else {
         report.value = tableFilter2.filter(function(e) {
-          return e.woreda.name == woreda.name
-        })
+          return e.woreda.name == woreda.name;
+        });
       }
-    }
+    };
     const filterDate = (startDate, endDate) => {
       report.value = store.getters["report/getReport"];
       var dateFilter = [];
@@ -1035,8 +1067,9 @@ export default {
   flex-wrap: wrap;
 }
 .applicationType {
-  background-color: #300400
-},
+  background-color: #300400;
+}
+,
 th {
   color: #648ea3;
   background-color: #eff6ff;

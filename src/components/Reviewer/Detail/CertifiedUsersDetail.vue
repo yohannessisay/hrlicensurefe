@@ -322,7 +322,8 @@ export default {
             showApplicationLoading.value = false;
             certificateDetail.value = res.data.data;
             certificateDetail.value = res.data.data;
-            certificateDetail.value.licenseNumber = certificateDetail.value.verificationCode
+            certificateDetail.value.licenseNumber =
+              certificateDetail.value.verificationCode;
             if (
               route.params.applicantId != certificateDetail.value.applicantId
             ) {
@@ -355,7 +356,8 @@ export default {
             showApplicationLoading.value = false;
             certificateDetail.value = res.data.data;
             certificateDetail.value = res.data.data;
-            certificateDetail.value.licenseNumber = certificateDetail.value.goodStandingCode
+            certificateDetail.value.licenseNumber =
+              certificateDetail.value.goodStandingCode;
             if (
               route.params.applicantId != certificateDetail.value.applicantId
             ) {
@@ -381,7 +383,8 @@ export default {
           .then((res) => {
             showApplicationLoading.value = false;
             certificateDetail.value = res.data.data;
-            certificateDetail.value.licenseNumber = certificateDetail.value.newLicenseCode
+            certificateDetail.value.licenseNumber =
+              certificateDetail.value.newLicenseCode;
             if (
               route.params.applicantId != certificateDetail.value.applicantId
             ) {
@@ -407,7 +410,8 @@ export default {
           .then((res) => {
             showApplicationLoading.value = false;
             certificateDetail.value = res.data.data;
-            certificateDetail.value.licenseNumber = certificateDetail.value.renewalCode;
+            certificateDetail.value.licenseNumber =
+              certificateDetail.value.renewalCode;
             if (
               route.params.applicantId != certificateDetail.value.applicantId
             ) {
@@ -537,21 +541,9 @@ export default {
         }`
       );
       // License Number
-      doc.text(
-        245,
-        58,
-        `${
-          certificateDetail.value.licenseNumber
-        }`
-      );
+      doc.text(245, 58, `${certificateDetail.value.licenseNumber}`);
       // License Number for amharic
-      doc.text(
-        38,
-        58,
-        `${
-          certificateDetail.value.licenseNumber
-        }`
-      );
+      doc.text(38, 58, `${certificateDetail.value.licenseNumber}`);
 
       // doc.addFileToVFS("Amiri-Regular.ttf", AmiriRegular);
       doc.addFileToVFS("Tera-Regular-normal.ttf", AmharicFont);
@@ -561,44 +553,43 @@ export default {
       doc.setFont("Tera-Regular"); // set font
 
       doc.setFontSize(17);
-      if(code === "AA") {
+      if (code === "AA") {
         doc.text(
-        60,
-        namePosition - 5,
-        `${
-          certifiedUser.value.alternativeName
-            ? certifiedUser.value.alternativeName
-            : ""
-        } ${
-          certifiedUser.value.alternativeFatherName
-            ? certifiedUser.value.alternativeFatherName
-            : ""
-        } ${
-          certifiedUser.value.alternativeGrandFatherName
-            ? certifiedUser.value.alternativeGrandFatherName
-            : ""
-        }`
-      );
+          60,
+          namePosition - 5,
+          `${
+            certifiedUser.value.alternativeName
+              ? certifiedUser.value.alternativeName
+              : ""
+          } ${
+            certifiedUser.value.alternativeFatherName
+              ? certifiedUser.value.alternativeFatherName
+              : ""
+          } ${
+            certifiedUser.value.alternativeGrandFatherName
+              ? certifiedUser.value.alternativeGrandFatherName
+              : ""
+          }`
+        );
       } else {
         doc.text(
-        60,
-        namePosition,
-        `${
-          certifiedUser.value.alternativeName
-            ? certifiedUser.value.alternativeName
-            : ""
-        } ${
-          certifiedUser.value.alternativeFatherName
-            ? certifiedUser.value.alternativeFatherName
-            : ""
-        } ${
-          certifiedUser.value.alternativeGrandFatherName
-            ? certifiedUser.value.alternativeGrandFatherName
-            : ""
-        }`
-      );
+          60,
+          namePosition,
+          `${
+            certifiedUser.value.alternativeName
+              ? certifiedUser.value.alternativeName
+              : ""
+          } ${
+            certifiedUser.value.alternativeFatherName
+              ? certifiedUser.value.alternativeFatherName
+              : ""
+          } ${
+            certifiedUser.value.alternativeGrandFatherName
+              ? certifiedUser.value.alternativeGrandFatherName
+              : ""
+          }`
+        );
       }
-      
 
       if (changeWidth.value) {
         doc.setFontSize(11);
