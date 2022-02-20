@@ -375,21 +375,28 @@ export default {
     this.herqa = this.getHerqa;
     this.supportLetter = this.getSupportLetter;
     this.coc = this.getCoc;
+    this.coc3 = this.getCoc2;
+    this.coc2 = this.getCoc3;
     this.educationalDocs = this.getEducationalDocuments;
     this.workExperience = this.getWorkExperience;
+    this.workExperience2 = this.getWorkExperience2;
     this.serviceFee = this.getServiceFee;
     this.letterfromOrg = this.getLetterfromOrg;
     this.renewedLicense = this.getRenewedLicense;
     this.professionalLicense = this.getProfessionalLicense;
+    this.professionalLicense2 = this.getProfessionalLicense2;
     this.diploma = this.getDiploma;
     this.transcript = this.getTranscript;
+    this.transcript2 = this.getTranscript2;
     this.degree = this.getDegree;
     this.payroll = this.getPayroll;
 
     this.masters = this.getMasters;
     this.mastersTranscript = this.getMastersTranscript;
+    this.mastersTranscript2 = this.getMastersTranscript2;
     this.phd = this.getPhd;
     this.phdTranscript = this.getPhdTranscript;
+    this.phdTranscript2 = this.getPhdTranscript2;
 
     if (this.passport != "" && this.passport != undefined) {
       if ("name" in this.passport) {
@@ -595,6 +602,38 @@ export default {
         this.docList.push(this.coc);
       }
     }
+    if (this.coc2 != "" && this.coc2 != undefined) {
+      if ("name" in this.coc2) {
+        if (this.draftId != undefined) {
+          this.documentsArray.splice(
+            this.documentsArray.findIndex(
+              (e) => e.documentTypeCode === "COC 2"
+            ),
+            1
+          );
+        }
+        var filePreview = await this.blobToBase64(this.coc2);
+        this.coc2.docFile = filePreview;
+        this.coc2.title = "COC 2";
+        this.docList.push(this.coc2);
+      }
+    }
+    if (this.coc3 != "" && this.coc3 != undefined) {
+      if ("name" in this.coc3) {
+        if (this.draftId != undefined) {
+          this.documentsArray.splice(
+            this.documentsArray.findIndex(
+              (e) => e.documentTypeCode === "COC 3"
+            ),
+            1
+          );
+        }
+        var filePreview = await this.blobToBase64(this.coc3);
+        this.coc3.docFile = filePreview;
+        this.coc3.title = "COC 3";
+        this.docList.push(this.coc3);
+      }
+    }
     if (this.workExperience != "" && this.workExperience != undefined) {
       if ("name" in this.workExperience) {
         if (this.draftId != undefined) {
@@ -607,6 +646,20 @@ export default {
         this.workExperience.docFile = filePreview;
         this.workExperience.title = "Work Experience";
         this.docList.push(this.workExperience);
+      }
+    }
+    if (this.workExperience2 != "" && this.workExperience2 != undefined) {
+      if ("name" in this.workExperience2) {
+        if (this.draftId != undefined) {
+          this.documentsArray.splice(
+            this.documentsArray.findIndex((e) => e.documentTypeCode === "WE2"),
+            1
+          );
+        }
+        var filePreview = await this.blobToBase64(this.workExperience2);
+        this.workExperience2.docFile = filePreview;
+        this.workExperience2.title = "Work Experience 2";
+        this.docList.push(this.workExperience2);
       }
     }
     if (this.serviceFee != "" && this.serviceFee != undefined) {
@@ -672,6 +725,26 @@ export default {
         this.docList.push(this.professionalLicense);
       }
     }
+    if (
+      this.professionalLicense2 != "" &&
+      this.professionalLicense2 != undefined
+    ) {
+      if ("name" in this.professionalLicense2) {
+        if (this.draftId != undefined) {
+          this.documentsArray.splice(
+            this.documentsArray.findIndex(
+              (e) => e.documentTypeCode === "APLFCO1"
+            ),
+            1
+          );
+        }
+        var filePreview = await this.blobToBase64(this.professionalLicense2);
+        this.professionalLicense2.docFile = filePreview;
+        this.professionalLicense2.title =
+          "Authenticated Professional License 2";
+        this.docList.push(this.professionalLicense2);
+      }
+    }
     if (this.diploma != "" && this.diploma != undefined) {
       if ("name" in this.diploma) {
         if (this.draftId != undefined) {
@@ -690,7 +763,7 @@ export default {
       if ("name" in this.transcript) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "PDT"),
+            this.documentsArray.findIndex((e) => e.documentTypeCode === "TRAN"),
             1
           );
         }
@@ -698,6 +771,22 @@ export default {
         this.transcript.docFile = filePreview;
         this.transcript.title = "Transcript";
         this.docList.push(this.transcript);
+      }
+    }
+    if (this.transcript2 != "" && this.transcript2 != undefined) {
+      if ("name" in this.transcript2) {
+        if (this.draftId != undefined) {
+          this.documentsArray.splice(
+            this.documentsArray.findIndex(
+              (e) => e.documentTypeCode === "TRAN1"
+            ),
+            1
+          );
+        }
+        var filePreview = await this.blobToBase64(this.transcript2);
+        this.transcript2.docFile = filePreview;
+        this.transcript2.title = "Transcript 2";
+        this.docList.push(this.transcript2);
       }
     }
     if (this.degree != "" && this.degree != undefined) {
@@ -758,6 +847,22 @@ export default {
         this.docList.push(this.mastersTranscript);
       }
     }
+    if (this.mastersTranscript2 != "" && this.mastersTranscript2 != undefined) {
+      if ("name" in this.mastersTranscript2) {
+        if (this.draftId != undefined) {
+          this.documentsArray.splice(
+            this.documentsArray.findIndex(
+              (e) => e.documentTypeCode === "MASTRAN1"
+            ),
+            1
+          );
+        }
+        var filePreview = await this.blobToBase64(this.mastersTranscript2);
+        this.mastersTranscript2.docFile = filePreview;
+        this.mastersTranscript2.title = "Masters Transcript 2";
+        this.docList.push(this.mastersTranscript2);
+      }
+    }
     if (this.phd != "" && this.phd != undefined) {
       if ("name" in this.phd) {
         if (this.draftId != undefined) {
@@ -786,6 +891,22 @@ export default {
         this.phdTranscript.docFile = filePreview;
         this.phdTranscript.title = "PhD Transcript";
         this.docList.push(this.phdTranscript);
+      }
+    }
+    if (this.phdTranscript2 != "" && this.phdTranscript2 != undefined) {
+      if ("name" in this.phdTranscript2) {
+        if (this.draftId != undefined) {
+          this.documentsArray.splice(
+            this.documentsArray.findIndex(
+              (e) => e.documentTypeCode === "PHDTRAN1"
+            ),
+            1
+          );
+        }
+        var filePreview = await this.blobToBase64(this.phdTranscript2);
+        this.phdTranscript2.docFile = filePreview;
+        this.phdTranscript2.title = "PhD Transcript 2";
+        this.docList.push(this.phdTranscript2);
       }
     }
     this.buttons = this.getButtons;
@@ -845,19 +966,26 @@ export default {
     herqa: "",
     supportLetter: "",
     coc: "",
+    coc2: "",
+    coc3: "",
     educationalDocs: [],
     workExperience: "",
+    workExperience2: "",
     letterfromOrg: "",
     renewedLicense: "",
     professionalLicense: "",
+    professionalLicense2: "",
     degree: "",
     diploma: "",
     transcript: "",
+    transcript2: "",
     payroll: "",
     masters: "",
     mastersTranscript: "",
+    mastersTranscript2: "",
     phd: "",
     phdTranscript: "",
+    phdTranscript2: "",
 
     eduEighth: "",
     eduTenth: "",
@@ -897,12 +1025,18 @@ export default {
       getHerqa: "newlicense/getHerqa",
       getSupportLetter: "newlicense/getSupportLetter",
       getCoc: "newlicense/getCoc",
+      getCoc2: "newlicense/getCoc2",
+      getCoc3: "newlicense/getCoc3",
       getEducationalDocuments: "newlicense/getEducationalDocuments",
       getWorkExperience: "newlicense/getWorkExperience",
+      getWorkExperience2: "newlicense/getWorkExperience2",
       getMasters: "newlicense/getMasters",
       getMastersTranscript: "newlicense/getMastersTranscript",
+      getMastersTranscript2: "newlicense/getMastersTranscript2",
+
       getPhd: "newlicense/getPhd",
       getPhdTranscript: "newlicense/getPhdTranscript",
+      getPhdTranscript2: "newlicense/getPhdTranscript2",
 
       getButtons: "newlicense/getButtons",
       getApplicationId: "newlicense/getApplicationId",
@@ -910,8 +1044,10 @@ export default {
       getLetterfromOrg: "newlicense/getLetterfromOrg",
       getRenewedLicense: "newlicense/getRenewedLicense",
       getProfessionalLicense: "newlicense/getProfessionalLicense",
+      getProfessionalLicense2: "newlicense/getProfessionalLicense2",
       getDiploma: "newlicense/getDiploma",
       getTranscript: "newlicense/getTranscript",
+      getTranscript2: "newlicense/getTranscript2",
       getDegree: "newlicense/getDegree",
       getPayroll: "newlicense/getPayroll",
     }),
@@ -1218,6 +1354,10 @@ export default {
                 this.workExperience
               );
               formData.append(
+                this.documentTypes[28].documentType.code,
+                this.workExperience2
+              );
+              formData.append(
                 this.documentTypes[5].documentType.code,
                 this.englishLanguage
               );
@@ -1229,6 +1369,10 @@ export default {
               formData.append(
                 this.documentTypes[8].documentType.code,
                 this.transcript
+              );
+              formData.append(
+                this.documentTypes[52].documentType.code,
+                this.transcript2
               );
               formData.append(
                 this.documentTypes[20].documentType.code,
@@ -1256,6 +1400,14 @@ export default {
               formData.append(
                 this.documentTypes[9].documentType.code,
                 this.coc
+              );
+              formData.append(
+                this.documentTypes[41].documentType.code,
+                this.coc2
+              );
+              formData.append(
+                this.documentTypes[42].documentType.code,
+                this.coc3
               );
               if (this.educationalDocs != undefined) {
                 formData.append(
@@ -1301,6 +1453,10 @@ export default {
                 this.professionalLicense
               );
               formData.append(
+                this.documentTypes[52].documentType.code,
+                this.professionalLicense2
+              );
+              formData.append(
                 this.documentTypes[24].documentType.code,
                 this.masters
               );
@@ -1309,12 +1465,20 @@ export default {
                 this.mastersTranscript
               );
               formData.append(
+                this.documentTypes[57].documentType.code,
+                this.mastersTranscript2
+              );
+              formData.append(
                 this.documentTypes[26].documentType.code,
                 this.phd
               );
               formData.append(
                 this.documentTypes[27].documentType.code,
                 this.phdTranscript
+              );
+              formData.append(
+                this.documentTypes[58].documentType.code,
+                this.phdTranscript2
               );
               let payload = { document: formData, id: licenseId };
 
@@ -1346,6 +1510,10 @@ export default {
           this.workExperience
         );
         formData.append(
+          this.documentTypes[28].documentType.code,
+          this.workExperience2
+        );
+        formData.append(
           this.documentTypes[5].documentType.code,
           this.englishLanguage
         );
@@ -1354,6 +1522,10 @@ export default {
         formData.append(
           this.documentTypes[8].documentType.code,
           this.transcript
+        );
+        formData.append(
+          this.documentTypes[52].documentType.code,
+          this.transcript2
         );
         formData.append(this.documentTypes[20].documentType.code, this.payroll);
         formData.append(this.documentTypes[21].documentType.code, this.degree);
@@ -1373,6 +1545,8 @@ export default {
         }
 
         formData.append(this.documentTypes[9].documentType.code, this.coc);
+        formData.append(this.documentTypes[41].documentType.code, this.coc2);
+        formData.append(this.documentTypes[42].documentType.code, this.coc3);
         if (this.educationalDocs != undefined) {
           formData.append(
             this.documentTypes[10].documentType.code,
@@ -1413,15 +1587,27 @@ export default {
           this.documentTypes[19].documentType.code,
           this.professionalLicense
         );
+        formData.append(
+          this.documentTypes[52].documentType.code,
+          this.professionalLicense2
+        );
         formData.append(this.documentTypes[24].documentType.code, this.masters);
         formData.append(
           this.documentTypes[25].documentType.code,
           this.mastersTranscript
         );
+        formData.append(
+          this.documentTypes[57].documentType.code,
+          this.mastersTranscript2
+        );
         formData.append(this.documentTypes[26].documentType.code, this.phd);
         formData.append(
           this.documentTypes[27].documentType.code,
           this.phdTranscript
+        );
+        formData.append(
+          this.documentTypes[58].documentType.code,
+          this.phdTranscript2
         );
         let license = {
           action: action,
@@ -1515,6 +1701,10 @@ export default {
                 this.workExperience
               );
               formData.append(
+                this.documentTypes[28].documentType.code,
+                this.workExperience2
+              );
+              formData.append(
                 this.documentTypes[5].documentType.code,
                 this.englishLanguage
               );
@@ -1526,6 +1716,10 @@ export default {
               formData.append(
                 this.documentTypes[8].documentType.code,
                 this.transcript
+              );
+              formData.append(
+                this.documentTypes[52].documentType.code,
+                this.transcript2
               );
               formData.append(
                 this.documentTypes[20].documentType.code,
@@ -1553,6 +1747,14 @@ export default {
               formData.append(
                 this.documentTypes[9].documentType.code,
                 this.coc
+              );
+              formData.append(
+                this.documentTypes[41].documentType.code,
+                this.coc2
+              );
+              formData.append(
+                this.documentTypes[42].documentType.code,
+                this.coc3
               );
               if (this.educationalDocs != undefined) {
                 formData.append(
@@ -1598,6 +1800,10 @@ export default {
                 this.professionalLicense
               );
               formData.append(
+                this.documentTypes[52].documentType.code,
+                this.professionalLicense2
+              );
+              formData.append(
                 this.documentTypes[24].documentType.code,
                 this.masters
               );
@@ -1606,12 +1812,20 @@ export default {
                 this.mastersTranscript
               );
               formData.append(
+                this.documentTypes[57].documentType.code,
+                this.mastersTranscript2
+              );
+              formData.append(
                 this.documentTypes[26].documentType.code,
                 this.phd
               );
               formData.append(
                 this.documentTypes[27].documentType.code,
                 this.phdTranscript
+              );
+              formData.append(
+                this.documentTypes[58].documentType.code,
+                this.phdTranscript2
               );
               let payload = { document: formData, id: licenseId };
               this.$store
@@ -1643,6 +1857,10 @@ export default {
           this.workExperience
         );
         formData.append(
+          this.documentTypes[28].documentType.code,
+          this.workExperience2
+        );
+        formData.append(
           this.documentTypes[5].documentType.code,
           this.englishLanguage
         );
@@ -1651,6 +1869,10 @@ export default {
         formData.append(
           this.documentTypes[8].documentType.code,
           this.transcript
+        );
+        formData.append(
+          this.documentTypes[52].documentType.code,
+          this.transcript2
         );
         formData.append(this.documentTypes[20].documentType.code, this.payroll);
         formData.append(this.documentTypes[21].documentType.code, this.degree);
@@ -1670,6 +1892,8 @@ export default {
         }
 
         formData.append(this.documentTypes[9].documentType.code, this.coc);
+        formData.append(this.documentTypes[41].documentType.code, this.coc2);
+        formData.append(this.documentTypes[42].documentType.code, this.coc3);
         if (this.educationalDocs != undefined) {
           formData.append(
             this.documentTypes[10].documentType.code,
@@ -1710,15 +1934,27 @@ export default {
           this.documentTypes[19].documentType.code,
           this.professionalLicense
         );
+        formData.append(
+          this.documentTypes[52].documentType.code,
+          this.professionalLicense2
+        );
         formData.append(this.documentTypes[24].documentType.code, this.masters);
         formData.append(
           this.documentTypes[25].documentType.code,
           this.mastersTranscript
         );
+        formData.append(
+          this.documentTypes[57].documentType.code,
+          this.mastersTranscript2
+        );
         formData.append(this.documentTypes[26].documentType.code, this.phd);
         formData.append(
           this.documentTypes[27].documentType.code,
           this.phdTranscript
+        );
+        formData.append(
+          this.documentTypes[58].documentType.code,
+          this.phdTranscript2
         );
         let license = {
           action: action,

@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="this.showLoading2"
-    class="bg-lightBlueB-200 w-screen h-screen max-w-4xl"
+    class="bg-lightBlueB-200 h-screen max-w-4xl"
   >
     <Spinner class="bg-lightBlueB-200" />
   </div>

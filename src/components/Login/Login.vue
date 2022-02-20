@@ -137,7 +137,7 @@ export default {
                 message.value.showErrorFlash = false;
                 setTimeout(() => {
                   router.push({ path: "/addProfile" });
-                }, 1500);
+                }, 3000);
               }
             });
           } else {

@@ -386,6 +386,7 @@ export default {
       passport: "",
       healthExamCert: "",
       workExperience: "",
+      workExperience2: "",
       englishLanguage: "",
       professionalDoc: [],
       herqa: "",
@@ -395,6 +396,7 @@ export default {
       letterfromOrg: "",
       renewedLicense: "",
       professionalLicense: "",
+      professionalLicense2: "",
       payroll: "",
       diploma: "",
       transcript: "",
@@ -442,10 +444,12 @@ export default {
       getCoc: "newlicense/getCoc",
       getEducationalDocuments: "newlicense/getEducationalDocuments",
       getWorkExperience: "newlicense/getWorkExperience",
+      getWorkExperience2: "newlicense/getWorkExperience2",
       getLetterfromOrg: "newlicense/getLetterfromOrg",
       getRenewedLicense: "newlicense/getRenewedLicense",
       getPayroll: "renewal/getPayroll",
       getProfessionalLicense: "newlicense/getProfessionalLicense",
+      getProfessionalLicense2: "newlicense/getProfessionalLicense2",
       getDiploma: "newlicense/getDiploma",
       getTranscript: "newlicense/getTranscript",
       getDegree: "newlicense/getDegree",
@@ -658,9 +662,11 @@ export default {
     this.coc = this.getCoc;
     this.educationalDocs = this.getEducationalDocuments;
     this.workExperience = this.getWorkExperience;
+    this.workExperience2 = this.getWorkExperience2;
     this.letterfromOrg = this.getLetterfromOrg;
     this.renewedLicense = this.getRenewedLicense;
     this.professionalLicense = this.getProfessionalLicense;
+    this.professionalLicense2 = this.getProfessionalLicense2;
     this.payroll = this.getPayroll;
     this.diploma = this.getDiploma;
     this.transcript = this.getTranscript;
@@ -901,6 +907,10 @@ export default {
               this.workExperience
             );
             formData.append(
+              this.documentSpec[28].documentType.code,
+              this.workExperience2
+            );
+            formData.append(
               this.documentSpec[5].documentType.code,
               this.englishLanguage
             );
@@ -961,6 +971,10 @@ export default {
             formData.append(
               this.documentSpec[19].documentType.code,
               this.professionalLicense
+            );
+             formData.append(
+              this.documentSpec[52].documentType.code,
+              this.professionalLicense2
             );
             formData.append(
               this.documentSpec[20].documentType.code,

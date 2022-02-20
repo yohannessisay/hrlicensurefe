@@ -357,17 +357,21 @@ export default {
     let supportLetter = ref("");
     let educationDoc = ref([]);
     let workExperience = ref("");
+    let workExperience2 = ref("");
     let professionalLicense = ref("");
     let letterfromOrg = ref("");
     let renewedLicense = ref("");
     let payroll = ref("");
     let diploma = ref("");
     let transcript = ref("");
+    let transcript2 = ref("");
     let degree = ref("");
     let masters = ref("");
     let mastersTranscript = ref("");
+    let mastersTranscript2 = ref("");
     let phd = ref("");
     let phdTranscript = ref("");
+    let phdTranscript2 = ref("");
 
     let eduLevel = ref("");
 
@@ -512,10 +516,14 @@ export default {
     const submit = () => {
       emit("changeActiveState");
       store.dispatch("newlicense/setCOC", COCFile);
+      store.dispatch("newlicense/setCOC2", COCFile2);
+      store.dispatch("newlicense/setCOC3", COCFile3);
     };
     const submitBack = () => {
       emit("changeActiveStateMinus");
       store.dispatch("newlicense/setCOC", COCFile);
+      store.dispatch("newlicense/setCOC2", COCFile2);
+      store.dispatch("newlicense/setCOC3", COCFile3);
     };
     buttons = store.getters["newlicense/getButtons"];
     documentSpecs = store.getters["newlicense/getDocumentSpec"];
@@ -529,6 +537,7 @@ export default {
     supportLetter = store.getters["newlicense/getSupportLetter"];
     educationDoc = store.getters["newlicense/getEducationalDocuments"];
     workExperience = store.getters["newlicense/getWorkExperience"];
+    workExperience2 = store.getters["newlicense/getWorkExperience2"];
     renewedLicense = store.getters["newlicense/getRenewedLicense"];
     professionalLicense = store.getters["newlicense/getProfessionalLicense"];
     letterfromOrg = store.getters["newlicense/getLetterfromOrg"];
@@ -536,10 +545,13 @@ export default {
     diploma = store.getters["newlicense/getDiploma"];
     degree = store.getters["newlicense/getDegree"];
     transcript = store.getters["newlicense/getTranscript"];
+    transcript2 = store.getters["newlicense/getTranscript2"];
     masters = store.getters["newlicense/getMasters"];
     mastersTranscript = store.getters["newlicense/getMastersTranscript"];
+    mastersTranscript2 = store.getters["newlicense/getMastersTranscript2"];
     phd = store.getters["newlicense/getPhd"];
     phdTranscript = store.getters["newlicense/getPhdTranscript"];
+    phdTranscript2 = store.getters["newlicense/getPhdTranscript2"];
 
     eduLevel = localStorage.getItem("educationalLevel");
 
@@ -561,6 +573,14 @@ export default {
               formData.append(
                 documentSpecs[9].documentType.code,
                 COCFile.value
+              );
+              formData.append(
+                documentSpecs[41].documentType.code,
+                COCFile2.value
+              );
+              formData.append(
+                documentSpecs[42].documentType.code,
+                COCFile3.value
               );
               let payload = { document: formData, id: licenseId };
               store
@@ -629,12 +649,14 @@ export default {
             formData.append(documentSpecs[1].documentType.code, passport);
             formData.append(documentSpecs[2].documentType.code, healthExamCert);
             formData.append(documentSpecs[4].documentType.code, workExperience);
+            formData.append(documentSpecs[28].documentType.code, workExperience2);
             formData.append(
               documentSpecs[5].documentType.code,
               englishLanguage
             );
             formData.append(documentSpecs[22].documentType.code, diploma);
             formData.append(documentSpecs[23].documentType.code, transcript);
+            formData.append(documentSpecs[52].documentType.code, transcript2);
             formData.append(documentSpecs[21].documentType.code, degree);
             if (professionalDoc != undefined) {
               formData.append(
@@ -651,6 +673,14 @@ export default {
               );
             }
             formData.append(documentSpecs[9].documentType.code, COCFile.value);
+            formData.append(
+              documentSpecs[41].documentType.code,
+              COCFile2.value
+            );
+            formData.append(
+              documentSpecs[42].documentType.code,
+              COCFile3.value
+            );
             if (educationDoc != undefined) {
               formData.append(
                 documentSpecs[10].documentType.code,
@@ -690,8 +720,16 @@ export default {
               documentSpecs[25].documentType.code,
               mastersTranscript
             );
+            formData.append(
+              documentSpecs[57].documentType.code,
+              mastersTranscript2
+            );
             formData.append(documentSpecs[26].documentType.code, phd);
             formData.append(documentSpecs[27].documentType.code, phdTranscript);
+            formData.append(
+              documentSpecs[58].documentType.code,
+              phdTranscript2
+            );
 
             let payload = { document: formData, id: licenseId };
             store
@@ -728,8 +766,16 @@ export default {
               let licenseId = route.params.id;
               let formData = new FormData();
               formData.append(
-                documentSpecs[1].documentType.code,
+                documentSpecs[9].documentType.code,
                 COCFile.value
+              );
+              formData.append(
+                documentSpecs[41].documentType.code,
+                COCFile2.value
+              );
+              formData.append(
+                documentSpecs[42].documentType.code,
+                COCFile3.value
               );
               let payload = { document: formData, id: licenseId };
               store
@@ -796,6 +842,14 @@ export default {
             let licenseId = res.data.data.id;
             let formData = new FormData();
             formData.append(documentSpecs[9].documentType.code, COCFile.value);
+            formData.append(
+              documentSpecs[41].documentType.code,
+              COCFile2.value
+            );
+            formData.append(
+              documentSpecs[42].documentType.code,
+              COCFile3.value
+            );
             let payload = { document: formData, id: licenseId };
             store
               .dispatch("newlicense/uploadDocuments", payload)
@@ -843,6 +897,8 @@ export default {
       maxFileSize.value = MAX_FILE_SIZE.MAX_FILE_SIZE;
       maxSizeMB.value = MAX_SIZE_MB.MAX_SIZE_MB;
       cocBack = store.getters["newlicense/getCoc"];
+      cocBack2 = store.getters["newlicense/getCoc2"];
+      cocBack3 = store.getters["newlicense/getCoc3"];
       if (
         cocBack &&
         cocBack !== undefined &&
@@ -880,6 +936,64 @@ export default {
           }
         }
       }
+      if (
+        cocBack2 &&
+        cocBack2 !== undefined &&
+        cocBack2 !== null &&
+        cocBack2 !== ""
+      ) {
+        docCount.value++;
+        showUpload2.value = false;
+        COCFile2.value = cocBack2;
+        let reader = new FileReader();
+        reader.addEventListener(
+          "load",
+          function() {
+            showPreview2.value = true;
+            filePreview2.value = reader.result;
+          },
+          false
+        );
+        if (COCFile2.value) {
+          if (/\.(jpe?g|png|gif)$/i.test(COCFile2.value.name)) {
+            isImage2.value = true;
+            reader.readAsDataURL(COCFile2.value);
+          } else if (/\.(pdf)$/i.test(COCFile2.value.name)) {
+            isImage2.value = false;
+            isPdf2.value = true;
+            reader.readAsDataURL(COCFile2.value);
+          }
+        }
+      }
+      if (
+        cocBack3 &&
+        cocBack3 !== undefined &&
+        cocBack3 !== null &&
+        cocBack3 !== ""
+      ) {
+        doc.value += 2;
+        showUpload3.value = false;
+        COCFile3.value = cocBack3;
+        let reader = new FileReader();
+        reader.addEventListener(
+          "load",
+          function() {
+            showPreview3.value = true;
+            filePreview3.value = reader.result;
+          },
+          false
+        );
+        if (COCFile3.value) {
+          if (/\.(jpe?g|png|gif)$/i.test(COCFile3.value.name)) {
+            isImage3.value = true;
+            reader.readAsDataURL(COCFile3.value);
+          } else if (/\.(pdf)$/i.test(COCFile3.value.name)) {
+            isImage3.value = false;
+            isPdf3.value = true;
+            reader.readAsDataURL(COCFile3.value);
+          }
+        }
+      }
       declinedFields = store.getters["newlicense/getDeclinedFields"];
       acceptedFields = store.getters["newlicense/getAcceptedFields"];
       remark = store.getters["newlicense/getRemark"];
@@ -905,6 +1019,30 @@ export default {
             COCFile.value = draftData.documents[i];
             showPreview.value = true;
             filePreview.value = basePath + draftData.documents[i].filePath;
+          }
+          if (draftData.documents[i].documentTypeCode == "COC1") {
+            doc.value++;
+            showUpload2.value = false;
+            if (draftData.documents[i].fileName.split(".")[1] == "pdf") {
+              isPdf2.value = true;
+            } else {
+              isImage2.value = true;
+            }
+            COCFile2.value = draftData.documents[i];
+            showPreview2.value = true;
+            filePreview2.value = basePath + draftData.documents[i].filePath;
+          }
+          if (draftData.documents[i].documentTypeCode == "COC2") {
+            doc.value += 2;
+            showUpload3.value = false;
+            if (draftData.documents[i].fileName.split(".")[1] == "pdf") {
+              isPdf3.value = true;
+            } else {
+              isImage3.value = true;
+            }
+            COCFile3.value = draftData.documents[i];
+            showPreview3.value = true;
+            filePreview3.value = basePath + draftData.documents[i].filePath;
           }
         }
       }

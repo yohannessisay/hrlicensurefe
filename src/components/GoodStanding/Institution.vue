@@ -1,6 +1,6 @@
 <template>
   <div class="flex justify-center items">
-    <div class="bg-lightBlueB-200 w-screen h-screen max-w-4xl">
+    <div class="bg-lightBlueB-200 h-screen">
       <div
         class="flex flex-col pt-large w-full bg-white blue-box-shadow-light rounded"
       >
@@ -231,7 +231,7 @@
               </div>
             </div>
           </div>
-          <div id="main" class="flex mt-4 pt-8 pl-4 mb-medium">
+          <!-- <div id="main" class="flex mt-4 pt-8 pl-4 mb-medium">
             <div class="flex flex-col mb-medium w-2/5 mr-12">
               <label class="text-primary-700">Applicant Position (Title)</label>
               <select
@@ -250,7 +250,7 @@
                 licenseInfoErrors.applicantPositionId
               }}</span>
             </div>
-          </div>
+          </div> -->
         </form>
         <div v-if="!showLoading">
           <div
@@ -326,7 +326,7 @@
             </button>
           </div>
         </div>
-        <div>
+        <div class="mt-12">
           <Spinner v-if="showLoading" />
         </div>
       </div>
