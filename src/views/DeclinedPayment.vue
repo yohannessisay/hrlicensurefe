@@ -56,6 +56,13 @@
                     <b>Certified: &nbsp;</b>No
                   </span>
                   <span
+                    v-if="item.reviewer.region"
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                  >
+                    <b>Reviewer Region: &nbsp;</b
+                    >{{ item.reviewer.region.name }}
+                  </span>
+                  <span
                     class="
                       mt-small
                       text-lightBlueB-500
@@ -127,6 +134,13 @@
                     class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
                     <b>Certified: &nbsp;</b>No
+                  </span>
+                  <span
+                    v-if="item.reviewer.region"
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                  >
+                    <b>Reviewer Region: &nbsp;</b
+                    >{{ item.reviewer.region.name }}
                   </span>
                   <span
                     class="
@@ -282,6 +296,13 @@
                     class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
                     <b>Certified: &nbsp;</b>No
+                  </span>
+                  <span
+                    v-if="item.reviewer.region"
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                  >
+                    <b>Reviewer Region: &nbsp;</b
+                    >{{ item.reviewer.region.name }}
                   </span>
                   <span
                     class="
