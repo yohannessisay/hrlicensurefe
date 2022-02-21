@@ -107,8 +107,19 @@
                 <h2 v-if="!this.fileSizeExceed">{{ this.photoFileSize }}</h2>
               </span>
               <span v-if="showDiplomaUpload">
-                <label class="text-primary-700 text-lg"
-                  >Authenticated Professional Document Diploma:
+                <label class="text-primary-700 text-lg">
+                  <label v-if="educationalLevel == 'diploma'"
+                    >Authenticated Professional Document Diploma: </label
+                  >
+                  <label v-if="educationalLevel == 'degree'"
+                    >Authenticated Professional Document Degree: </label
+                  >
+                  <label v-if="educationalLevel == 'masters'"
+                    >Authenticated Professional Document Masters: </label
+                  >
+                  <label v-if="educationalLevel == 'PhD'"
+                    >Authenticated Professional Document Phd: </label
+                  >
                   <span style="color: red; font-weight: bold; font-size:16px"
                     >Required</span
                   >
@@ -383,6 +394,7 @@ export default {
       documentSpec: [],
       licenseInfo: "",
       userId: +localStorage.getItem("userId"),
+      educationalLevel: localStorage.getItem("educationalLevel"),
       passport: "",
       healthExamCert: "",
       workExperience: "",
