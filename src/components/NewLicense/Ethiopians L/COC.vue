@@ -971,7 +971,7 @@ export default {
         cocBack3 !== null &&
         cocBack3 !== ""
       ) {
-        doc.value += 2;
+        docCount.value += 2;
         showUpload3.value = false;
         COCFile3.value = cocBack3;
         let reader = new FileReader();

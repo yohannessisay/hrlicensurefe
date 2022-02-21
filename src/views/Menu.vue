@@ -125,8 +125,13 @@ export default {
     this.$store.dispatch("renewal/setRenewalLetter", "");
     this.$store.dispatch("renewal/setRenewalServiceFee", "");
     this.$store.dispatch("renewal/setRenewalCpd", "");
+    this.$store.dispatch("renewal/setRenewalCpd2", "");
+    this.$store.dispatch("renewal/setRenewalCpd3", "");
+    this.$store.dispatch("renewal/setRenewalCpd4", "");
+    this.$store.dispatch("renewal/setRenewalCpd5", "");
     this.$store.dispatch("renewal/setProfessionalDoc", []);
     this.$store.dispatch("renewal/setRenewalWorkExperience", "");
+    this.$store.dispatch("renewal/setRenewalWorkExperience2", "");
     this.$store.dispatch("renewal/setRenewalHealthExamCert", "");
     this.$store.dispatch("renewal/setPreviousLicense", "");
     this.$store.dispatch("renewal/setCertificate", "");

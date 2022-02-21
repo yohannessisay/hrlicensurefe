@@ -359,7 +359,12 @@ export default {
     this.passport = this.getPassport;
     this.healthExamCert = this.getHealthExamCert;
     this.workExperience = this.getWorkExperience;
+    this.workExperience2 = this.getWorkExperience2;
     this.cpd = this.getcpd;
+    this.cpd2 = this.getcpd2;
+    this.cpd3 = this.getcpd3;
+    this.cpd4 = this.getcpd4;
+    this.cpd5 = this.getcpd5;
     this.herqa = this.getHerqa;
     this.previousLicense = this.getPreviousLicense;
     this.supportLetter = this.getSupportLetter;
@@ -435,6 +440,20 @@ export default {
         this.docList.push(this.workExperience);
       }
     }
+    if (this.workExperience2 != "" && this.workExperience2 != undefined) {
+      if ("name" in this.workExperience2) {
+        if (this.draftId != undefined) {
+          this.documentsArray.splice(
+            this.documentsArray.findIndex((e) => e.documentTypeCode === "WE1"),
+            1
+          );
+        }
+        var filePreview = await this.blobToBase64(this.workExperience2);
+        this.workExperience2.docFile = filePreview;
+        this.workExperience2.title = "Work Experience 2";
+        this.docList.push(this.workExperience2);
+      }
+    }
     if (this.cpd != "" && this.cpd != undefined) {
       if ("name" in this.cpd) {
         if (this.draftId != undefined) {
@@ -447,6 +466,62 @@ export default {
         this.cpd.docFile = filePreview;
         this.cpd.title = "CPD";
         this.docList.push(this.cpd);
+      }
+    }
+    if (this.cpd2 != "" && this.cpd2 != undefined) {
+      if ("name" in this.cpd2) {
+        if (this.draftId != undefined) {
+          this.documentsArray.splice(
+            this.documentsArray.findIndex((e) => e.documentTypeCode === "CPD1"),
+            1
+          );
+        }
+        var filePreview = await this.blobToBase64(this.cpd2);
+        this.cpd2.docFile = filePreview;
+        this.cpd2.title = "CPD 2";
+        this.docList.push(this.cpd2);
+      }
+    }
+    if (this.cpd3 != "" && this.cpd3 != undefined) {
+      if ("name" in this.cpd3) {
+        if (this.draftId != undefined) {
+          this.documentsArray.splice(
+            this.documentsArray.findIndex((e) => e.documentTypeCode === "CPD2"),
+            1
+          );
+        }
+        var filePreview = await this.blobToBase64(this.cpd3);
+        this.cpd3.docFile = filePreview;
+        this.cpd3.title = "CPD 3";
+        this.docList.push(this.cpd3);
+      }
+    }
+    if (this.cpd4 != "" && this.cpd4 != undefined) {
+      if ("name" in this.cpd4) {
+        if (this.draftId != undefined) {
+          this.documentsArray.splice(
+            this.documentsArray.findIndex((e) => e.documentTypeCode === "CPD3"),
+            1
+          );
+        }
+        var filePreview = await this.blobToBase64(this.cpd4);
+        this.cpd4.docFile = filePreview;
+        this.cpd4.title = "CPD 4";
+        this.docList.push(this.cpd4);
+      }
+    }
+    if (this.cpd5 != "" && this.cpd5 != undefined) {
+      if ("name" in this.cpd5) {
+        if (this.draftId != undefined) {
+          this.documentsArray.splice(
+            this.documentsArray.findIndex((e) => e.documentTypeCode === "CPD4"),
+            1
+          );
+        }
+        var filePreview = await this.blobToBase64(this.cpd5);
+        this.cpd5.docFile = filePreview;
+        this.cpd5.title = "CPD 5";
+        this.docList.push(this.cpd5);
       }
     }
     if (this.herqa != "" && this.herqa != undefined) {
@@ -869,7 +944,12 @@ export default {
     healthExamCert: "",
     professionalDoc: "",
     workExperience: "",
+    workExperience2: "",
     cpd: "",
+    cpd2: "",
+    cpd3: "",
+    cpd4: "",
+    cpd5: "",
     herqa: "",
     previousLicense: "",
     supportLetter: "",
@@ -917,7 +997,12 @@ export default {
       getPassport: "renewal/getPassport",
       getHealthExamCert: "renewal/getRenewalHealthExamCert",
       getWorkExperience: "renewal/getRenewalWorkExperience",
+      getWorkExperience2: "renewal/getRenewalWorkExperience2",
       getcpd: "renewal/getRenewalCpd",
+      getcpd2: "renewal/getRenewalCpd2",
+      getcpd3: "renewal/getRenewalCpd3",
+      getcpd4: "renewal/getRenewalCpd4",
+      getcpd5: "renewal/getRenewalCpd5",
       getHerqa: "renewal/getHerqa",
       getPreviousLicense: "renewal/getPreviousLicense",
       getSupportLetter: "renewal/getSupportLetter",
@@ -1286,8 +1371,28 @@ export default {
                 this.workExperience
               );
               formData.append(
+                this.documentTypes[35].documentType.code,
+                this.workExperience2
+              );
+              formData.append(
                 this.documentTypes[4].documentType.code,
                 this.cpd
+              );
+              formData.append(
+                this.documentTypes[31].documentType.code,
+                this.cpd2
+              );
+              formData.append(
+                this.documentTypes[32].documentType.code,
+                this.cpd3
+              );
+              formData.append(
+                this.documentTypes[33].documentType.code,
+                this.cpd4
+              );
+              formData.append(
+                this.documentTypes[34].documentType.code,
+                this.cpd5
               );
               formData.append(
                 this.documentTypes[18].documentType.code,
@@ -1422,7 +1527,15 @@ export default {
           this.documentTypes[5].documentType.code,
           this.workExperience
         );
+        formData.append(
+          this.documentTypes[35].documentType.code,
+          this.workExperience2
+        );
         formData.append(this.documentTypes[4].documentType.code, this.cpd);
+        formData.append(this.documentTypes[31].documentType.code, this.cpd2);
+        formData.append(this.documentTypes[32].documentType.code, this.cpd3);
+        formData.append(this.documentTypes[33].documentType.code, this.cpd4);
+        formData.append(this.documentTypes[34].documentType.code, this.cpd5);
         formData.append(this.documentTypes[18].documentType.code, this.herqa);
         formData.append(
           this.documentTypes[6].documentType.code,
@@ -1650,8 +1763,28 @@ export default {
                 this.workExperience
               );
               formData.append(
+                this.documentTypes[35].documentType.code,
+                this.workExperience2
+              );
+              formData.append(
                 this.documentTypes[4].documentType.code,
                 this.cpd
+              );
+              formData.append(
+                this.documentTypes[31].documentType.code,
+                this.cpd2
+              );
+              formData.append(
+                this.documentTypes[32].documentType.code,
+                this.cpd3
+              );
+              formData.append(
+                this.documentTypes[33].documentType.code,
+                this.cpd4
+              );
+              formData.append(
+                this.documentTypes[34].documentType.code,
+                this.cpd5
               );
               formData.append(
                 this.documentTypes[18].documentType.code,
@@ -1790,7 +1923,15 @@ export default {
           this.documentTypes[5].documentType.code,
           this.workExperience
         );
+        formData.append(
+          this.documentTypes[35].documentType.code,
+          this.workExperience2
+        );
         formData.append(this.documentTypes[4].documentType.code, this.cpd);
+        formData.append(this.documentTypes[31].documentType.code, this.cpd2);
+        formData.append(this.documentTypes[32].documentType.code, this.cpd3);
+        formData.append(this.documentTypes[33].documentType.code, this.cpd4);
+        formData.append(this.documentTypes[34].documentType.code, this.cpd5);
         formData.append(this.documentTypes[18].documentType.code, this.herqa);
         formData.append(
           this.documentTypes[6].documentType.code,

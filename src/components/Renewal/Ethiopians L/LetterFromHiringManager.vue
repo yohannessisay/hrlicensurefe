@@ -248,8 +248,13 @@ export default {
     let supportLetter = ref("");
     let transcript = ref("");
     let workExperience = ref("");
+    let workExperience2 = ref("");
     let previousLicense = ref("");
     let cpd = ref("");
+    let cpd2 = ref("");
+    let cpd3 = ref("");
+    let cpd4 = ref("");
+    let cpd5 = ref("");
     let letterFromHiringManager = ref("");
     let masters = ref("");
     let mastersTranscript = ref("");
@@ -318,8 +323,13 @@ export default {
     supportLetter = store.getters["renewal/getSupportLetter"];
     transcript = store.getters["renewal/getTranscript"];
     workExperience = store.getters["renewal/getRenewalWorkExperience"];
+    workExperience2 = store.getters["renewal/getRenewalWorkExperience2"];
     previousLicense = store.getters["renewal/getPreviousLicense"];
     cpd = store.getters["renewal/getRenewalCpd"];
+    cpd2 = store.getters["renewal/getRenewalCpd2"];
+    cpd3 = store.getters["renewal/getRenewalCpd3"];
+    cpd4 = store.getters["renewal/getRenewalCpd4"];
+    cpd5 = store.getters["renewal/getRenewalCpd5"];
     letterFromHiringManager = store.getters["renewal/getRenewalLicense"];
     masters = store.getters["renewal/getMasters"];
     mastersTranscript = store.getters["renewal/getMastersTranscript"];
@@ -520,11 +530,17 @@ export default {
             formData.append(documentSpecs[17].documentType.code, supportLetter);
             formData.append(documentSpecs[26].documentType.code, transcript);
             formData.append(documentSpecs[5].documentType.code, workExperience);
+            formData.append(documentSpecs[35].documentType.code, workExperience2);
             formData.append(
               documentSpecs[6].documentType.code,
               previousLicense
             );
             formData.append(documentSpecs[4].documentType.code, cpd);
+            formData.append(documentSpecs[31].documentType.code, cpd2);
+            formData.append(documentSpecs[32].documentType.code, cpd3);
+            formData.append(documentSpecs[33].documentType.code, cpd4);
+            formData.append(documentSpecs[34].documentType.code, cpd5);
+
             formData.append(
               documentSpecs[19].documentType.code,
               letterFile.value
