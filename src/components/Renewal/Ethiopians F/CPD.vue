@@ -31,6 +31,9 @@
           class="mt-8"
         />
         <span class="flex justify-center">{{ documentMessage }}</span>
+        <div class="ml-24">
+          <button @click="addDocs()">Add Document</button>
+        </div>
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
           <div class="flex justify-center mb-10">
             <div>
@@ -78,6 +81,172 @@
               </div>
               <span v-if="!showUpload && !isImage && !isPdf">
                 <img :src="filePreview" alt="" class="preview" />
+              </span>
+            </div>
+            <div class="ml-8" v-if="docCount > 0">
+              <span v-if="showUpload2">
+                <label class="text-primary-700"
+                  >Upload image:
+                  <div class="dropbox">
+                    <input
+                      type="file"
+                      id="cpdFile2"
+                      class="photoFile"
+                      ref="cpdFileP2"
+                      v-on:change="handleFileUpload2()"
+                      style="margin-bottom: 15px !important;"
+                      accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
+                    />
+                    <p>
+                      Drag your file(s) here to begin<br />
+                      or click to browse
+                    </p>
+                  </div>
+                </label>
+              </span>
+              <picture v-if="!showUpload2 && isImage2">
+                <p>
+                  <a href="javascript:void(0)" @click="reset2()"
+                    >Upload again</a
+                  >
+                </p>
+                <img v-bind:src="filePreview2" v-show="showPreview2" />
+              </picture>
+              <div v-if="!showUpload2 && isPdf2">
+                <p>
+                  <a href="javascript:void(0)" @click="reset2()"
+                    >Upload again</a
+                  >
+                </p>
+                <embed v-bind:src="filePreview2" v-show="showPreview2" />
+              </div>
+              <span v-if="!showUpload2 && !isImage2 && !isPdf2">
+                <img :src="filePreview2" alt="" class="preview" />
+              </span>
+            </div>
+            <div class="ml-8" v-if="docCount > 1">
+              <span v-if="showUpload3">
+                <label class="text-primary-700"
+                  >Upload image:
+                  <div class="dropbox">
+                    <input
+                      type="file"
+                      id="cpdFile3"
+                      class="photoFile"
+                      ref="cpdFileP3"
+                      v-on:change="handleFileUpload3()"
+                      style="margin-bottom: 15px !important;"
+                      accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
+                    />
+                    <p>
+                      Drag your file(s) here to begin<br />
+                      or click to browse
+                    </p>
+                  </div>
+                </label>
+              </span>
+              <picture v-if="!showUpload3 && isImage3">
+                <p>
+                  <a href="javascript:void(0)" @click="reset3()"
+                    >Upload again</a
+                  >
+                </p>
+                <img v-bind:src="filePreview3" v-show="showPreview3" />
+              </picture>
+              <div v-if="!showUpload3 && isPdf3">
+                <p>
+                  <a href="javascript:void(0)" @click="reset3()"
+                    >Upload again</a
+                  >
+                </p>
+                <embed v-bind:src="filePreview3" v-show="showPreview3" />
+              </div>
+              <span v-if="!showUpload3 && !isImage3 && !isPdf3">
+                <img :src="filePreview3" alt="" class="preview" />
+              </span>
+            </div>
+          </div>
+          <div class="flex justify-center mb-10">
+            <div class="ml-8" v-if="docCount > 2">
+              <span v-if="showUpload4">
+                <label class="text-primary-700"
+                  >Upload image:
+                  <div class="dropbox">
+                    <input
+                      type="file"
+                      id="cpdFile4"
+                      class="photoFile"
+                      ref="cpdFileP4"
+                      v-on:change="handleFileUpload4()"
+                      style="margin-bottom: 15px !important;"
+                      accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
+                    />
+                    <p>
+                      Drag your file(s) here to begin<br />
+                      or click to browse
+                    </p>
+                  </div>
+                </label>
+              </span>
+              <picture v-if="!showUpload4 && isImage4">
+                <p>
+                  <a href="javascript:void(0)" @click="reset4()"
+                    >Upload again</a
+                  >
+                </p>
+                <img v-bind:src="filePreview4" v-show="showPreview4" />
+              </picture>
+              <div v-if="!showUpload4 && isPdf4">
+                <p>
+                  <a href="javascript:void(0)" @click="reset4()"
+                    >Upload again</a
+                  >
+                </p>
+                <embed v-bind:src="filePreview4" v-show="showPreview4" />
+              </div>
+              <span v-if="!showUpload4 && !isImage4 && !isPdf4">
+                <img :src="filePreview4" alt="" class="preview" />
+              </span>
+            </div>
+            <div class="ml-8" v-if="docCount > 3">
+              <span v-if="showUpload5">
+                <label class="text-primary-700"
+                  >Upload image:
+                  <div class="dropbox">
+                    <input
+                      type="file"
+                      id="cpdFile5"
+                      class="photoFile"
+                      ref="cpdFileP5"
+                      v-on:change="handleFileUpload5()"
+                      style="margin-bottom: 15px !important;"
+                      accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
+                    />
+                    <p>
+                      Drag your file(s) here to begin<br />
+                      or click to browse
+                    </p>
+                  </div>
+                </label>
+              </span>
+              <picture v-if="!showUpload5 && isImage5">
+                <p>
+                  <a href="javascript:void(0)" @click="reset5()"
+                    >Upload again</a
+                  >
+                </p>
+                <img v-bind:src="filePreview5" v-show="showPreview5" />
+              </picture>
+              <div v-if="!showUpload5 && isPdf5">
+                <p>
+                  <a href="javascript:void(0)" @click="reset5()"
+                    >Upload again</a
+                  >
+                </p>
+                <embed v-bind:src="filePreview5" v-show="showPreview5" />
+              </div>
+              <span v-if="!showUpload5 && !isImage5 && !isPdf5">
+                <img :src="filePreview5" alt="" class="preview" />
               </span>
             </div>
           </div>
@@ -217,7 +386,43 @@ export default {
     let isImage = ref(false);
     let isPdf = ref(false);
 
+    let cpdFile2 = ref("");
+    let cpdFileP2 = ref("");
+    let showPreview2 = ref(false);
+    let filePreview2 = ref("");
+    let showUpload2 = ref(true);
+    let isImage2 = ref(false);
+    let isPdf2 = ref(false);
+
+    let cpdFile3 = ref("");
+    let cpdFileP3 = ref("");
+    let showPreview3 = ref(false);
+    let filePreview3 = ref("");
+    let showUpload3 = ref(true);
+    let isImage3 = ref(false);
+    let isPdf3 = ref(false);
+
+    let cpdFile4 = ref("");
+    let cpdFileP4 = ref("");
+    let showPreview4 = ref(false);
+    let filePreview4 = ref("");
+    let showUpload4 = ref(true);
+    let isImage4 = ref(false);
+    let isPdf4 = ref(false);
+
+    let cpdFile5 = ref("");
+    let cpdFileP5 = ref("");
+    let showPreview5 = ref(false);
+    let filePreview5 = ref("");
+    let showUpload5 = ref(true);
+    let isImage5 = ref(false);
+    let isPdf5 = ref(false);
+
     let cpdBack = ref("");
+    let cpdBack2 = ref("");
+    let cpdBack3 = ref("");
+    let cpdBack4 = ref("");
+    let cpdBack5 = ref("");
 
     let buttons = ref([]);
     let documentSpecs = ref([]);
@@ -247,6 +452,15 @@ export default {
     let cpd = ref("");
     let letterFromHiringManager = ref("");
     let workExperience = ref("");
+    let workExperience2 = ref("");
+
+    let docCount = ref(0);
+
+    const addDocs = () => {
+      if (docCount.value < 5) {
+        docCount.value++;
+      }
+    };
 
     const reset = () => {
       showUpload.value = true;
@@ -297,6 +511,163 @@ export default {
         isImage.value = true;
       }
     };
+
+    const reset2 = () => {
+      showUpload2.value = true;
+      showPreview2.value = false;
+      cpdFile2.value = "";
+      filePreview2.value = "";
+      isImage2.value = true;
+      isPdf2.value = false;
+    };
+    const handleFileUpload2 = () => {
+      cpdFile2.value = cpdFileP2.value.files[0];
+      let reader = new FileReader();
+      isImage2.value = true;
+      let fileS = cpdFile2.value.size;
+      if (fileS <= maxFileSize.value / 1000) {
+        showUpload2.value = false;
+        reader.addEventListener(
+          "load",
+          function() {
+            showPreview2.value = true;
+            filePreview2.value = reader.result;
+          },
+          false
+        );
+        if (cpdFile2.value) {
+          if (/\.(jpe?g|png|gif)$/i.test(cpdFile2.value.name)) {
+            isImage2.value = true;
+            reader.readAsDataURL(cpdFile2.value);
+          } else if (/\.(pdf)$/i.test(cpdFile2.value.name)) {
+            isImage2.value = false;
+            isPdf2.value = true;
+            reader.readAsDataURL(cpdFile2.value);
+          }
+        }
+      } else {
+        cpdFile2.value = "";
+        isImage2.value = true;
+      }
+    };
+
+    const reset3 = () => {
+      showUpload3.value = true;
+      showPreview3.value = false;
+      cpdFile3.value = "";
+      filePreview3.value = "";
+      isImage3.value = true;
+      isPdf3.value = false;
+    };
+    const handleFileUpload3 = () => {
+      cpdFile3.value = cpdFileP3.value.files[0];
+      let reader = new FileReader();
+      isImage3.value = true;
+      let fileS = cpdFile3.value.size;
+      if (fileS <= maxFileSize.value / 1000) {
+        showUpload3.value = false;
+        reader.addEventListener(
+          "load",
+          function() {
+            showPreview3.value = true;
+            filePreview3.value = reader.result;
+          },
+          false
+        );
+        if (cpdFile3.value) {
+          if (/\.(jpe?g|png|gif)$/i.test(cpdFile3.value.name)) {
+            isImage3.value = true;
+            reader.readAsDataURL(cpdFile3.value);
+          } else if (/\.(pdf)$/i.test(cpdFile3.value.name)) {
+            isImage3.value = false;
+            isPdf3.value = true;
+            reader.readAsDataURL(cpdFile3.value);
+          }
+        }
+      } else {
+        cpdFile3.value = "";
+        isImage3.value = true;
+      }
+    };
+
+    const reset4 = () => {
+      showUpload4.value = true;
+      showPreview4.value = false;
+      cpdFile4.value = "";
+      filePreview4.value = "";
+      isImage4.value = true;
+      isPdf4.value = false;
+    };
+    const handleFileUpload4 = () => {
+      cpdFile4.value = cpdFileP4.value.files[0];
+      let reader = new FileReader();
+      isImage4.value = true;
+      let fileS = cpdFile4.value.size;
+      if (fileS <= maxFileSize.value / 1000) {
+        showUpload4.value = false;
+        reader.addEventListener(
+          "load",
+          function() {
+            showPreview4.value = true;
+            filePreview4.value = reader.result;
+          },
+          false
+        );
+        if (cpdFile4.value) {
+          if (/\.(jpe?g|png|gif)$/i.test(cpdFile4.value.name)) {
+            isImage4.value = true;
+            reader.readAsDataURL(cpdFile4.value);
+          } else if (/\.(pdf)$/i.test(cpdFile4.value.name)) {
+            isImage4.value = false;
+            isPdf4.value = true;
+            reader.readAsDataURL(cpdFile4.value);
+          }
+        }
+      } else {
+        cpdFile4.value = "";
+        isImage4.value = true;
+      }
+    };
+
+    const reset5 = () => {
+      showUpload5.value = true;
+      showPreview5.value = false;
+      cpdFile5.value = "";
+      filePreview5.value = "";
+      isImage5.value = true;
+      isPdf5.value = false;
+    };
+    const handleFileUpload5 = () => {
+      cpdFile5.value = cpdFileP5.value.files[0];
+      let reader = new FileReader();
+      isImage5.value = true;
+      let fileS = cpdFile5.value.size;
+      if (fileS <= maxFileSize.value / 1000) {
+        showUpload5.value = false;
+        reader.addEventListener(
+          "load",
+          function() {
+            showPreview5.value = true;
+            filePreview5.value = reader.result;
+          },
+          false
+        );
+        if (cpdFile5.value) {
+          if (/\.(jpe?g|png|gif)$/i.test(cpdFile5.value.name)) {
+            isImage5.value = true;
+            reader.readAsDataURL(cpdFile5.value);
+          } else if (/\.(pdf)$/i.test(cpdFile5.value.name)) {
+            isImage5.value = false;
+            isPdf5.value = true;
+            reader.readAsDataURL(cpdFile5.value);
+          }
+        }
+      } else {
+        cpdFile5.value = "";
+        isImage5.value = true;
+      }
+    };
+
     buttons = store.getters["renewal/getButtons"];
     documentSpecs = store.getters["renewal/getDocumentSpec"];
     licenseInfo = store.getters["renewal/getLicense"];
@@ -310,18 +681,32 @@ export default {
     cpd = store.getters["renewal/getRenewalCpd"];
     letterFromHiringManager = store.getters["renewal/getRenewalLicense"];
     workExperience = store.getters["renewal/getRenewalWorkExperience"];
+    workExperience2 = store.getters["renewal/getRenewalWorkExperience2"];
 
     const submit = () => {
       emit("changeActiveState");
       store.dispatch("renewal/setRenewalCpd", cpdFile);
+      store.dispatch("renewal/setRenewalCpd2", cpdFile2);
+      store.dispatch("renewal/setRenewalCpd3", cpdFile3);
+      store.dispatch("renewal/setRenewalCpd4", cpdFile4);
+      store.dispatch("renewal/setRenewalCpd5", cpdFile5);
     };
     const submitBack = () => {
       emit("changeActiveStateMinus");
       store.dispatch("renewal/setRenewalCpd", cpdFile);
+      store.dispatch("renewal/setRenewalCpd2", cpdFile2);
+      store.dispatch("renewal/setRenewalCpd3", cpdFile3);
+      store.dispatch("renewal/setRenewalCpd4", cpdFile4);
+      store.dispatch("renewal/setRenewalCpd5", cpdFile5);
     };
 
     onMounted(() => {
       cpdBack = store.getters["renewal/getRenewalCpd"];
+      cpdBack2 = store.getters["renewal/getRenewalCpd2"];
+      cpdBack3 = store.getters["renewal/getRenewalCpd3"];
+      cpdBack4 = store.getters["renewal/getRenewalCpd4"];
+      cpdBack5 = store.getters["renewal/getRenewalCpd5"];
+
       documentMessage.value = MESSAGE.DOC_MESSAGE;
       maxFileSize.value = MAX_FILE_SIZE.MAX_FILE_SIZE;
       maxSizeMB.value = MAX_SIZE_MB.MAX_SIZE_MB;
@@ -362,6 +747,126 @@ export default {
           }
         }
       }
+
+      if (
+        cpdBack2 &&
+        cpdBack2 !== undefined &&
+        cpdBack2 !== null &&
+        cpdBack2 !== ""
+      ) {
+        docCount.value++;
+        showUpload2.value = false;
+        cpdFile2.value = cpdBack2;
+        let reader = new FileReader();
+        reader.addEventListener(
+          "load",
+          function() {
+            showPreview2.value = true;
+            filePreview2.value = reader.result;
+          },
+          false
+        );
+        if (cpdFile2.value) {
+          if (/\.(jpe?g|png|gif)$/i.test(cpdFile2.value.name)) {
+            isImage2.value = true;
+            reader.readAsDataURL(cpdFile2.value);
+          } else if (/\.(pdf)$/i.test(cpdFile2.value.name)) {
+            isImage2.value = false;
+            isPdf2.value = true;
+            reader.readAsDataURL(cpdFile2.value);
+          }
+        }
+      }
+
+      if (
+        cpdBack3 &&
+        cpdBack3 !== undefined &&
+        cpdBack3 !== null &&
+        cpdBack3 !== ""
+      ) {
+        docCount.value++;
+        showUpload3.value = false;
+        cpdFile3.value = cpdBack3;
+        let reader = new FileReader();
+        reader.addEventListener(
+          "load",
+          function() {
+            showPreview3.value = true;
+            filePreview3.value = reader.result;
+          },
+          false
+        );
+        if (cpdFile3.value) {
+          if (/\.(jpe?g|png|gif)$/i.test(cpdFile3.value.name)) {
+            isImage3.value = true;
+            reader.readAsDataURL(cpdFile3.value);
+          } else if (/\.(pdf)$/i.test(cpdFile3.value.name)) {
+            isImage3.value = false;
+            isPdf3.value = true;
+            reader.readAsDataURL(cpdFile3.value);
+          }
+        }
+      }
+
+      if (
+        cpdBack4 &&
+        cpdBack4 !== undefined &&
+        cpdBack4 !== null &&
+        cpdBack4 !== ""
+      ) {
+        docCount.value++;
+        showUpload4.value = false;
+        cpdFile4.value = cpdBack4;
+        let reader = new FileReader();
+        reader.addEventListener(
+          "load",
+          function() {
+            showPreview4.value = true;
+            filePreview4.value = reader.result;
+          },
+          false
+        );
+        if (cpdFile4.value) {
+          if (/\.(jpe?g|png|gif)$/i.test(cpdFile4.value.name)) {
+            isImage4.value = true;
+            reader.readAsDataURL(cpdFile4.value);
+          } else if (/\.(pdf)$/i.test(cpdFile4.value.name)) {
+            isImage4.value = false;
+            isPdf4.value = true;
+            reader.readAsDataURL(cpdFile4.value);
+          }
+        }
+      }
+
+      if (
+        cpdBack5 &&
+        cpdBack5 !== undefined &&
+        cpdBack5 !== null &&
+        cpdBack5 !== ""
+      ) {
+        docCount.value += 2;
+        showUpload5.value = false;
+        cpdFile5.value = cpdBack5;
+        let reader = new FileReader();
+        reader.addEventListener(
+          "load",
+          function() {
+            showPreview5.value = true;
+            filePreview5.value = reader.result;
+          },
+          false
+        );
+        if (cpdFile5.value) {
+          if (/\.(jpe?g|png|gif)$/i.test(cpdFile5.value.name)) {
+            isImage5.value = true;
+            reader.readAsDataURL(cpdFile5.value);
+          } else if (/\.(pdf)$/i.test(cpdFile5.value.name)) {
+            isImage5.value = false;
+            isPdf5.value = true;
+            reader.readAsDataURL(cpdFile5.value);
+          }
+        }
+      }
       declinedFields = store.getters["renewal/getDeclinedFields"];
       acceptedFields = store.getters["renewal/getAcceptedFields"];
       remark = store.getters["renewal/getRemark"];
@@ -387,6 +892,54 @@ export default {
             showPreview.value = true;
             filePreview.value = basePath + draftData.documents[i].filePath;
           }
+          if (draftData.documents[i].documentTypeCode == "CPD1") {
+            docCount.value++;
+            showUpload2.value = false;
+            if (draftData.documents[i].fileName.split(".")[1] == "pdf") {
+              isPdf2.value = true;
+            } else {
+              isImage2.value = true;
+            }
+            cpdFile2.value = draftData.documents[i];
+            showPreview2.value = true;
+            filePreview2.value = basePath + draftData.documents[i].filePath;
+          }
+          if (draftData.documents[i].documentTypeCode == "CPD2") {
+            docCount.value++;
+            showUpload3.value = false;
+            if (draftData.documents[i].fileName.split(".")[1] == "pdf") {
+              isPdf3.value = true;
+            } else {
+              isImage3.value = true;
+            }
+            cpdFile3.value = draftData.documents[i];
+            showPreview3.value = true;
+            filePreview3.value = basePath + draftData.documents[i].filePath;
+          }
+          if (draftData.documents[i].documentTypeCode == "CPD3") {
+            docCount.value++;
+            showUpload4.value = false;
+            if (draftData.documents[i].fileName.split(".")[1] == "pdf") {
+              isPdf4.value = true;
+            } else {
+              isImage4.value = true;
+            }
+            cpdFile4.value = draftData.documents[i];
+            showPreview4.value = true;
+            filePreview4.value = basePath + draftData.documents[i].filePath;
+          }
+          if (draftData.documents[i].documentTypeCode == "CPD4") {
+            docCount.value++;
+            showUpload5.value = false;
+            if (draftData.documents[i].fileName.split(".")[1] == "pdf") {
+              isPdf5.value = true;
+            } else {
+              isImage5.value = true;
+            }
+            cpdFile5.value = draftData.documents[i];
+            showPreview5.value = true;
+            filePreview5.value = basePath + draftData.documents[i].filePath;
+          }
         }
       }
     });
@@ -409,6 +962,22 @@ export default {
               formData.append(
                 documentSpecs[4].documentType.code,
                 cpdFile.value
+              );
+              formData.append(
+                documentSpecs[31].documentType.code,
+                cpdFile2.value
+              );
+              formData.append(
+                documentSpecs[32].documentType.code,
+                cpdFile3.value
+              );
+              formData.append(
+                documentSpecs[33].documentType.code,
+                cpdFile4.value
+              );
+              formData.append(
+                documentSpecs[34].documentType.code,
+                cpdFile5.value
               );
               let payload = { document: formData, id: licenseId };
               store
@@ -498,10 +1067,27 @@ export default {
             );
             formData.append(documentSpecs[4].documentType.code, cpdFile.value);
             formData.append(
+              documentSpecs[31].documentType.code,
+              cpdFile2.value
+            );
+            formData.append(
+              documentSpecs[32].documentType.code,
+              cpdFile3.value
+            );
+            formData.append(
+              documentSpecs[33].documentType.code,
+              cpdFile4.value
+            );
+            formData.append(
+              documentSpecs[34].documentType.code,
+              cpdFile5.value
+            );
+            formData.append(
               documentSpecs[7].documentType.code,
               letterFromHiringManager
             );
             formData.append(documentSpecs[5].documentType.code, workExperience);
+            formData.append(documentSpecs[35].documentType.code, workExperience2);
 
             let payload = { document: formData, id: licenseId };
             store
@@ -540,6 +1126,22 @@ export default {
               formData.append(
                 documentSpecs[4].documentType.code,
                 cpdFile.value
+              );
+              formData.append(
+                documentSpecs[31].documentType.code,
+                cpdFile2.value
+              );
+              formData.append(
+                documentSpecs[32].documentType.code,
+                cpdFile3.value
+              );
+              formData.append(
+                documentSpecs[33].documentType.code,
+                cpdFile4.value
+              );
+              formData.append(
+                documentSpecs[34].documentType.code,
+                cpdFile5.value
               );
               let payload = { document: formData, id: licenseId };
               store
@@ -606,6 +1208,22 @@ export default {
             let licenseId = res.data.data.id;
             let formData = new FormData();
             formData.append(documentSpecs[4].documentType.code, cpdFile.value);
+            formData.append(
+              documentSpecs[31].documentType.code,
+              cpdFile2.value
+            );
+            formData.append(
+              documentSpecs[32].documentType.code,
+              cpdFile3.value
+            );
+            formData.append(
+              documentSpecs[33].documentType.code,
+              cpdFile4.value
+            );
+            formData.append(
+              documentSpecs[34].documentType.code,
+              cpdFile5.value
+            );
             let payload = { document: formData, id: licenseId };
             store
               .dispatch("renewal/uploadDocuments", payload)
@@ -651,14 +1269,62 @@ export default {
     return {
       cpdFile,
       cpdFileP,
-      cpdBack,
       showPreview,
       filePreview,
       showUpload,
       isImage,
       isPdf,
+
+      cpdFile2,
+      cpdFileP2,
+      showPreview2,
+      filePreview2,
+      showUpload2,
+      isImage2,
+      isPdf2,
+
+      cpdFile3,
+      cpdFileP3,
+      showPreview3,
+      filePreview3,
+      showUpload3,
+      isImage3,
+      isPdf3,
+
+      cpdFile4,
+      cpdFileP4,
+      showPreview4,
+      filePreview4,
+      showUpload4,
+      isImage4,
+      isPdf4,
+
+      cpdFile5,
+      cpdFileP5,
+      showPreview5,
+      filePreview5,
+      showUpload5,
+      isImage5,
+      isPdf5,
+
+      cpdBack,
+      cpdBack2,
+      cpdBack3,
+      cpdBack4,
+      cpdBack5,
+
       handleFileUpload,
+      handleFileUpload2,
+      handleFileUpload3,
+      handleFileUpload4,
+      handleFileUpload5,
+
       reset,
+      reset2,
+      reset3,
+      reset4,
+      reset5,
+
       submit,
       submitBack,
       draft,
@@ -691,6 +1357,9 @@ export default {
       fileSizeExceed,
       maxFileSize,
       maxSizeMB,
+
+      docCount,
+      addDocs,
     };
   },
 };
