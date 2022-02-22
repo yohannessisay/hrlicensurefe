@@ -2,9 +2,9 @@
   <div>
     <Navigation />
     <div
-      class="h-full pb-xl bg-lightBlueB-200 flex items-center justify-center"
+      class="w-screen h-full pb-xl bg-lightBlueB-200 flex items-center justify-center"
     >
-      <div class="max-w-4xl mt-medium">
+      <div class="w-screen max-w-4xl mt-medium">
         <div class="flex flex-col w-full rounded mb-large">
           <h2 class="flex justify-center pb-medium">
             Good standing
@@ -118,25 +118,12 @@ export default {
                 return e.code == "DRA";
               });
               this.buttons = status[0]["buttons"];
-
-              let temp2 = "";
-              temp2 = this.buttons[1];
-              this.buttons[1] = this.buttons[2];
-              this.buttons[2] = temp2;
             }
             if (this.draftStatus == "SUB") {
               let status = this.applicationStatuses.filter(function(e) {
                 return e.code == "SUB";
               });
               this.buttons = status[0]["buttons"];
-              let temp = "";
-              temp = this.buttons[1];
-              this.buttons[1] = this.buttons[2];
-              this.buttons[2] = temp;
-              let temp2 = "";
-              temp2 = this.buttons[0];
-              this.buttons[0] = this.buttons[2];
-              this.buttons[2] = temp2;
             }
             if (this.draftStatus == "USUP") {
               let status = this.applicationStatuses.filter(function(e) {
@@ -149,10 +136,6 @@ export default {
                 return e.code == "DEC";
               });
               this.buttons = status[0]["buttons"];
-              let temp3 = "";
-              temp3 = this.buttons[1];
-              this.buttons[1] = this.buttons[2];
-              this.buttons[2] = temp3;
             }
           } else {
             let status = this.applicationStatuses.filter(function(e) {
