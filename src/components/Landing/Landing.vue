@@ -9,19 +9,23 @@
     <DeviceAccessibilitySection />
     <MinistryOfHealthSection />
     <FooterSection />
-    <Modal v-if="showLogin">
-      <Login
-        @closeModal="showLogin = false"
-        @redirectToSignup="redirectToSignup"
-        @forgotPassword="forgotPassword"
-      />
-    </Modal>
-    <Modal v-if="showSignUp">
-      <Signup
-        @closeModal="showSignUp = false"
-        @redirectToLogin="redirectToLogin"
-      />
-    </Modal>
+    <transition name="slide-fade-to-left">
+      <Modal v-if="showLogin">
+        <Login
+          @closeModal="showLogin = false"
+          @redirectToSignup="redirectToSignup"
+          @forgotPassword="forgotPassword"
+        />
+      </Modal>
+    </transition>
+    <transition name="slide-fade-to-left">
+      <Modal v-if="showSignUp">
+        <Signup
+          @closeModal="showSignUp = false"
+          @redirectToLogin="redirectToLogin"
+        />
+      </Modal>
+    </transition>
     <Modal v-if="showSendEmail">
       <SendEmail @closeModal="showSendEmail = false" />
     </Modal>
