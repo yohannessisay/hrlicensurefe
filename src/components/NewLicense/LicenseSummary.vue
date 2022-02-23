@@ -381,7 +381,6 @@ export default {
     this.workExperience = this.getWorkExperience;
     this.workExperience2 = this.getWorkExperience2;
     this.serviceFee = this.getServiceFee;
-    this.letterfromOrg = this.getLetterfromOrg;
     this.renewedLicense = this.getRenewedLicense;
     this.professionalLicense = this.getProfessionalLicense;
     this.professionalLicense2 = this.getProfessionalLicense2;
@@ -676,20 +675,6 @@ export default {
         this.docList.push(this.serviceFee);
       }
     }
-    if (this.letterfromOrg != "" && this.letterfromOrg != undefined) {
-      if ("name" in this.letterfromOrg) {
-        if (this.draftId != undefined) {
-          this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "LHI"),
-            1
-          );
-        }
-        var filePreview = await this.blobToBase64(this.letterfromOrg);
-        this.letterfromOrg.docFile = filePreview;
-        this.letterfromOrg.title = "Letter from Hiring Institution";
-        this.docList.push(this.letterfromOrg);
-      }
-    }
     if (this.renewedLicense != "" && this.renewedLicense != undefined) {
       if ("name" in this.renewedLicense) {
         if (this.draftId != undefined) {
@@ -971,7 +956,6 @@ export default {
     educationalDocs: [],
     workExperience: "",
     workExperience2: "",
-    letterfromOrg: "",
     renewedLicense: "",
     professionalLicense: "",
     professionalLicense2: "",
@@ -1212,7 +1196,6 @@ export default {
         this.proCertificate !== "" &&
         this.proDiploma !== "" &&
         this.proTranscript !== "" &&
-        this.letterfromOrg !== "" &&
         this.professionalLicense !== "" &&
         this.renewedLicense !== ""
       ) {
@@ -1229,7 +1212,6 @@ export default {
         this.proCertificate !== "" &&
         this.proDiploma !== "" &&
         this.proTranscript !== "" &&
-        this.letterfromOrg !== "" &&
         this.professionalLicense !== "" &&
         this.renewedLicense !== ""
       ) {
@@ -1246,7 +1228,6 @@ export default {
         this.proCertificate !== "" &&
         this.proDiploma !== "" &&
         this.proTranscript !== "" &&
-        this.letterfromOrg !== "" &&
         this.professionalLicense !== "" &&
         this.renewedLicense !== ""
       ) {
@@ -1263,7 +1244,6 @@ export default {
         this.proCertificate !== "" &&
         this.proDiploma !== "" &&
         this.proTranscript !== "" &&
-        this.letterfromOrg !== "" &&
         this.professionalLicense !== "" &&
         this.renewedLicense !== ""
       ) {
@@ -1441,10 +1421,6 @@ export default {
                 this.herqa
               );
               formData.append(
-                this.documentTypes[17].documentType.code,
-                this.letterfromOrg
-              );
-              formData.append(
                 this.documentTypes[18].documentType.code,
                 this.renewedLicense
               );
@@ -1575,10 +1551,6 @@ export default {
           this.supportLetter
         );
         formData.append(this.documentTypes[16].documentType.code, this.herqa);
-        formData.append(
-          this.documentTypes[17].documentType.code,
-          this.letterfromOrg
-        );
         formData.append(
           this.documentTypes[18].documentType.code,
           this.renewedLicense
@@ -1788,10 +1760,6 @@ export default {
                 this.herqa
               );
               formData.append(
-                this.documentTypes[17].documentType.code,
-                this.letterfromOrg
-              );
-              formData.append(
                 this.documentTypes[18].documentType.code,
                 this.renewedLicense
               );
@@ -1922,10 +1890,6 @@ export default {
           this.supportLetter
         );
         formData.append(this.documentTypes[16].documentType.code, this.herqa);
-        formData.append(
-          this.documentTypes[17].documentType.code,
-          this.letterfromOrg
-        );
         formData.append(
           this.documentTypes[18].documentType.code,
           this.renewedLicense

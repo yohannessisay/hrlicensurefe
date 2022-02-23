@@ -405,7 +405,6 @@ export default {
       educationalDocs: [],
       coc: "",
       supportLetter: "",
-      letterfromOrg: "",
       renewedLicense: "",
       professionalLicense: "",
       professionalLicense2: "",
@@ -675,7 +674,6 @@ export default {
     this.educationalDocs = this.getEducationalDocuments;
     this.workExperience = this.getWorkExperience;
     this.workExperience2 = this.getWorkExperience2;
-    this.letterfromOrg = this.getLetterfromOrg;
     this.renewedLicense = this.getRenewedLicense;
     this.professionalLicense = this.getProfessionalLicense;
     this.professionalLicense2 = this.getProfessionalLicense2;
@@ -971,10 +969,6 @@ export default {
             formData.append(
               this.documentSpec[16].documentType.code,
               this.herqa
-            );
-            formData.append(
-              this.documentSpec[17].documentType.code,
-              this.letterfromOrg
             );
             formData.append(
               this.documentSpec[18].documentType.code,

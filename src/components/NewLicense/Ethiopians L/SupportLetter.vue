@@ -240,7 +240,6 @@ export default {
     let workExperience = ref("");
     let workExperience2 = ref("");
     let professionalLicense = ref("");
-    let letterfromOrg = ref("");
     let renewedLicense = ref("");
     let payroll = ref("");
     let diploma = ref("");
@@ -334,7 +333,6 @@ export default {
     workExperience2 = store.getters["newlicense/getWorkExperience2"];
     renewedLicense = store.getters["newlicense/getRenewedLicense"];
     professionalLicense = store.getters["newlicense/getProfessionalLicense"];
-    letterfromOrg = store.getters["newlicense/getLetterfromOrg"];
     payroll = store.getters["newlicense/getPayroll"];
     diploma = store.getters["newlicense/getDiploma"];
     degree = store.getters["newlicense/getDegree"];
@@ -487,7 +485,6 @@ export default {
               supportLetterFile.value
             );
             formData.append(documentSpecs[16].documentType.code, herqa);
-            formData.append(documentSpecs[17].documentType.code, letterfromOrg);
             formData.append(
               documentSpecs[18].documentType.code,
               renewedLicense

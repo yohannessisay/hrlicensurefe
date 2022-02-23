@@ -14,7 +14,6 @@ import {
     SET_EDUCATIONAL_DOCUMENT,
     SET_WORK_EXPERIENCE,
     SET_WORK_EXPERIENCE2,
-    SET_LETTER_FROM_ORG,
     SET_RENEWED_LICENSE,
     SET_PROFESSIONAL_LICENSE,
     SET_PROFESSIONAL_LICENSE2,
@@ -91,9 +90,6 @@ export default {
     },
     setServiceFee({ commit }, serviceFee) {
         commit(SET_SERVICE_FEE, serviceFee);
-    },
-    setLetterfromOrg({ commit }, letter) {
-        commit(SET_LETTER_FROM_ORG, letter);
     },
     setRenewedLicense({ commit }, license) {
         commit(SET_RENEWED_LICENSE, license);
