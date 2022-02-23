@@ -507,15 +507,14 @@
 
               <!-- All Licensed Applications starts here -->
 
-              <li
+              <!-- <li
                 @click="goodStandingMenuHandler('goodStandingAllLicensed')"
                 class="mb-2"
               >
                 <div class=" text-base" style="color: white; ">
-                  <!-- <i class="far fa-thumbs-up fa-x fa-light mt-4"></i> -->
                   All Letter
                 </div>
-              </li>
+              </li> -->
             </ul>
           </div>
         </div>

@@ -695,15 +695,14 @@
 
               <!-- All Licensed Applications starts here -->
 
-              <li
+              <!-- <li
                 @click="renewalMenuHandler('renewalAllLicensed')"
                 class="mb-2"
               >
                 <div class=" text-base" style="color: white; ">
-                  <!-- <i class="far fa-thumbs-up fa-x fa-light mt-4"></i> -->
                   All Licensed
                 </div>
-              </li>
+              </li> -->
             </ul>
           </div>
         </div>
