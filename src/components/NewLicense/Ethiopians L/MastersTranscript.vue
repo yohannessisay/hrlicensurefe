@@ -33,6 +33,7 @@
         <span class="flex justify-center">{{ documentMessage }}</span>
         <div class="ml-4">
           <button @click="addDocs()">Add Document</button>
+          <button @click="removeDocs()">Remove Document</button>
         </div>
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
           <div class="flex justify-center">
@@ -326,6 +327,11 @@ export default {
         docCount.value++;
       }
     };
+    const removeDocs = () => {
+      if (docCount.value > 0) {
+        docCount.value--;
+      }
+    };
 
     const reset = () => {
       showUpload.value = true;
@@ -555,7 +561,10 @@ export default {
             formData.append(documentSpecs[1].documentType.code, passport);
             formData.append(documentSpecs[2].documentType.code, healthExamCert);
             formData.append(documentSpecs[4].documentType.code, workExperience);
-            formData.append(documentSpecs[28].documentType.code, workExperience2);
+            formData.append(
+              documentSpecs[28].documentType.code,
+              workExperience2
+            );
             formData.append(
               documentSpecs[5].documentType.code,
               englishLanguage
@@ -625,7 +634,10 @@ export default {
             );
             formData.append(documentSpecs[26].documentType.code, phd);
             formData.append(documentSpecs[27].documentType.code, phdTranscript);
-            formData.append(documentSpecs[58].documentType.code, phdTranscript2);
+            formData.append(
+              documentSpecs[58].documentType.code,
+              phdTranscript2
+            );
 
             let payload = { document: formData, id: licenseId };
             store
@@ -788,7 +800,8 @@ export default {
       maxFileSize.value = MAX_FILE_SIZE.MAX_FILE_SIZE;
       maxSizeMB.value = MAX_SIZE_MB.MAX_SIZE_MB;
       mastersTranscriptBack = store.getters["newlicense/getMastersTranscript"];
-      mastersTranscriptBack2 = store.getters["newlicense/getMastersTranscript2"];
+      mastersTranscriptBack2 =
+        store.getters["newlicense/getMastersTranscript2"];
 
       if (
         mastersTranscriptBack &&
@@ -946,6 +959,7 @@ export default {
 
       docCount,
       addDocs,
+      removeDocs,
     };
   },
 };

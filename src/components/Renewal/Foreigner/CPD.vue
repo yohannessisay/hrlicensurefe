@@ -33,6 +33,7 @@
         <span class="flex justify-center">{{ documentMessage }}</span>
         <div class="ml-24">
           <button @click="addDocs()">Add Document</button>
+          <button @click="removeDocs()">Remove Document</button>
         </div>
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
           <div class="flex justify-center mb-10">
@@ -455,6 +456,19 @@ export default {
     let previousLicense = ref("");
     let professionalLicense = ref("");
     let renewedLicense = ref("");
+
+    let docCount = ref(0);
+
+    const addDocs = () => {
+      if (docCount.value < 5) {
+        docCount.value++;
+      }
+    };
+    const removeDocs = () => {
+      if (docCount.value > 0) {
+        docCount.value--;
+      }
+    };
 
     const reset = () => {
       showUpload.value = true;
@@ -1056,7 +1070,10 @@ export default {
               );
             }
             formData.append(documentSpecs[5].documentType.code, workExperience);
-            formData.append(documentSpecs[35].documentType.code, workExperience2);
+            formData.append(
+              documentSpecs[35].documentType.code,
+              workExperience2
+            );
             formData.append(documentSpecs[4].documentType.code, cpdFile.value);
             formData.append(
               documentSpecs[31].documentType.code,
@@ -1363,6 +1380,10 @@ export default {
       fileSizeExceed,
       maxFileSize,
       maxSizeMB,
+
+      docCount,
+      addDocs,
+      removeDocs,
     };
   },
 };

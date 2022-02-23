@@ -27,13 +27,13 @@
         <ul>
           <li>Passport</li>
           <li>Medical Certificate</li>
-            <div class="tooltip">
+          <div class="tooltip">
             English Language Proficiency Certificate
             <span class="tooltiptext ml-4">
               For non-English speaking countries only
             </span>
           </div>
-          <br/>
+          <br />
           <div class="tooltip">
             Higher Education Relevance and Quality Agency
             <span class="tooltiptext ml-4">
@@ -128,7 +128,7 @@
               HERQA
             </span>
           </div>
-          <br/>
+          <br />
           <div class="tooltip">
             Authenticated Academic Document
             <span class="tooltiptext ml-4">
@@ -139,20 +139,6 @@
           <li>
             Authenticated Professional License from Country of Origin
           </li>
-          <div class="tooltip">
-            Renewed License of the Health Facility/Organization
-            <span class="tooltiptext ml-4">
-              Found in Ethiopia
-            </span>
-          </div>
-          <br />
-          <div class="tooltip">
-            Request Letter from health Facility
-            <span class="tooltiptext ml-4">
-              Found in Ethiopia
-            </span>
-          </div>
-          <br />
           <div class="tooltip">
             Current Work Experience/ Goodstanding Letter
             <span class="tooltiptext ml-4">
