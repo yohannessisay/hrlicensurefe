@@ -1,8 +1,5 @@
 <template>
-  <div
-    v-if="this.showLoading2"
-    class="bg-lightBlueB-200 w-screen h-screen max-w-4xl"
-  >
+  <div v-if="this.showLoading2" class="bg-lightBlueB-200 h-screen max-w-4xl">
     <Spinner class="bg-lightBlueB-200" />
   </div>
   <div class="bg-white mb-large rounded pl-4 pt-4 pr-4 pb-4">
@@ -393,7 +390,8 @@ export default {
         }
         this.letterPreview = await this.blobToBase64(this.goodstandingLetter);
         this.goodstandingLetter.docFile = this.letterPreview;
-        this.goodstandingLetter.title = "Verification Letter";
+        this.goodstandingLetter.title =
+          "Work Experience and Support Letter from Organization";
         this.docList.push(this.goodstandingLetter);
       }
     }

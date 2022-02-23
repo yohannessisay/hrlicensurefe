@@ -107,8 +107,19 @@
                 <h2 v-if="!this.fileSizeExceed">{{ this.photoFileSize }}</h2>
               </span>
               <span v-if="showDiplomaUpload">
-                <label class="text-primary-700 text-lg"
-                  >Authenticated Professional Document Diploma:
+                <label class="text-primary-700 text-lg">
+                  <label v-if="educationalLevel == 'diploma'"
+                    >Authenticated Professional Document Diploma:
+                  </label>
+                  <label v-if="educationalLevel == 'degree'"
+                    >Authenticated Professional Document Degree:
+                  </label>
+                  <label v-if="educationalLevel == 'masters'"
+                    >Authenticated Professional Document Masters:
+                  </label>
+                  <label v-if="educationalLevel == 'PhD'"
+                    >Authenticated Professional Document Phd:
+                  </label>
                   <span style="color: red; font-weight: bold; font-size:16px"
                     >Required</span
                   >
@@ -383,18 +394,20 @@ export default {
       documentSpec: [],
       licenseInfo: "",
       userId: +localStorage.getItem("userId"),
+      educationalLevel: localStorage.getItem("educationalLevel"),
       passport: "",
       healthExamCert: "",
       workExperience: "",
+      workExperience2: "",
       englishLanguage: "",
       professionalDoc: [],
       herqa: "",
       educationalDocs: [],
       coc: "",
       supportLetter: "",
-      letterfromOrg: "",
       renewedLicense: "",
       professionalLicense: "",
+      professionalLicense2: "",
       payroll: "",
       diploma: "",
       transcript: "",
@@ -442,10 +455,12 @@ export default {
       getCoc: "newlicense/getCoc",
       getEducationalDocuments: "newlicense/getEducationalDocuments",
       getWorkExperience: "newlicense/getWorkExperience",
+      getWorkExperience2: "newlicense/getWorkExperience2",
       getLetterfromOrg: "newlicense/getLetterfromOrg",
       getRenewedLicense: "newlicense/getRenewedLicense",
       getPayroll: "renewal/getPayroll",
       getProfessionalLicense: "newlicense/getProfessionalLicense",
+      getProfessionalLicense2: "newlicense/getProfessionalLicense2",
       getDiploma: "newlicense/getDiploma",
       getTranscript: "newlicense/getTranscript",
       getDegree: "newlicense/getDegree",
@@ -658,9 +673,10 @@ export default {
     this.coc = this.getCoc;
     this.educationalDocs = this.getEducationalDocuments;
     this.workExperience = this.getWorkExperience;
-    this.letterfromOrg = this.getLetterfromOrg;
+    this.workExperience2 = this.getWorkExperience2;
     this.renewedLicense = this.getRenewedLicense;
     this.professionalLicense = this.getProfessionalLicense;
+    this.professionalLicense2 = this.getProfessionalLicense2;
     this.payroll = this.getPayroll;
     this.diploma = this.getDiploma;
     this.transcript = this.getTranscript;
@@ -901,6 +917,10 @@ export default {
               this.workExperience
             );
             formData.append(
+              this.documentSpec[28].documentType.code,
+              this.workExperience2
+            );
+            formData.append(
               this.documentSpec[5].documentType.code,
               this.englishLanguage
             );
@@ -951,16 +971,16 @@ export default {
               this.herqa
             );
             formData.append(
-              this.documentSpec[17].documentType.code,
-              this.letterfromOrg
-            );
-            formData.append(
               this.documentSpec[18].documentType.code,
               this.renewedLicense
             );
             formData.append(
               this.documentSpec[19].documentType.code,
               this.professionalLicense
+            );
+            formData.append(
+              this.documentSpec[52].documentType.code,
+              this.professionalLicense2
             );
             formData.append(
               this.documentSpec[20].documentType.code,

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- <reviewer-nav-bar tab="newLicenseAllLicensed" /> -->
+    <!-- <reviewer-nav-bar tab="renewalAllLicensed" /> -->
     <div class="bg-lightBlueB-200 h-full" v-if="!allInfo.searchByInput">
       <div class="pl-12">
         <div>Filter By</div>
@@ -24,11 +24,11 @@
         </button>
       </div>
       <div class="flex pl-12 pt-tiny">
-        <Title message="New License All Licensed" />
+        <Title message="Accredited" />
       </div>
       <div class="flex flex-wrap pb-medium rounded h-full" v-if="!showLoading">
         <nothing-to-show :nothingToShow="nothingToShow" />
-        <all-licensed-applications :allLicensedApplication="getNewLicenseAllLicensed" app_type="New License" others_licensed="false"/>
+        <all-licensed-applications :allLicensedApplication="getRenewalAllLicensed" app_type="Renewal" others_licensed="false"/>
       </div>
     </div>
     <div
@@ -49,7 +49,7 @@
       <filtered-info
         :filteredData="allInfo.filteredByDate"
         type="detail"
-        app_type="New License"
+        app_type="Renewal"
       />
     </div>
   </div>
@@ -66,6 +66,7 @@ import { useStore } from "vuex";
 
 import AllLicensedApplications from "../ChildApplicationTypes/AllLicensedApplications.vue"
 import applicationStatus from "../../Configurations/getApplicationStatus.js";
+
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import filterApplication from "../../ChildComponents/FilteredDatas/FilterApplication.js";
 import FilteredInfo from "../../ChildComponents/FilteredDatas/FilteredInfo.vue";
@@ -83,8 +84,8 @@ import Title from "@/sharedComponents/TitleWithIllustration";
 export default {
   computed: {
     moment: () => moment,
-    getNewLicenseAllLicensed() {
-      return store.getters["reviewerNewLicense/getNewLicenseAllLicensedSearched"];
+    getRenewalAllLicensed() {
+      return store.getters["reviewerRenewal/getRenewalAllLicensedSearched"];
     },
   },
   components: {
@@ -98,7 +99,7 @@ export default {
   },
   setup() {
     const store = useStore();
-    let newLicenseAllLicensed = ref([]);
+    let renewalAllLicensed = ref([]);
 
     const adminId = +localStorage.getItem("adminId");
 
@@ -131,14 +132,15 @@ export default {
       allInfo.value.app_type = "";
     };
 
-    const fetchNewLicenseAllLicensed = () => {
+    const fetchRenewalAllLicensed = () => {
       showLoading.value = true;
-      store.dispatch("reviewerNewLicense/getNewLicenseAllLicensed").then((res) => {
+      store.dispatch("reviewerRenewal/getRenewalAllLicensed").then((res) => {
         showLoading.value = false;
-        newLicenseAllLicensed.value =
-          store.getters["reviewerNewLicense/getNewLicenseAllLicensedSearched"];
+        renewalAllLicensed.value =
+          store.getters["reviewerRenewal/getRenewalAllLicensedSearched"];
         allInfo.value.assignApplication =
-          store.getters["reviewerNewLicense/getNewLicenseAllLicensedSearched"];
+          store.getters["reviewerRenewal/getRenewalAllLicensedSearched"];
+
         for (let applicant in allInfo.value.assignApplication) {
           if (
             allInfo.value.assignApplication[applicant].applicationType ===
@@ -148,13 +150,13 @@ export default {
               allInfo.value.assignApplication[applicant].applicantType;
           }
         }
-        if (newLicenseAllLicensed.value.length === 0) {
+        if (renewalAllLicensed.value.length === 0) {
           nothingToShow.value = true;
         }
       });
     };
     onMounted(() => {
-      fetchNewLicenseAllLicensed();
+      fetchRenewalAllLicensed();
     });
 
     return {

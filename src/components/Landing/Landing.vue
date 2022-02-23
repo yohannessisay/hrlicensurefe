@@ -1,5 +1,5 @@
 <template>
-  <div class="w-screen overflow-x-hidden">
+  <div class="overflow-x-hidden">
     <LandingTopNav @setShowLogin="showLogin = true" />
     <GetCertifiedSection @setShowSignup="showSignUp = true" />
     <NewLicenseSection />
@@ -9,19 +9,23 @@
     <DeviceAccessibilitySection />
     <MinistryOfHealthSection />
     <FooterSection />
-    <Modal v-if="showLogin">
-      <Login
-        @closeModal="showLogin = false"
-        @redirectToSignup="redirectToSignup"
-        @forgotPassword="forgotPassword"
-      />
-    </Modal>
-    <Modal v-if="showSignUp">
-      <Signup
-        @closeModal="showSignUp = false"
-        @redirectToLogin="redirectToLogin"
-      />
-    </Modal>
+    <transition name="slide-fade-to-left">
+      <Modal v-if="showLogin">
+        <Login
+          @closeModal="showLogin = false"
+          @redirectToSignup="redirectToSignup"
+          @forgotPassword="forgotPassword"
+        />
+      </Modal>
+    </transition>
+    <transition name="slide-fade-to-left">
+      <Modal v-if="showSignUp">
+        <Signup
+          @closeModal="showSignUp = false"
+          @redirectToLogin="redirectToLogin"
+        />
+      </Modal>
+    </transition>
     <Modal v-if="showSendEmail">
       <SendEmail @closeModal="showSendEmail = false" />
     </Modal>

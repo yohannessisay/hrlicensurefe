@@ -27,10 +27,13 @@
         </h2>
         <TitleWithIllustration
           illustration="Certificate"
-          message="Authenticated Work Experience(3 to 4 years)"
+          message="Work Experience(3 to 4 years)"
           class="mt-8"
         />
         <span class="flex justify-center">{{ documentMessage }}</span>
+        <div class="ml-24">
+          <button @click="addDocs()">Add Document</button>
+        </div>
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
           <div class="flex justify-center mb-10">
             <div>
@@ -78,6 +81,47 @@
               </div>
               <span v-if="!showUpload && !isImage && !isPdf">
                 <img :src="filePreview" alt="" class="preview" />
+              </span>
+            </div>
+            <div class="ml-8" v-if="docCount > 1">
+              <span v-if="showUpload2">
+                <label class="text-primary-700"
+                  >Upload image:
+                  <div class="dropbox">
+                    <input
+                      type="file"
+                      id="workExperienceFile2"
+                      class="photoFile"
+                      ref="workExperienceFileP2"
+                      v-on:change="handleFileUpload2()"
+                      style="margin-bottom: 15px !important"
+                      accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
+                    />
+                    <p>
+                      Drag your file(s) here to begin<br />
+                      or click to browse
+                    </p>
+                  </div>
+                </label>
+              </span>
+              <picture v-if="!showUpload2 && isImage2">
+                <p>
+                  <a href="javascript:void(0)" @click="reset2()"
+                    >Upload again</a
+                  >
+                </p>
+                <img v-bind:src="filePreview2" v-show="showPreview2" />
+              </picture>
+              <div v-if="!showUpload2 && isPdf2">
+                <p>
+                  <a href="javascript:void(0)" @click="reset2()"
+                    >Upload again</a
+                  >
+                </p>
+                <embed v-bind:src="filePreview2" v-show="showPreview2" />
+              </div>
+              <span v-if="!showUpload2 && !isImage2 && !isPdf2">
+                <img :src="filePreview2" class="preview" />
               </span>
             </div>
           </div>
@@ -209,7 +253,16 @@ export default {
     let dataChanged = ref(false);
     let draftData = ref("");
 
+    let workExperienceFile2 = ref("");
+    let workExperienceFileP2 = ref("");
+    let showPreview2 = ref(false);
+    let filePreview2 = ref("");
+    let showUpload2 = ref(true);
+    let isImage2 = ref(false);
+    let isPdf2 = ref(false);
+
     let workExperienceBack = ref("");
+    let workExperienceBack2 = ref("");
 
     let buttons = [];
     let documentSpecs = ref([]);
@@ -233,6 +286,10 @@ export default {
     let professionalDoc = [];
     let healthExamCert = ref("");
     let cpd = ref("");
+    let cpd2 = ref("");
+    let cpd3 = ref("");
+    let cpd4 = ref("");
+    let cpd5 = ref("");
     let herqa = ref("");
     let previousLicense = ref("");
     let supportLetter = ref("");
@@ -251,6 +308,14 @@ export default {
     let mastersTranscript = ref("");
     let phd = ref("");
     let phdTranscript = ref("");
+
+    let docCount = ref(0);
+
+    const addDocs = () => {
+      if (docCount.value < 2) {
+        docCount.value++;
+      }
+    };
 
     const reset = () => {
       showUpload.value = true;
@@ -301,6 +366,47 @@ export default {
         isImage.value = true;
       }
     };
+
+    const reset2 = () => {
+      showUpload2.value = true;
+      showPreview2.value = false;
+      workExperienceFile2.value = "";
+      filePreview2.value = "";
+      isImage2.value = true;
+      isPdf2.value = false;
+    };
+
+    const handleFileUpload2 = () => {
+      workExperienceFile2.value = workExperienceFileP2.value.files[0];
+      let reader = new FileReader();
+      isImage2.value = true;
+      let fileS = workExperienceFile2.value.size;
+      if (fileS <= maxFileSize.value / 1000) {
+        showUpload2.value = false;
+        reader.addEventListener(
+          "load",
+          function() {
+            showPreview2.value = true;
+            filePreview2.value = reader.result;
+          },
+          false
+        );
+        if (workExperienceFile2.value) {
+          if (/\.(jpe?g|png|gif)$/i.test(workExperienceFile2.value.name)) {
+            isImage2.value = true;
+            reader.readAsDataURL(workExperienceFile2.value);
+          } else if (/\.(pdf)$/i.test(workExperienceFile2.value.name)) {
+            isImage2.value = false;
+            isPdf2.value = true;
+            reader.readAsDataURL(workExperienceFile2.value);
+          }
+        }
+      } else {
+        workExperienceFile2.value = "";
+        isImage2.value = true;
+      }
+    };
+
     buttons = store.getters["renewal/getButtons"];
     documentSpecs = store.getters["renewal/getDocumentSpec"];
     licenseInfo = store.getters["renewal/getLicense"];
@@ -309,6 +415,10 @@ export default {
     professionalDoc = store.getters["renewal/getProfessionalDocuments"];
     healthExamCert = store.getters["renewal/getHealthExamCert"];
     cpd = store.getters["renewal/getRenewalCpd"];
+    cpd2 = store.getters["renewal/getRenewalCpd2"];
+    cpd3 = store.getters["renewal/getRenewalCpd3"];
+    cpd4 = store.getters["renewal/getRenewalCpd4"];
+    cpd5 = store.getters["renewal/getRenewalCpd5"];
     herqa = store.getters["renewal/getHerqa"];
     previousLicense = store.getters["renewal/getPreviousLicense"];
     supportLetter = store.getters["renewal/getSupportLetter"];
@@ -331,17 +441,20 @@ export default {
     const submit = () => {
       emit("changeActiveState");
       store.dispatch("renewal/setRenewalWorkExperience", workExperienceFile);
+      store.dispatch("renewal/setRenewalWorkExperience2", workExperienceFile2);
     };
     const submitBack = () => {
       emit("changeActiveStateMinus");
       store.dispatch("renewal/setRenewalWorkExperience", workExperienceFile);
+      store.dispatch("renewal/setRenewalWorkExperience2", workExperienceFile2);
     };
 
     onMounted(() => {
       documentMessage.value = MESSAGE.DOC_MESSAGE;
       maxFileSize.value = MAX_FILE_SIZE.MAX_FILE_SIZE;
       maxSizeMB.value = MAX_SIZE_MB.MAX_SIZE_MB;
-      workExperienceBack = store.getters["renewal/getRenewalWorkExperience"];
+      workExperienceBack = store.getters["renewal/setRenewalWorkExperience"];
+      workExperienceBack2 = store.getters["renewal/setRenewalWorkExperience2"];
       if (
         workExperienceBack &&
         workExperienceBack !== undefined &&
@@ -379,6 +492,35 @@ export default {
           }
         }
       }
+      if (
+        workExperienceBack2 &&
+        workExperienceBack2 !== undefined &&
+        workExperienceBack2 !== null &&
+        workExperienceBack2 !== ""
+      ) {
+        docCount.value++;
+        showUpload2.value = false;
+        workExperienceFile2.value = workExperienceBack2;
+        let reader = new FileReader();
+        reader.addEventListener(
+          "load",
+          function() {
+            showPreview2.value = true;
+            filePreview2.value = reader.result;
+          },
+          false
+        );
+        if (workExperienceFile2.value) {
+          if (/\.(jpe?g|png|gif)$/i.test(workExperienceFile2.value.name)) {
+            isImage2.value = true;
+            reader.readAsDataURL(workExperienceFile2.value);
+          } else if (/\.(pdf)$/i.test(workExperienceFile2.value.name)) {
+            isImage2.value = false;
+            isPdf2.value = true;
+            reader.readAsDataURL(workExperienceFile2.value);
+          }
+        }
+      }
       declinedFields = store.getters["renewal/getDeclinedFields"];
       acceptedFields = store.getters["renewal/getAcceptedFields"];
       remark = store.getters["renewal/getRemark"];
@@ -400,10 +542,21 @@ export default {
             } else {
               isImage.value = true;
             }
-
             workExperienceFile.value = draftData.documents[i];
             showPreview.value = true;
             filePreview.value = basePath + draftData.documents[i].filePath;
+          }
+          if (draftData.documents[i].documentTypeCode == "WE1") {
+            docCount.value++;
+            showUpload2.value = false;
+            if (draftData.documents[i].fileName.split(".")[1] == "pdf") {
+              isPdf2.value = true;
+            } else {
+              isImage2.value = true;
+            }
+            workExperienceFile2.value = draftData.documents[i];
+            showPreview2.value = true;
+            filePreview2.value = basePath + draftData.documents[i].filePath;
           }
         }
       }
@@ -427,7 +580,10 @@ export default {
                 documentSpecs[5].documentType.code,
                 workExperienceFile.value
               );
-
+              formData.append(
+                documentSpecs[35].documentType.code,
+                workExperienceFile2.value
+              );
               let payload = { document: formData, id: licenseId };
               store
                 .dispatch("renewal/uploadDocuments", payload)
@@ -511,7 +667,15 @@ export default {
               documentSpecs[5].documentType.code,
               workExperienceFile.value
             );
+            formData.append(
+              documentSpecs[35].documentType.code,
+              workExperienceFile2.value
+            );
             formData.append(documentSpecs[4].documentType.code, cpd);
+            formData.append(documentSpecs[31].documentType.code, cpd2);
+            formData.append(documentSpecs[32].documentType.code, cpd3);
+            formData.append(documentSpecs[33].documentType.code, cpd4);
+            formData.append(documentSpecs[34].documentType.code, cpd5);
             formData.append(documentSpecs[18].documentType.code, herqa);
             formData.append(
               documentSpecs[6].documentType.code,
@@ -604,6 +768,10 @@ export default {
                 documentSpecs[1].documentType.code,
                 workExperienceFile.value
               );
+              formData.append(
+                documentSpecs[35].documentType.code,
+                workExperienceFile2.value
+              );
               let payload = { document: formData, id: licenseId };
               store
                 .dispatch("renewal/uploadDocuments", payload)
@@ -671,6 +839,10 @@ export default {
               documentSpecs[1].documentType.code,
               workExperienceFile.value
             );
+            formData.append(
+              documentSpecs[35].documentType.code,
+              workExperienceFile2.value
+            );
             let payload = { document: formData, id: licenseId };
             store
               .dispatch("renewal/uploadDocuments", payload)
@@ -723,9 +895,23 @@ export default {
       showUpload,
       isImage,
       isPdf,
+
+      workExperienceFile2,
+      workExperienceFileP2,
+      workExperienceBack2,
+      showPreview2,
+      filePreview2,
+      showUpload2,
+      isImage2,
+      isPdf2,
+
       handleFileUpload,
-      fileSize,
+      handleFileUpload2,
+
       reset,
+      reset2,
+
+      fileSize,
       submit,
       submitBack,
       draftStatus,

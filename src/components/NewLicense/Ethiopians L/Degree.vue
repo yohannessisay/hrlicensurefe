@@ -246,17 +246,22 @@ export default {
     let supportLetter = ref("");
     let educationDoc = ref([]);
     let workExperience = ref("");
+    let workExperience2 = ref("");
     let professionalLicense = ref("");
-    let letterfromOrg = ref("");
     let renewedLicense = ref("");
     let payroll = ref("");
     let coc = ref("");
+    let coc2 = ref("");
+    let coc3 = ref("");
     let diploma = ref("");
     let transcript = ref("");
+    let transcript2 = ref("");
     let masters = ref("");
     let mastersTranscript = ref("");
+    let mastersTranscript2 = ref("");
     let phd = ref("");
     let phdTranscript = ref("");
+    let phdTranscript2 = ref("");
 
     const reset = () => {
       showUpload.value = true;
@@ -329,17 +334,22 @@ export default {
     supportLetter = store.getters["newlicense/getSupportLetter"];
     educationDoc = store.getters["newlicense/getEducationalDocuments"];
     workExperience = store.getters["newlicense/getWorkExperience"];
+    workExperience2 = store.getters["newlicense/getWorkExperience2"];
     renewedLicense = store.getters["newlicense/getRenewedLicense"];
     professionalLicense = store.getters["newlicense/getProfessionalLicense"];
-    letterfromOrg = store.getters["newlicense/getLetterfromOrg"];
     payroll = store.getters["newlicense/getPayroll"];
     transcript = store.getters["newlicense/getTranscript"];
+    transcript2 = store.getters["newlicense/getTranscript2"];
     diploma = store.getters["newlicense/getDiploma"];
     coc = store.getters["newlicense/getCoc"];
+    coc2 = store.getters["newlicense/getCoc2"];
+    coc3 = store.getters["newlicense/getCoc3"];
     masters = store.getters["newlicense/getMasters"];
     mastersTranscript = store.getters["newlicense/getMastersTranscript"];
+    mastersTranscript2 = store.getters["newlicense/getMastersTranscript2"];
     phd = store.getters["newlicense/getPhd"];
     phdTranscript = store.getters["newlicense/getPhdTranscript"];
+    phdTranscript2 = store.getters["newlicense/getPhdTranscript2"];
 
     const draft = (action) => {
       message.value.showLoading = true;
@@ -427,13 +437,17 @@ export default {
             formData.append(documentSpecs[1].documentType.code, passport);
             formData.append(documentSpecs[2].documentType.code, healthExamCert);
             formData.append(documentSpecs[4].documentType.code, workExperience);
+            formData.append(documentSpecs[28].documentType.code, workExperience2);
             formData.append(
               documentSpecs[5].documentType.code,
               englishLanguage
             );
             formData.append(documentSpecs[22].documentType.code, diploma);
             formData.append(documentSpecs[23].documentType.code, transcript);
+            formData.append(documentSpecs[52].documentType.code, transcript2);
             formData.append(documentSpecs[9].documentType.code, coc);
+            formData.append(documentSpecs[42].documentType.code, coc2);
+            formData.append(documentSpecs[41].documentType.code, coc3);
             if (professionalDoc != undefined) {
               formData.append(
                 documentSpecs[6].documentType.code,
@@ -476,7 +490,6 @@ export default {
             }
             formData.append(documentSpecs[15].documentType.code, supportLetter);
             formData.append(documentSpecs[16].documentType.code, herqa);
-            formData.append(documentSpecs[17].documentType.code, letterfromOrg);
             formData.append(
               documentSpecs[18].documentType.code,
               renewedLicense
@@ -491,8 +504,13 @@ export default {
               documentSpecs[25].documentType.code,
               mastersTranscript
             );
+            formData.append(
+              documentSpecs[57].documentType.code,
+              mastersTranscript2
+            );
             formData.append(documentSpecs[26].documentType.code, phd);
             formData.append(documentSpecs[27].documentType.code, phdTranscript);
+            formData.append(documentSpecs[58].documentType.code, phdTranscript2);
 
             let payload = { document: formData, id: licenseId };
             store

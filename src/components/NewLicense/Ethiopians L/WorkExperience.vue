@@ -294,19 +294,23 @@ export default {
     let herqa = ref("");
     let supportLetter = ref("");
     let coc = ref("");
+    let coc2 = ref("");
+    let coc3 = ref("");
     let educationDoc = ref([]);
     let englishLanguage = ref("");
     let professionalLicense = ref("");
-    let letterfromOrg = ref("");
     let renewedLicense = ref("");
     let payroll = ref("");
     let diploma = ref("");
     let transcript = ref("");
+    let transcript2 = ref("");
     let degree = ref("");
     let masters = ref("");
     let mastersTranscript = ref("");
+    let mastersTranscript2 = ref("");
     let phd = ref("");
     let phdTranscript = ref("");
+    let phdTranscript2 = ref("");
 
     let docCount = ref(0);
 
@@ -409,10 +413,12 @@ export default {
     const submit = () => {
       emit("changeActiveState");
       store.dispatch("newlicense/setWorkExperience", workExperienceFile);
+      store.dispatch("newlicense/setWorkExperience2", workExperienceFile2);
     };
     const submitBack = () => {
       emit("changeActiveStateMinus");
       store.dispatch("newlicense/setWorkExperience", workExperienceFile);
+      store.dispatch("newlicense/setWorkExperience2", workExperienceFile2);
     };
     buttons = store.getters["newlicense/getButtons"];
     documentSpecs = store.getters["newlicense/getDocumentSpec"];
@@ -424,19 +430,23 @@ export default {
     herqa = store.getters["newlicense/getHerqa"];
     supportLetter = store.getters["newlicense/getSupportLetter"];
     coc = store.getters["newlicense/getCoc"];
+    coc2 = store.getters["newlicense/getCoc2"];
+    coc3 = store.getters["newlicense/getCoc3"];
     educationDoc = store.getters["newlicense/getEducationalDocuments"];
     englishLanguage = store.getters["newlicense/getEnglishLanguage"];
     renewedLicense = store.getters["newlicense/getRenewedLicense"];
     professionalLicense = store.getters["newlicense/getProfessionalLicense"];
-    letterfromOrg = store.getters["newlicense/getLetterfromOrg"];
     payroll = store.getters["newlicense/getPayroll"];
     diploma = store.getters["newlicense/getDiploma"];
     degree = store.getters["newlicense/getDegree"];
     transcript = store.getters["newlicense/getTranscript"];
+    transcript2 = store.getters["newlicense/getTranscript2"];
     masters = store.getters["newlicense/getMasters"];
     mastersTranscript = store.getters["newlicense/getMastersTranscript"];
+    mastersTranscript2 = store.getters["newlicense/getMastersTranscript2"];
     phd = store.getters["newlicense/getPhd"];
     phdTranscript = store.getters["newlicense/getPhdTranscript"];
+    phdTranscript2 = store.getters["newlicense/getPhdTranscript2"];
 
     const draft = (action) => {
       message.value.showLoading = true;
@@ -456,6 +466,10 @@ export default {
               formData.append(
                 documentSpecs[4].documentType.code,
                 workExperienceFile.value
+              );
+              formData.append(
+                documentSpecs[28].documentType.code,
+                workExperienceFile2.value
               );
               let payload = { document: formData, id: licenseId };
               store
@@ -528,11 +542,16 @@ export default {
               workExperienceFile.value
             );
             formData.append(
+              documentSpecs[28].documentType.code,
+              workExperienceFile2.value
+            );
+            formData.append(
               documentSpecs[5].documentType.code,
               englishLanguage
             );
             formData.append(documentSpecs[22].documentType.code, diploma);
             formData.append(documentSpecs[23].documentType.code, transcript);
+            formData.append(documentSpecs[52].documentType.code, transcript2);
             formData.append(documentSpecs[21].documentType.code, degree);
             if (professionalDoc != undefined) {
               formData.append(
@@ -549,6 +568,8 @@ export default {
               );
             }
             formData.append(documentSpecs[9].documentType.code, coc);
+            formData.append(documentSpecs[41].documentType.code, coc2);
+            formData.append(documentSpecs[42].documentType.code, coc3);
             if (educationDoc != undefined) {
               formData.append(
                 documentSpecs[10].documentType.code,
@@ -573,7 +594,6 @@ export default {
             }
             formData.append(documentSpecs[15].documentType.code, supportLetter);
             formData.append(documentSpecs[16].documentType.code, herqa);
-            formData.append(documentSpecs[17].documentType.code, letterfromOrg);
             formData.append(
               documentSpecs[18].documentType.code,
               renewedLicense
@@ -588,8 +608,16 @@ export default {
               documentSpecs[25].documentType.code,
               mastersTranscript
             );
+            formData.append(
+              documentSpecs[57].documentType.code,
+              mastersTranscript2
+            );
             formData.append(documentSpecs[26].documentType.code, phd);
             formData.append(documentSpecs[27].documentType.code, phdTranscript);
+            formData.append(
+              documentSpecs[58].documentType.code,
+              phdTranscript2
+            );
             let payload = { document: formData, id: licenseId };
             store
               .dispatch("newlicense/uploadDocuments", payload)
@@ -627,6 +655,10 @@ export default {
               formData.append(
                 documentSpecs[4].documentType.code,
                 workExperienceFile.value
+              );
+              formData.append(
+                documentSpecs[28].documentType.code,
+                workExperienceFile2.value
               );
               let payload = { document: formData, id: licenseId };
               store
@@ -695,6 +727,10 @@ export default {
               documentSpecs[4].documentType.code,
               workExperienceFile.value
             );
+            formData.append(
+              documentSpecs[28].documentType.code,
+              workExperienceFile2.value
+            );
             let payload = { document: formData, id: licenseId };
             store
               .dispatch("newlicense/uploadDocuments", payload)
@@ -742,6 +778,7 @@ export default {
       maxFileSize.value = MAX_FILE_SIZE.MAX_FILE_SIZE;
       maxSizeMB.value = MAX_SIZE_MB.MAX_SIZE_MB;
       workExperienceBack = store.getters["newlicense/getWorkExperience"];
+      workExperienceBack2 = store.getters["newlicense/getWorkExperience2"];
       if (
         workExperienceBack &&
         workExperienceBack !== undefined &&
@@ -779,6 +816,35 @@ export default {
           }
         }
       }
+      if (
+        workExperienceBack2 &&
+        workExperienceBack2 !== undefined &&
+        workExperienceBack2 !== null &&
+        workExperienceBack2 !== ""
+      ) {
+        docCount.value++;
+        showUpload2.value = false;
+        workExperienceFile2.value = workExperienceBack2;
+        let reader = new FileReader();
+        reader.addEventListener(
+          "load",
+          function() {
+            showPreview2.value = true;
+            filePreview2.value = reader.result;
+          },
+          false
+        );
+        if (workExperienceFile2.value) {
+          if (/\.(jpe?g|png|gif)$/i.test(workExperienceFile2.value.name)) {
+            isImage2.value = true;
+            reader.readAsDataURL(workExperienceFile2.value);
+          } else if (/\.(pdf)$/i.test(workExperienceFile2.value.name)) {
+            isImage2.value = false;
+            isPdf2.value = true;
+            reader.readAsDataURL(workExperienceFile2.value);
+          }
+        }
+      }
       declinedFields = store.getters["newlicense/getDeclinedFields"];
       acceptedFields = store.getters["newlicense/getAcceptedFields"];
       remark = store.getters["newlicense/getRemark"];
@@ -803,6 +869,18 @@ export default {
             workExperienceFile.value = draftData.documents[i];
             showPreview.value = true;
             filePreview.value = basePath + draftData.documents[i].filePath;
+          }
+          if (draftData.documents[i].documentTypeCode == "WE1") {
+            docCount.value++;
+            showUpload2.value = false;
+            if (draftData.documents[i].fileName.split(".")[1] == "pdf") {
+              isPdf2.value = true;
+            } else {
+              isImage2.value = true;
+            }
+            workExperienceFile2.value = draftData.documents[i];
+            showPreview2.value = true;
+            filePreview2.value = basePath + draftData.documents[i].filePath;
           }
         }
       }

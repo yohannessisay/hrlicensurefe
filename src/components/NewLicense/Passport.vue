@@ -243,19 +243,25 @@ export default {
     let herqa = ref("");
     let supportLetter = ref("");
     let coc = ref("");
+    let coc2 = ref("");
+    let coc3 = ref("");
     let educationDoc = ref([]);
     let workExperience = ref("");
+    let workExperience2 = ref("");
     let professionalLicense = ref("");
-    let letterfromOrg = ref("");
+    let professionalLicense2 = ref("");
     let renewedLicense = ref("");
     let payroll = ref("");
     let diploma = ref("");
     let transcript = ref("");
+    let transcript2 = ref("");
     let degree = ref("");
     let masters = ref("");
     let mastersTranscript = ref("");
+    let mastersTranscript2 = ref("");
     let phd = ref("");
     let phdTranscript = ref("");
+    let phdTranscript2 = ref("");
 
     const reset = () => {
       showUpload.value = true;
@@ -324,19 +330,25 @@ export default {
     herqa = store.getters["newlicense/getHerqa"];
     supportLetter = store.getters["newlicense/getSupportLetter"];
     coc = store.getters["newlicense/getCoc"];
+    coc2 = store.getters["newlicense/getCoc2"];
+    coc3 = store.getters["newlicense/getCoc3"];
     educationDoc = store.getters["newlicense/getEducationalDocuments"];
     workExperience = store.getters["newlicense/getWorkExperience"];
+    workExperience2 = store.getters["newlicense/getWorkExperience2"];
     renewedLicense = store.getters["newlicense/getRenewedLicense"];
     professionalLicense = store.getters["newlicense/getProfessionalLicense"];
-    letterfromOrg = store.getters["newlicense/getLetterfromOrg"];
+    professionalLicense2 = store.getters["newlicense/getProfessionalLicense2"];
     payroll = store.getters["newlicense/getPayroll"];
     diploma = store.getters["newlicense/getDiploma"];
     degree = store.getters["newlicense/getDegree"];
     transcript = store.getters["newlicense/getTranscript"];
+    transcript2 = store.getters["newlicense/getTranscript2"];
     masters = store.getters["newlicense/getMasters"];
     mastersTranscript = store.getters["newlicense/getMastersTranscript"];
+    mastersTranscript2 = store.getters["newlicense/getMastersTranscript2"];
     phd = store.getters["newlicense/getPhd"];
     phdTranscript = store.getters["newlicense/getPhdTranscript"];
+    phdTranscript2 = store.getters["newlicense/getPhdTranscript2"];
 
     const draft = (action) => {
       message.value.showLoading = true;
@@ -429,11 +441,16 @@ export default {
             formData.append(documentSpecs[2].documentType.code, healthExamCert);
             formData.append(documentSpecs[4].documentType.code, workExperience);
             formData.append(
+              documentSpecs[28].documentType.code,
+              workExperience2
+            );
+            formData.append(
               documentSpecs[5].documentType.code,
               englishLanguage
             );
             formData.append(documentSpecs[22].documentType.code, diploma);
             formData.append(documentSpecs[23].documentType.code, transcript);
+            formData.append(documentSpecs[52].documentType.code, transcript2);
             formData.append(documentSpecs[21].documentType.code, degree);
             if (professionalDoc != undefined) {
               formData.append(
@@ -450,6 +467,8 @@ export default {
               );
             }
             formData.append(documentSpecs[9].documentType.code, coc);
+            formData.append(documentSpecs[41].documentType.code, coc2);
+            formData.append(documentSpecs[42].documentType.code, coc3);
             if (educationDoc != undefined) {
               formData.append(
                 documentSpecs[10].documentType.code,
@@ -474,7 +493,6 @@ export default {
             }
             formData.append(documentSpecs[15].documentType.code, supportLetter);
             formData.append(documentSpecs[16].documentType.code, herqa);
-            formData.append(documentSpecs[17].documentType.code, letterfromOrg);
             formData.append(
               documentSpecs[18].documentType.code,
               renewedLicense
@@ -483,14 +501,26 @@ export default {
               documentSpecs[19].documentType.code,
               professionalLicense
             );
+            formData.append(
+              documentSpecs[52].documentType.code,
+              professionalLicense2
+            );
             formData.append(documentSpecs[20].documentType.code, payroll);
             formData.append(documentSpecs[24].documentType.code, masters);
             formData.append(
               documentSpecs[25].documentType.code,
               mastersTranscript
             );
+            formData.append(
+              documentSpecs[57].documentType.code,
+              mastersTranscript2
+            );
             formData.append(documentSpecs[26].documentType.code, phd);
             formData.append(documentSpecs[27].documentType.code, phdTranscript);
+            formData.append(
+              documentSpecs[58].documentType.code,
+              phdTranscript2
+            );
             let payload = { document: formData, id: licenseId };
             store
               .dispatch("newlicense/uploadDocuments", payload)

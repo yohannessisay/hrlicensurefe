@@ -239,7 +239,12 @@ export default {
     let healthExamCert = ref("");
     let professionalDoc = [];
     let workExperience = ref("");
+    let workExperience2 = ref("");
     let cpd = ref("");
+    let cpd2 = ref("");
+    let cpd3 = ref("");
+    let cpd4 = ref("");
+    let cpd5 = ref("");
     let herqa = ref("");
     let previousLicense = ref("");
     let supportLetter = ref("");
@@ -324,7 +329,12 @@ export default {
     healthExamCert = store.getters["renewal/getHealthExamCert"];
     professionalDoc = store.getters["renewal/getProfessionalDocuments"];
     workExperience = store.getters["renewal/getRenewalWorkExperience"];
+    workExperience2 = store.getters["renewal/getRenewalWorkExperience2"];
     cpd = store.getters["renewal/getRenewalCpd"];
+    cpd2 = store.getters["renewal/getRenewalCpd2"];
+    cpd3 = store.getters["renewal/getRenewalCpd3"];
+    cpd4 = store.getters["renewal/getRenewalCpd4"];
+    cpd5 = store.getters["renewal/getRenewalCpd5"];
     herqa = store.getters["renewal/getHerqa"];
     previousLicense = store.getters["renewal/getPreviousLicense"];
     supportLetter = store.getters["renewal/getSupportLetter"];
@@ -448,7 +458,12 @@ export default {
               );
             }
             formData.append(documentSpecs[5].documentType.code, workExperience);
+            formData.append(documentSpecs[35].documentType.code, workExperience2);
             formData.append(documentSpecs[4].documentType.code, cpd);
+            formData.append(documentSpecs[31].documentType.code, cpd2);
+            formData.append(documentSpecs[32].documentType.code, cpd3);
+            formData.append(documentSpecs[33].documentType.code, cpd4);
+            formData.append(documentSpecs[34].documentType.code, cpd5);
             formData.append(documentSpecs[18].documentType.code, herqa);
             formData.append(
               documentSpecs[6].documentType.code,
