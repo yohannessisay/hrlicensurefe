@@ -20,7 +20,7 @@
         </h2>
         <TitleWithIllustration
           illustration="Certificate"
-          message="Letter from Hiring Institution"
+          message="Work Experience and Support Letter from Organization"
           class="mt-8"
         />
         <span class="flex justify-center mt-2"
