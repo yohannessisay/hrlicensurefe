@@ -456,6 +456,14 @@ export default {
     let professionalLicense = ref("");
     let renewedLicense = ref("");
 
+    let docCount = ref(0);
+
+    const addDocs = () => {
+      if (docCount.value < 5) {
+        docCount.value++;
+      }
+    };
+
     const reset = () => {
       showUpload.value = true;
       showPreview.value = false;
@@ -1056,7 +1064,10 @@ export default {
               );
             }
             formData.append(documentSpecs[5].documentType.code, workExperience);
-            formData.append(documentSpecs[35].documentType.code, workExperience2);
+            formData.append(
+              documentSpecs[35].documentType.code,
+              workExperience2
+            );
             formData.append(documentSpecs[4].documentType.code, cpdFile.value);
             formData.append(
               documentSpecs[31].documentType.code,
@@ -1363,6 +1374,9 @@ export default {
       fileSizeExceed,
       maxFileSize,
       maxSizeMB,
+
+      docCount,
+      addDocs,
     };
   },
 };

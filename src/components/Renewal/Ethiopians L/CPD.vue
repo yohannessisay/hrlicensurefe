@@ -462,6 +462,14 @@ export default {
     let phd = ref("");
     let phdTranscript = ref("");
 
+    let docCount = ref(0);
+
+    const addDocs = () => {
+      if (docCount.value < 5) {
+        docCount.value++;
+      }
+    };
+
     const reset = () => {
       showUpload.value = true;
       showPreview.value = false;
@@ -1082,7 +1090,10 @@ export default {
             formData.append(documentSpecs[17].documentType.code, supportLetter);
             formData.append(documentSpecs[26].documentType.code, transcript);
             formData.append(documentSpecs[5].documentType.code, workExperience);
-            formData.append(documentSpecs[35].documentType.code, workExperience2);
+            formData.append(
+              documentSpecs[35].documentType.code,
+              workExperience2
+            );
             formData.append(
               documentSpecs[6].documentType.code,
               previousLicense
@@ -1392,6 +1403,9 @@ export default {
       fileSizeExceed,
       maxFileSize,
       maxSizeMB,
+
+      docCount,
+      addDocs,
     };
   },
 };
