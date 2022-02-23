@@ -11,7 +11,8 @@
                   ? selectedTabClass
                   : notSelectedTabClass,
               ]"
-            @click="fetchAllLicensed('New License')">
+              @click="changeTab('New License')"
+            >
               New License
             </li>
             <li
@@ -20,6 +21,7 @@
                   ? selectedTabClass
                   : notSelectedTabClass,
               ]"
+              @click="changeTab('Renewal')"
             >
               Renewal
             </li>
@@ -29,6 +31,7 @@
                   ? selectedTabClass
                   : notSelectedTabClass,
               ]"
+              @click="changeTab('Good Standing')"
             >
               Good Standing
             </li>
@@ -57,12 +60,26 @@
         </button>
       </div>
       <div class="flex pl-12 pt-tiny">
-        <Title message="All Licensed" />
+        <Title :message="message" />
       </div>
       <div class="flex flex-wrap pb-medium rounded h-full" v-if="!showLoading">
-        <nothing-to-show :nothingToShow="nothingToShow" />
+        <nothing-to-show
+          :nothingToShow="
+            selectedTab == 'New License'
+              ? nothingToShowNewLicense
+              : selectedTab == 'Renewal'
+              ? nothingToShowRenewal
+              : nothingToShowGoodStanding
+          "
+        />
         <all-licensed-applications
-          :allLicensedApplication="getRenewalAllLicensed"
+          :allLicensedApplication="
+            selectedTab == 'New License'
+              ? newLicenseAllLicensed
+              : selectedTab == 'Renewal'
+              ? renewalAllLicensed
+              : goodStandingAllLicensed
+          "
           app_type="Renewal"
           others_licensed="false"
         />
@@ -120,12 +137,12 @@ import Title from "@/sharedComponents/TitleWithIllustration";
 export default {
   computed: {
     moment: () => moment,
-    getRenewalAllLicensed() {
-      return store.getters["reviewerRenewal/getRenewalAllLicensedSearched"];
-    },
-    getAllLicensed() {
-      return store.getters["reviewer/getAllLicensedSearched"]
-    },
+    // getRenewalAllLicensed() {
+    //   return store.getters["reviewerRenewal/getRenewalAllLicensedSearched"];
+    // },
+    // getRenewalAllLicensed() {
+    //   return store.getters["reviewerRenewal/getRenewalAllLicensedSearched"];
+    // },
   },
   components: {
     ReviewerNavBar,
@@ -139,18 +156,22 @@ export default {
   setup() {
     const store = useStore();
     let renewalAllLicensed = ref([]);
+    let newLicenseAllLicensed = ref([]);
+    let goodStandingAllLicensed = ref([]);
 
     let selectedTabClass = "py-2 px-6 bg-white rounded-t-lg mr-4";
     let notSelectedTabClass = "py-2 px-6 rounded-t-lg mr-4";
 
     let selectedTab = ref("New License");
-    const allLicensed = ref([]);
+    let message = ref("New License All Licensed");
 
     // tabColor = ref("red");
 
     const adminId = +localStorage.getItem("adminId");
 
-    let nothingToShow = ref(false);
+    let nothingToShowNewLicense = ref(false);
+    let nothingToShowRenewal = ref(false);
+    let nothingToShowGoodStanding = ref(false);
     let showLoading = ref(false);
 
     let allInfo = ref({
@@ -166,6 +187,11 @@ export default {
       app_type: "",
     });
 
+    const changeTab = (type) => {
+      selectedTab.value = type;
+      message.value = `${type} All Licensed`;
+    };
+
     const filterAllLicensedApplication = () => {
       filterApplication(moment, allInfo.value);
     };
@@ -179,47 +205,20 @@ export default {
       allInfo.value.app_type = "";
     };
 
-    const fetchAllLicensed = (type) => {
-      selectedTab.value = type;
+    const fetchNewLicenseAllLicensed = () => {
       showLoading.value = true;
-      store.dispatch("reviewer/getAllLicensed").then((res) => {
-        showLoading.value = false;
-        allLicensed.value = store.getters["reviewer/getAllLicensedSearched"];
-        allInfo.value.assignApplication = store.getters["reviewer/getAllLicensedSearched"];
-        for (let applicant in allInfo.value.assignApplication) {
-            if (
-              allInfo.value.assignApplication[applicant].applicationType ===
-              undefined
-            ) {
-              allInfo.value.assignApplication[applicant].applicationType =
-                allInfo.value.assignApplication[applicant].applicantType;
-            }
-          }
-          if (allLicensed.value.length === 0) {
-            nothingToShow.value = true;
-          }
-      })
-    }
-    const fetchRenewalAllLicensed = () => {
-      showLoading.value = true;
-      const approvedPaymentStatus = applicationStatus(store, "AP");
-      const confirmedStatus = applicationStatus(store, "CONF");
-
-      const approvedStatus = applicationStatus(store, "APP");
-      const adminStatus = [
-        adminId,
-        approvedPaymentStatus,
-        confirmedStatus,
-        approvedStatus,
-      ];
       store
-        .dispatch("reviewerRenewal/getRenewalAllLicensed", adminStatus)
+        .dispatch("reviewerNewLicense/getNewLicenseAllLicensed")
         .then((res) => {
           showLoading.value = false;
-          renewalAllLicensed.value =
-            store.getters["reviewerRenewal/getRenewalAllLicensedSearched"];
+          newLicenseAllLicensed.value =
+            store.getters[
+              "reviewerNewLicense/getNewLicenseAllLicensedSearched"
+            ];
           allInfo.value.assignApplication =
-            store.getters["reviewerRenewal/getRenewalAllLicensedSearched"];
+            store.getters[
+              "reviewerNewLicense/getNewLicenseAllLicensedSearched"
+            ];
 
           for (let applicant in allInfo.value.assignApplication) {
             if (
@@ -230,17 +229,75 @@ export default {
                 allInfo.value.assignApplication[applicant].applicantType;
             }
           }
-          if (renewalAllLicensed.value.length === 0) {
-            nothingToShow.value = true;
+          if (newLicenseAllLicensed.value.length === 0) {
+            nothingToShowNewLicense.value = true;
+          }
+        });
+    };
+
+    const fetchRenewalAllLicensed = () => {
+      showLoading.value = true;
+      store.dispatch("reviewerRenewal/getRenewalAllLicensed").then((res) => {
+        showLoading.value = false;
+        renewalAllLicensed.value =
+          store.getters["reviewerRenewal/getRenewalAllLicensedSearched"];
+        allInfo.value.assignApplication =
+          store.getters["reviewerRenewal/getRenewalAllLicensedSearched"];
+
+        for (let applicant in allInfo.value.assignApplication) {
+          if (
+            allInfo.value.assignApplication[applicant].applicationType ===
+            undefined
+          ) {
+            allInfo.value.assignApplication[applicant].applicationType =
+              allInfo.value.assignApplication[applicant].applicantType;
+          }
+        }
+        if (renewalAllLicensed.value.length === 0) {
+          nothingToShowRenewal.value = true;
+        }
+      });
+    };
+
+    const fetchGoodStandingAllLicensed = () => {
+      showLoading.value = true;
+      store
+        .dispatch("reviewerGoodStanding/getGoodStandingAllLicensed")
+        .then((res) => {
+          showLoading.value = false;
+          goodStandingAllLicensed.value =
+            store.getters[
+              "reviewerGoodStanding/getGoodStandingAllLicensedSearched"
+            ];
+          allInfo.value.assignApplication =
+            store.getters[
+              "reviewerGoodStanding/getGoodStandingAllLicensedSearched"
+            ];
+
+          for (let applicant in allInfo.value.assignApplication) {
+            if (
+              allInfo.value.assignApplication[applicant].applicationType ===
+              undefined
+            ) {
+              allInfo.value.assignApplication[applicant].applicationType =
+                allInfo.value.assignApplication[applicant].applicantType;
+            }
+          }
+          if (goodStandingAllLicensed.value.length === 0) {
+            nothingToShowGoodStanding.value = true;
           }
         });
     };
     onMounted(() => {
       fetchRenewalAllLicensed();
+      fetchNewLicenseAllLicensed();
+      fetchGoodStandingAllLicensed();
     });
 
     return {
-      nothingToShow,
+      nothingToShowNewLicense,
+      nothingToShowRenewal,
+      nothingToShowGoodStanding,
       allInfo,
       showLoading,
       filterAllLicensedApplication,
@@ -248,6 +305,11 @@ export default {
       selectedTab,
       selectedTabClass,
       notSelectedTabClass,
+      newLicenseAllLicensed,
+      renewalAllLicensed,
+      goodStandingAllLicensed,
+      changeTab,
+      message,
     };
   },
 };

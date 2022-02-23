@@ -133,10 +133,7 @@ export default {
 
     const fetchGoodStandingAllLicensed = () => {
       showLoading.value = true;
-      const statusId = applicationStatus(store, 'AP');
-      const approvedStatus = applicationStatus(store, 'APP');
-      const adminStatus = [adminId, statusId, approvedStatus];
-      store.dispatch("reviewerGoodStanding/getGoodStandingAllLicensed", adminStatus).then((res) => {
+      store.dispatch("reviewerGoodStanding/getGoodStandingAllLicensed").then((res) => {
         showLoading.value = false;
         goodStandingAllLicensed.value =
           store.getters["reviewerGoodStanding/getGoodStandingAllLicensedSearched"];
