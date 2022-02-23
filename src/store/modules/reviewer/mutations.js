@@ -42,6 +42,9 @@ import {
   SET_CERTIFIED_USERS_SEARCHED,
   SET_MY_REGION_CERTIFIED_USERS,
   SET_MY_REGION_CERTIFIED_USERS_SEARCHED,
+
+  SET_ALL_LICENSED,
+  SET_ALL_LICENSED_SEARCHED,
 } from "./mutation-types";
 
 export default {
@@ -202,5 +205,13 @@ export default {
   },
   [SET_PENDING_PAYMENTS_SEARCHED](state, searchedVal) {
     state.pendingPaymentsSearched = searchedVal;
+  },
+
+  [SET_ALL_LICENSED](state, data) {
+    state.allLicensed = data;
+    state.allLicensedSearched = data;
+  },
+  [SET_ALL_LICENSED_SEARCHED](state, searchedVal) {
+    state.allLicensedSearched = searchedVal;
   },
 };

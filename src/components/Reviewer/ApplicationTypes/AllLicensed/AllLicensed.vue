@@ -3,6 +3,39 @@
     <!-- <reviewer-nav-bar tab="renewalAllLicensed" /> -->
     <div class="bg-lightBlueB-200 h-full" v-if="!allInfo.searchByInput">
       <div class="pl-12">
+        <div style="border-bottom: 2px solid #eaeaea">
+          <ul class="flex cursor-pointer">
+            <li
+              :class="[
+                selectedTab == 'New License'
+                  ? selectedTabClass
+                  : notSelectedTabClass,
+              ]"
+            @click="fetchAllLicensed('New License')">
+              New License
+            </li>
+            <li
+              :class="[
+                selectedTab == 'Renewal'
+                  ? selectedTabClass
+                  : notSelectedTabClass,
+              ]"
+            >
+              Renewal
+            </li>
+            <li
+              :class="[
+                selectedTab == 'Good Standing'
+                  ? selectedTabClass
+                  : notSelectedTabClass,
+              ]"
+            >
+              Good Standing
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="pl-12 mt-4">
         <div>Filter By</div>
       </div>
 
@@ -28,7 +61,11 @@
       </div>
       <div class="flex flex-wrap pb-medium rounded h-full" v-if="!showLoading">
         <nothing-to-show :nothingToShow="nothingToShow" />
-        <all-licensed-applications :allLicensedApplication="getRenewalAllLicensed" app_type="Renewal" others_licensed="false"/>
+        <all-licensed-applications
+          :allLicensedApplication="getRenewalAllLicensed"
+          app_type="Renewal"
+          others_licensed="false"
+        />
       </div>
     </div>
     <div
@@ -40,10 +77,13 @@
     <div class="bg-lightBlueB-200 h-full" v-if="allInfo.searchByInput">
       <div class="flex pl-12 pt-tiny">
         <Title
-        :message="
-          'All Licensed Applicants on Date Range ' + moment(allInfo.searchFromDate).format('MMM D, YYYY') + ' To ' + moment(allInfo.searchUpToDate).format('MMM D, YYYY')
-        "
-      />
+          :message="
+            'All Licensed Applicants on Date Range ' +
+              moment(allInfo.searchFromDate).format('MMM D, YYYY') +
+              ' To ' +
+              moment(allInfo.searchUpToDate).format('MMM D, YYYY')
+          "
+        />
         <button @click="backClicked">back</button>
       </div>
       <filtered-info
@@ -64,7 +104,7 @@
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
 
-import AllLicensedApplications from "../ChildApplicationTypes/AllLicensedApplications.vue"
+import AllLicensedApplications from "../ChildApplicationTypes/AllLicensedApplications.vue";
 import applicationStatus from "../../Configurations/getApplicationStatus.js";
 
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
@@ -77,15 +117,14 @@ import Spinner from "@/sharedComponents/Spinner";
 import store from "../../../../store";
 import Title from "@/sharedComponents/TitleWithIllustration";
 
-
-
-
-
 export default {
   computed: {
     moment: () => moment,
     getRenewalAllLicensed() {
       return store.getters["reviewerRenewal/getRenewalAllLicensedSearched"];
+    },
+    getAllLicensed() {
+      return store.getters["reviewer/getAllLicensedSearched"]
     },
   },
   components: {
@@ -100,6 +139,14 @@ export default {
   setup() {
     const store = useStore();
     let renewalAllLicensed = ref([]);
+
+    let selectedTabClass = "py-2 px-6 bg-white rounded-t-lg mr-4";
+    let notSelectedTabClass = "py-2 px-6 rounded-t-lg mr-4";
+
+    let selectedTab = ref("New License");
+    const allLicensed = ref([]);
+
+    // tabColor = ref("red");
 
     const adminId = +localStorage.getItem("adminId");
 
@@ -132,6 +179,27 @@ export default {
       allInfo.value.app_type = "";
     };
 
+    const fetchAllLicensed = (type) => {
+      selectedTab.value = type;
+      showLoading.value = true;
+      store.dispatch("reviewer/getAllLicensed").then((res) => {
+        showLoading.value = false;
+        allLicensed.value = store.getters["reviewer/getAllLicensedSearched"];
+        allInfo.value.assignApplication = store.getters["reviewer/getAllLicensedSearched"];
+        for (let applicant in allInfo.value.assignApplication) {
+            if (
+              allInfo.value.assignApplication[applicant].applicationType ===
+              undefined
+            ) {
+              allInfo.value.assignApplication[applicant].applicationType =
+                allInfo.value.assignApplication[applicant].applicantType;
+            }
+          }
+          if (allLicensed.value.length === 0) {
+            nothingToShow.value = true;
+          }
+      })
+    }
     const fetchRenewalAllLicensed = () => {
       showLoading.value = true;
       const approvedPaymentStatus = applicationStatus(store, "AP");
@@ -144,26 +212,28 @@ export default {
         confirmedStatus,
         approvedStatus,
       ];
-      store.dispatch("reviewerRenewal/getRenewalAllLicensed", adminStatus).then((res) => {
-        showLoading.value = false;
-        renewalAllLicensed.value =
-          store.getters["reviewerRenewal/getRenewalAllLicensedSearched"];
-        allInfo.value.assignApplication =
-          store.getters["reviewerRenewal/getRenewalAllLicensedSearched"];
+      store
+        .dispatch("reviewerRenewal/getRenewalAllLicensed", adminStatus)
+        .then((res) => {
+          showLoading.value = false;
+          renewalAllLicensed.value =
+            store.getters["reviewerRenewal/getRenewalAllLicensedSearched"];
+          allInfo.value.assignApplication =
+            store.getters["reviewerRenewal/getRenewalAllLicensedSearched"];
 
-        for (let applicant in allInfo.value.assignApplication) {
-          if (
-            allInfo.value.assignApplication[applicant].applicationType ===
-            undefined
-          ) {
-            allInfo.value.assignApplication[applicant].applicationType =
-              allInfo.value.assignApplication[applicant].applicantType;
+          for (let applicant in allInfo.value.assignApplication) {
+            if (
+              allInfo.value.assignApplication[applicant].applicationType ===
+              undefined
+            ) {
+              allInfo.value.assignApplication[applicant].applicationType =
+                allInfo.value.assignApplication[applicant].applicantType;
+            }
           }
-        }
-        if (renewalAllLicensed.value.length === 0) {
-          nothingToShow.value = true;
-        }
-      });
+          if (renewalAllLicensed.value.length === 0) {
+            nothingToShow.value = true;
+          }
+        });
     };
     onMounted(() => {
       fetchRenewalAllLicensed();
@@ -175,7 +245,16 @@ export default {
       showLoading,
       filterAllLicensedApplication,
       backClicked,
+      selectedTab,
+      selectedTabClass,
+      notSelectedTabClass,
     };
   },
 };
 </script>
+<style scoped>
+.tabColor {
+  background-color: "red";
+  color: "red";
+}
+</style>

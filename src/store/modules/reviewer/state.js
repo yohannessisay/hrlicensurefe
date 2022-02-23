@@ -74,5 +74,8 @@ export default {
         allPendingPayment: [],
         allPendingPaymentSearched: [],
 
+        allLicensed: [],
+        allLicensedSearched: [],
+
     }
 }
