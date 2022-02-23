@@ -13,7 +13,6 @@ export default {
     getWorkExperience: (state) => state.workExperience,
     getWorkExperience2: (state) => state.workExperience2,
     getServiceFee: (state) => state.serviceFee,
-    getLetterfromOrg: (state) => state.letterfromOrg,
     getRenewedLicense: (state) => state.renewedLicense,
     getPayroll: (state) => state.payroll,
     getDegree: (state) => state.degree,

@@ -38,7 +38,6 @@ export default {
         workExperience: "",
         workExperience2: "",
         serviceFee: "",
-        letterfromOrg: "",
         payroll: "",
         renewedLicense: "",
         professionalLicense: "",

@@ -79,6 +79,12 @@
                     >{{ item.reviewer.region.name }}
                   </span>
                   <span
+                    v-else
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                  >
+                    <b>Reviewer Region: &nbsp;</b>{{ item.reviewer.name }}
+                  </span>
+                  <span
                     class="
                       mt-medium
                       text-lightBlueB-500
@@ -163,6 +169,12 @@
                   >
                     <b>Reviewer Region: &nbsp;</b
                     >{{ item.reviewer.region.name }}
+                  </span>
+                  <span
+                    v-else
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                  >
+                    <b>Reviewer Region: &nbsp;</b>{{ item.reviewer.name }}
                   </span>
                   <span
                     class="
@@ -344,6 +356,12 @@
                     >{{ item.reviewer.region.name }}
                   </span>
                   <span
+                    v-else
+                    class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                  >
+                    <b>Reviewer Region: &nbsp;</b>{{ item.reviewer.name }}
+                  </span>
+                  <span
                     class="
                       mt-medium
                       text-lightBlueB-500
@@ -461,7 +479,6 @@ export default {
                 );
               }
             });
-            console.log(this.newlicense);
           }
         })
         .then(() => {

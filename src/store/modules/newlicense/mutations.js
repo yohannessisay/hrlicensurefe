@@ -13,7 +13,6 @@ import {
     SET_WORK_EXPERIENCE,
     SET_WORK_EXPERIENCE2,
     SET_SERVICE_FEE,
-    SET_LETTER_FROM_ORG,
     SET_RENEWED_LICENSE,
     SET_PROFESSIONAL_LICENSE,
     SET_PROFESSIONAL_LICENSE2,
@@ -90,9 +89,6 @@ export default {
     },
     [SET_PAYROLL](state, payroll) {
         state.payroll = payroll;
-    },
-    [SET_LETTER_FROM_ORG](state, letter) {
-        state.letterfromOrg = letter;
     },
     [SET_RENEWED_LICENSE](state, license) {
         state.renewedLicense = license;

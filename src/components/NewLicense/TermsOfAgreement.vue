@@ -40,7 +40,6 @@
               Equivalence Letter
             </span>
           </div>
-          <li>Letter from Organization</li>
           <div class="tooltip">
             Authenticated Academic Document
             <span class="tooltiptext ml-4">

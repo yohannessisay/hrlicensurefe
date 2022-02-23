@@ -842,7 +842,7 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 7">
-                <LetterfromOrg
+                <ProfessionalLicense
                   :activeState="7"
                   @changeActiveState="activeState++"
                   @changeActiveStateMinus="activeState--"
@@ -851,7 +851,7 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 8">
-                <ProfessionalLicense
+                <RenewedLicense
                   :activeState="8"
                   @changeActiveState="activeState++"
                   @changeActiveStateMinus="activeState--"
@@ -860,7 +860,7 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 9">
-                <RenewedLicense
+                <WorkExperienceF
                   :activeState="9"
                   @changeActiveState="activeState++"
                   @changeActiveStateMinus="activeState--"
@@ -869,17 +869,8 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 10">
-                <WorkExperienceF
-                  :activeState="10"
-                  @changeActiveState="activeState++"
-                  @changeActiveStateMinus="activeState--"
-                />
-              </div>
-            </transition>
-            <transition name="fade" mode="out-in">
-              <div v-if="this.activeState == 11">
                 <LicenseSummary
-                  :activeState="11"
+                  :activeState="10"
                   @changeActiveState="activeState++"
                   @changeActiveStateMinus="activeState--"
                 />
@@ -930,7 +921,7 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 6">
-                <LetterfromOrg
+                <ProfessionalLicense
                   :activeState="6"
                   @changeActiveState="activeState++"
                   @changeActiveStateMinus="activeState--"
@@ -939,7 +930,7 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 7">
-                <ProfessionalLicense
+                <RenewedLicense
                   :activeState="7"
                   @changeActiveState="activeState++"
                   @changeActiveStateMinus="activeState--"
@@ -948,7 +939,7 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 8">
-                <RenewedLicense
+                <WorkExperienceF
                   :activeState="8"
                   @changeActiveState="activeState++"
                   @changeActiveStateMinus="activeState--"
@@ -957,17 +948,8 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 9">
-                <WorkExperienceF
-                  :activeState="9"
-                  @changeActiveState="activeState++"
-                  @changeActiveStateMinus="activeState--"
-                />
-              </div>
-            </transition>
-            <transition name="fade" mode="out-in">
-              <div v-if="this.activeState == 10">
                 <LicenseSummary
-                  :activeState="10"
+                  :activeState="9"
                   @changeActiveState="activeState++"
                   @changeActiveStateMinus="activeState--"
                 />
@@ -1065,7 +1047,6 @@ import SupportLetterEthiopian from "./Ethiopians L/SupportLetter";
 
 import EnglishLanguageForeigner from "./Foreigner/EnglishLanguage";
 import ProfessionalDocumentForeigner from "./Foreigner/ProfessionalDocument";
-import LetterfromOrg from "./Foreigner/LetterfromOrg";
 import ProfessionalLicense from "./Foreigner/ProfessionalLicense";
 import RenewedLicense from "./Foreigner/RenewedLicense";
 import WorkExperienceFF from "./Foreigner/WorkExperience.vue";
@@ -1122,7 +1103,6 @@ export default {
     SupportLetterForeign,
     EnglishLanguageForeigner,
     ProfessionalDocumentForeigner,
-    LetterfromOrg,
     ProfessionalLicense,
     RenewedLicense,
     Navigation,
@@ -1262,7 +1242,6 @@ export default {
         .then((res) => {
           const results = res.data.data;
           this.documentSpecs = results;
-          console.log(this.documentSpecs);
           this.$store
             .dispatch("newlicense/setDocumentSpecs", this.documentSpecs)
             .then((res) => {});

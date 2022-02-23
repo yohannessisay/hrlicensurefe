@@ -9,12 +9,14 @@
     <DeviceAccessibilitySection />
     <MinistryOfHealthSection />
     <FooterSection />
-    <Modal v-if="showLogin">
-      <AdminLogin
-        @closeModal="showLogin = false"
-        @redirectToSignup="redirectToSignup"
-      />
-    </Modal>
+    <transition name="slide-fade-to-left">
+      <Modal v-if="showLogin">
+        <AdminLogin
+          @closeModal="showLogin = false"
+          @redirectToSignup="redirectToSignup"
+        />
+      </Modal>
+    </transition>
   </div>
 </template>
 <script>
@@ -43,7 +45,7 @@ export default {
     MinistryOfHealthSection,
     FooterSection,
     Modal,
-    AdminLogin
+    AdminLogin,
   },
   setup() {
     const showLogin = ref(false);
@@ -54,11 +56,10 @@ export default {
 
     return {
       showLogin,
-      redirectToLogin
+      redirectToLogin,
     };
-  }
+  },
 };
-
 </script>
 
 <style lang="postcss">
