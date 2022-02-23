@@ -33,6 +33,7 @@
         <span class="flex justify-center">{{ documentMessage }}</span>
         <div class="ml-24">
           <button @click="addDocs()">Add Document</button>
+          <button @click="removeDocs()">Remove Document</button>
         </div>
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
           <div class="flex justify-center mb-10">
@@ -461,6 +462,19 @@ export default {
     let mastersTranscript = ref("");
     let phd = ref("");
     let phdTranscript = ref("");
+
+    let docCount = ref(0);
+
+    const addDocs = () => {
+      if (docCount.value < 5) {
+        docCount.value++;
+      }
+    };
+    const removeDocs = () => {
+      if (docCount.value > 0) {
+        docCount.value--;
+      }
+    };
 
     const reset = () => {
       showUpload.value = true;
@@ -1082,7 +1096,10 @@ export default {
             formData.append(documentSpecs[17].documentType.code, supportLetter);
             formData.append(documentSpecs[26].documentType.code, transcript);
             formData.append(documentSpecs[5].documentType.code, workExperience);
-            formData.append(documentSpecs[35].documentType.code, workExperience2);
+            formData.append(
+              documentSpecs[35].documentType.code,
+              workExperience2
+            );
             formData.append(
               documentSpecs[6].documentType.code,
               previousLicense
@@ -1392,6 +1409,10 @@ export default {
       fileSizeExceed,
       maxFileSize,
       maxSizeMB,
+
+      docCount,
+      addDocs,
+      removeDocs,
     };
   },
 };

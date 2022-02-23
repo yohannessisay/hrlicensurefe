@@ -464,7 +464,7 @@ export const applicationTypeDD = (applicationDetail, dropdown) => {
   }
 
   if (applicationDetail == "AllLicensed") {
-    dropdown.allLicensed = true;
+    dropdown.allLicensed = !dropdown.allLicensed;
     dropdown.newLicense = false;
     dropdown.verification = false;
     dropdown.goodStanding = false;

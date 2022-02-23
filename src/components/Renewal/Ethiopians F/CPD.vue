@@ -33,6 +33,7 @@
         <span class="flex justify-center">{{ documentMessage }}</span>
         <div class="ml-24">
           <button @click="addDocs()">Add Document</button>
+          <button @click="removeDocs()">Remove Document</button>
         </div>
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
           <div class="flex justify-center mb-10">
@@ -459,6 +460,12 @@ export default {
     const addDocs = () => {
       if (docCount.value < 5) {
         docCount.value++;
+      }
+    };
+
+    const removeDocs = () => {
+      if (docCount.value > 0) {
+        docCount.value--;
       }
     };
 
@@ -1087,7 +1094,10 @@ export default {
               letterFromHiringManager
             );
             formData.append(documentSpecs[5].documentType.code, workExperience);
-            formData.append(documentSpecs[35].documentType.code, workExperience2);
+            formData.append(
+              documentSpecs[35].documentType.code,
+              workExperience2
+            );
 
             let payload = { document: formData, id: licenseId };
             store
@@ -1360,6 +1370,7 @@ export default {
 
       docCount,
       addDocs,
+      removeDocs,
     };
   },
 };

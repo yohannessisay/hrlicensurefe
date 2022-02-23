@@ -33,6 +33,7 @@
         <span class="flex justify-center">{{ documentMessage }}</span>
         <div class="ml-4">
           <button @click="addDocs()">Add Document</button>
+          <button @click="removeDocs()">Remove Document</button>
         </div>
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
           <div class="flex justify-center">
@@ -330,6 +331,11 @@ export default {
         docCount.value++;
       }
     };
+    const removeDocs = () => {
+      if (docCount.value > 0) {
+        docCount.value--;
+      }
+    };
 
     const reset = () => {
       showUpload.value = true;
@@ -552,7 +558,10 @@ export default {
             formData.append(documentSpecs[1].documentType.code, passport);
             formData.append(documentSpecs[2].documentType.code, healthExamCert);
             formData.append(documentSpecs[4].documentType.code, workExperience);
-            formData.append(documentSpecs[28].documentType.code, workExperience2);
+            formData.append(
+              documentSpecs[28].documentType.code,
+              workExperience2
+            );
             formData.append(
               documentSpecs[5].documentType.code,
               englishLanguage
@@ -946,6 +955,7 @@ export default {
       maxSizeMB,
       docCount,
       addDocs,
+      removeDocs,
     };
   },
 };

@@ -33,6 +33,7 @@
         <span class="flex justify-center">{{ documentMessage }}</span>
         <div class="ml-24">
           <button @click="addDocs()">Add Document</button>
+          <button @click="removeDocs()">Remove Document</button>
         </div>
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
           <div class="flex justify-center">
@@ -315,6 +316,11 @@ export default {
         docCount.value++;
       }
     };
+    const removeDocs = () => {
+      if (docCount.value > 0) {
+        docCount.value--;
+      }
+    };
 
     const reset = () => {
       showUpload.value = true;
@@ -591,7 +597,7 @@ export default {
               documentSpecs[19].documentType.code,
               professionalLicense
             );
-             formData.append(
+            formData.append(
               documentSpecs[52].documentType.code,
               professionalLicense2
             );
@@ -918,6 +924,7 @@ export default {
       maxSizeMB,
       docCount,
       addDocs,
+      removeDocs,
     };
   },
 };
