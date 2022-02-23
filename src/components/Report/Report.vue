@@ -1069,7 +1069,6 @@ export default {
 .applicationType {
   background-color: #300400;
 }
-,
 th {
   color: #648ea3;
   background-color: #eff6ff;
