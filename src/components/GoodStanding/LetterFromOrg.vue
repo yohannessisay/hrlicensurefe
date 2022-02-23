@@ -24,7 +24,7 @@
           class="mt-8"
         />
         <span class="flex justify-center mt-2"
-          >Request Letter from Federal or Regional</span
+          >Work Experience and Support Letter from Organization</span
         >
         <span class="flex justify-center">{{ documentMessage }}</span>
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">

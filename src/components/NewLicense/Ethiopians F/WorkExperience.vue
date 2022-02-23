@@ -80,7 +80,7 @@
                 <img :src="filePreview" alt="" class="preview" />
               </span>
             </div>
-            <div class="ml-8" v-if="docCount > 0">
+            <div class="ml-8" v-if="docCount > 1">
               <span v-if="showUpload2">
                 <label class="text-primary-700"
                   >Upload image:
