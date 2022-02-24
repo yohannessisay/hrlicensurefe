@@ -71,7 +71,11 @@
                     "
                     >
                       {{
-                        item.createdAt ? moment(item.createdAt).format('MMMM Do YYYY, h:mm:ss a') : "-"
+                        item.createdAt
+                          ? moment(item.createdAt).format(
+                              "MMMM Do YYYY, h:mm:ss a"
+                            )
+                          : "-"
                       }}
                     </span>
                   </div>
@@ -152,7 +156,11 @@
                     "
                     >
                       {{
-                        item.createdAt ? moment(item.createdAt).fromNow() : "-"
+                        item.createdAt
+                          ? moment(item.createdAt).format(
+                              "MMMM Do YYYY, h:mm:ss a"
+                            )
+                          : "-"
                       }}
                     </span>
                   </div>
@@ -317,7 +325,11 @@
                     "
                     >
                       {{
-                        item.createdAt ? moment(item.createdAt).fromNow() : "-"
+                        item.createdAt
+                          ? moment(item.createdAt).format(
+                              "MMMM Do YYYY, h:mm:ss a"
+                            )
+                          : "-"
                       }}
                     </span>
                   </div>
