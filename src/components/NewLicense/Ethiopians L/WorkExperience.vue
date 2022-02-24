@@ -33,9 +33,10 @@
         <span class="flex justify-center">{{ documentMessage }}</span>
         <div class="ml-4">
           <button @click="addDocs()">Add Document</button>
+          <button @click="removeDocs()">Remove Document</button>
         </div>
-        <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
-          <div class="flex justify-center">
+        <form @submit.prevent="submit" class="mx-auto max-w-3xl mt-8">
+          <div class="flex flex-col justify-center">
             <div>
               <span>
                 <h2 v-if="!fileSizeExceed">{{ workExperienceFile.name }}</h2>
@@ -80,7 +81,7 @@
                 <img :src="filePreview" alt="" class="preview" />
               </span>
             </div>
-            <div class="ml-8" v-if="docCount > 0">
+            <div v-if="docCount > 0">
               <span v-if="showUpload2">
                 <label class="text-primary-700"
                   >Upload image:
@@ -319,7 +320,11 @@ export default {
         docCount.value++;
       }
     };
-
+    const removeDocs = () => {
+      if (docCount.value > 0) {
+        docCount.value--;
+      }
+    };
     const reset = () => {
       showUpload.value = true;
       showPreview.value = false;
@@ -933,6 +938,7 @@ export default {
       maxSizeMB,
       docCount,
       addDocs,
+      removeDocs,
     };
   },
 };
