@@ -35,7 +35,7 @@
           <button @click="addDocs()">Add Document</button>
           <button @click="removeDocs()">Remove Document</button>
         </div>
-        <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
+        <form @submit.prevent="submit" class="mx-auto max-w-3xl mt-8">
           <div class="flex justify-center">
             <div>
               <span>

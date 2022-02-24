@@ -52,6 +52,7 @@ export default {
         mastersTranscript: "",
         phd: "",
         phdTranscript: "",
+        renewedLicenseOfHealthFacility: "",
 
         buttons: [],
         applicationId: 0,
