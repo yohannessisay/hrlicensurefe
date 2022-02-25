@@ -186,9 +186,9 @@
           </div>
         </div>
       </div>
-      <div class="flex justify-center mt-8">
+      <div class="flex justify-center mt-8" v-show="showCheckBox">
         <label class="inline-flex items-center">
-          <input @change="checkBox()" v-model="checkBoxValue" type="checkbox" class="form-checkbox" />
+          <input @change="checkBox()" type="checkbox" class="form-checkbox" />
           <span style="font-size: 16px" class="ml-2"
             >This is to verify that all the attached documents are legitimate
             and not forgery.</span
@@ -348,6 +348,7 @@ export default {
     Spinner,
   },
   async created() {
+    this.showCheckBox = true;
     this.userId = +localStorage.getItem("userId");
     this.draftId = this.$route.params.id;
     this.draftStatus = this.$route.params.status;
@@ -357,8 +358,7 @@ export default {
         this.draftData = this.getDraftData;
         this.documentsArray = this.draftData.documents;
       }, 3500);
-      this.checkBoxValue = true;
-
+    this.showCheckBox = false;
     }
     this.passport = this.getPassport;
     this.healthExamCert = this.getHealthExamCert;
