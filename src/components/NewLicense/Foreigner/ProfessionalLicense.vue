@@ -27,7 +27,7 @@
         </h2>
         <TitleWithIllustration
           illustration="Certificate"
-          message="Authenticated Professional License from Country of Origin"
+          message=""
           class="mt-8"
         />
         <span class="flex justify-center">{{ documentMessage }}</span>
