@@ -35,8 +35,8 @@
           <button @click="addDocs()">Add Document</button>
           <button @click="removeDocs()">Remove Document</button>
         </div>
-        <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
-          <div class="flex justify-center mb-10">
+        <form @submit.prevent="submit" class="mx-auto max-w-3xl mt-8">
+          <div class="flex flex-col justify-center mb-4">
             <div>
               <span>
                 <h2 v-if="!fileSizeExceed">{{ cpdFile.name }}</h2>
@@ -84,7 +84,7 @@
                 <img :src="filePreview" alt="" class="preview" />
               </span>
             </div>
-            <div class="ml-8" v-if="docCount > 0">
+            <div v-if="docCount > 0">
               <span v-if="showUpload2">
                 <label class="text-primary-700"
                   >Upload image:
@@ -125,7 +125,7 @@
                 <img :src="filePreview2" alt="" class="preview" />
               </span>
             </div>
-            <div class="ml-8" v-if="docCount > 1">
+            <div v-if="docCount > 1">
               <span v-if="showUpload3">
                 <label class="text-primary-700"
                   >Upload image:
@@ -167,8 +167,8 @@
               </span>
             </div>
           </div>
-          <div class="flex justify-center mb-10">
-            <div class="ml-8" v-if="docCount > 2">
+          <div class="flex flex-col justify-center mb-4">
+            <div v-if="docCount > 2">
               <span v-if="showUpload4">
                 <label class="text-primary-700"
                   >Upload image:
@@ -209,7 +209,7 @@
                 <img :src="filePreview4" alt="" class="preview" />
               </span>
             </div>
-            <div class="ml-8" v-if="docCount > 3">
+            <div v-if="docCount > 3">
               <span v-if="showUpload5">
                 <label class="text-primary-700"
                   >Upload image:

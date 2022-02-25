@@ -36,7 +36,7 @@
           <button @click="removeDocs()">Remove Document</button>
         </div>
         <form @submit.prevent="submit" class="mx-auto max-w-3xl mt-8">
-          <div class="flex justify-center">
+          <div class="flex flex-col justify-center">
             <div>
               <span>
                 <h2 v-if="!fileSizeExceed">{{ letterFile.name }}</h2>
@@ -84,7 +84,7 @@
                 <img :src="filePreview" alt="" class="preview" />
               </span>
             </div>
-            <div class="ml-8" v-if="docCount > 0">
+            <div v-if="docCount > 0">
               <span v-if="showUpload2">
                 <label class="text-primary-700"
                   >Upload image:
