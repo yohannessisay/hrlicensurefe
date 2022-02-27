@@ -95,7 +95,6 @@ export default {
     this.$store.dispatch("newlicense/setWorkExperience", "");
     this.$store.dispatch("newlicense/setWorkExperience2", "");
     this.$store.dispatch("newlicense/setServiceFee", "");
-    this.$store.dispatch("newlicense/setLetterfromOrg", "");
     this.$store.dispatch("newlicense/setRenewedLicense", "");
     this.$store.dispatch("newlicense/setProfessionalLicense", "");
     this.$store.dispatch("newlicense/setProfessionalLicense2", "");

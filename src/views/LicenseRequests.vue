@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="flex flex-row">
-      <div class="bg-lightBlueB-200 h-max pb-24 w-screen pl-24 h-screen">
+    <div class="flex flex-row justify-start h-screen">
+      <div class="bg-lightBlueB-200">
         <div class="flex pl-20 pt-8">
           <div class="mt-5">
             <h2 class="text-lightBlueB-400">New Requests</h2>

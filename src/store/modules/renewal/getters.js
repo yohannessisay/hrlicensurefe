@@ -45,4 +45,6 @@ export default {
     getMastersTranscript: (state) => state.mastersTranscript,
     getPhd: (state) => state.phd,
     getPhdTranscript: (state) => state.phdTranscript,
+    getRenewedLicenseOfHealthFacility: (state) =>
+        state.renewedLicenseOfHealthFacility,
 };

@@ -186,7 +186,7 @@
           </div>
         </div>
       </div>
-      <div class="flex justify-center mt-8">
+      <div class="flex justify-center mt-8" v-show="showCheckBox">
         <label class="inline-flex items-center">
           <input @change="checkBox()" type="checkbox" class="form-checkbox" />
           <span style="font-size: 16px" class="ml-2"
@@ -348,14 +348,17 @@ export default {
     Spinner,
   },
   async created() {
+    this.showCheckBox = true;
     this.userId = +localStorage.getItem("userId");
     this.draftId = this.$route.params.id;
     this.draftStatus = this.$route.params.status;
+  
     if (this.draftId != undefined) {
       setTimeout(() => {
         this.draftData = this.getDraftData;
         this.documentsArray = this.draftData.documents;
       }, 3500);
+    this.showCheckBox = false;
     }
     this.passport = this.getPassport;
     this.healthExamCert = this.getHealthExamCert;
@@ -396,7 +399,6 @@ export default {
     this.phd = this.getPhd;
     this.phdTranscript = this.getPhdTranscript;
     this.phdTranscript2 = this.getPhdTranscript2;
-
     if (this.passport != "" && this.passport != undefined) {
       if ("name" in this.passport) {
         if (this.draftId != undefined) {

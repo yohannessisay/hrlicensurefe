@@ -46,6 +46,7 @@ import {
     SET_MASTERS_TRANSCRIPT,
     SET_PHD,
     SET_PHD_TRANSCRIPT,
+    SET_RENEWED_LICENSE_OF_HEALTH_FACILITY,
 } from "./mutation-types";
 
 const url = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api/";
@@ -167,6 +168,14 @@ export default {
     },
     setPhdTranscript({ commit }, phdTranscript) {
         commit(SET_PHD_TRANSCRIPT, phdTranscript);
+    },
+    setRenewedLicenseOfHealthFacility({ commit },
+        renewedLicenseOfHealthFacility
+    ) {
+        commit(
+            SET_RENEWED_LICENSE_OF_HEALTH_FACILITY,
+            renewedLicenseOfHealthFacility
+        );
     },
     setButtons({ commit }, buttons) {
         commit(SET_BUTTONS, buttons);
