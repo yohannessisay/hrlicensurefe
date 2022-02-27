@@ -27,8 +27,9 @@
         </h2>
         <TitleWithIllustration
           illustration="Certificate"
-          message="Higher Education Relevance and Quality Agency center(HERQA)"
+          message="Higher Education Relevance and Quality Agency (HERQA)"
           class="mt-8"
+          v-b-tooltip.hover title="Equivalence letter "
         />
         <span class="flex justify-center">{{ documentMessage }}</span>
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">

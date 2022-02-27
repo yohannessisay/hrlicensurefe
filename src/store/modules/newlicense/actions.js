@@ -36,6 +36,8 @@ import {
     SET_PHD,
     SET_PHD_TRANSCRIPT,
     SET_PHD_TRANSCRIPT2,
+    SET_RENEWED_LICENSE_OF_HEALTH_FACILITY,
+    SET_SUPPORT_LETTER_FROM_SPONSOR,
     SET_BUTTONS,
     SET_APPLICATION_ID,
     SET_DOCUMENT_SPEC,
@@ -156,6 +158,17 @@ export default {
     },
     setPhdTranscript2({ commit }, phdTranscript2) {
         commit(SET_PHD_TRANSCRIPT2, phdTranscript2);
+    },
+    setRenewedLicenseOfHealthFacility({ commit },
+        renewedLicenseOfHealthFacility
+    ) {
+        commit(
+            SET_RENEWED_LICENSE_OF_HEALTH_FACILITY,
+            renewedLicenseOfHealthFacility
+        );
+    },
+    setSupportLetterFromSponsor({ commit }, supportLetterFromSponsor) {
+        commit(SET_SUPPORT_LETTER_FROM_SPONSOR, supportLetterFromSponsor);
     },
     setButtons({ commit }, buttons) {
         commit(SET_BUTTONS, buttons);

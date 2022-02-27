@@ -19,12 +19,48 @@
                       <th
                         class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
                       >
-                        License Type ID
+                        First Name
                       </th>
                       <th
                         class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
                       >
-                        License Status ID
+                        Middle Name
+                      </th>
+                      <th
+                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+                      >
+                        Last Name
+                      </th>
+                      <th
+                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+                      >
+                        Alternative Full Name
+                      </th>
+                      <th
+                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+                      >
+                        Employee Prefix
+                      </th>
+                      <th
+                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+                      >
+                        Employee Id
+                      </th>
+                      <th
+                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+                      >
+                        Expire Date
+                      </th>
+
+                      <th
+                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+                      >
+                       License Type
+                      </th>
+                      <th
+                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+                      >
+                        License Status
                       </th>
                       <th
                         class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
@@ -34,89 +70,38 @@
                       <th
                         class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
                       >
-                        Reason
-                      </th>
-                      <th
-                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
-                      >
-                        License Prefix Id
-                      </th>
-                      <th
-                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
-                      >
-                        License Category
-                      </th>
-                      <th
-                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
-                      >
-                        Phone No.
-                      </th>
-
-                      <th
-                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
-                      >
-                        Professional Type
-                      </th>
-                      <th
-                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
-                      >
-                        Region
-                      </th>
-                      <th
-                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
-                      >
-                        Zone
-                      </th>
-                      <th
-                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
-                      >
-                        Woreda
-                      </th>
-                      <th
-                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
-                      >
-                        Start Date
-                      </th>
-                      <th
-                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
-                      >
-                        End Date
-                      </th>
-                      <th
-                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
-                      >
-                        Status
-                      </th>
-                      <th
-                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
-                      >
                         Remark
                       </th>
                       <th
                         class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
                       >
-                        License Code
+                        License Prefix
                       </th>
                       <th
                         class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
                       >
-                        Reviewer
+                       Issued Date
                       </th>
                       <th
                         class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
                       >
-                        Expert Level
+                        Phone
+                      </th>
+                      <th
+                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+                      >
+                        Email
+                      </th>
+                      <th
+                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+                      >
+                        Gender
                       </th>
 
                       <th
                         class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
                       >
-                        Department
-                      </th>
-                      <th
-                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
-                      >
-                        Institution
+                        Birth Date
                       </th>
                     </tr>
                   </thead>
@@ -154,22 +139,44 @@
                           <div class="ml-3">
                             <p class="text-gray-900 whitespace-no-wrap">
                               {{
-                                item.dateOfBirth
-                                  ? moment(item.dateOfBirth).fromNow()
-                                  : "-"
+                                item.alternativeName
                               }}
                             </p>
                           </div>
                         </div>
                       </td>
                       <td
-                        v-if="item.nationality"
+                        v-if="item.employee_prefix"
                         class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
                       >
                         <div class="flex">
                           <div class="ml-3">
                             <p class="text-gray-900 whitespace-no-wrap">
-                              {{ item.nationality.name }}
+                              {{ item.employee_prefix }}
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td
+                        v-else
+                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
+                      >
+                        <div class="flex">
+                          <div class="ml-3">
+                            <p class="text-gray-900 whitespace-no-wrap">
+                              ---
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td
+                        v-if="item.employee_id"
+                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
+                      >
+                        <div class="flex">
+                          <div class="ml-3">
+                            <p class="text-gray-900 whitespace-no-wrap">
+                              {{ item.employee_id }}
                             </p>
                           </div>
                         </div>
@@ -192,73 +199,26 @@
                         <div class="flex">
                           <div class="ml-3">
                             <p class="text-gray-900 whitespace-no-wrap">
-                              {{ item.gender }}
+                              {{ item.expireDate }}
                             </p>
                           </div>
                         </div>
                       </td>
                       <td
                         class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
+                        v-if="item.licenseType"
                       >
                         <div class="flex">
                           <div class="ml-3">
                             <p class="text-gray-900 whitespace-no-wrap">
-                              {{ item.applicant.phoneNumber }}
+                              {{ item.licenseType }}
                             </p>
                           </div>
                         </div>
                       </td>
                       <td
-                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
-                        v-if="item.professionalTypes"
-                      >
-                        <div class="flex">
-                          <div class="ml-3">
-                            <p class="text-gray-900 whitespace-no-wrap">
-                              {{ item.professionalTypes.name }}
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td
-                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
-                        v-if="item.region"
-                      >
-                        <div class="flex">
-                          <div class="ml-3">
-                            <p class="text-gray-900 whitespace-no-wrap">
-                              {{ item.region.name }}
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td
-                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
-                        v-if="item.region"
-                      >
-                        <div class="flex">
-                          <div class="ml-3">
-                            <p class="text-gray-900 whitespace-no-wrap">
-                              {{ item.region.name }}
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td
-                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
-                        v-if="item.region"
-                      >
-                        <div class="flex">
-                          <div class="ml-3">
-                            <p class="text-gray-900 whitespace-no-wrap">
-                              {{ item.region.name }}
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td
-                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
                         v-else
+                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
                       >
                         <div class="flex">
                           <div class="ml-3">
@@ -270,48 +230,55 @@
                       </td>
                       <td
                         class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
+                        v-if="item.licenseStatus"
                       >
                         <div class="flex">
                           <div class="ml-3">
                             <p class="text-gray-900 whitespace-no-wrap">
-                              {{
-                                item.createdAt
-                                  ? moment(item.createdAt).fromNow()
-                                  : "-"
-                              }}
+                              {{ item.licenseStatus }}
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td
+                        v-else
+                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
+                      >
+                        <div class="flex">
+                          <div class="ml-3">
+                            <p class="text-gray-900 whitespace-no-wrap">
+                              ---
                             </p>
                           </div>
                         </div>
                       </td>
                       <td
                         class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
+                        v-if="item.licenseNumber"
                       >
                         <div class="flex">
                           <div class="ml-3">
                             <p class="text-gray-900 whitespace-no-wrap">
-                              {{
-                                item.certifiedDate
-                                  ? moment(item.certifiedDate).fromNow()
-                                  : "-"
-                              }}
+                              {{ item.licenseNumber }}
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td
+                        v-else
+                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
+                      >
+                        <div class="flex">
+                          <div class="ml-3">
+                            <p class="text-gray-900 whitespace-no-wrap">
+                              ---
                             </p>
                           </div>
                         </div>
                       </td>
                       <td
                         class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
-                      >
-                        <div class="flex">
-                          <div class="ml-3">
-                            <p class="text-gray-900 whitespace-no-wrap">
-                              {{ item.applicationStatus.name }}
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td
                         v-if="item.remark"
-                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
                       >
                         <div class="flex">
                           <div class="ml-3">
@@ -334,62 +301,50 @@
                         </div>
                       </td>
                       <td
-                        v-if="item.newLicenseCode"
                         class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
+                        v-if="item.licensePrefix"
                       >
                         <div class="flex">
                           <div class="ml-3">
                             <p class="text-gray-900 whitespace-no-wrap">
-                              {{ item.newLicenseCode }}
+                              {{ item.licensePrefix }}
                             </p>
                           </div>
                         </div>
                       </td>
                       <td
-                        v-if="item.renewalCode"
                         class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
+                        v-else
                       >
                         <div class="flex">
                           <div class="ml-3">
                             <p class="text-gray-900 whitespace-no-wrap">
-                              {{ item.renewalCode }}
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-
-                      <td
-                        v-if="item.verificationCode"
-                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
-                      >
-                        <div class="flex">
-                          <div class="ml-3">
-                            <p class="text-gray-900 whitespace-no-wrap">
-                              {{ item.verificationCode }}
+                              ---
                             </p>
                           </div>
                         </div>
                       </td>
                       <td
-                        v-if="item.goodStandingCode"
                         class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
                       >
                         <div class="flex">
                           <div class="ml-3">
                             <p class="text-gray-900 whitespace-no-wrap">
-                              {{ item.goodStandingCode }}
+                              {{
+                                item.IssuedDate
+                              }}
                             </p>
                           </div>
                         </div>
                       </td>
                       <td
-                        v-if="item.reviewer"
+                      v-if="item.phone"
                         class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
                       >
                         <div class="flex">
                           <div class="ml-3">
                             <p class="text-gray-900 whitespace-no-wrap">
-                              {{ item.reviewer.name }}
+                              {{ item.phone }}
                             </p>
                           </div>
                         </div>
@@ -407,37 +362,73 @@
                         </div>
                       </td>
                       <td
-                        v-if="item.expertLevels"
+                        v-if="item.email"
                         class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
                       >
                         <div class="flex">
                           <div class="ml-3">
                             <p class="text-gray-900 whitespace-no-wrap">
-                              {{ item.expertLevels.name }}
+                              {{ item.email }}
                             </p>
                           </div>
                         </div>
                       </td>
                       <td
-                        v-if="item.education"
+                        v-else
                         class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
                       >
                         <div class="flex">
                           <div class="ml-3">
                             <p class="text-gray-900 whitespace-no-wrap">
-                              {{ item.education.department.name }}
+                              ---
                             </p>
                           </div>
                         </div>
                       </td>
                       <td
-                        v-if="item.education"
-                        class="px-5 py-5 border-gray-200 bg-white text-sm text-right"
+                        v-if="item.gender"
+                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
                       >
                         <div class="flex">
                           <div class="ml-3">
                             <p class="text-gray-900 whitespace-no-wrap">
-                              {{ item.education.institution.name }}
+                              {{ item.gender }}
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td
+                        v-else
+                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
+                      >
+                        <div class="flex">
+                          <div class="ml-3">
+                            <p class="text-gray-900 whitespace-no-wrap">
+                              ---
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td
+                        v-if="item.dateOfBirth"
+                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
+                      >
+                        <div class="flex">
+                          <div class="ml-3">
+                            <p class="text-gray-900 whitespace-no-wrap">
+                              {{ moment(item.dateOfBirth).format("MMM DD, YYYY") }}
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td
+                        v-else
+                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
+                      >
+                        <div class="flex">
+                          <div class="ml-3">
+                            <p class="text-gray-900 whitespace-no-wrap">
+                              ---
                             </p>
                           </div>
                         </div>
@@ -474,104 +465,80 @@ export default {
     const store = useStore();
     let report = ref([
       {
-        name: "Eyosias",
-        fatherName: "Desta",
-        grandFatherName: "Langena",
+        name: "Mesfin",
+        fatherName: "Girum",
+        grandFatherName: "Biruk",
+        alternativeName: "መስፊን ግሩም ብሩክ",
+        employee_prefix: "Dr.",
         dateOfBirth: "2002-01-25T09:55:23.494Z",
-        nationality: "Ethiopian",
+        employee_id: "R00212",
+        expireDate: "Jan 02, 2024",
+        licenseType: "Renewal",
+        licenseStatus: "Certified",
+        licenseNumber: "R00210",
+        remark: "-",
+        licensePrefix: "Medical Doctor",
+        IssuedDate: "Dec 22, 2021",
+        email: "mesfin@gmail.com",
         gender: "Male",
-        applicant: { phoneNumber: "0990099909" },
-        professionalTypes: { name: "Medical Doctor" },
-        region: { name: "SNNPR" },
-        createdAt: "2022-01-25T09:55:23.494Z",
-        certifiedDate: null,
-        applicationStatus: { name: "Submitted" },
-        remark: null,
-        newLicenseCode: "NL099090",
-        renewalCode: null,
-        verificationCode: null,
-        goodStandingCode: null,
-        reviewer: { name: "Robel Ephraim RE" },
-        expertLevels: { name: "Regional" },
-        education: {
-          department: { name: "Psychology" },
-          institution: { name: "AAU" },
-        },
+        phone: "0998890989"
       },
       {
-        name: "Ermias",
-        fatherName: "Bitew",
-        grandFatherName: "Meles",
+        name: "Getu",
+        fatherName: "Aman",
+        grandFatherName: "Temesgen",
+        alternativeName: "ጌቱ አማን ተከተል",
+        employee_prefix: "Mr.",
         dateOfBirth: "2002-01-25T09:55:23.494Z",
-        nationality: "Ethiopian",
+        employee_id: "NL00212",
+        expireDate: "Jan 02, 2024",
+        licenseType: "New License",
+        licenseStatus: "Certified",
+        licenseNumber: "NL00210",
+        remark: "-",
+        licensePrefix: "Medical Doctor",
+        IssuedDate: "Dec 22, 2021",
+        email: "mesfin@gmail.com",
         gender: "Male",
-        applicant: { phoneNumber: "0990099909" },
-        professionalTypes: { name: "Medical Doctor" },
-        region: { name: "SNNPR" },
-        createdAt: "2022-01-25T09:55:23.494Z",
-        certifiedDate: null,
-        applicationStatus: { name: "Submitted" },
-        remark: null,
-        newLicenseCode: "NL099090",
-        renewalCode: null,
-        verificationCode: null,
-        goodStandingCode: null,
-        reviewer: { name: "Robel Ephraim RE" },
-        expertLevels: { name: "Regional" },
-        education: {
-          department: { name: "Psychology" },
-          institution: { name: "AAU" },
-        },
-      },
-      {
-        name: "Robel",
-        fatherName: "Ephraim",
-        grandFatherName: "Abdisa",
-        dateOfBirth: "2002-01-25T09:55:23.494Z",
-        nationality: "Ethiopian",
-        gender: "Male",
-        applicant: { phoneNumber: "0990099909" },
-        professionalTypes: { name: "Medical Doctor" },
-        region: { name: "SNNPR" },
-        createdAt: "2022-01-25T09:55:23.494Z",
-        certifiedDate: null,
-        applicationStatus: { name: "Submitted" },
-        remark: null,
-        newLicenseCode: "NL099090",
-        renewalCode: null,
-        verificationCode: null,
-        goodStandingCode: null,
-        reviewer: { name: "Robel Ephraim RE" },
-        expertLevels: { name: "Regional" },
-        education: {
-          department: { name: "Psychology" },
-          institution: { name: "AAU" },
-        },
+        phone: "0998890989"
       },
       {
         name: "Mahlet",
-        fatherName: "Samuel",
-        grandFatherName: "Akalu",
+        fatherName: "Markos",
+        grandFatherName: "Kefa",
+        alternativeName: "ማህሌት ማርኮስ ኬፋ",
+        employee_prefix: "Ms.",
         dateOfBirth: "2002-01-25T09:55:23.494Z",
-        nationality: "Ethiopian",
-        gender: "Female",
-        applicant: { phoneNumber: "0990099909" },
-        professionalTypes: { name: "Assistant nurse" },
-        region: { name: "Oromia" },
-        createdAt: "2022-01-25T09:55:23.494Z",
-        certifiedDate: null,
-        applicationStatus: { name: "Submitted" },
-        remark: null,
-        newLicenseCode: "NL099090",
-        renewalCode: null,
-        verificationCode: null,
-        goodStandingCode: null,
-        reviewer: { name: "Robel Ephraim RE" },
-        expertLevels: { name: "Regional" },
-        education: {
-          department: { name: "Psychology" },
-          institution: { name: "AAU" },
-        },
+        employee_id: "GS00212",
+        expireDate: "Jan 02, 2024",
+        licenseType: "Good Standing",
+        licenseStatus: "Certified",
+        licenseNumber: "GS00210",
+        remark: "-",
+        licensePrefix: "Medical Doctor",
+        IssuedDate: "Dec 22, 2021",
+        email: "mesfin@gmail.com",
+        gender: "Male",
+        phone: "0998890989"
+      },
+      {
+        name: "Meron",
+        fatherName: "lema",
+        grandFatherName: "tomas",
+        alternativeName: "ሜሮን ለማ ቶማስ",
+        employee_prefix: "Dr.",
+        dateOfBirth: "2002-01-25T09:55:23.494Z",
+        employee_id: "NL00109",
+        expireDate: "Jan 02, 2024",
+        licenseType: "New License",
+        licenseStatus: "Certified",
+        licenseNumber: "NL00109",
+        remark: "-",
+        licensePrefix: "Medical Doctor",
+        IssuedDate: "Dec 22, 2021",
+        email: "mesfin@gmail.com",
+        gender: "Male",
+        phone: "0998890989"
       },
     ]);
 

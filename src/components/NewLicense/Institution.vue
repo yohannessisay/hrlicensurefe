@@ -915,7 +915,7 @@ export default {
           }
         } else {
           let draftData = this.getDraft;
-          if (draftData.education.institutionId != null) {
+          if (draftData?.education?.institutionId != null) {
             this.licenseInfo.education.institutionId =
               draftData.education.institutionId;
             for (var i = 0; i < this.institutions.length; i++) {
