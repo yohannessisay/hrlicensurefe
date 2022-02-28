@@ -866,6 +866,7 @@ export default {
     this.declinedFields = this.getDeclinedFields;
     this.remark = this.getRemarK;
     this.acceptedFields = this.acceptedFields;
+    this.licenseInfo = this.getLicense;
     if (this.declinedFields != null && this.declinedFields.includes("EDEGC")) {
       this.declinedFieldsCheck1 = true;
     }
@@ -1353,12 +1354,11 @@ export default {
               this.documentSpec[2].documentType.code,
               this.healthExamCert
             );
-
             formData.append(
               this.documentSpec[4].documentType.code,
               this.workExperience
             );
-              formData.append(
+            formData.append(
               this.documentSpec[28].documentType.code,
               this.workExperience2
             );
@@ -1370,7 +1370,6 @@ export default {
               this.documentSpec[22].documentType.code,
               this.diploma
             );
-
             formData.append(
               this.documentSpec[23].documentType.code,
               this.transcript
