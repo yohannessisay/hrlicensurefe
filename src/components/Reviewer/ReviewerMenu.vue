@@ -393,9 +393,9 @@
           <report />
         </div>
 
-        <!-- <div v-if="this.display == 'dashboard'">
+        <div v-if="this.display == 'dashboard'">
           <dashboard />
-        </div> -->
+        </div>
         <div v-if="this.display == 'allLicensed'">
           <all-licensed />
         </div>
