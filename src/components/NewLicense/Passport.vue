@@ -262,6 +262,9 @@ export default {
     let phd = ref("");
     let phdTranscript = ref("");
     let phdTranscript2 = ref("");
+    let professionalDocCertificate = ref("");
+    let professionalDocDiploma = ref("");
+    let professionalDocTranscript = ref("");
 
     const reset = () => {
       showUpload.value = true;
@@ -349,6 +352,12 @@ export default {
     phd = store.getters["newlicense/getPhd"];
     phdTranscript = store.getters["newlicense/getPhdTranscript"];
     phdTranscript2 = store.getters["newlicense/getPhdTranscript2"];
+    professionalDocCertificate =
+      store.getters["newlicense/getProfessionalDocCertificate"];
+    professionalDocDiploma =
+      store.getters["newlicense/getProfessionalDocDiploma"];
+    professionalDocTranscript =
+      store.getters["newlicense/getProfessionalDocTranscript"];
 
     const draft = (action) => {
       message.value.showLoading = true;
@@ -452,20 +461,18 @@ export default {
             formData.append(documentSpecs[23].documentType.code, transcript);
             formData.append(documentSpecs[52].documentType.code, transcript2);
             formData.append(documentSpecs[21].documentType.code, degree);
-            if (professionalDoc != undefined) {
-              formData.append(
-                documentSpecs[6].documentType.code,
-                professionalDoc[0]
-              );
-              formData.append(
-                documentSpecs[7].documentType.code,
-                professionalDoc[1]
-              );
-              formData.append(
-                documentSpecs[8].documentType.code,
-                professionalDoc[2]
-              );
-            }
+            formData.append(
+              documentSpecs[6].documentType.code,
+              professionalDocCertificate
+            );
+            formData.append(
+              documentSpecs[7].documentType.code,
+              professionalDocDiploma
+            );
+            formData.append(
+              documentSpecs[8].documentType.code,
+              professionalDocTranscript
+            );
             formData.append(documentSpecs[9].documentType.code, coc);
             formData.append(documentSpecs[41].documentType.code, coc2);
             formData.append(documentSpecs[42].documentType.code, coc3);

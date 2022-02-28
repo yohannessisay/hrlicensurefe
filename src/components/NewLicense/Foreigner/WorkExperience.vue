@@ -308,6 +308,9 @@ export default {
     let mastersTranscript = ref("");
     let phd = ref("");
     let phdTranscript = ref("");
+    let professionalDocCertificate = ref("");
+    let professionalDocDiploma = ref("");
+    let professionalDocTranscript = ref("");
 
     let docCount = ref(0);
 
@@ -445,6 +448,12 @@ export default {
     mastersTranscript = store.getters["newlicense/getMastersTranscript"];
     phd = store.getters["newlicense/getPhd"];
     phdTranscript = store.getters["newlicense/getPhdTranscript"];
+    professionalDocCertificate =
+      store.getters["newlicense/getProfessionalDocCertificate"];
+    professionalDocDiploma =
+      store.getters["newlicense/getProfessionalDocDiploma"];
+    professionalDocTranscript =
+      store.getters["newlicense/getProfessionalDocTranscript"];
 
     const draft = (action) => {
       message.value.showLoading = true;
@@ -550,20 +559,18 @@ export default {
             formData.append(documentSpecs[22].documentType.code, diploma);
             formData.append(documentSpecs[23].documentType.code, transcript);
             formData.append(documentSpecs[21].documentType.code, degree);
-            if (professionalDoc != undefined) {
-              formData.append(
-                documentSpecs[6].documentType.code,
-                professionalDoc[0]
-              );
-              formData.append(
-                documentSpecs[7].documentType.code,
-                professionalDoc[1]
-              );
-              formData.append(
-                documentSpecs[8].documentType.code,
-                professionalDoc[2]
-              );
-            }
+            formData.append(
+              documentSpecs[6].documentType.code,
+              professionalDocCertificate
+            );
+            formData.append(
+              documentSpecs[7].documentType.code,
+              professionalDocDiploma
+            );
+            formData.append(
+              documentSpecs[8].documentType.code,
+              professionalDocTranscript
+            );
             formData.append(documentSpecs[9].documentType.code, coc);
             if (educationDoc != undefined) {
               formData.append(

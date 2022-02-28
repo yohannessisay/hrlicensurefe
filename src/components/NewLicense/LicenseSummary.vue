@@ -352,22 +352,24 @@ export default {
     this.userId = +localStorage.getItem("userId");
     this.draftId = this.$route.params.id;
     this.draftStatus = this.$route.params.status;
-  
+
     if (this.draftId != undefined) {
       setTimeout(() => {
         this.draftData = this.getDraftData;
         this.documentsArray = this.draftData.documents;
       }, 3500);
-    this.showCheckBox = false;
+      this.showCheckBox = false;
     }
     this.passport = this.getPassport;
     this.healthExamCert = this.getHealthExamCert;
     this.englishLanguage = this.getEnglishLanguage;
-    this.professionalDoc = this.getProfessionalDocuments;
+    this.professionalDocCertificate = this.getProfessionalDocCertificate;
+    this.professionalDocDiploma = this.getProfessionalDocDiploma;
+    this.professionalDocTranscript = this.getProfessionalDocTranscript;
 
-    this.proCertificate = this.getProCertificate;
-    this.proTranscript = this.getProTranscript;
-    this.proDiploma = this.getProDiploma;
+    this.proCertificate = this.getProfessionalDocCertificate;
+    this.proDiploma = this.getProfessionalDocDiploma;
+    this.proTranscript = this.getProfessionalDocTranscript;
 
     this.eduEighth = this.getEduEighth;
     this.eduTenth = this.getEduTenth;
@@ -465,7 +467,7 @@ export default {
         }
         var filePreview = await this.blobToBase64(this.proTranscript);
         this.proTranscript.docFile = filePreview;
-        this.proTranscript.title = "Transcript";
+        this.proTranscript.title = "Professional Transcript";
         this.docList.push(this.proTranscript);
       }
     }
@@ -479,7 +481,7 @@ export default {
         }
         var filePreview = await this.blobToBase64(this.proDiploma);
         this.proDiploma.docFile = filePreview;
-        this.proDiploma.title = "Diploma";
+        this.proDiploma.title = "Professional Diploma";
         this.docList.push(this.proDiploma);
       }
     }
@@ -949,7 +951,9 @@ export default {
     passport: "",
     healthExamCert: "",
     englishLanguage: "",
-    professionalDoc: [],
+    professionalDocCertificate: "",
+    professionalDocDiploma: "",
+    professionalDocTranscript: "",
     herqa: "",
     supportLetter: "",
     coc: "",
@@ -997,10 +1001,9 @@ export default {
       getPassport: "newlicense/getPassport",
       getHealthExamCert: "newlicense/getHealthExamCert",
       getEnglishLanguage: "newlicense/getEnglishLanguage",
-      getProfessionalDocuments: "newlicense/getProfessionalDocuments",
-      getProCertificate: "newlicense/getProCertificate",
-      getProTranscript: "newlicense/getProTranscript",
-      getProDiploma: "newlicense/getProDiploma",
+      getProfessionalDocCertificate: "newlicense/getProfessionalDocCertificate",
+      getProfessionalDocDiploma: "newlicense/getProfessionalDocDiploma",
+      getProfessionalDocTranscript: "newlicense/getProfessionalDocTranscript",
 
       getEduEighth: "newlicense/getEduEighth",
       getEduTenth: "newlicense/getEduTenth",
@@ -1083,7 +1086,6 @@ export default {
       this.docs.push(this.passport);
       this.docs.push(this.healthExamCert);
       this.docs.push(this.englishLanguage);
-      this.docs.push(this.professionalDoc);
       this.docs.push(this.herqa);
       this.docs.push(this.supportLetter);
       this.docs.push(this.coc);
@@ -1364,21 +1366,18 @@ export default {
                 this.documentTypes[21].documentType.code,
                 this.degree
               );
-              if (this.professionalDoc != undefined) {
-                formData.append(
-                  this.documentTypes[6].documentType.code,
-                  this.professionalDoc[0]
-                );
-                formData.append(
-                  this.documentTypes[7].documentType.code,
-                  this.professionalDoc[1]
-                );
-                formData.append(
-                  this.documentTypes[8].documentType.code,
-                  this.professionalDoc[2]
-                );
-              }
-
+              formData.append(
+                this.documentTypes[6].documentType.code,
+                this.professionalDocCertificate
+              );
+              formData.append(
+                this.documentTypes[7].documentType.code,
+                this.professionalDocDiploma
+              );
+              formData.append(
+                this.documentTypes[8].documentType.code,
+                this.professionalDocTranscript
+              );
               formData.append(
                 this.documentTypes[9].documentType.code,
                 this.coc
@@ -1507,21 +1506,18 @@ export default {
         );
         formData.append(this.documentTypes[20].documentType.code, this.payroll);
         formData.append(this.documentTypes[21].documentType.code, this.degree);
-        if (this.professionalDoc != undefined) {
-          formData.append(
-            this.documentTypes[6].documentType.code,
-            this.professionalDoc[0]
-          );
-          formData.append(
-            this.documentTypes[7].documentType.code,
-            this.professionalDoc[1]
-          );
-          formData.append(
-            this.documentTypes[8].documentType.code,
-            this.professionalDoc[2]
-          );
-        }
-
+        formData.append(
+          this.documentTypes[6].documentType.code,
+          this.professionalDocCertificate
+        );
+        formData.append(
+          this.documentTypes[7].documentType.code,
+          this.professionalDocDiploma
+        );
+        formData.append(
+          this.documentTypes[8].documentType.code,
+          this.professionalDocTranscript
+        );
         formData.append(this.documentTypes[9].documentType.code, this.coc);
         formData.append(this.documentTypes[41].documentType.code, this.coc2);
         formData.append(this.documentTypes[42].documentType.code, this.coc3);
@@ -1703,21 +1699,18 @@ export default {
                 this.documentTypes[21].documentType.code,
                 this.degree
               );
-              if (this.professionalDoc != undefined) {
-                formData.append(
-                  this.documentTypes[6].documentType.code,
-                  this.professionalDoc[0]
-                );
-                formData.append(
-                  this.documentTypes[7].documentType.code,
-                  this.professionalDoc[1]
-                );
-                formData.append(
-                  this.documentTypes[8].documentType.code,
-                  this.professionalDoc[2]
-                );
-              }
-
+              formData.append(
+                this.documentTypes[6].documentType.code,
+                this.professionalDocCertificate
+              );
+              formData.append(
+                this.documentTypes[7].documentType.code,
+                this.professionalDocDiploma
+              );
+              formData.append(
+                this.documentTypes[8].documentType.code,
+                this.professionalDocTranscript
+              );
               formData.append(
                 this.documentTypes[9].documentType.code,
                 this.coc
@@ -1846,21 +1839,18 @@ export default {
         );
         formData.append(this.documentTypes[20].documentType.code, this.payroll);
         formData.append(this.documentTypes[21].documentType.code, this.degree);
-        if (this.professionalDoc != undefined) {
-          formData.append(
-            this.documentTypes[6].documentType.code,
-            this.professionalDoc[0]
-          );
-          formData.append(
-            this.documentTypes[7].documentType.code,
-            this.professionalDoc[1]
-          );
-          formData.append(
-            this.documentTypes[8].documentType.code,
-            this.professionalDoc[2]
-          );
-        }
-
+        formData.append(
+          this.documentTypes[6].documentType.code,
+          this.professionalDocCertificate
+        );
+        formData.append(
+          this.documentTypes[7].documentType.code,
+          this.professionalDocDiploma
+        );
+        formData.append(
+          this.documentTypes[8].documentType.code,
+          this.professionalDocTranscript
+        );
         formData.append(this.documentTypes[9].documentType.code, this.coc);
         formData.append(this.documentTypes[41].documentType.code, this.coc2);
         formData.append(this.documentTypes[42].documentType.code, this.coc3);

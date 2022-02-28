@@ -247,6 +247,9 @@ export default {
     let mastersTranscript = ref("");
     let phd = ref("");
     let phdTranscript = ref("");
+    let professionalDocCertificate = ref("");
+    let professionalDocDiploma = ref("");
+    let professionalDocTranscript = ref("");
 
     let message = ref({
       showFlash: false,
@@ -323,7 +326,7 @@ export default {
     coc = store.getters["newlicense/getCoc"];
     educationDoc = store.getters["newlicense/getEducationalDocuments"];
     workExperience = store.getters["newlicense/getWorkExperience"];
-    workExperience2 = store.getters["newlicense/getWorkExperience2"];   
+    workExperience2 = store.getters["newlicense/getWorkExperience2"];
     renewedLicense = store.getters["newlicense/getRenewedLicense"];
     professionalLicense = store.getters["newlicense/getProfessionalLicense"];
     payroll = store.getters["newlicense/getPayroll"];
@@ -334,6 +337,12 @@ export default {
     mastersTranscript = store.getters["newlicense/getMastersTranscript"];
     phd = store.getters["newlicense/getPhd"];
     phdTranscript = store.getters["newlicense/getPhdTranscript"];
+    professionalDocCertificate =
+      store.getters["newlicense/getProfessionalDocCertificate"];
+    professionalDocDiploma =
+      store.getters["newlicense/getProfessionalDocDiploma"];
+    professionalDocTranscript =
+      store.getters["newlicense/getProfessionalDocTranscript"];
 
     const draft = (action) => {
       message.value.showLoading = true;
@@ -422,7 +431,10 @@ export default {
             formData.append(documentSpecs[1].documentType.code, passport);
             formData.append(documentSpecs[2].documentType.code, healthExamCert);
             formData.append(documentSpecs[4].documentType.code, workExperience);
-            formData.append(documentSpecs[28].documentType.code, workExperience2);
+            formData.append(
+              documentSpecs[28].documentType.code,
+              workExperience2
+            );
             formData.append(
               documentSpecs[5].documentType.code,
               englishLanguage
@@ -430,20 +442,18 @@ export default {
             formData.append(documentSpecs[22].documentType.code, diploma);
             formData.append(documentSpecs[23].documentType.code, transcript);
             formData.append(documentSpecs[21].documentType.code, degree);
-            if (professionalDoc != undefined) {
-              formData.append(
-                documentSpecs[6].documentType.code,
-                professionalDoc[0]
-              );
-              formData.append(
-                documentSpecs[7].documentType.code,
-                professionalDoc[1]
-              );
-              formData.append(
-                documentSpecs[8].documentType.code,
-                professionalDoc[2]
-              );
-            }
+            formData.append(
+              documentSpecs[6].documentType.code,
+              professionalDocCertificate
+            );
+            formData.append(
+              documentSpecs[7].documentType.code,
+              professionalDocDiploma
+            );
+            formData.append(
+              documentSpecs[8].documentType.code,
+              professionalDocTranscript
+            );
             formData.append(documentSpecs[9].documentType.code, coc);
             if (educationDoc != undefined) {
               formData.append(

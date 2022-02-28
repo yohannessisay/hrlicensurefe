@@ -5,7 +5,9 @@ import {
     SET_HEALTH_EXAM_CERT,
     SET_SERVICE_FEE,
     SET_LANGUAGE,
-    SET_PROFESSIONAL_DOCUMENT,
+    SET_PROFESSIONAL_DOC_CERTIFICATE,
+    SET_PROFESSIONAL_DOC_DIPLOMA,
+    SET_PROFESSIONAL_DOC_TRANSCRIPT,
     SET_HERQA,
     SET_SUPPORT_LETTER,
     SET_COC,
@@ -63,8 +65,14 @@ export default {
     setLanguage({ commit }, language) {
         commit(SET_LANGUAGE, language);
     },
-    setProfessionalDoc({ commit }, professionalDoc) {
-        commit(SET_PROFESSIONAL_DOCUMENT, professionalDoc);
+    setProfessionalDocCertificate({ commit }, professionalDocCertificate) {
+        commit(SET_PROFESSIONAL_DOC_CERTIFICATE, professionalDocCertificate);
+    },
+    setProfessionalDocDiploma({ commit }, professionalDocDiploma) {
+        commit(SET_PROFESSIONAL_DOC_DIPLOMA, professionalDocDiploma);
+    },
+    setProfessionalDocTranscript({ commit }, professionalDocTranscript) {
+        commit(SET_PROFESSIONAL_DOC_TRANSCRIPT, professionalDocTranscript);
     },
     setHerqa({ commit }, herqa) {
         commit(SET_HERQA, herqa);

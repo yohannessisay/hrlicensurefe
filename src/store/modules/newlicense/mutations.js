@@ -3,7 +3,9 @@ import {
     SET_PASSPORT,
     SET_HEALTH_EXAM_CERT,
     SET_LANGUAGE,
-    SET_PROFESSIONAL_DOCUMENT,
+    SET_PROFESSIONAL_DOC_CERTIFICATE,
+    SET_PROFESSIONAL_DOC_DIPLOMA,
+    SET_PROFESSIONAL_DOC_TRANSCRIPT,
     SET_HERQA,
     SET_SUPPORT_LETTER,
     SET_COC,
@@ -62,8 +64,14 @@ export default {
     [SET_LANGUAGE](state, englishLanguage) {
         state.englishLanguage = englishLanguage;
     },
-    [SET_PROFESSIONAL_DOCUMENT](state, professionalDocuments) {
-        state.professionalDocuments = professionalDocuments;
+    [SET_PROFESSIONAL_DOC_CERTIFICATE](state, professionalDocCertificate) {
+        state.professionalDocCertificate = professionalDocCertificate;
+    },
+    [SET_PROFESSIONAL_DOC_DIPLOMA](state, professionalDocDiploma) {
+        state.professionalDocDiploma = professionalDocDiploma;
+    },
+    [SET_PROFESSIONAL_DOC_TRANSCRIPT](state, professionalDocTranscript) {
+        state.professionalDocTranscript = professionalDocTranscript;
     },
     [SET_HERQA](state, herqa) {
         state.herqa = herqa;

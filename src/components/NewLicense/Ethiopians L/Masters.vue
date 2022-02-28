@@ -242,7 +242,6 @@ export default {
 
     let passport = ref("");
     let healthExamCert = ref("");
-    let professionalDoc = ref([]);
     let herqa = ref("");
     let englishLanguage = ref("");
     let supportLetter = ref("");
@@ -331,7 +330,6 @@ export default {
 
     passport = store.getters["newlicense/getPassport"];
     englishLanguage = store.getters["newlicense/getEnglishLanguage"];
-    professionalDoc = store.getters["newlicense/getProfessionalDocuments"];
     herqa = store.getters["newlicense/getHerqa"];
     healthExamCert = store.getters["newlicense/getHealthExamCert"];
     supportLetter = store.getters["newlicense/getSupportLetter"];
@@ -442,7 +440,10 @@ export default {
             formData.append(documentSpecs[1].documentType.code, passport);
             formData.append(documentSpecs[2].documentType.code, healthExamCert);
             formData.append(documentSpecs[4].documentType.code, workExperience);
-            formData.append(documentSpecs[28].documentType.code, workExperience2);
+            formData.append(
+              documentSpecs[28].documentType.code,
+              workExperience2
+            );
             formData.append(
               documentSpecs[5].documentType.code,
               englishLanguage
@@ -454,20 +455,6 @@ export default {
             formData.append(documentSpecs[41].documentType.code, coc2);
             formData.append(documentSpecs[42].documentType.code, coc3);
             formData.append(documentSpecs[21].documentType.code, degree);
-            if (professionalDoc != undefined) {
-              formData.append(
-                documentSpecs[6].documentType.code,
-                professionalDoc[0]
-              );
-              formData.append(
-                documentSpecs[7].documentType.code,
-                professionalDoc[1]
-              );
-              formData.append(
-                documentSpecs[8].documentType.code,
-                professionalDoc[2]
-              );
-            }
             if (educationDoc != undefined) {
               formData.append(
                 documentSpecs[10].documentType.code,
@@ -509,13 +496,16 @@ export default {
               documentSpecs[25].documentType.code,
               mastersTranscript
             );
-             formData.append(
+            formData.append(
               documentSpecs[57].documentType.code,
               mastersTranscript2
             );
             formData.append(documentSpecs[26].documentType.code, phd);
             formData.append(documentSpecs[27].documentType.code, phdTranscript);
-            formData.append(documentSpecs[58].documentType.code, phdTranscript2);
+            formData.append(
+              documentSpecs[58].documentType.code,
+              phdTranscript2
+            );
 
             let payload = { document: formData, id: licenseId };
             store

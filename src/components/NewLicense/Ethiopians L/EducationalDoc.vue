@@ -587,7 +587,6 @@ export default {
       workExperience2: "",
       englishLanguage: "",
       herqa: "",
-      professionalDoc: [],
       coc: "",
       coc2: "",
       coc3: "",
@@ -974,7 +973,6 @@ export default {
     this.passport = this.getPassport;
     this.healthExamCert = this.getHealthExamCert;
     this.englishLanguage = this.getEnglishLanguage;
-    this.professionalDoc = this.getProfessionalDocuments;
     this.herqa = this.getHerqa;
     this.supportLetter = this.getSupportLetter;
     this.coc = this.getCoc;
@@ -1382,22 +1380,6 @@ export default {
               this.documentSpec[21].documentType.code,
               this.degree
             );
-
-            if (this.professionalDoc != undefined) {
-              formData.append(
-                this.documentSpec[6].documentType.code,
-                this.professionalDoc[0]
-              );
-              formData.append(
-                this.documentSpec[7].documentType.code,
-                this.professionalDoc[1]
-              );
-              formData.append(
-                this.documentSpec[8].documentType.code,
-                this.professionalDoc[2]
-              );
-            }
-
             formData.append(this.documentSpec[9].documentType.code, this.coc);
             formData.append(this.documentSpec[41].documentType.code, this.coc2);
             formData.append(this.documentSpec[42].documentType.code, this.coc3);
