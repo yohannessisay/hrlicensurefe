@@ -254,7 +254,13 @@ export default {
     let professionalDocCertificate3 = ref("");
     let professionalDocCertificate4 = ref("");
     let professionalDocCertificate5 = ref("");
+
     let professionalDocDiploma = ref("");
+    let professionalDocDiploma2 = ref("");
+    let professionalDocDiploma3 = ref("");
+    let professionalDocDiploma4 = ref("");
+    let professionalDocDiploma5 = ref("");
+
     let professionalDocTranscript = ref("");
 
     let declinedFields = ref([]);
@@ -356,8 +362,18 @@ export default {
       store.getters["newlicense/getProfessionalDocCertificate4"];
     professionalDocCertificate5 =
       store.getters["newlicense/getProfessionalDocCertificate5"];
+
     professionalDocDiploma =
       store.getters["newlicense/getProfessionalDocDiploma"];
+    professionalDocDiploma2 =
+      store.getters["newlicense/getProfessionalDocDiploma2"];
+    professionalDocDiploma3 =
+      store.getters["newlicense/getProfessionalDocDiploma3"];
+    professionalDocDiploma4 =
+      store.getters["newlicense/getProfessionalDocDiploma4"];
+    professionalDocDiploma5 =
+      store.getters["newlicense/getProfessionalDocDiploma5"];
+
     professionalDocTranscript =
       store.getters["newlicense/getProfessionalDocTranscript"];
 
@@ -481,6 +497,22 @@ export default {
             formData.append(
               documentSpecs[7].documentType.code,
               professionalDocDiploma
+            );
+            formData.append(
+              documentSpecs[33].documentType.code,
+              professionalDocDiploma2
+            );
+            formData.append(
+              documentSpecs[34].documentType.code,
+              professionalDocDiploma3
+            );
+            formData.append(
+              documentSpecs[35].documentType.code,
+              professionalDocDiploma4
+            );
+            formData.append(
+              documentSpecs[36].documentType.code,
+              professionalDocDiploma5
             );
             formData.append(
               documentSpecs[8].documentType.code,
