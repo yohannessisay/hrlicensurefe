@@ -878,6 +878,7 @@ export default {
         loader.value = false;
       });
     };
+
     const fetchProfessionType = () => {
       store.dispatch("report/getProfessionalTypes").then((res) => {
         professions.value = res.data.data;
@@ -913,7 +914,9 @@ export default {
     const filterProfession = (profType) => {
       // report.value = store.getters["report/getReport"];
       var tableFilter = [];
+      console.log("profe type", profType)
       tableFilter = report.value;
+      console.log("table filter", tableFilter)
       var tableFilter2 = [];
       for (var i = 0; i < tableFilter.length; i++) {
         if (tableFilter[i].professionalTypes != null) {

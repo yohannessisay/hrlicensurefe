@@ -20,9 +20,7 @@
                     class="fas fa-chevron-circle-down float-right mt-2"
                   ></i>
                 </span>
-                <span class="text-lg" style="color: white; "
-                  >All Licensed</span
-                >
+                <span class="text-lg" style="color: white; ">All Licensed</span>
               </h3>
             </div>
           </div>
@@ -33,20 +31,14 @@
             style="color: #648ea3; width: 200px;"
           >
             <ul class="block w-full shadow float-right" style="color: #648ea3;">
-                <li
-                @click="AllLicensedMenuHandler('allLicensed')"
-                class="mb-2"
-              >
+              <li @click="AllLicensedMenuHandler('allLicensed')" class="mb-2">
                 <div class=" text-base" style="color: white; ">
                   <!-- <i class="far fa-thumbs-up fa-x fa-light mt-4"></i> -->
                   All Licensed
                 </div>
               </li>
 
-              <li
-                @click="AllLicensedMenuHandler('accredited')"
-                class="mb-2"
-              >
+              <li @click="AllLicensedMenuHandler('accredited')" class="mb-2">
                 <div class=" text-base" style="color: white; ">
                   <!-- <i class="far fa-thumbs-up fa-x fa-light mt-4"></i> -->
                   Legacy data
