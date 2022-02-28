@@ -14,6 +14,10 @@ import {
     SET_PROFESSIONAL_DOC_DIPLOMA4,
     SET_PROFESSIONAL_DOC_DIPLOMA5,
     SET_PROFESSIONAL_DOC_TRANSCRIPT,
+    SET_PROFESSIONAL_DOC_TRANSCRIPT2,
+    SET_PROFESSIONAL_DOC_TRANSCRIPT3,
+    SET_PROFESSIONAL_DOC_TRANSCRIPT4,
+    SET_PROFESSIONAL_DOC_TRANSCRIPT5,
     SET_HERQA,
     SET_SUPPORT_LETTER,
     SET_COC,
@@ -104,6 +108,18 @@ export default {
     },
     [SET_PROFESSIONAL_DOC_TRANSCRIPT](state, professionalDocTranscript) {
         state.professionalDocTranscript = professionalDocTranscript;
+    },
+    [SET_PROFESSIONAL_DOC_TRANSCRIPT2](state, professionalDocTranscript2) {
+        state.professionalDocTranscript2 = professionalDocTranscript2;
+    },
+    [SET_PROFESSIONAL_DOC_TRANSCRIPT3](state, professionalDocTranscript3) {
+        state.professionalDocTranscript3 = professionalDocTranscript3;
+    },
+    [SET_PROFESSIONAL_DOC_TRANSCRIPT4](state, professionalDocTranscript4) {
+        state.professionalDocTranscript4 = professionalDocTranscript4;
+    },
+    [SET_PROFESSIONAL_DOC_TRANSCRIPT5](state, professionalDocTranscript5) {
+        state.professionalDocTranscript5 = professionalDocTranscript5;
     },
     [SET_HERQA](state, herqa) {
         state.herqa = herqa;
