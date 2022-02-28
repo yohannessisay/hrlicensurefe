@@ -4,6 +4,10 @@ import {
     SET_HEALTH_EXAM_CERT,
     SET_LANGUAGE,
     SET_PROFESSIONAL_DOC_CERTIFICATE,
+    SET_PROFESSIONAL_DOC_CERTIFICATE2,
+    SET_PROFESSIONAL_DOC_CERTIFICATE3,
+    SET_PROFESSIONAL_DOC_CERTIFICATE4,
+    SET_PROFESSIONAL_DOC_CERTIFICATE5,
     SET_PROFESSIONAL_DOC_DIPLOMA,
     SET_PROFESSIONAL_DOC_TRANSCRIPT,
     SET_HERQA,
@@ -66,6 +70,18 @@ export default {
     },
     [SET_PROFESSIONAL_DOC_CERTIFICATE](state, professionalDocCertificate) {
         state.professionalDocCertificate = professionalDocCertificate;
+    },
+    [SET_PROFESSIONAL_DOC_CERTIFICATE2](state, professionalDocCertificate2) {
+        state.professionalDocCertificate2 = professionalDocCertificate2;
+    },
+    [SET_PROFESSIONAL_DOC_CERTIFICATE3](state, professionalDocCertificate3) {
+        state.professionalDocCertificate3 = professionalDocCertificate3;
+    },
+    [SET_PROFESSIONAL_DOC_CERTIFICATE4](state, professionalDocCertificate4) {
+        state.professionalDocCertificate4 = professionalDocCertificate4;
+    },
+    [SET_PROFESSIONAL_DOC_CERTIFICATE5](state, professionalDocCertificate5) {
+        state.professionalDocCertificate5 = professionalDocCertificate5;
     },
     [SET_PROFESSIONAL_DOC_DIPLOMA](state, professionalDocDiploma) {
         state.professionalDocDiploma = professionalDocDiploma;

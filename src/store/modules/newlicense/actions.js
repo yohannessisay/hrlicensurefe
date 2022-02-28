@@ -6,6 +6,10 @@ import {
     SET_SERVICE_FEE,
     SET_LANGUAGE,
     SET_PROFESSIONAL_DOC_CERTIFICATE,
+    SET_PROFESSIONAL_DOC_CERTIFICATE2,
+    SET_PROFESSIONAL_DOC_CERTIFICATE3,
+    SET_PROFESSIONAL_DOC_CERTIFICATE4,
+    SET_PROFESSIONAL_DOC_CERTIFICATE5,
     SET_PROFESSIONAL_DOC_DIPLOMA,
     SET_PROFESSIONAL_DOC_TRANSCRIPT,
     SET_HERQA,
@@ -67,6 +71,18 @@ export default {
     },
     setProfessionalDocCertificate({ commit }, professionalDocCertificate) {
         commit(SET_PROFESSIONAL_DOC_CERTIFICATE, professionalDocCertificate);
+    },
+    setProfessionalDocCertificate2({ commit }, professionalDocCertificate2) {
+        commit(SET_PROFESSIONAL_DOC_CERTIFICATE2, professionalDocCertificate2);
+    },
+    setProfessionalDocCertificate3({ commit }, professionalDocCertificate3) {
+        commit(SET_PROFESSIONAL_DOC_CERTIFICATE3, professionalDocCertificate3);
+    },
+    setProfessionalDocCertificate4({ commit }, professionalDocCertificate4) {
+        commit(SET_PROFESSIONAL_DOC_CERTIFICATE4, professionalDocCertificate4);
+    },
+    setProfessionalDocCertificate5({ commit }, professionalDocCertificate5) {
+        commit(SET_PROFESSIONAL_DOC_CERTIFICATE5, professionalDocCertificate5);
     },
     setProfessionalDocDiploma({ commit }, professionalDocDiploma) {
         commit(SET_PROFESSIONAL_DOC_DIPLOMA, professionalDocDiploma);
