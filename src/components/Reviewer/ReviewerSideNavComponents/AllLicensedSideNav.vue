@@ -49,7 +49,7 @@
               >
                 <div class=" text-base" style="color: white; ">
                   <!-- <i class="far fa-thumbs-up fa-x fa-light mt-4"></i> -->
-                  Accredited
+                  Legacy data
                 </div>
               </li>
             </ul>
