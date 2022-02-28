@@ -47,7 +47,12 @@
           <li>Health Exam Certificate</li>
           <li>Previous License</li>
           <li>CPD Certificate</li>
-          <li>Payroll Document</li>
+          <li>   <div class="tooltip">
+            Payroll Document
+            <span class="tooltiptext ml-4">
+              Non-government Institutions
+            </span>
+          </div></li>
           <li>Authenticated Professional Document Certificate</li>
           <li>Authenticated Professional Document Diploma</li>
           <li>Authenticated Professional Document Transcript</li>
