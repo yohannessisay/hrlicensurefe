@@ -256,6 +256,10 @@ export default {
     let phd = ref("");
     let phdTranscript = ref("");
     let professionalDocCertificate = ref("");
+    let professionalDocCertificate2 = ref("");
+    let professionalDocCertificate3 = ref("");
+    let professionalDocCertificate4 = ref("");
+    let professionalDocCertificate5 = ref("");
     let professionalDocTranscript = ref("");
 
     const reset = () => {
@@ -339,8 +343,18 @@ export default {
     mastersTranscript = store.getters["newlicense/getMastersTranscript"];
     phd = store.getters["newlicense/getPhd"];
     phdTranscript = store.getters["newlicense/getPhdTranscript"];
-    professionalDocCertificate = store.getters["newlicense/getProfessionalDocCertificate"];
-    professionalDocTranscript = store.getters["newlicense/getProfessionalDocTranscript"];
+    professionalDocCertificate =
+      store.getters["newlicense/getProfessionalDocCertificate"];
+    professionalDocCertificate2 =
+      store.getters["newlicense/getProfessionalDocCertificate2"];
+    professionalDocCertificate3 =
+      store.getters["newlicense/getProfessionalDocCertificate3"];
+    professionalDocCertificate4 =
+      store.getters["newlicense/getProfessionalDocCertificate4"];
+    professionalDocCertificate5 =
+      store.getters["newlicense/getProfessionalDocCertificate5"];
+    professionalDocTranscript =
+      store.getters["newlicense/getProfessionalDocTranscript"];
 
     const draft = (action) => {
       message.value.showLoading = true;
@@ -427,7 +441,10 @@ export default {
             formData.append(documentSpecs[1].documentType.code, passport);
             formData.append(documentSpecs[2].documentType.code, healthExamCert);
             formData.append(documentSpecs[4].documentType.code, workExperience);
-            formData.append(documentSpecs[28].documentType.code, workExperience2);
+            formData.append(
+              documentSpecs[28].documentType.code,
+              workExperience2
+            );
             formData.append(
               documentSpecs[5].documentType.code,
               englishLanguage
@@ -435,18 +452,34 @@ export default {
             formData.append(documentSpecs[22].documentType.code, diploma);
             formData.append(documentSpecs[23].documentType.code, transcript);
             formData.append(documentSpecs[21].documentType.code, degree);
-              formData.append(
-                documentSpecs[6].documentType.code,
-                professionalDocCertificate
-              );
-              formData.append(
-                documentSpecs[7].documentType.code,
-                diplomaFile.value
-              );
-              formData.append(
-                documentSpecs[8].documentType.code,
-                professionalDocTranscript
-              );
+            formData.append(
+              documentSpecs[6].documentType.code,
+              professionalDocCertificate
+            );
+            formData.append(
+              documentSpecs[29].documentType.code,
+              professionalDocCertificate2
+            );
+            formData.append(
+              documentSpecs[30].documentType.code,
+              professionalDocCertificate3
+            );
+            formData.append(
+              documentSpecs[31].documentType.code,
+              professionalDocCertificate4
+            );
+            formData.append(
+              documentSpecs[32].documentType.code,
+              professionalDocCertificate5
+            );
+            formData.append(
+              documentSpecs[7].documentType.code,
+              diplomaFile.value
+            );
+            formData.append(
+              documentSpecs[8].documentType.code,
+              professionalDocTranscript
+            );
             formData.append(documentSpecs[9].documentType.code, coc);
             if (educationDoc != undefined) {
               formData.append(
@@ -471,10 +504,7 @@ export default {
               );
             }
             formData.append(documentSpecs[15].documentType.code, supportLetter);
-            formData.append(
-              documentSpecs[16].documentType.code,
-              herqa
-            );
+            formData.append(documentSpecs[16].documentType.code, herqa);
             formData.append(
               documentSpecs[18].documentType.code,
               renewedLicense

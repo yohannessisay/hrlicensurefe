@@ -368,6 +368,11 @@ export default {
     this.professionalDocTranscript = this.getProfessionalDocTranscript;
 
     this.proCertificate = this.getProfessionalDocCertificate;
+    this.proCertificate2 = this.getProfessionalDocCertificate2;
+    this.proCertificate3 = this.getProfessionalDocCertificate3;
+    this.proCertificate4 = this.getProfessionalDocCertificate4;
+    this.proCertificate5 = this.getProfessionalDocCertificate5;
+
     this.proDiploma = this.getProfessionalDocDiploma;
     this.proTranscript = this.getProfessionalDocTranscript;
 
@@ -455,6 +460,62 @@ export default {
         this.proCertificate.docFile = filePreview;
         this.proCertificate.title = "Professional Certificate";
         this.docList.push(this.proCertificate);
+      }
+    }
+    if (this.proCertificate2 != "" && this.proCertificate2 != undefined) {
+      if ("name" in this.proCertificate2) {
+        if (this.draftId != undefined) {
+          this.documentsArray.splice(
+            this.documentsArray.findIndex((e) => e.documentTypeCode === "PDC1"),
+            1
+          );
+        }
+        var filePreview = await this.blobToBase64(this.proCertificate2);
+        this.proCertificate2.docFile = filePreview;
+        this.proCertificate2.title = "Professional Certificate 2";
+        this.docList.push(this.proCertificate2);
+      }
+    }
+    if (this.proCertificate3 != "" && this.proCertificate3 != undefined) {
+      if ("name" in this.proCertificate3) {
+        if (this.draftId != undefined) {
+          this.documentsArray.splice(
+            this.documentsArray.findIndex((e) => e.documentTypeCode === "PDC2"),
+            1
+          );
+        }
+        var filePreview = await this.blobToBase64(this.proCertificate3);
+        this.proCertificate3.docFile = filePreview;
+        this.proCertificate3.title = "Professional Certificate 3";
+        this.docList.push(this.proCertificate3);
+      }
+    }
+    if (this.proCertificate4 != "" && this.proCertificate4 != undefined) {
+      if ("name" in this.proCertificate4) {
+        if (this.draftId != undefined) {
+          this.documentsArray.splice(
+            this.documentsArray.findIndex((e) => e.documentTypeCode === "PDC3"),
+            1
+          );
+        }
+        var filePreview = await this.blobToBase64(this.proCertificate4);
+        this.proCertificate4.docFile = filePreview;
+        this.proCertificate4.title = "Professional Certificate 4";
+        this.docList.push(this.proCertificate4);
+      }
+    }
+    if (this.proCertificate5 != "" && this.proCertificate5 != undefined) {
+      if ("name" in this.proCertificate5) {
+        if (this.draftId != undefined) {
+          this.documentsArray.splice(
+            this.documentsArray.findIndex((e) => e.documentTypeCode === "PDC4"),
+            1
+          );
+        }
+        var filePreview = await this.blobToBase64(this.proCertificate5);
+        this.proCertificate5.docFile = filePreview;
+        this.proCertificate5.title = "Professional Certificate 5";
+        this.docList.push(this.proCertificate5);
       }
     }
     if (this.proTranscript != "" && this.proTranscript != undefined) {
@@ -984,6 +1045,10 @@ export default {
     eduTranscript2: "",
 
     proCertificate: "",
+    proCertificate2: "",
+    proCertificate3: "",
+    proCertificate4: "",
+    proCertificate5: "",
     proTranscript: "",
     proDiploma: "",
 
@@ -1002,6 +1067,15 @@ export default {
       getHealthExamCert: "newlicense/getHealthExamCert",
       getEnglishLanguage: "newlicense/getEnglishLanguage",
       getProfessionalDocCertificate: "newlicense/getProfessionalDocCertificate",
+      getProfessionalDocCertificate2:
+        "newlicense/getProfessionalDocCertificate2",
+      getProfessionalDocCertificate3:
+        "newlicense/getProfessionalDocCertificate3",
+      getProfessionalDocCertificate4:
+        "newlicense/getProfessionalDocCertificate4",
+      getProfessionalDocCertificate5:
+        "newlicense/getProfessionalDocCertificate5",
+
       getProfessionalDocDiploma: "newlicense/getProfessionalDocDiploma",
       getProfessionalDocTranscript: "newlicense/getProfessionalDocTranscript",
 
@@ -1368,7 +1442,23 @@ export default {
               );
               formData.append(
                 this.documentTypes[6].documentType.code,
-                this.professionalDocCertificate
+                this.proCertificate
+              );
+              formData.append(
+                this.documentTypes[29].documentType.code,
+                this.proCertificate2
+              );
+              formData.append(
+                this.documentTypes[30].documentType.code,
+                this.proCertificate3
+              );
+              formData.append(
+                this.documentTypes[31].documentType.code,
+                this.proCertificate4
+              );
+              formData.append(
+                this.documentTypes[32].documentType.code,
+                this.proCertificate5
               );
               formData.append(
                 this.documentTypes[7].documentType.code,
@@ -1682,7 +1772,6 @@ export default {
                 this.documentTypes[7].documentType.code,
                 this.diploma
               );
-
               formData.append(
                 this.documentTypes[8].documentType.code,
                 this.transcript
@@ -1701,7 +1790,23 @@ export default {
               );
               formData.append(
                 this.documentTypes[6].documentType.code,
-                this.professionalDocCertificate
+                this.proCertificate
+              );
+              formData.append(
+                this.documentTypes[29].documentType.code,
+                this.proCertificate2
+              );
+              formData.append(
+                this.documentTypes[30].documentType.code,
+                this.proCertificate3
+              );
+              formData.append(
+                this.documentTypes[31].documentType.code,
+                this.proCertificate4
+              );
+              formData.append(
+                this.documentTypes[32].documentType.code,
+                this.proCertificate5
               );
               formData.append(
                 this.documentTypes[7].documentType.code,

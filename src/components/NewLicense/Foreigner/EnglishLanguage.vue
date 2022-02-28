@@ -257,6 +257,10 @@ export default {
     let phd = ref("");
     let phdTranscript = ref("");
     let professionalDocCertificate = ref("");
+    let professionalDocCertificate2 = ref("");
+    let professionalDocCertificate3 = ref("");
+    let professionalDocCertificate4 = ref("");
+    let professionalDocCertificate5 = ref("");
     let professionalDocDiploma = ref("");
     let professionalDocTranscript = ref("");
 
@@ -344,6 +348,14 @@ export default {
     phdTranscript = store.getters["newlicense/getPhdTranscript"];
     professionalDocCertificate =
       store.getters["newlicense/getProfessionalDocCertificate"];
+    professionalDocCertificate2 =
+      store.getters["newlicense/getProfessionalDocCertificate2"];
+    professionalDocCertificate3 =
+      store.getters["newlicense/getProfessionalDocCertificate3"];
+    professionalDocCertificate4 =
+      store.getters["newlicense/getProfessionalDocCertificate4"];
+    professionalDocCertificate5 =
+      store.getters["newlicense/getProfessionalDocCertificate5"];
     professionalDocDiploma =
       store.getters["newlicense/getProfessionalDocDiploma"];
     professionalDocTranscript =
@@ -449,6 +461,22 @@ export default {
             formData.append(
               documentSpecs[6].documentType.code,
               professionalDocCertificate
+            );
+            formData.append(
+              documentSpecs[29].documentType.code,
+              professionalDocCertificate2
+            );
+            formData.append(
+              documentSpecs[30].documentType.code,
+              professionalDocCertificate3
+            );
+            formData.append(
+              documentSpecs[31].documentType.code,
+              professionalDocCertificate4
+            );
+            formData.append(
+              documentSpecs[32].documentType.code,
+              professionalDocCertificate5
             );
             formData.append(
               documentSpecs[7].documentType.code,

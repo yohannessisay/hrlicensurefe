@@ -74,7 +74,7 @@ export default {
     ApprovedPayment,
     DeclinedPayment,
     PendingPayment,
-    FlashMessage
+    FlashMessage,
   },
   created() {
     this.$route.params.status = undefined;
@@ -85,7 +85,11 @@ export default {
     this.$store.dispatch("newlicense/setPassport", "");
     this.$store.dispatch("newlicense/setHealthExamCert", "");
     this.$store.dispatch("newlicense/setLanguage", "");
-    this.$store.dispatch("newlicense/setProfessionalDoc", []);
+    this.$store.dispatch("newlicense/setProfessionalDocCertificate", "");
+    this.$store.dispatch("newlicense/setProfessionalDocCertificate2", "");
+    this.$store.dispatch("newlicense/setProfessionalDocCertificate3", "");
+    this.$store.dispatch("newlicense/setProfessionalDocCertificate4", "");
+    this.$store.dispatch("newlicense/setProfessionalDocCertificate5", "");
     this.$store.dispatch("newlicense/setHerqa", "");
     this.$store.dispatch("newlicense/setSupportLetter", "");
     this.$store.dispatch("newlicense/setCOC", "");
