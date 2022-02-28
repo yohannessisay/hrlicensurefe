@@ -49,9 +49,7 @@
           <br />
           <div class="tooltip">
             Authenticated Professional License from Country of Origin
-            <span class="tooltiptext ml-4">
-              Found in Ethiopia
-            </span>
+           
           </div>
           <br />
           <div class="tooltip">
@@ -123,7 +121,7 @@
           <br />
           <li>Medical Certificate</li>
           <div class="tooltip">
-            Higher Education Relevance and Quality Agency center
+            Higher Education Relevance and Quality Agency
             <span class="tooltiptext ml-4">
               HERQA
             </span>
