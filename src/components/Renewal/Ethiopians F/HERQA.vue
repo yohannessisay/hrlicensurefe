@@ -25,12 +25,17 @@
         >
           ACCEPTED
         </h2>
-        <TitleWithIllustration
+        <div class="tooltip">
+              <TitleWithIllustration
           illustration="Certificate"
           message="Higher Education Relevance and Quality Agency(HERQA)"
           class="mt-8"
-          v-b-tooltip.hover title="Equivalence letter "
         />
+            <span class="tooltiptext ml-4">R
+             Equivalence letter
+            </span>
+          </div>
+          
         <span class="flex justify-center">{{ documentMessage }}</span>
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
           <div class="flex justify-center">
@@ -728,5 +733,28 @@ img {
   background-image: linear-gradient(to right, #d63232, #e63636) !important;
   color: white;
   border-color: tomato;
+}
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #1e40af82;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+
+  /* Position the tooltip text - see examples below! */
+  position: absolute;
+  z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted white; /* If you want dots under the hoverable text */
 }
 </style>
