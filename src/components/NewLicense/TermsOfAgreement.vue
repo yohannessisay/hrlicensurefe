@@ -123,7 +123,7 @@
           <div class="tooltip">
             Higher Education Relevance and Quality Agency
             <span class="tooltiptext ml-4">
-              HERQA
+              Equivalence letter
             </span>
           </div>
           <br />
