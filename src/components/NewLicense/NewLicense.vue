@@ -1085,8 +1085,17 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 10">
-                <LicenseSummary
+                <ProfessionalLicenseE
                   :activeState="10"
+                  @changeActiveStateMinus="activeState--"
+                  @changeActiveState="activeState++"
+                />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 11">
+                <LicenseSummary
+                  :activeState="11"
                   @changeActiveStateMinus="activeState--"
                   @changeActiveState="activeState++"
                 />
@@ -1113,6 +1122,7 @@ import ProfessionalDocDiploma from "./Ethiopians F/ProfessionalDocDiploma";
 import ProfessionalDocTranscript from "./Ethiopians F/ProfessionalDocTranscript";
 import SupportLetterFromSponsorInstitution from "./Ethiopians F/SupportLetter";
 import WorkExperienceF from "./Ethiopians F/WorkExperience.vue";
+import ProfessionalLicenseE from "./Ethiopians F/ProfessionalLicense";
 
 import RenewedLicenseOfHealthFacility from "./Foreigner/RenewedLicenseOfHealthFacility";
 
@@ -1199,6 +1209,7 @@ export default {
     PhD,
     PhDTranscript,
     RenewedLicenseOfHealthFacility,
+    ProfessionalLicenseE,
   },
 
   methods: {
