@@ -415,6 +415,8 @@ export default {
     this.phd = this.getPhd;
     this.phdTranscript = this.getPhdTranscript;
     this.phdTranscript2 = this.getPhdTranscript2;
+    this.renewedLicenseFromHealthFacility = this.getRenewedLicenseOfHealthFacility;
+
     if (this.passport != "" && this.passport != undefined) {
       if ("name" in this.passport) {
         if (this.draftId != undefined) {
@@ -1122,6 +1124,28 @@ export default {
         this.docList.push(this.phdTranscript2);
       }
     }
+    if (
+      this.renewedLicenseFromHealthFacility != "" &&
+      this.renewedLicenseFromHealthFacility != undefined
+    ) {
+      if ("name" in this.renewedLicenseFromHealthFacility) {
+        if (this.draftId != undefined) {
+          this.documentsArray.splice(
+            this.documentsArray.findIndex(
+              (e) => e.documentTypeCode === "RLHFO"
+            ),
+            1
+          );
+        }
+        var filePreview = await this.blobToBase64(
+          this.renewedLicenseFromHealthFacility
+        );
+        this.renewedLicenseFromHealthFacility.docFile = filePreview;
+        this.renewedLicenseFromHealthFacility.title =
+          "Renewed License of Health Facility";
+        this.docList.push(this.renewedLicenseFromHealthFacility);
+      }
+    }
     this.buttons = this.getButtons;
     this.fetchProfileInfo();
     this.setDocs();
@@ -1200,6 +1224,7 @@ export default {
     phd: "",
     phdTranscript: "",
     phdTranscript2: "",
+    renewedLicenseFromHealthFacility: "",
 
     eduEighth: "",
     eduTenth: "",
@@ -1284,6 +1309,9 @@ export default {
       getPhd: "newlicense/getPhd",
       getPhdTranscript: "newlicense/getPhdTranscript",
       getPhdTranscript2: "newlicense/getPhdTranscript2",
+
+      getRenewedLicenseOfHealthFacility:
+        "newlicense/getRenewedLicenseOfHealthFacility",
 
       getButtons: "newlicense/getButtons",
       getApplicationId: "newlicense/getApplicationId",
@@ -1758,6 +1786,10 @@ export default {
                 this.documentTypes[58].documentType.code,
                 this.phdTranscript2
               );
+              formData.append(
+                this.documentTypes[63].documentType.code,
+                this.renewedLicenseFromHealthFacility
+              );
               let payload = { document: formData, id: licenseId };
 
               this.$store
@@ -1925,6 +1957,10 @@ export default {
         formData.append(
           this.documentTypes[58].documentType.code,
           this.phdTranscript2
+        );
+        formData.append(
+          this.documentTypes[63].documentType.code,
+          this.renewedLicenseFromHealthFacility
         );
         let license = {
           action: action,
@@ -2180,6 +2216,10 @@ export default {
                 this.documentTypes[58].documentType.code,
                 this.phdTranscript2
               );
+              formData.append(
+                this.documentTypes[63].documentType.code,
+                this.renewedLicenseFromHealthFacility
+              );
               let payload = { document: formData, id: licenseId };
               this.$store
                 .dispatch("newlicense/uploadDocuments", payload)
@@ -2347,6 +2387,10 @@ export default {
         formData.append(
           this.documentTypes[58].documentType.code,
           this.phdTranscript2
+        );
+        formData.append(
+          this.documentTypes[63].documentType.code,
+          this.renewedLicenseFromHealthFacility
         );
         let license = {
           action: action,

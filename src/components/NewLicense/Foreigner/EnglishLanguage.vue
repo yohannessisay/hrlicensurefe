@@ -238,7 +238,6 @@ export default {
 
     let passport = ref("");
     let healthExamCert = ref("");
-    let professionalDoc = ref([]);
     let herqa = ref("");
     let supportLetter = ref("");
     let coc = ref("");
@@ -256,6 +255,7 @@ export default {
     let mastersTranscript = ref("");
     let phd = ref("");
     let phdTranscript = ref("");
+    let renewedLicenseOfHealthFacility = ref("");
 
     let professionalDocCertificate = ref("");
     let professionalDocCertificate2 = ref("");
@@ -270,10 +270,6 @@ export default {
     let professionalDocDiploma5 = ref("");
 
     let professionalDocTranscript = ref("");
-    let professionalDocTranscript2 = ref("");
-    let professionalDocTranscript3 = ref("");
-    let professionalDocTranscript4 = ref("");
-    let professionalDocTranscript5 = ref("");
 
     const reset = () => {
       showUpload.value = true;
@@ -339,7 +335,6 @@ export default {
 
     passport = store.getters["newlicense/getPassport"];
     healthExamCert = store.getters["newlicense/getHealthExamCert"];
-    professionalDoc = store.getters["newlicense/getProfessionalDocuments"];
     herqa = store.getters["newlicense/getHerqa"];
     supportLetter = store.getters["newlicense/getSupportLetter"];
     coc = store.getters["newlicense/getCoc"];
@@ -357,6 +352,8 @@ export default {
     mastersTranscript = store.getters["newlicense/getMastersTranscript"];
     phd = store.getters["newlicense/getPhd"];
     phdTranscript = store.getters["newlicense/getPhdTranscript"];
+    renewedLicenseOfHealthFacility = store.getters["newlicense/getRenewedLicenseOfHealthFacility"];
+
     professionalDocCertificate =
       store.getters["newlicense/getProfessionalDocCertificate"];
     professionalDocCertificate2 =
@@ -381,14 +378,6 @@ export default {
 
     professionalDocTranscript =
       store.getters["newlicense/getProfessionalDocTranscript"];
-    professionalDocTranscript2 =
-      store.getters["newlicense/getProfessionalDocTranscript2"];
-    professionalDocTranscript3 =
-      store.getters["newlicense/getProfessionalDocTranscript3"];
-    professionalDocTranscript4 =
-      store.getters["newlicense/getProfessionalDocTranscript4"];
-    professionalDocTranscript5 =
-      store.getters["newlicense/getProfessionalDocTranscript5"];
 
     const draft = (action) => {
       message.value.showLoading = true;
@@ -531,22 +520,6 @@ export default {
               documentSpecs[8].documentType.code,
               professionalDocTranscript
             );
-            formData.append(
-              documentSpecs[37].documentType.code,
-              professionalDocTranscript2
-            );
-            formData.append(
-              documentSpecs[38].documentType.code,
-              professionalDocTranscript3
-            );
-            formData.append(
-              documentSpecs[39].documentType.code,
-              professionalDocTranscript4
-            );
-            formData.append(
-              documentSpecs[40].documentType.code,
-              professionalDocTranscript5
-            );
             formData.append(documentSpecs[9].documentType.code, coc);
             if (educationDoc != undefined) {
               formData.append(
@@ -592,6 +565,8 @@ export default {
             );
             formData.append(documentSpecs[26].documentType.code, phd);
             formData.append(documentSpecs[27].documentType.code, phdTranscript);
+            formData.append(documentSpecs[63].documentType.code, renewedLicenseOfHealthFacility);
+
             let payload = { document: formData, id: licenseId };
             store
               .dispatch("newlicense/uploadDocuments", payload)

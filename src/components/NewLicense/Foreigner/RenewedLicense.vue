@@ -249,6 +249,8 @@ export default {
     let mastersTranscript = ref("");
     let phd = ref("");
     let phdTranscript = ref("");
+    let renewedLicenseOfHealthFacility = ref("");
+
     let professionalDocCertificate = ref("");
     let professionalDocCertificate2 = ref("");
     let professionalDocCertificate3 = ref("");
@@ -355,6 +357,8 @@ export default {
     masters = store.getters["newlicense/getMasters"];
     mastersTranscript = store.getters["newlicense/getMastersTranscript"];
     phd = store.getters["newlicense/getPhd"];
+    renewedLicenseOfHealthFacility = store.getters["newlicense/getRenewedLicenseOfHealthFacility"];
+
     phdTranscript = store.getters["newlicense/getPhdTranscript"];
     professionalDocCertificate =
       store.getters["newlicense/getProfessionalDocCertificate"];
@@ -591,6 +595,8 @@ export default {
             );
             formData.append(documentSpecs[26].documentType.code, phd);
             formData.append(documentSpecs[27].documentType.code, phdTranscript);
+            formData.append(documentSpecs[63].documentType.code, renewedLicenseOfHealthFacility);
+
             let payload = { document: formData, id: licenseId };
             store
               .dispatch("newlicense/uploadDocuments", payload)

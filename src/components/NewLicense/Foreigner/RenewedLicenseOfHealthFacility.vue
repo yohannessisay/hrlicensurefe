@@ -25,21 +25,19 @@
         >
           ACCEPTED
         </h2>
-        <TitleWithIllustration
-          illustration="Certificate"
-          message="Professional License"
-          class="mt-8"
-        />
-        <span class="flex justify-center">{{ documentMessage }}</span>
-        <div class="ml-24">
-          <button @click="addDocs()">Add Document</button>
-          <button @click="removeDocs()">Remove Document</button>
+        <div>
+          <TitleWithIllustration
+            illustration="Certificate"
+            message="Renewed License of Health Facility"
+            class="mt-8"
+          />
         </div>
-        <form @submit.prevent="submit" class="mx-auto max-w-3xl mt-8">
-          <div class="flex flex-col justify-center">
+        <span class="flex justify-center">{{ documentMessage }}</span>
+        <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
+          <div class="flex justify-center">
             <div>
               <span>
-                <h2 v-if="!fileSizeExceed">{{ letterFile.name }}</h2>
+                <h2 v-if="!fileSizeExceed">{{ licenseFile.name }}</h2>
                 <h2 v-if="!fileSizeExceed">{{ fileSize }}</h2>
                 <h3 style="color: red" v-if="fileSizeExceed">
                   File size must be less than {{ maxSizeMB }} MB
@@ -54,9 +52,9 @@
                   <div class="dropbox">
                     <input
                       type="file"
-                      id="letterFile"
+                      id="licenseFile"
                       class="photoFile"
-                      ref="letterFileP"
+                      ref="licenseFileP"
                       v-on:change="handleFileUpload()"
                       style="margin-bottom: 15px !important"
                       accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
@@ -68,6 +66,7 @@
                   </div>
                 </label>
               </span>
+
               <picture v-if="!showUpload && isImage">
                 <p>
                   <a href="javascript:void(0)" @click="reset()">Upload again</a>
@@ -82,50 +81,6 @@
               </div>
               <span v-if="!showUpload && !isImage && !isPdf">
                 <img :src="filePreview" alt="" class="preview" />
-              </span>
-            </div>
-            <div v-if="docCount > 0">
-              <span v-if="showUpload2">
-                <label class="text-primary-700"
-                  >Upload image:
-                  <span style="color: red; font-weight: bold; font-size:16px"
-                    >Required</span
-                  >
-                  <div class="dropbox">
-                    <input
-                      type="file"
-                      id="letterFile2"
-                      class="photoFile"
-                      ref="letterFileP2"
-                      v-on:change="handleFileUpload2()"
-                      style="margin-bottom: 15px !important"
-                      accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
-                    />
-                    <p>
-                      Drag your file(s) here to begin<br />
-                      or click to browse
-                    </p>
-                  </div>
-                </label>
-              </span>
-              <picture v-if="!showUpload2 && isImage2">
-                <p>
-                  <a href="javascript:void(0)" @click="reset2()"
-                    >Upload again</a
-                  >
-                </p>
-                <img v-bind:src="filePreview2" v-show="showPreview2" />
-              </picture>
-              <div v-if="!showUpload2 && isPdf2">
-                <p>
-                  <a href="javascript:void(0)" @click="reset2()"
-                    >Upload again</a
-                  >
-                </p>
-                <embed v-bind:src="filePreview2" v-show="showPreview2" />
-              </div>
-              <span v-if="!showUpload2 && !isImage2 && !isPdf2">
-                <img :src="filePreview2" class="preview" />
               </span>
             </div>
           </div>
@@ -244,6 +199,7 @@ export default {
     const store = useStore();
     const route = useRoute();
     const router = useRouter();
+
     const basePath = "https://storage.googleapis.com/hris-lisence-dev/";
 
     let message = ref({
@@ -255,22 +211,13 @@ export default {
     let fileSize = ref("");
 
     let dataChanged = ref(false);
-    let letterFile = ref("");
-    let letterFileP = ref("");
+    let licenseFile = ref("");
+    let licenseFileP = ref("");
     let showPreview = ref(false);
     let filePreview = ref("");
     let showUpload = ref(true);
     let isImage = ref(false);
     let isPdf = ref(false);
-
-    let letterFile2 = ref("");
-    let letterFileP2 = ref("");
-    let showPreview2 = ref(false);
-    let filePreview2 = ref("");
-    let showUpload2 = ref(true);
-    let isImage2 = ref(false);
-    let isPdf2 = ref(false);
-
     let buttons = [];
     let documentSpecs = ref([]);
     let userId = +localStorage.getItem("userId");
@@ -278,24 +225,31 @@ export default {
     let draftData = ref("");
     let draftStatus = ref("");
 
-    let letterFileBack = ref("");
-    let letterFileBack2 = ref("");
+    let licenseBack = ref("");
+
+    let declinedFields = ref([]);
+    let acceptedFields = ref([]);
+    let remark = ref("");
 
     let documentMessage = ref("");
     let maxFileSize = ref("");
     let maxSizeMB = ref("");
     let fileSizeExceed = ref(false);
 
+    let declinedFieldsCheck = ref(false);
+    let acceptedFieldsCheck = ref(false);
+
     let passport = ref("");
     let healthExamCert = ref("");
-    let englishLanguage = ref("");
-    let professionalDoc = ref([]);
     let herqa = ref("");
+    let englishLanguage = ref("");
     let supportLetter = ref("");
     let coc = ref("");
     let educationDoc = ref([]);
     let workExperience = ref("");
     let workExperience2 = ref("");
+    let professionalLicense = ref("");
+    let professionalLicense2 = ref("");
     let renewedLicense = ref("");
     let payroll = ref("");
     let diploma = ref("");
@@ -305,8 +259,6 @@ export default {
     let mastersTranscript = ref("");
     let phd = ref("");
     let phdTranscript = ref("");
-    let renewedLicenseOfHealthFacility = ref("");
-
     let professionalDocCertificate = ref("");
     let professionalDocCertificate2 = ref("");
     let professionalDocCertificate3 = ref("");
@@ -325,30 +277,10 @@ export default {
     let professionalDocTranscript4 = ref("");
     let professionalDocTranscript5 = ref("");
 
-    let declinedFields = ref([]);
-    let acceptedFields = ref([]);
-    let remark = ref("");
-
-    let declinedFieldsCheck = ref(false);
-    let acceptedFieldsCheck = ref(false);
-
-    let docCount = ref(0);
-
-    const addDocs = () => {
-      if (docCount.value < 2) {
-        docCount.value++;
-      }
-    };
-    const removeDocs = () => {
-      if (docCount.value > 0) {
-        docCount.value--;
-      }
-    };
-
     const reset = () => {
       showUpload.value = true;
       showPreview.value = false;
-      letterFile.value = "";
+      licenseFile.value = "";
       filePreview.value = "";
       isImage.value = true;
       fileSize.value = "";
@@ -356,10 +288,10 @@ export default {
     };
 
     const handleFileUpload = () => {
-      letterFile.value = letterFileP.value.files[0];
+      licenseFile.value = licenseFileP.value.files[0];
       let reader = new FileReader();
       isImage.value = true;
-      let fileS = letterFile.value.size;
+      let fileS = licenseFile.value.size;
       if (fileS <= maxFileSize.value / 1000) {
         fileSizeExceed.value = false;
         dataChanged.value = true;
@@ -379,89 +311,52 @@ export default {
           },
           false
         );
-        if (letterFile.value) {
-          if (/\.(jpe?g|png|gif)$/i.test(letterFile.value.name)) {
+        if (licenseFile.value) {
+          if (/\.(jpe?g|png|gif)$/i.test(licenseFile.value.name)) {
             isImage.value = true;
-            reader.readAsDataURL(letterFile.value);
-          } else if (/\.(pdf)$/i.test(letterFile.value.name)) {
+            reader.readAsDataURL(licenseFile.value);
+          } else if (/\.(pdf)$/i.test(licenseFile.value.name)) {
             isImage.value = false;
             isPdf.value = true;
-            reader.readAsDataURL(letterFile.value);
+            reader.readAsDataURL(licenseFile.value);
           }
         }
       } else {
         fileSizeExceed.value = true;
-        letterFile.value = "";
+        licenseFile.value = "";
         isImage.value = true;
       }
     };
-
-    const reset2 = () => {
-      showUpload2.value = true;
-      showPreview2.value = false;
-      letterFile2.value = "";
-      filePreview2.value = "";
-      isImage2.value = true;
-      fileSize2.value = "";
-      isPdf2.value = false;
-    };
-
-    const handleFileUpload2 = () => {
-      letterFile2.value = letterFileP2.value.files[0];
-      let reader = new FileReader();
-      isImage2.value = true;
-      let fileS = letterFile2.value.size;
-      if (fileS <= maxFileSize.value / 1000) {
-        showUpload2.value = false;
-        reader.addEventListener(
-          "load",
-          function() {
-            showPreview2.value = true;
-            filePreview2.value = reader.result;
-          },
-          false
-        );
-        if (letterFile2.value) {
-          if (/\.(jpe?g|png|gif)$/i.test(letterFile2.value.name)) {
-            isImage2.value = true;
-            reader.readAsDataURL(letterFile2.value);
-          } else if (/\.(pdf)$/i.test(letterFile2.value.name)) {
-            isImage2.value = false;
-            isPdf2.value = true;
-            reader.readAsDataURL(letterFile2.value);
-          }
-        }
-      } else {
-        letterFile2.value = "";
-        isImage2.value = true;
-      }
-    };
-
     const submit = () => {
       emit("changeActiveState");
-      store.dispatch("newlicense/setProfessionalLicense", letterFile);
-      store.dispatch("newlicense/setProfessionalLicense2", letterFile2);
+      store.dispatch(
+        "newlicense/setRenewedLicenseOfHealthFacility",
+        licenseFile
+      );
     };
     const submitBack = () => {
       emit("changeActiveStateMinus");
-      store.dispatch("newlicense/setProfessionalLicense", letterFile);
-      store.dispatch("newlicense/setProfessionalLicense2", letterFile2);
+      store.dispatch(
+        "newlicense/setRenewedLicenseOfHealthFacility",
+        licenseFile
+      );
     };
     buttons = store.getters["newlicense/getButtons"];
     documentSpecs = store.getters["newlicense/getDocumentSpec"];
     licenseInfo = store.getters["newlicense/getLicense"];
 
     passport = store.getters["newlicense/getPassport"];
-    healthExamCert = store.getters["newlicense/getHealthExamCert"];
-    professionalDoc = store.getters["newlicense/getProfessionalDocuments"];
-    englishLanguage = store.getters["newlicense/getEnglishLanguage"];
     herqa = store.getters["newlicense/getHerqa"];
+    healthExamCert = store.getters["newlicense/getHealthExamCert"];
+    englishLanguage = store.getters["newlicense/getEnglishLanguage"];
     supportLetter = store.getters["newlicense/getSupportLetter"];
     coc = store.getters["newlicense/getCoc"];
     educationDoc = store.getters["newlicense/getEducationalDocuments"];
     workExperience = store.getters["newlicense/getWorkExperience"];
     workExperience2 = store.getters["newlicense/getWorkExperience2"];
     renewedLicense = store.getters["newlicense/getRenewedLicense"];
+    professionalLicense = store.getters["newlicense/getProfessionalLicense"];
+    professionalLicense2 = store.getters["newlicense/getProfessionalLicense2"];
     payroll = store.getters["newlicense/getPayroll"];
     diploma = store.getters["newlicense/getDiploma"];
     degree = store.getters["newlicense/getDegree"];
@@ -470,8 +365,6 @@ export default {
     mastersTranscript = store.getters["newlicense/getMastersTranscript"];
     phd = store.getters["newlicense/getPhd"];
     phdTranscript = store.getters["newlicense/getPhdTranscript"];
-    renewedLicenseOfHealthFacility = store.getters["newlicense/getRenewedLicenseOfHealthFacility"];
-
     professionalDocCertificate =
       store.getters["newlicense/getProfessionalDocCertificate"];
     professionalDocCertificate2 =
@@ -521,12 +414,8 @@ export default {
               let licenseId = route.params.id;
               let formData = new FormData();
               formData.append(
-                documentSpecs[19].documentType.code,
-                letterFile.value
-              );
-              formData.append(
-                documentSpecs[52].documentType.code,
-                letterFile2.value
+                documentSpecs[63].documentType.code,
+                licenseFile.value
               );
               let payload = { document: formData, id: licenseId };
               store
@@ -578,7 +467,6 @@ export default {
             },
             professionalTypeIds: licenseInfo.professionalTypeIds,
             residenceWoredaId: licenseInfo.residenceWoredaId,
-            educationalLevelId: licenseInfo.educationalLevelId,
             paymentSlip: null,
             occupationTypeId: licenseInfo.occupationTypeId,
             nativeLanguageId: licenseInfo.nativeLanguageId,
@@ -695,14 +583,13 @@ export default {
               documentSpecs[18].documentType.code,
               renewedLicense
             );
-
             formData.append(
               documentSpecs[19].documentType.code,
-              letterFile.value
+              professionalLicense
             );
             formData.append(
               documentSpecs[52].documentType.code,
-              letterFile2.value
+              professionalLicense2
             );
             formData.append(documentSpecs[20].documentType.code, payroll);
             formData.append(documentSpecs[24].documentType.code, masters);
@@ -712,8 +599,10 @@ export default {
             );
             formData.append(documentSpecs[26].documentType.code, phd);
             formData.append(documentSpecs[27].documentType.code, phdTranscript);
-            formData.append(documentSpecs[63].documentType.code, renewedLicenseOfHealthFacility);
-
+            formData.append(
+              documentSpecs[63].documentType.code,
+              licenseFile.value
+            );
             let payload = { document: formData, id: licenseId };
             store
               .dispatch("newlicense/uploadDocuments", payload)
@@ -749,12 +638,8 @@ export default {
               let licenseId = route.params.id;
               let formData = new FormData();
               formData.append(
-                documentSpecs[19].documentType.code,
-                letterFile.value
-              );
-              formData.append(
-                documentSpecs[52].documentType.code,
-                letterFile2.value
+                documentSpecs[63].documentType.code,
+                licenseFile.value
               );
               let payload = { document: formData, id: licenseId };
               store
@@ -821,12 +706,8 @@ export default {
             let licenseId = res.data.data.id;
             let formData = new FormData();
             formData.append(
-              documentSpecs[19].documentType.code,
-              letterFile.value
-            );
-            formData.append(
-              documentSpecs[52].documentType.code,
-              letterFile2.value
+              documentSpecs[63].documentType.code,
+              licenseFile.value
             );
             let payload = { document: formData, id: licenseId };
             store
@@ -870,23 +751,24 @@ export default {
         }
       });
     };
+
     onMounted(() => {
       documentMessage.value = MESSAGE.DOC_MESSAGE;
       maxFileSize.value = MAX_FILE_SIZE.MAX_FILE_SIZE;
       maxSizeMB.value = MAX_SIZE_MB.MAX_SIZE_MB;
-      letterFileBack = store.getters["newlicense/getProfessionalLicense"];
-      letterFileBack2 = store.getters["newlicense/getProfessionalLicense2"];
+      licenseBack =
+        store.getters["newlicense/getRenewedLicenseOfHealthFacility"];
       if (
-        letterFileBack &&
-        letterFileBack !== undefined &&
-        letterFileBack !== null &&
-        letterFileBack !== ""
+        licenseBack &&
+        licenseBack !== undefined &&
+        licenseBack !== null &&
+        licenseBack !== ""
       ) {
         dataChanged.value = true;
         showUpload.value = false;
-        letterFile.value = letterFileBack;
+        licenseFile.value = licenseBack;
         let reader = new FileReader();
-        let fileS = letterFile.value.size;
+        let fileS = licenseFile.value.size;
         if (fileS > 0 && fileS < 1000) {
           fileSize.value += "B";
         } else if (fileS > 1000 && fileS < 1000000) {
@@ -902,120 +784,67 @@ export default {
           },
           false
         );
-        if (letterFile.value) {
-          if (/\.(jpe?g|png|gif)$/i.test(letterFile.value.name)) {
+        if (licenseFile.value) {
+          if (/\.(jpe?g|png|gif)$/i.test(licenseFile.value.name)) {
             isImage.value = true;
-            reader.readAsDataURL(letterFile.value);
-          } else if (/\.(pdf)$/i.test(letterFile.value.name)) {
+            reader.readAsDataURL(licenseFile.value);
+          } else if (/\.(pdf)$/i.test(licenseFile.value.name)) {
             isImage.value = false;
             isPdf.value = true;
-            reader.readAsDataURL(letterFile.value);
-          }
-        }
-      }
-      if (
-        letterFileBack2 &&
-        letterFileBack2 !== undefined &&
-        letterFileBack2 !== null &&
-        letterFileBack2 !== ""
-      ) {
-        docCount.value++;
-        showUpload2.value = false;
-        letterFile2.value = letterFileBack2;
-        let reader = new FileReader();
-        reader.addEventListener(
-          "load",
-          function() {
-            showPreview2.value = true;
-            filePreview2.value = reader.result;
-          },
-          false
-        );
-        if (letterFile2.value) {
-          if (/\.(jpe?g|png|gif)$/i.test(letterFile2.value.name)) {
-            isImage2.value = true;
-            reader.readAsDataURL(letterFile2.value);
-          } else if (/\.(pdf)$/i.test(letterFile2.value.name)) {
-            isImage2.value = false;
-            isPdf2.value = true;
-            reader.readAsDataURL(letterFile2.value);
+            reader.readAsDataURL(licenseFile.value);
           }
         }
       }
       declinedFields = store.getters["newlicense/getDeclinedFields"];
       acceptedFields = store.getters["newlicense/getAcceptedFields"];
       remark = store.getters["newlicense/getRemark"];
-      if (declinedFields != null && declinedFields.includes("APLFCO")) {
+      if (declinedFields != undefined && declinedFields.includes("RLHFO")) {
         declinedFieldsCheck.value = true;
       }
-      if (acceptedFields != null && acceptedFields.includes("APLFCO")) {
+      if (acceptedFields != undefined && acceptedFields.includes("RLHFO")) {
         acceptedFieldsCheck.value = true;
       }
+
       buttons = store.getters["newlicense/getButtons"];
       draftData = store.getters["newlicense/getDraft"];
       if (route.params.id) {
         draftStatus.value = route.params.status;
         for (let i = 0; i < draftData.documents.length; i++) {
-          if (draftData.documents[i].documentTypeCode == "APLFCO") {
+          if (draftData.documents[i].documentTypeCode == "RLHFO") {
             showUpload.value = false;
             if (draftData.documents[i].fileName.split(".")[1] == "pdf") {
               isPdf.value = true;
             } else {
               isImage.value = true;
             }
-            letterFile.value = draftData.documents[i];
+
+            licenseFile.value = draftData.documents[i];
             showPreview.value = true;
             filePreview.value = basePath + draftData.documents[i].filePath;
-          }
-          if (draftData.documents[i].documentTypeCode == "APLFCO1") {
-            docCount.value++;
-            showUpload2.value = false;
-            if (draftData.documents[i].fileName.split(".")[1] == "pdf") {
-              isPdf2.value = true;
-            } else {
-              isImage2.value = true;
-            }
-            letterFile2.value = draftData.documents[i];
-            showPreview2.value = true;
-            filePreview2.value = basePath + draftData.documents[i].filePath;
           }
         }
       }
     });
     return {
-      letterFile,
-      letterFileP,
-      letterFileBack,
+      licenseFile,
+      licenseFileP,
+      licenseBack,
       showPreview,
       filePreview,
       showUpload,
       isImage,
       isPdf,
-
-      letterFile2,
-      letterFileP2,
-      letterFileBack2,
-      showPreview2,
-      filePreview2,
-      showUpload2,
-      isImage2,
-      isPdf2,
-
       handleFileUpload,
-      handleFileUpload2,
-
+      fileSize,
       reset,
-      reset2,
-
       submit,
       submitBack,
       draft,
       withdraw,
-      fileSize,
       buttons,
-      draftData,
       draftStatus,
       update,
+      draftData,
       basePath,
       message,
       dataChanged,
@@ -1028,9 +857,6 @@ export default {
       fileSizeExceed,
       maxFileSize,
       maxSizeMB,
-      docCount,
-      addDocs,
-      removeDocs,
     };
   },
 };

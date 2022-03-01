@@ -887,8 +887,17 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 12">
-                <LicenseSummary
+                <RenewedLicenseOfHealthFacility
                   :activeState="12"
+                  @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
+                />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 13">
+                <LicenseSummary
+                  :activeState="13"
                   @changeActiveState="activeState++"
                   @changeActiveStateMinus="activeState--"
                 />
@@ -984,8 +993,17 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 11">
-                <LicenseSummary
+                <RenewedLicenseOfHealthFacility
                   :activeState="11"
+                  @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
+                />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 12">
+                <LicenseSummary
+                  :activeState="12"
                   @changeActiveState="activeState++"
                   @changeActiveStateMinus="activeState--"
                 />
@@ -1096,6 +1114,8 @@ import ProfessionalDocTranscript from "./Ethiopians F/ProfessionalDocTranscript"
 import SupportLetterFromSponsorInstitution from "./Ethiopians F/SupportLetter";
 import WorkExperienceF from "./Ethiopians F/WorkExperience.vue";
 
+import RenewedLicenseOfHealthFacility from "./Foreigner/RenewedLicenseOfHealthFacility";
+
 import COC from "./Ethiopians L/COC";
 import EducationalDoc from "./Ethiopians L/EducationalDoc";
 import WorkExperience from "./Ethiopians L/WorkExperience";
@@ -1178,6 +1198,7 @@ export default {
     MastersTranscript,
     PhD,
     PhDTranscript,
+    RenewedLicenseOfHealthFacility,
   },
 
   methods: {
