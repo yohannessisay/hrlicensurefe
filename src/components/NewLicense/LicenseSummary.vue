@@ -803,13 +803,15 @@ export default {
       if ("name" in this.supportLetter) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "SL"),
+            this.documentsArray.findIndex(
+              (e) => e.documentTypeCode === "SLFSI"
+            ),
             1
           );
         }
         var filePreview = await this.blobToBase64(this.supportLetter);
         this.supportLetter.docFile = filePreview;
-        this.supportLetter.title = "Support Letter";
+        this.supportLetter.title = "Support Letter From Sponsored Institution";
         this.docList.push(this.supportLetter);
       }
     }
@@ -1713,7 +1715,7 @@ export default {
               }
 
               formData.append(
-                this.documentTypes[15].documentType.code,
+                this.documentTypes[64].documentType.code,
                 this.supportLetter
               );
               formData.append(
@@ -1890,7 +1892,7 @@ export default {
         }
 
         formData.append(
-          this.documentTypes[15].documentType.code,
+          this.documentTypes[64].documentType.code,
           this.supportLetter
         );
         formData.append(this.documentTypes[16].documentType.code, this.herqa);
@@ -2135,7 +2137,7 @@ export default {
               }
 
               formData.append(
-                this.documentTypes[15].documentType.code,
+                this.documentTypes[64].documentType.code,
                 this.supportLetter
               );
               formData.append(
@@ -2312,7 +2314,7 @@ export default {
         }
 
         formData.append(
-          this.documentTypes[15].documentType.code,
+          this.documentTypes[64].documentType.code,
           this.supportLetter
         );
         formData.append(this.documentTypes[16].documentType.code, this.herqa);

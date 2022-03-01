@@ -27,7 +27,7 @@
         </h2>
         <TitleWithIllustration
           illustration="Certificate"
-          message="Support Letter"
+          message="Support Letter From Sponsored Institution"
           class="mt-8"
         />
         <span class="flex justify-center">{{ documentMessage }}</span>
@@ -230,7 +230,6 @@ export default {
 
     let passport = ref("");
     let healthExamCert = ref("");
-    let professionalDoc = ref([]);
     let herqa = ref("");
     let englishLanguage = ref("");
     let coc = ref("");
@@ -334,7 +333,6 @@ export default {
 
     passport = store.getters["newlicense/getPassport"];
     englishLanguage = store.getters["newlicense/getEnglishLanguage"];
-    professionalDoc = store.getters["newlicense/getProfessionalDocuments"];
     herqa = store.getters["newlicense/getHerqa"];
     healthExamCert = store.getters["newlicense/getHealthExamCert"];
     coc = store.getters["newlicense/getCoc"];
@@ -351,6 +349,7 @@ export default {
     mastersTranscript = store.getters["newlicense/getMastersTranscript"];
     phd = store.getters["newlicense/getPhd"];
     phdTranscript = store.getters["newlicense/getPhdTranscript"];
+
     professionalDocCertificate =
       store.getters["newlicense/getProfessionalDocCertificate"];
     professionalDocCertificate2 =
@@ -400,7 +399,7 @@ export default {
               let licenseId = route.params.id;
               let formData = new FormData();
               formData.append(
-                documentSpecs[15].documentType.code,
+                documentSpecs[64].documentType.code,
                 supportLetterFile.value
               );
               let payload = { document: formData, id: licenseId };
@@ -566,7 +565,7 @@ export default {
               );
             }
             formData.append(
-              documentSpecs[15].documentType.code,
+              documentSpecs[64].documentType.code,
               supportLetterFile.value
             );
             formData.append(documentSpecs[16].documentType.code, herqa);
@@ -622,7 +621,7 @@ export default {
               let licenseId = route.params.id;
               let formData = new FormData();
               formData.append(
-                documentSpecs[15].documentType.code,
+                documentSpecs[64].documentType.code,
                 supportLetterFile.value
               );
               let payload = { document: formData, id: licenseId };
@@ -690,7 +689,7 @@ export default {
             let licenseId = res.data.data.id;
             let formData = new FormData();
             formData.append(
-              documentSpecs[15].documentType.code,
+              documentSpecs[64].documentType.code,
               supportLetterFile.value
             );
             let payload = { document: formData, id: licenseId };
@@ -779,10 +778,10 @@ export default {
       declinedFields = store.getters["newlicense/getDeclinedFields"];
       acceptedFields = store.getters["newlicense/getAcceptedFields"];
       remark = store.getters["newlicense/getRemark"];
-      if (declinedFields != undefined && declinedFields.includes("SL")) {
+      if (declinedFields != undefined && declinedFields.includes("SLFSI")) {
         declinedFieldsCheck.value = true;
       }
-      if (acceptedFields != undefined && acceptedFields.includes("SL")) {
+      if (acceptedFields != undefined && acceptedFields.includes("SLFSI")) {
         acceptedFieldsCheck.value = true;
       }
       buttons = store.getters["newlicense/getButtons"];
@@ -790,7 +789,7 @@ export default {
       if (route.params.id) {
         draftStatus.value = route.params.status;
         for (let i = 0; i < draftData.documents.length; i++) {
-          if (draftData.documents[i].documentTypeCode == "SL") {
+          if (draftData.documents[i].documentTypeCode == "SLFSI") {
             showUpload.value = false;
             if (draftData.documents[i].fileName.split(".")[1] == "pdf") {
               isPdf.value = true;

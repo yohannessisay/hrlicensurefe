@@ -85,6 +85,7 @@ export default {
     this.$store.dispatch("newlicense/setPassport", "");
     this.$store.dispatch("newlicense/setHealthExamCert", "");
     this.$store.dispatch("newlicense/setLanguage", "");
+    
     this.$store.dispatch("newlicense/setProfessionalDocCertificate", "");
     this.$store.dispatch("newlicense/setProfessionalDocCertificate2", "");
     this.$store.dispatch("newlicense/setProfessionalDocCertificate3", "");

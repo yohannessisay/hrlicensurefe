@@ -831,7 +831,7 @@
                 />
               </div>
             </transition>
-           <transition name="fade" mode="out-in">
+            <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 6">
                 <ProfessionalDocCertificateF
                   :activeState="6"
@@ -1058,8 +1058,17 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 9">
-                <LicenseSummary
+                <SupportLetterFromSponsorInstitution
                   :activeState="9"
+                  @changeActiveStateMinus="activeState--"
+                  @changeActiveState="activeState++"
+                />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 10">
+                <LicenseSummary
+                  :activeState="10"
                   @changeActiveStateMinus="activeState--"
                   @changeActiveState="activeState++"
                 />
@@ -1084,7 +1093,7 @@ import HERQAF from "./Foreigner/HERQAF.vue";
 import ProfessionalDocCertificate from "./Ethiopians F/ProfessionalDocCertificate";
 import ProfessionalDocDiploma from "./Ethiopians F/ProfessionalDocDiploma";
 import ProfessionalDocTranscript from "./Ethiopians F/ProfessionalDocTranscript";
-import SupportLetterForeign from "./Ethiopians F/SupportLetter";
+import SupportLetterFromSponsorInstitution from "./Ethiopians F/SupportLetter";
 import WorkExperienceF from "./Ethiopians F/WorkExperience.vue";
 
 import COC from "./Ethiopians L/COC";
@@ -1151,7 +1160,7 @@ export default {
     COC,
     EducationalDoc,
     WorkExperience,
-    SupportLetterForeign,
+    SupportLetterFromSponsorInstitution,
     EnglishLanguageForeigner,
     ProfessionalDocCertificateF,
     ProfessionalDocDiplomaF,
