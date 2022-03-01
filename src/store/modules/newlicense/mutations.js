@@ -57,7 +57,6 @@ import {
     SET_PHD_TRANSCRIPT,
     SET_PHD_TRANSCRIPT2,
     SET_RENEWED_LICENSE_OF_HEALTH_FACILITY,
-    SET_SUPPORT_LETTER_FROM_SPONSOR,
 } from "./mutation-types";
 
 export default {
@@ -225,9 +224,6 @@ export default {
         renewedLicenseOfHealthFacility
     ) {
         state.renewedLicenseOfHealthFacility = renewedLicenseOfHealthFacility;
-    },
-    [SET_SUPPORT_LETTER_FROM_SPONSOR](state, supportLetterFromSponsor) {
-        state.supportLetterFromSponsor = supportLetterFromSponsor;
     },
     [SET_DRAFT](state, draft) {
         state.draft = draft;

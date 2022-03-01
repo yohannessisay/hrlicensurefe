@@ -67,7 +67,6 @@ export default {
         phdTranscript: "",
         phdTranscript2: "",
         renewedLicenseOfHealthFacility: "",
-        supportLetterFromSponsor: "",
         buttons: [],
         applicationId: 0,
         documentSpec: [],

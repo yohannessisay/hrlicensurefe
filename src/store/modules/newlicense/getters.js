@@ -51,7 +51,6 @@ export default {
     getPhdTranscript2: (state) => state.phdTranscript2,
     getRenewedLicenseOfHealthFacility: (state) =>
         state.renewedLicenseOfHealthFacility,
-    getSupportLetterFromSponsor: (state) => state.supportLetterFromSponsor,
     getButtons: (state) => state.buttons,
     getApplicationId: (state) => state.applicationId,
     getDocumentSpec: (state) => state.documentSpec,
