@@ -1549,8 +1549,7 @@ export default {
         this.herqa !== "" &&
         this.proCertificate !== "" &&
         this.proDiploma !== "" &&
-        this.proTranscript !== "" &&
-        this.workExperience !== ""
+        this.proTranscript !== ""
       ) {
         return true;
       } else if (
@@ -1561,8 +1560,7 @@ export default {
         this.herqa !== "" &&
         this.proCertificate !== "" &&
         this.proDiploma !== "" &&
-        this.proTranscript !== "" &&
-        this.workExperience !== ""
+        this.proTranscript !== ""
       ) {
         return true;
       } else if (
@@ -1573,8 +1571,7 @@ export default {
         this.herqa !== "" &&
         this.proCertificate !== "" &&
         this.proDiploma !== "" &&
-        this.proTranscript !== "" &&
-        this.workExperience !== ""
+        this.proTranscript !== ""
       ) {
         return true;
       } else if (
@@ -1585,8 +1582,7 @@ export default {
         this.herqa !== "" &&
         this.proCertificate !== "" &&
         this.proDiploma !== "" &&
-        this.proTranscript !== "" &&
-        this.workExperience !== ""
+        this.proTranscript !== ""
       ) {
         return true;
       } else {
