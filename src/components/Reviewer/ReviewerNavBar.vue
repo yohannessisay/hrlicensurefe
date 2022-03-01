@@ -469,6 +469,12 @@ export default {
           search.value
         );
       }
+      if (props.tab === "newLicenseLicensed") {
+        store.dispatch(
+          "reviewerNewLicense/getNewLicenseLicensedSearched",
+          search.value
+        )
+      }
 
       if (props.tab === "verificationUnassigned") {
         store.dispatch(
@@ -575,6 +581,20 @@ export default {
       if (props.tab === "allGoodStandingDeclined") {
         store.dispatch(
           "reviewerGoodStanding/getGoodStandingAllDeclinedSearched",
+          search.value
+        );
+      }
+      if (props.tab === "allLicensed") {
+        store.dispatch(
+          "reviewerNewLicense/getNewLicenseAllLicensedSearched",
+          search.value
+        );
+        store.dispatch(
+          "reviewerRenewal/getRenewalAllLicensedSearched",
+          search.value
+        );
+        store.dispatch(
+          "reviewerGoodStanding/getGoodStandingAllLicensedSearched",
           search.value
         );
       }

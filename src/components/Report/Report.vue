@@ -11,30 +11,51 @@
       <div v-else>
         <div class="px-4 sm:px-4">
           <div class="py-8">
-            <div class="flex flex-row">
+            <div class="flex flex-row titile-container">
               <div class="ml-2 flex flex-row">
-                <div @click="fetchNewLicenseReport()">
+                <div
+                  @click="fetchNewLicenseReport()"
+                  :class="
+                    selectedApplication.newLicense ? 'applicationType' : ''
+                  "
+                >
                   <a class="text-2xl font-semibold leading-tight">
                     New License Report
                   </a>
                 </div>
-                <div @click="fetchRenewalReport()">
-                  <a class="ml-8 text-2xl font-semibold leading-tight">
+                <div
+                  @click="fetchRenewalReport()"
+                  class="ml-8"
+                  :class="selectedApplication.renewal ? 'applicationType' : ''"
+                >
+                  <a class="text-2xl font-semibold leading-tight">
                     Renewal Report
                   </a>
                 </div>
-                <div @click="fetchVerificationReport()">
-                  <a class="ml-8 text-2xl font-semibold leading-tight">
+                <div
+                  @click="fetchVerificationReport()"
+                  class="ml-8"
+                  :class="
+                    selectedApplication.verification ? 'applicationType' : ''
+                  "
+                >
+                  <a class="text-2xl font-semibold leading-tight">
                     Verification Report
                   </a>
                 </div>
-                <div @click="fetchGoodstandingReport()">
-                  <a class="ml-8 text-2xl font-semibold leading-tight">
+                <div
+                  @click="fetchGoodstandingReport()"
+                  class="ml-8"
+                  :class="
+                    selectedApplication.goodStanding ? 'applicationType' : ''
+                  "
+                >
+                  <a class="text-2xl font-semibold leading-tight">
                     Goodstanding Report
                   </a>
                 </div>
               </div>
-              <div id="export" @click="exportTable()" style="margin-left:10%">
+              <div id="export" @click="exportTable()" class="mt-4">
                 <a class="text-2xl font-semibold leading-tight">
                   <i class="fa fa-file-text" aria-hidden="true"></i>
                   Export
@@ -44,7 +65,7 @@
             <div class="mt-8">
               <label>Filter By:</label>
             </div>
-            <div class="flex">
+            <div class="flex filter-container">
               <div class="flex flex-col mb-medium w-72 mr-4">
                 <label class="text-primary-700">Professional Type</label>
                 <select
@@ -77,9 +98,47 @@
                   <option
                     v-for="region in regions"
                     v-bind:key="region.name"
-                    v-bind:value="region.name"
+                    v-bind:value="region"
                   >
                     {{ region.name }}
+                  </option>
+                </select>
+              </div>
+              <div class="flex flex-col mb-small w-72 mr-4">
+                <label class="text-primary-700">Zone</label>
+                <select
+                  class="max-w-3xl"
+                  v-model="filter.zone"
+                  @change="filterZone(filter.zone)"
+                >
+                  <option v-bind:key="filter.all" v-bind:value="filter.all"
+                    >All</option
+                  >
+                  <option
+                    v-for="zone in zones"
+                    v-bind:key="zone.name"
+                    v-bind:value="zone"
+                  >
+                    {{ zone.name }}
+                  </option>
+                </select>
+              </div>
+              <div class="flex flex-col mb-small w-72 mr-4">
+                <label class="text-primary-700">Woreda</label>
+                <select
+                  class="max-w-3xl"
+                  v-model="filter.woreda"
+                  @change="filterWoreda(filter.woreda)"
+                >
+                  <option v-bind:key="filter.all" v-bind:value="filter.all"
+                    >All</option
+                  >
+                  <option
+                    v-for="woreda in woredas"
+                    v-bind:key="woreda.name"
+                    v-bind:value="woreda"
+                  >
+                    {{ woreda.name }}
                   </option>
                 </select>
               </div>
@@ -228,6 +287,16 @@
                       <th
                         class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
                       >
+                        Zone
+                      </th>
+                      <th
+                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+                      >
+                        Woreda
+                      </th>
+                      <th
+                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+                      >
                         Start Date
                       </th>
                       <th
@@ -369,6 +438,30 @@
                           <div class="ml-3">
                             <p class="text-gray-900 whitespace-no-wrap">
                               {{ item.professionalTypes.name }}
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td
+                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
+                        v-if="item.region"
+                      >
+                        <div class="flex">
+                          <div class="ml-3">
+                            <p class="text-gray-900 whitespace-no-wrap">
+                              {{ item.region.name }}
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td
+                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
+                        v-if="item.region"
+                      >
+                        <div class="flex">
+                          <div class="ml-3">
+                            <p class="text-gray-900 whitespace-no-wrap">
+                              {{ item.region.name }}
                             </p>
                           </div>
                         </div>
@@ -611,15 +704,126 @@ export default {
     const route = useRoute();
     const router = useRouter();
 
-    let report = ref([]);
+    let selectedApplication = ref({
+      newLicense: true,
+      renewal: false,
+      goodStanding: false,
+      verification: false,
+    });
+    let report = ref([
+      {
+        name: "Eyosias",
+        fatherName: "Desta",
+        grandFatherName: "Langena",
+        dateOfBirth: "2002-01-25T09:55:23.494Z",
+        nationality: "Ethiopian",
+        gender: "Male",
+        applicant: { phoneNumber: "0990099909" },
+        professionalTypes: { name: "Medical Doctor" },
+        region: { name: "SNNPR" },
+        createdAt: "2022-01-25T09:55:23.494Z",
+        certifiedDate: null,
+        applicationStatus: { name: "Submitted" },
+        remark: null,
+        newLicenseCode: "NL099090",
+        renewalCode: null,
+        verificationCode: null,
+        goodStandingCode: null,
+        reviewer: { name: "Robel Ephraim RE" },
+        expertLevels: { name: "Regional" },
+        education: {
+          department: { name: "Psychology" },
+          institution: { name: "AAU" },
+        },
+      },
+      {
+        name: "Ermias",
+        fatherName: "Bitew",
+        grandFatherName: "Meles",
+        dateOfBirth: "2002-01-25T09:55:23.494Z",
+        nationality: "Ethiopian",
+        gender: "Male",
+        applicant: { phoneNumber: "0990099909" },
+        professionalTypes: { name: "Medical Doctor" },
+        region: { name: "SNNPR" },
+        createdAt: "2022-01-25T09:55:23.494Z",
+        certifiedDate: null,
+        applicationStatus: { name: "Submitted" },
+        remark: null,
+        newLicenseCode: "NL099090",
+        renewalCode: null,
+        verificationCode: null,
+        goodStandingCode: null,
+        reviewer: { name: "Robel Ephraim RE" },
+        expertLevels: { name: "Regional" },
+        education: {
+          department: { name: "Psychology" },
+          institution: { name: "AAU" },
+        },
+      },
+      {
+        name: "Robel",
+        fatherName: "Ephraim",
+        grandFatherName: "Abdisa",
+        dateOfBirth: "2002-01-25T09:55:23.494Z",
+        nationality: "Ethiopian",
+        gender: "Male",
+        applicant: { phoneNumber: "0990099909" },
+        professionalTypes: { name: "Medical Doctor" },
+        region: { name: "SNNPR" },
+        createdAt: "2022-01-25T09:55:23.494Z",
+        certifiedDate: null,
+        applicationStatus: { name: "Submitted" },
+        remark: null,
+        newLicenseCode: "NL099090",
+        renewalCode: null,
+        verificationCode: null,
+        goodStandingCode: null,
+        reviewer: { name: "Robel Ephraim RE" },
+        expertLevels: { name: "Regional" },
+        education: {
+          department: { name: "Psychology" },
+          institution: { name: "AAU" },
+        },
+      },
+      {
+        name: "Mahlet",
+        fatherName: "Samuel",
+        grandFatherName: "Akalu",
+        dateOfBirth: "2002-01-25T09:55:23.494Z",
+        nationality: "Ethiopian",
+        gender: "Female",
+        applicant: { phoneNumber: "0990099909" },
+        professionalTypes: { name: "Assistant nurse" },
+        region: { name: "Oromia" },
+        createdAt: "2022-01-25T09:55:23.494Z",
+        certifiedDate: null,
+        applicationStatus: { name: "Submitted" },
+        remark: null,
+        newLicenseCode: "NL099090",
+        renewalCode: null,
+        verificationCode: null,
+        goodStandingCode: null,
+        reviewer: { name: "Robel Ephraim RE" },
+        expertLevels: { name: "Regional" },
+        education: {
+          department: { name: "Psychology" },
+          institution: { name: "AAU" },
+        },
+      },
+    ]);
     let professions = ref([]);
     let regions = ref([]);
+    let zones = ref([]);
+    let woredas = ref([]);
     let applicationStatuses = ref([]);
 
     let filter = ref({
       profType: "",
       gender: "",
       region: "",
+      zone: "",
+      woreda: "",
       status: "",
       startDate: "",
       endDate: "",
@@ -628,8 +832,18 @@ export default {
 
     let loader = ref(false);
 
+    const changeBackgroundColor = (title) => {
+      selectedApplication.value = {
+        newLicense: title === "newLicense",
+        renewal: title === "renewal",
+        goodStanding: title === "goodStanding",
+        verification: title === "verification",
+      };
+    };
+
     const fetchNewLicenseReport = () => {
       loader.value = true;
+      changeBackgroundColor("newLicense");
       store.dispatch("report/getNewLicenseReport").then((res) => {
         report.value = res.data.data;
         store.dispatch("report/setReport", report.value);
@@ -638,15 +852,17 @@ export default {
     };
     const fetchRenewalReport = () => {
       loader.value = true;
+      changeBackgroundColor("renewal");
       store.dispatch("report/getRenewalReport").then((res) => {
         report.value = res.data.data;
         store.dispatch("report/setReport", report.value);
         loader.value = false;
       });
     };
-    
+
     const fetchVerificationReport = () => {
       loader.value = true;
+      changeBackgroundColor("verification");
       store.dispatch("report/getVerificationReport").then((res) => {
         report.value = res.data.data;
         store.dispatch("report/setReport", report.value);
@@ -655,12 +871,14 @@ export default {
     };
     const fetchGoodstandingReport = () => {
       loader.value = true;
+      changeBackgroundColor("goodStanding");
       store.dispatch("report/getGoodstandingReport").then((res) => {
         report.value = res.data.data;
         store.dispatch("report/setReport", report.value);
         loader.value = false;
       });
     };
+
     const fetchProfessionType = () => {
       store.dispatch("report/getProfessionalTypes").then((res) => {
         professions.value = res.data.data;
@@ -669,6 +887,16 @@ export default {
     const fetchRegion = () => {
       store.dispatch("report/getRegions").then((res) => {
         regions.value = res.data.data;
+      });
+    };
+    const fetchZones = (regionID) => {
+      store.dispatch("report/getZones", regionID).then((res) => {
+        zones.value = res.data.data;
+      });
+    };
+    const fetchWoredas = (zoneID) => {
+      store.dispatch("report/getWoredas", zoneID).then((res) => {
+        woredas.value = res.data.data;
       });
     };
     const fetchApplicationStatuses = () => {
@@ -684,9 +912,11 @@ export default {
       saveAs(blob, "Report.xls");
     };
     const filterProfession = (profType) => {
-      report.value = store.getters["report/getReport"];
+      // report.value = store.getters["report/getReport"];
       var tableFilter = [];
+      console.log("profe type", profType)
       tableFilter = report.value;
+      console.log("table filter", tableFilter)
       var tableFilter2 = [];
       for (var i = 0; i < tableFilter.length; i++) {
         if (tableFilter[i].professionalTypes != null) {
@@ -694,7 +924,7 @@ export default {
         }
       }
       if (profType == null) {
-        report.value = store.getter["report/getReport"];
+        // report.value = store.getter["report/getReport"];
       } else {
         report.value = tableFilter2.filter(function(e) {
           return e.professionalTypes.name == profType;
@@ -702,20 +932,57 @@ export default {
       }
     };
     const filterRegion = (region) => {
-      report.value = store.getters["report/getReport"];
+      // report.value = store.getters["report/getReport"];
+      fetchZones(region.id);
       var tableFilter = [];
       tableFilter = report.value;
       var tableFilter2 = [];
       for (var i = 0; i < tableFilter.length; i++) {
-        if (tableFilter[i].region != null) {
+        if (tableFilter[i].region.name != null) {
           tableFilter2.push(tableFilter[i]);
         }
       }
-      if (region == null) {
+      if (region.name == null) {
         report.value = store.getter["report/getReport"];
       } else {
         report.value = tableFilter2.filter(function(e) {
-          return e.region.name == region;
+          return e.region.name == region.name;
+        });
+      }
+    };
+
+    const filterZone = (zone) => {
+      fetchWoredas(zone.id);
+      var tableFilter = [];
+      tableFilter = report.value;
+      var tableFilter2 = [];
+      for (var i = 0; i < tableFilter.length; i++) {
+        if (tableFilter[i].zone.name != null) {
+          tableFilter2.push(tableFilter[i]);
+        }
+      }
+      if (zone.name == null) {
+        report.value = store.getter["report/getReport"];
+      } else {
+        report.value = tableFilter2.filter(function(e) {
+          return e.zone.name == zone.name;
+        });
+      }
+    };
+    const filterWoreda = (woreda) => {
+      var tableFilter = [];
+      tableFilter = report.value;
+      var tableFilter2 = [];
+      for (var i = 0; i < tableFilter.length; i++) {
+        if (tableFilter[i].woreda.name != null) {
+          tableFilter2.push(tableFilter[i]);
+        }
+      }
+      if (woreda.name == null) {
+        report.value = store.getter["report/getReport"];
+      } else {
+        report.value = tableFilter2.filter(function(e) {
+          return e.woreda.name == woreda.name;
         });
       }
     };
@@ -724,8 +991,6 @@ export default {
       var dateFilter = [];
       dateFilter = report.value;
       report.value = dateFilter.filter(function(date) {
-        // console.log(Date.parse(date.createdAt));
-        // console.log(Date.parse(date.certifiedDate));
         return (
           // !isNaN(Date.parse(date.applicant.createdAt)) &&
           Date.parse(date.applicant.createdAt) >= Date.parse(startDate) &&
@@ -738,7 +1003,6 @@ export default {
       report.value = store.getters["report/getReport"];
       var gendertable = [];
       gendertable = report.value;
-      console.log(gender);
       if (gender == "both") {
         report.value = gendertable.filter(function(e) {
           return e.gender == "male" || e.gender == "female";
@@ -762,7 +1026,7 @@ export default {
       }
     };
     onMounted(() => {
-      fetchNewLicenseReport();
+      // fetchNewLicenseReport();
       fetchProfessionType();
       fetchRegion();
       fetchApplicationStatuses();
@@ -777,9 +1041,13 @@ export default {
       fetchGoodstandingReport,
       fetchProfessionType,
       fetchRegion,
+      fetchZones,
+      fetchWoredas,
       fetchApplicationStatuses,
       professions,
       regions,
+      zones,
+      woredas,
       applicationStatuses,
       filter,
       filterProfession,
@@ -787,12 +1055,23 @@ export default {
       filterAppStatus,
       filterDate,
       filterRegion,
+      filterZone,
+      selectedApplication,
     };
   },
 };
 </script>
 
 <style>
+.titile-container {
+  flex-wrap: wrap;
+}
+.filter-container {
+  flex-wrap: wrap;
+}
+.applicationType {
+  background-color: #300400;
+}
 th {
   color: #648ea3;
   background-color: #eff6ff;

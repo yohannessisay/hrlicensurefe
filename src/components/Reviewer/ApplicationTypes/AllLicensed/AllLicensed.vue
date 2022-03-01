@@ -84,10 +84,10 @@
         <all-licensed-applications
           :allLicensedApplication="
             selectedTab == 'New License'
-              ? newLicenseAllLicensed
+              ? getNewLicenseAllLicensed
               : selectedTab == 'Renewal'
-              ? renewalAllLicensed
-              : goodStandingAllLicensed
+              ? getRenewalAllLicensed
+              : getGoodStandingAllLicensed
           "
           :app_type="app_type"
           others_licensed="false"
@@ -152,6 +152,19 @@ import Title from "@/sharedComponents/TitleWithIllustration";
 export default {
   computed: {
     moment: () => moment,
+    getNewLicenseAllLicensed() {
+      return store.getters[
+        "reviewerNewLicense/getNewLicenseAllLicensedSearched"
+      ];
+    },
+    getRenewalAllLicensed() {
+      return store.getters["reviewerRenewal/getRenewalAllLicensedSearched"];
+    },
+    getGoodStandingAllLicensed() {
+      return store.getters[
+        "reviewerGoodStanding/getGoodStandingAllLicensedSearched"
+      ];
+    },
   },
   components: {
     ReviewerNavBar,

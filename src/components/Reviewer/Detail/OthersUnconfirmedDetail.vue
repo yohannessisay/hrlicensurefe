@@ -32,7 +32,8 @@
               <span v-show="showAdminCountError">
                 <label class="text-red-200">please select 2 or 3 admins</label>
               </span>
-              <button v-if="!showButtons"
+              <button
+                v-if="!showButtons"
                 class="block mx-auto bg-lightBlue-300 hover:bg-lightBlue-600 hover:shadow-lg mt-small"
                 @click="assignAdminToConfirm()"
               >
