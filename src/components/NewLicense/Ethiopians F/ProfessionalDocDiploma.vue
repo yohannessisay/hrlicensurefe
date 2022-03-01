@@ -490,7 +490,6 @@ export default {
     let professionalDocTranscript5 = ref("");
 
     let educationLevel = localStorage.getItem("educationalLevel");
-    console.log(educationLevel.value);
 
     let docCount = ref(0);
 

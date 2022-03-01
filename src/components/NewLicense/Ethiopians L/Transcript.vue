@@ -30,6 +30,20 @@
           message="Transcript"
           class="mt-8"
         />
+        <div class="flex justify-center">
+          <label class="text-xl" v-if="educationLevel == 'diploma'">
+            Diploma
+          </label>
+          <label class="text-xl" v-if="educationLevel == 'degree'">
+            Degree
+          </label>
+          <label class="text-xl" v-if="educationLevel == 'masters'">
+            Masters
+          </label>
+          <label class="text-xl" v-if="educationLevel == 'phd'">
+            PhD
+          </label>
+        </div>
         <span class="flex justify-center">{{ documentMessage }}</span>
         <div class="ml-4">
           <button @click="addDocs()">Add Document</button>
@@ -314,6 +328,8 @@ export default {
     let phd = ref("");
     let phdTranscript = ref("");
     let phdTranscript2 = ref("");
+
+    let educationLevel = localStorage.getItem("educationalLevel");
 
     let docCount = ref(0);
 
@@ -936,6 +952,8 @@ export default {
       docCount,
       addDocs,
       removeDocs,
+
+      educationLevel,
     };
   },
 };
