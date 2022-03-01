@@ -380,6 +380,10 @@ export default {
     this.proDiploma5 = this.getProfessionalDocDiploma5;
 
     this.proTranscript = this.getProfessionalDocTranscript;
+    this.proTranscript2 = this.getProfessionalDocTranscript2;
+    this.proTranscript3 = this.getProfessionalDocTranscript3;
+    this.proTranscript4 = this.getProfessionalDocTranscript4;
+    this.proTranscript5 = this.getProfessionalDocTranscript5;
 
     this.eduEighth = this.getEduEighth;
     this.eduTenth = this.getEduTenth;
@@ -533,7 +537,15 @@ export default {
         }
         var filePreview = await this.blobToBase64(this.proDiploma);
         this.proDiploma.docFile = filePreview;
-        this.proDiploma.title = "Professional Diploma";
+        if (this.levelOfEducation == "diploma") {
+          this.proDiploma.title = "Professional Diploma";
+        } else if (this.levelOfEducation == "degree") {
+          this.proDiploma.title = "Professional Degree";
+        } else if (this.levelOfEducation == "masters") {
+          this.proDiploma.title = "Professional Masters";
+        } else {
+          this.proDiploma.title = "Professional PhD";
+        }
         this.docList.push(this.proDiploma);
       }
     }
@@ -547,7 +559,15 @@ export default {
         }
         var filePreview = await this.blobToBase64(this.proDiploma2);
         this.proDiploma2.docFile = filePreview;
-        this.proDiploma2.title = "Professional Diploma 2";
+        if (this.levelOfEducation == "diploma") {
+          this.proDiploma2.title = "Professional Diploma 2";
+        } else if (this.levelOfEducation == "degree") {
+          this.proDiploma2.title = "Professional Degree 2";
+        } else if (this.levelOfEducation == "masters") {
+          this.proDiploma2.title = "Professional Masters 2";
+        } else {
+          this.proDiploma2.title = "Professional PhD 2";
+        }
         this.docList.push(this.proDiploma2);
       }
     }
@@ -561,7 +581,15 @@ export default {
         }
         var filePreview = await this.blobToBase64(this.proDiploma3);
         this.proDiploma3.docFile = filePreview;
-        this.proDiploma3.title = "Professional Diploma 3";
+        if (this.levelOfEducation == "diploma") {
+          this.proDiploma3.title = "Professional Diploma 3";
+        } else if (this.levelOfEducation == "degree") {
+          this.proDiploma3.title = "Professional Degree 3";
+        } else if (this.levelOfEducation == "masters") {
+          this.proDiploma3.title = "Professional Masters 3";
+        } else {
+          this.proDiploma3.title = "Professional PhD 3";
+        }
         this.docList.push(this.proDiploma3);
       }
     }
@@ -575,7 +603,15 @@ export default {
         }
         var filePreview = await this.blobToBase64(this.proDiploma4);
         this.proDiploma4.docFile = filePreview;
-        this.proDiploma4.title = "Professional Diploma 4";
+        if (this.levelOfEducation == "diploma") {
+          this.proDiploma4.title = "Professional Diploma 4";
+        } else if (this.levelOfEducation == "degree") {
+          this.proDiploma4.title = "Professional Degree 4";
+        } else if (this.levelOfEducation == "masters") {
+          this.proDiploma4.title = "Professional Masters 4";
+        } else {
+          this.proDiploma4.title = "Professional PhD 4";
+        }
         this.docList.push(this.proDiploma4);
       }
     }
@@ -589,7 +625,15 @@ export default {
         }
         var filePreview = await this.blobToBase64(this.proDiploma5);
         this.proDiploma5.docFile = filePreview;
-        this.proDiploma5.title = "Professional Diploma 5";
+        if (this.levelOfEducation == "diploma") {
+          this.proDiploma5.title = "Professional Diploma 5";
+        } else if (this.levelOfEducation == "degree") {
+          this.proDiploma5.title = "Professional Degree 5";
+        } else if (this.levelOfEducation == "masters") {
+          this.proDiploma5.title = "Professional Masters 5";
+        } else {
+          this.proDiploma5.title = "Professional PhD 5";
+        }
         this.docList.push(this.proDiploma5);
       }
     }
@@ -605,6 +649,62 @@ export default {
         this.proTranscript.docFile = filePreview;
         this.proTranscript.title = "Professional Transcript";
         this.docList.push(this.proTranscript);
+      }
+    }
+    if (this.proTranscript2 != "" && this.proTranscript2 != undefined) {
+      if ("name" in this.proTranscript2) {
+        if (this.draftId != undefined) {
+          this.documentsArray.splice(
+            this.documentsArray.findIndex((e) => e.documentTypeCode === "PDT1"),
+            1
+          );
+        }
+        var filePreview = await this.blobToBase64(this.proTranscript2);
+        this.proTranscript2.docFile = filePreview;
+        this.proTranscript2.title = "Professional Transcript 2";
+        this.docList.push(this.proTranscript2);
+      }
+    }
+    if (this.proTranscript3 != "" && this.proTranscript3 != undefined) {
+      if ("name" in this.proTranscript3) {
+        if (this.draftId != undefined) {
+          this.documentsArray.splice(
+            this.documentsArray.findIndex((e) => e.documentTypeCode === "PDT2"),
+            1
+          );
+        }
+        var filePreview = await this.blobToBase64(this.proTranscript3);
+        this.proTranscript3.docFile = filePreview;
+        this.proTranscript3.title = "Professional Transcript 3";
+        this.docList.push(this.proTranscript3);
+      }
+    }
+    if (this.proTranscript4 != "" && this.proTranscript4 != undefined) {
+      if ("name" in this.proTranscript4) {
+        if (this.draftId != undefined) {
+          this.documentsArray.splice(
+            this.documentsArray.findIndex((e) => e.documentTypeCode === "PDT3"),
+            1
+          );
+        }
+        var filePreview = await this.blobToBase64(this.proTranscript4);
+        this.proTranscript4.docFile = filePreview;
+        this.proTranscript4.title = "Professional Transcript 4";
+        this.docList.push(this.proTranscript4);
+      }
+    }
+    if (this.proTranscript5 != "" && this.proTranscript5 != undefined) {
+      if ("name" in this.proTranscript5) {
+        if (this.draftId != undefined) {
+          this.documentsArray.splice(
+            this.documentsArray.findIndex((e) => e.documentTypeCode === "PDT4"),
+            1
+          );
+        }
+        var filePreview = await this.blobToBase64(this.proTranscript5);
+        this.proTranscript5.docFile = filePreview;
+        this.proTranscript5.title = "Professional Transcript 5";
+        this.docList.push(this.proTranscript5);
       }
     }
     if (this.eduEighth != "" && this.eduEighth != undefined) {
@@ -1118,6 +1218,10 @@ export default {
     proDiploma5: "",
 
     proTranscript: "",
+    proTranscript2: "",
+    proTranscript3: "",
+    proTranscript4: "",
+    proTranscript5: "",
 
     applicationId: "",
     buttons: [],
@@ -1126,6 +1230,7 @@ export default {
 
     checkBoxValue: true,
     showAllAttachements: false,
+    levelOfEducation: localStorage.getItem("educationalLevel"),
   }),
   computed: {
     ...mapGetters({
@@ -1133,6 +1238,7 @@ export default {
       getPassport: "newlicense/getPassport",
       getHealthExamCert: "newlicense/getHealthExamCert",
       getEnglishLanguage: "newlicense/getEnglishLanguage",
+
       getProfessionalDocCertificate: "newlicense/getProfessionalDocCertificate",
       getProfessionalDocCertificate2:
         "newlicense/getProfessionalDocCertificate2",
@@ -1150,6 +1256,10 @@ export default {
       getProfessionalDocDiploma5: "newlicense/getProfessionalDocDiploma5",
 
       getProfessionalDocTranscript: "newlicense/getProfessionalDocTranscript",
+      getProfessionalDocTranscript2: "newlicense/getProfessionalDocTranscript2",
+      getProfessionalDocTranscript3: "newlicense/getProfessionalDocTranscript3",
+      getProfessionalDocTranscript4: "newlicense/getProfessionalDocTranscript4",
+      getProfessionalDocTranscript5: "newlicense/getProfessionalDocTranscript5",
 
       getEduEighth: "newlicense/getEduEighth",
       getEduTenth: "newlicense/getEduTenth",
@@ -1549,7 +1659,23 @@ export default {
               );
               formData.append(
                 this.documentTypes[8].documentType.code,
-                this.professionalDocTranscript
+                this.proTranscript
+              );
+              formData.append(
+                this.documentTypes[37].documentType.code,
+                this.proTranscript2
+              );
+              formData.append(
+                this.documentTypes[38].documentType.code,
+                this.proTranscript3
+              );
+              formData.append(
+                this.documentTypes[39].documentType.code,
+                this.proTranscript4
+              );
+              formData.append(
+                this.documentTypes[40].documentType.code,
+                this.proTranscript5
               );
               formData.append(
                 this.documentTypes[9].documentType.code,
@@ -1719,7 +1845,23 @@ export default {
         );
         formData.append(
           this.documentTypes[8].documentType.code,
-          this.professionalDocTranscript
+          this.proTranscript
+        );
+        formData.append(
+          this.documentTypes[37].documentType.code,
+          this.proTranscript2
+        );
+        formData.append(
+          this.documentTypes[38].documentType.code,
+          this.proTranscript3
+        );
+        formData.append(
+          this.documentTypes[39].documentType.code,
+          this.proTranscript4
+        );
+        formData.append(
+          this.documentTypes[40].documentType.code,
+          this.proTranscript5
         );
         formData.append(this.documentTypes[9].documentType.code, this.coc);
         formData.append(this.documentTypes[41].documentType.code, this.coc2);
@@ -1939,7 +2081,23 @@ export default {
               );
               formData.append(
                 this.documentTypes[8].documentType.code,
-                this.professionalDocTranscript
+                this.proTranscript
+              );
+              formData.append(
+                this.documentTypes[37].documentType.code,
+                this.proTranscript2
+              );
+              formData.append(
+                this.documentTypes[38].documentType.code,
+                this.proTranscript3
+              );
+              formData.append(
+                this.documentTypes[39].documentType.code,
+                this.proTranscript4
+              );
+              formData.append(
+                this.documentTypes[40].documentType.code,
+                this.proTranscript5
               );
               formData.append(
                 this.documentTypes[9].documentType.code,
@@ -2109,7 +2267,23 @@ export default {
         );
         formData.append(
           this.documentTypes[8].documentType.code,
-          this.professionalDocTranscript
+          this.proTranscript
+        );
+        formData.append(
+          this.documentTypes[37].documentType.code,
+          this.proTranscript2
+        );
+        formData.append(
+          this.documentTypes[38].documentType.code,
+          this.proTranscript3
+        );
+        formData.append(
+          this.documentTypes[39].documentType.code,
+          this.proTranscript4
+        );
+        formData.append(
+          this.documentTypes[40].documentType.code,
+          this.proTranscript5
         );
         formData.append(this.documentTypes[9].documentType.code, this.coc);
         formData.append(this.documentTypes[41].documentType.code, this.coc2);

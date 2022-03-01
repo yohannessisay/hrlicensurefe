@@ -27,15 +27,29 @@
         </h2>
         <TitleWithIllustration
           illustration="Certificate"
-          message="Professional Document Diploma"
+          message="Professional Document"
           class="mt-8"
         />
+        <div class="flex justify-center">
+          <label class="text-xl" v-if="educationLevel == 'diploma'">
+            Professinal Document Diploma
+          </label>
+          <label class="text-xl" v-if="educationLevel == 'degree'">
+            Professinal Document Degree
+          </label>
+          <label class="text-xl" v-if="educationLevel == 'masters'">
+            Professinal Document Masters
+          </label>
+          <label class="text-xl" v-if="educationLevel == 'phd'">
+            Professinal Document PhD
+          </label>
+        </div>
         <span class="flex justify-center">{{ documentMessage }}</span>
         <div class="ml-24">
           <button @click="addDocs()">Add Document</button>
           <button @click="removeDocs()">Remove Document</button>
         </div>
-        <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
+        <form @submit.prevent="submit" class="mx-auto max-w-3xl mt-8">
           <div class="flex flex-col justify-center">
             <div>
               <span>
@@ -462,12 +476,21 @@ export default {
     let mastersTranscript = ref("");
     let phd = ref("");
     let phdTranscript = ref("");
+
     let professionalDocCertificate = ref("");
     let professionalDocCertificate2 = ref("");
     let professionalDocCertificate3 = ref("");
     let professionalDocCertificate4 = ref("");
     let professionalDocCertificate5 = ref("");
+
     let professionalDocTranscript = ref("");
+    let professionalDocTranscript2 = ref("");
+    let professionalDocTranscript3 = ref("");
+    let professionalDocTranscript4 = ref("");
+    let professionalDocTranscript5 = ref("");
+
+    let educationLevel = localStorage.getItem("educationalLevel");
+    console.log(educationLevel.value);
 
     let docCount = ref(0);
 
@@ -692,19 +715,19 @@ export default {
 
     const submit = () => {
       emit("changeActiveState");
-      store.dispatch("newlicense/setProfessionalDocDiploma", certificateFile);
-      store.dispatch("newlicense/setProfessionalDocDiploma2", certificateFile2);
-      store.dispatch("newlicense/setProfessionalDocDiploma3", certificateFile3);
-      store.dispatch("newlicense/setProfessionalDocDiploma4", certificateFile4);
-      store.dispatch("newlicense/setProfessionalDocDiploma5", certificateFile5);
+      store.dispatch("newlicense/setProfessionalDocDiploma", diplomaFile);
+      store.dispatch("newlicense/setProfessionalDocDiploma2", diplomaFile2);
+      store.dispatch("newlicense/setProfessionalDocDiploma3", diplomaFile3);
+      store.dispatch("newlicense/setProfessionalDocDiploma4", diplomaFile4);
+      store.dispatch("newlicense/setProfessionalDocDiploma5", diplomaFile5);
     };
     const submitBack = () => {
       emit("changeActiveStateMinus");
-      store.dispatch("newlicense/setProfessionalDocDiploma", certificateFile);
-      store.dispatch("newlicense/setProfessionalDocDiploma2", certificateFile2);
-      store.dispatch("newlicense/setProfessionalDocDiploma3", certificateFile3);
-      store.dispatch("newlicense/setProfessionalDocDiploma4", certificateFile4);
-      store.dispatch("newlicense/setProfessionalDocDiploma5", certificateFile5);
+      store.dispatch("newlicense/setProfessionalDocDiploma", diplomaFile);
+      store.dispatch("newlicense/setProfessionalDocDiploma2", diplomaFile2);
+      store.dispatch("newlicense/setProfessionalDocDiploma3", diplomaFile3);
+      store.dispatch("newlicense/setProfessionalDocDiploma4", diplomaFile4);
+      store.dispatch("newlicense/setProfessionalDocDiploma5", diplomaFile5);
     };
 
     buttons = store.getters["newlicense/getButtons"];
@@ -730,6 +753,7 @@ export default {
     mastersTranscript = store.getters["newlicense/getMastersTranscript"];
     phd = store.getters["newlicense/getPhd"];
     phdTranscript = store.getters["newlicense/getPhdTranscript"];
+
     professionalDocCertificate =
       store.getters["newlicense/getProfessionalDocCertificate"];
     professionalDocCertificate2 =
@@ -740,8 +764,17 @@ export default {
       store.getters["newlicense/getProfessionalDocCertificate4"];
     professionalDocCertificate5 =
       store.getters["newlicense/getProfessionalDocCertificate5"];
+
     professionalDocTranscript =
       store.getters["newlicense/getProfessionalDocTranscript"];
+    professionalDocTranscript2 =
+      store.getters["newlicense/getProfessionalDocTranscript2"];
+    professionalDocTranscript3 =
+      store.getters["newlicense/getProfessionalDocTranscript3"];
+    professionalDocTranscript4 =
+      store.getters["newlicense/getProfessionalDocTranscript4"];
+    professionalDocTranscript5 =
+      store.getters["newlicense/getProfessionalDocTranscript5"];
 
     const draft = (action) => {
       message.value.showLoading = true;
@@ -898,6 +931,22 @@ export default {
             formData.append(
               documentSpecs[8].documentType.code,
               professionalDocTranscript
+            );
+            formData.append(
+              documentSpecs[37].documentType.code,
+              professionalDocTranscript2
+            );
+            formData.append(
+              documentSpecs[38].documentType.code,
+              professionalDocTranscript3
+            );
+            formData.append(
+              documentSpecs[39].documentType.code,
+              professionalDocTranscript4
+            );
+            formData.append(
+              documentSpecs[40].documentType.code,
+              professionalDocTranscript5
             );
             formData.append(documentSpecs[9].documentType.code, coc);
             if (educationDoc != undefined) {
@@ -1312,6 +1361,7 @@ export default {
             filePreview.value = basePath + draftData.documents[i].filePath;
           }
           if (draftData.documents[i].documentTypeCode == "PDD1") {
+            docCount.value++;
             showUpload2.value = false;
             if (draftData.documents[i].fileName.split(".")[1] == "pdf") {
               isPdf2.value = true;
@@ -1323,6 +1373,7 @@ export default {
             filePreview2.value = basePath + draftData.documents[i].filePath;
           }
           if (draftData.documents[i].documentTypeCode == "PDD2") {
+            docCount.value++;
             showUpload3.value = false;
             if (draftData.documents[i].fileName.split(".")[1] == "pdf") {
               isPdf3.value = true;
@@ -1334,6 +1385,7 @@ export default {
             filePreview3.value = basePath + draftData.documents[i].filePath;
           }
           if (draftData.documents[i].documentTypeCode == "PDD3") {
+            docCount.value++;
             showUpload4.value = false;
             if (draftData.documents[i].fileName.split(".")[1] == "pdf") {
               isPdf4.value = true;
@@ -1345,6 +1397,7 @@ export default {
             filePreview4.value = basePath + draftData.documents[i].filePath;
           }
           if (draftData.documents[i].documentTypeCode == "PDD4") {
+            docCount.value++;
             showUpload5.value = false;
             if (draftData.documents[i].fileName.split(".")[1] == "pdf") {
               isPdf5.value = true;
@@ -1442,6 +1495,8 @@ export default {
       docCount,
       addDocs,
       removeDocs,
+
+      educationLevel,
     };
   },
 };

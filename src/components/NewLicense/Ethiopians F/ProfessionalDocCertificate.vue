@@ -462,6 +462,7 @@ export default {
     let mastersTranscript = ref("");
     let phd = ref("");
     let phdTranscript = ref("");
+
     let professionalDocDiploma = ref("");
     let professionalDocDiploma2 = ref("");
     let professionalDocDiploma3 = ref("");
@@ -469,6 +470,10 @@ export default {
     let professionalDocDiploma5 = ref("");
 
     let professionalDocTranscript = ref("");
+    let professionalDocTranscript2 = ref("");
+    let professionalDocTranscript3 = ref("");
+    let professionalDocTranscript4 = ref("");
+    let professionalDocTranscript5 = ref("");
 
     let docCount = ref(0);
 
@@ -768,9 +773,17 @@ export default {
       store.getters["newlicense/getProfessionalDocDiploma4"];
     professionalDocDiploma5 =
       store.getters["newlicense/getProfessionalDocDiploma5"];
-      
+
     professionalDocTranscript =
       store.getters["newlicense/getProfessionalDocTranscript"];
+    professionalDocTranscript2 =
+      store.getters["newlicense/getProfessionalDocTranscript2"];
+    professionalDocTranscript3 =
+      store.getters["newlicense/getProfessionalDocTranscript3"];
+    professionalDocTranscript4 =
+      store.getters["newlicense/getProfessionalDocTranscript4"];
+    professionalDocTranscript5 =
+      store.getters["newlicense/getProfessionalDocTranscript5"];
 
     const draft = (action) => {
       message.value.showLoading = true;
@@ -908,25 +921,41 @@ export default {
               documentSpecs[7].documentType.code,
               professionalDocDiploma
             );
-             formData.append(
+            formData.append(
               documentSpecs[33].documentType.code,
               professionalDocDiploma2
             );
-             formData.append(
+            formData.append(
               documentSpecs[34].documentType.code,
               professionalDocDiploma3
             );
-             formData.append(
+            formData.append(
               documentSpecs[35].documentType.code,
               professionalDocDiploma4
             );
-             formData.append(
+            formData.append(
               documentSpecs[36].documentType.code,
               professionalDocDiploma5
             );
             formData.append(
               documentSpecs[8].documentType.code,
               professionalDocTranscript
+            );
+            formData.append(
+              documentSpecs[37].documentType.code,
+              professionalDocTranscript2
+            );
+            formData.append(
+              documentSpecs[38].documentType.code,
+              professionalDocTranscript3
+            );
+            formData.append(
+              documentSpecs[39].documentType.code,
+              professionalDocTranscript4
+            );
+            formData.append(
+              documentSpecs[40].documentType.code,
+              professionalDocTranscript5
             );
             formData.append(documentSpecs[9].documentType.code, coc);
             if (educationDoc != undefined) {
