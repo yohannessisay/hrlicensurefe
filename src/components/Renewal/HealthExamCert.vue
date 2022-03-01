@@ -257,6 +257,7 @@ export default {
     let letterFromOrg = ref("");
     let professionalLicense = ref("");
     let renewedLicense = ref("");
+    let renewedLicenseOfHealthFacility = ref("");
     let letterOrg = ref("");
     let masters = ref("");
     let mastersTranscript = ref("");
@@ -338,6 +339,8 @@ export default {
     letterFromOrg = store.getters["renewal/getRenewalLicense"];
     professionalLicense = store.getters["renewal/getProfessionalLicense"];
     renewedLicense = store.getters["renewal/getRenewedLicense"];
+        renewedLicenseOfHealthFacility =
+      store.getters["renewal/getRenewedLicenseOfHealthFacility"];
     letterOrg = store.getters["renewal/getLetterfromOrg"];
     masters = store.getters["renewal/getMasters"];
     mastersTranscript = store.getters["renewal/getMastersTranscript"];
@@ -582,6 +585,10 @@ export default {
               documentSpecs[21].documentType.code,
               renewedLicense
             );
+             formData.append(
+              documentSpecs[36].documentType.code,
+              renewedLicenseOfHealthFacility
+            );
             formData.append(documentSpecs[20].documentType.code, letterOrg);
             formData.append(documentSpecs[27].documentType.code, masters);
             formData.append(
@@ -784,6 +791,7 @@ export default {
       letterFromOrg,
       professionalLicense,
       renewedLicense,
+      renewedLicenseOfHealthFacility,
       letterOrg,
       masters,
       mastersTranscript,

@@ -85,7 +85,7 @@
                 <img :src="filePreview" alt="" class="preview" />
               </span>
             </div>
-            <div v-if="docCount > 1">
+            <div v-if="docCount > 0">
               <span v-if="showUpload2">
                 <label class="text-primary-700"
                   >Upload image:
@@ -126,7 +126,7 @@
                 <img :src="filePreview2" class="preview" />
               </span>
             </div>
-            <div v-if="docCount > 2">
+            <div v-if="docCount > 1">
               <span v-if="showUpload3">
                 <label class="text-primary-700"
                   >Upload image:
@@ -999,7 +999,7 @@ export default {
             filePreview.value = basePath + draftData.documents[i].filePath;
           }
           if (draftData.documents[i].documentTypeCode == "COC1") {
-            doc.value++;
+            docCount.value++;
             showUpload2.value = false;
             if (draftData.documents[i].fileName.split(".")[1] == "pdf") {
               isPdf2.value = true;
@@ -1011,7 +1011,7 @@ export default {
             filePreview2.value = basePath + draftData.documents[i].filePath;
           }
           if (draftData.documents[i].documentTypeCode == "COC2") {
-            doc.value += 2;
+            docCount.value += 2;
             showUpload3.value = false;
             if (draftData.documents[i].fileName.split(".")[1] == "pdf") {
               isPdf3.value = true;

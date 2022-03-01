@@ -2,14 +2,7 @@
   <div class="flex justify-center">
     <div class="bg-lightBlueB-200 w-screen h-screen max-w-4xl">
       <div
-        class="
-          flex flex-col
-          pt-large
-          w-full
-          bg-white
-          blue-box-shadow-light
-          rounded
-        "
+        class="flex flex-col pt-large w-full bg-white blue-box-shadow-light rounded "
       >
         <h2
           class="flex justify-center"
@@ -27,15 +20,15 @@
         </h2>
         <TitleWithIllustration
           illustration="Certificate"
-          message="Letter from Organization"
+          message="Renewed License of Health Facility"
           class="mt-8"
         />
         <span class="flex justify-center">{{ documentMessage }}</span>
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
-          <div class="flex justify-center">
+          <div class="flex justify-center mb-10">
             <div>
               <span>
-                <h2 v-if="!fileSizeExceed">{{ letterFile.name }}</h2>
+                <h2 v-if="!fileSizeExceed">{{ licenseFile.name }}</h2>
                 <h2 v-if="!fileSizeExceed">{{ fileSize }}</h2>
                 <h3 style="color: red" v-if="fileSizeExceed">
                   File size must be less than {{ maxSizeMB }} MB
@@ -50,11 +43,11 @@
                   <div class="dropbox">
                     <input
                       type="file"
-                      id="letterFile"
+                      id="licenseFile"
                       class="photoFile"
-                      ref="letterFileP"
+                      ref="licenseFileP"
                       v-on:change="handleFileUpload()"
-                      style="margin-bottom: 15px !important"
+                      style="margin-bottom: 15px !important;"
                       accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
                     />
                     <p>
@@ -88,7 +81,9 @@
             <button @click="submitBack">
               Back
             </button>
-            <button @click="submit">Next</button>
+            <button @click="submit">
+              Next
+            </button>
             <button @click="draft(buttons[1].action)" variant="outline">
               {{ buttons[1]["name"] }}
             </button>
@@ -100,7 +95,9 @@
             <button @click="submitBack">
               Back
             </button>
-            <button @click="submit">Next</button>
+            <button @click="submit">
+              Next
+            </button>
             <button @click="draft(buttons[2].action)" variant="outline">
               {{ buttons[2]["name"] }}
             </button>
@@ -119,7 +116,9 @@
             <button @click="submitBack">
               Back
             </button>
-            <button @click="submit">Next</button>
+            <button @click="submit">
+              Next
+            </button>
             <button
               class="withdraw"
               @click="withdraw(buttons[1].action)"
@@ -135,7 +134,9 @@
             <button @click="submitBack">
               Back
             </button>
-            <button @click="submit">Next</button>
+            <button @click="submit">
+              Next
+            </button>
             <button @click="draft(buttons[0].action)" variant="outline">
               {{ buttons[0]["name"] }}
             </button>
@@ -150,7 +151,9 @@
             <button @click="submitBack">
               Back
             </button>
-            <button @click="submit">Next</button>
+            <button @click="submit">
+              Next
+            </button>
             <!-- <button @click="draft(buttons[0].action)" variant="outline">
             {{ buttons[0]["name"] }}
           </button> -->
@@ -186,17 +189,18 @@ import MAX_FILE_SIZE from "../../../composables/documentMessage";
 import MAX_SIZE_MB from "../../../composables/documentMessage";
 
 export default {
+  props: ["activeState"],
   components: {
     TitleWithIllustration,
     FlashMessage,
     ErrorFlashMessage,
     Spinner,
   },
-  props: ["activeState"],
   setup(props, { emit }) {
     const store = useStore();
     const route = useRoute();
     const router = useRouter();
+
     const basePath = "https://storage.googleapis.com/hris-lisence-dev/";
 
     let message = ref({
@@ -208,44 +212,27 @@ export default {
     let fileSize = ref("");
 
     let dataChanged = ref(false);
-    let letterFile = ref("");
-    let letterFileP = ref("");
+    let licenseFile = ref("");
+    let licenseFileP = ref("");
     let showPreview = ref(false);
     let filePreview = ref("");
     let showUpload = ref(true);
     let isImage = ref(false);
     let isPdf = ref(false);
-    let buttons = [];
-    let documentSpecs = ref([]);
-    let userId = +localStorage.getItem("userId");
-    let licenseInfo = ref("");
-    let draftData = ref("");
     let draftStatus = ref("");
 
-    let passport = ref("");
-    let healthExamCert = ref("");
-    let professionalDoc = ref("");
-    let workExperience = ref("");
-    let workExperience2 = ref("");
-    let englishLanguage = ref("");
-    let herqa = ref("");
-    let cpd = ref("");
-    let cpd2 = ref("");
-    let cpd3 = ref("");
-    let cpd4 = ref("");
-    let cpd5 = ref("");
-    let previousLicense = ref("");
-    let professionalLicense = ref("");
-    let renewedLicense = ref("");
-    let renewedLicenseOfHealthFacility = ref("");
-    let letterFromOrg = ref("");
-
-    let letterFileBack = ref("");
+    let licenseBack = ref("");
 
     let documentMessage = ref("");
     let maxFileSize = ref("");
     let maxSizeMB = ref("");
     let fileSizeExceed = ref(false);
+
+    let buttons = [];
+    let documentSpecs = ref([]);
+    let userId = +localStorage.getItem("userId");
+    let licenseInfo = ref("");
+    let draftData = ref("");
 
     let declinedFields = ref([]);
     let acceptedFields = ref([]);
@@ -254,10 +241,28 @@ export default {
     let declinedFieldsCheck = ref(false);
     let acceptedFieldsCheck = ref(false);
 
+    let passport = ref("");
+    let previousLicense = ref("");
+    let healthExamCert = ref("");
+    let professionalDoc = ref("");
+    let workExperience = ref("");
+    let workExperience2 = ref("");
+    let englishLanguage = ref("");
+    let herqa = ref("");
+    let letterFromOrg = ref("");
+    let letterOrg = ref("");
+    let cpd = ref("");
+    let cpd2 = ref("");
+    let cpd3 = ref("");
+    let cpd4 = ref("");
+    let cpd5 = ref("");
+    let professionalLicense = ref("");
+    let renewedLicense = ref("");
+
     const reset = () => {
       showUpload.value = true;
       showPreview.value = false;
-      letterFile.value = "";
+      licenseFile.value = "";
       filePreview.value = "";
       isImage.value = true;
       fileSize.value = "";
@@ -265,10 +270,11 @@ export default {
     };
 
     const handleFileUpload = () => {
-      letterFile.value = letterFileP.value.files[0];
+      licenseFile.value = licenseFileP.value.files[0];
+      console.log(licenseFile.value);
       let reader = new FileReader();
       isImage.value = true;
-      let fileS = letterFile.value.size;
+      let fileS = licenseFile.value.size;
       if (fileS <= maxFileSize.value / 1000) {
         fileSizeExceed.value = false;
         dataChanged.value = true;
@@ -288,52 +294,124 @@ export default {
           },
           false
         );
-        if (letterFile.value) {
-          if (/\.(jpe?g|png|gif)$/i.test(letterFile.value.name)) {
+        if (licenseFile.value) {
+          if (/\.(jpe?g|png|gif)$/i.test(licenseFile.value.name)) {
             isImage.value = true;
-            reader.readAsDataURL(letterFile.value);
-          } else if (/\.(pdf)$/i.test(letterFile.value.name)) {
+            reader.readAsDataURL(licenseFile.value);
+          } else if (/\.(pdf)$/i.test(licenseFile.value.name)) {
             isImage.value = false;
             isPdf.value = true;
-            reader.readAsDataURL(letterFile.value);
+            reader.readAsDataURL(licenseFile.value);
           }
         }
       } else {
         fileSizeExceed.value = true;
-        letterFile.value = "";
+        licenseFile.value = "";
         isImage.value = true;
       }
-    };
-    const submit = () => {
-      emit("changeActiveState");
-      store.dispatch("renewal/setLetterfromOrg", letterFile);
-    };
-    const submitBack = () => {
-      emit("changeActiveStateMinus");
-      store.dispatch("renewal/setLetterfromOrg", letterFile);
     };
     buttons = store.getters["renewal/getButtons"];
     documentSpecs = store.getters["renewal/getDocumentSpec"];
     licenseInfo = store.getters["renewal/getLicense"];
 
     passport = store.getters["renewal/getPassport"];
+    previousLicense = store.getters["renewal/getPreviousLicense"];
     healthExamCert = store.getters["renewal/getRenewalHealthExamCert"];
     professionalDoc = store.getters["renewal/getProfessionalDocuments"];
     workExperience = store.getters["renewal/getRenewalWorkExperience"];
     workExperience2 = store.getters["renewal/getRenewalWorkExperience2"];
     englishLanguage = store.getters["renewal/getEnglishLanguage"];
     herqa = store.getters["renewal/getHerqa"];
+    letterFromOrg = store.getters["renewal/getRenewalLicense"];
     cpd = store.getters["renewal/getRenewalCpd"];
     cpd2 = store.getters["renewal/getRenewalCpd2"];
     cpd3 = store.getters["renewal/getRenewalCpd3"];
     cpd4 = store.getters["renewal/getRenewalCpd4"];
     cpd5 = store.getters["renewal/getRenewalCpd5"];
-    previousLicense = store.getters["renewal/getPreviousLicense"];
     professionalLicense = store.getters["renewal/getProfessionalLicense"];
     renewedLicense = store.getters["renewal/getRenewedLicense"];
-    renewedLicenseOfHealthFacility =
-      store.getters["renewal/getRenewedLicenseOfHealthFacility"];
-    letterFromOrg = store.getters["renewal/getRenewalLicense"];
+    letterOrg = store.getters["renewal/getLetterfromOrg"];
+
+    const submit = () => {
+      emit("changeActiveState");
+      store.dispatch("renewal/setRenewedLicenseOfHealthFacility", licenseFile);
+    };
+    const submitBack = () => {
+      emit("changeActiveStateMinus");
+      store.dispatch("renewal/setRenewedLicenseOfHealthFacility", licenseFile);
+    };
+
+    onMounted(() => {
+      documentMessage.value = MESSAGE.DOC_MESSAGE;
+      maxFileSize.value = MAX_FILE_SIZE.MAX_FILE_SIZE;
+      maxSizeMB.value = MAX_SIZE_MB.MAX_SIZE_MB;
+      licenseBack = store.getters["renewal/getRenewedLicenseOfHealthFacility"];
+      if (
+        licenseBack &&
+        licenseBack !== undefined &&
+        licenseBack !== null &&
+        licenseBack !== ""
+      ) {
+        dataChanged.value = true;
+        showUpload.value = false;
+        licenseFile.value = licenseBack;
+        let reader = new FileReader();
+        let fileS = licenseFile.value.size;
+        if (fileS > 0 && fileS < 1000) {
+          fileSize.value += "B";
+        } else if (fileS > 1000 && fileS < 1000000) {
+          fileSize.value = fileS / 1000 + "kB";
+        } else {
+          fileSize.value = fileS / 1000000 + "MB";
+        }
+        reader.addEventListener(
+          "load",
+          function() {
+            showPreview.value = true;
+            filePreview.value = reader.result;
+          },
+          false
+        );
+        if (licenseFile.value) {
+          if (/\.(jpe?g|png|gif)$/i.test(licenseFile.value.name)) {
+            isImage.value = true;
+            reader.readAsDataURL(licenseFile.value);
+          } else if (/\.(pdf)$/i.test(licenseFile.value.name)) {
+            isImage.value = false;
+            isPdf.value = true;
+            reader.readAsDataURL(licenseFile.value);
+          }
+        }
+      }
+      declinedFields = store.getters["renewal/getDeclinedFields"];
+      acceptedFields = store.getters["renewal/getAcceptedFields"];
+      remark = store.getters["renewal/getRemark"];
+      if (declinedFields != undefined && declinedFields.includes("RLHFO")) {
+        declinedFieldsCheck.value = true;
+      }
+      if (acceptedFields != undefined && acceptedFields.includes("RLHFO")) {
+        acceptedFieldsCheck.value = true;
+      }
+      buttons = store.getters["renewal/getButtons"];
+      draftData = store.getters["renewal/getDraft"];
+      if (route.params.id) {
+        draftStatus.value = route.params.status;
+        for (let i = 0; i < draftData.documents.length; i++) {
+          if (draftData.documents[i].documentTypeCode == "RLHFO") {
+            showUpload.value = false;
+            if (draftData.documents[i].fileName.split(".")[1] == "pdf") {
+              isPdf.value = true;
+            } else {
+              isImage.value = true;
+            }
+
+            licenseFile.value = draftData.documents[i];
+            showPreview.value = true;
+            filePreview.value = basePath + draftData.documents[i].filePath;
+          }
+        }
+      }
+    });
 
     const draft = (action) => {
       message.value.showLoading = true;
@@ -351,8 +429,8 @@ export default {
               let licenseId = route.params.id;
               let formData = new FormData();
               formData.append(
-                documentSpecs[20].documentType.code,
-                letterFile.value
+                documentSpecs[36].documentType.code,
+                licenseFile.value
               );
               let payload = { document: formData, id: licenseId };
               store
@@ -407,7 +485,6 @@ export default {
             residenceWoredaId: licenseInfo.residenceWoredaId,
             paymentSlip: null,
             occupationTypeId: licenseInfo.occupationTypeId,
-            nativeLanguageId: licenseInfo.nativeLanguageId,
             expertLevelId: licenseInfo.expertLevelId,
             otherEducationalInstitution:
               licenseInfo.otherEducationalInstitution,
@@ -418,6 +495,7 @@ export default {
           if (res.data.status == "Success") {
             let licenseId = res.data.data.id;
             let formData = new FormData();
+
             formData.append(documentSpecs[0].documentType.code, passport);
             formData.append(documentSpecs[2].documentType.code, healthExamCert);
             if (professionalDoc != undefined) {
@@ -449,10 +527,7 @@ export default {
               englishLanguage
             );
             formData.append(documentSpecs[18].documentType.code, herqa);
-            formData.append(
-              documentSpecs[20].documentType.code,
-              letterFile.value
-            );
+            formData.append(documentSpecs[19].documentType.code, letterFromOrg);
             formData.append(
               documentSpecs[6].documentType.code,
               previousLicense
@@ -465,12 +540,11 @@ export default {
               documentSpecs[21].documentType.code,
               renewedLicense
             );
+            formData.append(documentSpecs[20].documentType.code, letterOrg);
             formData.append(
               documentSpecs[36].documentType.code,
-              renewedLicenseOfHealthFacility
+              licenseFile.value
             );
-            formData.append(documentSpecs[19].documentType.code, letterFromOrg);
-
             let payload = { document: formData, id: licenseId };
             store
               .dispatch("renewal/uploadDocuments", payload)
@@ -506,8 +580,8 @@ export default {
               let licenseId = route.params.id;
               let formData = new FormData();
               formData.append(
-                documentSpecs[20].documentType.code,
-                letterFile.value
+                documentSpecs[36].documentType.code,
+                licenseFile.value
               );
               let payload = { document: formData, id: licenseId };
               store
@@ -562,7 +636,6 @@ export default {
             residenceWoredaId: licenseInfo.residenceWoredaId,
             paymentSlip: null,
             occupationTypeId: licenseInfo.occupationTypeId,
-            nativeLanguageId: licenseInfo.nativeLanguageId,
             expertLevelId: licenseInfo.expertLevelId,
             otherEducationalInstitution:
               licenseInfo.otherEducationalInstitution,
@@ -574,8 +647,8 @@ export default {
             let licenseId = res.data.data.id;
             let formData = new FormData();
             formData.append(
-              documentSpecs[20].documentType.code,
-              letterFile.value
+              documentSpecs[36].documentType.code,
+              licenseFile.value
             );
             let payload = { document: formData, id: licenseId };
             store
@@ -607,9 +680,9 @@ export default {
         withdrawData: withdrawObj,
       };
       store.dispatch("renewal/withdraw", payload).then((res) => {
-        if (res) {
+        if (res.data.status == "Success") {
+          message.value.showLoading = !message.value.showLoading;
           message.value.showFlash = !message.value.showFlash;
-          message.value.showLoading = false;
           setTimeout(() => {
             router.push({ path: "/menu" });
           }, 1500);
@@ -618,80 +691,11 @@ export default {
         }
       });
     };
-    onMounted(() => {
-      documentMessage.value = MESSAGE.DOC_MESSAGE;
-      maxFileSize.value = MAX_FILE_SIZE.MAX_FILE_SIZE;
-      maxSizeMB.value = MAX_SIZE_MB.MAX_SIZE_MB;
-      letterFileBack = store.getters["renewal/getLetterfromOrg"];
-      if (
-        letterFileBack &&
-        letterFileBack !== undefined &&
-        letterFileBack !== null &&
-        letterFileBack !== ""
-      ) {
-        dataChanged.value = true;
-        showUpload.value = false;
-        letterFile.value = letterFileBack;
-        let reader = new FileReader();
-        let fileS = letterFile.value.size;
-        if (fileS > 0 && fileS < 1000) {
-          fileSize.value += "B";
-        } else if (fileS > 1000 && fileS < 1000000) {
-          fileSize.value = fileS / 1000 + "kB";
-        } else {
-          fileSize.value = fileS / 1000000 + "MB";
-        }
-        reader.addEventListener(
-          "load",
-          function() {
-            showPreview.value = true;
-            filePreview.value = reader.result;
-          },
-          false
-        );
-        if (letterFile.value) {
-          if (/\.(jpe?g|png|gif)$/i.test(letterFile.value.name)) {
-            isImage.value = true;
-            reader.readAsDataURL(letterFile.value);
-          } else if (/\.(pdf)$/i.test(letterFile.value.name)) {
-            isImage.value = false;
-            isPdf.value = true;
-            reader.readAsDataURL(letterFile.value);
-          }
-        }
-      }
-      declinedFields = store.getters["renewal/getDeclinedFields"];
-      acceptedFields = store.getters["renewal/getAcceptedFields"];
-      remark = store.getters["renewal/getRemark"];
-      if (declinedFields != null && declinedFields.includes("LFO")) {
-        declinedFieldsCheck.value = true;
-      }
-      if (acceptedFields != null && acceptedFields.includes("LFO")) {
-        acceptedFieldsCheck.value = true;
-      }
-      buttons = store.getters["renewal/getButtons"];
-      draftData = store.getters["renewal/getDraft"];
-      if (route.params.id) {
-        draftStatus.value = route.params.status;
-        for (let i = 0; i < draftData.documents.length; i++) {
-          if (draftData.documents[i].documentTypeCode == "LFO") {
-            showUpload.value = false;
-            if (draftData.documents[i].fileName.split(".")[1] == "pdf") {
-              isPdf.value = true;
-            } else {
-              isImage.value = true;
-            }
-            letterFile.value = draftData.documents[i];
-            showPreview.value = true;
-            filePreview.value = basePath + draftData.documents[i].filePath;
-          }
-        }
-      }
-    });
+
     return {
-      letterFile,
-      letterFileP,
-      letterFileBack,
+      licenseFile,
+      licenseFileP,
+      licenseBack,
       showPreview,
       filePreview,
       showUpload,
@@ -705,8 +709,8 @@ export default {
       withdraw,
       buttons,
       draftData,
-      fileSize,
       draftStatus,
+      fileSize,
       update,
       basePath,
       message,
@@ -723,12 +727,12 @@ export default {
       workExperience,
       englishLanguage,
       herqa,
+      letterFromOrg,
       cpd,
-      previousLicense,
       professionalLicense,
       renewedLicense,
-      renewedLicenseOfHealthFacility,
-      letterFromOrg,
+      letterOrg,
+      previousLicense,
 
       documentMessage,
       fileSizeExceed,
@@ -740,6 +744,7 @@ export default {
 </script>
 <style>
 @import "../../../styles/document-upload.css";
+
 img {
   width: 250px;
   height: 250px;

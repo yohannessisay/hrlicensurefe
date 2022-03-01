@@ -456,6 +456,7 @@ export default {
     let previousLicense = ref("");
     let professionalLicense = ref("");
     let renewedLicense = ref("");
+    let renewedLicenseOfHealthFacility = ref("");
 
     let docCount = ref(0);
 
@@ -691,6 +692,8 @@ export default {
     previousLicense = store.getters["renewal/getPreviousLicense"];
     professionalLicense = store.getters["renewal/getProfessionalLicense"];
     renewedLicense = store.getters["renewal/getRenewedLicense"];
+    renewedLicenseOfHealthFacility =
+      store.getters["renewal/getRenewedLicenseOfHealthFacility"];
     letterOrg = store.getters["renewal/getLetterfromOrg"];
 
     const submit = () => {
@@ -1109,6 +1112,10 @@ export default {
               documentSpecs[21].documentType.code,
               renewedLicense
             );
+            formData.append(
+              documentSpecs[36].documentType.code,
+              renewedLicenseOfHealthFacility
+            );
             formData.append(documentSpecs[20].documentType.code, letterOrg);
             let payload = { document: formData, id: licenseId };
             store
@@ -1374,6 +1381,7 @@ export default {
       previousLicense,
       professionalLicense,
       renewedLicense,
+      renewedLicenseOfHealthFacility,
       letterOrg,
 
       documentMessage,

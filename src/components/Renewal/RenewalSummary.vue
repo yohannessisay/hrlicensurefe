@@ -188,7 +188,7 @@
       </div>
       <div class="flex justify-center mt-8" v-show="showCheckBox">
         <label class="inline-flex items-center">
-          <input @change="checkBox()"  type="checkbox" class="form-checkbox" />
+          <input @change="checkBox()" type="checkbox" class="form-checkbox" />
           <span style="font-size: 16px" class="ml-2"
             >This is to verify that all the attached documents are legitimate
             and not forgery.</span
@@ -345,7 +345,7 @@ export default {
     Spinner,
   },
   async created() {
-    this.showCheckBox =true;
+    this.showCheckBox = true;
     this.draftId = this.$route.params.id;
     this.draftStatus = this.$route.params.status;
     if (this.draftId != undefined) {
@@ -353,7 +353,7 @@ export default {
         this.draftData = this.getDraftData;
         this.documentsArray = this.draftData.documents;
       }, 3500);
-this.showCheckBox =false;
+      this.showCheckBox = false;
     }
 
     this.userId = +localStorage.getItem("userId");
@@ -380,6 +380,7 @@ this.showCheckBox =false;
     this.letterFromOrg = this.getLetterFromHiringInstitution;
     this.professionalLicense = this.getProfessionalLicense;
     this.renewedLicense = this.getRenewedLicense;
+    this.renewedLicenseOfHealthFacility = this.getRenewedLicenseOfHealthFacility;
     this.letterOrg = this.getLetterFromOrg;
     this.professionalDoc = this.getProfessionalDocuments;
 
@@ -570,6 +571,28 @@ this.showCheckBox =false;
         this.renewedLicense.docFile = filePreview;
         this.renewedLicense.title = "Renewed License";
         this.docList.push(this.renewedLicense);
+      }
+    }
+    if (
+      this.renewedLicenseOfHealthFacility != "" &&
+      this.renewedLicenseOfHealthFacility != undefined
+    ) {
+      if ("name" in this.renewedLicenseOfHealthFacility) {
+        if (this.draftId != undefined) {
+          this.documentsArray.splice(
+            this.documentsArray.findIndex(
+              (e) => e.documentTypeCode === "RLHFO"
+            ),
+            1
+          );
+        }
+        var filePreview = await this.blobToBase64(
+          this.renewedLicenseOfHealthFacility
+        );
+        this.renewedLicenseOfHealthFacility.docFile = filePreview;
+        this.renewedLicenseOfHealthFacility.title =
+          "Renewed License of Health Facility";
+        this.docList.push(this.renewedLicenseOfHealthFacility);
       }
     }
     if (this.supportLetter != "" && this.supportLetter != undefined) {
@@ -965,6 +988,7 @@ this.showCheckBox =false;
     letterFromOrg: "",
     professionalLicense: "",
     renewedLicense: "",
+    renewedLicenseOfHealthFacility: "",
     letterOrg: "",
     masters: "",
     mastersTranscript: "",
@@ -1018,6 +1042,8 @@ this.showCheckBox =false;
       getLetterFromHiringInstitution: "renewal/getRenewalLicense",
       getProfessionalLicense: "renewal/getProfessionalLicense",
       getRenewedLicense: "renewal/getRenewedLicense",
+      getRenewedLicenseOfHealthFacility:
+        "renewal/getRenewedLicenseOfHealthFacility",
       getLetterFromOrg: "renewal/getLetterfromOrg",
       getProfessionalDocuments: "renewal/getProfessionalDocuments",
 
@@ -1467,6 +1493,10 @@ this.showCheckBox =false;
                 this.renewedLicense
               );
               formData.append(
+                this.documentTypes[36].documentType.code,
+                this.renewedLicenseOfHealthFacility
+              );
+              formData.append(
                 this.documentTypes[20].documentType.code,
                 this.letterOrg
               );
@@ -1593,6 +1623,10 @@ this.showCheckBox =false;
           this.documentTypes[21].documentType.code,
           this.renewedLicense
         );
+          formData.append(
+                this.documentTypes[36].documentType.code,
+                this.renewedLicenseOfHealthFacility
+              );
         formData.append(
           this.documentTypes[20].documentType.code,
           this.letterOrg
@@ -1858,6 +1892,10 @@ this.showCheckBox =false;
                 this.documentTypes[21].documentType.code,
                 this.renewedLicense
               );
+                formData.append(
+                this.documentTypes[36].documentType.code,
+                this.renewedLicenseOfHealthFacility
+              );
               formData.append(
                 this.documentTypes[20].documentType.code,
                 this.letterOrg
@@ -1989,6 +2027,10 @@ this.showCheckBox =false;
           this.documentTypes[21].documentType.code,
           this.renewedLicense
         );
+          formData.append(
+                this.documentTypes[36].documentType.code,
+                this.renewedLicenseOfHealthFacility
+              );
         formData.append(
           this.documentTypes[20].documentType.code,
           this.letterOrg

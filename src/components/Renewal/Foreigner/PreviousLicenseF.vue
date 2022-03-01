@@ -257,6 +257,7 @@ export default {
     let cpd5 = ref("");
     let professionalLicense = ref("");
     let renewedLicense = ref("");
+    let renewedLicenseOfHealthFacility = ref("");
 
     const reset = () => {
       showUpload.value = true;
@@ -327,6 +328,8 @@ export default {
     cpd5 = store.getters["renewal/getRenewalCpd5"];
     professionalLicense = store.getters["renewal/getProfessionalLicense"];
     renewedLicense = store.getters["renewal/getRenewedLicense"];
+    renewedLicenseOfHealthFacility =
+      store.getters["renewal/getRenewedLicenseOfHealthFacility"];
     letterOrg = store.getters["renewal/getLetterfromOrg"];
 
     const submit = () => {
@@ -511,7 +514,10 @@ export default {
               );
             }
             formData.append(documentSpecs[5].documentType.code, workExperience);
-            formData.append(documentSpecs[35].documentType.code, workExperience2);
+            formData.append(
+              documentSpecs[35].documentType.code,
+              workExperience2
+            );
             formData.append(documentSpecs[4].documentType.code, cpd);
             formData.append(documentSpecs[31].documentType.code, cpd2);
             formData.append(documentSpecs[32].documentType.code, cpd3);
@@ -534,6 +540,10 @@ export default {
             formData.append(
               documentSpecs[21].documentType.code,
               renewedLicense
+            );
+            formData.append(
+              documentSpecs[36].documentType.code,
+              renewedLicenseOfHealthFacility
             );
             formData.append(documentSpecs[20].documentType.code, letterOrg);
             let payload = { document: formData, id: licenseId };
@@ -722,6 +732,7 @@ export default {
       cpd,
       professionalLicense,
       renewedLicense,
+      renewedLicenseOfHealthFacility,
       letterOrg,
 
       documentMessage,
