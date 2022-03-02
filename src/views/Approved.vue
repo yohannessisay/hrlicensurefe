@@ -332,7 +332,7 @@
                     class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
                     <b>Applicant Type: &nbsp;</b>
-                    {{ item.applicantPosition.name }}
+                    {{ item.applicantType.name }}
                   </span>
                   <span
                     class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
