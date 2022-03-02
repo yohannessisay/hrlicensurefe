@@ -270,7 +270,7 @@
           </button>
           <button
             class="withdraw"
-            @click="withdraw(this.buttons[1].action)"
+            @click="withdraw(this.buttons[0].action)"
             variant="outline"
           >
             {{ this.buttons[1]["name"] }}
@@ -353,7 +353,9 @@ export default {
         this.draftData = this.getDraftData;
         this.documentsArray = this.draftData.documents;
       }, 3500);
-      this.showCheckBox = false;
+      if (this.draftStatus == "SUB") {
+        this.showCheckBox = false;
+      }
     }
 
     this.userId = +localStorage.getItem("userId");
@@ -1012,6 +1014,7 @@ export default {
 
     checkBoxValue: true,
     showAllAttachements: false,
+    showCheckBox: false,
   }),
   computed: {
     ...mapGetters({
@@ -1623,10 +1626,10 @@ export default {
           this.documentTypes[21].documentType.code,
           this.renewedLicense
         );
-          formData.append(
-                this.documentTypes[36].documentType.code,
-                this.renewedLicenseOfHealthFacility
-              );
+        formData.append(
+          this.documentTypes[36].documentType.code,
+          this.renewedLicenseOfHealthFacility
+        );
         formData.append(
           this.documentTypes[20].documentType.code,
           this.letterOrg
@@ -1892,7 +1895,7 @@ export default {
                 this.documentTypes[21].documentType.code,
                 this.renewedLicense
               );
-                formData.append(
+              formData.append(
                 this.documentTypes[36].documentType.code,
                 this.renewedLicenseOfHealthFacility
               );
@@ -2027,10 +2030,10 @@ export default {
           this.documentTypes[21].documentType.code,
           this.renewedLicense
         );
-          formData.append(
-                this.documentTypes[36].documentType.code,
-                this.renewedLicenseOfHealthFacility
-              );
+        formData.append(
+          this.documentTypes[36].documentType.code,
+          this.renewedLicenseOfHealthFacility
+        );
         formData.append(
           this.documentTypes[20].documentType.code,
           this.letterOrg

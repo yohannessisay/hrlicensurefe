@@ -20,7 +20,7 @@
           <span v-if="showUpload">
             <span>
               <label class="text-primary-700 ml-4"
-                >Maximum size for profile picture is 100 KB
+                >Maximum size for profile picture is 3 MB
               </label>
             </span>
             <br />
@@ -54,8 +54,8 @@
             <img v-bind:src="filePreview" v-show="showPreview" />
           </picture>
           <span v-if="photoSizeCheck" style="color: red"
-            >Image size to big, Upload again. Image must be less than 100
-            kB</span
+            >Image size to big, Upload again. Image must be less than 3
+            MB</span
           >
           <span v-if="!showUpload && !isImage && !photoSizeCheck">
             <img :src="filePreview" alt="" class="preview" />
@@ -347,7 +347,7 @@ export default {
       showUpload.value = false;
       photoFile.value = photoFileP.value.files[0];
       let reader = new FileReader();
-      if (photoFile.value.size > 100000) {
+      if (photoFile.value.size > 3000000) {
         photoSizeCheck.value = true;
       } else {
         let fileS = photoFile.value.size;

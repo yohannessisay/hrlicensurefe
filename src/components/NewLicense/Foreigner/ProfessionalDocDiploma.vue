@@ -25,11 +25,36 @@
         >
           ACCEPTED
         </h2>
-        <TitleWithIllustration
-          illustration="Certificate"
-          message="Professional Document Diploma"
-          class="mt-8"
-        />
+        <div v-if="educationLevel == 'diploma'">
+          <TitleWithIllustration
+            illustration="Certificate"
+            message="Professional Document Diploma"
+            class="mt-8"
+          />
+        </div>
+
+        <div v-if="educationLevel == 'degree'">
+          <TitleWithIllustration
+            illustration="Certificate"
+            message="Professional Document Degree"
+            class="mt-8"
+          />
+        </div>
+
+        <div v-if="educationLevel == 'masters'">
+          <TitleWithIllustration
+            illustration="Certificate"
+            message="Professional Document Masters"
+            class="mt-8"
+          />
+        </div>
+        <div v-if="educationLevel == 'phd'">
+          <TitleWithIllustration
+            illustration="Certificate"
+            message="Professional Document PhD"
+            class="mt-8"
+          />
+        </div>
         <span class="flex justify-center">{{ documentMessage }}</span>
         <div class="ml-24">
           <button @click="addDocs()">Add Document</button>
@@ -462,7 +487,6 @@ export default {
     let mastersTranscript = ref("");
     let phd = ref("");
     let phdTranscript = ref("");
-    let renewedLicenseOfHealthFacility = ref("");
 
     let professionalDocCertificate = ref("");
     let professionalDocCertificate2 = ref("");
@@ -475,6 +499,46 @@ export default {
     let professionalDocTranscript3 = ref("");
     let professionalDocTranscript4 = ref("");
     let professionalDocTranscript5 = ref("");
+
+    let educationLevel = localStorage.getItem("educationalLevel");
+
+    let docCode = "";
+    let docNum = 0;
+    let docIdx = 0;
+    let docIdx2 = 0;
+    let docIdx3 = 0;
+    let docIdx4 = 0;
+    let docIdx5 = 0;
+
+    if (educationLevel == "diploma") {
+      docCode = "PDD";
+      docIdx = 7;
+      docIdx2 = 33;
+      docIdx3 = 34;
+      docIdx4 = 35;
+      docIdx5 = 36;
+    } else if (educationLevel == "degree") {
+      docCode = "DEG";
+      docIdx = 21;
+      docIdx2 = 44;
+      docIdx3 = 45;
+      docIdx4 = 46;
+      docIdx5 = 47;
+    } else if (educationLevel == "masters") {
+      docCode = "MAST";
+      docIdx = 24;
+      docIdx2 = 53;
+      docIdx3 = 54;
+      docIdx4 = 55;
+      docIdx5 = 56;
+    } else {
+      docCode = "PHD";
+      docIdx = 26;
+      docIdx2 = 59;
+      docIdx3 = 60;
+      docIdx4 = 61;
+      docIdx5 = 62;
+    }
 
     let docCount = ref(0);
 
@@ -737,7 +801,6 @@ export default {
     mastersTranscript = store.getters["newlicense/getMastersTranscript"];
     phd = store.getters["newlicense/getPhd"];
     phdTranscript = store.getters["newlicense/getPhdTranscript"];
-    renewedLicenseOfHealthFacility = store.getters["newlicense/getRenewedLicenseOfHealthFacility"];
 
     professionalDocCertificate =
       store.getters["newlicense/getProfessionalDocCertificate"];
@@ -777,23 +840,23 @@ export default {
               let licenseId = route.params.id;
               let formData = new FormData();
               formData.append(
-                documentSpecs[7].documentType.code,
+                documentSpecs[docIdx].documentType.code,
                 diplomaFile.value
               );
               formData.append(
-                documentSpecs[33].documentType.code,
+                documentSpecs[docIdx2].documentType.code,
                 diplomaFile2.value
               );
               formData.append(
-                documentSpecs[34].documentType.code,
+                documentSpecs[docIdx3].documentType.code,
                 diplomaFile3.value
               );
               formData.append(
-                documentSpecs[35].documentType.code,
+                documentSpecs[docIdx4].documentType.code,
                 diplomaFile4.value
               );
               formData.append(
-                documentSpecs[36].documentType.code,
+                documentSpecs[docIdx5].documentType.code,
                 diplomaFile5.value
               );
               let payload = { document: formData, id: licenseId };
@@ -894,23 +957,23 @@ export default {
               professionalDocCertificate5
             );
             formData.append(
-              documentSpecs[7].documentType.code,
+              documentSpecs[docIdx].documentType.code,
               diplomaFile.value
             );
             formData.append(
-              documentSpecs[33].documentType.code,
+              documentSpecs[docIdx2].documentType.code,
               diplomaFile2.value
             );
             formData.append(
-              documentSpecs[34].documentType.code,
+              documentSpecs[docIdx3].documentType.code,
               diplomaFile3.value
             );
             formData.append(
-              documentSpecs[35].documentType.code,
+              documentSpecs[docIdx4].documentType.code,
               diplomaFile4.value
             );
             formData.append(
-              documentSpecs[36].documentType.code,
+              documentSpecs[docIdx5].documentType.code,
               diplomaFile5.value
             );
             formData.append(
@@ -974,8 +1037,6 @@ export default {
             );
             formData.append(documentSpecs[26].documentType.code, phd);
             formData.append(documentSpecs[27].documentType.code, phdTranscript);
-            formData.append(documentSpecs[63].documentType.code, renewedLicenseOfHealthFacility);
-
             let payload = { document: formData, id: licenseId };
             store
               .dispatch("newlicense/uploadDocuments", payload)
@@ -1011,23 +1072,23 @@ export default {
               let licenseId = route.params.id;
               let formData = new FormData();
               formData.append(
-                documentSpecs[7].documentType.code,
+                documentSpecs[docIdx].documentType.code,
                 diplomaFile.value
               );
               formData.append(
-                documentSpecs[33].documentType.code,
+                documentSpecs[docIdx2].documentType.code,
                 diplomaFile2.value
               );
               formData.append(
-                documentSpecs[34].documentType.code,
+                documentSpecs[docIdx3].documentType.code,
                 diplomaFile3.value
               );
               formData.append(
-                documentSpecs[35].documentType.code,
+                documentSpecs[docIdx4].documentType.code,
                 diplomaFile4.value
               );
               formData.append(
-                documentSpecs[36].documentType.code,
+                documentSpecs[docIdx5].documentType.code,
                 diplomaFile5.value
               );
               let payload = { document: formData, id: licenseId };
@@ -1095,23 +1156,23 @@ export default {
             let licenseId = res.data.data.id;
             let formData = new FormData();
             formData.append(
-              documentSpecs[7].documentType.code,
+              documentSpecs[docIdx].documentType.code,
               diplomaFile.value
             );
             formData.append(
-              documentSpecs[33].documentType.code,
+              documentSpecs[docIdx2].documentType.code,
               diplomaFile2.value
             );
             formData.append(
-              documentSpecs[34].documentType.code,
+              documentSpecs[docIdx3].documentType.code,
               diplomaFile3.value
             );
             formData.append(
-              documentSpecs[35].documentType.code,
+              documentSpecs[docIdx4].documentType.code,
               diplomaFile4.value
             );
             formData.append(
-              documentSpecs[36].documentType.code,
+              documentSpecs[docIdx5].documentType.code,
               diplomaFile5.value
             );
             let payload = { document: formData, id: licenseId };
@@ -1323,10 +1384,16 @@ export default {
       declinedFields = store.getters["newlicense/getDeclinedFields"];
       acceptedFields = store.getters["newlicense/getAcceptedFields"];
       remark = store.getters["newlicense/getRemark"];
-      if (declinedFields != undefined && declinedFields.includes("PDD")) {
+      if (
+        declinedFields != undefined &&
+        declinedFields.includes(`${docCode}`)
+      ) {
         declinedFieldsCheck.value = true;
       }
-      if (acceptedFields != undefined && acceptedFields.includes("PDD")) {
+      if (
+        acceptedFields != undefined &&
+        acceptedFields.includes(`${docCode}`)
+      ) {
         acceptedFieldsCheck.value = true;
       }
 
@@ -1335,7 +1402,7 @@ export default {
       if (route.params.id) {
         draftStatus.value = route.params.status;
         for (let i = 0; i < draftData.documents.length; i++) {
-          if (draftData.documents[i].documentTypeCode == "PDD") {
+          if (draftData.documents[i].documentTypeCode == `${docCode}`) {
             showUpload.value = false;
             if (draftData.documents[i].fileName.split(".")[1] == "pdf") {
               isPdf.value = true;
@@ -1347,7 +1414,9 @@ export default {
             showPreview.value = true;
             filePreview.value = basePath + draftData.documents[i].filePath;
           }
-          if (draftData.documents[i].documentTypeCode == "PDD1") {
+          if (
+            draftData.documents[i].documentTypeCode == `${docCode}${docNum + 1}`
+          ) {
             docCount.value++;
             showUpload2.value = false;
             if (draftData.documents[i].fileName.split(".")[1] == "pdf") {
@@ -1359,7 +1428,9 @@ export default {
             showPreview2.value = true;
             filePreview2.value = basePath + draftData.documents[i].filePath;
           }
-          if (draftData.documents[i].documentTypeCode == "PDD2") {
+          if (
+            draftData.documents[i].documentTypeCode == `${docCode}${docNum + 2}`
+          ) {
             docCount.value++;
             showUpload3.value = false;
             if (draftData.documents[i].fileName.split(".")[1] == "pdf") {
@@ -1371,7 +1442,9 @@ export default {
             showPreview3.value = true;
             filePreview3.value = basePath + draftData.documents[i].filePath;
           }
-          if (draftData.documents[i].documentTypeCode == "PDD3") {
+          if (
+            draftData.documents[i].documentTypeCode == `${docCode}${docNum + 3}`
+          ) {
             docCount.value++;
             showUpload4.value = false;
             if (draftData.documents[i].fileName.split(".")[1] == "pdf") {
@@ -1383,7 +1456,9 @@ export default {
             showPreview4.value = true;
             filePreview4.value = basePath + draftData.documents[i].filePath;
           }
-          if (draftData.documents[i].documentTypeCode == "PDD4") {
+          if (
+            draftData.documents[i].documentTypeCode == `${docCode}${docNum + 4}`
+          ) {
             docCount.value++;
             showUpload5.value = false;
             if (draftData.documents[i].fileName.split(".")[1] == "pdf") {
@@ -1482,6 +1557,15 @@ export default {
       docCount,
       addDocs,
       removeDocs,
+
+      educationLevel,
+      docCode,
+      docNum,
+      docIdx,
+      docIdx2,
+      docIdx3,
+      docIdx4,
+      docIdx5,
     };
   },
 };

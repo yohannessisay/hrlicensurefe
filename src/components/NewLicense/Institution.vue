@@ -574,6 +574,7 @@ export default {
       }
     },
     checkOtherProfession(profession, event) {
+      this.professionalTypeRepeat = false;
       if (!event.target.checked) {
         for (var i = 0; i < this.licenseInfo.professionalTypeIds.length; i++) {
           if (this.licenseInfo.professionalTypeIds[i] == profession.id) {

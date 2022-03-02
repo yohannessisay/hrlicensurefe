@@ -52,13 +52,6 @@
           </div>
           <br />
           <div class="tooltip">
-            Request Letter from hiring Health Facility
-            <span class="tooltiptext ml-4">
-              Found in Ethiopia
-            </span>
-          </div>
-          <br />
-          <div class="tooltip">
             Current Work Experience / Goodstanding Letter
             <span class="tooltiptext ml-4">
               More than two years.
