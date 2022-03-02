@@ -64,8 +64,8 @@ export default {
 
     getRenewalLicensed: (state) => state.renewalLicensed,
     getRenewalLicensedSearched: (state) => state.renewalLicensedSearched,
-    getRenewalOthersLicensed: (state) => state.renewalOthersPendingPayment,
-    getRenewalOthersLicensedSearched: (state) => state.renewalOthersLicensed,
+    getRenewalOthersLicensed: (state) => state.renewalOthersLicensed,
+    getRenewalOthersLicensedSearched: (state) => state.renewalOthersLicensedSearched,
 
     getRenewalAllLicensed: (state) => state.renewalAllLicensed,
     getRenewalAllLicensedSearched: (state) => state.renewalAllLicensedSearched,

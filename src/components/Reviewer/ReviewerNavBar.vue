@@ -330,6 +330,18 @@ export default {
           search.value
         );
       }
+      if (props.tab === "renewalLicensed") {
+        store.dispatch(
+          "reviewerRenewal/getRenewalLicensedSearched",
+          search.value
+        )
+      }
+      if (props.tab === "renewalOthersLicensed") {
+        store.dispatch(
+          "reviewerRenewal/getRenewalOthersLicensedSearched",
+          search.value
+        )
+      }
 
       if (props.tab === "newLicenseUnassigned") {
         store.dispatch(
@@ -584,6 +596,19 @@ export default {
           search.value
         );
       }
+      if (props.tab === "goodStandingLicensed") {
+        store.dispatch(
+          "reviewerGoodStanding/getGoodStandingLicensedSearched",
+          search.value
+        );
+      }
+      if (props.tab === "goodStandingOthersLicensed") {
+        store.dispatch(
+          "reviewerGoodStanding/getGoodStandingOthersLicensedSearched",
+          search.value
+        );
+      }
+
       if (props.tab === "allLicensed") {
         store.dispatch(
           "reviewerNewLicense/getNewLicenseAllLicensedSearched",
@@ -598,6 +623,7 @@ export default {
           search.value
         );
       }
+
     });
     let showAdminCreate = false;
     let isSuperAdmin = ref(false);
