@@ -201,7 +201,7 @@
           </div>
         </div>
       </div>
-      <div class="flex justify-center mt-8">
+      <div class="flex justify-center mt-8" v-show="showCheckBox">
         <label class="inline-flex items-center">
           <input @change="checkBox()" type="checkbox" class="form-checkbox" />
           <span style="font-size: 16px" class="ml-2"
@@ -277,7 +277,7 @@
           </button>
           <button
             class="withdraw"
-            @click="withdraw(this.buttons[1].action)"
+            @click="withdraw(this.buttons[0].action)"
             variant="outline"
           >
             {{ this.buttons[1]["name"] }}
@@ -354,6 +354,7 @@ export default {
     Spinner,
   },
   async created() {
+    this.showCheckBox = true;
     this.userId = +localStorage.getItem("userId");
     this.draftId = this.$route.params.id;
     this.draftStatus = this.$route.params.status;
@@ -362,6 +363,9 @@ export default {
         this.draftData = this.getDraftData;
         this.documentsArray = this.draftData.documents;
       }, 3500);
+      if (this.draftStatus == "SUB") {
+        this.showCheckBox = false;
+      }
     }
     this.licenseCopy = this.getLicenseCopy;
     this.serviceFee = this.getServiceFee;
@@ -443,6 +447,7 @@ export default {
     docs: [],
 
     checkBoxValue: true,
+    showCheckBox: false,
   }),
   computed: {
     ...mapGetters({

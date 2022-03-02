@@ -27,10 +27,10 @@
         </h2>
         <TitleWithIllustration
           illustration="Certificate"
-          message="Transcript"
+          message="Degree Transcript"
           class="mt-8"
         />
-        <div class="flex justify-center">
+        <!-- <div class="flex justify-center">
           <label class="text-xl" v-if="educationLevel == 'diploma'">
             Diploma
           </label>
@@ -43,7 +43,7 @@
           <label class="text-xl" v-if="educationLevel == 'phd'">
             PhD
           </label>
-        </div>
+        </div> -->
         <span class="flex justify-center">{{ documentMessage }}</span>
         <div class="ml-4">
           <button @click="addDocs()">Add Document</button>
@@ -840,7 +840,6 @@ export default {
         transcriptBack2 !== null &&
         transcriptBack2 !== ""
       ) {
-        docCount.value++;
         showUpload2.value = false;
         TranscriptFile2.value = transcriptBack2;
         let reader = new FileReader();

@@ -271,10 +271,10 @@
           </button>
           <button
             class="withdraw"
-            @click="withdraw(this.buttons[1].action)"
+            @click="withdraw(this.buttons[0].action)"
             variant="outline"
           >
-            {{ this.buttons[1]["name"] }}
+            {{ this.buttons[0]["name"] }}
           </button>
         </div>
         <div
@@ -358,7 +358,9 @@ export default {
         this.draftData = this.getDraftData;
         this.documentsArray = this.draftData.documents;
       }, 3500);
-      this.showCheckBox = false;
+      if (this.draftStatus == "SUB") {
+        this.showCheckBox = false;
+      }
     }
     this.passport = this.getPassport;
     this.healthExamCert = this.getHealthExamCert;
@@ -435,6 +437,36 @@ export default {
     this.otherEducationalInstitution = this.license.otherEducationalInstitution;
     this.otherProfessionalType = this.license.otherProfessionalType;
     this.buttons = this.getButtons;
+
+    if (this.levelOfEducation == "diploma") {
+      this.docCode = "PDD";
+      this.docIdx = 7;
+      this.docIdx2 = 33;
+      this.docIdx3 = 34;
+      this.docIdx4 = 35;
+      this.docIdx5 = 36;
+    } else if (this.levelOfEducation == "degree") {
+      this.docCode = "DEG";
+      this.docIdx = 21;
+      this.docIdx2 = 44;
+      this.docIdx3 = 45;
+      this.docIdx4 = 46;
+      this.docIdx5 = 47;
+    } else if (this.levelOfEducation == "masters") {
+      this.docCode = "MAST";
+      this.docIdx = 24;
+      this.docIdx2 = 53;
+      this.docIdx3 = 54;
+      this.docIdx4 = 55;
+      this.docIdx5 = 56;
+    } else {
+      this.docCode = "PHD";
+      this.docIdx = 26;
+      this.docIdx2 = 59;
+      this.docIdx3 = 60;
+      this.docIdx4 = 61;
+      this.docIdx5 = 62;
+    }
 
     if (this.passport != "" && this.passport != undefined) {
       if ("name" in this.passport) {
@@ -552,7 +584,9 @@ export default {
       if ("name" in this.proDiploma) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "PDD"),
+            this.documentsArray.findIndex(
+              (e) => e.documentTypeCode === `${this.docCode}`
+            ),
             1
           );
         }
@@ -574,7 +608,9 @@ export default {
       if ("name" in this.proDiploma2) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "PDD1"),
+            this.documentsArray.findIndex(
+              (e) => e.documentTypeCode === `${this.docCode}${this.docNum + 1}`
+            ),
             1
           );
         }
@@ -596,7 +632,9 @@ export default {
       if ("name" in this.proDiploma3) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "PDD2"),
+            this.documentsArray.findIndex(
+              (e) => e.documentTypeCode === `${this.docCode}${this.docNum + 2}`
+            ),
             1
           );
         }
@@ -618,7 +656,9 @@ export default {
       if ("name" in this.proDiploma4) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "PDD3"),
+            this.documentsArray.findIndex(
+              (e) => e.documentTypeCode === `${this.docCode}${this.docNum + 3}`
+            ),
             1
           );
         }
@@ -640,7 +680,9 @@ export default {
       if ("name" in this.proDiploma5) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "PDD4"),
+            this.documentsArray.findIndex(
+              (e) => e.documentTypeCode === `${this.docCode}${this.docNum + 4}`
+            ),
             1
           );
         }
@@ -1023,7 +1065,7 @@ export default {
         }
         var filePreview = await this.blobToBase64(this.transcript);
         this.transcript.docFile = filePreview;
-        this.transcript.title = "Transcript";
+        this.transcript.title = "Degree Transcript";
         this.docList.push(this.transcript);
       }
     }
@@ -1039,7 +1081,7 @@ export default {
         }
         var filePreview = await this.blobToBase64(this.transcript2);
         this.transcript2.docFile = filePreview;
-        this.transcript2.title = "Transcript 2";
+        this.transcript2.title = "Degree Transcript 2";
         this.docList.push(this.transcript2);
       }
     }
@@ -1276,9 +1318,19 @@ export default {
     documentTypes: [],
     docs: [],
 
+    showCheckBox: false,
+
     checkBoxValue: true,
     showAllAttachements: false,
     levelOfEducation: localStorage.getItem("educationalLevel"),
+
+    docCode: "",
+    docNum: 0,
+    docIdx: 0,
+    docIdx2: 0,
+    docIdx3: 0,
+    docIdx4: 0,
+    docIdx5: 0,
   }),
   computed: {
     ...mapGetters({
@@ -1649,7 +1701,7 @@ export default {
                 this.englishLanguage
               );
               formData.append(
-                this.documentTypes[8].documentType.code,
+                this.documentTypes[23].documentType.code,
                 this.transcript
               );
               formData.append(
@@ -1685,23 +1737,23 @@ export default {
                 this.proCertificate5
               );
               formData.append(
-                this.documentTypes[7].documentType.code,
+                this.documentTypes[this.docIdx].documentType.code,
                 this.proDiploma
               );
               formData.append(
-                this.documentTypes[33].documentType.code,
+                this.documentTypes[this.docIdx2].documentType.code,
                 this.proDiploma2
               );
               formData.append(
-                this.documentTypes[34].documentType.code,
+                this.documentTypes[this.docIdx3].documentType.code,
                 this.proDiploma3
               );
               formData.append(
-                this.documentTypes[35].documentType.code,
+                this.documentTypes[this.docIdx4].documentType.code,
                 this.proDiploma4
               );
               formData.append(
-                this.documentTypes[36].documentType.code,
+                this.documentTypes[this.docIdx5].documentType.code,
                 this.proDiploma5
               );
               formData.append(
@@ -1852,7 +1904,7 @@ export default {
           this.englishLanguage
         );
         formData.append(
-          this.documentTypes[8].documentType.code,
+          this.documentTypes[23].documentType.code,
           this.transcript
         );
         formData.append(
@@ -1882,23 +1934,23 @@ export default {
           this.proCertificate5
         );
         formData.append(
-          this.documentTypes[7].documentType.code,
+          this.documentTypes[this.docIdx].documentType.code,
           this.proDiploma
         );
         formData.append(
-          this.documentTypes[33].documentType.code,
+          this.documentTypes[this.docIdx2].documentType.code,
           this.proDiploma2
         );
         formData.append(
-          this.documentTypes[34].documentType.code,
+          this.documentTypes[this.docIdx3].documentType.code,
           this.proDiploma3
         );
         formData.append(
-          this.documentTypes[35].documentType.code,
+          this.documentTypes[this.docIdx4].documentType.code,
           this.proDiploma4
         );
         formData.append(
-          this.documentTypes[36].documentType.code,
+          this.documentTypes[this.docIdx5].documentType.code,
           this.proDiploma5
         );
         formData.append(
@@ -2094,7 +2146,7 @@ export default {
                 this.englishLanguage
               );
               formData.append(
-                this.documentTypes[8].documentType.code,
+                this.documentTypes[23].documentType.code,
                 this.transcript
               );
               formData.append(
@@ -2130,23 +2182,23 @@ export default {
                 this.proCertificate5
               );
               formData.append(
-                this.documentTypes[7].documentType.code,
+                this.documentTypes[this.docIdx].documentType.code,
                 this.proDiploma
               );
               formData.append(
-                this.documentTypes[33].documentType.code,
+                this.documentTypes[this.docIdx2].documentType.code,
                 this.proDiploma2
               );
               formData.append(
-                this.documentTypes[34].documentType.code,
+                this.documentTypes[this.docIdx3].documentType.code,
                 this.proDiploma3
               );
               formData.append(
-                this.documentTypes[35].documentType.code,
+                this.documentTypes[this.docIdx4].documentType.code,
                 this.proDiploma4
               );
               formData.append(
-                this.documentTypes[36].documentType.code,
+                this.documentTypes[this.docIdx5].documentType.code,
                 this.proDiploma5
               );
               formData.append(
@@ -2298,7 +2350,7 @@ export default {
           this.englishLanguage
         );
         formData.append(
-          this.documentTypes[8].documentType.code,
+          this.documentTypes[23].documentType.code,
           this.transcript
         );
         formData.append(
@@ -2328,23 +2380,23 @@ export default {
           this.proCertificate5
         );
         formData.append(
-          this.documentTypes[7].documentType.code,
+          this.documentTypes[this.docIdx].documentType.code,
           this.proDiploma
         );
         formData.append(
-          this.documentTypes[33].documentType.code,
+          this.documentTypes[this.docIdx2].documentType.code,
           this.proDiploma2
         );
         formData.append(
-          this.documentTypes[34].documentType.code,
+          this.documentTypes[this.docIdx3].documentType.code,
           this.proDiploma3
         );
         formData.append(
-          this.documentTypes[35].documentType.code,
+          this.documentTypes[this.docIdx4].documentType.code,
           this.proDiploma4
         );
         formData.append(
-          this.documentTypes[36].documentType.code,
+          this.documentTypes[this.docIdx5].documentType.code,
           this.proDiploma5
         );
         formData.append(

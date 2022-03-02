@@ -269,6 +269,40 @@ export default {
     let professionalDocTranscript4 = ref("");
     let professionalDocTranscript5 = ref("");
 
+    let educationLevel = localStorage.getItem("educationalLevel");
+
+    let docIdx = 0;
+    let docIdx2 = 0;
+    let docIdx3 = 0;
+    let docIdx4 = 0;
+    let docIdx5 = 0;
+
+    if (educationLevel == "diploma") {
+      docIdx = 7;
+      docIdx2 = 33;
+      docIdx3 = 34;
+      docIdx4 = 35;
+      docIdx5 = 36;
+    } else if (educationLevel == "degree") {
+      docIdx = 21;
+      docIdx2 = 44;
+      docIdx3 = 45;
+      docIdx4 = 46;
+      docIdx5 = 47;
+    } else if (educationLevel == "masters") {
+      docIdx = 24;
+      docIdx2 = 53;
+      docIdx3 = 54;
+      docIdx4 = 55;
+      docIdx5 = 56;
+    } else {
+      docIdx = 26;
+      docIdx2 = 59;
+      docIdx3 = 60;
+      docIdx4 = 61;
+      docIdx5 = 62;
+    }
+
     let declinedFields = ref([]);
     let acceptedFields = ref([]);
     let remark = ref("");
@@ -357,7 +391,8 @@ export default {
     masters = store.getters["newlicense/getMasters"];
     mastersTranscript = store.getters["newlicense/getMastersTranscript"];
     phd = store.getters["newlicense/getPhd"];
-    renewedLicenseOfHealthFacility = store.getters["newlicense/getRenewedLicenseOfHealthFacility"];
+    renewedLicenseOfHealthFacility =
+      store.getters["newlicense/getRenewedLicenseOfHealthFacility"];
 
     phdTranscript = store.getters["newlicense/getPhdTranscript"];
     professionalDocCertificate =
@@ -511,23 +546,23 @@ export default {
               professionalDocCertificate5
             );
             formData.append(
-              documentSpecs[7].documentType.code,
+              documentSpecs[docIdx].documentType.code,
               professionalDocDiploma
             );
             formData.append(
-              documentSpecs[33].documentType.code,
+              documentSpecs[docIdx2].documentType.code,
               professionalDocDiploma2
             );
             formData.append(
-              documentSpecs[34].documentType.code,
+              documentSpecs[docIdx3].documentType.code,
               professionalDocDiploma3
             );
             formData.append(
-              documentSpecs[35].documentType.code,
+              documentSpecs[docIdx4].documentType.code,
               professionalDocDiploma4
             );
             formData.append(
-              documentSpecs[36].documentType.code,
+              documentSpecs[docIdx5].documentType.code,
               professionalDocDiploma5
             );
             formData.append(
@@ -595,7 +630,10 @@ export default {
             );
             formData.append(documentSpecs[26].documentType.code, phd);
             formData.append(documentSpecs[27].documentType.code, phdTranscript);
-            formData.append(documentSpecs[63].documentType.code, renewedLicenseOfHealthFacility);
+            formData.append(
+              documentSpecs[63].documentType.code,
+              renewedLicenseOfHealthFacility
+            );
 
             let payload = { document: formData, id: licenseId };
             store
@@ -845,6 +883,12 @@ export default {
       fileSizeExceed,
       maxFileSize,
       maxSizeMB,
+
+      docIdx,
+      docIdx2,
+      docIdx3,
+      docIdx4,
+      docIdx5,
     };
   },
 };

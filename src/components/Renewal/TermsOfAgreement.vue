@@ -35,11 +35,9 @@
           <br />
           <li>Previous License</li>
           <li>CPD Certificate</li>
-          <li>Authenticated Professional Document Certificate</li>
-          <li>Authenticated Professional Document Diploma</li>
-          <li>Authenticated Professional Document Transcript</li>
           <li>Work Experience</li>
           <li>Renewed License of Health Facility</li>
+          <li>Letter from Hiring Organization</li>
         </ul>
       </div>
       <div class="ml-8">
@@ -48,15 +46,14 @@
           <li>Health Exam Certificate</li>
           <li>Previous License</li>
           <li>CPD Certificate</li>
-          <li>   <div class="tooltip">
-            Payroll Document
-            <span class="tooltiptext ml-4">
-              Non-government Institutions
-            </span>
-          </div></li>
-          <li>Authenticated Professional Document Certificate</li>
-          <li>Authenticated Professional Document Diploma</li>
-          <li>Authenticated Professional Document Transcript</li>
+          <li>
+            <div class="tooltip">
+              Payroll Document
+              <span class="tooltiptext ml-4">
+                Non-government Institutions
+              </span>
+            </div>
+          </li>
           <li>Work Experience</li>
         </ul>
       </div>
@@ -66,10 +63,8 @@
           <li>Health Exam Certificate</li>
           <li>CPD Certificate</li>
           <li>Previous License</li>
-          <li>Authenticated Professional Document Certificate</li>
-          <li>Authenticated Professional Document Diploma</li>
-          <li>Authenticated Professional Document Transcript</li>
           <li>Work Experience</li>
+          <li>Letter from Hiring Organization</li>
         </ul>
       </div>
     </div>
