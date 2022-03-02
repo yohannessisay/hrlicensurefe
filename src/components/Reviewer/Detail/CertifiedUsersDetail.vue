@@ -52,7 +52,29 @@
                     </h3>
                     <br />
                     <h4>በኢትዮጵያ ፌዴራላዊ ዴሞክራሲያዊ ረፐብሊክ የጤና ጥበቃ ሚንስቴር</h4>
-                    <h4>በአዋጅ ቁጥር 916/2008 አንቀጽ 33(13)በተሰጠው ስልጣን መሰረት</h4>
+                    <h4>
+                      በአዋጅ ቁጥር
+                      {{
+                        certificateDetail.reviewer.region.code === "ORO"
+                          ? "661/2002"
+                          : certificateDetail.reviewer.region.code === "AA"
+                          ? "64/2011"
+                          : certificateDetail.reviewer.region.code === "FED"
+                          ? "1112/2011"
+                          : "-"
+                      }}
+                      አንቀጽ
+                      {{
+                        certificateDetail.reviewer.region.code === "ORO"
+                          ? "3/3"
+                          : certificateDetail.reviewer.region.code === "AA"
+                          ? "44/8"
+                          : certificateDetail.reviewer.region.code === "FED"
+                          ? "73"
+                          : "-"
+                      }}
+                      ስልጣን መሰረት
+                    </h4>
                     <br /><br /><br /><br />
                     <h3 class="underline">
                       <b
@@ -133,8 +155,26 @@
                       Minstry
                     </h4>
                     <h4>
-                      of Health by Virtue of proclamation No. 916/2015 Article
-                      33(13)
+                      of Health by Virtue of proclamation No.
+                      {{
+                        certificateDetail.reviewer.region.code === "ORO"
+                          ? "661/2002"
+                          : certificateDetail.reviewer.region.code === "AA"
+                          ? "64/2011"
+                          : certificateDetail.reviewer.region.code === "FED"
+                          ? "1112/2011"
+                          : "-"
+                      }}
+                      Article
+                      {{
+                        certificateDetail.reviewer.region.code === "ORO"
+                          ? "3/3"
+                          : certificateDetail.reviewer.region.code === "AA"
+                          ? "44/8"
+                          : certificateDetail.reviewer.region.code === "FED"
+                          ? "73"
+                          : "-"
+                      }}
                     </h4>
                     <h4>is given the authority to issue</h4>
                     <br />
