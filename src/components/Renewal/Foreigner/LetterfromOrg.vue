@@ -237,6 +237,7 @@ export default {
     let previousLicense = ref("");
     let professionalLicense = ref("");
     let renewedLicense = ref("");
+    let renewedLicenseOfHealthFacility = ref("");
     let letterFromOrg = ref("");
 
     let letterFileBack = ref("");
@@ -330,6 +331,8 @@ export default {
     previousLicense = store.getters["renewal/getPreviousLicense"];
     professionalLicense = store.getters["renewal/getProfessionalLicense"];
     renewedLicense = store.getters["renewal/getRenewedLicense"];
+    renewedLicenseOfHealthFacility =
+      store.getters["renewal/getRenewedLicenseOfHealthFacility"];
     letterFromOrg = store.getters["renewal/getRenewalLicense"];
 
     const draft = (action) => {
@@ -432,7 +435,10 @@ export default {
               );
             }
             formData.append(documentSpecs[5].documentType.code, workExperience);
-            formData.append(documentSpecs[35].documentType.code, workExperience2);
+            formData.append(
+              documentSpecs[35].documentType.code,
+              workExperience2
+            );
             formData.append(documentSpecs[4].documentType.code, cpd);
             formData.append(documentSpecs[31].documentType.code, cpd2);
             formData.append(documentSpecs[32].documentType.code, cpd3);
@@ -458,6 +464,10 @@ export default {
             formData.append(
               documentSpecs[21].documentType.code,
               renewedLicense
+            );
+            formData.append(
+              documentSpecs[36].documentType.code,
+              renewedLicenseOfHealthFacility
             );
             formData.append(documentSpecs[19].documentType.code, letterFromOrg);
 
@@ -717,6 +727,7 @@ export default {
       previousLicense,
       professionalLicense,
       renewedLicense,
+      renewedLicenseOfHealthFacility,
       letterFromOrg,
 
       documentMessage,

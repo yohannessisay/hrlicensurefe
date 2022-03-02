@@ -39,6 +39,7 @@
           <li>Authenticated Professional Document Diploma</li>
           <li>Authenticated Professional Document Transcript</li>
           <li>Work Experience</li>
+          <li>Renewed License of Health Facility</li>
         </ul>
       </div>
       <div class="ml-8">

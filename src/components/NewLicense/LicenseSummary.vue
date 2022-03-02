@@ -352,22 +352,38 @@ export default {
     this.userId = +localStorage.getItem("userId");
     this.draftId = this.$route.params.id;
     this.draftStatus = this.$route.params.status;
-  
+
     if (this.draftId != undefined) {
       setTimeout(() => {
         this.draftData = this.getDraftData;
         this.documentsArray = this.draftData.documents;
       }, 3500);
-    this.showCheckBox = false;
+      this.showCheckBox = false;
     }
     this.passport = this.getPassport;
     this.healthExamCert = this.getHealthExamCert;
     this.englishLanguage = this.getEnglishLanguage;
-    this.professionalDoc = this.getProfessionalDocuments;
+    this.professionalDocCertificate = this.getProfessionalDocCertificate;
+    this.professionalDocDiploma = this.getProfessionalDocDiploma;
+    this.professionalDocTranscript = this.getProfessionalDocTranscript;
 
-    this.proCertificate = this.getProCertificate;
-    this.proTranscript = this.getProTranscript;
-    this.proDiploma = this.getProDiploma;
+    this.proCertificate = this.getProfessionalDocCertificate;
+    this.proCertificate2 = this.getProfessionalDocCertificate2;
+    this.proCertificate3 = this.getProfessionalDocCertificate3;
+    this.proCertificate4 = this.getProfessionalDocCertificate4;
+    this.proCertificate5 = this.getProfessionalDocCertificate5;
+
+    this.proDiploma = this.getProfessionalDocDiploma;
+    this.proDiploma2 = this.getProfessionalDocDiploma2;
+    this.proDiploma3 = this.getProfessionalDocDiploma3;
+    this.proDiploma4 = this.getProfessionalDocDiploma4;
+    this.proDiploma5 = this.getProfessionalDocDiploma5;
+
+    this.proTranscript = this.getProfessionalDocTranscript;
+    this.proTranscript2 = this.getProfessionalDocTranscript2;
+    this.proTranscript3 = this.getProfessionalDocTranscript3;
+    this.proTranscript4 = this.getProfessionalDocTranscript4;
+    this.proTranscript5 = this.getProfessionalDocTranscript5;
 
     this.eduEighth = this.getEduEighth;
     this.eduTenth = this.getEduTenth;
@@ -399,6 +415,8 @@ export default {
     this.phd = this.getPhd;
     this.phdTranscript = this.getPhdTranscript;
     this.phdTranscript2 = this.getPhdTranscript2;
+    this.renewedLicenseFromHealthFacility = this.getRenewedLicenseOfHealthFacility;
+
     if (this.passport != "" && this.passport != undefined) {
       if ("name" in this.passport) {
         if (this.draftId != undefined) {
@@ -455,18 +473,60 @@ export default {
         this.docList.push(this.proCertificate);
       }
     }
-    if (this.proTranscript != "" && this.proTranscript != undefined) {
-      if ("name" in this.proTranscript) {
+    if (this.proCertificate2 != "" && this.proCertificate2 != undefined) {
+      if ("name" in this.proCertificate2) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "PDT"),
+            this.documentsArray.findIndex((e) => e.documentTypeCode === "PDC1"),
             1
           );
         }
-        var filePreview = await this.blobToBase64(this.proTranscript);
-        this.proTranscript.docFile = filePreview;
-        this.proTranscript.title = "Transcript";
-        this.docList.push(this.proTranscript);
+        var filePreview = await this.blobToBase64(this.proCertificate2);
+        this.proCertificate2.docFile = filePreview;
+        this.proCertificate2.title = "Professional Certificate 2";
+        this.docList.push(this.proCertificate2);
+      }
+    }
+    if (this.proCertificate3 != "" && this.proCertificate3 != undefined) {
+      if ("name" in this.proCertificate3) {
+        if (this.draftId != undefined) {
+          this.documentsArray.splice(
+            this.documentsArray.findIndex((e) => e.documentTypeCode === "PDC2"),
+            1
+          );
+        }
+        var filePreview = await this.blobToBase64(this.proCertificate3);
+        this.proCertificate3.docFile = filePreview;
+        this.proCertificate3.title = "Professional Certificate 3";
+        this.docList.push(this.proCertificate3);
+      }
+    }
+    if (this.proCertificate4 != "" && this.proCertificate4 != undefined) {
+      if ("name" in this.proCertificate4) {
+        if (this.draftId != undefined) {
+          this.documentsArray.splice(
+            this.documentsArray.findIndex((e) => e.documentTypeCode === "PDC3"),
+            1
+          );
+        }
+        var filePreview = await this.blobToBase64(this.proCertificate4);
+        this.proCertificate4.docFile = filePreview;
+        this.proCertificate4.title = "Professional Certificate 4";
+        this.docList.push(this.proCertificate4);
+      }
+    }
+    if (this.proCertificate5 != "" && this.proCertificate5 != undefined) {
+      if ("name" in this.proCertificate5) {
+        if (this.draftId != undefined) {
+          this.documentsArray.splice(
+            this.documentsArray.findIndex((e) => e.documentTypeCode === "PDC4"),
+            1
+          );
+        }
+        var filePreview = await this.blobToBase64(this.proCertificate5);
+        this.proCertificate5.docFile = filePreview;
+        this.proCertificate5.title = "Professional Certificate 5";
+        this.docList.push(this.proCertificate5);
       }
     }
     if (this.proDiploma != "" && this.proDiploma != undefined) {
@@ -479,8 +539,174 @@ export default {
         }
         var filePreview = await this.blobToBase64(this.proDiploma);
         this.proDiploma.docFile = filePreview;
-        this.proDiploma.title = "Diploma";
+        if (this.levelOfEducation == "diploma") {
+          this.proDiploma.title = "Professional Diploma";
+        } else if (this.levelOfEducation == "degree") {
+          this.proDiploma.title = "Professional Degree";
+        } else if (this.levelOfEducation == "masters") {
+          this.proDiploma.title = "Professional Masters";
+        } else {
+          this.proDiploma.title = "Professional PhD";
+        }
         this.docList.push(this.proDiploma);
+      }
+    }
+    if (this.proDiploma2 != "" && this.proDiploma2 != undefined) {
+      if ("name" in this.proDiploma2) {
+        if (this.draftId != undefined) {
+          this.documentsArray.splice(
+            this.documentsArray.findIndex((e) => e.documentTypeCode === "PDD1"),
+            1
+          );
+        }
+        var filePreview = await this.blobToBase64(this.proDiploma2);
+        this.proDiploma2.docFile = filePreview;
+        if (this.levelOfEducation == "diploma") {
+          this.proDiploma2.title = "Professional Diploma 2";
+        } else if (this.levelOfEducation == "degree") {
+          this.proDiploma2.title = "Professional Degree 2";
+        } else if (this.levelOfEducation == "masters") {
+          this.proDiploma2.title = "Professional Masters 2";
+        } else {
+          this.proDiploma2.title = "Professional PhD 2";
+        }
+        this.docList.push(this.proDiploma2);
+      }
+    }
+    if (this.proDiploma3 != "" && this.proDiploma3 != undefined) {
+      if ("name" in this.proDiploma3) {
+        if (this.draftId != undefined) {
+          this.documentsArray.splice(
+            this.documentsArray.findIndex((e) => e.documentTypeCode === "PDD2"),
+            1
+          );
+        }
+        var filePreview = await this.blobToBase64(this.proDiploma3);
+        this.proDiploma3.docFile = filePreview;
+        if (this.levelOfEducation == "diploma") {
+          this.proDiploma3.title = "Professional Diploma 3";
+        } else if (this.levelOfEducation == "degree") {
+          this.proDiploma3.title = "Professional Degree 3";
+        } else if (this.levelOfEducation == "masters") {
+          this.proDiploma3.title = "Professional Masters 3";
+        } else {
+          this.proDiploma3.title = "Professional PhD 3";
+        }
+        this.docList.push(this.proDiploma3);
+      }
+    }
+    if (this.proDiploma4 != "" && this.proDiploma4 != undefined) {
+      if ("name" in this.proDiploma4) {
+        if (this.draftId != undefined) {
+          this.documentsArray.splice(
+            this.documentsArray.findIndex((e) => e.documentTypeCode === "PDD3"),
+            1
+          );
+        }
+        var filePreview = await this.blobToBase64(this.proDiploma4);
+        this.proDiploma4.docFile = filePreview;
+        if (this.levelOfEducation == "diploma") {
+          this.proDiploma4.title = "Professional Diploma 4";
+        } else if (this.levelOfEducation == "degree") {
+          this.proDiploma4.title = "Professional Degree 4";
+        } else if (this.levelOfEducation == "masters") {
+          this.proDiploma4.title = "Professional Masters 4";
+        } else {
+          this.proDiploma4.title = "Professional PhD 4";
+        }
+        this.docList.push(this.proDiploma4);
+      }
+    }
+    if (this.proDiploma5 != "" && this.proDiploma5 != undefined) {
+      if ("name" in this.proDiploma5) {
+        if (this.draftId != undefined) {
+          this.documentsArray.splice(
+            this.documentsArray.findIndex((e) => e.documentTypeCode === "PDD4"),
+            1
+          );
+        }
+        var filePreview = await this.blobToBase64(this.proDiploma5);
+        this.proDiploma5.docFile = filePreview;
+        if (this.levelOfEducation == "diploma") {
+          this.proDiploma5.title = "Professional Diploma 5";
+        } else if (this.levelOfEducation == "degree") {
+          this.proDiploma5.title = "Professional Degree 5";
+        } else if (this.levelOfEducation == "masters") {
+          this.proDiploma5.title = "Professional Masters 5";
+        } else {
+          this.proDiploma5.title = "Professional PhD 5";
+        }
+        this.docList.push(this.proDiploma5);
+      }
+    }
+    if (this.proTranscript != "" && this.proTranscript != undefined) {
+      if ("name" in this.proTranscript) {
+        if (this.draftId != undefined) {
+          this.documentsArray.splice(
+            this.documentsArray.findIndex((e) => e.documentTypeCode === "PDT"),
+            1
+          );
+        }
+        var filePreview = await this.blobToBase64(this.proTranscript);
+        this.proTranscript.docFile = filePreview;
+        this.proTranscript.title = "Professional Transcript";
+        this.docList.push(this.proTranscript);
+      }
+    }
+    if (this.proTranscript2 != "" && this.proTranscript2 != undefined) {
+      if ("name" in this.proTranscript2) {
+        if (this.draftId != undefined) {
+          this.documentsArray.splice(
+            this.documentsArray.findIndex((e) => e.documentTypeCode === "PDT1"),
+            1
+          );
+        }
+        var filePreview = await this.blobToBase64(this.proTranscript2);
+        this.proTranscript2.docFile = filePreview;
+        this.proTranscript2.title = "Professional Transcript 2";
+        this.docList.push(this.proTranscript2);
+      }
+    }
+    if (this.proTranscript3 != "" && this.proTranscript3 != undefined) {
+      if ("name" in this.proTranscript3) {
+        if (this.draftId != undefined) {
+          this.documentsArray.splice(
+            this.documentsArray.findIndex((e) => e.documentTypeCode === "PDT2"),
+            1
+          );
+        }
+        var filePreview = await this.blobToBase64(this.proTranscript3);
+        this.proTranscript3.docFile = filePreview;
+        this.proTranscript3.title = "Professional Transcript 3";
+        this.docList.push(this.proTranscript3);
+      }
+    }
+    if (this.proTranscript4 != "" && this.proTranscript4 != undefined) {
+      if ("name" in this.proTranscript4) {
+        if (this.draftId != undefined) {
+          this.documentsArray.splice(
+            this.documentsArray.findIndex((e) => e.documentTypeCode === "PDT3"),
+            1
+          );
+        }
+        var filePreview = await this.blobToBase64(this.proTranscript4);
+        this.proTranscript4.docFile = filePreview;
+        this.proTranscript4.title = "Professional Transcript 4";
+        this.docList.push(this.proTranscript4);
+      }
+    }
+    if (this.proTranscript5 != "" && this.proTranscript5 != undefined) {
+      if ("name" in this.proTranscript5) {
+        if (this.draftId != undefined) {
+          this.documentsArray.splice(
+            this.documentsArray.findIndex((e) => e.documentTypeCode === "PDT4"),
+            1
+          );
+        }
+        var filePreview = await this.blobToBase64(this.proTranscript5);
+        this.proTranscript5.docFile = filePreview;
+        this.proTranscript5.title = "Professional Transcript 5";
+        this.docList.push(this.proTranscript5);
       }
     }
     if (this.eduEighth != "" && this.eduEighth != undefined) {
@@ -579,13 +805,15 @@ export default {
       if ("name" in this.supportLetter) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "SL"),
+            this.documentsArray.findIndex(
+              (e) => e.documentTypeCode === "SLFSI"
+            ),
             1
           );
         }
         var filePreview = await this.blobToBase64(this.supportLetter);
         this.supportLetter.docFile = filePreview;
-        this.supportLetter.title = "Support Letter";
+        this.supportLetter.title = "Support Letter From Sponsored Institution";
         this.docList.push(this.supportLetter);
       }
     }
@@ -896,6 +1124,28 @@ export default {
         this.docList.push(this.phdTranscript2);
       }
     }
+    if (
+      this.renewedLicenseFromHealthFacility != "" &&
+      this.renewedLicenseFromHealthFacility != undefined
+    ) {
+      if ("name" in this.renewedLicenseFromHealthFacility) {
+        if (this.draftId != undefined) {
+          this.documentsArray.splice(
+            this.documentsArray.findIndex(
+              (e) => e.documentTypeCode === "RLHFO"
+            ),
+            1
+          );
+        }
+        var filePreview = await this.blobToBase64(
+          this.renewedLicenseFromHealthFacility
+        );
+        this.renewedLicenseFromHealthFacility.docFile = filePreview;
+        this.renewedLicenseFromHealthFacility.title =
+          "Renewed License of Health Facility";
+        this.docList.push(this.renewedLicenseFromHealthFacility);
+      }
+    }
     this.buttons = this.getButtons;
     this.fetchProfileInfo();
     this.setDocs();
@@ -949,7 +1199,9 @@ export default {
     passport: "",
     healthExamCert: "",
     englishLanguage: "",
-    professionalDoc: [],
+    professionalDocCertificate: "",
+    professionalDocDiploma: "",
+    professionalDocTranscript: "",
     herqa: "",
     supportLetter: "",
     coc: "",
@@ -972,6 +1224,7 @@ export default {
     phd: "",
     phdTranscript: "",
     phdTranscript2: "",
+    renewedLicenseFromHealthFacility: "",
 
     eduEighth: "",
     eduTenth: "",
@@ -980,8 +1233,22 @@ export default {
     eduTranscript2: "",
 
     proCertificate: "",
-    proTranscript: "",
+    proCertificate2: "",
+    proCertificate3: "",
+    proCertificate4: "",
+    proCertificate5: "",
+
     proDiploma: "",
+    proDiploma2: "",
+    proDiploma3: "",
+    proDiploma4: "",
+    proDiploma5: "",
+
+    proTranscript: "",
+    proTranscript2: "",
+    proTranscript3: "",
+    proTranscript4: "",
+    proTranscript5: "",
 
     applicationId: "",
     buttons: [],
@@ -990,6 +1257,7 @@ export default {
 
     checkBoxValue: true,
     showAllAttachements: false,
+    levelOfEducation: localStorage.getItem("educationalLevel"),
   }),
   computed: {
     ...mapGetters({
@@ -997,10 +1265,28 @@ export default {
       getPassport: "newlicense/getPassport",
       getHealthExamCert: "newlicense/getHealthExamCert",
       getEnglishLanguage: "newlicense/getEnglishLanguage",
-      getProfessionalDocuments: "newlicense/getProfessionalDocuments",
-      getProCertificate: "newlicense/getProCertificate",
-      getProTranscript: "newlicense/getProTranscript",
-      getProDiploma: "newlicense/getProDiploma",
+
+      getProfessionalDocCertificate: "newlicense/getProfessionalDocCertificate",
+      getProfessionalDocCertificate2:
+        "newlicense/getProfessionalDocCertificate2",
+      getProfessionalDocCertificate3:
+        "newlicense/getProfessionalDocCertificate3",
+      getProfessionalDocCertificate4:
+        "newlicense/getProfessionalDocCertificate4",
+      getProfessionalDocCertificate5:
+        "newlicense/getProfessionalDocCertificate5",
+
+      getProfessionalDocDiploma: "newlicense/getProfessionalDocDiploma",
+      getProfessionalDocDiploma2: "newlicense/getProfessionalDocDiploma2",
+      getProfessionalDocDiploma3: "newlicense/getProfessionalDocDiploma3",
+      getProfessionalDocDiploma4: "newlicense/getProfessionalDocDiploma4",
+      getProfessionalDocDiploma5: "newlicense/getProfessionalDocDiploma5",
+
+      getProfessionalDocTranscript: "newlicense/getProfessionalDocTranscript",
+      getProfessionalDocTranscript2: "newlicense/getProfessionalDocTranscript2",
+      getProfessionalDocTranscript3: "newlicense/getProfessionalDocTranscript3",
+      getProfessionalDocTranscript4: "newlicense/getProfessionalDocTranscript4",
+      getProfessionalDocTranscript5: "newlicense/getProfessionalDocTranscript5",
 
       getEduEighth: "newlicense/getEduEighth",
       getEduTenth: "newlicense/getEduTenth",
@@ -1023,6 +1309,9 @@ export default {
       getPhd: "newlicense/getPhd",
       getPhdTranscript: "newlicense/getPhdTranscript",
       getPhdTranscript2: "newlicense/getPhdTranscript2",
+
+      getRenewedLicenseOfHealthFacility:
+        "newlicense/getRenewedLicenseOfHealthFacility",
 
       getButtons: "newlicense/getButtons",
       getApplicationId: "newlicense/getApplicationId",
@@ -1083,7 +1372,6 @@ export default {
       this.docs.push(this.passport);
       this.docs.push(this.healthExamCert);
       this.docs.push(this.englishLanguage);
-      this.docs.push(this.professionalDoc);
       this.docs.push(this.herqa);
       this.docs.push(this.supportLetter);
       this.docs.push(this.coc);
@@ -1261,8 +1549,7 @@ export default {
         this.herqa !== "" &&
         this.proCertificate !== "" &&
         this.proDiploma !== "" &&
-        this.proTranscript !== "" &&
-        this.workExperience !== ""
+        this.proTranscript !== ""
       ) {
         return true;
       } else if (
@@ -1273,8 +1560,7 @@ export default {
         this.herqa !== "" &&
         this.proCertificate !== "" &&
         this.proDiploma !== "" &&
-        this.proTranscript !== "" &&
-        this.workExperience !== ""
+        this.proTranscript !== ""
       ) {
         return true;
       } else if (
@@ -1285,8 +1571,7 @@ export default {
         this.herqa !== "" &&
         this.proCertificate !== "" &&
         this.proDiploma !== "" &&
-        this.proTranscript !== "" &&
-        this.workExperience !== ""
+        this.proTranscript !== ""
       ) {
         return true;
       } else if (
@@ -1297,8 +1582,7 @@ export default {
         this.herqa !== "" &&
         this.proCertificate !== "" &&
         this.proDiploma !== "" &&
-        this.proTranscript !== "" &&
-        this.workExperience !== ""
+        this.proTranscript !== ""
       ) {
         return true;
       } else {
@@ -1344,11 +1628,6 @@ export default {
                 this.englishLanguage
               );
               formData.append(
-                this.documentTypes[7].documentType.code,
-                this.diploma
-              );
-
-              formData.append(
                 this.documentTypes[8].documentType.code,
                 this.transcript
               );
@@ -1364,21 +1643,66 @@ export default {
                 this.documentTypes[21].documentType.code,
                 this.degree
               );
-              if (this.professionalDoc != undefined) {
-                formData.append(
-                  this.documentTypes[6].documentType.code,
-                  this.professionalDoc[0]
-                );
-                formData.append(
-                  this.documentTypes[7].documentType.code,
-                  this.professionalDoc[1]
-                );
-                formData.append(
-                  this.documentTypes[8].documentType.code,
-                  this.professionalDoc[2]
-                );
-              }
-
+              formData.append(
+                this.documentTypes[6].documentType.code,
+                this.proCertificate
+              );
+              formData.append(
+                this.documentTypes[29].documentType.code,
+                this.proCertificate2
+              );
+              formData.append(
+                this.documentTypes[30].documentType.code,
+                this.proCertificate3
+              );
+              formData.append(
+                this.documentTypes[31].documentType.code,
+                this.proCertificate4
+              );
+              formData.append(
+                this.documentTypes[32].documentType.code,
+                this.proCertificate5
+              );
+              formData.append(
+                this.documentTypes[7].documentType.code,
+                this.proDiploma
+              );
+              formData.append(
+                this.documentTypes[33].documentType.code,
+                this.proDiploma2
+              );
+              formData.append(
+                this.documentTypes[34].documentType.code,
+                this.proDiploma3
+              );
+              formData.append(
+                this.documentTypes[35].documentType.code,
+                this.proDiploma4
+              );
+              formData.append(
+                this.documentTypes[36].documentType.code,
+                this.proDiploma5
+              );
+              formData.append(
+                this.documentTypes[8].documentType.code,
+                this.proTranscript
+              );
+              formData.append(
+                this.documentTypes[37].documentType.code,
+                this.proTranscript2
+              );
+              formData.append(
+                this.documentTypes[38].documentType.code,
+                this.proTranscript3
+              );
+              formData.append(
+                this.documentTypes[39].documentType.code,
+                this.proTranscript4
+              );
+              formData.append(
+                this.documentTypes[40].documentType.code,
+                this.proTranscript5
+              );
               formData.append(
                 this.documentTypes[9].documentType.code,
                 this.coc
@@ -1415,7 +1739,7 @@ export default {
               }
 
               formData.append(
-                this.documentTypes[15].documentType.code,
+                this.documentTypes[64].documentType.code,
                 this.supportLetter
               );
               formData.append(
@@ -1458,6 +1782,10 @@ export default {
                 this.documentTypes[58].documentType.code,
                 this.phdTranscript2
               );
+              formData.append(
+                this.documentTypes[63].documentType.code,
+                this.renewedLicenseFromHealthFacility
+              );
               let payload = { document: formData, id: licenseId };
 
               this.$store
@@ -1495,8 +1823,6 @@ export default {
           this.documentTypes[5].documentType.code,
           this.englishLanguage
         );
-        formData.append(this.documentTypes[7].documentType.code, this.diploma);
-
         formData.append(
           this.documentTypes[8].documentType.code,
           this.transcript
@@ -1507,21 +1833,66 @@ export default {
         );
         formData.append(this.documentTypes[20].documentType.code, this.payroll);
         formData.append(this.documentTypes[21].documentType.code, this.degree);
-        if (this.professionalDoc != undefined) {
-          formData.append(
-            this.documentTypes[6].documentType.code,
-            this.professionalDoc[0]
-          );
-          formData.append(
-            this.documentTypes[7].documentType.code,
-            this.professionalDoc[1]
-          );
-          formData.append(
-            this.documentTypes[8].documentType.code,
-            this.professionalDoc[2]
-          );
-        }
-
+        formData.append(
+          this.documentTypes[6].documentType.code,
+          this.proCertificate
+        );
+        formData.append(
+          this.documentTypes[29].documentType.code,
+          this.proCertificate2
+        );
+        formData.append(
+          this.documentTypes[30].documentType.code,
+          this.proCertificate3
+        );
+        formData.append(
+          this.documentTypes[31].documentType.code,
+          this.proCertificate4
+        );
+        formData.append(
+          this.documentTypes[32].documentType.code,
+          this.proCertificate5
+        );
+        formData.append(
+          this.documentTypes[7].documentType.code,
+          this.proDiploma
+        );
+        formData.append(
+          this.documentTypes[33].documentType.code,
+          this.proDiploma2
+        );
+        formData.append(
+          this.documentTypes[34].documentType.code,
+          this.proDiploma3
+        );
+        formData.append(
+          this.documentTypes[35].documentType.code,
+          this.proDiploma4
+        );
+        formData.append(
+          this.documentTypes[36].documentType.code,
+          this.proDiploma5
+        );
+        formData.append(
+          this.documentTypes[8].documentType.code,
+          this.proTranscript
+        );
+        formData.append(
+          this.documentTypes[37].documentType.code,
+          this.proTranscript2
+        );
+        formData.append(
+          this.documentTypes[38].documentType.code,
+          this.proTranscript3
+        );
+        formData.append(
+          this.documentTypes[39].documentType.code,
+          this.proTranscript4
+        );
+        formData.append(
+          this.documentTypes[40].documentType.code,
+          this.proTranscript5
+        );
         formData.append(this.documentTypes[9].documentType.code, this.coc);
         formData.append(this.documentTypes[41].documentType.code, this.coc2);
         formData.append(this.documentTypes[42].documentType.code, this.coc3);
@@ -1549,7 +1920,7 @@ export default {
         }
 
         formData.append(
-          this.documentTypes[15].documentType.code,
+          this.documentTypes[64].documentType.code,
           this.supportLetter
         );
         formData.append(this.documentTypes[16].documentType.code, this.herqa);
@@ -1582,6 +1953,10 @@ export default {
         formData.append(
           this.documentTypes[58].documentType.code,
           this.phdTranscript2
+        );
+        formData.append(
+          this.documentTypes[63].documentType.code,
+          this.renewedLicenseFromHealthFacility
         );
         let license = {
           action: action,
@@ -1683,11 +2058,6 @@ export default {
                 this.englishLanguage
               );
               formData.append(
-                this.documentTypes[7].documentType.code,
-                this.diploma
-              );
-
-              formData.append(
                 this.documentTypes[8].documentType.code,
                 this.transcript
               );
@@ -1703,21 +2073,66 @@ export default {
                 this.documentTypes[21].documentType.code,
                 this.degree
               );
-              if (this.professionalDoc != undefined) {
-                formData.append(
-                  this.documentTypes[6].documentType.code,
-                  this.professionalDoc[0]
-                );
-                formData.append(
-                  this.documentTypes[7].documentType.code,
-                  this.professionalDoc[1]
-                );
-                formData.append(
-                  this.documentTypes[8].documentType.code,
-                  this.professionalDoc[2]
-                );
-              }
-
+              formData.append(
+                this.documentTypes[6].documentType.code,
+                this.proCertificate
+              );
+              formData.append(
+                this.documentTypes[29].documentType.code,
+                this.proCertificate2
+              );
+              formData.append(
+                this.documentTypes[30].documentType.code,
+                this.proCertificate3
+              );
+              formData.append(
+                this.documentTypes[31].documentType.code,
+                this.proCertificate4
+              );
+              formData.append(
+                this.documentTypes[32].documentType.code,
+                this.proCertificate5
+              );
+              formData.append(
+                this.documentTypes[7].documentType.code,
+                this.proDiploma
+              );
+              formData.append(
+                this.documentTypes[33].documentType.code,
+                this.proDiploma2
+              );
+              formData.append(
+                this.documentTypes[34].documentType.code,
+                this.proDiploma3
+              );
+              formData.append(
+                this.documentTypes[35].documentType.code,
+                this.proDiploma4
+              );
+              formData.append(
+                this.documentTypes[36].documentType.code,
+                this.proDiploma5
+              );
+              formData.append(
+                this.documentTypes[8].documentType.code,
+                this.proTranscript
+              );
+              formData.append(
+                this.documentTypes[37].documentType.code,
+                this.proTranscript2
+              );
+              formData.append(
+                this.documentTypes[38].documentType.code,
+                this.proTranscript3
+              );
+              formData.append(
+                this.documentTypes[39].documentType.code,
+                this.proTranscript4
+              );
+              formData.append(
+                this.documentTypes[40].documentType.code,
+                this.proTranscript5
+              );
               formData.append(
                 this.documentTypes[9].documentType.code,
                 this.coc
@@ -1754,7 +2169,7 @@ export default {
               }
 
               formData.append(
-                this.documentTypes[15].documentType.code,
+                this.documentTypes[64].documentType.code,
                 this.supportLetter
               );
               formData.append(
@@ -1797,6 +2212,10 @@ export default {
                 this.documentTypes[58].documentType.code,
                 this.phdTranscript2
               );
+              formData.append(
+                this.documentTypes[63].documentType.code,
+                this.renewedLicenseFromHealthFacility
+              );
               let payload = { document: formData, id: licenseId };
               this.$store
                 .dispatch("newlicense/uploadDocuments", payload)
@@ -1834,8 +2253,6 @@ export default {
           this.documentTypes[5].documentType.code,
           this.englishLanguage
         );
-        formData.append(this.documentTypes[7].documentType.code, this.diploma);
-
         formData.append(
           this.documentTypes[8].documentType.code,
           this.transcript
@@ -1846,21 +2263,66 @@ export default {
         );
         formData.append(this.documentTypes[20].documentType.code, this.payroll);
         formData.append(this.documentTypes[21].documentType.code, this.degree);
-        if (this.professionalDoc != undefined) {
-          formData.append(
-            this.documentTypes[6].documentType.code,
-            this.professionalDoc[0]
-          );
-          formData.append(
-            this.documentTypes[7].documentType.code,
-            this.professionalDoc[1]
-          );
-          formData.append(
-            this.documentTypes[8].documentType.code,
-            this.professionalDoc[2]
-          );
-        }
-
+        formData.append(
+          this.documentTypes[6].documentType.code,
+          this.proCertificate
+        );
+        formData.append(
+          this.documentTypes[29].documentType.code,
+          this.proCertificate2
+        );
+        formData.append(
+          this.documentTypes[30].documentType.code,
+          this.proCertificate3
+        );
+        formData.append(
+          this.documentTypes[31].documentType.code,
+          this.proCertificate4
+        );
+        formData.append(
+          this.documentTypes[32].documentType.code,
+          this.proCertificate5
+        );
+        formData.append(
+          this.documentTypes[7].documentType.code,
+          this.proDiploma
+        );
+        formData.append(
+          this.documentTypes[33].documentType.code,
+          this.proDiploma2
+        );
+        formData.append(
+          this.documentTypes[34].documentType.code,
+          this.proDiploma3
+        );
+        formData.append(
+          this.documentTypes[35].documentType.code,
+          this.proDiploma4
+        );
+        formData.append(
+          this.documentTypes[36].documentType.code,
+          this.proDiploma5
+        );
+        formData.append(
+          this.documentTypes[8].documentType.code,
+          this.proTranscript
+        );
+        formData.append(
+          this.documentTypes[37].documentType.code,
+          this.proTranscript2
+        );
+        formData.append(
+          this.documentTypes[38].documentType.code,
+          this.proTranscript3
+        );
+        formData.append(
+          this.documentTypes[39].documentType.code,
+          this.proTranscript4
+        );
+        formData.append(
+          this.documentTypes[40].documentType.code,
+          this.proTranscript5
+        );
         formData.append(this.documentTypes[9].documentType.code, this.coc);
         formData.append(this.documentTypes[41].documentType.code, this.coc2);
         formData.append(this.documentTypes[42].documentType.code, this.coc3);
@@ -1888,7 +2350,7 @@ export default {
         }
 
         formData.append(
-          this.documentTypes[15].documentType.code,
+          this.documentTypes[64].documentType.code,
           this.supportLetter
         );
         formData.append(this.documentTypes[16].documentType.code, this.herqa);
@@ -1921,6 +2383,10 @@ export default {
         formData.append(
           this.documentTypes[58].documentType.code,
           this.phdTranscript2
+        );
+        formData.append(
+          this.documentTypes[63].documentType.code,
+          this.renewedLicenseFromHealthFacility
         );
         let license = {
           action: action,

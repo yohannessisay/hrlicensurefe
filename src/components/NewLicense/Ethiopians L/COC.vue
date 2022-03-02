@@ -85,7 +85,7 @@
                 <img :src="filePreview" alt="" class="preview" />
               </span>
             </div>
-            <div v-if="docCount > 1">
+            <div v-if="docCount > 0">
               <span v-if="showUpload2">
                 <label class="text-primary-700"
                   >Upload image:
@@ -126,7 +126,7 @@
                 <img :src="filePreview2" class="preview" />
               </span>
             </div>
-            <div v-if="docCount > 2">
+            <div v-if="docCount > 1">
               <span v-if="showUpload3">
                 <label class="text-primary-700"
                   >Upload image:
@@ -345,7 +345,6 @@ export default {
 
     let passport = ref("");
     let healthExamCert = ref("");
-    let professionalDoc = ref([]);
     let herqa = ref("");
     let englishLanguage = ref("");
     let supportLetter = ref("");
@@ -524,7 +523,6 @@ export default {
 
     passport = store.getters["newlicense/getPassport"];
     englishLanguage = store.getters["newlicense/getEnglishLanguage"];
-    professionalDoc = store.getters["newlicense/getProfessionalDocuments"];
     herqa = store.getters["newlicense/getHerqa"];
     healthExamCert = store.getters["newlicense/getHealthExamCert"];
     supportLetter = store.getters["newlicense/getSupportLetter"];
@@ -653,20 +651,6 @@ export default {
             formData.append(documentSpecs[23].documentType.code, transcript);
             formData.append(documentSpecs[52].documentType.code, transcript2);
             formData.append(documentSpecs[21].documentType.code, degree);
-            if (professionalDoc != undefined) {
-              formData.append(
-                documentSpecs[6].documentType.code,
-                professionalDoc[0]
-              );
-              formData.append(
-                documentSpecs[7].documentType.code,
-                professionalDoc[1]
-              );
-              formData.append(
-                documentSpecs[8].documentType.code,
-                professionalDoc[2]
-              );
-            }
             formData.append(documentSpecs[9].documentType.code, COCFile.value);
             formData.append(
               documentSpecs[41].documentType.code,
@@ -1015,7 +999,7 @@ export default {
             filePreview.value = basePath + draftData.documents[i].filePath;
           }
           if (draftData.documents[i].documentTypeCode == "COC1") {
-            doc.value++;
+            docCount.value++;
             showUpload2.value = false;
             if (draftData.documents[i].fileName.split(".")[1] == "pdf") {
               isPdf2.value = true;
@@ -1027,7 +1011,7 @@ export default {
             filePreview2.value = basePath + draftData.documents[i].filePath;
           }
           if (draftData.documents[i].documentTypeCode == "COC2") {
-            doc.value += 2;
+            docCount.value += 2;
             showUpload3.value = false;
             if (draftData.documents[i].fileName.split(".")[1] == "pdf") {
               isPdf3.value = true;

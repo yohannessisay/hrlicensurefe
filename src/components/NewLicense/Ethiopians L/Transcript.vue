@@ -30,6 +30,20 @@
           message="Transcript"
           class="mt-8"
         />
+        <div class="flex justify-center">
+          <label class="text-xl" v-if="educationLevel == 'diploma'">
+            Diploma
+          </label>
+          <label class="text-xl" v-if="educationLevel == 'degree'">
+            Degree
+          </label>
+          <label class="text-xl" v-if="educationLevel == 'masters'">
+            Masters
+          </label>
+          <label class="text-xl" v-if="educationLevel == 'phd'">
+            PhD
+          </label>
+        </div>
         <span class="flex justify-center">{{ documentMessage }}</span>
         <div class="ml-4">
           <button @click="addDocs()">Add Document</button>
@@ -294,7 +308,6 @@ export default {
 
     let passport = ref("");
     let healthExamCert = ref("");
-    let professionalDoc = ref([]);
     let herqa = ref("");
     let englishLanguage = ref("");
     let supportLetter = ref("");
@@ -315,6 +328,8 @@ export default {
     let phd = ref("");
     let phdTranscript = ref("");
     let phdTranscript2 = ref("");
+
+    let educationLevel = localStorage.getItem("educationalLevel");
 
     let docCount = ref(0);
 
@@ -436,7 +451,6 @@ export default {
 
     passport = store.getters["newlicense/getPassport"];
     englishLanguage = store.getters["newlicense/getEnglishLanguage"];
-    professionalDoc = store.getters["newlicense/getProfessionalDocuments"];
     herqa = store.getters["newlicense/getHerqa"];
     healthExamCert = store.getters["newlicense/getHealthExamCert"];
     supportLetter = store.getters["newlicense/getSupportLetter"];
@@ -561,20 +575,6 @@ export default {
             formData.append(documentSpecs[9].documentType.code, coc);
             formData.append(documentSpecs[41].documentType.code, coc2);
             formData.append(documentSpecs[42].documentType.code, coc3);
-            if (professionalDoc != undefined) {
-              formData.append(
-                documentSpecs[6].documentType.code,
-                professionalDoc[0]
-              );
-              formData.append(
-                documentSpecs[7].documentType.code,
-                professionalDoc[1]
-              );
-              formData.append(
-                documentSpecs[8].documentType.code,
-                professionalDoc[2]
-              );
-            }
             formData.append(
               documentSpecs[23].documentType.code,
               TranscriptFile.value
@@ -952,6 +952,8 @@ export default {
       docCount,
       addDocs,
       removeDocs,
+
+      educationLevel,
     };
   },
 };

@@ -1321,8 +1321,17 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 7">
-                <LicenseSummary
+                <RenewedLicenseOfHealthFacility
                   :activeState="7"
+                  @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
+                />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 8">
+                <LicenseSummary
+                  :activeState="8"
                   @changeActiveState="activeState++"
                   @changeActiveStateMinus="activeState--"
                 />
@@ -1377,8 +1386,17 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 8">
-                <LicenseSummary
+                <RenewedLicenseOfHealthFacility
                   :activeState="8"
+                  @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
+                />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 9">
+                <LicenseSummary
+                  :activeState="9"
                   @changeActiveState="activeState++"
                   @changeActiveStateMinus="activeState--"
                 />
@@ -1413,6 +1431,8 @@ import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import Spinner from "@/sharedComponents/Spinner";
 import PayrollDoc from "./Ethiopians L/Payroll.vue";
+
+import RenewedLicenseOfHealthFacility from "./Foreigner/RenewedLicenseOfHealthFacility";
 
 import Passport from "./Passport.vue";
 
@@ -1504,6 +1524,7 @@ export default {
     MastersTranscript,
     PhD,
     PhDTranscript,
+    RenewedLicenseOfHealthFacility,
   },
   methods: {
     applicantTypeSet: function(params) {

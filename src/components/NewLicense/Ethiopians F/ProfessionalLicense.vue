@@ -27,15 +27,15 @@
         </h2>
         <TitleWithIllustration
           illustration="Certificate"
-          message="PhD"
+          message="Authenticated Professional License from Country of Origin"
           class="mt-8"
         />
         <span class="flex justify-center">{{ documentMessage }}</span>
-        <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
-          <div class="flex justify-center">
+        <form @submit.prevent="submit" class="mx-auto max-w-3xl mt-8">
+          <div class="flex flex-col justify-center">
             <div>
               <span>
-                <h2 v-if="!fileSizeExceed">{{ PhDFile.name }}</h2>
+                <h2 v-if="!fileSizeExceed">{{ letterFile.name }}</h2>
                 <h2 v-if="!fileSizeExceed">{{ fileSize }}</h2>
                 <h3 style="color: red" v-if="fileSizeExceed">
                   File size must be less than {{ maxSizeMB }} MB
@@ -44,17 +44,15 @@
               <span v-if="showUpload">
                 <label class="text-primary-700"
                   >Upload image:
-                  <span
-                    v-if="eduLevel !== 'diploma'"
-                    style="color: red; font-weight: bold; font-size:16px"
+                  <span style="color: red; font-weight: bold; font-size:16px"
                     >Required</span
                   >
                   <div class="dropbox">
                     <input
                       type="file"
-                      id="PhDFile"
+                      id="letterFile"
                       class="photoFile"
-                      ref="PhDFileP"
+                      ref="letterFileP"
                       v-on:change="handleFileUpload()"
                       style="margin-bottom: 15px !important"
                       accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
@@ -198,6 +196,7 @@ export default {
     const store = useStore();
     const route = useRoute();
     const router = useRouter();
+    const basePath = "https://storage.googleapis.com/hris-lisence-dev/";
 
     let message = ref({
       showFlash: false,
@@ -207,17 +206,15 @@ export default {
 
     let fileSize = ref("");
 
-    const basePath = "https://storage.googleapis.com/hris-lisence-dev/";
-
     let dataChanged = ref(false);
-
-    let PhDFile = ref("");
-    let PhDFileP = ref("");
+    let letterFile = ref("");
+    let letterFileP = ref("");
     let showPreview = ref(false);
     let filePreview = ref("");
     let showUpload = ref(true);
     let isImage = ref(false);
     let isPdf = ref(false);
+
     let buttons = [];
     let documentSpecs = ref([]);
     let userId = +localStorage.getItem("userId");
@@ -225,50 +222,61 @@ export default {
     let draftData = ref("");
     let draftStatus = ref("");
 
-    let phdBack = ref("");
-
-    let declinedFields = ref([]);
-    let acceptedFields = ref([]);
-    let remark = ref("");
+    let letterFileBack = ref("");
 
     let documentMessage = ref("");
     let maxFileSize = ref("");
     let maxSizeMB = ref("");
     let fileSizeExceed = ref(false);
 
-    let declinedFieldsCheck = ref(false);
-    let acceptedFieldsCheck = ref(false);
-
     let passport = ref("");
     let healthExamCert = ref("");
-    let herqa = ref("");
     let englishLanguage = ref("");
+    let herqa = ref("");
     let supportLetter = ref("");
+    let coc = ref("");
     let educationDoc = ref([]);
     let workExperience = ref("");
     let workExperience2 = ref("");
-    let professionalLicense = ref("");
     let renewedLicense = ref("");
     let payroll = ref("");
-    let coc = ref("");
-    let coc2 = ref("");
-    let coc3 = ref("");
     let diploma = ref("");
     let transcript = ref("");
-    let transcript2 = ref("");
     let degree = ref("");
     let masters = ref("");
     let mastersTranscript = ref("");
-    let mastersTranscript2 = ref("");
+    let phd = ref("");
     let phdTranscript = ref("");
-    let phdTranscript2 = ref("");
 
-    let eduLevel = ref("");
+    let professionalDocCertificate = ref("");
+    let professionalDocCertificate2 = ref("");
+    let professionalDocCertificate3 = ref("");
+    let professionalDocCertificate4 = ref("");
+    let professionalDocCertificate5 = ref("");
+
+    let professionalDocDiploma = ref("");
+    let professionalDocDiploma2 = ref("");
+    let professionalDocDiploma3 = ref("");
+    let professionalDocDiploma4 = ref("");
+    let professionalDocDiploma5 = ref("");
+
+    let professionalDocTranscript = ref("");
+    let professionalDocTranscript2 = ref("");
+    let professionalDocTranscript3 = ref("");
+    let professionalDocTranscript4 = ref("");
+    let professionalDocTranscript5 = ref("");
+
+    let declinedFields = ref([]);
+    let acceptedFields = ref([]);
+    let remark = ref("");
+
+    let declinedFieldsCheck = ref(false);
+    let acceptedFieldsCheck = ref(false);
 
     const reset = () => {
       showUpload.value = true;
       showPreview.value = false;
-      PhDFile.value = "";
+      letterFile.value = "";
       filePreview.value = "";
       isImage.value = true;
       fileSize.value = "";
@@ -276,10 +284,10 @@ export default {
     };
 
     const handleFileUpload = () => {
-      PhDFile.value = PhDFileP.value.files[0];
+      letterFile.value = letterFileP.value.files[0];
       let reader = new FileReader();
       isImage.value = true;
-      let fileS = PhDFile.value.size;
+      let fileS = letterFile.value.size;
       if (fileS <= maxFileSize.value / 1000) {
         fileSizeExceed.value = false;
         dataChanged.value = true;
@@ -299,59 +307,86 @@ export default {
           },
           false
         );
-        if (PhDFile.value) {
-          if (/\.(jpe?g|png|gif)$/i.test(PhDFile.value.name)) {
+        if (letterFile.value) {
+          if (/\.(jpe?g|png|gif)$/i.test(letterFile.value.name)) {
             isImage.value = true;
-            reader.readAsDataURL(PhDFile.value);
-          } else if (/\.(pdf)$/i.test(PhDFile.value.name)) {
+            reader.readAsDataURL(letterFile.value);
+          } else if (/\.(pdf)$/i.test(letterFile.value.name)) {
             isImage.value = false;
             isPdf.value = true;
-            reader.readAsDataURL(PhDFile.value);
+            reader.readAsDataURL(letterFile.value);
           }
         }
       } else {
         fileSizeExceed.value = true;
-        PhDFile.value = "";
-        isImage = true;
+        letterFile.value = "";
+        isImage.value = true;
       }
     };
+
     const submit = () => {
       emit("changeActiveState");
-      store.dispatch("newlicense/setPhd", PhDFile);
+      store.dispatch("newlicense/setProfessionalLicense", letterFile);
     };
     const submitBack = () => {
       emit("changeActiveStateMinus");
-      store.dispatch("newlicense/setPhd", PhDFile);
+      store.dispatch("newlicense/setProfessionalLicense", letterFile);
     };
     buttons = store.getters["newlicense/getButtons"];
     documentSpecs = store.getters["newlicense/getDocumentSpec"];
     licenseInfo = store.getters["newlicense/getLicense"];
 
     passport = store.getters["newlicense/getPassport"];
+    healthExamCert = store.getters["newlicense/getHealthExamCert"];
     englishLanguage = store.getters["newlicense/getEnglishLanguage"];
     herqa = store.getters["newlicense/getHerqa"];
-    healthExamCert = store.getters["newlicense/getHealthExamCert"];
     supportLetter = store.getters["newlicense/getSupportLetter"];
+    coc = store.getters["newlicense/getCoc"];
     educationDoc = store.getters["newlicense/getEducationalDocuments"];
     workExperience = store.getters["newlicense/getWorkExperience"];
     workExperience2 = store.getters["newlicense/getWorkExperience2"];
     renewedLicense = store.getters["newlicense/getRenewedLicense"];
-    professionalLicense = store.getters["newlicense/getProfessionalLicense"];
     payroll = store.getters["newlicense/getPayroll"];
-    coc = store.getters["newlicense/getCoc"];
-    coc2 = store.getters["newlicense/getCoc2"];
-    coc3 = store.getters["newlicense/getCoc3"];
     diploma = store.getters["newlicense/getDiploma"];
     degree = store.getters["newlicense/getDegree"];
     transcript = store.getters["newlicense/getTranscript"];
-    transcript2 = store.getters["newlicense/getTranscript2"];
     masters = store.getters["newlicense/getMasters"];
     mastersTranscript = store.getters["newlicense/getMastersTranscript"];
-    mastersTranscript2 = store.getters["newlicense/getMastersTranscript2"];
+    phd = store.getters["newlicense/getPhd"];
     phdTranscript = store.getters["newlicense/getPhdTranscript"];
-    phdTranscript2 = store.getters["newlicense/getPhdTranscript2"];
 
-    eduLevel = localStorage.getItem("educationalLevel");
+    professionalDocCertificate =
+      store.getters["newlicense/getProfessionalDocCertificate"];
+    professionalDocCertificate2 =
+      store.getters["newlicense/getProfessionalDocCertificate2"];
+    professionalDocCertificate3 =
+      store.getters["newlicense/getProfessionalDocCertificate3"];
+    professionalDocCertificate4 =
+      store.getters["newlicense/getProfessionalDocCertificate4"];
+    professionalDocCertificate5 =
+      store.getters["newlicense/getProfessionalDocCertificate5"];
+
+    professionalDocDiploma =
+      store.getters["newlicense/getProfessionalDocDiploma"];
+    professionalDocDiploma2 =
+      store.getters["newlicense/getProfessionalDocDiploma2"];
+    professionalDocDiploma3 =
+      store.getters["newlicense/getProfessionalDocDiploma3"];
+    professionalDocDiploma4 =
+      store.getters["newlicense/getProfessionalDocDiploma4"];
+    professionalDocDiploma5 =
+      store.getters["newlicense/getProfessionalDocDiploma5"];
+
+    professionalDocTranscript =
+      store.getters["newlicense/getProfessionalDocTranscript"];
+    professionalDocTranscript2 =
+      store.getters["newlicense/getProfessionalDocTranscript2"];
+    professionalDocTranscript3 =
+      store.getters["newlicense/getProfessionalDocTranscript3"];
+    professionalDocTranscript4 =
+      store.getters["newlicense/getProfessionalDocTranscript4"];
+    professionalDocTranscript5 =
+      store.getters["newlicense/getProfessionalDocTranscript5"];
 
     const draft = (action) => {
       message.value.showLoading = true;
@@ -369,8 +404,8 @@ export default {
               let licenseId = route.params.id;
               let formData = new FormData();
               formData.append(
-                documentSpecs[26].documentType.code,
-                PhDFile.value
+                documentSpecs[19].documentType.code,
+                letterFile.value
               );
               let payload = { document: formData, id: licenseId };
               store
@@ -439,18 +474,78 @@ export default {
             formData.append(documentSpecs[1].documentType.code, passport);
             formData.append(documentSpecs[2].documentType.code, healthExamCert);
             formData.append(documentSpecs[4].documentType.code, workExperience);
-            formData.append(documentSpecs[28].documentType.code, workExperience2);
+            formData.append(
+              documentSpecs[28].documentType.code,
+              workExperience2
+            );
             formData.append(
               documentSpecs[5].documentType.code,
               englishLanguage
             );
             formData.append(documentSpecs[22].documentType.code, diploma);
             formData.append(documentSpecs[23].documentType.code, transcript);
-            formData.append(documentSpecs[52].documentType.code, transcript2);
-            formData.append(documentSpecs[9].documentType.code, coc);
-            formData.append(documentSpecs[41].documentType.code, coc2);
-            formData.append(documentSpecs[42].documentType.code, coc3);
             formData.append(documentSpecs[21].documentType.code, degree);
+            formData.append(
+              documentSpecs[6].documentType.code,
+              professionalDocCertificate
+            );
+            formData.append(
+              documentSpecs[29].documentType.code,
+              professionalDocCertificate2
+            );
+            formData.append(
+              documentSpecs[30].documentType.code,
+              professionalDocCertificate3
+            );
+            formData.append(
+              documentSpecs[31].documentType.code,
+              professionalDocCertificate4
+            );
+            formData.append(
+              documentSpecs[32].documentType.code,
+              professionalDocCertificate5
+            );
+            formData.append(
+              documentSpecs[7].documentType.code,
+              professionalDocDiploma
+            );
+            formData.append(
+              documentSpecs[33].documentType.code,
+              professionalDocDiploma2
+            );
+            formData.append(
+              documentSpecs[34].documentType.code,
+              professionalDocDiploma3
+            );
+            formData.append(
+              documentSpecs[35].documentType.code,
+              professionalDocDiploma4
+            );
+            formData.append(
+              documentSpecs[36].documentType.code,
+              professionalDocDiploma5
+            );
+            formData.append(
+              documentSpecs[8].documentType.code,
+              professionalDocTranscript
+            );
+            formData.append(
+              documentSpecs[37].documentType.code,
+              professionalDocTranscript2
+            );
+            formData.append(
+              documentSpecs[38].documentType.code,
+              professionalDocTranscript3
+            );
+            formData.append(
+              documentSpecs[39].documentType.code,
+              professionalDocTranscript4
+            );
+            formData.append(
+              documentSpecs[40].documentType.code,
+              professionalDocTranscript5
+            );
+            formData.append(documentSpecs[9].documentType.code, coc);
             if (educationDoc != undefined) {
               formData.append(
                 documentSpecs[10].documentType.code,
@@ -479,9 +574,10 @@ export default {
               documentSpecs[18].documentType.code,
               renewedLicense
             );
+
             formData.append(
               documentSpecs[19].documentType.code,
-              professionalLicense
+              letterFile.value
             );
             formData.append(documentSpecs[20].documentType.code, payroll);
             formData.append(documentSpecs[24].documentType.code, masters);
@@ -489,13 +585,8 @@ export default {
               documentSpecs[25].documentType.code,
               mastersTranscript
             );
-            formData.append(
-              documentSpecs[57].documentType.code,
-              mastersTranscript2
-            );
-            formData.append(documentSpecs[26].documentType.code, PhDFile.value);
+            formData.append(documentSpecs[26].documentType.code, phd);
             formData.append(documentSpecs[27].documentType.code, phdTranscript);
-            formData.append(documentSpecs[58].documentType.code, phdTranscript2);
 
             let payload = { document: formData, id: licenseId };
             store
@@ -532,8 +623,8 @@ export default {
               let licenseId = route.params.id;
               let formData = new FormData();
               formData.append(
-                documentSpecs[26].documentType.code,
-                PhDFile.value
+                documentSpecs[19].documentType.code,
+                letterFile.value
               );
               let payload = { document: formData, id: licenseId };
               store
@@ -599,7 +690,10 @@ export default {
           if (res.data.status == "Success") {
             let licenseId = res.data.data.id;
             let formData = new FormData();
-            formData.append(documentSpecs[26].documentType.code, PhDFile.value);
+            formData.append(
+              documentSpecs[19].documentType.code,
+              letterFile.value
+            );
             let payload = { document: formData, id: licenseId };
             store
               .dispatch("newlicense/uploadDocuments", payload)
@@ -619,6 +713,7 @@ export default {
         });
       }
     };
+
     const withdraw = (action) => {
       message.value.showLoading = !message.value.showLoading;
       let withdrawObj = {
@@ -641,23 +736,22 @@ export default {
         }
       });
     };
-
     onMounted(() => {
       documentMessage.value = MESSAGE.DOC_MESSAGE;
       maxFileSize.value = MAX_FILE_SIZE.MAX_FILE_SIZE;
       maxSizeMB.value = MAX_SIZE_MB.MAX_SIZE_MB;
-      phdBack = store.getters["newlicense/getPhd"];
+      letterFileBack = store.getters["newlicense/getProfessionalLicense"];
       if (
-        phdBack &&
-        phdBack !== undefined &&
-        phdBack !== null &&
-        phdBack !== ""
+        letterFileBack &&
+        letterFileBack !== undefined &&
+        letterFileBack !== null &&
+        letterFileBack !== ""
       ) {
         dataChanged.value = true;
         showUpload.value = false;
-        PhDFile.value = phdBack;
+        letterFile.value = letterFileBack;
         let reader = new FileReader();
-        let fileS = PhDFile.value.size;
+        let fileS = letterFile.value.size;
         if (fileS > 0 && fileS < 1000) {
           fileSize.value += "B";
         } else if (fileS > 1000 && fileS < 1000000) {
@@ -673,24 +767,25 @@ export default {
           },
           false
         );
-        if (PhDFile.value) {
-          if (/\.(jpe?g|png|gif)$/i.test(PhDFile.value.name)) {
+        if (letterFile.value) {
+          if (/\.(jpe?g|png|gif)$/i.test(letterFile.value.name)) {
             isImage.value = true;
-            reader.readAsDataURL(PhDFile.value);
-          } else if (/\.(pdf)$/i.test(PhDFile.value.name)) {
+            reader.readAsDataURL(letterFile.value);
+          } else if (/\.(pdf)$/i.test(letterFile.value.name)) {
             isImage.value = false;
             isPdf.value = true;
-            reader.readAsDataURL(PhDFile.value);
+            reader.readAsDataURL(letterFile.value);
           }
         }
       }
+
       declinedFields = store.getters["newlicense/getDeclinedFields"];
       acceptedFields = store.getters["newlicense/getAcceptedFields"];
       remark = store.getters["newlicense/getRemark"];
-      if (declinedFields != undefined && declinedFields.includes("PHD")) {
+      if (declinedFields != null && declinedFields.includes("APLFCO")) {
         declinedFieldsCheck.value = true;
       }
-      if (acceptedFields != undefined && acceptedFields.includes("PHD")) {
+      if (acceptedFields != null && acceptedFields.includes("APLFCO")) {
         acceptedFieldsCheck.value = true;
       }
       buttons = store.getters["newlicense/getButtons"];
@@ -698,14 +793,14 @@ export default {
       if (route.params.id) {
         draftStatus.value = route.params.status;
         for (let i = 0; i < draftData.documents.length; i++) {
-          if (draftData.documents[i].documentTypeCode == "PHD") {
+          if (draftData.documents[i].documentTypeCode == "APLFCO") {
             showUpload.value = false;
             if (draftData.documents[i].fileName.split(".")[1] == "pdf") {
               isPdf.value = true;
             } else {
               isImage.value = true;
             }
-            PhDFile.value = draftData.documents[i];
+            letterFile.value = draftData.documents[i];
             showPreview.value = true;
             filePreview.value = basePath + draftData.documents[i].filePath;
           }
@@ -713,16 +808,19 @@ export default {
       }
     });
     return {
-      PhDFile,
-      PhDFileP,
-      phdBack,
+      letterFile,
+      letterFileP,
+      letterFileBack,
       showPreview,
       filePreview,
       showUpload,
       isImage,
       isPdf,
+
       handleFileUpload,
+
       reset,
+
       submit,
       submitBack,
       draft,
@@ -741,7 +839,6 @@ export default {
       declinedFieldsCheck,
       acceptedFieldsCheck,
       documentMessage,
-      eduLevel,
       fileSizeExceed,
       maxFileSize,
       maxSizeMB,

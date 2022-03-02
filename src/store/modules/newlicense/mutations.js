@@ -3,7 +3,21 @@ import {
     SET_PASSPORT,
     SET_HEALTH_EXAM_CERT,
     SET_LANGUAGE,
-    SET_PROFESSIONAL_DOCUMENT,
+    SET_PROFESSIONAL_DOC_CERTIFICATE,
+    SET_PROFESSIONAL_DOC_CERTIFICATE2,
+    SET_PROFESSIONAL_DOC_CERTIFICATE3,
+    SET_PROFESSIONAL_DOC_CERTIFICATE4,
+    SET_PROFESSIONAL_DOC_CERTIFICATE5,
+    SET_PROFESSIONAL_DOC_DIPLOMA,
+    SET_PROFESSIONAL_DOC_DIPLOMA2,
+    SET_PROFESSIONAL_DOC_DIPLOMA3,
+    SET_PROFESSIONAL_DOC_DIPLOMA4,
+    SET_PROFESSIONAL_DOC_DIPLOMA5,
+    SET_PROFESSIONAL_DOC_TRANSCRIPT,
+    SET_PROFESSIONAL_DOC_TRANSCRIPT2,
+    SET_PROFESSIONAL_DOC_TRANSCRIPT3,
+    SET_PROFESSIONAL_DOC_TRANSCRIPT4,
+    SET_PROFESSIONAL_DOC_TRANSCRIPT5,
     SET_HERQA,
     SET_SUPPORT_LETTER,
     SET_COC,
@@ -43,7 +57,6 @@ import {
     SET_PHD_TRANSCRIPT,
     SET_PHD_TRANSCRIPT2,
     SET_RENEWED_LICENSE_OF_HEALTH_FACILITY,
-    SET_SUPPORT_LETTER_FROM_SPONSOR,
 } from "./mutation-types";
 
 export default {
@@ -62,8 +75,50 @@ export default {
     [SET_LANGUAGE](state, englishLanguage) {
         state.englishLanguage = englishLanguage;
     },
-    [SET_PROFESSIONAL_DOCUMENT](state, professionalDocuments) {
-        state.professionalDocuments = professionalDocuments;
+    [SET_PROFESSIONAL_DOC_CERTIFICATE](state, professionalDocCertificate) {
+        state.professionalDocCertificate = professionalDocCertificate;
+    },
+    [SET_PROFESSIONAL_DOC_CERTIFICATE2](state, professionalDocCertificate2) {
+        state.professionalDocCertificate2 = professionalDocCertificate2;
+    },
+    [SET_PROFESSIONAL_DOC_CERTIFICATE3](state, professionalDocCertificate3) {
+        state.professionalDocCertificate3 = professionalDocCertificate3;
+    },
+    [SET_PROFESSIONAL_DOC_CERTIFICATE4](state, professionalDocCertificate4) {
+        state.professionalDocCertificate4 = professionalDocCertificate4;
+    },
+    [SET_PROFESSIONAL_DOC_CERTIFICATE5](state, professionalDocCertificate5) {
+        state.professionalDocCertificate5 = professionalDocCertificate5;
+    },
+    [SET_PROFESSIONAL_DOC_DIPLOMA](state, professionalDocDiploma) {
+        state.professionalDocDiploma = professionalDocDiploma;
+    },
+    [SET_PROFESSIONAL_DOC_DIPLOMA2](state, professionalDocDiploma2) {
+        state.professionalDocDiploma2 = professionalDocDiploma2;
+    },
+    [SET_PROFESSIONAL_DOC_DIPLOMA3](state, professionalDocDiploma3) {
+        state.professionalDocDiploma3 = professionalDocDiploma3;
+    },
+    [SET_PROFESSIONAL_DOC_DIPLOMA4](state, professionalDocDiploma4) {
+        state.professionalDocDiploma4 = professionalDocDiploma4;
+    },
+    [SET_PROFESSIONAL_DOC_DIPLOMA5](state, professionalDocDiploma5) {
+        state.professionalDocDiploma5 = professionalDocDiploma5;
+    },
+    [SET_PROFESSIONAL_DOC_TRANSCRIPT](state, professionalDocTranscript) {
+        state.professionalDocTranscript = professionalDocTranscript;
+    },
+    [SET_PROFESSIONAL_DOC_TRANSCRIPT2](state, professionalDocTranscript2) {
+        state.professionalDocTranscript2 = professionalDocTranscript2;
+    },
+    [SET_PROFESSIONAL_DOC_TRANSCRIPT3](state, professionalDocTranscript3) {
+        state.professionalDocTranscript3 = professionalDocTranscript3;
+    },
+    [SET_PROFESSIONAL_DOC_TRANSCRIPT4](state, professionalDocTranscript4) {
+        state.professionalDocTranscript4 = professionalDocTranscript4;
+    },
+    [SET_PROFESSIONAL_DOC_TRANSCRIPT5](state, professionalDocTranscript5) {
+        state.professionalDocTranscript5 = professionalDocTranscript5;
     },
     [SET_HERQA](state, herqa) {
         state.herqa = herqa;
@@ -169,9 +224,6 @@ export default {
         renewedLicenseOfHealthFacility
     ) {
         state.renewedLicenseOfHealthFacility = renewedLicenseOfHealthFacility;
-    },
-    [SET_SUPPORT_LETTER_FROM_SPONSOR](state, supportLetterFromSponsor) {
-        state.supportLetterFromSponsor = supportLetterFromSponsor;
     },
     [SET_DRAFT](state, draft) {
         state.draft = draft;

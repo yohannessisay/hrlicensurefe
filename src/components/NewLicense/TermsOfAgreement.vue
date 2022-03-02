@@ -49,7 +49,6 @@
           <br />
           <div class="tooltip">
             Authenticated Professional License from Country of Origin
-           
           </div>
           <br />
           <div class="tooltip">
@@ -65,6 +64,8 @@
               More than two years.
             </span>
           </div>
+          <br />
+          <li>Renewed License of Health Facility</li>
         </ul>
       </div>
       <div class="ml-2">
@@ -143,6 +144,8 @@
               More than two years
             </span>
           </div>
+          <br />
+          <li>Support Letter from Sponsored Institution</li>
         </ul>
       </div>
     </div>
