@@ -417,6 +417,25 @@ export default {
     this.phdTranscript2 = this.getPhdTranscript2;
     this.renewedLicenseFromHealthFacility = this.getRenewedLicenseOfHealthFacility;
 
+    this.buttons = this.getButtons;
+    this.fetchProfileInfo();
+    this.setDocs();
+    this.getDocumentSpecs();
+    this.license = this.getLicense;
+    this.applicantId = this.license.applicantId;
+    this.applicantTypeId = this.license.applicantTypeId;
+    this.education.departmentId = this.license.education.departmentId;
+    this.education.institutionId = this.license.education.institutionId;
+    this.residenceWoredaId = this.license.residenceWoredaId;
+    this.professionalTypeIds = this.license.professionalTypeIds;
+    this.occupationTypeId = this.license.occupationTypeId;
+    this.educationalLevelId = this.license.educationalLevelId;
+    this.nativeLanguageId = this.license.nativeLanguageId;
+    this.expertLevelId = this.license.expertLevelId;
+    this.otherEducationalInstitution = this.license.otherEducationalInstitution;
+    this.otherProfessionalType = this.license.otherProfessionalType;
+    this.buttons = this.getButtons;
+
     if (this.passport != "" && this.passport != undefined) {
       if ("name" in this.passport) {
         if (this.draftId != undefined) {
@@ -801,22 +820,42 @@ export default {
         this.docList.push(this.herqa);
       }
     }
-    if (this.supportLetter != "" && this.supportLetter != undefined) {
-      if ("name" in this.supportLetter) {
-        if (this.draftId != undefined) {
-          this.documentsArray.splice(
-            this.documentsArray.findIndex(
-              (e) => e.documentTypeCode === "SLFSI"
-            ),
-            1
-          );
+    if (this.applicantTypeId == 1) {
+      if (this.supportLetter != "" && this.supportLetter != undefined) {
+        if ("name" in this.supportLetter) {
+          if (this.draftId != undefined) {
+            this.documentsArray.splice(
+              this.documentsArray.findIndex((e) => e.documentTypeCode === "SL"),
+              1
+            );
+          }
+          var filePreview = await this.blobToBase64(this.supportLetter);
+          this.supportLetter.docFile = filePreview;
+          this.supportLetter.title = "Support Letter";
+          this.docList.push(this.supportLetter);
         }
-        var filePreview = await this.blobToBase64(this.supportLetter);
-        this.supportLetter.docFile = filePreview;
-        this.supportLetter.title = "Support Letter From Sponsored Institution";
-        this.docList.push(this.supportLetter);
       }
     }
+    if (this.applicantTypeId == 3) {
+      if (this.supportLetter != "" && this.supportLetter != undefined) {
+        if ("name" in this.supportLetter) {
+          if (this.draftId != undefined) {
+            this.documentsArray.splice(
+              this.documentsArray.findIndex(
+                (e) => e.documentTypeCode === "SLFSI"
+              ),
+              1
+            );
+          }
+          var filePreview = await this.blobToBase64(this.supportLetter);
+          this.supportLetter.docFile = filePreview;
+          this.supportLetter.title =
+            "Support Letter From Sponsored Institution";
+          this.docList.push(this.supportLetter);
+        }
+      }
+    }
+
     if (this.coc != "" && this.coc != undefined) {
       if ("name" in this.coc) {
         if (this.draftId != undefined) {
@@ -1146,24 +1185,6 @@ export default {
         this.docList.push(this.renewedLicenseFromHealthFacility);
       }
     }
-    this.buttons = this.getButtons;
-    this.fetchProfileInfo();
-    this.setDocs();
-    this.getDocumentSpecs();
-    this.license = this.getLicense;
-    this.applicantId = this.license.applicantId;
-    this.applicantTypeId = this.license.applicantTypeId;
-    this.education.departmentId = this.license.education.departmentId;
-    this.education.institutionId = this.license.education.institutionId;
-    this.residenceWoredaId = this.license.residenceWoredaId;
-    this.professionalTypeIds = this.license.professionalTypeIds;
-    this.occupationTypeId = this.license.occupationTypeId;
-    this.educationalLevelId = this.license.educationalLevelId;
-    this.nativeLanguageId = this.license.nativeLanguageId;
-    this.expertLevelId = this.license.expertLevelId;
-    this.otherEducationalInstitution = this.license.otherEducationalInstitution;
-    this.otherProfessionalType = this.license.otherProfessionalType;
-    this.buttons = this.getButtons;
   },
 
   data: () => ({
@@ -1737,11 +1758,18 @@ export default {
                   this.educationalDocs[4]
                 );
               }
-
-              formData.append(
-                this.documentTypes[64].documentType.code,
-                this.supportLetter
-              );
+              if (this.applicantTypeId == 1) {
+                formData.append(
+                  this.documentTypes[15].documentType.code,
+                  this.supportLetter
+                );
+              }
+              if (this.applicantTypeId == 3) {
+                formData.append(
+                  this.documentTypes[64].documentType.code,
+                  this.supportLetter
+                );
+              }
               formData.append(
                 this.documentTypes[16].documentType.code,
                 this.herqa
@@ -1919,10 +1947,18 @@ export default {
           );
         }
 
-        formData.append(
-          this.documentTypes[64].documentType.code,
-          this.supportLetter
-        );
+        if (this.applicantTypeId == 1) {
+          formData.append(
+            this.documentTypes[15].documentType.code,
+            this.supportLetter
+          );
+        }
+        if (this.applicantTypeId == 3) {
+          formData.append(
+            this.documentTypes[64].documentType.code,
+            this.supportLetter
+          );
+        }
         formData.append(this.documentTypes[16].documentType.code, this.herqa);
         formData.append(
           this.documentTypes[18].documentType.code,
@@ -2168,10 +2204,18 @@ export default {
                 );
               }
 
-              formData.append(
-                this.documentTypes[64].documentType.code,
-                this.supportLetter
-              );
+              if (this.applicantTypeId == 1) {
+                formData.append(
+                  this.documentTypes[15].documentType.code,
+                  this.supportLetter
+                );
+              }
+              if (this.applicantTypeId == 3) {
+                formData.append(
+                  this.documentTypes[64].documentType.code,
+                  this.supportLetter
+                );
+              }
               formData.append(
                 this.documentTypes[16].documentType.code,
                 this.herqa
@@ -2349,10 +2393,18 @@ export default {
           );
         }
 
-        formData.append(
-          this.documentTypes[64].documentType.code,
-          this.supportLetter
-        );
+        if (this.applicantTypeId == 1) {
+          formData.append(
+            this.documentTypes[15].documentType.code,
+            this.supportLetter
+          );
+        }
+        if (this.applicantTypeId == 3) {
+          formData.append(
+            this.documentTypes[64].documentType.code,
+            this.supportLetter
+          );
+        }
         formData.append(this.documentTypes[16].documentType.code, this.herqa);
         formData.append(
           this.documentTypes[18].documentType.code,

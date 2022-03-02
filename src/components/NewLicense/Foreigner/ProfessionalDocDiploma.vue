@@ -27,9 +27,23 @@
         </h2>
         <TitleWithIllustration
           illustration="Certificate"
-          message="Professional Document Diploma"
+          message="Professional Document"
           class="mt-8"
         />
+        <div class="flex justify-center">
+          <label class="text-xl" v-if="educationLevel == 'diploma'">
+            Professinal Document Diploma
+          </label>
+          <label class="text-xl" v-if="educationLevel == 'degree'">
+            Professinal Document Degree
+          </label>
+          <label class="text-xl" v-if="educationLevel == 'masters'">
+            Professinal Document Masters
+          </label>
+          <label class="text-xl" v-if="educationLevel == 'phd'">
+            Professinal Document PhD
+          </label>
+        </div>
         <span class="flex justify-center">{{ documentMessage }}</span>
         <div class="ml-24">
           <button @click="addDocs()">Add Document</button>
@@ -462,7 +476,6 @@ export default {
     let mastersTranscript = ref("");
     let phd = ref("");
     let phdTranscript = ref("");
-    let renewedLicenseOfHealthFacility = ref("");
 
     let professionalDocCertificate = ref("");
     let professionalDocCertificate2 = ref("");
@@ -475,6 +488,8 @@ export default {
     let professionalDocTranscript3 = ref("");
     let professionalDocTranscript4 = ref("");
     let professionalDocTranscript5 = ref("");
+
+    let educationLevel = localStorage.getItem("educationalLevel");
 
     let docCount = ref(0);
 
@@ -737,7 +752,6 @@ export default {
     mastersTranscript = store.getters["newlicense/getMastersTranscript"];
     phd = store.getters["newlicense/getPhd"];
     phdTranscript = store.getters["newlicense/getPhdTranscript"];
-    renewedLicenseOfHealthFacility = store.getters["newlicense/getRenewedLicenseOfHealthFacility"];
 
     professionalDocCertificate =
       store.getters["newlicense/getProfessionalDocCertificate"];
@@ -974,8 +988,6 @@ export default {
             );
             formData.append(documentSpecs[26].documentType.code, phd);
             formData.append(documentSpecs[27].documentType.code, phdTranscript);
-            formData.append(documentSpecs[63].documentType.code, renewedLicenseOfHealthFacility);
-
             let payload = { document: formData, id: licenseId };
             store
               .dispatch("newlicense/uploadDocuments", payload)
@@ -1482,6 +1494,8 @@ export default {
       docCount,
       addDocs,
       removeDocs,
+
+      educationLevel,
     };
   },
 };
