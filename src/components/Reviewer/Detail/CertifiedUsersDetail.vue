@@ -37,8 +37,8 @@
                     </div>
                   </div>
                   <div>
-                    <h6>የምዝገባ ቁጥር: {{ certifiedUser.licenseNumber }}</h6>
-                    <h6>License Number: {{ certifiedUser.licenseNumber }}</h6>
+                    <h6>የምዝገባ ቁጥር: {{ certificateDetail.licenseNumber }}</h6>
+                    <!-- <h6>License Number: {{ certificateDetail.licenseNumber }}</h6> -->
                   </div>
                   <!-- <br/>
                   <div>
@@ -55,22 +55,28 @@
                     <h4>
                       በአዋጅ ቁጥር
                       {{
-                        certificateDetail.reviewer.region.code === "ORO"
-                          ? "661/2002"
-                          : certificateDetail.reviewer.region.code === "AA"
-                          ? "64/2011"
-                          : certificateDetail.reviewer.region.code === "FED"
+                        certificateDetail.reviewer.expertLevel &&
+                        certificateDetail.reviewer.expertLevel.code === "FED"
                           ? "1112/2011"
+                          : certificateDetail.reviewer.region &&
+                            certificateDetail.reviewer.region.code === "AA"
+                          ? "64/2011"
+                          : certificateDetail.reviewer.region &&
+                            certificateDetail.reviewer.region.code === "ORO"
+                          ? "661/2002"
                           : "-"
                       }}
                       አንቀጽ
                       {{
-                        certificateDetail.reviewer.region.code === "ORO"
-                          ? "3/3"
-                          : certificateDetail.reviewer.region.code === "AA"
-                          ? "44/8"
-                          : certificateDetail.reviewer.region.code === "FED"
+                        certificateDetail.reviewer.expertLevel &&
+                        certificateDetail.reviewer.expertLevel.code === "FED"
                           ? "73"
+                          : certificateDetail.reviewer.region &&
+                            certificateDetail.reviewer.region.code === "AA"
+                          ? "44/8"
+                          : certificateDetail.reviewer.region &&
+                            certificateDetail.reviewer.region.code === "ORO"
+                          ? "3/3"
                           : "-"
                       }}
                       ስልጣን መሰረት
@@ -157,22 +163,28 @@
                     <h4>
                       of Health by Virtue of proclamation No.
                       {{
-                        certificateDetail.reviewer.region.code === "ORO"
-                          ? "661/2002"
-                          : certificateDetail.reviewer.region.code === "AA"
-                          ? "64/2011"
-                          : certificateDetail.reviewer.region.code === "FED"
+                        certificateDetail.reviewer.expertLevel &&
+                        certificateDetail.reviewer.expertLevel.code === "FED"
                           ? "1112/2011"
+                          : certificateDetail.reviewer.region &&
+                            certificateDetail.reviewer.region.code === "AA"
+                          ? "64/2011"
+                          : certificateDetail.reviewer.region &&
+                            certificateDetail.reviewer.region.code === "ORO"
+                          ? "661/2002"
                           : "-"
                       }}
                       Article
                       {{
-                        certificateDetail.reviewer.region.code === "ORO"
-                          ? "3/3"
-                          : certificateDetail.reviewer.region.code === "AA"
-                          ? "44/8"
-                          : certificateDetail.reviewer.region.code === "FED"
+                        certificateDetail.reviewer.expertLevel &&
+                        certificateDetail.reviewer.expertLevel.code === "FED"
                           ? "73"
+                          : certificateDetail.reviewer.region &&
+                            certificateDetail.reviewer.region.code === "AA"
+                          ? "44/8"
+                          : certificateDetail.reviewer.region &&
+                            certificateDetail.reviewer.region.code === "ORO"
+                          ? "3/3"
                           : "-"
                       }}
                     </h4>
