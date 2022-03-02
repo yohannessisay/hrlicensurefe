@@ -101,7 +101,6 @@
           <br />
           <li>Work Experience</li>
           <li>Academic Transcript</li>
-          <li>Letter from Hiring Organization</li>
         </ul>
       </div>
       <div class="ml-2">
@@ -140,7 +139,6 @@
           </div>
           <br />
           <li>Support Letter from Sponsored Institution</li>
-          <li>Letter from Hiring Organization</li>
         </ul>
       </div>
     </div>
