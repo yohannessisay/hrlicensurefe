@@ -25,24 +25,35 @@
         >
           ACCEPTED
         </h2>
-        <TitleWithIllustration
-          illustration="Certificate"
-          message="Professional Document"
-          class="mt-8"
-        />
-        <div class="flex justify-center">
-          <label class="text-xl" v-if="educationLevel == 'diploma'">
-            Professinal Document Diploma
-          </label>
-          <label class="text-xl" v-if="educationLevel == 'degree'">
-            Professinal Document Degree
-          </label>
-          <label class="text-xl" v-if="educationLevel == 'masters'">
-            Professinal Document Masters
-          </label>
-          <label class="text-xl" v-if="educationLevel == 'phd'">
-            Professinal Document PhD
-          </label>
+        <div v-if="educationLevel == 'diploma'">
+          <TitleWithIllustration
+            illustration="Certificate"
+            message="Professional Document Diploma"
+            class="mt-8"
+          />
+        </div>
+
+        <div v-if="educationLevel == 'degree'">
+          <TitleWithIllustration
+            illustration="Certificate"
+            message="Professional Document Degree"
+            class="mt-8"
+          />
+        </div>
+
+        <div v-if="educationLevel == 'masters'">
+          <TitleWithIllustration
+            illustration="Certificate"
+            message="Professional Document Masters"
+            class="mt-8"
+          />
+        </div>
+        <div v-if="educationLevel == 'phd'">
+          <TitleWithIllustration
+            illustration="Certificate"
+            message="Professional Document PhD"
+            class="mt-8"
+          />
         </div>
         <span class="flex justify-center">{{ documentMessage }}</span>
         <div class="ml-24">
