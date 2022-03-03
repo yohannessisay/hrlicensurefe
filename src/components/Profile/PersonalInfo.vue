@@ -347,7 +347,7 @@ export default {
       showUpload.value = false;
       photoFile.value = photoFileP.value.files[0];
       let reader = new FileReader();
-      if (photoFile.value.size > 3000000) {
+      if (photoFile.value.size > 3145728) {
         photoSizeCheck.value = true;
       } else {
         let fileS = photoFile.value.size;
