@@ -605,7 +605,7 @@ export default {
       doc.setFont("Tera-Regular"); // set font
 
       doc.setFontSize(17);
-      if (code === "AA") {
+      if (code === "AA" || code == "FED") {
         doc.text(
           60,
           namePosition - 5,
