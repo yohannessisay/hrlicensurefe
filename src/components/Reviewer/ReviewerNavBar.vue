@@ -403,6 +403,12 @@ export default {
           search.value
         );
       }
+      if (props.tab === "newLicenseUnassignedEvaluation") {
+        store.dispatch(
+          "reviewerNewLicense/getNewLicenseApprovedSearched",
+          search.value
+        )
+      }
       if (props.tab === "othersNewLicenseUnderSuperVision") {
         store.dispatch(
           "reviewerNewLicense/getNewLicenseOthersUnderSuperVisionSearched",

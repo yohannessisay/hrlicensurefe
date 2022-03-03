@@ -55,6 +55,7 @@
             </div>
           </li>
           <li>Work Experience</li>
+          <li>Letter from Hiring Organization</li>
         </ul>
       </div>
       <div class="ml-8">
