@@ -63,7 +63,7 @@
                           ? "64/2011"
                           : certificateDetail.reviewer.region &&
                             certificateDetail.reviewer.region.code === "ORO"
-                          ? "661/2002"
+                          ? "661/2009"
                           : "-"
                       }}
                       አንቀጽ
@@ -165,10 +165,10 @@
                       {{
                         certificateDetail.reviewer.expertLevel &&
                         certificateDetail.reviewer.expertLevel.code === "FED"
-                          ? "1112/2011"
+                          ? "1112/2019"
                           : certificateDetail.reviewer.region &&
                             certificateDetail.reviewer.region.code === "AA"
-                          ? "64/2011"
+                          ? "64/2019"
                           : certificateDetail.reviewer.region &&
                             certificateDetail.reviewer.region.code === "ORO"
                           ? "661/2002"
