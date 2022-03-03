@@ -330,6 +330,12 @@ export default {
           search.value
         );
       }
+      if (props.tab === "renewalUnassignedEvaluation") {
+        store.dispatch(
+          "reviewerRenewal/getRenewalApprovedSearched",
+          search.value
+        )
+      }
       if (props.tab === "renewalLicensed") {
         store.dispatch(
           "reviewerRenewal/getRenewalLicensedSearched",
