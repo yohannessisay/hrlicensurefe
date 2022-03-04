@@ -58,7 +58,13 @@
             </span>
           </div>
           <br />
-          <li>Renewed License of Health Facility</li>
+          <div class="tooltip">
+            Renewed License of Health Facility
+            <span class="tooltiptext ml-4">
+              Found in Ethiopia
+            </span>
+          </div>
+          <br />
         </ul>
       </div>
       <div class="ml-2">
