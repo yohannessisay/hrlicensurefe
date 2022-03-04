@@ -270,7 +270,7 @@
           </button>
           <button
             class="withdraw"
-            @click="withdraw(this.buttons[0].action)"
+            @click="withdraw(this.buttons[1].action)"
             variant="outline"
           >
             {{ this.buttons[1]["name"] }}
@@ -1146,8 +1146,7 @@ export default {
         this.transcript !== "" &&
         this.workExperience !== "" &&
         this.previousLicense !== "" &&
-        this.cpd !== "" &&
-        this.letterFromOrg !== ""
+        this.cpd !== ""
       ) {
         if (payroll == "payroll" && this.payroll !== "") {
           return true;
@@ -1189,8 +1188,7 @@ export default {
         this.transcript !== "" &&
         this.workExperience !== "" &&
         this.previousLicense !== "" &&
-        this.cpd !== "" &&
-        this.letterFromOrg !== ""
+        this.cpd !== ""
       ) {
         if (payroll == "payroll" && this.payroll !== "") {
           return true;
@@ -1234,8 +1232,7 @@ export default {
         this.transcript !== "" &&
         this.workExperience !== "" &&
         this.previousLicense !== "" &&
-        this.cpd !== "" &&
-        this.letterFromOrg !== ""
+        this.cpd !== ""
       ) {
         if (payroll == "payroll" && this.payroll !== "") {
           return true;
@@ -1281,8 +1278,7 @@ export default {
         this.transcript !== "" &&
         this.workExperience !== "" &&
         this.previousLicense !== "" &&
-        this.cpd !== "" &&
-        this.letterFromOrg !== ""
+        this.cpd !== ""
       ) {
         if (payroll == "payroll" && this.payroll !== "") {
           return true;
@@ -1316,7 +1312,8 @@ export default {
         this.herqa !== "" &&
         this.workExperience !== "" &&
         this.previousLicense !== "" &&
-        this.cpd !== ""
+        this.cpd !== "" && 
+        this.renewedLicenseOfHealthFacility !== ""
       ) {
         return true;
       } else if (
@@ -1326,7 +1323,8 @@ export default {
         this.letterFromOrg !== "" &&
         this.previousLicense !== "" &&
         this.cpd !== "" &&
-        this.workExperience !== ""
+        this.workExperience !== "" &&
+        this.renewedLicenseOfHealthFacility !== ""
       ) {
         return true;
       } else if (
