@@ -55,7 +55,6 @@
             </div>
           </li>
           <li>Work Experience</li>
-          <li>Letter from Hiring Organization</li>
         </ul>
       </div>
       <div class="ml-8">
@@ -65,7 +64,6 @@
           <li>CPD Certificate</li>
           <li>Previous License</li>
           <li>Work Experience</li>
-          <li>Letter from Hiring Organization</li>
         </ul>
       </div>
     </div>

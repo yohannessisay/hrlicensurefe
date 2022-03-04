@@ -25,11 +25,20 @@
         >
           ACCEPTED
         </h2>
-        <TitleWithIllustration
-          illustration="Certificate"
-          message="Medical Certificate"
-          class="mt-8"
-        />
+        <div v-if="applicantTypeId == 1">
+          <TitleWithIllustration
+            illustration="Certificate"
+            message="Medical Certificate"
+            class="mt-8"
+          />
+        </div>
+        <div v-else>
+          <TitleWithIllustration
+            illustration="Certificate"
+            message="Health Certificate"
+            class="mt-8"
+          />
+        </div>
         <span class="flex justify-center">{{ documentMessage }}</span>
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
           <div class="flex justify-center">
@@ -312,6 +321,7 @@ export default {
     let buttons = ref([]);
     let documentSpecs = ref([]);
     let userId = +localStorage.getItem("userId");
+    let applicantTypeId = +localStorage.getItem("applicantTypeId");
     let licenseInfo = ref("");
     let draftData = ref("");
 
@@ -917,6 +927,8 @@ export default {
       docIdx3,
       docIdx4,
       docIdx5,
+
+      applicantTypeId,
     };
   },
 };

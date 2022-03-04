@@ -271,10 +271,10 @@
           </button>
           <button
             class="withdraw"
-            @click="withdraw(this.buttons[0].action)"
+            @click="withdraw(this.buttons[1].action)"
             variant="outline"
           >
-            {{ this.buttons[0]["name"] }}
+            {{ this.buttons[1]["name"] }}
           </button>
         </div>
         <div
@@ -352,7 +352,6 @@ export default {
     this.userId = +localStorage.getItem("userId");
     this.draftId = this.$route.params.id;
     this.draftStatus = this.$route.params.status;
-
     if (this.draftId != undefined) {
       setTimeout(() => {
         this.draftData = this.getDraftData;
@@ -436,7 +435,6 @@ export default {
     this.expertLevelId = this.license.expertLevelId;
     this.otherEducationalInstitution = this.license.otherEducationalInstitution;
     this.otherProfessionalType = this.license.otherProfessionalType;
-    this.buttons = this.getButtons;
 
     if (this.levelOfEducation == "diploma") {
       this.docCode = "PDD";
@@ -1560,7 +1558,8 @@ export default {
         this.proDiploma !== "" &&
         this.proTranscript !== "" &&
         this.professionalLicense !== "" &&
-        this.renewedLicense !== ""
+        this.renewedLicense !== "" && 
+        this.renewedLicenseFromHealthFacility !== ""
       ) {
         if (language == "english" && this.englishLanguage !== "") {
           return false;
@@ -1576,7 +1575,8 @@ export default {
         this.proDiploma !== "" &&
         this.proTranscript !== "" &&
         this.professionalLicense !== "" &&
-        this.renewedLicense !== ""
+        this.renewedLicense !== "" && 
+        this.renewedLicenseFromHealthFacility !== ""
       ) {
         if (language == "english" && this.englishLanguage !== "") {
           return false;
@@ -1592,7 +1592,8 @@ export default {
         this.proDiploma !== "" &&
         this.proTranscript !== "" &&
         this.professionalLicense !== "" &&
-        this.renewedLicense !== ""
+        this.renewedLicense !== "" && 
+        this.renewedLicenseFromHealthFacility !== ""
       ) {
         if (language == "english" && this.englishLanguage !== "") {
           return false;
@@ -1608,7 +1609,8 @@ export default {
         this.proDiploma !== "" &&
         this.proTranscript !== "" &&
         this.professionalLicense !== "" &&
-        this.renewedLicense !== ""
+        this.renewedLicense !== "" && 
+        this.renewedLicenseFromHealthFacility !== ""
       ) {
         if (language == "english" && this.englishLanguage !== "") {
           return false;
@@ -1622,7 +1624,8 @@ export default {
         this.herqa !== "" &&
         this.proCertificate !== "" &&
         this.proDiploma !== "" &&
-        this.proTranscript !== ""
+        this.proTranscript !== "" &&
+        this.professionalLicense !== ""
       ) {
         return true;
       } else if (
@@ -1633,7 +1636,8 @@ export default {
         this.herqa !== "" &&
         this.proCertificate !== "" &&
         this.proDiploma !== "" &&
-        this.proTranscript !== ""
+        this.proTranscript !== "" &&
+        this.professionalLicense !== ""
       ) {
         return true;
       } else if (
@@ -1644,7 +1648,8 @@ export default {
         this.herqa !== "" &&
         this.proCertificate !== "" &&
         this.proDiploma !== "" &&
-        this.proTranscript !== ""
+        this.proTranscript !== "" &&
+        this.professionalLicense !== ""
       ) {
         return true;
       } else if (
@@ -1655,7 +1660,8 @@ export default {
         this.herqa !== "" &&
         this.proCertificate !== "" &&
         this.proDiploma !== "" &&
-        this.proTranscript !== ""
+        this.proTranscript !== "" &&
+        this.professionalLicense !== ""
       ) {
         return true;
       } else {

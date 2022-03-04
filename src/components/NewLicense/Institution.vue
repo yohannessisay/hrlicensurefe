@@ -872,6 +872,10 @@ export default {
                   this.licenseInfo.occupationTypeId
                 );
                 this.$emit("diplomaSet", this.licenseInfo.educationalLevelId);
+                localStorage.setItem(
+                  "applicantTypeId",
+                  this.licenseInfo.applicantTypeId
+                );
                 this.$store.dispatch("newlicense/setLicense", license);
               }
             });
@@ -881,6 +885,10 @@ export default {
           this.$emit("nativeLanguageSet", this.licenseInfo.nativeLanguageId);
           this.$emit("payrollDocumentSet", this.licenseInfo.occupationTypeId);
           this.$emit("diplomaSet", this.licenseInfo.educationalLevelId);
+          localStorage.setItem(
+            "applicantTypeId",
+            this.licenseInfo.applicantTypeId
+          );
           this.$store.dispatch("newlicense/setLicense", license);
         }
       }
