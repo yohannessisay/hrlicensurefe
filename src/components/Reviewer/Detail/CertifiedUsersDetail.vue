@@ -545,7 +545,7 @@ export default {
         doc.text(
           xPosition.value,
           professionPossition + i * professionListGap,
-          `${
+          `${certificateDetail.value.professionalTypes.length > 1 ? i+1 + '. ' : ''}${
             certificateDetail.value.professionalTypePrefixes[i]
               .professionalTypes.name
               ? `${
@@ -593,7 +593,7 @@ export default {
         }`
       );
       // License Number
-      doc.text(245, 58, `${certificateDetail.value.licenseNumber}`);
+      // doc.text(245, 58, `${certificateDetail.value.licenseNumber}`);
       // License Number for amharic
       doc.text(38, 58, `${certificateDetail.value.licenseNumber}`);
 
@@ -662,7 +662,7 @@ export default {
         doc.text(
           xPosition.value,
           professionPossition + i * professionListGap,
-          `${
+          `${certificateDetail.value.professionalTypes.length > 1 ? i+1 + '. ' : ''}${
             certificateDetail.value.professionalTypes[i].professionalTypes
               .amharicProfessionalType
               ? certificateDetail.value.professionalTypes[i].professionalTypes
