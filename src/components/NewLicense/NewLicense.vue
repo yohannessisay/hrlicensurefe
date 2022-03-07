@@ -896,8 +896,17 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 13">
-                <LicenseSummary
+                <RequestLetterFromHiringHealthFacility
                   :activeState="13"
+                  @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
+                />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 14">
+                <LicenseSummary
+                  :activeState="14"
                   @changeActiveState="activeState++"
                   @changeActiveStateMinus="activeState--"
                 />
@@ -1002,8 +1011,17 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 12">
-                <LicenseSummary
+                <RequestLetterFromHiringHealthFacility
                   :activeState="12"
+                  @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
+                />
+              </div>
+            </transition>
+            <transition name="fade" mode="out-in">
+              <div v-if="this.activeState == 13">
+                <LicenseSummary
+                  :activeState="13"
                   @changeActiveState="activeState++"
                   @changeActiveStateMinus="activeState--"
                 />
@@ -1125,6 +1143,7 @@ import WorkExperienceF from "./Ethiopians F/WorkExperience.vue";
 import ProfessionalLicenseE from "./Ethiopians F/ProfessionalLicense";
 
 import RenewedLicenseOfHealthFacility from "./Foreigner/RenewedLicenseOfHealthFacility";
+import RequestLetterFromHiringHealthFacility from "./Foreigner/RequestLetterFromHiringHealthFacility";
 
 import COC from "./Ethiopians L/COC";
 import EducationalDoc from "./Ethiopians L/EducationalDoc";
@@ -1209,6 +1228,7 @@ export default {
     PhD,
     PhDTranscript,
     RenewedLicenseOfHealthFacility,
+    RequestLetterFromHiringHealthFacility,
     ProfessionalLicenseE,
   },
 

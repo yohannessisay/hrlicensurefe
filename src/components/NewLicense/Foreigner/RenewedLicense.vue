@@ -250,6 +250,7 @@ export default {
     let phd = ref("");
     let phdTranscript = ref("");
     let renewedLicenseOfHealthFacility = ref("");
+    let requestLetterFromHiringHealthFacility = ref("");
 
     let professionalDocCertificate = ref("");
     let professionalDocCertificate2 = ref("");
@@ -393,6 +394,8 @@ export default {
     phd = store.getters["newlicense/getPhd"];
     renewedLicenseOfHealthFacility =
       store.getters["newlicense/getRenewedLicenseOfHealthFacility"];
+    requestLetterFromHiringHealthFacility =
+      store.getters["getRequestLetterFromHiringHealthFacility"];
 
     phdTranscript = store.getters["newlicense/getPhdTranscript"];
     professionalDocCertificate =
@@ -633,6 +636,10 @@ export default {
             formData.append(
               documentSpecs[63].documentType.code,
               renewedLicenseOfHealthFacility
+            );
+            formData.append(
+              documentSpecs[65].documentType.code,
+              requestLetterFromHiringHealthFacility
             );
 
             let payload = { document: formData, id: licenseId };

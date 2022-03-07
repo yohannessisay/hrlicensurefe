@@ -259,6 +259,8 @@ export default {
     let mastersTranscript = ref("");
     let phd = ref("");
     let phdTranscript = ref("");
+    let requestLetterFromHiringHealthFacility = ref("");
+
     let professionalDocCertificate = ref("");
     let professionalDocCertificate2 = ref("");
     let professionalDocCertificate3 = ref("");
@@ -398,6 +400,9 @@ export default {
     masters = store.getters["newlicense/getMasters"];
     mastersTranscript = store.getters["newlicense/getMastersTranscript"];
     phd = store.getters["newlicense/getPhd"];
+    requestLetterFromHiringHealthFacility =
+      store.getters["getRequestLetterFromHiringHealthFacility"];
+
     phdTranscript = store.getters["newlicense/getPhdTranscript"];
     professionalDocCertificate =
       store.getters["newlicense/getProfessionalDocCertificate"];
@@ -637,6 +642,11 @@ export default {
               documentSpecs[63].documentType.code,
               licenseFile.value
             );
+            formData.append(
+              documentSpecs[65].documentType.code,
+              requestLetterFromHiringHealthFacility
+            );
+
             let payload = { document: formData, id: licenseId };
             store
               .dispatch("newlicense/uploadDocuments", payload)

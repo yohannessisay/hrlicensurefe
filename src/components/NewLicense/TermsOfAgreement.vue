@@ -71,7 +71,7 @@
         <h2>Ethiopian</h2>
         <ul>
           <li>Residence ID</li>
-          <li>Health Exam Certificate</li>
+          <li>Medical Certificate</li>
           <div class="tooltip">
             COC Certificate
             <span class="tooltiptext ml-4">

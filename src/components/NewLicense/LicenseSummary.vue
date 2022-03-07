@@ -417,6 +417,7 @@ export default {
     this.phdTranscript = this.getPhdTranscript;
     this.phdTranscript2 = this.getPhdTranscript2;
     this.renewedLicenseFromHealthFacility = this.getRenewedLicenseOfHealthFacility;
+    this.requestLetterFromHiringHealthFacility = this.getRequestLetterFromHiringHealthFacility;
 
     this.buttons = this.getButtons;
     this.fetchProfileInfo();
@@ -1225,6 +1226,28 @@ export default {
         this.docList.push(this.renewedLicenseFromHealthFacility);
       }
     }
+    if (
+      this.requestLetterFromHiringHealthFacility != "" &&
+      this.requestLetterFromHiringHealthFacility != undefined
+    ) {
+      if ("name" in this.requestLetterFromHiringHealthFacility) {
+        if (this.draftId != undefined) {
+          this.documentsArray.splice(
+            this.documentsArray.findIndex(
+              (e) => e.documentTypeCode === "RLFHHF"
+            ),
+            1
+          );
+        }
+        var filePreview = await this.blobToBase64(
+          this.requestLetterFromHiringHealthFacility
+        );
+        this.requestLetterFromHiringHealthFacility.docFile = filePreview;
+        this.requestLetterFromHiringHealthFacility.title =
+          "Request Letter from Hiring Health Facility";
+        this.docList.push(this.requestLetterFromHiringHealthFacility);
+      }
+    }
   },
 
   data: () => ({
@@ -1286,6 +1309,7 @@ export default {
     phdTranscript: "",
     phdTranscript2: "",
     renewedLicenseFromHealthFacility: "",
+    requestLetterFromHiringHealthFacility: "",
 
     eduEighth: "",
     eduTenth: "",
@@ -1383,6 +1407,8 @@ export default {
 
       getRenewedLicenseOfHealthFacility:
         "newlicense/getRenewedLicenseOfHealthFacility",
+      getRequestLetterFromHiringHealthFacility:
+        "newlicense/getRequestLetterFromHiringHealthFacility",
 
       getButtons: "newlicense/getButtons",
       getApplicationId: "newlicense/getApplicationId",
@@ -1558,8 +1584,9 @@ export default {
         this.proDiploma !== "" &&
         this.proTranscript !== "" &&
         this.professionalLicense !== "" &&
-        this.renewedLicense !== "" && 
-        this.renewedLicenseFromHealthFacility !== ""
+        this.renewedLicense !== "" &&
+        this.renewedLicenseFromHealthFacility !== "" &&
+        this.requestLetterFromHiringHealthFacility !== ""
       ) {
         if (language == "english" && this.englishLanguage !== "") {
           return false;
@@ -1575,8 +1602,9 @@ export default {
         this.proDiploma !== "" &&
         this.proTranscript !== "" &&
         this.professionalLicense !== "" &&
-        this.renewedLicense !== "" && 
-        this.renewedLicenseFromHealthFacility !== ""
+        this.renewedLicense !== "" &&
+        this.renewedLicenseFromHealthFacility !== "" &&
+        this.requestLetterFromHiringHealthFacility !== ""
       ) {
         if (language == "english" && this.englishLanguage !== "") {
           return false;
@@ -1592,8 +1620,9 @@ export default {
         this.proDiploma !== "" &&
         this.proTranscript !== "" &&
         this.professionalLicense !== "" &&
-        this.renewedLicense !== "" && 
-        this.renewedLicenseFromHealthFacility !== ""
+        this.renewedLicense !== "" &&
+        this.renewedLicenseFromHealthFacility !== "" &&
+        this.requestLetterFromHiringHealthFacility !== ""
       ) {
         if (language == "english" && this.englishLanguage !== "") {
           return false;
@@ -1609,8 +1638,9 @@ export default {
         this.proDiploma !== "" &&
         this.proTranscript !== "" &&
         this.professionalLicense !== "" &&
-        this.renewedLicense !== "" && 
-        this.renewedLicenseFromHealthFacility !== ""
+        this.renewedLicense !== "" &&
+        this.renewedLicenseFromHealthFacility !== "" &&
+        this.requestLetterFromHiringHealthFacility !== ""
       ) {
         if (language == "english" && this.englishLanguage !== "") {
           return false;
@@ -1872,6 +1902,10 @@ export default {
                 this.documentTypes[63].documentType.code,
                 this.renewedLicenseFromHealthFacility
               );
+              formData.append(
+                this.documentTypes[65].documentType.code,
+                this.requestLetterFromHiringHealthFacility
+              );
               let payload = { document: formData, id: licenseId };
 
               this.$store
@@ -2051,6 +2085,10 @@ export default {
         formData.append(
           this.documentTypes[63].documentType.code,
           this.renewedLicenseFromHealthFacility
+        );
+        formData.append(
+          this.documentTypes[65].documentType.code,
+          this.requestLetterFromHiringHealthFacility
         );
         let license = {
           action: action,
@@ -2318,6 +2356,10 @@ export default {
                 this.documentTypes[63].documentType.code,
                 this.renewedLicenseFromHealthFacility
               );
+              formData.append(
+                this.documentTypes[65].documentType.code,
+                this.requestLetterFromHiringHealthFacility
+              );
               let payload = { document: formData, id: licenseId };
               this.$store
                 .dispatch("newlicense/uploadDocuments", payload)
@@ -2497,6 +2539,10 @@ export default {
         formData.append(
           this.documentTypes[63].documentType.code,
           this.renewedLicenseFromHealthFacility
+        );
+        formData.append(
+          this.documentTypes[65].documentType.code,
+          this.requestLetterFromHiringHealthFacility
         );
         let license = {
           action: action,
