@@ -27,7 +27,7 @@
         </h2>
         <TitleWithIllustration
           illustration="Certificate"
-          message="Renewed License of the Organization"
+          message="Renewed License of Organization"
           class="mt-8"
         />
         <span class="flex justify-center">{{ documentMessage }}</span>
