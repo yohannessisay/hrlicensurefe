@@ -37,7 +37,6 @@
           <li>CPD Certificate</li>
           <li>Work Experience</li>
           <li>Renewed License of Health Facility</li>
-          <li>Letter from Hiring Organization</li>
         </ul>
       </div>
       <div class="ml-8">
