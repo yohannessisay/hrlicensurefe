@@ -25,20 +25,19 @@
         >
           ACCEPTED
         </h2>
-        <div class="tooltip">
+        <div>
           <TitleWithIllustration
             illustration="Certificate"
-            message="Higher Education Relevance and Quality Agency(HERQA)"
+            message="Request Letter from Hiring Health Facility"
             class="mt-8"
           />
-          <span class="tooltiptext ml-4">R Equivalence letter </span>
         </div>
         <span class="flex justify-center">{{ documentMessage }}</span>
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
           <div class="flex justify-center">
             <div>
               <span>
-                <h2 v-if="!fileSizeExceed">{{ herqaFile.name }}</h2>
+                <h2 v-if="!fileSizeExceed">{{ requestLetterFile.name }}</h2>
                 <h2 v-if="!fileSizeExceed">{{ fileSize }}</h2>
                 <h3 style="color: red" v-if="fileSizeExceed">
                   File size must be less than {{ maxSizeMB }} MB
@@ -53,9 +52,9 @@
                   <div class="dropbox">
                     <input
                       type="file"
-                      id="herqaFile"
+                      id="requestLetterFile"
                       class="photoFile"
-                      ref="herqaFileP"
+                      ref="requestLetterFileP"
                       v-on:change="handleFileUpload()"
                       style="margin-bottom: 15px !important"
                       accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
@@ -212,8 +211,8 @@ export default {
     let fileSize = ref("");
 
     let dataChanged = ref(false);
-    let herqaFile = ref("");
-    let herqaFileP = ref("");
+    let requestLetterFile = ref("");
+    let requestLetterFileP = ref("");
     let showPreview = ref(false);
     let filePreview = ref("");
     let showUpload = ref(true);
@@ -226,7 +225,7 @@ export default {
     let draftData = ref("");
     let draftStatus = ref("");
 
-    let herqaBack = ref("");
+    let requestLetterBack = ref("");
 
     let declinedFields = ref([]);
     let acceptedFields = ref([]);
@@ -243,6 +242,7 @@ export default {
     let passport = ref("");
     let healthExamCert = ref("");
     let professionalDoc = ref([]);
+    let herqa = ref("");
     let englishLanguage = ref("");
     let supportLetter = ref("");
     let coc = ref("");
@@ -261,7 +261,6 @@ export default {
     let phd = ref("");
     let phdTranscript = ref("");
     let renewedLicenseOfHealthFacility = ref("");
-    let requestLetterFromHiringHealthFacility = ref("");
 
     let professionalDocCertificate = ref("");
     let professionalDocCertificate2 = ref("");
@@ -318,7 +317,7 @@ export default {
     const reset = () => {
       showUpload.value = true;
       showPreview.value = false;
-      herqaFile.value = "";
+      requestLetterFile.value = "";
       filePreview.value = "";
       isImage.value = true;
       fileSize.value = "";
@@ -326,10 +325,10 @@ export default {
     };
 
     const handleFileUpload = () => {
-      herqaFile.value = herqaFileP.value.files[0];
+      requestLetterFile.value = requestLetterFileP.value.files[0];
       let reader = new FileReader();
       isImage.value = true;
-      let fileS = herqaFile.value.size;
+      let fileS = requestLetterFile.value.size;
       if (fileS <= maxFileSize.value / 1000) {
         fileSizeExceed.value = false;
         dataChanged.value = true;
@@ -349,29 +348,29 @@ export default {
           },
           false
         );
-        if (herqaFile.value) {
-          if (/\.(jpe?g|png|gif)$/i.test(herqaFile.value.name)) {
+        if (requestLetterFile.value) {
+          if (/\.(jpe?g|png|gif)$/i.test(requestLetterFile.value.name)) {
             isImage.value = true;
-            reader.readAsDataURL(herqaFile.value);
-          } else if (/\.(pdf)$/i.test(herqaFile.value.name)) {
+            reader.readAsDataURL(requestLetterFile.value);
+          } else if (/\.(pdf)$/i.test(requestLetterFile.value.name)) {
             isImage.value = false;
             isPdf.value = true;
-            reader.readAsDataURL(herqaFile.value);
+            reader.readAsDataURL(requestLetterFile.value);
           }
         }
       } else {
         fileSizeExceed.value = true;
-        herqaFile.value = "";
+        requestLetterFile.value = "";
         isImage.value = true;
       }
     };
     const submit = () => {
       emit("changeActiveState");
-      store.dispatch("newlicense/setHerqa", herqaFile);
+      store.dispatch("newlicense/setRequestLetterFromHiringHealthFacility", requestLetterFile);
     };
     const submitBack = () => {
       emit("changeActiveStateMinus");
-      store.dispatch("newlicense/setHerqa", herqaFile);
+      store.dispatch("newlicense/setRequestLetterFromHiringHealthFacility", requestLetterFile);
     };
     buttons = store.getters["newlicense/getButtons"];
     documentSpecs = store.getters["newlicense/getDocumentSpec"];
@@ -383,6 +382,7 @@ export default {
     englishLanguage = store.getters["newlicense/getEnglishLanguage"];
     supportLetter = store.getters["newlicense/getSupportLetter"];
     coc = store.getters["newlicense/getCoc"];
+    herqa = store.getters["newlicense/getHerqa"];
     educationDoc = store.getters["newlicense/getEducationalDocuments"];
     workExperience = store.getters["newlicense/getWorkExperience"];
     workExperience2 = store.getters["newlicense/getWorkExperience2"];
@@ -399,8 +399,6 @@ export default {
     phdTranscript = store.getters["newlicense/getPhdTranscript"];
     renewedLicenseOfHealthFacility =
       store.getters["newlicense/getRenewedLicenseOfHealthFacility"];
-    requestLetterFromHiringHealthFacility =
-      store.getters["getRequestLetterFromHiringHealthFacility"];
 
     professionalDocCertificate =
       store.getters["newlicense/getProfessionalDocCertificate"];
@@ -451,8 +449,8 @@ export default {
               let licenseId = route.params.id;
               let formData = new FormData();
               formData.append(
-                documentSpecs[16].documentType.code,
-                herqaFile.value
+                documentSpecs[65].documentType.code,
+                requestLetterFile.value
               );
               let payload = { document: formData, id: licenseId };
               store
@@ -615,9 +613,10 @@ export default {
               );
             }
             formData.append(documentSpecs[15].documentType.code, supportLetter);
+            formData.append(documentSpecs[16].documentType.code, herqa);
             formData.append(
-              documentSpecs[16].documentType.code,
-              herqaFile.value
+              documentSpecs[65].documentType.code,
+              requestLetterFile.value
             );
             formData.append(
               documentSpecs[18].documentType.code,
@@ -642,10 +641,6 @@ export default {
             formData.append(
               documentSpecs[63].documentType.code,
               renewedLicenseOfHealthFacility
-            );
-            formData.append(
-              documentSpecs[65].documentType.code,
-              requestLetterFromHiringHealthFacility
             );
 
             let payload = { document: formData, id: licenseId };
@@ -683,8 +678,8 @@ export default {
               let licenseId = route.params.id;
               let formData = new FormData();
               formData.append(
-                documentSpecs[16].documentType.code,
-                herqaFile.value
+                documentSpecs[65].documentType.code,
+                requestLetterFile.value
               );
               let payload = { document: formData, id: licenseId };
               store
@@ -751,8 +746,8 @@ export default {
             let licenseId = res.data.data.id;
             let formData = new FormData();
             formData.append(
-              documentSpecs[16].documentType.code,
-              herqaFile.value
+              documentSpecs[65].documentType.code,
+              requestLetterFile.value
             );
             let payload = { document: formData, id: licenseId };
             store
@@ -801,18 +796,18 @@ export default {
       documentMessage.value = MESSAGE.DOC_MESSAGE;
       maxFileSize.value = MAX_FILE_SIZE.MAX_FILE_SIZE;
       maxSizeMB.value = MAX_SIZE_MB.MAX_SIZE_MB;
-      herqaBack = store.getters["newlicense/getHerqa"];
+      requestLetterBack = store.getters["newlicense/getRequestLetterFromHiringHealthFacility"];
       if (
-        herqaBack &&
-        herqaBack !== undefined &&
-        herqaBack !== null &&
-        herqaBack !== ""
+        requestLetterBack &&
+        requestLetterBack !== undefined &&
+        requestLetterBack !== null &&
+        requestLetterBack !== ""
       ) {
         dataChanged.value = true;
         showUpload.value = false;
-        herqaFile.value = herqaBack;
+        requestLetterFile.value = requestLetterBack;
         let reader = new FileReader();
-        let fileS = herqaFile.value.size;
+        let fileS = requestLetterFile.value.size;
         if (fileS > 0 && fileS < 1000) {
           fileSize.value += "B";
         } else if (fileS > 1000 && fileS < 1000000) {
@@ -828,24 +823,24 @@ export default {
           },
           false
         );
-        if (herqaFile.value) {
-          if (/\.(jpe?g|png|gif)$/i.test(herqaFile.value.name)) {
+        if (requestLetterFile.value) {
+          if (/\.(jpe?g|png|gif)$/i.test(requestLetterFile.value.name)) {
             isImage.value = true;
-            reader.readAsDataURL(herqaFile.value);
-          } else if (/\.(pdf)$/i.test(herqaFile.value.name)) {
+            reader.readAsDataURL(requestLetterFile.value);
+          } else if (/\.(pdf)$/i.test(requestLetterFile.value.name)) {
             isImage.value = false;
             isPdf.value = true;
-            reader.readAsDataURL(herqaFile.value);
+            reader.readAsDataURL(requestLetterFile.value);
           }
         }
       }
       declinedFields = store.getters["newlicense/getDeclinedFields"];
       acceptedFields = store.getters["newlicense/getAcceptedFields"];
       remark = store.getters["newlicense/getRemark"];
-      if (declinedFields != undefined && declinedFields.includes("HERQA")) {
+      if (declinedFields != undefined && declinedFields.includes("RLFHHF")) {
         declinedFieldsCheck.value = true;
       }
-      if (acceptedFields != undefined && acceptedFields.includes("HERQA")) {
+      if (acceptedFields != undefined && acceptedFields.includes("RLFHHF")) {
         acceptedFieldsCheck.value = true;
       }
 
@@ -854,7 +849,7 @@ export default {
       if (route.params.id) {
         draftStatus.value = route.params.status;
         for (let i = 0; i < draftData.documents.length; i++) {
-          if (draftData.documents[i].documentTypeCode == "HERQA") {
+          if (draftData.documents[i].documentTypeCode == "RLFHHF") {
             showUpload.value = false;
             if (draftData.documents[i].fileName.split(".")[1] == "pdf") {
               isPdf.value = true;
@@ -862,7 +857,7 @@ export default {
               isImage.value = true;
             }
 
-            herqaFile.value = draftData.documents[i];
+            requestLetterFile.value = draftData.documents[i];
             showPreview.value = true;
             filePreview.value = basePath + draftData.documents[i].filePath;
           }
@@ -870,9 +865,9 @@ export default {
       }
     });
     return {
-      herqaFile,
-      herqaFileP,
-      herqaBack,
+      requestLetterFile,
+      requestLetterFileP,
+      requestLetterBack,
       showPreview,
       filePreview,
       showUpload,
@@ -922,51 +917,5 @@ img {
   background-image: linear-gradient(to right, #d63232, #e63636) !important;
   color: white;
   border-color: tomato;
-}
-.tooltip .tooltiptext {
-  visibility: hidden;
-  width: 120px;
-  background-color: #1e40af82;
-  color: #fff;
-  text-align: center;
-  padding: 5px 0;
-  border-radius: 6px;
-
-  /* Position the tooltip text - see examples below! */
-  position: absolute;
-  z-index: 1;
-}
-
-/* Show the tooltip text when you mouse over the tooltip container */
-.tooltip:hover .tooltiptext {
-  visibility: visible;
-}
-.tooltip {
-  position: relative;
-  display: inline-block;
-  border-bottom: 1px dotted white; /* If you want dots under the hoverable text */
-}
-.tooltip .tooltiptext {
-  visibility: hidden;
-  width: 120px;
-  background-color: #1e40af82;
-  color: #fff;
-  text-align: center;
-  padding: 5px 0;
-  border-radius: 6px;
-
-  /* Position the tooltip text - see examples below! */
-  position: absolute;
-  z-index: 1;
-}
-
-/* Show the tooltip text when you mouse over the tooltip container */
-.tooltip:hover .tooltiptext {
-  visibility: visible;
-}
-.tooltip {
-  position: relative;
-  display: inline-block;
-  border-bottom: 1px dotted white; /* If you want dots under the hoverable text */
 }
 </style>
