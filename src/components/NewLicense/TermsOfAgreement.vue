@@ -40,6 +40,7 @@
               Equivalence Letter
             </span>
           </div>
+          <br />
           <div class="tooltip">
             Authenticated Academic Document
             <span class="tooltiptext ml-4">
@@ -47,10 +48,9 @@
             </span>
           </div>
           <br />
-          <div class="tooltip">
+          <li>
             Authenticated Professional License from Country of Origin
-          </div>
-          <br />
+          </li>
           <div class="tooltip">
             Current Work Experience / Goodstanding Letter
             <span class="tooltiptext ml-4">
