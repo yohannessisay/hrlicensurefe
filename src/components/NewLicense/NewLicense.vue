@@ -869,7 +869,7 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 10">
-                <RenewedLicense
+                <WorkExperienceF
                   :activeState="10"
                   @changeActiveState="activeState++"
                   @changeActiveStateMinus="activeState--"
@@ -878,7 +878,7 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 11">
-                <WorkExperienceF
+                <RenewedLicenseOfHealthFacility
                   :activeState="11"
                   @changeActiveState="activeState++"
                   @changeActiveStateMinus="activeState--"
@@ -887,7 +887,7 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 12">
-                <RenewedLicenseOfHealthFacility
+                <RequestLetterFromHiringHealthFacility
                   :activeState="12"
                   @changeActiveState="activeState++"
                   @changeActiveStateMinus="activeState--"
@@ -896,17 +896,8 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 13">
-                <RequestLetterFromHiringHealthFacility
-                  :activeState="13"
-                  @changeActiveState="activeState++"
-                  @changeActiveStateMinus="activeState--"
-                />
-              </div>
-            </transition>
-            <transition name="fade" mode="out-in">
-              <div v-if="this.activeState == 14">
                 <LicenseSummary
-                  :activeState="14"
+                  :activeState="13"
                   @changeActiveState="activeState++"
                   @changeActiveStateMinus="activeState--"
                 />
@@ -984,7 +975,7 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 9">
-                <RenewedLicense
+                <WorkExperienceF
                   :activeState="9"
                   @changeActiveState="activeState++"
                   @changeActiveStateMinus="activeState--"
@@ -993,7 +984,7 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 10">
-                <WorkExperienceF
+                <RenewedLicenseOfHealthFacility
                   :activeState="10"
                   @changeActiveState="activeState++"
                   @changeActiveStateMinus="activeState--"
@@ -1002,7 +993,7 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 11">
-                <RenewedLicenseOfHealthFacility
+                <RequestLetterFromHiringHealthFacility
                   :activeState="11"
                   @changeActiveState="activeState++"
                   @changeActiveStateMinus="activeState--"
@@ -1011,17 +1002,8 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 12">
-                <RequestLetterFromHiringHealthFacility
-                  :activeState="12"
-                  @changeActiveState="activeState++"
-                  @changeActiveStateMinus="activeState--"
-                />
-              </div>
-            </transition>
-            <transition name="fade" mode="out-in">
-              <div v-if="this.activeState == 13">
                 <LicenseSummary
-                  :activeState="13"
+                  :activeState="12"
                   @changeActiveState="activeState++"
                   @changeActiveStateMinus="activeState--"
                 />
