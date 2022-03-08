@@ -134,6 +134,12 @@ export default {
     this.$store.dispatch("newlicense/setMastersTranscript2", "");
     this.$store.dispatch("newlicense/setPhd", "");
     this.$store.dispatch("newlicense/setPhdTranscript", "");
+    this.$store.dispatch("newlicense/setPhdTranscript2", "");
+    this.$store.dispatch("newlicense/setRenewedLicenseOfHealthFacility", "");
+    this.$store.dispatch(
+      "newlicense/setRequestLetterFromHiringHealthFacility",
+      ""
+    );
 
     // resetting renewal store
     this.$store.dispatch("renewal/storeAcceptedFields", []);
