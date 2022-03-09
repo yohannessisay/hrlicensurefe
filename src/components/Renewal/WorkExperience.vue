@@ -462,8 +462,8 @@ export default {
       documentMessage.value = MESSAGE.DOC_MESSAGE;
       maxFileSize.value = MAX_FILE_SIZE.MAX_FILE_SIZE;
       maxSizeMB.value = MAX_SIZE_MB.MAX_SIZE_MB;
-      workExperienceBack = store.getters["renewal/setRenewalWorkExperience"];
-      workExperienceBack2 = store.getters["renewal/setRenewalWorkExperience2"];
+      workExperienceBack = store.getters["renewal/getRenewalWorkExperience"];
+      workExperienceBack2 = store.getters["renewal/getRenewalWorkExperience2"];
       if (
         workExperienceBack &&
         workExperienceBack !== undefined &&
