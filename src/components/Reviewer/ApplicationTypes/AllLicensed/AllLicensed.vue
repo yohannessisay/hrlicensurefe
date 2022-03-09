@@ -12,7 +12,11 @@
                   : notSelectedTabClass,
               ]"
               @click="changeTab('New License')"
-              :style="[selectedTab == 'New License' ? 'background-color: white' : 'background-color: #C3DBD9']"
+              :style="[
+                selectedTab == 'New License'
+                  ? 'background-color: white'
+                  : 'background-color: #C3DBD9',
+              ]"
             >
               New License
             </li>
@@ -22,7 +26,11 @@
                   ? selectedTabClass
                   : notSelectedTabClass,
               ]"
-              :style="[selectedTab == 'Renewal' ? 'background-color: white' : 'background-color: #C3DBD9']"
+              :style="[
+                selectedTab == 'Renewal'
+                  ? 'background-color: white'
+                  : 'background-color: #C3DBD9',
+              ]"
               @click="changeTab('Renewal')"
             >
               Renewal
@@ -32,9 +40,13 @@
                 selectedTab == 'Good Standing'
                   ? selectedTabClass
                   : notSelectedTabClass,
-                  'tabColor'
+                'tabColor',
               ]"
-              :style="[selectedTab == 'Good Standing' ? 'background-color: white' : 'background-color: #C3DBD9']"
+              :style="[
+                selectedTab == 'Good Standing'
+                  ? 'background-color: white'
+                  : 'background-color: #C3DBD9',
+              ]"
               @click="changeTab('Good Standing')"
             >
               Good Standing
