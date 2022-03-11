@@ -574,6 +574,7 @@ export default {
       }
     },
     checkOtherProfession(profession, event) {
+      this.professionalTypeRepeat = false;
       if (!event.target.checked) {
         for (var i = 0; i < this.licenseInfo.professionalTypeIds.length; i++) {
           if (this.licenseInfo.professionalTypeIds[i] == profession.id) {
@@ -871,6 +872,10 @@ export default {
                   this.licenseInfo.occupationTypeId
                 );
                 this.$emit("diplomaSet", this.licenseInfo.educationalLevelId);
+                localStorage.setItem(
+                  "applicantTypeId",
+                  this.licenseInfo.applicantTypeId
+                );
                 this.$store.dispatch("newlicense/setLicense", license);
               }
             });
@@ -880,6 +885,10 @@ export default {
           this.$emit("nativeLanguageSet", this.licenseInfo.nativeLanguageId);
           this.$emit("payrollDocumentSet", this.licenseInfo.occupationTypeId);
           this.$emit("diplomaSet", this.licenseInfo.educationalLevelId);
+          localStorage.setItem(
+            "applicantTypeId",
+            this.licenseInfo.applicantTypeId
+          );
           this.$store.dispatch("newlicense/setLicense", license);
         }
       }
@@ -915,7 +924,7 @@ export default {
           }
         } else {
           let draftData = this.getDraft;
-          if (draftData.education.institutionId != null) {
+          if (draftData?.education?.institutionId != null) {
             this.licenseInfo.education.institutionId =
               draftData.education.institutionId;
             for (var i = 0; i < this.institutions.length; i++) {

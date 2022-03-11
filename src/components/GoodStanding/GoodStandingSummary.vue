@@ -1,8 +1,5 @@
 <template>
-  <div
-    v-if="this.showLoading2"
-    class="bg-lightBlueB-200 w-screen h-screen max-w-4xl"
-  >
+  <div v-if="this.showLoading2" class="bg-lightBlueB-200 h-screen max-w-4xl">
     <Spinner class="bg-lightBlueB-200" />
   </div>
   <div class="bg-white mb-large rounded pl-4 pt-4 pr-4 pb-4">
@@ -204,7 +201,7 @@
           </div>
         </div>
       </div>
-      <div class="flex justify-center mt-8">
+      <div class="flex justify-center mt-8" v-show="showCheckBox">
         <label class="inline-flex items-center">
           <input @change="checkBox()" type="checkbox" class="form-checkbox" />
           <span style="font-size: 16px" class="ml-2"
@@ -280,7 +277,7 @@
           </button>
           <button
             class="withdraw"
-            @click="withdraw(this.buttons[1].action)"
+            @click="withdraw(this.buttons[0].action)"
             variant="outline"
           >
             {{ this.buttons[1]["name"] }}
@@ -357,6 +354,7 @@ export default {
     Spinner,
   },
   async created() {
+    this.showCheckBox = true;
     this.userId = +localStorage.getItem("userId");
     this.draftId = this.$route.params.id;
     this.draftStatus = this.$route.params.status;
@@ -365,6 +363,9 @@ export default {
         this.draftData = this.getDraftData;
         this.documentsArray = this.draftData.documents;
       }, 3500);
+      if (this.draftStatus == "SUB") {
+        this.showCheckBox = false;
+      }
     }
     this.licenseCopy = this.getLicenseCopy;
     this.serviceFee = this.getServiceFee;
@@ -393,7 +394,8 @@ export default {
         }
         this.letterPreview = await this.blobToBase64(this.goodstandingLetter);
         this.goodstandingLetter.docFile = this.letterPreview;
-        this.goodstandingLetter.title = "Verification Letter";
+        this.goodstandingLetter.title =
+          "Work Experience and Support Letter from Organization";
         this.docList.push(this.goodstandingLetter);
       }
     }
@@ -445,6 +447,7 @@ export default {
     docs: [],
 
     checkBoxValue: true,
+    showCheckBox: false,
   }),
   computed: {
     ...mapGetters({

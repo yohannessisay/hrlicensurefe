@@ -389,13 +389,19 @@
         </div>
         <!-- end goodstanding -->
 
-        <!-- <div v-if="this.display == 'report'">
+        <div v-if="this.display == 'report'">
           <report />
-        </div> -->
+        </div>
 
-        <!-- <div v-if="this.display == 'dashboard'">
+        <div v-if="this.display == 'dashboard'">
           <dashboard />
-        </div> -->
+        </div>
+        <div v-if="this.display == 'allLicensed'">
+          <all-licensed />
+        </div>
+        <div v-if="this.display == 'accredited'">
+          <accredited />
+        </div>
       </div>
     </div>
   </div>
@@ -501,6 +507,11 @@ import GoodStandingLicensed from "./ApplicationTypes/GoodStanding/GoodStandingLi
 import GoodStandingOthersLicensed from "./ApplicationTypes/GoodStanding/GoodStandingOthersLicensed.vue";
 import GoodStandingAllLicensed from "./ApplicationTypes/GoodStanding/GoodStandingAllLicensed.vue";
 
+import AllLicensed from "./ApplicationTypes/AllLicensed/AllLicensed.vue";
+import Accredited from "./ApplicationTypes/AllLicensed/Accredited.vue";
+// import AllLicensed from "./ApplicationTypes/AllLicensed/AllLicensed.vue";
+// import Accredited from "./ApplicationTypes/AllLicensed/Accredited.vue";
+
 import Report from "../Report/Report.vue";
 import Dashboard from "./Dashboard.vue";
 
@@ -603,6 +614,10 @@ export default {
     GoodStandingLicensed,
     GoodStandingOthersLicensed,
     GoodStandingAllLicensed,
+
+    AllLicensed,
+    Accredited,
+
     Dashboard,
     Report,
   },

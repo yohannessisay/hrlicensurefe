@@ -57,6 +57,26 @@ export default {
       return resp;
     }
   },
+  async getZones({commit}, regionID) {
+    try {
+      const baseUrl = url + "lookups/zones/" + regionID;
+      const resp = await ApiService.get(baseUrl);
+      return resp;
+    } catch (error) {
+      const resp = error;
+      return resp;
+    }
+  },
+  async getWoredas({commit}, zoneID) {
+    try {
+      const baseUrl = url + "lookups/woredas/" + zoneID;
+      const resp = await ApiService.get(baseUrl);
+      return resp;
+    } catch (error) {
+      const resp = error;
+      return resp;
+    }
+  },
   async getapplicationStatuses({ commit }) {
     try {
       const resp = await ApiService.get(url + "applicationStatuses");

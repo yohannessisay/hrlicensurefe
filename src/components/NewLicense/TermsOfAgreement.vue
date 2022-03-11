@@ -22,25 +22,25 @@
       documentMessage
     }}</span>
     <div class="flex flex-row">
-      <div class="ml-8">
+      <div class="ml-2">
         <h2>Foreigner</h2>
         <ul>
           <li>Passport</li>
           <li>Medical Certificate</li>
-          <li>Health Exam Certificate</li>
           <div class="tooltip">
             English Language Proficiency Certificate
             <span class="tooltiptext ml-4">
               For non-English speaking countries only
             </span>
           </div>
+          <br />
           <div class="tooltip">
-            Higher Education Relevance and Quality Agency center
+            Higher Education Relevance and Quality Agency
             <span class="tooltiptext ml-4">
-              HERQA
+              Equivalence Letter
             </span>
           </div>
-          <li>Letter from Organization</li>
+          <br />
           <div class="tooltip">
             Authenticated Academic Document
             <span class="tooltiptext ml-4">
@@ -48,33 +48,36 @@
             </span>
           </div>
           <br />
-          <div class="tooltip">
+          <li>
             Authenticated Professional License from Country of Origin
-            <span class="tooltiptext ml-4">
-              Found in Ethiopia
-            </span>
-          </div>
-          <br />
-          <div class="tooltip">
-            Request Letter from Health Facility
-            <span class="tooltiptext ml-4">
-              Found in Ethiopia
-            </span>
-          </div>
-          <br />
+          </li>
           <div class="tooltip">
             Current Work Experience / Goodstanding Letter
             <span class="tooltiptext ml-4">
               More than two years.
             </span>
           </div>
+          <br />
+          <div class="tooltip">
+            Renewed License of Health Facility
+            <span class="tooltiptext ml-4">
+              Found in Ethiopia
+            </span>
+          </div>
+          <br />
+          <div class="tooltip">
+            Request Letter from Hiring Health Facility
+            <span class="tooltiptext ml-4">
+              Found in Ethiopia
+            </span>
+          </div>
         </ul>
       </div>
-      <div class="ml-8">
+      <div class="ml-2">
         <h2>Ethiopian</h2>
         <ul>
           <li>Residence ID</li>
-          <li>Health Exam Certificate</li>
+          <li>Medical Certificate</li>
           <div class="tooltip">
             COC Certificate
             <span class="tooltiptext ml-4">
@@ -92,12 +95,12 @@
           <li>
             8<sup>th</sup>, 10<sup>th</sup>, 12<sup>th</sup> Grade Certificate
           </li>
-          <li>9<sup>th</sup> - 10<sup>th</sup></li>
-          <li>11<sup>th</sup> - 12<sup>th</sup></li>
+          <li>9<sup>th</sup> - 10<sup>th</sup> Grade Transcript</li>
+          <li>11<sup>th</sup> - 12<sup>th</sup> Grade Transcript</li>
           <div class="tooltip">
             Payroll Document
             <span class="tooltiptext ml-4">
-              If private Institution Work Experience
+              Non-government Institutions
             </span>
           </div>
           <br />
@@ -112,7 +115,7 @@
           <li>Academic Transcript</li>
         </ul>
       </div>
-      <div class="ml-8">
+      <div class="ml-2">
         <h2>Ethiopians from Abroad</h2>
         <ul>
           <div class="tooltip">
@@ -124,11 +127,12 @@
           <br />
           <li>Medical Certificate</li>
           <div class="tooltip">
-            Higher Education Relevance and Quality Agency center
+            Higher Education Relevance and Quality Agency
             <span class="tooltiptext ml-4">
-              HERQA
+              Equivalence letter
             </span>
           </div>
+          <br />
           <div class="tooltip">
             Authenticated Academic Document
             <span class="tooltiptext ml-4">
@@ -140,25 +144,13 @@
             Authenticated Professional License from Country of Origin
           </li>
           <div class="tooltip">
-            Renewed License of the Health Facility/Organization
-            <span class="tooltiptext ml-4">
-              Found in Ethiopia
-            </span>
-          </div>
-          <br />
-          <div class="tooltip">
-            Request Letter from health Facility
-            <span class="tooltiptext ml-4">
-              Found in Ethiopia
-            </span>
-          </div>
-          <br />
-          <div class="tooltip">
             Current Work Experience/ Goodstanding Letter
             <span class="tooltiptext ml-4">
               More than two years
             </span>
           </div>
+          <br />
+          <li>Support Letter from Sponsored Institution</li>
         </ul>
       </div>
     </div>

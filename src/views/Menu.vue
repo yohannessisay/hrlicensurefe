@@ -57,6 +57,7 @@ import InReview from "@/views/InReview";
 import ApprovedPayment from "@/views/ApprovedPayment";
 import DeclinedPayment from "@/views/DeclinedPayment";
 import PendingPayment from "@/views/PendingPayment";
+import FlashMessage from "@/sharedComponents/FlashMessage";
 
 export default {
   components: {
@@ -73,10 +74,10 @@ export default {
     ApprovedPayment,
     DeclinedPayment,
     PendingPayment,
+    FlashMessage,
   },
   created() {
     this.$route.params.status = undefined;
-    console.log(this.$route.params.status);
     // resetting new license store
     this.$store.dispatch("newlicense/storeAcceptedFields", []);
     this.$store.dispatch("newlicense/storeDeclinedFields", []);
@@ -84,19 +85,41 @@ export default {
     this.$store.dispatch("newlicense/setPassport", "");
     this.$store.dispatch("newlicense/setHealthExamCert", "");
     this.$store.dispatch("newlicense/setLanguage", "");
-    this.$store.dispatch("newlicense/setProfessionalDoc", []);
+
+    this.$store.dispatch("newlicense/setProfessionalDocCertificate", "");
+    this.$store.dispatch("newlicense/setProfessionalDocCertificate2", "");
+    this.$store.dispatch("newlicense/setProfessionalDocCertificate3", "");
+    this.$store.dispatch("newlicense/setProfessionalDocCertificate4", "");
+    this.$store.dispatch("newlicense/setProfessionalDocCertificate5", "");
+
+    this.$store.dispatch("newlicense/setProfessionalDocDiploma", "");
+    this.$store.dispatch("newlicense/setProfessionalDocDiploma2", "");
+    this.$store.dispatch("newlicense/setProfessionalDocDiploma3", "");
+    this.$store.dispatch("newlicense/setProfessionalDocDiploma4", "");
+    this.$store.dispatch("newlicense/setProfessionalDocDiploma5", "");
+
+    this.$store.dispatch("newlicense/setProfessionalDocTranscript", "");
+    this.$store.dispatch("newlicense/setProfessionalDocTranscript2", "");
+    this.$store.dispatch("newlicense/setProfessionalDocTranscript3", "");
+    this.$store.dispatch("newlicense/setProfessionalDocTranscript4", "");
+    this.$store.dispatch("newlicense/setProfessionalDocTranscript5", "");
+
     this.$store.dispatch("newlicense/setHerqa", "");
     this.$store.dispatch("newlicense/setSupportLetter", "");
     this.$store.dispatch("newlicense/setCOC", "");
+    this.$store.dispatch("newlicense/setCOC2", "");
+    this.$store.dispatch("newlicense/setCOC3", "");
     this.$store.dispatch("newlicense/setEducationalDocument", []);
     this.$store.dispatch("newlicense/setWorkExperience", "");
+    this.$store.dispatch("newlicense/setWorkExperience2", "");
     this.$store.dispatch("newlicense/setServiceFee", "");
-    this.$store.dispatch("newlicense/setLetterfromOrg", "");
     this.$store.dispatch("newlicense/setRenewedLicense", "");
     this.$store.dispatch("newlicense/setProfessionalLicense", "");
+    this.$store.dispatch("newlicense/setProfessionalLicense2", "");
     this.$store.dispatch("newlicense/setPayroll", "");
     this.$store.dispatch("newlicense/setDegree", "");
     this.$store.dispatch("newlicense/setTranscript", "");
+    this.$store.dispatch("newlicense/setTranscript2", "");
     this.$store.dispatch("newlicense/setDiploma", "");
     this.$store.dispatch("newlicense/setProCertificate", "");
     this.$store.dispatch("newlicense/setProDiploma", "");
@@ -108,8 +131,15 @@ export default {
     this.$store.dispatch("newlicense/setEduTranscript2", "");
     this.$store.dispatch("newlicense/setMasters", "");
     this.$store.dispatch("newlicense/setMastersTranscript", "");
+    this.$store.dispatch("newlicense/setMastersTranscript2", "");
     this.$store.dispatch("newlicense/setPhd", "");
     this.$store.dispatch("newlicense/setPhdTranscript", "");
+    this.$store.dispatch("newlicense/setPhdTranscript2", "");
+    this.$store.dispatch("newlicense/setRenewedLicenseOfHealthFacility", "");
+    this.$store.dispatch(
+      "newlicense/setRequestLetterFromHiringHealthFacility",
+      ""
+    );
 
     // resetting renewal store
     this.$store.dispatch("renewal/storeAcceptedFields", []);
@@ -118,8 +148,13 @@ export default {
     this.$store.dispatch("renewal/setRenewalLetter", "");
     this.$store.dispatch("renewal/setRenewalServiceFee", "");
     this.$store.dispatch("renewal/setRenewalCpd", "");
+    this.$store.dispatch("renewal/setRenewalCpd2", "");
+    this.$store.dispatch("renewal/setRenewalCpd3", "");
+    this.$store.dispatch("renewal/setRenewalCpd4", "");
+    this.$store.dispatch("renewal/setRenewalCpd5", "");
     this.$store.dispatch("renewal/setProfessionalDoc", []);
     this.$store.dispatch("renewal/setRenewalWorkExperience", "");
+    this.$store.dispatch("renewal/setRenewalWorkExperience2", "");
     this.$store.dispatch("renewal/setRenewalHealthExamCert", "");
     this.$store.dispatch("renewal/setPreviousLicense", "");
     this.$store.dispatch("renewal/setCertificate", "");
@@ -161,6 +196,7 @@ export default {
     localStorage.removeItem("educationalLevel");
     localStorage.removeItem("language");
     localStorage.removeItem("payroll");
+    localStorage.removeItem("applicantTypeId");
   },
   data: () => ({
     display: 0,
@@ -173,6 +209,11 @@ export default {
 };
 </script>
 <style>
+@media only screen and (max-width: 1024px) {
+  .sidenav {
+    display: none;
+  }
+}
 .menu {
   width: 80%;
 }

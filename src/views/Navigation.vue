@@ -138,6 +138,7 @@ export default {
       localStorage.removeItem("educationalLevel");
       localStorage.removeItem("language");
       localStorage.removeItem("payroll");
+      localStorage.removeItem("applicantTypeId");
       this.$router.push({ path: "/" });
     },
     showDropDown() {

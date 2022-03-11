@@ -1,16 +1,16 @@
 <template>
   <div>
-    <div class="flex flex-row">
-      <div class="bg-lightBlueB-200 h-max pb-24 w-screen pl-24 h-screen">
+    <div class="flex flex-row justify-start h-screen">
+      <div class="bg-lightBlueB-200">
         <div class="flex pl-20 pt-8">
           <div class="mt-5">
             <h2 class="text-lightBlueB-400">New Requests</h2>
           </div>
         </div>
-        <div class="flex justify-start mt-8 rounded ml-20">
+        <div class="flex flex-wrap justify-start mt-8 rounded ml-20">
           <transition name="slide-fade-to-left">
             <div
-              class="container mr-12 box-shadow-pop rounded-lg bg-lightGrey-100 "
+              class="container mr-12 box-shadow-pop rounded-lg bg-lightGrey-100 mb-4"
             >
               <div
                 @click="openModalNL()"
@@ -67,7 +67,7 @@
           </transition> -->
           <transition name="slide-fade-to-left">
             <div
-              class="container mr-12 box-shadow-pop rounded-lg bg-lightGrey-100 "
+              class="container mr-12 box-shadow-pop rounded-lg bg-lightGrey-100 mb-8"
             >
               <div
                 @click="openModalGS()"

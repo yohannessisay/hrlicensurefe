@@ -237,7 +237,12 @@ export default {
     let passport = ref("");
     let professionalDoc = [];
     let workExperience = ref("");
+    let workExperience2 = ref("");
     let cpd = ref("");
+    let cpd2 = ref("");
+    let cpd3 = ref("");
+    let cpd4 = ref("");
+    let cpd5 = ref("");
     let herqa = ref("");
     let previousLicense = ref("");
     let supportLetter = ref("");
@@ -251,6 +256,7 @@ export default {
     let letterFromOrg = ref("");
     let professionalLicense = ref("");
     let renewedLicense = ref("");
+    let renewedLicenseOfHealthFacility = ref("");
     let letterOrg = ref("");
     let masters = ref("");
     let mastersTranscript = ref("");
@@ -313,7 +319,12 @@ export default {
     passport = store.getters["renewal/getPassport"];
     professionalDoc = store.getters["renewal/getProfessionalDocuments"];
     workExperience = store.getters["renewal/getRenewalWorkExperience"];
+    workExperience2 = store.getters["renewal/getRenewalWorkExperience2"];
     cpd = store.getters["renewal/getRenewalCpd"];
+    cpd2 = store.getters["renewal/getRenewalCpd2"];
+    cpd3 = store.getters["renewal/getRenewalCpd3"];
+    cpd4 = store.getters["renewal/getRenewalCpd4"];
+    cpd5 = store.getters["renewal/getRenewalCpd5"];
     herqa = store.getters["renewal/getHerqa"];
     previousLicense = store.getters["renewal/getPreviousLicense"];
     supportLetter = store.getters["renewal/getSupportLetter"];
@@ -327,6 +338,8 @@ export default {
     letterFromOrg = store.getters["renewal/getRenewalLicense"];
     professionalLicense = store.getters["renewal/getProfessionalLicense"];
     renewedLicense = store.getters["renewal/getRenewedLicense"];
+        renewedLicenseOfHealthFacility =
+      store.getters["renewal/getRenewedLicenseOfHealthFacility"];
     letterOrg = store.getters["renewal/getLetterfromOrg"];
     masters = store.getters["renewal/getMasters"];
     mastersTranscript = store.getters["renewal/getMastersTranscript"];
@@ -519,7 +532,12 @@ export default {
               );
             }
             formData.append(documentSpecs[5].documentType.code, workExperience);
+            formData.append(documentSpecs[35].documentType.code, workExperience2);
             formData.append(documentSpecs[4].documentType.code, cpd);
+            formData.append(documentSpecs[31].documentType.code, cpd2);
+            formData.append(documentSpecs[32].documentType.code, cpd3);
+            formData.append(documentSpecs[33].documentType.code, cpd4);
+            formData.append(documentSpecs[34].documentType.code, cpd5);
             formData.append(documentSpecs[18].documentType.code, herqa);
             formData.append(
               documentSpecs[6].documentType.code,
@@ -565,6 +583,10 @@ export default {
             formData.append(
               documentSpecs[21].documentType.code,
               renewedLicense
+            );
+             formData.append(
+              documentSpecs[36].documentType.code,
+              renewedLicenseOfHealthFacility
             );
             formData.append(documentSpecs[20].documentType.code, letterOrg);
             formData.append(documentSpecs[27].documentType.code, masters);
@@ -768,6 +790,7 @@ export default {
       letterFromOrg,
       professionalLicense,
       renewedLicense,
+      renewedLicenseOfHealthFacility,
       letterOrg,
       masters,
       mastersTranscript,

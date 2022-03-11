@@ -1716,9 +1716,9 @@ export default {
           })
           .catch((err) => {
             showErrorFlash.value = true;
-              setTimeout(() => {
-                router.go();
-              }, 3000);
+            setTimeout(() => {
+              router.go();
+            }, 3000);
           });
       }
       if (

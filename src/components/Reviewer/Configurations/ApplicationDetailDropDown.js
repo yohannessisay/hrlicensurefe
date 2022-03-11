@@ -57,6 +57,8 @@ export let dropdown = {
   goodStandingDeclinedPayment: false,
   goodStandingLicensed: false,
   goodStandingUnassigned: false,
+
+  allLicensed: false,
   
 };
 
@@ -69,6 +71,7 @@ export const applicationTypeDD = (applicationDetail, dropdown) => {
     dropdown.newLicense = false;
     dropdown.verification = false;
     dropdown.goodStanding = false;
+    dropdown.allLicensed = false;
     
   }
   if (applicationDetail == "NewLicense") {
@@ -79,6 +82,7 @@ export const applicationTypeDD = (applicationDetail, dropdown) => {
     dropdown.goodStanding = false;
     dropdown.renewal = false;
     dropdown.verification = false;
+    dropdown.allLicensed = false;
   }
   if (applicationDetail == "GoodStanding") {
     dropdown.goodStanding = !dropdown.goodStanding;
@@ -90,6 +94,7 @@ export const applicationTypeDD = (applicationDetail, dropdown) => {
     dropdown.newLicense = false;
     dropdown.renewal = false;
     dropdown.verification = false;
+    dropdown.allLicensed = false;
 
   }
   if (applicationDetail == "Verification") {
@@ -456,5 +461,13 @@ export const applicationTypeDD = (applicationDetail, dropdown) => {
     dropdown.goodStandingAssigned = false;
     dropdown.goodStandingPaymentReview = false;
     dropdown.goodStandingUnassigned = false;
+  }
+
+  if (applicationDetail == "AllLicensed") {
+    dropdown.allLicensed = !dropdown.allLicensed;
+    dropdown.newLicense = false;
+    dropdown.verification = false;
+    dropdown.goodStanding = false;
+    dropdown.renewal = false;
   }
 };

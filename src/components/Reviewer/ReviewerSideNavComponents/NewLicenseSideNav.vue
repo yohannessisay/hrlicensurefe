@@ -712,7 +712,7 @@
 
               <!-- All Licensed Applications starts here -->
 
-              <li
+              <!-- <li
                 @click="newLicenseMenuHandler('newLicenseAllLicensed')"
                 class="mb-2"
               >
@@ -720,7 +720,7 @@
                   <i class="mr-2 far fa-address-book fa-x fa-light"></i>
                   All Licensed
                 </div>
-              </li>
+              </li> -->
 
               <!-- All Licensed Appilcations ends here -->
             </ul>

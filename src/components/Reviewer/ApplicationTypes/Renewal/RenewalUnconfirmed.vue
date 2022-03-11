@@ -25,7 +25,7 @@
       </div>
       
       <div class="flex pl-12 pt-tiny" v-if="expertLevel === 3">
-        <Title message="Renewal Finished" />
+        <Title message="Renewal Approved" />
       </div>
       <div class="flex pl-12 pt-tiny" v-else>
         <Title message="Renewal Unconfirmed" />

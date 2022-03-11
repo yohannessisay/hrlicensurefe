@@ -560,18 +560,11 @@ export default {
     commit(SET_GOOD_STANDING_OTHERS_LICENSED_SEARCHED, searchedVal);
   },
 
-  async getGoodStandingAllLicensed({ commit }, adminStatus) {
-    // const url = baseUrl + "/goodstandings/all/licensed ";
-    // const resp = await ApiService.get(url);
-    // const licensed = resp.data.data;
-    const url = baseUrl + "/goodstandings/status/" + adminStatus[1];
-    const approvedURL = baseUrl + "/goodstandings/status/" + adminStatus[2];
+  async getGoodStandingAllLicensed({ commit }) {
+    const url = baseUrl + "/goodStandings/all/licensed";
     const resp = await ApiService.get(url);
-    const approvedResp = await ApiService.get(approvedURL);
-    const allLicensed = resp.data.data;
-    const allApprovedLicensed = approvedResp.data.data;
-    const concateAllLicensedUsers = allLicensed.concat(allApprovedLicensed)
-    commit(SET_GOOD_STANDING_ALL_LICENSED, concateAllLicensedUsers);
+    const goodStandingAllLicensed = resp.data.data;
+    commit(SET_GOOD_STANDING_ALL_LICENSED, goodStandingAllLicensed);
   },
 
   getGoodStandingAllLicensedSearched({ commit, getters }, searchKey) {

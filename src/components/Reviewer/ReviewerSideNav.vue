@@ -31,6 +31,12 @@
           @applicationTypeSelected="applicationTypeHandler"
           @selectGoodStandingMenu="selectMenu"
         />
+        <all-licensed-side-nav
+          :dropdownValue="dropdownValue"
+          :adminRole="adminRole"
+          @applicationTypeSelected="applicationTypeHandler"
+          @selectAllLicensedMenu="selectMenu"
+        />
         <!-- <report-side-nav @selectReportMenu="selectMenu" />
 
         <dashboard-side-nav @selectDashboardMenu="selectMenu" /> -->
@@ -44,6 +50,7 @@ import NewLicenseSideNav from "./ReviewerSideNavComponents/NewLicenseSideNav.vue
 import RenewalSideNav from "./ReviewerSideNavComponents/RenewalSideNav.vue";
 import VerificationSideNav from "./ReviewerSideNavComponents/VerificationSideNav.vue";
 import GoodStandingSideNav from "./ReviewerSideNavComponents/GoodStandingSideNav.vue";
+import AllLicensedSideNav from "./ReviewerSideNavComponents/AllLicensedSideNav.vue";
 import ReportSideNav from "./ReviewerSideNavComponents/ReportSideNav.vue";
 import DashboardSideNav from "./ReviewerSideNavComponents/DashboardSideNav.vue";
 import {
@@ -64,6 +71,7 @@ export default {
     GoodStandingSideNav,
     ReportSideNav,
     DashboardSideNav,
+    AllLicensedSideNav,
   },
   setup(props, { emit }) {
     const expertLevelId = JSON.parse(localStorage.getItem("allAdminData"))

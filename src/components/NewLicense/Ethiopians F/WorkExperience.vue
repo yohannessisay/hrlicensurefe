@@ -31,8 +31,12 @@
           class="mt-8"
         />
         <span class="flex justify-center">{{ documentMessage }}</span>
-        <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
-          <div class="flex justify-center">
+        <div class="ml-24">
+          <button @click="addDocs()">Add Document</button>
+          <button @click="removeDocs()">Remove Document</button>
+        </div>
+        <form @submit.prevent="submit" class="mx-auto max-w-3xl mt-8">
+          <div class="flex flex-col justify-center">
             <div>
               <span>
                 <h2 v-if="!fileSizeExceed">{{ workExperienceFile.name }}</h2>
@@ -75,6 +79,47 @@
               </div>
               <span v-if="!showUpload && !isImage && !isPdf">
                 <img :src="filePreview" alt="" class="preview" />
+              </span>
+            </div>
+            <div v-if="docCount > 1">
+              <span v-if="showUpload2">
+                <label class="text-primary-700"
+                  >Upload image:
+                  <div class="dropbox">
+                    <input
+                      type="file"
+                      id="workExperienceFile2"
+                      class="photoFile"
+                      ref="workExperienceFileP2"
+                      v-on:change="handleFileUpload2()"
+                      style="margin-bottom: 15px !important"
+                      accept=".jpeg, .png, .gif, .jpg, .pdf, .webp, .tiff , .svg"
+                    />
+                    <p>
+                      Drag your file(s) here to begin<br />
+                      or click to browse
+                    </p>
+                  </div>
+                </label>
+              </span>
+              <picture v-if="!showUpload2 && isImage2">
+                <p>
+                  <a href="javascript:void(0)" @click="reset2()"
+                    >Upload again</a
+                  >
+                </p>
+                <img v-bind:src="filePreview2" v-show="showPreview2" />
+              </picture>
+              <div v-if="!showUpload2 && isPdf2">
+                <p>
+                  <a href="javascript:void(0)" @click="reset2()"
+                    >Upload again</a
+                  >
+                </p>
+                <embed v-bind:src="filePreview2" v-show="showPreview2" />
+              </div>
+              <span v-if="!showUpload2 && !isImage2 && !isPdf2">
+                <img :src="filePreview2" class="preview" />
               </span>
             </div>
           </div>
@@ -213,6 +258,15 @@ export default {
     let showUpload = ref(true);
     let isImage = ref(false);
     let isPdf = ref(false);
+
+    let workExperienceFile2 = ref("");
+    let workExperienceFileP2 = ref("");
+    let showPreview2 = ref(false);
+    let filePreview2 = ref("");
+    let showUpload2 = ref(true);
+    let isImage2 = ref(false);
+    let isPdf2 = ref(false);
+
     let buttons = [];
     let documentSpecs = ref([]);
     let userId = +localStorage.getItem("userId");
@@ -221,6 +275,7 @@ export default {
     let draftStatus = ref("");
 
     let workExperienceBack = ref("");
+    let workExperienceBack2 = ref("");
 
     let declinedFields = ref([]);
     let acceptedFields = ref([]);
@@ -243,7 +298,6 @@ export default {
     let educationDoc = ref([]);
     let englishLanguage = ref("");
     let professionalLicense = ref("");
-    let letterfromOrg = ref("");
     let renewedLicense = ref("");
     let payroll = ref("");
     let diploma = ref("");
@@ -253,6 +307,70 @@ export default {
     let mastersTranscript = ref("");
     let phd = ref("");
     let phdTranscript = ref("");
+    let professionalDocCertificate = ref("");
+    let professionalDocCertificate2 = ref("");
+    let professionalDocCertificate3 = ref("");
+    let professionalDocCertificate4 = ref("");
+    let professionalDocCertificate5 = ref("");
+
+    let professionalDocDiploma = ref("");
+    let professionalDocDiploma2 = ref("");
+    let professionalDocDiploma3 = ref("");
+    let professionalDocDiploma4 = ref("");
+    let professionalDocDiploma5 = ref("");
+
+    let professionalDocTranscript = ref("");
+    let professionalDocTranscript2 = ref("");
+    let professionalDocTranscript3 = ref("");
+    let professionalDocTranscript4 = ref("");
+    let professionalDocTranscript5 = ref("");
+
+    let educationLevel = localStorage.getItem("educationalLevel");
+
+    let docIdx = 0;
+    let docIdx2 = 0;
+    let docIdx3 = 0;
+    let docIdx4 = 0;
+    let docIdx5 = 0;
+
+    if (educationLevel == "diploma") {
+      docIdx = 7;
+      docIdx2 = 33;
+      docIdx3 = 34;
+      docIdx4 = 35;
+      docIdx5 = 36;
+    } else if (educationLevel == "degree") {
+      docIdx = 21;
+      docIdx2 = 44;
+      docIdx3 = 45;
+      docIdx4 = 46;
+      docIdx5 = 47;
+    } else if (educationLevel == "masters") {
+      docIdx = 24;
+      docIdx2 = 53;
+      docIdx3 = 54;
+      docIdx4 = 55;
+      docIdx5 = 56;
+    } else {
+      docIdx = 26;
+      docIdx2 = 59;
+      docIdx3 = 60;
+      docIdx4 = 61;
+      docIdx5 = 62;
+    }
+
+    let docCount = ref(0);
+
+    const addDocs = () => {
+      if (docCount.value < 2) {
+        docCount.value++;
+      }
+    };
+    const removeDocs = () => {
+      if (docCount.value > 0) {
+        docCount.value--;
+      }
+    };
 
     const reset = () => {
       showUpload.value = true;
@@ -303,13 +421,56 @@ export default {
         isImage.value = true;
       }
     };
+
+    const reset2 = () => {
+      showUpload2.value = true;
+      showPreview2.value = false;
+      workExperienceFile2.value = "";
+      filePreview2.value = "";
+      isImage2.value = true;
+      isPdf2.value = false;
+    };
+
+    const handleFileUpload2 = () => {
+      workExperienceFile2.value = workExperienceFileP2.value.files[0];
+      let reader = new FileReader();
+      isImage2.value = true;
+      let fileS = workExperienceFile2.value.size;
+      if (fileS <= maxFileSize.value / 1000) {
+        showUpload2.value = false;
+        reader.addEventListener(
+          "load",
+          function() {
+            showPreview2.value = true;
+            filePreview2.value = reader.result;
+          },
+          false
+        );
+        if (workExperienceFile2.value) {
+          if (/\.(jpe?g|png|gif)$/i.test(workExperienceFile2.value.name)) {
+            isImage2.value = true;
+            reader.readAsDataURL(workExperienceFile2.value);
+          } else if (/\.(pdf)$/i.test(workExperienceFile2.value.name)) {
+            isImage2.value = false;
+            isPdf2.value = true;
+            reader.readAsDataURL(workExperienceFile2.value);
+          }
+        }
+      } else {
+        workExperienceFile2.value = "";
+        isImage2.value = true;
+      }
+    };
+
     const submit = () => {
       emit("changeActiveState");
       store.dispatch("newlicense/setWorkExperience", workExperienceFile);
+      store.dispatch("newlicense/setWorkExperience2", workExperienceFile2);
     };
     const submitBack = () => {
       emit("changeActiveStateMinus");
       store.dispatch("newlicense/setWorkExperience", workExperienceFile);
+      store.dispatch("newlicense/setWorkExperience2", workExperienceFile2);
     };
     buttons = store.getters["newlicense/getButtons"];
     documentSpecs = store.getters["newlicense/getDocumentSpec"];
@@ -325,7 +486,6 @@ export default {
     englishLanguage = store.getters["newlicense/getEnglishLanguage"];
     renewedLicense = store.getters["newlicense/getRenewedLicense"];
     professionalLicense = store.getters["newlicense/getProfessionalLicense"];
-    letterfromOrg = store.getters["newlicense/getLetterfromOrg"];
     payroll = store.getters["newlicense/getPayroll"];
     diploma = store.getters["newlicense/getDiploma"];
     degree = store.getters["newlicense/getDegree"];
@@ -334,6 +494,38 @@ export default {
     mastersTranscript = store.getters["newlicense/getMastersTranscript"];
     phd = store.getters["newlicense/getPhd"];
     phdTranscript = store.getters["newlicense/getPhdTranscript"];
+    professionalDocCertificate =
+      store.getters["newlicense/getProfessionalDocCertificate"];
+    professionalDocCertificate2 =
+      store.getters["newlicense/getProfessionalDocCertificate2"];
+    professionalDocCertificate3 =
+      store.getters["newlicense/getProfessionalDocCertificate3"];
+    professionalDocCertificate4 =
+      store.getters["newlicense/getProfessionalDocCertificate4"];
+    professionalDocCertificate5 =
+      store.getters["newlicense/getProfessionalDocCertificate5"];
+
+    professionalDocDiploma =
+      store.getters["newlicense/getProfessionalDocDiploma"];
+    professionalDocDiploma2 =
+      store.getters["newlicense/getProfessionalDocDiploma2"];
+    professionalDocDiploma3 =
+      store.getters["newlicense/getProfessionalDocDiploma3"];
+    professionalDocDiploma4 =
+      store.getters["newlicense/getProfessionalDocDiploma4"];
+    professionalDocDiploma5 =
+      store.getters["newlicense/getProfessionalDocDiploma5"];
+
+    professionalDocTranscript =
+      store.getters["newlicense/getProfessionalDocTranscript"];
+    professionalDocTranscript2 =
+      store.getters["newlicense/getProfessionalDocTranscript2"];
+    professionalDocTranscript3 =
+      store.getters["newlicense/getProfessionalDocTranscript3"];
+    professionalDocTranscript4 =
+      store.getters["newlicense/getProfessionalDocTranscript4"];
+    professionalDocTranscript5 =
+      store.getters["newlicense/getProfessionalDocTranscript5"];
 
     const draft = (action) => {
       message.value.showLoading = true;
@@ -353,6 +545,10 @@ export default {
               formData.append(
                 documentSpecs[4].documentType.code,
                 workExperienceFile.value
+              );
+              formData.append(
+                documentSpecs[28].documentType.code,
+                workExperienceFile2.value
               );
               let payload = { document: formData, id: licenseId };
               store
@@ -425,26 +621,76 @@ export default {
               workExperienceFile.value
             );
             formData.append(
+              documentSpecs[28].documentType.code,
+              workExperienceFile2.value
+            );
+            formData.append(
               documentSpecs[5].documentType.code,
               englishLanguage
             );
             formData.append(documentSpecs[22].documentType.code, diploma);
             formData.append(documentSpecs[23].documentType.code, transcript);
             formData.append(documentSpecs[21].documentType.code, degree);
-            if (professionalDoc != undefined) {
-              formData.append(
-                documentSpecs[6].documentType.code,
-                professionalDoc[0]
-              );
-              formData.append(
-                documentSpecs[7].documentType.code,
-                professionalDoc[1]
-              );
-              formData.append(
-                documentSpecs[8].documentType.code,
-                professionalDoc[2]
-              );
-            }
+            formData.append(
+              documentSpecs[6].documentType.code,
+              professionalDocCertificate
+            );
+            formData.append(
+              documentSpecs[29].documentType.code,
+              professionalDocCertificate2
+            );
+            formData.append(
+              documentSpecs[30].documentType.code,
+              professionalDocCertificate3
+            );
+            formData.append(
+              documentSpecs[31].documentType.code,
+              professionalDocCertificate4
+            );
+            formData.append(
+              documentSpecs[32].documentType.code,
+              professionalDocCertificate5
+            );
+            formData.append(
+              documentSpecs[docIdx].documentType.code,
+              professionalDocDiploma
+            );
+            formData.append(
+              documentSpecs[docIdx2].documentType.code,
+              professionalDocDiploma2
+            );
+            formData.append(
+              documentSpecs[docIdx3].documentType.code,
+              professionalDocDiploma3
+            );
+            formData.append(
+              documentSpecs[docIdx4].documentType.code,
+              professionalDocDiploma4
+            );
+            formData.append(
+              documentSpecs[docIdx5].documentType.code,
+              professionalDocDiploma5
+            );
+            formData.append(
+              documentSpecs[8].documentType.code,
+              professionalDocTranscript
+            );
+            formData.append(
+              documentSpecs[37].documentType.code,
+              professionalDocTranscript2
+            );
+            formData.append(
+              documentSpecs[38].documentType.code,
+              professionalDocTranscript3
+            );
+            formData.append(
+              documentSpecs[39].documentType.code,
+              professionalDocTranscript4
+            );
+            formData.append(
+              documentSpecs[40].documentType.code,
+              professionalDocTranscript5
+            );
             formData.append(documentSpecs[9].documentType.code, coc);
             if (educationDoc != undefined) {
               formData.append(
@@ -470,7 +716,6 @@ export default {
             }
             formData.append(documentSpecs[15].documentType.code, supportLetter);
             formData.append(documentSpecs[16].documentType.code, herqa);
-            formData.append(documentSpecs[17].documentType.code, letterfromOrg);
             formData.append(
               documentSpecs[18].documentType.code,
               renewedLicense
@@ -524,6 +769,10 @@ export default {
               formData.append(
                 documentSpecs[4].documentType.code,
                 workExperienceFile.value
+              );
+              formData.append(
+                documentSpecs[28].documentType.code,
+                workExperienceFile2.value
               );
               let payload = { document: formData, id: licenseId };
               store
@@ -592,6 +841,10 @@ export default {
               documentSpecs[4].documentType.code,
               workExperienceFile.value
             );
+            formData.append(
+              documentSpecs[28].documentType.code,
+              workExperienceFile2.value
+            );
             let payload = { document: formData, id: licenseId };
             store
               .dispatch("newlicense/uploadDocuments", payload)
@@ -639,6 +892,7 @@ export default {
       maxFileSize.value = MAX_FILE_SIZE.MAX_FILE_SIZE;
       maxSizeMB.value = MAX_SIZE_MB.MAX_SIZE_MB;
       workExperienceBack = store.getters["newlicense/getWorkExperience"];
+      workExperienceBack2 = store.getters["newlicense/getWorkExperience2"];
       if (
         workExperienceBack &&
         workExperienceBack !== undefined &&
@@ -676,6 +930,35 @@ export default {
           }
         }
       }
+      if (
+        workExperienceBack2 &&
+        workExperienceBack2 !== undefined &&
+        workExperienceBack2 !== null &&
+        workExperienceBack2 !== ""
+      ) {
+        docCount.value++;
+        showUpload2.value = false;
+        workExperienceFile2.value = workExperienceBack2;
+        let reader = new FileReader();
+        reader.addEventListener(
+          "load",
+          function() {
+            showPreview2.value = true;
+            filePreview2.value = reader.result;
+          },
+          false
+        );
+        if (workExperienceFile2.value) {
+          if (/\.(jpe?g|png|gif)$/i.test(workExperienceFile2.value.name)) {
+            isImage2.value = true;
+            reader.readAsDataURL(workExperienceFile2.value);
+          } else if (/\.(pdf)$/i.test(workExperienceFile2.value.name)) {
+            isImage2.value = false;
+            isPdf2.value = true;
+            reader.readAsDataURL(workExperienceFile2.value);
+          }
+        }
+      }
       declinedFields = store.getters["newlicense/getDeclinedFields"];
       acceptedFields = store.getters["newlicense/getAcceptedFields"];
       remark = store.getters["newlicense/getRemark"];
@@ -701,6 +984,18 @@ export default {
             showPreview.value = true;
             filePreview.value = basePath + draftData.documents[i].filePath;
           }
+          if (draftData.documents[i].documentTypeCode == "WE1") {
+            docCount.value++;
+            showUpload2.value = false;
+            if (draftData.documents[i].fileName.split(".")[1] == "pdf") {
+              isPdf2.value = true;
+            } else {
+              isImage2.value = true;
+            }
+            workExperienceFile2.value = draftData.documents[i];
+            showPreview2.value = true;
+            filePreview2.value = basePath + draftData.documents[i].filePath;
+          }
         }
       }
     });
@@ -713,8 +1008,22 @@ export default {
       showUpload,
       isImage,
       isPdf,
+
+      workExperienceFile2,
+      workExperienceFileP2,
+      workExperienceBack2,
+      showPreview2,
+      filePreview2,
+      showUpload2,
+      isImage2,
+      isPdf2,
+
       handleFileUpload,
+      handleFileUpload2,
+
       reset,
+      reset2,
+
       submit,
       submitBack,
       draft,
@@ -736,6 +1045,15 @@ export default {
       fileSizeExceed,
       maxFileSize,
       maxSizeMB,
+      docCount,
+      addDocs,
+      removeDocs,
+
+      docIdx,
+      docIdx2,
+      docIdx3,
+      docIdx4,
+      docIdx5,
     };
   },
 };

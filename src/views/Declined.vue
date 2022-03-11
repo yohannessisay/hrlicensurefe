@@ -12,7 +12,11 @@
           v-if="this.newlicense.length != 0"
           class=" mt-medium rounded ml-large"
         >
-          <div class="flex " v-for="i in this.newlicense.length" v-bind:key="i">
+          <div
+            class="flex flex-wrap"
+            v-for="i in this.newlicense.length"
+            v-bind:key="i"
+          >
             <div
               class="container mb-medium"
               v-for="item in this.newlicense.slice((i - 1) * 4, i * 4)"
@@ -58,10 +62,17 @@
                       <b>Certified: &nbsp;</b>No
                     </span>
                     <span
-                      v-if="item.reviewer != null || item.reviewer != undefined"
+                      v-if="item.reviewer.region"
                       class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                     >
-                      <b>Reviewer: &nbsp;</b>{{ item.reviewer.name }}
+                      <b>Reviewer Region: &nbsp;</b
+                      >{{ item.reviewer.region.name }}
+                    </span>
+                    <span
+                      v-else
+                      class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                    >
+                      <b>Reviewer Region: &nbsp;</b>{{ item.reviewer.name }}
                     </span>
                     <span
                       class="
@@ -73,7 +84,11 @@
                     "
                     >
                       {{
-                        item.createdAt ? moment(item.createdAt).fromNow() : "-"
+                        item.createdAt
+                          ? moment(item.createdAt).format(
+                              "MMMM Do YYYY, h:mm:ss a"
+                            )
+                          : "-"
                       }}
                     </span>
                   </div>
@@ -94,7 +109,11 @@
           v-if="this.renewal.length != 0"
           class=" mt-medium rounded ml-large"
         >
-          <div class="flex " v-for="i in this.renewal.length" v-bind:key="i">
+          <div
+            class="flex flex-wrap"
+            v-for="i in this.renewal.length"
+            v-bind:key="i"
+          >
             <div
               class="container mb-medium"
               v-for="item in this.renewal.slice((i - 1) * 4, i * 4)"
@@ -140,10 +159,17 @@
                       <b>Certified: &nbsp;</b>No
                     </span>
                     <span
-                      v-if="item.reviewer != null || item.reviewer != undefined"
+                      v-if="item.reviewer.region"
                       class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                     >
-                      <b>Reviewer: &nbsp;</b>{{ item.reviewer.name }}
+                      <b>Reviewer Region: &nbsp;</b
+                      >{{ item.reviewer.region.name }}
+                    </span>
+                    <span
+                      v-else
+                      class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                    >
+                      <b>Reviewer Region: &nbsp;</b>{{ item.reviewer.name }}
                     </span>
                     <span
                       class="
@@ -155,7 +181,11 @@
                     "
                     >
                       {{
-                        item.createdAt ? moment(item.createdAt).fromNow() : "-"
+                        item.createdAt
+                          ? moment(item.createdAt).format(
+                              "MMMM Do YYYY, h:mm:ss a"
+                            )
+                          : "-"
                       }}
                     </span>
                   </div>
@@ -266,7 +296,7 @@
           class=" mt-medium rounded ml-large"
         >
           <div
-            class="flex "
+            class="flex flex-wrap"
             v-for="i in this.goodstanding.length"
             v-bind:key="i"
           >
@@ -290,7 +320,7 @@
                       class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                     >
                       <b>Applicant Type: &nbsp;</b>
-                      {{ item.applicantPosition.name }}
+                      {{ item.applicantType.name }}
                     </span>
                     <span
                       class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
@@ -315,10 +345,17 @@
                       <b>Certified: &nbsp;</b>No
                     </span>
                     <span
-                      v-if="item.reviewer != null || item.reviewer != undefined"
+                      v-if="item.reviewer.region"
                       class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                     >
-                      <b>Reviewer: &nbsp;</b>{{ item.reviewer.name }}
+                      <b>Reviewer Region: &nbsp;</b
+                      >{{ item.reviewer.region.name }}
+                    </span>
+                    <span
+                      v-else
+                      class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
+                    >
+                      <b>Reviewer Region: &nbsp;</b>{{ item.reviewer.name }}
                     </span>
                     <span
                       class="
@@ -330,7 +367,11 @@
                     "
                     >
                       {{
-                        item.createdAt ? moment(item.createdAt).fromNow() : "-"
+                        item.createdAt
+                          ? moment(item.createdAt).format(
+                              "MMMM Do YYYY, h:mm:ss a"
+                            )
+                          : "-"
                       }}
                     </span>
                   </div>

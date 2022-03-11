@@ -330,6 +330,24 @@ export default {
           search.value
         );
       }
+      if (props.tab === "renewalUnassignedEvaluation") {
+        store.dispatch(
+          "reviewerRenewal/getRenewalApprovedSearched",
+          search.value
+        )
+      }
+      if (props.tab === "renewalLicensed") {
+        store.dispatch(
+          "reviewerRenewal/getRenewalLicensedSearched",
+          search.value
+        )
+      }
+      if (props.tab === "renewalOthersLicensed") {
+        store.dispatch(
+          "reviewerRenewal/getRenewalOthersLicensedSearched",
+          search.value
+        )
+      }
 
       if (props.tab === "newLicenseUnassigned") {
         store.dispatch(
@@ -390,6 +408,12 @@ export default {
           "reviewerNewLicense/getNewLicenseUnderSuperVisionSearched",
           search.value
         );
+      }
+      if (props.tab === "newLicenseUnassignedEvaluation") {
+        store.dispatch(
+          "reviewerNewLicense/getNewLicenseApprovedSearched",
+          search.value
+        )
       }
       if (props.tab === "othersNewLicenseUnderSuperVision") {
         store.dispatch(
@@ -468,6 +492,12 @@ export default {
           "reviewerNewLicense/getNewLicenseReturnedToOthersSearched",
           search.value
         );
+      }
+      if (props.tab === "newLicenseLicensed") {
+        store.dispatch(
+          "reviewerNewLicense/getNewLicenseLicensedSearched",
+          search.value
+        )
       }
 
       if (props.tab === "verificationUnassigned") {
@@ -578,6 +608,34 @@ export default {
           search.value
         );
       }
+      if (props.tab === "goodStandingLicensed") {
+        store.dispatch(
+          "reviewerGoodStanding/getGoodStandingLicensedSearched",
+          search.value
+        );
+      }
+      if (props.tab === "goodStandingOthersLicensed") {
+        store.dispatch(
+          "reviewerGoodStanding/getGoodStandingOthersLicensedSearched",
+          search.value
+        );
+      }
+
+      if (props.tab === "allLicensed") {
+        store.dispatch(
+          "reviewerNewLicense/getNewLicenseAllLicensedSearched",
+          search.value
+        );
+        store.dispatch(
+          "reviewerRenewal/getRenewalAllLicensedSearched",
+          search.value
+        );
+        store.dispatch(
+          "reviewerGoodStanding/getGoodStandingAllLicensedSearched",
+          search.value
+        );
+      }
+
     });
     let showAdminCreate = false;
     let isSuperAdmin = ref(false);

@@ -25,11 +25,14 @@
         >
           ACCEPTED
         </h2>
-        <TitleWithIllustration
-          illustration="Certificate"
-          message="Higher Education Relevance and Quality Agency center(HERQA)"
-          class="mt-8"
-        />
+        <div class="tooltip">
+          <TitleWithIllustration
+            illustration="Certificate"
+            message="Higher Education Relevance and Quality Agency(HERQA)"
+            class="mt-8"
+          />
+          <span class="tooltiptext ml-4">R Equivalence letter </span>
+        </div>
         <span class="flex justify-center">{{ documentMessage }}</span>
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
           <div class="flex justify-center">
@@ -241,13 +244,19 @@ export default {
     let healthExamCert = ref("");
     let professionalDoc = ref("");
     let workExperience = ref("");
+    let workExperience2 = ref("");
     let englishLanguage = ref("");
     let cpd = ref("");
+    let cpd2 = ref("");
+    let cpd3 = ref("");
+    let cpd4 = ref("");
+    let cpd5 = ref("");
     let letterFromOrg = ref("");
     let letterOrg = ref("");
     let previousLicense = ref("");
     let professionalLicense = ref("");
     let renewedLicense = ref("");
+    let renewedLicenseOfHealthFacility = ref("");
 
     const reset = () => {
       showUpload.value = true;
@@ -315,12 +324,19 @@ export default {
     healthExamCert = store.getters["renewal/getRenewalHealthExamCert"];
     professionalDoc = store.getters["renewal/getProfessionalDocuments"];
     workExperience = store.getters["renewal/getRenewalWorkExperience"];
+    workExperience2 = store.getters["renewal/getRenewalWorkExperience2"];
     englishLanguage = store.getters["renewal/getEnglishLanguage"];
     cpd = store.getters["renewal/getRenewalCpd"];
+    cpd2 = store.getters["renewal/getRenewalCpd2"];
+    cpd3 = store.getters["renewal/getRenewalCpd3"];
+    cpd4 = store.getters["renewal/getRenewalCpd4"];
+    cpd5 = store.getters["renewal/getRenewalCpd5"];
     letterFromOrg = store.getters["renewal/getRenewalLicense"];
     previousLicense = store.getters["renewal/getPreviousLicense"];
     professionalLicense = store.getters["renewal/getProfessionalLicense"];
     renewedLicense = store.getters["renewal/getRenewedLicense"];
+    renewedLicenseOfHealthFacility =
+      store.getters["renewal/getRenewedLicenseOfHealthFacility"];
     letterOrg = store.getters["renewal/getLetterfromOrg"];
 
     const draft = (action) => {
@@ -423,7 +439,15 @@ export default {
               );
             }
             formData.append(documentSpecs[5].documentType.code, workExperience);
+            formData.append(
+              documentSpecs[35].documentType.code,
+              workExperience2
+            );
             formData.append(documentSpecs[4].documentType.code, cpd);
+            formData.append(documentSpecs[31].documentType.code, cpd2);
+            formData.append(documentSpecs[32].documentType.code, cpd3);
+            formData.append(documentSpecs[33].documentType.code, cpd4);
+            formData.append(documentSpecs[34].documentType.code, cpd5);
             formData.append(
               documentSpecs[7].documentType.code,
               englishLanguage
@@ -444,6 +468,10 @@ export default {
             formData.append(
               documentSpecs[21].documentType.code,
               renewedLicense
+            );
+            formData.append(
+              documentSpecs[36].documentType.code,
+              renewedLicenseOfHealthFacility
             );
             formData.append(documentSpecs[20].documentType.code, letterOrg);
             let payload = { document: formData, id: licenseId };
@@ -706,6 +734,7 @@ export default {
       previousLicense,
       professionalLicense,
       renewedLicense,
+      renewedLicenseOfHealthFacility,
       letterOrg,
 
       documentMessage,
@@ -727,5 +756,28 @@ img {
   background-image: linear-gradient(to right, #d63232, #e63636) !important;
   color: white;
   border-color: tomato;
+}
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #1e40af82;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+
+  /* Position the tooltip text - see examples below! */
+  position: absolute;
+  z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted white; /* If you want dots under the hoverable text */
 }
 </style>
