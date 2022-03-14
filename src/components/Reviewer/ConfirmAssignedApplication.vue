@@ -138,7 +138,7 @@
               <picture v-if="docs.length > 0">
                 <img
                   v-bind:src="
-                    'https://storage.googleapis.com/hris-lisence-dev/' +
+                    googleApi + '' +
                       docs[index].filePath
                   "
                 />
@@ -316,7 +316,7 @@
                             >
                               <img
                                 v-bind:src="
-                                  'https://storage.googleapis.com/hris-lisence-dev/' +
+                                  googleApi + '' +
                                     rejectedObj[ind].filePath
                                 "
                               />
@@ -397,6 +397,7 @@
 import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useStore } from "vuex";
+import { googleApi } from "@/composables/baseURL";
 
 import Modal from "@/sharedComponents/Modal";
 import FlashMessage from "@/sharedComponents/FlashMessage";
@@ -694,6 +695,7 @@ export default {
       approvedColor,
       approvedOrRejected,
       showLoadingButtons,
+      googleApi
     };
   },
 };

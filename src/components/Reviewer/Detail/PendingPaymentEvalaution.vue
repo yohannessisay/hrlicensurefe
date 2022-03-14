@@ -86,7 +86,7 @@
                   <div>
                     <iframe
                       v-bind:src="
-                        'https://storage.googleapis.com/hris-lisence-dev/' +
+                        googleApi + '' +
                           docs[0].filePath
                       "
                     ></iframe>
@@ -100,7 +100,7 @@
                 <div v-else>
                   <img
                     v-bind:src="
-                      'https://storage.googleapis.com/hris-lisence-dev/' +
+                      googleApi + '' +
                         docs[0].filePath
                     "
                   />
@@ -177,6 +177,7 @@ import { useRoute } from "vue-router";
 import { ref, onMounted } from "vue";
 
 import { useRouter } from "vue-router";
+import { googleApi } from "@/composables/baseURL";
 
 import Modal from "@/sharedComponents/Modal";
 import FlashMessage from "@/sharedComponents/FlashMessage";
@@ -375,7 +376,7 @@ export default {
     const openPdfInNewTab = (pdfPath) => {
       pdfFilePath.value = pdfPath;
       window.open(
-        "https://storage.googleapis.com/hris-lisence-dev/" + pdfPath,
+        googleApi + "" + pdfPath,
         "_blank"
       );
     };
@@ -401,6 +402,7 @@ export default {
       evaluateRoute,
       pdfFilePath,
       openPdfInNewTab,
+      googleApi
     };
   },
 };

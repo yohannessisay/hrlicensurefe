@@ -41,9 +41,6 @@ export const SET_VERIFICATION_OTHERS_RE_APPLY =
 export const SET_VERIFICATION_OTHERS_RE_APPLY_SEARCHED =
   "SET_VERIFICATION_OTHERS_RE_APPLY_SEARCHED";
 
-
-const baseUrl = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api";
-
 export default {
   SET_VERIFICATION_UNASSIGNED,
   SET_VERIFICATION_UNASSIGNED_SEARCHED,

@@ -660,7 +660,7 @@
                     <div>
                       <iframe
                         v-bind:src="
-                          'https://storage.googleapis.com/hris-lisence-dev/' +
+                          googleApi + '' +
                             docs[index].filePath
                         "
                       ></iframe>
@@ -674,7 +674,7 @@
                   <div v-else>
                     <img
                       v-bind:src="
-                        'https://storage.googleapis.com/hris-lisence-dev/' +
+                        googleApi + '' +
                           docs[index].filePath
                       "
                     />
@@ -906,7 +906,7 @@
                             >
                               <img
                                 v-bind:src="
-                                  'https://storage.googleapis.com/hris-lisence-dev/' +
+                                  googleApi + '' +
                                     rejectedObj[ind].filePath
                                 "
                               />
@@ -1030,6 +1030,7 @@ import { useRoute } from "vue-router";
 import { ref, onMounted } from "vue";
 
 import { useRouter } from "vue-router";
+import { googleApi } from "@/composables/baseURL";
 
 import Title from "@/sharedComponents/Title";
 import Modal from "@/sharedComponents/Modal";
@@ -1807,7 +1808,7 @@ export default {
     const openPdfInNewTab = (pdfPath) => {
       pdfFilePath.value = pdfPath;
       window.open(
-        "https://storage.googleapis.com/hris-lisence-dev/" + pdfPath,
+        googleApi + "" + pdfPath,
         "_blank"
       );
     };
@@ -2106,6 +2107,7 @@ export default {
       isGoodStanding,
       showActionLoading,
       showLoadingButtons,
+      googleApi,
     };
   },
 };

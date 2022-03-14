@@ -1,4 +1,5 @@
 import ApiService from "../../../services/api.service";
+import { baseUrl } from "../../../composables/baseURL";
 import {
   SET_VERIFICATION_UNASSIGNED,
   SET_VERIFICATION_UNASSIGNED_SEARCHED,
@@ -28,7 +29,6 @@ import {
   SET_VERIFICATION_OTHERS_RE_APPLY,
   SET_VERIFICATION_OTHERS_RE_APPLY_SEARCHED,
 } from "./mutation-types";
-const baseUrl = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api";
 
 export default {
   async getUnassignedVerification({ commit }, statusId) {

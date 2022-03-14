@@ -1,4 +1,5 @@
 import ApiService from "../../../services/api.service";
+import { baseUrl } from "../../../composables/baseURL";
 import {
   SET_NEW_LICENSE_UNASSIGNED,
   SET_NEW_LICENSE_UNASSIGNED_SEARCHED,
@@ -72,8 +73,6 @@ import {
   SET_NEW_LICENSE_FOR_SPECIFIC_USER_SEARCHED,
   NEW_LICENSE_REPORT,
 } from "./mutation-types";
-
-const baseUrl = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api";
 
 export default {
   async getNewLicenseUnassigned({ commit }, statusId) {

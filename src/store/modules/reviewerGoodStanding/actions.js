@@ -1,4 +1,5 @@
 import ApiService from "../../../services/api.service";
+import { baseUrl } from "../../../composables/baseURL";
 import {
   SET_GOOD_STANDING_UNASSIGNED,
   SET_GOOD_STANDING_UNASSIGNED_SEARCHED,
@@ -37,7 +38,6 @@ import {
   SET_GOOD_STANDING_OTHERS_RE_APPLY,
   SET_GOOD_STANDING_OTHERS_RE_APPLY_SEARCHED,
 } from "./mutation-types";
-const baseUrl = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api";
 
 export default {
   async getUnassignedGoodStanding({ commit }, statusId) {
