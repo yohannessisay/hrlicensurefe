@@ -5,7 +5,7 @@
       <SideNav />
     </div>
     <div class="menu">
-      <div v-if="!this.showLoading" class="bg-lightBlueB-200 h-full">
+      <div v-if="!this.showLoading" class="bg-lightBlueB-200">
         <div class="flex pl-12 pt-medium">
           <Title message="New License Withdrawn Applications" />
         </div>
@@ -89,7 +89,7 @@
           </div>
         </div>
       </div>
-      <div v-if="!this.showLoading" class="bg-lightBlueB-200 h-full">
+      <div v-if="!this.showLoading" class="bg-lightBlueB-200">
         <div class="flex pl-12 pt-medium">
           <Title message="Renewal Withdrawn Applications" />
         </div>
@@ -255,7 +255,7 @@
           </div>
         </div>
       </div> -->
-      <div v-if="!this.showLoading" class="bg-lightBlueB-200 h-full">
+      <div v-if="!this.showLoading" class="bg-lightBlueB-200">
         <div class="flex pl-12 pt-medium">
           <Title message="Good Standing Withdrawn Applications" />
         </div>
