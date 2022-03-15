@@ -243,13 +243,47 @@
 import { ref } from "vue";
 
 export default {
-  props: ["display"],
   data() {
     return {};
   },
   methods: {
     selectMenu(menu) {
-      this.$emit("changeDisplay", menu);
+      console.log(menu);
+      switch (menu) {
+        case 0:
+          this.$router.push({ path: "/menu" });
+          break;
+        case 1:
+          this.$router.push({ path: "/draft" });
+          break;
+        case 2:
+          this.$router.push({ path: "/withdrawn" });
+          break;
+        case 3:
+          this.$router.push({ path: "/submitted" });
+          break;
+        case 4:
+          this.$router.push({ path: "/inReview" });
+          break;
+        case 5:
+          this.$router.push({ path: "/approved" });
+          break;
+        case 6:
+          this.$router.push({ path: "/approvedPayment" });
+          break;
+        case 7:
+          this.$router.push({ path: "/declined" });
+          break;
+        case 8:
+          this.$router.push({ path: "/declinedPayment" });
+          break;
+        case 9:
+          this.$router.push({ path: "/undersupervision" });
+          break;
+        case 10:
+          this.$router.push({ path: "/pendingPayment" });
+          break;
+      }
     },
   },
   setup() {

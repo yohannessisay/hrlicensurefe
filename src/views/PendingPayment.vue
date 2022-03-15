@@ -1,7 +1,11 @@
 <template>
-  <div>
-    <div>
-      <div v-if="!this.showLoading" class="bg-lightBlueB-200 h-full">
+  <Navigation />
+  <div class="flex flex-row">
+    <div class="sidenav">
+      <SideNav />
+    </div>
+    <div class="menu">
+      <div v-if="!this.showLoading" class="bg-lightBlueB-200">
         <div class="flex pl-12 pt-medium">
           <Title message="New License Pending Payment Applications" />
         </div>
@@ -91,7 +95,7 @@
           </div>
         </div>
       </div>
-      <div v-if="!this.showLoading" class="bg-lightBlueB-200 h-full">
+      <div v-if="!this.showLoading" class="bg-lightBlueB-200">
         <div class="flex pl-12 pt-medium">
           <Title message="Renewal Pending Payment Applications" />
         </div>
@@ -260,7 +264,7 @@
           </div>
         </div>
       </div> -->
-      <div v-if="!this.showLoading" class="bg-lightBlueB-200 h-full">
+      <div v-if="!this.showLoading" class="bg-lightBlueB-200">
         <div class="flex pl-12 pt-medium">
           <Title message="Good Standing Pending Payment Applications" />
         </div>
@@ -353,17 +357,18 @@
           </div>
         </div>
       </div>
-    </div>
-    <div
-      v-if="showLoading"
-      class="flex justify-center justify-items-center mt-24"
-    >
-      <Spinner />
+      <div
+        v-if="showLoading"
+        class="flex justify-center justify-items-center mt-24"
+      >
+        <Spinner />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import SideNav from "./SideNav.vue";
 import Title from "@/sharedComponents/TitleWithIllustration";
 import RenderIllustration from "@/sharedComponents/RenderIllustration";
 import Navigation from "@/views/Navigation";
@@ -371,7 +376,14 @@ import Spinner from "@/sharedComponents/Spinner";
 import moment from "moment";
 
 export default {
-  components: { Navigation, Title, Spinner, RenderIllustration, Title },
+  components: {
+    Navigation,
+    SideNav,
+    Title,
+    Spinner,
+    RenderIllustration,
+    Title,
+  },
   data: function() {
     return {
       license: [],
@@ -453,4 +465,16 @@ export default {
   },
 };
 </script>
-<style></style>
+<style>
+@media only screen and (max-width: 1024px) {
+  .sidenav {
+    display: none;
+  }
+}
+.menu {
+  width: 80%;
+}
+.sidenav {
+  width: 20%;
+}
+</style>
