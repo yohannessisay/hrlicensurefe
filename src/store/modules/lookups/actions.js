@@ -8,7 +8,7 @@ export default {
     },
     async getApplicantType() {
         try {
-            const resp = await ApiService.get(baseUrl + "lookups/applicantTypes");
+            const resp = await ApiService.get(baseUrl + "/lookups/applicantTypes");
             return resp;
         } catch (error) {
             return error;
@@ -16,7 +16,7 @@ export default {
     },
     async getRegions() {
         try {
-            const resp = await ApiService.get(baseUrl + "lookups/regions");
+            const resp = await ApiService.get(baseUrl + "/lookups/regions");
             return resp;
         } catch (error) {
             const resp = error;
@@ -25,7 +25,7 @@ export default {
     },
     async getGovernment({ commit }, id) {
         try {
-            const resp = await ApiService.get(baseUrl + "lookups/OccupationTypes");
+            const resp = await ApiService.get(baseUrl + "/lookups/OccupationTypes");
             return resp;
         } catch (error) {
             return error;
@@ -33,7 +33,7 @@ export default {
     },
     async getNativeLanguage({ commit }, id) {
         try {
-            const resp = await ApiService.get(baseUrl + "lookups/NativeLanguages");
+            const resp = await ApiService.get(baseUrl + "/lookups/NativeLanguages");
             return resp;
         } catch (error) {
             return error;
@@ -41,7 +41,7 @@ export default {
     },
     async getEducationalLevel({ commit }) {
         try {
-            const resp = await ApiService.get(baseUrl + "lookups/educationalLevels");
+            const resp = await ApiService.get(baseUrl + "/lookups/educationalLevels");
             return resp;
         } catch (error) {
             return error;

@@ -201,7 +201,7 @@ export default {
     },
     async addRenewalLicense({ commit }, license) {
         try {
-            const resp = await ApiService.post(baseUrl + "renewals/add", license);
+            const resp = await ApiService.post(baseUrl + "/renewals/add", license);
             return resp;
         } catch (error) {
             return error;
@@ -210,7 +210,7 @@ export default {
     async editRenewalLicense({ commit }, license) {
         try {
             const resp = await ApiService.put(
-                baseUrl + "renewals/" + license.id,
+                baseUrl + "/renewals/" + license.id,
                 license.data
             );
             return resp;
@@ -221,7 +221,7 @@ export default {
     async uploadDocuments({ commit }, documents) {
         try {
             const resp = await ApiService.post(
-                baseUrl + "documentUploads/renewalDocument/" + documents.id,
+                baseUrl + "/documentUploads/renewalDocument/" + documents.id,
                 documents.document, {
                     headers: {
                         "Content-Type": "multipart/form-data",
@@ -236,7 +236,7 @@ export default {
 
     async getApplicantType() {
         try {
-            const resp = await ApiService.get(baseUrl + "lookups/applicantTypes");
+            const resp = await ApiService.get(baseUrl + "/lookups/applicantTypes");
             return resp;
         } catch (error) {
             return error;
@@ -245,7 +245,7 @@ export default {
     async getInstitution({ commit }, value) {
         try {
             const resp = await ApiService.get(
-                baseUrl + "lookups/appTypeInstitutions/" + value
+                baseUrl + "/lookups/appTypeInstitutions/" + value
             );
             return resp;
         } catch (error) {
@@ -254,7 +254,7 @@ export default {
     },
     async getDepartmentType() {
         try {
-            const resp = await ApiService.get(baseUrl + "lookups/departments");
+            const resp = await ApiService.get(baseUrl + "/lookups/departments");
             return resp;
         } catch (error) {
             return error;
@@ -262,7 +262,7 @@ export default {
     },
     async getProfile({ commit }, id) {
         try {
-            const resp = await ApiService.get(baseUrl + "profiles/user/" + id);
+            const resp = await ApiService.get(baseUrl + "/profiles/user/" + id);
             return resp;
         } catch (error) {
             return error;
@@ -270,7 +270,7 @@ export default {
     },
     async getApplicationStatuses() {
         try {
-            const resp = await ApiService.get(baseUrl + "applicationStatuses");
+            const resp = await ApiService.get(baseUrl + "/applicationStatuses");
             return resp;
         } catch (error) {
             return error;
@@ -278,7 +278,7 @@ export default {
     },
     async getApplicationCategories() {
         try {
-            const resp = await ApiService.get(baseUrl + "applicationCategories");
+            const resp = await ApiService.get(baseUrl + "/applicationCategories");
             return resp;
         } catch (error) {
             return error;
@@ -286,7 +286,7 @@ export default {
     },
     async getDocumentSpecs({ commit }, id) {
         try {
-            const resp = await ApiService.get(baseUrl + "documentSpecs/" + id);
+            const resp = await ApiService.get(baseUrl + "/documentSpecs/" + id);
             return resp;
         } catch (error) {
             return error;
@@ -295,7 +295,7 @@ export default {
 
     async getRenewalLicense({ commit }) {
         try {
-            const resp = await ApiService.get(baseUrl + "renewals/user/" + userId);
+            const resp = await ApiService.get(baseUrl + "/renewals/user/" + userId);
             return resp;
         } catch (error) {
             return error;
@@ -303,7 +303,7 @@ export default {
     },
     async getDraft({ commit }, id) {
         try {
-            const resp = await ApiService.get(baseUrl + "renewals/" + id);
+            const resp = await ApiService.get(baseUrl + "/renewals/" + id);
             return resp;
         } catch (error) {
             return error;
@@ -313,7 +313,7 @@ export default {
     async withdraw({ commit }, payload) {
         try {
             const resp = await ApiService.put(
-                baseUrl + "renewals/" + payload.licenseId,
+                baseUrl + "/renewals/" + payload.licenseId,
                 payload.withdrawData
             );
             return resp;
@@ -324,7 +324,7 @@ export default {
     async updateDraft({ commit }, payload) {
         try {
             const resp = await ApiService.put(
-                baseUrl + "renewals/" + payload.licenseId,
+                baseUrl + "/renewals/" + payload.licenseId,
                 payload.draftData
             );
             return resp;
@@ -334,7 +334,7 @@ export default {
     },
     async getRegions() {
         try {
-            const resp = await ApiService.get(baseUrl + "lookups/regions");
+            const resp = await ApiService.get(baseUrl + "/lookups/regions");
             return resp;
         } catch (error) {
             const resp = error;
@@ -343,7 +343,7 @@ export default {
     },
     async getWoredas(context, zoneId) {
         try {
-            const baseUrl = baseUrl + "lookups/woredas/" + zoneId;
+            const baseUrl = baseUrl + "/lookups/woredas/" + zoneId;
             const resp = await ApiService.get(baseUrl);
             return resp;
         } catch (error) {
@@ -353,7 +353,7 @@ export default {
     },
     async getZones(context, regionId) {
         try {
-            const baseUrl = baseUrl + "lookups/zones/" + regionId;
+            const baseUrl = baseUrl + "/lookups/zones/" + regionId;
             const resp = await ApiService.get(baseUrl);
             return resp;
         } catch (error) {
@@ -363,7 +363,7 @@ export default {
     },
     async getExpertLevel() {
         try {
-            const resp = await ApiService.get(baseUrl + "lookups/expertLevels");
+            const resp = await ApiService.get(baseUrl + "/lookups/expertLevels");
             return resp;
         } catch (error) {
             return error;
@@ -372,7 +372,7 @@ export default {
     async getProfessionalTypes(context, deptId) {
         try {
             const resp = await ApiService.get(
-                baseUrl + "lookups/professionalTypes/" + deptId
+                baseUrl + "/lookups/professionalTypes/" + deptId
             );
             return resp;
         } catch (error) {
@@ -381,7 +381,7 @@ export default {
     },
     async searchNewLicense({ commit }, id) {
         try {
-            const resp = await ApiService.get(baseUrl + "newLicenses/search/applicant");
+            const resp = await ApiService.get(baseUrl + "/newLicenses/search/applicant");
             return resp;
         } catch (error) {
             return resp;
@@ -390,7 +390,7 @@ export default {
     async searchProfessionalType({ commit }, profTypes) {
         try {
             const resp = await ApiService.post(
-                baseUrl + "renewals/search/professionalType",
+                baseUrl + "/renewals/search/professionalType",
                 profTypes
             );
             return resp;

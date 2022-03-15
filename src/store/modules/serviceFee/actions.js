@@ -13,7 +13,7 @@ export default {
     },
     async getApplicationStatuses() {
         try {
-            const resp = await ApiService.get(baseUrl + "applicationStatuses");
+            const resp = await ApiService.get(baseUrl + "/applicationStatuses");
             return resp;
         } catch (error) {
             return error;
@@ -23,7 +23,7 @@ export default {
         if (license.appType == "newlicense") {
             try {
                 const resp = await ApiService.put(
-                    baseUrl + "newLicenses/" + license.id,
+                    baseUrl + "/newLicenses/" + license.id,
                     license.save
                 );
                 return resp;
@@ -33,7 +33,7 @@ export default {
         } else if (license.appType == "renewal") {
             try {
                 const resp = await ApiService.put(
-                    baseUrl + "renewals/" + license.id,
+                    baseUrl + "/renewals/" + license.id,
                     license.save
                 );
                 return resp;
@@ -43,7 +43,7 @@ export default {
         } else if (license.appType == "verification") {
             try {
                 const resp = await ApiService.put(
-                    baseUrl + "verifications/" + license.id,
+                    baseUrl + "/verifications/" + license.id,
                     license.save
                 );
                 return resp;
@@ -53,7 +53,7 @@ export default {
         } else {
             try {
                 const resp = await ApiService.put(
-                    baseUrl + "goodStandings/" + license.id,
+                    baseUrl + "/goodStandings/" + license.id,
                     license.save
                 );
                 return resp;
@@ -66,7 +66,7 @@ export default {
         if (license.appT == "newlicense") {
             try {
                 const resp = await ApiService.post(
-                    baseUrl + "documentUploads/licenseDocument/" + license.id,
+                    baseUrl + "/documentUploads/licenseDocument/" + license.id,
                     license.document, {
                         headers: {
                             "Content-Type": "multipart/form-data",
@@ -80,7 +80,7 @@ export default {
         } else if (license.appT == "renewal") {
             try {
                 const resp = await ApiService.post(
-                    baseUrl + "documentUploads/renewalDocument/" + license.id,
+                    baseUrl + "/documentUploads/renewalDocument/" + license.id,
                     license.document, {
                         headers: {
                             "Content-Type": "multipart/form-data",
@@ -94,7 +94,7 @@ export default {
         } else if (license.appT == "verification") {
             try {
                 const resp = await ApiService.post(
-                    baseUrl + "documentUploads/verificationDocument/" + license.id,
+                    baseUrl + "/documentUploads/verificationDocument/" + license.id,
                     license.document, {
                         headers: {
                             "Content-Type": "multipart/form-data",
@@ -108,7 +108,7 @@ export default {
         } else {
             try {
                 const resp = await ApiService.post(
-                    baseUrl + "documentUploads/goodStandingDocument/" + license.id,
+                    baseUrl + "/documentUploads/goodStandingDocument/" + license.id,
                     license.document, {
                         headers: {
                             "Content-Type": "multipart/form-data",

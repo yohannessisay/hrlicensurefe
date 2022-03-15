@@ -252,19 +252,19 @@
             </button>
             <button
               v-if="this.buttons.length > 2"
-              @click="draft(this.buttons[2].action)"
+              @click="draft(this.buttons[1].action)"
               variant="outline"
             >
-              {{ this.buttons[2].name }}
+              {{ this.buttons[1].name }}
             </button>
 
             <button
               v-if="this.buttons.length > 2"
               class="withdraw"
-              @click="withdraw(this.buttons[1].action)"
+              @click="withdraw(this.buttons[2].action)"
               variant="outline"
             >
-              {{ this.buttons[1].name }}
+              {{ this.buttons[2].name }}
             </button>
           </div>
         </div>

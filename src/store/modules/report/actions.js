@@ -8,9 +8,9 @@ export default {
     },
     async getReport({ commit }, AppId, RId, date) {
         try {
-            const approved = await ApiService.get(baseUrl + "renewals/add");
-            const declined = await ApiService.get(baseUrl + "renewals/add");
-            const underReview = await ApiService.get(baseUrl + "renewals/add");
+            const approved = await ApiService.get(baseUrl + "/renewals/add");
+            const declined = await ApiService.get(baseUrl + "/renewals/add");
+            const underReview = await ApiService.get(baseUrl + "/renewals/add");
 
             return [approved, declined, underReview];
         } catch (error) {
@@ -19,7 +19,7 @@ export default {
     },
     async getNewLicenseReport({ commit }) {
         try {
-            const resp = await ApiService.get(baseUrl + "newLicenseReport");
+            const resp = await ApiService.get(baseUrl + "/newLicenseReport");
             return resp;
         } catch (error) {
             return error;
@@ -27,7 +27,7 @@ export default {
     },
     async getRenewalReport({ commit }) {
         try {
-            const resp = await ApiService.get(baseUrl + "renewalReport");
+            const resp = await ApiService.get(baseUrl + "/renewalReport");
             return resp;
         } catch (error) {
             return error;
@@ -35,7 +35,7 @@ export default {
     },
     async getVerificationReport({ commit }) {
         try {
-            const resp = await ApiService.get(baseUrl + "verificationReport");
+            const resp = await ApiService.get(baseUrl + "/verificationReport");
             return resp;
         } catch (error) {
             return error;
@@ -43,7 +43,7 @@ export default {
     },
     async getGoodstandingReport({ commit }) {
         try {
-            const resp = await ApiService.get(baseUrl + "goodstandingReport");
+            const resp = await ApiService.get(baseUrl + "/goodstandingReport");
             return resp;
         } catch (error) {
             return error;
@@ -51,7 +51,7 @@ export default {
     },
     async getRegions({ commit }) {
         try {
-            const resp = await ApiService.get(baseUrl + "lookups/regions");
+            const resp = await ApiService.get(baseUrl + "/lookups/regions");
             return resp;
         } catch (error) {
             const resp = error;
@@ -60,7 +60,7 @@ export default {
     },
     async getZones({ commit }, regionID) {
         try {
-            const baseUrl = baseUrl + "lookups/zones/" + regionID;
+            const baseUrl = baseUrl + "/lookups/zones/" + regionID;
             const resp = await ApiService.get(baseUrl);
             return resp;
         } catch (error) {
@@ -70,7 +70,7 @@ export default {
     },
     async getWoredas({ commit }, zoneID) {
         try {
-            const baseUrl = baseUrl + "lookups/woredas/" + zoneID;
+            const baseUrl = baseUrl + "/lookups/woredas/" + zoneID;
             const resp = await ApiService.get(baseUrl);
             return resp;
         } catch (error) {
@@ -80,7 +80,7 @@ export default {
     },
     async getapplicationStatuses({ commit }) {
         try {
-            const resp = await ApiService.get(baseUrl + "applicationStatuses");
+            const resp = await ApiService.get(baseUrl + "/applicationStatuses");
             return resp;
         } catch (error) {
             const resp = error;
@@ -89,7 +89,7 @@ export default {
     },
     async getProfessionalTypes({ commit }) {
         try {
-            const resp = await ApiService.get(baseUrl + "lookups/professionalTypes");
+            const resp = await ApiService.get(baseUrl + "/lookups/professionalTypes");
             return resp;
         } catch (error) {
             return error;

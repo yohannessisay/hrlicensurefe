@@ -43,7 +43,7 @@ export default {
     },
     async addGoodstandingLicense({ commit }, license) {
         try {
-            const resp = await ApiService.post(baseUrl + "goodStandings/add", license);
+            const resp = await ApiService.post(baseUrl + "/goodStandings/add", license);
             return resp;
         } catch (error) {
             return error;
@@ -52,7 +52,7 @@ export default {
     async editGoodstandingLicense({ commit }, license) {
         try {
             const resp = await ApiService.put(
-                baseUrl + "goodStandings/" + license.id,
+                baseUrl + "/goodStandings/" + license.id,
                 license.data
             );
             return resp;
@@ -63,7 +63,7 @@ export default {
     async uploadDocuments({ commit }, documents) {
         try {
             const resp = await ApiService.post(
-                baseUrl + "documentUploads/goodStandingDocument/" + documents.id,
+                baseUrl + "/documentUploads/goodStandingDocument/" + documents.id,
                 documents.document, {
                     headers: {
                         "Content-Type": "multipart/form-data",
@@ -78,7 +78,7 @@ export default {
     async updateDraft({ commit }, payload) {
         try {
             const resp = await ApiService.put(
-                baseUrl + "goodStandings/" + payload.licenseId,
+                baseUrl + "/goodStandings/" + payload.licenseId,
                 payload.draftData, {
                     headers: {
                         "Content-Type": "multipart/form-data",
@@ -93,7 +93,7 @@ export default {
 
     async getApplicantType() {
         try {
-            const resp = await ApiService.get(baseUrl + "lookups/applicantTypes");
+            const resp = await ApiService.get(baseUrl + "/lookups/applicantTypes");
             return resp;
         } catch (error) {
             return error;
@@ -101,7 +101,7 @@ export default {
     },
     async getInstitution() {
         try {
-            const resp = await ApiService.get(baseUrl + "lookups/institutions");
+            const resp = await ApiService.get(baseUrl + "/lookups/institutions");
             return resp;
         } catch (error) {
             return error;
@@ -109,7 +109,7 @@ export default {
     },
     async getDepartmentType() {
         try {
-            const resp = await ApiService.get(baseUrl + "lookups/departments");
+            const resp = await ApiService.get(baseUrl + "/lookups/departments");
             return resp;
         } catch (error) {
             return error;
@@ -117,7 +117,7 @@ export default {
     },
     async getProfile({ commit }, id) {
         try {
-            const resp = await ApiService.get(baseUrl + "profiles/user/" + id);
+            const resp = await ApiService.get(baseUrl + "/profiles/user/" + id);
             return resp;
         } catch (error) {
             return error;
@@ -125,7 +125,7 @@ export default {
     },
     async getApplicationStatuses() {
         try {
-            const resp = await ApiService.get(baseUrl + "applicationStatuses");
+            const resp = await ApiService.get(baseUrl + "/applicationStatuses");
             return resp;
         } catch (error) {
             return error;
@@ -133,7 +133,7 @@ export default {
     },
     async getApplicationCategories() {
         try {
-            const resp = await ApiService.get(baseUrl + "applicationCategories");
+            const resp = await ApiService.get(baseUrl + "/applicationCategories");
             return resp;
         } catch (error) {
             return error;
@@ -141,7 +141,7 @@ export default {
     },
     async getDocumentSpecs({ commit }, id) {
         try {
-            const resp = await ApiService.get(baseUrl + "documentSpecs/" + id);
+            const resp = await ApiService.get(baseUrl + "/documentSpecs/" + id);
             return resp;
         } catch (error) {
             return error;
@@ -150,7 +150,7 @@ export default {
 
     async getGoodStandingLicense({ commit }) {
         try {
-            const resp = await ApiService.get(baseUrl + "goodStandings/user/" + userId);
+            const resp = await ApiService.get(baseUrl + "/goodStandings/user/" + userId);
             return resp;
         } catch (error) {
             return error;
@@ -158,7 +158,7 @@ export default {
     },
     async getDraft({ commit }, id) {
         try {
-            const resp = await ApiService.get(baseUrl + "goodStandings/" + id);
+            const resp = await ApiService.get(baseUrl + "/goodStandings/" + id);
             return resp;
         } catch (error) {
             return error;
@@ -168,7 +168,7 @@ export default {
     async withdraw({ commit }, payload) {
         try {
             const resp = await ApiService.put(
-                baseUrl + "goodStandings/" + payload.licenseId,
+                baseUrl + "/goodStandings/" + payload.licenseId,
                 payload.withdrawData
             );
             return resp;
@@ -178,7 +178,7 @@ export default {
     },
     async getRegions() {
         try {
-            const resp = await ApiService.get(baseUrl + "lookups/regions");
+            const resp = await ApiService.get(baseUrl + "/lookups/regions");
             return resp;
         } catch (error) {
             const resp = error;
@@ -187,7 +187,7 @@ export default {
     },
     async getWoredas(context, zoneId) {
         try {
-            const baseUrl = baseUrl + "lookups/woredas/" + zoneId;
+            const baseUrl = baseUrl + "/lookups/woredas/" + zoneId;
             const resp = await ApiService.get(baseUrl);
             return resp;
         } catch (error) {
@@ -197,7 +197,7 @@ export default {
     },
     async getZones(context, regionId) {
         try {
-            const baseUrl = baseUrl + "lookups/zones/" + regionId;
+            const baseUrl = baseUrl + "/lookups/zones/" + regionId;
             const resp = await ApiService.get(baseUrl);
             return resp;
         } catch (error) {
@@ -207,7 +207,7 @@ export default {
     },
     async getExpertLevel() {
         try {
-            const resp = await ApiService.get(baseUrl + "lookups/expertLevels");
+            const resp = await ApiService.get(baseUrl + "/lookups/expertLevels");
             return resp;
         } catch (error) {
             return error;
@@ -216,7 +216,7 @@ export default {
     async getProfessionalTypes(context, deptId) {
         try {
             const resp = await ApiService.get(
-                baseUrl + "lookups/professionalTypes/" + deptId
+                baseUrl + "/lookups/professionalTypes/" + deptId
             );
             return resp;
         } catch (error) {
@@ -225,7 +225,7 @@ export default {
     },
     async getApplicantPosition() {
         try {
-            const baseUrl = baseUrl + "lookups/applicantPositions";
+            const baseUrl = baseUrl + "/lookups/applicantPositions";
             const resp = await ApiService.get(baseUrl);
             return resp;
         } catch (error) {

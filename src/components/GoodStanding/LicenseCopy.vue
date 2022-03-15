@@ -89,15 +89,15 @@
             <button @click="submit">
               Next
             </button>
-            <button @click="draft(buttons[2].action)" variant="outline">
-              {{ buttons[2]["name"] }}
+            <button @click="draft(buttons[1].action)" variant="outline">
+              {{ buttons[1]["name"] }}
             </button>
             <button
               class="withdraw"
-              @click="withdraw(buttons[1].action)"
+              @click="withdraw(buttons[2].action)"
               variant="outline"
             >
-              {{ buttons[1]["name"] }}
+              {{ buttons[2]["name"] }}
             </button>
           </div>
           <div

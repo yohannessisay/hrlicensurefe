@@ -38,7 +38,7 @@ export default {
 
     async getUserTypes() {
         try {
-            const resp = await ApiService.get(baseUrl + "lookups/userTypes");
+            const resp = await ApiService.get(baseUrl + "/lookups/userTypes");
             return resp;
         } catch (error) {
             const resp = error;
@@ -47,7 +47,7 @@ export default {
     },
     async getRegions() {
         try {
-            const resp = await ApiService.get(baseUrl + "lookups/regions");
+            const resp = await ApiService.get(baseUrl + "/lookups/regions");
             return resp;
         } catch (error) {
             const resp = error;
@@ -56,7 +56,7 @@ export default {
     },
     async getWoredas(context, zoneId) {
         try {
-            const baseUrl = baseUrl + "lookups/woredas/" + zoneId;
+            const baseUrl = baseUrl + "/lookups/woredas/" + zoneId;
             const resp = await ApiService.get(baseUrl);
             return resp;
         } catch (error) {
@@ -66,7 +66,7 @@ export default {
     },
     async getZones(context, regionId) {
         try {
-            const baseUrl = baseUrl + "lookups/zones/" + regionId;
+            const baseUrl = baseUrl + "/lookups/zones/" + regionId;
             const resp = await ApiService.get(baseUrl);
             return resp;
         } catch (error) {
@@ -76,7 +76,7 @@ export default {
     },
     async getNationalities() {
         try {
-            const baseUrl = baseUrl + "lookups/nationalities";
+            const baseUrl = baseUrl + "/lookups/nationalities";
             const resp = await ApiService.get(baseUrl);
             return resp;
         } catch (error) {
@@ -86,7 +86,7 @@ export default {
     },
     async addProfile({ commit }, profile) {
         try {
-            const resp = await ApiService.post(baseUrl + "profiles/add", profile);
+            const resp = await ApiService.post(baseUrl + "/profiles/add", profile);
             return resp;
         } catch (error) {
             return error;
@@ -94,7 +94,7 @@ export default {
     },
     async getProfiles() {
         try {
-            const resp = await ApiService.get(baseUrl + "profiles/");
+            const resp = await ApiService.get(baseUrl + "/profiles/");
             return resp;
         } catch (error) {
             return error;
@@ -102,7 +102,7 @@ export default {
     },
     async getProfileById({ commit }, id) {
         try {
-            const resp = await ApiService.get(baseUrl + "profiles/" + id);
+            const resp = await ApiService.get(baseUrl + "/profiles/" + id);
             return resp;
         } catch (error) {
             return error;
@@ -110,7 +110,7 @@ export default {
     },
     async getProfileByUserId({ commit }, id) {
         try {
-            const resp = await ApiService.get(baseUrl + "profiles/user/" + id);
+            const resp = await ApiService.get(baseUrl + "/profiles/user/" + id);
             return resp;
         } catch (error) {
             return error;
@@ -119,7 +119,7 @@ export default {
     async changeUserProfile({ commit }, profileInfo) {
         try {
             const resp = await ApiService.put(
-                baseUrl + "profiles/" + profileInfo[0],
+                baseUrl + "/profiles/" + profileInfo[0],
                 profileInfo[1]
             );
             return resp;
@@ -129,7 +129,7 @@ export default {
     },
     async getUserById({ commit }, id) {
         try {
-            const resp = await ApiService.get(baseUrl + "users/" + id);
+            const resp = await ApiService.get(baseUrl + "/users/" + id);
             return resp;
         } catch (error) {
             return error;
