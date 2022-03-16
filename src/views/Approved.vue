@@ -1,10 +1,14 @@
 <template>
-  <div>
-    <div>
-      <div v-if="!this.showLoading" class="bg-lightBlueB-200 h-full">
+  <Navigation />
+  <div class="flex flex-row">
+    <div class="sidenav">
+      <SideNav />
+    </div>
+    <div class="menu">
+      <div v-if="!this.showLoading" class="bg-lightBlueB-200">
         <h3
           style="color: #b30000; font-weight: bold"
-          class="flex justify-center mt-medium"
+          class="flex justify-center pt-medium"
         >
           Applicants are required to bring all original documents to licensing
           office.
@@ -107,7 +111,7 @@
           </div>
         </div>
       </div>
-      <div v-if="!this.showLoading" class="bg-lightBlueB-200 h-full">
+      <div v-if="!this.showLoading" class="bg-lightBlueB-200">
         <div class="flex pl-12 pt-medium">
           <Title message="Renewal Approved Applications" />
         </div>
@@ -290,7 +294,7 @@
           </div>
         </div>
       </div> -->
-      <div v-if="!this.showLoading" class="bg-lightBlueB-200 h-full">
+      <div v-if="!this.showLoading" class="bg-lightBlueB-200">
         <div class="flex pl-12 pt-medium">
           <Title message="Good Standing Approved Applications" />
         </div>
@@ -392,20 +396,21 @@
           </div>
         </div>
       </div>
-    </div>
-    <Modal v-if="this.serviceFeeModal">
-      <ServiceFee @serviceFeeModal="this.serviceFeeModal = false" />
-    </Modal>
-    <div
-      v-if="showLoading"
-      class="flex justify-center justify-items-center mt-24"
-    >
-      <Spinner />
+      <div
+        v-if="showLoading"
+        class="flex justify-center justify-items-center mt-24"
+      >
+        <Spinner />
+      </div>
+      <Modal v-if="this.serviceFeeModal">
+        <ServiceFee @serviceFeeModal="this.serviceFeeModal = false" />
+      </Modal>
     </div>
   </div>
 </template>
 
 <script>
+import SideNav from "./SideNav.vue";
 import Title from "@/sharedComponents/TitleWithIllustration";
 import RenderIllustration from "@/sharedComponents/RenderIllustration";
 import Navigation from "@/views/Navigation";
@@ -417,6 +422,7 @@ import moment from "moment";
 export default {
   components: {
     Navigation,
+    SideNav,
     Title,
     Spinner,
     RenderIllustration,
@@ -550,4 +556,16 @@ export default {
   },
 };
 </script>
-<style></style>
+<style>
+@media only screen and (max-width: 1024px) {
+  .sidenav {
+    display: none;
+  }
+}
+.menu {
+  width: 80%;
+}
+.sidenav {
+  width: 20%;
+}
+</style>
