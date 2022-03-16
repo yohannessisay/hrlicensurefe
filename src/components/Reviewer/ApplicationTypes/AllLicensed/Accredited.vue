@@ -55,7 +55,7 @@
                       <th
                         class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
                       >
-                       License Type
+                        License Type
                       </th>
                       <th
                         class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
@@ -80,7 +80,7 @@
                       <th
                         class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
                       >
-                       Issued Date
+                        Issued Date
                       </th>
                       <th
                         class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
@@ -138,9 +138,7 @@
                         <div class="flex">
                           <div class="ml-3">
                             <p class="text-gray-900 whitespace-no-wrap">
-                              {{
-                                item.alternativeName
-                              }}
+                              {{ item.alternativeName }}
                             </p>
                           </div>
                         </div>
@@ -330,15 +328,13 @@
                         <div class="flex">
                           <div class="ml-3">
                             <p class="text-gray-900 whitespace-no-wrap">
-                              {{
-                                item.IssuedDate
-                              }}
+                              {{ item.IssuedDate }}
                             </p>
                           </div>
                         </div>
                       </td>
                       <td
-                      v-if="item.phone"
+                        v-if="item.phone"
                         class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
                       >
                         <div class="flex">
@@ -416,7 +412,9 @@
                         <div class="flex">
                           <div class="ml-3">
                             <p class="text-gray-900 whitespace-no-wrap">
-                              {{ moment(item.dateOfBirth).format("MMM DD, YYYY") }}
+                              {{
+                                moment(item.dateOfBirth).format("MMM DD, YYYY")
+                              }}
                             </p>
                           </div>
                         </div>
@@ -460,9 +458,15 @@ export default {
 
   computed: {
     moment: () => moment,
+    getLegacyData() {
+      return store.getters["reviewer/getLegacyData"];
+    },
   },
   setup(props, { emit }) {
     const store = useStore();
+
+    let showLoading = ref(false);
+    let legacyData = ref([]);
     let report = ref([
       {
         name: "Mesfin",
@@ -481,7 +485,7 @@ export default {
         IssuedDate: "Dec 22, 2021",
         email: "mesfin@gmail.com",
         gender: "Male",
-        phone: "0998890989"
+        phone: "0998890989",
       },
       {
         name: "Getu",
@@ -500,7 +504,7 @@ export default {
         IssuedDate: "Dec 22, 2021",
         email: "mesfin@gmail.com",
         gender: "Male",
-        phone: "0998890989"
+        phone: "0998890989",
       },
       {
         name: "Mahlet",
@@ -519,7 +523,7 @@ export default {
         IssuedDate: "Dec 22, 2021",
         email: "mesfin@gmail.com",
         gender: "Male",
-        phone: "0998890989"
+        phone: "0998890989",
       },
       {
         name: "Meron",
@@ -538,14 +542,24 @@ export default {
         IssuedDate: "Dec 22, 2021",
         email: "mesfin@gmail.com",
         gender: "Male",
-        phone: "0998890989"
+        phone: "0998890989",
       },
     ]);
+
+    const fetchLegacyData = () => {
+      showLoading.value = true;
+      console.log("legacy above")
+      store.dispatch("reviewer/getLegacyData").then((res) => {
+        showLoading.value = false;
+        legacyData.value = store.getters["reviewer/getLegacyData"];
+        console.log("legacy data is ", legacyData.value);
+      });
+    };
 
     let loader = ref(false);
 
     onMounted(() => {
-
+      fetchLegacyData();
     });
     return {
       loader,

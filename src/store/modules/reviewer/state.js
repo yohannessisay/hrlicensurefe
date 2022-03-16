@@ -77,5 +77,8 @@ export default {
         allLicensed: [],
         allLicensedSearched: [],
 
+        legacyData: [],
+        legacyDataSearched: [],
+
     }
 }

@@ -45,6 +45,8 @@ import {
   SET_MY_REGION_CERTIFIED_USERS,
   SET_MY_REGION_CERTIFIED_USERS_SEARCHED,
   SET_PROFESSIONAL_TYPES,
+  SET_LEGACY_DATA,
+  SET_LEGACY_DATA_SEARCHED,
 } from "./mutation-types";
 
 export default {
@@ -922,6 +924,34 @@ export default {
             e.reviewer.name.toLowerCase().includes(searchKey.toLowerCase());
     });
     commit(SET_PENDING_PAYMENTS_SEARCHED, searchedVal);
+  },
+
+  async getLegacyData({ commit }) {
+    const url = baseUrl + "/legacyData";
+    const resp = await ApiService.get(url);
+    console.log("response is ", resp)
+    commit(SET_LEGACY_DATA, resp.data.data);
+  },
+
+  getLegacyDataSearched({ commit, getters }, searchKey) {
+    if (getters.legacyData === undefined) {
+      return;
+    }
+    const searchedVal = getters.legacyData.filter(function(e) {
+      return (
+        e.newLicenseCode.toLowerCase().includes(searchKey.toLowerCase()) ||
+        (e.applicant.profile.name + " " + e.applicant.profile.fatherName)
+          .toLowerCase()
+          .includes(searchKey.toLowerCase()) ||
+        e.applicant.profile.name
+          .toLowerCase()
+          .includes(searchKey.toLowerCase()) ||
+        e.applicant.profile.fatherName
+          .toLowerCase()
+          .includes(searchKey.toLowerCase())
+      );
+    });
+    commit(SET_LEGACY_DATA_SEARCHED, searchedVal);
   },
 
   async getProfile(context, id) {

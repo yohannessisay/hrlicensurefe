@@ -76,4 +76,7 @@ export default {
     getApprovedPendingPayments: state => state.approvedPendingPayments,
     getApprovedPendingPaymentsSearched: state => state.approvedPendingPaymentsSearched,
 
+    getLegacyData: state => state.legacyData,
+    getLegacyDataSearched: state => state.legacyDataSearched,
+
 };

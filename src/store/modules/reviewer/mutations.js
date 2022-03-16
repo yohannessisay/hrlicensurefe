@@ -45,6 +45,9 @@ import {
 
   SET_ALL_LICENSED,
   SET_ALL_LICENSED_SEARCHED,
+
+  SET_LEGACY_DATA,
+  SET_LEGACY_DATA_SEARCHED,
 } from "./mutation-types";
 
 export default {
@@ -213,5 +216,12 @@ export default {
   },
   [SET_ALL_LICENSED_SEARCHED](state, searchedVal) {
     state.allLicensedSearched = searchedVal;
+  },
+  [SET_LEGACY_DATA](state, data) {
+    state.legacyData = data;
+    state.legacyDataSearched = data;
+  },
+  [SET_LEGACY_DATA_SEARCHED](state, searchedVal) {
+    state.legacyDataSearched = searchedVal;
   },
 };
