@@ -344,6 +344,7 @@ import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import Spinner from "@/sharedComponents/Spinner";
 import moment from "moment";
+import {googleApi} from "../../composables/baseURL";
 
 export default {
   props: ["activeState"],
@@ -414,7 +415,7 @@ export default {
     this.departmentId = this.license.departmentId;
   },
   data: () => ({
-    basePath: "https://storage.googleapis.com/hris-lisence-dev/",
+    basePath: googleApi,
 
     filePreview: "",
     letterPreview: "",
