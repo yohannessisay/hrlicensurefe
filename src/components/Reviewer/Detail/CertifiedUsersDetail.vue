@@ -36,62 +36,79 @@
                 </div>
                 <div class="flex">
                   <div class="flex flex-col mb-medium w-1/2 mr-12">
-                    <h4> በኢትዮጵያ ፌዴራላዊ ዴሞክራሲያዊ ረፐብሊክ የጤና ሚንስቴር በአዋጅ ቁጥር {{
-                      certificateDetail.reviewer && certificateDetail.reviewer.expertLevel &&
-                      certificateDetail.reviewer.expertLevel.code === "FED"
-                        ? "1112/2011"
-                        : certificateDetail.reviewer &&certificateDetail.reviewer.region &&
-                          certificateDetail.reviewer.region.code === "AA"
-                        ? "64/2011"
-                        : certificateDetail.reviewer && certificateDetail.reviewer.region &&
-                          certificateDetail.reviewer.region.code === "ORO"
-                        ? "661/2009"
-                        : "-" 
-                    }} አንቀጽ
+                    <h4>
+                      በኢትዮጵያ ፌዴራላዊ ዴሞክራሲያዊ ረፐብሊክ የጤና ሚንስቴር በአዋጅ ቁጥር
                       {{
-                        certificateDetail.reviewer && certificateDetail.reviewer.expertLevel &&
+                        certificateDetail.reviewer &&
+                        certificateDetail.reviewer.expertLevel &&
+                        certificateDetail.reviewer.expertLevel.code === "FED"
+                          ? "1112/2011"
+                          : certificateDetail.reviewer &&
+                            certificateDetail.reviewer.region &&
+                            certificateDetail.reviewer.region.code === "AA"
+                          ? "64/2011"
+                          : certificateDetail.reviewer &&
+                            certificateDetail.reviewer.region &&
+                            certificateDetail.reviewer.region.code === "ORO"
+                          ? "661/2009"
+                          : "-"
+                      }}
+                      አንቀጽ
+                      {{
+                        certificateDetail.reviewer &&
+                        certificateDetail.reviewer.expertLevel &&
                         certificateDetail.reviewer.expertLevel.code === "FED"
                           ? "73"
-                          : certificateDetail.reviewer && certificateDetail.reviewer.region &&
+                          : certificateDetail.reviewer &&
+                            certificateDetail.reviewer.region &&
                             certificateDetail.reviewer.region.code === "AA"
                           ? "44/8"
-                          : certificateDetail.reviewer && certificateDetail.reviewer.region &&
+                          : certificateDetail.reviewer &&
+                            certificateDetail.reviewer.region &&
                             certificateDetail.reviewer.region.code === "ORO"
                           ? "3/3"
                           : "-"
                       }}
-                      ስልጣን መሰረት </h4>
+                      ስልጣን መሰረት
+                    </h4>
                   </div>
+                  
                   <div class="flex flex-col mb-medium w-1/2 mr-12">
-                  <h4>
+                    <h4>
                       Under the Federal Democratic Republic of Ethiopiathe
-                      Minstry
-                      of Health by Virtue of proclamation No.
+                      Minstry of Health by Virtue of proclamation No.
                       {{
-                        certificateDetail.reviewer && certificateDetail.reviewer.expertLevel &&
+                        certificateDetail.reviewer &&
+                        certificateDetail.reviewer.expertLevel &&
                         certificateDetail.reviewer.expertLevel.code === "FED"
                           ? "1112/2019"
-                          : certificateDetail.reviewer && certificateDetail.reviewer.region &&
+                          : certificateDetail.reviewer &&
+                            certificateDetail.reviewer.region &&
                             certificateDetail.reviewer.region.code === "AA"
                           ? "64/2019"
-                          : certificateDetail.reviewer && certificateDetail.reviewer.region &&
+                          : certificateDetail.reviewer &&
+                            certificateDetail.reviewer.region &&
                             certificateDetail.reviewer.region.code === "ORO"
                           ? "661/2002"
                           : "-"
                       }}
                       Article
                       {{
-                        certificateDetail.reviewer && certificateDetail.reviewer.expertLevel &&
+                        certificateDetail.reviewer &&
+                        certificateDetail.reviewer.expertLevel &&
                         certificateDetail.reviewer.expertLevel.code === "FED"
                           ? "73"
-                          : certificateDetail.reviewer && certificateDetail.reviewer.region &&
+                          : certificateDetail.reviewer &&
+                            certificateDetail.reviewer.region &&
                             certificateDetail.reviewer.region.code === "AA"
                           ? "44/8"
-                          : certificateDetail.reviewer && certificateDetail.reviewer.region &&
+                          : certificateDetail.reviewer &&
+                            certificateDetail.reviewer.region &&
                             certificateDetail.reviewer.region.code === "ORO"
                           ? "3/3"
                           : "-"
-                      }} is given the authority to issue
+                      }}
+                      is given the authority to issue
                     </h4>
                   </div>
                 </div>
@@ -134,7 +151,7 @@
                 </div>
                 <div class="flex">
                   <div class="flex flex-col mb-medium w-1/2 mr-12">
-                     <h4>ተገቢውን መስፈርት አሟልተው ስለተገኙ ሚኒስቴር መስሪያ ቤቱ</h4>
+                    <h4>ተገቢውን መስፈርት አሟልተው ስለተገኙ ሚኒስቴር መስሪያ ቤቱ</h4>
                     <h4
                       v-if="
                         certificateDetail.professionalTypes &&
@@ -146,15 +163,17 @@
                         v-for="professions in certificateDetail.professionalTypes"
                         class="flex flex-row"
                       >
-                        <b>{{
-                          professions.professionalTypes
-                            .amharicProfessionalType === "ሌላ"
-                            ? ""
-                            : professions.professionalTypes
-                                .amharicProfessionalType
-                        }} </b>
+                        <b
+                          >{{
+                            professions.professionalTypes
+                              .amharicProfessionalType === "ሌላ"
+                              ? ""
+                              : professions.professionalTypes
+                                  .amharicProfessionalType
+                          }}
+                        </b>
                       </div>
-                      <br>ሙያ መዝግቦ ይህን የሙያ ስራ ፈቃድ ሰጥቷል።
+                      <br />ሙያ መዝግቦ ይህን የሙያ ስራ ፈቃድ ሰጥቷል።
                     </h4>
                   </div>
                   <div class="flex flex-col mb-medium w-1/2 mr-12">
@@ -450,7 +469,7 @@ export default {
             certificateDetail.value = res.data.data;
             certificateDetail.value.licenseNumber =
               certificateDetail.value.renewalCode;
-              console.log("certificate detail", certificateDetail.value)
+            console.log("certificate detail", certificateDetail.value);
             if (
               route.params.applicantId != certificateDetail.value.applicantId
             ) {

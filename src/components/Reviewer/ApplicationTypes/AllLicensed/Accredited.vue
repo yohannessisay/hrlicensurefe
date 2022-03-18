@@ -1,6 +1,6 @@
 <template
   ><div>
-    <!-- <ReviewerNavBar tab="Report" /> -->
+    <!-- <ReviewerNavBar tab="legacyData" /> -->
     <div class="flex flex-row">
       <!-- <div>
         <ReviewerSideBar style="width: 30vh" />
@@ -85,17 +85,17 @@
                       <th
                         class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
                       >
-                        Phone
+                        emp_mobile
                       </th>
                       <th
                         class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
                       >
-                        Email
+                        emp_work_email
                       </th>
                       <th
                         class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
                       >
-                        Gender
+                        emp_gender
                       </th>
 
                       <th
@@ -106,12 +106,12 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="item in report" :key="item">
+                    <tr v-for="item in legacyData" :key="item">
                       <td class="px-5 py-5 border-gray-200 bg-white text-sm">
                         <div class="flex">
                           <div class="ml-3">
                             <p class="text-gray-900 whitespace-no-wrap">
-                              {{ item.name }}
+                              {{ item.emp_first_name }}
                             </p>
                           </div>
                         </div>
@@ -120,7 +120,7 @@
                         <div class="flex">
                           <div class="ml-3">
                             <p class="text-gray-900 whitespace-no-wrap">
-                              {{ item.fatherName }}
+                              {{ item.emp_middle_name }}
                             </p>
                           </div>
                         </div>
@@ -129,7 +129,7 @@
                         <div class="flex">
                           <div class="ml-3">
                             <p class="text-gray-900 whitespace-no-wrap">
-                              {{ item.grandFatherName }}
+                              {{ item.emp_last_name }}
                             </p>
                           </div>
                         </div>
@@ -138,19 +138,19 @@
                         <div class="flex">
                           <div class="ml-3">
                             <p class="text-gray-900 whitespace-no-wrap">
-                              {{ item.alternativeName }}
+                              {{ item.alternative_first_name }} {{item.alternative_middle_name}} {{ item.alternative_last_name }}
                             </p>
                           </div>
                         </div>
                       </td>
                       <td
-                        v-if="item.employee_prefix"
+                        v-if="item.prefix_id"
                         class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
                       >
                         <div class="flex">
                           <div class="ml-3">
                             <p class="text-gray-900 whitespace-no-wrap">
-                              {{ item.employee_prefix }}
+                              {{ item.prefix_id }}
                             </p>
                           </div>
                         </div>
@@ -197,43 +197,19 @@
                         <div class="flex">
                           <div class="ml-3">
                             <p class="text-gray-900 whitespace-no-wrap">
-                              {{ item.expireDate }}
+                              {{ item.expiry_date }}
                             </p>
                           </div>
                         </div>
                       </td>
                       <td
                         class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
-                        v-if="item.licenseType"
+                        v-if="item.license_type_id"
                       >
                         <div class="flex">
                           <div class="ml-3">
                             <p class="text-gray-900 whitespace-no-wrap">
-                              {{ item.licenseType }}
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td
-                        v-else
-                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
-                      >
-                        <div class="flex">
-                          <div class="ml-3">
-                            <p class="text-gray-900 whitespace-no-wrap">
-                              ---
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td
-                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
-                        v-if="item.licenseStatus"
-                      >
-                        <div class="flex">
-                          <div class="ml-3">
-                            <p class="text-gray-900 whitespace-no-wrap">
-                              {{ item.licenseStatus }}
+                              {{ item.license_type_id }}
                             </p>
                           </div>
                         </div>
@@ -252,12 +228,36 @@
                       </td>
                       <td
                         class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
-                        v-if="item.licenseNumber"
+                        v-if="item.license_status_id"
                       >
                         <div class="flex">
                           <div class="ml-3">
                             <p class="text-gray-900 whitespace-no-wrap">
-                              {{ item.licenseNumber }}
+                              {{ item.license_status_id }}
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td
+                        v-else
+                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
+                      >
+                        <div class="flex">
+                          <div class="ml-3">
+                            <p class="text-gray-900 whitespace-no-wrap">
+                              ---
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td
+                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
+                        v-if="item.license_no"
+                      >
+                        <div class="flex">
+                          <div class="ml-3">
+                            <p class="text-gray-900 whitespace-no-wrap">
+                              {{ item.license_no }}
                             </p>
                           </div>
                         </div>
@@ -300,12 +300,12 @@
                       </td>
                       <td
                         class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
-                        v-if="item.licensePrefix"
+                        v-if="item.prefix_id"
                       >
                         <div class="flex">
                           <div class="ml-3">
                             <p class="text-gray-900 whitespace-no-wrap">
-                              {{ item.licensePrefix }}
+                              {{ item.prefix_id }}
                             </p>
                           </div>
                         </div>
@@ -328,19 +328,19 @@
                         <div class="flex">
                           <div class="ml-3">
                             <p class="text-gray-900 whitespace-no-wrap">
-                              {{ item.IssuedDate }}
+                              {{ item.issued_date }}
                             </p>
                           </div>
                         </div>
                       </td>
                       <td
-                        v-if="item.phone"
+                        v-if="item.emp_mobile"
                         class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
                       >
                         <div class="flex">
                           <div class="ml-3">
                             <p class="text-gray-900 whitespace-no-wrap">
-                              {{ item.phone }}
+                              {{ item.emp_mobile }}
                             </p>
                           </div>
                         </div>
@@ -358,13 +358,13 @@
                         </div>
                       </td>
                       <td
-                        v-if="item.email"
+                        v-if="item.emp_work_email"
                         class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
                       >
                         <div class="flex">
                           <div class="ml-3">
                             <p class="text-gray-900 whitespace-no-wrap">
-                              {{ item.email }}
+                              {{ item.emp_work_email }}
                             </p>
                           </div>
                         </div>
@@ -382,13 +382,13 @@
                         </div>
                       </td>
                       <td
-                        v-if="item.gender"
+                        v-if="item.emp_gender"
                         class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
                       >
                         <div class="flex">
                           <div class="ml-3">
                             <p class="text-gray-900 whitespace-no-wrap">
-                              {{ item.gender }}
+                              {{ item.emp_gender }}
                             </p>
                           </div>
                         </div>
@@ -406,14 +406,14 @@
                         </div>
                       </td>
                       <td
-                        v-if="item.dateOfBirth"
+                        v-if="item.emp_birthday"
                         class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
                       >
                         <div class="flex">
                           <div class="ml-3">
                             <p class="text-gray-900 whitespace-no-wrap">
                               {{
-                                moment(item.dateOfBirth).format("MMM DD, YYYY")
+                                moment(item.emp_birthday).format("MMM DD, YYYY")
                               }}
                             </p>
                           </div>
@@ -466,83 +466,91 @@ export default {
     const store = useStore();
 
     let showLoading = ref(false);
-    let legacyData = ref([]);
-    let report = ref([
+    // let legacyData = ref([]);
+    let legacyData = ref([
       {
-        name: "Mesfin",
-        fatherName: "Girum",
-        grandFatherName: "Biruk",
-        alternativeName: "መስፊን ግሩም ብሩክ",
-        employee_prefix: "Dr.",
-        dateOfBirth: "2002-01-25T09:55:23.494Z",
+        emp_first_name: "Mesfin",
+        emp_middle_name: "Girum",
+        emp_last_name: "Biruk",
+        alternative_first_name: "መስፊን",
+        alternative_middle_name: "ግሩም",
+        alternative_last_name: "ብሩክ",
+        prefix_id: "Dr.",
+        emp_birthday: "2002-01-25T09:55:23.494Z",
         employee_id: "R00212",
-        expireDate: "Jan 02, 2024",
-        licenseType: "Renewal",
-        licenseStatus: "Certified",
-        licenseNumber: "R00210",
+        expiry_date: "Jan 02, 2024",
+        license_type_id: "Renewal",
+        license_status_id: "Certified",
+        license_no: "R00210",
         remark: "-",
-        licensePrefix: "Medical Doctor",
-        IssuedDate: "Dec 22, 2021",
-        email: "mesfin@gmail.com",
-        gender: "Male",
-        phone: "0998890989",
+        prefix_id: "Medical Doctor",
+        issued_date: "Dec 22, 2021",
+        emp_work_email: "mesfin@gmail.com",
+        emp_gender: "Male",
+        emp_mobile: "0998890989",
       },
       {
-        name: "Getu",
-        fatherName: "Aman",
-        grandFatherName: "Temesgen",
-        alternativeName: "ጌቱ አማን ተከተል",
-        employee_prefix: "Mr.",
-        dateOfBirth: "2002-01-25T09:55:23.494Z",
+        emp_first_name: "Getu",
+        emp_middle_name: "Aman",
+        emp_last_name: "Temesgen",
+        alternative_first_name: "ጌቱ",
+        alternative_middle_name: "አማን",
+        alternative_last_name: "ተከተል",
+        prefix_id: "Mr.",
+        emp_birthday: "2002-01-25T09:55:23.494Z",
         employee_id: "NL00212",
-        expireDate: "Jan 02, 2024",
-        licenseType: "New License",
-        licenseStatus: "Certified",
-        licenseNumber: "NL00210",
+        expiry_date: "Jan 02, 2024",
+        license_type_id: "New License",
+        license_status_id: "Certified",
+        license_no: "NL00210",
         remark: "-",
-        licensePrefix: "Medical Doctor",
-        IssuedDate: "Dec 22, 2021",
-        email: "mesfin@gmail.com",
-        gender: "Male",
-        phone: "0998890989",
+        prefix_id: "Medical Doctor",
+        issued_date: "Dec 22, 2021",
+        emp_work_email: "mesfin@gmail.com",
+        emp_gender: "Male",
+        emp_mobile: "0998890989",
       },
       {
-        name: "Mahlet",
-        fatherName: "Markos",
-        grandFatherName: "Kefa",
-        alternativeName: "ማህሌት ማርኮስ ኬፋ",
-        employee_prefix: "Ms.",
-        dateOfBirth: "2002-01-25T09:55:23.494Z",
+        emp_first_name: "Mahlet",
+        emp_middle_name: "Markos",
+        emp_last_name: "Kefa",
+        alternative_first_name: "ማህሌት",
+        alternative_middle_name: "ማርኮስ",
+        alternative_last_name: "ኬፋ",
+        prefix_id: "Ms.",
+        emp_birthday: "2002-01-25T09:55:23.494Z",
         employee_id: "GS00212",
-        expireDate: "Jan 02, 2024",
-        licenseType: "Good Standing",
-        licenseStatus: "Certified",
-        licenseNumber: "GS00210",
+        expiry_date: "Jan 02, 2024",
+        license_type_id: "Good Standing",
+        license_status_id: "Certified",
+        license_no: "GS00210",
         remark: "-",
-        licensePrefix: "Medical Doctor",
-        IssuedDate: "Dec 22, 2021",
-        email: "mesfin@gmail.com",
-        gender: "Male",
-        phone: "0998890989",
+        prefix_id: "Medical Doctor",
+        issued_date: "Dec 22, 2021",
+        emp_work_email: "mesfin@gmail.com",
+        emp_gender: "Male",
+        emp_mobile: "0998890989",
       },
       {
-        name: "Meron",
-        fatherName: "lema",
-        grandFatherName: "tomas",
-        alternativeName: "ሜሮን ለማ ቶማስ",
-        employee_prefix: "Dr.",
-        dateOfBirth: "2002-01-25T09:55:23.494Z",
+        emp_first_name: "Meron",
+        emp_middle_name: "lema",
+        emp_last_name: "tomas",
+        alternative_first_name: "ሜሮን",
+        alternative_middle_name: "ለማ",
+        alternative_last_name: "ቶማስ",
+        prefix_id: "Dr.",
+        emp_birthday: "2002-01-25T09:55:23.494Z",
         employee_id: "NL00109",
-        expireDate: "Jan 02, 2024",
-        licenseType: "New License",
-        licenseStatus: "Certified",
-        licenseNumber: "NL00109",
+        expiry_date: "Jan 02, 2024",
+        license_type_id: "New License",
+        license_status_id: "Certified",
+        license_no: "NL00109",
         remark: "-",
-        licensePrefix: "Medical Doctor",
-        IssuedDate: "Dec 22, 2021",
-        email: "mesfin@gmail.com",
-        gender: "Male",
-        phone: "0998890989",
+        prefix_id: "Medical Doctor",
+        issued_date: "Dec 22, 2021",
+        emp_work_email: "mesfin@gmail.com",
+        emp_gender: "Male",
+        emp_mobile: "0998890989",
       },
     ]);
 
@@ -551,8 +559,6 @@ export default {
       console.log("legacy above")
       store.dispatch("reviewer/getLegacyData").then((res) => {
         showLoading.value = false;
-        legacyData.value = store.getters["reviewer/getLegacyData"];
-        console.log("legacy data is ", legacyData.value);
       });
     };
 
@@ -563,7 +569,7 @@ export default {
     });
     return {
       loader,
-      report,
+      legacyData,
     };
   },
 };
