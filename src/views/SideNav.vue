@@ -248,7 +248,6 @@ export default {
   },
   methods: {
     selectMenu(menu) {
-      console.log(menu);
       switch (menu) {
         case 0:
           this.$router.push({ path: "/menu" });

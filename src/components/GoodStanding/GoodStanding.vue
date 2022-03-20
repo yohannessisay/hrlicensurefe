@@ -118,7 +118,6 @@ export default {
                 return e.code == "DRA";
               });
               this.buttons = status[0]["buttons"];
-              console.log(this.buttons);
             }
             if (this.draftStatus == "SUB") {
               let status = this.applicationStatuses.filter(function(e) {

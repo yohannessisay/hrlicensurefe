@@ -378,6 +378,7 @@ import Spinner from "@/sharedComponents/Spinner";
 import MESSAGE from "../../../composables/documentMessage";
 import MAX_FILE_SIZE from "../../../composables/documentMessage";
 import MAX_SIZE_MB from "../../../composables/documentMessage";
+import { googleApi } from "@/composables/baseURL";
 
 export default {
   components: {
@@ -391,8 +392,6 @@ export default {
     const store = useStore();
     const route = useRoute();
     const router = useRouter();
-
-    const basePath = "https://storage.googleapis.com/hris-lisence-dev/";
 
     let message = ref({
       showFlash: false,
@@ -1412,7 +1411,7 @@ export default {
 
             diplomaFile.value = draftData.documents[i];
             showPreview.value = true;
-            filePreview.value = basePath + draftData.documents[i].filePath;
+            filePreview.value = googleApi + draftData.documents[i].filePath;
           }
           if (
             draftData.documents[i].documentTypeCode == `${docCode}${docNum + 1}`
@@ -1426,7 +1425,7 @@ export default {
             }
             diplomaFile2.value = draftData.documents[i];
             showPreview2.value = true;
-            filePreview2.value = basePath + draftData.documents[i].filePath;
+            filePreview2.value = googleApi + draftData.documents[i].filePath;
           }
           if (
             draftData.documents[i].documentTypeCode == `${docCode}${docNum + 2}`
@@ -1440,7 +1439,7 @@ export default {
             }
             diplomaFile3.value = draftData.documents[i];
             showPreview3.value = true;
-            filePreview3.value = basePath + draftData.documents[i].filePath;
+            filePreview3.value = googleApi + draftData.documents[i].filePath;
           }
           if (
             draftData.documents[i].documentTypeCode == `${docCode}${docNum + 3}`
@@ -1454,7 +1453,7 @@ export default {
             }
             diplomaFile4.value = draftData.documents[i];
             showPreview4.value = true;
-            filePreview4.value = basePath + draftData.documents[i].filePath;
+            filePreview4.value = googleApi + draftData.documents[i].filePath;
           }
           if (
             draftData.documents[i].documentTypeCode == `${docCode}${docNum + 4}`
@@ -1468,7 +1467,7 @@ export default {
             }
             diplomaFile5.value = draftData.documents[i];
             showPreview5.value = true;
-            filePreview5.value = basePath + draftData.documents[i].filePath;
+            filePreview5.value = googleApi + draftData.documents[i].filePath;
           }
         }
       }
@@ -1541,7 +1540,7 @@ export default {
       draftStatus,
       update,
       draftData,
-      basePath,
+      googleApi,
       message,
       dataChanged,
       acceptedFields,
