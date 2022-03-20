@@ -291,10 +291,10 @@
             </button>
             <button
               class="withdraw"
-              @click="withdraw(this.buttons[1].action)"
+              @click="withdraw(this.buttons[2].action)"
               variant="outline"
             >
-              {{ this.buttons[1]["name"] }}
+              {{ this.buttons[2]["name"] }}
             </button>
           </div>
           <div
