@@ -506,6 +506,7 @@ import Spinner from "@/sharedComponents/Spinner";
 import MESSAGE from "../../../composables/documentMessage";
 import MAX_FILE_SIZE from "../../../composables/documentMessage";
 import MAX_SIZE_MB from "../../../composables/documentMessage";
+import { googleApi } from "@/composables/baseURL";
 
 export default {
   components: {
@@ -517,7 +518,7 @@ export default {
   props: ["activeState"],
   data() {
     return {
-      basePath: "https://storage.googleapis.com/hris-lisence-dev/",
+      basePath: googleApi,
 
       dataChanged: false,
       showFlash: false,
