@@ -513,29 +513,6 @@ export default {
             });
         });
     },
-    routeTo(item) {
-      if (item.newLicenseCode) {
-        this.$router.push({
-          name: "NewLicense",
-          params: { id: item.id, status: item.applicationStatus.code },
-        });
-      } else if (item.renewalCode) {
-        this.$router.push({
-          name: "Renewal",
-          params: { id: item.id, status: item.applicationStatus.code },
-        });
-      } else if (item.verificationCode) {
-        this.$router.push({
-          name: "Verification",
-          params: { id: item.id, status: item.applicationStatus.code },
-        });
-      } else {
-        this.$router.push({
-          name: "GoodStanding",
-          params: { id: item.id, status: item.applicationStatus.code },
-        });
-      }
-    },
   },
 };
 </script>
