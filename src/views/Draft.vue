@@ -174,87 +174,6 @@
           </div>
         </div>
       </div>
-      <!-- <div v-if="!this.showLoading" class="bg-lightBlueB-200 h-full">
-        <div class="flex pl-12 pt-medium">
-          <Title message="Verification Draft Applications" />
-        </div>
-        <div v-if="this.verification.length == 0" class="flex pl-12 ml-6">
-          <h4>Nothing to Show.</h4>
-        </div>
-        <div
-          v-if="this.verification.length != 0"
-          class=" mt-medium rounded ml-large"
-        >
-          <div
-            class="flex "
-            v-for="i in this.verification.length"
-            v-bind:key="i"
-          >
-            <div
-              class="container mb-medium"
-              v-for="item in this.verification.slice((i - 1) * 4, i * 4)"
-              v-bind:key="item"
-              v-bind:value="item"
-            >
-              <router-link
-                :to="{
-                  name: 'Verification',
-                  params: { id: item.id, status: item.applicationStatus.code },
-                }"
-              >
-                <div
-                  class="flex justify-center items-center  ml-4 mr-4 box-shadow-pop rounded-lg bg-lightGrey-100"
-                >
-                  <div class="p-4 w-auto h-auto">
-                    <span
-                      class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                    >
-                      <b>Applicant Type: &nbsp;</b>
-                      {{ item.applicantType.name }}
-                    </span>
-                    <span
-                      class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                    >
-                      <b>Status: &nbsp;</b>{{ item.applicationStatus.name }}
-                    </span>
-                    <span
-                      class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                    >
-                      <b>Code: &nbsp;</b>{{ item.verificationCode }}
-                    </span>
-                    <span
-                      v-if="item.certified == true"
-                      class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                    >
-                      <b>Certified: &nbsp;</b>Yes
-                    </span>
-                    <span
-                      v-else
-                      class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                    >
-                      <b>Certified: &nbsp;</b>No
-                    </span>
-
-                    <span
-                      class="
-                      mt-medium
-                      text-lightBlueB-500
-                      flex
-                      justify-end
-                      content-center
-                    "
-                    >
-                      {{
-                        item.createdAt ? moment(item.createdAt).fromNow() : "-"
-                      }}
-                    </span>
-                  </div>
-                </div>
-              </router-link>
-            </div>
-          </div>
-        </div>
-      </div> -->
       <div v-if="!this.showLoading" class="bg-lightBlueB-200">
         <div class="flex pl-12 pt-medium">
           <Title message="Good Standing Draft Applications" />
@@ -375,7 +294,6 @@ export default {
       license: [],
       newlicense: [],
       renewal: [],
-      verification: [],
       goodstanding: [],
       showLoading: false,
       showDD: false,
@@ -421,18 +339,6 @@ export default {
               });
             }
           });
-        })
-        .then(() => {
-          this.$store
-            .dispatch("verification/getVerificationLicense")
-            .then((res) => {
-              this.license = res.data.data;
-              if (this.license) {
-                this.verification = this.license.filter(function(e) {
-                  return e.applicationStatus.code.includes("DRA");
-                });
-              }
-            });
         })
         .then(() => {
           this.$store
