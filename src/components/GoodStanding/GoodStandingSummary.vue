@@ -277,10 +277,10 @@
           </button>
           <button
             class="withdraw"
-            @click="withdraw(this.buttons[0].action)"
+            @click="withdraw(this.buttons[2].action)"
             variant="outline"
           >
-            {{ this.buttons[1]["name"] }}
+            {{ this.buttons[2]["name"] }}
           </button>
         </div>
         <div
@@ -344,6 +344,7 @@ import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import Spinner from "@/sharedComponents/Spinner";
 import moment from "moment";
+import {googleApi} from "@/composables/baseURL";
 
 export default {
   props: ["activeState"],
@@ -414,7 +415,7 @@ export default {
     this.departmentId = this.license.departmentId;
   },
   data: () => ({
-    basePath: "https://storage.googleapis.com/hris-lisence-dev/",
+    basePath: googleApi,
 
     filePreview: "",
     letterPreview: "",

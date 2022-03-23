@@ -60,8 +60,8 @@
         <div class="mb-4">
           <li class=" justify-start ">
             <transition name="slide-fade-to-left">
-              <div class="">
-                <div class=" justify-center items-center ">
+              <div>
+                <div @click="submittedDD" class="justify-center items-center">
                   <div>
                     <h3 class="text-lightBlueB-500 mt-tiny">
                       <span style="color: white;">
@@ -71,9 +71,7 @@
 
                         <i class="mr-2 far fa-address-book fa-x fa-light"></i>
                       </span>
-                      <span @click="submittedDD" style="color: white; "
-                        >Submitted</span
-                      >
+                      <span style="color: white; ">Submitted</span>
                     </h3>
                   </div>
                 </div>
@@ -104,16 +102,14 @@
         <div class="mb-4">
           <li class=" justify-start static">
             <transition name="slide-fade-to-left">
-              <div class=" ">
-                <div class=" justify-center items-center ">
+              <div>
+                <div @click="approvedDD" class="justify-center items-center">
                   <div class="">
                     <h3 class="text-lightBlueB-500 mt-tiny">
                       <span style="color: white;">
                         <i class="mr-2 far fa-thumbs-up fa-x fa-light"></i>
                       </span>
-                      <span @click="approvedDD" style="color: white; "
-                        >Approved</span
-                      >
+                      <span style="color: white;">Approved</span>
                       <span style="color: white;">
                         <i
                           class="fas fa-chevron-circle-down float-right mt-2"
@@ -153,17 +149,15 @@
         <div class="mb-4">
           <li class=" justify-start ">
             <transition name="slide-fade-to-left">
-              <div class=" ">
-                <div class=" justify-center items-center ">
+              <div>
+                <div @click="declinedDD" class="justify-center items-center">
                   <div class=" ">
                     <h3 class="text-lightBlueB-500 mt-tiny">
                       <span style="color: white;">
                         <i class="mr-2 far fa-thumbs-down fa-x fa-light"></i>
                       </span>
 
-                      <span @click="declinedDD" style="color: white; "
-                        >Declined
-                      </span>
+                      <span style="color: white;">Declined </span>
                       <span style="color: white;">
                         <i
                           class="fas fa-chevron-circle-down float-right mt-2"
@@ -248,7 +242,6 @@ export default {
   },
   methods: {
     selectMenu(menu) {
-      console.log(menu);
       switch (menu) {
         case 0:
           this.$router.push({ path: "/menu" });
