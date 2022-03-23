@@ -5,25 +5,33 @@
       <!-- <div>
         <ReviewerSideBar style="width: 30vh" />
       </div> -->
-      <div v-if="loader" style="margin-left: 45%; margin-top: 5%">
+      <!-- <div v-if="showLoading" style="margin-left: 45%; margin-top: 5%">
         <Spinner />
-      </div>
-      <div v-else>
-        
+      </div> -->
+      <!-- <div v-else> -->
         <div class="px-4 sm:px-4">
-          
           <div class="py-8">
-            
             <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 max-w-4xl">
               <div id="printable" class="shadow-md rounded-lg">
                 <!-- <div v-if="showLoading">
                   loading...
                 </div>
                 <div v-else> -->
-                  <div>show</div>
-                  <!-- <table id="myTable" class="display" width="100%"></table> -->
-                  <!-- <data-table :rows="data"/> -->
-                
+                <label class="text-primary-700">Show</label>
+                <select
+                  class="max-w-3xl"
+                  v-model="paginationSize"
+                  @change="handlePagSize()"
+                >
+                  <option
+                    v-for="size in paginationSizeList"
+                    v-bind:key="size"
+                    v-bind:value="size"
+                  >
+                    {{ size }}
+                  </option>
+                </select>
+
                 <table class="leading-normal" id="myTable">
                   <thead>
                     <tr class="">
@@ -149,7 +157,9 @@
                         <div class="flex">
                           <div class="ml-3">
                             <p class="text-gray-900 whitespace-no-wrap">
-                              {{ item.alternative_first_name }} {{item.alternative_middle_name}} {{ item.alternative_last_name }}
+                              {{ item.alternative_first_name }}
+                              {{ item.alternative_middle_name }}
+                              {{ item.alternative_last_name }}
                             </p>
                           </div>
                         </div>
@@ -447,9 +457,13 @@
                 </table>
               </div>
             </div>
+            <div id="pagination">
+              <a v-if="indexValue > 1" class="mr-8" @click="handlePrevValue">previous</a> <a class="mr-8" @click="handleIndex(indexValue + 1)">{{indexValue}} </a
+              ><a class="mr-8" @click="handleIndex(lastIndex)">{{ lastIndex }}</a
+              ><a v-if="indexValue < lastIndex" @click="handleNextValue">Next</a>
+            </div>
           </div>
         </div>
-      </div>
     </div>
   </div>
 </template>
@@ -465,11 +479,11 @@ import store from "../../../../store";
 
 export default {
   components: {
-    Spinner
+    Spinner,
   },
-      props: {
-            data: { type: Array, required: true },
-        },
+  props: {
+    data: { type: Array, required: true },
+  },
 
   computed: {
     moment: () => moment,
@@ -478,7 +492,6 @@ export default {
     },
   },
   setup(props, { emit }) {
-    
     const store = useStore();
 
     let showLoading = ref(false);
@@ -864,10 +877,14 @@ export default {
       },
     ]);
 
-    // let legacyData = ref([])
-
     let legacyData = ref([]);
     let totalCount = ref();
+    let lastIndex = ref(2);
+
+    let indexValue = ref(1);
+    let paginationSize = ref(10);
+    const paginationSizeList = [10, 50, 100];
+
     const fetchLegacyData = (page, size, value) => {
       showLoading.value = true;
       console.log("legacy above");
@@ -875,52 +892,52 @@ export default {
       store.dispatch("reviewer/getLegacyData", apiParameters).then((res) => {
         // legacyData.value = store.getters["reviewer/getLegacyData"];
         legacyData.value = res.rows;
-        totalCount.valu = res.count;
+        totalCount.value = res.count;
+        lastIndex.value = res.count / 10;
         console.log("legacy data is ", legacyData.value);
         showLoading.value = false;
-
-        // $(document).ready(function() {
-        //   $("#myTable").DataTable({
-        //     data: res.rows,
-        //     columns: [
-        //       { title: "emp first name", data: "emp_first_name" },
-        //       { title: "emp middl name", data: "emp_middle_name" },
-        //       { title: "emp last name", data: "emp_last_name" },
-        //       { title: "emp gender", data: "emp_gender" },
-        //       { title: "license no", data: "license_no" },
-        //       { title: "employee id", data: "employee_id" },
-        //     ],
-        //     paging: res.count,
-        //     lengthMenu: [
-        //       [5, 7, 12, -1],
-        //       [5, 7, 12, "All"],
-        //     ],
-        //     // "data": legacyData
-        //     // "ajax": "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api/legacyData",
-        //     processing: true,
-        //     serverSide: true,
-        //     deferLoading: res.count,
-        //   });
-        // });
       });
     };
 
-    let loader = ref(false);
-    const initDataTable = () => {};
-    $("#myTable_paginate  > a > #myTable_next ").click(function() {
-      // alert("Handler for .click() called.");
-      // var activeText = $(".paginate_button current").text();
-      console.log("active");
-    });
+    const handleIndex = (index) => {
+      indexValue.value = index;
+      if(index == lastIndex.value) {
+        let lastIndexSize = totalCount.value - ((lastIndex.value * 10) - 1);
+        console.log("totalcount", totalCount.value)
+        fetchLegacyData(index, lastIndexSize, "")
+      }
+      fetchLegacyData(index, paginationSize.value, "");
+    }
+    const handlePrevValue = () => {
+      fetchLegacyData(indexValue.value - 1, paginationSize.value, "");
+      indexValue.value = indexValue.value - 1;
+    }
+    const handleNextValue = () => {
+      fetchLegacyData(indexValue.value + 1, paginationSize.value, "");
+      indexValue.value = indexValue.value + 1;
+    }
+
+    const handlePagSize = () => {
+      fetchLegacyData(indexValue.value, paginationSize.value, "");
+      console.log("pagination value is ", paginationSize.value);
+    };
     onMounted(() => {
-      fetchLegacyData(0, 10, "");
+      fetchLegacyData(0, paginationSize.value, "");
       if (!showLoading.value) {
         initDataTable();
       }
     });
     return {
-      loader,
       legacyData,
+      showLoading,
+      lastIndex,
+      indexValue,
+      handlePagSize,
+      paginationSize,
+      paginationSizeList,
+      handleIndex,
+      handlePrevValue,
+      handleNextValue,
     };
   },
 };
@@ -968,5 +985,9 @@ a:hover {
   width: 170vh;
   overflow-x: scroll;
   overflow-y: hidden;
+}
+#pagination {
+  display: flex;
+  justify-content: center;
 }
 </style>
