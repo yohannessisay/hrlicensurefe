@@ -912,11 +912,8 @@ export default {
       saveAs(blob, "Report.xls");
     };
     const filterProfession = (profType) => {
-      // report.value = store.getters["report/getReport"];
       var tableFilter = [];
-      console.log("profe type", profType)
       tableFilter = report.value;
-      console.log("table filter", tableFilter)
       var tableFilter2 = [];
       for (var i = 0; i < tableFilter.length; i++) {
         if (tableFilter[i].professionalTypes != null) {
@@ -924,7 +921,6 @@ export default {
         }
       }
       if (profType == null) {
-        // report.value = store.getter["report/getReport"];
       } else {
         report.value = tableFilter2.filter(function(e) {
           return e.professionalTypes.name == profType;
@@ -932,7 +928,6 @@ export default {
       }
     };
     const filterRegion = (region) => {
-      // report.value = store.getters["report/getReport"];
       fetchZones(region.id);
       var tableFilter = [];
       tableFilter = report.value;
