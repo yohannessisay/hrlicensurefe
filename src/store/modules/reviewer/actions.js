@@ -926,11 +926,13 @@ export default {
     commit(SET_PENDING_PAYMENTS_SEARCHED, searchedVal);
   },
 
-  async getLegacyData({ commit }) {
-    const url = baseUrl + "/legacyData";
+  async getLegacyData({ commit }, parameters) {
+    console.log("para", parameters)
+    let url = "";
+    parameters[2] ? url = baseUrl + `/legacyData?page=${parameters[0]}&size=${parameters[1]}&value=${parameters[2]}` : url = baseUrl + `/legacyData?page=${parameters[0]}&size=${parameters[1]}`;
     const resp = await ApiService.get(url);
-    console.log("response is ", resp)
-    commit(SET_LEGACY_DATA, resp.data.data);
+    return resp.data.data
+    // commit(SET_LEGACY_DATA, resp.data.data);
   },
 
   getLegacyDataSearched({ commit, getters }, searchKey) {

@@ -104,7 +104,7 @@ export default {
     const submit = () => {
       showLoading.value = true;
       let credentialData = {
-        email: credentials.value.email,
+        email: credentials.value.email.toLowerCase(),
         password: credentials.value.password,
       };
       store.dispatch("admin/login", credentialData).then((res) => {

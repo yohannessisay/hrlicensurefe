@@ -5,15 +5,34 @@
       <!-- <div>
         <ReviewerSideBar style="width: 30vh" />
       </div> -->
-      <div v-if="loader" style="margin-left: 45%; margin-top: 5%">
+      <!-- <div v-if="showLoading" style="margin-left: 45%; margin-top: 5%">
         <Spinner />
-      </div>
-      <div v-else>
-        <div class="px-4 sm:px-4">
-          <div class="py-8">
-            <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 max-w-4xl">
-              <div id="printable" class="shadow-md rounded-lg">
-                <table class="leading-normal">
+      </div> -->
+      <!-- <div v-else> -->
+      <div class="px-4 sm:px-4">
+        <div class="py-8">
+          <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 max-w-4xl">
+            <div id="printable" class="shadow-md rounded-lg">
+              <div v-if="showLoading">
+                loading...
+              </div>
+              <div v-else>
+                <label class="text-primary-700">Show</label>
+                <select
+                  class="max-w-3xl"
+                  v-model="paginationSize"
+                  @change="handlePagSize($)"
+                >
+                  <option
+                    v-for="size in paginationSizeList"
+                    v-bind:key="size"
+                    v-bind:value="size"
+                  >
+                    {{ size }}
+                  </option>
+                </select>
+
+                <table class="leading-normal" id="myTable">
                   <thead>
                     <tr class="">
                       <th
@@ -138,7 +157,9 @@
                         <div class="flex">
                           <div class="ml-3">
                             <p class="text-gray-900 whitespace-no-wrap">
-                              {{ item.alternative_first_name }} {{item.alternative_middle_name}} {{ item.alternative_last_name }}
+                              {{ item.alternative_first_name }}
+                              {{ item.alternative_middle_name }}
+                              {{ item.alternative_last_name }}
                             </p>
                           </div>
                         </div>
@@ -434,6 +455,17 @@
                     </tr>
                   </tbody>
                 </table>
+
+                <div>
+                  <VueTailwindPagination
+                    :current="currentPage"
+                    :total="totalCount"
+                    :per-page="paginationSize"
+                    @page-changed="pageChanged($event)"
+                    text-before-input="Go to page"
+                    text-after-input="Go"
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -447,13 +479,18 @@
 import Spinner from "@/sharedComponents/Spinner";
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
-import { useRouter, useRoute } from "vue-router";
 import moment from "moment";
-import { saveAs } from "file-saver";
+import store from "../../../../store";
+import "@ocrv/vue-tailwind-pagination/dist/style.css";
+import VueTailwindPagination from "@ocrv/vue-tailwind-pagination";
 
 export default {
   components: {
     Spinner,
+    VueTailwindPagination,
+  },
+  props: {
+    data: { type: Array, required: true },
   },
 
   computed: {
@@ -466,110 +503,50 @@ export default {
     const store = useStore();
 
     let showLoading = ref(false);
-    // let legacyData = ref([]);
-    let legacyData = ref([
-      {
-        emp_first_name: "Mesfin",
-        emp_middle_name: "Girum",
-        emp_last_name: "Biruk",
-        alternative_first_name: "መስፊን",
-        alternative_middle_name: "ግሩም",
-        alternative_last_name: "ብሩክ",
-        prefix_id: "Dr.",
-        emp_birthday: "2002-01-25T09:55:23.494Z",
-        employee_id: "R00212",
-        expiry_date: "Jan 02, 2024",
-        license_type_id: "Renewal",
-        license_status_id: "Certified",
-        license_no: "R00210",
-        remark: "-",
-        prefix_id: "Medical Doctor",
-        issued_date: "Dec 22, 2021",
-        emp_work_email: "mesfin@gmail.com",
-        emp_gender: "Male",
-        emp_mobile: "0998890989",
-      },
-      {
-        emp_first_name: "Getu",
-        emp_middle_name: "Aman",
-        emp_last_name: "Temesgen",
-        alternative_first_name: "ጌቱ",
-        alternative_middle_name: "አማን",
-        alternative_last_name: "ተከተል",
-        prefix_id: "Mr.",
-        emp_birthday: "2002-01-25T09:55:23.494Z",
-        employee_id: "NL00212",
-        expiry_date: "Jan 02, 2024",
-        license_type_id: "New License",
-        license_status_id: "Certified",
-        license_no: "NL00210",
-        remark: "-",
-        prefix_id: "Medical Doctor",
-        issued_date: "Dec 22, 2021",
-        emp_work_email: "mesfin@gmail.com",
-        emp_gender: "Male",
-        emp_mobile: "0998890989",
-      },
-      {
-        emp_first_name: "Mahlet",
-        emp_middle_name: "Markos",
-        emp_last_name: "Kefa",
-        alternative_first_name: "ማህሌት",
-        alternative_middle_name: "ማርኮስ",
-        alternative_last_name: "ኬፋ",
-        prefix_id: "Ms.",
-        emp_birthday: "2002-01-25T09:55:23.494Z",
-        employee_id: "GS00212",
-        expiry_date: "Jan 02, 2024",
-        license_type_id: "Good Standing",
-        license_status_id: "Certified",
-        license_no: "GS00210",
-        remark: "-",
-        prefix_id: "Medical Doctor",
-        issued_date: "Dec 22, 2021",
-        emp_work_email: "mesfin@gmail.com",
-        emp_gender: "Male",
-        emp_mobile: "0998890989",
-      },
-      {
-        emp_first_name: "Meron",
-        emp_middle_name: "lema",
-        emp_last_name: "tomas",
-        alternative_first_name: "ሜሮን",
-        alternative_middle_name: "ለማ",
-        alternative_last_name: "ቶማስ",
-        prefix_id: "Dr.",
-        emp_birthday: "2002-01-25T09:55:23.494Z",
-        employee_id: "NL00109",
-        expiry_date: "Jan 02, 2024",
-        license_type_id: "New License",
-        license_status_id: "Certified",
-        license_no: "NL00109",
-        remark: "-",
-        prefix_id: "Medical Doctor",
-        issued_date: "Dec 22, 2021",
-        emp_work_email: "mesfin@gmail.com",
-        emp_gender: "Male",
-        emp_mobile: "0998890989",
-      },
-    ]);
+    let legacyData = ref([]);
+    let totalCount = ref();
+    let lastIndex = ref(2);
+    let currentPage = ref(1);
 
-    const fetchLegacyData = () => {
+    let indexValue = ref(0);
+    let paginationSize = ref(10);
+    const paginationSizeList = [10, 25, 50, 100];
+
+    const fetchLegacyData = (page, size, value) => {
       showLoading.value = true;
-      console.log("legacy above")
-      store.dispatch("reviewer/getLegacyData").then((res) => {
+      const apiParameters = [page, size, value];
+      store.dispatch("reviewer/getLegacyData", apiParameters).then((res) => {
+        legacyData.value = res.rows;
+        totalCount.value = res.count;
         showLoading.value = false;
       });
     };
 
-    let loader = ref(false);
+    const pageChanged = (event) => {
+      currentPage.value = event;
+      indexValue.value = event - 1;
+      fetchLegacyData(indexValue.value, paginationSize.value);
+    };
 
+    const handlePagSize = () => {
+      currentPage.value = 1;
+      indexValue.value = 0;
+      fetchLegacyData(indexValue.value, paginationSize.value);
+    };
     onMounted(() => {
-      fetchLegacyData();
+      fetchLegacyData(0, paginationSize.value);
     });
     return {
-      loader,
       legacyData,
+      showLoading,
+      lastIndex,
+      indexValue,
+      handlePagSize,
+      paginationSize,
+      paginationSizeList,
+      currentPage,
+      pageChanged,
+      totalCount,
     };
   },
 };
@@ -618,4 +595,8 @@ a:hover {
   overflow-x: scroll;
   overflow-y: hidden;
 }
+/* #pagination {
+  display: flex;
+  justify-content: center;
+} */
 </style>

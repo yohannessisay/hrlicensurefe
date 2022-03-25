@@ -270,6 +270,7 @@ import Spinner from "@/sharedComponents/Spinner";
 import MESSAGE from "../../../composables/documentMessage";
 import MAX_FILE_SIZE from "../../../composables/documentMessage";
 import MAX_SIZE_MB from "../../../composables/documentMessage";
+import { googleApi } from "@/composables/baseURL";
 
 export default {
   components: {
@@ -291,8 +292,6 @@ export default {
     });
 
     let fileSize = ref("");
-
-    const basePath = "https://storage.googleapis.com/hris-lisence-dev/";
 
     let dataChanged = ref(false);
 
@@ -996,7 +995,7 @@ export default {
 
             COCFile.value = draftData.documents[i];
             showPreview.value = true;
-            filePreview.value = basePath + draftData.documents[i].filePath;
+            filePreview.value = googleApi + draftData.documents[i].filePath;
           }
           if (draftData.documents[i].documentTypeCode == "COC1") {
             docCount.value++;
@@ -1008,7 +1007,7 @@ export default {
             }
             COCFile2.value = draftData.documents[i];
             showPreview2.value = true;
-            filePreview2.value = basePath + draftData.documents[i].filePath;
+            filePreview2.value = googleApi + draftData.documents[i].filePath;
           }
           if (draftData.documents[i].documentTypeCode == "COC2") {
             docCount.value += 2;
@@ -1020,7 +1019,7 @@ export default {
             }
             COCFile3.value = draftData.documents[i];
             showPreview3.value = true;
-            filePreview3.value = basePath + draftData.documents[i].filePath;
+            filePreview3.value = googleApi + draftData.documents[i].filePath;
           }
         }
       }
@@ -1070,7 +1069,7 @@ export default {
       draftData,
       draftStatus,
       update,
-      basePath,
+      googleApi,
       message,
       dataChanged,
       acceptedFields,
