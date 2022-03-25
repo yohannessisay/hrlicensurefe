@@ -7,6 +7,9 @@
       <div class="w-screen max-w-4xl mt-medium">
         <div class="flex flex-col w-full rounded mb-large">
           <h2 class="flex justify-center pb-medium">New License</h2>
+          <h4 v-if="this.remark" class="flex justify-center pb-medium">
+            Remark: {{ this.remark }}
+          </h4>
           <transition name="fade" mode="out-in">
             <div v-if="this.activeState == 1">
               <Institution
@@ -1176,6 +1179,7 @@ export default {
     displayLanguageOption: false,
     displayPayrollOption: false,
     eduLevel: "",
+    remark: "",
   }),
   components: {
     Institution,
@@ -1346,6 +1350,7 @@ export default {
     fetchDraft(id) {
       this.$store.dispatch("newlicense/getDraft", id).then((res) => {
         const results = res.data.data;
+        this.remark = results.remark;
         if (results.occupationTypeId == 2) {
           this.displayPayrollOption = false;
         } else {
