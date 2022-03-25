@@ -9,19 +9,19 @@
         <Spinner />
       </div> -->
       <!-- <div v-else> -->
-        <div class="px-4 sm:px-4">
-          <div class="py-8">
-            <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 max-w-4xl">
-              <div id="printable" class="shadow-md rounded-lg">
-                <!-- <div v-if="showLoading">
-                  loading...
-                </div>
-                <div v-else> -->
+      <div class="px-4 sm:px-4">
+        <div class="py-8">
+          <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 max-w-4xl">
+            <div id="printable" class="shadow-md rounded-lg">
+              <div v-if="showLoading">
+                loading...
+              </div>
+              <div v-else>
                 <label class="text-primary-700">Show</label>
                 <select
                   class="max-w-3xl"
                   v-model="paginationSize"
-                  @change="handlePagSize()"
+                  @change="handlePagSize($)"
                 >
                   <option
                     v-for="size in paginationSizeList"
@@ -455,15 +455,22 @@
                     </tr>
                   </tbody>
                 </table>
+
+                <div>
+                  <VueTailwindPagination
+                    :current="currentPage"
+                    :total="totalCount"
+                    :per-page="paginationSize"
+                    @page-changed="pageChanged($event)"
+                    text-before-input="Go to page"
+                    text-after-input="Go"
+                  />
+                </div>
               </div>
-            </div>
-            <div id="pagination">
-              <a v-if="indexValue > 1" class="mr-8" @click="handlePrevValue">previous</a> <a class="mr-8" @click="handleIndex(indexValue + 1)">{{indexValue}} </a
-              ><a class="mr-8" @click="handleIndex(lastIndex)">{{ lastIndex }}</a
-              ><a v-if="indexValue < lastIndex" @click="handleNextValue">Next</a>
             </div>
           </div>
         </div>
+      </div>
     </div>
   </div>
 </template>
@@ -472,14 +479,15 @@
 import Spinner from "@/sharedComponents/Spinner";
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
-import { useRouter, useRoute } from "vue-router";
 import moment from "moment";
-import { saveAs } from "file-saver";
 import store from "../../../../store";
+import "@ocrv/vue-tailwind-pagination/dist/style.css";
+import VueTailwindPagination from "@ocrv/vue-tailwind-pagination";
 
 export default {
   components: {
     Spinner,
+    VueTailwindPagination,
   },
   props: {
     data: { type: Array, required: true },
@@ -495,437 +503,38 @@ export default {
     const store = useStore();
 
     let showLoading = ref(false);
-    // let legacyData = ref([]);
-    let newLegacyData = ref([
-      {
-        emp_first_name: "Mesfin",
-        emp_middle_name: "Girum",
-        emp_last_name: "Biruk",
-        alternative_first_name: "መስፊን",
-        alternative_middle_name: "ግሩም",
-        alternative_last_name: "ብሩክ",
-        prefix_id: "Dr.",
-        emp_birthday: "2002-01-25T09:55:23.494Z",
-        employee_id: "R00212",
-        expiry_date: "Jan 02, 2024",
-        license_type_id: "Renewal",
-        license_status_id: "Certified",
-        license_no: "R00210",
-        remark: "-",
-        prefix_id: "Medical Doctor",
-        issued_date: "Dec 22, 2021",
-        emp_work_email: "mesfin@gmail.com",
-        emp_gender: "Male",
-        emp_mobile: "0998890989",
-      },
-      {
-        emp_first_name: "Mesfin",
-        emp_middle_name: "Girum",
-        emp_last_name: "Biruk",
-        alternative_first_name: "መስፊን",
-        alternative_middle_name: "ግሩም",
-        alternative_last_name: "ብሩክ",
-        prefix_id: "Dr.",
-        emp_birthday: "2002-01-25T09:55:23.494Z",
-        employee_id: "R00212",
-        expiry_date: "Jan 02, 2024",
-        license_type_id: "Renewal",
-        license_status_id: "Certified",
-        license_no: "R00210",
-        remark: "-",
-        prefix_id: "Medical Doctor",
-        issued_date: "Dec 22, 2021",
-        emp_work_email: "mesfin@gmail.com",
-        emp_gender: "Male",
-        emp_mobile: "0998890989",
-      },
-      {
-        emp_first_name: "Mesfin",
-        emp_middle_name: "Girum",
-        emp_last_name: "Biruk",
-        alternative_first_name: "መስፊን",
-        alternative_middle_name: "ግሩም",
-        alternative_last_name: "ብሩክ",
-        prefix_id: "Dr.",
-        emp_birthday: "2002-01-25T09:55:23.494Z",
-        employee_id: "R00212",
-        expiry_date: "Jan 02, 2024",
-        license_type_id: "Renewal",
-        license_status_id: "Certified",
-        license_no: "R00210",
-        remark: "-",
-        prefix_id: "Medical Doctor",
-        issued_date: "Dec 22, 2021",
-        emp_work_email: "mesfin@gmail.com",
-        emp_gender: "Male",
-        emp_mobile: "0998890989",
-      },
-      {
-        emp_first_name: "Mesfin",
-        emp_middle_name: "Girum",
-        emp_last_name: "Biruk",
-        alternative_first_name: "መስፊን",
-        alternative_middle_name: "ግሩም",
-        alternative_last_name: "ብሩክ",
-        prefix_id: "Dr.",
-        emp_birthday: "2002-01-25T09:55:23.494Z",
-        employee_id: "R00212",
-        expiry_date: "Jan 02, 2024",
-        license_type_id: "Renewal",
-        license_status_id: "Certified",
-        license_no: "R00210",
-        remark: "-",
-        prefix_id: "Medical Doctor",
-        issued_date: "Dec 22, 2021",
-        emp_work_email: "mesfin@gmail.com",
-        emp_gender: "Male",
-        emp_mobile: "0998890989",
-      },
-      {
-        emp_first_name: "Mesfin",
-        emp_middle_name: "Girum",
-        emp_last_name: "Biruk",
-        alternative_first_name: "መስፊን",
-        alternative_middle_name: "ግሩም",
-        alternative_last_name: "ብሩክ",
-        prefix_id: "Dr.",
-        emp_birthday: "2002-01-25T09:55:23.494Z",
-        employee_id: "R00212",
-        expiry_date: "Jan 02, 2024",
-        license_type_id: "Renewal",
-        license_status_id: "Certified",
-        license_no: "R00210",
-        remark: "-",
-        prefix_id: "Medical Doctor",
-        issued_date: "Dec 22, 2021",
-        emp_work_email: "mesfin@gmail.com",
-        emp_gender: "Male",
-        emp_mobile: "0998890989",
-      },
-      {
-        emp_first_name: "Mesfin",
-        emp_middle_name: "Girum",
-        emp_last_name: "Biruk",
-        alternative_first_name: "መስፊን",
-        alternative_middle_name: "ግሩም",
-        alternative_last_name: "ብሩክ",
-        prefix_id: "Dr.",
-        emp_birthday: "2002-01-25T09:55:23.494Z",
-        employee_id: "R00212",
-        expiry_date: "Jan 02, 2024",
-        license_type_id: "Renewal",
-        license_status_id: "Certified",
-        license_no: "R00210",
-        remark: "-",
-        prefix_id: "Medical Doctor",
-        issued_date: "Dec 22, 2021",
-        emp_work_email: "mesfin@gmail.com",
-        emp_gender: "Male",
-        emp_mobile: "0998890989",
-      },
-      {
-        emp_first_name: "Mesfin",
-        emp_middle_name: "Girum",
-        emp_last_name: "Biruk",
-        alternative_first_name: "መስፊን",
-        alternative_middle_name: "ግሩም",
-        alternative_last_name: "ብሩክ",
-        prefix_id: "Dr.",
-        emp_birthday: "2002-01-25T09:55:23.494Z",
-        employee_id: "R00212",
-        expiry_date: "Jan 02, 2024",
-        license_type_id: "Renewal",
-        license_status_id: "Certified",
-        license_no: "R00210",
-        remark: "-",
-        prefix_id: "Medical Doctor",
-        issued_date: "Dec 22, 2021",
-        emp_work_email: "mesfin@gmail.com",
-        emp_gender: "Male",
-        emp_mobile: "0998890989",
-      },
-      {
-        emp_first_name: "Mesfin",
-        emp_middle_name: "Girum",
-        emp_last_name: "Biruk",
-        alternative_first_name: "መስፊን",
-        alternative_middle_name: "ግሩም",
-        alternative_last_name: "ብሩክ",
-        prefix_id: "Dr.",
-        emp_birthday: "2002-01-25T09:55:23.494Z",
-        employee_id: "R00212",
-        expiry_date: "Jan 02, 2024",
-        license_type_id: "Renewal",
-        license_status_id: "Certified",
-        license_no: "R00210",
-        remark: "-",
-        prefix_id: "Medical Doctor",
-        issued_date: "Dec 22, 2021",
-        emp_work_email: "mesfin@gmail.com",
-        emp_gender: "Male",
-        emp_mobile: "0998890989",
-      },
-      {
-        emp_first_name: "Mesfin",
-        emp_middle_name: "Girum",
-        emp_last_name: "Biruk",
-        alternative_first_name: "መስፊን",
-        alternative_middle_name: "ግሩም",
-        alternative_last_name: "ብሩክ",
-        prefix_id: "Dr.",
-        emp_birthday: "2002-01-25T09:55:23.494Z",
-        employee_id: "R00212",
-        expiry_date: "Jan 02, 2024",
-        license_type_id: "Renewal",
-        license_status_id: "Certified",
-        license_no: "R00210",
-        remark: "-",
-        prefix_id: "Medical Doctor",
-        issued_date: "Dec 22, 2021",
-        emp_work_email: "mesfin@gmail.com",
-        emp_gender: "Male",
-        emp_mobile: "0998890989",
-      },
-      {
-        emp_first_name: "Mesfin",
-        emp_middle_name: "Girum",
-        emp_last_name: "Biruk",
-        alternative_first_name: "መስፊን",
-        alternative_middle_name: "ግሩም",
-        alternative_last_name: "ብሩክ",
-        prefix_id: "Dr.",
-        emp_birthday: "2002-01-25T09:55:23.494Z",
-        employee_id: "R00212",
-        expiry_date: "Jan 02, 2024",
-        license_type_id: "Renewal",
-        license_status_id: "Certified",
-        license_no: "R00210",
-        remark: "-",
-        prefix_id: "Medical Doctor",
-        issued_date: "Dec 22, 2021",
-        emp_work_email: "mesfin@gmail.com",
-        emp_gender: "Male",
-        emp_mobile: "0998890989",
-      },
-      {
-        emp_first_name: "Mesfin",
-        emp_middle_name: "Girum",
-        emp_last_name: "Biruk",
-        alternative_first_name: "መስፊን",
-        alternative_middle_name: "ግሩም",
-        alternative_last_name: "ብሩክ",
-        prefix_id: "Dr.",
-        emp_birthday: "2002-01-25T09:55:23.494Z",
-        employee_id: "R00212",
-        expiry_date: "Jan 02, 2024",
-        license_type_id: "Renewal",
-        license_status_id: "Certified",
-        license_no: "R00210",
-        remark: "-",
-        prefix_id: "Medical Doctor",
-        issued_date: "Dec 22, 2021",
-        emp_work_email: "mesfin@gmail.com",
-        emp_gender: "Male",
-        emp_mobile: "0998890989",
-      },
-      {
-        emp_first_name: "Mesfin",
-        emp_middle_name: "Girum",
-        emp_last_name: "Biruk",
-        alternative_first_name: "መስፊን",
-        alternative_middle_name: "ግሩም",
-        alternative_last_name: "ብሩክ",
-        prefix_id: "Dr.",
-        emp_birthday: "2002-01-25T09:55:23.494Z",
-        employee_id: "R00212",
-        expiry_date: "Jan 02, 2024",
-        license_type_id: "Renewal",
-        license_status_id: "Certified",
-        license_no: "R00210",
-        remark: "-",
-        prefix_id: "Medical Doctor",
-        issued_date: "Dec 22, 2021",
-        emp_work_email: "mesfin@gmail.com",
-        emp_gender: "Male",
-        emp_mobile: "0998890989",
-      },
-      {
-        emp_first_name: "Mesfin",
-        emp_middle_name: "Girum",
-        emp_last_name: "Biruk",
-        alternative_first_name: "መስፊን",
-        alternative_middle_name: "ግሩም",
-        alternative_last_name: "ብሩክ",
-        prefix_id: "Dr.",
-        emp_birthday: "2002-01-25T09:55:23.494Z",
-        employee_id: "R00212",
-        expiry_date: "Jan 02, 2024",
-        license_type_id: "Renewal",
-        license_status_id: "Certified",
-        license_no: "R00210",
-        remark: "-",
-        prefix_id: "Medical Doctor",
-        issued_date: "Dec 22, 2021",
-        emp_work_email: "mesfin@gmail.com",
-        emp_gender: "Male",
-        emp_mobile: "0998890989",
-      },
-      {
-        emp_first_name: "Mesfin",
-        emp_middle_name: "Girum",
-        emp_last_name: "Biruk",
-        alternative_first_name: "መስፊን",
-        alternative_middle_name: "ግሩም",
-        alternative_last_name: "ብሩክ",
-        prefix_id: "Dr.",
-        emp_birthday: "2002-01-25T09:55:23.494Z",
-        employee_id: "R00212",
-        expiry_date: "Jan 02, 2024",
-        license_type_id: "Renewal",
-        license_status_id: "Certified",
-        license_no: "R00210",
-        remark: "-",
-        prefix_id: "Medical Doctor",
-        issued_date: "Dec 22, 2021",
-        emp_work_email: "mesfin@gmail.com",
-        emp_gender: "Male",
-        emp_mobile: "0998890989",
-      },
-      {
-        emp_first_name: "Mesfin",
-        emp_middle_name: "Girum",
-        emp_last_name: "Biruk",
-        alternative_first_name: "መስፊን",
-        alternative_middle_name: "ግሩም",
-        alternative_last_name: "ብሩክ",
-        prefix_id: "Dr.",
-        emp_birthday: "2002-01-25T09:55:23.494Z",
-        employee_id: "R00212",
-        expiry_date: "Jan 02, 2024",
-        license_type_id: "Renewal",
-        license_status_id: "Certified",
-        license_no: "R00210",
-        remark: "-",
-        prefix_id: "Medical Doctor",
-        issued_date: "Dec 22, 2021",
-        emp_work_email: "mesfin@gmail.com",
-        emp_gender: "Male",
-        emp_mobile: "0998890989",
-      },
-      {
-        emp_first_name: "Getu",
-        emp_middle_name: "Aman",
-        emp_last_name: "Temesgen",
-        alternative_first_name: "ጌቱ",
-        alternative_middle_name: "አማን",
-        alternative_last_name: "ተከተል",
-        prefix_id: "Mr.",
-        emp_birthday: "2002-01-25T09:55:23.494Z",
-        employee_id: "NL00212",
-        expiry_date: "Jan 02, 2024",
-        license_type_id: "New License",
-        license_status_id: "Certified",
-        license_no: "NL00210",
-        remark: "-",
-        prefix_id: "Medical Doctor",
-        issued_date: "Dec 22, 2021",
-        emp_work_email: "mesfin@gmail.com",
-        emp_gender: "Male",
-        emp_mobile: "0998890989",
-      },
-      {
-        emp_first_name: "Mahlet",
-        emp_middle_name: "Markos",
-        emp_last_name: "Kefa",
-        alternative_first_name: "ማህሌት",
-        alternative_middle_name: "ማርኮስ",
-        alternative_last_name: "ኬፋ",
-        prefix_id: "Ms.",
-        emp_birthday: "2002-01-25T09:55:23.494Z",
-        employee_id: "GS00212",
-        expiry_date: "Jan 02, 2024",
-        license_type_id: "Good Standing",
-        license_status_id: "Certified",
-        license_no: "GS00210",
-        remark: "-",
-        prefix_id: "Medical Doctor",
-        issued_date: "Dec 22, 2021",
-        emp_work_email: "mesfin@gmail.com",
-        emp_gender: "Male",
-        emp_mobile: "0998890989",
-      },
-      {
-        emp_first_name: "Meron",
-        emp_middle_name: "lema",
-        emp_last_name: "tomas",
-        alternative_first_name: "ሜሮን",
-        alternative_middle_name: "ለማ",
-        alternative_last_name: "ቶማስ",
-        prefix_id: "Dr.",
-        emp_birthday: "2002-01-25T09:55:23.494Z",
-        employee_id: "NL00109",
-        expiry_date: "Jan 02, 2024",
-        license_type_id: "New License",
-        license_status_id: "Certified",
-        license_no: "NL00109",
-        remark: "-",
-        prefix_id: "Medical Doctor",
-        issued_date: "Dec 22, 2021",
-        emp_work_email: "mesfin@gmail.com",
-        emp_gender: "Male",
-        emp_mobile: "0998890989",
-      },
-    ]);
-
     let legacyData = ref([]);
     let totalCount = ref();
     let lastIndex = ref(2);
+    let currentPage = ref(1);
 
-    let indexValue = ref(1);
+    let indexValue = ref(0);
     let paginationSize = ref(10);
-    const paginationSizeList = [10, 50, 100];
+    const paginationSizeList = [10, 25, 50, 100];
 
     const fetchLegacyData = (page, size, value) => {
       showLoading.value = true;
-      console.log("legacy above");
       const apiParameters = [page, size, value];
       store.dispatch("reviewer/getLegacyData", apiParameters).then((res) => {
-        // legacyData.value = store.getters["reviewer/getLegacyData"];
         legacyData.value = res.rows;
         totalCount.value = res.count;
-        lastIndex.value = res.count / 10;
-        console.log("legacy data is ", legacyData.value);
         showLoading.value = false;
       });
     };
 
-    const handleIndex = (index) => {
-      indexValue.value = index;
-      if(index == lastIndex.value) {
-        let lastIndexSize = totalCount.value - ((lastIndex.value * 10) - 1);
-        console.log("totalcount", totalCount.value)
-        fetchLegacyData(index, lastIndexSize, "")
-      }
-      fetchLegacyData(index, paginationSize.value, "");
-    }
-    const handlePrevValue = () => {
-      fetchLegacyData(indexValue.value - 1, paginationSize.value, "");
-      indexValue.value = indexValue.value - 1;
-    }
-    const handleNextValue = () => {
-      fetchLegacyData(indexValue.value + 1, paginationSize.value, "");
-      indexValue.value = indexValue.value + 1;
-    }
+    const pageChanged = (event) => {
+      currentPage.value = event;
+      indexValue.value = event - 1;
+      fetchLegacyData(indexValue.value, paginationSize.value);
+    };
 
     const handlePagSize = () => {
-      fetchLegacyData(indexValue.value, paginationSize.value, "");
-      console.log("pagination value is ", paginationSize.value);
+      currentPage.value = 1;
+      indexValue.value = 0;
+      fetchLegacyData(indexValue.value, paginationSize.value);
     };
     onMounted(() => {
-      fetchLegacyData(0, paginationSize.value, "");
-      if (!showLoading.value) {
-        initDataTable();
-      }
+      fetchLegacyData(0, paginationSize.value);
     });
     return {
       legacyData,
@@ -935,9 +544,9 @@ export default {
       handlePagSize,
       paginationSize,
       paginationSizeList,
-      handleIndex,
-      handlePrevValue,
-      handleNextValue,
+      currentPage,
+      pageChanged,
+      totalCount,
     };
   },
 };
@@ -986,8 +595,8 @@ a:hover {
   overflow-x: scroll;
   overflow-y: hidden;
 }
-#pagination {
+/* #pagination {
   display: flex;
   justify-content: center;
-}
+} */
 </style>
