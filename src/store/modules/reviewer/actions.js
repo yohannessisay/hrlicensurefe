@@ -927,7 +927,6 @@ export default {
   },
 
   async getLegacyData({ commit }, parameters) {
-    console.log("para", parameters)
     let url = "";
     parameters[2] ? url = baseUrl + `/legacyData?page=${parameters[0]}&size=${parameters[1]}&value=${parameters[2]}` : url = baseUrl + `/legacyData?page=${parameters[0]}&size=${parameters[1]}`;
     const resp = await ApiService.get(url);
