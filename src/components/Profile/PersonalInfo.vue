@@ -54,8 +54,7 @@
             <img v-bind:src="filePreview" v-show="showPreview" />
           </picture>
           <span v-if="photoSizeCheck" style="color: red"
-            >Image size to big, Upload again. Image must be less than 3
-            MB</span
+            >Image size to big, Upload again. Image must be less than 3 MB</span
           >
           <span v-if="!showUpload && !isImage && !photoSizeCheck">
             <img :src="filePreview" alt="" class="preview" />
@@ -410,6 +409,7 @@ export default {
     const fetchNationalities = () => {
       store.dispatch("profile/getNationalities").then((res) => {
         const nationalities = res.data;
+        console.log(nationalities);
         state.value.nationalities = nationalities.data;
       });
     };

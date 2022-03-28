@@ -18,6 +18,13 @@
         >
           REJECTED
         </h2>
+        <h6
+          style="font-weight: bold;"
+          class="flex justify-center ml-4 mr-4"
+          v-if="declinedFieldsCheck"
+        >
+          Remark: <span class="ml-2" style="color: #e63636"> {{ remark }}</span>
+        </h6>
         <h2
           class="flex justify-center"
           v-if="acceptedFieldsCheck"
@@ -355,6 +362,7 @@ export default {
     mastersTranscript = store.getters["renewal/getMastersTranscript"];
     phd = store.getters["renewal/getPhd"];
     phdTranscript = store.getters["renewal/getPhdTranscript"];
+    remark = store.getters["renewal/getRemark"];
 
     const draft = (action) => {
       message.value.showLoading = true;
@@ -720,7 +728,6 @@ export default {
       }
       declinedFields = store.getters["renewal/getDeclinedFields"];
       acceptedFields = store.getters["renewal/getAcceptedFields"];
-      remark = store.getters["renewal/getRemark"];
       if (declinedFields != null && declinedFields.includes("PSP")) {
         declinedFieldsCheck.value = true;
       }

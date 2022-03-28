@@ -18,6 +18,13 @@
         >
           REJECTED
         </h2>
+        <h6
+          style="font-weight: bold;"
+          class="flex justify-center ml-4 mr-4"
+          v-if="declinedFieldsCheck"
+        >
+          Remark: <span class="ml-2" style="color: #e63636"> {{ remark }}</span>
+        </h6>
         <h2
           class="flex justify-center"
           v-if="acceptedFieldsCheck"
@@ -199,8 +206,6 @@ export default {
     const route = useRoute();
     const router = useRouter();
 
-    const basePath = "https://storage.googleapis.com/hris-lisence-dev/";
-
     let dataChanged = ref(false);
     let supportLetterFile = ref("");
     let supportLetterFileP = ref("");
@@ -329,6 +334,7 @@ export default {
     letterFromHiringManager = store.getters["renewal/getRenewalLicense"];
     workExperience = store.getters["renewal/getRenewalWorkExperience"];
     workExperience2 = store.getters["renewal/getRenewalWorkExperience2"];
+    remark = store.getters["renewal/getRemark"];
 
     const draft = (action) => {
       message.value.showLoading = true;
@@ -449,7 +455,10 @@ export default {
               letterFromHiringManager
             );
             formData.append(documentSpecs[5].documentType.code, workExperience);
-            formData.append(documentSpecs[35].documentType.code, workExperience2);
+            formData.append(
+              documentSpecs[35].documentType.code,
+              workExperience2
+            );
 
             let payload = { document: formData, id: licenseId };
             store
@@ -642,7 +651,6 @@ export default {
       }
       declinedFields = store.getters["renewal/getDeclinedFields"];
       acceptedFields = store.getters["renewal/getAcceptedFields"];
-      remark = store.getters["renewal/getRemark"];
       if (declinedFields != undefined && declinedFields.includes("SL")) {
         declinedFieldsCheck.value = true;
       }
@@ -663,7 +671,7 @@ export default {
             }
             supportLetterFile.value = draftData.documents[i];
             showPreview.value = true;
-            filePreview.value = basePath + draftData.documents[i].filePath;
+            filePreview.value = googleApi + draftData.documents[i].filePath;
           }
         }
       }
@@ -688,7 +696,7 @@ export default {
       fileSize,
       update,
       draftData,
-      basePath,
+      googleApi,
       dataChanged,
       message,
       acceptedFields,

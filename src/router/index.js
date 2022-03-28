@@ -68,7 +68,7 @@ const routes = [{
         name: "Google-Form",
         path: "/google-form",
         component: {},
-        meta: { RedirectExternalUrl: "https://google.com" },
+        meta: { RedirectExternalUrl: "https://docs.google.com/forms/d/e/1FAIpQLSdHJh4WF9bBHgw7ewMHUzEr3a4dhvOjdF9aWu50PdQo_7no0Q/viewform" },
     },
     {
         path: "/approved",

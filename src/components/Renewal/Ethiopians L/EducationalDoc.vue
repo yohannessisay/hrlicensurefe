@@ -33,6 +33,14 @@
             >
               REJECTED
             </h2>
+            <h6
+              style="font-weight: bold;"
+              class="flex justify-center ml-4 mr-4"
+              v-if="this.declinedFieldsCheck"
+            >
+              Remark:
+              <span class="ml-2" style="color: #e63636"> {{ this.remark }}</span>
+            </h6>
             <h2
               class="flex justify-center"
               v-if="this.acceptedFieldsCheck1"

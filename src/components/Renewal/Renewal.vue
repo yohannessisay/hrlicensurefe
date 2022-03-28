@@ -1150,7 +1150,7 @@
           <div v-if="this.applicantType == 2 && !this.firstTimeUser">
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 3">
-                <LetterFromHiringManagerForeignerEthiopian
+                <LetterFromHiringManagerForeigner
                   :activeState="3"
                   @changeActiveState="activeState++"
                   @changeActiveStateMinus="activeState--"
@@ -1308,7 +1308,7 @@ import ProfessionalLicense from "./Foreigner/ProfessionalLicense";
 import RenewedLicense from "./Foreigner/RenewedLicense";
 
 import LetterFromHiringManagerForeignerEthiopian from "./Ethiopians F/LetterFromHiringManager.vue";
-
+import LetterFromHiringManagerForeigner from "./Foreigner/LetterFromHiringManager.vue";
 import LetterFromHiringManagerEthiopianLocal from "./Ethiopians L/LetterFromHiringManager.vue";
 
 import COC from "./Ethiopians L/COC";
@@ -1385,6 +1385,7 @@ export default {
     SupportLetterForeign,
     LetterFromHiringManagerForeignerEthiopian,
     LetterFromHiringManagerEthiopianLocal,
+    LetterFromHiringManagerForeigner,
     Masters,
     MastersTranscript,
     PhD,
