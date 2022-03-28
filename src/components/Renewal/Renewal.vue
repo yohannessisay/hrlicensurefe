@@ -7,7 +7,6 @@
       <div class="w-screen max-w-4xl mt-medium">
         <div class="flex flex-col w-full rounded mb-large">
           <h2 class="flex justify-center pb-medium">Renewal</h2>
-          <h4 v-if="this.remark" class="flex justify-center pb-medium">Remark: {{this.remark}}</h4>
           <transition name="fade" mode="out-in">
             <div v-if="this.activeState == 1">
               <Institution
@@ -1151,7 +1150,7 @@
           <div v-if="this.applicantType == 2 && !this.firstTimeUser">
             <transition name="fade" mode="out-in">
               <div v-if="this.activeState == 3">
-                <LetterFromHiringManagerForeignerEthiopian
+                <LetterFromHiringManagerForeigner
                   :activeState="3"
                   @changeActiveState="activeState++"
                   @changeActiveStateMinus="activeState--"
@@ -1309,7 +1308,7 @@ import ProfessionalLicense from "./Foreigner/ProfessionalLicense";
 import RenewedLicense from "./Foreigner/RenewedLicense";
 
 import LetterFromHiringManagerForeignerEthiopian from "./Ethiopians F/LetterFromHiringManager.vue";
-
+import LetterFromHiringManagerForeigner from "./Foreigner/LetterFromHiringManager.vue";
 import LetterFromHiringManagerEthiopianLocal from "./Ethiopians L/LetterFromHiringManager.vue";
 
 import COC from "./Ethiopians L/COC";
@@ -1352,7 +1351,6 @@ export default {
     remark: "",
     displayPayrollOption: true,
     eduLevel: "",
-    remark: "",
   }),
   components: {
     Institution,
@@ -1387,6 +1385,7 @@ export default {
     SupportLetterForeign,
     LetterFromHiringManagerForeignerEthiopian,
     LetterFromHiringManagerEthiopianLocal,
+    LetterFromHiringManagerForeigner,
     Masters,
     MastersTranscript,
     PhD,
@@ -1513,7 +1512,6 @@ export default {
     fetchDraft(id) {
       this.$store.dispatch("renewal/getDraft", id).then((res) => {
         const results = res.data.data;
-        this.remark = results.remark;
         this.$store
           .dispatch("renewal/searchNewLicense", results.professionalTypes.id)
           .then((res) => {

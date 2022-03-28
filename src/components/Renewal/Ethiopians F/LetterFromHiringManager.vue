@@ -18,6 +18,13 @@
         >
           REJECTED
         </h2>
+        <h6
+          style="font-weight: bold;"
+          class="flex justify-center ml-4 mr-4"
+          v-if="declinedFieldsCheck"
+        >
+          Remark: <span class="ml-2" style="color: #e63636"> {{ remark }}</span>
+        </h6>
         <h2
           class="flex justify-center"
           v-if="acceptedFieldsCheck"
@@ -318,6 +325,7 @@ export default {
     letterFromHiringManager = store.getters["renewal/getRenewalLicense"];
     workExperience = store.getters["renewal/getRenewalWorkExperience"];
     workExperience2 = store.getters["renewal/getRenewalWorkExperience2"];
+    remark = store.getters["renewal/getRemark"];
 
     const submit = () => {
       emit("changeActiveState");
@@ -372,7 +380,6 @@ export default {
       }
       declinedFields = store.getters["renewal/getDeclinedFields"];
       acceptedFields = store.getters["renewal/getAcceptedFields"];
-      remark = store.getters["renewal/getRemark"];
       if (declinedFields != undefined && declinedFields.includes("LHI")) {
         declinedFieldsCheck.value = true;
       }
@@ -514,7 +521,10 @@ export default {
               letterFile.value
             );
             formData.append(documentSpecs[5].documentType.code, workExperience);
-            formData.append(documentSpecs[35].documentType.code, workExperience2);
+            formData.append(
+              documentSpecs[35].documentType.code,
+              workExperience2
+            );
             let payload = { document: formData, id: licenseId };
             store
               .dispatch("renewal/uploadDocuments", payload)

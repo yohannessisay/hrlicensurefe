@@ -18,6 +18,13 @@
         >
           REJECTED
         </h2>
+        <h6
+          style="font-weight: bold;"
+          class="flex justify-center ml-4 mr-4"
+          v-if="declinedFieldsCheck"
+        >
+          Remark: <span class="ml-2" style="color: #e63636"> {{ remark }}</span>
+        </h6>
         <h2
           class="flex justify-center"
           v-if="acceptedFieldsCheck"
@@ -461,6 +468,7 @@ export default {
     mastersTranscript = store.getters["newlicense/getMastersTranscript"];
     mastersTranscript2 = store.getters["newlicense/getMastersTranscript2"];
     phd = store.getters["newlicense/getPhd"];
+    remark = store.getters["newlicense/getRemark"];
 
     eduLevel = localStorage.getItem("educationalLevel");
 
@@ -850,7 +858,6 @@ export default {
       }
       declinedFields = store.getters["newlicense/getDeclinedFields"];
       acceptedFields = store.getters["newlicense/getAcceptedFields"];
-      remark = store.getters["newlicense/getRemark"];
       if (declinedFields != undefined && declinedFields.includes("PHDTRAN")) {
         declinedFieldsCheck.value = true;
       }

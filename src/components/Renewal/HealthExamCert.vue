@@ -18,6 +18,13 @@
         >
           REJECTED
         </h2>
+        <h6
+          style="font-weight: bold;"
+          class="flex justify-center ml-4 mr-4"
+          v-if="declinedFieldsCheck"
+        >
+          Remark: <span class="ml-2" style="color: #e63636"> {{ remark }}</span>
+        </h6>
         <h2
           class="flex justify-center"
           v-if="acceptedFieldsCheck"
@@ -338,13 +345,14 @@ export default {
     letterFromOrg = store.getters["renewal/getRenewalLicense"];
     professionalLicense = store.getters["renewal/getProfessionalLicense"];
     renewedLicense = store.getters["renewal/getRenewedLicense"];
-        renewedLicenseOfHealthFacility =
+    renewedLicenseOfHealthFacility =
       store.getters["renewal/getRenewedLicenseOfHealthFacility"];
     letterOrg = store.getters["renewal/getLetterfromOrg"];
     masters = store.getters["renewal/getMasters"];
     mastersTranscript = store.getters["renewal/getMastersTranscript"];
     phd = store.getters["renewal/getPhd"];
     phdTranscript = store.getters["renewal/getPhdTranscript"];
+    remark = store.getters["renewal/getRemark"];
 
     const submit = () => {
       emit("changeActiveState");
@@ -399,7 +407,6 @@ export default {
       }
       declinedFields = store.getters["renewal/getDeclinedFields"];
       acceptedFields = store.getters["renewal/getAcceptedFields"];
-      remark = store.getters["renewal/getRemark"];
       if (declinedFields != undefined && declinedFields.includes("HEC")) {
         declinedFieldsCheck.value = true;
       }
@@ -532,7 +539,10 @@ export default {
               );
             }
             formData.append(documentSpecs[5].documentType.code, workExperience);
-            formData.append(documentSpecs[35].documentType.code, workExperience2);
+            formData.append(
+              documentSpecs[35].documentType.code,
+              workExperience2
+            );
             formData.append(documentSpecs[4].documentType.code, cpd);
             formData.append(documentSpecs[31].documentType.code, cpd2);
             formData.append(documentSpecs[32].documentType.code, cpd3);
@@ -584,7 +594,7 @@ export default {
               documentSpecs[21].documentType.code,
               renewedLicense
             );
-             formData.append(
+            formData.append(
               documentSpecs[36].documentType.code,
               renewedLicenseOfHealthFacility
             );

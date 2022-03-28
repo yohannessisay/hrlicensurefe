@@ -18,6 +18,13 @@
         >
           REJECTED
         </h2>
+        <h6
+          style="font-weight: bold;"
+          class="flex justify-center ml-4 mr-4"
+          v-if="declinedFieldsCheck"
+        >
+          Remark: <span class="ml-2" style="color: #e63636"> {{ remark }}</span>
+        </h6>
         <h2
           class="flex justify-center"
           v-if="acceptedFieldsCheck"
@@ -341,6 +348,7 @@ export default {
     phd = store.getters["newlicense/getPhd"];
     phdTranscript = store.getters["newlicense/getPhdTranscript"];
     phdTranscript2 = store.getters["newlicense/getPhdTranscript2"];
+    remark = store.getters["newlicense/getRemark"];
 
     const draft = (action) => {
       message.value.showLoading = true;
@@ -429,7 +437,10 @@ export default {
             formData.append(documentSpecs[1].documentType.code, passport);
             formData.append(documentSpecs[2].documentType.code, healthExamCert);
             formData.append(documentSpecs[4].documentType.code, workExperience);
-            formData.append(documentSpecs[28].documentType.code, workExperience2);
+            formData.append(
+              documentSpecs[28].documentType.code,
+              workExperience2
+            );
             formData.append(
               documentSpecs[5].documentType.code,
               englishLanguage
@@ -488,7 +499,10 @@ export default {
             );
             formData.append(documentSpecs[26].documentType.code, phd);
             formData.append(documentSpecs[27].documentType.code, phdTranscript);
-            formData.append(documentSpecs[58].documentType.code, phdTranscript2);
+            formData.append(
+              documentSpecs[58].documentType.code,
+              phdTranscript2
+            );
 
             let payload = { document: formData, id: licenseId };
             store
@@ -681,7 +695,6 @@ export default {
       }
       declinedFields = store.getters["newlicense/getDeclinedFields"];
       acceptedFields = store.getters["newlicense/getAcceptedFields"];
-      remark = store.getters["newlicense/getRemark"];
       if (declinedFields != undefined && declinedFields.includes("SL")) {
         declinedFieldsCheck.value = true;
       }
