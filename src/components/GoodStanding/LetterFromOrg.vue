@@ -11,6 +11,13 @@
         >
           REJECTED
         </h2>
+        <h6
+          style="font-weight: bold;"
+          class="flex justify-center ml-4 mr-4"
+          v-if="declinedFieldsCheck"
+        >
+          Remark: <span class="ml-2" style="color: #e63636"> {{ remark }}</span>
+        </h6>
         <h2
           class="flex justify-center"
           v-if="acceptedFieldsCheck"
@@ -292,8 +299,8 @@ export default {
     buttons = store.getters["goodstanding/getButtons"];
     documentSpecs = store.getters["goodstanding/getDocumentSpec"];
     licenseInfo = store.getters["goodstanding/getLicense"];
-
     licenseCopy = store.getters["goodstanding/getLicenseCopy"];
+    remark = store.getters["goodstanding/getRemark"];
 
     const submit = () => {
       emit("changeActiveState");
@@ -348,7 +355,6 @@ export default {
       }
       declinedFields = store.getters["goodstanding/getDeclinedFields"];
       acceptedFields = store.getters["goodstanding/getAcceptedFields"];
-      remark = store.getters["goodstanding/getRemark"];
       if (declinedFields != undefined && declinedFields.includes("LHI")) {
         declinedFieldsCheck.value = true;
       }
