@@ -2,24 +2,53 @@
   ><div>
     <!-- <ReviewerNavBar tab="legacyData" /> -->
     <div class="flex flex-row">
-      <!-- <div>
-        <ReviewerSideBar style="width: 30vh" />
-      </div> -->
-      <!-- <div v-if="showLoading" style="margin-left: 45%; margin-top: 5%">
-        <Spinner />
-      </div> -->
-      <!-- <div v-else> -->
-      <div class="px-4 sm:px-4">
+      <div class="px-4 sm:px-4 width-screen">
         <div class="py-8">
           <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 max-w-4xl">
             <div id="printable" class="shadow-md rounded-lg">
               <div v-if="showLoading">
                 loading...
               </div>
+              <div v-else-if="noLegacyData" style="display: inline">
+                <div class="mr-6">there is no data</div>
+                <a @click="clearSearch()">back</a>
+                </div>
+
               <div v-else>
-                <div id="main" class="mt-1 pt-8 pl-4">
+                <div id="main" class="mt-1 pt-4 pl-4">
+                  <div style="display: inline">
+                    <div class="flex flex-wrap -mx-3 mb-6">
+                      <div class="w-full px-3">
+                        <p
+                          v-if="searchValue"
+                          class="absolute"
+                          style="margin-left: 300px; margin-top: 16px; cursor: pointer"
+                          @click="clearSearch()"
+                        >
+                          X
+                        </p>
+                        <input
+                          class="appearance-none  w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                          id="grid-search"
+                          type="text"
+                          v-model="searchValue"
+                          placeholder="search by user name"
+                        />
+                        <a
+                          @click="handleSearch(searchValue)"
+                          disabled
+                          class=" font-bold text-sm text-blue-100 hover:text-blue-800"
+                        >
+                          Search
+                        </a>
+                      </div>
+                    </div>
+                  </div>
                   <div class="flex">
-                    <div class="flex flex-col mb-medium w-2/5 mr-12" style="display: inline" >
+                    <div
+                      class="flex flex-col mb-medium w-2/5 mr-12"
+                      style="display: inline"
+                    >
                       <label class="text-primary-700">Rows per page: </label>
                       <select
                         class="max-w-3xl"
@@ -519,13 +548,23 @@ export default {
     let paginationSize = ref(10);
     const paginationSizeList = [10, 25, 50, 100];
 
+    let noLegacyData = ref(false);
+
+    let searchValue = ref();
+
     const fetchLegacyData = (page, size, value) => {
       showLoading.value = true;
       const apiParameters = [page, size, value];
       store.dispatch("reviewer/getLegacyData", apiParameters).then((res) => {
+        if(res) {
+          noLegacyData.value = false;
         legacyData.value = res.rows;
         totalCount.value = res.count;
         showLoading.value = false;
+        } else {
+          noLegacyData.value = true;
+          showLoading.value = false;
+        }
       });
     };
 
@@ -540,6 +579,22 @@ export default {
       indexValue.value = 0;
       fetchLegacyData(indexValue.value, paginationSize.value);
     };
+
+    const handleSearch = (searchValue) => {
+      if (searchValue) {
+        currentPage.value = 1;
+        indexValue.value = 0;
+        fetchLegacyData(indexValue.value, paginationSize.value, searchValue);
+      }
+    };
+
+    const clearSearch = () => {
+      searchValue.value = "";
+      currentPage.value = 1;
+      indexValue.value = 0;
+      fetchLegacyData(indexValue.value, paginationSize.value);
+    };
+
     onMounted(() => {
       fetchLegacyData(0, paginationSize.value);
     });
@@ -554,6 +609,10 @@ export default {
       currentPage,
       pageChanged,
       totalCount,
+      searchValue,
+      handleSearch,
+      clearSearch,
+      noLegacyData,
     };
   },
 };
