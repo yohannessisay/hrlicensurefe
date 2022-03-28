@@ -17,20 +17,27 @@
                 loading...
               </div>
               <div v-else>
-                <label class="text-primary-700">Show</label>
-                <select
-                  class="max-w-3xl"
-                  v-model="paginationSize"
-                  @change="handlePagSize($)"
-                >
-                  <option
-                    v-for="size in paginationSizeList"
-                    v-bind:key="size"
-                    v-bind:value="size"
-                  >
-                    {{ size }}
-                  </option>
-                </select>
+                <div id="main" class="mt-1 pt-8 pl-4">
+                  <div class="flex">
+                    <div class="flex flex-col mb-medium w-2/5 mr-12" style="display: inline" >
+                      <label class="text-primary-700">Rows per page: </label>
+                      <select
+                        class="max-w-3xl"
+                        v-model="paginationSize"
+                        @change="handlePagSize($event)"
+                        style="padding: 0px 35px 0px 5px; border: none; border-radius: unset; border-bottom: 2px solid lightblue;margin-left: 8px"
+                      >
+                        <option
+                          v-for="size in paginationSizeList"
+                          v-bind:key="size"
+                          v-bind:value="size"
+                        >
+                          {{ size }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
 
                 <table class="leading-normal" id="myTable">
                   <thead>
@@ -594,6 +601,22 @@ a:hover {
   width: 170vh;
   overflow-x: scroll;
   overflow-y: hidden;
+}
+.page-number {
+  padding-left: 16px;
+  margin-right: 14px;
+}
+.page-number-select {
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  flex-grow: 1;
+  flex-wrap: wrap;
+  min-width: 0;
+  width: 100%;
+}
+svg {
+  color: #60a5fa;
 }
 /* #pagination {
   display: flex;
