@@ -76,6 +76,14 @@
                     Leave a Feedback
                   </li>
                 </router-link>
+                <a @click="updateProfile()">
+                  <li
+                    class="block px-4 py-2 text-sm text-blue-100 hover:bg-gray-100 hover:text-gray-900"
+                    role="menuitem"
+                  >
+                    Update Profile
+                  </li>
+                </a>
                 <a
                   @click="logout()"
                   class="block px-4 py-2 text-sm text-blue-100 hover:bg-gray-100 hover:text-gray-900"
@@ -131,6 +139,11 @@ export default {
     if (this.token != undefined) this.auth = true;
   },
   methods: {
+    updateProfile() {
+      const id = +localStorage.getItem("userId");
+      const url = "/update-profile/:" + id;
+      this.$router.push(url);
+    },
     logout() {
       location.reload();
       localStorage.removeItem("token");
@@ -150,9 +163,6 @@ export default {
       } else {
         this.$emit("changeDisplay", menu);
       }
-    },
-    openFeedbackPage() {
-      window.location = "http://google.com";
     },
   },
   computed() {

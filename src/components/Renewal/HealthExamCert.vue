@@ -95,7 +95,9 @@
             <button @click="submitBack">
               Back
             </button>
-            <button @click="submit">Next</button>
+            <button @click="submit">
+              Next
+            </button>
             <button @click="draft(buttons[1].action)" variant="outline">
               {{ buttons[1]["name"] }}
             </button>
@@ -107,7 +109,9 @@
             <button @click="submitBack">
               Back
             </button>
-            <button @click="submit">Next</button>
+            <button @click="submit">
+              Next
+            </button>
             <button @click="draft(buttons[2].action)" variant="outline">
               {{ buttons[2]["name"] }}
             </button>
@@ -126,7 +130,9 @@
             <button @click="submitBack">
               Back
             </button>
-            <button @click="submit">Next</button>
+            <button @click="submit">
+              Next
+            </button>
             <button
               class="withdraw"
               @click="withdraw(buttons[1].action)"
@@ -142,7 +148,9 @@
             <button @click="submitBack">
               Back
             </button>
-            <button @click="submit">Next</button>
+            <button @click="submit">
+              Next
+            </button>
             <button @click="draft(buttons[0].action)" variant="outline">
               {{ buttons[0]["name"] }}
             </button>
@@ -154,7 +162,12 @@
             v-if="buttons && (draftStatus == 'DEC' || draftStatus == 'CONF')"
             class="flex justify-center mb-8"
           >
-            <button @click="submit">Next</button>
+            <button @click="submitBack">
+              Back
+            </button>
+            <button @click="submit">
+              Next
+            </button>
             <!-- <button @click="draft(buttons[0].action)" variant="outline">
             {{ buttons[0]["name"] }}
           </button> -->
