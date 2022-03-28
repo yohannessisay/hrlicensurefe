@@ -9,7 +9,6 @@
           <h2 class="flex justify-center pb-medium">
             Good standing
           </h2>
-          <h4 v-if="this.remark" class="flex justify-center pb-medium">Remark: {{this.remark}}</h4>
           <transition name="fade" mode="out-in">
             <div v-if="this.activeState == 1">
               <Institution
@@ -153,7 +152,6 @@ export default {
         .then((res) => {
           const results = res.data.data;
           this.applicationCategories = results;
-          this.remark = results.remark;
           const newApplicationData = this.applicationCategories.filter(
             (item) => {
               return item.name == "Good Standing Later";
