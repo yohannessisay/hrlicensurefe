@@ -18,6 +18,13 @@
         >
           REJECTED
         </h2>
+        <h6
+          style="font-weight: bold;"
+          class="flex justify-center ml-4 mr-4"
+          v-if="declinedFieldsCheck"
+        >
+          Remark: <span class="ml-2" style="color: #e63636"> {{ remark }}</span>
+        </h6>
         <h2
           class="flex justify-center"
           v-if="acceptedFieldsCheck"
@@ -365,11 +372,17 @@ export default {
     };
     const submit = () => {
       emit("changeActiveState");
-      store.dispatch("newlicense/setRequestLetterFromHiringHealthFacility", requestLetterFile);
+      store.dispatch(
+        "newlicense/setRequestLetterFromHiringHealthFacility",
+        requestLetterFile
+      );
     };
     const submitBack = () => {
       emit("changeActiveStateMinus");
-      store.dispatch("newlicense/setRequestLetterFromHiringHealthFacility", requestLetterFile);
+      store.dispatch(
+        "newlicense/setRequestLetterFromHiringHealthFacility",
+        requestLetterFile
+      );
     };
     buttons = store.getters["newlicense/getButtons"];
     documentSpecs = store.getters["newlicense/getDocumentSpec"];
@@ -431,6 +444,8 @@ export default {
       store.getters["newlicense/getProfessionalDocTranscript4"];
     professionalDocTranscript5 =
       store.getters["newlicense/getProfessionalDocTranscript5"];
+
+    remark = store.getters["newlicense/getRemark"];
 
     const draft = (action) => {
       message.value.showLoading = true;
@@ -795,7 +810,8 @@ export default {
       documentMessage.value = MESSAGE.DOC_MESSAGE;
       maxFileSize.value = MAX_FILE_SIZE.MAX_FILE_SIZE;
       maxSizeMB.value = MAX_SIZE_MB.MAX_SIZE_MB;
-      requestLetterBack = store.getters["newlicense/getRequestLetterFromHiringHealthFacility"];
+      requestLetterBack =
+        store.getters["newlicense/getRequestLetterFromHiringHealthFacility"];
       if (
         requestLetterBack &&
         requestLetterBack !== undefined &&
@@ -835,7 +851,6 @@ export default {
       }
       declinedFields = store.getters["newlicense/getDeclinedFields"];
       acceptedFields = store.getters["newlicense/getAcceptedFields"];
-      remark = store.getters["newlicense/getRemark"];
       if (declinedFields != undefined && declinedFields.includes("RLFHHF")) {
         declinedFieldsCheck.value = true;
       }
