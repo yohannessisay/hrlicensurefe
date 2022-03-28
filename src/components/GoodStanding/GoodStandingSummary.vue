@@ -306,9 +306,6 @@
           </button>
           <button
             id="reapplyButton"
-            style="opacity: 0.3"
-            :disabled="this.checkBoxValue == true"
-            disabled
             @click="draft('UpdateEvent')"
             variant="outline"
           >
@@ -344,7 +341,7 @@ import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import Spinner from "@/sharedComponents/Spinner";
 import moment from "moment";
-import {googleApi} from "@/composables/baseURL";
+import { googleApi } from "@/composables/baseURL";
 
 export default {
   props: ["activeState"],
