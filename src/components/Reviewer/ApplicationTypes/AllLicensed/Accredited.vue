@@ -36,7 +36,6 @@
                         />
                         <a
                           @click="handleSearch(searchValue)"
-                          disabled
                           class=" font-bold text-sm text-blue-100 hover:text-blue-800"
                         >
                           Search
