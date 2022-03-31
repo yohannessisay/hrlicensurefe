@@ -282,19 +282,28 @@
               </div>
             </div>
           </div>
-          <div v-if="loading" class="flex mb-medium w-full mt-medium">
+          <div
+            v-if="!message.showLoading"
+            class="flex mb-medium w-full mt-medium"
+          >
             <button
               class="block mx-auto w-1/4  bg-lightBlue-500 hover:bg-lightBlue-600 hover:shadow-lg"
             >
               Update Profile
             </button>
           </div>
-          <div class="mt-4" v-else>
+          <div v-else class="mt-4" v-else>
             <Spinner />
           </div>
         </form>
       </div>
     </div>
+  </div>
+  <div class="mr-3xl" v-if="message.showFlash">
+    <FlashMessage message="Login Successful!" />
+  </div>
+  <div v-if="message.showErrorFlash">
+    <ErrorFlashMessage v-bind:message="message.errorMessage" />
   </div>
 </template>
 <script>
@@ -304,13 +313,27 @@ import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
 import Navigation from "@/views/Navigation";
 import { useRoute } from "vue-router";
 import Spinner from "@/sharedComponents/Spinner";
+import FlashMessage from "@/sharedComponents/FlashMessage";
+import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 
 export default {
-  components: { TitleWithIllustration, Navigation, Spinner },
+  components: {
+    TitleWithIllustration,
+    Navigation,
+    Spinner,
+    FlashMessage,
+    ErrorFlashMessage,
+  },
   props: ["activeState"],
   setup(props, { emit }) {
     const store = useStore();
     const route = useRoute();
+
+    let message = ref({
+      showFlash: false,
+      showErrorFlash: false,
+      showLoading: false,
+    });
 
     let photoFile = ref("");
     let photoFileP = ref("");
@@ -322,7 +345,6 @@ export default {
     let fileSize = ref("");
     let nationality = ref("");
     let maritalStatus = ref("");
-    let loading = ref(true);
 
     let personalInfo = ref({
       name: "",
@@ -437,10 +459,25 @@ export default {
     };
     const updateProfile = () => {
       loading.value = !loading.value;
-      setTimeout(() => {
-        loading.value = !loading.value;
-      }, 3000);
-      console.log(personalInfo);
+      let profileInfo = {
+        id: userID,
+        data: personalInfo
+      }
+      store.dispatch("profile/updateProfile", profileInfo).then((res) => {
+        if (res) {
+          message.value.showLoading = false;
+          message.value.showFlash = true;
+          setTimeout(() => {
+            router.push({ path: "/menu" });
+          }, 1500);
+        } else {
+          message.value.showLoading = false;
+          message.value.showErrorFlash = true;
+          setTimeout(() => {
+            message.value.showErrorFlash = false;
+          }, 3000);
+        }
+      });
     };
     onMounted(() => {
       let userID = route.params.id.substring(1);
@@ -476,7 +513,7 @@ export default {
       id,
       fetchNationalities,
       updateProfile,
-      loading,
+      message,
     };
   },
 };
