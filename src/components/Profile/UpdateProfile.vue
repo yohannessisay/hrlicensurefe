@@ -460,28 +460,7 @@ export default {
     };
     const updateProfile = () => {
       message.value.showLoading = true;
-      let userID = route.params.id.substring(1);
-      let profileData = {
-          name: personalInfo.value.name,
-          fatherName: personalInfo.value.fatherName,
-          grandFatherName: personalInfo.value.grandFatherName,
-          alternativeName: personalInfo.value.alternativeName,
-          alternativeFatherName: personalInfo.value.alternativeFatherName,
-          alternativeGrandFatherName: personalInfo.value.alternativeGrandFatherName,
-          gender: personalInfo.value.gender,
-          dateOfBirth: personalInfo.value.dateOfBirth,
-          nationalityId: personalInfo.value.nationalityId,
-          maritalStatusId: personalInfo.value.maritalStatusId,
-          poBox: personalInfo.value.poBox,
-          photo: personalInfo.value.photo,
-          userId: userID,
-      }
-      let profileInfo = {
-        id: userID,
-        data: personalInfo.value,
-      };
-      console.log(profileInfo);
-      store.dispatch("profile/updateProfile", profileInfo).then((res) => {
+      store.dispatch("profile/updateProfile", personalInfo.value).then((res) => {
         if (res) {
           message.value.showLoading = false;
           message.value.showFlash = true;

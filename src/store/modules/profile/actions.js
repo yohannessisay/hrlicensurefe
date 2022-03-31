@@ -134,7 +134,7 @@ export default {
     },
     async updateProfile({ commit }, profileInfo) {
         try {
-            const resp = await ApiService.put(baseUrl + "/profiles/" + profileInfo.id, profileInfo.data);
+            const resp = await ApiService.put(baseUrl + "/profiles/" + profileInfo.id, profileInfo);
             return resp;
         } catch (error) {
             return error;
