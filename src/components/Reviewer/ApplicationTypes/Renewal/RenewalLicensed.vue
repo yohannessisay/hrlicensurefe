@@ -296,7 +296,7 @@ export default {
     const fetchRenewalSuspended = () => {
       showLoadingSuspended.value = true;
 
-      const suspendedStatus = applicationStatus(store, "APP");
+      const suspendedStatus = applicationStatus(store, "SUSP");
       const adminStatus = [
         adminId,
         suspendedStatus,
@@ -316,7 +316,7 @@ export default {
     const fetchRenewalCancelled = () => {
       showLoadingCancelled.value = true;
 
-      const cancelledStatus = applicationStatus(store, "APP");
+      const cancelledStatus = applicationStatus(store, "CANC");
       const adminStatus = [
         adminId,
         cancelledStatus,
