@@ -311,7 +311,7 @@ import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
 import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
 import Navigation from "@/views/Navigation";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import Spinner from "@/sharedComponents/Spinner";
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
@@ -328,6 +328,7 @@ export default {
   setup(props, { emit }) {
     const store = useStore();
     const route = useRoute();
+    const router = useRouter();
 
     let message = ref({
       showFlash: false,
@@ -458,12 +459,8 @@ export default {
       return true;
     };
     const updateProfile = () => {
-      loading.value = !loading.value;
-      let profileInfo = {
-        id: userID,
-        data: personalInfo
-      }
-      store.dispatch("profile/updateProfile", profileInfo).then((res) => {
+      message.value.showLoading = true;
+      store.dispatch("profile/updateProfile", personalInfo.value).then((res) => {
         if (res) {
           message.value.showLoading = false;
           message.value.showFlash = true;
