@@ -311,7 +311,7 @@ import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
 import TitleWithIllustration from "@/sharedComponents/TitleWithIllustration";
 import Navigation from "@/views/Navigation";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import Spinner from "@/sharedComponents/Spinner";
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
@@ -328,6 +328,7 @@ export default {
   setup(props, { emit }) {
     const store = useStore();
     const route = useRoute();
+    const router = useRouter();
 
     let message = ref({
       showFlash: false,
@@ -458,11 +459,28 @@ export default {
       return true;
     };
     const updateProfile = () => {
-      loading.value = !loading.value;
+      message.value.showLoading = true;
+      let userID = route.params.id.substring(1);
+      let profileData = {
+          name: personalInfo.value.name,
+          fatherName: personalInfo.value.fatherName,
+          grandFatherName: personalInfo.value.grandFatherName,
+          alternativeName: personalInfo.value.alternativeName,
+          alternativeFatherName: personalInfo.value.alternativeFatherName,
+          alternativeGrandFatherName: personalInfo.value.alternativeGrandFatherName,
+          gender: personalInfo.value.gender,
+          dateOfBirth: personalInfo.value.dateOfBirth,
+          nationalityId: personalInfo.value.nationalityId,
+          maritalStatusId: personalInfo.value.maritalStatusId,
+          poBox: personalInfo.value.poBox,
+          photo: personalInfo.value.photo,
+          userId: userID,
+      }
       let profileInfo = {
         id: userID,
-        data: personalInfo
-      }
+        data: personalInfo.value,
+      };
+      console.log(profileInfo);
       store.dispatch("profile/updateProfile", profileInfo).then((res) => {
         if (res) {
           message.value.showLoading = false;
