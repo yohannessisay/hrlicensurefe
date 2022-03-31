@@ -9,7 +9,25 @@
     </span>
     <span v-else>
       <span v-if="isUserCertified && myRegion">
-        <button @click="downloadPdf">Download PDF</button>
+        <div class="flex justify-center items-center mb-medium">
+          <div v-if="true">
+            <button @click="downloadPdf">Download PDF</button>
+          </div>
+          <div
+            v-if="isLicenseGenerated"
+            v-for="button in buttons"
+            v-bind:key="button.name"
+            v-bind:value="button.id"
+          >
+            <button
+              variant="outline"
+              v-bind:class="button.class"
+              @click="action(button.action)"
+            >
+              {{ button.name }}
+            </button>
+          </div>
+        </div>
         <div
           class="w-screen bg-lightBlueB-200 flex items-center justify-center"
         >
@@ -72,7 +90,7 @@
                       ስልጣን መሰረት
                     </h4>
                   </div>
-                  
+
                   <div class="flex flex-col mb-medium w-1/2 mr-12">
                     <h4>
                       Under the Federal Democratic Republic of Ethiopiathe
@@ -322,6 +340,9 @@ export default {
     let show = ref(false);
     let certifiedUser = ref({});
     let certificateDetail = ref({});
+    let renewalData = ref({
+      data: {},
+    });
     let showLoading = ref(false);
     let showApplicationLoading = ref(false);
     let isUserCertified = ref(true);
@@ -335,6 +356,43 @@ export default {
 
     const expertLevelCode = JSON.parse(localStorage.getItem("allAdminData"))
       .expertLevel.code;
+
+    let buttons = ref([
+      { action: "", name: "" },
+      { action: "", name: "" },
+    ]);
+    let isLicenseGenerated = ref(false);
+
+    const updateLicenseGenerated = () => {
+      let applicationTypes = route.params.applicationType;
+      let returnValue = ref(true);
+      let req = {
+        action: null,
+        data: { ...certificateDetail.value, isLicenseGenerated: true },
+      };
+      if (applicationTypes == "New License") {
+        store
+          .dispatch("reviewer/editNewLicense", req)
+          .then((res) => {
+            returnValue.value = true;
+          })
+          .catch((err) => {
+            returnValue.value = false;
+          });
+          return returnValue.value;
+      }
+      else if (applicationTypes == "Renewal") {
+        store
+          .dispatch("reviewer/editRenewal", "rr")
+          .then((res) => {
+            returnValue.value = true;
+          })
+          .catch((err) => {
+            returnValue.value = false;
+          });
+          return returnValue.value;
+      }
+    };
 
     const fetchCertifiedUser = () => {
       showLoading.value = true;
@@ -378,9 +436,14 @@ export default {
           .then((res) => {
             showApplicationLoading.value = false;
             certificateDetail.value = res.data.data;
-            certificateDetail.value = res.data.data;
             certificateDetail.value.licenseNumber =
               certificateDetail.value.verificationCode;
+            buttons.value = res.data.data.applicationStatus.buttons.filter(
+              (button) => {
+                return button.code == "CAN" || button.code == "SUS";
+              }
+            );
+            isLicenseGenerated.value = res.data.data.isLicenseGenerated;
             if (
               route.params.applicantId != certificateDetail.value.applicantId
             ) {
@@ -412,7 +475,12 @@ export default {
           .then((res) => {
             showApplicationLoading.value = false;
             certificateDetail.value = res.data.data;
-            certificateDetail.value = res.data.data;
+            buttons.value = res.data.data.applicationStatus.buttons.filter(
+              (button) => {
+                return button.code == "CAN" || button.code == "SUS";
+              }
+            );
+            isLicenseGenerated.value = res.data.data.isLicenseGenerated;
             certificateDetail.value.licenseNumber =
               certificateDetail.value.goodStandingCode;
             if (
@@ -440,6 +508,12 @@ export default {
           .then((res) => {
             showApplicationLoading.value = false;
             certificateDetail.value = res.data.data;
+            buttons.value = res.data.data.applicationStatus.buttons.filter(
+              (button) => {
+                return button.code == "CAN" || button.code == "SUS";
+              }
+            );
+            isLicenseGenerated.value = res.data.data.isLicenseGenerated;
             certificateDetail.value.licenseNumber =
               certificateDetail.value.newLicenseCode;
             if (
@@ -467,9 +541,14 @@ export default {
           .then((res) => {
             showApplicationLoading.value = false;
             certificateDetail.value = res.data.data;
+            buttons.value = res.data.data.applicationStatus.buttons.filter(
+              (button) => {
+                return button.code == "CAN" || button.code == "SUS";
+              }
+            );
+            isLicenseGenerated.value = res.data.data.isLicenseGenerated;
             certificateDetail.value.licenseNumber =
               certificateDetail.value.renewalCode;
-            console.log("certificate detail", certificateDetail.value);
             if (
               route.params.applicantId != certificateDetail.value.applicantId
             ) {
@@ -730,6 +809,9 @@ export default {
         orientation: "landscape",
         filters: ["ASCIIHexEncode"],
       });
+      const response = updateLicenseGenerated();
+      console.log("update response", response);
+      return;
       const userImage = certifiedUser.value.photo;
       if (certificateDetail.value.reviewer.expertLevel.code === "FED") {
         doc.addImage(
@@ -793,6 +875,8 @@ export default {
       isUserCertified,
       isUserFound,
       myRegion,
+      buttons,
+      isLicenseGenerated,
     };
   },
 };

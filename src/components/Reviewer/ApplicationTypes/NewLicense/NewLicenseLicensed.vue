@@ -113,7 +113,7 @@
               ? getNewLicenseSuspended
               : getNewLicenseCancelled
           "
-          :app_type="app_type"
+          app_type="New License"
           others_licensed="false"
         />
       </div>
@@ -183,10 +183,10 @@ export default {
       return store.getters["reviewerNewLicense/getNewLicenseLicensedSearched"];
     },
     getNewLicenseSuspended() {
-      return store.getters["reviewerRenewal/getRenewalLicensedSearched"];
+      return store.getters["reviewerRenewal/getNewLicenseSuspendedSearched"];
     },
     getNewLicenseCancelled() {
-      return store.getters["reviewerNewLicense/getNewLicenseLicensedSearched"];
+      return store.getters["reviewerNewLicense/getNewLicenseCancelledSearched"];
     },
   },
   components: {
@@ -235,7 +235,6 @@ export default {
     const changeTab = (type) => {
       selectedTab.value = type;
       message.value = `New License ${type}`;
-      app_type.value = type;
       type == "Licensed"
         ? (allInfo.value.assignApplication = newLicenseLicensed.value)
         : type == "Suspended"
@@ -303,22 +302,18 @@ export default {
 
     const fetchNewLicenseSuspended = () => {
       showLoadingSuspended.value = true;
-      const approvedPaymentStatus = applicationStatus(store, "AP");
-      const confirmedStatus = applicationStatus(store, "CONF");
 
-      const approvedStatus = applicationStatus(store, "APP");
+      const suspendedStatus = applicationStatus(store, "APP");
       const adminStatus = [
         adminId,
-        approvedPaymentStatus,
-        confirmedStatus,
-        approvedStatus,
+        suspendedStatus,
       ];
       store
-        .dispatch("reviewerNewLicense/getNewLicenseLicensed", adminStatus)
+        .dispatch("reviewerNewLicense/getNewLicenseSuspended", adminStatus)
         .then((res) => {
           showLoadingSuspended.value = false;
           newLicenseSuspended.value =
-            store.getters["reviewerNewLicense/getNewLicenseLicensedSearched"];
+            store.getters["reviewerNewLicense/getNewLicenseSuspendedSearched"];
           if (newLicenseSuspended.value.length === 0) {
             nothingToShowSuspended.value = true;
           }
@@ -327,22 +322,18 @@ export default {
 
     const fetchNewLicenseCancelled = () => {
       showLoadingCancelled.value = true;
-      const approvedPaymentStatus = applicationStatus(store, "AP");
-      const confirmedStatus = applicationStatus(store, "CONF");
 
-      const approvedStatus = applicationStatus(store, "APP");
+      const cancelledStatus = applicationStatus(store, "IRV");
       const adminStatus = [
         adminId,
-        approvedPaymentStatus,
-        confirmedStatus,
-        approvedStatus,
+        cancelledStatus,
       ];
       store
-        .dispatch("reviewerNewLicense/getNewLicenseLicensed", adminStatus)
+        .dispatch("reviewerNewLicense/getNewLicenseCancelled", adminStatus)
         .then((res) => {
           showLoadingCancelled.value = false;
           newlicenseCancelled.value =
-            store.getters["reviewerNewLicense/getNewLicenseLicensedSearched"];
+            store.getters["reviewerNewLicense/getNewLicenseCancelledSearched"];
           if (newlicenseCancelled.value.length === 0) {
             nothingToShowCancelled.value = true;
           }

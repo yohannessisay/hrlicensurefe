@@ -87,6 +87,11 @@ import {
 
   SET_NEW_LICENSE_FOR_SPECIFIC_USER,
   SET_NEW_LICENSE_FOR_SPECIFIC_USER_SEARCHED,
+
+  SET_NEW_LICENSE_SUSPENDED,
+  SET_NEW_LICENSE_SUSPENDED_SEARCHED,
+  SET_NEW_LICENSE_CANCELLED,
+  SET_NEW_LICENSE_CANCELLED_SEARCHED,
 } from "./mutation-types";
 
 export default {
@@ -353,5 +358,20 @@ export default {
   },
   [SET_NEW_LICENSE_FOR_SPECIFIC_USER_SEARCHED](state, searchedVal) {
     state.newLicenseForSpecificUserSearched = searchedVal;
+  },
+
+  [SET_NEW_LICENSE_SUSPENDED](state, data) {
+    state.newLicenseSuspended = data;
+    state.newLicenseSuspendedSearched = data;
+  },
+  [SET_NEW_LICENSE_SUSPENDED_SEARCHED](state, searchedVal) {
+    state.newLicenseSuspendedSearched = searchedVal;
+  },
+  [SET_NEW_LICENSE_CANCELLED](state, data) {
+    state.newLicenseCancelled = data;
+    state.newLicenseCancelledSearched = data;
+  },
+  [SET_NEW_LICENSE_CANCELLED_SEARCHED](state, searchedVal) {
+    state.newLicenseCancelledSearched = searchedVal;
   },
 };

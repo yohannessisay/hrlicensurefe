@@ -89,5 +89,10 @@ export default {
     newLicenseForSpecificUser: [],
     newLicenseForSpecificUserSearched: [],
 
+    newLicenseSuspended: [],
+    newLicenseSuspendedSearched: [],
+    newLicenseCancelled: [],
+    newLicenseCancelledSearched: [],
+
   },
 };
