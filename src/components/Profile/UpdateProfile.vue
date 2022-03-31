@@ -292,7 +292,7 @@
               Update Profile
             </button>
           </div>
-          <div v-else class="mt-4" v-else>
+          <div v-else class="mt-4">
             <Spinner />
           </div>
         </form>
