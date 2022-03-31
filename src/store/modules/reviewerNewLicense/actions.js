@@ -1031,10 +1031,10 @@ export default {
   },
 
   async getNewLicenseSuspended({ commit }, adminStatus) {
-    const url = baseUrl + "/newLicenses/status/"+adminStatus[0];
+    const url = baseUrl + "/newLicenses/status/"+adminStatus[1];
     const resp = await ApiService.get(url);
     const suspended = resp.data.data.filter(function(e) {
-      return e.reviewerId === adminStatus[1];
+      return e.reviewerId === adminStatus[0];
     });
     commit(SET_NEW_LICENSE_SUSPENDED, suspended);
   },
@@ -1061,10 +1061,10 @@ export default {
   },
 
   async getNewLicenseCancelled({ commit }, adminStatus) {
-    const url = baseUrl + "/newLicenses/status/"+adminStatus[0];
+    const url = baseUrl + "/newLicenses/status/"+adminStatus[1];
     const resp = await ApiService.get(url);
     const cancelled = resp.data.data.filter(function(e) {
-      return e.reviewerId === adminStatus[1];
+      return e.reviewerId === adminStatus[0];
     });
     commit(SET_NEW_LICENSE_CANCELLED, cancelled);
   },

@@ -11,7 +11,11 @@
       <span v-if="isUserCertified && myRegion">
         <div
           class="flex justify-center items-center mb-medium"
-          v-if="applicationStatus !== 'CANC' && applicationStatus !== 'SUSP' && !showActionLoading"
+          v-if="
+            applicationStatus !== 'CANC' &&
+              applicationStatus !== 'SUSP' &&
+              !showActionLoading
+          "
         >
           <div v-if="true">
             <button @click="downloadPdf">Download PDF</button>
@@ -309,6 +313,12 @@
       </span>
     </span>
   </div>
+  <div v-if="showFlash">
+    <FlashMessage message="Operation Successful!" />
+  </div>
+  <div v-if="showErrorFlash">
+    <ErrorFlashMessage message="Operation Failed!" />
+  </div>
 </template>
 <script>
 import ReviewerNavBar from "@/components/Reviewer/ReviewerNavBar";
@@ -328,7 +338,9 @@ import { toEthiopian } from "../Configurations/dateConvertor";
 import STATIC_CERTIFICATE_URL from "../../../sharedComponents/constants/message.js";
 
 import moment from "moment";
-import router from '../../../router';
+import router from "../../../router";
+import FlashMessage from "@/sharedComponents/FlashMessage";
+import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 export default {
   computed: {
     moment: () => moment,
@@ -343,6 +355,8 @@ export default {
     Title,
     ReviewerNavBar,
     Spinner,
+    FlashMessage,
+    ErrorFlashMessage,
   },
   setup() {
     const store = useStore();
@@ -377,6 +391,9 @@ export default {
     let applicationTypes = route.params.applicationType;
     let applicationStatus = ref("");
 
+    let showFlash = ref(false);
+    let showErrorFlash = ref(false);
+
     const updateLicenseGenerated = () => {
       let req = {
         action: null,
@@ -386,28 +403,56 @@ export default {
     };
 
     const editApplication = (applicationType, req) => {
-        showActionLoading.value = true;
-        if (applicationType == "New License") {
-          store
-            .dispatch("reviewer/editNewLicense", req)
-            .then((res) => {
-              showActionLoading.value = false;
+      showActionLoading.value = true;
+      if (applicationType == "New License") {
+        store
+          .dispatch("reviewer/editNewLicense", req)
+          .then((res) => {
+            showActionLoading.value = false;
+            if (res.statusText == "Created") {
+              showFlash.value = true;
+              setTimeout(() => {
+                router.go();
+              }, 3000);
+            } else {
+              showErrorFlash.value = true;
+              setTimeout(() => {
+                router.go();
+              }, 3000);
+            }
+          })
+          .catch((err) => {
+            showErrorFlash.value = true;
+            showActionLoading.value = false;
+            setTimeout(() => {
               router.go();
-            })
-            .catch((err) => {
-              showActionLoading.value = false;
-            });
-        } else if (applicationType == "Renewal") {
-          store
-            .dispatch("reviewer/editRenewal", req)
-            .then((res) => {
-              showActionLoading.value = false;
+            }, 3000);
+          });
+      } else if (applicationType == "Renewal") {
+        store
+          .dispatch("reviewer/editRenewal", req)
+          .then((res) => {
+            showActionLoading.value = false;
+            if (res.statusText == "Created") {
+              showFlash.value = true;
+              setTimeout(() => {
+                router.go();
+              }, 3000);
+            } else {
+              showErrorFlash.value = true;
+              setTimeout(() => {
+                router.go();
+              }, 3000);
+            }
+          })
+          .catch((err) => {
+            showErrorFlash.value = true;
+            showActionLoading.value = false;
+            setTimeout(() => {
               router.go();
-            })
-            .catch((err) => {
-              showActionLoading.value = false;
-            });
-        }
+            }, 3000);
+          });
+      }
     };
 
     const action = (actionValue) => {
@@ -906,6 +951,8 @@ export default {
       action,
       showActionLoading,
       applicationStatus,
+      showFlash,
+      showErrorFlash,
     };
   },
 };

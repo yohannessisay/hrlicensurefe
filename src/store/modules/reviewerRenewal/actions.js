@@ -1020,10 +1020,10 @@ export default {
   },
 
   async getRenewalSuspended({ commit }, adminStatus) {
-    const url = baseUrl + "/renewals/status/"+adminStatus[0];
+    const url = baseUrl + "/renewals/status/"+adminStatus[1];
     const resp = await ApiService.get(url);
     const suspended = resp.data.data.filter(function(e) {
-      return e.reviewerId === adminStatus[1];
+      return e.reviewerId === adminStatus[0];
     });
     commit(SET_RENEWAL_SUSPENDED, suspended);
   },
@@ -1050,10 +1050,10 @@ export default {
   },
 
   async getRenewalCancelled({ commit }, adminStatus) {
-    const url = baseUrl + "/renewals/status/"+adminStatus[0];
+    const url = baseUrl + "/renewals/status/"+adminStatus[1];
     const resp = await ApiService.get(url);
     const cancelled = resp.data.data.filter(function(e) {
-      return e.reviewerId === adminStatus[1];
+      return e.reviewerId === adminStatus[0];
     });
     commit(SET_RENEWAL_CANCELLED, cancelled);
   },

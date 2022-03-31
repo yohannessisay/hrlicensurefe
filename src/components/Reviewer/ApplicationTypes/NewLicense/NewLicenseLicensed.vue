@@ -153,18 +153,6 @@
       />
     </div>
   </div>
-  <div v-if="showSuspendedFlash">
-    <FlashMessage message="Operation Successful!" />
-  </div>
-  <div v-if="showSuspendedErrorFlash">
-    <ErrorFlashMessage message="Operation Failed!" />
-  </div>
-  <div v-if="showCancelledFlash">
-    <FlashMessage message="Operation Successful!" />
-  </div>
-  <div v-if="showCancelledErrorFlash">
-    <ErrorFlashMessage message="Operation Failed!" />
-  </div>
   <div v-if="allInfo.message.showErrorFlash">
     <ErrorFlashMessage
       message="Date Range is not valid, Please Enter Valid Date"
@@ -178,7 +166,6 @@ import { useStore } from "vuex";
 
 import applicationStatus from "../../Configurations/getApplicationStatus.js";
 import LicensedApplications from "../ChildApplicationTypes/LicensedApplications.vue";
-import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import filterApplication from "../../ChildComponents/FilteredDatas/FilterApplication.js";
 import FilteredInfo from "../../ChildComponents/FilteredDatas/FilteredInfo.vue";
@@ -231,11 +218,6 @@ export default {
     let showLoadingLicensed = ref(false);
     let showLoadingSuspended = ref(false);
     let showLoadingCancelled = ref(false);
-
-    let showSuspendedFlash = ref(false);
-    let showSuspendedErrorFlash = ref(false);
-    let showCancelledFlash = ref(false);
-    let showCancelledErrorFlash = ref(false);
 
     let allInfo = ref({
       alreadyPushed: false,
@@ -322,7 +304,10 @@ export default {
       showLoadingSuspended.value = true;
 
       const suspendedStatus = applicationStatus(store, "SUSP");
-      const adminStatus = [adminId, suspendedStatus];
+      const adminStatus = [
+        adminId,
+        suspendedStatus,
+      ];
       store
         .dispatch("reviewerNewLicense/getNewLicenseSuspended", adminStatus)
         .then((res) => {
@@ -339,7 +324,10 @@ export default {
       showLoadingCancelled.value = true;
 
       const cancelledStatus = applicationStatus(store, "CANC");
-      const adminStatus = [adminId, cancelledStatus];
+      const adminStatus = [
+        adminId,
+        cancelledStatus,
+      ];
       store
         .dispatch("reviewerNewLicense/getNewLicenseCancelled", adminStatus)
         .then((res) => {
@@ -373,10 +361,6 @@ export default {
       notSelectedTabClass,
       changeTab,
       message,
-      showSuspendedFlash,
-      showSuspendedErrorFlash,
-      showCancelledFlash,
-      showCancelledErrorFlash,
     };
   },
 };
