@@ -9,7 +9,38 @@
     </span>
     <span v-else>
       <span v-if="isUserCertified && myRegion">
-        <button @click="downloadPdf">Download PDF</button>
+        <div
+          class="flex justify-center items-center mb-medium"
+          v-if="
+            applicationStatus !== 'CANC' &&
+              applicationStatus !== 'SUSP' &&
+              !showActionLoading
+          "
+        >
+          <div v-if="true">
+            <button @click="downloadPdf">Download PDF</button>
+          </div>
+          <div
+            v-if="isLicenseGenerated"
+            v-for="button in buttons"
+            v-bind:key="button.name"
+            v-bind:value="button.id"
+          >
+            <button
+              variant="outline"
+              v-bind:class="button.class"
+              @click="action(button.action)"
+            >
+              {{ button.name }}
+            </button>
+          </div>
+        </div>
+        <div
+          v-if="showActionLoading"
+          class="flex justify-center justify-items-center mt-2"
+        >
+          <Spinner />
+        </div>
         <div
           class="w-screen bg-lightBlueB-200 flex items-center justify-center"
         >
@@ -72,7 +103,7 @@
                       ስልጣን መሰረት
                     </h4>
                   </div>
-                  
+
                   <div class="flex flex-col mb-medium w-1/2 mr-12">
                     <h4>
                       Under the Federal Democratic Republic of Ethiopiathe
@@ -282,6 +313,12 @@
       </span>
     </span>
   </div>
+  <div v-if="showFlash">
+    <FlashMessage message="Operation Successful!" />
+  </div>
+  <div v-if="showErrorFlash">
+    <ErrorFlashMessage message="Operation Failed!" />
+  </div>
 </template>
 <script>
 import ReviewerNavBar from "@/components/Reviewer/ReviewerNavBar";
@@ -301,6 +338,9 @@ import { toEthiopian } from "../Configurations/dateConvertor";
 import STATIC_CERTIFICATE_URL from "../../../sharedComponents/constants/message.js";
 
 import moment from "moment";
+import router from "../../../router";
+import FlashMessage from "@/sharedComponents/FlashMessage";
+import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 export default {
   computed: {
     moment: () => moment,
@@ -315,6 +355,8 @@ export default {
     Title,
     ReviewerNavBar,
     Spinner,
+    FlashMessage,
+    ErrorFlashMessage,
   },
   setup() {
     const store = useStore();
@@ -322,7 +364,12 @@ export default {
     let show = ref(false);
     let certifiedUser = ref({});
     let certificateDetail = ref({});
+    let renewalData = ref({
+      data: {},
+    });
     let showLoading = ref(false);
+    let showActionLoading = ref(false);
+
     let showApplicationLoading = ref(false);
     let isUserCertified = ref(true);
     let isUserFound = ref(true);
@@ -335,6 +382,86 @@ export default {
 
     const expertLevelCode = JSON.parse(localStorage.getItem("allAdminData"))
       .expertLevel.code;
+
+    let buttons = ref([
+      { action: "", name: "" },
+      { action: "", name: "" },
+    ]);
+    let isLicenseGenerated = ref(false);
+    let applicationTypes = route.params.applicationType;
+    let applicationStatus = ref("");
+
+    let showFlash = ref(false);
+    let showErrorFlash = ref(false);
+
+    const updateLicenseGenerated = () => {
+      let req = {
+        action: null,
+        data: { ...certificateDetail.value, isLicenseGenerated: true },
+      };
+      editApplication(applicationTypes, req);
+    };
+
+    const editApplication = (applicationType, req) => {
+      showActionLoading.value = true;
+      if (applicationType == "New License") {
+        store
+          .dispatch("reviewer/editNewLicense", req)
+          .then((res) => {
+            showActionLoading.value = false;
+            if (res.statusText == "Created") {
+              showFlash.value = true;
+              setTimeout(() => {
+                router.go();
+              }, 3000);
+            } else {
+              showErrorFlash.value = true;
+              setTimeout(() => {
+                router.go();
+              }, 3000);
+            }
+          })
+          .catch((err) => {
+            showErrorFlash.value = true;
+            showActionLoading.value = false;
+            setTimeout(() => {
+              router.go();
+            }, 3000);
+          });
+      } else if (applicationType == "Renewal") {
+        store
+          .dispatch("reviewer/editRenewal", req)
+          .then((res) => {
+            showActionLoading.value = false;
+            if (res.statusText == "Created") {
+              showFlash.value = true;
+              setTimeout(() => {
+                router.go();
+              }, 3000);
+            } else {
+              showErrorFlash.value = true;
+              setTimeout(() => {
+                router.go();
+              }, 3000);
+            }
+          })
+          .catch((err) => {
+            showErrorFlash.value = true;
+            showActionLoading.value = false;
+            setTimeout(() => {
+              router.go();
+            }, 3000);
+          });
+      }
+    };
+
+    const action = (actionValue) => {
+      let req = {
+        action: actionValue,
+        data: certificateDetail.value,
+      };
+      editApplication(applicationTypes, req);
+    };
 
     const fetchCertifiedUser = () => {
       showLoading.value = true;
@@ -378,9 +505,15 @@ export default {
           .then((res) => {
             showApplicationLoading.value = false;
             certificateDetail.value = res.data.data;
-            certificateDetail.value = res.data.data;
             certificateDetail.value.licenseNumber =
               certificateDetail.value.verificationCode;
+            buttons.value = res.data.data.applicationStatus.buttons.filter(
+              (button) => {
+                return button.code == "CAN" || button.code == "SUS";
+              }
+            );
+            applicationStatus.value = res.data.data.applicationStatus.code;
+            isLicenseGenerated.value = res.data.data.isLicenseGenerated;
             if (
               route.params.applicantId != certificateDetail.value.applicantId
             ) {
@@ -412,7 +545,13 @@ export default {
           .then((res) => {
             showApplicationLoading.value = false;
             certificateDetail.value = res.data.data;
-            certificateDetail.value = res.data.data;
+            buttons.value = res.data.data.applicationStatus.buttons.filter(
+              (button) => {
+                return button.code == "CAN" || button.code == "SUS";
+              }
+            );
+            applicationStatus.value = res.data.data.applicationStatus.code;
+            isLicenseGenerated.value = res.data.data.isLicenseGenerated;
             certificateDetail.value.licenseNumber =
               certificateDetail.value.goodStandingCode;
             if (
@@ -440,6 +579,13 @@ export default {
           .then((res) => {
             showApplicationLoading.value = false;
             certificateDetail.value = res.data.data;
+            buttons.value = res.data.data.applicationStatus.buttons.filter(
+              (button) => {
+                return button.code == "CAN" || button.code == "SUS";
+              }
+            );
+            applicationStatus.value = res.data.data.applicationStatus.code;
+            isLicenseGenerated.value = res.data.data.isLicenseGenerated;
             certificateDetail.value.licenseNumber =
               certificateDetail.value.newLicenseCode;
             if (
@@ -467,9 +613,15 @@ export default {
           .then((res) => {
             showApplicationLoading.value = false;
             certificateDetail.value = res.data.data;
+            buttons.value = res.data.data.applicationStatus.buttons.filter(
+              (button) => {
+                return button.code == "CAN" || button.code == "SUS";
+              }
+            );
+            applicationStatus.value = res.data.data.applicationStatus.code;
+            isLicenseGenerated.value = res.data.data.isLicenseGenerated;
             certificateDetail.value.licenseNumber =
               certificateDetail.value.renewalCode;
-            console.log("certificate detail", certificateDetail.value);
             if (
               route.params.applicantId != certificateDetail.value.applicantId
             ) {
@@ -730,6 +882,7 @@ export default {
         orientation: "landscape",
         filters: ["ASCIIHexEncode"],
       });
+      updateLicenseGenerated();
       const userImage = certifiedUser.value.photo;
       if (certificateDetail.value.reviewer.expertLevel.code === "FED") {
         doc.addImage(
@@ -793,6 +946,13 @@ export default {
       isUserCertified,
       isUserFound,
       myRegion,
+      buttons,
+      isLicenseGenerated,
+      action,
+      showActionLoading,
+      applicationStatus,
+      showFlash,
+      showErrorFlash,
     };
   },
 };

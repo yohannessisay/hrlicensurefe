@@ -926,6 +926,15 @@ export default {
     commit(SET_PENDING_PAYMENTS_SEARCHED, searchedVal);
   },
 
+  async updateLicenseGenerated({commit}, appInfo) {
+    console.log("app data", appInfo);
+    const id = parseInt(appInfo[2])
+    const url = `${baseUrl}/${appInfo[1]}/${id}`
+    const resp = await ApiService.put(url, appInfo[0]);
+    console.log("respond", resp)
+    return resp;
+  },
+
   async getLegacyData({ commit }, parameters) {
     let url = "";
     parameters[2] ? url = baseUrl + `/legacyData?page=${parameters[0]}&size=${parameters[1]}&value=${parameters[2]}` : url = baseUrl + `/legacyData?page=${parameters[0]}&size=${parameters[1]}`;
@@ -1273,6 +1282,7 @@ export default {
   },
   async editRenewal({ commit }, license) {
     try {
+      console.log("license is", license)
       const resp = await ApiService.put(
         baseUrl + "/renewals/" + license.data.id,
         license

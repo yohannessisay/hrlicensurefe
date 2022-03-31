@@ -87,4 +87,9 @@ export default {
 
   getNewLicenseForSpecificUser: (state) => state.newLicenseForSpecificUser,
   getNewLicenseForSpecificUserSearched: (state) => state.newLicenseForSpecificUserSearched,
+
+  getNewLicenseSuspended: (state) => state.newLicenseSuspended,
+  getNewLicenseSuspendedSearched: (state) => state.newLicenseSuspendedSearched,
+  getNewLicenseCancelled: (state) => state.newLicenseCancelled,
+  getNewLicenseCancelledSearched: (state) => state.newLicenseCancelledSearched,
 };

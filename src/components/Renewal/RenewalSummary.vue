@@ -299,9 +299,6 @@
           </button>
           <button
             id="reapplyButton"
-            style="opacity: 0.3"
-            :disabled="this.checkBoxValue == true"
-            disabled
             @click="draft('UpdateEvent')"
             variant="outline"
           >

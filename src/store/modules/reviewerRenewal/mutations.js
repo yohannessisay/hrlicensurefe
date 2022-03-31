@@ -85,6 +85,11 @@ import {
   SET_RENEWAL_OTHERS_UNDER_SUPER_VISION_CONFIRMED,
   SET_RENEWAL_OTHERS_UNDER_SUPER_VISION_CONFIRMED_SEARCHED,
 
+  SET_RENEWAL_SUSPENDED,
+  SET_RENEWAL_SUSPENDED_SEARCHED,
+  SET_RENEWAL_CANCELLED,
+  SET_RENEWAL_CANCELLED_SEARCHED,
+
 } from "./mutation-types";
 
 export default {
@@ -343,5 +348,20 @@ export default {
   },
   [SET_RENEWAL_OTHERS_UNDER_SUPER_VISION_CONFIRMED_SEARCHED](state, searchedVal) {
     state.renewalOthersUnderSuperVisionConfirmedSearched = searchedVal;
+  },
+
+  [SET_RENEWAL_SUSPENDED](state, data) {
+    state.renewalSuspended = data;
+    state.renewalSuspendedSearched = data;
+  },
+  [SET_RENEWAL_SUSPENDED_SEARCHED](state, searchedVal) {
+    state.renewalSuspendedSearched = searchedVal;
+  },
+  [SET_RENEWAL_CANCELLED](state, data) {
+    state.renewalCancelled = data;
+    state.renewalCancelledSearched = data;
+  },
+  [SET_RENEWAL_CANCELLED_SEARCHED](state, searchedVal) {
+    state.renewalCancelledSearched = searchedVal;
   },
 };

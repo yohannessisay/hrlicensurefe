@@ -72,6 +72,11 @@ import {
   SET_NEW_LICENSE_FOR_SPECIFIC_USER,
   SET_NEW_LICENSE_FOR_SPECIFIC_USER_SEARCHED,
   NEW_LICENSE_REPORT,
+
+  SET_NEW_LICENSE_SUSPENDED,
+  SET_NEW_LICENSE_SUSPENDED_SEARCHED,
+  SET_NEW_LICENSE_CANCELLED,
+  SET_NEW_LICENSE_CANCELLED_SEARCHED,
 } from "./mutation-types";
 
 export default {
@@ -1023,6 +1028,66 @@ export default {
               .includes(searchKey.toLowerCase());
     });
     commit(SET_NEW_LICENSE_ALL_LICENSED_SEARCHED, searchedVal);
+  },
+
+  async getNewLicenseSuspended({ commit }, adminStatus) {
+    const url = baseUrl + "/newLicenses/status/"+adminStatus[1];
+    const resp = await ApiService.get(url);
+    const suspended = resp.data.data.filter(function(e) {
+      return e.reviewerId === adminStatus[0];
+    });
+    commit(SET_NEW_LICENSE_SUSPENDED, suspended);
+  },
+
+  getNewLicenseSuspendedSearched({ commit, getters }, searchKey) {
+    if (getters.getNewLicenseSuspended === undefined) {
+      return;
+    }
+    const searchedVal = getters.getNewLicenseSuspended.filter(function(e) {
+      return e.newLicenseCode === undefined
+        ? ""
+        : e.newLicenseCode.toLowerCase().includes(searchKey.toLowerCase()) ||
+            (e.applicant.profile.name + " " + e.applicant.profile.fatherName)
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.name
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.fatherName
+              .toLowerCase()
+              .includes(searchKey.toLowerCase());
+    });
+    commit(SET_NEW_LICENSE_SUSPENDED_SEARCHED, searchedVal);
+  },
+
+  async getNewLicenseCancelled({ commit }, adminStatus) {
+    const url = baseUrl + "/newLicenses/status/"+adminStatus[1];
+    const resp = await ApiService.get(url);
+    const cancelled = resp.data.data.filter(function(e) {
+      return e.reviewerId === adminStatus[0];
+    });
+    commit(SET_NEW_LICENSE_CANCELLED, cancelled);
+  },
+
+  getNewLicenseCancelledSearched({ commit, getters }, searchKey) {
+    if (getters.getNewLicenseCancelled === undefined) {
+      return;
+    }
+    const searchedVal = getters.getNewLicenseCancelled.filter(function(e) {
+      return e.newLicenseCode === undefined
+        ? ""
+        : e.newLicenseCode.toLowerCase().includes(searchKey.toLowerCase()) ||
+            (e.applicant.profile.name + " " + e.applicant.profile.fatherName)
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.name
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.fatherName
+              .toLowerCase()
+              .includes(searchKey.toLowerCase());
+    });
+    commit(SET_NEW_LICENSE_CANCELLED_SEARCHED, searchedVal);
   },
 
   async getNewLicenseReApply({ commit }, adminStatus) {
