@@ -90,6 +90,11 @@ import {
   SET_RENEWAL_CANCELLED,
   SET_RENEWAL_CANCELLED_SEARCHED,
 
+  SET_RENEWAL_ALL_Suspended,
+  SET_RENEWAL_ALL_Suspended_SEARCHED,
+  SET_RENEWAL_ALL_Cancelled,
+  SET_RENEWAL_ALL_Cancelled_SEARCHED,
+
 } from "./mutation-types";
 
 export default {
@@ -363,5 +368,20 @@ export default {
   },
   [SET_RENEWAL_CANCELLED_SEARCHED](state, searchedVal) {
     state.renewalCancelledSearched = searchedVal;
+  },
+
+  [SET_RENEWAL_ALL_Suspended](state, data) {
+    state.renewalAllSuspended = data;
+    state.renewalAllSuspendedSearched = data;
+  },
+  [SET_RENEWAL_ALL_Suspended_SEARCHED](state, searchedVal) {
+    state.renewalAllSuspendedSearched = searchedVal;
+  },
+  [SET_RENEWAL_ALL_Cancelled](state, data) {
+    state.renewalAllCancelled = data;
+    state.renewalAllCancelledSearched = data;
+  },
+  [SET_RENEWAL_ALL_Cancelled_SEARCHED](state, searchedVal) {
+    state.renewalAllCancelledSearched = searchedVal
   },
 };

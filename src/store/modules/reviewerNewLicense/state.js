@@ -94,5 +94,10 @@ export default {
     newLicenseCancelled: [],
     newLicenseCancelledSearched: [],
 
+    newLicenseAllSuspended: [],
+    newLicenseAllSuspendedSearched: [],
+    newLicenseAllCancelled: [],
+    newLicenseAllCancelledSearched: [],
+
   },
 };

@@ -81,6 +81,11 @@ import {
   SET_RENEWAL_SUSPENDED_SEARCHED,
   SET_RENEWAL_CANCELLED,
   SET_RENEWAL_CANCELLED_SEARCHED,
+
+  SET_RENEWAL_ALL_Suspended,
+  SET_RENEWAL_ALL_Suspended_SEARCHED,
+  SET_RENEWAL_ALL_Cancelled,
+  SET_RENEWAL_ALL_Cancelled_SEARCHED,
 } from "./mutation-types";
 
 export default {
@@ -1049,6 +1054,34 @@ export default {
     commit(SET_RENEWAL_SUSPENDED_SEARCHED, searchedVal);
   },
 
+  async getRenewalAllSuspended({commit}, status) {
+    const url = baseUrl + "/renewals/status/"+ status;
+    const resp = await ApiService.get(url);
+    const renewalAllSuspended = resp.data.data;
+    commit(SET_RENEWAL_ALL_Suspended, renewalAllSuspended);
+  },
+
+  getRenewalAllSuspendedSearched({ commit, getters }, searchKey) {
+    if (getters.getRenewalAllSuspended === undefined) {
+      return;
+    }
+    const searchedVal = getters.getRenewalAllSuspended.filter(function(e) {
+      return e.renewalCode === undefined
+        ? ""
+        : e.renewalCode.toLowerCase().includes(searchKey.toLowerCase()) ||
+            (e.applicant.profile.name + " " + e.applicant.profile.fatherName)
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.name
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.fatherName
+              .toLowerCase()
+              .includes(searchKey.toLowerCase());
+    });
+    commit(SET_RENEWAL_ALL_Suspended_SEARCHED, searchedVal);
+  },
+
   async getRenewalCancelled({ commit }, adminStatus) {
     const url = baseUrl + "/renewals/status/"+adminStatus[1];
     const resp = await ApiService.get(url);
@@ -1077,6 +1110,34 @@ export default {
               .includes(searchKey.toLowerCase());
     });
     commit(SET_RENEWAL_CANCELLED_SEARCHED, searchedVal);
+  },
+
+  async getRenewalAllCancelled({commit}, status) {
+    const url = baseUrl + "/renewals/status/"+ status;
+    const resp = await ApiService.get(url);
+    const renewalAllCancelled = resp.data.data;
+    commit(SET_RENEWAL_ALL_Cancelled, renewalAllCancelled);
+  },
+
+  getRenewalAllCancelledSearched({ commit, getters }, searchKey) {
+    if (getters.getRenewalAllCancelled === undefined) {
+      return;
+    }
+    const searchedVal = getters.getRenewalAllCancelled.filter(function(e) {
+      return e.renewalCode === undefined
+        ? ""
+        : e.renewalCode.toLowerCase().includes(searchKey.toLowerCase()) ||
+            (e.applicant.profile.name + " " + e.applicant.profile.fatherName)
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.name
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.fatherName
+              .toLowerCase()
+              .includes(searchKey.toLowerCase());
+    });
+    commit(SET_RENEWAL_ALL_Cancelled_SEARCHED, searchedVal);
   },
 
   async getRenewalReApply({ commit }, adminStatus) {

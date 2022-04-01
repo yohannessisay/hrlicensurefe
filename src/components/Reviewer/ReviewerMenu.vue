@@ -402,6 +402,9 @@
         <div v-if="this.display == 'accredited'">
           <accredited />
         </div>
+        <div v-if="this.display == 'suspendedCancelled'">
+          <suspended-cancelled />
+        </div>
       </div>
     </div>
   </div>
@@ -509,6 +512,7 @@ import GoodStandingAllLicensed from "./ApplicationTypes/GoodStanding/GoodStandin
 
 import AllLicensed from "./ApplicationTypes/AllLicensed/AllLicensed.vue";
 import Accredited from "./ApplicationTypes/AllLicensed/Accredited.vue";
+import SuspendedCancelled from "./ApplicationTypes/AllLicensed/SuspendedCancelled.vue"
 // import AllLicensed from "./ApplicationTypes/AllLicensed/AllLicensed.vue";
 // import Accredited from "./ApplicationTypes/AllLicensed/Accredited.vue";
 
@@ -617,6 +621,7 @@ export default {
 
     AllLicensed,
     Accredited,
+    SuspendedCancelled,
 
     Dashboard,
     Report,

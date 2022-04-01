@@ -92,4 +92,9 @@ export default {
   getNewLicenseSuspendedSearched: (state) => state.newLicenseSuspendedSearched,
   getNewLicenseCancelled: (state) => state.newLicenseCancelled,
   getNewLicenseCancelledSearched: (state) => state.newLicenseCancelledSearched,
+
+  getNewLicenseAllSuspended: (state) => state.newLicenseAllSuspended,
+  getNewLicenseAllSuspendedSearched: (state) => state.newLicenseAllSuspendedSearched,
+  getNewLicenseAllCancelled: (state) => state.newLicenseAllCancelled,
+  getNewLicenseAllCancelledSearched: (state) => state.newLicenseAllCancelledSearched,
 };
