@@ -1,0 +1,38 @@
+variables:
+  BRANCH: ${CI_COMMIT_REF_NAME}
+  PROJECT: ${CI_PROJECT_PATH_SLUG}
+  BUILD_NUMBER: ${CI_PIPELINE_IID}
+  H_PORT: 9000
+  C_PORT: 80
+stages:
+  - build
+  - deploy
+
+build_project:
+  stage: build
+  only:
+    - moh
+  script:
+    - echo Building $BRANCH branch of project $PROJECT started on `date`
+    - docker build --cache-from ${PROJECT}_${BRANCH} -t ${PROJECT}_${BRANCH}:$BUILD_NUMBER -t ${PROJECT}_${BRANCH}:latest .
+    - echo Build of ${PROJECT}_${BRANCH}:$BUILD_NUMBER Finished on `date`.
+  retry:
+    max: 2
+    when:
+      - always
+  tags:
+    - hrl
+
+deploy_project:
+  stage: deploy
+  only:
+    - moh
+  script:
+    - docker stop ${PROJECT}_${BRANCH} || true && docker rm ${PROJECT}_${BRANCH} || true
+    - docker run -d --restart=always  -p ${H_PORT}:${C_PORT} --name ${PROJECT}_${BRANCH} ${PROJECT}_${BRANCH}:$BUILD_NUMBER
+  retry:
+    max: 2
+    when:
+      - always
+  tags:
+    - hrl
