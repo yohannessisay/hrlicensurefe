@@ -5,16 +5,13 @@
       <!-- <div>
         <ReviewerSideBar style="width: 30vh" />
       </div> -->
-      <div v-if="loader" style="margin-left: 45%; margin-top: 5%">
-        <Spinner />
-      </div>
-      <div v-else>
+      <div>
         <div class="px-4 sm:px-4">
           <div class="py-8">
             <div class="flex flex-row titile-container">
               <div class="ml-2 flex flex-row">
                 <div
-                  @click="fetchReport(0, paginationSize, 'new_license')"
+                  @click="fetchNewLicenseReport()"
                   :class="
                     selectBackgroundColor == 'newLicense' && 'applicationType'
                   "
@@ -24,7 +21,7 @@
                   </a>
                 </div>
                 <div
-                  @click="fetchReport(0, paginationSize, 'renewal')"
+                  @click="fetchRenewalReport()"
                   class="ml-8"
                   :class="
                     selectBackgroundColor == 'renewal' && 'applicationType'
@@ -34,8 +31,8 @@
                     Renewal Report
                   </a>
                 </div>
-                <div
-                  @click="fetchReport(0, paginationSize, 'verification')()"
+                <!-- <div
+                  @click="fetchReport(0, paginationSize, 'verification')"
                   class="ml-8"
                   :class="
                     selectBackgroundColor == 'verification' && 'applicationType'
@@ -44,9 +41,9 @@
                   <a class="text-2xl font-semibold leading-tight">
                     Verification Report
                   </a>
-                </div>
+                </div> -->
                 <div
-                  @click="fetchReport(0, paginationSize, 'good_standing')"
+                  @click="fetchGoodstandingReport()"
                   class="ml-8"
                   :class="
                     selectBackgroundColor == 'goodStanding' && 'applicationType'
@@ -57,7 +54,7 @@
                   </a>
                 </div>
               </div>
-              <div id="export" @click="exportTable()" class="mt-4">
+              <div id="export" @click="exportTable()" class="ml-12">
                 <a class="text-2xl font-semibold leading-tight">
                   <i class="fa fa-file-text" aria-hidden="true"></i>
                   Export
@@ -106,7 +103,7 @@
                   </option>
                 </select>
               </div>
-              <div class="flex flex-col mb-small w-72 mr-4">
+              <!-- <div class="flex flex-col mb-small w-72 mr-4">
                 <label class="text-primary-700">Zone</label>
                 <select
                   class="max-w-3xl"
@@ -143,7 +140,7 @@
                     {{ woreda.name }}
                   </option>
                 </select>
-              </div>
+              </div> -->
               <div class="flex flex-col mb-small w-72 mr-4">
                 <label class="text-primary-700">Gender</label>
                 <div class="flex w-full">
@@ -235,22 +232,29 @@
                 />
               </div>
             </div>
+            <div v-if="loader" style="margin-left: 45%; margin-top: 5%">
+              <Spinner />
+            </div>
             <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 max-w-4xl">
               <label class="text-primary-700">Show</label>
-                <select
-                  class="max-w-3xl"
-                  v-model="paginationSize"
-                  @change="handlePagSize($)"
+              <select
+                class="max-w-3xl"
+                v-model="paginationSize"
+                @change="handlePagSize($)"
+              >
+                <option
+                  v-for="size in paginationSizeList"
+                  v-bind:key="size"
+                  v-bind:value="size"
                 >
-                  <option
-                    v-for="size in paginationSizeList"
-                    v-bind:key="size"
-                    v-bind:value="size"
-                  >
-                    {{ size }}
-                  </option>
-                </select>
-              <div id="printable" class="shadow-md rounded-lg" v-if="!showLoading">
+                  {{ size }}
+                </option>
+              </select>
+              <div
+                id="printable"
+                class="shadow-md rounded-lg"
+                v-if="!showLoading"
+              >
                 <!-- <table class="leading-normal">
                   <thead>
                     <tr class="">
@@ -701,12 +705,12 @@
                       >
                         Last Name
                       </th>
-                      <th
+                      <!-- <th
                         class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
                       >
                         Alternative Full Name
-                      </th>
-                      <th
+                      </th> -->
+                      <!-- <th
                         class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
                       >
                         Employee Prefix
@@ -715,22 +719,27 @@
                         class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
                       >
                         Employee Id
-                      </th>
-                      <th
+                      </th> -->
+                      <!-- <th
                         class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
                       >
                         Expire Date
-                      </th>
+                      </th> -->
 
-                      <th
+                      <!-- <th
                         class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
                       >
                         License Type
-                      </th>
+                      </th> -->
                       <th
                         class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
                       >
                         License Status
+                      </th>
+                      <th
+                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+                      >
+                        Professional Type
                       </th>
                       <th
                         class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
@@ -742,11 +751,11 @@
                       >
                         Remark
                       </th>
-                      <th
+                      <!-- <th
                         class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
                       >
                         License Prefix
-                      </th>
+                      </th> -->
                       <th
                         class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
                       >
@@ -755,17 +764,17 @@
                       <th
                         class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
                       >
-                        emp_mobile
+                        Phone
                       </th>
                       <th
                         class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
                       >
-                        emp_work_email
+                        Email
                       </th>
                       <th
                         class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
                       >
-                        emp_gender
+                        Gender
                       </th>
 
                       <th
@@ -781,7 +790,7 @@
                         <div class="flex">
                           <div class="ml-3">
                             <p class="text-gray-900 whitespace-no-wrap">
-                              {{ item.emp_first_name }}
+                              {{ item.name }}
                             </p>
                           </div>
                         </div>
@@ -790,7 +799,7 @@
                         <div class="flex">
                           <div class="ml-3">
                             <p class="text-gray-900 whitespace-no-wrap">
-                              {{ item.emp_middle_name }}
+                              {{ item.fatherName }}
                             </p>
                           </div>
                         </div>
@@ -799,12 +808,12 @@
                         <div class="flex">
                           <div class="ml-3">
                             <p class="text-gray-900 whitespace-no-wrap">
-                              {{ item.emp_last_name }}
+                              {{ item.grandFatherName }}
                             </p>
                           </div>
                         </div>
                       </td>
-                      <td class="px-5 py-5  border-gray-200 bg-white text-sm">
+                      <!-- <td class="px-5 py-5  border-gray-200 bg-white text-sm">
                         <div class="flex">
                           <div class="ml-3">
                             <p class="text-gray-900 whitespace-no-wrap">
@@ -814,8 +823,8 @@
                             </p>
                           </div>
                         </div>
-                      </td>
-                      <td
+                      </td> -->
+                      <!-- <td
                         v-if="item.prefix_id"
                         class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
                       >
@@ -873,7 +882,7 @@
                             </p>
                           </div>
                         </div>
-                      </td>
+                      </td> 
                       <td
                         class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
                         v-if="item.license_type_id"
@@ -897,15 +906,47 @@
                             </p>
                           </div>
                         </div>
-                      </td>
+                      </td> -->
                       <td
                         class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
-                        v-if="item.license_status_id"
+                        v-if="item.applicationStatus.name"
                       >
                         <div class="flex">
                           <div class="ml-3">
                             <p class="text-gray-900 whitespace-no-wrap">
-                              {{ item.license_status_id }}
+                              {{ item.applicationStatus.name }}
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td
+                        v-else
+                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
+                      >
+                        <div class="flex">
+                          <div class="ml-3">
+                            <p class="text-gray-900 whitespace-no-wrap">
+                              ---
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td
+                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
+                        v-if="
+                          item.licenseProfessionalTypes[0].professionalTypes
+                        "
+                      >
+                        <div class="flex">
+                          <div class="ml-3">
+                            <p class="text-gray-900 whitespace-no-wrap">
+                              {{
+                                item.licenseProfessionalTypes[0]
+                                  .professionalTypes.name
+                                  ? item.licenseProfessionalTypes[0]
+                                      .professionalTypes.name
+                                  : "-"
+                              }}
                             </p>
                           </div>
                         </div>
@@ -970,7 +1011,7 @@
                           </div>
                         </div>
                       </td>
-                      <td
+                      <!-- <td
                         class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
                         v-if="item.prefix_id"
                       >
@@ -993,99 +1034,103 @@
                             </p>
                           </div>
                         </div>
-                      </td>
+                      </td> -->
                       <td
-                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
-                      >
-                        <div class="flex">
-                          <div class="ml-3">
-                            <p class="text-gray-900 whitespace-no-wrap">
-                              {{ item.issued_date }}
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td
-                        v-if="item.emp_mobile"
-                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
-                      >
-                        <div class="flex">
-                          <div class="ml-3">
-                            <p class="text-gray-900 whitespace-no-wrap">
-                              {{ item.emp_mobile }}
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td
-                        v-else
-                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
-                      >
-                        <div class="flex">
-                          <div class="ml-3">
-                            <p class="text-gray-900 whitespace-no-wrap">
-                              ---
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td
-                        v-if="item.emp_work_email"
-                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
-                      >
-                        <div class="flex">
-                          <div class="ml-3">
-                            <p class="text-gray-900 whitespace-no-wrap">
-                              {{ item.emp_work_email }}
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td
-                        v-else
-                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
-                      >
-                        <div class="flex">
-                          <div class="ml-3">
-                            <p class="text-gray-900 whitespace-no-wrap">
-                              ---
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td
-                        v-if="item.emp_gender"
-                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
-                      >
-                        <div class="flex">
-                          <div class="ml-3">
-                            <p class="text-gray-900 whitespace-no-wrap">
-                              {{ item.emp_gender }}
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td
-                        v-else
-                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
-                      >
-                        <div class="flex">
-                          <div class="ml-3">
-                            <p class="text-gray-900 whitespace-no-wrap">
-                              ---
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td
-                        v-if="item.emp_birthday"
                         class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
                       >
                         <div class="flex">
                           <div class="ml-3">
                             <p class="text-gray-900 whitespace-no-wrap">
                               {{
-                                moment(item.emp_birthday).format("MMM DD, YYYY")
+                                moment(item.certifiedDate).format(
+                                  "MMM DD, YYYY"
+                                )
+                              }}
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td
+                        v-if="item.applicant.phoneNumber"
+                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
+                      >
+                        <div class="flex">
+                          <div class="ml-3">
+                            <p class="text-gray-900 whitespace-no-wrap">
+                              {{ item.applicant.phoneNumber }}
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td
+                        v-else
+                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
+                      >
+                        <div class="flex">
+                          <div class="ml-3">
+                            <p class="text-gray-900 whitespace-no-wrap">
+                              ---
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td
+                        v-if="item.applicant.emailAddress"
+                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
+                      >
+                        <div class="flex">
+                          <div class="ml-3">
+                            <p class="text-gray-900 whitespace-no-wrap">
+                              {{ item.applicant.emailAddress }}
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td
+                        v-else
+                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
+                      >
+                        <div class="flex">
+                          <div class="ml-3">
+                            <p class="text-gray-900 whitespace-no-wrap">
+                              ---
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td
+                        v-if="item.gender"
+                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
+                      >
+                        <div class="flex">
+                          <div class="ml-3">
+                            <p class="text-gray-900 whitespace-no-wrap">
+                              {{ item.gender }}
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td
+                        v-else
+                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
+                      >
+                        <div class="flex">
+                          <div class="ml-3">
+                            <p class="text-gray-900 whitespace-no-wrap">
+                              ---
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td
+                        v-if="item.dateOfBirth"
+                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
+                      >
+                        <div class="flex">
+                          <div class="ml-3">
+                            <p class="text-gray-900 whitespace-no-wrap">
+                              {{
+                                moment(item.dateOfBirth).format("MMM DD, YYYY")
                               }}
                             </p>
                           </div>
@@ -1108,13 +1153,13 @@
                 </table>
               </div>
               <VueTailwindPagination
-                    :current="currentPage"
-                    :total="totalCount"
-                    :per-page="paginationSize"
-                    @page-changed="pageChanged($event)"
-                    text-before-input="Go to page"
-                    text-after-input="Go"
-                  />
+                :current="currentPage"
+                :total="totalCount"
+                :per-page="paginationSize"
+                @page-changed="pageChanged($event)"
+                text-before-input="Go to page"
+                text-after-input="Go"
+              />
             </div>
           </div>
         </div>
@@ -1165,41 +1210,42 @@ export default {
     let totalCount = ref();
     let lastIndex = ref(2);
     let report = ref([]);
-    let showLoading = ref(false)
-    let selectBackgroundColor = ref('newLicense');
+    let showLoading = ref(false);
+    let selectBackgroundColor = ref("newLicense");
 
     let indexValue = ref(0);
     let paginationSize = ref(10);
     const paginationSizeList = [10, 25, 50, 100];
+    let reportData = ref([]);
 
     const pageChanged = (event) => {
       currentPage.value = event;
       indexValue.value = event - 1;
-      fetchReport(indexValue.value, paginationSize.value, 'null');
-    }
+      paginateReport(reportData.value, indexValue.value);
+      // fetchReport(indexValue.value, paginationSize.value, 'null');
+    };
     const handlePagSize = () => {
       currentPage.value = 1;
       indexValue.value = 0;
-      fetchReport(indexValue.value, paginationSize.value, 'null');
+      fetchReport(indexValue.value, paginationSize.value, "null");
     };
 
     const fetchReport = (page, size, app_type, value) => {
       showLoading.value = true;
-      
-      if(app_type == 'newLicense') {
+
+      if (app_type == "newLicense") {
         changeBackgroundColor("newLicense");
-      }
-      else if(app_type == "renewal") {
+      } else if (app_type == "renewal") {
         loader.value = true;
         changeBackgroundColor("renewal");
-      } else if(app_type == 'goodStanding') {
+      } else if (app_type == "goodStanding") {
         loader.value = true;
         changeBackgroundColor("goodStandinganding");
-      } else if(app_type == 'verification') {
+      } else if (app_type == "verification") {
         loader.value = true;
         changeBackgroundColor("verification");
       }
-      
+
       const apiParameters = [page, size, value];
       store.dispatch("reviewer/getLegacyData", apiParameters).then((res) => {
         report.value = res.rows;
@@ -1208,7 +1254,6 @@ export default {
         loader.value = false;
       });
     };
-    
 
     let reportOld = ref([
       {
@@ -1346,17 +1391,28 @@ export default {
       loader.value = true;
       changeBackgroundColor("newLicense");
       store.dispatch("report/getNewLicenseReport").then((res) => {
-        report.value = res.data.data;
-        store.dispatch("report/setReport", report.value);
+        reportData.value = res.data.data;
+        paginateReport(res.data.data, 0);
+        store.dispatch("report/setReport", reportData.value);
         loader.value = false;
       });
+    };
+
+    const paginateReport = (reportValue, index) => {
+      console.log("index", index);
+      report.value = reportValue.slice(
+        index * paginationSize.value,
+        index * paginationSize.value + paginationSize.value
+      );
+      totalCount.value = reportValue.length;
     };
     const fetchRenewalReport = () => {
       loader.value = true;
       changeBackgroundColor("renewal");
       store.dispatch("report/getRenewalReport").then((res) => {
-        report.value = res.data.data;
-        store.dispatch("report/setReport", report.value);
+        reportData.value = res.data.data;
+        paginateReport(res.data.data, 0);
+        store.dispatch("report/setReport", reportData.value);
         loader.value = false;
       });
     };
@@ -1365,8 +1421,9 @@ export default {
       loader.value = true;
       changeBackgroundColor("verification");
       store.dispatch("report/getVerificationReport").then((res) => {
-        report.value = res.data.data;
-        store.dispatch("report/setReport", report.value);
+        reportData.value = res.data.data;
+        paginateReport(res.data.data, 0);
+        store.dispatch("report/setReport", reportData.value);
         loader.value = false;
       });
     };
@@ -1374,8 +1431,9 @@ export default {
       loader.value = true;
       changeBackgroundColor("goodStanding");
       store.dispatch("report/getGoodstandingReport").then((res) => {
-        report.value = res.data.data;
-        store.dispatch("report/setReport", report.value);
+        reportData.value = res.data.data;
+        paginateReport(res.data.data, 0);
+        store.dispatch("report/setReport", reportData.value);
         loader.value = false;
       });
     };
@@ -1412,6 +1470,10 @@ export default {
       });
       saveAs(blob, "Report.xls");
     };
+
+    const filterApplication = (profession, region, gender, applicationStatus, startDateFrom, endDateFrom) => {
+      
+    }
     const filterProfession = (profType) => {
       var tableFilter = [];
       tableFilter = report.value;
@@ -1522,8 +1584,8 @@ export default {
       }
     };
     onMounted(() => {
-      fetchReport(0, paginationSize.value, 'new_license');
-      // fetchNewLicenseReport();
+      // fetchReport(0, paginationSize.value, 'new_license');
+      fetchNewLicenseReport();
       fetchProfessionType();
       fetchRegion();
       fetchApplicationStatuses();
