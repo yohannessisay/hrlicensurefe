@@ -21,7 +21,7 @@ build_project:
     when:
       - always
   tags:
-    - hrl
+    - hrl_hrd_fe
 
 deploy_project:
   stage: deploy
@@ -35,4 +35,4 @@ deploy_project:
     when:
       - always
   tags:
-    - hrl
+    - hrl_hrd_fe
