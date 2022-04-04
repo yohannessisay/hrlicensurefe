@@ -90,5 +90,10 @@ export default {
     renewalSuspendedSearched: [],
     renewalCancelled: [],
     renewalCancelledSearched: [],
+
+    renewalAllSuspended: [],
+    renewalAllSuspendedSearched: [],
+    renewalAllCancelled: [],
+    renewalAllCancelledSearched: [],
   },
 };
