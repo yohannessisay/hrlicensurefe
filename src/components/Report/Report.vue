@@ -1260,6 +1260,7 @@ export default {
     let paginationSize = ref(10);
     const paginationSizeList = [10, 25, 50, 100];
     let reportData = ref([]);
+    let allData = ref([]);
 
     const pageChanged = (event) => {
       currentPage.value = event;
@@ -1301,6 +1302,7 @@ export default {
       changeBackgroundColor("newLicense");
       store.dispatch("report/getNewLicenseReport").then((res) => {
         reportData.value = res.data.data;
+        allData.value = res.data.data;
         paginateReport(res.data.data, 0);
         store.dispatch("report/setReport", reportData.value);
         loader.value = false;
@@ -1319,6 +1321,7 @@ export default {
       changeBackgroundColor("renewal");
       store.dispatch("report/getRenewalReport").then((res) => {
         reportData.value = res.data.data;
+        allData.value = res.data.data;
         paginateReport(res.data.data, 0);
         store.dispatch("report/setReport", reportData.value);
         loader.value = false;
@@ -1330,6 +1333,7 @@ export default {
       changeBackgroundColor("verification");
       store.dispatch("report/getVerificationReport").then((res) => {
         reportData.value = res.data.data;
+        allData.value = res.data.data;
         paginateReport(res.data.data, 0);
         store.dispatch("report/setReport", reportData.value);
         loader.value = false;
@@ -1340,6 +1344,7 @@ export default {
       changeBackgroundColor("goodStanding");
       store.dispatch("report/getGoodstandingReport").then((res) => {
         reportData.value = res.data.data;
+        allData.value = res.data.data;
         paginateReport(res.data.data, 0);
         store.dispatch("report/setReport", reportData.value);
         loader.value = false;
@@ -1393,7 +1398,7 @@ export default {
       }
     };
     const filterApplication = () => {
-      let filterValue = reportData.value.filter((report) => {
+      let filterValue = allData.value.filter((report) => {
         return (
           report.licenseProfessionalTypes[0].professionalTypes.name.includes(
             professionTypeValue.value
@@ -1406,8 +1411,8 @@ export default {
           moment(endDateValue.value).isSameOrAfter(report.createdAt)
         );
       });
-      // reportData.value = filterValue;
       paginateReport(filterValue, 0);
+      reportData.value = filterValue;
     };
     const filterProfession = (profType) => {
       var tableFilter = [];
@@ -1462,7 +1467,6 @@ export default {
       }
     };
     const filterDate = (startDate, endDate) => {
-      console.log("fd", startDate, "ed", endDate);
       if (endDate == "") {
         startDateValue.value = "1900-01-01";
         endDateValue.value = "2100-01-01";
