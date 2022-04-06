@@ -70,7 +70,7 @@
                 <select
                   class="max-w-3xl"
                   v-model="filter.profType"
-                  @change="filterProfession(filter.profType)"
+                  @change="filterProfessionType(filter.profType)"
                 >
                   <option v-bind:key="filter.all" v-bind:value="filter.all"
                     >All</option
@@ -84,7 +84,7 @@
                   </option>
                 </select>
               </div>
-              <div class="flex flex-col mb-small w-72 mr-4">
+              <!-- <div class="flex flex-col mb-small w-72 mr-4">
                 <label class="text-primary-700">Region</label>
                 <select
                   class="max-w-3xl"
@@ -102,44 +102,6 @@
                     {{ region.name }}
                   </option>
                 </select>
-              </div>
-              <!-- <div class="flex flex-col mb-small w-72 mr-4">
-                <label class="text-primary-700">Zone</label>
-                <select
-                  class="max-w-3xl"
-                  v-model="filter.zone"
-                  @change="filterZone(filter.zone)"
-                >
-                  <option v-bind:key="filter.all" v-bind:value="filter.all"
-                    >All</option
-                  >
-                  <option
-                    v-for="zone in zones"
-                    v-bind:key="zone.name"
-                    v-bind:value="zone"
-                  >
-                    {{ zone.name }}
-                  </option>
-                </select>
-              </div>
-              <div class="flex flex-col mb-small w-72 mr-4">
-                <label class="text-primary-700">Woreda</label>
-                <select
-                  class="max-w-3xl"
-                  v-model="filter.woreda"
-                  @change="filterWoreda(filter.woreda)"
-                >
-                  <option v-bind:key="filter.all" v-bind:value="filter.all"
-                    >All</option
-                  >
-                  <option
-                    v-for="woreda in woredas"
-                    v-bind:key="woreda.name"
-                    v-bind:value="woreda"
-                  >
-                    {{ woreda.name }}
-                  </option>
-                </select>
               </div> -->
               <div class="flex flex-col mb-small w-72 mr-4">
                 <label class="text-primary-700">Gender</label>
@@ -150,7 +112,7 @@
                         <input
                           type="radio"
                           id="both"
-                          value="both"
+                          value=""
                           v-model="filter.gender"
                           @change="filterGender(filter.gender)"
                         />
@@ -236,11 +198,12 @@
               <Spinner />
             </div>
             <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 max-w-4xl">
-              <label class="text-primary-700">Show</label>
+              <label class="text-primary-700">Rows per page: </label>
               <select
-                class="max-w-3xl"
+                class="max-w-3xl mb-4"
                 v-model="paginationSize"
                 @change="handlePagSize($)"
+                style="padding: 0px 35px 0px 5px; border: none; border-radius: unset; border-bottom: 2px solid lightblue;margin-left: 8px"
               >
                 <option
                   v-for="size in paginationSizeList"
@@ -744,6 +707,11 @@
                       <th
                         class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
                       >
+                        Region
+                      </th>
+                      <th
+                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+                      >
                         License Number
                       </th>
                       <th
@@ -756,6 +724,11 @@
                       >
                         License Prefix
                       </th> -->
+                      <th
+                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+                      >
+                        Created Date
+                      </th>
                       <th
                         class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
                       >
@@ -965,6 +938,30 @@
                       </td>
                       <td
                         class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
+                        v-if="item.region"
+                      >
+                        <div class="flex">
+                          <div class="ml-3">
+                            <p class="text-gray-900 whitespace-no-wrap">
+                              {{ item.region.name ? item.region.name : "-" }}
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td
+                        v-else
+                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
+                      >
+                        <div class="flex">
+                          <div class="ml-3">
+                            <p class="text-gray-900 whitespace-no-wrap">
+                              ---
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td
+                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
                         v-if="item.license_no"
                       >
                         <div class="flex">
@@ -1036,6 +1033,7 @@
                         </div>
                       </td> -->
                       <td
+                        v-if="item.certifiedDate"
                         class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
                       >
                         <div class="flex">
@@ -1046,6 +1044,44 @@
                                   "MMM DD, YYYY"
                                 )
                               }}
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td
+                        v-else
+                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
+                      >
+                        <div class="flex">
+                          <div class="ml-3">
+                            <p class="text-gray-900 whitespace-no-wrap">
+                              ---
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td
+                        v-if="item.createdAt"
+                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
+                      >
+                        <div class="flex">
+                          <div class="ml-3">
+                            <p class="text-gray-900 whitespace-no-wrap">
+                              {{
+                                moment(item.createdAt).format("MMM DD, YYYY")
+                              }}
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td
+                        v-else
+                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
+                      >
+                        <div class="flex">
+                          <div class="ml-3">
+                            <p class="text-gray-900 whitespace-no-wrap">
+                              ---
                             </p>
                           </div>
                         </div>
@@ -1199,6 +1235,13 @@ export default {
     const route = useRoute();
     const router = useRouter();
 
+    let professionTypeValue = ref("");
+    let regionValue = ref("");
+    let genderValue = ref("");
+    let applicationStatusValue = ref("");
+    let startDateValue = ref("1900-01-01");
+    let endDateValue = ref("2100-01-01");
+
     let selectedApplication = ref({
       newLicense: true,
       renewal: false,
@@ -1222,141 +1265,13 @@ export default {
       currentPage.value = event;
       indexValue.value = event - 1;
       paginateReport(reportData.value, indexValue.value);
-      // fetchReport(indexValue.value, paginationSize.value, 'null');
     };
     const handlePagSize = () => {
       currentPage.value = 1;
       indexValue.value = 0;
-      fetchReport(indexValue.value, paginationSize.value, "null");
+      paginateReport(reportData.value, indexValue.value);
     };
 
-    const fetchReport = (page, size, app_type, value) => {
-      showLoading.value = true;
-
-      if (app_type == "newLicense") {
-        changeBackgroundColor("newLicense");
-      } else if (app_type == "renewal") {
-        loader.value = true;
-        changeBackgroundColor("renewal");
-      } else if (app_type == "goodStanding") {
-        loader.value = true;
-        changeBackgroundColor("goodStandinganding");
-      } else if (app_type == "verification") {
-        loader.value = true;
-        changeBackgroundColor("verification");
-      }
-
-      const apiParameters = [page, size, value];
-      store.dispatch("reviewer/getLegacyData", apiParameters).then((res) => {
-        report.value = res.rows;
-        totalCount.value = res.count;
-        showLoading.value = false;
-        loader.value = false;
-      });
-    };
-
-    let reportOld = ref([
-      {
-        name: "Eyosias",
-        fatherName: "Desta",
-        grandFatherName: "Langena",
-        dateOfBirth: "2002-01-25T09:55:23.494Z",
-        nationality: "Ethiopian",
-        gender: "Male",
-        applicant: { phoneNumber: "0990099909" },
-        professionalTypes: { name: "Medical Doctor" },
-        region: { name: "SNNPR" },
-        createdAt: "2022-01-25T09:55:23.494Z",
-        certifiedDate: null,
-        applicationStatus: { name: "Submitted" },
-        remark: null,
-        newLicenseCode: "NL099090",
-        renewalCode: null,
-        verificationCode: null,
-        goodStandingCode: null,
-        reviewer: { name: "Robel Ephraim RE" },
-        expertLevels: { name: "Regional" },
-        education: {
-          department: { name: "Psychology" },
-          institution: { name: "AAU" },
-        },
-      },
-      {
-        name: "Ermias",
-        fatherName: "Bitew",
-        grandFatherName: "Meles",
-        dateOfBirth: "2002-01-25T09:55:23.494Z",
-        nationality: "Ethiopian",
-        gender: "Male",
-        applicant: { phoneNumber: "0990099909" },
-        professionalTypes: { name: "Medical Doctor" },
-        region: { name: "SNNPR" },
-        createdAt: "2022-01-25T09:55:23.494Z",
-        certifiedDate: null,
-        applicationStatus: { name: "Submitted" },
-        remark: null,
-        newLicenseCode: "NL099090",
-        renewalCode: null,
-        verificationCode: null,
-        goodStandingCode: null,
-        reviewer: { name: "Robel Ephraim RE" },
-        expertLevels: { name: "Regional" },
-        education: {
-          department: { name: "Psychology" },
-          institution: { name: "AAU" },
-        },
-      },
-      {
-        name: "Robel",
-        fatherName: "Ephraim",
-        grandFatherName: "Abdisa",
-        dateOfBirth: "2002-01-25T09:55:23.494Z",
-        nationality: "Ethiopian",
-        gender: "Male",
-        applicant: { phoneNumber: "0990099909" },
-        professionalTypes: { name: "Medical Doctor" },
-        region: { name: "SNNPR" },
-        createdAt: "2022-01-25T09:55:23.494Z",
-        certifiedDate: null,
-        applicationStatus: { name: "Submitted" },
-        remark: null,
-        newLicenseCode: "NL099090",
-        renewalCode: null,
-        verificationCode: null,
-        goodStandingCode: null,
-        reviewer: { name: "Robel Ephraim RE" },
-        expertLevels: { name: "Regional" },
-        education: {
-          department: { name: "Psychology" },
-          institution: { name: "AAU" },
-        },
-      },
-      {
-        name: "Mahlet",
-        fatherName: "Samuel",
-        grandFatherName: "Akalu",
-        dateOfBirth: "2002-01-25T09:55:23.494Z",
-        nationality: "Ethiopian",
-        gender: "Female",
-        applicant: { phoneNumber: "0990099909" },
-        professionalTypes: { name: "Assistant nurse" },
-        region: { name: "Oromia" },
-        createdAt: "2022-01-25T09:55:23.494Z",
-        certifiedDate: null,
-        applicationStatus: { name: "Submitted" },
-        remark: null,
-        newLicenseCode: "NL099090",
-        renewalCode: null,
-        verificationCode: null,
-        goodStandingCode: null,
-        reviewer: { name: "Robel Ephraim RE" },
-        expertLevels: { name: "Regional" },
-        education: {
-          department: { name: "Psychology" },
-          institution: { name: "AAU" },
-        },
-      },
-    ]);
     let professions = ref([]);
     let regions = ref([]);
     let zones = ref([]);
@@ -1372,19 +1287,13 @@ export default {
       status: "",
       startDate: "",
       endDate: "",
-      all: null,
+      all: "",
     });
 
     let loader = ref(false);
 
     const changeBackgroundColor = (title) => {
       selectBackgroundColor.value = title;
-      // selectedApplication.value = {
-      //   newLicense: title === "newLicense",
-      //   renewal: title === "renewal",
-      //   goodStanding: title === "goodStanding",
-      //   verification: title === "verification",
-      // };
     };
 
     const fetchNewLicenseReport = () => {
@@ -1399,7 +1308,6 @@ export default {
     };
 
     const paginateReport = (reportValue, index) => {
-      console.log("index", index);
       report.value = reportValue.slice(
         index * paginationSize.value,
         index * paginationSize.value + paginationSize.value
@@ -1471,9 +1379,36 @@ export default {
       saveAs(blob, "Report.xls");
     };
 
-    const filterApplication = (profession, region, gender, applicationStatus, startDateFrom, endDateFrom) => {
-      
-    }
+    const filterProfessionType = (profType) => {
+      professionTypeValue.value = profType;
+      filterApplication();
+    };
+    const filterRegion = (regionVal) => {
+      if (regionVal == "") {
+        regionValue.value = "";
+        filterApplication();
+      } else {
+        regionValue.value = regionVal.name;
+        filterApplication();
+      }
+    };
+    const filterApplication = () => {
+      let filterValue = reportData.value.filter((report) => {
+        return (
+          report.licenseProfessionalTypes[0].professionalTypes.name.includes(
+            professionTypeValue.value
+          ) &&
+          report.gender.includes(genderValue.value) &&
+          report.applicationStatus.name.includes(
+            applicationStatusValue.value
+          ) &&
+          !moment(startDateValue.value).isAfter(report.createdAt) &&
+          moment(endDateValue.value).isSameOrAfter(report.createdAt)
+        );
+      });
+      // reportData.value = filterValue;
+      paginateReport(filterValue, 0);
+    };
     const filterProfession = (profType) => {
       var tableFilter = [];
       tableFilter = report.value;
@@ -1487,24 +1422,6 @@ export default {
       } else {
         report.value = tableFilter2.filter(function(e) {
           return e.professionalTypes.name == profType;
-        });
-      }
-    };
-    const filterRegion = (region) => {
-      fetchZones(region.id);
-      var tableFilter = [];
-      tableFilter = report.value;
-      var tableFilter2 = [];
-      for (var i = 0; i < tableFilter.length; i++) {
-        if (tableFilter[i].region.name != null) {
-          tableFilter2.push(tableFilter[i]);
-        }
-      }
-      if (region.name == null) {
-        report.value = store.getter["report/getReport"];
-      } else {
-        report.value = tableFilter2.filter(function(e) {
-          return e.region.name == region.name;
         });
       }
     };
@@ -1545,46 +1462,26 @@ export default {
       }
     };
     const filterDate = (startDate, endDate) => {
-      report.value = store.getters["report/getReport"];
-      var dateFilter = [];
-      dateFilter = report.value;
-      report.value = dateFilter.filter(function(date) {
-        return (
-          // !isNaN(Date.parse(date.applicant.createdAt)) &&
-          Date.parse(date.applicant.createdAt) >= Date.parse(startDate) &&
-          // !isNaN(Date.parse(date.createdAt)) &&
-          Date.parse(date.createdAt) <= Date.parse(endDate)
-        );
-      });
+      console.log("fd", startDate, "ed", endDate);
+      if (endDate == "") {
+        startDateValue.value = "1900-01-01";
+        endDateValue.value = "2100-01-01";
+        filter.value.startDate = "";
+      } else {
+        startDateValue.value = startDate;
+        endDateValue.value = endDate;
+      }
+      filterApplication();
     };
     const filterGender = (gender) => {
-      report.value = store.getters["report/getReport"];
-      var gendertable = [];
-      gendertable = report.value;
-      if (gender == "both") {
-        report.value = gendertable.filter(function(e) {
-          return e.gender == "male" || e.gender == "female";
-        });
-      } else {
-        report.value = gendertable.filter(function(e) {
-          return e.gender == gender;
-        });
-      }
+      genderValue.value = gender;
+      filterApplication();
     };
     const filterAppStatus = (status) => {
-      report.value = store.getters["report/getReport"];
-      var statusTable = [];
-      statusTable = report.value;
-      if (status == null) {
-        report.value = store.getter["report/getReport"];
-      } else {
-        report.value = statusTable.filter(function(e) {
-          return e.applicationStatus.name == status;
-        });
-      }
+      applicationStatusValue.value = status;
+      filterApplication();
     };
     onMounted(() => {
-      // fetchReport(0, paginationSize.value, 'new_license');
       fetchNewLicenseReport();
       fetchProfessionType();
       fetchRegion();
@@ -1623,8 +1520,8 @@ export default {
       paginationSizeList,
       pageChanged,
       handlePagSize,
-      fetchReport,
       selectBackgroundColor,
+      filterProfessionType,
     };
   },
 };
@@ -1638,7 +1535,8 @@ export default {
   flex-wrap: wrap;
 }
 .applicationType {
-  background-color: #300400;
+  background-color: #285180;
+  color: #ffffff;
 }
 th {
   color: #648ea3;
