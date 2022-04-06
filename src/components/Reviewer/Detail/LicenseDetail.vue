@@ -405,6 +405,7 @@ export default {
         admins.value = res.data.data.filter(e => {
           return e.id !== loggedInAdminId;
         })
+        console.log("res admin", res)
       });
     };
 
@@ -413,6 +414,12 @@ export default {
         admins.value = res.data.data.filter(e => {
           return e.id !== loggedInAdminId
         });
+        admins.value = [
+          ...admins.value,
+          {
+            name: "Federal Admin"
+          }
+        ]
       });
     };
 
