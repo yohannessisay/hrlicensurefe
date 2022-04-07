@@ -1,6 +1,8 @@
 export default {
   getNewLicenseUnassigned: (state) => state.newLicenseUnassigned,
   getNewLicenseUnassignedSearched: (state) => state.newLicenseUnassignedSearched,
+  getNewLicenseFromOtherRegion: (state) => state.newLicenseFromOtherRegion,
+  getNewLicenseFromOtherRegionSearched: (state) => state.newLicenseFromOtherRegionSearched,
 
   getNewLicenseUnfinished: (state) => state.newLicenseUnfinished,
   getNewLicenseUnfinishedSearched: (state) => state.newLicenseUnfinishedSearched,

@@ -2,6 +2,8 @@ export default {
   state: {
     newLicenseUnassigned: [],
     newLicenseUnassignedSearched: [],
+    newLicenseFromOtherRegion: [],
+    newLicenseFromOtherRegionSearched: [],
 
     newLicenseUnfinished: [],
     newLicenseUnfinishedSearched: [],

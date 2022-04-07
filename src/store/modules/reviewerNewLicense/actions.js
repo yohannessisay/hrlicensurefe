@@ -3,6 +3,8 @@ import { baseUrl } from "../../../composables/baseURL";
 import {
   SET_NEW_LICENSE_UNASSIGNED,
   SET_NEW_LICENSE_UNASSIGNED_SEARCHED,
+  SET_NEW_LICENSE_FROM_OTHER_REGION,
+  SET_NEW_LICENSE_FROM_OTHER_REGION_SEARCHED,
   SET_NEW_LICENSE_UNFINISHED,
   SET_NEW_LICENSE_UNFINISHED_SEARCHED,
   SET_NEW_LICENSE_OTHERS_UNFINISHED,
@@ -72,12 +74,10 @@ import {
   SET_NEW_LICENSE_FOR_SPECIFIC_USER,
   SET_NEW_LICENSE_FOR_SPECIFIC_USER_SEARCHED,
   NEW_LICENSE_REPORT,
-
   SET_NEW_LICENSE_SUSPENDED,
   SET_NEW_LICENSE_SUSPENDED_SEARCHED,
   SET_NEW_LICENSE_CANCELLED,
   SET_NEW_LICENSE_CANCELLED_SEARCHED,
-
   SET_NEW_LICENSE_ALL_Suspended,
   SET_NEW_LICENSE_ALL_Suspended_SEARCHED,
   SET_NEW_LICENSE_ALL_Cancelled,
@@ -85,11 +85,6 @@ import {
 } from "./mutation-types";
 
 export default {
-  async getNewLicenseUnassigned({ commit }, statusId) {
-    const url = baseUrl + "/newLicenses/status/" + statusId;
-    const resp = await ApiService.get(url);
-    commit(SET_NEW_LICENSE_UNASSIGNED, resp.data.data);
-  },
   async getNewLicenseReport({ commit }) {
     try {
       const approved = await ApiService.get(baseUrl + "/newLicenses/status/5");
@@ -99,6 +94,14 @@ export default {
     } catch (err) {
       return err;
     }
+  },
+  async getNewLicenseUnassigned({ commit }, statusId) {
+    const url = baseUrl + "/newLicenses/status/" + statusId;
+    const resp = await ApiService.get(url);
+    const unassignedApplications = resp.data.data.filter((unassigned) => {
+      return unassigned.transferFrom === null;
+    });
+    commit(SET_NEW_LICENSE_UNASSIGNED, unassignedApplications);
   },
   getNewLicenseUnassignedSearched({ commit, getters }, searchKey) {
     if (getters.getNewLicenseUnassigned === undefined) {
@@ -119,6 +122,37 @@ export default {
               .includes(searchKey.toLowerCase());
     });
     commit(SET_NEW_LICENSE_UNASSIGNED_SEARCHED, searchedVal);
+  },
+
+  async getNewLicenseFromOtherRegion({ commit }, statusId) {
+    const url = baseUrl + "/newLicenses/status/" + statusId;
+    const resp = await ApiService.get(url);
+    const transferdApplications = resp.data.data.filter((unassigned) => {
+      return unassigned.transferFrom !== null;
+    });
+    commit(SET_NEW_LICENSE_FROM_OTHER_REGION, transferdApplications);
+  },
+  getNewLicenseFromOtherRegionSearched({ commit, getters }, searchKey) {
+    if (getters.getNewLicenseFromOtherRegion === undefined) {
+      return;
+    }
+    const searchedVal = getters.getNewLicenseFromOtherRegion.filter(function(
+      e
+    ) {
+      return e.newLicenseCode === undefined
+        ? ""
+        : e.newLicenseCode.toLowerCase().includes(searchKey.toLowerCase()) ||
+            (e.applicant.profile.name + " " + e.applicant.profile.fatherName)
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.name
+              .toLowerCase()
+              .includes(searchKey.toLowerCase()) ||
+            e.applicant.profile.fatherName
+              .toLowerCase()
+              .includes(searchKey.toLowerCase());
+    });
+    commit(SET_NEW_LICENSE_FROM_OTHER_REGION_SEARCHED, searchedVal);
   },
 
   async getNewLicenseUnfinished({ commit }, adminStatus) {
@@ -1036,7 +1070,7 @@ export default {
   },
 
   async getNewLicenseSuspended({ commit }, adminStatus) {
-    const url = baseUrl + "/newLicenses/status/"+adminStatus[1];
+    const url = baseUrl + "/newLicenses/status/" + adminStatus[1];
     const resp = await ApiService.get(url);
     const suspended = resp.data.data.filter(function(e) {
       return e.reviewerId === adminStatus[0];
@@ -1065,8 +1099,8 @@ export default {
     commit(SET_NEW_LICENSE_SUSPENDED_SEARCHED, searchedVal);
   },
 
-  async getNewLicenseAllSuspended({commit}, status) {
-    const url = baseUrl + "/newLicenses/status/"+ status;
+  async getNewLicenseAllSuspended({ commit }, status) {
+    const url = baseUrl + "/newLicenses/status/" + status;
     const resp = await ApiService.get(url);
     const newLicenseAllSuspended = resp.data.data;
     commit(SET_NEW_LICENSE_ALL_Suspended, newLicenseAllSuspended);
@@ -1094,7 +1128,7 @@ export default {
   },
 
   async getNewLicenseCancelled({ commit }, adminStatus) {
-    const url = baseUrl + "/newLicenses/status/"+adminStatus[1];
+    const url = baseUrl + "/newLicenses/status/" + adminStatus[1];
     const resp = await ApiService.get(url);
     const cancelled = resp.data.data.filter(function(e) {
       return e.reviewerId === adminStatus[0];
@@ -1123,8 +1157,8 @@ export default {
     commit(SET_NEW_LICENSE_CANCELLED_SEARCHED, searchedVal);
   },
 
-  async getNewLicenseAllCancelled({commit}, status) {
-    const url = baseUrl + "/newLicenses/status/"+ status;
+  async getNewLicenseAllCancelled({ commit }, status) {
+    const url = baseUrl + "/newLicenses/status/" + status;
     const resp = await ApiService.get(url);
     const newLicenseAllCancelled = resp.data.data;
     commit(SET_NEW_LICENSE_ALL_Cancelled, newLicenseAllCancelled);
