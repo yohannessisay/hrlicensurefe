@@ -3,6 +3,42 @@
     <!-- <reviewer-nav-bar tab="newLicenseUnassigned" /> -->
     <div class="bg-lightBlueB-200 h-full" v-if="!allInfo.searchByInput">
       <div class="pl-12">
+        <div style="border-bottom: 2px solid #eaeaea">
+          <ul class="flex cursor-pointer">
+            <li
+              :class="[
+                selectedTab == 'Unassigned'
+                  ? selectedTabClass
+                  : notSelectedTabClass,
+              ]"
+              @click="changeTab('Unassigned')"
+              :style="[
+                selectedTab == 'Unassigned'
+                  ? 'background-color: white'
+                  : 'background-color: #C3DBD9',
+              ]"
+            >
+              New License
+            </li>
+            <li
+              :class="[
+                selectedTab == 'From Other Region'
+                  ? selectedTabClass
+                  : notSelectedTabClass,
+              ]"
+              :style="[
+                selectedTab == 'From Other Region'
+                  ? 'background-color: white'
+                  : 'background-color: #C3DBD9',
+              ]"
+              @click="changeTab('From Other Region')"
+            >
+              Renewal
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="pl-12">
         <div>Filter By</div>
       </div>
 
@@ -106,6 +142,11 @@ export default {
     let nothingToShow = ref(false);
     let showLoading = ref(false);
 
+    let selectedTabClass = "py-2 px-6 bg-white rounded-t-lg mr-4";
+    let notSelectedTabClass = "py-2 px-6 rounded-t-lg mr-4";
+
+    let selectedTab = ref("New License");
+
     let allInfo = ref({
       alreadyPushed: false,
       searchByInput: false,
@@ -122,6 +163,8 @@ export default {
     const filterAssignedApplication = () => {
       filterApplication(moment, allInfo.value);
     };
+
+    const changeTab = (type) => {};
 
     const backClicked = () => {
       allInfo.value.searchByInput = false;
@@ -171,6 +214,9 @@ export default {
       showLoading,
       filterAssignedApplication,
       backClicked,
+      selectedTabClass,
+      notSelectedTabClass,
+      selectedTab,
     };
   },
 };
