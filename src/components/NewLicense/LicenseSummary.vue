@@ -176,12 +176,7 @@
           >
             <Title class="" :message="item.documentType.name" />
             <picture>
-              <img
-                :src="
-                  'https://storage.googleapis.com/hris-lisence-dev/' +
-                    item.filePath
-                "
-              />
+              <img :src="this.basePath + item.filePath" />
             </picture>
           </div>
         </div>
@@ -334,7 +329,7 @@ import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import Spinner from "@/sharedComponents/Spinner";
 import moment from "moment";
-import idVue from "../../sharedComponents/illustrations/id.vue";
+import { googleApi } from "@/composables/baseURL";
 
 export default {
   props: ["activeState"],
@@ -345,6 +340,7 @@ export default {
     Spinner,
   },
   async created() {
+    this.basePath = googleApi;
     this.showCheckBox = true;
     this.userId = +localStorage.getItem("userId");
     this.draftId = this.$route.params.id;
@@ -1248,7 +1244,7 @@ export default {
   },
 
   data: () => ({
-    basePath: "https://storage.googleapis.com/hris-lisence-dev/",
+    basePath: "",
     docList: [],
     documentsArray: [],
     show: false,
