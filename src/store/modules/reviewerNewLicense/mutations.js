@@ -1,6 +1,8 @@
 import {
   SET_NEW_LICENSE_UNASSIGNED,
   SET_NEW_LICENSE_UNASSIGNED_SEARCHED,
+  SET_NEW_LICENSE_FROM_OTHER_REGION,
+  SET_NEW_LICENSE_FROM_OTHER_REGION_SEARCHED,
 
   SET_NEW_LICENSE_UNFINISHED,
   SET_NEW_LICENSE_UNFINISHED_SEARCHED,
@@ -107,7 +109,13 @@ export default {
   [SET_NEW_LICENSE_UNASSIGNED_SEARCHED](state, searchedVal) {
     state.newLicenseUnassignedSearched = searchedVal;
   },
-
+  [SET_NEW_LICENSE_FROM_OTHER_REGION](state, data) {
+    state.newLicenseFromOtherRegion = data;
+    state.newLicenseFromOtherRegionSearched = data;
+  },
+  [SET_NEW_LICENSE_FROM_OTHER_REGION_SEARCHED](state, searchedVal) {
+    state.newLicenseFromOtherRegionSearched = searchedVal;
+  },
 
   [SET_NEW_LICENSE_UNFINISHED](state, data) {
     state.newLicenseUnfinished = data;

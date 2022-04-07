@@ -2,7 +2,7 @@
   <div>
     <!-- <reviewer-nav-bar tab="newLicenseUnassigned" /> -->
     <div class="bg-lightBlueB-200 h-full" v-if="!allInfo.searchByInput">
-      <div class="pl-12">
+      <div class="pl-12" v-if="expertLevel == 3">
         <div style="border-bottom: 2px solid #eaeaea">
           <ul class="flex cursor-pointer">
             <li
@@ -18,7 +18,7 @@
                   : 'background-color: #C3DBD9',
               ]"
             >
-              New License
+              Unassigned
             </li>
             <li
               :class="[
@@ -33,7 +33,7 @@
               ]"
               @click="changeTab('From Other Region')"
             >
-              Renewal
+              From Other Region
             </li>
           </ul>
         </div>
@@ -60,18 +60,47 @@
         </button>
       </div>
       <div class="flex pl-12 pt-tiny">
-        <Title message="New License Unassigned" />
+        <Title :message="message" />
       </div>
-      <div class="flex flex-wrap pb-medium rounded h-full" v-if="!showLoading">
+      <!-- <div class="flex flex-wrap pb-medium rounded h-full" v-if="!showLoading">
         <nothing-to-show :nothingToShow="nothingToShow" />
         <unassigned-applications
           :unassignedApplication="getNewLicenseUnassigned"
           app_type="New License"
         />
+      </div> -->
+      <div
+        class="flex flex-wrap pb-medium rounded h-full"
+        v-if="
+          selectedTab == 'Unassigned'
+            ? !showLoadingUnassigned
+            : !showLoadingFromOtherRegion
+        "
+      >
+        <nothing-to-show
+          :nothingToShow="
+            selectedTab == 'Unassigned'
+              ? nothingToShowUnassigned
+              : nothingToShowFromOtherRegion
+          "
+        />
+        <unassigned-applications
+          :unassignedApplication="
+            selectedTab == 'Unassigned'
+              ? getNewLicenseUnassigned
+              : getNewLicenseFromOtherRegion
+          "
+          app_type="New License"
+          others_licensed="false"
+        />
       </div>
     </div>
     <div
-      v-if="showLoading"
+      v-if="
+        selectedTab == 'Unassigned'
+          ? showLoadingUnassigned
+          : showLoadingFromOtherRegion
+      "
       class="flex justify-center justify-items-center mt-24"
     >
       <Spinner />
@@ -125,6 +154,11 @@ export default {
         "reviewerNewLicense/getNewLicenseUnassignedSearched"
       ];
     },
+    getNewLicenseFromOtherRegion() {
+      return store.getters[
+        "reviewerNewLicense/getNewLicenseFromOtherRegionSearched"
+      ];
+    },
   },
   components: {
     ReviewerNavBar,
@@ -137,15 +171,22 @@ export default {
   },
   setup() {
     const store = useStore();
-    let newLicenseUnassigned = ref([]);
+    let expertLevel = JSON.parse(localStorage.getItem("allAdminData")).expertLevelId
 
-    let nothingToShow = ref(false);
-    let showLoading = ref(false);
+    let newLicenseUnassigned = ref([]);
+    let newLicenseFromOtherRegion = ref([]);
+
+    let nothingToShowUnassigned = ref(false);
+    let nothingToShowFromOtherRegion = ref(false);
+
+    let showLoadingUnassigned = ref(false);
+    let showLoadingFromOtherRegion = ref(false);
 
     let selectedTabClass = "py-2 px-6 bg-white rounded-t-lg mr-4";
     let notSelectedTabClass = "py-2 px-6 rounded-t-lg mr-4";
+    let message = ref("New License Unassigned");
 
-    let selectedTab = ref("New License");
+    let selectedTab = ref("Unassigned");
 
     let allInfo = ref({
       alreadyPushed: false,
@@ -164,7 +205,24 @@ export default {
       filterApplication(moment, allInfo.value);
     };
 
-    const changeTab = (type) => {};
+    const changeTab = (type) => {
+      selectedTab.value = type;
+      message.value = `New License ${type}`;
+
+      type == "Unassigned"
+        ? (allInfo.value.assignApplication = newLicenseUnassigned.value)
+        : (allInfo.value.assignApplication = newLicenseFromOtherRegion.value);
+
+      for (let applicant in allInfo.value.assignApplication) {
+        if (
+          allInfo.value.assignApplication[applicant].applicationType ===
+          undefined
+        ) {
+          allInfo.value.assignApplication[applicant].applicationType =
+            allInfo.value.assignApplication[applicant].applicantType;
+        }
+      }
+    };
 
     const backClicked = () => {
       allInfo.value.searchByInput = false;
@@ -176,12 +234,12 @@ export default {
     };
 
     const fetchNewLicenseUnassigned = () => {
-      showLoading.value = true;
+      showLoadingUnassigned.value = true;
       const statusId = applicationStatus(store, "SUB");
       store
         .dispatch("reviewerNewLicense/getNewLicenseUnassigned", statusId)
         .then((res) => {
-          showLoading.value = false;
+          showLoadingUnassigned.value = false;
           newLicenseUnassigned.value =
             store.getters["reviewerNewLicense/getNewLicenseUnassignedSearched"];
           allInfo.value.assignApplication =
@@ -199,24 +257,42 @@ export default {
             store.getters["reviewerNewLicense/getNewLicenseUnassigned"]
               .length === 0
           ) {
-            nothingToShow.value = true;
+            nothingToShowUnassigned.value = true;
           }
         });
     };
 
+    const fetchNewLicenseFromOtherRegion = () => {
+      showLoadingFromOtherRegion.value = true;
+      const statusId = applicationStatus(store, "SUB");
+      store.dispatch("reviewerNewLicense/getNewLicenseFromOtherRegion", statusId).then((res) => {
+        showLoadingFromOtherRegion.value = false;
+        newLicenseFromOtherRegion.value =
+          store.getters["reviewerNewLicense/getNewLicenseFromOtherRegionSearched"];
+        if (newLicenseFromOtherRegion.value.length === 0) {
+          nothingToShowFromOtherRegion.value = true;
+        }
+      });
+    };
+
     onMounted(() => {
       fetchNewLicenseUnassigned();
+      fetchNewLicenseFromOtherRegion();
     });
 
     return {
-      nothingToShow,
+      expertLevel,
+      nothingToShowUnassigned,
+      nothingToShowFromOtherRegion,
       allInfo,
-      showLoading,
+      showLoadingUnassigned,
       filterAssignedApplication,
       backClicked,
       selectedTabClass,
       notSelectedTabClass,
       selectedTab,
+      changeTab,
+      message,
     };
   },
 };
