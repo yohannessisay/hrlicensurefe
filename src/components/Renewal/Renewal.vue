@@ -1284,47 +1284,43 @@ import Navigation from "@/views/Navigation";
 import Institution from "./Institution.vue";
 import HealthExamCert from "./HealthExamCert";
 import WorkExperience from "./WorkExperience";
-import LicenseSummary from "./RenewalSummary";
-import LetterFromInstitution from "./Foreigner/LetterFromHiringManager";
-import CPDE from "./Ethiopians F/CPD";
-import CPDL from "./Ethiopians L/CPD";
-import CPDF from "./Foreigner/CPD";
-import PreviousLicenseE from "./Ethiopians F/PreviousLicenseE";
-import PreviousLicenseL from "./Ethiopians L/PreviousLicenseL";
-import PreviousLicenseF from "./Foreigner/PreviousLicenseF";
-import FlashMessage from "@/sharedComponents/FlashMessage";
-import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
-import Spinner from "@/sharedComponents/Spinner";
-import PayrollDoc from "./Ethiopians L/Payroll.vue";
-
-import RenewedLicenseOfHealthFacility from "./Foreigner/RenewedLicenseOfHealthFacility";
-
 import Passport from "./Passport.vue";
 
-import EnglishLanguageForeigner from "./Foreigner/EnglishLanguage";
-import HERQAF from "./Foreigner/HERQAF.vue";
-import LetterfromOrg from "./Foreigner/LetterfromOrg";
-import ProfessionalLicense from "./Foreigner/ProfessionalLicense";
-import RenewedLicense from "./Foreigner/RenewedLicense";
+// ethiopian from abroad applicant's documents
+import CPDE from "./Ethiopians F/CPD";
+import PreviousLicenseE from "./Ethiopians F/PreviousLicenseE";
+import HERQA from "./Ethiopians F/HERQA";
 
-import LetterFromHiringManagerForeignerEthiopian from "./Ethiopians F/LetterFromHiringManager.vue";
-import LetterFromHiringManagerForeigner from "./Foreigner/LetterFromHiringManager.vue";
-import LetterFromHiringManagerEthiopianLocal from "./Ethiopians L/LetterFromHiringManager.vue";
-
+// ethiopiain local applicant's documents
+import CPDL from "./Ethiopians L/CPD";
+import PreviousLicenseL from "./Ethiopians L/PreviousLicenseL";
+import PayrollDoc from "./Ethiopians L/Payroll.vue";
 import COC from "./Ethiopians L/COC";
 import Degree from "./Ethiopians L/Degree.vue";
 import Diploma from "./Ethiopians L/Diploma.vue";
 import Transcript from "./Ethiopians L/Transcript.vue";
 import EducationalDoc from "./Ethiopians L/EducationalDoc";
 import SupportLetterEthiopian from "./Ethiopians L/SupportLetter";
-
-import HERQA from "./Ethiopians F/HERQA";
-import SupportLetterForeign from "./Ethiopians F/SupportLetter";
-
 import Masters from "./Ethiopians L/Masters.vue";
 import MastersTranscript from "./Ethiopians L/MastersTranscript.vue";
 import PhD from "./Ethiopians L/PhD.vue";
 import PhDTranscript from "./Ethiopians L/PhDTranscript.vue";
+
+// foreigner applicant's documents
+import PreviousLicenseF from "./Foreigner/PreviousLicenseF";
+import CPDF from "./Foreigner/CPD";
+import RenewedLicenseOfHealthFacility from "./Foreigner/RenewedLicenseOfHealthFacility";
+import EnglishLanguageForeigner from "./Foreigner/EnglishLanguage";
+import HERQAF from "./Foreigner/HERQAF.vue";
+import ProfessionalLicense from "./Foreigner/ProfessionalLicense";
+import RenewedLicense from "./Foreigner/RenewedLicense";
+import LetterFromHiringManagerForeigner from "./Foreigner/LetterFromHiringManager.vue";
+
+import LicenseSummary from "./RenewalSummary";
+
+import FlashMessage from "@/sharedComponents/FlashMessage";
+import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
+import Spinner from "@/sharedComponents/Spinner";
 
 export default {
   created() {
@@ -1353,44 +1349,39 @@ export default {
     eduLevel: "",
   }),
   components: {
+    Navigation,
     Institution,
     HealthExamCert,
-    LicenseSummary,
-    Navigation,
-    LetterFromInstitution,
-    CPDE,
-    CPDL,
-    CPDF,
     WorkExperience,
-    PreviousLicenseE,
-    PreviousLicenseL,
-    PreviousLicenseF,
-    FlashMessage,
-    ErrorFlashMessage,
-    Spinner,
-    PayrollDoc,
     Passport,
-    EnglishLanguageForeigner,
+    CPDE,
+    PreviousLicenseE,
     HERQA,
-    LetterfromOrg,
-    ProfessionalLicense,
-    RenewedLicense,
+    CPDL,
+    PreviousLicenseL,
+    PayrollDoc,
     COC,
     Degree,
     Diploma,
     Transcript,
     EducationalDoc,
     SupportLetterEthiopian,
-    HERQAF,
-    SupportLetterForeign,
-    LetterFromHiringManagerForeignerEthiopian,
-    LetterFromHiringManagerEthiopianLocal,
-    LetterFromHiringManagerForeigner,
     Masters,
     MastersTranscript,
     PhD,
     PhDTranscript,
+    PreviousLicenseF,
+    CPDF,
     RenewedLicenseOfHealthFacility,
+    EnglishLanguageForeigner,
+    HERQAF,
+    ProfessionalLicense,
+    RenewedLicense,
+    LetterFromHiringManagerForeigner,
+    LicenseSummary,
+    FlashMessage,
+    ErrorFlashMessage,
+    Spinner,
   },
   methods: {
     applicantTypeSet: function(params) {
