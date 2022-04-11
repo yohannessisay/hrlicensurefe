@@ -193,7 +193,7 @@
             <picture>
               <img
                 :src="
-                  'https://storage.googleapis.com/hris-lisence-dev/' +
+                  this.basePath +
                     item.filePath
                 "
               />
@@ -352,6 +352,7 @@ export default {
     Spinner,
   },
   async created() {
+    this.basePath = googleApi;
     this.showCheckBox = true;
     this.userId = +localStorage.getItem("userId");
     this.draftId = this.$route.params.id;
@@ -412,8 +413,7 @@ export default {
     this.departmentId = this.license.departmentId;
   },
   data: () => ({
-    basePath: googleApi,
-
+    basePath: "",
     filePreview: "",
     letterPreview: "",
     docList: [],
