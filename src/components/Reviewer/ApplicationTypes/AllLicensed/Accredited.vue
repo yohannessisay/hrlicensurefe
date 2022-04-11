@@ -12,7 +12,7 @@
               <div v-else-if="noLegacyData" style="display: inline">
                 <div class="mr-6">there is no data</div>
                 <a @click="clearSearch()">back</a>
-                </div>
+              </div>
 
               <div v-else>
                 <div id="main" class="mt-1 pt-4 pl-4">
@@ -555,11 +555,11 @@ export default {
       showLoading.value = true;
       const apiParameters = [page, size, value];
       store.dispatch("reviewer/getLegacyData", apiParameters).then((res) => {
-        if(res) {
+        if (res) {
           noLegacyData.value = false;
-        legacyData.value = res.rows;
-        totalCount.value = res.count;
-        showLoading.value = false;
+          legacyData.value = res.rows;
+          totalCount.value = res.count;
+          showLoading.value = false;
         } else {
           noLegacyData.value = true;
           showLoading.value = false;

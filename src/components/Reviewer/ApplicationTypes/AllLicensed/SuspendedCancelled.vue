@@ -37,7 +37,11 @@
             </li>
             <li>
               <label class="text-primary-700">Application Type</label>
-              <select class="max-w-7x3" v-model="app_type" @change="changeTab(app_type, app_value)">
+              <select
+                class="max-w-7x3"
+                v-model="app_type"
+                @change="changeTab(app_type, app_value)"
+              >
                 <option
                   v-for="types in applicationTypes"
                   v-bind:key="types"
@@ -170,10 +174,14 @@ export default {
   computed: {
     moment: () => moment,
     getNewLicenseSuspended() {
-      return store.getters["reviewerNewLicense/getNewLicenseAllSuspendedSearched"];
+      return store.getters[
+        "reviewerNewLicense/getNewLicenseAllSuspendedSearched"
+      ];
     },
     getNewLicenseCancelled() {
-      return store.getters["reviewerNewLicense/getNewLicenseAllCancelledSearched"];
+      return store.getters[
+        "reviewerNewLicense/getNewLicenseAllCancelledSearched"
+      ];
     },
     getRenewalSuspended() {
       return store.getters["reviewerRenewal/getRenewalAllSuspendedSearched"];
@@ -268,13 +276,20 @@ export default {
       showLoadingNewLicenseSuspended.value = true;
       const suspendedStatus = applicationStatus(store, "SUSP");
       store
-        .dispatch("reviewerNewLicense/getNewLicenseAllSuspended", suspendedStatus)
+        .dispatch(
+          "reviewerNewLicense/getNewLicenseAllSuspended",
+          suspendedStatus
+        )
         .then((res) => {
           showLoadingNewLicenseSuspended.value = false;
           newLicenseSuspended.value =
-            store.getters["reviewerNewLicense/getNewLicenseAllSuspendedSearched"];
+            store.getters[
+              "reviewerNewLicense/getNewLicenseAllSuspendedSearched"
+            ];
           allInfo.value.assignApplication =
-            store.getters["reviewerNewLicense/getNewLicenseAllSuspendedSearched"];
+            store.getters[
+              "reviewerNewLicense/getNewLicenseAllSuspendedSearched"
+            ];
 
           for (let applicant in allInfo.value.assignApplication) {
             if (
@@ -294,40 +309,53 @@ export default {
     const fetchNewLicenseCancelled = () => {
       showLoadingNewLicenseCancelled.value = true;
       const cancelledStatus = applicationStatus(store, "CANC");
-      store.dispatch("reviewerNewLicense/getNewLicenseAllCancelled", cancelledStatus).then((res) => {
-        showLoadingNewLicenseCancelled.value = false;
-        newLicenseCancelled.value =
-          store.getters["reviewerNewLicense/getNewLicenseAllCancelledSearched"];
-        if (newLicenseCancelled.value.length === 0) {
-          nothingToShowGoodStanding.value = true;
-        }
-      });
+      store
+        .dispatch(
+          "reviewerNewLicense/getNewLicenseAllCancelled",
+          cancelledStatus
+        )
+        .then((res) => {
+          showLoadingNewLicenseCancelled.value = false;
+          newLicenseCancelled.value =
+            store.getters[
+              "reviewerNewLicense/getNewLicenseAllCancelledSearched"
+            ];
+          if (newLicenseCancelled.value.length === 0) {
+            nothingToShowGoodStanding.value = true;
+          }
+        });
     };
 
     const fetchRenewalSuspended = () => {
       showLoadingRenewalSuspended.value = true;
       const suspendedStatus = applicationStatus(store, "SUSP");
-      store.dispatch("reviewerRenewal/getRenewalAllSuspended", suspendedStatus).then((res) => {
-        showLoadingRenewalSuspended.value = false;
-        renewalSuspended.value =
-          store.getters["reviewerRenewal/getRenewalAllSuspendedSearched"];
-        if (renewalSuspended.value.length === 0) {
-          nothingToShowRenewal.value = true;
-        }
-      });
+      store
+        .dispatch("reviewerRenewal/getRenewalAllSuspended", suspendedStatus)
+        .then((res) => {
+          showLoadingRenewalSuspended.value = false;
+          renewalSuspended.value =
+            store.getters["reviewerRenewal/getRenewalAllSuspendedSearched"];
+          if (renewalSuspended.value.length === 0) {
+            nothingToShowRenewal.value = true;
+          }
+        });
     };
 
     const fetchRenewalCancelled = () => {
       showLoadingRenewalCancelled.value = true;
       const cancelledStatus = applicationStatus(store, "CANC");
-      store.dispatch("reviewerRenewal/getRenewalAllCancelled", cancelledStatus).then((res) => {
-        showLoadingRenewalCancelled.value = false;
-        renewalCancelled.value =
-          store.getters["reviewerGoodStanding/getRenewalAllCancelledSearched"];
-        if (renewalCancelled.value.length === 0) {
-          nothingToShowGoodStanding.value = true;
-        }
-      });
+      store
+        .dispatch("reviewerRenewal/getRenewalAllCancelled", cancelledStatus)
+        .then((res) => {
+          showLoadingRenewalCancelled.value = false;
+          renewalCancelled.value =
+            store.getters[
+              "reviewerGoodStanding/getRenewalAllCancelledSearched"
+            ];
+          if (renewalCancelled.value.length === 0) {
+            nothingToShowGoodStanding.value = true;
+          }
+        });
     };
     onMounted(() => {
       fetchRenewalSuspended();
