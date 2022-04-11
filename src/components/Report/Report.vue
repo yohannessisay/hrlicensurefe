@@ -727,7 +727,7 @@
                       <th
                         class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
                       >
-                        Created Date
+                        Certified Date
                       </th>
                       <th
                         class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
@@ -1061,14 +1061,16 @@
                         </div>
                       </td>
                       <td
-                        v-if="item.createdAt"
+                        v-if="item.certifiedDate"
                         class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
                       >
                         <div class="flex">
                           <div class="ml-3">
                             <p class="text-gray-900 whitespace-no-wrap">
                               {{
-                                moment(item.createdAt).format("MMM DD, YYYY")
+                                moment(item.certifiedDate).format(
+                                  "MMM DD, YYYY"
+                                )
                               }}
                             </p>
                           </div>
@@ -1399,17 +1401,21 @@ export default {
     };
     const filterApplication = () => {
       let filterValue = allData.value.filter((report) => {
-        return (
-          report.licenseProfessionalTypes[0].professionalTypes.name.includes(
-            professionTypeValue.value
-          ) &&
-          report.gender.includes(genderValue.value) &&
-          report.applicationStatus.name.includes(
-            applicationStatusValue.value
-          ) &&
-          !moment(startDateValue.value).isAfter(report.createdAt) &&
-          moment(endDateValue.value).isSameOrAfter(report.createdAt)
-        );
+        return report.licenseProfessionalTypes[0].professionalTypes.name.includes(
+          professionTypeValue.value
+        ) && genderValue.value
+          ? report.gender === genderValue.value &&
+              report.applicationStatus.name.includes(
+                applicationStatusValue.value
+              ) &&
+              !moment(startDateValue.value).isAfter(report.certifiedDate) &&
+              moment(endDateValue.value).isSameOrAfter(report.certifiedDate)
+          : report.gender.includes(genderValue.value) &&
+              report.applicationStatus.name.includes(
+                applicationStatusValue.value
+              ) &&
+              !moment(startDateValue.value).isAfter(report.certifiedDate) &&
+              moment(endDateValue.value).isSameOrAfter(report.certifiedDate);
       });
       paginateReport(filterValue, 0);
       reportData.value = filterValue;
