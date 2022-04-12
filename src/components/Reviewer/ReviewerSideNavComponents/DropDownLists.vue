@@ -66,6 +66,27 @@
           </ul>
         </div>
       </li>
+      <li
+        @click="dropDownListHandler(dropDownMenus[1])"
+        v-if="
+          adminRole != 'ADM' && yoursAndOthersApplication[1] == 'Re Submitted'
+        "
+      >
+        <div
+          v-if="dropdownValue[0]"
+          class="dropdown-menu relative  shadow-md"
+          style="color: #648ea3; width: 200px;"
+        >
+          <ul class="block w-full  shadow float-right ">
+            <li @click="dropDownListHandler(dropDownMenus[1])" class="mb-2">
+              <p class=" text-sm" style="color: white; ">
+                <i class="mr-2 far fa-address-book fa-x fa-light"></i>
+                {{ yoursAndOthersApplication[1] }}
+              </p>
+            </li>
+          </ul>
+        </div>
+      </li>
     </ul>
   </div>
 </template>
