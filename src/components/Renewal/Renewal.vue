@@ -1291,7 +1291,7 @@ import CPDE from "./Ethiopians F/CPD";
 import PreviousLicenseE from "./Ethiopians F/PreviousLicenseE";
 import HERQA from "./Ethiopians F/HERQA";
 
-// ethiopiain local applicant's documents
+// ethiopian local applicant's documents
 import CPDL from "./Ethiopians L/CPD";
 import PreviousLicenseL from "./Ethiopians L/PreviousLicenseL";
 import PayrollDoc from "./Ethiopians L/Payroll.vue";
@@ -1443,14 +1443,14 @@ export default {
               return e.code == "SUB";
             });
             this.buttons = status[0]["buttons"];
-            let temp = "";
-            temp = this.buttons[1];
-            this.buttons[1] = this.buttons[2];
-            this.buttons[2] = temp;
-            let temp2 = "";
-            temp2 = this.buttons[0];
-            this.buttons[0] = this.buttons[2];
-            this.buttons[2] = temp2;
+            // let temp = "";
+            // temp = this.buttons[1];
+            // this.buttons[1] = this.buttons[2];
+            // this.buttons[2] = temp;
+            // let temp2 = "";
+            // temp2 = this.buttons[0];
+            // this.buttons[0] = this.buttons[2];
+            // this.buttons[2] = temp2;
           }
           if (this.draftStatus == "USUP") {
             let status = this.applicationStatuses.filter(function(e) {

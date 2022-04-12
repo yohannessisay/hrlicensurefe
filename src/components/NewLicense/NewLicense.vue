@@ -1281,14 +1281,14 @@ export default {
               return e.code == "SUB";
             });
             this.buttons = status[0]["buttons"];
-            let temp = "";
-            temp = this.buttons[1];
-            this.buttons[1] = this.buttons[2];
-            this.buttons[2] = temp;
-            let temp2 = "";
-            temp2 = this.buttons[0];
-            this.buttons[0] = this.buttons[2];
-            this.buttons[2] = temp2;
+            // let temp = "";
+            // temp = this.buttons[1];
+            // this.buttons[1] = this.buttons[2];
+            // this.buttons[2] = temp;
+            // let temp2 = "";
+            // temp2 = this.buttons[0];
+            // this.buttons[0] = this.buttons[2];
+            // this.buttons[2] = temp2;
           }
           if (this.draftStatus == "USUP") {
             let status = this.applicationStatuses.filter(function(e) {
