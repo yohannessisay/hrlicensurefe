@@ -59,9 +59,9 @@
 <script>
 import Navigation from "@/views/Navigation";
 import Institution from "./Institution.vue";
-import GoodStandingSummary from "./GoodStandingSummary";
-import GoodStandingLetter from "./LetterFromOrg";
 import LicenseCopy from "./LicenseCopy";
+import GoodStandingLetter from "./LetterFromOrg";
+import GoodStandingSummary from "./GoodStandingSummary";
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import Spinner from "@/sharedComponents/Spinner";
@@ -95,9 +95,9 @@ export default {
   components: {
     Navigation,
     Institution,
-    GoodStandingSummary,
-    GoodStandingLetter,
     LicenseCopy,
+    GoodStandingLetter,
+    GoodStandingSummary,
     FlashMessage,
     ErrorFlashMessage,
     Spinner,
