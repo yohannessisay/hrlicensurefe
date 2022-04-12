@@ -591,9 +591,7 @@ export default {
   async getGoodStandingReApply({ commit }, adminStatus) {
     const url = baseUrl + "/goodstandings/status/" + adminStatus[0];
     const resp = await ApiService.get(url);
-    const reApply = resp.data.data.filter(function(e) {
-      return e.reviewerId === adminStatus[1];
-    });
+    const reApply = resp.data.data;
     commit(SET_GOOD_STANDING_RE_APPLY, reApply);
   },
 

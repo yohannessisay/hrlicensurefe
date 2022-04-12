@@ -1143,9 +1143,7 @@ export default {
   async getRenewalReApply({ commit }, adminStatus) {
     const url = baseUrl + "/renewals/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
-    const reApply = resp.data.data.filter(function(e) {
-      return e.reviewerId === adminStatus[1];
-    });
+    const reApply = resp.data.data;
     commit(SET_RENEWAL_RE_APPLY, reApply);
   },
 

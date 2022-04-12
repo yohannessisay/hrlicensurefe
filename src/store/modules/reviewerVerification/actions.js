@@ -352,9 +352,7 @@ export default {
   async getVerificationReApply({ commit }, adminStatus) {
     const url = baseUrl + "/verifications/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
-    const reApply = resp.data.data.filter(function(e) {
-      return e.reviewerId === adminStatus[1];
-    });
+    const reApply = resp.data.data;
     commit(SET_VERIFICATION_RE_APPLY, reApply);
   },
 
