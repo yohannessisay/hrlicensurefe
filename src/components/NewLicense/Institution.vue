@@ -571,6 +571,8 @@ export default {
       this.licenseInfo.education.institutionId = institution.id;
       if (institution.name == "Other") {
         this.showOtherEducation = true;
+      } else {
+        this.showOtherEducation = false;
       }
     },
     checkOtherProfession(profession, event) {
