@@ -1110,13 +1110,13 @@
 
 <script>
 import Navigation from "@/views/Navigation";
+
 import Institution from "./Institution.vue";
 import Passport from "./Passport.vue";
 import HealthExamCert from "./HealthExamCert.vue";
-import LicenseSummary from "./LicenseSummary.vue";
 
+// ethiopian from abroad applicant's documents
 import HERQA from "./Ethiopians F/HERQA";
-import HERQAF from "./Foreigner/HERQAF.vue";
 import ProfessionalDocCertificate from "./Ethiopians F/ProfessionalDocCertificate";
 import ProfessionalDocDiploma from "./Ethiopians F/ProfessionalDocDiploma";
 import ProfessionalDocTranscript from "./Ethiopians F/ProfessionalDocTranscript";
@@ -1124,14 +1124,24 @@ import SupportLetterFromSponsorInstitution from "./Ethiopians F/SupportLetter";
 import WorkExperienceF from "./Ethiopians F/WorkExperience.vue";
 import ProfessionalLicenseE from "./Ethiopians F/ProfessionalLicense";
 
-import RenewedLicenseOfHealthFacility from "./Foreigner/RenewedLicenseOfHealthFacility";
-import RequestLetterFromHiringHealthFacility from "./Foreigner/RequestLetterFromHiringHealthFacility";
-
+// ethiopian local applicant's documents
 import COC from "./Ethiopians L/COC";
 import EducationalDoc from "./Ethiopians L/EducationalDoc";
 import WorkExperience from "./Ethiopians L/WorkExperience";
 import SupportLetterEthiopian from "./Ethiopians L/SupportLetter";
+import PayrollDoc from "./Ethiopians L/Payroll.vue";
+import Degree from "./Ethiopians L/Degree.vue";
+import Diploma from "./Ethiopians L/Diploma.vue";
+import Transcript from "./Ethiopians L/Transcript.vue";
+import Masters from "./Ethiopians L/Masters.vue";
+import MastersTranscript from "./Ethiopians L/MastersTranscript.vue";
+import PhD from "./Ethiopians L/PhD.vue";
+import PhDTranscript from "./Ethiopians L/PhDTranscript.vue";
 
+// foreigner applicant's documents
+import HERQAF from "./Foreigner/HERQAF.vue";
+import RenewedLicenseOfHealthFacility from "./Foreigner/RenewedLicenseOfHealthFacility";
+import RequestLetterFromHiringHealthFacility from "./Foreigner/RequestLetterFromHiringHealthFacility";
 import EnglishLanguageForeigner from "./Foreigner/EnglishLanguage";
 import ProfessionalDocCertificateF from "./Foreigner/ProfessionalDocCertificate";
 import ProfessionalDocDiplomaF from "./Foreigner/ProfessionalDocDiploma";
@@ -1139,16 +1149,8 @@ import ProfessionalDocTranscriptF from "./Foreigner/ProfessionalDocTranscript";
 import ProfessionalLicense from "./Foreigner/ProfessionalLicense";
 import RenewedLicense from "./Foreigner/RenewedLicense";
 import WorkExperienceFF from "./Foreigner/WorkExperience.vue";
-import PayrollDoc from "./Ethiopians L/Payroll.vue";
 
-import Degree from "./Ethiopians L/Degree.vue";
-import Diploma from "./Ethiopians L/Diploma.vue";
-import Transcript from "./Ethiopians L/Transcript.vue";
-
-import Masters from "./Ethiopians L/Masters.vue";
-import MastersTranscript from "./Ethiopians L/MastersTranscript.vue";
-import PhD from "./Ethiopians L/PhD.vue";
-import PhDTranscript from "./Ethiopians L/PhDTranscript.vue";
+import LicenseSummary from "./LicenseSummary.vue";
 
 export default {
   created() {
@@ -1178,40 +1180,40 @@ export default {
     eduLevel: "",
   }),
   components: {
+    Navigation,
     Institution,
     Passport,
     HealthExamCert,
-    LicenseSummary,
     HERQA,
-    HERQAF,
     ProfessionalDocCertificate,
     ProfessionalDocDiploma,
     ProfessionalDocTranscript,
-    SupportLetterEthiopian,
+    SupportLetterFromSponsorInstitution,
+    WorkExperienceF,
+    ProfessionalLicenseE,
     COC,
     EducationalDoc,
     WorkExperience,
-    SupportLetterFromSponsorInstitution,
+    SupportLetterEthiopian,
+    PayrollDoc,
+    Degree,
+    Diploma,
+    Transcript,
+    Masters,
+    MastersTranscript,
+    PhD,
+    PhDTranscript,
+    HERQAF,
+    RenewedLicenseOfHealthFacility,
+    RequestLetterFromHiringHealthFacility,
     EnglishLanguageForeigner,
     ProfessionalDocCertificateF,
     ProfessionalDocDiplomaF,
     ProfessionalDocTranscriptF,
     ProfessionalLicense,
     RenewedLicense,
-    Navigation,
-    WorkExperienceF,
     WorkExperienceFF,
-    PayrollDoc,
-    Degree,
-    Transcript,
-    Diploma,
-    Masters,
-    MastersTranscript,
-    PhD,
-    PhDTranscript,
-    RenewedLicenseOfHealthFacility,
-    RequestLetterFromHiringHealthFacility,
-    ProfessionalLicenseE,
+    LicenseSummary,
   },
 
   methods: {
@@ -1279,14 +1281,14 @@ export default {
               return e.code == "SUB";
             });
             this.buttons = status[0]["buttons"];
-            let temp = "";
-            temp = this.buttons[1];
-            this.buttons[1] = this.buttons[2];
-            this.buttons[2] = temp;
-            let temp2 = "";
-            temp2 = this.buttons[0];
-            this.buttons[0] = this.buttons[2];
-            this.buttons[2] = temp2;
+            // let temp = "";
+            // temp = this.buttons[1];
+            // this.buttons[1] = this.buttons[2];
+            // this.buttons[2] = temp;
+            // let temp2 = "";
+            // temp2 = this.buttons[0];
+            // this.buttons[0] = this.buttons[2];
+            // this.buttons[2] = temp2;
           }
           if (this.draftStatus == "USUP") {
             let status = this.applicationStatuses.filter(function(e) {
