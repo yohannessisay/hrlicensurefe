@@ -516,8 +516,8 @@ import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
 import moment from "moment";
 import store from "../../../../store";
-// import "@ocrv/vue-tailwind-pagination/dist/style.css";
-// import VueTailwindPagination from "@ocrv/vue-tailwind-pagination";
+import "@ocrv/vue-tailwind-pagination/dist/style.css";
+import VueTailwindPagination from "@ocrv/vue-tailwind-pagination";
 
 export default {
   components: {
