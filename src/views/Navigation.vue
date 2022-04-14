@@ -28,10 +28,10 @@
               v-on:click="showNotification()"
             >
               <div class="w-12 h-12 mt-4">
-                <span
+                <!-- <span
                   class="inline-flex items-center justify-center align-middle px-2 py-1 text-lg font-bold leading-none rounded-full bg-primary-400 text-white"
                   >99+</span
-                >
+                > -->
               </div>
             </a>
             <div
