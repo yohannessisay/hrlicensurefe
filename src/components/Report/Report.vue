@@ -1213,8 +1213,8 @@ import { useStore } from "vuex";
 import { useRouter, useRoute } from "vue-router";
 import moment from "moment";
 import { saveAs } from "file-saver";
-import "@ocrv/vue-tailwind-pagination/dist/style.css";
-import VueTailwindPagination from "@ocrv/vue-tailwind-pagination";
+// import "@ocrv/vue-tailwind-pagination/dist/style.css";
+// import VueTailwindPagination from "@ocrv/vue-tailwind-pagination";
 
 export default {
   components: {

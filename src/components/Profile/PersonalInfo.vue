@@ -159,8 +159,12 @@
               class="max-w-3xl"
               type="date"
               v-model="personalInfo.dateOfBirth"
+              @change="validateDate(personalInfo.dateOfBirth)"
             />
             <span style="color: red">{{ personalInfoErrors.dateOfBirth }}</span>
+            <span v-if="invalidBirthDate" style="color: red">
+              Applicant must be at least 18.
+            </span>
           </div>
           <div class="flex flex-col mb-medium w-1/2 ml-12">
             <div class="flex flex-col w-full">
@@ -292,6 +296,7 @@ export default {
     let fileSize = ref("");
     let nationality = ref("");
     let maritalStatus = ref("");
+    let invalidBirthDate = ref(false);
 
     let personalInfo = ref({
       name: "",
@@ -409,7 +414,6 @@ export default {
     const fetchNationalities = () => {
       store.dispatch("profile/getNationalities").then((res) => {
         const nationalities = res.data;
-        console.log(nationalities);
         state.value.nationalities = nationalities.data;
       });
     };
@@ -440,6 +444,22 @@ export default {
         emit("changeActiveState");
       }
     };
+    const validateDate = (dateInput) => {
+      let today = new Date();
+      let birthYear = parseInt(dateInput.slice(0, 4));
+      let birthMonth = parseInt(dateInput.slice(5, 7));
+      let birthDay = parseInt(dateInput.slice(8, 10));
+      let age = today.getFullYear() - birthYear;
+      let month = today.getMonth() - birthMonth;
+      if (month < 0 || (month === 0 && today.getDate() < birthDay)) {
+        age--;
+      }
+      if (age < 18) {
+        invalidBirthDate.value = true;
+      } else {
+        invalidBirthDate.value = false;
+      }
+    };
     const validateForm = (formData) => {
       const errors = {};
       if (!formData.photo) errors.photo = "Profile Picture Required";
@@ -449,7 +469,6 @@ export default {
         errors.grandFatherName = "Grandfather's Name Required";
       if (!formData.nationalityId)
         errors.nationalityId = "Nationality Required";
-      if (!formData.dateOfBirth) errors.dateOfBirth = "Date of Birth Required";
       return errors;
     };
     const isEmpty = (obj) => {
@@ -530,6 +549,8 @@ export default {
       fetchZones,
       fetchWoredas,
       fetchNationalities,
+      validateDate,
+      invalidBirthDate,
     };
   },
 };

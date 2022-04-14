@@ -20,6 +20,38 @@
         </div>
 
         <div class="flex items-center space-x-5">
+          <div class="relative inline-block text-left">
+            <a
+              id="options-menu"
+              aria-expanded="true"
+              aria-haspopup="true"
+              v-on:click="showNotification()"
+            >
+              <div class="w-12 h-12 mt-4">
+                <span
+                  class="inline-flex items-center justify-center align-middle px-2 py-1 text-lg font-bold leading-none rounded-full bg-primary-400 text-white"
+                  >99+</span
+                >
+              </div>
+            </a>
+            <div
+              v-if="showNotificationDropDown == true"
+              class="origin-top-right absolute right-0 w-64 rounded-md shadow-lg bg-white focus:outline-none"
+              role="menu"
+              aria-orientation="vertical"
+              aria-labelledby="options-menu"
+            >
+              <div role="none">
+                <li
+                  class="block px-4 py-2 text-sm text-blue-100 hover:bg-gray-100 hover:text-gray-900"
+                  role="menuitem"
+                >
+                  Your license is about to expire.
+                </li>
+              </div>
+            </div>
+          </div>
+
           <p class="text-primary-600" v-text="name.fullName"></p>
           <div class="relative inline-block text-left">
             <a
@@ -27,7 +59,6 @@
               id="options-menu"
               aria-expanded="true"
               aria-haspopup="true"
-              href="#"
               v-on:click="showDropDown()"
             >
               <div v-if="!isFirstTime" class="w-12 h-12 ">
@@ -52,7 +83,7 @@
             </a>
             <div
               v-if="showDD == true"
-              class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white focus:outline-none"
+              class="origin-top-right absolute right-0 mt-1 w-56 rounded-md shadow-lg bg-white focus:outline-none"
               role="menu"
               aria-orientation="vertical"
               aria-labelledby="options-menu"
@@ -114,6 +145,7 @@ export default {
       auth: false,
       token: "",
       showDD: false,
+      showNotificationDropDown: false,
     };
   },
   created() {
@@ -137,7 +169,12 @@ export default {
       this.$router.push({ path: "/" });
     },
     showDropDown() {
+      this.showNotificationDropDown = false;
       this.showDD = !this.showDD;
+    },
+    showNotification() {
+      this.showNotificationDropDown = !this.showNotificationDropDown;
+      this.showDD = false;
     },
     selectMenu(menu) {
       if (this.$route.name != "Menu") {
