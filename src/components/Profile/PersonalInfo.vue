@@ -63,7 +63,11 @@
         <div class="flex">
           <div class="flex flex-col mb-medium w-1/2 mr-6">
             <label class="text-primary-700">First Name (*)</label>
-            <input class="max-w-3xl" type="text" v-model="personalInfo.name" />
+            <input
+              class="max-w-3xl"
+              type="text"
+              v-model="personalInfo.name"
+            />
             <span style="color: red">{{ personalInfoErrors.name }}</span>
           </div>
           <div class="flex flex-col mb-medium w-1/2 ml-12">
@@ -162,7 +166,11 @@
               @change="validateDate(personalInfo.dateOfBirth)"
             />
             <span style="color: red">{{ personalInfoErrors.dateOfBirth }}</span>
-            <span v-if="invalidBirthDate" style="color: red">
+            <span
+              v-if="invalidBirthDate"
+              style="color:red"
+              class="mt-2 text-lg"
+            >
               Applicant must be at least 18.
             </span>
           </div>
