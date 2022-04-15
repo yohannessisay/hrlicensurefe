@@ -731,7 +731,9 @@ export default {
     };
     const fetchApplicationStatuses = () => {
       store.dispatch("report/getapplicationStatuses").then((res) => {
-        applicationStatuses.value = res.data.data;
+        applicationStatuses.value = res.data.data.filter(application => {
+          return (application.code === "APP" || application.code === "DEC" || application.code === "CONF")
+        })
       });
     };
     const exportTable = () => {
