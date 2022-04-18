@@ -89,7 +89,7 @@
                 v-model="licenseInfo.otherEducationalInstitution"
                 v-if="showOtherEducation"
                 class="mt-2"
-                placeholder="Write Education Level"
+                placeholder="Write Educational Institution"
                 type="text"
               />
             </div>
