@@ -19,14 +19,14 @@
         <div class="flex mb-4 justify-center">
           <span v-if="showUpload">
             <span>
-              <label class="text-primary-700 ml-4"
+              <label class="text-primary-700 text-justify"
                 >Maximum size for profile picture is 3 MB
               </label>
             </span>
             <br />
-            <label class="text-primary-700 ml-4"
+            <label class="text-primary-700 text-justify"
               >Upload Profile Picture: (*)
-              <div class="dropbox">
+              <div class="dropbox ml-8">
                 <input
                   type="file"
                   id="photoFile"
@@ -46,7 +46,6 @@
               </div>
             </label>
           </span>
-
           <picture v-if="!showUpload && isImage">
             <p class="ml-4">
               <a href="javascript:void(0)" @click="reset()">Upload again</a>
@@ -66,6 +65,8 @@
             <input
               class="max-w-3xl"
               type="text"
+              pattern="[a-zA-Z]"
+              title="Numbers are not allowed."
               v-model="personalInfo.name"
             />
             <span style="color: red">{{ personalInfoErrors.name }}</span>
@@ -75,6 +76,8 @@
             <input
               class="max-w-3xl"
               type="text"
+              pattern="[a-zA-Z]"
+              title="Numbers are not allowed."
               v-model="personalInfo.fatherName"
             />
             <span style="color: red">{{ personalInfoErrors.fatherName }}</span>
@@ -86,6 +89,8 @@
             <input
               class="max-w-3xl"
               type="text"
+              pattern="[a-zA-Z]"
+              title="Numbers are not allowed."
               v-model="personalInfo.grandFatherName"
             />
             <span style="color: red">{{
@@ -97,6 +102,8 @@
             <input
               class="max-w-3xl"
               type="text"
+              pattern="[a-zA-Z]"
+              title="Numbers are not allowed."
               v-model="personalInfo.alternativeName"
             />
             <span style="color: red">{{
@@ -110,6 +117,8 @@
             <input
               class="max-w-3xl"
               type="text"
+              pattern="[a-zA-Z]"
+              title="Numbers are not allowed."
               v-model="personalInfo.alternativeFatherName"
             />
             <span style="color: red">{{
@@ -123,6 +132,8 @@
             <input
               class="max-w-3xl"
               type="text"
+              pattern="[a-zA-Z]"
+              title="Numbers are not allowed."
               v-model="personalInfo.alternativeGrandFatherName"
             />
             <span style="color: red">{{
