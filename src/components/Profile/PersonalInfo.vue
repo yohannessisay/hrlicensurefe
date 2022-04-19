@@ -65,8 +65,7 @@
             <input
               class="max-w-3xl"
               type="text"
-              pattern="[a-zA-Z]"
-              title="Numbers are not allowed."
+              onkeypress="return /[a-zA-Z]/i.test(event.key)"
               v-model="personalInfo.name"
             />
             <span style="color: red">{{ personalInfoErrors.name }}</span>
@@ -76,8 +75,7 @@
             <input
               class="max-w-3xl"
               type="text"
-              pattern="[a-zA-Z]"
-              title="Numbers are not allowed."
+              onkeypress="return /[a-zA-Z]/i.test(event.key)"
               v-model="personalInfo.fatherName"
             />
             <span style="color: red">{{ personalInfoErrors.fatherName }}</span>
@@ -89,8 +87,7 @@
             <input
               class="max-w-3xl"
               type="text"
-              pattern="[a-zA-Z]"
-              title="Numbers are not allowed."
+              onkeypress="return /[a-zA-Z]/i.test(event.key)"
               v-model="personalInfo.grandFatherName"
             />
             <span style="color: red">{{
@@ -102,8 +99,7 @@
             <input
               class="max-w-3xl"
               type="text"
-              pattern="[a-zA-Z]"
-              title="Numbers are not allowed."
+              onkeypress="return /[a-zA-Z]/i.test(event.key)"
               v-model="personalInfo.alternativeName"
             />
             <span style="color: red">{{
@@ -117,8 +113,7 @@
             <input
               class="max-w-3xl"
               type="text"
-              pattern="[a-zA-Z]"
-              title="Numbers are not allowed."
+              onkeypress="return /[a-zA-Z]/i.test(event.key)"
               v-model="personalInfo.alternativeFatherName"
             />
             <span style="color: red">{{
@@ -132,8 +127,7 @@
             <input
               class="max-w-3xl"
               type="text"
-              pattern="[a-zA-Z]"
-              title="Numbers are not allowed."
+              onkeypress="return /[a-zA-Z]/i.test(event.key)"
               v-model="personalInfo.alternativeGrandFatherName"
             />
             <span style="color: red">{{
