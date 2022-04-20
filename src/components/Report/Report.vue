@@ -65,6 +65,25 @@
             </div>
             <div class="flex filter-container">
               <div class="flex flex-col mb-medium w-72 mr-4">
+                <label class="text-primary-700">Department</label>
+                <select
+                  class="max-w-3xl"
+                  v-model="filter.deptType"
+                  @change="filterDpartmentType(filter.deptType)"
+                >
+                  <option v-bind:key="filter.all" v-bind:value="filter.all"
+                    >All</option
+                  >
+                  <option
+                    v-for="department in departments"
+                    v-bind:key="department.id"
+                    v-bind:value="department.id"
+                  >
+                    {{ department.name }}
+                  </option>
+                </select>
+              </div>
+              <div class="flex flex-col mb-medium w-72 mr-4">
                 <label class="text-primary-700">Professional Type</label>
                 <select
                   class="max-w-3xl"
@@ -153,6 +172,26 @@
                     v-for="status in applicationStatuses"
                     v-bind:key="status.name"
                     v-bind:value="status.name"
+                  >
+                    {{ status.name }}
+                  </option>
+                </select>
+              </div>
+              <div class="flex flex-col mb-small w-80 mr-4">
+                <label class="text-primary-700">Expert Level</label>
+                <select
+                  class="max-w-3xl"
+                  clearable="{true}"
+                  v-model="filter.status"
+                  @change="filterExpertLevel(filter.expertLevel)"
+                >
+                  <option v-bind:key="filter.all" v-bind:value="filter.all"
+                    >All</option
+                  >
+                  <option
+                    v-for="status in expertLevels"
+                    v-bind:key="status.id"
+                    v-bind:value="status.id"
                   >
                     {{ status.name }}
                   </option>
@@ -673,17 +712,20 @@ export default {
 
     let departments = ref([]);
     let professions = ref([]);
+    let expertLevels = ref([]);
     let regions = ref([]);
     let zones = ref([]);
     let woredas = ref([]);
     let applicationStatuses = ref([]);
 
     let filter = ref({
+      deptType: "",
       profType: "",
       gender: "",
       region: "",
       zone: "",
       woreda: "",
+      expertLevel: "",
       status: "",
       startDate: "",
       endDate: "",
@@ -765,8 +807,8 @@ export default {
       });
     };
 
-    const fetchProfessionType = () => {
-      store.dispatch("report/getProfessionalTypes").then((res) => {
+    const fetchProfessionType = (deptId) => {
+      store.dispatch("goodStanding/getProfessionalTypes", deptId).then((res) => {
         professions.value = res.data.data;
       });
     };
@@ -810,6 +852,11 @@ export default {
       professionTypeValue.value = profType;
       filterApplication();
     };
+    const filterDpartmentType = (deptType) => {
+      fetchProfessionType(deptId);
+      // console.log("dept type", deptType);
+    }
+
     const filterRegion = (regionVal) => {
       if (regionVal == "") {
         regionValue.value = "";
@@ -923,7 +970,6 @@ export default {
       fetchNewLicenseReport();
       fetchRenewalReport();
       fetchGoodstandingReport();
-      fetchProfessionType();
       fetchRegion();
       fetchApplicationStatuses();
       fetchDepartmentType();
@@ -936,7 +982,6 @@ export default {
       fetchRenewalReport,
       fetchVerificationReport,
       fetchGoodstandingReport,
-      fetchProfessionType,
       fetchRegion,
       fetchZones,
       fetchWoredas,
@@ -966,6 +1011,8 @@ export default {
       checked,
       handleCheckBoxClick,
       departments,
+      filterDpartmentType,
+      expertLevels,
     };
   },
 };
