@@ -10,34 +10,44 @@
           <div class="py-8">
             <div class="flex flex-row titile-container">
               <div class="ml-2 flex flex-row">
-                <div
-                  @click="fetchNewLicenseReport()"
-                  :class="
-                    selectBackgroundColor == 'newLicense' && 'applicationType'
-                  "
-                >
+                <div @click="handleCheckBoxClick('newLicense', $event)">
+                  <input
+                    v-on:click="handleCheckBoxClick('newLicense', $event)"
+                    type="checkbox"
+                    class="bg-gray-50 mr-4 border border-gray-300 focus:ring-3 focus:ring-blue-300 h-4 w-4 rounded dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
+                    required
+                    :checked="checked.newLicense"
+                  />
                   <a class="text-2xl font-semibold leading-tight">
                     New License Report
                   </a>
                 </div>
                 <div
-                  @click="fetchRenewalReport()"
+                  @click="handleCheckBoxClick('renewal', $event)"
                   class="ml-8"
-                  :class="
-                    selectBackgroundColor == 'renewal' && 'applicationType'
-                  "
                 >
+                  <input
+                    v-on:click="handleCheckBoxClick('renewal', $event)"
+                    type="checkbox"
+                    class="bg-gray-50 mr-4 border border-gray-300 focus:ring-3 focus:ring-blue-300 h-4 w-4 rounded dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
+                    required
+                    :checked="checked.renewal"
+                  />
                   <a class="text-2xl font-semibold leading-tight">
                     Renewal Report
                   </a>
                 </div>
                 <div
-                  @click="fetchGoodstandingReport()"
+                  @click="handleCheckBoxClick('goodStanding', $event)"
                   class="ml-8"
-                  :class="
-                    selectBackgroundColor == 'goodStanding' && 'applicationType'
-                  "
                 >
+                  <input
+                    v-on:click="handleCheckBoxClick('goodStanding', $event)"
+                    type="checkbox"
+                    class="bg-gray-50 mr-4 border border-gray-300 focus:ring-3 focus:ring-blue-300 h-4 w-4 rounded dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
+                    required
+                    :checked="checked.goodStanding"
+                  />
                   <a class="text-2xl font-semibold leading-tight">
                     Goodstanding Report
                   </a>
@@ -600,6 +610,12 @@ export default {
     let startDateValue = ref("1900-01-01");
     let endDateValue = ref("2100-01-01");
 
+    let checked = ref({
+      newLicense: true,
+      renewal: true,
+      goodStanding: true,
+    });
+
     let selectedApplication = ref({
       newLicense: true,
       renewal: false,
@@ -631,6 +647,30 @@ export default {
       paginateReport(reportData.value, indexValue.value);
     };
 
+    const handleCheckBoxClick = (type, event) => {
+      if (!event.target.checked && type == "renewal") {
+        let filterValue = allData.value.filter((report) => {
+          return !report.renewalCode;
+        });
+        paginateReport(filterValue, 0);
+        reportData = filterValue;
+      } else if (!event.target.checked && type == "newLicense") {
+        let filterValue = allData.value.filter((report) => {
+          return !report.newLicenseCode;
+        });
+        paginateReport(filterValue, 0);
+        reportData = filterValue;
+      } else if (!event.target.checked && type == "goodStanding") {
+        let filterValue = allData.value.filter((report) => {
+          return !report.goodStandingCode;
+        });
+        paginateReport(filterValue, 0);
+        reportData = filterValue;
+      }
+
+      console.log("event", event, "type", type);
+    };
+
     let professions = ref([]);
     let regions = ref([]);
     let zones = ref([]);
@@ -659,28 +699,25 @@ export default {
       loader.value = true;
       changeBackgroundColor("newLicense");
       store.dispatch("report/getNewLicenseReport").then((res) => {
-        reportData.value = res.data.data;
-        allData.value = res.data.data;
-        paginateReport(res.data.data, 0);
+        reportData.value.push(...res.data.data);
+        console.log("res data new license", res.data.data);
+        allData.value.push(...res.data.data);
+        console.log("report in new license: ", reportData.value);
+        paginateReport(reportData.value, 0);
         store.dispatch("report/setReport", reportData.value);
         loader.value = false;
       });
     };
 
-    const paginateReport = (reportValue, index) => {
-      report.value = reportValue.slice(
-        index * paginationSize.value,
-        index * paginationSize.value + paginationSize.value
-      );
-      totalCount.value = reportValue.length;
-    };
     const fetchRenewalReport = () => {
       loader.value = true;
       changeBackgroundColor("renewal");
       store.dispatch("report/getRenewalReport").then((res) => {
-        reportData.value = res.data.data;
-        allData.value = res.data.data;
-        paginateReport(res.data.data, 0);
+        reportData.value.push(...res.data.data);
+        console.log("res data renewal", res.data.data);
+        allData.value.push(...res.data.data);
+        console.log("report in renewal: ", reportData.value);
+        paginateReport(reportData.value, 0);
         store.dispatch("report/setReport", reportData.value);
         loader.value = false;
       });
@@ -690,9 +727,10 @@ export default {
       loader.value = true;
       changeBackgroundColor("verification");
       store.dispatch("report/getVerificationReport").then((res) => {
-        reportData.value = res.data.data;
-        allData.value = res.data.data;
-        paginateReport(res.data.data, 0);
+        reportData.value.push(...res.data.data);
+        console.log("res data verification", res.data.data);
+        allData.value.push(...res.data.data);
+        paginateReport(reportData.value, 0);
         store.dispatch("report/setReport", reportData.value);
         loader.value = false;
       });
@@ -701,12 +739,23 @@ export default {
       loader.value = true;
       changeBackgroundColor("goodStanding");
       store.dispatch("report/getGoodstandingReport").then((res) => {
-        reportData.value = res.data.data;
-        allData.value = res.data.data;
-        paginateReport(res.data.data, 0);
+        reportData.value.push(...res.data.data);
+        console.log("res data good standing", res.data.data);
+        allData.value.push(...res.data.data);
+        console.log("report in good standing: ", reportData.value);
+        paginateReport(reportData.value, 0);
         store.dispatch("report/setReport", reportData.value);
         loader.value = false;
       });
+    };
+
+    const paginateReport = (reportValue, index) => {
+      console.log("report value", reportValue);
+      report.value = reportValue.slice(
+        index * paginationSize.value,
+        index * paginationSize.value + paginationSize.value
+      );
+      totalCount.value = reportValue.length;
     };
 
     const fetchProfessionType = () => {
@@ -731,11 +780,16 @@ export default {
     };
     const fetchApplicationStatuses = () => {
       store.dispatch("report/getapplicationStatuses").then((res) => {
-        applicationStatuses.value = res.data.data.filter(application => {
-          return (application.code === "APP" || application.code === "DEC" || application.code === "CONF")
-        })
+        applicationStatuses.value = res.data.data.filter((application) => {
+          return (
+            application.code === "APP" ||
+            application.code === "DEC" ||
+            application.code === "CONF"
+          );
+        });
       });
     };
+
     const exportTable = () => {
       var blob = new Blob([document.getElementById("printable").innerHTML], {
         type:
@@ -766,14 +820,22 @@ export default {
               report.applicationStatus.name.includes(
                 applicationStatusValue.value
               ) &&
-              !moment(startDateValue.value).isAfter(report.applicationStatus.updatedAt) &&
-              moment(endDateValue.value).isSameOrAfter(report.applicationStatus.updatedAt)
+              !moment(startDateValue.value).isAfter(
+                report.applicationStatus.updatedAt
+              ) &&
+              moment(endDateValue.value).isSameOrAfter(
+                report.applicationStatus.updatedAt
+              )
           : report.gender.includes(genderValue.value) &&
               report.applicationStatus.name.includes(
                 applicationStatusValue.value
               ) &&
-              !moment(startDateValue.value).isAfter(report.applicationStatus.updatedAt) &&
-              moment(endDateValue.value).isSameOrAfter(report.applicationStatus.updatedAt);
+              !moment(startDateValue.value).isAfter(
+                report.applicationStatus.updatedAt
+              ) &&
+              moment(endDateValue.value).isSameOrAfter(
+                report.applicationStatus.updatedAt
+              );
       });
       paginateReport(filterValue, 0);
       reportData.value = filterValue;
@@ -851,6 +913,8 @@ export default {
     };
     onMounted(() => {
       fetchNewLicenseReport();
+      fetchRenewalReport();
+      fetchGoodstandingReport();
       fetchProfessionType();
       fetchRegion();
       fetchApplicationStatuses();
@@ -890,6 +954,8 @@ export default {
       handlePagSize,
       selectBackgroundColor,
       filterProfessionType,
+      checked,
+      handleCheckBoxClick,
     };
   },
 };
