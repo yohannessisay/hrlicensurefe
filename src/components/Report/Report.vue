@@ -182,7 +182,7 @@
                 <select
                   class="max-w-3xl"
                   clearable="{true}"
-                  v-model="filter.status"
+                  v-model="filter.expertLevel"
                   @change="filterExpertLevel(filter.expertLevel)"
                 >
                   <option v-bind:key="filter.all" v-bind:value="filter.all"
@@ -190,8 +190,31 @@
                   >
                   <option
                     v-for="status in expertLevels"
-                    v-bind:key="status.id"
-                    v-bind:value="status.id"
+                    v-bind:key="status.code"
+                    v-bind:value="status.code"
+                  >
+                    {{ status.name }}
+                  </option>
+                </select>
+              </div>
+              <div
+                class="flex flex-col mb-small w-80 mr-4"
+                v-if="filter.expertLevel == 'REG'"
+              >
+                <label class="text-primary-700">Regions</label>
+                <select
+                  class="max-w-3xl"
+                  clearable="{true}"
+                  v-model="filter.region"
+                  @change="filterRegions(filter.region)"
+                >
+                  <option v-bind:key="filter.all" v-bind:value="filter.all"
+                    >All</option
+                  >
+                  <option
+                    v-for="status in regions"
+                    v-bind:key="status.name"
+                    v-bind:value="status.name"
                   >
                     {{ status.name }}
                   </option>
@@ -642,6 +665,7 @@ export default {
     const route = useRoute();
     const router = useRouter();
 
+    let expertlevelCode = ref("");
     let professionTypeValue = ref("");
     let regionValue = ref("");
     let genderValue = ref("");
@@ -673,6 +697,7 @@ export default {
     let paginationSize = ref(10);
     const paginationSizeList = [10, 25, 50, 100];
     let reportData = ref([]);
+    let reportForRegions = ref([]);
     let allData = ref([]);
 
     const pageChanged = (event) => {
@@ -706,13 +731,14 @@ export default {
         paginateReport(filterValue, 0);
         reportData = filterValue;
       }
-
-      console.log("event", event, "type", type);
     };
 
     let departments = ref([]);
     let professions = ref([]);
-    let expertLevels = ref([]);
+    let expertLevels = ref([
+      { name: "Federal", id: 3, code: "FED" },
+      { name: "Regional", id: 4, code: "REG" },
+    ]);
     let regions = ref([]);
     let zones = ref([]);
     let woredas = ref([]);
@@ -743,9 +769,7 @@ export default {
       changeBackgroundColor("newLicense");
       store.dispatch("report/getNewLicenseReport").then((res) => {
         reportData.value.push(...res.data.data);
-        console.log("res data new license", res.data.data);
         allData.value.push(...res.data.data);
-        console.log("report in new license: ", reportData.value);
         paginateReport(reportData.value, 0);
         store.dispatch("report/setReport", reportData.value);
         loader.value = false;
@@ -757,9 +781,7 @@ export default {
       changeBackgroundColor("renewal");
       store.dispatch("report/getRenewalReport").then((res) => {
         reportData.value.push(...res.data.data);
-        console.log("res data renewal", res.data.data);
         allData.value.push(...res.data.data);
-        console.log("report in renewal: ", reportData.value);
         paginateReport(reportData.value, 0);
         store.dispatch("report/setReport", reportData.value);
         loader.value = false;
@@ -771,7 +793,6 @@ export default {
       changeBackgroundColor("verification");
       store.dispatch("report/getVerificationReport").then((res) => {
         reportData.value.push(...res.data.data);
-        console.log("res data verification", res.data.data);
         allData.value.push(...res.data.data);
         paginateReport(reportData.value, 0);
         store.dispatch("report/setReport", reportData.value);
@@ -783,9 +804,7 @@ export default {
       changeBackgroundColor("goodStanding");
       store.dispatch("report/getGoodstandingReport").then((res) => {
         reportData.value.push(...res.data.data);
-        console.log("res data good standing", res.data.data);
         allData.value.push(...res.data.data);
-        console.log("report in good standing: ", reportData.value);
         paginateReport(reportData.value, 0);
         store.dispatch("report/setReport", reportData.value);
         loader.value = false;
@@ -793,7 +812,6 @@ export default {
     };
 
     const paginateReport = (reportValue, index) => {
-      console.log("report value", reportValue);
       report.value = reportValue.slice(
         index * paginationSize.value,
         index * paginationSize.value + paginationSize.value
@@ -808,9 +826,11 @@ export default {
     };
 
     const fetchProfessionType = (deptId) => {
-      store.dispatch("goodStanding/getProfessionalTypes", deptId).then((res) => {
-        professions.value = res.data.data;
-      });
+      store
+        .dispatch("goodstanding/getProfessionalTypes", deptId)
+        .then((res) => {
+          professions.value = res.data.data;
+        });
     };
 
     const fetchRegion = () => {
@@ -852,29 +872,51 @@ export default {
       professionTypeValue.value = profType;
       filterApplication();
     };
-    const filterDpartmentType = (deptType) => {
-      fetchProfessionType(deptId);
-      // console.log("dept type", deptType);
-    }
-
-    const filterRegion = (regionVal) => {
-      if (regionVal == "") {
-        regionValue.value = "";
-        filterApplication();
-      } else {
-        regionValue.value = regionVal.name;
-        filterApplication();
+    const filterDpartmentType = (deptId) => {
+      if (deptId !== "") {
+        fetchProfessionType(deptId);
       }
     };
+
+    const filterExpertLevel = (code) => {
+      expertlevelCode.value = code;
+      filterApplication();
+    };
+
+    const filterRegions = (name) => {
+      regionValue.value = name;
+      filterRegionalApplication();
+    };
+
+    const filterRegionalApplication = () => {
+
+      let filterRegion = reportForRegions.value.filter((report) => {
+        return report.region.name.includes(regionValue.value);
+      });
+      paginateReport(filterRegion, 0);
+      reportData.value = filterRegion;
+    }
+
+    // const filterRegion = (regionVal) => {
+    //   if (regionVal == "") {
+    //     regionValue.value = "";
+    //     filterApplication();
+    //   } else {
+    //     regionValue.value = regionVal.name;
+    //     filterApplication();
+    //   }
+    // };
     const filterApplication = () => {
       let filterValue = allData.value.filter((report) => {
-        return report.licenseProfessionalTypes[0].professionalTypes.name.includes(
-          professionTypeValue.value
-        ) && genderValue.value
+        return genderValue.value
           ? report.gender === genderValue.value &&
               report.applicationStatus.name.includes(
                 applicationStatusValue.value
               ) &&
+              report.licenseProfessionalTypes[0].professionalTypes.name.includes(
+                professionTypeValue.value
+              ) &&
+              report.expertLevels.code.includes(expertlevelCode.value) &&
               !moment(startDateValue.value).isAfter(
                 report.applicationStatus.updatedAt
               ) &&
@@ -885,6 +927,10 @@ export default {
               report.applicationStatus.name.includes(
                 applicationStatusValue.value
               ) &&
+              report.licenseProfessionalTypes[0].professionalTypes.name.includes(
+                professionTypeValue.value
+              ) &&
+              report.expertLevels.code.includes(expertlevelCode.value) &&
               !moment(startDateValue.value).isAfter(
                 report.applicationStatus.updatedAt
               ) &&
@@ -894,6 +940,7 @@ export default {
       });
       paginateReport(filterValue, 0);
       reportData.value = filterValue;
+      reportForRegions.value = reportData.value;
     };
     const filterProfession = (profType) => {
       var tableFilter = [];
@@ -996,7 +1043,6 @@ export default {
       filterGender,
       filterAppStatus,
       filterDate,
-      filterRegion,
       filterZone,
       selectedApplication,
       changeBackgroundColor,
@@ -1013,6 +1059,8 @@ export default {
       departments,
       filterDpartmentType,
       expertLevels,
+      filterExpertLevel,
+      filterRegions,
     };
   },
 };
