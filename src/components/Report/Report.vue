@@ -671,6 +671,7 @@ export default {
       console.log("event", event, "type", type);
     };
 
+    let departments = ref([]);
     let professions = ref([]);
     let regions = ref([]);
     let zones = ref([]);
@@ -758,11 +759,18 @@ export default {
       totalCount.value = reportValue.length;
     };
 
+    const fetchDepartmentType = () => {
+      store.dispatch("goodstanding/getDepartmentType").then((res) => {
+        departments.value = res.data.data;
+      });
+    };
+
     const fetchProfessionType = () => {
       store.dispatch("report/getProfessionalTypes").then((res) => {
         professions.value = res.data.data;
       });
     };
+
     const fetchRegion = () => {
       store.dispatch("report/getRegions").then((res) => {
         regions.value = res.data.data;
@@ -918,6 +926,7 @@ export default {
       fetchProfessionType();
       fetchRegion();
       fetchApplicationStatuses();
+      fetchDepartmentType();
     });
     return {
       loader,
@@ -956,6 +965,7 @@ export default {
       filterProfessionType,
       checked,
       handleCheckBoxClick,
+      departments,
     };
   },
 };
