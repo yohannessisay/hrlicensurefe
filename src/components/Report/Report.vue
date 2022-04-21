@@ -713,23 +713,23 @@ export default {
 
     const handleCheckBoxClick = (type, event) => {
       if (!event.target.checked && type == "renewal") {
-        let filterValue = allData.value.filter((report) => {
+        let filterValue = reportData.value.filter((report) => {
           return !report.renewalCode;
         });
         paginateReport(filterValue, 0);
-        reportData = filterValue;
+        reportData.value = filterValue;
       } else if (!event.target.checked && type == "newLicense") {
-        let filterValue = allData.value.filter((report) => {
+        let filterValue = reportData.value.filter((report) => {
           return !report.newLicenseCode;
         });
         paginateReport(filterValue, 0);
-        reportData = filterValue;
+        reportData.value = filterValue;
       } else if (!event.target.checked && type == "goodStanding") {
-        let filterValue = allData.value.filter((report) => {
+        let filterValue = reportData.value.filter((report) => {
           return !report.goodStandingCode;
         });
         paginateReport(filterValue, 0);
-        reportData = filterValue;
+        reportData.value = filterValue;
       }
     };
 
