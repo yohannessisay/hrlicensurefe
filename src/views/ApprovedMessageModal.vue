@@ -12,13 +12,14 @@
       relative
       pt-8
       pb-8
+      shadow-2xl
     "
   >
     <div>
       <button
         id="myCheck"
         class="absolute top-0 right-0 mr-4 mt-4"
-        @click="$emit('serviceFeeModal', false)"
+        @click="$emit('approvalModal', false)"
         variant="rounded"
       >
         <svg
@@ -34,7 +35,7 @@
     </div>
     <div id="holder" class="flex justify-center rounded mb-medium pb-4">
       <div>
-        <div class="flex flex-col pt-medium w-auto rounded mb-medium">
+        <div class="flex flex-col pt-medium rounded mb-medium w-72">
           <div class="text-center">
             <span class="text-lg">
               Applicants are required to bring all original documents to

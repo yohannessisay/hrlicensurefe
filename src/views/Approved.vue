@@ -323,8 +323,8 @@
         <Spinner />
       </div>
       <transition name="slide-fade-to-left">
-        <Modal v-if="this.serviceFeeModal">
-          <ApprovedMessageModal @serviceFeeModal="this.serviceFeeModal = false" />
+        <Modal v-if="this.approvalModal">
+          <ApprovedMessageModal @approvalModal="this.approvalModal = false" />
         </Modal>
       </transition>
     </div>
@@ -362,7 +362,7 @@ export default {
       showDD: false,
       auth: false,
       token: "",
-      serviceFeeModal: false,
+      approvalModal: false,
       itemId: "",
       applicationType: "",
     };
@@ -382,7 +382,7 @@ export default {
       return moment(date);
     },
     openServiceFeeModal(item) {
-      this.serviceFeeModal = true;
+      this.approvalModal = true;
       this.itemId = item.id;
       if (item.newLicenseCode != undefined) {
         this.applicationType = "newlicense";
