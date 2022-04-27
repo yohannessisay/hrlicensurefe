@@ -10,7 +10,7 @@
           <div class="py-8">
             <div class="flex flex-row titile-container">
               <div class="ml-2 flex flex-row">
-                <div @click="handleCheckBoxClick('newLicense', $event)">
+                <div>
                   <input
                     v-on:click="handleCheckBoxClick('newLicense', $event)"
                     type="checkbox"
@@ -22,10 +22,7 @@
                     New License Report
                   </a>
                 </div>
-                <div
-                  @click="handleCheckBoxClick('renewal', $event)"
-                  class="ml-8"
-                >
+                <div class="ml-8">
                   <input
                     v-on:click="handleCheckBoxClick('renewal', $event)"
                     type="checkbox"
@@ -37,10 +34,7 @@
                     Renewal Report
                   </a>
                 </div>
-                <div
-                  @click="handleCheckBoxClick('goodStanding', $event)"
-                  class="ml-8"
-                >
+                <div class="ml-8">
                   <input
                     v-on:click="handleCheckBoxClick('goodStanding', $event)"
                     type="checkbox"
@@ -63,6 +57,20 @@
             <div class="mt-8">
               <label>Filter By:</label>
             </div>
+
+            <!-- <div class="max-w-3xl red">
+              <input
+                type="text"
+                id="fname"
+                name="fname"
+                v-model="userSearchedName"
+                class="mr-6"
+                placeholder="search by name"
+              />
+              <Button class="ml-4" @click="searchByName()">search</Button>
+              <label for="lname" class="pointer">clear</label>
+            </div> -->
+
             <div class="flex filter-container">
               <div class="flex flex-col mb-medium w-72 mr-4">
                 <label class="text-primary-700">Department</label>
@@ -77,7 +85,7 @@
                   <option
                     v-for="department in departments"
                     v-bind:key="department.id"
-                    v-bind:value="department.id"
+                    v-bind:value="department"
                   >
                     {{ department.name }}
                   </option>
@@ -666,6 +674,7 @@ export default {
     const router = useRouter();
 
     let expertlevelCode = ref("");
+    let departmentValue = ref("");
     let professionTypeValue = ref("");
     let regionValue = ref("");
     let genderValue = ref("");
@@ -693,12 +702,18 @@ export default {
     let showLoading = ref(false);
     let selectBackgroundColor = ref("newLicense");
 
+    let userSearchedName = ref("");
+
     let indexValue = ref(0);
     let paginationSize = ref(10);
     const paginationSizeList = [10, 25, 50, 100];
     let reportData = ref([]);
     let reportForRegions = ref([]);
     let allData = ref([]);
+
+    let renewalData = ref([]);
+    let newLicenseData = ref([]);
+    let goodStandingData = ref([]);
 
     const pageChanged = (event) => {
       currentPage.value = event;
@@ -718,18 +733,34 @@ export default {
         });
         paginateReport(filterValue, 0);
         reportData.value = filterValue;
+        allData.value = filterValue;
       } else if (!event.target.checked && type == "newLicense") {
         let filterValue = reportData.value.filter((report) => {
           return !report.newLicenseCode;
         });
         paginateReport(filterValue, 0);
         reportData.value = filterValue;
+        allData.value = filterValue;
       } else if (!event.target.checked && type == "goodStanding") {
         let filterValue = reportData.value.filter((report) => {
           return !report.goodStandingCode;
         });
         paginateReport(filterValue, 0);
         reportData.value = filterValue;
+        allData.value = filterValue;
+      } else if (event.target.checked && type == "renewal") {
+        reportData.value.push(...renewalData.value);
+        allData.value.push(...renewalData.value);
+
+        paginateReport(allData.value, 0);
+      } else if (event.target.checked && type == "newLicense") {
+        reportData.value.push(...newLicenseData.value);
+        allData.value.push(...newLicenseData.value);
+        paginateReport(reportData.value, 0);
+      } else if (event.target.checked && type == "goodStanding") {
+        reportData.value.push(...goodStandingData.value);
+        allData.value.push(...goodStandingData.value);
+        paginateReport(reportData.value, 0);
       }
     };
 
@@ -768,6 +799,7 @@ export default {
       loader.value = true;
       changeBackgroundColor("newLicense");
       store.dispatch("report/getNewLicenseReport").then((res) => {
+        newLicenseData.value = res.data.data;
         reportData.value.push(...res.data.data);
         allData.value.push(...res.data.data);
         paginateReport(reportData.value, 0);
@@ -780,6 +812,7 @@ export default {
       loader.value = true;
       changeBackgroundColor("renewal");
       store.dispatch("report/getRenewalReport").then((res) => {
+        renewalData.value = res.data.data;
         reportData.value.push(...res.data.data);
         allData.value.push(...res.data.data);
         paginateReport(reportData.value, 0);
@@ -803,6 +836,7 @@ export default {
       loader.value = true;
       changeBackgroundColor("goodStanding");
       store.dispatch("report/getGoodstandingReport").then((res) => {
+        goodStandingData.value = res.data.data;
         reportData.value.push(...res.data.data);
         allData.value.push(...res.data.data);
         paginateReport(reportData.value, 0);
@@ -868,13 +902,32 @@ export default {
       saveAs(blob, "Report.xls");
     };
 
+    const searchByName = () => {
+      let filterByName = allData.value.filter((report) => {
+        return (
+          report.name.toLowerCase().includes(userSearchedName.value) ||
+          report.fatherName.toLowerCase().includes(userSearchedName.value) ||
+          report.grandFatherName.toLowerCase().includes(userSearchedName.value)
+        );
+      });
+      paginateReport(filterByName, 0);
+      reportData.value = filterByName;
+    };
+
     const filterProfessionType = (profType) => {
       professionTypeValue.value = profType;
       filterApplication();
     };
-    const filterDpartmentType = (deptId) => {
-      if (deptId !== "") {
-        fetchProfessionType(deptId);
+    const filterDpartmentType = (department) => {
+      if (department) {
+        departmentValue.value = department.name;
+        professionTypeValue.value = "";
+        filterApplication();
+        fetchProfessionType(department.id);
+      } else {
+        departmentValue.value = "";
+        professionTypeValue.value = "";
+        filterApplication();
       }
     };
 
@@ -889,13 +942,18 @@ export default {
     };
 
     const filterRegionalApplication = () => {
-
       let filterRegion = reportForRegions.value.filter((report) => {
         return report.region.name.includes(regionValue.value);
       });
       paginateReport(filterRegion, 0);
       reportData.value = filterRegion;
-    }
+    };
+
+    // const filterDepartmentApplication = () => {
+    //   let filterDepartment = reportForDepartments.value.filter(report) => {
+    //     return
+    //   }
+    // }
 
     // const filterRegion = (regionVal) => {
     //   if (regionVal == "") {
@@ -913,6 +971,9 @@ export default {
               report.applicationStatus.name.includes(
                 applicationStatusValue.value
               ) &&
+              report.licenseProfessionalTypes[0].professionalTypes.department.name.includes(
+                departmentValue.value
+              ) &&
               report.licenseProfessionalTypes[0].professionalTypes.name.includes(
                 professionTypeValue.value
               ) &&
@@ -926,6 +987,9 @@ export default {
           : report.gender.includes(genderValue.value) &&
               report.applicationStatus.name.includes(
                 applicationStatusValue.value
+              ) &&
+              report.licenseProfessionalTypes[0].professionalTypes.department.name.includes(
+                departmentValue.value
               ) &&
               report.licenseProfessionalTypes[0].professionalTypes.name.includes(
                 professionTypeValue.value
@@ -1061,6 +1125,8 @@ export default {
       expertLevels,
       filterExpertLevel,
       filterRegions,
+      searchByName,
+      userSearchedName,
     };
   },
 };
