@@ -34,7 +34,7 @@
         </h2>
         <TitleWithIllustration
           illustration="Certificate"
-          message="Degree Transcript"
+          message="Transcript"
           class="mt-8"
         />
         <!-- <div class="flex justify-center">
