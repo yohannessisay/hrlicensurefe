@@ -185,6 +185,7 @@
                 <Transcript
                   :activeState="8"
                   @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
                 />
               </div>
             </transition>
@@ -282,6 +283,7 @@
                 <Transcript
                   :activeState="10"
                   @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
                 />
               </div>
             </transition>
@@ -397,6 +399,7 @@
                 <Transcript
                   :activeState="12"
                   @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
                 />
               </div>
             </transition>
@@ -663,6 +666,7 @@
                 <Transcript
                   :activeState="10"
                   @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
                 />
               </div>
             </transition>
@@ -778,6 +782,7 @@
                 <Transcript
                   :activeState="12"
                   @changeActiveState="activeState++"
+                  @changeActiveStateMinus="activeState--"
                 />
               </div>
             </transition>
