@@ -58,7 +58,7 @@
               <label>Filter By:</label>
             </div>
 
-            <!-- <div class="max-w-3xl red">
+            <div class="max-w-3xl red">
               <input
                 type="text"
                 id="fname"
@@ -67,9 +67,15 @@
                 class="mr-6"
                 placeholder="search by name"
               />
-              <Button class="ml-4" @click="searchByName()">search</Button>
-              <label for="lname" class="pointer">clear</label>
-            </div> -->
+              <span v-if="!searchingState">
+                <Button class="ml-4" @click="searchByName()">search</Button>
+              </span>
+              <span v-else>
+                <label for="lname" class="clear-lable" @click="clearSearch()"
+                  >clear</label
+                >
+              </span>
+            </div>
 
             <div class="flex filter-container">
               <div class="flex flex-col mb-medium w-72 mr-4">
@@ -702,6 +708,8 @@ export default {
     let showLoading = ref(false);
     let selectBackgroundColor = ref("newLicense");
 
+    let searchingState = ref(false);
+
     let userSearchedName = ref("");
 
     let indexValue = ref(0);
@@ -749,17 +757,22 @@ export default {
         reportData.value = filterValue;
         allData.value = filterValue;
       } else if (event.target.checked && type == "renewal") {
-        reportData.value.push(...renewalData.value);
-        allData.value.push(...renewalData.value);
-
+        let mockRenewalData = reportData.value;
+        mockRenewalData.push(...renewalData.value);
+        reportData.value = mockRenewalData;
+        allData.value = mockRenewalData;
         paginateReport(allData.value, 0);
       } else if (event.target.checked && type == "newLicense") {
-        reportData.value.push(...newLicenseData.value);
-        allData.value.push(...newLicenseData.value);
+        let mockNewLicenseData = reportData.value;
+        mockNewLicenseData.push(...newLicenseData.value);
+        reportData.value = mockNewLicenseData;
+        allData.value = mockNewLicenseData;
         paginateReport(reportData.value, 0);
       } else if (event.target.checked && type == "goodStanding") {
-        reportData.value.push(...goodStandingData.value);
-        allData.value.push(...goodStandingData.value);
+        let mockGoodStandingData = reportData.value;
+        mockGoodStandingData.push(...goodStandingData.value);
+        reportData.value = mockGoodStandingData;
+        allData.value = mockGoodStandingData;
         paginateReport(reportData.value, 0);
       }
     };
@@ -903,6 +916,7 @@ export default {
     };
 
     const searchByName = () => {
+      searchingState.value = true;
       let filterByName = allData.value.filter((report) => {
         return (
           report.name.toLowerCase().includes(userSearchedName.value) ||
@@ -912,6 +926,13 @@ export default {
       });
       paginateReport(filterByName, 0);
       reportData.value = filterByName;
+    };
+
+    const clearSearch = () => {
+      searchingState.value = false;
+      userSearchedName.value = "";
+      reportData.value = allData.value;
+      paginateReport(reportData.value, 0);
     };
 
     const filterProfessionType = (profType) => {
@@ -948,22 +969,6 @@ export default {
       paginateReport(filterRegion, 0);
       reportData.value = filterRegion;
     };
-
-    // const filterDepartmentApplication = () => {
-    //   let filterDepartment = reportForDepartments.value.filter(report) => {
-    //     return
-    //   }
-    // }
-
-    // const filterRegion = (regionVal) => {
-    //   if (regionVal == "") {
-    //     regionValue.value = "";
-    //     filterApplication();
-    //   } else {
-    //     regionValue.value = regionVal.name;
-    //     filterApplication();
-    //   }
-    // };
     const filterApplication = () => {
       let filterValue = allData.value.filter((report) => {
         return genderValue.value
@@ -1127,6 +1132,8 @@ export default {
       filterRegions,
       searchByName,
       userSearchedName,
+      clearSearch,
+      searchingState,
     };
   },
 };
@@ -1175,5 +1182,8 @@ a:hover {
   width: 170vh;
   overflow-x: scroll;
   overflow-y: hidden;
+}
+.clear-lable {
+  cursor: pointer;
 }
 </style>
