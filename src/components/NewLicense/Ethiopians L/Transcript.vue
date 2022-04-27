@@ -32,25 +32,20 @@
         >
           ACCEPTED
         </h2>
-        <TitleWithIllustration
-          illustration="Certificate"
-          message="Transcript"
-          class="mt-8"
-        />
-        <!-- <div class="flex justify-center">
-          <label class="text-xl" v-if="educationLevel == 'diploma'">
-            Diploma
-          </label>
-          <label class="text-xl" v-if="educationLevel == 'degree'">
-            Degree
-          </label>
-          <label class="text-xl" v-if="educationLevel == 'masters'">
-            Masters
-          </label>
-          <label class="text-xl" v-if="educationLevel == 'phd'">
-            PhD
-          </label>
-        </div> -->
+        <div v-if="educationLevel == 'diploma'">
+          <TitleWithIllustration
+            illustration="Certificate"
+            message="Diploma Transcript"
+            class="mt-8"
+          />
+        </div>
+        <div v-else>
+          <TitleWithIllustration
+            illustration="Certificate"
+            message="Degree Transcript"
+            class="mt-8"
+          />
+        </div>
         <span class="flex justify-center">{{ documentMessage }}</span>
         <div class="ml-4">
           <button @click="addDocs()">Add Document</button>

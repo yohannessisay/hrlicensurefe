@@ -29,6 +29,7 @@
             v-bind:key="i"
           >
             <div
+              @click="openServiceFeeModal"
               class="container mb-medium"
               v-for="item in this.newlicense.slice((i - 1) * 4, i * 4)"
               v-bind:key="item"
@@ -44,6 +45,7 @@
                   box-shadow-pop
                   rounded-lg
                   bg-lightGrey-100
+                  cursor-pointer
                 "
               >
                 <div class="p-4 w-auto h-auto">
@@ -125,6 +127,7 @@
             v-bind:key="i"
           >
             <div
+              @click="openServiceFeeModal"
               class="container mb-medium"
               v-for="item in this.renewal.slice((i - 1) * 4, i * 4)"
               v-bind:key="item"
@@ -140,6 +143,7 @@
                   box-shadow-pop
                   rounded-lg
                   bg-lightGrey-100
+                  cursor-pointer
                 "
               >
                 <div class="p-4 w-auto h-auto">
@@ -228,6 +232,7 @@
             v-bind:key="i"
           >
             <div
+              @click="openServiceFeeModal"
               class="container mb-medium"
               v-for="item in this.goodstanding.slice((i - 1) * 4, i * 4)"
               v-bind:key="item"
@@ -243,6 +248,7 @@
                   box-shadow-pop
                   rounded-lg
                   bg-lightGrey-100
+                  cursor-pointer
                 "
               >
                 <div class="p-4 w-auto h-auto">
@@ -316,9 +322,11 @@
       >
         <Spinner />
       </div>
-      <Modal v-if="this.serviceFeeModal">
-        <ServiceFee @serviceFeeModal="this.serviceFeeModal = false" />
-      </Modal>
+      <transition name="slide-fade-to-left">
+        <Modal v-if="this.approvalModal">
+          <ApprovedMessageModal @approvalModal="this.approvalModal = false" />
+        </Modal>
+      </transition>
     </div>
   </div>
 </template>
@@ -330,7 +338,7 @@ import RenderIllustration from "@/sharedComponents/RenderIllustration";
 import Navigation from "@/views/Navigation";
 import Spinner from "@/sharedComponents/Spinner";
 import Modal from "@/sharedComponents/Modal";
-import ServiceFee from "@/views/ServiceFee.vue";
+import ApprovedMessageModal from "@/views/ApprovedMessageModal.vue";
 import moment from "moment";
 
 export default {
@@ -342,7 +350,7 @@ export default {
     RenderIllustration,
     Title,
     Modal,
-    ServiceFee,
+    ApprovedMessageModal,
   },
   data: function() {
     return {
@@ -354,7 +362,7 @@ export default {
       showDD: false,
       auth: false,
       token: "",
-      serviceFeeModal: false,
+      approvalModal: false,
       itemId: "",
       applicationType: "",
     };
@@ -374,7 +382,7 @@ export default {
       return moment(date);
     },
     openServiceFeeModal(item) {
-      this.serviceFeeModal = true;
+      this.approvalModal = true;
       this.itemId = item.id;
       if (item.newLicenseCode != undefined) {
         this.applicationType = "newlicense";
