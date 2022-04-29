@@ -334,7 +334,6 @@
 <script>
 import SideNav from "./SideNav.vue";
 import Title from "@/sharedComponents/TitleWithIllustration";
-import RenderIllustration from "@/sharedComponents/RenderIllustration";
 import Navigation from "@/views/Navigation";
 import Spinner from "@/sharedComponents/Spinner";
 import Modal from "@/sharedComponents/Modal";
@@ -347,10 +346,8 @@ export default {
     SideNav,
     Title,
     Spinner,
-    RenderIllustration,
-    Title,
     Modal,
-    ApprovedMessageModal,
+    ApprovedMessageModal
   },
   data: function() {
     return {
@@ -364,7 +361,7 @@ export default {
       token: "",
       approvalModal: false,
       itemId: "",
-      applicationType: "",
+      applicationType: ""
     };
   },
   async created() {
@@ -403,7 +400,7 @@ export default {
       this.showLoading = !this.showLoading;
       this.$store
         .dispatch("newlicense/getNewLicense")
-        .then((res) => {
+        .then(res => {
           this.license = res.data.data;
           if (this.license) {
             this.newlicense = this.license.filter(function(e) {
@@ -418,7 +415,7 @@ export default {
           }
         })
         .then(() => {
-          this.$store.dispatch("renewal/getRenewalLicense").then((res) => {
+          this.$store.dispatch("renewal/getRenewalLicense").then(res => {
             this.license = res.data.data;
             if (this.license) {
               this.renewal = this.license.filter(function(e) {
@@ -436,7 +433,7 @@ export default {
         .then(() => {
           this.$store
             .dispatch("goodstanding/getGoodStandingLicense")
-            .then((res) => {
+            .then(res => {
               this.license = res.data.data;
               this.showLoading = !this.showLoading;
               if (this.license) {
@@ -452,8 +449,8 @@ export default {
               }
             });
         });
-    },
-  },
+    }
+  }
 };
 </script>
 <style>

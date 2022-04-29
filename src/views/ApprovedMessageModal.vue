@@ -37,10 +37,13 @@
       <div>
         <div class="flex flex-col pt-medium rounded mb-medium w-72">
           <div class="text-center">
+            <h2>Dear applicant,</h2>
             <span class="text-lg">
-              Applicants are required to bring all original documents to
-              licensing office.
+              Your application request is approved,<br />
+              you are appointed to come to our office with all original
+              documents you submitted during application
             </span>
+            <h3 class="flex justify-center mt-2">Thank You</h3>
           </div>
         </div>
       </div>
