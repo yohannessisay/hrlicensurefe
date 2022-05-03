@@ -1,17 +1,31 @@
 <template
   ><div>
     <!-- <ReviewerNavBar tab="Report" /> -->
-    <div class="flex flex-row">
+    <div class="flex ">
       <!-- <div>
         <ReviewerSideBar style="width: 30vh" />
       </div> -->
       <div>
-        <div class="px-4 sm:px-4">
+        <div class="px-4">
           <div class="py-8">
             <div class="flex flex-row titile-container">
               <div class="ml-2 flex flex-row">
                 <div>
-                  <input
+                  <label class="text-primary-700 mr-4">Application Type</label>
+
+                  <select
+                    @click="handleFilterByApplication()"
+                    v-model="selectedApplicationType"
+                    class="w-48"
+                  >
+                  
+                    <option disabled value="">Please select Application</option>
+                    <option>All</option>
+                    <option>New License</option>
+                    <option> Renewal Report</option>
+                    <option> Goodstanding Report</option>
+                  </select>
+                  <!-- <input
                     v-on:click="handleCheckBoxClick('newLicense', $event)"
                     type="checkbox"
                     class="bg-gray-50 mr-4 border border-gray-300 focus:ring-3 focus:ring-blue-300 h-4 w-4 rounded dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
@@ -44,15 +58,15 @@
                   />
                   <a class="text-2xl font-semibold leading-tight">
                     Goodstanding Report
-                  </a>
+                  </a> -->
                 </div>
               </div>
-              <div id="export" @click="exportTable()" class="ml-12">
+              <!-- <div id="export" @click="exportTable()" class="ml-12">
                 <a class="text-2xl font-semibold leading-tight">
                   <i class="fa fa-file-text" aria-hidden="true"></i>
                   Export
                 </a>
-              </div>
+              </div> -->
             </div>
             <div class="mt-8">
               <label>Filter By:</label>
@@ -77,7 +91,7 @@
               </span>
             </div>
 
-            <div class="flex filter-container">
+            <div class="flex filter-container mt-4">
               <div class="flex flex-col mb-medium w-72 mr-4">
                 <label class="text-primary-700">Department</label>
                 <select
@@ -119,10 +133,17 @@
               <div class="flex flex-col mb-small w-72 mr-4">
                 <label class="text-primary-700">Gender</label>
                 <div class="flex w-full">
-                  <div class="flex w-1/3">
-                    <div class="flex flex-col w-60 mr-4">
-                      <div class="flex py-2">
-                        <input
+                      <div class="flex">
+                           <select
+                    @click="filterGender(filter.gender)"
+                    v-model="filter.gender"
+                  >
+                    <option disabled value="">Please select Gender</option>
+                    <option value="">Both</option>
+                    <option value="male">Male</option>
+                    <option value="female"> Female</option>
+                  </select>
+                        <!-- <input
                           type="radio"
                           id="both"
                           value=""
@@ -131,11 +152,9 @@
                         />
                         <label class="ml-tiny text-primary-700" for="female">
                           Both
-                        </label>
-                      </div>
-                    </div>
+                        </label> -->
                   </div>
-                  <div class="flex flex-col mb-small w-60 mr-4">
+                  <!-- <div class="flex flex-col mb-small w-60 mr-4">
                     <div class="flex py-2">
                       <input
                         class="flex flex-col"
@@ -152,8 +171,8 @@
                         Male
                       </label>
                     </div>
-                  </div>
-                  <div class="flex w-1/3">
+                  </div> -->
+                  <!-- <div class="flex w-1/3">
                     <div class="flex flex-col w-60">
                       <div class="flex py-2">
                         <input
@@ -168,7 +187,7 @@
                         </label>
                       </div>
                     </div>
-                  </div>
+                  </div> -->
                 </div>
               </div>
               <div class="flex flex-col mb-small w-80 mr-4">
@@ -253,7 +272,7 @@
             <div v-if="loader" style="margin-left: 45%; margin-top: 5%">
               <Spinner />
             </div>
-            <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 max-w-4xl">
+            <div class="">
               <label class="text-primary-700">Rows per page: </label>
               <select
                 class="max-w-3xl mb-4"
@@ -269,12 +288,18 @@
                   {{ size }}
                 </option>
               </select>
+                 <span id="export" @click="exportTable()" class="ml-12 float-right">
+                <a class="text-2xl font-semibold leading-tight">
+                  <i class="fa fa-file-text" aria-hidden="true"></i>
+                  Export
+                </a>
+              </span>
               <div
                 id="printable"
-                class="shadow-md rounded-lg"
+                class="shadow-md rounded-lg  min-w-full"
                 v-if="!showLoading"
               >
-                <table class="leading-normal" id="myTable">
+                <table class="w-full" id="myTable">
                   <thead>
                     <tr class="">
                       <th
@@ -305,18 +330,18 @@
                       <th
                         class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
                       >
-                        Region
+                        Organizational Unit 
                       </th>
                       <th
                         class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
                       >
                         License Number
                       </th>
-                      <th
+                      <!-- <th
                         class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
                       >
                         Remark
-                      </th>
+                      </th> -->
                       <th
                         class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
                       >
@@ -442,26 +467,14 @@
                           </div>
                         </div>
                       </td>
-                      <td
-                        v-else
+                       <td
+                        v-else-if="item.expertLevels.code == 'FED'"
                         class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
                       >
                         <div class="flex">
                           <div class="ml-3">
                             <p class="text-gray-900 whitespace-no-wrap">
-                              ---
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td
-                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
-                        v-if="item.license_no"
-                      >
-                        <div class="flex">
-                          <div class="ml-3">
-                            <p class="text-gray-900 whitespace-no-wrap">
-                              {{ item.license_no }}
+                              Federal
                             </p>
                           </div>
                         </div>
@@ -479,6 +492,54 @@
                         </div>
                       </td>
                       <td
+                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
+                        v-if="item.newLicenseCode"
+                      >
+                        <div class="flex">
+                          <div class="ml-3">
+                            <p class="text-gray-900 whitespace-no-wrap">
+                              {{ item.newLicenseCode }}
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td
+                        v-else-if="item.renewalCode"
+                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
+                      >
+                        <div class="flex">
+                          <div class="ml-3">
+                            <p class="text-gray-900 whitespace-no-wrap">
+                              {{item.renewalCode}}
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                       <td
+                        v-else-if="item.goodStandingCode"
+                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
+                      >
+                        <div class="flex">
+                          <div class="ml-3">
+                            <p class="text-gray-900 whitespace-no-wrap">
+                              {{item.goodStandingCode}}
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                       <td
+                        v-else
+                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
+                      >
+                        <div class="flex">
+                          <div class="ml-3">
+                            <p class="text-gray-900 whitespace-no-wrap">
+                              ---
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <!-- <td
                         class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
                         v-if="item.remark"
                       >
@@ -489,8 +550,8 @@
                             </p>
                           </div>
                         </div>
-                      </td>
-                      <td
+                      </td> -->
+                      <!-- <td
                         v-else
                         class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
                       >
@@ -501,7 +562,7 @@
                             </p>
                           </div>
                         </div>
-                      </td>
+                      </td> -->
                       <td
                         v-if="item.certifiedDate"
                         class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
@@ -652,11 +713,11 @@
 import ReviewerNavBar from "@/components/Reviewer/ReviewerNavBar";
 import ReviewerSideBar from "../Reviewer/ReviewerSideNav.vue";
 import Spinner from "@/sharedComponents/Spinner";
-import { ref, onMounted } from "vue";
-import { useStore } from "vuex";
-import { useRouter, useRoute } from "vue-router";
+import {ref, onMounted} from "vue";
+import {useStore} from "vuex";
+import {useRouter, useRoute} from "vue-router";
 import moment from "moment";
-import { saveAs } from "file-saver";
+import {saveAs} from "file-saver";
 import "@ocrv/vue-tailwind-pagination/dist/style.css";
 import VueTailwindPagination from "@ocrv/vue-tailwind-pagination";
 
@@ -674,7 +735,7 @@ export default {
       return store.getters["reviewer/getAssignedForEveryOneSearched"];
     },
   },
-  setup(props, { emit }) {
+  setup(props, {emit}) {
     const store = useStore();
     const route = useRoute();
     const router = useRouter();
@@ -687,6 +748,7 @@ export default {
     let applicationStatusValue = ref("");
     let startDateValue = ref("1900-01-01");
     let endDateValue = ref("2100-01-01");
+    let selectedApplicationType = ref("");
 
     let checked = ref({
       newLicense: true,
@@ -732,6 +794,60 @@ export default {
       currentPage.value = 1;
       indexValue.value = 0;
       paginateReport(reportData.value, indexValue.value);
+    };
+    const handleFilterByApplication = () => {
+      console.log(selectedApplicationType.value, "selected application");
+
+      switch (selectedApplicationType.value) {
+        case "All": {
+          console.log(selectedApplicationType.value, "all application");
+
+          let fullData = [];
+
+          ///// good standing
+          fullData.push(...goodStandingData.value);
+          //// new license
+          fullData.push(...newLicenseData.value);
+          /////  renewal
+          fullData.push(...renewalData.value);
+
+          reportData.value = fullData;
+          allData.value = fullData;
+          paginateReport(allData.value, 0);
+          break;
+        }
+        case "New License": {
+          console.log(selectedApplicationType.value, "new application");
+          let newLData = [];
+          allData.value = [];
+          reportData.value = [];
+          newLData.push(...newLicenseData.value);
+          reportData.value = newLData;
+          allData.value = newLData;
+          paginateReport(allData.value, 0);
+          break;
+        }
+        case "Renewal Report": {
+          let newRRData = [];
+          allData.value = [];
+          reportData.value = [];
+          newRRData.push(...renewalData.value);
+          reportData.value = newRRData;
+          allData.value = newRRData;
+          paginateReport(allData.value, 0);
+          break;
+        }
+        case "Goodstanding Report": {
+          let newGSRData = [];
+          allData.value = [];
+          reportData.value = [];
+          newGSRData.push(...goodStandingData.value);
+          reportData.value = newGSRData;
+          allData.value = newGSRData;
+          paginateReport(allData.value, 0);
+          break;
+        }
+      }
     };
 
     const handleCheckBoxClick = (type, event) => {
@@ -780,8 +896,8 @@ export default {
     let departments = ref([]);
     let professions = ref([]);
     let expertLevels = ref([
-      { name: "Federal", id: 3, code: "FED" },
-      { name: "Regional", id: 4, code: "REG" },
+      {name: "Federal", id: 3, code: "FED"},
+      {name: "Regional", id: 4, code: "REG"},
     ]);
     let regions = ref([]);
     let zones = ref([]);
@@ -1125,6 +1241,8 @@ export default {
       filterProfessionType,
       checked,
       handleCheckBoxClick,
+      selectedApplicationType,
+      handleFilterByApplication,
       departments,
       filterDpartmentType,
       expertLevels,
@@ -1179,7 +1297,7 @@ a:hover {
 }
 #printable {
   /* display: block; */
-  width: 170vh;
+  /* width: 90%; */
   overflow-x: scroll;
   overflow-y: hidden;
 }
