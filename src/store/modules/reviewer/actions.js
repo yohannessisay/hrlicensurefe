@@ -1330,4 +1330,15 @@ export default {
       return error;
     }
   },
+  async transferToFederal({ commit }, data) {
+    try {
+      const resp = await ApiService.post(
+        baseUrl + "/licenseReviewers/transfer",
+        data
+      );
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
 };
