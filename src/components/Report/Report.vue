@@ -77,7 +77,7 @@
                 type="text"
                 id="fname"
                 name="fname"
-                v-model="userSearchedName"
+                v-model="searchedValue"
                 class="mr-6"
                 placeholder="search by name"
               />
@@ -789,7 +789,7 @@ export default {
 
     let searchingState = ref(false);
 
-    let userSearchedName = ref("");
+    let searchedValue = ref("");
 
     let indexValue = ref(0);
     let paginationSize = ref(10);
@@ -1052,12 +1052,12 @@ export default {
       searchingState.value = true;
       let filterByName = allData.value.filter((report) => {
         return (
-          report.name.toLowerCase().includes(userSearchedName.value) ||
-          report.fatherName.toLowerCase().includes(userSearchedName.value) ||
-          report.grandFatherName.toLowerCase().includes(userSearchedName.value) ||
-          report.goodStandingCode? report.goodStandingCode.toLowerCase().includes(userSearchedName.value): 
-          report.renewalCode? report.renewalCode.toLowerCase().includes(userSearchedName.value): 
-          report.newLicenseCode.toLowerCase().includes(userSearchedName.value) 
+          report.name.toLowerCase().includes(searchedValue.value) ||
+          report.fatherName.toLowerCase().includes(searchedValue.value) ||
+          report.grandFatherName.toLowerCase().includes(searchedValue.value) ||
+          report.goodStandingCode? report.goodStandingCode.toLowerCase().includes(searchedValue.value.toLowerCase()): 
+          report.renewalCode? report.renewalCode.toLowerCase().includes(searchedValue.value.toLowerCase()): 
+          report.newLicenseCode.toLowerCase().includes(searchedValue.value.toLowerCase()) 
         );
       });
       paginateReport(filterByName, 0);
@@ -1066,7 +1066,7 @@ export default {
 
     const clearSearch = () => {
       searchingState.value = false;
-      userSearchedName.value = "";
+      searchedValue.value = "";
       reportData.value = allData.value;
       paginateReport(reportData.value, 0);
     };
@@ -1269,7 +1269,7 @@ export default {
       filterExpertLevel,
       filterRegions,
       searchByName,
-      userSearchedName,
+      searchedValue,
       clearSearch,
       searchingState,
     };
