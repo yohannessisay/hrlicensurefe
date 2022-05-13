@@ -317,11 +317,17 @@
                       >
                         Last Name
                       </th>
+                           <th
+                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+                      >
+                        Application Type
+                      </th>
                       <th
                         class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
                       >
                         License Status
                       </th>
+                   
                       <th
                         class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
                       >
@@ -395,6 +401,17 @@
                           <div class="ml-3">
                             <p class="text-gray-900 whitespace-no-wrap">
                               {{ item.grandFatherName }}
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                         <td
+                        class="px-5 py-5  border-gray-200 bg-white text-sm text-right"
+                      >
+                        <div class="flex">
+                          <div class="ml-3">
+                            <p class="text-gray-900 whitespace-no-wrap">
+                              {{ item.newLicenseCode? "New License" : item.renewalCode? "Renewal": item.goodStandingCode? "Good Standing": ""   }}
                             </p>
                           </div>
                         </div>
@@ -1037,7 +1054,10 @@ export default {
         return (
           report.name.toLowerCase().includes(userSearchedName.value) ||
           report.fatherName.toLowerCase().includes(userSearchedName.value) ||
-          report.grandFatherName.toLowerCase().includes(userSearchedName.value)
+          report.grandFatherName.toLowerCase().includes(userSearchedName.value) ||
+          report.goodStandingCode? report.goodStandingCode.toLowerCase().includes(userSearchedName.value): 
+          report.renewalCode? report.renewalCode.toLowerCase().includes(userSearchedName.value): 
+          report.newLicenseCode.toLowerCase().includes(userSearchedName.value) 
         );
       });
       paginateReport(filterByName, 0);
