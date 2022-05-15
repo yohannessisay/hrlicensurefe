@@ -885,7 +885,7 @@ const routes = [
     component: () =>
       import(
         "../components/Reviewer/ApplicationTypes/GoodStanding/GoodStandingDeclined.vue"
-      ),
+      )
   },
   {
     path: "/admin/goodstanding/all-declined",
@@ -893,8 +893,14 @@ const routes = [
     component: () =>
       import(
         "../components/Reviewer/ApplicationTypes/GoodStanding/GoodStandingAllDeclined.vue"
-      ),
+      )
   },
+  {
+    path: "/admin/review/importResults",
+    name: "ImportResults",
+    component: () =>
+      import("../components/Reviewer/ImportResults/ImportHome.vue")
+  }
 ];
 
 const router = createRouter({
