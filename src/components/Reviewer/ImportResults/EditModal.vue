@@ -36,13 +36,13 @@
 export default {
   components: {},
   props: ["editData"],
-  data: function () {
+  data: function() {
     return {
       content: "",
-      err: "",
+      err: ""
     };
   },
-  methods: {},
+  methods: {}
 };
 </script>
 <style>

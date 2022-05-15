@@ -904,10 +904,10 @@ export default {
     ImportModal,
     ErrorModal,
     EditModal,
-    Spinner,
+    Spinner
   },
   name: "TaskList",
-  data: function () {
+  data: function() {
     return {
       content: "",
       finalData: [],
@@ -930,22 +930,22 @@ export default {
       editModal: false,
       previousData: [],
       color: "grey",
-      errors: [],
+      errors: []
     };
   },
   computed: {
-    moment: () => moment,
+    moment: () => moment
   },
   created() {
     const store = useStore();
-    store.dispatch("reviewer/getProfessionalType").then((res) => {
+    store.dispatch("reviewer/getProfessionalType").then(res => {
       this.professions = res.data.data;
     });
-    store.dispatch("goodstanding/getInstitution").then((res) => {
+    store.dispatch("goodstanding/getInstitution").then(res => {
       this.institutions = res.data.data;
     });
-    store.dispatch("reviewer/getImported").then((res) => {
-      res.data.data.forEach((element) => {
+    store.dispatch("reviewer/getImported").then(res => {
+      res.data.data.forEach(element => {
         element.createdAt = moment(element.createdAt).format("MMMM D, YYYY");
         element.updatedAt = moment(element.updatedAt).format("MMMM D, YYYY");
         this.previousData.push(element);
@@ -962,7 +962,7 @@ export default {
 
       var reader = new FileReader();
       reader.readAsBinaryString(file);
-      reader.onload = (event) => {
+      reader.onload = event => {
         var data = event.target.result;
         var workbook = read(data, { type: "binary" });
         var sheets = workbook.Sheets;
@@ -973,7 +973,7 @@ export default {
               row: i,
               column: 3,
               columnData: transformed[i][3],
-              errorMessage: "Number is not allowed in name",
+              errorMessage: "Number is not allowed in name"
             });
           }
           if (hasNumber.test(transformed[i][4])) {
@@ -981,7 +981,7 @@ export default {
               row: i,
               column: 4,
               columnData: transformed[i][4],
-              errorMessage: "Number is not allowed in name",
+              errorMessage: "Number is not allowed in name"
             });
           }
 
@@ -990,7 +990,7 @@ export default {
               row: i,
               column: 5,
               columnData: transformed[i][5],
-              errorMessage: "Number is not allowed in name",
+              errorMessage: "Number is not allowed in name"
             });
           }
 
@@ -1009,7 +1009,7 @@ export default {
     },
     editSelected(item) {
       let data = JSON.parse(JSON.stringify(item));
-      this.createdAt=data.createdAt;
+      this.createdAt = data.createdAt;
       this.editedDataId = data.id;
       this.firstName = data.firstName;
       this.lastName = data.lastName;
@@ -1021,10 +1021,9 @@ export default {
       this.editModal = true;
     },
     saveEdited() {
+      var updatedAt = new Date().toISOString();
 
-      var updatedAt =new Date().toISOString()
-
-        var crd=new Date(this.createdAt).toISOString();
+      var crd = new Date(this.createdAt).toISOString();
 
       let editedData = {
         id: this.editedDataId,
@@ -1035,17 +1034,18 @@ export default {
         profession: this.profession,
         sex: this.sex,
         result: this.result,
-        createdAt:crd,
-        updatedAt: updatedAt,
+        createdAt: crd,
+        updatedAt: updatedAt
       };
 
-
-        // st.editImported(editedData);
-      this.$store.dispatch("reviewer/editImported",editedData,this.editedDataId).then((res) => {
-        console.log(res);
-      });
-    },
-  },
+      // st.editImported(editedData);
+      this.$store
+        .dispatch("reviewer/editImported", editedData, this.editedDataId)
+        .then(res => {
+          console.log(res);
+        });
+    }
+  }
 };
 </script>
 <style scoped>
