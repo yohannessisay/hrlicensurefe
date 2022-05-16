@@ -45,7 +45,7 @@ import {
   SET_MY_REGION_CERTIFIED_USERS,
   SET_MY_REGION_CERTIFIED_USERS_SEARCHED,
   SET_PROFESSIONAL_TYPES,
-  SET_LEGACY_DATA,
+  SET_IMPORTED,
   SET_LEGACY_DATA_SEARCHED,
 } from "./mutation-types";
 
@@ -926,20 +926,25 @@ export default {
     commit(SET_PENDING_PAYMENTS_SEARCHED, searchedVal);
   },
 
-  async updateLicenseGenerated({commit}, appInfo) {
+  async updateLicenseGenerated({ commit }, appInfo) {
     console.log("app data", appInfo);
-    const id = parseInt(appInfo[2])
-    const url = `${baseUrl}/${appInfo[1]}/${id}`
+    const id = parseInt(appInfo[2]);
+    const url = `${baseUrl}/${appInfo[1]}/${id}`;
     const resp = await ApiService.put(url, appInfo[0]);
-    console.log("respond", resp)
+    console.log("respond", resp);
     return resp;
   },
 
   async getLegacyData({ commit }, parameters) {
     let url = "";
-    parameters[2] ? url = baseUrl + `/legacyData?page=${parameters[0]}&size=${parameters[1]}&value=${parameters[2]}` : url = baseUrl + `/legacyData?page=${parameters[0]}&size=${parameters[1]}`;
+    parameters[2]
+      ? (url =
+          baseUrl +
+          `/legacyData?page=${parameters[0]}&size=${parameters[1]}&value=${parameters[2]}`)
+      : (url =
+          baseUrl + `/legacyData?page=${parameters[0]}&size=${parameters[1]}`);
     const resp = await ApiService.get(url);
-    return resp.data.data
+    return resp.data.data;
     // commit(SET_LEGACY_DATA, resp.data.data);
   },
 
@@ -1282,7 +1287,7 @@ export default {
   },
   async editRenewal({ commit }, license) {
     try {
-      console.log("license is", license)
+      console.log("license is", license);
       const resp = await ApiService.put(
         baseUrl + "/renewals/" + license.data.id,
         license
@@ -1336,6 +1341,41 @@ export default {
         baseUrl + "/licenseReviewers/transfer",
         data
       );
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+
+  async getImported({ commit }) {
+    try {
+      const url = baseUrl + "/nationalExamResult";
+      const resp = await ApiService.get(url);
+      commit(SET_IMPORTED, resp.data);
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+
+  async addImported(data) {
+    try {
+      const url = baseUrl + "/nationalExamResult/import";
+
+      const resp = await ApiService.post(url, data);
+      console.log(resp);
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+
+  async editImported(data,editedData) {
+    try {
+      const url = baseUrl + "/nationalExamResult/"+editedData.id;
+
+      const resp = await ApiService.put(url, editedData);
+      console.log(resp);
       return resp;
     } catch (error) {
       return error;

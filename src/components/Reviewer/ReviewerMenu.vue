@@ -405,6 +405,11 @@
         <div v-if="this.display == 'suspendedCancelled'">
           <suspended-cancelled />
         </div>
+
+             <div v-if="this.display == 'importResults'">
+          <import-results />
+        </div>
+      
       </div>
     </div>
   </div>
@@ -515,6 +520,8 @@ import Accredited from "./ApplicationTypes/AllLicensed/Accredited.vue";
 import SuspendedCancelled from "./ApplicationTypes/AllLicensed/SuspendedCancelled.vue"
 // import AllLicensed from "./ApplicationTypes/AllLicensed/AllLicensed.vue";
 // import Accredited from "./ApplicationTypes/AllLicensed/Accredited.vue";
+import ImportResults from "./ImportResults/ImportHome.vue";
+
 
 import Report from "../Report/Report.vue";
 import Dashboard from "./Dashboard.vue";
@@ -619,12 +626,13 @@ export default {
     GoodStandingOthersLicensed,
     GoodStandingAllLicensed,
 
+    ImportResults,
     AllLicensed,
     Accredited,
     SuspendedCancelled,
 
     Dashboard,
-    Report,
+    Report
   },
   setup() {
     const store = useStore();
