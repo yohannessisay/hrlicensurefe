@@ -396,6 +396,9 @@
         <div v-if="this.display == 'dashboard'">
           <dashboard />
         </div>
+        <div v-if="this.display == 'userManagement'">
+          <UserManagement />
+        </div>
         <div v-if="this.display == 'allLicensed'">
           <all-licensed />
         </div>
@@ -525,6 +528,7 @@ import ImportResults from "./ImportResults/ImportHome.vue";
 
 import Report from "../Report/Report.vue";
 import Dashboard from "./Dashboard.vue";
+import UserManagement from "../UserManagement/UserDashboard.vue";
 
 import ReviewerNavBar from "./ReviewerNavBar.vue";
 import ReviewerSideNav from "./ReviewerSideNav.vue";
@@ -632,7 +636,8 @@ export default {
     SuspendedCancelled,
 
     Dashboard,
-    Report
+    Report,
+    UserManagement
   },
   setup() {
     const store = useStore();

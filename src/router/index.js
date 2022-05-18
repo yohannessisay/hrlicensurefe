@@ -414,6 +414,11 @@ const routes = [
     component: () => import("../components/Reviewer/CreateAdmin.vue"),
   },
   {
+    path: "/admin/list",
+    name: "AdminUserManagement",
+    component: () => import("../components/UserManagement/UserDashboard.vue"),
+  },
+  {
     path: "/admin/newLicense/unassigned",
     name: "NewLicenseUnassigned",
     component: () =>

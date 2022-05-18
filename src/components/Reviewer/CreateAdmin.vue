@@ -202,6 +202,7 @@ export default {
       expertLevelId: null,
       regionId: null,
       password: "password1",
+      isActive: true
     };
 
     let showLoading = ref(false);

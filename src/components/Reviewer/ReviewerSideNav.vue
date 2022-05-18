@@ -40,6 +40,7 @@
         <report-side-nav @selectReportMenu="selectMenu" />
 
         <dashboard-side-nav @selectDashboardMenu="selectMenu" />
+          <user-management-side-nav @selectUserManagementMenu="selectMenu" />
         <import-results-side-nav @selectImportResultsMenu="selectMenu" />
       </ul>
     </div>
@@ -54,6 +55,8 @@ import GoodStandingSideNav from "./ReviewerSideNavComponents/GoodStandingSideNav
 import AllLicensedSideNav from "./ReviewerSideNavComponents/AllLicensedSideNav.vue";
 import ReportSideNav from "./ReviewerSideNavComponents/ReportSideNav.vue";
 import DashboardSideNav from "./ReviewerSideNavComponents/DashboardSideNav.vue";
+import UserManagementSideNav from "./ReviewerSideNavComponents/UserManagementSideNav.vue";
+
 import ImportResultsSideNav from "./ReviewerSideNavComponents/ImportResultsSideNav.vue";
 import {
   dropdown,
@@ -75,6 +78,7 @@ export default {
     DashboardSideNav,
     ImportResultsSideNav,
     AllLicensedSideNav,
+    UserManagementSideNav
   },
   setup(props, { emit }) {
     const expertLevelId = JSON.parse(localStorage.getItem("allAdminData"))
