@@ -41,6 +41,7 @@
 
         <dashboard-side-nav @selectDashboardMenu="selectMenu" />
           <user-management-side-nav @selectUserManagementMenu="selectMenu" />
+        <import-results-side-nav @selectImportResultsMenu="selectMenu" />
       </ul>
     </div>
   </div>
@@ -56,6 +57,7 @@ import ReportSideNav from "./ReviewerSideNavComponents/ReportSideNav.vue";
 import DashboardSideNav from "./ReviewerSideNavComponents/DashboardSideNav.vue";
 import UserManagementSideNav from "./ReviewerSideNavComponents/UserManagementSideNav.vue";
 
+import ImportResultsSideNav from "./ReviewerSideNavComponents/ImportResultsSideNav.vue";
 import {
   dropdown,
   applicationTypeDD,
@@ -74,6 +76,7 @@ export default {
     GoodStandingSideNav,
     ReportSideNav,
     DashboardSideNav,
+    ImportResultsSideNav,
     AllLicensedSideNav,
     UserManagementSideNav
   },

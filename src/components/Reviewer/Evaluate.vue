@@ -695,7 +695,7 @@
               save as Draft
             </button>
             <button
-            v-if="showTransferErrorMessage" 
+            v-if="showTransferToAdminButton" 
               variant="outline"
               @click="transferToFederal()"
             >
