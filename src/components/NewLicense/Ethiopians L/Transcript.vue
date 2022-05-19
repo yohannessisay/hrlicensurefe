@@ -18,6 +18,13 @@
         >
           REJECTED
         </h2>
+        <h6
+          style="font-weight: bold;"
+          class="flex justify-center ml-4 mr-4"
+          v-if="declinedFieldsCheck"
+        >
+          Remark: <span class="ml-2" style="color: #e63636"> {{ remark }}</span>
+        </h6>
         <h2
           class="flex justify-center"
           v-if="acceptedFieldsCheck"
@@ -25,25 +32,20 @@
         >
           ACCEPTED
         </h2>
-        <TitleWithIllustration
-          illustration="Certificate"
-          message="Degree Transcript"
-          class="mt-8"
-        />
-        <!-- <div class="flex justify-center">
-          <label class="text-xl" v-if="educationLevel == 'diploma'">
-            Diploma
-          </label>
-          <label class="text-xl" v-if="educationLevel == 'degree'">
-            Degree
-          </label>
-          <label class="text-xl" v-if="educationLevel == 'masters'">
-            Masters
-          </label>
-          <label class="text-xl" v-if="educationLevel == 'phd'">
-            PhD
-          </label>
-        </div> -->
+        <div v-if="educationLevel == 'diploma'">
+          <TitleWithIllustration
+            illustration="Certificate"
+            message="Diploma Transcript"
+            class="mt-8"
+          />
+        </div>
+        <div v-else>
+          <TitleWithIllustration
+            illustration="Certificate"
+            message="Degree Transcript"
+            class="mt-8"
+          />
+        </div>
         <span class="flex justify-center">{{ documentMessage }}</span>
         <div class="ml-4">
           <button @click="addDocs()">Add Document</button>
@@ -242,6 +244,7 @@ import Spinner from "@/sharedComponents/Spinner";
 import MESSAGE from "../../../composables/documentMessage";
 import MAX_FILE_SIZE from "../../../composables/documentMessage";
 import MAX_SIZE_MB from "../../../composables/documentMessage";
+import { googleApi } from "@/composables/baseURL";
 
 export default {
   components: {
@@ -263,8 +266,6 @@ export default {
     });
 
     let fileSize = ref("");
-
-    const basePath = "https://storage.googleapis.com/hris-lisence-dev/";
 
     let dataChanged = ref(false);
 
@@ -471,6 +472,7 @@ export default {
     phd = store.getters["newlicense/getPhd"];
     phdTranscript = store.getters["newlicense/getPhdTranscript"];
     phdTranscript2 = store.getters["newlicense/getPhdTranscript2"];
+    remark = store.getters["newlicense/getRemark"];
 
     const draft = (action) => {
       message.value.showLoading = true;
@@ -864,7 +866,6 @@ export default {
       }
       declinedFields = store.getters["newlicense/getDeclinedFields"];
       acceptedFields = store.getters["newlicense/getAcceptedFields"];
-      remark = store.getters["newlicense/getRemark"];
       if (declinedFields != undefined && declinedFields.includes("TRAN")) {
         declinedFieldsCheck.value = true;
       }
@@ -885,7 +886,7 @@ export default {
             }
             TranscriptFile.value = draftData.documents[i];
             showPreview.value = true;
-            filePreview.value = basePath + draftData.documents[i].filePath;
+            filePreview.value = googleApi + draftData.documents[i].filePath;
           }
           if (draftData.documents[i].documentTypeCode == "TRAN1") {
             docCount.value++;
@@ -897,7 +898,7 @@ export default {
             }
             TranscriptFile2.value = draftData.documents[i];
             showPreview2.value = true;
-            filePreview2.value = basePath + draftData.documents[i].filePath;
+            filePreview2.value = googleApi + draftData.documents[i].filePath;
           }
         }
       }
@@ -936,7 +937,7 @@ export default {
       draftData,
       draftStatus,
       update,
-      basePath,
+      googleApi,
       message,
       dataChanged,
       acceptedFields,

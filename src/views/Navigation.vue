@@ -20,6 +20,38 @@
         </div>
 
         <div class="flex items-center space-x-5">
+          <div class="relative inline-block text-left">
+            <a
+              id="options-menu"
+              aria-expanded="true"
+              aria-haspopup="true"
+              v-on:click="showNotification()"
+            >
+              <div class="w-12 h-12 mt-4">
+                <!-- <span
+                  class="inline-flex items-center justify-center align-middle px-2 py-1 text-lg font-bold leading-none rounded-full bg-primary-400 text-white"
+                  >99+</span
+                > -->
+              </div>
+            </a>
+            <div
+              v-if="showNotificationDropDown == true"
+              class="origin-top-right absolute right-0 w-64 rounded-md shadow-lg bg-white focus:outline-none"
+              role="menu"
+              aria-orientation="vertical"
+              aria-labelledby="options-menu"
+            >
+              <div role="none">
+                <li
+                  class="block px-4 py-2 text-sm text-blue-100 hover:bg-gray-100 hover:text-gray-900"
+                  role="menuitem"
+                >
+                  Your license is about to expire.
+                </li>
+              </div>
+            </div>
+          </div>
+
           <p class="text-primary-600" v-text="name.fullName"></p>
           <div class="relative inline-block text-left">
             <a
@@ -27,7 +59,6 @@
               id="options-menu"
               aria-expanded="true"
               aria-haspopup="true"
-              href="#"
               v-on:click="showDropDown()"
             >
               <div v-if="!isFirstTime" class="w-12 h-12 ">
@@ -52,7 +83,7 @@
             </a>
             <div
               v-if="showDD == true"
-              class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white focus:outline-none"
+              class="origin-top-right absolute right-0 mt-1 w-56 rounded-md shadow-lg bg-white focus:outline-none"
               role="menu"
               aria-orientation="vertical"
               aria-labelledby="options-menu"
@@ -68,14 +99,22 @@
                 </router-link>
               </div>
               <div role="none">
-                <!-- <router-link to="/google-form">
+                <router-link to="/google-form">
                   <li
                     class="block px-4 py-2 text-sm text-blue-100 hover:bg-gray-100 hover:text-gray-900"
                     role="menuitem"
                   >
                     Leave a Feedback
                   </li>
-                </router-link> -->
+                </router-link>
+                <a @click="updateProfile()">
+                  <li
+                    class="block px-4 py-2 text-sm text-blue-100 hover:bg-gray-100 hover:text-gray-900"
+                    role="menuitem"
+                  >
+                    Update Profile
+                  </li>
+                </a>
                 <a
                   @click="logout()"
                   class="block px-4 py-2 text-sm text-blue-100 hover:bg-gray-100 hover:text-gray-900"
@@ -87,24 +126,6 @@
               </div>
             </div>
           </div>
-          <!-- <a
-            class="focus:outline-none bg-lightBlueB-300 text-lightBlueB-400 hover:text-gray-800 w-7 h-7 rounded-full flex items-center justify-center"
-            href="#"
-          >
-            <svg
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              class="inline-block w-8 h-8 px-1 py-1"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="1"
-                d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
-              ></path>
-            </svg>
-          </a> -->
         </div>
       </main>
     </nav>
@@ -124,6 +145,7 @@ export default {
       auth: false,
       token: "",
       showDD: false,
+      showNotificationDropDown: false,
     };
   },
   created() {
@@ -131,6 +153,11 @@ export default {
     if (this.token != undefined) this.auth = true;
   },
   methods: {
+    updateProfile() {
+      const id = +localStorage.getItem("userId");
+      const url = "/update-profile/:" + id;
+      this.$router.push(url);
+    },
     logout() {
       location.reload();
       localStorage.removeItem("token");
@@ -142,7 +169,12 @@ export default {
       this.$router.push({ path: "/" });
     },
     showDropDown() {
+      this.showNotificationDropDown = false;
       this.showDD = !this.showDD;
+    },
+    showNotification() {
+      this.showNotificationDropDown = !this.showNotificationDropDown;
+      this.showDD = false;
     },
     selectMenu(menu) {
       if (this.$route.name != "Menu") {
@@ -150,9 +182,6 @@ export default {
       } else {
         this.$emit("changeDisplay", menu);
       }
-    },
-    openFeedbackPage() {
-      window.location = "http://google.com";
     },
   },
   computed() {

@@ -18,13 +18,8 @@ import {
   SET_OTHERS_CONFIRM_REVIEW,
   SET_OTHERS_CONFIRM_REVIEW_SEARCHED,
   SET_EVALUATE_REVIEW,
-  SET_EVALUATE_REVIEW_SEARCHED,
-  SET_OTHERS_EVALAUTE_REVIEW,
-  SET_OTHERS_EVALUATE_REVIEW_SEARCHED,
   SET_CONFIRMED,
   SET_CONFIRMED_SEARCHED,
-  SET_TEMPORARLY_FINISHED,
-  SET_TEMPORARLY_FINISHED_SEARCHED,
   SET_RECENTLY_FINISHED,
   SET_RECENTLY_FINISHED_SEARCHED,
   SET_ASSIGNED_FOR_EVERYONE,
@@ -45,6 +40,11 @@ import {
 
   SET_ALL_LICENSED,
   SET_ALL_LICENSED_SEARCHED,
+
+  SET_LEGACY_DATA,
+  SET_LEGACY_DATA_SEARCHED,
+
+  SET_IMPORTED,
 } from "./mutation-types";
 
 export default {
@@ -213,5 +213,16 @@ export default {
   },
   [SET_ALL_LICENSED_SEARCHED](state, searchedVal) {
     state.allLicensedSearched = searchedVal;
+  },
+  [SET_LEGACY_DATA](state, data) {
+    state.legacyData = data;
+    state.legacyDataSearched = data;
+  },
+  [SET_LEGACY_DATA_SEARCHED](state, searchedVal) {
+    state.legacyDataSearched = searchedVal;
+  },
+
+  [SET_IMPORTED](state, data) {
+    state.imported = data;
   },
 };

@@ -1,7 +1,11 @@
 <template>
-  <div>
-    <div>
-      <div v-if="!this.showLoading" class="bg-lightBlueB-200 h-full">
+  <Navigation />
+  <div class="flex flex-row">
+    <div class="sidenav">
+      <SideNav />
+    </div>
+    <div class="menu">
+      <div v-if="!this.showLoading" class="bg-lightBlueB-200">
         <div class="flex pl-12 pt-medium">
           <Title message="New License Under Supervision Applications" />
         </div>
@@ -98,7 +102,7 @@
           </div>
         </div>
       </div>
-      <div v-if="!this.showLoading" class="bg-lightBlueB-200 h-full">
+      <div v-if="!this.showLoading" class="bg-lightBlueB-200">
         <div class="flex pl-12 pt-medium">
           <Title message="Renewal Under Supervision Applications" />
         </div>
@@ -195,186 +199,18 @@
           </div>
         </div>
       </div>
-      <!-- <div v-if="!this.showLoading" class="bg-lightBlueB-200 h-full">
-        <div class="flex pl-12 pt-medium">
-          <Title message="Verification Under Supervision Applications" />
-        </div>
-        <div v-if="this.verification.length == 0" class="flex pl-12 ml-6">
-          <h4>Nothing to Show.</h4>
-        </div>
-        <div
-          v-if="this.verification.length != 0"
-          class=" mt-medium rounded ml-large"
-        >
-          <div
-            class="flex "
-            v-for="i in this.verification.length"
-            v-bind:key="i"
-          >
-            <div
-              class="container mb-medium"
-              v-for="item in this.verification.slice((i - 1) * 4, i * 4)"
-              v-bind:key="item"
-              v-bind:value="item"
-            >
-              <router-link
-                :to="{
-                  name: 'Verification',
-                  params: { id: item.id, status: item.applicationStatus.code },
-                }"
-              >
-                <div
-                  class="flex justify-center items-center pb-16 ml-4 mr-4 box-shadow-pop rounded-lg bg-lightGrey-100"
-                >
-                  <div class="p-4 w-auto h-auto">
-                    <span
-                      class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                    >
-                      <b>Applicant Type: &nbsp;</b>
-                      {{ item.applicantType.name }}
-                    </span>
-                    <span
-                      class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                    >
-                      <b>Status: &nbsp;</b>{{ item.applicationStatus.name }}
-                    </span>
-                    <span
-                      class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                    >
-                      <b>Code: &nbsp;</b>{{ item.verificationCode }}
-                    </span>
-                    <span
-                      v-if="item.certified == true"
-                      class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                    >
-                      <b>Certified: &nbsp;</b>Yes
-                    </span>
-                    <span
-                      v-else
-                      class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                    >
-                      <b>Certified: &nbsp;</b>No
-                    </span>
-                    <span
-                      v-if="item.reviewer != null || item.reviewer != undefined"
-                      class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                    >
-                      <b>Reviewer: &nbsp;</b>{{ item.reviewer.name }}
-                    </span>
-                    <span
-                      class="
-                      mt-medium
-                      text-lightBlueB-500
-                      flex
-                      justify-end
-                      content-center
-                    "
-                    >
-                      {{
-                        item.createdAt ? moment(item.createdAt).fromNow() : "-"
-                      }}
-                    </span>
-                  </div>
-                </div>
-              </router-link>
-            </div>
-          </div>
-        </div>
-      </div> -->
-      <!-- <div v-if="!this.showLoading" class="bg-lightBlueB-200 h-full">
-        <div class="flex pl-12 pt-medium">
-          <Title message="Good Standing Under Supervision Applications" />
-        </div>
-        <div
-          v-if="this.goodstanding.length == 0"
-          class="flex pl-12 ml-6 h-screen"
-        >
-          <h4>Nothing to Show.</h4>
-        </div>
-        <div
-          v-if="this.goodstanding.length != 0"
-          class=" mt-medium rounded ml-large"
-        >
-          <div
-            class="flex flex-wrap"
-            v-for="i in this.goodstanding.length"
-            v-bind:key="i"
-          >
-            <div
-              class="container mb-medium"
-              v-for="item in this.goodstanding.slice((i - 1) * 4, i * 4)"
-              v-bind:key="item"
-              v-bind:value="item"
-            >
-              <router-link
-                :to="{
-                  name: 'GoodStanding',
-                  params: { id: item.id, status: item.applicationStatus.code },
-                }"
-              >
-                <div
-                  class="flex justify-center items-center pb-16 ml-4 mr-4 box-shadow-pop rounded-lg bg-lightGrey-100"
-                >
-                  <div class="p-4 w-auto h-auto">
-                    <span
-                      class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                    >
-                      <b>Applicant Type: &nbsp;</b>
-                      {{ item.applicantPosition.name }}
-                    </span>
-                    <span
-                      class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                    >
-                      <b>Status: &nbsp;</b>{{ item.applicationStatus.name }}
-                    </span>
-                    <span
-                      class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                    >
-                      <b>Code: &nbsp;</b>{{ item.goodStandingCode }}
-                    </span>
-                    <span
-                      v-if="item.certified == true"
-                      class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                    >
-                      <b>Certified: &nbsp;</b>Yes
-                    </span>
-                    <span
-                      v-else
-                      class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
-                    >
-                      <b>Certified: &nbsp;</b>No
-                    </span>
-                    <span
-                      class="
-                      mt-medium
-                      text-lightBlueB-500
-                      flex
-                      justify-end
-                      content-center
-                    "
-                    >
-                      {{
-                        item.createdAt ? moment(item.createdAt).fromNow() : "-"
-                      }}
-                    </span>
-                  </div>
-                </div>
-              </router-link>
-            </div>
-          </div>
-        </div>
-      </div> -->
-    </div>
-    <div
-      v-if="showLoading"
-      class="flex justify-center justify-items-center mt-24"
-    >
-      <Spinner />
+      <div
+        v-if="showLoading"
+        class="flex justify-center justify-items-center mt-24"
+      >
+        <Spinner />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import SideNav from "./SideNav.vue";
 import Title from "@/sharedComponents/TitleWithIllustration";
 import RenderIllustration from "@/sharedComponents/RenderIllustration";
 import Navigation from "@/views/Navigation";
@@ -382,14 +218,19 @@ import Spinner from "@/sharedComponents/Spinner";
 import moment from "moment";
 
 export default {
-  components: { Navigation, Title, Spinner, RenderIllustration, Title },
+  components: {
+    Navigation,
+    SideNav,
+    Title,
+    Spinner,
+    RenderIllustration,
+    Title,
+  },
   data: function() {
     return {
       license: [],
       newlicense: [],
       renewal: [],
-      verification: [],
-      goodstanding: [],
       showLoading: false,
       showDD: false,
       auth: false,
@@ -434,6 +275,7 @@ export default {
         .then(() => {
           this.$store.dispatch("renewal/getRenewalLicense").then((res) => {
             this.license = res.data.data;
+            this.showLoading = !this.showLoading;
             if (this.license) {
               this.renewal = this.license.filter(function(e) {
                 if (e.expertLevelId === 3) {
@@ -446,69 +288,21 @@ export default {
               });
             }
           });
-        })
-        .then(() => {
-          this.$store
-            .dispatch("verification/getVerificationLicense")
-            .then((res) => {
-              this.license = res.data.data;
-              if (this.license) {
-                this.verification = this.license.filter(function(e) {
-                  if (e.expertLevelId === 3) {
-                    return e.applicationStatus.code === "USUP";
-                  } else {
-                    return (
-                      e.applicationStatusId == 16 && e.previousAppStatusId == 7
-                    );
-                  }
-                });
-              }
-            });
-        })
-        .then(() => {
-          this.$store
-            .dispatch("goodstanding/getGoodStandingLicense")
-            .then((res) => {
-              this.license = res.data.data;
-              this.showLoading = !this.showLoading;
-              if (this.license) {
-                this.goodstanding = this.license.filter(function(e) {
-                  if (e.expertLevelId === 3) {
-                    return e.applicationStatus.code === "USUP";
-                  } else {
-                    return (
-                      e.applicationStatusId == 16 && e.previousAppStatusId == 7
-                    );
-                  }
-                });
-              }
-            });
         });
-    },
-    routeTo(item) {
-      if (item.newLicenseCode) {
-        this.$router.push({
-          name: "NewLicense",
-          params: { id: item.id, status: item.applicationStatus.code },
-        });
-      } else if (item.renewalCode) {
-        this.$router.push({
-          name: "Renewal",
-          params: { id: item.id, status: item.applicationStatus.code },
-        });
-      } else if (item.verificationCode) {
-        this.$router.push({
-          name: "Verification",
-          params: { id: item.id, status: item.applicationStatus.code },
-        });
-      } else {
-        this.$router.push({
-          name: "GoodStanding",
-          params: { id: item.id, status: item.applicationStatus.code },
-        });
-      }
     },
   },
 };
 </script>
-<style></style>
+<style>
+@media only screen and (max-width: 1024px) {
+  .sidenav {
+    display: none;
+  }
+}
+.menu {
+  width: 80%;
+}
+.sidenav {
+  width: 20%;
+}
+</style>

@@ -18,6 +18,13 @@
         >
           REJECTED
         </h2>
+        <h6
+          style="font-weight: bold;"
+          class="flex justify-center ml-4 mr-4"
+          v-if="declinedFieldsCheck"
+        >
+          Remark: <span class="ml-2" style="color: #e63636"> {{ remark }}</span>
+        </h6>
         <h2
           class="flex justify-center"
           v-if="acceptedFieldsCheck"
@@ -353,6 +360,7 @@ import Spinner from "@/sharedComponents/Spinner";
 import MESSAGE from "../../../composables/documentMessage";
 import MAX_FILE_SIZE from "../../../composables/documentMessage";
 import MAX_SIZE_MB from "../../../composables/documentMessage";
+import { googleApi } from "@/composables/baseURL";
 
 export default {
   components: {
@@ -366,8 +374,6 @@ export default {
     const store = useStore();
     const route = useRoute();
     const router = useRouter();
-
-    const basePath = "https://storage.googleapis.com/hris-lisence-dev/";
 
     let message = ref({
       showFlash: false,
@@ -818,6 +824,7 @@ export default {
       store.getters["newlicense/getProfessionalDocTranscript4"];
     professionalDocTranscript5 =
       store.getters["newlicense/getProfessionalDocTranscript5"];
+    remark = store.getters["newlicense/getRemark"];
 
     const draft = (action) => {
       message.value.showLoading = true;
@@ -1382,7 +1389,6 @@ export default {
       }
       declinedFields = store.getters["newlicense/getDeclinedFields"];
       acceptedFields = store.getters["newlicense/getAcceptedFields"];
-      remark = store.getters["newlicense/getRemark"];
       if (declinedFields != undefined && declinedFields.includes("PDC")) {
         declinedFieldsCheck.value = true;
       }
@@ -1405,7 +1411,7 @@ export default {
 
             certificateFile.value = draftData.documents[i];
             showPreview.value = true;
-            filePreview.value = basePath + draftData.documents[i].filePath;
+            filePreview.value = googleApi + draftData.documents[i].filePath;
           }
           if (draftData.documents[i].documentTypeCode == "PDC1") {
             docCount.value++;
@@ -1417,7 +1423,7 @@ export default {
             }
             certificateFile2.value = draftData.documents[i];
             showPreview2.value = true;
-            filePreview2.value = basePath + draftData.documents[i].filePath;
+            filePreview2.value = googleApi + draftData.documents[i].filePath;
           }
           if (draftData.documents[i].documentTypeCode == "PDC2") {
             docCount.value++;
@@ -1429,7 +1435,7 @@ export default {
             }
             certificateFile3.value = draftData.documents[i];
             showPreview3.value = true;
-            filePreview3.value = basePath + draftData.documents[i].filePath;
+            filePreview3.value = googleApi + draftData.documents[i].filePath;
           }
           if (draftData.documents[i].documentTypeCode == "PDC3") {
             docCount.value++;
@@ -1441,7 +1447,7 @@ export default {
             }
             certificateFile4.value = draftData.documents[i];
             showPreview4.value = true;
-            filePreview4.value = basePath + draftData.documents[i].filePath;
+            filePreview4.value = googleApi + draftData.documents[i].filePath;
           }
           if (draftData.documents[i].documentTypeCode == "PDC4") {
             docCount.value++;
@@ -1453,7 +1459,7 @@ export default {
             }
             certificateFile5.value = draftData.documents[i];
             showPreview5.value = true;
-            filePreview5.value = basePath + draftData.documents[i].filePath;
+            filePreview5.value = googleApi + draftData.documents[i].filePath;
           }
         }
       }
@@ -1526,7 +1532,7 @@ export default {
       draftStatus,
       update,
       draftData,
-      basePath,
+      googleApi,
       message,
       dataChanged,
       acceptedFields,

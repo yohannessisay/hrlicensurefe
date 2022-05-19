@@ -193,7 +193,7 @@
             <picture>
               <img
                 :src="
-                  'https://storage.googleapis.com/hris-lisence-dev/' +
+                  this.basePath +
                     item.filePath
                 "
               />
@@ -252,19 +252,19 @@
             </button>
             <button
               v-if="this.buttons.length > 2"
-              @click="draft(this.buttons[2].action)"
+              @click="draft(this.buttons[1].action)"
               variant="outline"
             >
-              {{ this.buttons[2].name }}
+              {{ this.buttons[1].name }}
             </button>
 
             <button
               v-if="this.buttons.length > 2"
               class="withdraw"
-              @click="withdraw(this.buttons[1].action)"
+              @click="withdraw(this.buttons[2].action)"
               variant="outline"
             >
-              {{ this.buttons[1].name }}
+              {{ this.buttons[2].name }}
             </button>
           </div>
         </div>
@@ -277,10 +277,10 @@
           </button>
           <button
             class="withdraw"
-            @click="withdraw(this.buttons[0].action)"
+            @click="withdraw(this.buttons[2].action)"
             variant="outline"
           >
-            {{ this.buttons[1]["name"] }}
+            {{ this.buttons[2]["name"] }}
           </button>
         </div>
         <div
@@ -306,9 +306,6 @@
           </button>
           <button
             id="reapplyButton"
-            style="opacity: 0.3"
-            :disabled="this.checkBoxValue == true"
-            disabled
             @click="draft('UpdateEvent')"
             variant="outline"
           >
@@ -344,6 +341,7 @@ import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import Spinner from "@/sharedComponents/Spinner";
 import moment from "moment";
+import { googleApi } from "@/composables/baseURL";
 
 export default {
   props: ["activeState"],
@@ -354,6 +352,7 @@ export default {
     Spinner,
   },
   async created() {
+    this.basePath = googleApi;
     this.showCheckBox = true;
     this.userId = +localStorage.getItem("userId");
     this.draftId = this.$route.params.id;
@@ -414,8 +413,7 @@ export default {
     this.departmentId = this.license.departmentId;
   },
   data: () => ({
-    basePath: "https://ihris.moh.gov.et/hrl/",
-
+    basePath: "",
     filePreview: "",
     letterPreview: "",
     docList: [],

@@ -81,5 +81,22 @@ export default {
     } catch(error) {
       return error;
     }
-  }
+  },
+  async getAdmins() {
+    try {
+      const resp = await ApiService.get(url + "admins/all");
+      return resp;
+    } catch (error) {
+      const resp = error;
+      return resp;
+    }
+  },
+  async updateAdmin({ commit }, data) {
+    try {
+      const resp = await ApiService.put(url+`admins/${data.id}`, data)
+      return resp;
+    } catch(error) {
+      return error;
+    }
+  },
 };

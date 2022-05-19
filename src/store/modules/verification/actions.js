@@ -1,4 +1,6 @@
 import ApiService from "../../../services/api.service";
+import { baseUrl } from "../../../composables/baseURL";
+
 import {
   SET_LICENSE,
   SET_LICENSE_COPY,
@@ -13,7 +15,6 @@ import {
   SET_ACCEPTED_FIELDS,
 } from "./mutation-types";
 
-const url = "https://ihris.moh.gov.et/hrl/api/";
 const userId = +localStorage.getItem("userId");
 
 export default {
@@ -43,7 +44,10 @@ export default {
   },
   async addVerificationLicense({ commit }, license) {
     try {
-      const resp = await ApiService.post(url + "verifications/add", license);
+      const resp = await ApiService.post(
+        baseUrl + "/verifications/add",
+        license
+      );
       return resp;
     } catch (error) {
       return error;
@@ -52,7 +56,7 @@ export default {
   async editVerificationLicense({ commit }, license) {
     try {
       const resp = await ApiService.put(
-        url + "verifications/" + license.id,
+        baseUrl + "/verifications/" + license.id,
         license.data
       );
       return resp;
@@ -63,7 +67,7 @@ export default {
   async uploadDocuments({ commit }, documents) {
     try {
       const resp = await ApiService.post(
-        url + "documentUploads/verificationDocument/" + documents.id,
+        baseUrl + "/documentUploads/verificationDocument/" + documents.id,
         documents.document,
         {
           headers: {
@@ -79,7 +83,7 @@ export default {
 
   async getApplicantType() {
     try {
-      const resp = await ApiService.get(url + "lookups/applicantTypes");
+      const resp = await ApiService.get(baseUrl + "/lookups/applicantTypes");
       return resp;
     } catch (error) {
       return error;
@@ -87,7 +91,7 @@ export default {
   },
   async getInstitution() {
     try {
-      const resp = await ApiService.get(url + "lookups/institutions");
+      const resp = await ApiService.get(baseUrl + "/lookups/institutions");
       return resp;
     } catch (error) {
       return error;
@@ -95,7 +99,7 @@ export default {
   },
   async getDepartmentType() {
     try {
-      const resp = await ApiService.get(url + "lookups/departments");
+      const resp = await ApiService.get(baseUrl + "/lookups/departments");
       return resp;
     } catch (error) {
       return error;
@@ -103,7 +107,7 @@ export default {
   },
   async getProfile({ commit }, id) {
     try {
-      const resp = await ApiService.get(url + "profiles/user/" + id);
+      const resp = await ApiService.get(baseUrl + "/profiles/user/" + id);
       return resp;
     } catch (error) {
       return error;
@@ -111,7 +115,7 @@ export default {
   },
   async getApplicationStatuses() {
     try {
-      const resp = await ApiService.get(url + "applicationStatuses");
+      const resp = await ApiService.get(baseUrl + "/applicationStatuses");
       return resp;
     } catch (error) {
       return error;
@@ -119,7 +123,7 @@ export default {
   },
   async getApplicationCategories() {
     try {
-      const resp = await ApiService.get(url + "applicationCategories");
+      const resp = await ApiService.get(baseUrl + "/applicationCategories");
       return resp;
     } catch (error) {
       return error;
@@ -127,7 +131,7 @@ export default {
   },
   async getDocumentSpecs({ commit }, id) {
     try {
-      const resp = await ApiService.get(url + "documentSpecs/" + id);
+      const resp = await ApiService.get(baseUrl + "/documentSpecs/" + id);
       return resp;
     } catch (error) {
       return error;
@@ -136,7 +140,9 @@ export default {
 
   async getVerificationLicense({ commit }) {
     try {
-      const resp = await ApiService.get(url + "verifications/user/" + userId);
+      const resp = await ApiService.get(
+        baseUrl + "/verifications/user/" + userId
+      );
       return resp;
     } catch (error) {
       return error;
@@ -144,7 +150,7 @@ export default {
   },
   async getDraft({ commit }, id) {
     try {
-      const resp = await ApiService.get(url + "verifications/" + id);
+      const resp = await ApiService.get(baseUrl + "/verifications/" + id);
       return resp;
     } catch (error) {
       return error;
@@ -154,7 +160,7 @@ export default {
   async withdraw({ commit }, payload) {
     try {
       const resp = await ApiService.put(
-        url + "verifications/" + payload.licenseId,
+        baseUrl + "/verifications/" + payload.licenseId,
         payload.withdrawData
       );
       return resp;
@@ -165,7 +171,7 @@ export default {
   async updateDraft({ commit }, payload) {
     try {
       const resp = await ApiService.put(
-        url + "verifications/" + payload.licenseId,
+        baseUrl + "/verifications/" + payload.licenseId,
         payload.draftData
       );
       return resp;
@@ -175,7 +181,7 @@ export default {
   },
   async getRegions() {
     try {
-      const resp = await ApiService.get(url + "lookups/regions");
+      const resp = await ApiService.get(baseUrl + "/lookups/regions");
       return resp;
     } catch (error) {
       const resp = error;
@@ -184,8 +190,7 @@ export default {
   },
   async getWoredas(context, zoneId) {
     try {
-      const baseUrl = url + "lookups/woredas/" + zoneId;
-      const resp = await ApiService.get(baseUrl);
+      const resp = await ApiService.get(baseUrl + "/lookups/woredas/" + zoneId);
       return resp;
     } catch (error) {
       const resp = error;
@@ -194,8 +199,7 @@ export default {
   },
   async getZones(context, regionId) {
     try {
-      const baseUrl = url + "lookups/zones/" + regionId;
-      const resp = await ApiService.get(baseUrl);
+      const resp = await ApiService.get(baseUrl + "/lookups/zones/" + regionId);
       return resp;
     } catch (error) {
       const resp = error;
@@ -204,7 +208,7 @@ export default {
   },
   async getExpertLevel() {
     try {
-      const resp = await ApiService.get(url + "lookups/expertLevels");
+      const resp = await ApiService.get(baseUrl + "/lookups/expertLevels");
       return resp;
     } catch (error) {
       return error;
@@ -213,7 +217,7 @@ export default {
   async getProfessionalTypes(context, deptId) {
     try {
       const resp = await ApiService.get(
-        url + "lookups/professionalTypes/" + deptId
+        baseUrl + "/lookups/professionalTypes/" + deptId
       );
       return resp;
     } catch (error) {

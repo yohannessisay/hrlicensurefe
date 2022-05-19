@@ -44,6 +44,12 @@
                   Legacy data
                 </div>
               </li>
+              <li @click="AllLicensedMenuHandler('suspendedCancelled')" class="mb-2">
+                <div class=" text-base" style="color: white; ">
+                  <!-- <i class="far fa-thumbs-up fa-x fa-light mt-4"></i> -->
+                  Suspended / Cancelled
+                </div>
+              </li>
             </ul>
           </div>
         </div>

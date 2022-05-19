@@ -22,8 +22,8 @@
                 <img
                   style="border-radius: 100%"
                   v-bind:src="
-                    'https://ihris.moh.gov.et/hrl/' +
-                    paymentImage
+                    googleApi + '' +
+                      paymentImage
                   "
                   class="img"
                 />
@@ -97,8 +97,8 @@
               <picture>
                 <img
                   v-bind:src="
-                    'https://ihris.moh.gov.et/hrl/' +
-                    paymentImage
+                    googleApi + '' +
+                      paymentImage
                   "
                 />
               </picture>
@@ -155,6 +155,7 @@
 import { useStore } from "vuex";
 import { useRoute, useRouter } from "vue-router";
 import { ref, onMounted } from "vue";
+import { googleApi } from "@/composables/baseURL";
 
 import Modal from "@/sharedComponents/Modal";
 import FlashMessage from "@/sharedComponents/FlashMessage";
@@ -304,6 +305,7 @@ export default {
       showLoading,
       buttons,
       action,
+      googleApi
     };
   },
 };

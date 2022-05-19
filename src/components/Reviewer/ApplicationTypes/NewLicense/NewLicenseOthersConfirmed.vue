@@ -23,7 +23,7 @@
           Filter
         </button>
       </div>
-    
+
       <div class="flex pl-12 pt-tiny">
         <Title message="Others New License Confirmed" />
       </div>
@@ -140,10 +140,13 @@ export default {
 
     const fetchNewLicenseConfirmed = () => {
       showLoading.value = true;
-      const statusId = applicationStatus(store, 'CONF');
+      const statusId = applicationStatus(store, "CONF");
       const adminStatus = [statusId, adminId];
       store
-        .dispatch("reviewerNewLicense/getNewLicenseOthersConfirmed", adminStatus)
+        .dispatch(
+          "reviewerNewLicense/getNewLicenseOthersConfirmed",
+          adminStatus
+        )
         .then((res) => {
           showLoading.value = false;
           newLicenseConfirmed.value =
@@ -164,9 +167,7 @@ export default {
                 allInfo.value.assignApplication[applicant].applicantType;
             }
           }
-          if (
-            newLicenseConfirmed.value.length === 0
-          ) {
+          if (newLicenseConfirmed.value.length === 0) {
             nothingToShow.value = true;
           }
         });

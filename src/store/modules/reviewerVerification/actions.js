@@ -1,4 +1,5 @@
 import ApiService from "../../../services/api.service";
+import { baseUrl } from "../../../composables/baseURL";
 import {
   SET_VERIFICATION_UNASSIGNED,
   SET_VERIFICATION_UNASSIGNED_SEARCHED,
@@ -28,7 +29,6 @@ import {
   SET_VERIFICATION_OTHERS_RE_APPLY,
   SET_VERIFICATION_OTHERS_RE_APPLY_SEARCHED,
 } from "./mutation-types";
-const baseUrl = "https://ihris.moh.gov.et/hrl/api";
 
 export default {
   async getUnassignedVerification({ commit }, statusId) {
@@ -352,9 +352,7 @@ export default {
   async getVerificationReApply({ commit }, adminStatus) {
     const url = baseUrl + "/verifications/status/"+adminStatus[0];
     const resp = await ApiService.get(url);
-    const reApply = resp.data.data.filter(function(e) {
-      return e.reviewerId === adminStatus[1];
-    });
+    const reApply = resp.data.data;
     commit(SET_VERIFICATION_RE_APPLY, reApply);
   },
 

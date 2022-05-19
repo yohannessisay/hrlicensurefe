@@ -1,6 +1,8 @@
 export default {
   getNewLicenseUnassigned: (state) => state.newLicenseUnassigned,
   getNewLicenseUnassignedSearched: (state) => state.newLicenseUnassignedSearched,
+  getNewLicenseFromOtherRegion: (state) => state.newLicenseFromOtherRegion,
+  getNewLicenseFromOtherRegionSearched: (state) => state.newLicenseFromOtherRegionSearched,
 
   getNewLicenseUnfinished: (state) => state.newLicenseUnfinished,
   getNewLicenseUnfinishedSearched: (state) => state.newLicenseUnfinishedSearched,
@@ -87,4 +89,14 @@ export default {
 
   getNewLicenseForSpecificUser: (state) => state.newLicenseForSpecificUser,
   getNewLicenseForSpecificUserSearched: (state) => state.newLicenseForSpecificUserSearched,
+
+  getNewLicenseSuspended: (state) => state.newLicenseSuspended,
+  getNewLicenseSuspendedSearched: (state) => state.newLicenseSuspendedSearched,
+  getNewLicenseCancelled: (state) => state.newLicenseCancelled,
+  getNewLicenseCancelledSearched: (state) => state.newLicenseCancelledSearched,
+
+  getNewLicenseAllSuspended: (state) => state.newLicenseAllSuspended,
+  getNewLicenseAllSuspendedSearched: (state) => state.newLicenseAllSuspendedSearched,
+  getNewLicenseAllCancelled: (state) => state.newLicenseAllCancelled,
+  getNewLicenseAllCancelledSearched: (state) => state.newLicenseAllCancelledSearched,
 };

@@ -3,6 +3,58 @@
     <!-- <reviewer-nav-bar tab="newLicenseLicensed" /> -->
     <div class="bg-lightBlueB-200 h-full" v-if="!allInfo.searchByInput">
       <div class="pl-12">
+        <div style="border-bottom: 2px solid #eaeaea">
+          <ul class="flex cursor-pointer">
+            <li
+              :class="[
+                selectedTab == 'Licensed'
+                  ? selectedTabClass
+                  : notSelectedTabClass,
+              ]"
+              @click="changeTab('Licensed')"
+              :style="[
+                selectedTab == 'Licensed'
+                  ? 'background-color: white'
+                  : 'background-color: #C3DBD9',
+              ]"
+            >
+              Licensed
+            </li>
+            <li
+              :class="[
+                selectedTab == 'Suspended'
+                  ? selectedTabClass
+                  : notSelectedTabClass,
+              ]"
+              :style="[
+                selectedTab == 'Suspended'
+                  ? 'background-color: white'
+                  : 'background-color: #C3DBD9',
+              ]"
+              @click="changeTab('Suspended')"
+            >
+              Suspended
+            </li>
+            <li
+              :class="[
+                selectedTab == 'Cancelled'
+                  ? selectedTabClass
+                  : notSelectedTabClass,
+                'tabColor',
+              ]"
+              :style="[
+                selectedTab == 'Cancelled'
+                  ? 'background-color: white'
+                  : 'background-color: #C3DBD9',
+              ]"
+              @click="changeTab('Cancelled')"
+            >
+              Cancelled
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="pl-12">
         <div>Filter By</div>
       </div>
 
@@ -24,19 +76,60 @@
         </button>
       </div>
       <div class="flex pl-12 pt-tiny">
-        <Title message="New License Licensed" />
+        <Title :message="message" />
       </div>
-      <div class="flex flex-wrap pb-medium rounded h-full" v-if="!showLoading">
+      <!-- <div class="flex flex-wrap pb-medium rounded h-full" v-if="!showLoading">
         <nothing-to-show :nothingToShow="nothingToShow" />
         <licensed-applications
           :licensedApplication="getNewLicenseLicensed"
           app_type="New License"
           others_licensed="false"
         />
+      </div> -->
+      <div
+        class="flex flex-wrap pb-medium rounded h-full"
+        v-if="
+          selectedTab == 'Licensed'
+            ? !showLoadingLicensed
+            : selectedTab == 'Suspended'
+            ? !showLoadingSuspended
+            : !showLoadingCancelled
+        "
+      >
+        <nothing-to-show
+          :nothingToShow="
+            selectedTab == 'Licensed'
+              ? nothingToShowLicensed
+              : selectedTab == 'Suspended'
+              ? nothingToShowSuspended
+              : nothingToShowCancelled
+          "
+        />
+        <licensed-applications
+          :licensedApplication="
+            selectedTab == 'Licensed'
+              ? getNewLicenseLicensed
+              : selectedTab == 'Suspended'
+              ? getNewLicenseSuspended
+              : getNewLicenseCancelled
+          "
+          app_type="New License"
+          others_licensed="false"
+        />
       </div>
     </div>
-    <div
+    <!-- <div
       v-if="showLoading"
+      class="flex justify-center justify-items-center mt-24"
+    > -->
+    <div
+      v-if="
+        selectedTab == 'Licensed'
+          ? showLoadingLicensed
+          : selectedTab == 'Suspended'
+          ? showLoadingSuspended
+          : showLoadingCancelled
+      "
       class="flex justify-center justify-items-center mt-24"
     >
       <Spinner />
@@ -89,6 +182,12 @@ export default {
     getNewLicenseLicensed() {
       return store.getters["reviewerNewLicense/getNewLicenseLicensedSearched"];
     },
+    getNewLicenseSuspended() {
+      return store.getters["reviewerNewLicense/getNewLicenseSuspendedSearched"];
+    },
+    getNewLicenseCancelled() {
+      return store.getters["reviewerNewLicense/getNewLicenseCancelledSearched"];
+    },
   },
   components: {
     ReviewerNavBar,
@@ -102,11 +201,23 @@ export default {
   setup() {
     const store = useStore();
     let newLicenseLicensed = ref([]);
+    let newLicenseSuspended = ref([]);
+    let newlicenseCancelled = ref([]);
 
     const adminId = +localStorage.getItem("adminId");
 
-    let nothingToShow = ref(false);
-    let showLoading = ref(false);
+    let selectedTabClass = "py-2 px-6 bg-white rounded-t-lg mr-4";
+    let notSelectedTabClass = "py-2 px-6 rounded-t-lg mr-4";
+
+    let selectedTab = ref("Licensed");
+    let message = ref("New License Licensed");
+
+    let nothingToShowLicensed = ref(false);
+    let nothingToShowSuspended = ref(false);
+    let nothingToShowCancelled = ref(false);
+    let showLoadingLicensed = ref(false);
+    let showLoadingSuspended = ref(false);
+    let showLoadingCancelled = ref(false);
 
     let allInfo = ref({
       alreadyPushed: false,
@@ -120,6 +231,26 @@ export default {
       searchUpToDate: "",
       app_type: "",
     });
+
+    const changeTab = (type) => {
+      selectedTab.value = type;
+      message.value = `New License ${type}`;
+      type == "Licensed"
+        ? (allInfo.value.assignApplication = newLicenseLicensed.value)
+        : type == "Suspended"
+        ? (allInfo.value.assignApplication = newLicenseSuspended.value)
+        : (allInfo.value.assignApplication = newlicenseCancelled.value);
+
+      for (let applicant in allInfo.value.assignApplication) {
+        if (
+          allInfo.value.assignApplication[applicant].applicationType ===
+          undefined
+        ) {
+          allInfo.value.assignApplication[applicant].applicationType =
+            allInfo.value.assignApplication[applicant].applicantType;
+        }
+      }
+    };
 
     const filterLicensedApplication = () => {
       filterApplication(moment, allInfo.value);
@@ -135,7 +266,7 @@ export default {
     };
 
     const fetchNewLicenseLicensed = () => {
-      showLoading.value = true;
+      showLoadingLicensed.value = true;
       const approvedPaymentStatus = applicationStatus(store, "AP");
       const confirmedStatus = applicationStatus(store, "CONF");
 
@@ -149,7 +280,7 @@ export default {
       store
         .dispatch("reviewerNewLicense/getNewLicenseLicensed", adminStatus)
         .then((res) => {
-          showLoading.value = false;
+          showLoadingLicensed.value = false;
           newLicenseLicensed.value =
             store.getters["reviewerNewLicense/getNewLicenseLicensedSearched"];
           allInfo.value.assignApplication =
@@ -164,20 +295,72 @@ export default {
             }
           }
           if (newLicenseLicensed.value.length === 0) {
-            nothingToShow.value = true;
+            nothingToShowLicensed.value = true;
           }
         });
     };
+
+    const fetchNewLicenseSuspended = () => {
+      showLoadingSuspended.value = true;
+
+      const suspendedStatus = applicationStatus(store, "SUSP");
+      const adminStatus = [
+        adminId,
+        suspendedStatus,
+      ];
+      store
+        .dispatch("reviewerNewLicense/getNewLicenseSuspended", adminStatus)
+        .then((res) => {
+          showLoadingSuspended.value = false;
+          newLicenseSuspended.value =
+            store.getters["reviewerNewLicense/getNewLicenseSuspendedSearched"];
+          if (newLicenseSuspended.value.length === 0) {
+            nothingToShowSuspended.value = true;
+          }
+        });
+    };
+
+    const fetchNewLicenseCancelled = () => {
+      showLoadingCancelled.value = true;
+
+      const cancelledStatus = applicationStatus(store, "CANC");
+      const adminStatus = [
+        adminId,
+        cancelledStatus,
+      ];
+      store
+        .dispatch("reviewerNewLicense/getNewLicenseCancelled", adminStatus)
+        .then((res) => {
+          showLoadingCancelled.value = false;
+          newlicenseCancelled.value =
+            store.getters["reviewerNewLicense/getNewLicenseCancelledSearched"];
+          if (newlicenseCancelled.value.length === 0) {
+            nothingToShowCancelled.value = true;
+          }
+        });
+    };
+
     onMounted(() => {
       fetchNewLicenseLicensed();
+      fetchNewLicenseSuspended();
+      fetchNewLicenseCancelled();
     });
 
     return {
-      nothingToShow,
+      nothingToShowLicensed,
+      nothingToShowSuspended,
+      nothingToShowCancelled,
       allInfo,
-      showLoading,
+      showLoadingLicensed,
+      showLoadingSuspended,
+      showLoadingCancelled,
       filterLicensedApplication,
       backClicked,
+      selectedTab,
+      selectedTabClass,
+      notSelectedTabClass,
+      changeTab,
+      message,
     };
   },
 };

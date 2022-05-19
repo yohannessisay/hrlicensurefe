@@ -11,7 +11,8 @@
           <span
             v-if="
               isGoodStanding &&
-                (license.applicationStatus.code === 'AP' || license.applicationStatus.code === 'APP') &&
+                (license.applicationStatus.code === 'AP' ||
+                  license.applicationStatus.code === 'APP') &&
                 myRegion
             "
           >
@@ -51,7 +52,9 @@
             >
               <label class="ml-8"> Nationality</label>
               <h5 class="ml-8">
-                {{ profileInfo.nationality ? profileInfo.nationality.name : "-" }}
+                {{
+                  profileInfo.nationality ? profileInfo.nationality.name : "-"
+                }}
               </h5>
             </div>
             <div
@@ -250,7 +253,12 @@ export default {
 
     let goodStandingUser = ref({});
     let gender = ref("");
-    let grandFatherName = ref("");
+    let userProfile = ref({
+      name: "",
+      fatherName: "",
+      grandFatherName: "",
+    });
+    let applicantPosition = ref("-");
 
     let license = ref({
       applicant: {},
@@ -288,7 +296,10 @@ export default {
     let getReviewId = ref(0);
 
     const GenerateLetter = () => {
-      if (license.value.applicationStatus.code !== "AP" && license.value.applicationStatus.code !== "APP") {
+      if (
+        license.value.applicationStatus.code !== "AP" &&
+        license.value.applicationStatus.code !== "APP"
+      ) {
         // if user is not approved don't generate a good standing letter
         return;
       }
@@ -321,30 +332,38 @@ export default {
           " upon request of " +
           license.value.applicantTitle +
           " " +
-          goodStandingUser.value.applicant.profile.name +
+          userProfile.value.name +
           " " +
-          goodStandingUser.value.applicant.profile.fatherName +
+          userProfile.value.fatherName +
           " " +
-          grandFatherName.value +
+          userProfile.value.grandFatherName +
           "."
       );
       doc.text(
         40,
         100,
-        goodStandingUser.value.applicant.profile.name +
+        userProfile.value.name +
           " " +
-          goodStandingUser.value.applicant.profile.fatherName +
+          userProfile.value.fatherName +
           " " +
-          grandFatherName.value +
+          userProfile.value.grandFatherName +
           " " +
           "was registered as " +
-          license.value.applicantPosition.name +
-          " " +
-          moment(license.value.licenseIssuedDate).format("MMMM D, YYYY") +
-          " by " + license.value.whoIssued + ","
+          applicantPosition.value
+           +
+              " " +
+              moment(license.value.licenseIssuedDate).format("MMMM D, YYYY") +
+              " by " +
+              license.value.whoIssued +
+              ","
       );
-      doc.text(40, 110, `which is the responsible organ for registration and licensing of health professionals and ${gender.value == "male" ? "his": "her"} registration`
-        );
+      doc.text(
+        40,
+        110,
+        `which is the responsible organ for registration and licensing of health professionals and ${
+          gender.value == "male" ? "his" : "her"
+        } registration`
+      );
       doc.text(
         40,
         120,
@@ -431,9 +450,21 @@ export default {
               }
             }
             gender.value = res.data.data.applicant.profile.gender;
-            if (res.data.data.applicant.profile.grandFatherName) {
-              grandFatherName.value =
-                res.data.data.applicant.profile.grandFatherName;
+            if (res.data.data.applicant.profile) {
+              userProfile.value.name = res.data.data.applicant.profile.name
+                ? res.data.data.applicant.profile.name
+                : "";
+              userProfile.value.fatherName = res.data.data.applicant.profile
+                .fatherName
+                ? res.data.data.applicant.profile.fatherName
+                : "";
+              userProfile.value.grandFatherName = res.data.data.applicant
+                .profile.grandFatherName
+                ? res.data.data.applicant.profile.grandFatherName
+                : "";
+            }
+            if(res.data.data.applicantPosition) {
+              applicantPosition.value = res.data.data.applicantPosition.name ? res.data.data.applicantPosition.name : "-"
             }
             getReviewId.value = license.value.reviewerId;
             show.value = true;

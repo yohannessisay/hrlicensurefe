@@ -33,6 +33,14 @@
             >
               REJECTED
             </h2>
+            <h6
+              style="font-weight: bold;"
+              class="flex justify-center ml-4 mr-4"
+              v-if="this.declinedFieldsCheck"
+            >
+              Remark:
+              <span class="ml-2" style="color: #e63636"> {{ this.remark }}</span>
+            </h6>
             <h2
               class="flex justify-center"
               v-if="this.acceptedFieldsCheck1"
@@ -507,6 +515,7 @@ import Spinner from "@/sharedComponents/Spinner";
 import MESSAGE from "../../../composables/documentMessage";
 import MAX_FILE_SIZE from "../../../composables/documentMessage";
 import MAX_SIZE_MB from "../../../composables/documentMessage";
+import { googleApi } from "@/composables/baseURL";
 
 export default {
   components: {
@@ -518,7 +527,7 @@ export default {
   props: ["activeState"],
   data() {
     return {
-      basePath: "https://storage.googleapis.com/hris-lisence-dev/",
+      basePath: googleApi,
 
       dataChanged: false,
       showFlash: false,

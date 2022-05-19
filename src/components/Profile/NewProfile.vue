@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="overflow-x-hidden overflow-y-scroll">
     <Navigation />
     <div
       class="w-screen h-full bg-lightBlueB-200 flex items-center justify-center"

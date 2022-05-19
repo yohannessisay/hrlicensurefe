@@ -11,6 +11,13 @@
         >
           REJECTED
         </h2>
+        <h6
+          style="font-weight: bold;"
+          class="flex justify-center ml-4 mr-4"
+          v-if="declinedFieldsCheck"
+        >
+          Remark: <span class="ml-2" style="color: #e63636"> {{ remark }}</span>
+        </h6>
         <h2
           class="flex justify-center"
           v-if="acceptedFieldsCheck"
@@ -97,15 +104,15 @@
             <button @click="submit">
               Next
             </button>
-            <button @click="draft(buttons[2].action)" variant="outline">
-              {{ buttons[2]["name"] }}
+            <button @click="draft(buttons[1].action)" variant="outline">
+              {{ buttons[1]["name"] }}
             </button>
             <button
               class="withdraw"
-              @click="withdraw(buttons[1].action)"
+              @click="withdraw(buttons[2].action)"
               variant="outline"
             >
-              {{ buttons[1]["name"] }}
+              {{ buttons[2]["name"] }}
             </button>
           </div>
           <div
@@ -120,10 +127,10 @@
             </button>
             <button
               class="withdraw"
-              @click="withdraw(buttons[1].action)"
+              @click="withdraw(buttons[2].action)"
               variant="outline"
             >
-              {{ buttons[1]["name"] }}
+              {{ buttons[2]["name"] }}
             </button>
           </div>
           <div
@@ -186,6 +193,7 @@ import Spinner from "@/sharedComponents/Spinner";
 import MESSAGE from "../../composables/documentMessage";
 import MAX_FILE_SIZE from "../../composables/documentMessage";
 import MAX_SIZE_MB from "../../composables/documentMessage";
+import { googleApi } from "@/composables/baseURL";
 
 export default {
   components: {
@@ -199,8 +207,6 @@ export default {
     const store = useStore();
     const route = useRoute();
     const router = useRouter();
-
-    const basePath = "https://ihris.moh.gov.et/hrl/";
 
     let message = ref({
       showFlash: false,
@@ -293,8 +299,8 @@ export default {
     buttons = store.getters["goodstanding/getButtons"];
     documentSpecs = store.getters["goodstanding/getDocumentSpec"];
     licenseInfo = store.getters["goodstanding/getLicense"];
-
     licenseCopy = store.getters["goodstanding/getLicenseCopy"];
+    remark = store.getters["goodstanding/getRemark"];
 
     const submit = () => {
       emit("changeActiveState");
@@ -349,7 +355,6 @@ export default {
       }
       declinedFields = store.getters["goodstanding/getDeclinedFields"];
       acceptedFields = store.getters["goodstanding/getAcceptedFields"];
-      remark = store.getters["goodstanding/getRemark"];
       if (declinedFields != undefined && declinedFields.includes("LHI")) {
         declinedFieldsCheck.value = true;
       }
@@ -370,7 +375,7 @@ export default {
             }
             letterFile.value = draftData.documents[i];
             showPreview.value = true;
-            filePreview.value = basePath + draftData.documents[i].filePath;
+            filePreview.value = googleApi + draftData.documents[i].filePath;
           }
         }
       }
@@ -636,7 +641,7 @@ export default {
       draftStatus,
       buttons,
       draftData,
-      basePath,
+      googleApi,
       message,
       dataChanged,
       licenseCopy,

@@ -659,10 +659,7 @@
                   <div v-if="docs[index].fileName.split('.')[1] == 'pdf'">
                     <div>
                       <iframe
-                        v-bind:src="
-                          'https://ihris.moh.gov.et/hrl/' +
-                            docs[index].filePath
-                        "
+                        v-bind:src="googleApi + '' + docs[index].filePath"
                       ></iframe>
                     </div>
                     <br />
@@ -672,12 +669,7 @@
                   </div>
 
                   <div v-else>
-                    <img
-                      v-bind:src="
-                        'https://ihris.moh.gov.et/hrl/' +
-                          docs[index].filePath
-                      "
-                    />
+                    <img v-bind:src="googleApi + '' + docs[index].filePath" />
                   </div>
                 </picture>
               </div>
@@ -701,6 +693,13 @@
               @click="action('ReviewerDraftEvent')"
             >
               save as Draft
+            </button>
+            <button
+            v-if="showTransferToAdminButton" 
+              variant="outline"
+              @click="transferToFederal()"
+            >
+              Transfer to Federal
             </button>
           </div>
           <div class="relative pt-1 mt-medium">
@@ -906,8 +905,7 @@
                             >
                               <img
                                 v-bind:src="
-                                  'https://ihris.moh.gov.et/hrl/' +
-                                    rejectedObj[ind].filePath
+                                  googleApi + '' + rejectedObj[ind].filePath
                                 "
                               />
                             </picture>
@@ -1020,16 +1018,26 @@
           message="Error! license expiration date must exceed today"
         />
       </div>
+      <div v-if="showTransferSuccessMessage">
+            <FlashMessage message="Transfer Successful!" />
+
+        </div>
+            <div v-if="showTransferErrorMessage">
+        <ErrorFlashMessage
+          message="Error! Couldn't transfer to federal"
+        />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import { useStore } from "vuex";
-import { useRoute } from "vue-router";
-import { ref, onMounted } from "vue";
+import {useStore} from "vuex";
+import {useRoute} from "vue-router";
+import {ref, onMounted} from "vue";
 
-import { useRouter } from "vue-router";
+import {useRouter} from "vue-router";
+import {googleApi} from "@/composables/baseURL";
 
 import Title from "@/sharedComponents/Title";
 import Modal from "@/sharedComponents/Modal";
@@ -1075,14 +1083,14 @@ export default {
     let professionalTypeIds = ref([]);
     let professionalTypeIdss = ref([]);
     let prefixList = ref([
-      { name: "None", id: 0 },
-      { name: "Consultant", id: 1 },
-      { name: "Expert", id: 2 },
-      { name: "Junior", id: 3 },
-      { name: "Senior", id: 4 },
-      { name: "Senior expert", id: 5 },
-      { name: "Chief", id: 6 },
-      { name: "Chief expert", id: 7 },
+      {name: "None", id: 0},
+      {name: "Consultant", id: 1},
+      {name: "Expert", id: 2},
+      {name: "Junior", id: 3},
+      {name: "Senior", id: 4},
+      {name: "Senior expert", id: 5},
+      {name: "Chief", id: 6},
+      {name: "Chief expert", id: 7},
     ]);
     let prefix = ref();
     let canChangeName = ref(false);
@@ -1091,29 +1099,31 @@ export default {
 
     let showNameChangeFlash = ref(false);
     let showNameChangeErrorFlash = ref(false);
-
+    let showTransferErrorMessage = ref(false);
+    let showTransferSuccessMessage = ref(false);
     let showLicenseDateRequirementError = ref(false);
     let departmentId = ref(0);
+    let adminId = localStorage.getItem("adminId");
 
     let newLicense = ref({
-      applicant: { profile: { name: "", fatherName: "" } },
-      applicantType: { name: "" },
+      applicant: {profile: {name: "", fatherName: ""}},
+      applicantType: {name: ""},
       education: {
-        department: { name: "" },
-        institution: { institutionType: {}, name: "" },
+        department: {name: ""},
+        institution: {institutionType: {}, name: ""},
       },
       declinedFields: "",
       remark: "",
-      documents: [{ filePath: "" }],
+      documents: [{filePath: ""}],
       applicationStatus: {
-        buttons: [{ action: "", name: "" }],
+        buttons: [{action: "", name: ""}],
       },
     });
     let buttons = ref([
-      { action: "", name: "" },
-      { action: "", name: "" },
-      { action: "", name: "" },
-      { action: "", name: "" },
+      {action: "", name: ""},
+      {action: "", name: ""},
+      {action: "", name: ""},
+      {action: "", name: ""},
     ]);
 
     let professionalTypePrefixes = ref([]);
@@ -1128,6 +1138,7 @@ export default {
     let width = ref("width:11.11111%");
     let accepted = ref([]);
     let rejected = ref([]);
+    let showTransferToAdminButton = ref(false);
     let rejectedObj = ref([]);
     let showButtons = ref(false);
     let disableNext = ref(true);
@@ -1212,6 +1223,8 @@ export default {
               ) {
                 findDocumentType(documentTypes.value, docs.value[index.value]);
               }
+            } else if (newLicense.value.applicationStatus.code == "IRV") {
+              showTransferToAdminButton.value = true;
             }
           });
       }
@@ -1282,6 +1295,8 @@ export default {
               ) {
                 findDocumentType(documentTypes.value, docs.value[index.value]);
               }
+            } else if (newLicense.value.applicationStatus.code == "IRV") {
+              showTransferToAdminButton.value = true;
             }
           });
       }
@@ -1344,6 +1359,8 @@ export default {
               ) {
                 findDocumentType(documentTypes.value, docs.value[index.value]);
               }
+            } else if (newLicense.value.applicationStatus.code == "IRV") {
+              showTransferToAdminButton.value = true;
             }
           });
       }
@@ -1399,6 +1416,8 @@ export default {
               ) {
                 findDocumentType(documentTypes.value, docs.value[index.value]);
               }
+            } else if (newLicense.value.applicationStatus.code == "IRV") {
+              showTransferToAdminButton.value = true;
             }
           });
       }
@@ -1464,6 +1483,33 @@ export default {
           modalDocumentTypeName.value = obj[prop].name;
         }
       }
+    };
+    const transferToFederal = () => {
+      store.dispatch("renewal/getExpertLevel").then((res) => {
+        let federalData = res.data.data.filter((r) => r.code == "FED");
+        let transferData = {
+          licenseId: route.params.applicationId,
+          expertLevelId: federalData[0].id,
+          createdByAdminId: adminId,
+        };
+        store
+          .dispatch("reviewer/transferToFederal", transferData)
+          .then((res) => {
+             if(res.data?.status == "Success")
+             {
+               showTransferSuccessMessage.value = true;
+               setTimeout(()=>
+               {
+                    router.push({ path: "/admin/review" });
+
+               }, 4000)
+             }
+             else
+             {
+               showTransferErrorMessage.value = true;
+             }
+          });
+      });
     };
     const accept = (doc) => {
       nextClickable.value = true;
@@ -1806,10 +1852,7 @@ export default {
 
     const openPdfInNewTab = (pdfPath) => {
       pdfFilePath.value = pdfPath;
-      window.open(
-        "https://storage.googleapis.com/hris-lisence-dev/" + pdfPath,
-        "_blank"
-      );
+      window.open(googleApi + "" + pdfPath, "_blank");
     };
 
     const toChangeProfession = () => {
@@ -2046,6 +2089,10 @@ export default {
       accepted,
       rejected,
       accept,
+      transferToFederal,
+      showTransferToAdminButton,
+      showTransferSuccessMessage,
+      showTransferErrorMessage,
       reject,
       buttons,
       action,
@@ -2106,6 +2153,7 @@ export default {
       isGoodStanding,
       showActionLoading,
       showLoadingButtons,
+      googleApi,
     };
   },
 };

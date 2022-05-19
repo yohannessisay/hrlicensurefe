@@ -27,6 +27,11 @@ const routes = [
     component: () => import("../components/Landing/Landing.vue"),
   },
   {
+    path: "/update-profile/:id",
+    name: "UpdateProfile",
+    component: () => import("../components/Profile/UpdateProfile.vue"),
+  },
+  {
     path: "/addProfile",
     name: "NewProfile",
     component: () => import("../components/Profile/NewProfile.vue"),
@@ -60,53 +65,61 @@ const routes = [
     name: "Google-Form",
     path: "/google-form",
     component: {},
-    meta: { RedirectExternalUrl: "https://google.com" },
+    meta: {
+      RedirectExternalUrl:
+        "https://docs.google.com/forms/d/e/1FAIpQLSdHJh4WF9bBHgw7ewMHUzEr3a4dhvOjdF9aWu50PdQo_7no0Q/viewform",
+    },
   },
-  // {
-  //   path: "/approved",
-  //   name: "Approved",
-  //   component: () => import("../views/Approved.vue"),
-  // },
-  // {
-  //   path: "/inReview",
-  //   name: "InReview",
-  //   component: () => import("../views/InReview.vue"),
-  // },
-  // {
-  //   path: "/undersupervision",
-  //   name: "UnderSupervision",
-  //   component: () => import("../views/UnderSupervision.vue"),
-  // },
-  // {
-  //   path: "/declined",
-  //   name: "Declined",
-  //   component: () => import("../views/Declined.vue"),
-  // },
-  // {
-  //   path: "/withdrawn",
-  //   name: "Withdraw",
-  //   component: () => import("../views/Withdraw.vue"),
-  // },
-  // {
-  //   path: "/pendingPayment",
-  //   name: "PendingPayment",
-  //   component: () => import("../views/PendingPayment.vue"),
-  // },
-  // {
-  //   path: "/approvedPayment",
-  //   name: "ApprovedPayment",
-  //   component: () => import("../views/ApprovedPayment.vue"),
-  // },
-  // {
-  //   path: "/declinedPayment",
-  //   name: "DeclinedPayment",
-  //   component: () => import("../views/DeclinedPayment.vue"),
-  // },
-  // {
-  //   path: "/draft",
-  //   name: "Draft",
-  //   component: () => import("../views/Draft.vue"),
-  // },
+  {
+    path: "/approved",
+    name: "Approved",
+    component: () => import("../views/Approved.vue"),
+  },
+  {
+    path: "/submitted",
+    name: "Submitted",
+    component: () => import("../views/Submitted.vue"),
+  },
+  {
+    path: "/inReview",
+    name: "InReview",
+    component: () => import("../views/InReview.vue"),
+  },
+  {
+    path: "/undersupervision",
+    name: "UnderSupervision",
+    component: () => import("../views/UnderSupervision.vue"),
+  },
+  {
+    path: "/declined",
+    name: "Declined",
+    component: () => import("../views/Declined.vue"),
+  },
+  {
+    path: "/withdrawn",
+    name: "Withdraw",
+    component: () => import("../views/Withdraw.vue"),
+  },
+  {
+    path: "/pendingPayment",
+    name: "PendingPayment",
+    component: () => import("../views/PendingPayment.vue"),
+  },
+  {
+    path: "/approvedPayment",
+    name: "ApprovedPayment",
+    component: () => import("../views/ApprovedPayment.vue"),
+  },
+  {
+    path: "/declinedPayment",
+    name: "DeclinedPayment",
+    component: () => import("../views/DeclinedPayment.vue"),
+  },
+  {
+    path: "/draft",
+    name: "Draft",
+    component: () => import("../views/Draft.vue"),
+  },
   {
     path: "/newlicense",
     name: "NewLicense",
@@ -127,11 +140,6 @@ const routes = [
     path: "/goodstanding",
     name: "GoodStanding",
     component: () => import("../components/GoodStanding/GoodStanding.vue"),
-  },
-  {
-    path: "/submitted",
-    name: "Submitted",
-    component: () => import("../views/Submitted.vue"),
   },
   // {
   //   path: "/admin/review",
@@ -372,8 +380,7 @@ const routes = [
     path:
       "/admin/on-review-detail/:applicationType/:applicationId/:applicantId",
     name: "onReviewDetail",
-    component: () =>
-      import("../components/Reviewer/Detail/OnReviewDetail.vue"),
+    component: () => import("../components/Reviewer/Detail/OnReviewDetail.vue"),
   },
   {
     path:
@@ -405,6 +412,11 @@ const routes = [
     path: "/admin/create",
     name: "CreateAdmin",
     component: () => import("../components/Reviewer/CreateAdmin.vue"),
+  },
+  {
+    path: "/admin/list",
+    name: "AdminUserManagement",
+    component: () => import("../components/UserManagement/UserDashboard.vue"),
   },
   {
     path: "/admin/newLicense/unassigned",
@@ -878,7 +890,7 @@ const routes = [
     component: () =>
       import(
         "../components/Reviewer/ApplicationTypes/GoodStanding/GoodStandingDeclined.vue"
-      ),
+      )
   },
   {
     path: "/admin/goodstanding/all-declined",
@@ -886,8 +898,14 @@ const routes = [
     component: () =>
       import(
         "../components/Reviewer/ApplicationTypes/GoodStanding/GoodStandingAllDeclined.vue"
-      ),
+      )
   },
+  {
+    path: "/admin/review/importResults",
+    name: "ImportResults",
+    component: () =>
+      import("../components/Reviewer/ImportResults/ImportHome.vue")
+  }
 ];
 
 const router = createRouter({
