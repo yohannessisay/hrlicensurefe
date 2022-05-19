@@ -111,7 +111,7 @@ export default {
         loggedInData.value = store.getters["admin/getAdmin"];
         showLoading.value = false;
         if (loggedInData.value !== undefined) {
-          if (loggedInData.value.isActive) {
+          if (!loggedInData.value.isActive) {
           message.value.showErrorFlash = true;
           setTimeout(() => {
             // context.emit("closeModal", true);
