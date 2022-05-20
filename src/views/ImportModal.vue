@@ -285,10 +285,8 @@ export default {
         }
       });
   this.saveStatus=false
-      // store.addImported(finalArray);
-      // store.dispatch("reviewer/addImported", add).then((res) => {
-      //   console.log(res);
-      // });
+      store.addImported(finalArray);
+
     },
   },
 };
