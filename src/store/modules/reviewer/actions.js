@@ -1351,6 +1351,7 @@ export default {
     try {
       const url = baseUrl + "/nationalExamResult";
       const resp = await ApiService.get(url);
+
       commit(SET_IMPORTED, resp.data);
       return resp;
     } catch (error) {
@@ -1363,7 +1364,7 @@ export default {
       const url = baseUrl + "/nationalExamResult/import";
 
       const resp = await ApiService.post(url, data);
-      console.log(resp);
+   
       return resp;
     } catch (error) {
       return error;
@@ -1375,7 +1376,6 @@ export default {
       const url = baseUrl + "/nationalExamResult/"+editedData.id;
 
       const resp = await ApiService.put(url, editedData);
-      console.log(resp);
       return resp;
     } catch (error) {
       return error;
