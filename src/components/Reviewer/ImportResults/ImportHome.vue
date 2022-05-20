@@ -1,314 +1,387 @@
 <template>
+<div class="p-4 max-w-full bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-200 dark:border-gray-700">
   <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-    <div class="m-2 grid grid-row-2 grid-flow-col">
-      <div class="bg-green-200 rounded-lg">
-        <h1 class="mt-4 ml-2">
-          Import the required documnet and view the reults before finalizing it
-          and saving
-        </h1>
-        <label
-          class="
-            flex flex-col
-            items-center
-            mt-3
-            py-4
-            bg-grey-100
-            rounded-lg
-            shadow-md
-            uppercase
-            hover:bg-purple-600 hover:text-lightBlue-1000
-            ease-linear
-            transition-all
-            duration-150
-          "
-        >
-          <i class="fas fa-cloud-upload-alt fa-1x">Select a file</i>
-
-          <input
-            type="file"
-            onclick="this.value=null;"
-            @change="importExcel"
-            id="upload"
-            class="hidden"
-          />
-        </label>
-      </div>
-    </div>
-    <hr />
-    <h1 class="ml-4 mt-4">These are the previously added records</h1>
-    <div>
-      <label for="table-search" class="sr-only">Search</label>
-      <div class="relative mb-2 mt-4 ml-4">
-        <div
-          class="
-            absolute
-            inset-y-0
-            left-0
-            flex
-            items-center
-            pl-3
-            pointer-events-none
-          "
-        >
-          <svg
-            class="w-5 h-5 text-gray-500 dark:text-gray-400"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg"
+      
+      <div class="m-2 grid grid-row-2 grid-flow-col">
+        <div class="bg-green-200 rounded-lg">
+          <h1 class="mt-4 ml-2">
+            Import the required documnet and view the reults before finalizing
+            it and saving
+          </h1>
+          <label
+            class="
+              flex flex-col
+              items-center
+              mt-3
+              py-4
+              bg-grey-100
+              rounded-lg
+              shadow-md
+              uppercase
+              hover:bg-purple-600 hover:text-lightBlue-1000
+              ease-linear
+              transition-all
+              duration-150
+            "
           >
-            <path
-              fill-rule="evenodd"
-              d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-              clip-rule="evenodd"
-            ></path>
-          </svg>
+            <i class="fas fa-cloud-upload-alt fa-1x">Select a file</i>
+
+            <input
+              type="file"
+              onclick="this.value=null;"
+              @change="importExcel"
+              id="upload"
+              class="hidden"
+            />
+          </label>
         </div>
-        <input
-          type="text"
-          id="table-search"
-          class="
-            bg-gray-50
-            border border-gray-300
-            text-gray-900 text-sm
-            rounded-lg
-            focus:ring-blue-500 focus:border-blue-500
-            block
-            w-80
-            pl-10
-            p-2.5
-            dark:bg-gray-700
-            dark:border-gray-600
-            dark:placeholder-gray-400
-            dark:text-white
-            dark:focus:ring-blue-500
-            dark:focus:border-blue-500
-          "
-          placeholder="Search name"
-        />
       </div>
-    </div>
-    <Spinner v-if="previousTableLoading" />
-    <table
-      class="w-full ml-4"
-      style="display: block; height: 500px; overflow-y: scroll"
-    >
-      <thead>
-        <tr>
-          <th
-            class="
-              px-5
-              py-3
-              border-b-2 border-gray-200
-              bg-gray-100
-              text-left text-xs
-              font-semibold
-              text-gray-700
-              uppercase
-              tracking-wider
-            "
-          >
-            Number
-          </th>
-          <th
-            class="
-              px-5
-              py-3
-              border-b-2 border-gray-200
-              bg-gray-100
-              text-left text-xs
-              font-semibold
-              text-gray-700
-              uppercase
-              tracking-wider
-            "
-          >
-            Registration Number
-          </th>
-          <th
-            class="
-              px-5
-              py-3
-              border-b-2 border-gray-200
-              bg-gray-100
-              text-left text-xs
-              font-semibold
-              text-gray-700
-              uppercase
-              tracking-wider
-            "
-          >
-            Institution
-          </th>
-          <th
-            class="
-              px-5
-              py-3
-              border-b-2 border-gray-200
-              bg-gray-100
-              text-left text-xs
-              font-semibold
-              text-gray-700
-              uppercase
-              tracking-wider
-            "
-          >
-            First Name
-          </th>
-          <th
-            class="
-              px-5
-              py-3
-              border-b-2 border-gray-200
-              bg-gray-100
-              text-left text-xs
-              font-semibold
-              text-gray-700
-              uppercase
-              tracking-wider
-            "
-          >
-            Middle Name
-          </th>
-          <th
-            class="
-              px-5
-              py-3
-              border-b-2 border-gray-200
-              bg-gray-100
-              text-left text-xs
-              font-semibold
-              text-gray-700
-              uppercase
-              tracking-wider
-            "
-          >
-            Last Name
-          </th>
-          <th
-            class="
-              px-5
-              py-3
-              border-b-2 border-gray-200
-              bg-gray-100
-              text-left text-xs
-              font-semibold
-              text-gray-700
-              uppercase
-              tracking-wider
-            "
-          >
-            Sex
-          </th>
-          <th
-            class="
-              px-5
-              py-3
-              border-b-2 border-gray-200
-              bg-gray-100
-              text-left text-xs
-              font-semibold
-              text-gray-700
-              uppercase
-              tracking-wider
-            "
-          >
-            Profession
-          </th>
-          <th
-            class="
-              px-5
-              py-3
-              border-b-2 border-gray-200
-              bg-gray-100
-              text-left text-xs
-              font-semibold
-              text-gray-700
-              uppercase
-              tracking-wider
-            "
-          >
-            Result
-          </th>
-          <th
-            class="
-              px-5
-              py-3
-              border-b-2 border-gray-200
-              bg-gray-100
-              text-left text-xs
-              font-semibold
-              text-gray-700
-              uppercase
-              tracking-wider
-            "
-          >
-            Added Time
-          </th>
-          <th
-            class="
-              px-5
-              py-3
-              border-b-2 border-gray-200
-              bg-gray-100
-              text-left text-xs
-              font-semibold
-              text-gray-700
-              uppercase
-              tracking-wider
-            "
-          >
-            Updated Time
-          </th>
-          <th
-            class="
-              px-5
-              py-3
-              border-b-2 border-gray-200
-              bg-gray-100
-              text-left text-xs
-              font-semibold
-              text-gray-700
-              uppercase
-              tracking-wider
-            "
-          >
-            Action
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="row in previousData" :key="row.id">
-          <td
-            :class="
-              item === 'Fail' || item === 'fail' ? 'cell-red' : 'cell-green'
-            "
-            v-for="item in row"
-            :key="item.id"
-          >
-            <div class="flex">
-              <div class="ml-3">
-                <p
-                  :class="
-                    item === 'Fail' || item === 'fail'
-                      ? 'px-5 py-5 border-gray-200 bg-green-100 text-sm cell-red'
-                      : ' px-5 py-5 border-gray-200 bg-green-100 text-sm'
-                  "
-                >
-                  {{ item }}
-                </p>
-              </div>
-            </div>
-          </td>
-          <td>
-            <button @click="editSelected(row)">
-              <i class="fa fa-pencil" aria-hidden="true"> Edit</i>
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+      <hr />
+      <h1 class="ml-4 mt-4">These are the previously added records</h1>
 
+      <div>
+        <div class="blue ml-4 mt-4">
+          <input
+            type="text"
+            id="fname"
+            name="fname"
+            v-model="searchNameVal"
+            class="mr-6"
+            placeholder="search by name"
+          />
+        </div>
+        <div class="grid lg:grid-cols-4 xl:gap-6 ml-4 mt-4">
+          <div class="relative z-0 w-full mb-6 group">
+            <div class="flex flex-col mb-medium w-22 mr-4">
+              <label class="text-primary-700">Institution</label>
+              <select
+                class="max-w-1xl"
+                v-model="vFilterInstitution"
+                @change="filterInstitution()"
+                clearable
+              >
+                <option value="instfilterAll">All</option>
+                <option
+                  v-for="inst in institutions"
+                  v-bind:key="inst.id"
+                  v-bind:value="inst.name"
+                >
+                  {{ inst.name }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="relative z-0 w-full mb-6 group">
+            <div class="flex flex-col mb-medium w-22 mr-4">
+              <label class="text-primary-700">Profession</label>
+              <select
+                class="max-w-1xl"
+                v-model="vFilterProfession"
+                @change="filterProfession()"
+              >
+                <option value="proffilterAll">All</option>
+                <option
+                  v-for="profession in professions"
+                  :value="profession.name"
+                  :key="profession.id"
+                >
+                  {{ profession.name }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="relative z-0 w-full mb-6 group">
+            <div class="flex flex-col mb-medium w-44 mr-4">
+              <label class="text-primary-700">Sex</label>
+              <select
+                class="max-w-1xl"
+                v-model="vFilterGender"
+                @change="filterGender()"
+              >
+                <option value="genderfilterAll">All</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="relative z-0 w-full mb-6 group">
+            <div class="flex flex-col mb-medium w-44 mr-4">
+              <label class="text-primary-700">Result</label>
+              <select
+                class="max-w-1xl"
+                v-model="vFilterResult"
+                @change="filterResult()"
+              >
+                <option value="resultfilterAll">All</option>
+                <option value="pass">Pass</option>
+                <option value="fail">Fail</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+       <hr />
+      <label class="text-primary-700 ml-4">Rows per page: </label>
+      <select
+        class="max-w-3xl mb-4"
+        v-model="paginationSize"
+        @change="handlePagSize($)"
+        style="
+          padding: 0px 35px 0px 5px;
+          border: none;
+          border-radius: unset;
+          border-bottom: 2px solid lightblue;
+          margin-left: 8px;
+        "
+      >
+        <option
+          v-for="size in paginationSizeList"
+          v-bind:key="size"
+          v-bind:value="size"
+        >
+          {{ size }}
+        </option>
+      </select>
+      
+      <Spinner v-if="previousTableLoading" />
+      
+      <table
+        class="w-full ml-4"
+        style="display: inline-table; height: 500px; overflow-y: scroll"
+        id="prevTable"
+      >
+        <thead>
+          <tr>
+            <th
+              class="
+                px-5
+                py-3
+                border-b-2 border-gray-200
+                bg-gray-100
+                text-left text-xs
+                font-semibold
+                text-gray-700
+                uppercase
+                tracking-wider
+              "
+            >
+              Number
+            </th>
+            <th
+              class="
+                px-5
+                py-3
+                border-b-2 border-gray-200
+                bg-gray-100
+                text-left text-xs
+                font-semibold
+                text-gray-700
+                uppercase
+                tracking-wider
+              "
+            >
+              Registration Number
+            </th>
+            <th
+              class="
+                px-5
+                py-3
+                border-b-2 border-gray-200
+                bg-gray-100
+                text-left text-xs
+                font-semibold
+                text-gray-700
+                uppercase
+                tracking-wider
+              "
+            >
+              Institution
+            </th>
+            <th
+              class="
+                px-5
+                py-3
+                border-b-2 border-gray-200
+                bg-gray-100
+                text-left text-xs
+                font-semibold
+                text-gray-700
+                uppercase
+                tracking-wider
+              "
+            >
+              First Name
+            </th>
+            <th
+              class="
+                px-5
+                py-3
+                border-b-2 border-gray-200
+                bg-gray-100
+                text-left text-xs
+                font-semibold
+                text-gray-700
+                uppercase
+                tracking-wider
+              "
+            >
+              Middle Name
+            </th>
+            <th
+              class="
+                px-5
+                py-3
+                border-b-2 border-gray-200
+                bg-gray-100
+                text-left text-xs
+                font-semibold
+                text-gray-700
+                uppercase
+                tracking-wider
+              "
+            >
+              Last Name
+            </th>
+            <th
+              class="
+                px-5
+                py-3
+                border-b-2 border-gray-200
+                bg-gray-100
+                text-left text-xs
+                font-semibold
+                text-gray-700
+                uppercase
+                tracking-wider
+              "
+            >
+              Sex
+            </th>
+            <th
+              class="
+                px-5
+                py-3
+                border-b-2 border-gray-200
+                bg-gray-100
+                text-left text-xs
+                font-semibold
+                text-gray-700
+                uppercase
+                tracking-wider
+              "
+            >
+              Profession
+            </th>
+            <th
+              class="
+                px-5
+                py-3
+                border-b-2 border-gray-200
+                bg-gray-100
+                text-left text-xs
+                font-semibold
+                text-gray-700
+                uppercase
+                tracking-wider
+              "
+            >
+              Result
+            </th>
+            <th
+              class="
+                px-5
+                py-3
+                border-b-2 border-gray-200
+                bg-gray-100
+                text-left text-xs
+                font-semibold
+                text-gray-700
+                uppercase
+                tracking-wider
+              "
+            >
+              Added Time
+            </th>
+            <th
+              class="
+                px-5
+                py-3
+                border-b-2 border-gray-200
+                bg-gray-100
+                text-left text-xs
+                font-semibold
+                text-gray-700
+                uppercase
+                tracking-wider
+              "
+            >
+              Updated Time
+            </th>
+            <th
+              class="
+                px-5
+                py-3
+                border-b-2 border-gray-200
+                bg-gray-100
+                text-left text-xs
+                font-semibold
+                text-gray-700
+                uppercase
+                tracking-wider
+              "
+            >
+              Action
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="row in filteredData" :key="row.id">
+            <td
+              :class="
+                item === 'Fail' || item === 'fail'
+                  ? 'cell-red mb-1'
+                  : 'cell-green mb-1'
+              "
+              v-for="item in row"
+              :key="item.id"
+            >
+              <div class="flex">
+                <div class="ml-3">
+                  <p
+                    :class="
+                      item === 'Fail' || item === 'fail'
+                        ? 'px-2  border-gray-200 bg-green-100 text-sm cell-red'
+                        : ' px-2  border-gray-200 bg-green-100 text-sm'
+                    "
+                  >
+                    {{ item }}
+                  </p>
+                </div>
+              </div>
+            </td>
+            <td>
+              <button @click="editSelected(row)" class="mb-2 mt-1">
+                <i class="fa fa-pencil" aria-hidden="true"> Edit</i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <VueTailwindPagination
+        :current="currentPage"
+        :total="totalCount"
+        :per-page="paginationSize"
+        @page-changed="pageChanged($event)"
+        text-before-input="Go to page"
+        text-after-input="Go"
+      />
+    </div>
+</div>
+  
+  
   <transition name="slide-fade-up">
     <Modal v-if="this.importModal">
       <ImportModal
@@ -827,6 +900,38 @@
                 </option>
               </select>
             </div>
+            <div class="form-group mb-4">
+              <label for="firstName">Registration Number</label>
+              <input
+                v-model="registrationNumber"
+                type="text"
+                class="
+                  form-control
+                  block
+                  w-full
+                  px-3
+                  py-1.5
+                  text-base
+                  font-normal
+                  text-gray-700
+                  bg-white bg-clip-padding
+                  border border-solid border-gray-300
+                  rounded
+                  transition
+                  ease-in-out
+                  m-0
+                  focus:text-gray-700
+                  focus:bg-white
+                  focus:border-blue-600
+                  focus:outline-none
+                "
+                id="registrationNumber"
+                placeholder="Registration Number"
+              />
+              <p class="text-red-200 text-xs italic">
+                Please check twice before editing this field.
+              </p>
+            </div>
           </div>
           <button
             type="submit"
@@ -880,6 +985,14 @@
           >
             Cancel
           </button>
+          <Spinner v-if="editStatus" />
+          <p
+            :class="{ 'text-red-200 text-lg italic invisible ...': regError }"
+            style="color: red"
+          >
+            Error: There is an already existing record with the same
+            registration number
+          </p>
         </form>
       </EditModal>
     </Modal>
@@ -897,17 +1010,18 @@ import transformSheets from "@/services/excelConverter";
 import { useStore } from "vuex";
 import moment from "moment";
 import Spinner from "@/sharedComponents/Spinner";
-import st from "../../../store/modules/reviewer/actions";
+import VueTailwindPagination from "@ocrv/vue-tailwind-pagination";
 export default {
   components: {
     Modal,
     ImportModal,
     ErrorModal,
     EditModal,
-    Spinner
+    Spinner,
+    VueTailwindPagination,
   },
   name: "TaskList",
-  data: function() {
+  data: function () {
     return {
       content: "",
       finalData: [],
@@ -917,43 +1031,160 @@ export default {
       createdAt: "",
       editedDataId: "",
       middleName: "",
+      registrationNumber: "",
       profession: "",
+      vFilterInstitution: "",
+      vFilterProfession: "",
+      vFilterResult: "",
+      vFilterGender: "",
       professions: [],
       result: "",
+
+      currentPage: 0,
+      totalCount: 0,
+      paginationSizeList: [10, 25, 50, 100],
+      paginationSize: 10,
       institution: "",
+      indexValue: 0,
       institutions: [],
       sex: "",
       err: "",
+      searchNameVal: "",
+      regError: true,
+      editStatus: false,
       previousTableLoading: true,
       importModal: false,
       errorModal: false,
       editModal: false,
       previousData: [],
+      filteredData: [],
       color: "grey",
-      errors: []
+      errors: [],
     };
   },
+  watch: {
+    searchNameVal: function () {
+      let userSearchedName = this.searchNameVal;
+      let filterByName = this.previousData.filter((report) => {
+        return (
+          report.firstName.toLowerCase().includes(userSearchedName) ||
+          report.middleName.toLowerCase().includes(userSearchedName) ||
+          report.lastName.toLowerCase().includes(userSearchedName)
+        );
+      });
+
+      this.filteredData = filterByName;
+    },
+  },
   computed: {
-    moment: () => moment
+    moment: () => moment,
   },
   created() {
-    const store = useStore();
-    store.dispatch("reviewer/getProfessionalType").then(res => {
-      this.professions = res.data.data;
-    });
-    store.dispatch("goodstanding/getInstitution").then(res => {
-      this.institutions = res.data.data;
-    });
-    store.dispatch("reviewer/getImported").then(res => {
-      res.data.data.forEach(element => {
-        element.createdAt = moment(element.createdAt).format("MMMM D, YYYY");
-        element.updatedAt = moment(element.updatedAt).format("MMMM D, YYYY");
-        this.previousData.push(element);
-      });
-      this.previousTableLoading = false;
-    });
+    console.log("created",this);
+    this.getData();
   },
   methods: {
+    handlePagSize() {
+      this.paginateReport(
+        JSON.parse(JSON.stringify(this.filteredData)),
+        this.indexValue
+      );
+    },
+    paginateReport(reportValue, index) {
+      this.filteredData = reportValue.slice(
+        index * this.paginationSize,
+        index * this.paginationSize + this.paginationSize
+      );
+      this.totalCount = reportValue.length;
+    },
+    filterInstitution() {
+      let previous = JSON.parse(JSON.stringify(this.previousData));
+      var searchTerm = this.vFilterInstitution;
+
+      if (searchTerm === "instfilterAll") {
+        this.previousTableLoading = true;
+        this.getData();
+      }
+      this.filteredData = previous.filter((item) => {
+        return item.institution.toLowerCase().includes(searchTerm);
+      });
+    },
+
+    filterProfession() {
+      let previous = JSON.parse(JSON.stringify(this.previousData));
+      var searchTerm = this.vFilterProfession;
+
+      if (searchTerm === "proffilterAll") {
+        this.previousTableLoading = true;
+        this.getData();
+      }
+      this.filteredData = previous.filter((item) => {
+        return item.profession.toLowerCase().includes(searchTerm);
+      });
+    },
+
+    filterResult() {
+      let previous = JSON.parse(JSON.stringify(this.previousData));
+
+      var searchTerm = this.vFilterResult;
+      if (searchTerm === "resultfilterAll") {
+        this.previousTableLoading = true;
+        this.getData();
+      }
+      this.filteredData = previous.filter((item) => {
+        return item.result.toLowerCase().includes(searchTerm);
+      });
+    },
+
+    filterGender() {
+      let previous = JSON.parse(JSON.stringify(this.previousData));
+      let otherWay = "";
+      var searchTerm = this.vFilterGender.toLowerCase();
+      if (searchTerm === "male") {
+        otherWay = "M";
+      }
+      if (searchTerm === "female") {
+        otherWay = "F";
+      }
+
+      if (searchTerm === "genderfilterAll") {
+        this.previousTableLoading = true;
+        this.getData();
+      }
+      this.filteredData = previous.filter((item) => {
+        return (
+          item.sex.toLowerCase().includes(searchTerm) ||
+          item.sex.includes(otherWay)
+        );
+      });
+    },
+
+    getData() {
+      this.previousData = [];
+      this.filteredData = [];
+      this.$store.dispatch("reviewer/getProfessionalType").then((res) => {
+        this.professions = res.data.data;
+      });
+
+      this.$store.dispatch("goodstanding/getInstitution").then((res) => {
+        this.institutions = res.data.data;
+      });
+      this.$store.dispatch("reviewer/getImported").then((res) => {
+        this.totalCount = res.data.data.length;
+        res.data.data.forEach((element) => {
+          element.createdAt = moment(element.createdAt).format("MMMM D, YYYY");
+          element.updatedAt = moment(element.updatedAt).format("MMMM D, YYYY");
+          element.sex = element.sex.replace(/\s/g, "");
+          this.previousData.push(element);
+          this.filteredData.push(element);
+        });
+              this.paginateReport(
+        JSON.parse(JSON.stringify(this.filteredData)),
+        this.indexValue
+      );
+        this.previousTableLoading = false;
+      });
+    },
     importExcel() {
       var file = [];
       var errors = [];
@@ -962,7 +1193,7 @@ export default {
 
       var reader = new FileReader();
       reader.readAsBinaryString(file);
-      reader.onload = event => {
+      reader.onload = (event) => {
         var data = event.target.result;
         var workbook = read(data, { type: "binary" });
         var sheets = workbook.Sheets;
@@ -973,7 +1204,7 @@ export default {
               row: i,
               column: 3,
               columnData: transformed[i][3],
-              errorMessage: "Number is not allowed in name"
+              errorMessage: "Number is not allowed in name",
             });
           }
           if (hasNumber.test(transformed[i][4])) {
@@ -981,7 +1212,7 @@ export default {
               row: i,
               column: 4,
               columnData: transformed[i][4],
-              errorMessage: "Number is not allowed in name"
+              errorMessage: "Number is not allowed in name",
             });
           }
 
@@ -990,7 +1221,7 @@ export default {
               row: i,
               column: 5,
               columnData: transformed[i][5],
-              errorMessage: "Number is not allowed in name"
+              errorMessage: "Number is not allowed in name",
             });
           }
 
@@ -1017,7 +1248,8 @@ export default {
       this.result = data.result;
       this.institution = data.institution;
       this.profession = data.profession;
-      this.sex = data.sex;
+      this.sex = data.sex.replace(/\s/g, "");
+      this.registrationNumber = data.registrationNo;
       this.editModal = true;
     },
     saveEdited() {
@@ -1035,17 +1267,26 @@ export default {
         sex: this.sex,
         result: this.result,
         createdAt: crd,
-        updatedAt: updatedAt
+        registrationNo: this.registrationNumber,
+        updatedAt: updatedAt,
       };
-
-      // st.editImported(editedData);
+      this.editStatus = true;
       this.$store
         .dispatch("reviewer/editImported", editedData, this.editedDataId)
-        .then(res => {
-          console.log(res);
+        .then((res) => {
+          if (res.data.status === "Error") {
+            this.regError = false;
+            this.editStatus = false;
+            return;
+          }
+          if (res.status === 200) {
+            this.getData();
+            this.editStatus = false;
+            this.editModal = false;
+          }
         });
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped>
@@ -1072,5 +1313,11 @@ td {
 }
 .cell-red {
   background-color: red;
+}
+[type="button"],
+[type="submit"],
+button {
+  min-width: 107px !important;
+  min-height: 35px !important;
 }
 </style>
