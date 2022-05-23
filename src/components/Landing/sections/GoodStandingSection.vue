@@ -7,7 +7,7 @@
     <section
       class="content-wrapper flex flex-col md:flex-row justify-center md:justify-start items-center"
     >
-      <transition name="slide-fade-to-right">
+      <!-- <transition name="slide-fade-to-right">
         <svg
           v-if="showElement"
           xmlns="http://www.w3.org/2000/svg"
@@ -32,20 +32,23 @@
             fill="url(#goodStanding)"
           />
         </svg>
-      </transition>
+      </transition> -->
       <transition name="slide-fade-to-top">
         <section
           class="flex flex-col px-small sm:ml-large items-center md:items-start"
           v-if="showElement"
         >
           <div class="flex flex-col items-center">
-            <h1
-              class="text-3xl sm:text-largeDisplay blue-text-gradient -mb-tiny sm:-mb-small"
-            >
-              Good Standing
-            </h1>
-            <hr class="yellow-gradient glow separator border-none" />
+                      <!-- <h5 class="mt-small text-primary-100 text-center">
+
+              If your application is approved, you are expected to pay a service fee and take your license. Please note that foreigners will pay in dollars and Ethiopians will pay in birr. 
+            </h5> -->
+            <!-- <hr class="yellow-gradient glow separator border-none" /> -->
           </div>
+                       <h5 class="mt-small text-primary-600 text-center">
+
+              If your application is approved, you are expected to pay a service fee and take your license. Please note that foreigners will pay in dollars and Ethiopians will pay in birr. 
+            </h5>
         </section>
       </transition>
     </section>

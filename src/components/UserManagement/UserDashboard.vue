@@ -1,4 +1,7 @@
 <template>
+<div v-if="showNavBar">
+    <ReviewerNavBar tab="createAdmin"  />
+</div>
   <h1 class="text-center mt-12 text-3xl">User Management</h1>
 
   <div class="mt-20 ml-20 bg-primary-100">
@@ -195,6 +198,7 @@ import {useRoute, useRouter} from "vue-router";
 import Spinner from "@/sharedComponents/Spinner";
 import EditUser from "@/components/UserManagement/EditUser";
 import Modal from "@/sharedComponents/Modal";
+import ReviewerNavBar from "@/components/Reviewer/ReviewerNavBar";
 
 export default {
   components: {
@@ -202,6 +206,7 @@ export default {
     VueTailwindPagination,
     EditUser,
     Modal,
+    ReviewerNavBar
   },
   computed: {},
 
@@ -219,7 +224,7 @@ export default {
     let showEditUserModal = ref(false);
     let paginationSize = ref(10);
     let expertLevelFilter = ref();
-
+    const showNavBar = localStorage.getItem("role") == "UM";
     let expertLevels = ref([
       {name: "All", code: "all"},
       {name: "Federal", code: "FED"},
@@ -312,6 +317,7 @@ export default {
       expertLevels,
       expertLevelFilter,
       filterExpertLevel,
+      showNavBar
     };
   },
 };
