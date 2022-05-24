@@ -154,12 +154,7 @@
           {{ size }}
         </option>
       </select>
-      <span id="print" @click="printTable()" class="ml-8 float-right mr-4">
-        <a class="text-2xl font-semibold leading-tight">
-          <i class="fa fa-print" aria-hidden="true"></i>
-          Print
-        </a>
-      </span>
+
       <Spinner v-if="previousTableLoading" />
 
       <table
@@ -680,401 +675,217 @@
 
   <transition name="slide-fade-up">
     <Modal v-if="this.editModal">
-      <EditModal @editModal="this.editModal = false">
-        <div class="grid grid-cols-6 gap-4">
-          <div class="col-start-2 col-span-4 ...">
-            <h2 class="mt-4 text-center">Primary Information</h2>
-            <div
-              class="
-                p-12
-                max-w-full
-                rounded-lg
-                border border-gray-200
-                shadow-md
-                dark:bg-gray-200 dark:border-gray-700
-                bg-primary-400
-              "
-            >
-              <div class="grid grid-cols-3 gap-4">
-                <div class="col-auto h-4">
-                  <i
-                    class="fa fa-user"
-                    style="color: white"
-                    aria-hidden="true"
-                  ></i
-                  >&nbsp; <label for="">First Name:</label>&nbsp;<strong>{{
-                    firstName
-                  }}</strong>
-                </div>
-                <div class="col-auto h-4 bg-teal-400">
-                  <i
-                    class="fa fa-user"
-                    style="color: white"
-                    aria-hidden="true"
-                  ></i
-                  >&nbsp; <label>Middle Name:</label>&nbsp;<strong>{{
-                    middleName
-                  }}</strong>
-                </div>
+      <EditModal  @close="editModal = false">
+        <div id="printIndiv">
+          <div class="grid grid-cols-6 gap-4">
+            <div class="col-start-2 col-span-4 ...">
+              <h2 class="mt-4 text-center">Primary Information</h2>
+              <div
+                class="
+                  p-12
+                  max-w-full
+                  rounded-lg
+                  border border-gray-200
+                  shadow-md
+                  dark:bg-gray-200 dark:border-gray-700
+                "
+                style="background-color: #487db9"
+              >
+                <div class="grid grid-cols-2 gap-2">
+                  <div class="col-auto h-4">
+                    <i
+                      class="fa fa-user"
+                      style="color: white"
+                      aria-hidden="true"
+                    ></i
+                    >&nbsp;
+                    <label for="" style="font-weight: bold">First Name:</label
+                    >&nbsp;<strong style="color: #ff8d00; font-size: 16px">{{
+                      firstName
+                    }}</strong>
+                  </div>
+                  <div class="col-auto h-4 bg-teal-400">
+                    <i
+                      class="fa fa-user"
+                      style="color: white"
+                      aria-hidden="true"
+                    ></i
+                    >&nbsp;
+                    <label style="font-weight: bold">Middle Name:</label
+                    >&nbsp;<strong style="color: #ff8d00; font-size: 16px">{{
+                      middleName
+                    }}</strong>
+                  </div>
 
-                <div class="col-auto h-4 bg-teal-400">
-                  <i
-                    class="fa fa-user"
-                    style="color: white"
-                    aria-hidden="true"
-                  ></i
-                  >&nbsp; <label for="">Last Name:</label>&nbsp;<strong>{{
-                    lastName
-                  }}</strong>
+                  <div class="col-auto h-4 bg-teal-400 mt-4">
+                    <i
+                      class="fa fa-user"
+                      style="color: white"
+                      aria-hidden="true"
+                    ></i
+                    >&nbsp;
+                    <label for="" style="font-weight: bold">Last Name:</label
+                    >&nbsp;<strong style="color: #ff8d00; font-size: 16px">{{
+                      lastName
+                    }}</strong>
+                  </div>
+
+                  <div class="col-auto h-4 bg-teal-400 mt-4 show-on-print">
+                    <i
+                      class="fa fa-male"
+                      style="color: white"
+                      aria-hidden="true"
+                    ></i>
+                    <i
+                      class="fa fa-female"
+                      style="color: white"
+                      aria-hidden="true"
+                    ></i>
+                    &nbsp;
+                    <label for="" style="font-weight: bold">Sex:</label
+                    >&nbsp;<strong style="color: #ff8d00; font-size: 16px">{{
+                      sex
+                    }}</strong>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="col-start-1 col-end-3 ...">
+
+          <div class="grid grid-cols-6 gap-4 mb-4">
+            <div class="col-start-2 col-span-4 ...">
+              <h2 class="mt-4 text-center">Record Detail</h2>
+              <div
+                class="
+                  p-12
+                  max-w-full
+                  rounded-lg
+                  border border-gray-200
+                  shadow-md
+                  dark:bg-gray-200 dark:border-gray-700
+                  bg-primary-400
+                "
+              >
+                <div class="grid grid-cols-1 gap-2">
 
 
+                               <div class="col-auto h-4 bg-teal-400">
+                    <i
+                      class="fa fa-file-invoice"
+                      style="color: white"
+                      aria-hidden="true"
+                    ></i>
+                    &nbsp;
+                    <label for="" style="font-weight: bold"
+                      >Registration Number:</label
+                    >&nbsp;<strong style="color: #ff8d00; font-size: 16px">{{
+                      registrationNumber
+                    }}</strong>
+                  </div>
 
 
+                  <div class="col-6 h-4 bg-teal-100 mt-4">
+                    <i
+                      class="fa fa-check"
+                      style="color: white"
+                      aria-hidden="true"
+                    ></i
+                    >&nbsp;
+                    <label style="font-weight: bold">Result:</label
+                    >&nbsp;<strong style="color: #ff8d00; font-size: 16px">{{
+                      result
+                    }}</strong>
+                  </div>
 
+                  <div class="col-auto h-4 bg-teal-400 mt-4">
+                    <i
+                      class="fa fa-building"
+                      style="color: white"
+                      aria-hidden="true"
+                    ></i
+                    >&nbsp;
+                    <label for="" style="font-weight: bold">Institution:</label
+                    >&nbsp;<strong style="color: #ff8d00; font-size: 16px">{{
+                      institution
+                    }}</strong>
+                  </div>
 
-
-
-
+     
+                  <div class="col-auto h-4 mt-4">
+                    <i
+                      class="fa fa-briefcase"
+                      style="color: white"
+                      aria-hidden="true"
+                    ></i
+                    >&nbsp;
+                    <label for="" style="font-weight: bold">Profession:</label
+                    >&nbsp;<strong style="color: #ff8d00; font-size: 16px">
+                      {{ profession }}</strong
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="col-end-7 col-span-2 ...">03</div>
-          <div class="col-start-1 col-end-7 ...">04</div>
+
+          <div class="grid grid-cols-6 gap-4 mb-4">
+            <div class="col-start-2 col-span-4 ...">
+              <button
+                class="
+                  hide-on-print
+                  tetx-center
+                  px-4
+                  py-2
+                  rounded-lg
+                  bg-primary-400
+                  text-white
+                  hover:bg-primary-500
+                  focus:outline-none focus:shadow-outline-blue
+                  font-semibold
+                  shadow
+                  hover:shadow-lg
+                  transition
+                  duration-300
+                  ease-in-out
+                  transform
+                  hover:(translate-y-1)
+                "
+                @click="printIndividualResult()"
+              >
+                Print
+              </button>
+
+              <button
+                class="
+                  hide-on-print
+                  ml-4
+                  tetx-center
+                  px-4
+                  py-2
+                  rounded-lg
+                  bg-primary-400
+                  text-white
+                  hover:bg-primary-500
+                  focus:outline-none focus:shadow-outline-blue
+                  font-semibold
+                  shadow
+                  hover:shadow-lg
+                  transition
+                  duration-300
+                  ease-in-out
+                  transform
+                  hover:(translate-y-1)
+                "
+               @click="editModal = false"
+              >
+                Cancel
+              </button>
+
+              <div class="grid grid-cols-1 gap-2"></div>
+            </div>
+          </div>
         </div>
-
-        <form class="ml-2 mt-2" @submit.prevent="saveEdited()">
-          <div class="grid grid-cols-3 gap-4">
-            <div class="form-group mb-4">
-              <label for="firstName">First Name</label>
-              <input
-                v-model="firstName"
-                type="text"
-                class="
-                  form-control
-                  block
-                  w-full
-                  px-3
-                  py-1.5
-                  text-base
-                  font-normal
-                  text-gray-700
-                  bg-white bg-clip-padding
-                  border border-solid border-gray-300
-                  rounded
-                  transition
-                  ease-in-out
-                  m-0
-                  focus:text-gray-700
-                  focus:bg-white
-                  focus:border-blue-600
-                  focus:outline-none
-                "
-                id="firstName"
-                placeholder="First name"
-              />
-            </div>
-            <div class="form-group mb-4">
-              <label for="firstName">Middle Name</label>
-              <input
-                v-model="middleName"
-                type="text"
-                class="
-                  form-control
-                  block
-                  w-full
-                  px-3
-                  py-1.5
-                  text-base
-                  font-normal
-                  text-gray-700
-                  bg-white bg-clip-padding
-                  border border-solid border-gray-300
-                  rounded
-                  transition
-                  ease-in-out
-                  m-0
-                  focus:text-gray-700
-                  focus:bg-white
-                  focus:border-blue-600
-                  focus:outline-none
-                "
-                id="middleName"
-                placeholder="Middle name"
-              />
-            </div>
-            <div class="form-group mb-4">
-              <label for="firstName">Last Name</label>
-              <input
-                v-model="lastName"
-                type="text"
-                class="
-                  form-control
-                  block
-                  w-full
-                  px-3
-                  py-1.5
-                  text-base
-                  font-normal
-                  text-gray-700
-                  bg-white bg-clip-padding
-                  border border-solid border-gray-300
-                  rounded
-                  transition
-                  ease-in-out
-                  m-0
-                  focus:text-gray-700
-                  focus:bg-white
-                  focus:border-blue-600
-                  focus:outline-none
-                "
-                id="lastName"
-                placeholder="Last name"
-              />
-            </div>
-          </div>
-          <div class="grid grid-cols-3 gap-4">
-            <div class="form-group mb-4">
-              <label for="firstName">Sex</label>
-              <select
-                v-model="sex"
-                class="
-                  form-select form-select-lg
-                  mb-3
-                  appearance-none
-                  block
-                  w-full
-                  px-4
-                  py-1
-                  text-lg
-                  font-normal
-                  text-gray-700
-                  bg-white bg-clip-padding bg-no-repeat
-                  border border-solid border-gray-300
-                  rounded
-                  transition
-                  ease-in-out
-                  m-0
-                  focus:text-gray-700
-                  focus:bg-white
-                  focus:border-blue-600
-                  focus:outline-none
-                "
-                aria-label=".form-select-lg example"
-              >
-                <option selected :value="sex">{{ sex }}</option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-              </select>
-            </div>
-            <div class="form-group mb-4">
-              <label for="firstName">Profession</label>
-              <select
-                v-model="profession"
-                class="
-                  form-select form-select-lg
-                  mb-3
-                  appearance-none
-                  block
-                  w-full
-                  px-4
-                  py-1
-                  text-lg
-                  font-normal
-                  text-gray-700
-                  bg-white bg-clip-padding bg-no-repeat
-                  border border-solid border-gray-300
-                  rounded
-                  transition
-                  ease-in-out
-                  m-0
-                  focus:text-gray-700
-                  focus:bg-white
-                  focus:border-blue-600
-                  focus:outline-none
-                "
-                aria-label=".form-select-lg example"
-              >
-                <option selected :value="profession">{{ profession }}</option>
-                <option
-                  v-for="profession in professions"
-                  :value="profession.name"
-                  :key="profession.id"
-                >
-                  {{ profession.name }}
-                </option>
-              </select>
-            </div>
-            <div class="form-group mb-4">
-              <label for="firstName">Result</label>
-              <select
-                v-model="result"
-                class="
-                  form-select form-select-lg
-                  mb-3
-                  appearance-none
-                  block
-                  w-full
-                  px-4
-                  py-1
-                  text-lg
-                  font-normal
-                  text-gray-700
-                  bg-white bg-clip-padding bg-no-repeat
-                  border border-solid border-gray-300
-                  rounded
-                  transition
-                  ease-in-out
-                  m-0
-                  focus:text-gray-700
-                  focus:bg-white
-                  focus:border-blue-600
-                  focus:outline-none
-                "
-                aria-label=".form-select-lg example"
-              >
-                <option selected :value="result">{{ result }}</option>
-                <option value="pass">Pass</option>
-                <option value="fail">Fail</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="grid grid-cols-3 gap-4">
-            <div class="form-group mb-4">
-              <label for="firstName">Institution</label>
-              <select
-                v-model="institution"
-                class="
-                  form-select form-select-lg
-                  mb-3
-                  appearance-none
-                  block
-                  w-full
-                  px-4
-                  py-1
-                  text-lg
-                  font-normal
-                  text-gray-700
-                  bg-white bg-clip-padding bg-no-repeat
-                  border border-solid border-gray-300
-                  rounded
-                  transition
-                  ease-in-out
-                  m-0
-                  focus:text-gray-700
-                  focus:bg-white
-                  focus:border-blue-600
-                  focus:outline-none
-                "
-                aria-label=".form-select-lg example"
-              >
-                <option selected :value="institution">{{ institution }}</option>
-                <option
-                  v-for="instituite in institutions"
-                  :value="instituite.name"
-                  :key="instituite.name"
-                >
-                  {{ instituite.name }}
-                </option>
-              </select>
-            </div>
-            <div class="form-group mb-4">
-              <label for="firstName">Registration Number</label>
-              <input
-                v-model="registrationNumber"
-                type="text"
-                class="
-                  form-control
-                  block
-                  w-full
-                  px-3
-                  py-1.5
-                  text-base
-                  font-normal
-                  text-gray-700
-                  bg-white bg-clip-padding
-                  border border-solid border-gray-300
-                  rounded
-                  transition
-                  ease-in-out
-                  m-0
-                  focus:text-gray-700
-                  focus:bg-white
-                  focus:border-blue-600
-                  focus:outline-none
-                "
-                id="registrationNumber"
-                placeholder="Registration Number"
-              />
-              <p class="text-red-200 text-xs italic">
-                Please check twice before editing this field.
-              </p>
-            </div>
-          </div>
-          <button
-            type="submit"
-            class="
-              text-gray-500
-              bg-white
-              hover:bg-gray-100
-              focus:ring-4 focus:outline-none focus:ring-gray-200
-              rounded-lg
-              border border-gray-200
-              text-sm
-              font-medium
-              px-5
-              py-2.5
-              hover:text-gray-900
-              focus:z-10
-              dark:bg-gray-700
-              dark:text-gray-300
-              dark:border-gray-500
-              dark:hover:text-white
-              dark:hover:bg-gray-600
-              dark:focus:ring-gray-600
-            "
-          >
-            Save
-          </button>
-          <button
-            id="myCheck"
-            type="submit"
-            @click="editModal = false"
-            class="
-              text-gray-500
-              bg-white
-              hover:bg-gray-100
-              focus:ring-4 focus:outline-none focus:ring-gray-200
-              rounded-lg
-              border border-gray-200
-              text-sm
-              font-medium
-              px-5
-              py-2.5
-              hover:text-gray-900
-              focus:z-10
-              dark:bg-gray-700
-              dark:text-gray-300
-              dark:border-gray-500
-              dark:hover:text-white
-              dark:hover:bg-gray-600
-              dark:focus:ring-gray-600
-            "
-          >
-            Cancel
-          </button>
-          <Spinner v-if="editStatus" />
-          <p
-            :class="{ 'text-red-200 text-lg italic invisible ...': regError }"
-            style="color: red"
-          >
-            Error: There is an already existing record with the same
-            registration number
-          </p>
-        </form>
+        <!-- If edit functinality is needed, then go to a push that is older than may 24,2022 -->
       </EditModal>
     </Modal>
   </transition>
@@ -1164,18 +975,16 @@ export default {
     this.getData();
   },
   methods: {
-    printTable() {
-      var divElements = document.getElementById("prevTable").innerHTML;
-      console.log(divElements);
-      var oldPage = document.body.innerHTML;
+    printIndividualResult() {
+      
+      var divElements = document.getElementById("printIndiv").innerHTML;
       document.body.innerHTML =
-        "<html><head><title></title></head><body><table>" +
-        divElements +
-        "</table></body>";
+        "<html><head><title></title></head><body>" + divElements + "</body>";
 
       window.print();
+      window.location.reload()
 
-      document.body.innerHTML = oldPage;
+
     },
     handlePagSize() {
       this.paginateReport(
