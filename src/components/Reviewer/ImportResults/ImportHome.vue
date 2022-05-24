@@ -1,7 +1,16 @@
 <template>
-<div class="p-4 max-w-full bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-200 dark:border-gray-700">
-  <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-      
+  <div
+    class="
+      p-4
+      max-w-full
+      bg-white
+      rounded-lg
+      border border-gray-200
+      shadow-md
+      dark:bg-gray-200 dark:border-gray-700
+    "
+  >
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
       <div class="m-2 grid grid-row-2 grid-flow-col">
         <div class="bg-green-200 rounded-lg">
           <h1 class="mt-4 ml-2">
@@ -123,7 +132,7 @@
           </div>
         </div>
       </div>
-       <hr />
+      <hr />
       <label class="text-primary-700 ml-4">Rows per page: </label>
       <select
         class="max-w-3xl mb-4"
@@ -145,11 +154,16 @@
           {{ size }}
         </option>
       </select>
-      
+      <span id="print" @click="printTable()" class="ml-8 float-right mr-4">
+        <a class="text-2xl font-semibold leading-tight">
+          <i class="fa fa-print" aria-hidden="true"></i>
+          Print
+        </a>
+      </span>
       <Spinner v-if="previousTableLoading" />
-      
+
       <table
-        class="w-full ml-4"
+        class="w-full ml-4 show-on-print"
         style="display: inline-table; height: 500px; overflow-y: scroll"
         id="prevTable"
       >
@@ -166,6 +180,7 @@
                 text-gray-700
                 uppercase
                 tracking-wider
+                show-on-print
               "
             >
               Number
@@ -342,8 +357,8 @@
             <td
               :class="
                 item === 'Fail' || item === 'fail'
-                  ? 'cell-red mb-1'
-                  : 'cell-green mb-1'
+                  ? 'cell-red mb-1 show-on-print'
+                  : 'cell-green mb-1 show-on-print'
               "
               v-for="item in row"
               :key="item.id"
@@ -363,8 +378,11 @@
               </div>
             </td>
             <td>
-              <button @click="editSelected(row)" class="mb-2 mt-1">
-                <i class="fa fa-pencil" aria-hidden="true"> Edit</i>
+              <button
+                @click="editSelected(row)"
+                class="mb-2 mt-1 hide-on-print"
+              >
+                <i class="fa fa-eye" aria-hidden="true"> View</i>
               </button>
             </td>
           </tr>
@@ -379,9 +397,8 @@
         text-after-input="Go"
       />
     </div>
-</div>
-  
-  
+  </div>
+
   <transition name="slide-fade-up">
     <Modal v-if="this.importModal">
       <ImportModal
@@ -664,6 +681,70 @@
   <transition name="slide-fade-up">
     <Modal v-if="this.editModal">
       <EditModal @editModal="this.editModal = false">
+        <div class="grid grid-cols-6 gap-4">
+          <div class="col-start-2 col-span-4 ...">
+            <h2 class="mt-4 text-center">Primary Information</h2>
+            <div
+              class="
+                p-12
+                max-w-full
+                rounded-lg
+                border border-gray-200
+                shadow-md
+                dark:bg-gray-200 dark:border-gray-700
+                bg-primary-400
+              "
+            >
+              <div class="grid grid-cols-3 gap-4">
+                <div class="col-auto h-4">
+                  <i
+                    class="fa fa-user"
+                    style="color: white"
+                    aria-hidden="true"
+                  ></i
+                  >&nbsp; <label for="">First Name:</label>&nbsp;<strong>{{
+                    firstName
+                  }}</strong>
+                </div>
+                <div class="col-auto h-4 bg-teal-400">
+                  <i
+                    class="fa fa-user"
+                    style="color: white"
+                    aria-hidden="true"
+                  ></i
+                  >&nbsp; <label>Middle Name:</label>&nbsp;<strong>{{
+                    middleName
+                  }}</strong>
+                </div>
+
+                <div class="col-auto h-4 bg-teal-400">
+                  <i
+                    class="fa fa-user"
+                    style="color: white"
+                    aria-hidden="true"
+                  ></i
+                  >&nbsp; <label for="">Last Name:</label>&nbsp;<strong>{{
+                    lastName
+                  }}</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-start-1 col-end-3 ...">
+
+
+
+
+
+
+
+
+
+          </div>
+          <div class="col-end-7 col-span-2 ...">03</div>
+          <div class="col-start-1 col-end-7 ...">04</div>
+        </div>
+
         <form class="ml-2 mt-2" @submit.prevent="saveEdited()">
           <div class="grid grid-cols-3 gap-4">
             <div class="form-group mb-4">
@@ -1080,10 +1161,22 @@ export default {
     moment: () => moment,
   },
   created() {
-    console.log("created",this);
     this.getData();
   },
   methods: {
+    printTable() {
+      var divElements = document.getElementById("prevTable").innerHTML;
+      console.log(divElements);
+      var oldPage = document.body.innerHTML;
+      document.body.innerHTML =
+        "<html><head><title></title></head><body><table>" +
+        divElements +
+        "</table></body>";
+
+      window.print();
+
+      document.body.innerHTML = oldPage;
+    },
     handlePagSize() {
       this.paginateReport(
         JSON.parse(JSON.stringify(this.filteredData)),
@@ -1178,10 +1271,10 @@ export default {
           this.previousData.push(element);
           this.filteredData.push(element);
         });
-              this.paginateReport(
-        JSON.parse(JSON.stringify(this.filteredData)),
-        this.indexValue
-      );
+        this.paginateReport(
+          JSON.parse(JSON.stringify(this.filteredData)),
+          this.indexValue
+        );
         this.previousTableLoading = false;
       });
     },
@@ -1319,5 +1412,13 @@ td {
 button {
   min-width: 107px !important;
   min-height: 35px !important;
+}
+@media print {
+  .show-on-print {
+    display: block;
+  }
+  .hide-on-print {
+    display: none !important;
+  }
 }
 </style>
