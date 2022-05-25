@@ -137,7 +137,7 @@
       <select
         class="max-w-3xl mb-4"
         v-model="paginationSize"
-        @change="handlePagSize($)"
+        @change="handlePagSize()"
         style="
           padding: 0px 35px 0px 5px;
           border: none;
@@ -352,8 +352,8 @@
             <td
               :class="
                 item === 'Fail' || item === 'fail'
-                  ? 'cell-red mb-1 show-on-print'
-                  : 'cell-green mb-1 show-on-print'
+                  ? 'cell-red mb-1 show-on-print px-5 py-5 border-gray-200 bg-white text-sm'
+                  : 'cell-green mb-1 show-on-print px-5 py-5 border-gray-200 bg-white text-sm'
               "
               v-for="item in row"
               :key="item.id"
@@ -675,7 +675,7 @@
 
   <transition name="slide-fade-up">
     <Modal v-if="this.editModal">
-      <EditModal  @close="editModal = false">
+      <EditModal @close="editModal = false">
         <div id="printIndiv">
           <div class="grid grid-cols-6 gap-4">
             <div class="col-start-2 col-span-4 ...">
@@ -767,9 +767,7 @@
                 "
               >
                 <div class="grid grid-cols-1 gap-2">
-
-
-                               <div class="col-auto h-4 bg-teal-400">
+                  <div class="col-auto h-4 bg-teal-400">
                     <i
                       class="fa fa-file-invoice"
                       style="color: white"
@@ -782,7 +780,6 @@
                       registrationNumber
                     }}</strong>
                   </div>
-
 
                   <div class="col-6 h-4 bg-teal-100 mt-4">
                     <i
@@ -810,7 +807,6 @@
                     }}</strong>
                   </div>
 
-     
                   <div class="col-auto h-4 mt-4">
                     <i
                       class="fa fa-briefcase"
@@ -876,7 +872,7 @@
                   transform
                   hover:(translate-y-1)
                 "
-               @click="editModal = false"
+                @click="editModal = false"
               >
                 Cancel
               </button>
@@ -903,6 +899,7 @@ import { useStore } from "vuex";
 import moment from "moment";
 import Spinner from "@/sharedComponents/Spinner";
 import VueTailwindPagination from "@ocrv/vue-tailwind-pagination";
+
 export default {
   components: {
     Modal,
@@ -956,16 +953,39 @@ export default {
   },
   watch: {
     searchNameVal: function () {
-      let userSearchedName = this.searchNameVal;
-      let filterByName = this.previousData.filter((report) => {
-        return (
-          report.firstName.toLowerCase().includes(userSearchedName) ||
-          report.middleName.toLowerCase().includes(userSearchedName) ||
-          report.lastName.toLowerCase().includes(userSearchedName)
-        );
-      });
+      // let userSearchedName = this.searchNameVal;
+      // let filterByName = this.previousData.filter((report) => {
+      //   return (
+      //     report.firstName.toLowerCase().includes(userSearchedName) ||
+      //     report.middleName.toLowerCase().includes(userSearchedName) ||
+      //     report.lastName.toLowerCase().includes(userSearchedName)
+      //   );
+      // });
 
-      this.filteredData = filterByName;
+      // this.filteredData = filterByName;
+
+      let input, filter, table, tr, td, i, txtValue;
+
+      input = this.searchNameVal;
+
+      filter = input.toUpperCase();
+
+      table = document.getElementById("prevTable");
+      tr = table.getElementsByTagName("tr");
+
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[3];
+
+        if (td) {
+          txtValue = td.textContent || td.innerText;
+
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
     },
   },
   computed: {
@@ -976,27 +996,34 @@ export default {
   },
   methods: {
     printIndividualResult() {
-      
       var divElements = document.getElementById("printIndiv").innerHTML;
       document.body.innerHTML =
         "<html><head><title></title></head><body>" + divElements + "</body>";
 
       window.print();
-      window.location.reload()
-
-
+      window.location.reload();
     },
-    handlePagSize() {
+    pageChanged(event) {
+      console.log(event);
+      this.currentPage = event;
+      this.indexValue = event - 1;
       this.paginateReport(
-        JSON.parse(JSON.stringify(this.filteredData)),
+        JSON.parse(JSON.stringify(this.previousData)),
         this.indexValue
       );
+    },
+    handlePagSize() {
+      this.currentPage = 0;
+      this.indexValue = 0;
+
+      this.paginateReport(JSON.parse(JSON.stringify(this.previousData)), 0);
     },
     paginateReport(reportValue, index) {
       this.filteredData = reportValue.slice(
         index * this.paginationSize,
         index * this.paginationSize + this.paginationSize
       );
+
       this.totalCount = reportValue.length;
     },
     filterInstitution() {
