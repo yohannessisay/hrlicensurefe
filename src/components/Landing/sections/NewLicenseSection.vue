@@ -8,8 +8,10 @@
       class="content-wrapper-new-license w-full flex flex-col md:flex-row justify-center md:justify-start items-center"
     >
       <transition name="slide-fade-to-right">
-    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"  x="0px" y="0px"
-	 viewBox="0 0 700 700">
+    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" 
+	 viewBox="0 0 700 700"
+             v-if="showElement"
+>
 
 	    <linearGradient
               id="newLicense"
