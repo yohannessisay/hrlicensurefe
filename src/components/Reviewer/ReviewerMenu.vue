@@ -412,7 +412,9 @@
              <div v-if="this.display == 'importResults'">
           <import-results />
         </div>
-      
+      <div v-if="this.display == 'verificationRequests'">
+          <VerificationRequests />
+        </div>
       </div>
     </div>
   </div>
@@ -524,6 +526,8 @@ import SuspendedCancelled from "./ApplicationTypes/AllLicensed/SuspendedCancelle
 // import AllLicensed from "./ApplicationTypes/AllLicensed/AllLicensed.vue";
 // import Accredited from "./ApplicationTypes/AllLicensed/Accredited.vue";
 import ImportResults from "./ImportResults/ImportHome.vue";
+import VerificationRequests from "./Verification/RequestedVerifications.vue";
+
 
 
 import Report from "../Report/Report.vue";
@@ -637,7 +641,8 @@ export default {
 
     Dashboard,
     Report,
-    UserManagement
+    UserManagement,
+    VerificationRequests
   },
   setup() {
     const store = useStore();
