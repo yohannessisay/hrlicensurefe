@@ -1,5 +1,6 @@
 <template>
-  <div v-if="importPart"
+  <div
+    v-if="importPart"
     class="
       card-wrapper
       max-w-4xl
@@ -101,7 +102,6 @@
     </div>
   </div>
 
-
   <transition name="slide-fade-up">
     <Modal v-if="this.showErrorModal">
       <ErrorModal @showErrorModal="this.showErrorModal = false">
@@ -199,7 +199,6 @@
       </ErrorModal>
     </Modal>
   </transition>
- 
 </template>
 
 <script>
@@ -209,14 +208,14 @@ import Spinner from "@/sharedComponents/Spinner";
 import ErrorModal from "./ImportErrorModal";
 export default {
   components: { Spinner, ErrorModal },
-  props: ["finalData"],
+  props: ["finalData", "getData"],
   data: function () {
     return {
       content: "",
       err: "",
       saveStatus: false,
       showErrorModal: false,
-      importPart: true
+      importPart: true,
     };
   },
   methods: {
@@ -240,30 +239,30 @@ export default {
       add.forEach((element) => {
         let tempObj = {
           registrationNo: element[1],
-          institution: element[2],
           firstName: element[3],
           middleName: element[4],
+          institution: element[2],
           lastName: element[5],
           sex: element[6],
           profession: element[7],
-          result: element[8],
+          testDate: element[8],
+          result: element[9],
           createdAt: createdAt,
           updatedAt: updatedAt,
         };
         finalArray.push(tempObj);
       });
-        this.saveStatus = true;
+
+      this.saveStatus = true;
       this.$store.dispatch("reviewer/getImported").then((res) => {
-      
         let checkforExisting = res.data.data;
         let errorForExisting = [];
-        let i=0;
+        let i = 0;
         if (checkforExisting.length > 0) {
-          checkforExisting.forEach((element)=> {
+          checkforExisting.forEach((element) => {
             finalArray.forEach((element2) => {
-          
               if (element.registrationNo === element2.registrationNo) {
-                    i++;
+                i++;
                 errorForExisting.push({
                   row: i,
                   column: 1,
@@ -274,19 +273,19 @@ export default {
               }
             });
           });
-
         }
-    
-        if(errorForExisting.length>0){
-          
-          this.importPart=false
-            this.errors=errorForExisting
-            this.showErrorModal=true
+
+        if (errorForExisting.length > 0) {
+          this.importPart = false;
+          this.errors = errorForExisting;
+          this.showErrorModal = true;
         }
       });
-  this.saveStatus=false
-      store.addImported(finalArray);
-
+      console.log(this);
+      this.saveStatus = false;
+      // store.addImported(finalArray);
+      //  this.$emit("importModal", false);
+      this.$parent.getData();
     },
   },
 };

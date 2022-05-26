@@ -15,7 +15,7 @@
         <div class="bg-green-200 rounded-lg">
           <h1 class="mt-4 ml-2">
             Import the required documnet and view the reults before finalizing
-            it and saving
+            it and saving.(Allowed file types are .XLSX and .CSV)
           </h1>
           <label
             class="
@@ -41,10 +41,49 @@
               @change="importExcel"
               id="upload"
               class="hidden"
+              accept=".xlsx, .csv"
             />
           </label>
         </div>
       </div>
+      <hr />
+      <div style="text-align: center; font-weight: bold; font-size: 24px">
+        OR
+      </div>
+
+      <hr />
+
+      <div class="m-2 grid grid-row-2 grid-flow-col">
+        <div class="bg-green-200 rounded-lg">
+          <h1 class="mt-4 ml-2">
+            Download a template and fill it with the required data and come back
+            here to upload it.
+          </h1>
+          <a href="/template/importTemplate.xlsx" download>
+            <label
+              class="
+                flex flex-col
+                items-center
+                mt-3
+                py-4
+                bg-primary-400
+                rounded-lg
+                shadow-md
+                uppercase
+                hover:bg-purple-600 hover:text-lightBlue-1000
+                ease-linear
+                transition-all
+                duration-150
+              "
+            >
+              <i class="fas fa-cloud-upload-alt fa-1x"
+                >Click to download a template</i
+              >
+            </label>
+          </a>
+        </div>
+      </div>
+
       <hr />
       <h1 class="ml-4 mt-4">These are the previously added records</h1>
 
@@ -195,21 +234,7 @@
             >
               Registration Number
             </th>
-            <th
-              class="
-                px-5
-                py-3
-                border-b-2 border-gray-200
-                bg-gray-100
-                text-left text-xs
-                font-semibold
-                text-gray-700
-                uppercase
-                tracking-wider
-              "
-            >
-              Institution
-            </th>
+
             <th
               class="
                 px-5
@@ -283,7 +308,37 @@
                 tracking-wider
               "
             >
+              Institution
+            </th>
+            <th
+              class="
+                px-5
+                py-3
+                border-b-2 border-gray-200
+                bg-gray-100
+                text-left text-xs
+                font-semibold
+                text-gray-700
+                uppercase
+                tracking-wider
+              "
+            >
               Profession
+            </th>
+            <th
+              class="
+                px-5
+                py-3
+                border-b-2 border-gray-200
+                bg-gray-100
+                text-left text-xs
+                font-semibold
+                text-gray-700
+                uppercase
+                tracking-wider
+              "
+            >
+              Test Date
             </th>
             <th
               class="
@@ -899,6 +954,7 @@ import { useStore } from "vuex";
 import moment from "moment";
 import Spinner from "@/sharedComponents/Spinner";
 import VueTailwindPagination from "@ocrv/vue-tailwind-pagination";
+import toast from 'toast-me';
 
 export default {
   components: {
@@ -1004,7 +1060,6 @@ export default {
       window.location.reload();
     },
     pageChanged(event) {
-      console.log(event);
       this.currentPage = event;
       this.indexValue = event - 1;
       this.paginateReport(
@@ -1121,51 +1176,60 @@ export default {
       file = document.getElementById("upload").files[0];
 
       var reader = new FileReader();
-      reader.readAsBinaryString(file);
-      reader.onload = (event) => {
-        var data = event.target.result;
-        var workbook = read(data, { type: "binary" });
-        var sheets = workbook.Sheets;
-        var transformed = transformSheets(sheets, workbook);
-        for (let i = 1; i < transformed.length; i++) {
-          if (hasNumber.test(transformed[i][3])) {
-            errors.push({
-              row: i,
-              column: 3,
-              columnData: transformed[i][3],
-              errorMessage: "Number is not allowed in name",
-            });
-          }
-          if (hasNumber.test(transformed[i][4])) {
-            errors.push({
-              row: i,
-              column: 4,
-              columnData: transformed[i][4],
-              errorMessage: "Number is not allowed in name",
-            });
+      let extension = file.name.split(".").pop().toLowerCase();
+      console.log(extension, file);
+      if (extension === "xlsx" || extension === "xls" || extension === "csv") {
+        reader.readAsBinaryString(file);
+        reader.onload = (event) => {
+          var data = event.target.result;
+          var workbook = read(data, { type: "binary" });
+          var sheets = workbook.Sheets;
+          var transformed = transformSheets(sheets, workbook);
+          for (let i = 1; i < transformed.length; i++) {
+            transformed[i][6] = transformed[i][6].replace(/\s/g, "");
+            if (hasNumber.test(transformed[i][3])) {
+              errors.push({
+                row: i,
+                column: 3,
+                columnData: transformed[i][3],
+                errorMessage: "Number is not allowed in name",
+              });
+            }
+            if (hasNumber.test(transformed[i][4])) {
+              errors.push({
+                row: i,
+                column: 4,
+                columnData: transformed[i][4],
+                errorMessage: "Number is not allowed in name",
+              });
+            }
+
+            if (hasNumber.test(transformed[i][5])) {
+              errors.push({
+                row: i,
+                column: 5,
+                columnData: transformed[i][5],
+                errorMessage: "Number is not allowed in name",
+              });
+            }
+
+            if (transformed[i][9] === "Pass" || transformed[i][9] === "pass") {
+              transformed[i].result = "pass";
+            } else transformed[i].result = "fail";
           }
 
-          if (hasNumber.test(transformed[i][5])) {
-            errors.push({
-              row: i,
-              column: 5,
-              columnData: transformed[i][5],
-              errorMessage: "Number is not allowed in name",
-            });
-          }
+          this.content = transformed;
+          if (errors.length > 0) {
+            this.errorModal = true;
+            this.errors = errors;
+          } else this.finalData = transformed;
+          this.importModal = true;
+        };
+      } else
 
-          if (transformed[i][8] === "Pass" || transformed[i][8] === "pass") {
-            transformed[i].result = "pass";
-          } else transformed[i].result = "fail";
-        }
+toast('The file type you chose is invalid', { duration: 3000, position:'bottom'});
 
-        this.content = transformed;
-        if (errors.length > 0) {
-          this.errorModal = true;
-          this.errors = errors;
-        } else this.finalData = transformed;
-        this.importModal = true;
-      };
+      return;
     },
     editSelected(item) {
       let data = JSON.parse(JSON.stringify(item));
