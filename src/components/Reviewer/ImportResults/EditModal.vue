@@ -18,9 +18,6 @@
     <div class="relative p-4 w-full max-w-7xl h-full md:h-auto">
       <!-- Modal content -->
       <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-        <!-- Modal header -->
-
-        <!-- Modal body -->
         <div
           style="overflow-x: auto; overflow-y: scroll"
           class="shadow-md rounded-lg min-w-full"

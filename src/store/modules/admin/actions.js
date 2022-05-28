@@ -12,6 +12,7 @@ export default {
     commit(ADD_ADMIN_LOADING);
     try {
       const resp = await ApiService.post(url + "admins/login", admin, {});
+      console.log(resp);
       window.localStorage.setItem("token", resp.data["token"]);
       window.localStorage.setItem("adminId", resp.data.data["id"]);
       window.localStorage.setItem("role", resp.data.data["role"]["code"]);
