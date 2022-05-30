@@ -316,7 +316,7 @@ export default {
       selectedExpertLevel,
       selectedRegion,
       showButtons,
-      updateUser
+      updateUser  
     };
   },
 };

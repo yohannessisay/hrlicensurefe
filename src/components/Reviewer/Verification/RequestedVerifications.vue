@@ -1,5 +1,5 @@
 <template>
-  <div class="container p-5">
+  <div class=" p-5">
     <h2 class="align-middle ">Verification Requests</h2>
     <div class="float-right">
       <button @click="showNewVerificationModal()">Request Verifications</button>
