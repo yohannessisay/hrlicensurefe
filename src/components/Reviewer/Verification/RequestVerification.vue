@@ -23,23 +23,23 @@
         <div class="flex">
           <div class="flex flex-col mb-medium w-1/2 ">
             <label>Users</label>
-            <div class="rounded shadow-md my-2 relative pin-t pin-l">
-              <ul class="list-reset">
+            <div class="rounded shadow-md my-2 relative pin-t pin-l h-xl overflow-y-auto">
+              <ul class="list-reset ">
                 <li class="p-2">
-                  <input class="border-2 rounded h-8 w-full" /><br />
+                  <input class="border-2 rounded h-8 w-full" v-model="searchInput" @input="searchedUserInput" /><br />
                 </li>
                 <li v-for="user in users">
                   <p
-                    class="p-2 block text-black hover:bg-grey-light cursor-pointer"
+                    class="block text-black hover:bg-grey-light cursor-pointer text-xs"
                   >
-                    {{ user.emailAddress }}
+                    {{ user.name + " " + user.fatherName + " "+  user.grandFatherName}}
                   </p>
                 </li>
               </ul>
             </div>
             <select class=" mr-2" v-model="selectedUser">
               <option
-                v-for="item in users"
+                v-for="item in filteredUsers"
                 v-bind:key="item.id"
                 v-bind:value="item.emailAddress"
               >
@@ -90,22 +90,34 @@ export default {
 
   setup() {
     let users = ref([]);
+    let filteredUsers = ref([]);
     let selectedUser = ref();
     let showForm = ref(false);
+    let searchInput = ref("");
 
-    onMounted(() => {
-      getAllUsers();
+    onMounted(async () => {
+     await getAllUsers();
       showForm.value = true;
     });
     const getAllUsers = () => {
       store.dispatch("applicationVerification/getAllUsers").then((res) => {
         console.log(res);
         users.value = res.data.data;
+        filteredUsers.value = res.data.data;
+
       });
     };
+    const searchedUserInput =() =>
+    {
+      console.log(searchInput);
+      filteredUsers.value = users.filter( x =>
+      {
+        return x.name.includes(searchedInput) || x.fatherName.includes(searchedInput) || x.grandFatherName.includes(searchedInput)
+      })
+    }
     const submit = () => {};
     return{
-      users, selectedUser, submit, showForm, getAllUsers
+      users, selectedUser, submit, showForm, getAllUsers, searchedUserInput, searchInput
     }
   },
 };
