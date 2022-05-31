@@ -104,7 +104,7 @@
 
   <transition name="slide-fade-up">
     <Modal v-if="this.showErrorModal">
-      <ErrorModal @showErrorModal="this.showErrorModal = false">
+      <ErrorModal :showErrorModal="showErrorModal">
         <h1>
           This are the errors in the file you imported, please correct them
           accordingly
@@ -202,20 +202,18 @@
 </template>
 
 <script>
-import { useStore } from "vuex";
-import store from "../store/modules/reviewer/actions";
 import Spinner from "@/sharedComponents/Spinner";
 import ErrorModal from "./ImportErrorModal";
 export default {
   components: { Spinner, ErrorModal },
-  props: ['finalData', 'getData'],
-  data: function () {
+  props: ["finalData", "getData"],
+  data: function() {
     return {
       content: "",
       err: "",
       saveStatus: false,
       showErrorModal: false,
-      importPart: true,
+      importPart: true
     };
   },
   methods: {
@@ -235,7 +233,7 @@ export default {
         (today.getMonth() + 1) +
         "-" +
         today.getDate();
-      add.forEach((element) => {
+      add.forEach(element => {
         let tempObj = {
           registrationNo: element[1],
           firstName: element[3],
@@ -247,17 +245,17 @@ export default {
           dateOfExamination: element[8],
           result: element[9],
           createdAt: createdAt,
-          updatedAt: updatedAt,
+          updatedAt: updatedAt
         };
         finalArray.push(tempObj);
       });
       let idArray = [];
-      finalArray.forEach((element) => {
+      finalArray.forEach(element => {
         idArray.push(element.registrationNo);
       });
       this.saveStatus = true;
 
-      this.$store.dispatch("reviewer/getMultiple", idArray).then((res) => {
+      this.$store.dispatch("reviewer/getMultiple", idArray).then(res => {
         let checkforExisting = res.data.data;
         let errorForExisting = [];
 
@@ -273,7 +271,7 @@ export default {
                   column: 1,
                   columnData: finalArray[i].registrationNo,
                   errorMessage:
-                    "There is an already existing record with that id",
+                    "There is an already existing record with that id"
                 });
               }
             }
@@ -284,15 +282,17 @@ export default {
           this.importPart = false;
           this.errors = errorForExisting;
           this.showErrorModal = true;
+          return;
+        } else {
+          this.saveStatus = false;
+          this.$store.dispatch("reviewer/addImported", finalArray).then(res => {
+            this.$emit("importModal", false);
+            this.getData();
+          });
         }
       });
-      this.saveStatus = false;
-      this.$store.dispatch("reviewer/addImported", finalArray).then((res) => {
-         this.$emit("importModal", false);
-          this.getData();
-      });
-    },
-  },
+    }
+  }
 };
 </script>
 <style>

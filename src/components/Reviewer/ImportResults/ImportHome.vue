@@ -93,7 +93,7 @@
             type="text"
             id="fname"
             name="fname"
-            v-model="searchNameVal"
+            v-model="searchName"
             class="mr-6"
             placeholder="search by name"
           />
@@ -169,6 +169,23 @@
               </select>
             </div>
           </div>
+
+          <div class="flex flex-row mb-small w-80 mr-4">
+            <label class="text-primary-700 mr-2">From</label>
+            <input
+              v-model="startDate"
+              class="max-w-3xl mr-5"
+              type="date"
+              @change="filterDate()"
+            />
+            <label class="text-primary-700 mr-2">To</label>
+            <input
+              v-model="endDate"
+              @change="filterDate()"
+              class="max-w-3xl mr-5"
+              type="date"
+            />
+          </div>
         </div>
       </div>
       <hr />
@@ -195,10 +212,10 @@
       </select>
 
       <Spinner v-if="previousTableLoading" />
-     
+
       <table
-        class="w-full ml-4 show-on-print"
-        style="display: inline-table; height: 500px; overflow-y: scroll"
+        class=""
+        style="overflow-y: scroll"
         id="prevTable"
       >
         <thead>
@@ -325,7 +342,7 @@
             >
               Profession
             </th>
-    
+
             <th
               class="
                 px-5
@@ -341,7 +358,7 @@
             >
               Result
             </th>
-                    <th
+            <th
               class="
                 px-5
                 py-3
@@ -447,7 +464,6 @@
         text-before-input="Go to page"
         text-after-input="Go"
       />
-     
     </div>
   </div>
 
@@ -586,7 +602,7 @@
               >
                 Profession
               </th>
-                                      <th
+              <th
                 class="
                   px-5
                   py-3
@@ -616,7 +632,6 @@
               >
                 Result
               </th>
-   
             </tr>
           </thead>
           <tbody>
@@ -894,14 +909,15 @@
                     >
                   </div>
 
-                               <div class="col-auto h-4 mt-4">
+                  <div class="col-auto h-4 mt-4">
                     <i
                       class="fa fa-briefcase"
                       style="color: white"
                       aria-hidden="true"
                     ></i
                     >&nbsp;
-                    <label for="" style="font-weight: bold">Date Of Examination:</label
+                    <label for="" style="font-weight: bold"
+                      >Date Of Examination:</label
                     >&nbsp;<strong style="color: #ff8d00; font-size: 16px">
                       {{ dateOfExamination }}</strong
                     >
@@ -1017,6 +1033,8 @@ export default {
       vFilterGender: "",
       professions: [],
       result: "",
+      startDate: "",
+      endDate: "",
 
       currentPage: 0,
       totalCount: 0,
@@ -1027,7 +1045,7 @@ export default {
       institutions: [],
       sex: "",
       err: "",
-      searchNameVal: "",
+      searchName: "",
       regError: true,
       editStatus: false,
       previousTableLoading: true,
@@ -1041,40 +1059,19 @@ export default {
     };
   },
   watch: {
-    searchNameVal: function () {
-      // let userSearchedName = this.searchNameVal;
-      // let filterByName = this.previousData.filter((report) => {
-      //   return (
-      //     report.firstName.toLowerCase().includes(userSearchedName) ||
-      //     report.middleName.toLowerCase().includes(userSearchedName) ||
-      //     report.lastName.toLowerCase().includes(userSearchedName)
-      //   );
-      // });
+    searchName: function () {
+      let userSearchedName = this.searchName;
+      let filterByName = this.previousData.filter((report) => {
+        return (
+          report.firstName.toLowerCase().includes(userSearchedName) ||
+          report.middleName.toLowerCase().includes(userSearchedName) ||
+          report.lastName.toLowerCase().includes(userSearchedName)
+        );
+      });
 
-      // this.filteredData = filterByName;
+      this.filteredData = filterByName;
 
-      let input, filter, table, tr, td, i, txtValue;
-
-      input = this.searchNameVal;
-
-      filter = input.toUpperCase();
-
-      table = document.getElementById("prevTable");
-      tr = table.getElementsByTagName("tr");
-
-      for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[3];
-
-        if (td) {
-          txtValue = td.textContent || td.innerText;
-
-          if (txtValue.toUpperCase().indexOf(filter) > -1) {
-            tr[i].style.display = "";
-          } else {
-            tr[i].style.display = "none";
-          }
-        }
-      }
+     
     },
   },
   computed: {
@@ -1176,6 +1173,34 @@ export default {
       });
     },
 
+    filterDate() {
+      let startDateValue, endDateValue;
+      startDateValue = new Date(this.startDate);
+      endDateValue = new Date(this.endDate);
+      if (this.endDate == "") {
+        endDateValue = moment("01-01-2100");
+      }
+      if (this.startDate == "") {
+        startDateValue = moment("01-01-1900");
+      }
+
+      let filtered = JSON.parse(JSON.stringify(this.previousData));
+   
+      filtered=filtered.filter((o) => {
+   
+        if(moment(o.dateOfExamination).isValid()===true){
+         return o.dateOfExamination<=endDateValue&&o.dateOfExamination>= startDateValue;
+          }
+    });
+      
+      console.log(filtered);
+      this.filteredData = filtered;
+      this.paginateReport(
+        JSON.parse(JSON.stringify(this.filteredData)),
+        this.indexValue
+      );
+    },
+
     getData() {
       this.previousData = [];
       this.filteredData = [];
@@ -1187,16 +1212,25 @@ export default {
         this.institutions = res.data.data;
       });
       this.$store.dispatch("reviewer/getImported").then((res) => {
+         
+        
+      
+        if(res.data.message==='No national exam found!'){
+          this.previousTableLoading=false;
+          return;
+        }
         this.totalCount = res.data.data.length;
         res.data.data.forEach((element) => {
           element.createdAt = moment(element.createdAt).format("MM-DD-YYYY");
           element.updatedAt = moment(element.updatedAt).format("MM-DD-YYYY");
-           element.dateOfExamination = moment(element.dateOfExamination).format("MM-DD-YYYY");
+          element.dateOfExamination = moment(element.dateOfExamination).format(
+            "MM-DD-YYYY"
+          );
           element.sex = element.sex.replace(/\s/g, "");
           this.previousData.push(element);
           this.filteredData.push(element);
         });
-     
+
         this.paginateReport(
           JSON.parse(JSON.stringify(this.filteredData)),
           this.indexValue
@@ -1212,7 +1246,7 @@ export default {
 
       var reader = new FileReader();
       let extension = file.name.split(".").pop().toLowerCase();
-      
+
       if (extension === "xlsx" || extension === "xls" || extension === "csv") {
         reader.readAsBinaryString(file);
         reader.onload = (event) => {
@@ -1223,11 +1257,10 @@ export default {
           transformed.shift();
           transformed.pop();
           for (let i = 0; i < transformed.length; i++) {
-           
-            let tempDate=new Date(Date.UTC(0, 0, transformed[i][8] - 1));
-        
-             transformed[i][8]= tempDate.toLocaleDateString();
-             
+            let tempDate = new Date(Date.UTC(0, 0, transformed[i][8] - 1));
+
+            transformed[i][8] = tempDate.toLocaleDateString();
+
             if (hasNumber.test(transformed[i][3])) {
               errors.push({
                 row: i,
@@ -1272,8 +1305,8 @@ export default {
                   "Number is not allowed in result(only pass or fail is allowed)",
               });
             }
-           
-            if (moment( transformed[i][8]).isValid()===false) {
+
+            if (moment(transformed[i][8]).isValid() === false) {
               errors.push({
                 row: i,
                 column: 8,
@@ -1283,24 +1316,18 @@ export default {
               });
             }
 
-
-
-
-
             if (transformed[i][9] === "Pass" || transformed[i][9] === "pass") {
               transformed[i].result = "pass";
             } else transformed[i].result = "fail";
           }
 
           this.content = transformed;
-      
+
           if (errors.length > 0) {
             this.errorModal = true;
             this.errors = errors;
-           return;
-          } else 
-         
-          this.finalData = transformed;
+            return;
+          } else this.finalData = transformed;
           this.importModal = true;
         };
       } else
@@ -1323,7 +1350,7 @@ export default {
       this.profession = data.profession;
       this.sex = data.sex.replace(/\s/g, "");
       this.registrationNumber = data.registrationNo;
-      this.dateOfExamination=data.dateOfExamination;
+      this.dateOfExamination = data.dateOfExamination;
       this.editModal = true;
     },
     saveEdited() {
