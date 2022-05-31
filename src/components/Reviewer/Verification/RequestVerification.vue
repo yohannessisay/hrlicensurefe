@@ -23,53 +23,57 @@
         <div class="flex">
           <div class="flex flex-col mb-medium w-1/2 ">
             <label>Users</label>
-            <div class="rounded shadow-md my-2 relative pin-t pin-l h-xl overflow-y-auto">
               <ul class="list-reset ">
-                <li class="p-2">
+                <li class="mr-3">
                   <input class="border-2 rounded h-8 w-full" v-model="searchInput" @input="searchedUserInput" /><br />
                 </li>
-                <li v-for="user in users">
+                            <div class="relative pin-t pin-l custom-lookup overflow-y-auto" v-if="showCustomLookup">
+
+                <li class="p-1" v-for="user in filteredUsers" >
                   <p
-                    class="block text-black hover:bg-grey-light cursor-pointer text-xs"
+                    class="border-grey-500 block text-black hover:bg-grey-light cursor-pointer text-xs" @click="setUserValue(user)"
                   >
                     {{ user.name + " " + user.fatherName + " "+  user.grandFatherName}}
                   </p>
                 </li>
+                 </div>
               </ul>
+           
             </div>
-            <select class=" mr-2" v-model="selectedUser">
-              <option
-                v-for="item in filteredUsers"
-                v-bind:key="item.id"
-                v-bind:value="item.emailAddress"
+         <div
+            class="flex flex-col mb-medium w-1/2 "
+          >
+            <label class="text-primary-700">Region</label>
+            <div>
+              <select
+                class="max-w-3xl"
+                v-model="region"
               >
-                {{ item.emailAddress }}
-              </option>
-            </select>
+                <option
+                  v-for="region in regions"
+                  v-bind:key="region.name"
+                  v-bind:value="region.id"
+                >
+                  {{ region.name }}
+                </option>
+              </select>
+           
           </div>
-        </div>
+         </div>
+        
 
-        <!-- <select class="max-w-3xl mr-2" v-model="allInfo.app_type">
-          <option
-            v-for="item in applicationTypes"
-            v-bind:key="item.id"
-            v-bind:value="item.name"
-          >
-            {{ item.name }}
-          </option>
-        </select>
-          <select class="max-w-3xl mr-2" v-model="allInfo.app_type">
-          <option
-            v-for="item in applicationTypes"
-            v-bind:key="item.id"
-            v-bind:value="item.name"
-          >
-            {{ item.name }}
-          </option>
-        </select> -->
+          </div>
+           <div>
+         <label class="text-primary-700">License Number</label>
+
+           <input type="text" v-model="licenseNumber"/>
+         </div>
+         <button class="text-primary mt-5 float-right" type="submit" >Submit</button>
       </form>
     </div>
   </div>
+  <ErrorFlashMessage :message="message.errorMessage" v-if="response.error"/>
+  <FlashMessage message="Successfully requested verification" v-if="response.success"/>
 </template>
 
 <script>
@@ -80,47 +84,117 @@ import store from "../../../store";
 import Title from "@/sharedComponents/TitleWithIllustration";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import Spinner from "@/sharedComponents/Spinner";
+import FlashMessage from "@/sharedComponents/FlashMessage";
 
 export default {
   components: {
     Title,
     Spinner,
     ErrorFlashMessage,
+    FlashMessage,
   },
 
-  setup() {
+  setup({emit}) {
     let users = ref([]);
     let filteredUsers = ref([]);
     let selectedUser = ref();
     let showForm = ref(false);
     let searchInput = ref("");
-
+    let regions = ref([]);
+    let region = ref();
+    let showCustomLookup= ref(false);
+    let licenseNumber = ref("");
+    let loggedInAdmin = JSON.parse(localStorage.getItem("allAdminData"));
+    let message = ref({
+      successMessage: "",
+      errorMessage: ""
+    });
+    let response = ref({
+      success: false,
+      error: false,
+    })
+    
     onMounted(async () => {
      await getAllUsers();
-      showForm.value = true;
+     await getRegion();
+     showForm.value = true;
+
     });
     const getAllUsers = () => {
       store.dispatch("applicationVerification/getAllUsers").then((res) => {
         console.log(res);
         users.value = res.data.data;
         filteredUsers.value = res.data.data;
+      });
+    };
+     const getRegion = () => {
+      store.dispatch("applicationVerification/getRegions").then((res) => {
+        console.log(res);
+        regions.value = res.data.data;
+        // filteredUsers.value = res.data.data;
 
       });
     };
     const searchedUserInput =() =>
     {
-      console.log(searchInput);
-      filteredUsers.value = users.filter( x =>
+      if(searchInput.value.length > 3)
       {
-        return x.name.includes(searchedInput) || x.fatherName.includes(searchedInput) || x.grandFatherName.includes(searchedInput)
+        showCustomLookup.value = true;
+      }
+      filteredUsers.value = users.value.filter( x =>
+      {
+        return x.name.toLowerCase().includes(searchInput.value) || x.fatherName.toLowerCase().includes(searchInput.value) || x.grandFatherName.toLowerCase().includes(searchInput.value)
       })
+      
     }
-    const submit = () => {};
+    const setUserValue =(user)=>
+    {
+      searchInput.value = user.name + " " + user.fatherName + " " +user.grandFatherName
+      showCustomLookup.value = false;
+      selectedUser.value = user;
+      console.log(user);
+    }
+    const submit = () => {
+      let submittedData = {
+        regionId: region.value,
+        licenseNumber: licenseNumber.value,
+        applicantId: selectedUser.value?.userId, 
+        requesterId: loggedInAdmin.id
+
+      };
+      store.dispatch("applicationVerification/saveVerificationRequest",submittedData).then((res) => {
+        if(res.data.status == "Success")
+        {
+          response.value.success = true;
+          setTimeout(()=>
+          {
+            window.location.reload();
+          },3000)
+        }
+      else
+      {          
+        response.value.error = true;
+        message.value.errorMessage = res.data.message;
+        setTimeout(()=>
+          {
+            window.location.reload();
+          },3000)
+      }
+      },(res)=>{
+        emit('closeModal', false);
+        response.value.error = true;
+        message.value.errorMessage = res.data.message;
+      });
+    };
     return{
-      users, selectedUser, submit, showForm, getAllUsers, searchedUserInput, searchInput
+      users, selectedUser, submit, showForm, getAllUsers, searchedUserInput, searchInput, filteredUsers, region, response, regions,showCustomLookup, setUserValue, licenseNumber,message
     }
   },
 };
 </script>
 
-<style></style>
+<style scoped>
+.custom-lookup{
+  max-height: 100px;
+}
+</style>

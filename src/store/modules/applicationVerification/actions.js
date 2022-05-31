@@ -10,7 +10,7 @@ export default {
     
     async getAllUsers({ commit }) {
         try {
-            const resp = await ApiService.get(baseUrl + "/profiles" );
+            const resp = await ApiService.get(baseUrl + "/profiles/userInfo" );
             return resp;
         } catch (error) {
             return error;
@@ -20,6 +20,24 @@ export default {
     async getRegions() {
         try {
             const resp = await ApiService.get(baseUrl + "/lookups/regions");
+            return resp;
+        } catch (error) {
+            const resp = error;
+            return resp;
+        }
+    },
+    async saveVerificationRequest({commit},data) {
+        try {
+            const resp = await ApiService.post(baseUrl + "/applicationVerification/add", data);
+            return resp;
+        } catch (error) {
+            const resp = error;
+            return resp;
+        }
+    },
+    async getRequestsByRequester({commit},id) {
+        try {
+            const resp = await ApiService.get(baseUrl + "/applicationVerification/all/byRequester/" + id);
             return resp;
         } catch (error) {
             const resp = error;
