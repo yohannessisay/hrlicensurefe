@@ -1359,10 +1359,9 @@ export default {
     }
   },
 
-  async addImported(data) {
+  async addImported(id,data) {
     try {
       const url = baseUrl + "/nationalExamResult/import";
-
       const resp = await ApiService.post(url, data);
    
       return resp;
@@ -1371,11 +1370,22 @@ export default {
     }
   },
 
-  async editImported(data,editedData) {
+  async editImported(id,editedData) {
     try {
       const url = baseUrl + "/nationalExamResult/"+editedData.id;
 
       const resp = await ApiService.put(url, editedData);
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+
+  async getMultiple(id,multipleId) {
+    try {
+      const url = baseUrl + "/nationalExamResult/getMultiple";
+
+      const resp = await ApiService.post(url, multipleId);
       return resp;
     } catch (error) {
       return error;

@@ -10,7 +10,7 @@
             <div class="p-1 ">
               <h3 class="text-lightBlueB-500 mt-tiny">
                 <span style="color: white;">
-                  <i class="mr-2 far fa-thumbs-up fa-x fa-light"></i>
+                  <i class="mr-2 fa fa-spinner fa-x fa-light"></i>
                   <i
                     v-if="goodStandingDDIcon.isGoodStandingUp"
                     class="fas fa-chevron-circle-up float-right mt-2"

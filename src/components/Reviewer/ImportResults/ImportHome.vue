@@ -93,7 +93,7 @@
             type="text"
             id="fname"
             name="fname"
-            v-model="searchNameVal"
+            v-model="searchName"
             class="mr-6"
             placeholder="search by name"
           />
@@ -169,6 +169,23 @@
               </select>
             </div>
           </div>
+
+          <div class="flex flex-row mb-small w-80 mr-4">
+            <label class="text-primary-700 mr-2">From</label>
+            <input
+              v-model="startDate"
+              class="max-w-3xl mr-5"
+              type="date"
+              @change="filterDate()"
+            />
+            <label class="text-primary-700 mr-2">To</label>
+            <input
+              v-model="endDate"
+              @change="filterDate()"
+              class="max-w-3xl mr-5"
+              type="date"
+            />
+          </div>
         </div>
       </div>
       <hr />
@@ -197,8 +214,8 @@
       <Spinner v-if="previousTableLoading" />
 
       <table
-        class="w-full ml-4 show-on-print"
-        style="display: inline-table; height: 500px; overflow-y: scroll"
+        class=""
+        style="overflow-y: scroll"
         id="prevTable"
       >
         <thead>
@@ -234,7 +251,21 @@
             >
               Registration Number
             </th>
-
+            <th
+              class="
+                px-5
+                py-3
+                border-b-2 border-gray-200
+                bg-gray-100
+                text-left text-xs
+                font-semibold
+                text-gray-700
+                uppercase
+                tracking-wider
+              "
+            >
+              Institution
+            </th>
             <th
               class="
                 px-5
@@ -295,21 +326,7 @@
             >
               Sex
             </th>
-            <th
-              class="
-                px-5
-                py-3
-                border-b-2 border-gray-200
-                bg-gray-100
-                text-left text-xs
-                font-semibold
-                text-gray-700
-                uppercase
-                tracking-wider
-              "
-            >
-              Institution
-            </th>
+
             <th
               class="
                 px-5
@@ -325,21 +342,7 @@
             >
               Profession
             </th>
-            <th
-              class="
-                px-5
-                py-3
-                border-b-2 border-gray-200
-                bg-gray-100
-                text-left text-xs
-                font-semibold
-                text-gray-700
-                uppercase
-                tracking-wider
-              "
-            >
-              Test Date
-            </th>
+
             <th
               class="
                 px-5
@@ -354,6 +357,21 @@
               "
             >
               Result
+            </th>
+            <th
+              class="
+                px-5
+                py-3
+                border-b-2 border-gray-200
+                bg-gray-100
+                text-left text-xs
+                font-semibold
+                text-gray-700
+                uppercase
+                tracking-wider
+              "
+            >
+              Date of Examination
             </th>
             <th
               class="
@@ -411,7 +429,7 @@
                   : 'cell-green mb-1 show-on-print px-5 py-5 border-gray-200 bg-white text-sm'
               "
               v-for="item in row"
-              :key="item.id"
+              :key="item"
             >
               <div class="flex">
                 <div class="ml-3">
@@ -454,6 +472,7 @@
       <ImportModal
         @importModal="this.importModal = false"
         :finalData="finalData"
+        :getData="getData"
       >
         <h1>IMPORTED RESULTS</h1>
 
@@ -596,12 +615,27 @@
                   tracking-wider
                 "
               >
+                Date of Examination
+              </th>
+              <th
+                class="
+                  px-5
+                  py-3
+                  border-b-2 border-gray-200
+                  bg-gray-100
+                  text-left text-xs
+                  font-semibold
+                  text-gray-700
+                  uppercase
+                  tracking-wider
+                "
+              >
                 Result
               </th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="row in content.slice(1)" :key="row.id">
+            <tr v-for="row in finalData" :key="row.id">
               <td
                 :class="
                   item === 'Fail' || item === 'fail' ? 'cell-red' : 'cell-green'
@@ -874,6 +908,20 @@
                       {{ profession }}</strong
                     >
                   </div>
+
+                  <div class="col-auto h-4 mt-4">
+                    <i
+                      class="fa fa-briefcase"
+                      style="color: white"
+                      aria-hidden="true"
+                    ></i
+                    >&nbsp;
+                    <label for="" style="font-weight: bold"
+                      >Date Of Examination:</label
+                    >&nbsp;<strong style="color: #ff8d00; font-size: 16px">
+                      {{ dateOfExamination }}</strong
+                    >
+                  </div>
                 </div>
               </div>
             </div>
@@ -954,7 +1002,7 @@ import { useStore } from "vuex";
 import moment from "moment";
 import Spinner from "@/sharedComponents/Spinner";
 import VueTailwindPagination from "@ocrv/vue-tailwind-pagination";
-import toast from 'toast-me';
+import toast from "toast-me";
 
 export default {
   components: {
@@ -978,12 +1026,15 @@ export default {
       middleName: "",
       registrationNumber: "",
       profession: "",
+      dateOfExamination: "",
       vFilterInstitution: "",
       vFilterProfession: "",
       vFilterResult: "",
       vFilterGender: "",
       professions: [],
       result: "",
+      startDate: "",
+      endDate: "",
 
       currentPage: 0,
       totalCount: 0,
@@ -994,7 +1045,7 @@ export default {
       institutions: [],
       sex: "",
       err: "",
-      searchNameVal: "",
+      searchName: "",
       regError: true,
       editStatus: false,
       previousTableLoading: true,
@@ -1008,40 +1059,19 @@ export default {
     };
   },
   watch: {
-    searchNameVal: function () {
-      // let userSearchedName = this.searchNameVal;
-      // let filterByName = this.previousData.filter((report) => {
-      //   return (
-      //     report.firstName.toLowerCase().includes(userSearchedName) ||
-      //     report.middleName.toLowerCase().includes(userSearchedName) ||
-      //     report.lastName.toLowerCase().includes(userSearchedName)
-      //   );
-      // });
+    searchName: function () {
+      let userSearchedName = this.searchName;
+      let filterByName = this.previousData.filter((report) => {
+        return (
+          report.firstName.toLowerCase().includes(userSearchedName) ||
+          report.middleName.toLowerCase().includes(userSearchedName) ||
+          report.lastName.toLowerCase().includes(userSearchedName)
+        );
+      });
 
-      // this.filteredData = filterByName;
+      this.filteredData = filterByName;
 
-      let input, filter, table, tr, td, i, txtValue;
-
-      input = this.searchNameVal;
-
-      filter = input.toUpperCase();
-
-      table = document.getElementById("prevTable");
-      tr = table.getElementsByTagName("tr");
-
-      for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[3];
-
-        if (td) {
-          txtValue = td.textContent || td.innerText;
-
-          if (txtValue.toUpperCase().indexOf(filter) > -1) {
-            tr[i].style.display = "";
-          } else {
-            tr[i].style.display = "none";
-          }
-        }
-      }
+     
     },
   },
   computed: {
@@ -1143,6 +1173,34 @@ export default {
       });
     },
 
+    filterDate() {
+      let startDateValue, endDateValue;
+      startDateValue = new Date(this.startDate);
+      endDateValue = new Date(this.endDate);
+      if (this.endDate == "") {
+        endDateValue = moment("01-01-2100");
+      }
+      if (this.startDate == "") {
+        startDateValue = moment("01-01-1900");
+      }
+
+      let filtered = JSON.parse(JSON.stringify(this.previousData));
+   
+      filtered=filtered.filter((o) => {
+   
+        if(moment(o.dateOfExamination).isValid()===true){
+         return o.dateOfExamination<=endDateValue&&o.dateOfExamination>= startDateValue;
+          }
+    });
+      
+      console.log(filtered);
+      this.filteredData = filtered;
+      this.paginateReport(
+        JSON.parse(JSON.stringify(this.filteredData)),
+        this.indexValue
+      );
+    },
+
     getData() {
       this.previousData = [];
       this.filteredData = [];
@@ -1154,14 +1212,25 @@ export default {
         this.institutions = res.data.data;
       });
       this.$store.dispatch("reviewer/getImported").then((res) => {
+         
+        
+      
+        if(res.data.message==='No national exam found!'){
+          this.previousTableLoading=false;
+          return;
+        }
         this.totalCount = res.data.data.length;
         res.data.data.forEach((element) => {
-          element.createdAt = moment(element.createdAt).format("MMMM D, YYYY");
-          element.updatedAt = moment(element.updatedAt).format("MMMM D, YYYY");
+          element.createdAt = moment(element.createdAt).format("MM-DD-YYYY");
+          element.updatedAt = moment(element.updatedAt).format("MM-DD-YYYY");
+          element.dateOfExamination = moment(element.dateOfExamination).format(
+            "MM-DD-YYYY"
+          );
           element.sex = element.sex.replace(/\s/g, "");
           this.previousData.push(element);
           this.filteredData.push(element);
         });
+
         this.paginateReport(
           JSON.parse(JSON.stringify(this.filteredData)),
           this.indexValue
@@ -1177,7 +1246,7 @@ export default {
 
       var reader = new FileReader();
       let extension = file.name.split(".").pop().toLowerCase();
-      console.log(extension, file);
+
       if (extension === "xlsx" || extension === "xls" || extension === "csv") {
         reader.readAsBinaryString(file);
         reader.onload = (event) => {
@@ -1185,8 +1254,13 @@ export default {
           var workbook = read(data, { type: "binary" });
           var sheets = workbook.Sheets;
           var transformed = transformSheets(sheets, workbook);
-          for (let i = 1; i < transformed.length; i++) {
-            transformed[i][6] = transformed[i][6].replace(/\s/g, "");
+          transformed.shift();
+          transformed.pop();
+          for (let i = 0; i < transformed.length; i++) {
+            let tempDate = new Date(Date.UTC(0, 0, transformed[i][8] - 1));
+
+            transformed[i][8] = tempDate.toLocaleDateString();
+
             if (hasNumber.test(transformed[i][3])) {
               errors.push({
                 row: i,
@@ -1212,6 +1286,35 @@ export default {
                 errorMessage: "Number is not allowed in name",
               });
             }
+            if (hasNumber.test(transformed[i][6])) {
+              errors.push({
+                row: i,
+                column: 6,
+                columnData: transformed[i][6],
+                errorMessage:
+                  "Number is not allowed in gender(only female or male is allowed)",
+              });
+            }
+
+            if (hasNumber.test(transformed[i][9])) {
+              errors.push({
+                row: i,
+                column: 9,
+                columnData: transformed[i][9],
+                errorMessage:
+                  "Number is not allowed in result(only pass or fail is allowed)",
+              });
+            }
+
+            if (moment(transformed[i][8]).isValid() === false) {
+              errors.push({
+                row: i,
+                column: 8,
+                columnData: transformed[i][8],
+                errorMessage:
+                  "Date format is invalid, accepted format is DD-MM-YYYY or DD/MM/YYYY",
+              });
+            }
 
             if (transformed[i][9] === "Pass" || transformed[i][9] === "pass") {
               transformed[i].result = "pass";
@@ -1219,15 +1322,19 @@ export default {
           }
 
           this.content = transformed;
+
           if (errors.length > 0) {
             this.errorModal = true;
             this.errors = errors;
+            return;
           } else this.finalData = transformed;
           this.importModal = true;
         };
       } else
-
-toast('The file type you chose is invalid', { duration: 3000, position:'bottom'});
+        toast("The file type you chose is invalid", {
+          duration: 3000,
+          position: "bottom",
+        });
 
       return;
     },
@@ -1243,6 +1350,7 @@ toast('The file type you chose is invalid', { duration: 3000, position:'bottom'}
       this.profession = data.profession;
       this.sex = data.sex.replace(/\s/g, "");
       this.registrationNumber = data.registrationNo;
+      this.dateOfExamination = data.dateOfExamination;
       this.editModal = true;
     },
     saveEdited() {

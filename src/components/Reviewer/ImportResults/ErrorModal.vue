@@ -21,7 +21,7 @@
           <div class="text-center">
             <slot></slot>
             <button
-              id="myCheck"
+              id="errorModalClose"
               @click="$emit('errorModal', false)"
               class="
                 text-gray-500
@@ -54,19 +54,9 @@
 </template>
 
 <script>
-import { ref, onMounted } from "vue";
-import { useStore } from "vuex";
-import { useRoute, useRouter } from "vue-router";
-
 export default {
   components: {},
-  setup(props, { emit }) {
-    const store = useStore();
-    const route = useRoute();
-    const router = useRouter();
-    onMounted(() => {});
-    return {};
-  },
+  return: {}
 };
 </script>
 <style scoped>
