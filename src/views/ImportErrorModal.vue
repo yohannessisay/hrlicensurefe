@@ -21,8 +21,8 @@
           <div class="text-center">
             <slot></slot>
             <button
-              id="errorModalClose"
-              @click="$emit('errorModal', false)"
+              id="myCheck"
+              @click="refresh()"
               class="
                 text-gray-500
                 bg-white
@@ -54,9 +54,15 @@
 </template>
 
 <script>
+
+
 export default {
   components: {},
-  return: {}
+  methods: {
+    refresh() {
+      window.location.reload();
+    }
+  }
 };
 </script>
 <style scoped>
@@ -110,4 +116,5 @@ img {
 .close-svg {
   width: 16px;
 }
+
 </style>

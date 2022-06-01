@@ -4,7 +4,7 @@
 </div>
   <h1 class="text-center mt-12 text-3xl">User Management</h1>
 
-  <div class="mt-20 ml-20 bg-primary-100">
+  <div class="mt-20 ml-5 bg-primary-100">
     <Spinner v-if="showLoading" class="text-center" />
     <div class="float-right">
       <button class="btn " @click="createAdmin()">Create Admin</button>
@@ -56,10 +56,10 @@
     </div>
     <div
       id="printable"
-      class="shadow-md rounded-lg  min-w-full"
+      class="shadow-md rounded-lg  "
       v-if="!showLoading"
     >
-      <table v-if="!showLoading" class="w-full">
+      <table v-if="!showLoading" class="w-10/12">
         <thead>
           <tr>
             <th
@@ -166,8 +166,9 @@
                   type="button"
                   class="btn  text-red-500 hover:bg-error hover:border-error "
                   title="Edit User"
+                   @click="openEditUserModal(item)"
                 >
-                  <i class="fa fa-edit " @click="openEditUserModal(item)"></i>
+                  <i class="fa fa-edit "></i>
                 </button>
               </div>
             </td>
