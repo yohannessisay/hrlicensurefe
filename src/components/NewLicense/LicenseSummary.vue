@@ -1,24 +1,21 @@
 <template>
-  <div
-    v-if="this.showLoading2"
-    class="bg-lightBlueB-200 w-screen h-screen max-w-4xl"
-  >
-    <Spinner class="bg-lightBlueB-200" />
+  <div v-if="this.showLoading2" class="bg-lightBlueB-200 w-screen h-screen max-w-4xl">
+      <Spinner class="bg-lightBlueB-200" />
   </div>
   <div class="bg-white mb-large rounded pl-4 pt-4 pr-4 pb-4">
     <div v-if="this.show && !this.showLoading2">
-      <div class="flex justify-center"><Title message="Summary" /></div>
+      <div class="flex justify-center">
+        <Title message="Summary" />
+      </div>
       <div class="flex justify-start">
         <Title message="Personal Information" />
       </div>
       <div class="flex flex-row">
-        <div
-          :class="[this.profileInfo.name === null ? errorClass : activeClass]"
-        >
+        <div :class="[this.profileInfo.name === null ? errorClass : activeClass]">
           <label class="ml-4 text-primary-300"> Full Name</label>
           <h5 class="ml-4">
             {{
-              this.profileInfo.name +
+                this.profileInfo.name +
                 " " +
                 this.profileInfo.fatherName +
                 " " +
@@ -30,7 +27,7 @@
           <label class="ml-8 text-primary-300"> Full Alternative Name</label>
           <h5 class="ml-8">
             {{
-              this.profileInfo.alternativeName +
+                this.profileInfo.alternativeName +
                 " " +
                 this.profileInfo.alternativeFatherName +
                 " " +
@@ -38,55 +35,47 @@
             }}
           </h5>
         </div>
-        <div
-          :class="[this.profileInfo.gender === null ? errorClass : activeClass]"
-        >
+        <div :class="[this.profileInfo.gender === null ? errorClass : activeClass]">
           <label class="ml-4 text-primary-300"> Gender</label>
           <h5 class="ml-4">
             {{ this.profileInfo.gender ? this.profileInfo["gender"] : "-" }}
           </h5>
         </div>
-        <div
-          :class="[
-            this.profileInfo.nationality === null ? errorClass : activeClass,
-          ]"
-        >
+        <div :class="[
+          this.profileInfo.nationality === null ? errorClass : activeClass,
+        ]">
           <label class="ml-4 text-primary-300"> Nationality</label>
           <h5 class="ml-4">
             {{
-              this.profileInfo.nationality
-                ? this.profileInfo.nationality.name
-                : "-"
+                this.profileInfo.nationality
+                  ? this.profileInfo.nationality.name
+                  : "-"
             }}
           </h5>
         </div>
-        <div
-          :class="[
-            this.profileInfo.dateOfBirth === null ? errorClass : activeClass,
-          ]"
-        >
+        <div :class="[
+          this.profileInfo.dateOfBirth === null ? errorClass : activeClass,
+        ]">
           <label class="ml-4 text-primary-300"> Date of Birth</label>
           <h5 class="ml-4">
             {{
-              this.profileInfo.dateOfBirth
-                ? moment(this.profileInfo.dateOfBirth).format("MMM D, YYYY")
-                : "-"
+                this.profileInfo.dateOfBirth
+                  ? moment(this.profileInfo.dateOfBirth).format("MMM D, YYYY")
+                  : "-"
             }}
           </h5>
         </div>
-        <div
-          :class="[
-            this.profileInfo.maritalStatus.name === null
-              ? errorClass
-              : activeClass,
-          ]"
-        >
+        <div :class="[
+          this.profileInfo.maritalStatus.name === null
+            ? errorClass
+            : activeClass,
+        ]">
           <label class="ml-4 text-primary-300"> Marital Status</label>
           <h5 class="ml-4">
             {{
-              this.profileInfo.maritalStatus.name
-                ? this.profileInfo.maritalStatus.name
-                : "-"
+                this.profileInfo.maritalStatus.name
+                  ? this.profileInfo.maritalStatus.name
+                  : "-"
             }}
           </h5>
         </div>
@@ -103,55 +92,41 @@
         <Title message="Contact" />
       </div>
       <div class="flex flex-row">
-        <div
-          :class="[
-            this.profileInfo.user.phoneNumber === null
-              ? errorClass
-              : activeClass,
-          ]"
-        >
+        <div :class="[
+          this.profileInfo.user.phoneNumber === null
+            ? errorClass
+            : activeClass,
+        ]">
           <label class="ml-4 text-primary-300"> Mobile Number</label>
           <h5 class="ml-4">
             {{
-              this.profileInfo.user.phoneNumber
-                ? this.profileInfo.user.phoneNumber
-                : "-"
+                this.profileInfo.user.phoneNumber
+                  ? this.profileInfo.user.phoneNumber
+                  : "-"
             }}
           </h5>
         </div>
 
-        <div
-          :class="[
-            this.profileInfo.user.emailAddress === null
-              ? errorClass
-              : activeClass,
-          ]"
-        >
+        <div :class="[
+          this.profileInfo.user.emailAddress === null
+            ? errorClass
+            : activeClass,
+        ]">
           <label class="ml-4 text-primary-300"> Email</label>
           <h5 class="ml-4">
             {{
-              this.profileInfo.user.emailAddress
-                ? this.profileInfo.user.emailAddress
-                : "-"
+                this.profileInfo.user.emailAddress
+                  ? this.profileInfo.user.emailAddress
+                  : "-"
             }}
           </h5>
         </div>
       </div>
-      <label
-        style="font-size: 20px"
-        v-if="docList.length != 0"
-        class="flex justify-center text-primary-300"
-      >
-        Newly Attached Documents</label
-      >
+      <label style="font-size: 20px" v-if="docList.length != 0" class="flex justify-center text-primary-300">
+        Newly Attached Documents</label>
       <div class="flex justify-start flex-wrap">
         <div v-for="i in docList.length" v-bind:key="i">
-          <div
-            class="mr-4"
-            v-for="item in docList.slice((i - 1) * 1, i * 1)"
-            v-bind="item"
-            v-bind:value="item"
-          >
+          <div class="mr-4" v-for="item in docList.slice((i - 1) * 1, i * 1)" v-bind="item" v-bind:value="item">
             <Title class="" :message="item.title" />
             <picture>
               <img :src="item.docFile" />
@@ -159,21 +134,12 @@
           </div>
         </div>
       </div>
-      <label
-        style="font-size: 20px"
-        v-if="documentsArray.length != 0"
-        class="flex justify-center text-primary-300"
-      >
-        Draft Documents</label
-      >
+      <label style="font-size: 20px" v-if="documentsArray.length != 0" class="flex justify-center text-primary-300">
+        Draft Documents</label>
       <div v-if="draftId != undefined" class="flex justify-start flex-wrap">
         <div v-for="i in draftData.documents.length" v-bind:key="i">
-          <div
-            class="mr-4"
-            v-for="item in draftData.documents.slice((i - 1) * 1, i * 1)"
-            v-bind="item"
-            v-bind:value="item"
-          >
+          <div class="mr-4" v-for="item in draftData.documents.slice((i - 1) * 1, i * 1)" v-bind="item"
+            v-bind:value="item">
             <Title class="" :message="item.documentType.name" />
             <picture>
               <img :src="this.basePath + item.filePath" />
@@ -184,20 +150,14 @@
       <div class="flex justify-center mt-8" v-show="showCheckBox">
         <label class="inline-flex items-center">
           <input @change="checkBox()" type="checkbox" class="form-checkbox" />
-          <span style="font-size: 16px" class="ml-2"
-            >This is to verify that all the attached documents are legitimate
-            and not forgery.</span
-          >
+          <span style="font-size: 16px" class="ml-2">This is to verify that all the attached documents are legitimate
+            and not forgery.</span>
         </label>
         <br />
       </div>
       <div class="flex justify-center mt-8">
-        <span
-          v-if="showAllAttachements"
-          style="font-size: 16px; color: red"
-          class="ml-2"
-          >Please attach all required documents.</span
-        >
+        <span v-if="showAllAttachements" style="font-size: 16px; color: red" class="ml-2">Please attach all required
+          documents.</span>
       </div>
       <div v-if="!showLoading">
         <div v-if="this.draftStatus == 'DRA' || !this.draftStatus">
@@ -206,22 +166,10 @@
               <button @click="submitBack">
                 Back
               </button>
-              <button
-                id="subButton"
-                style="opacity: 0.3"
-                :disabled="this.checkBoxValue == true"
-                v-if="this.buttons.length < 3"
-                @click="submitRequest(this.buttons[0].action)"
-              >
+              <button v-if="this.buttons.length < 3" @click="submitRequest(this.buttons[0].action)">
                 {{ this.buttons[0].name }}
               </button>
-              <button
-                id="subButton"
-                style="opacity: 0.3"
-                :disabled="this.checkBoxValue == true"
-                v-if="this.buttons.length > 2"
-                @click="submitRequest(this.buttons[0].action)"
-              >
+              <button v-if="this.buttons.length > 2" @click="submitRequest(this.buttons[0].action)">
                 {{ this.buttons[0].name }}
               </button>
             </div>
@@ -232,50 +180,30 @@
             </h6>
           </div>
           <div class="flex justify-center mt-4 mb-8">
-            <button
-              v-if="this.buttons.length < 3"
-              @click="draft(this.buttons[1].action)"
-              variant="outline"
-            >
+            <button id="subButton" style="opacity: 0.3" :disabled="this.checkBoxValue == true"
+              v-if="this.buttons.length < 3" @click="draft(this.buttons[1].action)" variant="outline">
               {{ this.buttons[1].name }}
             </button>
-            <button
-              v-if="this.buttons.length > 2"
-              @click="draft(this.buttons[2].action)"
-              variant="outline"
-            >
+            <button id="subButton" style="opacity: 0.3" :disabled="this.checkBoxValue == true"
+              v-if="this.buttons.length > 2" @click="draft(this.buttons[2].action)" variant="outline">
               {{ this.buttons[2].name }}
             </button>
 
-            <button
-              v-if="this.buttons.length > 2"
-              class="withdraw"
-              @click="withdraw(this.buttons[1].action)"
-              variant="outline"
-            >
+            <button v-if="this.buttons.length > 2" class="withdraw" @click="withdraw(this.buttons[1].action)"
+              variant="outline">
               {{ this.buttons[1].name }}
             </button>
           </div>
         </div>
-        <div
-          v-if="this.draftStatus == 'SUB'"
-          class="flex justify-center mt-8 pb-12"
-        >
+        <div v-if="this.draftStatus == 'SUB'" class="flex justify-center mt-8 pb-12">
           <button @click="submitBack">
             Back
           </button>
-          <button
-            class="withdraw"
-            @click="withdraw(this.buttons[1].action)"
-            variant="outline"
-          >
+          <button class="withdraw" @click="withdraw(this.buttons[1].action)" variant="outline">
             {{ this.buttons[1]["name"] }}
           </button>
         </div>
-        <div
-          v-if="this.draftStatus == 'USUP'"
-          class="flex justify-center mt-8 pb-12"
-        >
+        <div v-if="this.draftStatus == 'USUP'" class="flex justify-center mt-8 pb-12">
           <button @click="submitBack">
             Back
           </button>
@@ -286,18 +214,11 @@
             {{ this.buttons[1]["name"] }}
           </button>
         </div>
-        <div
-          v-if="this.draftStatus == 'DEC' || this.draftStatus == 'CONF'"
-          class="flex justify-center mt-8 pb-12"
-        >
+        <div v-if="this.draftStatus == 'DEC' || this.draftStatus == 'CONF'" class="flex justify-center mt-8 pb-12">
           <button @click="submitBack">
             Back
           </button>
-          <button
-            id="reapplyButton"
-            @click="draft('UpdateEvent')"
-            variant="outline"
-          >
+          <button id="reapplyButton" @click="draft('UpdateEvent')" variant="outline">
             Re-apply
           </button>
           <button @click="update(this.buttons[1].action)" variant="outline">
@@ -305,10 +226,7 @@
           </button>
         </div>
       </div>
-      <div
-        class="flex justify-center justify-items-center mt-8 pb-8"
-        v-if="showLoading"
-      >
+      <div class="flex justify-center justify-items-center mt-8 pb-8" v-if="showLoading">
         <Spinner />
       </div>
     </div>
@@ -1057,7 +975,7 @@ export default {
         }
         var filePreview = await this.blobToBase64(this.transcript);
         this.transcript.docFile = filePreview;
-        this.transcript.title = "Degree Transcript";
+        this.transcript.title = "Diploma Transcript";
         this.docList.push(this.transcript);
       }
     }
@@ -1364,7 +1282,7 @@ export default {
       getProfessionalDocCertificate5:
         "newlicense/getProfessionalDocCertificate5",
 
-      getProfessionalDocDiploma: "newlicense/getProfessionalDocDiploma",
+      getProfessionalDocDiploma: "newlicense/getDiploma",
       getProfessionalDocDiploma2: "newlicense/getProfessionalDocDiploma2",
       getProfessionalDocDiploma3: "newlicense/getProfessionalDocDiploma3",
       getProfessionalDocDiploma4: "newlicense/getProfessionalDocDiploma4",
@@ -1418,7 +1336,7 @@ export default {
     }),
   },
   methods: {
-    checkBox: function() {
+    checkBox: function () {
       this.checkBoxValue = !this.checkBoxValue;
       if (this.draftStatus == "DEC" || this.draftStatus == "CONF") {
         if (this.checkBoxValue) {
@@ -1438,7 +1356,7 @@ export default {
         }
       }
     },
-    moment: function(date) {
+    moment: function (date) {
       return moment(date);
     },
     fetchProfileInfo() {
@@ -1775,6 +1693,7 @@ export default {
                   this.documentTypes[32].documentType.code,
                   this.proCertificate5
                 );
+                console.log(this.proDiploma, this.payroll, this.passport);
                 formData.append(
                   this.documentTypes[this.docIdx].documentType.code,
                   this.proDiploma
@@ -1924,7 +1843,7 @@ export default {
                       this.showErrorFlash = true;
                     }
                   })
-                  .catch((err) => {});
+                  .catch((err) => { });
               }
             });
         }
@@ -2378,7 +2297,7 @@ export default {
                     this.showErrorFlash = true;
                   }
                 })
-                .catch((err) => {});
+                .catch((err) => { });
             }
           });
       } else {
@@ -2672,7 +2591,7 @@ export default {
     },
   },
   mounted() {
-    this.$nextTick(function() {
+    this.$nextTick(function () {
       window.setInterval(() => {
         this.showFlash = false;
         this.showErrorFlash = false;
@@ -2682,15 +2601,17 @@ export default {
 };
 </script>
 <style>
-.text-danger > label,
-.text-danger > h5 {
+.text-danger>label,
+.text-danger>h5 {
   color: red;
 }
+
 .withdraw {
   background-image: linear-gradient(to right, #d63232, #e63636) !important;
   color: white;
   border-color: tomato;
 }
+
 .disabled {
   pointer-events: none;
   opacity: 0.3;
