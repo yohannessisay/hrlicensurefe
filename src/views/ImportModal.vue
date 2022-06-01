@@ -1,5 +1,6 @@
 <template>
   <div
+    v-if="importPart"
     class="
       card-wrapper
       max-w-4xl
@@ -95,52 +96,201 @@
           >
             Cancel
           </button>
+          <Spinner v-if="saveStatus" />
         </div>
       </div>
     </div>
   </div>
+
+  <transition name="slide-fade-up">
+    <Modal v-if="this.showErrorModal">
+      <ErrorModal :showErrorModal="showErrorModal">
+        <h1>
+          This are the errors in the file you imported, please correct them
+          accordingly
+        </h1>
+        <table
+          class="w-full"
+          style="display: block; height: 500px; overflow-y: scroll"
+        >
+          <thead>
+            <tr>
+              <th
+                class="
+                  px-5
+                  py-3
+                  border-b-2 border-gray-200
+                  bg-gray-100
+                  text-left text-xs
+                  font-semibold
+                  text-gray-700
+                  uppercase
+                  tracking-wider
+                "
+              >
+                Row Number
+              </th>
+              <th
+                class="
+                  px-5
+                  py-3
+                  border-b-2 border-gray-200
+                  bg-gray-100
+                  text-left text-xs
+                  font-semibold
+                  text-gray-700
+                  uppercase
+                  tracking-wider
+                "
+              >
+                Column Number
+              </th>
+
+              <th
+                class="
+                  px-5
+                  py-3
+                  border-b-2 border-gray-200
+                  bg-gray-100
+                  text-left text-xs
+                  font-semibold
+                  text-gray-700
+                  uppercase
+                  tracking-wider
+                "
+              >
+                Error Column Data
+              </th>
+              <th
+                class="
+                  px-5
+                  py-3
+                  border-b-2 border-gray-200
+                  bg-gray-100
+                  text-left text-xs
+                  font-semibold
+                  text-gray-700
+                  uppercase
+                  tracking-wider
+                "
+              >
+                Error Message
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="row in errors" :key="row.id">
+              <td
+                class="px-5 py-5 border-gray-200 bg-green-100 text-sm"
+                v-for="item in row"
+                :key="item.id"
+              >
+                <div class="flex">
+                  <div class="ml-3">
+                    <p style="color: red">
+                      {{ item }}
+                    </p>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </ErrorModal>
+    </Modal>
+  </transition>
 </template>
 
 <script>
-import { useStore } from "vuex";
-import store from "../store/modules/reviewer/actions";
+import Spinner from "@/sharedComponents/Spinner";
+import ErrorModal from "./ImportErrorModal";
 export default {
-  components: {},
-  props: ["finalData"],
+  components: { Spinner, ErrorModal },
+  props: ["finalData", "getData"],
   data: function() {
     return {
       content: "",
-      err: ""
+      err: "",
+      saveStatus: false,
+      showErrorModal: false,
+      importPart: true
     };
   },
   methods: {
     addImported() {
       let add = JSON.parse(JSON.stringify(this.finalData));
-      let finalArray=[]
+      let finalArray = [];
       var today = new Date();
-      var createdAt =today.getFullYear() +"-" +(today.getMonth() + 1) +"-" +today.getDate()
-      var updatedAt= today.getFullYear() +"-" +(today.getMonth() + 1) +"-" +today.getDate()
-      add.shift();
+      var createdAt =
+        today.getFullYear() +
+        "-" +
+        (today.getMonth() + 1) +
+        "-" +
+        today.getDate();
+      var updatedAt =
+        today.getFullYear() +
+        "-" +
+        (today.getMonth() + 1) +
+        "-" +
+        today.getDate();
       add.forEach(element => {
-        let tempObj={
-
-          'registrationNo':element[1],
-           'institution':element[2],
-          'firstName':element[3],
-          'middleName':element[4],
-          'lastName':element[5],
-          'sex':element[6],
-          'profession':element[7],
-          'result':element[8],
-          'createdAt':createdAt,
-          'updatedAt':updatedAt
-        }
-      finalArray.push(tempObj)
+        let tempObj = {
+          registrationNo: element[1],
+          firstName: element[3],
+          middleName: element[4],
+          institution: element[2],
+          lastName: element[5],
+          sex: element[6],
+          profession: element[7],
+          dateOfExamination: element[8],
+          result: element[9],
+          createdAt: createdAt,
+          updatedAt: updatedAt
+        };
+        finalArray.push(tempObj);
       });
-      store.addImported(finalArray);
-      // store.dispatch("reviewer/addImported", add).then((res) => {
-      //   console.log(res);
-      // });
+      let idArray = [];
+      finalArray.forEach(element => {
+        idArray.push(element.registrationNo);
+      });
+      this.saveStatus = true;
+
+      this.$store.dispatch("reviewer/getMultiple", idArray).then(res => {
+        let checkforExisting = res.data.data;
+        let errorForExisting = [];
+
+        if (res.data.status === "Success") {
+          for (let i = 0; i < finalArray.length; i++) {
+            for (let j = 0; j < checkforExisting.length; j++) {
+              if (
+                finalArray[i].registrationNo ===
+                checkforExisting[j].registrationNo
+              ) {
+                errorForExisting.push({
+                  row: i,
+                  column: 1,
+                  columnData: finalArray[i].registrationNo,
+                  errorMessage:
+                    "There is an already existing record with that id"
+                });
+              }
+            }
+          }
+        }
+
+        if (errorForExisting.length > 0) {
+          this.importPart = false;
+          this.errors = errorForExisting;
+          this.showErrorModal = true;
+          return;
+        } else {
+          this.saveStatus = false;
+          this.$store.dispatch("reviewer/addImported", finalArray).then(res => {
+            this.$emit("importModal", false);
+            this.getData();
+          });
+        }
+      });
     }
   }
 };

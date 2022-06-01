@@ -1,6 +1,6 @@
 <template>
   <div
-    class="card-wrapper  sm:rounded-lg w-full p-large flex flex-col justify-center items-center  mt-5"
+    class="card-wrapper w-full p-large flex flex-col justify-center items-center  mt-5"
   >
     <div class="float-right">
       <button
@@ -11,7 +11,7 @@
         <i class="fa fa-close "></i>
       </button>
     </div>
-    <div class="bg-white blue-box-shadow-light rounded w-1/3 p-5">
+    <div class="bg-white blue-box-shadow-light rounded  p-5">
       <div class="mt-medium">
         <Title message="Edit Admin User" />
       </div>
