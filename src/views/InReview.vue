@@ -35,7 +35,7 @@
                     class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
                     <b>Applicant Type: &nbsp;</b>
-                    {{ item.applicantType.name }}
+                    {{ item.applicantType?item.applicantType.name: "----" }}
                   </span>
                   <span
                     class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
@@ -125,7 +125,7 @@
                     class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
                     <b>Applicant Type: &nbsp;</b>
-                    {{ item.applicantType.name }}
+                    {{ item.applicantType?item.applicantType.name: "----"  }}
                   </span>
                   <span
                     class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
@@ -218,7 +218,7 @@
                     class="text-lightBlueB-500 mt-tiny flex justify-start content-center"
                   >
                     <b>Applicant Type: &nbsp;</b>
-                    {{ item.applicantType.name }}
+                    {{ item.applicantType?item.applicantType.name: "----"  }}
                   </span>
                   <span
                     class="text-lightBlueB-500 mt-tiny flex justify-start content-center"

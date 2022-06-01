@@ -1,6 +1,11 @@
 <template>
   <div class=" p-5">
-    <h2 class="align-middle ">Verification Requests</h2>
+    <h1 class=" text-center mb-3">Verification Requests</h1>
+    <div class="mt-5">
+        <Spinner v-if="showLoading" class="text-center" />
+
+    </div>
+
     <div class="float-right">
       <button @click="showNewVerificationModal()">Request Verifications</button>
     </div>
@@ -10,7 +15,7 @@
           <input
             type="text"
             class="mb-5"
-            placeholder="Search for users"
+            placeholder="Search for Applications by user"
             v-model="searchData"
             v-on:input="searchVerificationData()"
           />
@@ -84,7 +89,7 @@
                 <div class="flex">
                   <div class="ml-3">
                     <p class="text-gray-900 whitespace-no-wrap">
-                      {{ item.name }}
+                      {{ item.Profiles?.name  + " " + item.Profiles?.fatherName + " " + item.Profiles?.grandFatherName}}
                     </p>
                   </div>
                 </div>
@@ -191,7 +196,8 @@ export default {
       verificationData.value = allData.value.filter((data) => {
         return (
           data.name.toLowerCase().includes(searchData.value.toLowerCase()) ||
-          data.email.toLowerCase().includes(searchData.value.toLowerCase())
+          data.fatherName.toLowerCase().includes(searchData.value.toLowerCase())||
+          data.grandFatherName.toLowerCase().includes(searchData.value.toLowerCase())
         );
       });
       paginateReport(verificationData.value, indexValue.value);
