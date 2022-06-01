@@ -9,13 +9,13 @@
         >
           <RenderIllustration class="" illustration="Logo" message="Address" />
           <h2 class="text-md AtkinsonHyperlegibleBold text-primary-600 ml-2 ">
-            HRIS - License
+            HPEL(Health professional electronic licensing )
           </h2>
         </div>
         <div v-if="isFirstTime" class="flex items-center">
           <RenderIllustration class="" illustration="Logo" message="Address" />
           <h2 class="text-md AtkinsonHyperlegibleBold text-primary-600 ml-2 ">
-            HRIS - License
+            HPEL(Health professional electronic licensing )
           </h2>
         </div>
 

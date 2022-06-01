@@ -11,7 +11,7 @@
             />
           </router-link>
           <h2 class="text-md AtkinsonHyperlegibleBold text-primary-600 ml-2 ">
-            HRIS - License
+            HPEL(Health professional electronic licensing )
           </h2>
         </div>
 
