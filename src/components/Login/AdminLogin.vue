@@ -120,7 +120,7 @@ export default {
             message.value.showErrorFlash = false;
           }, 3000);
          }
-        else
+        else{
           if (loggedInData.value.isFirstTime) {
             message.value.showFlash = !message.value.showFlash;
             setTimeout(() => {
@@ -139,6 +139,7 @@ export default {
               router.push({ path: "/admin/review" });
             }, 3000);
           }
+        }
         } else {
           message.value.showErrorFlash = !message.value.showErrorFlash;
           setTimeout(() => {
