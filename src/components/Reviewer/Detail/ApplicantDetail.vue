@@ -211,7 +211,7 @@
                   :data-title="document.documentType.name"
                   data-lightbox="example-2"
                 >
-                  <img :src="googleApi + document.filePath" />
+                  <img :src="googleApi + document.filePath"  class="w-full h-48 object-cover"/>
                 </a>
                
                 <h4 style="font-weight: bold">Document Type:-</h4>
