@@ -386,7 +386,7 @@ export default {
             1
           );
         }
-        var filePreview = await this.blobToBase64(this.passport);
+        const filePreview = await this.blobToBase64(this.passport);
         this.passport.docFile = filePreview;
         this.passport.title = "Passport";
         this.docList.push(this.passport);
@@ -400,7 +400,7 @@ export default {
             1
           );
         }
-        var filePreview = await this.blobToBase64(this.healthExamCert);
+        const filePreview = await this.blobToBase64(this.healthExamCert);
         this.healthExamCert.docFile = filePreview;
         this.healthExamCert.title = "Medical Certificate";
         this.docList.push(this.healthExamCert);
@@ -414,7 +414,7 @@ export default {
             1
           );
         }
-        var filePreview = await this.blobToBase64(this.englishLanguage);
+        const filePreview = await this.blobToBase64(this.englishLanguage);
         this.englishLanguage.docFile = filePreview;
         this.englishLanguage.title = "English Language Certificated";
         this.docList.push(this.englishLanguage);
@@ -428,7 +428,7 @@ export default {
             1
           );
         }
-        var filePreview = await this.blobToBase64(this.proCertificate);
+        const filePreview = await this.blobToBase64(this.proCertificate);
         this.proCertificate.docFile = filePreview;
         this.proCertificate.title = "Professional Certificate";
         this.docList.push(this.proCertificate);
@@ -442,7 +442,7 @@ export default {
             1
           );
         }
-        var filePreview = await this.blobToBase64(this.proCertificate2);
+        const filePreview = await this.blobToBase64(this.proCertificate2);
         this.proCertificate2.docFile = filePreview;
         this.proCertificate2.title = "Professional Certificate 2";
         this.docList.push(this.proCertificate2);
@@ -456,7 +456,7 @@ export default {
             1
           );
         }
-        var filePreview = await this.blobToBase64(this.proCertificate3);
+        const filePreview = await this.blobToBase64(this.proCertificate3);
         this.proCertificate3.docFile = filePreview;
         this.proCertificate3.title = "Professional Certificate 3";
         this.docList.push(this.proCertificate3);
@@ -470,7 +470,7 @@ export default {
             1
           );
         }
-        var filePreview = await this.blobToBase64(this.proCertificate4);
+        const filePreview = await this.blobToBase64(this.proCertificate4);
         this.proCertificate4.docFile = filePreview;
         this.proCertificate4.title = "Professional Certificate 4";
         this.docList.push(this.proCertificate4);
@@ -484,7 +484,7 @@ export default {
             1
           );
         }
-        var filePreview = await this.blobToBase64(this.proCertificate5);
+        const filePreview = await this.blobToBase64(this.proCertificate5);
         this.proCertificate5.docFile = filePreview;
         this.proCertificate5.title = "Professional Certificate 5";
         this.docList.push(this.proCertificate5);
@@ -500,7 +500,7 @@ export default {
             1
           );
         }
-        var filePreview = await this.blobToBase64(this.proDiploma);
+        const filePreview = await this.blobToBase64(this.proDiploma);
         this.proDiploma.docFile = filePreview;
         if (this.levelOfEducation == "diploma") {
           this.proDiploma.title = "Professional Diploma";
@@ -524,7 +524,7 @@ export default {
             1
           );
         }
-        var filePreview = await this.blobToBase64(this.proDiploma2);
+        const filePreview = await this.blobToBase64(this.proDiploma2);
         this.proDiploma2.docFile = filePreview;
         if (this.levelOfEducation == "diploma") {
           this.proDiploma2.title = "Professional Diploma 2";
@@ -548,7 +548,7 @@ export default {
             1
           );
         }
-        var filePreview = await this.blobToBase64(this.proDiploma3);
+        const filePreview = await this.blobToBase64(this.proDiploma3);
         this.proDiploma3.docFile = filePreview;
         if (this.levelOfEducation == "diploma") {
           this.proDiploma3.title = "Professional Diploma 3";
@@ -572,7 +572,7 @@ export default {
             1
           );
         }
-        var filePreview = await this.blobToBase64(this.proDiploma4);
+        const filePreview = await this.blobToBase64(this.proDiploma4);
         this.proDiploma4.docFile = filePreview;
         if (this.levelOfEducation == "diploma") {
           this.proDiploma4.title = "Professional Diploma 4";
@@ -596,7 +596,7 @@ export default {
             1
           );
         }
-        var filePreview = await this.blobToBase64(this.proDiploma5);
+        const filePreview = await this.blobToBase64(this.proDiploma5);
         this.proDiploma5.docFile = filePreview;
         if (this.levelOfEducation == "diploma") {
           this.proDiploma5.title = "Professional Diploma 5";
@@ -618,7 +618,7 @@ export default {
             1
           );
         }
-        var filePreview = await this.blobToBase64(this.proTranscript);
+        const filePreview = await this.blobToBase64(this.proTranscript);
         this.proTranscript.docFile = filePreview;
         this.proTranscript.title = "Professional Transcript";
         this.docList.push(this.proTranscript);
@@ -632,7 +632,7 @@ export default {
             1
           );
         }
-        var filePreview = await this.blobToBase64(this.proTranscript2);
+        const filePreview = await this.blobToBase64(this.proTranscript2);
         this.proTranscript2.docFile = filePreview;
         this.proTranscript2.title = "Professional Transcript 2";
         this.docList.push(this.proTranscript2);
@@ -646,7 +646,7 @@ export default {
             1
           );
         }
-        var filePreview = await this.blobToBase64(this.proTranscript3);
+        const filePreview = await this.blobToBase64(this.proTranscript3);
         this.proTranscript3.docFile = filePreview;
         this.proTranscript3.title = "Professional Transcript 3";
         this.docList.push(this.proTranscript3);
@@ -660,7 +660,7 @@ export default {
             1
           );
         }
-        var filePreview = await this.blobToBase64(this.proTranscript4);
+       const filePreview = await this.blobToBase64(this.proTranscript4);
         this.proTranscript4.docFile = filePreview;
         this.proTranscript4.title = "Professional Transcript 4";
         this.docList.push(this.proTranscript4);
@@ -674,7 +674,7 @@ export default {
             1
           );
         }
-        var filePreview = await this.blobToBase64(this.proTranscript5);
+       const filePreview = await this.blobToBase64(this.proTranscript5);
         this.proTranscript5.docFile = filePreview;
         this.proTranscript5.title = "Professional Transcript 5";
         this.docList.push(this.proTranscript5);
@@ -690,7 +690,7 @@ export default {
             1
           );
         }
-        var filePreview = await this.blobToBase64(this.eduEighth);
+       const filePreview = await this.blobToBase64(this.eduEighth);
         this.eduEighth.docFile = filePreview;
         this.eduEighth.title = "Eighth Grade Certificate";
         this.docList.push(this.eduEighth);
@@ -706,7 +706,7 @@ export default {
             1
           );
         }
-        var filePreview = await this.blobToBase64(this.eduTenth);
+       const filePreview = await this.blobToBase64(this.eduTenth);
         this.eduTenth.docFile = filePreview;
         this.eduTenth.title = "Tenth Grade Certificate";
         this.docList.push(this.eduTenth);
@@ -722,7 +722,7 @@ export default {
             1
           );
         }
-        var filePreview = await this.blobToBase64(this.eduTwelveth);
+       const filePreview = await this.blobToBase64(this.eduTwelveth);
         this.eduTwelveth.docFile = filePreview;
         this.eduTwelveth.title = "Twelveth Grade Certificate";
         this.docList.push(this.eduTwelveth);
@@ -736,7 +736,7 @@ export default {
             1
           );
         }
-        var filePreview = await this.blobToBase64(this.eduTranscript1);
+       const filePreview = await this.blobToBase64(this.eduTranscript1);
         this.eduTranscript1.docFile = filePreview;
         this.eduTranscript1.title = "Education Transcript 1";
         this.docList.push(this.eduTranscript1);
@@ -750,7 +750,7 @@ export default {
             1
           );
         }
-        var filePreview = await this.blobToBase64(this.eduTranscript2);
+       const filePreview = await this.blobToBase64(this.eduTranscript2);
         this.eduTranscript2.docFile = filePreview;
         this.eduTranscript2.title = "Education Transcript 2";
         this.docList.push(this.eduTranscript2);
@@ -766,7 +766,7 @@ export default {
             1
           );
         }
-        var filePreview = await this.blobToBase64(this.herqa);
+       const filePreview = await this.blobToBase64(this.herqa);
         this.herqa.docFile = filePreview;
         this.herqa.title = "HERQA";
         this.docList.push(this.herqa);
@@ -781,7 +781,7 @@ export default {
               1
             );
           }
-          var filePreview = await this.blobToBase64(this.supportLetter);
+         const filePreview = await this.blobToBase64(this.supportLetter);
           this.supportLetter.docFile = filePreview;
           this.supportLetter.title = "Support Letter";
           this.docList.push(this.supportLetter);
@@ -799,7 +799,7 @@ export default {
               1
             );
           }
-          var filePreview = await this.blobToBase64(this.supportLetter);
+         const filePreview = await this.blobToBase64(this.supportLetter);
           this.supportLetter.docFile = filePreview;
           this.supportLetter.title =
             "Support Letter From Sponsored Institution";
@@ -816,7 +816,7 @@ export default {
             1
           );
         }
-        var filePreview = await this.blobToBase64(this.coc);
+       const filePreview = await this.blobToBase64(this.coc);
         this.coc.docFile = filePreview;
         this.coc.title = "COC";
         this.docList.push(this.coc);
@@ -832,7 +832,7 @@ export default {
             1
           );
         }
-        var filePreview = await this.blobToBase64(this.coc2);
+       const filePreview = await this.blobToBase64(this.coc2);
         this.coc2.docFile = filePreview;
         this.coc2.title = "COC 2";
         this.docList.push(this.coc2);
@@ -848,7 +848,7 @@ export default {
             1
           );
         }
-        var filePreview = await this.blobToBase64(this.coc3);
+       const filePreview = await this.blobToBase64(this.coc3);
         this.coc3.docFile = filePreview;
         this.coc3.title = "COC 3";
         this.docList.push(this.coc3);
@@ -862,7 +862,7 @@ export default {
             1
           );
         }
-        var filePreview = await this.blobToBase64(this.workExperience);
+       const filePreview = await this.blobToBase64(this.workExperience);
         this.workExperience.docFile = filePreview;
         this.workExperience.title = "Work Experience";
         this.docList.push(this.workExperience);
@@ -876,7 +876,7 @@ export default {
             1
           );
         }
-        var filePreview = await this.blobToBase64(this.workExperience2);
+       const filePreview = await this.blobToBase64(this.workExperience2);
         this.workExperience2.docFile = filePreview;
         this.workExperience2.title = "Work Experience 2";
         this.docList.push(this.workExperience2);
@@ -890,7 +890,7 @@ export default {
             1
           );
         }
-        var filePreview = await this.blobToBase64(this.serviceFee);
+       const filePreview = await this.blobToBase64(this.serviceFee);
         this.serviceFee.docFile = filePreview;
         this.serviceFee.title = "Service Fee";
         this.docList.push(this.serviceFee);
@@ -906,7 +906,7 @@ export default {
             1
           );
         }
-        var filePreview = await this.blobToBase64(this.renewedLicense);
+       const filePreview = await this.blobToBase64(this.renewedLicense);
         this.renewedLicense.docFile = filePreview;
         this.renewedLicense.title = "Renewed License";
         this.docList.push(this.renewedLicense);
@@ -925,7 +925,7 @@ export default {
             1
           );
         }
-        var filePreview = await this.blobToBase64(this.professionalLicense);
+       const filePreview = await this.blobToBase64(this.professionalLicense);
         this.professionalLicense.docFile = filePreview;
         this.professionalLicense.title = "Authenticated Professional License";
         this.docList.push(this.professionalLicense);
@@ -944,7 +944,7 @@ export default {
             1
           );
         }
-        var filePreview = await this.blobToBase64(this.professionalLicense2);
+       const filePreview = await this.blobToBase64(this.professionalLicense2);
         this.professionalLicense2.docFile = filePreview;
         this.professionalLicense2.title =
           "Authenticated Professional License 2";
@@ -959,7 +959,7 @@ export default {
             1
           );
         }
-        var filePreview = await this.blobToBase64(this.diploma);
+       const filePreview = await this.blobToBase64(this.diploma);
         this.diploma.docFile = filePreview;
         this.diploma.title = "Diploma";
         this.docList.push(this.diploma);
@@ -973,7 +973,7 @@ export default {
             1
           );
         }
-        var filePreview = await this.blobToBase64(this.transcript);
+       const filePreview = await this.blobToBase64(this.transcript);
         this.transcript.docFile = filePreview;
         this.transcript.title = "Diploma Transcript";
         this.docList.push(this.transcript);
@@ -989,7 +989,7 @@ export default {
             1
           );
         }
-        var filePreview = await this.blobToBase64(this.transcript2);
+       const filePreview = await this.blobToBase64(this.transcript2);
         this.transcript2.docFile = filePreview;
         this.transcript2.title = "Degree Transcript 2";
         this.docList.push(this.transcript2);
@@ -1003,7 +1003,7 @@ export default {
             1
           );
         }
-        var filePreview = await this.blobToBase64(this.degree);
+       const filePreview = await this.blobToBase64(this.degree);
         this.degree.docFile = filePreview;
         this.degree.title = "Degree";
         this.docList.push(this.degree);
@@ -1017,7 +1017,7 @@ export default {
             1
           );
         }
-        var filePreview = await this.blobToBase64(this.payroll);
+       const filePreview = await this.blobToBase64(this.payroll);
         this.payroll.docFile = filePreview;
         this.payroll.title = "Payroll";
         this.docList.push(this.payroll);
@@ -1031,7 +1031,7 @@ export default {
             1
           );
         }
-        var filePreview = await this.blobToBase64(this.masters);
+       const filePreview = await this.blobToBase64(this.masters);
         this.masters.docFile = filePreview;
         this.masters.title = "Masters";
         this.docList.push(this.masters);
@@ -1047,7 +1047,7 @@ export default {
             1
           );
         }
-        var filePreview = await this.blobToBase64(this.mastersTranscript);
+       const filePreview = await this.blobToBase64(this.mastersTranscript);
         this.mastersTranscript.docFile = filePreview;
         this.mastersTranscript.title = "Masters Transcript";
         this.docList.push(this.mastersTranscript);
@@ -1063,7 +1063,7 @@ export default {
             1
           );
         }
-        var filePreview = await this.blobToBase64(this.mastersTranscript2);
+       const filePreview = await this.blobToBase64(this.mastersTranscript2);
         this.mastersTranscript2.docFile = filePreview;
         this.mastersTranscript2.title = "Masters Transcript 2";
         this.docList.push(this.mastersTranscript2);
@@ -1077,7 +1077,7 @@ export default {
             1
           );
         }
-        var filePreview = await this.blobToBase64(this.phd);
+       const filePreview = await this.blobToBase64(this.phd);
         this.phd.docFile = filePreview;
         this.phd.title = "PhD";
         this.docList.push(this.phd);
@@ -1093,7 +1093,7 @@ export default {
             1
           );
         }
-        var filePreview = await this.blobToBase64(this.phdTranscript);
+       const filePreview = await this.blobToBase64(this.phdTranscript);
         this.phdTranscript.docFile = filePreview;
         this.phdTranscript.title = "PhD Transcript";
         this.docList.push(this.phdTranscript);
@@ -1109,7 +1109,7 @@ export default {
             1
           );
         }
-        var filePreview = await this.blobToBase64(this.phdTranscript2);
+       const filePreview = await this.blobToBase64(this.phdTranscript2);
         this.phdTranscript2.docFile = filePreview;
         this.phdTranscript2.title = "PhD Transcript 2";
         this.docList.push(this.phdTranscript2);
@@ -1128,7 +1128,7 @@ export default {
             1
           );
         }
-        var filePreview = await this.blobToBase64(
+       const filePreview = await this.blobToBase64(
           this.renewedLicenseFromHealthFacility
         );
         this.renewedLicenseFromHealthFacility.docFile = filePreview;
@@ -1150,7 +1150,7 @@ export default {
             1
           );
         }
-        var filePreview = await this.blobToBase64(
+       const filePreview = await this.blobToBase64(
           this.requestLetterFromHiringHealthFacility
         );
         this.requestLetterFromHiringHealthFacility.docFile = filePreview;
@@ -1693,7 +1693,6 @@ export default {
                   this.documentTypes[32].documentType.code,
                   this.proCertificate5
                 );
-                console.log(this.proDiploma, this.payroll, this.passport);
                 formData.append(
                   this.documentTypes[this.docIdx].documentType.code,
                   this.proDiploma
