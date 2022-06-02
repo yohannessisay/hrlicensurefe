@@ -139,7 +139,6 @@
                 Is Verified ?
               </th>
 
-
               <th
                 class="
                   px-5
@@ -216,15 +215,19 @@
                 </div>
               </td>
               <td class="px-5 py-5 border-gray-200 bg-white text-sm">
-                <div class="flex" :style="item.isVerified===true?'background-color: green;border-radius: 25px;':'background-color: red;border-radius: 25px;'">
-                  <div class="ml-3" >
+                <div
+                  class="flex"
+                  :style="
+                    item.isVerified === true
+                      ? 'background-color: green;border-radius: 25px;'
+                      : 'background-color: red;border-radius: 25px;'
+                  "
+                >
+                  <div class="ml-3">
                     {{ item.isVerified }}
-                     
                   </div>
                 </div>
               </td>
-
-   
 
               <td class="px-5 py-5 border-gray-200 bg-white text-sm">
                 <div class="flex">
@@ -378,7 +381,6 @@
               />
             </div>
 
-        
             <div class="form-group mb-4">
               <label for="requestedRegion">Is Verified</label>
               <div class="flex justify-left">
@@ -569,11 +571,11 @@
         </form>
       </ResponseVerificationModal>
     </Modal>
-      <ErrorFlashMessage :message="message.errorMessage" v-if="response.error" />
-  <FlashMessage
-    message="Successfully edited verification Data"
-    v-if="response.success"
-  />
+    <ErrorFlashMessage :message="message.errorMessage" v-if="response.error" />
+    <FlashMessage
+      message="Successfully edited verification Data"
+      v-if="response.success"
+    />
   </div>
 </template>
 
@@ -695,7 +697,6 @@ export default {
           loggedInAdmin.roleId
         )
         .then((res) => {
-      
           verificationData.value = res.data.data;
           allData.value = res.data.data;
           showLoading.value = false;
@@ -708,10 +709,11 @@ export default {
       paginateReport(allData.value, indexValue.value);
     };
     const searchVerificationData = () => {
-
       verificationData.value = allData.value.filter((data) => {
         return (
-          data.Profiles.name.toLowerCase().includes(searchData.value.toLowerCase()) ||
+          data.Profiles.name
+            .toLowerCase()
+            .includes(searchData.value.toLowerCase()) ||
           data.Profiles.fatherName
             .toLowerCase()
             .includes(searchData.value.toLowerCase()) ||
@@ -755,13 +757,12 @@ export default {
             response.value.success = true;
             showResponseVerificationModal.value = false;
             getVerifications();
-                    setTimeout(() => {
-               response.value.success = false;
-              }, 3000);
+            setTimeout(() => {
+              response.value.success = false;
+            }, 3000);
           } else {
-              response.value.error = true;
-              message.value.errorMessage = res.data.message;
-          
+            response.value.error = true;
+            message.value.errorMessage = res.data.message;
           }
         });
     };

@@ -56,7 +56,7 @@
 <script>
 export default {
   components: {},
-  return: {}
+  return: {},
 };
 </script>
 <style scoped>

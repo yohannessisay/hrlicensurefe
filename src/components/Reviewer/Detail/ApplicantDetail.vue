@@ -211,9 +211,9 @@
                   :data-title="document.documentType.name"
                   data-lightbox="example-2"
                 >
-                  <img :src="googleApi + document.filePath"  class="w-full h-48 object-cover"/>
+                  <img :src="googleApi + document.filePath" />
                 </a>
-               
+
                 <h4 style="font-weight: bold">Document Type:-</h4>
                 <h6>{{ document.documentType.name }}</h6>
               </div>
@@ -333,7 +333,6 @@ export default {
               education.value.institutionTypeName =
                 license.value.education.institution.name;
             }
-            console.log(documents.value);
           });
       }
       if (applicationType.value == "Good Standing") {
