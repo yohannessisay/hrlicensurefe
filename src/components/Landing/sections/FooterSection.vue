@@ -1,6 +1,6 @@
 <template>
   <h2 class="text-primary-200 blue-gradient-dark p-small text-sm sm:text-lg">
-    HRIS License © Ministry of Health - Ethiopia {{ new Date().getFullYear() }}
+    HPEL(Health professional electronic licensing ) © Ministry of Health - Ethiopia {{ new Date().getFullYear() }}
   </h2>
 </template>
 <style lang="postcss" scoped>

@@ -176,7 +176,7 @@
       <h2
         class="text-primary-700  p-small text-sm sm:text-lg flex justify-center"
       >
-        HRIS License © Ministry of Health - Ethiopia {{ new Date().getFullYear() }}
+        HPEL(Health professional electronic licensing )  © Ministry of Health - Ethiopia {{ new Date().getFullYear() }}
       </h2>
     </div>
   </div>
