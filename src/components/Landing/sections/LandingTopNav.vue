@@ -4,7 +4,7 @@
   >
     <div class="flex justify-center items-center">
       <RenderIllustration illustration="Logo" class="hidden sm:block" />
-      <h3 class="ml-tiny font-AtkinsonHyperlegibleBold">HRIS - License</h3>
+      <h3 class="ml-tiny font-AtkinsonHyperlegibleBold">HPEL(Health professional electronic licensing )</h3>
     </div>
     <button
       variant="outline"
