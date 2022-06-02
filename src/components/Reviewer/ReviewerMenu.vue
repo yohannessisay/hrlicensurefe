@@ -87,7 +87,7 @@
       @navigateToHome="displaySet"
     />
     <!-- <reviewer-nav-bar :display="menu" @changeDisplay="displaySet" /> -->
-    <div style="width:100%" class="flex flex-row">
+    <div style="width: 100%" class="flex flex-row">
       <div class="sidenav">
         <reviewer-side-nav :display="menu" @changeDisplay="displaySet" />
       </div>
@@ -409,11 +409,14 @@
           <suspended-cancelled />
         </div>
 
-             <div v-if="this.display == 'importResults'">
+        <div v-if="this.display == 'importResults'">
           <import-results />
         </div>
-      <div v-if="this.display == 'verificationRequests'">
+        <div v-if="this.display == 'verificationRequests'">
           <VerificationRequests />
+        </div>
+        <div v-if="this.display == 'verificationResponses'">
+          <VerificationResponses />
         </div>
       </div>
     </div>
@@ -522,13 +525,12 @@ import GoodStandingAllLicensed from "./ApplicationTypes/GoodStanding/GoodStandin
 
 import AllLicensed from "./ApplicationTypes/AllLicensed/AllLicensed.vue";
 import Accredited from "./ApplicationTypes/AllLicensed/Accredited.vue";
-import SuspendedCancelled from "./ApplicationTypes/AllLicensed/SuspendedCancelled.vue"
+import SuspendedCancelled from "./ApplicationTypes/AllLicensed/SuspendedCancelled.vue";
 // import AllLicensed from "./ApplicationTypes/AllLicensed/AllLicensed.vue";
 // import Accredited from "./ApplicationTypes/AllLicensed/Accredited.vue";
 import ImportResults from "./ImportResults/ImportHome.vue";
 import VerificationRequests from "./Verification/RequestedVerifications.vue";
-
-
+import VerificationResponses from "./Verification/ResponseVerifications.vue";
 
 import Report from "../Report/Report.vue";
 import Dashboard from "./Dashboard.vue";
@@ -642,7 +644,8 @@ export default {
     Dashboard,
     Report,
     UserManagement,
-    VerificationRequests
+    VerificationRequests,
+    VerificationResponses
   },
   setup() {
     const store = useStore();
@@ -652,14 +655,14 @@ export default {
     let display = ref("newLicenseUnassigned");
     let selectedValue = ref("");
 
-    const displaySet = (menu) => {
+    const displaySet = menu => {
       display.value = menu;
     };
 
     let isStatusFetched = ref(false);
 
     const fetchApplicationStatus = () => {
-      store.dispatch("admin/getApplicationStatus").then((res) => {
+      store.dispatch("admin/getApplicationStatus").then(res => {
         isStatusFetched.value = true;
       });
     };
@@ -673,9 +676,9 @@ export default {
       display,
       isStatusFetched,
       selectedValue,
-      expertLevelId,
+      expertLevelId
     };
-  },
+  }
 };
 </script>
 <style>
