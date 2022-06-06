@@ -12,12 +12,14 @@
           <div class="flex justify-start">
             <Title message="Personal Info" />
           </div>
+         
           <div class="flex flex-row">
             <div
               :class="[profileInfo.name === null ? errorClass : activeClass]"
             >
               <label class="ml-8"> Full Name</label>
-              <h5 class="ml-8">
+                  <hr class="ml-4">
+              <h5 class="ml-8 mt-4">
                 {{
                   profileInfo.name +
                   " " +
@@ -31,7 +33,8 @@
               :class="[profileInfo.gender === null ? errorClass : activeClass]"
             >
               <label class="ml-8"> Gender</label>
-              <h5 class="ml-8">
+                  <hr>
+              <h5 class="ml-8 mt-4">
                 {{ profileInfo.gender ? profileInfo["gender"] : "-" }}
               </h5>
             </div>
@@ -41,7 +44,8 @@
               ]"
             >
               <label class="ml-8"> Nationality</label>
-              <h5 class="ml-8">
+                  <hr>
+              <h5 class="ml-8 mt-4">
                 {{
                   profileInfo.nationality ? profileInfo.nationality.name : "-"
                 }}
@@ -53,7 +57,8 @@
               ]"
             >
               <label class="ml-8"> Date of Birth</label>
-              <h5 class="ml-8">
+                  <hr>
+              <h5 class="ml-8 mt-4">
                 {{
                   profileInfo.dateOfBirth
                     ? moment(profileInfo.dateOfBirth).format("MMM D, YYYY")
@@ -69,7 +74,8 @@
               ]"
             >
               <label class="ml-8"> Marital Status</label>
-              <h5 class="ml-8">
+                  <hr>
+              <h5 class="ml-8 mt-4">
                 {{
                   profileInfo.maritalStatus.name
                     ? profileInfo.maritalStatus.name
@@ -94,7 +100,8 @@
               ]"
             >
               <label class="ml-8"> Region</label>
-              <h5 class="ml-8">
+                <hr class="ml-4">
+              <h5 class="ml-8 mt-4">
                 {{
                   license.woreda === null
                     ? "-"
@@ -116,7 +123,8 @@
               ]"
             >
               <label class="ml-8"> Zone</label>
-              <h5 class="ml-8">
+              <hr>
+              <h5 class="ml-8 mt-4">
                 {{
                   license.woreda === null
                     ? "-"
@@ -128,7 +136,8 @@
             </div>
             <div :class="[license.woreda === null ? errorClass : activeClass]">
               <label class="ml-8"> Wereda</label>
-              <h5 class="ml-8">
+              <hr>
+              <h5 class="ml-8 mt-4">
                 {{ license.woreda ? license.woreda.name : "-" }}
               </h5>
             </div>
@@ -145,7 +154,8 @@
               ]"
             >
               <label class="ml-8"> Mobile Number</label>
-              <h5 class="ml-8">
+              <hr class="ml-4">
+              <h5 class="ml-8 mt-4">
                 {{
                   profileInfo.user.phoneNumber
                     ? profileInfo.user.phoneNumber
@@ -162,7 +172,8 @@
               ]"
             >
               <label class="ml-8"> Email</label>
-              <h5 class="ml-8">
+              <hr>
+              <h5 class="ml-8 mt-4">
                 {{
                   profileInfo.user.emailAddress
                     ? profileInfo.user.emailAddress
@@ -177,19 +188,22 @@
           <div class="flex flex-row">
             <div>
               <label class="ml-8"> Institution Name</label>
-              <h5 class="ml-8" v-if="education.institutionName">
+              <hr class="ml-4">
+              <h5 class="ml-8 mt-4" v-if="education.institutionName">
                 {{ education.institutionName }}
               </h5>
             </div>
             <div>
               <label class="ml-8"> Department</label>
-              <h5 class="ml-8" v-if="education.departmentName">
+              <hr>
+              <h5 class="ml-8 mt-4" v-if="education.departmentName">
                 {{ education.departmentName }}
               </h5>
             </div>
             <div>
               <label class="ml-8"> Institution Type</label>
-              <h5 class="ml-8" v-if="education.institutionTypeName">
+              <hr>
+              <h5 class="ml-8 mt-4" v-if="education.institutionTypeName">
                 {{ education.institutionTypeName }}
               </h5>
             </div>
@@ -211,7 +225,7 @@
                   :data-title="document.documentType.name"
                   data-lightbox="example-2"
                 >
-                  <img :src="googleApi + document.filePath" />
+                  <img :src="googleApi + document.filePath" class="w-full h-48 object-cover" />
                 </a>
 
                 <h4 style="font-weight: bold">Document Type:-</h4>
