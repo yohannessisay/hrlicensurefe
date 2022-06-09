@@ -83,7 +83,7 @@
         </div>
         <div class="flex">
           <div class="flex flex-col mb-medium w-1/2 mr-6">
-            <label class="text-primary-700">Grand Father Name (*)</label>
+            <label class="text-primary-700">GrandFather Name (*)</label>
             <input
               class="max-w-3xl"
               type="text"
@@ -95,7 +95,7 @@
             }}</span>
           </div>
           <div class="flex flex-col mb-medium w-1/2 ml-12">
-            <label class="text-primary-700">Name in Amharic</label>
+            <label class="text-primary-700">ስም በአማርኛ (Name in Amharic)</label>
             <input
               class="max-w-3xl"
               type="text"
@@ -109,7 +109,7 @@
         </div>
         <div class="flex">
           <div class="flex flex-col mb-medium w-1/2 mr-12">
-            <label class="text-primary-700">Father's Name in Amharic</label>
+            <label class="text-primary-700">የአባት ስም በአማርኛ (Father's Name in Amharic)</label>
             <input
               class="max-w-3xl"
               type="text"
@@ -122,7 +122,7 @@
           </div>
           <div class="flex flex-col mb-medium w-1/2 m1-12">
             <label class="text-primary-700"
-              >Grandfather's Name in Amharic</label
+              >የአያት ስም በአማርኛ (Grandfather's Name in Amharic)</label
             >
             <input
               class="max-w-3xl"
