@@ -213,11 +213,7 @@
 
       <Spinner v-if="previousTableLoading" />
 
-      <table
-        class=""
-        style="overflow-y: scroll"
-        id="prevTable"
-      >
+      <table class="" style="overflow-y: scroll" id="prevTable">
         <thead>
           <tr>
             <th
@@ -1070,8 +1066,6 @@ export default {
       });
 
       this.filteredData = filterByName;
-
-     
     },
   },
   computed: {
@@ -1185,15 +1179,16 @@ export default {
       }
 
       let filtered = JSON.parse(JSON.stringify(this.previousData));
-   
-      filtered=filtered.filter((o) => {
-   
-        if(moment(o.dateOfExamination).isValid()===true){
-         return o.dateOfExamination<=endDateValue&&o.dateOfExamination>= startDateValue;
-          }
-    });
-      
-      console.log(filtered);
+
+      filtered = filtered.filter((o) => {
+        if (moment(o.dateOfExamination).isValid() === true) {
+          return (
+            o.dateOfExamination <= endDateValue &&
+            o.dateOfExamination >= startDateValue
+          );
+        }
+      });
+
       this.filteredData = filtered;
       this.paginateReport(
         JSON.parse(JSON.stringify(this.filteredData)),
@@ -1212,11 +1207,8 @@ export default {
         this.institutions = res.data.data;
       });
       this.$store.dispatch("reviewer/getImported").then((res) => {
-         
-        
-      
-        if(res.data.message==='No national exam found!'){
-          this.previousTableLoading=false;
+        if (res.data.message === "No national exam found!") {
+          this.previousTableLoading = false;
           return;
         }
         this.totalCount = res.data.data.length;
