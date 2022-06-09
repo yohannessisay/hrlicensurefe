@@ -57,9 +57,10 @@
                 </h2>
                 <h2 v-if="!this.fileSizeExceed">{{ this.certificate1Size }}</h2>
               </span>
+
               <span v-if="showCertificate1Upload">
                 <label class="text-primary-700 text-lg"
-                  >Upload 8th Grade Certificate:
+                  > <h3 class="document-title">Upload 8th Grade Certificate:</h3>
                   <span style="color: red; font-weight: bold; font-size:16px"
                     >Required</span
                   >
@@ -80,6 +81,9 @@
                 </label>
               </span>
               <picture v-if="!showCertificate1Upload && isCertificate1">
+              <p class="document-title">
+               8th Grade Certificate
+              </p>
                 <p>
                   <a href="javascript:void(0)" @click="resetCert1()"
                     >Upload again</a
@@ -91,6 +95,9 @@
                 />
               </picture>
               <div v-if="!showCertificate1Upload && isPdf1">
+                <p>
+               8th Grade Certificate
+              </p>
                 <p>
                   <a href="javascript:void(0)" @click="resetCert1()"
                     >Upload again</a
@@ -132,7 +139,7 @@
               </span>
               <span v-if="showCertificate2Upload">
                 <label class="text-primary-700 text-lg"
-                  >Upload 10th Grade Certificate:
+                  ><h3 class="document-title">Upload 10th Grade Certificate:</h3>
                   <span style="color: red; font-weight: bold; font-size:16px"
                     >Required</span
                   >
@@ -154,6 +161,9 @@
               </span>
 
               <picture v-if="!showCertificate2Upload && isCertificate2">
+                <p class="document-title">
+                 10th Grade Certificate:
+                </p>
                 <p>
                   <a href="javascript:void(0)" @click="resetCert2()"
                     >Upload again</a
@@ -165,6 +175,9 @@
                 />
               </picture>
               <div v-if="!showCertificate2Upload && isPdf2">
+              <p class="document-title">
+                 10th Grade Certificate:
+                </p>
                 <p>
                   <a href="javascript:void(0)" @click="resetCert2()"
                     >Upload again</a
@@ -208,7 +221,7 @@
               </span>
               <span v-if="showCertificate3Upload">
                 <label class="text-primary-700 text-lg"
-                  >Upload 12th Grade Certificate:
+                  ><h3 class="document-title">Upload 12th Grade Certificate:</h3>
                   <span
                     v-if="this.eduLevel !== 'diploma'"
                     style="color: red; font-weight: bold; font-size:16px"
@@ -232,6 +245,9 @@
               </span>
 
               <picture v-if="!showCertificate3Upload && isCertificate3">
+              <p class="document-title">
+                 12th Grade Certificate:
+                </p>
                 <p>
                   <a href="javascript:void(0)" @click="resetCert3()"
                     >Upload again</a
@@ -243,6 +259,9 @@
                 />
               </picture>
               <div v-if="!showCertificate3Upload && isPdf3">
+              <p class="document-title">
+                 12th Grade Certificate:
+                </p>
                 <p>
                   <a href="javascript:void(0)" @click="resetCert3()"
                     >Upload again</a
@@ -287,7 +306,7 @@
               </span>
               <span v-if="showCertificate4Upload">
                 <label class="text-primary-700 text-lg"
-                  >Upload Transcript 9-10:
+                  ><h3 class="document-title">Upload Transcript 9-10:</h3>
                   <span style="color: red; font-weight: bold; font-size:16px"
                     >Required</span
                   >
@@ -309,6 +328,9 @@
               </span>
 
               <picture v-if="!showCertificate4Upload && isCertificate4">
+              <p class="document-title">
+                 Transcript 9-10:
+                </p>
                 <p>
                   <a href="javascript:void(0)" @click="resetCert4()"
                     >Upload again</a
@@ -320,6 +342,9 @@
                 />
               </picture>
               <div v-if="!showCertificate4Upload && isPdf4">
+               <p class="document-title">
+                 Transcript 9-10:
+                </p>
                 <p>
                   <a href="javascript:void(0)" @click="resetCert4()"
                     >Upload again</a
@@ -362,7 +387,7 @@
               </span>
               <span v-if="showCertificate5Upload">
                 <label class="text-primary-700 text-lg"
-                  >Upload Transcript 11-12:
+                  ><h3 class="document-title">Upload Transcript 11-12:</h3>
                   <span
                     v-if="this.eduLevel !== 'diploma'"
                     style="color: red; font-weight: bold; font-size:16px"
@@ -386,6 +411,9 @@
               </span>
 
               <picture v-if="!showCertificate5Upload && isCertificate5">
+               <p class="document-title">
+                 Transcript 11-12:
+                </p>
                 <p>
                   <a href="javascript:void(0)" @click="resetCert5()"
                     >Upload again</a
@@ -397,6 +425,9 @@
                 />
               </picture>
               <div v-if="!showCertificate5Upload && isPdf5">
+               <p class="document-title">
+                 Transcript 11-12:
+                </p>
                 <p>
                   <a href="javascript:void(0)" @click="resetCert5()"
                     >Upload again</a
@@ -534,6 +565,7 @@ export default {
       showFlash: false,
       showErrorFlash: false,
       certificateFile1: "",
+      certificateFile1Id:0,
       showCertificate1Preview: false,
       certificate1Preview: "",
       showCertificate1Upload: true,
@@ -541,6 +573,7 @@ export default {
       isPdf1: false,
 
       certificateFile2: "",
+      certificateFile2Id:0,
       showCertificate2Preview: false,
       certificate2Preview: "",
       showCertificate2Upload: true,
@@ -548,6 +581,7 @@ export default {
       isPdf2: false,
 
       certificateFile3: "",
+      certificateFile3Id:0,
       showCertificate3Preview: false,
       certificate3Preview: "",
       showCertificate3Upload: true,
@@ -555,6 +589,7 @@ export default {
       isPdf3: false,
 
       certificateFile4: "",
+      certificateFile4Id:0,
       showCertificate4Preview: false,
       certificate4Preview: "",
       showCertificate4Upload: true,
@@ -562,6 +597,7 @@ export default {
       isPdf4: false,
 
       certificateFile5: "",
+      certificateFile5Id:0,
       showCertificate5Preview: false,
       certificate5Preview: "",
       showCertificate5Upload: true,
@@ -685,6 +721,12 @@ export default {
     let eduTwelveth = this.$store.getters["newlicense/getEduTwelveth"];
     let transcript1 = this.$store.getters["newlicense/getEduTranscript1"];
     let transcript2 = this.$store.getters["newlicense/getEduTranscript2"];
+    this.certificateFile1Id = eduEighth?eduEighth.id:0;
+    this.certificateFile2Id = eduTenth?eduTenth.id:0;
+    this.certificateFile3Id = eduTwelveth?eduTwelveth.id:0;
+    this.certificateFile4Id = transcript1?transcript1.id:0;
+    this.certificateFile5Id = transcript2?transcript2.id:0;
+
     if (
       eduEighth &&
       eduEighth !== undefined &&
@@ -1008,8 +1050,10 @@ export default {
   methods: {
     ...mapActions(["setProfessionalDoc"]),
     resetCert1() {
+
       this.showCertificate1Upload = true;
       this.showCertificate1Preview = false;
+      
       this.certificateFile1 = "";
       this.certificate1Preview = "";
       this.isCertificate1 = true;
@@ -1083,6 +1127,7 @@ export default {
             this.isPdf1 = true;
             reader.readAsDataURL(this.certificateFile1);
           }
+
         }
       } else {
         this.fileSizeExceed = true;
@@ -1536,6 +1581,9 @@ img {
   font-size: 1.2em;
   text-align: center;
   padding: 50px 0;
+}
+.document-title{
+    font-weight: bold;
 }
 .withdraw {
   background-image: linear-gradient(to right, #d63232, #e63636) !important;
