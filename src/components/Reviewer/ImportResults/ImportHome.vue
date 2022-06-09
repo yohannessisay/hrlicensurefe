@@ -945,6 +945,7 @@
                   transform
                   hover:(translate-y-1)
                 "
+                style="color:white !important"
                 @click="printIndividualResult()"
               >
                 Print
@@ -971,6 +972,7 @@
                   transform
                   hover:(translate-y-1)
                 "
+                style="color:white !important"
                 @click="editModal = false"
               >
                 Cancel

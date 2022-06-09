@@ -232,7 +232,10 @@
               <td class="px-5 py-5 border-gray-200 bg-white text-sm">
                 <div class="flex">
                   <div class="ml-3">
-                    <button @click="showResponse(item)">View</button>
+                
+                    <button @click="showResponse(item)">
+                        <i class="fas fa-eye"></i>&nbsp;
+                      View</button>
                   </div>
                 </div>
               </td>
@@ -540,6 +543,7 @@
               dark:hover:bg-gray-600
               dark:focus:ring-gray-600
             "
+            style="color: white !important;"
           >
             Save
           </button>
@@ -566,6 +570,7 @@
               dark:hover:bg-gray-600
               dark:focus:ring-gray-600
             "
+             style="color: white !important;"
           >
             Cancel
           </button>
