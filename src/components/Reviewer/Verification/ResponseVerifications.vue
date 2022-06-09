@@ -544,7 +544,8 @@
             Save
           </button>
           <button
-            @click="$emit('showResponseVerificationModal', false)"
+          type="button"
+            @click="closeModal()"
             class="
               text-gray-500
               bg-white
