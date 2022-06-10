@@ -4,7 +4,7 @@
       <div
         class="
           flex flex-col
-          pt-large
+          pt-small
           w-full
           bg-white
           blue-box-shadow-light
@@ -36,18 +36,18 @@
           <TitleWithIllustration
             illustration="Certificate"
             message="Diploma Transcript"
-            class="mt-8"
+         
           />
         </div>
         <div v-else>
           <TitleWithIllustration
             illustration="Certificate"
             message="Degree Transcript"
-            class="mt-8"
+           
           />
         </div>
         <span class="flex justify-center">{{ documentMessage }}</span>
-        <div class="ml-4">
+        <div class="ml-4 flex justify-center">
           <button @click="addDocs()">Add Document</button>
           <button @click="removeDocs()">Remove Document</button>
         </div>
@@ -88,7 +88,7 @@
                 <p>
                   <a href="javascript:void(0)" @click="reset()">Upload again</a>
                 </p>
-                <img v-bind:src="filePreview" v-show="showPreview" />
+                <img style="border-radius:25px" v-bind:src="filePreview" v-show="showPreview" />
               </picture>
               <div v-if="!showUpload && isPdf">
                 <p>
@@ -97,7 +97,7 @@
                 <embed v-bind:src="filePreview" v-show="showPreview" />
               </div>
               <span v-if="!showUpload && !isImage && !isPdf">
-                <img :src="filePreview" alt="" class="preview" />
+                <img style="border-radius:25px" :src="filePreview" alt="" class="preview" />
               </span>
             </div>
             <div v-if="docCount > 0">
@@ -127,7 +127,7 @@
                     >Upload again</a
                   >
                 </p>
-                <img v-bind:src="filePreview2" v-show="showPreview2" />
+                <img style="border-radius:25px" v-bind:src="filePreview2" v-show="showPreview2" />
               </picture>
               <div v-if="!showUpload2 && isPdf2">
                 <p>
@@ -138,7 +138,7 @@
                 <embed v-bind:src="filePreview2" v-show="showPreview2" />
               </div>
               <span v-if="!showUpload2 && !isImage2 && !isPdf2">
-                <img :src="filePreview2" class="preview" />
+                <img style="border-radius:25px" :src="filePreview2" class="preview" />
               </span>
             </div>
           </div>

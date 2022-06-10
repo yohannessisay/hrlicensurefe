@@ -6,7 +6,7 @@ import router from "./router";
 import store from "./store";
 import VueApexCharts from "vue3-apexcharts";
 import IdleVue from "idle-vue"
-
+import 'mdb-vue-ui-kit/css/mdb.min.css';
 // const eventsHub = new Vue();
 
 const app = createApp(App);
