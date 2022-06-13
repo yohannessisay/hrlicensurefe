@@ -1,81 +1,161 @@
 <template>
   <div
-    class="card-wrapper bg-white sm:rounded-lg w-full p-large flex flex-col justify-center items-center relative"
+    class="min-h-screen w-full bg-gray-100 flex flex-col justify-center sm:py-4"
   >
-    <button
-      class="absolute top-0 right-0 mr-2 mt-2"
-      @click="$emit('closeModal', false)"
-      variant="rounded"
-    >
-      <svg
-        viewBox="0 0 329.269 329"
-        xmlns="http://www.w3.org/2000/svg"
-        class="close-svg fill-current text-primary-100 relative"
-      >
-        <path
-          d="M194.8 164.77L323.013 36.555c8.343-8.34 8.343-21.825 0-30.164-8.34-8.34-21.825-8.34-30.164 0L164.633 134.605 36.422 6.391c-8.344-8.34-21.824-8.34-30.164 0-8.344 8.34-8.344 21.824 0 30.164l128.21 128.215L6.259 292.984c-8.344 8.34-8.344 21.825 0 30.164a21.266 21.266 0 0015.082 6.25c5.46 0 10.922-2.09 15.082-6.25l128.21-128.214 128.216 128.214a21.273 21.273 0 0015.082 6.25c5.46 0 10.922-2.09 15.082-6.25 8.343-8.34 8.343-21.824 0-30.164zm0 0"
-        />
-      </svg>
-    </button>
-
-    <Title message="Log In" />
-
-    <form
-      @submit.prevent="submit"
-      class="flex flex-col justify-center items-center w-full mt-4"
-    >
-      <div class="flex flex-col mb-medium w-full">
-        <label>Email</label>
-        <input
-          v-model="credentials.emailAddress"
-          id="email-address"
-          name="email"
-          type="email"
-          autocomplete="email"
-          required
-        />
-        <span style="color: red">{{ credentialsErrors.emailAddress }}</span>
-      </div>
-      <div class="flex flex-col mb-tiny w-full">
-        <label>Password</label>
-        <input
-          v-model="credentials.password"
-          type="password"
-          id="password"
-          name="password"
-          autocomplete="current-password"
-          required
-        />
-        <span style="color: red">{{ credentialsErrors.password }}</span>
-      </div>
-      <a
-        class="text-primary-500 w-full text-right mr-small hover:underline cursor-pointer"
-        @click="$emit('forgotPassword')"
-      >
-        Forgot password
-      </a>
-      <div v-if="!message.showLoading">
-        <button click="submit()" class="mt-medium">
-          Login
+    <div class="p-4 xs:p-0 mx-auto md:w-full md:max-w-md">
+      <h1 class="font-bold text-center text-2xl mb-5">
+        <button
+          @click="$emit('closeModal', false)"
+          variant="rounded"
+          style="display: inline-grid !important"
+        >
+          <svg
+            viewBox="0 0 329.269 329"
+            xmlns="http://www.w3.org/2000/svg"
+            class="close-svg fill-current text-primary-100 relative"
+          >
+            <path
+              d="M194.8 164.77L323.013 36.555c8.343-8.34 8.343-21.825 0-30.164-8.34-8.34-21.825-8.34-30.164 0L164.633 134.605 36.422 6.391c-8.344-8.34-21.824-8.34-30.164 0-8.344 8.34-8.344 21.824 0 30.164l128.21 128.215L6.259 292.984c-8.344 8.34-8.344 21.825 0 30.164a21.266 21.266 0 0015.082 6.25c5.46 0 10.922-2.09 15.082-6.25l128.21-128.214 128.216 128.214a21.273 21.273 0 0015.082 6.25c5.46 0 10.922-2.09 15.082-6.25 8.343-8.34 8.343-21.824 0-30.164zm0 0"
+            />
+          </svg>
         </button>
+      </h1>
+      <div
+        class="bg-white shadow w-full rounded-lg text-center"
+        style="height: 39vw"
+      >
+        <div class="flex flex-col justify-center items-center p-2">
+          <img
+            src="../../assets/image.png"
+            loading="lazy"
+            class="w-100"
+            alt="HPEL logo"
+          />
+          <h2>HPEL Login</h2>
+          <h5>Enter your email and password below</h5>
+        </div>
+        <form @submit.prevent="submit">
+          <div class="px-10 py-7">
+            <div class="form-group mb-6 text-left">
+              <label class="font-semibold text-md text-gray-600 block"
+                >Email address</label
+              >
+
+              <input
+                v-model="credentials.emailAddress"
+                id="email-address"
+                name="email"
+                type="email"
+                autocomplete="email"
+                required
+                class="border rounded-lg px-3 py-2 mt-1 mb-2 text-sm w-full"
+                aria-describedby="emailHelp"
+                placeholder="email@example.com"
+              />
+              <span style="color: red">{{
+                credentialsErrors.emailAddress
+              }}</span>
+            </div>
+
+            <div class="form-group mb-6 text-left">
+              <span class="inline-grid grid-cols-2 gap-8">
+                <span
+                  ><label class="font-semibold text-md text-gray-600 block"
+                    >Password</label
+                  ></span
+                >
+
+                <a
+                  class="text-primary-500 text-sm"
+                  @click="$emit('forgotPassword')"
+                >
+                  Forgot password?
+                </a>
+              </span>
+            </div>
+            <div class="inline-flex w-full">
+              <input
+                v-model="credentials.password"
+                type="password"
+                id="password"
+                name="password"
+                autocomplete="current-password"
+                required
+                class="border rounded-lg px-3 py-2 mt-1 mb-2 text-sm w-full"
+                placeholder="************"
+                @type="show ? 'password' : 'text'"
+              />
+              <div class="w-1/12 ml-2 mt-2">
+                <a class="text-primary-500">
+                  <i
+                    class="fa fa-eye"
+                    style="font-size: 26px"
+                    @click="showVisibility()"
+                  ></i
+                ></a>
+              </div>
+            </div>
+
+            <div class="form-group mb-6 text-center">
+              <button
+                class="
+                  transition
+                  duration-200
+                  bg-blue-500
+           
+                  text-white
+                  w-full
+                  ml-auto
+                  mt-4
+                  rounded-lg
+                  text-md
+                
+                  font-semibold
+                  text-center
+                  inline-block
+                "
+              >
+                Login
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  class="h-4 inline-block"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M17 8l4 4m0 0l-4 4m4-4H3"
+                  />
+                </svg>
+              
+              </button>
+  <vue-element-loading :active="show" spinner="ring" color="white" background-color="#ffffff00;" style="margin-left: 110px;margin-top: -20px;" />
+              <p class="text-gray-800 mt-6 text-center">
+                <a
+                  class="
+                    text-base text-primary-500
+                    hover:underline
+                    cursor-pointer
+                  "
+                  @click="$emit('redirectToSignup')"
+                  >Don't have an account? Sign Up
+                </a>
+              </p>
+            </div>
+
+            <div class="mr-3xl" v-if="message.showFlash">
+              <FlashMessage message="Login Successful!" />
+            </div>
+            <div v-if="message.showErrorFlash">
+              <ErrorFlashMessage message="Incorrect username or password" />
+            </div>
+          </div>
+        </form>
       </div>
-      <Spinner
-        v-if="message.showLoading"
-        class="mt-4 mb-4"
-        style="width:20px; height:20px"
-      />
-      <a
-        class="text-base text-primary-500 hover:underline cursor-pointer"
-        @click="$emit('redirectToSignup')"
-        >Don't have an account? Sign Up
-      </a>
-    </form>
-  </div>
-  <div class="mr-3xl" v-if="message.showFlash">
-    <FlashMessage message="Login Successful!" />
-  </div>
-  <div v-if="message.showErrorFlash">
-    <ErrorFlashMessage v-bind:message="message.errorMessage" />
+    </div>
   </div>
 </template>
 <script>
@@ -86,12 +166,19 @@ import { useRouter } from "vue-router";
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import Spinner from "@/sharedComponents/Spinner";
+import VueElementLoading from "vue-element-loading";
 export default {
-  components: { Title, FlashMessage, ErrorFlashMessage, Spinner },
+  components: {
+    Title,
+    FlashMessage,
+    ErrorFlashMessage,
+    Spinner,
+    VueElementLoading,
+  },
   setup({ emit }) {
     const store = useStore();
     const router = useRouter();
-
+    let show = ref(false);
     let message = ref({
       showFlash: false,
       showErrorFlash: false,
@@ -108,8 +195,17 @@ export default {
       emailAddress: undefined,
       password: undefined,
     });
+    const showVisibility = () => {
+      let x = document.getElementById("password");
 
+      if (x.type === "password") {
+        x.type = "text";
+      } else {
+        x.type = "password";
+      }
+    };
     const submit = () => {
+      show.value = true;
       let email = {
         emailAddress: credentials.value.emailAddress.toLowerCase(),
         password: credentials.value.password,
@@ -144,6 +240,7 @@ export default {
             message.value.showLoading = false;
             message.value.showFlash = false;
             message.value.showErrorFlash = true;
+            show.value = false;
             message.value.errorMessage = "Incorrect Username or Password";
             setTimeout(() => {
               message.value.showErrorFlash = false;
@@ -175,6 +272,8 @@ export default {
       credentialsErrors,
       submit,
       isEmail,
+      showVisibility,
+      show,
       validateForm,
       message,
       forgot,
