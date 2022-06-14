@@ -4,7 +4,7 @@
       <div
         class="
           flex flex-col
-          pt-large
+          pt-small
           w-full
           bg-white
           blue-box-shadow-light
@@ -185,7 +185,19 @@
                 <input
                   v-on:click="checkOtherProfession(types, $event)"
                   type="checkbox"
-                  class="bg-gray-50 mr-4 border border-gray-300 focus:ring-3 focus:ring-blue-300 h-4 w-4 rounded dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
+                  class="
+                    bg-gray-50
+                    mr-4
+                    border border-gray-300
+                    focus:ring-3 focus:ring-blue-300
+                    h-4
+                    w-4
+                    rounded
+                    dark:bg-gray-700
+                    dark:border-gray-600
+                    dark:focus:ring-blue-600
+                    dark:ring-offset-gray-800
+                  "
                   required
                   :checked="types.checked"
                 />
@@ -272,20 +284,20 @@
             class="flex justify-center mb-8"
           >
             <button @click="submit">Apply</button>
-            <button @click="draft(this.buttons[1].action)" variant="outline">
+            <button @click="draft(this.buttons[1].action)" variant="outline" class="p-1">
               {{ this.buttons[1]["name"] }}
             </button>
           </div>
           <div
             v-if="this.showButtons && this.draftStatus == 'DRA'"
-            class="flex justify-center mb-8"
+            class="flex justify-center mb-8 p-1"
           >
             <button @click="submit">Apply</button>
-            <button @click="draft(this.buttons[2].action)" variant="outline">
+            <button @click="draft(this.buttons[2].action)" variant="outline" class="p-1">
               {{ this.buttons[2]["name"] }}
             </button>
             <button
-              class="withdraw"
+              class="withdraw p-1"
               @click="withdraw(this.buttons[1].action)"
               variant="outline"
             >
@@ -298,7 +310,7 @@
           >
             <button @click="submit">Apply</button>
             <button
-              class="withdraw"
+              class="withdraw p-1"
               @click="withdraw(this.buttons[1].action)"
               variant="outline"
             >
@@ -310,10 +322,10 @@
             class="flex justify-center mb-8"
           >
             <button @click="submit">Apply</button>
-            <button @click="draft(this.buttons[0].action)" variant="outline">
+            <button @click="draft(this.buttons[0].action)" variant="outline" class="p-1">
               {{ this.buttons[0]["name"] }}
             </button>
-            <button @click="update(this.buttons[1].action)" variant="outline">
+            <button @click="update(this.buttons[1].action)" variant="outline" class="p-1">
               {{ this.buttons[1]["name"] }}
             </button>
           </div>
@@ -325,7 +337,7 @@
             <!-- <button @click="draft(this.buttons[0].action)" variant="outline">
             {{ this.buttons[0]["name"] }}
           </button> -->
-            <button @click="update(this.buttons[1].action)" variant="outline">
+            <button @click="update(this.buttons[1].action)" variant="outline" class="p-1">
               {{ this.buttons[1]["name"] }}
             </button>
           </div>
@@ -393,13 +405,13 @@ export default {
       this.licenseInfo.expertLevelId = draftData.expertLevelId;
       if (this.licenseInfo.applicantTypeId == 1) {
         this.$store.dispatch("newlicense/getExpertLevel").then((res) => {
-          this.expertLevels = res.data.data.filter(function(e) {
+          this.expertLevels = res.data.data.filter(function (e) {
             return e.code.includes("REG");
           });
         });
       } else {
         this.$store.dispatch("newlicense/getExpertLevel").then((res) => {
-          this.expertLevels = res.data.data.filter(function(e) {
+          this.expertLevels = res.data.data.filter(function (e) {
             return e.code.includes("FED");
           });
         });
@@ -630,13 +642,13 @@ export default {
       }
       if (applicantType == 1) {
         this.$store.dispatch("newlicense/getExpertLevel").then((res) => {
-          this.expertLevels = res.data.data.filter(function(e) {
+          this.expertLevels = res.data.data.filter(function (e) {
             return e.code.includes("REG");
           });
         });
       } else {
         this.$store.dispatch("newlicense/getExpertLevel").then((res) => {
-          this.expertLevels = res.data.data.filter(function(e) {
+          this.expertLevels = res.data.data.filter(function (e) {
             return e.code.includes("FED");
           });
         });
@@ -709,8 +721,8 @@ export default {
               occupationTypeId: this.licenseInfo.occupationTypeId,
               nativeLanguageId: this.licenseInfo.nativeLanguageId,
               expertLevelId: this.licenseInfo.expertLevelId,
-              otherEducationalInstitution: this.licenseInfo
-                .otherEducationalInstitution,
+              otherEducationalInstitution:
+                this.licenseInfo.otherEducationalInstitution,
               otherProfessionalType: this.licenseInfo.otherProfessionalType,
               applicationStatusId: this.licenseInfo.applicationStatusId,
             },
@@ -764,8 +776,8 @@ export default {
             paymentSlip: null,
             occupationTypeId: this.licenseInfo.occupationTypeId,
             nativeLanguageId: this.licenseInfo.nativeLanguageId,
-            otherEducationalInstitution: this.licenseInfo
-              .otherEducationalInstitution,
+            otherEducationalInstitution:
+              this.licenseInfo.otherEducationalInstitution,
             expertLevelId: this.licenseInfo.expertLevelId,
             otherProfessionalType: this.licenseInfo.otherProfessionalType,
             applicationStatusId: this.licenseInfo.applicationStatusId,
@@ -846,8 +858,8 @@ export default {
           nativeLanguageId: this.licenseInfo.nativeLanguageId,
           expertLevelId: this.licenseInfo.expertLevelId,
           otherProfessionalType: this.licenseInfo.otherProfessionalType,
-          otherEducationalInstitution: this.licenseInfo
-            .otherEducationalInstitution,
+          otherEducationalInstitution:
+            this.licenseInfo.otherEducationalInstitution,
         };
         let profTypes = {
           professionalTypeIds: this.licenseInfo.professionalTypeIds,
@@ -1042,7 +1054,7 @@ export default {
       if (this.licenseInfo.applicantTypeId == 1) {
         this.displayPayrollDoc = true;
         this.$store.dispatch("newlicense/getExpertLevel").then((res) => {
-          this.expertLevels = res.data.data.filter(function(e) {
+          this.expertLevels = res.data.data.filter(function (e) {
             return e.code.includes("REG");
           });
         });
@@ -1051,7 +1063,7 @@ export default {
       } else {
         this.displayEnglishLanguageOption = true;
         this.$store.dispatch("newlicense/getExpertLevel").then((res) => {
-          this.expertLevels = res.data.data.filter(function(e) {
+          this.expertLevels = res.data.data.filter(function (e) {
             return e.code.includes("FED");
           });
         });

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="w-full blue-gradient flex flex-col justify-center items-center pt-large sm:pt-xl box-border"
+    class="w-full blue-gradient flex flex-col justify-center items-center pt-small sm:pt-xl box-border"
     ref="wrapperRef"
   >
     <transition name="fade">

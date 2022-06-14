@@ -4,7 +4,7 @@
       <div
         class="
           flex flex-col
-          pt-large
+          pt-small
           w-full
           bg-white
           blue-box-shadow-light
@@ -35,7 +35,7 @@
         <TitleWithIllustration
           illustration="Certificate"
           message="Support Letter"
-          class="mt-8"
+        
         />
         <span class="flex justify-center">{{ documentMessage }}</span>
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
@@ -88,7 +88,7 @@
           </div>
         </form>
         <div v-if="!message.showLoading">
-          <div v-if="buttons && !draftStatus" class="flex justify-center mb-8">
+          <div v-if="buttons && !draftStatus" class="flex justify-center mb-8 mt-4">
             <button @click="submitBack">
               Back
             </button>

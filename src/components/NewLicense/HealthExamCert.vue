@@ -4,7 +4,7 @@
       <div
         class="
           flex flex-col
-          pt-large
+          pt-small
           w-full
           bg-white
           blue-box-shadow-light
@@ -36,7 +36,7 @@
           <TitleWithIllustration
             illustration="Certificate"
             message="Medical Certificate"
-            class="mt-8"
+          
           />
         </div>
         <div v-else>
@@ -47,7 +47,7 @@
           />
         </div>
         <span class="flex justify-center">{{ documentMessage }}</span>
-        <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
+        <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-4">
           <div class="flex justify-center">
             <div>
               <span>
@@ -99,12 +99,12 @@
           </div>
         </form>
         <div v-if="!message.showLoading">
-          <div v-if="buttons && !draftStatus" class="flex justify-center mb-8">
+          <div v-if="buttons && !draftStatus" class="flex justify-center mb-8 mt-4">
             <button @click="submitBack">
               Back
             </button>
             <button @click="submit">Next</button>
-            <button @click="draft(buttons[1].action)" variant="outline">
+            <button @click="draft(buttons[1].action)" variant="outline" class="p-1">
               {{ buttons[1]["name"] }}
             </button>
           </div>
@@ -116,11 +116,11 @@
               Back
             </button>
             <button @click="submit">Next</button>
-            <button @click="draft(buttons[2].action)" variant="outline">
+            <button @click="draft(buttons[2].action)" variant="outline" class="p-1">
               {{ buttons[2]["name"] }}
             </button>
             <button
-              class="withdraw"
+              class="withdraw p-1"
               @click="withdraw(buttons[1].action)"
               variant="outline"
             >
@@ -136,7 +136,7 @@
             </button>
             <button @click="submit">Next</button>
             <button
-              class="withdraw"
+              class="withdraw p-1"
               @click="withdraw(buttons[1].action)"
               variant="outline"
             >
@@ -151,10 +151,10 @@
               Back
             </button>
             <button @click="submit">Next</button>
-            <button @click="draft(buttons[0].action)" variant="outline">
+            <button @click="draft(buttons[0].action)" variant="outline" class="p-1">
               {{ buttons[0]["name"] }}
             </button>
-            <button @click="update(buttons[1].action)" variant="outline">
+            <button @click="update(buttons[1].action)" variant="outline" class="p-1">
               {{ buttons[1]["name"] }}
             </button>
           </div>
@@ -169,7 +169,7 @@
             <!-- <button @click="draft(buttons[0].action)" variant="outline">
             {{ buttons[0]["name"] }}
           </button> -->
-            <button @click="update(buttons[1].action)" variant="outline">
+            <button @click="update(buttons[1].action)" variant="outline" class="p-1">
               {{ buttons[1]["name"] }}
             </button>
           </div>

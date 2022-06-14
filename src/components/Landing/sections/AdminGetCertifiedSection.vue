@@ -1,7 +1,7 @@
 <template>
   <section class="wrapper">
     <div
-      class="illustration-and-message relative px-small pt-xl lg:pt-large xl:pt-0 box-border w-full flex flex-col-reverse lg:flex-row justify-end items-center"
+      class="illustration-and-message relative px-small pt-xl lg:pt-small xl:pt-0 box-border w-full flex flex-col-reverse lg:flex-row justify-end items-center"
     >
       <LandingIllustration
         class="block lg:absolute z-0 -mb-small sm:-mb-large"
