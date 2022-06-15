@@ -4,12 +4,13 @@
       <div
         class="
           flex flex-col
-          pt-large
+          pt-small
           w-full
           bg-white
           blue-box-shadow-light
           rounded
         "
+        style="border-radius:25px"
       >
         <h2
           class="flex justify-center"
@@ -35,7 +36,7 @@
         <TitleWithIllustration
           illustration="User"
           message="Identification Card or Passport"
-          class="mt-8"
+          
         />
         <span class="flex justify-center">{{ documentMessage }}</span>
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
@@ -74,13 +75,17 @@
 
               <picture v-if="!showUpload && isImage">
                 <p>
-                  <a href="javascript:void(0)" @click="reset()">Upload again</a>
+                  <a href="javascript:void(0)"  @click="reset()" style="background-color: white !important;">
+                    <button class="p-1" >
+                            Upload again
+                    </button>
+                   </a>
                 </p>
                 <img v-bind:src="filePreview" v-show="showPreview" />
               </picture>
               <div v-if="!showUpload && isPdf">
                 <p>
-                  <a href="javascript:void(0)" @click="reset()">Upload again</a>
+                  <a href="javascript:void(0)"  @click="reset()">Upload again</a>
                 </p>
                 <embed v-bind:src="filePreview" v-show="showPreview" />
               </div>
@@ -91,7 +96,7 @@
           </div>
         </form>
         <div v-if="!message.showLoading">
-          <div v-if="buttons && !draftStatus" class="flex justify-center mb-8">
+          <div v-if="buttons && !draftStatus" class="flex justify-center mb-4 mt-4">
             <button @click="submitBack">
               Back
             </button>
@@ -112,7 +117,7 @@
               {{ buttons[0]["name"] }}
             </button>
             <button
-              class="withdraw"
+              class="withdraw p-1"
               @click="withdraw(buttons[1].action)"
               variant="outline"
             >
@@ -128,7 +133,7 @@
             </button>
             <button @click="submit">Next</button>
             <button
-              class="withdraw"
+              class="withdraw p-1"
               @click="withdraw(buttons[1].action)"
               variant="outline"
             >
@@ -140,13 +145,13 @@
             class="flex justify-center mb-8"
           >
             <button @click="submitBack">
-              Back
+              Backsss
             </button>
             <button @click="submit">Next</button>
-            <button @click="draft(buttons[0].action)" variant="outline">
+            <button @click="draft(buttons[0].action)" variant="outline" class="p-1">
               {{ buttons[0]["name"] }}
             </button>
-            <button @click="update(buttons[1].action)" variant="outline">
+            <button @click="update(buttons[1].action)" variant="outline" class="p-1">
               {{ buttons[1]["name"] }}
             </button>
           </div>
@@ -161,7 +166,7 @@
             <!-- <button @click="draft(buttons[0].action)" variant="outline">
             {{ buttons[0]["name"] }}
           </button> -->
-            <button @click="update(buttons[1].action)" variant="outline">
+            <button @click="update(buttons[1].action)" variant="outline" class="p-1">
               {{ buttons[1]["name"] }}
             </button>
           </div>

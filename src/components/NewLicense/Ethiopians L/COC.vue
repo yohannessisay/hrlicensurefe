@@ -4,7 +4,7 @@
       <div
         class="
           flex flex-col
-          pt-large
+          pt-small
           w-full
           bg-white
           blue-box-shadow-light
@@ -35,12 +35,10 @@
         <TitleWithIllustration
           illustration="Certificate"
           message="COC"
-          class="mt-8"
+        
         />
         <span class="flex justify-center">{{ documentMessage }}</span>
-        <div class="ml-4">
-          <button @click="addDocs()">Add Document</button>
-        </div>
+   
         <form @submit.prevent="submit" class="mx-auto max-w-3xl mt-8">
           <div class="flex flex-col justify-center">
             <div>

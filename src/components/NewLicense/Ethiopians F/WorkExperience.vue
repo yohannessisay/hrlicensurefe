@@ -4,7 +4,7 @@
       <div
         class="
           flex flex-col
-          pt-large
+          pt-small
           w-full
           bg-white
           blue-box-shadow-light
@@ -35,10 +35,10 @@
         <TitleWithIllustration
           illustration="Certificate"
           message="Work Experience"
-          class="mt-8"
+        
         />
         <span class="flex justify-center">{{ documentMessage }}</span>
-        <div class="ml-24">
+        <div class="ml-4 flex justify-center">
           <button @click="addDocs()">Add Document</button>
           <button @click="removeDocs()">Remove Document</button>
         </div>
@@ -132,7 +132,7 @@
           </div>
         </form>
         <div v-if="!message.showLoading">
-          <div v-if="buttons && !draftStatus" class="flex justify-center mb-8">
+          <div v-if="buttons && !draftStatus" class="flex justify-center mb-8 mt-4">
             <button @click="submitBack">
               Back
             </button>

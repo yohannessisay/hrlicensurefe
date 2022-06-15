@@ -2,7 +2,7 @@
   <div class="flex justify-center items">
     <div class="bg-lightBlueB-200 w-screen h-screen max-w-4xl">
       <div
-        class="flex flex-col pt-large w-full bg-white blue-box-shadow-light rounded"
+        class="flex flex-col pt-small w-full bg-white blue-box-shadow-light rounded"
       >
         <div class="mt-small">
           <TitleWithIllustration
