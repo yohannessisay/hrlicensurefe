@@ -87,7 +87,7 @@ export default {
         email: email.value,
       };
       store
-        .dispatch("profile/sendEmail", emailToBeSent)
+        .dispatch("profile/adminForgotPassowrd", emailToBeSent)
         .then((res) => {
           showLoading.value = false;
           if (res.data.status === "Success") {
