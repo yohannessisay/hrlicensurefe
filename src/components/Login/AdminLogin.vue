@@ -7,7 +7,7 @@
           variant="rounded"
           style="display: inline-grid !important"
         >
-             <svg
+          <svg
             viewBox="0 0 329.269 329"
             xmlns="http://www.w3.org/2000/svg"
             class="close-svg fill-current text-primary-100 relative"
@@ -16,38 +16,11 @@
               d="M194.8 164.77L323.013 36.555c8.343-8.34 8.343-21.825 0-30.164-8.34-8.34-21.825-8.34-30.164 0L164.633 134.605 36.422 6.391c-8.344-8.34-21.824-8.34-30.164 0-8.344 8.34-8.344 21.824 0 30.164l128.21 128.215L6.259 292.984c-8.344 8.34-8.344 21.825 0 30.164a21.266 21.266 0 0015.082 6.25c5.46 0 10.922-2.09 15.082-6.25l128.21-128.214 128.216 128.214a21.273 21.273 0 0015.082 6.25c5.46 0 10.922-2.09 15.082-6.25 8.343-8.34 8.343-21.824 0-30.164zm0 0"
             />
           </svg>
-      </button>
-</h1>
-    <Title message="Log In" />
-
-  
-      <div class="flex flex-col mb-medium w-full">
-        <label>Email</label>
-        <input
-          v-model="credentials.email"
-          id="email-address"
-          name="email"
-          type="email"
-          autocomplete="email"
-          required
-        />
-        <span style="color: red">{{ credentialsErrors.email }}</span>
-      </div>
-      <div class="flex flex-col mb-tiny w-full">
-        <label>Password</label>
-        <input
-          v-model="credentials.password"
-          type="password"
-          id="password"
-          name="password"
-          autocomplete="current-password"
-          required
-        />
-        <span style="color: red">{{ credentialsErrors.password }}</span>
-      </div>
-      <a
-        href="#"
-        class="text-primary-500 w-full text-right mr-small hover:underline"
+        </button>
+      </h1>
+      <div
+        class="bg-white shadow w-full rounded-lg text-center"
+        style="height: 39vw"
       >
         <div class="flex flex-col justify-center items-center p-2">
           <img
@@ -108,7 +81,12 @@
                 <i class="fa fa-eye" style="font-size: 26px;" @click="showVisibility()"></i></a>
               </div>
             </div>
-
+    <div>
+       <a
+        href="#"
+        class="text-primary-500 w-full text-right mr-small hover:underline"
+        @click="$emit('forgotPassword')">Forgot Password</a>
+    </div>
             <div class="form-group mb-6 text-center">
               <button
                 class="
@@ -163,6 +141,7 @@
         </form>
       </div>
     </div>
+  </div>
 </template>
 <script>
 import Title from "@/sharedComponents/Title";
