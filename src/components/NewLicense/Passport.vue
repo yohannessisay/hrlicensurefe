@@ -101,8 +101,8 @@
               Back
             </button>
             <button @click="submit">Next</button>
-            <button @click="draft(buttons[1].action)" variant="outline" class="p-1">
-              {{ buttons[1]["name"] }}
+            <button @click="draft(buttons[0].action)" variant="outline">
+              {{ buttons[0]["name"] }}
             </button>
           </div>
           <div
@@ -113,8 +113,8 @@
               Back
             </button>
             <button @click="submit">Next</button>
-            <button @click="draft(buttons[2].action)" variant="outline" class="p-1">
-              {{ buttons[2]["name"] }}
+            <button @click="draft(buttons[0].action)" variant="outline">
+              {{ buttons[0]["name"] }}
             </button>
             <button
               class="withdraw p-1"
@@ -388,7 +388,7 @@ export default {
     buttons = store.getters["newlicense/getButtons"];
     documentSpecs = store.getters["newlicense/getDocumentSpec"];
     licenseInfo = store.getters["newlicense/getLicense"];
-
+  
     healthExamCert = store.getters["newlicense/getHealthExamCert"];
     englishLanguage = store.getters["newlicense/getEnglishLanguage"];
     professionalDoc = store.getters["newlicense/getProfessionalDocuments"];
@@ -456,12 +456,12 @@ export default {
 
     const draft = (action) => {
       message.value.showLoading = true;
-      if (route.params.id) {
+      if (route.params.id || draftStatus) {
         if (dataChanged.value) {
           let license = {
             data: {
               action: action,
-              data: draftData,
+              data: licenseInfo,
             },
             id: route.params.id,
           };
@@ -473,8 +473,9 @@ export default {
                 documentSpecs[1].documentType.code,
                 passportFile.value
               );
-
+               
               let payload = { document: formData, id: licenseId };
+
               store
                 .dispatch("newlicense/uploadDocuments", payload)
                 .then((res) => {
@@ -496,7 +497,7 @@ export default {
           let license = {
             data: {
               action: action,
-              data: draftData,
+              data: licenseInfo,
             },
             id: route.params.id,
           };
@@ -705,7 +706,7 @@ export default {
           let license = {
             data: {
               action: action,
-              data: draftData,
+              data: licenseInfo,
             },
             id: route.params.id,
           };
@@ -739,7 +740,7 @@ export default {
           let license = {
             data: {
               action: action,
-              data: draftData,
+              data: licenseInfo,
             },
             id: route.params.id,
           };

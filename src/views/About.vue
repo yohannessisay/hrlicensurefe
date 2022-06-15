@@ -176,7 +176,8 @@
       <h2
         class="text-primary-700  p-small text-sm sm:text-lg flex justify-center"
       >
-        HPEL(Health professional electronic licensing )  © Ministry of Health - Ethiopia {{ new Date().getFullYear() }}
+       electronical Health Professional Licensing (eHPL) 
+  © Ministry of Health - Ethiopia {{ new Date().getFullYear() }}
       </h2>
     </div>
   </div>

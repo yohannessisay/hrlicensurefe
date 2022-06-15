@@ -116,8 +116,8 @@
               Back
             </button>
             <button @click="submit">Next</button>
-            <button @click="draft(buttons[2].action)" variant="outline" class="p-1">
-              {{ buttons[2]["name"] }}
+            <button @click="draft(buttons[0].action)" variant="outline">
+              {{ buttons[0]["name"] }}
             </button>
             <button
               class="withdraw p-1"
@@ -463,12 +463,14 @@ export default {
 
     const draft = (action) => {
       message.value.showLoading = true;
-      if (route.params.id) {
+      if (route.params.id || draftStatus) {
+
         if (dataChanged.value) {
+
           let license = {
             data: {
               action: action,
-              data: draftData,
+              data: licenseInfo,
             },
             id: route.params.id,
           };
@@ -502,11 +504,11 @@ export default {
           let license = {
             data: {
               action: action,
-              data: draftData,
+              data: licenseInfo,
             },
             id: route.params.id,
           };
-          store.dispatch("newlicense/editNewLicense", license).then((res) => {
+            store.dispatch("newlicense/editNewLicense", license).then((res) => {
             if (res.data.status == "Success") {
               message.value.showFlash = !message.value.showFlash;
               message.value.showLoading = false;
@@ -712,7 +714,7 @@ export default {
           let license = {
             data: {
               action: action,
-              data: draftData,
+              data: licenseInfo,
             },
             id: route.params.id,
           };
@@ -746,7 +748,7 @@ export default {
           let license = {
             data: {
               action: action,
-              data: draftData,
+              data: licenseInfo,
             },
             id: route.params.id,
           };

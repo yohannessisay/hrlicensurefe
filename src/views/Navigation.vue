@@ -9,13 +9,13 @@
         >
           <RenderIllustration class="" illustration="Logo" message="Address" />
           <h2 class="text-md AtkinsonHyperlegibleBold text-primary-600 ml-2 ">
-            HPEL(Health professional electronic licensing )
+           electronical Health Professional Licensing (eHPL) 
           </h2>
         </div>
         <div v-if="isFirstTime" class="flex items-center">
           <RenderIllustration class="" illustration="Logo" message="Address" />
           <h2 class="text-md AtkinsonHyperlegibleBold text-primary-600 ml-2 ">
-            HPEL(Health professional electronic licensing )
+           electronical Health Professional Licensing (eHPL) 
           </h2>
         </div>
 

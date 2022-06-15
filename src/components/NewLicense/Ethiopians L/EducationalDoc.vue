@@ -441,17 +441,17 @@
               <button @click="submit">Next</button>
               <button
                 v-if="this.buttons.length < 3"
-                @click="draft(this.buttons[1].action)"
+                @click="draft(this.buttons[0].action)"
                 variant="outline"
               >
-                {{ this.buttons[1].name }}
+                {{ this.buttons[0].name }}
               </button>
               <button
                 v-if="this.buttons.length > 2"
-                @click="draft(this.buttons[2].action)"
+                @click="draft(this.buttons[0].action)"
                 variant="outline"
               >
-                {{ this.buttons[2].name }}
+                {{ this.buttons[0].name }}
               </button>
 
               <button
@@ -1320,7 +1320,7 @@ export default {
     },
     draft(action) {
       this.showLoading = true;
-      if (this.draftId) {
+      if (this.draftId || this.draftStatus) {
         if (
           this.certificateFile1 ||
           this.certificateFile2 ||
@@ -1331,7 +1331,7 @@ export default {
         } else {
           let draftObj = {
             action: action,
-            data: this.getDraftData,
+            data: this.licenseInfo,
           };
           let payload = {
             licenseId: this.getDraftData.id,

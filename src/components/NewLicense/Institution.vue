@@ -284,8 +284,8 @@
             class="flex justify-center mb-8"
           >
             <button @click="submit">Apply</button>
-            <button @click="draft(this.buttons[1].action)" variant="outline" class="p-1">
-              {{ this.buttons[1]["name"] }}
+            <button @click="draft(this.buttons[0].action)" variant="outline">
+              {{ this.buttons[0]["name"] }}
             </button>
           </div>
           <div
@@ -293,8 +293,8 @@
             class="flex justify-center mb-8 p-1"
           >
             <button @click="submit">Apply</button>
-            <button @click="draft(this.buttons[2].action)" variant="outline" class="p-1">
-              {{ this.buttons[2]["name"] }}
+            <button @click="draft(this.buttons[0].action)" variant="outline">
+              {{ this.buttons[0]["name"] }}
             </button>
             <button
               class="withdraw p-1"
@@ -470,7 +470,7 @@ export default {
       }
     } else if (this.$route.params.id != undefined) {
       this.draftId = this.$route.params.id;
-      if (this.draftId != undefined) {
+      if (this.draftId != undefined || this.draftStatus) {
         setTimeout(() => {
           this.fetchDraft();
         }, 6500);
@@ -836,31 +836,36 @@ export default {
     },
     submit() {
       this.licenseInfoErrors = this.validateForm(this.licenseInfo);
+      
       if (
         this.licenseInfoErrors &&
         Object.keys(this.licenseInfoErrors).length === 0 &&
         Object.getPrototypeOf(this.licenseInfoErrors) === Object.prototype
       ) {
-        let license = {
-          applicantId: this.licenseInfo.applicantId,
-          applicantTypeId: this.licenseInfo.applicantTypeId,
-          education: {
-            departmentId: this.licenseInfo.education.departmentId,
-            institutionId: this.licenseInfo.education.institutionId,
-          },
-          regionId: this.regionID,
-          zoneId: this.zoneID,
-          residenceWoredaId: this.licenseInfo.residenceWoredaId,
-          professionalTypeIds: this.licenseInfo.professionalTypeIds,
-          educationalLevelId: this.licenseInfo.educationalLevelId,
-          paymentSlip: null,
-          occupationTypeId: this.licenseInfo.occupationTypeId,
-          nativeLanguageId: this.licenseInfo.nativeLanguageId,
-          expertLevelId: this.licenseInfo.expertLevelId,
-          otherProfessionalType: this.licenseInfo.otherProfessionalType,
-          otherEducationalInstitution:
-            this.licenseInfo.otherEducationalInstitution,
+          let license = {
+              applicantId: this.licenseInfo.applicantId,
+              applicantTypeId: this.licenseInfo.applicantTypeId,
+              education: {
+                departmentId: this.licenseInfo.education.departmentId,
+                institutionId: this.licenseInfo.education.institutionId,
+                id: this.licenseInfo.education.id,
+              },
+              regionId: this.regionID,
+              zoneId: this.zoneID,
+              residenceWoredaId: this.licenseInfo.residenceWoredaId,
+              professionalTypeIds: this.licenseInfo.professionalTypeIds,
+              educationalLevelId: this.licenseInfo.educationalLevelId,
+              paymentSlip: null,
+              occupationTypeId: this.licenseInfo.occupationTypeId,
+              nativeLanguageId: this.licenseInfo.nativeLanguageId,
+              expertLevelId: this.licenseInfo.expertLevelId,
+              otherEducationalInstitution: this.licenseInfo
+                .otherEducationalInstitution,
+              otherProfessionalType: this.licenseInfo.otherProfessionalType,
+              applicationStatusId: this.licenseInfo.applicationStatusId,
+     
         };
+        
         let profTypes = {
           professionalTypeIds: this.licenseInfo.professionalTypeIds,
         };
@@ -1029,6 +1034,7 @@ export default {
     },
     async fetchDraft() {
       let draftData = this.getDraft;
+      
       this.licenseInfo.applicantId = draftData.applicantId;
       this.licenseInfo.applicantTypeId = draftData.applicantTypeId;
       if (this.licenseInfo.applicantTypeId == 1) {
