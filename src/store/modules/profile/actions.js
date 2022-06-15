@@ -161,4 +161,12 @@ export default {
             return err;
         }
     },
+    async adminForgotPassowrd({ commit }, email) {
+        try {
+            const resp = await ApiService.post(baseUrl + "/forgotpassword", email);
+            return resp;
+        } catch (err) {
+            return err;
+        }
+    },
 };

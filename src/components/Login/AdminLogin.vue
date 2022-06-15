@@ -18,7 +18,7 @@
         </svg>
       </button>
 
-    <Title message="Log In" />
+    <Title message="Admin Log In" />
 
     <form
       @submit.prevent="submit"
@@ -51,6 +51,7 @@
       <a
         href="#"
         class="text-primary-500 w-full text-right mr-small hover:underline"
+        @click="$emit('forgotPassword')"
       >
         Forgot password?
       </a>
@@ -79,7 +80,7 @@ import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import Spinner from "@/sharedComponents/Spinner";
 export default {
   components: { Title, FlashMessage, ErrorFlashMessage, Spinner },
-  setup(props, context) {
+  setup( { emit }) {
     const store = useStore();
     const router = useRouter();
 
