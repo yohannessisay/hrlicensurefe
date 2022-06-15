@@ -688,11 +688,11 @@
             </button>
             <button class="decline" @click="reject(docs[index])">Reject</button>
             <button
-              class=""
+              class="p-1"
               variant="outline"
               @click="action('ReviewerDraftEvent')"
             >
-              save as Draft
+              Save as Draft
             </button>
             <button
             v-if="showTransferToAdminButton" 

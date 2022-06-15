@@ -1,5 +1,5 @@
 <template>
-  <div v-if="message.showLoading2" class="h-screen mt-large pt-large">
+  <div v-if="message.showLoading2" class="h-screen mt-large pt-small">
     <Spinner class="bg-lightBlueB-200  " />
   </div>
   <div
@@ -83,8 +83,8 @@
             Back
           </button>
         </div>
-        <div v-if="!message.showLoading">
-          <button v-on:click="submit()">Save Profile</button>
+        <div v-if="!message.showLoading" >
+          <button v-on:click="submit() " class="p-1">Save Profile</button>
         </div>
       </div>
       <div

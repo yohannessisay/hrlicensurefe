@@ -4,7 +4,7 @@
       <div
         class="
           flex flex-col
-          pt-large
+          pt-small
           w-full
           bg-white
           blue-box-shadow-light
@@ -14,7 +14,6 @@
         <TitleWithIllustration
           illustration="Institution"
           message="Educational Documents"
-          class="mt-8"
         />
         <span class="flex justify-center">{{ this.documentMessage }}</span>
         <h3
@@ -34,7 +33,7 @@
               REJECTED
             </h2>
             <h6
-              style="font-weight: bold;"
+              style="font-weight: bold"
               class="flex justify-center ml-4 mr-4"
               v-if="this.declinedFieldsCheck"
             >
@@ -52,16 +51,16 @@
             </h2>
             <div class="ml-4" style="width: 250px">
               <span>
-                <h2 v-if="!this.fileSizeExceed">
+                <h2 v-if="!this.fileSizeExceed" style="overflow-wrap: break-word;" >
                   {{ this.certificateFile1.name }}
                 </h2>
-                <h2 v-if="!this.fileSizeExceed">{{ this.certificate1Size }}</h2>
+                <h2 v-if="!this.fileSizeExceed" style="overflow-wrap: break-word;">{{ this.certificate1Size }}</h2>
               </span>
 
               <span v-if="showCertificate1Upload">
-                <label class="text-primary-700 text-lg"
-                  > <h3 class="document-title">Upload 8th Grade Certificate:</h3>
-                  <span style="color: red; font-weight: bold; font-size:16px"
+                <label class="text-primary-700 text-lg">
+                  <h3 class="document-title">Upload 8th Grade Certificate:</h3>
+                  <span style="color: red; font-weight: bold; font-size: 16px"
                     >Required</span
                   >
                   <div class="dropbox">
@@ -81,23 +80,20 @@
                 </label>
               </span>
               <picture v-if="!showCertificate1Upload && isCertificate1">
-              <p class="document-title">
-               8th Grade Certificate
-              </p>
+                <p class="document-title">8th Grade Certificate</p>
                 <p>
                   <a href="javascript:void(0)" @click="resetCert1()"
                     >Upload again</a
                   >
                 </p>
                 <img
+                  style="border-radius: 25px"
                   v-bind:src="certificate1Preview"
                   v-show="showCertificate1Preview"
                 />
               </picture>
               <div v-if="!showCertificate1Upload && isPdf1">
-                <p>
-               8th Grade Certificate
-              </p>
+                <p>8th Grade Certificate</p>
                 <p>
                   <a href="javascript:void(0)" @click="resetCert1()"
                     >Upload again</a
@@ -111,7 +107,7 @@
               <span
                 v-if="!showCertificate1Upload && !isCertificate1 && !isPdf1"
               >
-                <img :src="certificate1Preview" alt="" class="preview" />
+                <img style="border-radius: 25px" :src="certificate1Preview" alt="" class="preview" />
               </span>
             </div>
           </div>
@@ -132,15 +128,17 @@
             </h2>
             <div class="ml-4" style="width: 250px">
               <span>
-                <h2 v-if="!this.fileSizeExceed">
+                <h2 v-if="!this.fileSizeExceed" style="overflow-wrap: break-word;">
                   {{ this.certificateFile2.name }}
                 </h2>
-                <h2 v-if="!this.fileSizeExceed">{{ this.certificate2Size }}</h2>
+                <h2 v-if="!this.fileSizeExceed" style="overflow-wrap: break-word;">{{ this.certificate2Size }}</h2>
               </span>
               <span v-if="showCertificate2Upload">
                 <label class="text-primary-700 text-lg"
-                  ><h3 class="document-title">Upload 10th Grade Certificate:</h3>
-                  <span style="color: red; font-weight: bold; font-size:16px"
+                  ><h3 class="document-title">
+                    Upload 10th Grade Certificate:
+                  </h3>
+                  <span style="color: red; font-weight: bold; font-size: 16px"
                     >Required</span
                   >
                   <div class="dropbox">
@@ -161,23 +159,20 @@
               </span>
 
               <picture v-if="!showCertificate2Upload && isCertificate2">
-                <p class="document-title">
-                 10th Grade Certificate:
-                </p>
+                <p class="document-title">10th Grade Certificate:</p>
                 <p>
                   <a href="javascript:void(0)" @click="resetCert2()"
                     >Upload again</a
                   >
                 </p>
                 <img
+                style="border-radius: 25px"
                   v-bind:src="certificate2Preview"
                   v-show="showCertificate2Preview"
                 />
               </picture>
               <div v-if="!showCertificate2Upload && isPdf2">
-              <p class="document-title">
-                 10th Grade Certificate:
-                </p>
+                <p class="document-title">10th Grade Certificate:</p>
                 <p>
                   <a href="javascript:void(0)" @click="resetCert2()"
                     >Upload again</a
@@ -192,7 +187,7 @@
               <span
                 v-if="!showCertificate2Upload && !isCertificate2 && !isPdf2"
               >
-                <img :src="certificate2Preview" alt="" class="preview" />
+                <img style="border-radius: 25px" :src="certificate2Preview" alt="" class="preview" />
               </span>
             </div>
           </div>
@@ -214,17 +209,19 @@
 
             <div class="ml-4" style="width: 250px">
               <span>
-                <h2 v-if="!this.fileSizeExceed">
+                <h2 v-if="!this.fileSizeExceed" style="overflow-wrap: break-word;">
                   {{ this.certificateFile3.name }}
                 </h2>
-                <h2 v-if="!this.fileSizeExceed">{{ this.certificate3Size }}</h2>
+                <h2 v-if="!this.fileSizeExceed" style="overflow-wrap: break-word;">{{ this.certificate3Size }}</h2>
               </span>
               <span v-if="showCertificate3Upload">
                 <label class="text-primary-700 text-lg"
-                  ><h3 class="document-title">Upload 12th Grade Certificate:</h3>
+                  ><h3 class="document-title">
+                    Upload 12th Grade Certificate:
+                  </h3>
                   <span
                     v-if="this.eduLevel !== 'diploma'"
-                    style="color: red; font-weight: bold; font-size:16px"
+                    style="color: red; font-weight: bold; font-size: 16px"
                     >Required</span
                   >
                   <div class="dropbox">
@@ -245,23 +242,20 @@
               </span>
 
               <picture v-if="!showCertificate3Upload && isCertificate3">
-              <p class="document-title">
-                 12th Grade Certificate:
-                </p>
+                <p class="document-title">12th Grade Certificate:</p>
                 <p>
                   <a href="javascript:void(0)" @click="resetCert3()"
                     >Upload again</a
                   >
                 </p>
                 <img
+                style="border-radius: 25px"
                   v-bind:src="certificate3Preview"
                   v-show="showCertificate3Preview"
                 />
               </picture>
               <div v-if="!showCertificate3Upload && isPdf3">
-              <p class="document-title">
-                 12th Grade Certificate:
-                </p>
+                <p class="document-title">12th Grade Certificate:</p>
                 <p>
                   <a href="javascript:void(0)" @click="resetCert3()"
                     >Upload again</a
@@ -276,7 +270,7 @@
               <span
                 v-if="!showCertificate3Upload && !isCertificate3 && !isPdf3"
               >
-                <img :src="certificate3Preview" alt="" class="preview" />
+                <img style="border-radius: 25px" :src="certificate3Preview" alt="" class="preview" />
               </span>
             </div>
           </div>
@@ -299,15 +293,15 @@
             </h2>
             <div class="ml-4" style="width: 250px">
               <span>
-                <h2 v-if="!this.fileSizeExceed">
+                <h2 v-if="!this.fileSizeExceed" style="overflow-wrap: break-word;">
                   {{ this.certificateFile4.name }}
                 </h2>
-                <h2 v-if="!this.fileSizeExceed">{{ this.certificate4Size }}</h2>
+                <h2 v-if="!this.fileSizeExceed" style="overflow-wrap: break-word;">{{ this.certificate4Size }}</h2>
               </span>
               <span v-if="showCertificate4Upload">
                 <label class="text-primary-700 text-lg"
                   ><h3 class="document-title">Upload Transcript 9-10:</h3>
-                  <span style="color: red; font-weight: bold; font-size:16px"
+                  <span style="color: red; font-weight: bold; font-size: 16px"
                     >Required</span
                   >
                   <div class="dropbox">
@@ -328,23 +322,20 @@
               </span>
 
               <picture v-if="!showCertificate4Upload && isCertificate4">
-              <p class="document-title">
-                 Transcript 9-10:
-                </p>
+                <p class="document-title">Transcript 9-10:</p>
                 <p>
                   <a href="javascript:void(0)" @click="resetCert4()"
                     >Upload again</a
                   >
                 </p>
                 <img
+                style="border-radius: 25px"
                   v-bind:src="certificate4Preview"
                   v-show="showCertificate4Preview"
                 />
               </picture>
               <div v-if="!showCertificate4Upload && isPdf4">
-               <p class="document-title">
-                 Transcript 9-10:
-                </p>
+                <p class="document-title">Transcript 9-10:</p>
                 <p>
                   <a href="javascript:void(0)" @click="resetCert4()"
                     >Upload again</a
@@ -359,7 +350,7 @@
               <span
                 v-if="!showCertificate4Upload && !isCertificate4 && !isPdf4"
               >
-                <img :src="certificate4Preview" alt="" class="preview" />
+                <img style="border-radius: 25px" :src="certificate4Preview" alt="" class="preview" />
               </span>
             </div>
           </div>
@@ -380,17 +371,17 @@
             </h2>
             <div class="ml-4" style="width: 250px">
               <span>
-                <h2 v-if="!this.fileSizeExceed">
+                <h2 v-if="!this.fileSizeExceed" style="overflow-wrap: break-word;">
                   {{ this.certificateFile5.name }}
                 </h2>
-                <h2 v-if="!this.fileSizeExceed">{{ this.certificate5Size }}</h2>
+                <h2 v-if="!this.fileSizeExceed" style="overflow-wrap: break-word;">{{ this.certificate5Size }}</h2>
               </span>
               <span v-if="showCertificate5Upload">
                 <label class="text-primary-700 text-lg"
                   ><h3 class="document-title">Upload Transcript 11-12:</h3>
                   <span
                     v-if="this.eduLevel !== 'diploma'"
-                    style="color: red; font-weight: bold; font-size:16px"
+                    style="color: red; font-weight: bold; font-size: 16px"
                     >Required</span
                   >
                   <div class="dropbox">
@@ -411,23 +402,20 @@
               </span>
 
               <picture v-if="!showCertificate5Upload && isCertificate5">
-               <p class="document-title">
-                 Transcript 11-12:
-                </p>
+                <p class="document-title">Transcript 11-12:</p>
                 <p>
                   <a href="javascript:void(0)" @click="resetCert5()"
                     >Upload again</a
                   >
                 </p>
                 <img
+                style="border-radius: 25px"
                   v-bind:src="certificate5Preview"
                   v-show="showCertificate5Preview"
                 />
               </picture>
               <div v-if="!showCertificate5Upload && isPdf5">
-               <p class="document-title">
-                 Transcript 11-12:
-                </p>
+                <p class="document-title">Transcript 11-12:</p>
                 <p>
                   <a href="javascript:void(0)" @click="resetCert5()"
                     >Upload again</a
@@ -441,7 +429,7 @@
               <span
                 v-if="!showCertificate5Upload && !isCertificate5 && !isPdf5"
               >
-                <img :src="certificate5Preview" alt="" class="preview" />
+                <img style="border-radius: 25px" :src="certificate5Preview" alt="" class="preview" />
               </span>
             </div>
           </div>
@@ -449,23 +437,21 @@
         <div v-if="!showLoading">
           <div v-if="this.draftStatus == 'DRA' || !this.draftStatus">
             <div class="flex justify-center mt-4 mb-8">
-              <button @click="submitBack">
-                Back
-              </button>
+              <button @click="submitBack">Back</button>
               <button @click="submit">Next</button>
               <button
                 v-if="this.buttons.length < 3"
-                @click="draft(this.buttons[1].action)"
+                @click="draft(this.buttons[0].action)"
                 variant="outline"
               >
-                {{ this.buttons[1].name }}
+                {{ this.buttons[0].name }}
               </button>
               <button
                 v-if="this.buttons.length > 2"
-                @click="draft(this.buttons[2].action)"
+                @click="draft(this.buttons[0].action)"
                 variant="outline"
               >
-                {{ this.buttons[2].name }}
+                {{ this.buttons[0].name }}
               </button>
 
               <button
@@ -482,9 +468,7 @@
             v-if="this.draftStatus == 'SUB'"
             class="flex justify-center mt-8 pb-12"
           >
-            <button @click="submitBack">
-              Back
-            </button>
+            <button @click="submitBack">Back</button>
             <button @click="submit">Next</button>
             <button
               class="withdraw"
@@ -498,9 +482,7 @@
             v-if="this.draftStatus == 'USUP'"
             class="flex justify-center mt-8 pb-12"
           >
-            <button @click="submitBack">
-              Back
-            </button>
+            <button @click="submitBack">Back</button>
             <button @click="submit">Next</button>
             <button @click="draft(this.buttons[0].action)" variant="outline">
               {{ this.buttons[0]["name"] }}
@@ -513,9 +495,7 @@
             v-if="this.draftStatus == 'DEC'"
             class="flex justify-center mt-8 pb-12"
           >
-            <button @click="submitBack">
-              Back
-            </button>
+            <button @click="submitBack">Back</button>
             <button @click="submit">Next</button>
             <!-- <button @click="draft(this.buttons[0].action)" variant="outline">
             {{ this.buttons[0]["name"] }}
@@ -565,7 +545,7 @@ export default {
       showFlash: false,
       showErrorFlash: false,
       certificateFile1: "",
-      certificateFile1Id:0,
+      certificateFile1Id: 0,
       showCertificate1Preview: false,
       certificate1Preview: "",
       showCertificate1Upload: true,
@@ -573,7 +553,7 @@ export default {
       isPdf1: false,
 
       certificateFile2: "",
-      certificateFile2Id:0,
+      certificateFile2Id: 0,
       showCertificate2Preview: false,
       certificate2Preview: "",
       showCertificate2Upload: true,
@@ -581,7 +561,7 @@ export default {
       isPdf2: false,
 
       certificateFile3: "",
-      certificateFile3Id:0,
+      certificateFile3Id: 0,
       showCertificate3Preview: false,
       certificate3Preview: "",
       showCertificate3Upload: true,
@@ -589,7 +569,7 @@ export default {
       isPdf3: false,
 
       certificateFile4: "",
-      certificateFile4Id:0,
+      certificateFile4Id: 0,
       showCertificate4Preview: false,
       certificate4Preview: "",
       showCertificate4Upload: true,
@@ -597,7 +577,7 @@ export default {
       isPdf4: false,
 
       certificateFile5: "",
-      certificateFile5Id:0,
+      certificateFile5Id: 0,
       showCertificate5Preview: false,
       certificate5Preview: "",
       showCertificate5Upload: true,
@@ -721,11 +701,11 @@ export default {
     let eduTwelveth = this.$store.getters["newlicense/getEduTwelveth"];
     let transcript1 = this.$store.getters["newlicense/getEduTranscript1"];
     let transcript2 = this.$store.getters["newlicense/getEduTranscript2"];
-    this.certificateFile1Id = eduEighth?eduEighth.id:0;
-    this.certificateFile2Id = eduTenth?eduTenth.id:0;
-    this.certificateFile3Id = eduTwelveth?eduTwelveth.id:0;
-    this.certificateFile4Id = transcript1?transcript1.id:0;
-    this.certificateFile5Id = transcript2?transcript2.id:0;
+    this.certificateFile1Id = eduEighth ? eduEighth.id : 0;
+    this.certificateFile2Id = eduTenth ? eduTenth.id : 0;
+    this.certificateFile3Id = eduTwelveth ? eduTwelveth.id : 0;
+    this.certificateFile4Id = transcript1 ? transcript1.id : 0;
+    this.certificateFile5Id = transcript2 ? transcript2.id : 0;
 
     if (
       eduEighth &&
@@ -746,7 +726,7 @@ export default {
       }
       reader.addEventListener(
         "load",
-        function() {
+        function () {
           this.showCertificate1Preview = true;
           this.certificate1Preview = reader.result;
         }.bind(this),
@@ -783,7 +763,7 @@ export default {
       }
       reader.addEventListener(
         "load",
-        function() {
+        function () {
           this.showCertificate2Preview = true;
           this.certificate2Preview = reader.result;
         }.bind(this),
@@ -820,7 +800,7 @@ export default {
       }
       reader.addEventListener(
         "load",
-        function() {
+        function () {
           this.showCertificate3Preview = true;
           this.certificate3Preview = reader.result;
         }.bind(this),
@@ -857,7 +837,7 @@ export default {
       }
       reader.addEventListener(
         "load",
-        function() {
+        function () {
           this.showCertificate4Preview = true;
           this.certificate4Preview = reader.result;
         }.bind(this),
@@ -894,7 +874,7 @@ export default {
       }
       reader.addEventListener(
         "load",
-        function() {
+        function () {
           this.showCertificate5Preview = true;
           this.certificate5Preview = reader.result;
         }.bind(this),
@@ -1050,10 +1030,9 @@ export default {
   methods: {
     ...mapActions(["setProfessionalDoc"]),
     resetCert1() {
-
       this.showCertificate1Upload = true;
       this.showCertificate1Preview = false;
-      
+
       this.certificateFile1 = "";
       this.certificate1Preview = "";
       this.isCertificate1 = true;
@@ -1112,7 +1091,7 @@ export default {
         }
         reader.addEventListener(
           "load",
-          function() {
+          function () {
             this.showCertificate1Preview = true;
             this.certificate1Preview = reader.result;
           }.bind(this),
@@ -1127,7 +1106,6 @@ export default {
             this.isPdf1 = true;
             reader.readAsDataURL(this.certificateFile1);
           }
-
         }
       } else {
         this.fileSizeExceed = true;
@@ -1153,7 +1131,7 @@ export default {
         }
         reader.addEventListener(
           "load",
-          function() {
+          function () {
             this.showCertificate2Preview = true;
             this.certificate2Preview = reader.result;
           }.bind(this),
@@ -1193,7 +1171,7 @@ export default {
         }
         reader.addEventListener(
           "load",
-          function() {
+          function () {
             this.showCertificate3Preview = true;
             this.certificate3Preview = reader.result;
           }.bind(this),
@@ -1233,7 +1211,7 @@ export default {
         }
         reader.addEventListener(
           "load",
-          function() {
+          function () {
             this.showCertificate4Preview = true;
             this.certificate4Preview = reader.result;
           }.bind(this),
@@ -1273,7 +1251,7 @@ export default {
         }
         reader.addEventListener(
           "load",
-          function() {
+          function () {
             this.showCertificate5Preview = true;
             this.certificate5Preview = reader.result;
           }.bind(this),
@@ -1342,7 +1320,7 @@ export default {
     },
     draft(action) {
       this.showLoading = true;
-      if (this.draftId) {
+      if (this.draftId || this.draftStatus) {
         if (
           this.certificateFile1 ||
           this.certificateFile2 ||
@@ -1353,7 +1331,7 @@ export default {
         } else {
           let draftObj = {
             action: action,
-            data: this.getDraftData,
+            data: this.licenseInfo,
           };
           let payload = {
             licenseId: this.getDraftData.id,
@@ -1390,8 +1368,8 @@ export default {
             occupationTypeId: this.licenseInfo.occupationTypeId,
             nativeLanguageId: this.licenseInfo.nativeLanguageId,
             expertLevelId: this.licenseInfo.expertLevelId,
-            otherEducationalInstitution: this.licenseInfo
-              .otherEducationalInstitution,
+            otherEducationalInstitution:
+              this.licenseInfo.otherEducationalInstitution,
             otherProfessionalType: this.licenseInfo.otherProfessionalType,
           },
         };
@@ -1582,8 +1560,8 @@ img {
   text-align: center;
   padding: 50px 0;
 }
-.document-title{
-    font-weight: bold;
+.document-title {
+  font-weight: bold;
 }
 .withdraw {
   background-image: linear-gradient(to right, #d63232, #e63636) !important;

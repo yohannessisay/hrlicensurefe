@@ -4,7 +4,7 @@
       <div
         class="
           flex flex-col
-          pt-large
+          pt-small
           w-full
           bg-white
           blue-box-shadow-light
@@ -35,14 +35,15 @@
         <TitleWithIllustration
           illustration="Certificate"
           message="Work Experience"
-          class="mt-8"
+     
         />
         <span class="flex justify-center">{{ documentMessage }}</span>
-        <div class="ml-4">
+        <div class="ml-4 flex justify-center">
           <button @click="addDocs()">Add Document</button>
           <button @click="removeDocs()">Remove Document</button>
         </div>
         <form @submit.prevent="submit" class="mx-auto max-w-3xl mt-8">
+          
           <div class="flex flex-col justify-center">
             <div>
               <span>
@@ -132,13 +133,13 @@
           </div>
         </form>
         <div v-if="!message.showLoading">
-          <div v-if="buttons && !draftStatus" class="flex justify-center mb-8">
+          <div v-if="buttons && !draftStatus" class="flex justify-center mb-8 mt-4">
             <button @click="submitBack">
               Back
             </button>
             <button @click="submit">Next</button>
-            <button @click="draft(buttons[1].action)" variant="outline">
-              {{ buttons[1]["name"] }}
+            <button @click="draft(buttons[0].action)" variant="outline">
+              {{ buttons[0]["name"] }}
             </button>
           </div>
           <div
@@ -149,8 +150,8 @@
               Back
             </button>
             <button @click="submit">Next</button>
-            <button @click="draft(buttons[2].action)" variant="outline">
-              {{ buttons[2]["name"] }}
+            <button @click="draft(buttons[0].action)" variant="outline">
+              {{ buttons[0]["name"] }}
             </button>
             <button
               class="withdraw"
@@ -460,12 +461,12 @@ export default {
 
     const draft = (action) => {
       message.value.showLoading = true;
-      if (route.params.id) {
+      if (route.params.id || this.draftStatus) {
         if (dataChanged.value) {
           let license = {
             data: {
               action: action,
-              data: draftData,
+              data: licenseInfo,  
             },
             id: route.params.id,
           };

@@ -11,7 +11,8 @@
             />
           </router-link>
           <h2 class="text-md AtkinsonHyperlegibleBold text-primary-600 ml-2 ">
-            HPEL(Health professional electronic licensing )
+           electronical Health Professional Licensing (eHPL) 
+
           </h2>
         </div>
 
