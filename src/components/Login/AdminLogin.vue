@@ -18,7 +18,7 @@
         </svg>
       </button>
 
-    <Title message="Admin Log In" />
+    <Title message="Log In" />
 
     <form
       @submit.prevent="submit"
