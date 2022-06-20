@@ -1322,6 +1322,8 @@ export default {
             otherEducationalInstitution: this.licenseInfo
               .otherEducationalInstitution,
             otherProfessionalType: this.licenseInfo.otherProfessionalType,
+            otherProfessionalTypeAmharic: this.licenseInfo.otherProfessionalTypeAmharic,
+
           },
         };
         this.$store

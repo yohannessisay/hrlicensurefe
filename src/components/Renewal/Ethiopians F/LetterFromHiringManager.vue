@@ -481,7 +481,9 @@ export default {
             expertLevelId: licenseInfo.expertLevelId,
             otherEducationalInstitution:
               licenseInfo.otherEducationalInstitution,
-            otherProfessionalType: licenseInfo.otherProfessionalType,
+              otherProfessionalType: licenseInfo.otherProfessionalType,
+             otherProfessionalTypeAmharic:licenseInfo.otherProfessionalType,
+
           },
         };
         store.dispatch("renewal/addRenewalLicense", license).then((res) => {
@@ -619,7 +621,9 @@ export default {
             expertLevelId: licenseInfo.expertLevelId,
             otherEducationalInstitution:
               licenseInfo.otherEducationalInstitution,
-            otherProfessionalType: licenseInfo.otherProfessionalType,
+              otherProfessionalType: licenseInfo.otherProfessionalType,
+             otherProfessionalTypeAmharic:licenseInfo.otherProfessionalType,
+
           },
         };
         store.dispatch("renewal/addRenewalLicense", license).then((res) => {

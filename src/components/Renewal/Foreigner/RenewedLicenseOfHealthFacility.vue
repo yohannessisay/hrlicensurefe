@@ -491,9 +491,12 @@ export default {
             paymentSlip: null,
             occupationTypeId: licenseInfo.occupationTypeId,
             expertLevelId: licenseInfo.expertLevelId,
-            otherEducationalInstitution:
-              licenseInfo.otherEducationalInstitution,
+            otherEducationalInstitution: licenseInfo.otherEducationalInstitution,
             otherProfessionalType: licenseInfo.otherProfessionalType,
+            otherProfessionalTypeAmharic:licenseInfo.otherProfessionalType,
+
+
+            
           },
         };
         store.dispatch("renewal/addRenewalLicense", license).then((res) => {
@@ -645,6 +648,8 @@ export default {
             otherEducationalInstitution:
               licenseInfo.otherEducationalInstitution,
             otherProfessionalType: licenseInfo.otherProfessionalType,
+            otherProfessionalTypeAmharic:licenseInfo.otherProfessionalType,
+
           },
         };
         store.dispatch("renewal/addRenewalLicense", license).then((res) => {

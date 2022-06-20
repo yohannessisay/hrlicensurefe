@@ -222,7 +222,8 @@
                   You can't select more than 3 professional types.
                 </span>
               </div>
-              <div>
+            <div class="flex flex-col" style="min-width: 400px;">
+              
                 <input
                   v-model="licenseInfo.otherProfessionalType"
                   v-if="showOtherProfession"
@@ -230,7 +231,15 @@
                   placeholder="Write Other Profession"
                   type="text"
                 />
+                 <input
+                  v-model="licenseInfo.otherProfessionalTypeAmharic"
+                  v-if="showOtherProfession && this.draftStatus == 'USUP'"
+                  class="mt-2"
+                  placeholder="የሙያ ስም በአማርኛ"
+                  type="text"
+                />
               </div>
+           
             </div>
           </div>
           <div
@@ -502,6 +511,7 @@ export default {
       educationalLevelId: null,
       otherEducationalInstitution: null,
       otherProfessionalType: null,
+      otherProfessionalTypeAmharic: null,      
       applicationStatusId: null,
     },
     licenseInfoErrors: {
@@ -722,8 +732,9 @@ export default {
               nativeLanguageId: this.licenseInfo.nativeLanguageId,
               expertLevelId: this.licenseInfo.expertLevelId,
               otherEducationalInstitution:
-                this.licenseInfo.otherEducationalInstitution,
+               this.licenseInfo.otherEducationalInstitution,
               otherProfessionalType: this.licenseInfo.otherProfessionalType,
+              otherProfessionalTypeAmharic: this.licenseInfo.otherProfessionalTypeAmharic,
               applicationStatusId: this.licenseInfo.applicationStatusId,
             },
           },
@@ -780,6 +791,7 @@ export default {
               this.licenseInfo.otherEducationalInstitution,
             expertLevelId: this.licenseInfo.expertLevelId,
             otherProfessionalType: this.licenseInfo.otherProfessionalType,
+            otherProfessionalTypeAmharic: this.licenseInfo.otherProfessionalTypeAmharic,
             applicationStatusId: this.licenseInfo.applicationStatusId,
           },
         },
@@ -862,6 +874,7 @@ export default {
               otherEducationalInstitution: this.licenseInfo
                 .otherEducationalInstitution,
               otherProfessionalType: this.licenseInfo.otherProfessionalType,
+              otherProfessionalTypeAmharic: this.licenseInfo.otherProfessionalTypeAmharic,
               applicationStatusId: this.licenseInfo.applicationStatusId,
      
         };
@@ -1162,6 +1175,8 @@ export default {
         this.showOtherProfession = true;
         this.licenseInfo.otherProfessionalType =
           draftData.otherProfessionalType;
+          this.licenseInfo.otherProfessionalTypeAmharic =
+          draftData.otherProfessionalTypeAmharic;
       }
     },
   },
