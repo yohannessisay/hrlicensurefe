@@ -347,7 +347,7 @@ export default {
     this.expertLevelId = this.license.expertLevelId;
     this.otherEducationalInstitution = this.license.otherEducationalInstitution;
     this.otherProfessionalType = this.license.otherProfessionalType;
-
+    this.otherProfessionalTypeAmharic = this.license.otherProfessionalTypeAmharic;
     if (this.levelOfEducation == "diploma") {
       this.docCode = "PDD";
       this.docIdx = 7;
@@ -1181,6 +1181,7 @@ export default {
     educationalLevelId: null,
     otherEducationalInstitution: null,
     otherProfessionalType: null,
+    otherProfessionalTypeAmharic:null,
     draftId: "",
     draftData: "",
     draftStatus: "",

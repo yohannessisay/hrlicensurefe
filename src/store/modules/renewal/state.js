@@ -13,6 +13,7 @@ export default {
         educationalLevelId: "",
         otherEducationalInstitution: "",
         otherProfessionalType: "",
+        otherProfessionalTypeAmharic: "",
         paymentSlip: null,
         applicationId: 0,
         buttons: [],

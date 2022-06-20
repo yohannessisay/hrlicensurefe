@@ -165,7 +165,7 @@
                 <button
                   type="button"
                   class="btn  text-red-500 hover:bg-error hover:border-error "
-                  title="Edit User"
+                  title="update User"
                    @click="openEditUserModal(item)"
                 >
                   <i class="fa fa-edit "></i>
