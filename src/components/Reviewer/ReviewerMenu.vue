@@ -399,8 +399,8 @@
         <div v-if="this.display == 'userManagement'">
           <UserManagement />
         </div>
-        <div v-if="this.display == 'allLicensed'">
-          <all-licensed />
+        <div v-if="this.display == 'allLicensed' || this.display == 'reprint' ">
+          <all-licensed :display="this.display"/>
         </div>
         <div v-if="this.display == 'accredited'">
           <accredited />

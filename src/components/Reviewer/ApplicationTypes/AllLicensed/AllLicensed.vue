@@ -5,50 +5,38 @@
       <div class="pl-12">
         <div style="border-bottom: 2px solid #eaeaea">
           <ul class="flex cursor-pointer">
-            <li
-              :class="[
-                selectedTab == 'New License'
-                  ? selectedTabClass
-                  : notSelectedTabClass,
-              ]"
-              @click="changeTab('New License')"
-              :style="[
-                selectedTab == 'New License'
-                  ? 'background-color: white'
-                  : 'background-color: #C3DBD9',
-              ]"
-            >
+            <li :class="[
+              selectedTab == 'New License'
+                ? selectedTabClass
+                : notSelectedTabClass,
+            ]" @click="changeTab('New License')" :style="[
+  selectedTab == 'New License'
+    ? 'background-color: white'
+    : 'background-color: #C3DBD9',
+]">
               New License
             </li>
-            <li
-              :class="[
-                selectedTab == 'Renewal'
-                  ? selectedTabClass
-                  : notSelectedTabClass,
-              ]"
-              :style="[
-                selectedTab == 'Renewal'
-                  ? 'background-color: white'
-                  : 'background-color: #C3DBD9',
-              ]"
-              @click="changeTab('Renewal')"
-            >
+            <li :class="[
+              selectedTab == 'Renewal'
+                ? selectedTabClass
+                : notSelectedTabClass,
+            ]" :style="[
+  selectedTab == 'Renewal'
+    ? 'background-color: white'
+    : 'background-color: #C3DBD9',
+]" @click="changeTab('Renewal')">
               Renewal
             </li>
-            <li
-              :class="[
-                selectedTab == 'Good Standing'
-                  ? selectedTabClass
-                  : notSelectedTabClass,
-                'tabColor',
-              ]"
-              :style="[
-                selectedTab == 'Good Standing'
-                  ? 'background-color: white'
-                  : 'background-color: #C3DBD9',
-              ]"
-              @click="changeTab('Good Standing')"
-            >
+            <li :class="[
+              selectedTab == 'Good Standing'
+                ? selectedTabClass
+                : notSelectedTabClass,
+              'tabColor',
+            ]" :style="[
+  selectedTab == 'Good Standing'
+    ? 'background-color: white'
+    : 'background-color: #C3DBD9',
+]" @click="changeTab('Good Standing')">
               Good Standing
             </li>
           </ul>
@@ -60,17 +48,9 @@
 
       <div class="flex flex-wrap mb-medium pl-12 pt-1">
         <label class="text-primary-700 mr-2">From</label>
-        <input
-          class="max-w-3xl mr-5"
-          type="date"
-          v-model="allInfo.searchFromDate"
-        />
+        <input class="max-w-3xl mr-5" type="date" v-model="allInfo.searchFromDate" />
         <label class="text-primary-700 mr-2">To</label>
-        <input
-          class="max-w-3xl mr-5"
-          type="date"
-          v-model="allInfo.searchUpToDate"
-        />
+        <input class="max-w-3xl mr-5" type="date" v-model="allInfo.searchUpToDate" />
         <button @click="filterAllLicensedApplication">
           Filter
         </button>
@@ -78,73 +58,53 @@
       <div class="flex pl-12 pt-tiny">
         <Title :message="message" />
       </div>
-      <div
-        class="flex flex-wrap pb-medium rounded h-full"
-        v-if="
-          selectedTab == 'New License'
-            ? !showLoadingNewLicense
-            : selectedTab == 'Renewal'
+      <div class="flex flex-wrap pb-medium rounded h-full" v-if="
+        selectedTab == 'New License'
+          ? !showLoadingNewLicense
+          : selectedTab == 'Renewal'
             ? !showLoadingRenewal
             : !showLoadingGoodStanding
-        "
-      >
-        <nothing-to-show
-          :nothingToShow="
-            selectedTab == 'New License'
-              ? nothingToShowNewLicense
-              : selectedTab == 'Renewal'
+      ">
+        <nothing-to-show :nothingToShow="
+          selectedTab == 'New License'
+            ? nothingToShowNewLicense
+            : selectedTab == 'Renewal'
               ? nothingToShowRenewal
               : nothingToShowGoodStanding
-          "
-        />
-        <all-licensed-applications
-          :allLicensedApplication="
-            selectedTab == 'New License'
-              ? getNewLicenseAllLicensed
-              : selectedTab == 'Renewal'
+        " />
+        <all-licensed-applications :allLicensedApplication="
+          selectedTab == 'New License'
+            ? getNewLicenseAllLicensed
+            : selectedTab == 'Renewal'
               ? getRenewalAllLicensed
               : getGoodStandingAllLicensed
-          "
-          :app_type="app_type"
-          others_licensed="false"
-        />
+        " :app_type="app_type" others_licensed="false" />
       </div>
     </div>
-    <div
-      v-if="
-        selectedTab == 'New License'
-          ? showLoadingNewLicense
-          : selectedTab == 'Renewal'
+    <div v-if="
+      selectedTab == 'New License'
+        ? showLoadingNewLicense
+        : selectedTab == 'Renewal'
           ? showLoadingRenewal
           : showLoadingGoodStanding
-      "
-      class="flex justify-center justify-items-center mt-24"
-    >
+    " class="flex justify-center justify-items-center mt-24">
       <Spinner />
     </div>
     <div class="bg-lightBlueB-200 h-full" v-if="allInfo.searchByInput">
       <div class="flex pl-12 pt-tiny">
-        <Title
-          :message="
-            'All Licensed Applicants on Date Range ' +
-              moment(allInfo.searchFromDate).format('MMM D, YYYY') +
-              ' To ' +
-              moment(allInfo.searchUpToDate).format('MMM D, YYYY')
-          "
-        />
+        <Title :message="
+          'All Licensed Applicants on Date Range ' +
+          moment(allInfo.searchFromDate).format('MMM D, YYYY') +
+          ' To ' +
+          moment(allInfo.searchUpToDate).format('MMM D, YYYY')
+        " />
         <button @click="backClicked">back</button>
       </div>
-      <filtered-info
-        :filteredData="allInfo.filteredByDate"
-        type="applicant-detail"
-        :app_type="app_type"
-      />
+      <filtered-info :filteredData="allInfo.filteredByDate" type="applicant-detail" :app_type="app_type" />
     </div>
   </div>
   <div v-if="allInfo.message.showErrorFlash">
-    <ErrorFlashMessage
-      message="Date Range is not valid, Please Enter Valid Date"
-    />
+    <ErrorFlashMessage message="Date Range is not valid, Please Enter Valid Date" />
   </div>
 </template>
 
@@ -154,7 +114,6 @@ import { useStore } from "vuex";
 
 import AllLicensedApplications from "../ChildApplicationTypes/AllLicensedApplications.vue";
 import applicationStatus from "../../Configurations/getApplicationStatus.js";
-
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import filterApplication from "../../ChildComponents/FilteredDatas/FilterApplication.js";
 import FilteredInfo from "../../ChildComponents/FilteredDatas/FilteredInfo.vue";
@@ -182,6 +141,10 @@ export default {
       ];
     },
   },
+  props: {
+    display: String
+  },
+
   components: {
     ReviewerNavBar,
     ErrorFlashMessage,
@@ -191,7 +154,8 @@ export default {
     AllLicensedApplications,
     Title,
   },
-  setup() {
+  setup(props) {
+    console.log(props.display);
     const store = useStore();
     let renewalAllLicensed = ref([]);
     let newLicenseAllLicensed = ref([]);
@@ -232,8 +196,8 @@ export default {
       type == "New License"
         ? (allInfo.value.assignApplication = newLicenseAllLicensed.value)
         : type == "Renewal"
-        ? (allInfo.value.assignApplication = renewalAllLicensed.value)
-        : (allInfo.value.assignApplication = goodStandingAllLicensed.value);
+          ? (allInfo.value.assignApplication = renewalAllLicensed.value)
+          : (allInfo.value.assignApplication = goodStandingAllLicensed.value);
 
       for (let applicant in allInfo.value.assignApplication) {
         if (
@@ -267,11 +231,11 @@ export default {
           showLoadingNewLicense.value = false;
           newLicenseAllLicensed.value =
             store.getters[
-              "reviewerNewLicense/getNewLicenseAllLicensedSearched"
+            "reviewerNewLicense/getNewLicenseAllLicensedSearched"
             ];
           allInfo.value.assignApplication =
             store.getters[
-              "reviewerNewLicense/getNewLicenseAllLicensedSearched"
+            "reviewerNewLicense/getNewLicenseAllLicensedSearched"
             ];
 
           for (let applicant in allInfo.value.assignApplication) {
@@ -291,7 +255,9 @@ export default {
 
     const fetchRenewalAllLicensed = () => {
       showLoadingRenewal.value = true;
-      store.dispatch("reviewerRenewal/getRenewalAllLicensed").then((res) => {
+      const pathurl = props.display == 'reprint' ? "reviewerRenewal/getCertificateIssuedRenewal" : "reviewerRenewal/getRenewalAllLicensed";
+      console.log(pathurl);
+      store.dispatch(pathurl).then((res) => {
         showLoadingRenewal.value = false;
         renewalAllLicensed.value =
           store.getters["reviewerRenewal/getRenewalAllLicensedSearched"];
@@ -309,17 +275,29 @@ export default {
           showLoadingGoodStanding.value = false;
           goodStandingAllLicensed.value =
             store.getters[
-              "reviewerGoodStanding/getGoodStandingAllLicensedSearched"
+            "reviewerGoodStanding/getGoodStandingAllLicensedSearched"
             ];
           if (goodStandingAllLicensed.value.length === 0) {
             nothingToShowGoodStanding.value = true;
           }
         });
     };
-    onMounted(() => {
+
+    const fetchLicencedGoodStanding = () => {
       fetchRenewalAllLicensed();
       fetchNewLicenseAllLicensed();
       fetchGoodStandingAllLicensed();
+    };
+
+    const fetchCertficateIssuedGoodStanding = () => {
+      fetchRenewalAllLicensed();
+      fetchNewLicenseAllLicensed();
+      fetchGoodStandingAllLicensed();
+    };
+
+    onMounted(() => {
+      props.display == 'reprint' ? fetchCertficateIssuedGoodStanding() : fetchLicencedGoodStanding();
+
     });
 
     return {
