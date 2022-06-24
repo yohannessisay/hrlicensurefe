@@ -516,7 +516,7 @@
                               v-model="newLicense.otherProfessionalType"
                             />
                              <label style="display: block"
-                              >የሙያ ስም በአማርኛ :</label
+                              >የሙያ ስም በአማርኛ (ለኢትዮጵያውያን አመልካች) :</label
                             >
                             <input
                                class="mt-1"
