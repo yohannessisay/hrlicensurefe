@@ -132,7 +132,6 @@
 
                 <input v-model="licenseInfo.otherProfessionalType" v-if="showOtherProfession" class="mt-2 mb-2"
                   placeholder="Write Other Profession" type="text" />
-                                <label style="display: block" v-if="showOtherProfession">የሙያ ስም በአማርኛ (ለኢትዮጵያውያን አመልካች) </label>
 
               </div>
 
