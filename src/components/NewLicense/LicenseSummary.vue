@@ -160,7 +160,42 @@
           documents.</span>
       </div>
       <div v-if="!showLoading">
-        <div v-if="this.draftStatus == 'DRA' || !this.draftStatus">
+      <div v-if="!this.draftStatus">
+          <div class="mt-12 flex justify-center">
+            <div>
+              <button @click="submitBack">
+                Back
+              </button>
+              <button v-if="this.buttons.length < 3" @click="submitRequest(this.buttons[1].action)">
+                {{ this.buttons[1].name }}
+              </button>
+              <button v-if="this.buttons.length > 2" @click="submitRequest(this.buttons[1].action)">
+                {{ this.buttons[1].name }}
+              </button>
+            </div>
+          </div>
+          <div class="flex justify-center mt-4">
+            <h6>
+              You need to check the box to be able to submit.
+            </h6>
+          </div>
+          <div class="flex justify-center mt-4 mb-8">
+            <button id="subButton" style="opacity: 0.3" :disabled="this.checkBoxValue == true"
+              v-if="this.buttons.length < 3" @click="draft(this.buttons[0].action)" variant="outline">
+              {{ this.buttons[0].name }}
+            </button>
+            <button id="subButton" style="opacity: 0.3" :disabled="this.checkBoxValue == true"
+              v-if="this.buttons.length > 2" @click="draft(this.buttons[2].action)" variant="outline">
+              {{ this.buttons[2].name }}
+            </button>
+
+            <button v-if="this.buttons.length > 2" class="withdraw" @click="withdraw(this.buttons[1].action)"
+              variant="outline">
+              {{ this.buttons[1].name }}
+            </button>
+          </div>
+        </div>
+        <div v-if="this.draftStatus == 'DRA'">
           <div class="mt-12 flex justify-center">
             <div>
               <button @click="submitBack">

@@ -116,6 +116,7 @@ export default {
   props: ["assignedApplication", "app_type", "assigned_to_others"],
   name: "AssignedApplications",
   setup(props) {
+    console.log(props.assignedApplication);
     let router = useRouter();
     const store = useStore();
 

@@ -1,74 +1,129 @@
 <template>
   <div class="flex justify-center items">
     <div class="bg-lightBlueB-200 w-screen h-screen max-w-4xl">
-      <div class="
+      <div
+        class="
           flex flex-col
           pt-small
           w-full
           bg-white
           blue-box-shadow-light
           rounded
-        ">
+        "
+      >
         <div class="mt-small">
-          <TitleWithIllustration illustration="Institution" message="Institution" />
+          <TitleWithIllustration
+            illustration="Institution"
+            message="Institution"
+          />
         </div>
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-10">
           <div id="main" class="flex">
             <div class="flex flex-col mb-small pt-8 w-2/5 ml-medium mr-12">
               <label class="text-primary-700">Applicant Type</label>
-              <select class="max-w-3xl" @change="checkApplicantType(licenseInfo.applicantTypeId)"
-                v-model="licenseInfo.applicantTypeId">
-                <option v-for="applicant in applicantTypes" v-bind:key="applicant.name" v-bind:value="applicant.id">
+              <select
+                class="max-w-3xl"
+                @change="checkApplicantType(licenseInfo.applicantTypeId)"
+                v-model="licenseInfo.applicantTypeId"
+              >
+                <option
+                  v-for="applicant in applicantTypes"
+                  v-bind:key="applicant.name"
+                  v-bind:value="applicant.id"
+                >
                   {{ applicant.name }}
                 </option>
               </select>
-              <span v-if="licenseInfoErrors.applicantTypeId !== null" style="color: red">{{
-                  licenseInfoErrors.applicantTypeId
-              }}</span>
+              <span
+                v-if="licenseInfoErrors.applicantTypeId !== null"
+                style="color: red"
+                >{{ licenseInfoErrors.applicantTypeId }}</span
+              >
             </div>
             <div class="flex flex-col mb-small pt-8 w-2/5 mr-12"></div>
           </div>
           <div id="main" class="flex mt-4 pt-8">
             <div class="flex flex-col mb-medium w-2/5 ml-medium mr-12">
               <label class="text-primary-700">Department</label>
-              <select class="max-w-3xl" v-model="licenseInfo.education.departmentId" @change="
-                fetchProfessionalType(licenseInfo.education.departmentId)
-              ">
-                <option v-for="department in departments" v-bind:key="department.name" v-bind:value="department.id">
+              <select
+                class="max-w-3xl"
+                v-model="licenseInfo.education.departmentId"
+                @change="
+                  fetchProfessionalType(licenseInfo.education.departmentId)
+                "
+              >
+                <option
+                  v-for="department in departments"
+                  v-bind:key="department.name"
+                  v-bind:value="department.id"
+                >
                   {{ department.name }}
                 </option>
               </select>
-              <span v-if="licenseInfoErrors.departmentId !== null" style="color: red">{{ licenseInfoErrors.departmentId
-              }}</span>
+              <span
+                v-if="licenseInfoErrors.departmentId !== null"
+                style="color: red"
+                >{{ licenseInfoErrors.departmentId }}</span
+              >
             </div>
             <div class="flex flex-col mb-medium w-2/5 mr-12">
               <label class="text-primary-700">Educational Institution</label>
-              <select v-model="institution" @change="checkOtherEducation(institution)">
-                <option v-for="institution in institutions" v-bind:key="institution.name" v-bind:value="institution">
+              <select
+                v-model="institution"
+                @change="checkOtherEducation(institution)"
+              >
+                <option
+                  v-for="institution in institutions"
+                  v-bind:key="institution.name"
+                  v-bind:value="institution"
+                >
                   {{ institution.name }}
                 </option>
               </select>
-              <span v-if="licenseInfoErrors.institutionId !== null" style="color: red">{{
-                  licenseInfoErrors.institutionId
-              }}</span>
-              <input v-model="licenseInfo.otherEducationalInstitution" v-if="showOtherEducation" class="mt-2"
-                placeholder="Write Educational Institution" type="text" />
+              <span
+                v-if="licenseInfoErrors.institutionId !== null"
+                style="color: red"
+                >{{ licenseInfoErrors.institutionId }}</span
+              >
+              <input
+                v-model="licenseInfo.otherEducationalInstitution"
+                v-if="showOtherEducation"
+                class="mt-2"
+                placeholder="Write Educational Institution"
+                type="text"
+              />
             </div>
           </div>
           <div v-if="this.showRegion" id="main" class="pt-8 mt-4">
             <div class="flex">
               <div class="flex flex-col mb-medium w-2/5 ml-medium mr-12">
                 <label class="text-primary-700">Region</label>
-                <select class="max-w-3xl" v-model="regionID" @change="fetchZones()">
-                  <option v-for="types in regionArray" v-bind:key="types.name" v-bind:value="types.id">
+                <select
+                  class="max-w-3xl"
+                  v-model="regionID"
+                  @change="fetchZones()"
+                >
+                  <option
+                    v-for="types in regionArray"
+                    v-bind:key="types.name"
+                    v-bind:value="types.id"
+                  >
                     {{ types.name }}
                   </option>
                 </select>
               </div>
               <div class="flex flex-col mb-medium w-2/5 mr-12">
                 <label class="text-primary-700">Zone</label>
-                <select class="max-w-3xl" @change="fetchWoredas()" v-model="zoneID">
-                  <option v-for="types in zoneArray" v-bind:key="types.name" v-bind:value="types.id">
+                <select
+                  class="max-w-3xl"
+                  @change="fetchWoredas()"
+                  v-model="zoneID"
+                >
+                  <option
+                    v-for="types in zoneArray"
+                    v-bind:key="types.name"
+                    v-bind:value="types.id"
+                  >
                     {{ types.name }}
                   </option>
                 </select>
@@ -77,8 +132,16 @@
             <div class="flex">
               <div class="flex flex-col mb-medium w-2/5 ml-medium mr-12">
                 <label class="text-primary-700">Woreda</label>
-                <select class="max-w-3xl" v-model="licenseInfo.residenceWoredaId" @change="woredaChanged()">
-                  <option v-for="types in woredaArray" v-bind:key="types.name" v-bind:value="types.id">
+                <select
+                  class="max-w-3xl"
+                  v-model="licenseInfo.residenceWoredaId"
+                  @change="woredaChanged()"
+                >
+                  <option
+                    v-for="types in woredaArray"
+                    v-bind:key="types.name"
+                    v-bind:value="types.id"
+                  >
                     {{ types.name }}
                   </option>
                 </select>
@@ -89,20 +152,40 @@
           <div id="main" class="flex pt-8 mt-4">
             <div class="flex flex-col mb-medium w-2/5 mr-12 ml-medium">
               <label class="text-primary-700">Education Level </label>
-              <select class="max-w-3xl" @change="setEducationLevel(licenseInfo.educationalLevelId)"
-                v-model="licenseInfo.educationalLevelId">
-                <option v-for="types in this.educationData" v-bind:key="types.name" v-bind:value="types.id">
+              <select
+                class="max-w-3xl"
+                @change="setEducationLevel(licenseInfo.educationalLevelId)"
+                v-model="licenseInfo.educationalLevelId"
+              >
+                <option
+                  v-for="types in this.educationData"
+                  v-bind:key="types.name"
+                  v-bind:value="types.id"
+                >
                   {{ types.name }}
                 </option>
               </select>
-              <span v-if="licenseInfoErrors.educationalLevelId !== null" style="color: red">{{
-                  licenseInfoErrors.educationalLevelId
-              }}</span>
+              <span
+                v-if="licenseInfoErrors.educationalLevelId !== null"
+                style="color: red"
+                >{{ licenseInfoErrors.educationalLevelId }}</span
+              >
             </div>
-            <div v-if="showProfessionalTypes" class="flex flex-col items-start mb-6">
+            <div
+              v-if="showProfessionalTypes"
+              class="flex flex-col items-start mb-6"
+            >
               <label class="text-primary-700">Professional Type </label>
-              <div class="flex" v-for="types in this.professionalTypes" v-bind:key="types.name" v-bind:value="types">
-                <input v-on:click="checkOtherProfession(types, $event)" type="checkbox" class="
+              <div
+                class="flex"
+                v-for="types in this.professionalTypes"
+                v-bind:key="types.name"
+                v-bind:value="types"
+              >
+                <input
+                  v-on:click="checkOtherProfession(types, $event)"
+                  type="checkbox"
+                  class="
                     bg-gray-50
                     mr-4
                     border border-gray-300
@@ -114,12 +197,23 @@
                     dark:border-gray-600
                     dark:focus:ring-blue-600
                     dark:ring-offset-gray-800
-                  " required :checked="types.checked" />
-                <label for="remember" class="font-medium text-gray-900 dark:text-gray-300">{{ types.name }}</label>
+                  "
+                  required
+                  :checked="types.checked"
+                />
+                <label
+                  for="remember"
+                  class="font-medium text-gray-900 dark:text-gray-300"
+                  >{{ types.name }}</label
+                >
               </div>
               <div v-if="professionalTypeRepeat">
-                <span style="font-size: 18px; color: red" v-for="prof in this.repeatedProfArray" v-bind:key="prof.name"
-                  v-bind:value="prof.id">
+                <span
+                  style="font-size: 18px; color: red"
+                  v-for="prof in this.repeatedProfArray"
+                  v-bind:key="prof.name"
+                  v-bind:value="prof.id"
+                >
                   {{ prof.name }} was previously saved.
                 </span>
               </div>
@@ -129,28 +223,56 @@
                 </span>
               </div>
               <div class="flex flex-col" style="min-width: 400px;">
-
-                <input v-model="licenseInfo.otherProfessionalType" v-if="showOtherProfession" class="mt-2 mb-2"
-                  placeholder="Write Other Profession" type="text" />
+                <input
+                  v-model="licenseInfo.otherProfessionalType"
+                  v-if="showOtherProfession"
+                  class="mt-2 mb-2"
+                  placeholder="Write Other Profession"
+                  type="text"
+                />
 
               </div>
-
             </div>
           </div>
-          <div v-if="this.displayEnglishLanguageOption || this.displayPayrollDoc" id="main" class="flex pt-8 mt-4">
-            <div v-if="this.displayEnglishLanguageOption" class="flex flex-col mb-medium w-2/5 mr-12 ml-medium">
+          <div
+            v-if="this.displayEnglishLanguageOption || this.displayPayrollDoc" 
+            id="main"
+            class="flex pt-8 mt-4"
+          >
+            <div
+              v-if="this.displayEnglishLanguageOption"
+              class="flex flex-col mb-medium w-2/5 mr-12 ml-medium"
+            >
               <label class="text-primary-700">English Language</label>
-              <select class="max-w-3xl" @change="setEnglishLanguage()" v-model="licenseInfo.nativeLanguageId">
-                <option v-for="types in this.englishData.data" v-bind:key="types.name" v-bind:value="types.id">
+              <select
+                class="max-w-3xl"
+                @change="setEnglishLanguage()"
+                v-model="licenseInfo.nativeLanguageId"
+              >
+                <option
+                  v-for="types in this.englishData.data"
+                  v-bind:key="types.name"
+                  v-bind:value="types.id"
+                >
                   {{ types.name }}
                 </option>
               </select>
             </div>
-            <div v-if="this.displayPayrollDoc" class="flex flex-col mb-medium w-2/5 mr-12 ml-medium">
+            <div
+              v-if="this.displayPayrollDoc"
+              class="flex flex-col mb-medium w-2/5 mr-12 ml-medium"
+            >
               <label class="text-primary-700">Occupation Type</label>
-              <select class="max-w-3xl" @change="setPayrollDoc(licenseInfo.occupationTypeId)"
-                v-model="licenseInfo.occupationTypeId">
-                <option v-for="types in this.payrollData.data" v-bind:key="types.name" v-bind:value="types.id">
+              <select
+                class="max-w-3xl"
+                @change="setPayrollDoc(licenseInfo.occupationTypeId)"
+                v-model="licenseInfo.occupationTypeId"
+              >
+                <option
+                  v-for="types in this.payrollData.data"
+                  v-bind:key="types.name"
+                  v-bind:value="types.id"
+                >
                   {{ types.name }}
                 </option>
               </select>
@@ -158,42 +280,77 @@
           </div>
         </form>
         <div v-if="!showLoading">
-          <div v-if="this.showButtons && !this.draftStatus" class="flex justify-center mb-8">
+          <div
+            v-if="this.showButtons && !this.draftStatus"
+            class="flex justify-center mb-8"
+          >
             <button @click="submit">Apply</button>
             <button @click="draft(this.buttons[1].action)" variant="outline">
               {{ this.buttons[1]["name"] }}
             </button>
           </div>
-          <div v-if="this.showButtons && this.draftStatus == 'DRA'" class="flex justify-center mb-8 p-1">
+          <div
+            v-if="this.showButtons && this.draftStatus == 'DRA'"
+            class="flex justify-center mb-8 p-1"
+          >
             <button @click="submit">Apply</button>
             <button @click="draft(this.buttons[0].action)" variant="outline">
               {{ this.buttons[0]["name"] }}
             </button>
-            <button class="withdraw p-1" @click="withdraw(this.buttons[1].action)" variant="outline">
+            <button
+              class="withdraw p-1"
+              @click="withdraw(this.buttons[1].action)"
+              variant="outline"
+            >
               {{ this.buttons[1]["name"] }}
             </button>
           </div>
-          <div v-if="this.showButtons && this.draftStatus == 'SUB'" class="flex justify-center mb-8">
+          <div
+            v-if="this.showButtons && this.draftStatus == 'SUB'"
+            class="flex justify-center mb-8"
+          >
             <button @click="submit">Apply</button>
-            <button class="withdraw p-1" @click="withdraw(this.buttons[1].action)" variant="outline">
+            <button
+              class="withdraw p-1"
+              @click="withdraw(this.buttons[1].action)"
+              variant="outline"
+            >
               {{ this.buttons[1]["name"] }}
             </button>
           </div>
-          <div v-if="this.showButtons && this.draftStatus == 'USUP'" class="flex justify-center mb-8">
+          <div
+            v-if="this.showButtons && this.draftStatus == 'USUP'"
+            class="flex justify-center mb-8"
+          >
             <button @click="submit">Apply</button>
-            <button @click="draft(this.buttons[0].action)" variant="outline" class="p-1">
+            <button
+              @click="draft(this.buttons[0].action)"
+              variant="outline"
+              class="p-1"
+            >
               {{ this.buttons[0]["name"] }}
             </button>
-            <button @click="update(this.buttons[1].action)" variant="outline" class="p-1">
+            <button
+              @click="update(this.buttons[1].action)"
+              variant="outline"
+              class="p-1"
+            >
               {{ this.buttons[1]["name"] }}
             </button>
           </div>
-          <div v-if="this.showButtons && this.draftStatus == 'DEC'" class="flex justify-center mb-8">
+          <div
+            v-if="this.showButtons && this.draftStatus == 'DEC'"
+            class="flex justify-center mb-8"
+          >
             <button @click="submit">Apply</button>
             <!-- <button @click="draft(this.buttons[0].action)" variant="outline">
             {{ this.buttons[0]["name"] }}
           </button> -->
-            <button @click="update(this.buttons[1].action)" variant="outline" class="p-1">
+            <button
+              @click="update(this.buttons[1].action)"
+              variant="outline"
+              class="p-1"
+            >
               {{ this.buttons[1]["name"] }}
             </button>
           </div>
@@ -225,7 +382,7 @@ export default {
     TitleWithIllustration,
     FlashMessage,
     ErrorFlashMessage,
-    Spinner,
+    Spinner
   },
 
   async created() {
@@ -239,9 +396,11 @@ export default {
     this.showLoading = true;
     setTimeout(() => {
       this.buttons = this.getButtons;
+      console.log(this.buttons);
       this.showButtons = true;
       this.showLoading = false;
     }, 5000);
+    console.table(this.buttons)
     if (this.getLicense && Object.keys(this.getLicense).length != 0) {
       let draftData = this.getLicense;
       this.licenseInfo.applicantId = draftData.applicantId;
@@ -260,14 +419,14 @@ export default {
       this.setEducationLevel(this.licenseInfo.educationalLevelId);
       this.licenseInfo.expertLevelId = draftData.expertLevelId;
       if (this.licenseInfo.applicantTypeId == 1) {
-        this.$store.dispatch("newlicense/getExpertLevel").then((res) => {
-          this.expertLevels = res.data.data.filter(function (e) {
+        this.$store.dispatch("newlicense/getExpertLevel").then(res => {
+          this.expertLevels = res.data.data.filter(function(e) {
             return e.code.includes("REG");
           });
         });
       } else {
-        this.$store.dispatch("newlicense/getExpertLevel").then((res) => {
-          this.expertLevels = res.data.data.filter(function (e) {
+        this.$store.dispatch("newlicense/getExpertLevel").then(res => {
+          this.expertLevels = res.data.data.filter(function(e) {
             return e.code.includes("FED");
           });
         });
@@ -338,8 +497,8 @@ export default {
     ...mapGetters({
       getButtons: "newlicense/getButtons",
       getDraft: "newlicense/getDraft",
-      getLicense: "newlicense/getLicense",
-    }),
+      getLicense: "newlicense/getLicense"
+    })
   },
   data: () => ({
     licenseInfo: {
@@ -348,7 +507,7 @@ export default {
       education: {
         departmentId: null,
         institutionId: null,
-        id: null,
+        id: null
       },
       residenceWoredaId: null,
       professionalTypeIds: [],
@@ -359,13 +518,13 @@ export default {
       otherEducationalInstitution: null,
       otherProfessionalType: null,
       otherProfessionalTypeAmharic: null,
-      applicationStatusId: null,
+      applicationStatusId: null
     },
     licenseInfoErrors: {
       applicantTypeId: null,
       departmentId: null,
       institutionId: null,
-      educationalLevelId: null,
+      educationalLevelId: null
     },
     regionID: "",
     zoneID: "",
@@ -408,12 +567,12 @@ export default {
 
     profession: "",
     showOtherProfession: false,
-    checkedProfessionalTypes: [],
+    checkedProfessionalTypes: []
   }),
 
   methods: {
     fetchEnglishSpeaker() {
-      this.$store.dispatch("lookups/getNativeLanguage").then((res) => {
+      this.$store.dispatch("lookups/getNativeLanguage").then(res => {
         if (res.data.status == "Success") {
           this.englishData = res.data;
         } else {
@@ -422,14 +581,14 @@ export default {
     },
 
     fetchEducationLevel() {
-      this.$store.dispatch("lookups/getEducationalLevel").then((res) => {
+      this.$store.dispatch("lookups/getEducationalLevel").then(res => {
         if (res.data.status == "Success") {
           this.educationData = res.data.data;
         }
       });
     },
     fetchPayrollData() {
-      this.$store.dispatch("lookups/getGovernment").then((res) => {
+      this.$store.dispatch("lookups/getGovernment").then(res => {
         if (res.data.status == "Success") {
           this.payrollData = res.data;
         } else {
@@ -498,14 +657,14 @@ export default {
         this.showRegion = false;
       }
       if (applicantType == 1) {
-        this.$store.dispatch("newlicense/getExpertLevel").then((res) => {
-          this.expertLevels = res.data.data.filter(function (e) {
+        this.$store.dispatch("newlicense/getExpertLevel").then(res => {
+          this.expertLevels = res.data.data.filter(function(e) {
             return e.code.includes("REG");
           });
         });
       } else {
-        this.$store.dispatch("newlicense/getExpertLevel").then((res) => {
-          this.expertLevels = res.data.data.filter(function (e) {
+        this.$store.dispatch("newlicense/getExpertLevel").then(res => {
+          this.expertLevels = res.data.data.filter(function(e) {
             return e.code.includes("FED");
           });
         });
@@ -569,7 +728,7 @@ export default {
               education: {
                 departmentId: this.licenseInfo.education.departmentId,
                 institutionId: this.licenseInfo.education.institutionId,
-                id: this.licenseInfo.education.id,
+                id: this.licenseInfo.education.id
               },
               residenceWoredaId: this.licenseInfo.residenceWoredaId,
               professionalTypeIds: this.licenseInfo.professionalTypeIds,
@@ -578,19 +737,20 @@ export default {
               occupationTypeId: this.licenseInfo.occupationTypeId,
               nativeLanguageId: this.licenseInfo.nativeLanguageId,
               expertLevelId: this.licenseInfo.expertLevelId,
-              otherEducationalInstitution:
-                this.licenseInfo.otherEducationalInstitution,
+              otherEducationalInstitution: this.licenseInfo
+                .otherEducationalInstitution,
               otherProfessionalType: this.licenseInfo.otherProfessionalType,
-              otherProfessionalTypeAmharic: this.licenseInfo.otherProfessionalTypeAmharic,
-              applicationStatusId: this.licenseInfo.applicationStatusId,
-            },
+              otherProfessionalTypeAmharic: this.licenseInfo
+                .otherProfessionalTypeAmharic,
+              applicationStatusId: this.licenseInfo.applicationStatusId
+            }
           },
-          id: this.draftId,
+          id: this.draftId
         };
         if (this.draftId != undefined) {
           this.$store
             .dispatch("newlicense/editNewLicense", license)
-            .then((res) => {
+            .then(res => {
               if (res.data.status == "Success") {
                 this.showFlash = true;
                 this.showLoading = false;
@@ -604,11 +764,11 @@ export default {
         } else {
           this.$store
             .dispatch("newlicense/addNewLicense", license.data)
-            .then((res) => {
+            .then(res => {
               if (res.data.status == "Success") {
                 this.showFlash = true;
                 this.showLoading = false;
-                setTimeout(() => { }, 1500);
+                setTimeout(() => {}, 1500);
                 this.$router.push({ path: "/menu" });
               }
             });
@@ -626,7 +786,7 @@ export default {
             education: {
               departmentId: this.licenseInfo.education.departmentId,
               institutionId: this.licenseInfo.education.institutionId,
-              id: this.licenseInfo.education.id,
+              id: this.licenseInfo.education.id
             },
             residenceWoredaId: this.licenseInfo.residenceWoredaId,
             professionalTypeIds: this.licenseInfo.professionalTypeIds,
@@ -634,38 +794,37 @@ export default {
             paymentSlip: null,
             occupationTypeId: this.licenseInfo.occupationTypeId,
             nativeLanguageId: this.licenseInfo.nativeLanguageId,
-            otherEducationalInstitution:
-              this.licenseInfo.otherEducationalInstitution,
+            otherEducationalInstitution: this.licenseInfo
+              .otherEducationalInstitution,
             expertLevelId: this.licenseInfo.expertLevelId,
             otherProfessionalType: this.licenseInfo.otherProfessionalType,
-            otherProfessionalTypeAmharic: this.licenseInfo.otherProfessionalTypeAmharic,
-            applicationStatusId: this.licenseInfo.applicationStatusId,
-          },
+            otherProfessionalTypeAmharic: this.licenseInfo
+              .otherProfessionalTypeAmharic,
+            applicationStatusId: this.licenseInfo.applicationStatusId
+          }
         },
-        id: this.draftId,
+        id: this.draftId
       };
 
       if (this.draftId != undefined) {
-        this.$store
-          .dispatch("newlicense/editNewLicense", license)
-          .then((res) => {
-            if (res.data.status == "Success") {
-              this.showFlash = true;
-              this.showLoading = false;
-              setTimeout(() => { }, 1500);
-              this.$router.push({ path: "/menu" });
-            } else {
-              this.showErrorFlash = true;
-            }
-          });
+        this.$store.dispatch("newlicense/editNewLicense", license).then(res => {
+          if (res.data.status == "Success") {
+            this.showFlash = true;
+            this.showLoading = false;
+            setTimeout(() => {}, 1500);
+            this.$router.push({ path: "/menu" });
+          } else {
+            this.showErrorFlash = true;
+          }
+        });
       } else {
         this.$store
           .dispatch("newlicense/addNewLicense", license.data)
-          .then((res) => {
+          .then(res => {
             if (res.data.status == "Success") {
               this.showFlash = true;
               this.showLoading = false;
-              setTimeout(() => { }, 1500);
+              setTimeout(() => {}, 1500);
               this.$router.push({ path: "/menu" });
             }
           });
@@ -675,13 +834,13 @@ export default {
       this.showLoading = true;
       let withdrawObj = {
         action: action,
-        data: this.getDraft,
+        data: this.getDraft
       };
       let payload = {
         licenseId: this.getDraft.id,
-        withdrawData: withdrawObj,
+        withdrawData: withdrawObj
       };
-      this.$store.dispatch("newlicense/withdraw", payload).then((res) => {
+      this.$store.dispatch("newlicense/withdraw", payload).then(res => {
         if (res.data.status == "Success") {
           this.showFlash = true;
           this.showLoading = false;
@@ -707,7 +866,7 @@ export default {
           education: {
             departmentId: this.licenseInfo.education.departmentId,
             institutionId: this.licenseInfo.education.institutionId,
-            id: this.licenseInfo.education.id,
+            id: this.licenseInfo.education.id
           },
           regionId: this.regionID,
           zoneId: this.zoneID,
@@ -721,18 +880,18 @@ export default {
           otherEducationalInstitution: this.licenseInfo
             .otherEducationalInstitution,
           otherProfessionalType: this.licenseInfo.otherProfessionalType,
-          otherProfessionalTypeAmharic: this.licenseInfo.otherProfessionalTypeAmharic,
-          applicationStatusId: this.licenseInfo.applicationStatusId,
-
+          otherProfessionalTypeAmharic: this.licenseInfo
+            .otherProfessionalTypeAmharic,
+          applicationStatusId: this.licenseInfo.applicationStatusId
         };
 
         let profTypes = {
-          professionalTypeIds: this.licenseInfo.professionalTypeIds,
+          professionalTypeIds: this.licenseInfo.professionalTypeIds
         };
         if (this.$route.params.status == undefined) {
           this.$store
             .dispatch("newlicense/searchProfessionalType", profTypes)
-            .then((res) => {
+            .then(res => {
               if (res.data.data.length > 0) {
                 this.professionalTypeRepeat = true;
                 this.repeatedProfArray = res.data.data;
@@ -773,13 +932,13 @@ export default {
       }
     },
     fetchApplicantType() {
-      this.$store.dispatch("newlicense/getApplicantType").then((res) => {
+      this.$store.dispatch("newlicense/getApplicantType").then(res => {
         const results = res.data.data;
         this.applicantTypes = results;
       });
     },
     fetchInstitutions(value) {
-      this.$store.dispatch("newlicense/getInstitution", value).then((res) => {
+      this.$store.dispatch("newlicense/getInstitution", value).then(res => {
         const results = res.data.data;
         this.institutions = results;
         if (this.getLicense && Object.keys(this.getLicense).length != 0) {
@@ -824,27 +983,27 @@ export default {
       });
     },
     fetchDepartments() {
-      this.$store.dispatch("newlicense/getDepartmentType").then((res) => {
+      this.$store.dispatch("newlicense/getDepartmentType").then(res => {
         const results = res.data.data;
         this.departments = results;
       });
     },
     fetchRegions() {
-      this.$store.dispatch("newlicense/getRegions").then((res) => {
+      this.$store.dispatch("newlicense/getRegions").then(res => {
         const regionsResult = res.data;
         this.regionArray = regionsResult.data;
       });
     },
 
     fetchZones() {
-      this.$store.dispatch("newlicense/getZones", this.regionID).then((res) => {
+      this.$store.dispatch("newlicense/getZones", this.regionID).then(res => {
         const zonesResult = res.data;
         this.zoneArray = zonesResult.data;
       });
     },
 
     fetchWoredas() {
-      this.$store.dispatch("newlicense/getWoredas", this.zoneID).then((res) => {
+      this.$store.dispatch("newlicense/getWoredas", this.zoneID).then(res => {
         const woredasResult = res.data;
         this.woredaArray = woredasResult.data;
       });
@@ -856,7 +1015,7 @@ export default {
       this.showProfessionalTypes = true;
       await this.$store
         .dispatch("newlicense/getProfessionalTypes", id)
-        .then((res) => {
+        .then(res => {
           this.professionalTypes = res.data.data;
         });
       // if (this.getLicense && Object.keys(this.getLicense).length != 0) {
@@ -865,7 +1024,7 @@ export default {
       //   let draftData = this.getDraft;
       // }
     },
-    woredaChanged() { },
+    woredaChanged() {},
     validateForm(formData) {
       const errors = {};
       if (formData.applicantTypeId == null) {
@@ -919,8 +1078,8 @@ export default {
       this.setEducationLevel(this.licenseInfo.educationalLevelId);
       if (this.licenseInfo.applicantTypeId == 1) {
         this.displayPayrollDoc = true;
-        this.$store.dispatch("newlicense/getExpertLevel").then((res) => {
-          this.expertLevels = res.data.data.filter(function (e) {
+        this.$store.dispatch("newlicense/getExpertLevel").then(res => {
+          this.expertLevels = res.data.data.filter(function(e) {
             return e.code.includes("REG");
           });
         });
@@ -928,8 +1087,8 @@ export default {
         this.licenseInfo.occupationTypeId = draftData.occupationTypeId;
       } else {
         this.displayEnglishLanguageOption = true;
-        this.$store.dispatch("newlicense/getExpertLevel").then((res) => {
-          this.expertLevels = res.data.data.filter(function (e) {
+        this.$store.dispatch("newlicense/getExpertLevel").then(res => {
+          this.expertLevels = res.data.data.filter(function(e) {
             return e.code.includes("FED");
           });
         });
@@ -966,14 +1125,14 @@ export default {
       }
       this.$store
         .dispatch("newlicense/getZones", this.regionID)
-        .then((res) => {
+        .then(res => {
           const zonesResult = res.data;
           this.zoneArray = zonesResult.data;
         })
-        .then((res) => {
+        .then(res => {
           this.$store
             .dispatch("newlicense/getWoredas", this.zoneID)
-            .then((res) => {
+            .then(res => {
               const woredasResult = res.data;
               this.woredaArray = woredasResult.data;
             });
@@ -992,7 +1151,7 @@ export default {
             break;
           }
         }
-        this.professionalTypes.map((profData) => {
+        this.professionalTypes.map(profData => {
           for (var j = 0; j < draftData.professionalTypes.length; j++) {
             if (
               profData.id == draftData.professionalTypes[j].professionalTypeId
@@ -1025,8 +1184,8 @@ export default {
         this.licenseInfo.otherProfessionalTypeAmharic =
           draftData.otherProfessionalTypeAmharic;
       }
-    },
-  },
+    }
+  }
 };
 </script>
 

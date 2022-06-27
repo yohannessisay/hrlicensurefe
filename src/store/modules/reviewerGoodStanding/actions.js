@@ -566,6 +566,12 @@ export default {
     const goodStandingAllLicensed = resp.data.data;
     commit(SET_GOOD_STANDING_ALL_LICENSED, goodStandingAllLicensed);
   },
+  async getCertificateIssuedGoodStanding({ commit }) {
+    const url = baseUrl + "/goodStandings/certificat/issued";
+    const resp = await ApiService.get(url);
+    const goodStandingAllLicensed = resp.data.data;
+    commit(SET_GOOD_STANDING_ALL_LICENSED, goodStandingAllLicensed);
+  },
 
   getGoodStandingAllLicensedSearched({ commit, getters }, searchKey) {
     if (getters.getGoodStandingAllLicensed === undefined) {

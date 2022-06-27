@@ -1047,6 +1047,12 @@ export default {
     const newLicenseAllLicensed = resp.data.data;
     commit(SET_NEW_LICENSE_ALL_LICENSED, newLicenseAllLicensed);
   },
+  async getCertificateIssuedNewLicense({ commit }) {
+    const url = baseUrl + "/newLicenses/certficate/issued";
+    const resp = await ApiService.get(url);
+    const newLicenseAllLicensed = resp.data.data;
+    commit(SET_NEW_LICENSE_ALL_LICENSED, newLicenseAllLicensed);
+  },
 
   getNewLicenseAllLicensedSearched({ commit, getters }, searchKey) {
     if (getters.getNewLicenseAllLicensed === undefined) {
