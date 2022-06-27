@@ -1004,7 +1004,7 @@ export default {
   },
 
   async getCertificateIssuedRenewal({ commit }) {
-    const url = baseUrl + "/certificate/issued";
+    const url = baseUrl + "/renewals/certificate/issued";
     const resp = await ApiService.get(url);
     const renewalAllLicensed = resp.data.data;
     commit(SET_RENEWAL_ALL_LICENSED, renewalAllLicensed);

@@ -93,8 +93,8 @@
               Back
             </button>
             <button @click="submit">Next</button>
-            <button @click="draft(buttons[0].action)" variant="outline">
-              {{ buttons[0]["name"] }}
+            <button @click="draft(buttons[1].action)" variant="outline">
+              {{ buttons[1]["name"] }}
             </button>
           </div>
           <div
