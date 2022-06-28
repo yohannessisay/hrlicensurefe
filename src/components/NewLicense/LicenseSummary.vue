@@ -1,6 +1,9 @@
 <template>
-  <div v-if="this.showLoading2" class="bg-lightBlueB-200 w-screen h-screen max-w-4xl">
-      <Spinner class="bg-lightBlueB-200" />
+  <div
+    v-if="this.showLoading2"
+    class="bg-lightBlueB-200 w-screen h-screen max-w-4xl"
+  >
+    <Spinner class="bg-lightBlueB-200" />
   </div>
   <div class="bg-white mb-large rounded pl-4 pt-4 pr-4 pb-4">
     <div v-if="this.show && !this.showLoading2">
@@ -11,11 +14,13 @@
         <Title message="Personal Information" />
       </div>
       <div class="flex flex-row">
-        <div :class="[this.profileInfo.name === null ? errorClass : activeClass]">
+        <div
+          :class="[this.profileInfo.name === null ? errorClass : activeClass]"
+        >
           <label class="ml-4 text-primary-300"> Full Name</label>
           <h5 class="ml-4">
             {{
-                this.profileInfo.name +
+              this.profileInfo.name +
                 " " +
                 this.profileInfo.fatherName +
                 " " +
@@ -27,7 +32,7 @@
           <label class="ml-8 text-primary-300"> Full Alternative Name</label>
           <h5 class="ml-8">
             {{
-                this.profileInfo.alternativeName +
+              this.profileInfo.alternativeName +
                 " " +
                 this.profileInfo.alternativeFatherName +
                 " " +
@@ -35,47 +40,55 @@
             }}
           </h5>
         </div>
-        <div :class="[this.profileInfo.gender === null ? errorClass : activeClass]">
+        <div
+          :class="[this.profileInfo.gender === null ? errorClass : activeClass]"
+        >
           <label class="ml-4 text-primary-300"> Gender</label>
           <h5 class="ml-4">
             {{ this.profileInfo.gender ? this.profileInfo["gender"] : "-" }}
           </h5>
         </div>
-        <div :class="[
-          this.profileInfo.nationality === null ? errorClass : activeClass,
-        ]">
+        <div
+          :class="[
+            this.profileInfo.nationality === null ? errorClass : activeClass
+          ]"
+        >
           <label class="ml-4 text-primary-300"> Nationality</label>
           <h5 class="ml-4">
             {{
-                this.profileInfo.nationality
-                  ? this.profileInfo.nationality.name
-                  : "-"
+              this.profileInfo.nationality
+                ? this.profileInfo.nationality.name
+                : "-"
             }}
           </h5>
         </div>
-        <div :class="[
-          this.profileInfo.dateOfBirth === null ? errorClass : activeClass,
-        ]">
+        <div
+          :class="[
+            this.profileInfo.dateOfBirth === null ? errorClass : activeClass
+          ]"
+        >
           <label class="ml-4 text-primary-300"> Date of Birth</label>
           <h5 class="ml-4">
             {{
-                this.profileInfo.dateOfBirth
-                  ? moment(this.profileInfo.dateOfBirth).format("MMM D, YYYY")
-                  : "-"
+              this.profileInfo.dateOfBirth
+                ? moment(this.profileInfo.dateOfBirth).format("MMM D, YYYY")
+                : "-"
             }}
           </h5>
         </div>
-        <div :class="[
-          this.profileInfo.maritalStatus.name === null
-            ? errorClass
-            : activeClass,
-        ]">
+        <div
+          :class="[
+            this.profileInfo.maritalStatus.name === null
+              ? errorClass
+              : activeClass
+          ]"
+        >
           <label class="ml-4 text-primary-300"> Marital Status</label>
           <h5 class="ml-4">
             {{
-                this.profileInfo.maritalStatus.name
-                  ? this.profileInfo.maritalStatus.name
-                  : "-"
+              this.profileInfo.maritalStatus.name
+                ? this.profileInfo.maritalStatus.name
+                : "-"
             }}
           </h5>
         </div>
@@ -92,41 +105,55 @@
         <Title message="Contact" />
       </div>
       <div class="flex flex-row">
-        <div :class="[
-          this.profileInfo.user.phoneNumber === null
-            ? errorClass
-            : activeClass,
-        ]">
+        <div
+          :class="[
+            this.profileInfo.user.phoneNumber === null
+              ? errorClass
+              : activeClass
+          ]"
+        >
           <label class="ml-4 text-primary-300"> Mobile Number</label>
           <h5 class="ml-4">
             {{
-                this.profileInfo.user.phoneNumber
-                  ? this.profileInfo.user.phoneNumber
-                  : "-"
+              this.profileInfo.user.phoneNumber
+                ? this.profileInfo.user.phoneNumber
+                : "-"
             }}
           </h5>
         </div>
 
-        <div :class="[
-          this.profileInfo.user.emailAddress === null
-            ? errorClass
-            : activeClass,
-        ]">
+        <div
+          :class="[
+            this.profileInfo.user.emailAddress === null
+              ? errorClass
+              : activeClass
+          ]"
+        >
           <label class="ml-4 text-primary-300"> Email</label>
           <h5 class="ml-4">
             {{
-                this.profileInfo.user.emailAddress
-                  ? this.profileInfo.user.emailAddress
-                  : "-"
+              this.profileInfo.user.emailAddress
+                ? this.profileInfo.user.emailAddress
+                : "-"
             }}
           </h5>
         </div>
       </div>
-      <label style="font-size: 20px" v-if="docList.length != 0" class="flex justify-center text-primary-300">
-        Newly Attached Documents</label>
+      <label
+        style="font-size: 20px"
+        v-if="docList.length != 0"
+        class="flex justify-center text-primary-300"
+      >
+        Newly Attached Documents</label
+      >
       <div class="flex justify-start flex-wrap">
         <div v-for="i in docList.length" v-bind:key="i">
-          <div class="mr-4" v-for="item in docList.slice((i - 1) * 1, i * 1)" v-bind="item" v-bind:value="item">
+          <div
+            class="mr-4"
+            v-for="item in docList.slice((i - 1) * 1, i * 1)"
+            v-bind="item"
+            v-bind:value="item"
+          >
             <Title class="" :message="item.title" />
             <picture>
               <img :src="item.docFile" />
@@ -134,12 +161,21 @@
           </div>
         </div>
       </div>
-      <label style="font-size: 20px" v-if="documentsArray.length != 0" class="flex justify-center text-primary-300">
-        Draft Documents</label>
+      <label
+        style="font-size: 20px"
+        v-if="documentsArray.length != 0"
+        class="flex justify-center text-primary-300"
+      >
+        Draft Documents</label
+      >
       <div v-if="draftId != undefined" class="flex justify-start flex-wrap">
         <div v-for="i in draftData.documents.length" v-bind:key="i">
-          <div class="mr-4" v-for="item in draftData.documents.slice((i - 1) * 1, i * 1)" v-bind="item"
-            v-bind:value="item">
+          <div
+            class="mr-4"
+            v-for="item in draftData.documents.slice((i - 1) * 1, i * 1)"
+            v-bind="item"
+            v-bind:value="item"
+          >
             <Title class="" :message="item.documentType.name" />
             <picture>
               <img :src="this.basePath + item.filePath" />
@@ -150,26 +186,38 @@
       <div class="flex justify-center mt-8" v-show="showCheckBox">
         <label class="inline-flex items-center">
           <input @change="checkBox()" type="checkbox" class="form-checkbox" />
-          <span style="font-size: 16px" class="ml-2">This is to verify that all the attached documents are legitimate
-            and not forgery.</span>
+          <span style="font-size: 16px" class="ml-2"
+            >This is to verify that all the attached documents are legitimate
+            and not forgery.</span
+          >
         </label>
         <br />
       </div>
       <div class="flex justify-center mt-8">
-        <span v-if="showAllAttachements" style="font-size: 16px; color: red" class="ml-2">Please attach all required
-          documents.</span>
+        <span
+          v-if="showAllAttachements"
+          style="font-size: 16px; color: red"
+          class="ml-2"
+          >Please attach all required documents.</span
+        >
       </div>
       <div v-if="!showLoading">
-      <div v-if="!this.draftStatus">
+        <div v-if="!this.draftStatus">
           <div class="mt-12 flex justify-center">
             <div>
               <button @click="submitBack">
                 Back
               </button>
-              <button v-if="this.buttons.length < 3" @click="submitRequest(this.buttons[1].action)">
+              <button
+                v-if="this.buttons.length < 3"
+                @click="draft(this.buttons[1].action)"
+              >
                 {{ this.buttons[1].name }}
               </button>
-              <button v-if="this.buttons.length > 2" @click="submitRequest(this.buttons[1].action)">
+              <button
+                v-if="this.buttons.length > 2"
+                @click="draft(this.buttons[1].action)"
+              >
                 {{ this.buttons[1].name }}
               </button>
             </div>
@@ -180,17 +228,33 @@
             </h6>
           </div>
           <div class="flex justify-center mt-4 mb-8">
-            <button id="subButton" style="opacity: 0.3" :disabled="this.checkBoxValue == true"
-              v-if="this.buttons.length < 3" @click="draft(this.buttons[0].action)" variant="outline">
+            <button
+              id="subButton"
+              style="opacity: 0.3"
+              :disabled="this.checkBoxValue == true"
+              v-if="this.buttons.length < 3"
+              @click="submitRequest(this.buttons[0].action)"
+              variant="outline"
+            >
               {{ this.buttons[0].name }}
             </button>
-            <button id="subButton" style="opacity: 0.3" :disabled="this.checkBoxValue == true"
-              v-if="this.buttons.length > 2" @click="draft(this.buttons[2].action)" variant="outline">
+            <button
+              id="subButton"
+              style="opacity: 0.3"
+              :disabled="this.checkBoxValue == true"
+              v-if="this.buttons.length > 2"
+              @click="submitRequest(this.buttons[2].action)"
+              variant="outline"
+            >
               {{ this.buttons[2].name }}
             </button>
 
-            <button v-if="this.buttons.length > 2" class="withdraw" @click="withdraw(this.buttons[1].action)"
-              variant="outline">
+            <button
+              v-if="this.buttons.length > 2"
+              class="withdraw"
+              @click="withdraw(this.buttons[1].action)"
+              variant="outline"
+            >
               {{ this.buttons[1].name }}
             </button>
           </div>
@@ -201,10 +265,16 @@
               <button @click="submitBack">
                 Back
               </button>
-              <button v-if="this.buttons.length < 3" @click="submitRequest(this.buttons[0].action)">
+              <button
+                v-if="this.buttons.length < 3"
+                @click="draft(this.buttons[0].action)"
+              >
                 {{ this.buttons[0].name }}
               </button>
-              <button v-if="this.buttons.length > 2" @click="submitRequest(this.buttons[0].action)">
+              <button
+                v-if="this.buttons.length > 2"
+                @click="draft(this.buttons[0].action)"
+              >
                 {{ this.buttons[0].name }}
               </button>
             </div>
@@ -215,30 +285,56 @@
             </h6>
           </div>
           <div class="flex justify-center mt-4 mb-8">
-            <button id="subButton" style="opacity: 0.3" :disabled="this.checkBoxValue == true"
-              v-if="this.buttons.length < 3" @click="draft(this.buttons[1].action)" variant="outline">
+            <button
+              id="subButton"
+              style="opacity: 0.3"
+              :disabled="this.checkBoxValue == true"
+              v-if="this.buttons.length < 3"
+              @click="submitRequest(this.buttons[1].action)"
+              variant="outline"
+            >
               {{ this.buttons[1].name }}
             </button>
-            <button id="subButton" style="opacity: 0.3" :disabled="this.checkBoxValue == true"
-              v-if="this.buttons.length > 2" @click="draft(this.buttons[2].action)" variant="outline">
+            <button
+              id="subButton"
+              style="opacity: 0.3"
+              :disabled="this.checkBoxValue == true"
+              v-if="this.buttons.length > 2"
+              @click="submitRequest(this.buttons[2].action)"
+              variant="outline"
+            >
               {{ this.buttons[2].name }}
             </button>
 
-            <button v-if="this.buttons.length > 2" class="withdraw" @click="withdraw(this.buttons[1].action)"
-              variant="outline">
+            <button
+              v-if="this.buttons.length > 2"
+              class="withdraw"
+              @click="withdraw(this.buttons[1].action)"
+              variant="outline"
+            >
               {{ this.buttons[1].name }}
             </button>
           </div>
         </div>
-        <div v-if="this.draftStatus == 'SUB'" class="flex justify-center mt-8 pb-12">
+        <div
+          v-if="this.draftStatus == 'SUB'"
+          class="flex justify-center mt-8 pb-12"
+        >
           <button @click="submitBack">
             Back
           </button>
-          <button class="withdraw" @click="withdraw(this.buttons[1].action)" variant="outline">
+          <button
+            class="withdraw"
+            @click="withdraw(this.buttons[1].action)"
+            variant="outline"
+          >
             {{ this.buttons[1]["name"] }}
           </button>
         </div>
-        <div v-if="this.draftStatus == 'USUP'" class="flex justify-center mt-8 pb-12">
+        <div
+          v-if="this.draftStatus == 'USUP'"
+          class="flex justify-center mt-8 pb-12"
+        >
           <button @click="submitBack">
             Back
           </button>
@@ -249,11 +345,18 @@
             {{ this.buttons[1]["name"] }}
           </button>
         </div>
-        <div v-if="this.draftStatus == 'DEC' || this.draftStatus == 'CONF'" class="flex justify-center mt-8 pb-12">
+        <div
+          v-if="this.draftStatus == 'DEC' || this.draftStatus == 'CONF'"
+          class="flex justify-center mt-8 pb-12"
+        >
           <button @click="submitBack">
             Back
           </button>
-          <button id="reapplyButton" @click="draft('UpdateEvent')" variant="outline">
+          <button
+            id="reapplyButton"
+            @click="draft('UpdateEvent')"
+            variant="outline"
+          >
             Re-apply
           </button>
           <button @click="update(this.buttons[1].action)" variant="outline">
@@ -261,7 +364,10 @@
           </button>
         </div>
       </div>
-      <div class="flex justify-center justify-items-center mt-8 pb-8" v-if="showLoading">
+      <div
+        class="flex justify-center justify-items-center mt-8 pb-8"
+        v-if="showLoading"
+      >
         <Spinner />
       </div>
     </div>
@@ -290,7 +396,7 @@ export default {
     Title,
     FlashMessage,
     ErrorFlashMessage,
-    Spinner,
+    Spinner
   },
   async created() {
     this.basePath = googleApi;
@@ -417,7 +523,7 @@ export default {
       if ("name" in this.passport) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "PSP"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "PSP"),
             1
           );
         }
@@ -431,7 +537,7 @@ export default {
       if ("name" in this.healthExamCert) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "HEC"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "HEC"),
             1
           );
         }
@@ -445,7 +551,7 @@ export default {
       if ("name" in this.englishLanguage) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "ELPC"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "ELPC"),
             1
           );
         }
@@ -459,7 +565,7 @@ export default {
       if ("name" in this.proCertificate) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "PDC"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "PDC"),
             1
           );
         }
@@ -473,7 +579,7 @@ export default {
       if ("name" in this.proCertificate2) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "PDC1"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "PDC1"),
             1
           );
         }
@@ -487,7 +593,7 @@ export default {
       if ("name" in this.proCertificate3) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "PDC2"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "PDC2"),
             1
           );
         }
@@ -501,7 +607,7 @@ export default {
       if ("name" in this.proCertificate4) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "PDC3"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "PDC3"),
             1
           );
         }
@@ -515,7 +621,7 @@ export default {
       if ("name" in this.proCertificate5) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "PDC4"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "PDC4"),
             1
           );
         }
@@ -530,7 +636,7 @@ export default {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
             this.documentsArray.findIndex(
-              (e) => e.documentTypeCode === `${this.docCode}`
+              e => e.documentTypeCode === `${this.docCode}`
             ),
             1
           );
@@ -554,7 +660,7 @@ export default {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
             this.documentsArray.findIndex(
-              (e) => e.documentTypeCode === `${this.docCode}${this.docNum + 1}`
+              e => e.documentTypeCode === `${this.docCode}${this.docNum + 1}`
             ),
             1
           );
@@ -578,7 +684,7 @@ export default {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
             this.documentsArray.findIndex(
-              (e) => e.documentTypeCode === `${this.docCode}${this.docNum + 2}`
+              e => e.documentTypeCode === `${this.docCode}${this.docNum + 2}`
             ),
             1
           );
@@ -602,7 +708,7 @@ export default {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
             this.documentsArray.findIndex(
-              (e) => e.documentTypeCode === `${this.docCode}${this.docNum + 3}`
+              e => e.documentTypeCode === `${this.docCode}${this.docNum + 3}`
             ),
             1
           );
@@ -626,7 +732,7 @@ export default {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
             this.documentsArray.findIndex(
-              (e) => e.documentTypeCode === `${this.docCode}${this.docNum + 4}`
+              e => e.documentTypeCode === `${this.docCode}${this.docNum + 4}`
             ),
             1
           );
@@ -649,7 +755,7 @@ export default {
       if ("name" in this.proTranscript) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "PDT"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "PDT"),
             1
           );
         }
@@ -663,7 +769,7 @@ export default {
       if ("name" in this.proTranscript2) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "PDT1"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "PDT1"),
             1
           );
         }
@@ -677,7 +783,7 @@ export default {
       if ("name" in this.proTranscript3) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "PDT2"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "PDT2"),
             1
           );
         }
@@ -691,11 +797,11 @@ export default {
       if ("name" in this.proTranscript4) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "PDT3"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "PDT3"),
             1
           );
         }
-       const filePreview = await this.blobToBase64(this.proTranscript4);
+        const filePreview = await this.blobToBase64(this.proTranscript4);
         this.proTranscript4.docFile = filePreview;
         this.proTranscript4.title = "Professional Transcript 4";
         this.docList.push(this.proTranscript4);
@@ -705,11 +811,11 @@ export default {
       if ("name" in this.proTranscript5) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "PDT4"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "PDT4"),
             1
           );
         }
-       const filePreview = await this.blobToBase64(this.proTranscript5);
+        const filePreview = await this.blobToBase64(this.proTranscript5);
         this.proTranscript5.docFile = filePreview;
         this.proTranscript5.title = "Professional Transcript 5";
         this.docList.push(this.proTranscript5);
@@ -719,13 +825,11 @@ export default {
       if ("name" in this.eduEighth) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex(
-              (e) => e.documentTypeCode === "EDEGC"
-            ),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "EDEGC"),
             1
           );
         }
-       const filePreview = await this.blobToBase64(this.eduEighth);
+        const filePreview = await this.blobToBase64(this.eduEighth);
         this.eduEighth.docFile = filePreview;
         this.eduEighth.title = "Eighth Grade Certificate";
         this.docList.push(this.eduEighth);
@@ -735,13 +839,11 @@ export default {
       if ("name" in this.eduTenth) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex(
-              (e) => e.documentTypeCode === "EDTGC"
-            ),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "EDTGC"),
             1
           );
         }
-       const filePreview = await this.blobToBase64(this.eduTenth);
+        const filePreview = await this.blobToBase64(this.eduTenth);
         this.eduTenth.docFile = filePreview;
         this.eduTenth.title = "Tenth Grade Certificate";
         this.docList.push(this.eduTenth);
@@ -751,13 +853,11 @@ export default {
       if ("name" in this.eduTwelveth) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex(
-              (e) => e.documentTypeCode === "EDTWGC"
-            ),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "EDTWGC"),
             1
           );
         }
-       const filePreview = await this.blobToBase64(this.eduTwelveth);
+        const filePreview = await this.blobToBase64(this.eduTwelveth);
         this.eduTwelveth.docFile = filePreview;
         this.eduTwelveth.title = "Twelveth Grade Certificate";
         this.docList.push(this.eduTwelveth);
@@ -767,11 +867,11 @@ export default {
       if ("name" in this.eduTranscript1) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "EDHT"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "EDHT"),
             1
           );
         }
-       const filePreview = await this.blobToBase64(this.eduTranscript1);
+        const filePreview = await this.blobToBase64(this.eduTranscript1);
         this.eduTranscript1.docFile = filePreview;
         this.eduTranscript1.title = "Education Transcript 1";
         this.docList.push(this.eduTranscript1);
@@ -781,11 +881,11 @@ export default {
       if ("name" in this.eduTranscript2) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "EDPT"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "EDPT"),
             1
           );
         }
-       const filePreview = await this.blobToBase64(this.eduTranscript2);
+        const filePreview = await this.blobToBase64(this.eduTranscript2);
         this.eduTranscript2.docFile = filePreview;
         this.eduTranscript2.title = "Education Transcript 2";
         this.docList.push(this.eduTranscript2);
@@ -795,13 +895,11 @@ export default {
       if ("name" in this.herqa) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex(
-              (e) => e.documentTypeCode === "HERQA"
-            ),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "HERQA"),
             1
           );
         }
-       const filePreview = await this.blobToBase64(this.herqa);
+        const filePreview = await this.blobToBase64(this.herqa);
         this.herqa.docFile = filePreview;
         this.herqa.title = "HERQA";
         this.docList.push(this.herqa);
@@ -812,11 +910,11 @@ export default {
         if ("name" in this.supportLetter) {
           if (this.draftId != undefined) {
             this.documentsArray.splice(
-              this.documentsArray.findIndex((e) => e.documentTypeCode === "SL"),
+              this.documentsArray.findIndex(e => e.documentTypeCode === "SL"),
               1
             );
           }
-         const filePreview = await this.blobToBase64(this.supportLetter);
+          const filePreview = await this.blobToBase64(this.supportLetter);
           this.supportLetter.docFile = filePreview;
           this.supportLetter.title = "Support Letter";
           this.docList.push(this.supportLetter);
@@ -829,12 +927,12 @@ export default {
           if (this.draftId != undefined) {
             this.documentsArray.splice(
               this.documentsArray.findIndex(
-                (e) => e.documentTypeCode === "SLFSI"
+                e => e.documentTypeCode === "SLFSI"
               ),
               1
             );
           }
-         const filePreview = await this.blobToBase64(this.supportLetter);
+          const filePreview = await this.blobToBase64(this.supportLetter);
           this.supportLetter.docFile = filePreview;
           this.supportLetter.title =
             "Support Letter From Sponsored Institution";
@@ -847,11 +945,11 @@ export default {
       if ("name" in this.coc) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "COC"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "COC"),
             1
           );
         }
-       const filePreview = await this.blobToBase64(this.coc);
+        const filePreview = await this.blobToBase64(this.coc);
         this.coc.docFile = filePreview;
         this.coc.title = "COC";
         this.docList.push(this.coc);
@@ -861,13 +959,11 @@ export default {
       if ("name" in this.coc2) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex(
-              (e) => e.documentTypeCode === "COC 2"
-            ),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "COC 2"),
             1
           );
         }
-       const filePreview = await this.blobToBase64(this.coc2);
+        const filePreview = await this.blobToBase64(this.coc2);
         this.coc2.docFile = filePreview;
         this.coc2.title = "COC 2";
         this.docList.push(this.coc2);
@@ -877,13 +973,11 @@ export default {
       if ("name" in this.coc3) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex(
-              (e) => e.documentTypeCode === "COC 3"
-            ),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "COC 3"),
             1
           );
         }
-       const filePreview = await this.blobToBase64(this.coc3);
+        const filePreview = await this.blobToBase64(this.coc3);
         this.coc3.docFile = filePreview;
         this.coc3.title = "COC 3";
         this.docList.push(this.coc3);
@@ -893,11 +987,11 @@ export default {
       if ("name" in this.workExperience) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "WE"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "WE"),
             1
           );
         }
-       const filePreview = await this.blobToBase64(this.workExperience);
+        const filePreview = await this.blobToBase64(this.workExperience);
         this.workExperience.docFile = filePreview;
         this.workExperience.title = "Work Experience";
         this.docList.push(this.workExperience);
@@ -907,11 +1001,11 @@ export default {
       if ("name" in this.workExperience2) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "WE2"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "WE2"),
             1
           );
         }
-       const filePreview = await this.blobToBase64(this.workExperience2);
+        const filePreview = await this.blobToBase64(this.workExperience2);
         this.workExperience2.docFile = filePreview;
         this.workExperience2.title = "Work Experience 2";
         this.docList.push(this.workExperience2);
@@ -921,11 +1015,11 @@ export default {
       if ("name" in this.serviceFee) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "SF"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "SF"),
             1
           );
         }
-       const filePreview = await this.blobToBase64(this.serviceFee);
+        const filePreview = await this.blobToBase64(this.serviceFee);
         this.serviceFee.docFile = filePreview;
         this.serviceFee.title = "Service Fee";
         this.docList.push(this.serviceFee);
@@ -935,13 +1029,11 @@ export default {
       if ("name" in this.renewedLicense) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex(
-              (e) => e.documentTypeCode === "RLOTO"
-            ),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "RLOTO"),
             1
           );
         }
-       const filePreview = await this.blobToBase64(this.renewedLicense);
+        const filePreview = await this.blobToBase64(this.renewedLicense);
         this.renewedLicense.docFile = filePreview;
         this.renewedLicense.title = "Renewed License";
         this.docList.push(this.renewedLicense);
@@ -954,13 +1046,11 @@ export default {
       if ("name" in this.professionalLicense) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex(
-              (e) => e.documentTypeCode === "APLFCO"
-            ),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "APLFCO"),
             1
           );
         }
-       const filePreview = await this.blobToBase64(this.professionalLicense);
+        const filePreview = await this.blobToBase64(this.professionalLicense);
         this.professionalLicense.docFile = filePreview;
         this.professionalLicense.title = "Authenticated Professional License";
         this.docList.push(this.professionalLicense);
@@ -974,12 +1064,12 @@ export default {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
             this.documentsArray.findIndex(
-              (e) => e.documentTypeCode === "APLFCO1"
+              e => e.documentTypeCode === "APLFCO1"
             ),
             1
           );
         }
-       const filePreview = await this.blobToBase64(this.professionalLicense2);
+        const filePreview = await this.blobToBase64(this.professionalLicense2);
         this.professionalLicense2.docFile = filePreview;
         this.professionalLicense2.title =
           "Authenticated Professional License 2";
@@ -990,11 +1080,11 @@ export default {
       if ("name" in this.diploma) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "PDD"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "PDD"),
             1
           );
         }
-       const filePreview = await this.blobToBase64(this.diploma);
+        const filePreview = await this.blobToBase64(this.diploma);
         this.diploma.docFile = filePreview;
         this.diploma.title = "Diploma";
         this.docList.push(this.diploma);
@@ -1004,11 +1094,11 @@ export default {
       if ("name" in this.transcript) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "TRAN"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "TRAN"),
             1
           );
         }
-       const filePreview = await this.blobToBase64(this.transcript);
+        const filePreview = await this.blobToBase64(this.transcript);
         this.transcript.docFile = filePreview;
         this.transcript.title = "Diploma Transcript";
         this.docList.push(this.transcript);
@@ -1018,13 +1108,11 @@ export default {
       if ("name" in this.transcript2) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex(
-              (e) => e.documentTypeCode === "TRAN1"
-            ),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "TRAN1"),
             1
           );
         }
-       const filePreview = await this.blobToBase64(this.transcript2);
+        const filePreview = await this.blobToBase64(this.transcript2);
         this.transcript2.docFile = filePreview;
         this.transcript2.title = "Degree Transcript 2";
         this.docList.push(this.transcript2);
@@ -1034,11 +1122,11 @@ export default {
       if ("name" in this.degree) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "DEG"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "DEG"),
             1
           );
         }
-       const filePreview = await this.blobToBase64(this.degree);
+        const filePreview = await this.blobToBase64(this.degree);
         this.degree.docFile = filePreview;
         this.degree.title = "Degree";
         this.docList.push(this.degree);
@@ -1048,11 +1136,11 @@ export default {
       if ("name" in this.payroll) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "PAYR"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "PAYR"),
             1
           );
         }
-       const filePreview = await this.blobToBase64(this.payroll);
+        const filePreview = await this.blobToBase64(this.payroll);
         this.payroll.docFile = filePreview;
         this.payroll.title = "Payroll";
         this.docList.push(this.payroll);
@@ -1062,11 +1150,11 @@ export default {
       if ("name" in this.masters) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "MAST"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "MAST"),
             1
           );
         }
-       const filePreview = await this.blobToBase64(this.masters);
+        const filePreview = await this.blobToBase64(this.masters);
         this.masters.docFile = filePreview;
         this.masters.title = "Masters";
         this.docList.push(this.masters);
@@ -1077,12 +1165,12 @@ export default {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
             this.documentsArray.findIndex(
-              (e) => e.documentTypeCode === "MASTRAN"
+              e => e.documentTypeCode === "MASTRAN"
             ),
             1
           );
         }
-       const filePreview = await this.blobToBase64(this.mastersTranscript);
+        const filePreview = await this.blobToBase64(this.mastersTranscript);
         this.mastersTranscript.docFile = filePreview;
         this.mastersTranscript.title = "Masters Transcript";
         this.docList.push(this.mastersTranscript);
@@ -1093,12 +1181,12 @@ export default {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
             this.documentsArray.findIndex(
-              (e) => e.documentTypeCode === "MASTRAN1"
+              e => e.documentTypeCode === "MASTRAN1"
             ),
             1
           );
         }
-       const filePreview = await this.blobToBase64(this.mastersTranscript2);
+        const filePreview = await this.blobToBase64(this.mastersTranscript2);
         this.mastersTranscript2.docFile = filePreview;
         this.mastersTranscript2.title = "Masters Transcript 2";
         this.docList.push(this.mastersTranscript2);
@@ -1108,11 +1196,11 @@ export default {
       if ("name" in this.phd) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex((e) => e.documentTypeCode === "PHD"),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "PHD"),
             1
           );
         }
-       const filePreview = await this.blobToBase64(this.phd);
+        const filePreview = await this.blobToBase64(this.phd);
         this.phd.docFile = filePreview;
         this.phd.title = "PhD";
         this.docList.push(this.phd);
@@ -1123,12 +1211,12 @@ export default {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
             this.documentsArray.findIndex(
-              (e) => e.documentTypeCode === "PHDTRAN"
+              e => e.documentTypeCode === "PHDTRAN"
             ),
             1
           );
         }
-       const filePreview = await this.blobToBase64(this.phdTranscript);
+        const filePreview = await this.blobToBase64(this.phdTranscript);
         this.phdTranscript.docFile = filePreview;
         this.phdTranscript.title = "PhD Transcript";
         this.docList.push(this.phdTranscript);
@@ -1139,12 +1227,12 @@ export default {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
             this.documentsArray.findIndex(
-              (e) => e.documentTypeCode === "PHDTRAN1"
+              e => e.documentTypeCode === "PHDTRAN1"
             ),
             1
           );
         }
-       const filePreview = await this.blobToBase64(this.phdTranscript2);
+        const filePreview = await this.blobToBase64(this.phdTranscript2);
         this.phdTranscript2.docFile = filePreview;
         this.phdTranscript2.title = "PhD Transcript 2";
         this.docList.push(this.phdTranscript2);
@@ -1157,13 +1245,11 @@ export default {
       if ("name" in this.renewedLicenseFromHealthFacility) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex(
-              (e) => e.documentTypeCode === "RLHFO"
-            ),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "RLHFO"),
             1
           );
         }
-       const filePreview = await this.blobToBase64(
+        const filePreview = await this.blobToBase64(
           this.renewedLicenseFromHealthFacility
         );
         this.renewedLicenseFromHealthFacility.docFile = filePreview;
@@ -1179,13 +1265,11 @@ export default {
       if ("name" in this.requestLetterFromHiringHealthFacility) {
         if (this.draftId != undefined) {
           this.documentsArray.splice(
-            this.documentsArray.findIndex(
-              (e) => e.documentTypeCode === "RLFHHF"
-            ),
+            this.documentsArray.findIndex(e => e.documentTypeCode === "RLFHHF"),
             1
           );
         }
-       const filePreview = await this.blobToBase64(
+        const filePreview = await this.blobToBase64(
           this.requestLetterFromHiringHealthFacility
         );
         this.requestLetterFromHiringHealthFacility.docFile = filePreview;
@@ -1206,7 +1290,7 @@ export default {
     applicantTypeId: null,
     education: {
       departmentId: null,
-      institutionId: null,
+      institutionId: null
     },
     residenceWoredaId: null,
     professionalTypeIds: [],
@@ -1216,7 +1300,7 @@ export default {
     educationalLevelId: null,
     otherEducationalInstitution: null,
     otherProfessionalType: null,
-    otherProfessionalTypeAmharic:null,
+    otherProfessionalTypeAmharic: null,
     draftId: "",
     draftData: "",
     draftStatus: "",
@@ -1299,7 +1383,7 @@ export default {
     docIdx2: 0,
     docIdx3: 0,
     docIdx4: 0,
-    docIdx5: 0,
+    docIdx5: 0
   }),
   computed: {
     ...mapGetters({
@@ -1368,11 +1452,11 @@ export default {
       getTranscript: "newlicense/getTranscript",
       getTranscript2: "newlicense/getTranscript2",
       getDegree: "newlicense/getDegree",
-      getPayroll: "newlicense/getPayroll",
-    }),
+      getPayroll: "newlicense/getPayroll"
+    })
   },
   methods: {
-    checkBox: function () {
+    checkBox: function() {
       this.checkBoxValue = !this.checkBoxValue;
       if (this.draftStatus == "DEC" || this.draftStatus == "CONF") {
         if (this.checkBoxValue) {
@@ -1392,12 +1476,12 @@ export default {
         }
       }
     },
-    moment: function (date) {
+    moment: function(date) {
       return moment(date);
     },
     fetchProfileInfo() {
       this.showLoading2 = true;
-      this.$store.dispatch("newlicense/getProfile", this.userId).then((res) => {
+      this.$store.dispatch("newlicense/getProfile", this.userId).then(res => {
         setTimeout(() => {
           this.profileInfo = res.data.data;
           this.show = true;
@@ -1428,7 +1512,7 @@ export default {
       const applicationId = this.getApplicationId;
       this.$store
         .dispatch("newlicense/getDocumentSpecs", applicationId)
-        .then((res) => {
+        .then(res => {
           this.documentTypes = res.data.data;
         });
     },
@@ -1436,6 +1520,7 @@ export default {
       this.$emit("changeActiveStateMinus");
     },
     checkRequiredDocs(id, educationLevel, payroll, language) {
+      console.log(this.getApplicationId);
       if (
         educationLevel == "diploma" &&
         id == 1 &&
@@ -1528,7 +1613,6 @@ export default {
         this.healthExamCert !== "" &&
         this.herqa !== "" &&
         this.proCertificate !== "" &&
-        this.proDiploma !== "" &&
         this.proTranscript !== "" &&
         this.professionalLicense !== "" &&
         this.renewedLicenseFromHealthFacility !== "" &&
@@ -1545,7 +1629,6 @@ export default {
         this.healthExamCert !== "" &&
         this.herqa !== "" &&
         this.proCertificate !== "" &&
-        this.proDiploma !== "" &&
         this.proTranscript !== "" &&
         this.professionalLicense !== "" &&
         this.renewedLicenseFromHealthFacility !== "" &&
@@ -1562,7 +1645,6 @@ export default {
         this.healthExamCert !== "" &&
         this.herqa !== "" &&
         this.proCertificate !== "" &&
-        this.proDiploma !== "" &&
         this.proTranscript !== "" &&
         this.professionalLicense !== "" &&
         this.renewedLicenseFromHealthFacility !== "" &&
@@ -1579,7 +1661,6 @@ export default {
         this.healthExamCert !== "" &&
         this.herqa !== "" &&
         this.proCertificate !== "" &&
-        this.proDiploma !== "" &&
         this.proTranscript !== "" &&
         this.professionalLicense !== "" &&
         this.renewedLicenseFromHealthFacility !== "" &&
@@ -1620,7 +1701,6 @@ export default {
         this.healthExamCert !== "" &&
         this.herqa !== "" &&
         this.proCertificate !== "" &&
-        this.proDiploma !== "" &&
         this.proTranscript !== "" &&
         this.professionalLicense !== ""
       ) {
@@ -1632,7 +1712,6 @@ export default {
         this.healthExamCert !== "" &&
         this.herqa !== "" &&
         this.proCertificate !== "" &&
-        this.proDiploma !== "" &&
         this.proTranscript !== "" &&
         this.professionalLicense !== ""
       ) {
@@ -1662,13 +1741,13 @@ export default {
           let license = {
             data: {
               action: action,
-              data: this.draftData,
+              data: this.draftData
             },
-            id: this.draftId,
+            id: this.draftId
           };
           this.$store
             .dispatch("newlicense/editNewLicense", license)
-            .then((res) => {
+            .then(res => {
               if (res.data.status == "Success") {
                 let licenseId = this.draftId;
                 let formData = new FormData();
@@ -1867,7 +1946,7 @@ export default {
 
                 this.$store
                   .dispatch("newlicense/uploadDocuments", payload)
-                  .then((res) => {
+                  .then(res => {
                     if (res.status == 200) {
                       this.showFlash = true;
                       this.showLoading = false;
@@ -1878,7 +1957,7 @@ export default {
                       this.showErrorFlash = true;
                     }
                   })
-                  .catch((err) => { });
+                  .catch(err => {});
               }
             });
         }
@@ -2055,7 +2134,7 @@ export default {
             applicantTypeId: this.applicantTypeId,
             education: {
               institutionId: this.education.institutionId,
-              departmentId: this.education.departmentId,
+              departmentId: this.education.departmentId
             },
             residenceWoredaId: this.residenceWoredaId,
             professionalTypeIds: this.professionalTypeIds,
@@ -2066,8 +2145,8 @@ export default {
             expertLevelId: this.expertLevelId,
             isLegal: this.checkBoxValue,
             otherEducationalInstitution: this.otherEducationalInstitution,
-            otherProfessionalType: this.otherProfessionalType,
-          },
+            otherProfessionalType: this.otherProfessionalType
+          }
         };
         let educationLevel = localStorage.getItem("educationalLevel");
         let payroll = localStorage.getItem("payroll");
@@ -2085,12 +2164,12 @@ export default {
         } else {
           this.$store
             .dispatch("newlicense/addNewLicense", license)
-            .then((res) => {
+            .then(res => {
               let licenseId = res.data.data.id;
               let payload = { document: formData, id: licenseId };
               this.$store
                 .dispatch("newlicense/uploadDocuments", payload)
-                .then((res) => {
+                .then(res => {
                   this.showLoading = false;
                   if (res.data.status == "Success") {
                     this.showFlash = true;
@@ -2101,7 +2180,7 @@ export default {
                     this.showErrorFlash = true;
                   }
                 })
-                .catch((err) => {
+                .catch(err => {
                   this.showErrorFlash = true;
                 });
             });
@@ -2115,226 +2194,218 @@ export default {
         let license = {
           data: {
             action: action,
-            data: this.draftData,
+            data: this.draftData
           },
-          id: this.draftId,
+          id: this.draftId
         };
-        this.$store
-          .dispatch("newlicense/editNewLicense", license)
-          .then((res) => {
-            if (res.data.status == "Success") {
-              let licenseId = this.draftId;
-              let formData = new FormData();
+        this.$store.dispatch("newlicense/editNewLicense", license).then(res => {
+          if (res.data.status == "Success") {
+            let licenseId = this.draftId;
+            let formData = new FormData();
 
-              formData.append(
-                this.documentTypes[1].documentType.code,
-                this.passport
-              );
-              formData.append(
-                this.documentTypes[2].documentType.code,
-                this.healthExamCert
-              );
+            formData.append(
+              this.documentTypes[1].documentType.code,
+              this.passport
+            );
+            formData.append(
+              this.documentTypes[2].documentType.code,
+              this.healthExamCert
+            );
 
+            formData.append(
+              this.documentTypes[4].documentType.code,
+              this.workExperience
+            );
+            formData.append(
+              this.documentTypes[28].documentType.code,
+              this.workExperience2
+            );
+            formData.append(
+              this.documentTypes[5].documentType.code,
+              this.englishLanguage
+            );
+            formData.append(
+              this.documentTypes[23].documentType.code,
+              this.transcript
+            );
+            formData.append(
+              this.documentTypes[52].documentType.code,
+              this.transcript2
+            );
+            formData.append(
+              this.documentTypes[20].documentType.code,
+              this.payroll
+            );
+            formData.append(
+              this.documentTypes[21].documentType.code,
+              this.degree
+            );
+            formData.append(
+              this.documentTypes[6].documentType.code,
+              this.proCertificate
+            );
+            formData.append(
+              this.documentTypes[29].documentType.code,
+              this.proCertificate2
+            );
+            formData.append(
+              this.documentTypes[30].documentType.code,
+              this.proCertificate3
+            );
+            formData.append(
+              this.documentTypes[31].documentType.code,
+              this.proCertificate4
+            );
+            formData.append(
+              this.documentTypes[32].documentType.code,
+              this.proCertificate5
+            );
+            formData.append(
+              this.documentTypes[this.docIdx].documentType.code,
+              this.proDiploma
+            );
+            formData.append(
+              this.documentTypes[this.docIdx2].documentType.code,
+              this.proDiploma2
+            );
+            formData.append(
+              this.documentTypes[this.docIdx3].documentType.code,
+              this.proDiploma3
+            );
+            formData.append(
+              this.documentTypes[this.docIdx4].documentType.code,
+              this.proDiploma4
+            );
+            formData.append(
+              this.documentTypes[this.docIdx5].documentType.code,
+              this.proDiploma5
+            );
+            formData.append(
+              this.documentTypes[8].documentType.code,
+              this.proTranscript
+            );
+            formData.append(
+              this.documentTypes[37].documentType.code,
+              this.proTranscript2
+            );
+            formData.append(
+              this.documentTypes[38].documentType.code,
+              this.proTranscript3
+            );
+            formData.append(
+              this.documentTypes[39].documentType.code,
+              this.proTranscript4
+            );
+            formData.append(
+              this.documentTypes[40].documentType.code,
+              this.proTranscript5
+            );
+            formData.append(this.documentTypes[9].documentType.code, this.coc);
+            formData.append(
+              this.documentTypes[41].documentType.code,
+              this.coc2
+            );
+            formData.append(
+              this.documentTypes[42].documentType.code,
+              this.coc3
+            );
+            if (this.educationalDocs != undefined) {
               formData.append(
-                this.documentTypes[4].documentType.code,
-                this.workExperience
+                this.documentTypes[10].documentType.code,
+                this.educationalDocs[0]
               );
               formData.append(
-                this.documentTypes[28].documentType.code,
-                this.workExperience2
+                this.documentTypes[11].documentType.code,
+                this.educationalDocs[1]
               );
               formData.append(
-                this.documentTypes[5].documentType.code,
-                this.englishLanguage
+                this.documentTypes[12].documentType.code,
+                this.educationalDocs[2]
               );
               formData.append(
-                this.documentTypes[23].documentType.code,
-                this.transcript
+                this.documentTypes[13].documentType.code,
+                this.educationalDocs[3]
               );
               formData.append(
-                this.documentTypes[52].documentType.code,
-                this.transcript2
+                this.documentTypes[14].documentType.code,
+                this.educationalDocs[4]
               );
-              formData.append(
-                this.documentTypes[20].documentType.code,
-                this.payroll
-              );
-              formData.append(
-                this.documentTypes[21].documentType.code,
-                this.degree
-              );
-              formData.append(
-                this.documentTypes[6].documentType.code,
-                this.proCertificate
-              );
-              formData.append(
-                this.documentTypes[29].documentType.code,
-                this.proCertificate2
-              );
-              formData.append(
-                this.documentTypes[30].documentType.code,
-                this.proCertificate3
-              );
-              formData.append(
-                this.documentTypes[31].documentType.code,
-                this.proCertificate4
-              );
-              formData.append(
-                this.documentTypes[32].documentType.code,
-                this.proCertificate5
-              );
-              formData.append(
-                this.documentTypes[this.docIdx].documentType.code,
-                this.proDiploma
-              );
-              formData.append(
-                this.documentTypes[this.docIdx2].documentType.code,
-                this.proDiploma2
-              );
-              formData.append(
-                this.documentTypes[this.docIdx3].documentType.code,
-                this.proDiploma3
-              );
-              formData.append(
-                this.documentTypes[this.docIdx4].documentType.code,
-                this.proDiploma4
-              );
-              formData.append(
-                this.documentTypes[this.docIdx5].documentType.code,
-                this.proDiploma5
-              );
-              formData.append(
-                this.documentTypes[8].documentType.code,
-                this.proTranscript
-              );
-              formData.append(
-                this.documentTypes[37].documentType.code,
-                this.proTranscript2
-              );
-              formData.append(
-                this.documentTypes[38].documentType.code,
-                this.proTranscript3
-              );
-              formData.append(
-                this.documentTypes[39].documentType.code,
-                this.proTranscript4
-              );
-              formData.append(
-                this.documentTypes[40].documentType.code,
-                this.proTranscript5
-              );
-              formData.append(
-                this.documentTypes[9].documentType.code,
-                this.coc
-              );
-              formData.append(
-                this.documentTypes[41].documentType.code,
-                this.coc2
-              );
-              formData.append(
-                this.documentTypes[42].documentType.code,
-                this.coc3
-              );
-              if (this.educationalDocs != undefined) {
-                formData.append(
-                  this.documentTypes[10].documentType.code,
-                  this.educationalDocs[0]
-                );
-                formData.append(
-                  this.documentTypes[11].documentType.code,
-                  this.educationalDocs[1]
-                );
-                formData.append(
-                  this.documentTypes[12].documentType.code,
-                  this.educationalDocs[2]
-                );
-                formData.append(
-                  this.documentTypes[13].documentType.code,
-                  this.educationalDocs[3]
-                );
-                formData.append(
-                  this.documentTypes[14].documentType.code,
-                  this.educationalDocs[4]
-                );
-              }
-
-              if (this.applicantTypeId == 1) {
-                formData.append(
-                  this.documentTypes[15].documentType.code,
-                  this.supportLetter
-                );
-              }
-              if (this.applicantTypeId == 3) {
-                formData.append(
-                  this.documentTypes[64].documentType.code,
-                  this.supportLetter
-                );
-              }
-              formData.append(
-                this.documentTypes[16].documentType.code,
-                this.herqa
-              );
-              formData.append(
-                this.documentTypes[18].documentType.code,
-                this.renewedLicense
-              );
-              formData.append(
-                this.documentTypes[19].documentType.code,
-                this.professionalLicense
-              );
-              formData.append(
-                this.documentTypes[52].documentType.code,
-                this.professionalLicense2
-              );
-              formData.append(
-                this.documentTypes[24].documentType.code,
-                this.masters
-              );
-              formData.append(
-                this.documentTypes[25].documentType.code,
-                this.mastersTranscript
-              );
-              formData.append(
-                this.documentTypes[57].documentType.code,
-                this.mastersTranscript2
-              );
-              formData.append(
-                this.documentTypes[26].documentType.code,
-                this.phd
-              );
-              formData.append(
-                this.documentTypes[27].documentType.code,
-                this.phdTranscript
-              );
-              formData.append(
-                this.documentTypes[58].documentType.code,
-                this.phdTranscript2
-              );
-              formData.append(
-                this.documentTypes[63].documentType.code,
-                this.renewedLicenseFromHealthFacility
-              );
-              formData.append(
-                this.documentTypes[65].documentType.code,
-                this.requestLetterFromHiringHealthFacility
-              );
-              let payload = { document: formData, id: licenseId };
-              this.$store
-                .dispatch("newlicense/uploadDocuments", payload)
-                .then((res) => {
-                  if (res.status == 200) {
-                    this.showFlash = true;
-                    this.showLoading = false;
-                    setTimeout(() => {
-                      this.$router.push({ path: "/menu" });
-                    }, 1500);
-                  } else {
-                    this.showErrorFlash = true;
-                  }
-                })
-                .catch((err) => { });
             }
-          });
+
+            if (this.applicantTypeId == 1) {
+              formData.append(
+                this.documentTypes[15].documentType.code,
+                this.supportLetter
+              );
+            }
+            if (this.applicantTypeId == 3) {
+              formData.append(
+                this.documentTypes[64].documentType.code,
+                this.supportLetter
+              );
+            }
+            formData.append(
+              this.documentTypes[16].documentType.code,
+              this.herqa
+            );
+            formData.append(
+              this.documentTypes[18].documentType.code,
+              this.renewedLicense
+            );
+            formData.append(
+              this.documentTypes[19].documentType.code,
+              this.professionalLicense
+            );
+            formData.append(
+              this.documentTypes[52].documentType.code,
+              this.professionalLicense2
+            );
+            formData.append(
+              this.documentTypes[24].documentType.code,
+              this.masters
+            );
+            formData.append(
+              this.documentTypes[25].documentType.code,
+              this.mastersTranscript
+            );
+            formData.append(
+              this.documentTypes[57].documentType.code,
+              this.mastersTranscript2
+            );
+            formData.append(this.documentTypes[26].documentType.code, this.phd);
+            formData.append(
+              this.documentTypes[27].documentType.code,
+              this.phdTranscript
+            );
+            formData.append(
+              this.documentTypes[58].documentType.code,
+              this.phdTranscript2
+            );
+            formData.append(
+              this.documentTypes[63].documentType.code,
+              this.renewedLicenseFromHealthFacility
+            );
+            formData.append(
+              this.documentTypes[65].documentType.code,
+              this.requestLetterFromHiringHealthFacility
+            );
+            let payload = { document: formData, id: licenseId };
+            this.$store
+              .dispatch("newlicense/uploadDocuments", payload)
+              .then(res => {
+                if (res.status == 200) {
+                  this.showFlash = true;
+                  this.showLoading = false;
+                  setTimeout(() => {
+                    this.$router.push({ path: "/menu" });
+                  }, 1500);
+                } else {
+                  this.showErrorFlash = true;
+                }
+              })
+              .catch(err => {});
+          }
+        });
       } else {
         let formData = new FormData();
         formData.append(this.documentTypes[1].documentType.code, this.passport);
@@ -2509,7 +2580,7 @@ export default {
             applicantTypeId: this.applicantTypeId,
             education: {
               institutionId: this.education.institutionId,
-              departmentId: this.education.departmentId,
+              departmentId: this.education.departmentId
             },
             residenceWoredaId: this.residenceWoredaId,
             professionalTypeIds: this.professionalTypeIds,
@@ -2520,31 +2591,29 @@ export default {
             expertLevelId: this.expertLevelId,
             isLegal: this.checkBoxValue,
             otherEducationalInstitution: this.otherEducationalInstitution,
-            otherProfessionalType: this.otherProfessionalType,
-          },
+            otherProfessionalType: this.otherProfessionalType
+          }
         };
-        this.$store
-          .dispatch("newlicense/addNewLicense", license)
-          .then((res) => {
-            let licenseId = res.data.data.id;
-            let payload = { document: formData, id: licenseId };
-            this.$store
-              .dispatch("newlicense/uploadDocuments", payload)
-              .then((res) => {
-                this.showLoading = false;
-                if (res.data.status == "Success") {
-                  this.showFlash = true;
-                  setTimeout(() => {
-                    this.$router.push({ path: "/menu" });
-                  }, 1500);
-                } else {
-                  this.showErrorFlash = true;
-                }
-              })
-              .catch((err) => {
+        this.$store.dispatch("newlicense/addNewLicense", license).then(res => {
+          let licenseId = res.data.data.id;
+          let payload = { document: formData, id: licenseId };
+          this.$store
+            .dispatch("newlicense/uploadDocuments", payload)
+            .then(res => {
+              this.showLoading = false;
+              if (res.data.status == "Success") {
+                this.showFlash = true;
+                setTimeout(() => {
+                  this.$router.push({ path: "/menu" });
+                }, 1500);
+              } else {
                 this.showErrorFlash = true;
-              });
-          });
+              }
+            })
+            .catch(err => {
+              this.showErrorFlash = true;
+            });
+        });
       }
     },
     update(action) {
@@ -2557,7 +2626,7 @@ export default {
             applicantTypeId: this.licenseInfo.applicantTypeId,
             education: {
               departmentId: this.licenseInfo.education.departmentId,
-              institutionId: this.licenseInfo.education.institutionId,
+              institutionId: this.licenseInfo.education.institutionId
             },
             residenceWoredaId: this.residenceWoredaId,
             professionalTypeIds: this.professionalTypeIds,
@@ -2568,30 +2637,28 @@ export default {
             expertLevelId: this.expertLevelId,
             isLegal: this.checkBoxValue,
             otherEducationalInstitution: this.otherEducationalInstitution,
-            otherProfessionalType: this.otherProfessionalType,
-          },
+            otherProfessionalType: this.otherProfessionalType
+          }
         },
-        id: this.draftId,
+        id: this.draftId
       };
 
       if (this.draftId != undefined) {
-        this.$store
-          .dispatch("newlicense/editNewLicense", license)
-          .then((res) => {
-            if (res.data.status == "Success") {
-              this.showFlash = true;
-              this.showLoading = false;
-              setTimeout(() => {
-                this.$router.push({ path: "/menu" });
-              }, 1500);
-            } else {
-              this.showErrorFlash = true;
-            }
-          });
+        this.$store.dispatch("newlicense/editNewLicense", license).then(res => {
+          if (res.data.status == "Success") {
+            this.showFlash = true;
+            this.showLoading = false;
+            setTimeout(() => {
+              this.$router.push({ path: "/menu" });
+            }, 1500);
+          } else {
+            this.showErrorFlash = true;
+          }
+        });
       } else {
         this.$store
           .dispatch("newlicense/addNewLicense", license.data)
-          .then((res) => {
+          .then(res => {
             if (res.data.status == "Success") {
               this.showFlash = true;
               this.showLoading = false;
@@ -2606,13 +2673,13 @@ export default {
       this.showLoading = true;
       let withdrawObj = {
         action: action,
-        data: this.getDraftData,
+        data: this.getDraftData
       };
       let payload = {
         licenseId: this.getDraftData.id,
-        withdrawData: withdrawObj,
+        withdrawData: withdrawObj
       };
-      this.$store.dispatch("newlicense/withdraw", payload).then((res) => {
+      this.$store.dispatch("newlicense/withdraw", payload).then(res => {
         if (res) {
           this.showFlash = true;
           this.showLoading = false;
@@ -2623,21 +2690,21 @@ export default {
           this.showErrorFlash = true;
         }
       });
-    },
+    }
   },
   mounted() {
-    this.$nextTick(function () {
+    this.$nextTick(function() {
       window.setInterval(() => {
         this.showFlash = false;
         this.showErrorFlash = false;
       });
     });
-  },
+  }
 };
 </script>
 <style>
-.text-danger>label,
-.text-danger>h5 {
+.text-danger > label,
+.text-danger > h5 {
   color: red;
 }
 

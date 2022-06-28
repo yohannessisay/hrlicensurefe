@@ -31,13 +31,20 @@
           @applicationTypeSelected="applicationTypeHandler"
           @selectGoodStandingMenu="selectMenu"
         />
+      
         <all-licensed-side-nav
           :dropdownValue="dropdownValue"
           :adminRole="adminRole"
           @applicationTypeSelected="applicationTypeHandler"
           @selectAllLicensedMenu="selectMenu"
         />
-        <report-side-nav @selectReportMenu="selectMenu" />
+          <report-side-nav
+          :dropdownValue="dropdownValue"
+          :adminRole="adminRole"
+          @applicationTypeSelected="applicationTypeHandler"
+          @selectAllLicensedMenu="selectMenu"
+        />
+        <!-- <report-side-nav @selectReportMenu="selectMenu" /> -->
 
         <dashboard-side-nav @selectDashboardMenu="selectMenu" />
           <user-management-side-nav @selectUserManagementMenu="selectMenu" />

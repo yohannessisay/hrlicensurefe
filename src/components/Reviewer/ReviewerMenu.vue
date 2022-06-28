@@ -392,7 +392,9 @@
         <div v-if="this.display == 'report'">
           <report />
         </div>
-
+       <div v-if="this.display == 'adminReport'">
+          <AdminReport />
+        </div>
         <div v-if="this.display == 'dashboard'">
           <dashboard />
         </div>
@@ -533,6 +535,7 @@ import VerificationRequests from "./Verification/RequestedVerifications.vue";
 import VerificationResponses from "./Verification/ResponseVerifications.vue";
 
 import Report from "../Report/Report.vue";
+import AdminReport from "../Report/AdminReport.vue";
 import Dashboard from "./Dashboard.vue";
 import UserManagement from "../UserManagement/UserDashboard.vue";
 
@@ -635,7 +638,7 @@ export default {
     GoodStandingLicensed,
     GoodStandingOthersLicensed,
     GoodStandingAllLicensed,
-
+    AdminReport,
     ImportResults,
     AllLicensed,
     Accredited,
