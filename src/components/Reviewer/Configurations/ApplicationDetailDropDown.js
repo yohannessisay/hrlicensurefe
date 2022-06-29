@@ -72,13 +72,25 @@ export const applicationTypeDD = (applicationDetail, dropdown) => {
     dropdown.verification = false;
     dropdown.goodStanding = false;
     dropdown.allLicensed = false;
+    dropdown.report =false;
     
   }
   if (applicationDetail == "NewLicense") {
     dropdown.newLicense = !dropdown.newLicense;
     dropdown.newLicenseUnderReview = false;
     dropdown.newLicenseLicensed = false;
-
+    dropdown.report =false;
+    dropdown.goodStanding = false;
+    dropdown.renewal = false;
+    dropdown.verification = false;
+    dropdown.report =false;
+    dropdown.allLicensed = false;
+  }
+  if (applicationDetail == "Report") {
+    dropdown.report = !dropdown.report;
+    dropdown.newLicenseUnderReview = false;
+    dropdown.newLicenseLicensed = false;
+    dropdown.newLicense = false;
     dropdown.goodStanding = false;
     dropdown.renewal = false;
     dropdown.verification = false;
@@ -90,7 +102,7 @@ export const applicationTypeDD = (applicationDetail, dropdown) => {
     dropdown.goodStandingUnfinished = false;
     dropdown.goodStandingApproved = false;
     dropdown.goodStandingDeclined = false;
-
+    dropdown.report =false;
     dropdown.newLicense = false;
     dropdown.renewal = false;
     dropdown.verification = false;
@@ -103,10 +115,11 @@ export const applicationTypeDD = (applicationDetail, dropdown) => {
     dropdown.verificationUnfinished = false;
     dropdown.verificationApproved = false;
     dropdown.verificationDeclined = false;
-
     dropdown.goodStanding = false;
     dropdown.newLicense = false;
     dropdown.renewal = false;
+    dropdown.report =false;
+
   }
   if (applicationDetail == "RenewalAssigned") {
     dropdown.renewalAssigned = !dropdown.renewalAssigned;
@@ -469,5 +482,7 @@ export const applicationTypeDD = (applicationDetail, dropdown) => {
     dropdown.verification = false;
     dropdown.goodStanding = false;
     dropdown.renewal = false;
+    dropdown.report =false;
+
   }
 };
