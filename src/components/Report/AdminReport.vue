@@ -1,12 +1,14 @@
 <template
-  ><div>
+  >
+  
+  <div style="width:95%">
     <!-- <ReviewerNavBar tab="Report" /> -->
-    <div class="flex ">
+    <div class="flex" >
       <!-- <div>
         <ReviewerSideBar style="width: 30vh" />
       </div> -->
       <div>
-        <div class="px-4">
+        <div class="px-4" style="margin-right: 45%;">
           <div class="py-8">
        
           
@@ -19,7 +21,7 @@
             <div class="">
               <label class="text-primary-700">Rows per page: </label>
               <select
-                class="max-w-3xl mb-4"
+                class="max-w-xl mb-4"
                 v-model="paginationSize"
                 @change="handlePagSize($)"
                 style="padding: 0px 35px 0px 5px; border: none; border-radius: unset; border-bottom: 2px solid lightblue;margin-left: 8px"
@@ -43,7 +45,7 @@
                 class="shadow-md rounded-lg  min-w-full"
                 v-if="!showLoading"
               >
-                <table class="w-full" id="myTable">
+                <table class="w-full" id="myTable" style="width:95%">
                   <thead>
                     <tr class="">
                       <th
@@ -83,7 +85,7 @@
                       </td>
                       <td class="px-5 py-5  border-gray-200 bg-white text-sm">
                         <div class="flex">
-                          <div class="ml-3">
+                          <div class="ml-1">
                             <p class="text-gray-900 whitespace-no-wrap">
                               {{ item.newlicense }}
                             </p>

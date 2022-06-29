@@ -4,7 +4,7 @@
       <transition name="slide-fade-to-left">
         <div class="">
           <div
-            @click="allLicensedDDHandler('AllLicensed')"
+            @click="allLicensedDDHandler('Report')"
             class=" justify-center items-center "
           >
             <div class="p-1 ">
@@ -26,7 +26,7 @@
           </div>
 
           <div
-            v-if="dropdownValue.allLicensed"
+            v-if="dropdownValue.report"
             class="dropdown-menu   mb-12 ml-4 "
             style="color: #648ea3; width: 200px;"
           >
@@ -34,7 +34,7 @@
               <li @click="AllLicensedMenuHandler('report')" class="mb-2">
                 <div class=" text-base" style="color: white; ">
                   <!-- <i class="far fa-thumbs-up fa-x fa-light mt-4"></i> -->
-                  Service Report
+                  Service
                 </div>
               </li>
 
@@ -92,7 +92,7 @@ export default {
     };
 
     const allLicensedDDHandler = (applicationValue) => {
-      if (applicationValue == "AllLicensed") {
+      if (applicationValue == "Report") {
         allLicensedDDIcon.value.isAllLicensedUp = !allLicensedDDIcon.value
           .isAllLicensedUp;
       }
