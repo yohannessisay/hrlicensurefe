@@ -1,129 +1,33 @@
 <template>
-  <div>
-    <!-- <reviewer-nav-bar tab="newLicenseUnassigned" /> -->
-    <div class="bg-lightBlueB-200 h-full" v-if="!allInfo.searchByInput">
-      <div class="pl-12" v-if="expertLevel == 3">
-        <div style="border-bottom: 2px solid #eaeaea">
-          <ul class="flex cursor-pointer">
-            <li
-              :class="[
-                selectedTab == 'Unassigned'
-                  ? selectedTabClass
-                  : notSelectedTabClass,
-              ]"
-              @click="changeTab('Unassigned')"
-              :style="[
-                selectedTab == 'Unassigned'
-                  ? 'background-color: white'
-                  : 'background-color: #C3DBD9',
-              ]"
-            >
-              Unassigned
-            </li>
-            <li
-              :class="[
-                selectedTab == 'From Other Region'
-                  ? selectedTabClass
-                  : notSelectedTabClass,
-              ]"
-              :style="[
-                selectedTab == 'From Other Region'
-                  ? 'background-color: white'
-                  : 'background-color: #C3DBD9',
-              ]"
-              @click="changeTab('From Other Region')"
-            >
-              From Other Region
-            </li>
-          </ul>
+  <reviewer-nav-bar tab="newLicenseUnassigned" />
+  <div style="width: 100%" class="flex flex-row">
+    <div class="sidenav">
+      <reviewer-side-nav />
+    </div>
+    <div class="menu" style="width: -webkit-fill-available">
+      <div class="wrapper">
+        <div class="tabs">
+          <div class="tab">
+            <input
+              type="radio"
+              name="css-tabs"
+              id="tab-1"
+              checked
+              class="tab-switch"
+            />
+            <label for="tab-1" class="tab-label">Unassigned</label>
+            <div class="tab-content">
+              <h2>Unassigned</h2>
+            </div>
+          </div>
+       
+
+          
         </div>
       </div>
-      <div class="pl-12">
-        <div>Filter By</div>
-      </div>
-
-      <div class="flex flex-wrap mb-medium pl-12 pt-1">
-        <label class="text-primary-700 mr-2">From</label>
-        <input
-          class="max-w-3xl mr-5"
-          type="date"
-          v-model="allInfo.searchFromDate"
-        />
-        <label class="text-primary-700 mr-2">To</label>
-        <input
-          class="max-w-3xl mr-5"
-          type="date"
-          v-model="allInfo.searchUpToDate"
-        />
-        <button @click="filterAssignedApplication">
-          Filter
-        </button>
-      </div>
-      <div class="flex pl-12 pt-tiny">
-        <Title :message="message" />
-      </div>
-      <!-- <div class="flex flex-wrap pb-medium rounded h-full" v-if="!showLoading">
-        <nothing-to-show :nothingToShow="nothingToShow" />
-        <unassigned-applications
-          :unassignedApplication="getNewLicenseUnassigned"
-          app_type="New License"
-        />
-      </div> -->
-      <div
-        class="flex flex-wrap pb-medium rounded h-full"
-        v-if="
-          selectedTab == 'Unassigned'
-            ? !showLoadingUnassigned
-            : !showLoadingFromOtherRegion
-        "
-      >
-        <nothing-to-show
-          :nothingToShow="
-            selectedTab == 'Unassigned'
-              ? nothingToShowUnassigned
-              : nothingToShowFromOtherRegion
-          "
-        />
-        <unassigned-applications
-          :unassignedApplication="
-            selectedTab == 'Unassigned'
-              ? getNewLicenseUnassigned
-              : getNewLicenseFromOtherRegion
-          "
-          app_type="New License"
-          others_licensed="false"
-        />
-      </div>
-    </div>
-    <div
-      v-if="
-        selectedTab == 'Unassigned'
-          ? showLoadingUnassigned
-          : showLoadingFromOtherRegion
-      "
-      class="flex justify-center justify-items-center mt-24"
-    >
-      <Spinner />
-    </div>
-    <div class="bg-lightBlueB-200 h-full" v-if="allInfo.searchByInput">
-      <div class="flex pl-12 pt-tiny">
-        <Title
-          :message="
-            'Unassigned Applicants on Date Range ' +
-              moment(allInfo.searchFromDate).format('MMM D, YYYY') +
-              ' To ' +
-              moment(allInfo.searchUpToDate).format('MMM D, YYYY')
-          "
-        />
-        <button @click="backClicked">back</button>
-      </div>
-      <filtered-info
-        :filteredData="allInfo.filteredByDate"
-        type="unassignedDetail"
-        app_type="New License"
-      />
     </div>
   </div>
+
   <div v-if="allInfo.message.showErrorFlash">
     <ErrorFlashMessage
       message="Date Range is not valid, Please Enter Valid Date"
@@ -145,6 +49,7 @@ import filterApplication from "../../ChildComponents/FilteredDatas/FilterApplica
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import FilteredInfo from "../../ChildComponents/FilteredDatas/FilteredInfo.vue";
 import applicationStatus from "../../Configurations/getApplicationStatus.js";
+import ReviewerSideNav from "../../ReviewerSideNav.vue";
 
 export default {
   computed: {
@@ -168,10 +73,13 @@ export default {
     NothingToShow,
     UnassignedApplications,
     Title,
+    ReviewerSideNav,
   },
   setup() {
     const store = useStore();
-    let expertLevel = JSON.parse(localStorage.getItem("allAdminData")).expertLevelId
+    let expertLevel = JSON.parse(
+      localStorage.getItem("allAdminData")
+    ).expertLevelId;
 
     let newLicenseUnassigned = ref([]);
     let newLicenseFromOtherRegion = ref([]);
@@ -265,14 +173,18 @@ export default {
     const fetchNewLicenseFromOtherRegion = () => {
       showLoadingFromOtherRegion.value = true;
       const statusId = applicationStatus(store, "SUB");
-      store.dispatch("reviewerNewLicense/getNewLicenseFromOtherRegion", statusId).then((res) => {
-        showLoadingFromOtherRegion.value = false;
-        newLicenseFromOtherRegion.value =
-          store.getters["reviewerNewLicense/getNewLicenseFromOtherRegionSearched"];
-        if (newLicenseFromOtherRegion.value.length === 0) {
-          nothingToShowFromOtherRegion.value = true;
-        }
-      });
+      store
+        .dispatch("reviewerNewLicense/getNewLicenseFromOtherRegion", statusId)
+        .then((res) => {
+          showLoadingFromOtherRegion.value = false;
+          newLicenseFromOtherRegion.value =
+            store.getters[
+              "reviewerNewLicense/getNewLicenseFromOtherRegionSearched"
+            ];
+          if (newLicenseFromOtherRegion.value.length === 0) {
+            nothingToShowFromOtherRegion.value = true;
+          }
+        });
     };
 
     onMounted(() => {
@@ -297,3 +209,74 @@ export default {
   },
 };
 </script>
+<style scoped>
+.tabs {
+  position: relative;
+  margin: 10px 0 0 30px;
+  background: white;
+  height: 14.75rem;
+ 
+}
+.tabs::before,
+.tabs::after {
+  content: "";
+  display: table;
+}
+.tabs::after {
+  clear: both;
+}
+.tab {
+  float: left;
+}
+.tab-switch {
+  display: none;
+}
+.tab-label {
+  position: relative;
+  display: block;
+  line-height: 2.75em;
+  margin-right: 5px;
+  padding: 0 1.618em;
+  background: white;
+  border-right: 2px solid white;
+  color: #285180;
+  cursor: pointer;
+  top: 0;
+  transition: all 0.25s;
+  border-bottom:1px solid grey;
+}
+.tab-label:hover {
+  top: -0.5rem;
+  transition: top 0.25s;
+}
+.tab-content {
+  height: webkit-fill-available;
+  position: absolute;
+  z-index: 1;
+  margin-top: 10px;
+  left: 0;
+  padding: 1.618rem;
+  background: #fff;
+  color: #2c3e50;
+  border: 0.25rem solid #bdc3c7;
+  opacity: 0;
+  transition: all 0.35s;
+}
+.tab-switch:checked + .tab-label {
+  background: #285180;
+  margin-top: 10px;
+  color: white;
+  border-bottom: 2px solid #2c3e50;
+  margin-right: 2px;
+  border:2px solid #2c3e50;
+
+  transition: all 0.5s;
+  z-index: 1;
+  top: -0.0625rem;
+}
+.tab-switch:checked + label + .tab-content {
+  z-index: 1;
+  opacity: 1;
+  transition: all 0.5s;
+}
+</style>

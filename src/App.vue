@@ -25,6 +25,7 @@ export default {
 @import "styles/tailwind.postcss";
 @import "styles/fonts.css";
 @import "styles/design-system.css";
+@import "styles/main.css";
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;

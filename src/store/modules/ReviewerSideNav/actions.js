@@ -4,7 +4,7 @@ export default {
     commit(SET_SELECTED_SIDE_BAR, menu);
     // return menu;
   },
-  getSelectedSideBar({ commit, getters }) {
-    commit(GET_SELECTED_SIDE_BAR, "newLicenseUnassigned");
+  getSelectedSideBar({ commit }) {
+    commit(GET_SELECTED_SIDE_BAR);
   },
 };

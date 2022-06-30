@@ -12,13 +12,13 @@
           <div class="flex justify-start">
             <Title message="Personal Info" />
           </div>
-         
+
           <div class="flex flex-row">
             <div
               :class="[profileInfo.name === null ? errorClass : activeClass]"
             >
               <label class="ml-8"> Full Name</label>
-                  <hr class="ml-4">
+              <hr class="ml-4" />
               <h5 class="ml-8 mt-4">
                 {{
                   profileInfo.name +
@@ -33,7 +33,7 @@
               :class="[profileInfo.gender === null ? errorClass : activeClass]"
             >
               <label class="ml-8"> Gender</label>
-                  <hr>
+              <hr />
               <h5 class="ml-8 mt-4">
                 {{ profileInfo.gender ? profileInfo["gender"] : "-" }}
               </h5>
@@ -44,7 +44,7 @@
               ]"
             >
               <label class="ml-8"> Nationality</label>
-                  <hr>
+              <hr />
               <h5 class="ml-8 mt-4">
                 {{
                   profileInfo.nationality ? profileInfo.nationality.name : "-"
@@ -57,7 +57,7 @@
               ]"
             >
               <label class="ml-8"> Date of Birth</label>
-                  <hr>
+              <hr />
               <h5 class="ml-8 mt-4">
                 {{
                   profileInfo.dateOfBirth
@@ -74,7 +74,7 @@
               ]"
             >
               <label class="ml-8"> Marital Status</label>
-                  <hr>
+              <hr />
               <h5 class="ml-8 mt-4">
                 {{
                   profileInfo.maritalStatus.name
@@ -100,7 +100,7 @@
               ]"
             >
               <label class="ml-8"> Region</label>
-                <hr class="ml-4">
+              <hr class="ml-4" />
               <h5 class="ml-8 mt-4">
                 {{
                   license.woreda === null
@@ -123,7 +123,7 @@
               ]"
             >
               <label class="ml-8"> Zone</label>
-              <hr>
+              <hr />
               <h5 class="ml-8 mt-4">
                 {{
                   license.woreda === null
@@ -136,7 +136,7 @@
             </div>
             <div :class="[license.woreda === null ? errorClass : activeClass]">
               <label class="ml-8"> Wereda</label>
-              <hr>
+              <hr />
               <h5 class="ml-8 mt-4">
                 {{ license.woreda ? license.woreda.name : "-" }}
               </h5>
@@ -154,7 +154,7 @@
               ]"
             >
               <label class="ml-8"> Mobile Number</label>
-              <hr class="ml-4">
+              <hr class="ml-4" />
               <h5 class="ml-8 mt-4">
                 {{
                   profileInfo.user.phoneNumber
@@ -172,7 +172,7 @@
               ]"
             >
               <label class="ml-8"> Email</label>
-              <hr>
+              <hr />
               <h5 class="ml-8 mt-4">
                 {{
                   profileInfo.user.emailAddress
@@ -188,21 +188,21 @@
           <div class="flex flex-row">
             <div>
               <label class="ml-8"> Institution Name</label>
-              <hr class="ml-4">
+              <hr class="ml-4" />
               <h5 class="ml-8 mt-4" v-if="education.institutionName">
                 {{ education.institutionName }}
               </h5>
             </div>
             <div>
               <label class="ml-8"> Department</label>
-              <hr>
+              <hr />
               <h5 class="ml-8 mt-4" v-if="education.departmentName">
                 {{ education.departmentName }}
               </h5>
             </div>
             <div>
               <label class="ml-8"> Institution Type</label>
-              <hr>
+              <hr />
               <h5 class="ml-8 mt-4" v-if="education.institutionTypeName">
                 {{ education.institutionTypeName }}
               </h5>
@@ -225,7 +225,10 @@
                   :data-title="document.documentType.name"
                   data-lightbox="example-2"
                 >
-                  <img :src="googleApi + document.filePath" class="w-full h-48 object-cover" />
+                  <img
+                    :src="googleApi + document.filePath"
+                    class="w-full h-48 object-cover"
+                  />
                 </a>
 
                 <h4 style="font-weight: bold">Document Type:-</h4>
