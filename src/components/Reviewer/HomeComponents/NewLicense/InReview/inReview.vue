@@ -42,7 +42,11 @@
                     @is-finished="tableLoadingFinish"
                     @row-clicked="rowClicked"
                   ></vue-table-lite>
-                  <edit-modal v-if="showModal" :modalData="modalData">
+                  <edit-modal
+                    v-if="showModal"
+                    :modalData="modalData"
+                    :reviewers="reviewers"
+                  >
                   </edit-modal>
                 </div>
               </div>
@@ -120,7 +124,6 @@ export default {
     const adminId = +localStorage.getItem("adminId");
 
     let loading = ref(false);
-
     let modalData = ref({
       id: "",
       name: "",
@@ -133,6 +136,7 @@ export default {
       instName: "",
       department: "",
       instType: "",
+      documentData: {},
     });
 
     let allInfo = ref({
@@ -147,6 +151,7 @@ export default {
       searchUpToDate: "",
       app_type: "",
     });
+    const reviewers = ref([]);
 
     const toOthersTable = ref({});
     const toYouTable = ref({});
@@ -166,7 +171,7 @@ export default {
 
         store
           .dispatch(
-            "reviewerNewLicense/getNewLicenseOthersAssigned",
+            "reviewerNewLicense/getNewLicenseOthersOnReview",
             adminStatus
           )
           .then((res) => {
@@ -174,7 +179,7 @@ export default {
 
             allInfo.value.assignApplication =
               store.getters[
-                "reviewerNewLicense/getNewLicenseAssignedToOthersSearched"
+                "reviewerNewLicense/getNewLicenseOthersOnReviewSearched"
               ];
 
             for (let applicant in allInfo.value.assignApplication) {
@@ -262,15 +267,15 @@ export default {
 
     const inReviewAssignedToYou = () => {
       loading.value = true;
-      applicationStatus(store, "EVAASS").then((res) => {
+      applicationStatus(store, "IRV").then((res) => {
         let statusId = res;
         let adminStatus = [statusId, adminId];
 
         store
-          .dispatch("reviewerNewLicense/getNewLicenseAssigned", adminStatus)
-          .then((res) => {
+          .dispatch("reviewerNewLicense/getNewLicenseOnReview", adminStatus)
+          .then(() => {
             allInfo.value.assignApplication =
-              store.getters["reviewerNewLicense/getNewLicenseAssignedSearched"];
+              store.getters["reviewerNewLicense/getNewLicenseOnReviewSearched"];
 
             for (let applicant in allInfo.value.assignApplication) {
               if (
@@ -344,7 +349,7 @@ export default {
                   },
                 },
               ],
-              rows: JSON.parse(JSON.stringify(tableData.value)),
+              rows: JSON.parse(JSON.stringify(toYouTableData.value)),
               totalRecordCount: toYouTableData.value.length,
               sortable: {
                 order: "id",
@@ -356,8 +361,6 @@ export default {
     };
 
     const tableLoadingFinish = () => {
-      toOthersTable.value.isLoading = false;
-      toYouTable.value.isLoading = false;
       let elements = document.getElementsByClassName("edit-btn");
 
       Array.prototype.forEach.call(elements, function (element) {
@@ -365,11 +368,18 @@ export default {
           element.addEventListener("click", rowClicked());
         }
       });
+      toOthersTable.value.isLoading = false;
+      toYouTable.value.isLoading = false;
     };
     const rowClicked = (row) => {
       if (row != undefined) {
-        row = JSON.parse(JSON.stringify(row));
+        store.dispatch("reviewer/getAdmins").then((res) => {
+          reviewers.value = res.data.data.filter((e) => {
+            return e.role.code !== "UM";
+          });
+        });
 
+        row = JSON.parse(JSON.stringify(row));
         modalData.value.id = row.data.applicant.id ?? "------";
         modalData.value.name = row.ApplicantName ?? "------";
         modalData.value.email = row.data.applicant.emailAddress ?? "------";
@@ -388,6 +398,11 @@ export default {
           row.data.applicant.profile.nationality?.name ?? "------";
         modalData.value.martialStatus =
           row.data.applicant.profile.maritalStatus?.name ?? "------";
+        modalData.value.applicationId = row.data.id ?? "------";
+        modalData.value.applicantId = row.data.applicantType.code ?? "------";
+        modalData.value.applicationType =
+          row.data.applicationType.code ?? "------";
+        modalData.value.documentData = row.data.documents ?? {};
       }
     };
     onMounted(() => {
@@ -401,6 +416,7 @@ export default {
       toOthersTable,
       toYouTable,
       showModal,
+      reviewers,
       tableLoadingFinish,
       inReviewAssignedToOthers,
       rowClicked,

@@ -13,14 +13,14 @@
         outline-none
         overflow-x-hidden overflow-y-auto
       "
-      id="staticBackdropReSubmitted"
+      id="staticBackdrop"
       data-bs-backdrop="static"
       data-bs-keyboard="false"
       tabindex="-1"
       aria-labelledby="staticBackdropLabel"
       aria-hidden="true"
     >
-      <div class="modal-dialog modal-dialog-centered  modal-xl relative w-auto pointer-events-none">
+      <div class="modal-dialog-centered modal-xl relative w-auto pointer-events-none">
         <div
           class="
             modal-content
@@ -68,7 +68,7 @@
                 <div class="flex justify-center">
                   <div class="text-center lg:max-w-3xl md:max-w-xl">
                     <h2 class="text-2xl font-bold mb-8 px-6">
-                      Showing
+                      Evaluating
                       <span class="text-2xl font-bold px-6">
                         {{ modalData.name }}
                       </span>
@@ -182,11 +182,11 @@
                                 justify-center
                               "
                             >
-                              <i class="fa fa-link fa-4x"></i>
+                              <i class="fa fa-right-left fa-4x"></i>
                             </div>
                           </div>
                           <div class="grow ml-6">
-                            <h2 class="font-bold mb-1">Assign To</h2>
+                            <h2 class="font-bold mb-1">Transfer To</h2>
 
                             <div class="flex items-center">
                               <label
@@ -226,9 +226,9 @@
                                     duration-150
                                     ease-in-out
                                   "
-                                  @click="assignReviewer()"
+                                  @click="transferReviewer()"
                                 >
-                                  Assign
+                                  Transfer
                                 </button>
                               </div>
                             </div>
@@ -399,6 +399,7 @@
                     </div>
                   </div>
                 </div>
+                <evaluate-modal :modalData="modalData"></evaluate-modal>
               </section>
             </div>
           </div>
@@ -424,6 +425,7 @@
                 leading-tight
                 uppercase
                 rounded
+                ml-4
                 shadow-lg
                 hover:bg-purple-700 hover:shadow-lg
                 focus:bg-purple-700
@@ -437,7 +439,60 @@
               "
               data-bs-dismiss="modal"
             >
-              Close
+              Save As Draft
+            </button>
+            <button
+              type="button"
+              class="
+                inline-block
+                px-6
+                text-white
+                font-medium
+                text-xs
+                leading-tight
+                uppercase
+                rounded
+                shadow-lg
+                hover:bg-purple-700 hover:shadow-lg
+                focus:bg-purple-700
+                focus:shadow-lg
+                focus:outline-none
+                focus:ring-0
+                active:bg-purple-800 active:shadow-lg
+                transition
+                duration-150
+                ease-in-out
+              "
+              data-bs-dismiss="modal"
+            >
+              Save
+            </button>
+               <button
+              type="button"
+              class="
+                inline-block
+                px-6
+                text-white
+                font-medium
+                text-xs
+                leading-tight
+                uppercase
+                rounded
+                ml-4
+                shadow-lg
+                hover:bg-purple-700 hover:shadow-lg
+                focus:bg-purple-700
+                focus:shadow-lg
+                focus:outline-none
+                focus:ring-0
+                active:bg-purple-800 active:shadow-lg
+                transition
+                duration-150
+                ease-in-out
+              "
+              data-bs-dismiss="modal"
+            >
+              Cancel
             </button>
           </div>
         </div>
@@ -451,14 +506,16 @@ import { useStore } from "vuex";
 import { ref, onMounted } from "vue";
 import moment from "moment";
 import toast from "toast-me";
+import evaluateModal from "./inReviewEvaluationModal.vue"
 import Loading from "vue3-loading-overlay";
 // Import stylesheet
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 
 export default {
-  props: ["modalData", "reviewers"],
+  props: ["modalData", "reviewers","evaluationData"],
   components: {
     Loading,
+    evaluateModal,
   },
   computed: {
     moment: () => moment,
@@ -472,7 +529,7 @@ export default {
     let reviewer = ref({ id: "", name: "", expertLevel: "", role: "" });
     let adminId = +localStorage.getItem("adminId");
 
-    let assign = ref({
+    let transfer = ref({
       reviewerId: "",
       licenseId: "",
       createdByAdminId: "",
@@ -489,17 +546,17 @@ export default {
       });
     };
 
-    const assignReviewer = () => {
+    const transferReviewer = () => {
       if (role.value.code === "TL" || role.value.code === "ADM") {
-        assign.value = {
+        transfer.value = {
           licenseId: props.modalData.applicationId,
-          reviewerId: assign.value.reviewerId,
+          reviewerId: transfer.value.reviewerId,
           createdByAdminId: +localStorage.getItem("adminId"),
         };
       }
 
       if (role.value.code == "REV") {
-        assign.value = {
+        transfer.value = {
           licenseId: props.modalData.applicationId,
           reviewerId: +localStorage.getItem("adminId"),
           createdByAdminId: +localStorage.getItem("adminId"),
@@ -509,7 +566,7 @@ export default {
       isLoading.value = true;
 
       store
-        .dispatch("reviewer/assignReviewer", assign.value)
+        .dispatch("reviewer/transferLicenseReview", transfer.value)
         .then((response) => {
           if (response.statusText == "Created") {
             toast("Selected reviewer is successfully assigned.", {
@@ -521,7 +578,9 @@ export default {
               window.location.reload();
             }, 1000);
           } else {
-            console.log("no sup");
+            console.log(
+              "Error is related to the reviewer/assignReviewer action"
+            );
           }
         })
         .catch(() => {
@@ -558,7 +617,7 @@ export default {
         expertLevel: value.expertLevel.code,
         role: value.role.code,
       };
-      assign.value.reviewerId = value.id;
+      transfer.value.reviewerId = value.id;
       showOptions.value = false;
     };
     const onCancel = () => {
@@ -573,7 +632,7 @@ export default {
       adminId,
       reviewerAdminId,
       role,
-      assign,
+      transfer,
       show,
       showRes,
       showOptions,
@@ -583,7 +642,7 @@ export default {
       resultQuery,
       isLoading,
       fullPage,
-      assignReviewer,
+      transferReviewer,
       onCancel,
     };
   },

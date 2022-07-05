@@ -16,7 +16,7 @@
             <div class="py-8">
               <div>
                 <h2 class="text-2xl font-semibold leading-tight">
-                  Unassigned Applications Started By You
+                  Unassigned Applications
                 </h2>
                 <input
                   class="
@@ -170,6 +170,9 @@ export default {
       instName: "",
       department: "",
       instType: "",
+      applicationId: "",
+      applicantId: "",
+      applicationType: "",
     });
 
     let allInfo = ref({
@@ -588,6 +591,10 @@ export default {
           row.data.applicant.profile.nationality?.name ?? "------";
         modalData.value.martialStatus =
           row.data.applicant.profile.maritalStatus?.name ?? "------";
+        modalData.value.applicationId = row.data.id ?? "------";
+        modalData.value.applicantId = row.data.applicantType.code ?? "------";
+        modalData.value.applicationType =
+          row.data.applicationType.code ?? "------";
       }
     };
     const rowClickedResub = (row) => {
@@ -597,7 +604,9 @@ export default {
             return e.role.code !== "UM";
           });
         });
+
         row = JSON.parse(JSON.stringify(row));
+
         modalData.value.id = row.data.applicant.id ?? "------";
         modalData.value.name = row.ApplicantName ?? "------";
         modalData.value.email = row.data.applicant.emailAddress ?? "------";
@@ -616,6 +625,10 @@ export default {
           row.data.applicant.profile.nationality?.name ?? "------";
         modalData.value.martialStatus =
           row.data.applicant.profile.maritalStatus?.name ?? "------";
+        modalData.value.applicationId = row.data.id ?? "------";
+        modalData.value.applicantId = row.data.applicantType.code ?? "------";
+        modalData.value.applicationType =
+          row.data.applicationType.code ?? "------";
       }
     };
 
@@ -643,37 +656,3 @@ export default {
   },
 };
 </script>
-<style scoped>
-/* Apply these ones for table  */
-::v-deep(.vtl-table .vtl-thead .vtl-thead-th) {
-  color: #fff;
-  background-color: #0d3552;
-  border-color: #0d3552;
-}
-::v-deep(.vtl-table td),
-::v-deep(.vtl-table tr) {
-  border: none;
-}
-::v-deep(.vtl-paging-info) {
-  color: rgb(25, 155, 230);
-}
-::v-deep(.vtl-paging-count-label),
-::v-deep(.vtl-paging-page-label) {
-  margin-right: 10px;
-  margin-left: 10px;
-  color: rgb(25, 155, 230);
-}
-::v-deep(.vtl-paging-pagination-page-link) {
-  border: none;
-}
-::v-deep(.vtl-paging-count-dropdown) {
-  margin-right: 10px;
-  margin-left: 10px;
-  color: rgb(0, 0, 0);
-}
-
-::v-deep(.vtl-tbody-tr) {
-  border-bottom: 1px solid rgb(128, 128, 128) !important;
-  padding: 5px !important;
-}
-</style>

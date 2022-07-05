@@ -228,6 +228,7 @@ export default {
     const assignedToMe = resp.data.data.filter(function(e) {
       return e.reviewerId === adminStatus[1];
     });
+  
     commit(SET_NEW_LICENSE_ASSIGNED_TO_YOU, assignedToMe);
   },
 
@@ -613,9 +614,11 @@ export default {
   async getNewLicenseOnReview({ commit }, adminStatus) {
     const url = baseUrl + "/newlicenses/status/" + adminStatus[0];
     const resp = await ApiService.get(url);
+   
     const onReview = resp.data.data.filter(function(e) {
       return e.reviewerId === adminStatus[1];
     });
+  
     commit(SET_NEW_LICENSE_ON_REVIEW, onReview);
   },
 

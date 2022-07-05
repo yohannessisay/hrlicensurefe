@@ -19,7 +19,7 @@
     aria-labelledby="staticBackdropLabel"
     aria-hidden="true"
   >
-    <div class="modal-dialog modal-xl relative w-auto pointer-events-none">
+    <div class="modal-dialog modal-dialog-centered  modal-xl relative w-auto pointer-events-none">
       <div
         class="
           modal-content

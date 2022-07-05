@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-row justify-center ml-4">
+  <div id="home" class="flex flex-row justify-center ml-4 mt-12 ">
     <div class="flex flex-col md:flex-row justify-center flex-wrap gap-2">
       <div class="mr-12 mb-8 overview-boxes">
         <router-link to="/admin/newLicense/">
@@ -37,8 +37,8 @@
               />
             </p>
 
-            <div class="flex justify-center px-5 mb-2 text-sm">
-              <h1>New License</h1>
+            <div class="flex justify-center px-5 mb-2 text-sm mt-4">
+              <h1 class="text-2xl text-primary-500">New License</h1>
             </div>
           </div>
         </router-link>
@@ -79,8 +79,8 @@
               />
             </p>
 
-            <div class="flex justify-center px-5 mb-2 text-sm">
-              <h1>Renewal</h1>
+            <div class="flex justify-center px-5 mb-2 text-sm mt-4">
+              <h1 class="text-2xl text-primary-500">Renewal</h1>
             </div>
           </div>
         </router-link>
@@ -124,8 +124,8 @@
             />
           </p>
 
-          <div class="flex justify-center px-5 mb-2 text-sm">
-            <h1>Verification</h1>
+          <div class="flex justify-center px-5 mb-2 text-sm mt-4">
+            <h1 class="text-2xl text-primary-500">Verification</h1>
           </div>
         </div>
       </div>
@@ -164,8 +164,8 @@
             />
           </p>
 
-          <div class="flex justify-center px-1 mb-2 text-sm">
-            <h1>Good Standing</h1>
+          <div class="flex justify-center px-1 mb-2 text-sm mt-4">
+            <h1 class="text-2xl text-primary-500">Good Standing</h1>
           </div>
         </div>
       </div>

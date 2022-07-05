@@ -351,7 +351,39 @@
 
 
 
+/* Apply these for table */
+.vtl-table .vtl-thead .vtl-thead-th{
+  color: #fff;
+  background-color: #0d3552;
+  border-color: #0d3552;
+}
+.vtl-table td,
+.vtl-table tr {
+  border: none !important;
+  border-bottom: solid 1px rgba(128, 128, 128, 0.664) !important;
+}
+.vtl-paging-info {
+  color: rgb(25, 155, 230) !important;
+}
+.vtl-paging-count-label,
+.vtl-paging-page-label {
+  margin-right: 10px !important;
+  margin-left: 10px !important;
+  color: rgb(25, 155, 230) !;
+}
+.vtl-paging-pagination-page-link {
+  border: none !important;
+}
+.vtl-paging-count-dropdown {
+  margin-right: 10px  !important;
+  margin-left: 10px !important;
+  color: rgb(0, 0, 0) !important  ;
+}
 
+.vtl-tbody-tr {
+  border-bottom: 1px solid rgb(128, 128, 128) !important;
+  padding: 5px !important;
+}
 
 
 
@@ -363,9 +395,17 @@
 
   
   /* Responsive Media Query */
+  @media (max-width: 2600px) {
+    #home{
+      margin-top: 130px;
+    }
+  }
   @media (max-width: 1240px) {
     .sidebar{
       width: 60px;
+    }
+    #home{
+      margin-top: 130px;
     }
     .sidebar.active{
       width: 220px;
@@ -389,10 +429,14 @@
     }
   }
   @media (max-width: 1150px) {
+    .home{
+      margin-top: 130px;
+    }
     .home-content .sales-boxes{
       flex-direction: column;
     }
     .home-content .sales-boxes .box{
+
       width: 100%;
       overflow-x: scroll;
       margin-bottom: 30px;
@@ -402,6 +446,9 @@
     }
   }
   @media (max-width: 1000px) {
+    .home{
+      margin-top: 130px;
+    }
     .overview-boxes .box{
       width: calc(100% / 2 - 15px);
       margin-bottom: 15px;
