@@ -42,7 +42,7 @@
                     @is-finished="tableLoadingFinish"
                     @row-clicked="rowClicked"
                   ></vue-table-lite>
-                  <edit-modal v-if="showModal" :modalData="modalData">
+                  <edit-modal v-if="showModal" :modalDataId="modalDataId">
                   </edit-modal>
                 </div>
               </div>
@@ -117,20 +117,9 @@ export default {
     let nothingToShow = ref(false);
     let loading = ref(false);
 
-    let modalData = ref({
+    let modalDataId = ref({
       id: "",
-      name: "",
-      email: "",
-      gender: "",
-      nationality: "",
-      dateOfBirth: "",
-      martialStatus: "",
-      mobileNumber: "",
-      instName: "",
-      department: "",
-      instType: "",
-      documents: [],
-      data:{}
+      change:0
     });
 
     let allInfo = ref({
@@ -189,11 +178,11 @@ export default {
                   tableData.value.push({
                     id: element.id,
                     ApplicantName:
-                      element.applicant.profile.name +
+                      element.profile.name +
                       " " +
-                      element.applicant.profile.fatherName +
+                      element.profile.fatherName +
                       " " +
-                      element.applicant.profile.grandFatherName,
+                      element.profile.grandFatherName,
                     ApplicationType: element.applicationType.name,
                     Date: new Date(element.applicationType.createdAt)
                       .toJSON()
@@ -289,11 +278,11 @@ export default {
                   toYouTableData.value.push({
                     id: element.id,
                     ApplicantName:
-                      element.applicant.profile.name +
+                      element.profile.name +
                       " " +
-                      element.applicant.profile.fatherName +
+                      element.profile.fatherName +
                       " " +
-                      element.applicant.profile.grandFatherName,
+                      element.profile.grandFatherName,
                     ApplicationType: element.applicationType.name,
                     Date: new Date(element.applicationType.createdAt)
                       .toJSON()
@@ -367,30 +356,13 @@ export default {
         }
       });
     };
+     
     const rowClicked = (row) => {
       if (row != undefined) {
         row = JSON.parse(JSON.stringify(row));
-        console.log(row)
-        modalData.value.id = row.data.applicant.id ?? "------";
-        modalData.value.name = row.ApplicantName ?? "------";
-        modalData.value.email = row.data.applicant.emailAddress ?? "------";
-        modalData.value.mobileNumber =
-          row.data.applicant.phoneNumber ?? "------";
-        modalData.value.dateOfBirth =
-          row.data.applicant.profile.dateOfBirth ?? "------";
-        modalData.value.gender = row.data.applicant.profile.gender ?? "------";
-        modalData.value.instName =
-          row.data.education.institution?.name ?? "------";
-        modalData.value.department =
-          row.data.education.department?.name ?? "------";
-        modalData.value.instType =
-          row.data.education.institution.institutionType?.name ?? "-----";
-        modalData.value.nationality =
-          row.data.applicant.profile.nationality?.name ?? "------";
-        modalData.value.martialStatus =
-          row.data.applicant.profile.maritalStatus?.name ?? "------";
-        modalData.value.documents = row.data?.documents ?? [];
-        modalData.value.data=row.data??{}
+        modalDataId.value.change++
+        modalDataId.value.id = row.id?row.id:"";
+     
       }
     };
     onMounted(() => {
@@ -408,7 +380,7 @@ export default {
       tableLoadingFinish,
       licensedByOthers,
       rowClicked,
-      modalData,
+      modalDataId,
     };
   },
 };

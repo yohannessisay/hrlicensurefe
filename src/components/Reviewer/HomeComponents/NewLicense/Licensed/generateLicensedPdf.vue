@@ -60,7 +60,9 @@
                 <div class="text-center lg:max-w-3xl md:max-w-xl">
                   <h2 class="text-2xl font-bold mb-8 px-6">
                     Generate
-                    <span class="text-2xl font-bold">{{ modalData.name }}</span>
+                    <span class="text-2xl font-bold">{{
+                      modalData.name ? modalData.name : ""
+                    }}</span>
                     's License Data
                   </h2>
                 </div>
@@ -88,7 +90,7 @@
                           ></div>
 
                           <div
-                            v-if="modalData.data.applicant"
+                            v-if="modalData"
                             class="
                               bg-lightBlueB-200
                               flex
@@ -141,23 +143,23 @@
                                 </div>
                                 <div class="flex">
                                   <div class="flex flex-col ml-4 w-1/2 mr-12">
-                                    <h4>
+                                    <!-- <h4>
                                       በኢትዮጵያ ፌዴራላዊ ዴሞክራሲያዊ ረፐብሊክ የጤና ሚንስቴር በአዋጅ
                                       ቁጥር
                                       {{
                                         modalData.data.reviewer &&
-                                        modalData.data.reviewer.expertLevel &&
-                                        modalData.data.reviewer.expertLevel
+                                        modalData.data.reviewer?.expertLevel &&
+                                        modalData.data.reviewer?.expertLevel
                                           .code === "FED"
                                           ? "1112/2011"
                                           : modalData.data.reviewer &&
-                                            modalData.data.reviewer.region &&
-                                            modalData.data.reviewer.region
+                                            modalData.data.reviewer?.region &&
+                                            modalData.data.reviewer?.region
                                               .code === "AA"
                                           ? "64/2011"
                                           : modalData.data.reviewer &&
-                                            modalData.data.reviewer.region &&
-                                            modalData.data.reviewer.region
+                                            modalData.data.reviewer?.region &&
+                                            modalData.data.reviewer?.region
                                               .code === "ORO"
                                           ? "661/2009"
                                           : "-"
@@ -165,8 +167,8 @@
                                       አንቀጽ
                                       {{
                                         modalData.data.reviewer &&
-                                        modalData.data.reviewer.expertLevel &&
-                                        modalData.data.reviewer.expertLevel
+                                        modalData.data.reviewer?.expertLevel &&
+                                        modalData.data.reviewer?.expertLevel
                                           .code === "FED"
                                           ? "73"
                                           : modalData.data.reviewer &&
@@ -182,11 +184,11 @@
                                           : "-"
                                       }}
                                       ስልጣን መሰረት
-                                    </h4>
+                                    </h4> -->
                                   </div>
 
                                   <div class="flex flex-col w-1/2 mr-12">
-                                    <h4>
+                                    <!-- <h4>
                                       Under the Federal Democratic Republic of
                                       Ethiopia the Minstry of Health by Virtue
                                       of proclamation No.
@@ -228,31 +230,33 @@
                                           : "-"
                                       }}
                                       is given the authority to issue
-                                    </h4>
+                                    </h4> -->
                                   </div>
                                 </div>
+
                                 <div class="flex">
                                   <div class="flex flex-col w-1/2 mr-12">
                                     <h3 class="underline ml-4">
+
                                       <b
+                                      v-if="modalData.profile"
                                         >{{
-                                          modalData.data.applicant?.profile
-                                            ?.alternativeName != null
-                                            ? modalData.data.applicant?.profile
+                                          modalData.profile.alternativeName
+                                            ? modalData.profile
                                                 .alternativeName
                                             : ""
                                         }}
                                         {{
-                                          modalData.data.applicant?.profile
-                                            ?.alternativeFatherName != null
-                                            ? modalData.data.applicant?.profile
+                                          modalData.profile
+                                            .alternativeFatherName
+                                            ? modalData.profile
                                                 .alternativeFatherName
                                             : ""
                                         }}
                                         {{
-                                          modalData.data.applicant?.profile
-                                            ?.alternativeGrandFatherName != null
-                                            ? modalData.data.applicant?.profile
+                                          modalData.profile
+                                            .alternativeGrandFatherName
+                                            ? modalData.profile
                                                 .alternativeGrandFatherName
                                             : ""
                                         }}</b
@@ -264,39 +268,34 @@
                                     <h3 class="underline ml-4 mb-4">
                                       <b
                                         >{{
-                                          modalData.data.applicant.profile.name
+                                          modalData?.profile?.name
+                                            ? modalData?.profile?.name
+                                            : ""
                                         }}
                                         {{
-                                          modalData.data.applicant.profile
-                                            .fatherName
+                                          modalData.profile?.fatherName
+                                            ? modalData.profile?.fatherName
+                                            : ""
                                         }}
                                         {{
-                                          modalData.data.applicant.profile
-                                            .grandFatherName != null
-                                            ? modalData.data.applicant.profile
-                                                .grandFatherName
+                                          modalData.profile?.grandFatherName
+                                            ? modalData.profile?.grandFatherName
                                             : ""
                                         }}</b
                                       >
                                     </h3>
                                   </div>
                                 </div>
+
                                 <div class="flex">
                                   <div class="flex flex-col ml-4 w-1/2 mr-12">
                                     <h4>
                                       ተገቢውን መስፈርት አሟልተው ስለተገኙ ሚኒስቴር መስሪያ ቤቱ
                                     </h4>
-                                    <h4
-                                      v-if="
-                                        modalData.data.professionalTypes &&
-                                        modalData.data.professionalTypes[0]
-                                          .professionalTypes
-                                          .amharicProfessionalType
-                                      "
-                                    >
+                                 
+                                    <h4 v-if="modalData.professionalTypes">
                                       <div
-                                        v-for="professions in modalData.data
-                                          .professionalTypes"
+                                        v-for="professions in modalData.professionalTypes"
                                         :key="professions"
                                         class="flex flex-row ml-4"
                                       >
@@ -323,14 +322,13 @@
                                     <h4>hereby registered and licensed as</h4>
                                     <h4
                                       v-if="
-                                        modalData.data.professionalTypes &&
-                                        modalData.data.professionalTypes[0]
+                                        modalData.professionalTypes &&
+                                        modalData.professionalTypes[0]
                                           .professionalTypes.name
                                       "
                                     >
                                       <div
-                                        v-for="professions in modalData.data
-                                          .professionalTypePrefixes"
+                                        v-for="professions in modalData.professionalTypes"
                                         :key="professions"
                                         class="flex flex-row ml-4"
                                       >
@@ -368,21 +366,21 @@
                                       ይህ የሙያ የስራ ፈቃድ የሚያገለግለው
                                       <b>
                                         {{
-                                          modalData.data.certifiedDate
+                                          modalData.certifiedDate
                                             ? toEthiopian(
                                                 moment(
-                                                  modalData.data.certifiedDate
+                                                  modalData.certifiedDate
                                                 )._d.toISOString(),
                                                 false
                                               )
                                             : ""
                                         }}
                                         -{{
-                                          modalData.data
+                                          modalData
                                             .licenseExpirationDate !== null
                                             ? toEthiopian(
                                                 moment(
-                                                  modalData.data
+                                                  modalData
                                                     .licenseExpirationDate
                                                 )._d.toISOString(),
                                                 false
@@ -398,17 +396,17 @@
                                     <h3>
                                       The license is valid:<b
                                         >{{
-                                          modalData.data.certifiedDate
+                                          modalData.certifiedDate
                                             ? moment(
-                                                modalData.data.certifiedDate
+                                                modalData.certifiedDate
                                               ).format("MMM DD, YYYY")
                                             : ""
                                         }}
                                         -
                                         {{
-                                          modalData.data.licenseExpirationDate
+                                          modalData.licenseExpirationDate
                                             ? moment(
-                                                modalData.data
+                                                modalData
                                                   .licenseExpirationDate
                                               ).format("MMM DD, YYYY")
                                             : " Not specified"
@@ -538,7 +536,7 @@ import addisAbabaCertificateBackground from "../../../../../assets/A_A_Certifica
 import AmharicFont from "../../../Configurations/amharicFont.js";
 import { toEthiopian } from "../../../Configurations/dateConvertor";
 import STATIC_CERTIFICATE_URL from "../../../../../sharedComponents/constants/message.js";
-
+import toast from "toast-me";
 import moment from "moment";
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
@@ -561,7 +559,7 @@ export default {
     let isLoading = ref(false);
     let showLoading = ref(false);
     let showActionLoading = ref(false);
- const fullPage = ref(false);
+    const fullPage = ref(false);
     let isUserCertified = ref(true);
     let isUserFound = ref(true);
     let myRegion = ref(true);
@@ -582,35 +580,24 @@ export default {
 
     const updateLicenseGenerated = () => {
       let req = {
-        action: null,
-        data: { ...props.modalData.data, isLicenseGenerated: true },
+        data: { ...props.modalData, isLicenseGenerated: true },
       };
       editApplication(req);
     };
 
     const editApplication = (req) => {
-      delete req.data.applicant;
-      delete req.data.Profile;
-      delete req.data.reviewer;
-      delete req.data.professionalTypes;
-      delete req.data.professionalTypePrefixes;
-      delete req.data.expertLevels;
-      delete req.data.educationalLevel;
-      delete req.data.documents;
-      // delete req.data.education;
-      delete req.data.applicationType;
-      delete req.data.applicationStatus;
-      delete req.data.applicantType;
-      delete req.data.NewLicenseProfTypes;
-      delete req.data.LicenseProfessionalPrefixes;
       store
         .dispatch("reviewer/editNewLicense", req)
         .then((res) => {
           isLoading.value = false;
           if (res.statusText == "Created") {
-            console.log("done");
+            showGenerateModal.value = false;
           } else {
-            console.log("failed");
+            showGenerateModal.value = false;
+            toast("Certificate Generated Successfully.", {
+              duration: 3000,
+              position: "bottom",
+            });
           }
         })
         .catch((err) => {
@@ -620,9 +607,9 @@ export default {
 
     const fetchQrCode = () => {
       const staticUrl = STATIC_CERTIFICATE_URL;
-      const userId = props.modalData.data.Profile?.id;
-      const applicationId = props.modalData.data?.id;
-      const applicationType = props.modalData.data?.applicationType.code;
+      const userId = props.modalData.profile.id;
+      const applicationId = props.modalData.data.id;
+      const applicationType = props.modalData.data.applicationType.code;
 
       const qrParam = { url: null };
 
@@ -639,9 +626,9 @@ export default {
     };
 
     const generate = () => {
-      isLoading.value = false;
+      isLoading.value = true;
       fetchQrCode();
-      certifiedUser.value = props.modalData.data.Profile;
+      certifiedUser.value = props.modalData.profile;
       certificateDetail.value = props.modalData.data;
 
       applicationStatus.value = props.modalData.data.applicationStatus.code;
@@ -908,21 +895,12 @@ export default {
       updateLicenseGenerated();
       const userImage = certifiedUser.value.photo;
       if (certificateDetail.value.reviewer.expertLevel.code === "FED") {
-        doc.addImage(
-          backgroundImage,
-          "JPEG",
-          0,
-          0,
-          298,
-          213,
-          undefined,
-          "FAST"
-        );
+        doc.addImage(backgroundImage, "JPG", 0, 0, 298, 213, undefined, "FAST");
         handleRegionsLayout(doc, "FED", 100, 125, 7);
       } else if (certificateDetail.value.reviewer.region.code === "ORO") {
         doc.addImage(
           oromiaCertificateBackground,
-          "JPEG",
+          "JPG",
           0,
           0,
           298,
@@ -934,7 +912,7 @@ export default {
       } else if (certificateDetail.value.reviewer.region.code === "AA") {
         doc.addImage(
           addisAbabaCertificateBackground,
-          "JPEG",
+          "JPG",
           0,
           0,
           298,
@@ -956,7 +934,7 @@ export default {
       window.open(doc.output("bloburl"));
     };
 
-        const onCancel = () => {
+    const onCancel = () => {
       isLoading.value = false;
     };
 

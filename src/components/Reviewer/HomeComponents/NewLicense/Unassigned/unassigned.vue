@@ -73,7 +73,7 @@
                   ></vue-table-lite>
                   <edit-modal
                     v-if="showModal"
-                    :modalData="modalData"
+                    :modalDataId="modalDataId"
                     :reviewers="reviewers"
                   >
                   </edit-modal>
@@ -113,7 +113,7 @@
                   ></vue-table-lite>
                   <edit-modal-resubmitted
                     v-if="showModalResubmitted"
-                    :modalData="modalData"
+                    :modalDataId="modalDataId"
                     :reviewers="reviewers"
                   >
                   </edit-modal-resubmitted>
@@ -158,21 +158,9 @@ export default {
 
     let searchedReviewer = ref("");
     const adminId = +localStorage.getItem("adminId");
-    let modalData = ref({
+    let modalDataId = ref({
       id: "",
-      name: "",
-      email: "",
-      gender: "",
-      nationality: "",
-      dateOfBirth: "",
-      martialStatus: "",
-      mobileNumber: "",
-      instName: "",
-      department: "",
-      instType: "",
-      applicationId: "",
-      applicantId: "",
-      applicationType: "",
+      change: 0,
     });
 
     let allInfo = ref({
@@ -202,6 +190,7 @@ export default {
 
     const unassigned = () => {
       applicationStatus(store, "SUB").then((res) => {
+        modalDataId.value.apStatusUnassigned = res;
         let statusId = res;
 
         store
@@ -227,11 +216,11 @@ export default {
                 tableData.value.push({
                   LicenseNumber: element.newLicenseCode,
                   ApplicantName:
-                    element.applicant.profile.name +
+                    element.profile.name +
                     " " +
-                    element.applicant.profile.fatherName +
+                    element.profile.fatherName +
                     " " +
-                    element.applicant.profile.grandFatherName,
+                    element.profile.grandFatherName,
                   ApplicationType: element.newLicenseCode ? "New License" : "",
                   Date: new Date(element.applicationType.createdAt)
                     .toJSON()
@@ -241,6 +230,7 @@ export default {
                 });
               }
             );
+
             tableDataTemp.value = tableData.value;
             unassignedTable.value = {
               columns: [
@@ -328,11 +318,11 @@ export default {
                 tableData.value.push({
                   LicenseNumber: element.newLicenseCode,
                   ApplicantName:
-                    element.applicant.profile.name +
+                    element.profile.name +
                     " " +
-                    element.applicant.profile.fatherName +
+                    element.profile.fatherName +
                     " " +
-                    element.applicant.profile.grandFatherName,
+                    element.profile.grandFatherName,
                   ApplicationType: element.newLicenseCode ? "New License" : "",
                   Date: new Date(element.applicationType.createdAt)
                     .toJSON()
@@ -455,7 +445,7 @@ export default {
       applicationStatus(store, "UPD").then((res) => {
         let statusId = res;
         const adminStatus = [statusId, adminId];
-        store;
+        modalDataId.value.apStatusResub = statusId;
         store
           .dispatch("reviewerNewLicense/getNewLicenseReApply", adminStatus)
           .then(() => {
@@ -477,11 +467,11 @@ export default {
                 reTableData.value.push({
                   LicenseNumber: element.newLicenseCode,
                   ApplicantName:
-                    element.applicant.profile.name +
+                    element.profile.name +
                     " " +
-                    element.applicant.profile.fatherName +
+                    element.profile.fatherName +
                     " " +
-                    element.applicant.profile.grandFatherName,
+                    element.profile.grandFatherName,
                   ApplicationType: element.newLicenseCode ? "New License" : "",
                   Date: new Date(element.applicationType.createdAt)
                     .toJSON()
@@ -541,6 +531,8 @@ export default {
                 sort: "asc",
               },
             };
+
+                 console.log(modalDataId.value);
           });
       });
     };
@@ -566,76 +558,30 @@ export default {
 
     const rowClicked = (row) => {
       if (row != undefined) {
-        store.dispatch("reviewer/getAdmins").then((res) => {
-          reviewers.value = res.data.data.filter((e) => {
-            return e.role.code !== "UM";
-          });
-        });
-
         row = JSON.parse(JSON.stringify(row));
-        modalData.value.id = row.data.applicant.id ?? "------";
-        modalData.value.name = row.ApplicantName ?? "------";
-        modalData.value.email = row.data.applicant.emailAddress ?? "------";
-        modalData.value.mobileNumber =
-          row.data.applicant.phoneNumber ?? "------";
-        modalData.value.dateOfBirth =
-          row.data.applicant.profile.dateOfBirth ?? "------";
-        modalData.value.gender = row.data.applicant.profile.gender ?? "------";
-        modalData.value.instName =
-          row.data.education.institution?.name ?? "------";
-        modalData.value.department =
-          row.data.education.department?.name ?? "------";
-        modalData.value.instType =
-          row.data.education.institution.institutionType?.name ?? "-----";
-        modalData.value.nationality =
-          row.data.applicant.profile.nationality?.name ?? "------";
-        modalData.value.martialStatus =
-          row.data.applicant.profile.maritalStatus?.name ?? "------";
-        modalData.value.applicationId = row.data.id ?? "------";
-        modalData.value.applicantId = row.data.applicantType.code ?? "------";
-        modalData.value.applicationType =
-          row.data.applicationType.code ?? "------";
+        modalDataId.value.change++;
+        modalDataId.value.id = row.data.id ? row.data.id : "";
       }
     };
     const rowClickedResub = (row) => {
       if (row != undefined) {
-        store.dispatch("reviewer/getAdmins").then((res) => {
-          reviewers.value = res.data.data.filter((e) => {
-            return e.role.code !== "UM";
-          });
-        });
-
         row = JSON.parse(JSON.stringify(row));
-
-        modalData.value.id = row.data.applicant.id ?? "------";
-        modalData.value.name = row.ApplicantName ?? "------";
-        modalData.value.email = row.data.applicant.emailAddress ?? "------";
-        modalData.value.mobileNumber =
-          row.data.applicant.phoneNumber ?? "------";
-        modalData.value.dateOfBirth =
-          row.data.applicant.profile.dateOfBirth ?? "------";
-        modalData.value.gender = row.data.applicant.profile.gender ?? "------";
-        modalData.value.instName =
-          row.data.education.institution?.name ?? "------";
-        modalData.value.department =
-          row.data.education.department?.name ?? "------";
-        modalData.value.instType =
-          row.data.education.institution.institutionType?.name ?? "-----";
-        modalData.value.nationality =
-          row.data.applicant.profile.nationality?.name ?? "------";
-        modalData.value.martialStatus =
-          row.data.applicant.profile.maritalStatus?.name ?? "------";
-        modalData.value.applicationId = row.data.id ?? "------";
-        modalData.value.applicantId = row.data.applicantType.code ?? "------";
-        modalData.value.applicationType =
-          row.data.applicationType.code ?? "------";
+        modalDataId.value.change++;
+        modalDataId.value.id = row.data.id ? row.data.id : "";
+     
       }
     };
 
     onMounted(() => {
       unassigned();
       reSubmitted();
+              store.dispatch("reviewer/getAdmins").then((res) => {
+          reviewers.value = res.data.data.filter((e) => {
+            return e.role.code !== "UM";
+          });
+        });
     });
+
     return {
       allInfo,
       unassignedTable,
@@ -651,7 +597,7 @@ export default {
       reSubmitted,
       includeFromOthers,
       rowClickedResub,
-      modalData,
+      modalDataId,
     };
   },
 };
