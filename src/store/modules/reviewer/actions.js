@@ -1093,6 +1093,7 @@ export default {
         baseUrl + "/licenseReviewers/transfer",
         transfer
       );
+    
       return resp;
     } catch (error) {
       return error;
@@ -1257,7 +1258,9 @@ export default {
         baseUrl + "/newlicenses/" + license.data.id,
         license
       );
+      console.log(resp)
       return resp;
+      
     } catch (error) {
       return error;
     }
