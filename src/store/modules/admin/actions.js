@@ -7,7 +7,6 @@ import {
   SET_APPLICATION_STATUSES,
 } from "./mutation-types";
 const url = "https://hrlicensurebe.dev.k8s.sandboxaddis.com/api/";
-//const url = "http://localhost:5000/api/";
 export default {
   async login({ commit }, admin) {
     commit(ADD_ADMIN_LOADING);

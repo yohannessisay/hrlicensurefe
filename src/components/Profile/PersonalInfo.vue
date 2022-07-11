@@ -453,7 +453,7 @@ export default {
       }
       if (empty == true) {
         store.dispatch("profile/setProfileInfo", personalInfo);
-        store.dispatch("profile/setPhoto", photoFile);
+        store.dispatch("profile/setPhoto", photoFile.value);
         emit("changeActiveState");
       }
     };

@@ -137,6 +137,7 @@ import Title from "@/sharedComponents/Title";
 import RenderIllustration from "@/sharedComponents/RenderIllustration";
 import { useStore } from "vuex";
 import { ref, onMounted } from "vue";
+import { googleApi } from "@/composables/baseURL";
 
 export default {
   components: { Title, RenderIllustration },
@@ -211,7 +212,8 @@ export default {
       if (!profile) {
         isFirstTime.value = true;
       } else {
-        pic.value = profile.photo;
+        console.log(googleApi + profile.profileDocuments.filePath);
+        pic.value =  googleApi + profile.profileDocuments.filePath;
       }
     };
     const getName = (profile) => {
