@@ -60,7 +60,13 @@
             aria-label="Close"
           ></button>
         </div>
-        <div style="display: none">{{ modalDataId.id }}</div>
+         <div class="vld-parent">
+                <loading
+                  :active="isLoading"
+                  :is-full-page="false"
+                  :color="'#2F639D'"
+                  :opacity="1"
+                ></loading>
         <div class="modal-body relative p-4">
           <div class="container px-6 mx-auto">
             <section class="text-gray-800">
@@ -75,13 +81,7 @@
                   </h2>
                 </div>
               </div>
-              <div class="vld-parent">
-                <loading
-                  :active="isLoading"
-                  :is-full-page="false"
-                  :color="'#2F639D'"
-                  :opacity="0.7"
-                ></loading>
+        
                 <div class="flex flex-wrap">
                   <div class="grow-0 shrink-0 basis-auto w-full lg:w-11/12">
                     <div class="flex flex-wrap">
@@ -301,7 +301,7 @@
                               inline-block
                               px-6
                               py-2.5
-                              bg-yellow-200
+                              custom-warning
                               text-white
                               font-medium
                               text-xs
@@ -309,8 +309,6 @@
                               uppercase
                               rounded
                               shadow-lg
-                              hover:bg-yellow-200 hover:shadow-lg
-                              focus:bg-yellow-200
                               focus:shadow-lg
                               focus:outline-none
                               focus:ring-0
@@ -395,11 +393,11 @@
                     </div>
                   </div>
                 </div>
-              </div>
+              
             </section>
           </div>
         </div>
-
+         </div>
         <div
           class="
             modal-footer
@@ -475,7 +473,7 @@
 <script>
 import { googleApi } from "@/composables/baseURL";
 import generatePdf from "./generateLicensedPdf.vue";
-import { ref, onUpdated } from "vue";
+import { ref, watch } from "vue";
 import { useStore } from "vuex";
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
@@ -511,7 +509,7 @@ export default {
               ? result.profile.gender
               : "-----";
             modalData.value.nationality = result.profile.nationality
-              ? result.profile.nationality
+              ? result.profile.nationality.name
               : "-----";
             modalData.value.dateOfBirth = result.profile.dateOfBirth
               ? result.profile.dateOfBirth
@@ -540,14 +538,16 @@ export default {
             modalData.value.certifiedDate = result.certifiedDate;
             modalData.value.licenseExpirationDate =
               result.licenseExpirationDate;
-            modalData.value.data = result;
+            modalData.value.documents=result.documents
+             modalData.value.data=result
             isLoading.value = false;
-            console.log(modalData.value);
+
           }
         });
     };
 
-    onUpdated(() => {
+    watch(props.modalDataId,() => {
+         isLoading.value = true;
       check();
     });
     return {

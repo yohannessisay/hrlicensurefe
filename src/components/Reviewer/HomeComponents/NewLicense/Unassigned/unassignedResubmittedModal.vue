@@ -63,34 +63,33 @@
           >
             <button
               type="button"
-              class="btn-close border-none rounded-lg hover:text-primary-400"
+              class="btn-close border-none rounded-lg "
               data-bs-dismiss="modal"
               aria-label="Close"
             ></button>
           </div>
-
-          <div class="modal-body relative p-4">
-            <div class="container px-6 mx-auto">
-              <section class="text-gray-800">
-                <div class="flex justify-center">
-                  <div class="text-center lg:max-w-3xl md:max-w-xl">
-                    <h2 class="text-2xl font-bold mb-8 px-6">
-                      Showing
-                      <span class="text-2xl font-bold px-6">
-                        {{ modalData.name ? modalData.name : "" }}
-                      </span>
-                      's License Data
-                    </h2>
+          <div class="vld-parent mt-4">
+            <loading
+              :active="isLoadingStart"
+              :is-full-page="false"
+              :color="'#2F639D'"
+              :opacity="1"
+            ></loading>
+            <div class="modal-body relative p-4">
+              <div class="container px-6 mx-auto">
+                <section class="text-gray-800">
+                  <div class="flex justify-center">
+                    <div class="text-center lg:max-w-3xl md:max-w-xl">
+                      <h2 class="text-2xl font-bold mb-8 px-6">
+                        Showing
+                        <span class="text-2xl font-bold px-6">
+                          {{ modalData.name ? modalData.name : "" }}
+                        </span>
+                        's License Data
+                      </h2>
+                    </div>
                   </div>
-                </div>
 
-                <div class="vld-parent">
-                  <loading
-                    :active="isLoadingStart"
-                    :is-full-page="false"
-                    :color="'#2F639D'"
-                    :opacity="0.7"
-                  ></loading>
                   <div class="flex flex-wrap">
                     <div class="grow-0 shrink-0 basis-auto w-full lg:w-11/12">
                       <div class="flex flex-wrap">
@@ -432,11 +431,10 @@
                       </div>
                     </div>
                   </div>
-                </div>
-              </section>
+                </section>
+              </div>
             </div>
           </div>
-
           <div
             class="
               modal-footer
@@ -489,7 +487,7 @@ import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 
 export default {
-  props: ["modalDataId", "reviewers"],
+  props: ["modalDataIdResub", "reviewers"],
   components: {
     Loading,
   },
@@ -522,7 +520,6 @@ export default {
     };
 
     const assignReviewer = () => {
-     
       if (role.value.code === "TL" || role.value.code === "ADM") {
         assign.value = {
           licenseId: licenseData.value.id,
@@ -602,7 +599,10 @@ export default {
 
     const check = () => {
       store
-        .dispatch("reviewer/getNewLicenseApplication", props.modalDataId.id)
+        .dispatch(
+          "reviewer/getNewLicenseApplication",
+          props.modalDataIdResub.id
+        )
         .then((res) => {
           if (res.data.status == "Success") {
             result = res.data.data;
@@ -646,16 +646,15 @@ export default {
             modalData.value.licenseExpirationDate =
               result.licenseExpirationDate;
             modalData.value.data = result;
-            licenseData.value=result;
+            licenseData.value = result;
             isLoadingStart.value = false;
           }
         });
     };
 
-    watch(props.modalDataId, () => {
-       isLoadingStart.value=true
+    watch(props.modalDataIdResub, () => {
+      isLoadingStart.value = true;
       check();
-     
     });
 
     onMounted(() => {

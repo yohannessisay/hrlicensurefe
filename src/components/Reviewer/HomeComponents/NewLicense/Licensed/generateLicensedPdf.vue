@@ -146,30 +146,21 @@
                                     <!-- <h4>
                                       በኢትዮጵያ ፌዴራላዊ ዴሞክራሲያዊ ረፐብሊክ የጤና ሚንስቴር በአዋጅ
                                       ቁጥር
-                                      {{
-                                        modalData.data.reviewer &&
-                                        modalData.data.reviewer?.expertLevel &&
-                                        modalData.data.reviewer?.expertLevel
-                                          .code === "FED"
+                                  
+                                    
+                                           {{modalData.data.reviewer&&modalData.data.reviewer.expertLevelId === 3
                                           ? "1112/2011"
-                                          : modalData.data.reviewer &&
-                                            modalData.data.reviewer?.region &&
-                                            modalData.data.reviewer?.region
-                                              .code === "AA"
+                                          :modalData.data.reviewer.regionId&&modalData.data.reviewer.region.code === "AA"
                                           ? "64/2011"
-                                          : modalData.data.reviewer &&
-                                            modalData.data.reviewer?.region &&
-                                            modalData.data.reviewer?.region
-                                              .code === "ORO"
+                                          :modalData.data.reviewer.regionId&& modalData.data.reviewer.region.code === "ORO"
                                           ? "661/2009"
                                           : "-"
                                       }}
+                                           
                                       አንቀጽ
                                       {{
                                         modalData.data.reviewer &&
-                                        modalData.data.reviewer?.expertLevel &&
-                                        modalData.data.reviewer?.expertLevel
-                                          .code === "FED"
+                                        modalData.data.reviewer.expertLevelId === 3
                                           ? "73"
                                           : modalData.data.reviewer &&
                                             modalData.data.reviewer.region &&
@@ -609,7 +600,7 @@ export default {
       const staticUrl = STATIC_CERTIFICATE_URL;
       const userId = props.modalData.profile.id;
       const applicationId = props.modalData.data.id;
-      const applicationType = props.modalData.data.applicationType.code;
+      const applicationType = "NewLicense"
 
       const qrParam = { url: null };
 

@@ -110,7 +110,7 @@ export default {
     const getCpdUsers = () => {
       store.dispatch("reviewerCpd/getCpdCertified").then((res) => {
         allInfo.value.users = res.data;
-
+        
         allInfo.value.users.forEach((element) => {
           tableData.value.push({
             LicenseNumber: element.licenseNumber,

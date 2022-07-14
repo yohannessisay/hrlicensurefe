@@ -44,7 +44,7 @@
                   ></vue-table-lite>
                   <edit-modal
                     v-if="showModal"
-                    :modalData="modalData"
+                    :modalDataId="modalDataId"
                     :reviewers="reviewers"
                   >
                   </edit-modal>
@@ -79,11 +79,14 @@
                     :rows="toOthersTable.rows"
                     :total="toOthersTable.totalRecordCount"
                     :sortable="toOthersTable.sortable"
-                    @is-finished="tableLoadingFinish"
-                    @row-clicked="rowClicked"
+                    @is-finished="tableLoadingFinishOthers"
+                    @row-clicked="rowClickedOthers"
                   ></vue-table-lite>
 
-                  <edit-modal-others v-if="showModal" :modalData="modalData">
+                  <edit-modal-others
+                    v-if="showModal"
+                    :modalDataIdOthers="modalDataIdOthers"
+                  >
                   </edit-modal-others>
                 </div>
               </div>
@@ -122,23 +125,14 @@ export default {
     const store = useStore();
     const showModal = ref(true);
     const adminId = +localStorage.getItem("adminId");
-
-    let loading = ref(false);
-    let modalData = ref({
+    let modalDataId = ref({
       id: "",
-      name: "",
-      email: "",
-      gender: "",
-      nationality: "",
-      dateOfBirth: "",
-      martialStatus: "",
-      mobileNumber: "",
-      instName: "",
-      department: "",
-      instType: "",
-      documentData: {},
+      change: 0,
     });
-
+    let modalDataIdOthers = ref({
+      id: "",
+      change: 0,
+    });
     let allInfo = ref({
       alreadyPushed: false,
       searchByInput: false,
@@ -164,7 +158,6 @@ export default {
       isLoading: true,
     };
     const inReviewAssignedToOthers = () => {
-      loading.value = true;
       applicationStatus(store, "IRV").then((res) => {
         let statusId = res;
         let adminStatus = [statusId, adminId];
@@ -175,8 +168,6 @@ export default {
             adminStatus
           )
           .then((res) => {
-            loading.value = false;
-
             allInfo.value.assignApplication =
               store.getters[
                 "reviewerNewLicense/getNewLicenseOthersOnReviewSearched"
@@ -197,13 +188,17 @@ export default {
                 tableData.value.push({
                   id: element.id,
                   ApplicantName:
-                    element.applicant.profile.name +
+                    (element.profile ? element.profile.name : "------") +
                     " " +
-                    element.applicant.profile.fatherName +
+                    (element.profile.fatherName
+                      ? element.profile.fatherName
+                      : "------") +
                     " " +
-                    element.applicant.profile.grandFatherName,
+                    (element.profile.grandFatherName
+                      ? element.profile.grandFatherName
+                      : "------"),
                   ApplicationType: element.applicationType.name,
-                  Date: new Date(element.applicationType.createdAt)
+                  Date: new Date(element.createdAt)
                     .toJSON()
                     .slice(0, 10)
                     .replace(/-/g, "/"),
@@ -247,7 +242,7 @@ export default {
                     return (
                       '<button  data-set="' +
                       row +
-                      '"  data-bs-toggle="modal" data-bs-target="#staticBackdropOthers" class="edit-btn inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" data-id="' +
+                      '"  data-bs-toggle="modal" data-bs-target="#staticBackdropOthers" class="edit-btn-others inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" data-id="' +
                       row.id +
                       '" >View/Edit</button>'
                     );
@@ -266,7 +261,6 @@ export default {
     };
 
     const inReviewAssignedToYou = () => {
-      loading.value = true;
       applicationStatus(store, "IRV").then((res) => {
         let statusId = res;
         let adminStatus = [statusId, adminId];
@@ -286,19 +280,22 @@ export default {
                   allInfo.value.assignApplication[applicant].applicantType;
               }
             }
-
             JSON.parse(JSON.stringify(allInfo.value.assignApplication)).forEach(
               (element) => {
                 toYouTableData.value.push({
                   id: element.id,
                   ApplicantName:
-                    element.applicant.profile.name +
+                    (element.profile ? element.profile.name : "------") +
                     " " +
-                    element.applicant.profile.fatherName +
+                    (element.profile.fatherName
+                      ? element.profile.fatherName
+                      : "------") +
                     " " +
-                    element.applicant.profile.grandFatherName,
+                    (element.profile.grandFatherName
+                      ? element.profile.grandFatherName
+                      : "------"),
                   ApplicationType: element.applicationType.name,
-                  Date: new Date(element.applicationType.createdAt)
+                  Date: new Date(element.createdAt)
                     .toJSON()
                     .slice(0, 10)
                     .replace(/-/g, "/"),
@@ -368,8 +365,16 @@ export default {
           element.addEventListener("click", rowClicked());
         }
       });
-      toOthersTable.value.isLoading = false;
       toYouTable.value.isLoading = false;
+    };
+    const tableLoadingFinishOthers = () => {
+      let elementOthers = document.getElementsByClassName("edit-btn-others");
+      Array.prototype.forEach.call(elementOthers, function (element) {
+        if (element.classList.contains("edit-btn-others")) {
+          element.addEventListener("click", rowClickedOthers());
+        }
+      });
+      toOthersTable.value.isLoading = false;
     };
     const rowClicked = (row) => {
       if (row != undefined) {
@@ -380,29 +385,15 @@ export default {
         });
 
         row = JSON.parse(JSON.stringify(row));
-        modalData.value.id = row.data.applicant.id ?? "------";
-        modalData.value.name = row.ApplicantName ?? "------";
-        modalData.value.email = row.data.applicant.emailAddress ?? "------";
-        modalData.value.mobileNumber =
-          row.data.applicant.phoneNumber ?? "------";
-        modalData.value.dateOfBirth =
-          row.data.applicant.profile.dateOfBirth ?? "------";
-        modalData.value.gender = row.data.applicant.profile.gender ?? "------";
-        modalData.value.instName =
-          row.data.education.institution?.name ?? "------";
-        modalData.value.department =
-          row.data.education.department?.name ?? "------";
-        modalData.value.instType =
-          row.data.education.institution.institutionType?.name ?? "-----";
-        modalData.value.nationality =
-          row.data.applicant.profile.nationality?.name ?? "------";
-        modalData.value.martialStatus =
-          row.data.applicant.profile.maritalStatus?.name ?? "------";
-        modalData.value.applicationId = row.data.id ?? "------";
-        modalData.value.applicantId = row.data.applicantType.code ?? "------";
-        modalData.value.applicationType =
-          row.data.applicationType.code ?? "------";
-        modalData.value.documentData = row.data.documents ?? {};
+        modalDataId.value.id = row.id ? row.id : "-----";
+        modalDataId.value.change++;
+      }
+    };
+    const rowClickedOthers = (row) => {
+      if (row != undefined) {
+        row = JSON.parse(JSON.stringify(row));
+        modalDataIdOthers.value.id = row.id ? row.id : "-----";
+        modalDataIdOthers.value.change++;
       }
     };
     onMounted(() => {
@@ -412,15 +403,17 @@ export default {
 
     return {
       allInfo,
-      loading,
       toOthersTable,
       toYouTable,
       showModal,
       reviewers,
       tableLoadingFinish,
       inReviewAssignedToOthers,
+      tableLoadingFinishOthers,
       rowClicked,
-      modalData,
+      rowClickedOthers,
+      modalDataId,
+      modalDataIdOthers,
     };
   },
 };

@@ -75,9 +75,12 @@
                     :rows="toOthersTable.rows"
                     :total="toOthersTable.totalRecordCount"
                     :sortable="toOthersTable.sortable"
-                    @is-finished="tableLoadingFinish"
-                    @row-clicked="rowClicked"
+                    @is-finished="tableLoadingFinishOthers"
+                    @row-clicked="rowClickedOthers"
                   ></vue-table-lite>
+                  <edit-modal-others
+                    :modalDataIdOthers="modalDataIdOthers"
+                  ></edit-modal-others>
                 </div>
               </div>
             </div>
@@ -99,6 +102,7 @@ import { useStore } from "vuex";
 import applicationStatus from "../../../Configurations/getApplicationStatus.js";
 import VueTableLite from "vue3-table-lite";
 import editModal from "./licensedModal.vue";
+import editModalOthers from "./licensedModalOthers.vue";
 
 export default {
   name: "home",
@@ -108,6 +112,7 @@ export default {
     NewLicenseMainContent,
     VueTableLite,
     editModal,
+    editModalOthers,
   },
   setup() {
     const store = useStore();
@@ -119,21 +124,14 @@ export default {
 
     let modalDataId = ref({
       id: "",
-      change:0
+      change: 0,
+    });
+    let modalDataIdOthers = ref({
+      id: "",
+      change: 0,
     });
 
-    let allInfo = ref({
-      alreadyPushed: false,
-      searchByInput: false,
-      assignApplication: [],
-      message: {
-        showErrorFlash: false,
-      },
-      filteredByDate: [],
-      searchFromDate: "",
-      searchUpToDate: "",
-      app_type: "",
-    });
+    let allInfo = ref({});
 
     const toOthersTable = ref({});
     const toYouTable = ref({});
@@ -227,7 +225,7 @@ export default {
                         return (
                           '<button  data-set="' +
                           row +
-                          '"  data-bs-toggle="modal" data-bs-target="#staticBackdropOthers" class="edit-btn inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" data-id="' +
+                          '"  data-bs-toggle="modal" data-bs-target="#staticBackdropOthers" class="edit-btn-others inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" data-id="' +
                           row.id +
                           '" >View/Edit</button>'
                         );
@@ -248,7 +246,6 @@ export default {
     };
 
     const licensedByYou = () => {
-
       applicationStatus(store, "AP").then((ap) => {
         applicationStatus(store, "CONF").then((conf) => {
           applicationStatus(store, "APP").then((app) => {
@@ -356,15 +353,35 @@ export default {
         }
       });
     };
-     
+
+        const tableLoadingFinishOthers = () => {
+
+      let elements = document.getElementsByClassName("edit-btn-others");
+
+      Array.prototype.forEach.call(elements, function (element) {
+        if (element.classList.contains("edit-btn-others")) {
+          element.addEventListener("click", rowClicked());
+        }
+      });
+            toOthersTable.value.isLoading = false;
+    };
+
     const rowClicked = (row) => {
       if (row != undefined) {
         row = JSON.parse(JSON.stringify(row));
-        modalDataId.value.change++
-        modalDataId.value.id = row.id?row.id:"";
-     
+        modalDataId.value.change++;
+        modalDataId.value.id = row.id ? row.id : "";
       }
     };
+
+        const rowClickedOthers = (row) => {
+      if (row != undefined) {
+        row = JSON.parse(JSON.stringify(row));
+        modalDataIdOthers.value.change++;
+        modalDataIdOthers.value.id = row.id ? row.id : "";
+      }
+    };
+
     onMounted(() => {
       licensedByYou();
       licensedByOthers();
@@ -381,6 +398,9 @@ export default {
       licensedByOthers,
       rowClicked,
       modalDataId,
+      modalDataIdOthers,
+      rowClickedOthers,
+      tableLoadingFinishOthers
     };
   },
 };
