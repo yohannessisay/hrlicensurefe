@@ -1,74 +1,71 @@
 <template>
-  <div class="vld-parent">
+  <div
+    class="
+      modal
+      fade
+      fixed
+      top-0
+      left-0
+      hidden
+      w-full
+      h-full
+      outline-none
+      overflow-x-hidden overflow-y-auto
+    "
+    id="staticBackdrop"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false"
+    tabindex="-1"
+    aria-labelledby="staticBackdropLabel"
+    aria-hidden="true"
+  >
     <div
       class="
-        modal
-        fade
-        fixed
-        top-0
-        left-0
-        hidden
-        w-full
-        h-full
-        outline-none
-        overflow-x-hidden overflow-y-auto
+        modal-dialog modal-dialog-centered modal-xl
+        relative
+        w-auto
+        pointer-events-none
       "
-      id="staticBackdrop"
-      data-bs-backdrop="static"
-      data-bs-keyboard="false"
-      tabindex="-1"
-      aria-labelledby="staticBackdropLabel"
-      aria-hidden="true"
     >
       <div
         class="
-          modal-dialog modal-dialog-centered modal-xl
+          modal-content
+          border-none
+          shadow-lg
           relative
-          w-auto
-          pointer-events-none
+          flex flex-col
+          w-full
+          pointer-events-auto
+          bg-white bg-clip-padding
+          rounded-md
+          outline-none
+          text-current
         "
       >
         <div
           class="
-            modal-content
-            border-none
-            shadow-lg
-            relative
-            flex flex-col
-            w-full
-            pointer-events-auto
-            bg-white bg-clip-padding
-            rounded-md
-            outline-none
-            text-current
+            modal-header
+            flex flex-shrink-0
+            items-center
+            justify-between
+            p-2
+            rounded-t-md
           "
         >
+          <button
+            type="button"
+            class="btn-close border-none rounded-lg hover:text-primary-400"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="vld-parent mt-4">
           <loading
-            :active="isLoading"
-            :can-cancel="true"
-            :on-cancel="onCancel"
-            :is-full-page="fullPage"
+            :active="isLoadingStart"
+            :is-full-page="false"
             :color="'#2F639D'"
-            :opacity="0.7"
+            :opacity="1"
           ></loading>
-          <div
-            class="
-              modal-header
-              flex flex-shrink-0
-              items-center
-              justify-between
-              p-2
-              rounded-t-md
-            "
-          >
-            <button
-              type="button"
-              class="btn-close border-none rounded-lg hover:text-primary-400"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-
           <div class="modal-body relative p-4">
             <div class="container px-6 mx-auto">
               <section class="text-gray-800">
@@ -83,11 +80,12 @@
                     </h2>
                   </div>
                 </div>
-
                 <div class="vld-parent">
                   <loading
-                    :active="isLoadingStart"
-                    :is-full-page="false"
+                    :active="isLoading"
+                    :can-cancel="true"
+                    :on-cancel="onCancel"
+                    :is-full-page="fullPage"
                     :color="'#2F639D'"
                     :opacity="0.7"
                   ></loading>
@@ -436,44 +434,43 @@
               </section>
             </div>
           </div>
-
-          <div
+        </div>
+        <div
+          class="
+            modal-footer
+            flex flex-shrink-0 flex-wrap
+            items-center
+            justify-end
+            border-t border-grey-200
+            rounded-b-md
+          "
+        >
+          <button
+            type="button"
             class="
-              modal-footer
-              flex flex-shrink-0 flex-wrap
-              items-center
-              justify-end
-              border-t border-grey-200
-              rounded-b-md
+              inline-block
+              px-6
+              text-white
+              font-medium
+              text-xs
+              leading-tight
+              uppercase
+              rounded
+              shadow-lg
+              hover:bg-purple-700 hover:shadow-lg
+              focus:bg-purple-700
+              focus:shadow-lg
+              focus:outline-none
+              focus:ring-0
+              active:bg-purple-800 active:shadow-lg
+              transition
+              duration-150
+              ease-in-out
             "
+            data-bs-dismiss="modal"
           >
-            <button
-              type="button"
-              class="
-                inline-block
-                px-6
-                text-white
-                font-medium
-                text-xs
-                leading-tight
-                uppercase
-                rounded
-                shadow-lg
-                hover:bg-purple-700 hover:shadow-lg
-                focus:bg-purple-700
-                focus:shadow-lg
-                focus:outline-none
-                focus:ring-0
-                active:bg-purple-800 active:shadow-lg
-                transition
-                duration-150
-                ease-in-out
-              "
-              data-bs-dismiss="modal"
-            >
-              Close
-            </button>
-          </div>
+            Close
+          </button>
         </div>
       </div>
     </div>
@@ -522,7 +519,6 @@ export default {
     };
 
     const assignReviewer = () => {
-     
       if (role.value.code === "TL" || role.value.code === "ADM") {
         assign.value = {
           licenseId: licenseData.value.id,
@@ -548,21 +544,22 @@ export default {
             toast("Selected reviewer is successfully assigned.", {
               duration: 3000,
               position: "bottom",
+              toastClass: "toast-success",
             });
-            setTimeout(() => {
-              isLoading.value = false;
-              window.location.reload();
-            }, 1000);
           } else {
-            console.log("no sup");
+            toast("Something is wrong, please try again in a few minutes.", {
+              duration: 3000,
+              position: "bottom",
+              toastClass: "toast-error",
+            });
           }
         })
         .catch(() => {
           toast("Sorry there seems to be a problem, please try again.", {
             duration: 3000,
             position: "bottom",
+            toastClass: "toast-error",
           });
-          console.log("Error is related to the reviewer/assignReviewer action");
         });
     };
 
@@ -604,7 +601,11 @@ export default {
       store
         .dispatch("reviewer/getNewLicenseApplication", props.modalDataId.id)
         .then((res) => {
-          if (res.data.status == "Success") {
+          if (
+            res.data.status == "Success" &&
+            res.data.message !=
+              "New licenses total count retrieved successfully!"
+          ) {
             result = res.data.data;
             modalData.value.name =
               result.profile.name +
@@ -615,8 +616,8 @@ export default {
             modalData.value.gender = result.profile.gender
               ? result.profile.gender
               : "-----";
-            modalData.value.nationality = result.profile.nationality
-              ? result.profile.nationality
+            modalData.value.nationality = result.profile.nationality?.name
+              ? result.profile.nationality?.name
               : "-----";
             modalData.value.dateOfBirth = result.profile.dateOfBirth
               ? result.profile.dateOfBirth
@@ -646,13 +647,14 @@ export default {
             modalData.value.licenseExpirationDate =
               result.licenseExpirationDate;
             modalData.value.data = result;
-            licenseData.value=result;
+            licenseData.value = result;
             isLoadingStart.value = false;
           }
         });
     };
 
     watch(props.modalDataId, () => {
+      isLoadingStart.value = true;
       check();
     });
 

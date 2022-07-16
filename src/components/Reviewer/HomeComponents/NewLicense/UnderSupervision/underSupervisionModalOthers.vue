@@ -13,11 +13,11 @@
       outline-none
       overflow-x-hidden overflow-y-auto
     "
-    id="staticBackdrop"
+    id="staticBackdropOthers"
     data-bs-backdrop="static"
     data-bs-keyboard="false"
     tabindex="-1"
-    aria-labelledby="staticBackdropLabel"
+    aria-labelledby="staticBackdropOthersLabel"
     aria-hidden="true"
   >
     <div class="modal-dialog modal-xl relative w-auto pointer-events-none">
@@ -76,7 +76,7 @@
                 </div>
 
                 <div class="flex flex-wrap">
-                  <div class="grow-0 shrink-0 basis-auto w-full">
+                  <div class="grow-0 shrink-0 basis-auto w-full lg:w-11/12">
                     <div class="flex flex-wrap">
                       <div
                         class="
@@ -320,11 +320,7 @@
                               <div class="mt-large bg-white">
                                 <a
                                   :href="googleApi + document.filePath"
-                                  :data-title="
-                                    document.documentType
-                                      ? document.documentType.name
-                                      : '-----'
-                                  "
+                                  :data-title="document.documentType.name?document.documentType.name:''"
                                   data-lightbox="example-2"
                                 >
                                   <img
@@ -336,13 +332,7 @@
                                 <h4 style="font-weight: bold">
                                   Document Type
                                 </h4>
-                                <h5 class="text-primary-500">
-                                  {{
-                                    document.documentType
-                                      ? document.documentType.name
-                                      : "------"
-                                  }}
-                                </h5>
+                                <h5 class="text-primary-500">{{ document.documentType.name?document.documentType.name:'' }}</h5>
                               </div>
                             </div>
                           </div>
@@ -403,9 +393,8 @@ import moment from "moment";
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 import { googleApi } from "@/composables/baseURL";
-
 export default {
-  props: ["modalDataId"],
+  props: ["modalDataIdOthers"],
   components: {
     Loading,
   },
@@ -418,8 +407,7 @@ export default {
     let show = ref(true);
     let adminId = +localStorage.getItem("adminId");
 
-    let isLoading = ref(false);
-    const licenseData = ref({});
+    const isLoading = ref(true);
     let reviewerAdminId = ref(0);
 
     const showModal = () => {
@@ -434,7 +422,10 @@ export default {
 
     const check = () => {
       store
-        .dispatch("reviewer/getNewLicenseApplication", props.modalDataId.id)
+        .dispatch(
+          "reviewer/getNewLicenseApplication",
+          props.modalDataIdOthers.id
+        )
         .then((res) => {
           if (
             res.data.status == "Success" &&
@@ -442,7 +433,6 @@ export default {
               "New licenses total count retrieved successfully!"
           ) {
             result = res.data.data;
-
             modalData.value.name =
               result.profile.name +
               " " +
@@ -482,15 +472,13 @@ export default {
             modalData.value.certifiedDate = result.certifiedDate;
             modalData.value.licenseExpirationDate =
               result.licenseExpirationDate;
-
-            licenseData.value = result;
             modalData.value.documents = result.documents;
-            isLoading.value = false;
+            isLoading.value=false
           }
         });
     };
 
-    watch(props.modalDataId, () => {
+    watch(props.modalDataIdOthers, () => {
       isLoading.value = true;
       check();
     });
@@ -503,7 +491,7 @@ export default {
       isLoading,
       onCancel,
       modalData,
-      googleApi,
+      googleApi
     };
   },
 };

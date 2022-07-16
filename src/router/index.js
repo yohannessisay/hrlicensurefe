@@ -993,6 +993,17 @@ const routes = [
       import("../components/Reviewer/HomeComponents/Renewal/Licensed/licensed.vue"),
   },
 
+  //Verifixcation part
+  {
+    path: "/admin/verification",
+    name: "AdminVerification",
+    component: () =>
+      import(
+        "../components/Reviewer/HomeComponents/Verification/verification.vue"
+      )
+  },
+
+
   //Cpd part
   {
     path: "/admin/cpdCertified",

@@ -4,7 +4,7 @@
         <ul class="nav-links">
       <router-link to="/admin/newLicense/">
         <li class="mb-2">
-          <a href="#" >
+          <a href="#NewLicense" >
             <i class="bx bx-certification"></i>
             <span class="links_name">New License</span>
           </a>
@@ -12,15 +12,15 @@
       </router-link>
       <router-link to="/admin/renewal/">
         <li class="mb-2">
-          <a href="#">
+          <a href="#Renewal">
             <i class="bx bx-refresh"></i>
             <span class="links_name">Renewal</span>
           </a>
         </li>
       </router-link>
-      <router-link to="/admin/newLicense/">
+      <router-link to="/admin/verification/">
         <li class="mb-2">
-          <a href="#">
+          <a href="#Verification">
             <i class="bx bx-message-check"></i>
             <span class="links_name">Verification</span>
           </a>
@@ -28,15 +28,15 @@
       </router-link>
       <router-link to="/admin/newLicense/">
         <li class="mb-2">
-          <a href="#">
-            <i class="bx bx-loader"></i>
+          <a href="#GoodStanding">
+            <i class="fa fa-thumbs-up"></i>
             <span class="links_name">Good Standing</span>
           </a>
         </li>
       </router-link>
             <router-link to="/admin/cpdCertified">
         <li class="mb-2">
-          <a href="#">
+          <a href="#CpdCertified">
             <i class="bx bx-badge-check"></i>
             <span class="links_name">Cpd Certified</span>
           </a>
@@ -48,7 +48,7 @@
   <!-- Sidebar -->
   <section class="home-section">
     <!-- Header -->
-    <reviewer-nav-bar></reviewer-nav-bar>
+    <reviewer-nav-bar><h2>Home</h2></reviewer-nav-bar>
     <!-- Header -->
 
     <!-- Main Content -->

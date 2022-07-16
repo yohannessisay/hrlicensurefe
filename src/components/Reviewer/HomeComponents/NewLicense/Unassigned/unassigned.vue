@@ -113,7 +113,7 @@
                   ></vue-table-lite>
                   <edit-modal-resubmitted
                     v-if="showModalResubmitted"
-                    :modalDataId="modalDataId"
+                    :modalDataIdResub="modalDataIdResub"
                     :reviewers="reviewers"
                   >
                   </edit-modal-resubmitted>
@@ -162,6 +162,10 @@ export default {
       id: "",
       change: 0,
     });
+        let modalDataIdResub = ref({
+      id: "",
+      change: 0,
+    });
 
     let allInfo = ref({
       alreadyPushed: false,
@@ -195,7 +199,8 @@ export default {
 
         store
           .dispatch("reviewerNewLicense/getNewLicenseUnassigned", statusId)
-          .then(() => {
+          .then((res) => {
+                          console.log(res)
             allInfo.value.assignApplication =
               store.getters[
                 "reviewerNewLicense/getNewLicenseUnassignedSearched"
@@ -222,7 +227,7 @@ export default {
                     " " +
                     element.profile.grandFatherName,
                   ApplicationType: element.newLicenseCode ? "New License" : "",
-                  Date: new Date(element.applicationType.createdAt)
+                  Date: new Date(element.createdAt)
                     .toJSON()
                     .slice(0, 10)
                     .replace(/-/g, "/"),
@@ -294,7 +299,6 @@ export default {
               statusId
             )
             .then((res) => {
-              console.log(res, statusId);
 
               allInfo.value.assignApplication =
                 store.getters[
@@ -324,7 +328,7 @@ export default {
                     " " +
                     element.profile.grandFatherName,
                   ApplicationType: element.newLicenseCode ? "New License" : "",
-                  Date: new Date(element.applicationType.createdAt)
+                  Date: new Date(element.createdAt)
                     .toJSON()
                     .slice(0, 10)
                     .replace(/-/g, "/"),
@@ -448,7 +452,8 @@ export default {
         modalDataId.value.apStatusResub = statusId;
         store
           .dispatch("reviewerNewLicense/getNewLicenseReApply", adminStatus)
-          .then(() => {
+          .then((res) => {
+            console.log(res)
             allInfo.value.assignApplication =
               store.getters["reviewerNewLicense/getNewLicenseReApplySearched"];
 
@@ -473,7 +478,7 @@ export default {
                     " " +
                     element.profile.grandFatherName,
                   ApplicationType: element.newLicenseCode ? "New License" : "",
-                  Date: new Date(element.applicationType.createdAt)
+                  Date: new Date(element.createdAt)
                     .toJSON()
                     .slice(0, 10)
                     .replace(/-/g, "/"),
@@ -531,14 +536,22 @@ export default {
                 sort: "asc",
               },
             };
-
-                 console.log(modalDataId.value);
           });
       });
     };
 
     const tableLoadingFinish = () => {
       let elements = document.getElementsByClassName("edit-btn");
+      Array.prototype.forEach.call(elements, function (element) {
+        if (element.classList.contains("edit-btn")) {
+          element.addEventListener("click", rowClicked());
+        }
+      });
+      unassignedTable.value.isLoading = false;
+    };
+
+
+        const tableLoadingFinishResub = () => {
       let elementsResub = document.getElementsByClassName(
         "edit-btn-resubmitted"
       );
@@ -547,14 +560,11 @@ export default {
           element.addEventListener("click", rowClickedResub());
         }
       });
-      Array.prototype.forEach.call(elements, function (element) {
-        if (element.classList.contains("edit-btn")) {
-          element.addEventListener("click", rowClicked());
-        }
-      });
-      unassignedTable.value.isLoading = false;
       reSubmittedTable.value.isLoading = false;
     };
+
+
+
 
     const rowClicked = (row) => {
       if (row != undefined) {
@@ -566,8 +576,8 @@ export default {
     const rowClickedResub = (row) => {
       if (row != undefined) {
         row = JSON.parse(JSON.stringify(row));
-        modalDataId.value.change++;
-        modalDataId.value.id = row.data.id ? row.data.id : "";
+        modalDataIdResub.value.change++;
+        modalDataIdResub.value.id = row.data.id ? row.data.id : "";
      
       }
     };
@@ -592,12 +602,14 @@ export default {
       showModalResubmitted,
       searchedReviewer,
       tableLoadingFinish,
+      tableLoadingFinishResub,
       unassigned,
       rowClicked,
       reSubmitted,
       includeFromOthers,
       rowClickedResub,
       modalDataId,
+       modalDataIdResub,
     };
   },
 };

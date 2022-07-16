@@ -42,7 +42,7 @@
                     @is-finished="tableLoadingFinish"
                     @row-clicked="rowClicked"
                   ></vue-table-lite>
-                  <edit-modal v-if="showModal" :modalData="modalData">
+                  <edit-modal v-if="showModal" :modalDataId="modalDataId">
                   </edit-modal>
                 </div>
               </div>
@@ -75,11 +75,10 @@
                     :rows="toOthersTable.rows"
                     :total="toOthersTable.totalRecordCount"
                     :sortable="toOthersTable.sortable"
-                    @is-finished="tableLoadingFinish"
-                    @row-clicked="rowClicked"
+                    @is-finished="tableLoadingFinishOthers"
+                    @row-clicked="rowClickedOthers"
                   ></vue-table-lite>
-                    <edit-modal v-if="showModal" :modalData="modalData">
-                  </edit-modal>
+                  <edit-modal-others :modalDataIdOthers="modalDataIdOthers"></edit-modal-others>
                 </div>
               </div>
             </div>
@@ -94,13 +93,14 @@
 <script>
 import ReviewerSideNav from "../SharedComponents/sideNav.vue";
 import ReviewerNavBar from "../SharedComponents/navBar.vue";
-import NewLicenseMainContent from "../../../ApplicationTypes/NewLicense/MainComponents/declined.vue";
+import NewLicenseMainContent from "../../../ApplicationTypes/NewLicense/MainComponents/inReview.vue";
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
 
 import applicationStatus from "../../../Configurations/getApplicationStatus.js";
 import VueTableLite from "vue3-table-lite";
 import editModal from "./declinedModal.vue";
+import editModalOthers from "./declinedModalOthers.vue"
 
 export default {
   name: "home",
@@ -109,29 +109,22 @@ export default {
     ReviewerNavBar,
     NewLicenseMainContent,
     VueTableLite,
-    editModal
+    editModal,
+    editModalOthers
   },
   setup() {
     const store = useStore();
     const showModal = ref(true);
     const adminId = +localStorage.getItem("adminId");
 
-    let nothingToShow = ref(false);
-    let loading = ref(false);
 
-    let modalData = ref({
+    let modalDataId = ref({
       id: "",
-      name: "",
-      email: "",
-      gender: "",
-      nationality: "",
-      dateOfBirth: "",
-      martialStatus: "",
-      mobileNumber: "",
-      instName: "",
-      department: "",
-      instType: "",
-      documents: []
+      change: 0,
+    });
+       let modalDataIdOthers = ref({
+      id: "",
+      change: 0,
     });
 
     let allInfo = ref({
@@ -139,12 +132,12 @@ export default {
       searchByInput: false,
       assignApplication: [],
       message: {
-        showErrorFlash: false
+        showErrorFlash: false,
       },
       filteredByDate: [],
       searchFromDate: "",
       searchUpToDate: "",
-      app_type: ""
+      app_type: "",
     });
 
     const toOthersTable = ref({});
@@ -152,27 +145,23 @@ export default {
     let tableData = ref([]);
     let toYouTableData = ref([]);
     toOthersTable.value = {
-      isLoading: true
+      isLoading: true,
     };
     toYouTable.value = {
-      isLoading: true
+      isLoading: true,
     };
-    const approvedByOthers = () => {
-      loading.value = true;
-      applicationStatus(store, "DEC").then(res => {
+    const declinedByOthers = () => {
+      applicationStatus(store, "DEC").then((res) => {
         let statusId = res;
         let adminStatus = [statusId, adminId];
 
-        store
-          .dispatch("reviewerNewLicense/getNewLicenseAllDeclined", adminStatus)
+        store.dispatch("reviewerNewLicense/getNewLicenseAllDeclined", adminStatus)
           .then(() => {
-            loading.value = false;
 
             allInfo.value.assignApplication =
               store.getters[
                 "reviewerNewLicense/getNewLicenseAllDeclinedSearched"
               ];
-
             for (let applicant in allInfo.value.assignApplication) {
               if (
                 allInfo.value.assignApplication[applicant].applicationType ===
@@ -183,23 +172,26 @@ export default {
               }
             }
 
-
             JSON.parse(JSON.stringify(allInfo.value.assignApplication)).forEach(
-              element => {
+              (element) => {
                 tableData.value.push({
                   id: element.id,
                   ApplicantName:
-                    element.applicant.profile.name +
+                    (element.profile.name ? element.profile.name : "-----") +
                     " " +
-                    element.applicant.profile.fatherName +
+                    (element.profile.fatherName
+                      ? element.profile.fatherName
+                      : "-----") +
                     " " +
-                    element.applicant.profile.grandFatherName,
-                  ApplicationType: element.applicationType.name,
-                  Date: new Date(element.applicationType.createdAt)
+                    (element.profile.grandFatherName
+                      ? element.profile.grandFatherName
+                      : "-----"),
+                            ApplicationType: element.applicationType.name,
+                  Date: new Date(element.createdAt)
                     .toJSON()
                     .slice(0, 10)
                     .replace(/-/g, "/"),
-                  data: element
+                  data: element,
                 });
               }
             );
@@ -212,63 +204,60 @@ export default {
                   field: "id",
                   width: "3%",
                   sortable: true,
-                  isKey: true
+                  isKey: true,
                 },
                 {
                   label: "Applicant Name",
                   field: "ApplicantName",
                   width: "20%",
-                  sortable: true
+                  sortable: true,
                 },
                 {
                   label: "Applicant Type",
                   field: "ApplicationType",
                   width: "15%",
-                  sortable: true
+                  sortable: true,
                 },
                 {
                   label: "Date",
                   field: "Date",
                   width: "15%",
-                  sortable: true
+                  sortable: true,
                 },
                 {
                   label: "",
                   field: "quick",
                   width: "10%",
-                  display: function(row) {
+                  display: function (row) {
                     return (
                       '<button  data-set="' +
                       row +
-                      '"  data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="edit-btn inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" data-id="' +
+                      '"  data-bs-toggle="modal" data-bs-target="#staticBackdropOthers" class="edit-btn-others inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" data-id="' +
                       row.id +
                       '" >View/Edit</button>'
                     );
-                  }
-                }
+                  },
+                },
               ],
               rows: JSON.parse(JSON.stringify(tableData.value)),
               totalRecordCount: tableData.value.length,
               sortable: {
                 order: "id",
-                sort: "asc"
-              }
+                sort: "asc",
+              },
             };
-
           });
       });
     };
 
-    const approvedByYou = () => {
-      loading.value = true;
-      applicationStatus(store, "DEC").then(res => {
+    const declinedByYou = () => {
+      applicationStatus(store, "DEC").then((res) => {
         let statusId = res;
         let adminStatus = [statusId, adminId];
 
         store
           .dispatch("reviewerNewLicense/getNewLicenseDeclined", adminStatus)
           .then(() => {
-            loading.value = false;
         
             allInfo.value.assignApplication =
               store.getters["reviewerNewLicense/getNewLicenseDeclinedSearched"];
@@ -284,21 +273,25 @@ export default {
             }
 
             JSON.parse(JSON.stringify(allInfo.value.assignApplication)).forEach(
-              element => {
+              (element) => {
                 toYouTableData.value.push({
                   id: element.id,
                   ApplicantName:
-                    element.applicant.profile.name +
+                    (element.profile.name ? element.profile.name : "-----") +
                     " " +
-                    element.applicant.profile.fatherName +
+                    (element.profile.fatherName
+                      ? element.profile.fatherName
+                      : "-----") +
                     " " +
-                    element.applicant.profile.grandFatherName,
+                    (element.profile.grandFatherName
+                      ? element.profile.grandFatherName
+                      : "-----"),
                   ApplicationType: element.applicationType.name,
-                  Date: new Date(element.applicationType.createdAt)
+                  Date: new Date(element.createdAt)
                     .toJSON()
                     .slice(0, 10)
                     .replace(/-/g, "/"),
-                  data: element
+                  data: element,
                 });
               }
             );
@@ -311,31 +304,31 @@ export default {
                   field: "id",
                   width: "3%",
                   sortable: true,
-                  isKey: true
+                  isKey: true,
                 },
                 {
                   label: "Applicant Name",
                   field: "ApplicantName",
                   width: "20%",
-                  sortable: true
+                  sortable: true,
                 },
                 {
                   label: "Applicant Type",
                   field: "ApplicationType",
                   width: "15%",
-                  sortable: true
+                  sortable: true,
                 },
                 {
                   label: "Date",
                   field: "Date",
                   width: "15%",
-                  sortable: true
+                  sortable: true,
                 },
                 {
                   label: "",
                   field: "quick",
                   width: "10%",
-                  display: function(row) {
+                  display: function (row) {
                     return (
                       '<button  data-set="' +
                       row +
@@ -343,15 +336,15 @@ export default {
                       row.id +
                       '" >View/Edit</button>'
                     );
-                  }
-                }
+                  },
+                },
               ],
               rows: JSON.parse(JSON.stringify(toYouTableData.value)),
               totalRecordCount: toYouTableData.value.length,
               sortable: {
                 order: "id",
-                sort: "asc"
-              }
+                sort: "asc",
+              },
             };
           });
       });
@@ -362,54 +355,57 @@ export default {
       toYouTable.value.isLoading = false;
       let elements = document.getElementsByClassName("edit-btn");
 
-      Array.prototype.forEach.call(elements, function(element) {
+      Array.prototype.forEach.call(elements, function (element) {
         if (element.classList.contains("edit-btn")) {
           element.addEventListener("click", rowClicked());
         }
       });
     };
-    const rowClicked = row => {
+
+    const tableLoadingFinishOthers = () => {
+      let elements = document.getElementsByClassName("edit-btn-others");
+
+      Array.prototype.forEach.call(elements, function (element) {
+        if (element.classList.contains("edit-btn-others")) {
+          element.addEventListener("click", rowClickedOthers());
+        }
+      });
+      toOthersTable.value.isLoading = false;
+    };
+    const rowClicked = (row) => {
+      if (row != undefined) {
+        row = JSON.parse(JSON.stringify(row));
+        modalDataId.value.id = row.id ? row.id : "------";
+        modalDataId.value.change++;
+      }
+    };
+    const rowClickedOthers = (row) => {
       if (row != undefined) {
         row = JSON.parse(JSON.stringify(row));
 
-        modalData.value.id = row.data.applicant.id ?? "------";
-        modalData.value.name = row.ApplicantName ?? "------";
-        modalData.value.email = row.data.applicant.emailAddress ?? "------";
-        modalData.value.mobileNumber =
-          row.data.applicant.phoneNumber ?? "------";
-        modalData.value.dateOfBirth =
-          row.data.applicant.profile.dateOfBirth ?? "------";
-        modalData.value.gender = row.data.applicant.profile.gender ?? "------";
-        modalData.value.instName =
-          row.data.education.institution?.name ?? "------";
-        modalData.value.department =
-          row.data.education.department?.name ?? "------";
-        modalData.value.instType =
-          row.data.education.institution.institutionType?.name ?? "-----";
-        modalData.value.nationality =
-          row.data.applicant.profile.nationality?.name ?? "------";
-        modalData.value.martialStatus =
-          row.data.applicant.profile.maritalStatus?.name ?? "------";
-        modalData.value.documents = row.data?.documents ?? [];
+        modalDataIdOthers.value.id = row.id ? row.id : "------";
+        modalDataIdOthers.value.change++;
       }
     };
     onMounted(() => {
-     approvedByYou();
-     approvedByOthers();
+      declinedByOthers();
+      declinedByYou();
     });
 
     return {
-      nothingToShow,
       allInfo,
-      loading,
       toOthersTable,
       toYouTable,
       showModal,
       tableLoadingFinish,
-      approvedByOthers,
+      declinedByOthers,
       rowClicked,
-      modalData
+      modalDataId,
+      rowClickedOthers,
+      modalDataIdOthers,
+      tableLoadingFinishOthers,
     };
-  }
+  },
 };
 </script>
+
