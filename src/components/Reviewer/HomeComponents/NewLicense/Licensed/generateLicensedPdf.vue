@@ -663,17 +663,18 @@ export default {
       let changeWidth = ref(false);
       let changeWidthTooSmall = ref(false);
       let xPosition = ref(185);
+      console.log(certificateDetail.value)
       for (
         let i = 0;
-        i < certificateDetail.value.professionalTypePrefixes.length;
+        i < certificateDetail.value.licenseProfessions.length;
         i++
       ) {
         let professionPrefix = `${
-          certificateDetail.value.professionalTypePrefixes[i].prefix
-            ? certificateDetail.value.professionalTypePrefixes[i].prefix
+          certificateDetail.value.licenseProfessions[i].prefix
+            ? certificateDetail.value.licenseProfessions[i].prefix
             : ""
         }  ${
-          certificateDetail.value.professionalTypePrefixes[i].professionalTypes
+          certificateDetail.value.licenseProfessions[i].professionalTypes
             .name
         }`;
         let getLength = doc.getTextWidth(professionPrefix);
@@ -698,33 +699,33 @@ export default {
       }
       for (
         let i = 0;
-        i < certificateDetail.value.professionalTypePrefixes.length;
+        i < certificateDetail.value.licenseProfessions.length;
         i++
       ) {
         doc.text(
           xPosition.value,
           professionPossition + i * professionListGap,
           `${
-            certificateDetail.value.professionalTypes.length > 1
+            certificateDetail.value.licenseProfessions.length > 1
               ? i + 1 + ". "
               : ""
           }${
-            certificateDetail.value.professionalTypePrefixes[i]
+            certificateDetail.value.licenseProfessions[i]
               .professionalTypes.name
               ? `${
-                  certificateDetail.value.professionalTypePrefixes[i].prefix
+                  certificateDetail.value.licenseProfessions[i].prefix
                     ? "(" +
-                      certificateDetail.value.professionalTypePrefixes[i]
+                      certificateDetail.value.licenseProfessions[i]
                         .prefix +
                       ")"
                     : ""
                 }   ${
-                  certificateDetail.value.professionalTypePrefixes[i]
+                  certificateDetail.value.licenseProfessions[i]
                     .professionalTypes.code === "OTH"
                     ? certificateDetail.value.otherProfessionalType
                       ? certificateDetail.value.otherProfessionalType
                       : ""
-                    : certificateDetail.value.professionalTypePrefixes[i]
+                    : certificateDetail.value.licenseProfessions[i]
                         .professionalTypes.name
                 }`
               : ""
@@ -819,23 +820,23 @@ export default {
 
       for (
         let i = 0;
-        i < certificateDetail.value.professionalTypes.length;
+        i < certificateDetail.value.licenseProfessions.length;
         i++
       ) {
         doc.text(
           xPosition.value,
           professionPossition + i * professionListGap,
           `${
-            certificateDetail.value.professionalTypes.length > 1
+            certificateDetail.value.licenseProfessions.length > 1
               ? i + 1 + ". "
               : ""
           }${
-            certificateDetail.value.professionalTypes[i].professionalTypes
+            certificateDetail.value.licenseProfessions[i].professionalTypes
               .amharicProfessionalType
-              ? certificateDetail.value.professionalTypes[i].professionalTypes
+              ? certificateDetail.value.licenseProfessions[i].professionalTypes
                   .amharicProfessionalType === "ሌላ"
                 ? ""
-                : certificateDetail.value.professionalTypes[i].professionalTypes
+                : certificateDetail.value.licenseProfessions[i].professionalTypes
                     .amharicProfessionalType
               : ""
           }`
@@ -883,10 +884,14 @@ export default {
         orientation: "landscape",
         filters: ["ASCIIHexEncode"],
       });
+    
       updateLicenseGenerated();
-      const userImage = certifiedUser.value.photo;
-      if (certificateDetail.value.reviewer.expertLevel.code === "FED") {
+       
+      const userImage = certifiedUser.value.profilePicture?certifiedUser.value.profilePicture:null;
+     
+     if (certificateDetail.value.reviewer.expertLevel.code === "FED") {
         doc.addImage(backgroundImage, "JPG", 0, 0, 298, 213, undefined, "FAST");
+         console.log('here atleast,')
         handleRegionsLayout(doc, "FED", 100, 125, 7);
       } else if (certificateDetail.value.reviewer.region.code === "ORO") {
         doc.addImage(

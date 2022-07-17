@@ -947,6 +947,14 @@ const routes = [
         "../components/Reviewer/HomeComponents/NewLicense/Licensed/licensed.vue"
       ),
   },
+  {
+    path: "/admin/newLicense/evaluate/:id",
+    name: "NewLicenseEvaluate",
+    component: () =>
+      import(
+        "../components/Reviewer/HomeComponents/NewLicense/InReview/inReviewEvaluationModal.vue"
+      ),
+  },
 
   //Admin Renewal Section
   {
@@ -994,7 +1002,7 @@ const routes = [
       import("../components/Reviewer/HomeComponents/Renewal/licensed.vue"),
   },
 
-  //Verifixcation part
+  //Verification part
   {
     path: "/admin/verification",
     name: "AdminVerification",
