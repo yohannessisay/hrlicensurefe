@@ -1016,7 +1016,7 @@ export default {
   },
   async getAdmins() {
     try {
-      const url = baseUrl + "/admins/all";
+      const url = baseUrl + "/admins";
       const resp = await ApiService.get(url);
       return resp;
     } catch (error) {
@@ -1257,7 +1257,7 @@ export default {
   async editNewLicense({ commit }, license) {
     try {
       const resp = await ApiService.put(
-        baseUrl + "/newlicenses/" + license.data.id,
+        baseUrl + "/newlicenses/" + license.data.data.id,
         license
       );
       console.log(resp)

@@ -77,6 +77,12 @@
           <h5 class="ml-8">{{ user.emailAddress }}</h5>
         </div>
       </div>
+            <div class="flex flex-row">
+        <div v-if="personalInfo.employeeId!=null ||personalInfo.employeeId!=''">
+          <label class="ml-8 font-bold text-primary-500">HRA Employee Id</label>
+          <h5 class="ml-8">{{ personalInfo.employeeId }}</h5>
+        </div>
+      </div>
       <div class="mt-12 flex justify-center mb-medium">
         <div>
           <button @click="prevStep" class="mx-auto w-1/2" variant="outline">
@@ -149,6 +155,7 @@ export default {
       maritalStatusId: null,
       maritalStatus: null,
       poBox: null,
+      employeeId:null
     };
     let address = {
       poBox: null,
@@ -181,6 +188,7 @@ export default {
           poBox: personalInfo.poBox,
           photo: personalInfo.photo,
           userId: +localStorage.getItem("userId"),
+          employeeId:personalInfo.employeeId
         })
         .then((response) => {
           if (response.statusText == "Created") {

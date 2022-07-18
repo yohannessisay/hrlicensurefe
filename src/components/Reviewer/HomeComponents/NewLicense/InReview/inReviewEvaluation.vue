@@ -493,10 +493,10 @@
                           </div>
                         </div>
                         <div class="flex justify-start">
-                          <Title message="Professional Type" />
+                         <h2 class="font-bold">Professional Type</h2>
                         </div>
                         <div class="flex flex-row">
-                          <div v-if="newLicense?.professionalTypes?.length > 0">
+                          <div v-if="newLicense?.licenseProfessions?.length > 0">
                             <div class="flex flex-col mb-medium mr-12 ml-8">
                               <div style="background: lightgray; padding: 8px">
                                 <p style="color: blue">
@@ -507,7 +507,7 @@
                               <ul
                                 v-for="(
                                   professionName, index
-                                ) in newLicense.professionalTypes"
+                                ) in newLicense.licenseProfessions"
                                 v-bind:key="professionName.professionalTypeId"
                                 v-bind:value="professionName.professionalTypeId"
                               >
@@ -1253,7 +1253,7 @@ export default {
     let professionalTypes = ref([]);
     let evaluateRoute = ref("/admin/evaluate/NewLicense" + route.params.id);
     const created = async (applicationTypeName, applicationId) => {
-      applicationType.value = applicationTypeName;
+      applicationType.value = "New License";
 
       store
         .dispatch("reviewer/getNewLicenseApplication", applicationId)
@@ -1307,7 +1307,7 @@ export default {
           }
         });
 
-      applicationType.value = route.params.applicationType;
+      applicationType.value = "New License";
     };
     const fetchDocumentTypes = async () => {
       store.dispatch("reviewer/getDocumentTypes").then((res) => {
@@ -1622,6 +1622,7 @@ export default {
         applicationType.value == "New License" &&
         sendDeclinedData.value == true
       ) {
+        console.log(req)
         store
           .dispatch("reviewer/editNewLicense", req)
           .then((res) => {

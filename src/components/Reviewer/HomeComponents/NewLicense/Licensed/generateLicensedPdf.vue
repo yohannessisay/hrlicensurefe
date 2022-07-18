@@ -228,13 +228,10 @@
                                 <div class="flex">
                                   <div class="flex flex-col w-1/2 mr-12">
                                     <h3 class="underline ml-4">
-
-                                      <b
-                                      v-if="modalData.profile"
+                                      <b v-if="modalData.profile"
                                         >{{
                                           modalData.profile.alternativeName
-                                            ? modalData.profile
-                                                .alternativeName
+                                            ? modalData.profile.alternativeName
                                             : ""
                                         }}
                                         {{
@@ -283,7 +280,7 @@
                                     <h4>
                                       ተገቢውን መስፈርት አሟልተው ስለተገኙ ሚኒስቴር መስሪያ ቤቱ
                                     </h4>
-                                 
+
                                     <h4 v-if="modalData.professionalTypes">
                                       <div
                                         v-for="professions in modalData.professionalTypes"
@@ -367,12 +364,11 @@
                                             : ""
                                         }}
                                         -{{
-                                          modalData
-                                            .licenseExpirationDate !== null
+                                          modalData.licenseExpirationDate !==
+                                          null
                                             ? toEthiopian(
                                                 moment(
-                                                  modalData
-                                                    .licenseExpirationDate
+                                                  modalData.licenseExpirationDate
                                                 )._d.toISOString(),
                                                 false
                                               )
@@ -397,8 +393,7 @@
                                         {{
                                           modalData.licenseExpirationDate
                                             ? moment(
-                                                modalData
-                                                  .licenseExpirationDate
+                                                modalData.licenseExpirationDate
                                               ).format("MMM DD, YYYY")
                                             : " Not specified"
                                         }}</b
@@ -527,7 +522,7 @@ import addisAbabaCertificateBackground from "../../../../../assets/A_A_Certifica
 import AmharicFont from "../../../Configurations/amharicFont.js";
 import { toEthiopian } from "../../../Configurations/dateConvertor";
 import STATIC_CERTIFICATE_URL from "../../../../../sharedComponents/constants/message.js";
-import toast from "toast-me";
+import { useToast } from "vue-toastification";
 import moment from "moment";
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
@@ -543,6 +538,7 @@ export default {
   components: { Title, Loading },
   setup(props) {
     const store = useStore();
+    const toast = useToast();
     const showGenerateModal = ref(true);
     let show = ref(false);
     let certifiedUser = ref({});
@@ -577,17 +573,25 @@ export default {
     };
 
     const editApplication = (req) => {
+      console.log(req)
       store
         .dispatch("reviewer/editNewLicense", req)
         .then((res) => {
           isLoading.value = false;
           if (res.statusText == "Created") {
             showGenerateModal.value = false;
+            toast.success("Done", {
+              timeout: 5000,
+            });
           } else {
             showGenerateModal.value = false;
-            toast("Certificate Generated Successfully.", {
-              duration: 3000,
-              position: "bottom",
+
+            toast.error(res.data.message, {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
             });
           }
         })
@@ -600,7 +604,7 @@ export default {
       const staticUrl = STATIC_CERTIFICATE_URL;
       const userId = props.modalData.profile.id;
       const applicationId = props.modalData.data.id;
-      const applicationType = "NewLicense"
+      const applicationType = "NewLicense";
 
       const qrParam = { url: null };
 
@@ -663,7 +667,6 @@ export default {
       let changeWidth = ref(false);
       let changeWidthTooSmall = ref(false);
       let xPosition = ref(185);
-      console.log(certificateDetail.value)
       for (
         let i = 0;
         i < certificateDetail.value.licenseProfessions.length;
@@ -674,8 +677,7 @@ export default {
             ? certificateDetail.value.licenseProfessions[i].prefix
             : ""
         }  ${
-          certificateDetail.value.licenseProfessions[i].professionalTypes
-            .name
+          certificateDetail.value.licenseProfessions[i].professionalTypes.name
         }`;
         let getLength = doc.getTextWidth(professionPrefix);
         if (getLength > 125 && getLength <= 132) {
@@ -710,13 +712,11 @@ export default {
               ? i + 1 + ". "
               : ""
           }${
-            certificateDetail.value.licenseProfessions[i]
-              .professionalTypes.name
+            certificateDetail.value.licenseProfessions[i].professionalTypes.name
               ? `${
                   certificateDetail.value.licenseProfessions[i].prefix
                     ? "(" +
-                      certificateDetail.value.licenseProfessions[i]
-                        .prefix +
+                      certificateDetail.value.licenseProfessions[i].prefix +
                       ")"
                     : ""
                 }   ${
@@ -836,8 +836,8 @@ export default {
               ? certificateDetail.value.licenseProfessions[i].professionalTypes
                   .amharicProfessionalType === "ሌላ"
                 ? ""
-                : certificateDetail.value.licenseProfessions[i].professionalTypes
-                    .amharicProfessionalType
+                : certificateDetail.value.licenseProfessions[i]
+                    .professionalTypes.amharicProfessionalType
               : ""
           }`
         );
@@ -884,12 +884,14 @@ export default {
         orientation: "landscape",
         filters: ["ASCIIHexEncode"],
       });
-    
+
       updateLicenseGenerated();
-       
-      const userImage = certifiedUser.value.profilePicture?certifiedUser.value.profilePicture:null;
-     
-     if (certificateDetail.value.reviewer.expertLevel.code === "FED") {
+
+      const userImage = certifiedUser.value.profilePicture
+        ? certifiedUser.value.profilePicture
+        : null;
+
+      if (certificateDetail.value.reviewer.expertLevel.code === "FED") {
         doc.addImage(backgroundImage, "JPG", 0, 0, 298, 213, undefined, "FAST");
 
         handleRegionsLayout(doc, "FED", 100, 125, 7);
