@@ -567,7 +567,7 @@ export default {
 
     const updateLicenseGenerated = () => {
       let req = {
-        data: { ...props.modalData, isLicenseGenerated: true },
+        data: { ...props.modalData, isLicenseGenerated: true},
       };
       editApplication(req);
     };
