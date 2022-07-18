@@ -3,7 +3,7 @@
   <reviewer-side-nav />
   <!-- Sidebar -->
 
-  <section class="home-section">
+  <section class="home-section ">
     <!-- Header -->
     <reviewer-nav-bar>
       <h2 class="dashboard">Evaluate</h2>
@@ -11,9 +11,10 @@
     <!-- Header -->
 
     <!-- Main Content -->
-    <div class="home-content">
-      <div class="container mx-auto px-4 sm:px-4">
-        <div class="rounded-lg overflow-hidden bg-primary-800 w-full shadow-md">
+    <div class="home-content ">
+      <div class="container mx-auto px-4 sm:px-4 mb-12 ">
+       
+ <div class="rounded-lg  bg-primary-800 w-full shadow-md ">
           <h2 class="text-white ml-4">
             Evaluating
             {{
@@ -29,14 +30,15 @@
             }}
             's License
           </h2>
-          <div class="bg-white w-full">
+          <div class=" w-full ">
             <div class="box-shadow-pop bg-lightGrey-100">
-              <div class="flex mb-large mt-medium justify-center">
+              <div class="flex  justify-center">
                 <div
                   class="
                     w-64
                     h-40
                     mt-8
+                    ml-8
                     shadow-lg
                     container
                     box-shadow-pop
@@ -154,6 +156,7 @@
                     w-64
                     h-40
                     mt-8
+                    mr-8
                     shadow-lg
                     container
                     box-shadow-pop
@@ -748,6 +751,9 @@
                               "
                               v-bind:src="googleApi + '' + docs[index].filePath"
                             />
+                            <div style="width: 400px">
+                            
+                            </div>
                           </div>
                         </picture>
                       </div>
@@ -1105,6 +1111,8 @@
             </div>
           </div>
         </div>
+
+
       </div>
     </div>
     <!-- Main Content -->
@@ -1569,8 +1577,6 @@ export default {
           setTimeout(() => {
             showProfessionChangeError.value = false;
           }, 4000);
-          // professionalTypeIdss.value = [];
-          // professionalTypePrefixes.value = [];
           showActionLoading.value = false;
           showLoadingButtons.value = false;
           return;

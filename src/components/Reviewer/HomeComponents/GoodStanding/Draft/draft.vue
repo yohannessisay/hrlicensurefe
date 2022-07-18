@@ -6,7 +6,7 @@
   <section class="home-section">
     <!-- Header -->
     <reviewer-nav-bar>
-      <h2 class="dashboard">In Review</h2>
+      <h2 class="dashboard">Draft</h2>
     </reviewer-nav-bar>
     <!-- Header -->
 
@@ -18,7 +18,7 @@
             <div class="py-8">
               <div>
                 <h2 class="text-2xl font-semibold leading-tight">
-                  Applications in Review Assigned To You
+                  Applications in Draft Assigned To You
                 </h2>
               </div>
               <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
@@ -42,6 +42,7 @@
                     @is-finished="tableLoadingFinish"
                     @row-clicked="rowClicked"
                   ></vue-table-lite>
+
                   <edit-modal
                     v-if="showModal"
                     :modalDataId="modalDataId"
@@ -58,7 +59,7 @@
             <div class="py-8">
               <div>
                 <h2 class="text-2xl font-semibold leading-tight">
-                  Applications in Review Assigned To Others
+                  Applications in Draft Assigned To Others
                 </h2>
               </div>
               <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
@@ -79,13 +80,14 @@
                     :rows="toOthersTable.rows"
                     :total="toOthersTable.totalRecordCount"
                     :sortable="toOthersTable.sortable"
-                    @is-finished="tableLoadingFinishOthers"
+                    @is-finished="tableLoadingFinish"
                     @row-clicked="rowClickedOthers"
                   ></vue-table-lite>
 
                   <edit-modal-others
                     v-if="showModal"
                     :modalDataIdOthers="modalDataIdOthers"
+                    :reviewers="reviewers"
                   >
                   </edit-modal-others>
                 </div>
@@ -102,14 +104,14 @@
 <script>
 import ReviewerSideNav from "../SharedComponents/sideNav.vue";
 import ReviewerNavBar from "../SharedComponents/navBar.vue";
-import NewLicenseMainContent from "../../../ApplicationTypes/NewLicense/MainComponents/inReview.vue";
+import NewLicenseMainContent from "../../../ApplicationTypes/NewLicense/MainComponents/draft.vue";
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
 
 import applicationStatus from "../../../Configurations/getApplicationStatus.js";
 import VueTableLite from "vue3-table-lite";
-import editModal from "./inReviewModal.vue";
-import editModalOthers from "./inReviewOthersModal.vue";
+import editModal from "./draftModal.vue";
+import editModalOthers from "./draftOthersModal.vue";
 
 export default {
   name: "home",
@@ -125,6 +127,10 @@ export default {
     const store = useStore();
     const showModal = ref(true);
     const adminId = +localStorage.getItem("adminId");
+    const reviewers = ref([]);
+    let nothingToShow = ref(false);
+    let loading = ref(false);
+
     let modalDataId = ref({
       id: "",
       change: 0,
@@ -133,6 +139,7 @@ export default {
       id: "",
       change: 0,
     });
+
     let allInfo = ref({
       alreadyPushed: false,
       searchByInput: false,
@@ -145,7 +152,6 @@ export default {
       searchUpToDate: "",
       app_type: "",
     });
-    const reviewers = ref([]);
 
     const toOthersTable = ref({});
     const toYouTable = ref({});
@@ -157,20 +163,23 @@ export default {
     toYouTable.value = {
       isLoading: true,
     };
-    const inReviewAssignedToOthers = () => {
-      applicationStatus(store, "IRV").then((res) => {
+    const draftAssignedToOthers = () => {
+      loading.value = true;
+      applicationStatus(store, "REVDRA").then((res) => {
         let statusId = res;
         let adminStatus = [statusId, adminId];
 
         store
           .dispatch(
-            "reviewerNewLicense/getNewLicenseOthersOnReview",
+            "reviewerNewLicense/getNewLicenseOthersUnfinished",
             adminStatus
           )
           .then((res) => {
+            loading.value = false;
+
             allInfo.value.assignApplication =
               store.getters[
-                "reviewerNewLicense/getNewLicenseOthersOnReviewSearched"
+                "reviewerNewLicense/getNewLicenseOthersUnfinishedSearched"
               ];
 
             for (let applicant in allInfo.value.assignApplication) {
@@ -182,21 +191,28 @@ export default {
                   allInfo.value.assignApplication[applicant].applicantType;
               }
             }
+            if (
+              store.getters[
+                "reviewerNewLicense/getNewLicenseOthersUnfinishedSearched"
+              ].length === 0
+            ) {
+              nothingToShow.value = true;
+            }
 
             JSON.parse(JSON.stringify(allInfo.value.assignApplication)).forEach(
               (element) => {
                 tableData.value.push({
                   id: element.id,
                   ApplicantName:
-                    (element.profile ? element.profile.name : "------") +
+                    (element.profile.name ? element.profile.name : "-----") +
                     " " +
                     (element.profile.fatherName
                       ? element.profile.fatherName
-                      : "------") +
+                      : "-----") +
                     " " +
                     (element.profile.grandFatherName
                       ? element.profile.grandFatherName
-                      : "------"),
+                      : "-----"),
                   ApplicationType: element.applicationType.name,
                   Date: new Date(element.createdAt)
                     .toJSON()
@@ -208,6 +224,7 @@ export default {
             );
 
             toOthersTable.value = {
+              isLoading: false,
               columns: [
                 {
                   label: "ID",
@@ -260,16 +277,20 @@ export default {
       });
     };
 
-    const inReviewAssignedToYou = () => {
-      applicationStatus(store, "IRV").then((res) => {
+    const draftAssignedToYou = () => {
+      loading.value = true;
+      applicationStatus(store, "REVDRA").then((res) => {
         let statusId = res;
         let adminStatus = [statusId, adminId];
-
         store
-          .dispatch("reviewerNewLicense/getNewLicenseOnReview", adminStatus)
-          .then(() => {
+          .dispatch("reviewerNewLicense/getNewLicenseUnfinished", adminStatus)
+          .then((res) => {
+            loading.value = false;
+
             allInfo.value.assignApplication =
-              store.getters["reviewerNewLicense/getNewLicenseOnReviewSearched"];
+              store.getters[
+                "reviewerNewLicense/getNewLicenseUnfinishedSearched"
+              ];
 
             for (let applicant in allInfo.value.assignApplication) {
               if (
@@ -280,20 +301,28 @@ export default {
                   allInfo.value.assignApplication[applicant].applicantType;
               }
             }
+            if (
+              store.getters[
+                "reviewerNewLicense/getNewLicenseUnfinishedSearched"
+              ].length === 0
+            ) {
+              nothingToShow.value = true;
+            }
+
             JSON.parse(JSON.stringify(allInfo.value.assignApplication)).forEach(
               (element) => {
                 toYouTableData.value.push({
                   id: element.id,
                   ApplicantName:
-                    (element.profile ? element.profile.name : "------") +
+                    (element.profile.name ? element.profile.name : "-----") +
                     " " +
                     (element.profile.fatherName
                       ? element.profile.fatherName
-                      : "------") +
+                      : "-----") +
                     " " +
                     (element.profile.grandFatherName
                       ? element.profile.grandFatherName
-                      : "------"),
+                      : "-----"),
                   ApplicationType: element.applicationType.name,
                   Date: new Date(element.createdAt)
                     .toJSON()
@@ -305,6 +334,7 @@ export default {
             );
 
             toYouTable.value = {
+              isLoading: false,
               columns: [
                 {
                   label: "ID",
@@ -367,89 +397,64 @@ export default {
       });
       toYouTable.value.isLoading = false;
     };
+
     const tableLoadingFinishOthers = () => {
-      let elementOthers = document.getElementsByClassName("edit-btn-others");
-      Array.prototype.forEach.call(elementOthers, function (element) {
-        if (element.classList.contains("edit-btn-others")) {
-          element.addEventListener("click", rowClickedOthers());
+      let elements = document.getElementsByClassName("edit-btn-others");
+
+      Array.prototype.forEach.call(elements, function (element) {
+        if (element.classList.contains("edit-btn")) {
+          element.addEventListener("click", rowClicked());
         }
       });
       toOthersTable.value.isLoading = false;
     };
+
     const rowClicked = (row) => {
       if (row != undefined) {
         store.dispatch("reviewer/getAdmins").then((res) => {
-          console.log(res)
-          reviewers.value = res?.data?.data.filter((e) => {
+          reviewers.value = res.data.data.filter((e) => {
             return e.role.code !== "UM";
           });
         });
-
         row = JSON.parse(JSON.stringify(row));
-        modalDataId.value.id = row.id ? row.id : "-----";
+        modalDataId.value.id = row.id ? row.id : "------";
         modalDataId.value.change++;
       }
     };
     const rowClickedOthers = (row) => {
       if (row != undefined) {
+        store.dispatch("reviewer/getAdmins").then((res) => {
+          reviewers.value = res.data.data.filter((e) => {
+            return e.role.code !== "UM";
+          });
+        });
         row = JSON.parse(JSON.stringify(row));
-        modalDataIdOthers.value.id = row.id ? row.id : "-----";
+        modalDataIdOthers.value.id = row.id ? row.id : "------";
         modalDataIdOthers.value.change++;
       }
     };
     onMounted(() => {
-      inReviewAssignedToYou();
-      inReviewAssignedToOthers();
+      draftAssignedToYou();
+      draftAssignedToOthers();
     });
 
     return {
+      nothingToShow,
       allInfo,
+      loading,
       toOthersTable,
       toYouTable,
       showModal,
-      reviewers,
       tableLoadingFinish,
-      inReviewAssignedToOthers,
-      tableLoadingFinishOthers,
+      draftAssignedToOthers,
+      draftAssignedToYou,
       rowClicked,
       rowClickedOthers,
       modalDataId,
       modalDataIdOthers,
+      reviewers,
+      tableLoadingFinishOthers,
     };
   },
 };
 </script>
-<style scoped>
-/* Apply these for table */
-::v-deep(.vtl-table .vtl-thead .vtl-thead-th) {
-  color: #fff;
-  background-color: #0d3552;
-  border-color: #0d3552;
-}
-::v-deep(.vtl-table td),
-::v-deep(.vtl-table tr) {
-  border: none;
-}
-::v-deep(.vtl-paging-info) {
-  color: rgb(25, 155, 230);
-}
-::v-deep(.vtl-paging-count-label),
-::v-deep(.vtl-paging-page-label) {
-  margin-right: 10px;
-  margin-left: 10px;
-  color: rgb(25, 155, 230);
-}
-::v-deep(.vtl-paging-pagination-page-link) {
-  border: none;
-}
-::v-deep(.vtl-paging-count-dropdown) {
-  margin-right: 10px;
-  margin-left: 10px;
-  color: rgb(0, 0, 0);
-}
-
-::v-deep(.vtl-tbody-tr) {
-  border-bottom: 1px solid rgb(128, 128, 128) !important;
-  padding: 5px !important;
-}
-</style>

@@ -6,7 +6,7 @@
   <section class="home-section">
     <!-- Header -->
     <reviewer-nav-bar>
-      <h2 class="dashboard">In Review</h2>
+      <h2 class="dashboard">Approved</h2>
     </reviewer-nav-bar>
     <!-- Header -->
 
@@ -18,7 +18,7 @@
             <div class="py-8">
               <div>
                 <h2 class="text-2xl font-semibold leading-tight">
-                  Applications in Review Assigned To You
+                  Applications Approved By You
                 </h2>
               </div>
               <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
@@ -42,11 +42,7 @@
                     @is-finished="tableLoadingFinish"
                     @row-clicked="rowClicked"
                   ></vue-table-lite>
-                  <edit-modal
-                    v-if="showModal"
-                    :modalDataId="modalDataId"
-                    :reviewers="reviewers"
-                  >
+                  <edit-modal v-if="showModal" :modalDataId="modalDataId">
                   </edit-modal>
                 </div>
               </div>
@@ -58,7 +54,7 @@
             <div class="py-8">
               <div>
                 <h2 class="text-2xl font-semibold leading-tight">
-                  Applications in Review Assigned To Others
+                  Applications Approved By Others
                 </h2>
               </div>
               <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
@@ -82,12 +78,7 @@
                     @is-finished="tableLoadingFinishOthers"
                     @row-clicked="rowClickedOthers"
                   ></vue-table-lite>
-
-                  <edit-modal-others
-                    v-if="showModal"
-                    :modalDataIdOthers="modalDataIdOthers"
-                  >
-                  </edit-modal-others>
+                  <edit-modal-others :modalDataIdOthers="modalDataIdOthers"></edit-modal-others>
                 </div>
               </div>
             </div>
@@ -108,8 +99,8 @@ import { useStore } from "vuex";
 
 import applicationStatus from "../../../Configurations/getApplicationStatus.js";
 import VueTableLite from "vue3-table-lite";
-import editModal from "./inReviewModal.vue";
-import editModalOthers from "./inReviewOthersModal.vue";
+import editModal from "./approvedModal.vue";
+import editModalOthers from "./approvedModalOthers.vue"
 
 export default {
   name: "home",
@@ -119,20 +110,23 @@ export default {
     NewLicenseMainContent,
     VueTableLite,
     editModal,
-    editModalOthers,
+    editModalOthers
   },
   setup() {
     const store = useStore();
     const showModal = ref(true);
     const adminId = +localStorage.getItem("adminId");
+
+
     let modalDataId = ref({
       id: "",
       change: 0,
     });
-    let modalDataIdOthers = ref({
+       let modalDataIdOthers = ref({
       id: "",
       change: 0,
     });
+
     let allInfo = ref({
       alreadyPushed: false,
       searchByInput: false,
@@ -145,7 +139,6 @@ export default {
       searchUpToDate: "",
       app_type: "",
     });
-    const reviewers = ref([]);
 
     const toOthersTable = ref({});
     const toYouTable = ref({});
@@ -157,20 +150,17 @@ export default {
     toYouTable.value = {
       isLoading: true,
     };
-    const inReviewAssignedToOthers = () => {
-      applicationStatus(store, "IRV").then((res) => {
+    const approvedByOthers = () => {
+      applicationStatus(store, "APP").then((res) => {
         let statusId = res;
         let adminStatus = [statusId, adminId];
 
         store
-          .dispatch(
-            "reviewerNewLicense/getNewLicenseOthersOnReview",
-            adminStatus
-          )
-          .then((res) => {
+          .dispatch("reviewerNewLicense/getNewLicenseAllApproved", adminStatus)
+          .then(() => {
             allInfo.value.assignApplication =
               store.getters[
-                "reviewerNewLicense/getNewLicenseOthersOnReviewSearched"
+                "reviewerNewLicense/getNewLicenseAllApprovedSearched"
               ];
 
             for (let applicant in allInfo.value.assignApplication) {
@@ -188,16 +178,16 @@ export default {
                 tableData.value.push({
                   id: element.id,
                   ApplicantName:
-                    (element.profile ? element.profile.name : "------") +
+                    (element.profile.name ? element.profile.name : "-----") +
                     " " +
                     (element.profile.fatherName
                       ? element.profile.fatherName
-                      : "------") +
+                      : "-----") +
                     " " +
                     (element.profile.grandFatherName
                       ? element.profile.grandFatherName
-                      : "------"),
-                  ApplicationType: element.applicationType.name,
+                      : "-----"),
+                            ApplicationType: element.applicationType.name,
                   Date: new Date(element.createdAt)
                     .toJSON()
                     .slice(0, 10)
@@ -208,6 +198,7 @@ export default {
             );
 
             toOthersTable.value = {
+              isLoading: false,
               columns: [
                 {
                   label: "ID",
@@ -260,16 +251,16 @@ export default {
       });
     };
 
-    const inReviewAssignedToYou = () => {
-      applicationStatus(store, "IRV").then((res) => {
+    const approvedByYou = () => {
+      applicationStatus(store, "APP").then((res) => {
         let statusId = res;
         let adminStatus = [statusId, adminId];
 
         store
-          .dispatch("reviewerNewLicense/getNewLicenseOnReview", adminStatus)
-          .then(() => {
+          .dispatch("reviewerNewLicense/getNewLicenseApproved", adminStatus)
+          .then((res) => {
             allInfo.value.assignApplication =
-              store.getters["reviewerNewLicense/getNewLicenseOnReviewSearched"];
+              store.getters["reviewerNewLicense/getNewLicenseApprovedSearched"];
 
             for (let applicant in allInfo.value.assignApplication) {
               if (
@@ -280,20 +271,21 @@ export default {
                   allInfo.value.assignApplication[applicant].applicantType;
               }
             }
+
             JSON.parse(JSON.stringify(allInfo.value.assignApplication)).forEach(
               (element) => {
                 toYouTableData.value.push({
                   id: element.id,
                   ApplicantName:
-                    (element.profile ? element.profile.name : "------") +
+                    (element.profile.name ? element.profile.name : "-----") +
                     " " +
                     (element.profile.fatherName
                       ? element.profile.fatherName
-                      : "------") +
+                      : "-----") +
                     " " +
                     (element.profile.grandFatherName
                       ? element.profile.grandFatherName
-                      : "------"),
+                      : "-----"),
                   ApplicationType: element.applicationType.name,
                   Date: new Date(element.createdAt)
                     .toJSON()
@@ -305,6 +297,7 @@ export default {
             );
 
             toYouTable.value = {
+              isLoading: false,
               columns: [
                 {
                   label: "ID",
@@ -358,6 +351,8 @@ export default {
     };
 
     const tableLoadingFinish = () => {
+      toOthersTable.value.isLoading = false;
+      toYouTable.value.isLoading = false;
       let elements = document.getElementsByClassName("edit-btn");
 
       Array.prototype.forEach.call(elements, function (element) {
@@ -365,11 +360,12 @@ export default {
           element.addEventListener("click", rowClicked());
         }
       });
-      toYouTable.value.isLoading = false;
     };
+
     const tableLoadingFinishOthers = () => {
-      let elementOthers = document.getElementsByClassName("edit-btn-others");
-      Array.prototype.forEach.call(elementOthers, function (element) {
+      let elements = document.getElementsByClassName("edit-btn-others");
+
+      Array.prototype.forEach.call(elements, function (element) {
         if (element.classList.contains("edit-btn-others")) {
           element.addEventListener("click", rowClickedOthers());
         }
@@ -378,28 +374,22 @@ export default {
     };
     const rowClicked = (row) => {
       if (row != undefined) {
-        store.dispatch("reviewer/getAdmins").then((res) => {
-          console.log(res)
-          reviewers.value = res?.data?.data.filter((e) => {
-            return e.role.code !== "UM";
-          });
-        });
-
         row = JSON.parse(JSON.stringify(row));
-        modalDataId.value.id = row.id ? row.id : "-----";
+        modalDataId.value.id = row.id ? row.id : "------";
         modalDataId.value.change++;
       }
     };
     const rowClickedOthers = (row) => {
       if (row != undefined) {
         row = JSON.parse(JSON.stringify(row));
-        modalDataIdOthers.value.id = row.id ? row.id : "-----";
+
+        modalDataIdOthers.value.id = row.id ? row.id : "------";
         modalDataIdOthers.value.change++;
       }
     };
     onMounted(() => {
-      inReviewAssignedToYou();
-      inReviewAssignedToOthers();
+      approvedByYou();
+      approvedByOthers();
     });
 
     return {
@@ -407,49 +397,15 @@ export default {
       toOthersTable,
       toYouTable,
       showModal,
-      reviewers,
       tableLoadingFinish,
-      inReviewAssignedToOthers,
-      tableLoadingFinishOthers,
+      approvedByOthers,
       rowClicked,
-      rowClickedOthers,
       modalDataId,
+      rowClickedOthers,
       modalDataIdOthers,
+      tableLoadingFinishOthers,
     };
   },
 };
 </script>
-<style scoped>
-/* Apply these for table */
-::v-deep(.vtl-table .vtl-thead .vtl-thead-th) {
-  color: #fff;
-  background-color: #0d3552;
-  border-color: #0d3552;
-}
-::v-deep(.vtl-table td),
-::v-deep(.vtl-table tr) {
-  border: none;
-}
-::v-deep(.vtl-paging-info) {
-  color: rgb(25, 155, 230);
-}
-::v-deep(.vtl-paging-count-label),
-::v-deep(.vtl-paging-page-label) {
-  margin-right: 10px;
-  margin-left: 10px;
-  color: rgb(25, 155, 230);
-}
-::v-deep(.vtl-paging-pagination-page-link) {
-  border: none;
-}
-::v-deep(.vtl-paging-count-dropdown) {
-  margin-right: 10px;
-  margin-left: 10px;
-  color: rgb(0, 0, 0);
-}
 
-::v-deep(.vtl-tbody-tr) {
-  border-bottom: 1px solid rgb(128, 128, 128) !important;
-  padding: 5px !important;
-}
-</style>

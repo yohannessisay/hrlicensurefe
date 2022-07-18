@@ -42,30 +42,31 @@
           text-current
         "
       >
-        <div
-          class="
-            modal-header
-            flex flex-shrink-0
-            items-center
-            justify-between
-            p-2
-            rounded-t-md
-          "
-        >
-          <button
-            type="button"
-            class="btn-close border-none rounded-lg hover:text-primary-400"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
-        </div>
-        <div class="vld-parent mt-4">
+        <div class="vld-parent">
           <loading
             :active="isLoadingStart"
             :is-full-page="false"
             :color="'#2F639D'"
-            :opacity="1"
+            :opacity="0.7"
           ></loading>
+          <div
+            class="
+              modal-header
+              flex flex-shrink-0
+              items-center
+              justify-between
+              p-2
+              rounded-t-md
+            "
+          >
+            <button
+              type="button"
+              class="btn-close border-none rounded-lg hover:text-primary-400"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+
           <div class="modal-body relative p-4">
             <div class="container px-6 mx-auto">
               <section class="text-gray-800">
@@ -220,34 +221,8 @@
                                 >
                                   Users
                                 </label>
-                              
-                              </div>
-                              <label class="block text-left">
                                 <div>
-                                  <div class="w-full relative">
-                                    <div
-                                      class="
-                                        mt-1
-                                        ml-1
-                                        relative
-                                        border border-gray-300
-                                        overflow-hidden
-                                        rounded-md
-                                        shadow-sm
-                                      "
-                                    >
-                                      <input
-                                        id="email"
-                                        @keyup="showOptions = true"
-                                        v-model="reviewer.name"
-                                        class="w-full px-3 py-3"
-                                        style="border: none"
-                                        autocomplete="off"
-                                        placeholder="Select reviewer by typing a name"
-                                      />
-                                    </div>
-                                    <div>
-                                       <button
+                                  <button
                                     class="
                                       inline-block
                                       px-6
@@ -274,6 +249,31 @@
                                   >
                                     Transfer
                                   </button>
+                                </div>
+                              </div>
+                              <label class="block text-left">
+                                <div>
+                                  <div class="w-full relative">
+                                    <div
+                                      class="
+                                        mt-1
+                                        ml-1
+                                        relative
+                                        border border-gray-300
+                                        overflow-hidden
+                                        rounded-md
+                                        shadow-sm
+                                      "
+                                    >
+                                      <input
+                                        id="email"
+                                        @keyup="showOptions = true"
+                                        v-model="reviewer.name"
+                                        class="w-full px-3 py-3"
+                                        style="border: none"
+                                        autocomplete="off"
+                                        placeholder="Select reviewer by typing a name"
+                                      />
                                     </div>
                                     <div
                                       v-show="
@@ -436,11 +436,10 @@
             rounded-b-md
           "
         >
-        <a :href="'/admin/newLicense/evaluate/'+licenseId">
           <button
             type="button"
             class="
-          inline-block
+              inline-block
               px-6
               text-white
               font-medium
@@ -448,6 +447,7 @@
               leading-tight
               uppercase
               rounded
+              ml-4
               shadow-lg
               hover:bg-purple-700 hover:shadow-lg
               focus:bg-purple-700
@@ -459,11 +459,10 @@
               duration-150
               ease-in-out
             "
-          
+            data-bs-dismiss="modal"
           >
-          Evaluate
+            Continue Evaluating
           </button>
-          </a>
           <button
             type="button"
             class="
@@ -494,18 +493,16 @@
       </div>
     </div>
   </div>
-
 </template>
 
 <script>
 import { useStore } from "vuex";
-import { ref, onMounted, watch,computed } from "vue";
+import { ref, onMounted, watch } from "vue";
 import moment from "moment";
 import toast from "toast-me";
 import Loading from "vue3-loading-overlay";
 // Import stylesheet
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
-
 
 export default {
   props: ["modalDataId", "reviewers"],
@@ -523,7 +520,7 @@ export default {
     let showOptions = ref(false);
     let reviewer = ref({ id: "", name: "", expertLevel: "", role: "" });
     let adminId = +localStorage.getItem("adminId");
-    const licenseId=computed(()=>props.modalDataId.id);
+
     let transfer = ref({
       reviewerId: "",
       licenseId: "",
@@ -533,7 +530,7 @@ export default {
     let isLoading = ref(false);
     const isLoadingStart = ref(true);
     const fullPage = ref(false);
-    const evaluationData = ref({});
+
     let reviewerAdminId = ref(0);
 
     const fetchRole = (id) => {
@@ -626,7 +623,6 @@ export default {
     watch(props.modalDataId, () => {
       isLoadingStart.value = true;
       check();
-
     });
     const modalData = ref({});
     let result;
@@ -638,7 +634,6 @@ export default {
         .then((res) => {
           if (res.data.status == "Success") {
             result = res.data.data;
-            evaluationData.value = result;
             modalData.value.name =
               result.profile.name +
               " " +
@@ -668,7 +663,7 @@ export default {
               : "-----";
             modalData.value.instType = result.education.institution
               ?.institutionType
-              ? result.education.institution?.institutionType
+              ? result.education.institution?.institutionType.name
               : "-----";
             modalData.value.department = result.education.department.name
               ? result.education?.department.name
@@ -699,10 +694,8 @@ export default {
       resultQuery,
       isLoading,
       isLoadingStart,
-      licenseId,
       fullPage,
       modalData,
-      evaluationData,
       transferReviewer,
       onCancel,
     };

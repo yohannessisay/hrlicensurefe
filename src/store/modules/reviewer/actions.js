@@ -1016,7 +1016,7 @@ export default {
   },
   async getAdmins() {
     try {
-      const url = baseUrl + "/admins";
+      const url = baseUrl + "/admins/all";
       const resp = await ApiService.get(url);
       return resp;
     } catch (error) {
@@ -1048,7 +1048,9 @@ export default {
         baseUrl + "/licenseReviewers/assign",
         assign
       );
+      
       return resp;
+      
     } catch (error) {
       return error;
     }

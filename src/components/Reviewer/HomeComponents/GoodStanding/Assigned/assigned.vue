@@ -108,8 +108,8 @@ import { useStore } from "vuex";
 
 import applicationStatus from "../../../Configurations/getApplicationStatus.js";
 import VueTableLite from "vue3-table-lite";
-import editModal from "./inReviewModal.vue";
-import editModalOthers from "./inReviewOthersModal.vue";
+import editModal from "./assignedModal.vue";
+import editModalOthers from "./assignedOthersModal.vue";
 
 export default {
   name: "home",

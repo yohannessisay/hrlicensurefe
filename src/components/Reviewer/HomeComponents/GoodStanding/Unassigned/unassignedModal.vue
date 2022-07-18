@@ -74,7 +74,7 @@
                     <h2 class="text-2xl font-bold mb-8 px-6">
                       Showing
                       <span class="text-2xl font-bold px-6">
-                        {{ modalData.name }}
+                        {{ modalData.name ? modalData.name : "" }}
                       </span>
                       's License Data
                     </h2>
@@ -83,7 +83,9 @@
                 <div class="vld-parent">
                   <loading
                     :active="isLoading"
-                    :is-full-page="false"
+                    :can-cancel="true"
+                    :on-cancel="onCancel"
+                    :is-full-page="fullPage"
                     :color="'#2F639D'"
                     :opacity="0.7"
                   ></loading>
@@ -137,21 +139,25 @@
                                   "
                                   >Full Name:</span
                                 >
-                                {{ modalData.name }}
+                                {{ modalData.name ? modalData.name : "" }}
                               </p>
                               <p class="text-gray-500">
                                 <span
                                   class="font-semibold text-primary-700 mb-1"
                                   >Gender:</span
                                 >
-                                {{ modalData.gender }}
+                                {{ modalData.gender ? modalData.gender : "" }}
                               </p>
                               <p class="text-gray-500">
                                 <span
                                   class="font-semibold text-primary-700 mb-1"
                                   >Nationality:</span
                                 >
-                                {{ modalData.nationality }}
+                                {{
+                                  modalData.nationality
+                                    ? modalData.nationality
+                                    : ""
+                                }}
                               </p>
                               <p class="text-gray-500">
                                 <span
@@ -161,7 +167,7 @@
                                 {{
                                   modalData.dateOfBirth
                                     ? modalData.dateOfBirth.slice(0, 10)
-                                    : "-----"
+                                    : ""
                                 }}
                               </p>
                               <p class="text-gray-500">
@@ -169,7 +175,11 @@
                                   class="font-semibold text-primary-700 mb-1"
                                   >Martial Status:</span
                                 >
-                                {{ modalData.martialStatus }}
+                                {{
+                                  modalData.martialStatus
+                                    ? modalData.martialStatus
+                                    : ""
+                                }}
                               </p>
                             </div>
                           </div>
@@ -200,11 +210,11 @@
                                   justify-center
                                 "
                               >
-                                <i class="fa fa-right-left fa-4x"></i>
+                                <i class="fa fa-link fa-4x"></i>
                               </div>
                             </div>
                             <div class="grow ml-6">
-                              <h2 class="font-bold mb-1">Transfer To</h2>
+                              <h2 class="font-bold mb-1">Assign To</h2>
 
                               <div class="flex items-center">
                                 <label
@@ -220,7 +230,35 @@
                                 >
                                   Users
                                 </label>
-                              
+                                <div>
+                                  <button
+                                    class="
+                                      inline-block
+                                      px-6
+                                      py-2.5
+                                      bg-blue-600
+                                      text-white
+                                      font-medium
+                                      text-xs
+                                      leading-tight
+                                      uppercase
+                                      rounded
+                                      shadow-lg
+                                      hover:bg-blue-700 hover:shadow-lg
+                                      focus:bg-blue-700
+                                      focus:shadow-lg
+                                      focus:outline-none
+                                      focus:ring-0
+                                      active:bg-blue-800 active:shadow-lg
+                                      transition
+                                      duration-150
+                                      ease-in-out
+                                    "
+                                    @click="assignReviewer()"
+                                  >
+                                    Assign
+                                  </button>
+                                </div>
                               </div>
                               <label class="block text-left">
                                 <div>
@@ -245,35 +283,6 @@
                                         autocomplete="off"
                                         placeholder="Select reviewer by typing a name"
                                       />
-                                    </div>
-                                    <div>
-                                       <button
-                                    class="
-                                      inline-block
-                                      px-6
-                                      py-2.5
-                                      bg-blue-600
-                                      text-white
-                                      font-medium
-                                      text-xs
-                                      leading-tight
-                                      uppercase
-                                      rounded
-                                      shadow-lg
-                                      hover:bg-blue-700 hover:shadow-lg
-                                      focus:bg-blue-700
-                                      focus:shadow-lg
-                                      focus:outline-none
-                                      focus:ring-0
-                                      active:bg-blue-800 active:shadow-lg
-                                      transition
-                                      duration-150
-                                      ease-in-out
-                                    "
-                                    @click="transferReviewer()"
-                                  >
-                                    Transfer
-                                  </button>
                                     </div>
                                     <div
                                       v-show="
@@ -436,34 +445,6 @@
             rounded-b-md
           "
         >
-        <a :href="'/admin/newLicense/evaluate/'+licenseId">
-          <button
-            type="button"
-            class="
-          inline-block
-              px-6
-              text-white
-              font-medium
-              text-xs
-              leading-tight
-              uppercase
-              rounded
-              shadow-lg
-              hover:bg-purple-700 hover:shadow-lg
-              focus:bg-purple-700
-              focus:shadow-lg
-              focus:outline-none
-              focus:ring-0
-              active:bg-purple-800 active:shadow-lg
-              transition
-              duration-150
-              ease-in-out
-            "
-          
-          >
-          Evaluate
-          </button>
-          </a>
           <button
             type="button"
             class="
@@ -494,18 +475,15 @@
       </div>
     </div>
   </div>
-
 </template>
 
 <script>
 import { useStore } from "vuex";
-import { ref, onMounted, watch,computed } from "vue";
+import { ref, onMounted, watch } from "vue";
 import moment from "moment";
 import toast from "toast-me";
 import Loading from "vue3-loading-overlay";
-// Import stylesheet
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
-
 
 export default {
   props: ["modalDataId", "reviewers"],
@@ -523,37 +501,35 @@ export default {
     let showOptions = ref(false);
     let reviewer = ref({ id: "", name: "", expertLevel: "", role: "" });
     let adminId = +localStorage.getItem("adminId");
-    const licenseId=computed(()=>props.modalDataId.id);
-    let transfer = ref({
+
+    let assign = ref({
       reviewerId: "",
       licenseId: "",
       createdByAdminId: "",
     });
     let role = ref({});
+    let isLoadingStart = ref(true);
     let isLoading = ref(false);
-    const isLoadingStart = ref(true);
     const fullPage = ref(false);
-    const evaluationData = ref({});
+    const licenseData = ref({});
     let reviewerAdminId = ref(0);
 
-    const fetchRole = (id) => {
-      store.dispatch("reviewer/getRoles", id).then((res) => {
-        role.value = res.data.data.role;
-      });
+    const fetchRole = () => {
+      role.value = JSON.parse(localStorage.getItem("allAdminData")).role;
     };
 
-    const transferReviewer = () => {
+    const assignReviewer = () => {
       if (role.value.code === "TL" || role.value.code === "ADM") {
-        transfer.value = {
-          licenseId: props.modalDataId.id,
-          reviewerId: transfer.value.reviewerId,
+        assign.value = {
+          licenseId: licenseData.value.id,
+          reviewerId: assign.value.reviewerId,
           createdByAdminId: +localStorage.getItem("adminId"),
         };
       }
 
       if (role.value.code == "REV") {
-        transfer.value = {
-          licenseId: props.modalDataId.id,
+        assign.value = {
+          licenseId: licenseData.value.id,
           reviewerId: +localStorage.getItem("adminId"),
           createdByAdminId: +localStorage.getItem("adminId"),
         };
@@ -562,17 +538,17 @@ export default {
       isLoading.value = true;
 
       store
-        .dispatch("reviewer/transferLicenseReview", transfer.value)
+        .dispatch("reviewer/assignReviewer", assign.value)
         .then((response) => {
           if (response.statusText == "Created") {
             toast("Selected reviewer is successfully assigned.", {
-              duration: 4000,
+              duration: 3000,
               position: "bottom",
               toastClass: "toast-success",
             });
           } else {
-            toast("Something is wrong please try again after few minutes.", {
-              duration: 4000,
+            toast("Something is wrong, please try again in a few minutes.", {
+              duration: 3000,
               position: "bottom",
               toastClass: "toast-error",
             });
@@ -612,33 +588,25 @@ export default {
         expertLevel: value.expertLevel.code,
         role: value.role.code,
       };
-      transfer.value.reviewerId = value.id;
+      assign.value.reviewerId = value.id;
       showOptions.value = false;
     };
     const onCancel = () => {
       isLoading.value = false;
     };
-    onMounted(() => {
-      adminId = +localStorage.getItem("adminId");
-      fetchRole(adminId);
-    });
-
-    watch(props.modalDataId, () => {
-      isLoadingStart.value = true;
-      check();
-
-    });
     const modalData = ref({});
-    let result;
-    const licenseData = ref({});
+    let result = {};
 
     const check = () => {
       store
         .dispatch("reviewer/getNewLicenseApplication", props.modalDataId.id)
         .then((res) => {
-          if (res.data.status == "Success") {
+          if (
+            res.data.status == "Success" &&
+            res.data.message !=
+              "New licenses total count retrieved successfully!"
+          ) {
             result = res.data.data;
-            evaluationData.value = result;
             modalData.value.name =
               result.profile.name +
               " " +
@@ -648,8 +616,8 @@ export default {
             modalData.value.gender = result.profile.gender
               ? result.profile.gender
               : "-----";
-            modalData.value.nationality = result.profile.nationality
-              ? result.profile.nationality.name
+            modalData.value.nationality = result.profile.nationality?.name
+              ? result.profile.nationality?.name
               : "-----";
             modalData.value.dateOfBirth = result.profile.dateOfBirth
               ? result.profile.dateOfBirth
@@ -684,27 +652,35 @@ export default {
           }
         });
     };
+
+    watch(props.modalDataId, () => {
+      isLoadingStart.value = true;
+      check();
+    });
+
+    onMounted(() => {
+      fetchRole();
+    });
+
     return {
       adminId,
       reviewerAdminId,
       role,
-      transfer,
-      licenseData,
+      assign,
       show,
       showRes,
       showOptions,
       reviewer,
       setInput,
       showModal,
+      check,
       resultQuery,
       isLoading,
       isLoadingStart,
-      licenseId,
       fullPage,
-      modalData,
-      evaluationData,
-      transferReviewer,
+      assignReviewer,
       onCancel,
+      modalData,
     };
   },
 };

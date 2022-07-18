@@ -261,7 +261,7 @@
       </div>
 
       <div class="mr-12 mb-8 overview-boxes">
-        <router-link to="/admin/newLicense/">
+        <router-link to="/admin/goodStanding/">
           <div
             class="
               bg-white
