@@ -121,7 +121,7 @@ export default {
       store
         .dispatch("profile/getProfileByUserId", route.params.userId)
         .then((res) => {
-          showLoading.value = false;
+          // showLoading.value = false;
           if (res.data.data === undefined) {
             isUserFound.value = false;
             return;

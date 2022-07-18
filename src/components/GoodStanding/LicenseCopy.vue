@@ -450,6 +450,8 @@ export default {
             professionalTypeIds: licenseInfo.professionalTypeIds,
             expertLevelId: licenseInfo.expertLevelId,
             otherProfessionalType: licenseInfo.otherProfessionalType,
+            otherProfessionalTypeAmharic:licenseInfo.otherProfessionalType,
+
           },
         };
         store
@@ -562,7 +564,9 @@ export default {
             applicantPositionId: licenseInfo.applicantPositionId,
             professionalTypeIds: licenseInfo.professionalTypeIds,
             expertLevelId: licenseInfo.expertLevelId,
-            otherProfessionalType: licenseInfo.otherProfessionalType,
+              otherProfessionalType: licenseInfo.otherProfessionalType,
+             otherProfessionalTypeAmharic:licenseInfo.otherProfessionalType,
+
           },
         };
         store

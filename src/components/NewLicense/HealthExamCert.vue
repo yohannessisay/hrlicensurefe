@@ -36,7 +36,6 @@
           <TitleWithIllustration
             illustration="Certificate"
             message="Medical Certificate"
-          
           />
         </div>
         <div v-else>
@@ -99,12 +98,19 @@
           </div>
         </form>
         <div v-if="!message.showLoading">
-          <div v-if="buttons && !draftStatus" class="flex justify-center mb-8 mt-4">
+          <div
+            v-if="buttons && !draftStatus"
+            class="flex justify-center mb-8 mt-4"
+          >
             <button @click="submitBack">
               Back
             </button>
             <button @click="submit">Next</button>
-            <button @click="draft(buttons[1].action)" variant="outline" class="p-1">
+            <button
+              @click="draft(buttons[1].action)"
+              variant="outline"
+              class="p-1"
+            >
               {{ buttons[1]["name"] }}
             </button>
           </div>
@@ -116,8 +122,8 @@
               Back
             </button>
             <button @click="submit">Next</button>
-            <button @click="draft(buttons[2].action)" variant="outline" class="p-1">
-              {{ buttons[2]["name"] }}
+            <button @click="draft(buttons[0].action)" variant="outline">
+              {{ buttons[0]["name"] }}
             </button>
             <button
               class="withdraw p-1"
@@ -151,10 +157,18 @@
               Back
             </button>
             <button @click="submit">Next</button>
-            <button @click="draft(buttons[0].action)" variant="outline" class="p-1">
+            <button
+              @click="draft(buttons[0].action)"
+              variant="outline"
+              class="p-1"
+            >
               {{ buttons[0]["name"] }}
             </button>
-            <button @click="update(buttons[1].action)" variant="outline" class="p-1">
+            <button
+              @click="update(buttons[1].action)"
+              variant="outline"
+              class="p-1"
+            >
               {{ buttons[1]["name"] }}
             </button>
           </div>
@@ -169,7 +183,11 @@
             <!-- <button @click="draft(buttons[0].action)" variant="outline">
             {{ buttons[0]["name"] }}
           </button> -->
-            <button @click="update(buttons[1].action)" variant="outline" class="p-1">
+            <button
+              @click="update(buttons[1].action)"
+              variant="outline"
+              class="p-1"
+            >
               {{ buttons[1]["name"] }}
             </button>
           </div>
@@ -206,7 +224,7 @@ export default {
     TitleWithIllustration,
     FlashMessage,
     ErrorFlashMessage,
-    Spinner,
+    Spinner
   },
   props: ["activeState"],
   setup(props, { emit }) {
@@ -217,7 +235,7 @@ export default {
     let message = ref({
       showFlash: false,
       showErrorFlash: false,
-      showLoading: false,
+      showLoading: false
     });
 
     let fileSize = ref("");
@@ -461,18 +479,18 @@ export default {
 
     remark = store.getters["newlicense/getRemark"];
 
-    const draft = (action) => {
+    const draft = action => {
       message.value.showLoading = true;
-      if (route.params.id) {
+      if (route.params.id || draftStatus) {
         if (dataChanged.value) {
           let license = {
             data: {
               action: action,
-              data: draftData,
+              data: licenseInfo
             },
-            id: route.params.id,
+            id: route.params.id
           };
-          store.dispatch("newlicense/editNewLicense", license).then((res) => {
+          store.dispatch("newlicense/editNewLicense", license).then(res => {
             if (res.data.status == "Success") {
               let licenseId = route.params.id;
               let formData = new FormData();
@@ -483,7 +501,7 @@ export default {
               let payload = { document: formData, id: licenseId };
               store
                 .dispatch("newlicense/uploadDocuments", payload)
-                .then((res) => {
+                .then(res => {
                   if (res.status == 200) {
                     message.value.showFlash = !message.value.showFlash;
                     message.value.showLoading = false;
@@ -495,18 +513,18 @@ export default {
                       .showErrorFlash;
                   }
                 })
-                .catch((err) => {});
+                .catch(err => {});
             }
           });
         } else {
           let license = {
             data: {
               action: action,
-              data: draftData,
+              data: licenseInfo
             },
-            id: route.params.id,
+            id: route.params.id
           };
-          store.dispatch("newlicense/editNewLicense", license).then((res) => {
+          store.dispatch("newlicense/editNewLicense", license).then(res => {
             if (res.data.status == "Success") {
               message.value.showFlash = !message.value.showFlash;
               message.value.showLoading = false;
@@ -526,7 +544,7 @@ export default {
             applicantTypeId: licenseInfo.applicantTypeId,
             education: {
               departmentId: licenseInfo.education.departmentId,
-              institutionId: licenseInfo.education.institutionId,
+              institutionId: licenseInfo.education.institutionId
             },
             professionalTypeIds: licenseInfo.professionalTypeIds,
             residenceWoredaId: licenseInfo.residenceWoredaId,
@@ -538,9 +556,10 @@ export default {
             otherEducationalInstitution:
               licenseInfo.otherEducationalInstitution,
             otherProfessionalType: licenseInfo.otherProfessionalType,
-          },
+            otherProfessionalTypeAmharic: licenseInfo.otherProfessionalType
+          }
         };
-        store.dispatch("newlicense/addNewLicense", license).then((res) => {
+        store.dispatch("newlicense/addNewLicense", license).then(res => {
           if (res.data.status == "Success") {
             let licenseId = res.data.data.id;
             let formData = new FormData();
@@ -689,7 +708,7 @@ export default {
             let payload = { document: formData, id: licenseId };
             store
               .dispatch("newlicense/uploadDocuments", payload)
-              .then((res) => {
+              .then(res => {
                 if (res.status == 200) {
                   message.value.showFlash = !message.value.showFlash;
                   message.value.showLoading = false;
@@ -700,23 +719,23 @@ export default {
                   message.value.showErrorFlash = !message.value.showErrorFlash;
                 }
               })
-              .catch((err) => {});
+              .catch(err => {});
           }
         });
       }
     };
-    const update = (action) => {
+    const update = action => {
       message.value.showLoading = true;
       if (route.params.id) {
         if (dataChanged.value) {
           let license = {
             data: {
               action: action,
-              data: draftData,
+              data: licenseInfo
             },
-            id: route.params.id,
+            id: route.params.id
           };
-          store.dispatch("newlicense/editNewLicense", license).then((res) => {
+          store.dispatch("newlicense/editNewLicense", license).then(res => {
             if (res.data.status == "Success") {
               let licenseId = route.params.id;
               let formData = new FormData();
@@ -727,7 +746,7 @@ export default {
               let payload = { document: formData, id: licenseId };
               store
                 .dispatch("newlicense/uploadDocuments", payload)
-                .then((res) => {
+                .then(res => {
                   if (res.status == 200) {
                     message.value.showFlash = !message.value.showFlash;
                     message.value.showLoading = false;
@@ -739,18 +758,18 @@ export default {
                       .showErrorFlash;
                   }
                 })
-                .catch((err) => {});
+                .catch(err => {});
             }
           });
         } else {
           let license = {
             data: {
               action: action,
-              data: draftData,
+              data: licenseInfo
             },
-            id: route.params.id,
+            id: route.params.id
           };
-          store.dispatch("newlicense/editNewLicense", license).then((res) => {
+          store.dispatch("newlicense/editNewLicense", license).then(res => {
             if (res.data.status == "Success") {
               message.value.showFlash = !message.value.showFlash;
               message.value.showLoading = false;
@@ -770,7 +789,7 @@ export default {
             applicantTypeId: licenseInfo.applicantTypeId,
             education: {
               departmentId: licenseInfo.education.departmentId,
-              institutionId: licenseInfo.education.institutionId,
+              institutionId: licenseInfo.education.institutionId
             },
             professionalTypeIds: licenseInfo.professionalTypeIds,
             residenceWoredaId: licenseInfo.residenceWoredaId,
@@ -782,9 +801,10 @@ export default {
             otherEducationalInstitution:
               licenseInfo.otherEducationalInstitution,
             otherProfessionalType: licenseInfo.otherProfessionalType,
-          },
+            otherProfessionalTypeAmharic: licenseInfo.otherProfessionalType
+          }
         };
-        store.dispatch("newlicense/addNewLicense", license).then((res) => {
+        store.dispatch("newlicense/addNewLicense", license).then(res => {
           if (res.data.status == "Success") {
             let licenseId = res.data.data.id;
             let formData = new FormData();
@@ -795,7 +815,7 @@ export default {
             let payload = { document: formData, id: licenseId };
             store
               .dispatch("newlicense/uploadDocuments", payload)
-              .then((res) => {
+              .then(res => {
                 if (res.status == 200) {
                   message.value.showFlash = !message.value.showFlash;
                   message.value.showLoading = false;
@@ -806,23 +826,23 @@ export default {
                   message.value.showErrorFlash = !message.value.showErrorFlash;
                 }
               })
-              .catch((err) => {});
+              .catch(err => {});
           }
         });
       }
     };
 
-    const withdraw = (action) => {
+    const withdraw = action => {
       message.value.showLoading = !message.value.showLoading;
       let withdrawObj = {
         action: action,
-        data: draftData,
+        data: draftData
       };
       let payload = {
         licenseId: draftData.id,
-        withdrawData: withdrawObj,
+        withdrawData: withdrawObj
       };
-      store.dispatch("newlicense/withdraw", payload).then((res) => {
+      store.dispatch("newlicense/withdraw", payload).then(res => {
         if (res) {
           message.value.showFlash = !message.value.showFlash;
           message.value.showLoading = false;
@@ -942,9 +962,9 @@ export default {
       docIdx4,
       docIdx5,
 
-      applicantTypeId,
+      applicantTypeId
     };
-  },
+  }
 };
 </script>
 <style>

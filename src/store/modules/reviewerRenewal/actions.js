@@ -1003,6 +1003,13 @@ export default {
     commit(SET_RENEWAL_ALL_LICENSED, renewalAllLicensed);
   },
 
+  async getCertificateIssuedRenewal({ commit }) {
+    const url = baseUrl + "/renewals/certificate/issued";
+    const resp = await ApiService.get(url);
+    const renewalAllLicensed = resp.data.data;
+    commit(SET_RENEWAL_ALL_LICENSED, renewalAllLicensed);
+  },
+
   getRenewalAllLicensedSearched({ commit, getters }, searchKey) {
     if (getters.getRenewalAllLicensed === undefined) {
       return;

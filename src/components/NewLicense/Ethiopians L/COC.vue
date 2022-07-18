@@ -192,8 +192,8 @@
               Back
             </button>
             <button @click="submit">Next</button>
-            <button @click="draft(buttons[2].action)" variant="outline">
-              {{ buttons[2]["name"] }}
+            <button @click="draft(buttons[0].action)" variant="outline">
+              {{ buttons[0]["name"] }}
             </button>
             <button
               class="withdraw"
@@ -552,12 +552,12 @@ export default {
 
     const draft = (action) => {
       message.value.showLoading = true;
-      if (route.params.id) {
+      if (route.params.id || this.draftStatus) {
         if (dataChanged.value) {
           let license = {
             data: {
               action: action,
-              data: draftData,
+              data: licenseInfo,
             },
             id: route.params.id,
           };
@@ -599,7 +599,7 @@ export default {
           let license = {
             data: {
               action: action,
-              data: draftData,
+              data: licenseInfo,
             },
             id: route.params.id,
           };
@@ -634,7 +634,9 @@ export default {
             expertLevelId: licenseInfo.expertLevelId,
             otherEducationalInstitution:
               licenseInfo.otherEducationalInstitution,
-            otherProfessionalType: licenseInfo.otherProfessionalType,
+              otherProfessionalType: licenseInfo.otherProfessionalType,
+             otherProfessionalTypeAmharic:licenseInfo.otherProfessionalType,
+
           },
         };
         store.dispatch("newlicense/addNewLicense", license).then((res) => {
@@ -740,7 +742,7 @@ export default {
           let license = {
             data: {
               action: action,
-              data: draftData,
+              data: licenseInfo,
             },
             id: route.params.id,
           };
@@ -782,7 +784,7 @@ export default {
           let license = {
             data: {
               action: action,
-              data: draftData,
+              data: licenseInfo,
             },
             id: route.params.id,
           };
@@ -817,7 +819,9 @@ export default {
             expertLevelId: licenseInfo.expertLevelId,
             otherEducationalInstitution:
               licenseInfo.otherEducationalInstitution,
-            otherProfessionalType: licenseInfo.otherProfessionalType,
+              otherProfessionalType: licenseInfo.otherProfessionalType,
+             otherProfessionalTypeAmharic:licenseInfo.otherProfessionalType,
+
           },
         };
         store.dispatch("newlicense/addNewLicense", license).then((res) => {
