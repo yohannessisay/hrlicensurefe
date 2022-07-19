@@ -524,7 +524,7 @@ export default {
       if (empty == true) {
         console.log(personalInfo)
         store.dispatch("profile/setProfileInfo", personalInfo);
-        store.dispatch("profile/setPhoto", photoFile);
+        store.dispatch("profile/setPhoto", photoFile.value);
         emit("changeActiveState");
       }
     };
