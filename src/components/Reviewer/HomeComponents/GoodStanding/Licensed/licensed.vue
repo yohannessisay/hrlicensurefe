@@ -18,7 +18,7 @@
             <div class="py-8">
               <div>
                 <h2 class="text-2xl font-semibold leading-tight">
-                  Applications Licensed By You
+                  Letters Licensed By You
                 </h2>
               </div>
               <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
@@ -54,7 +54,7 @@
             <div class="py-8">
               <div>
                 <h2 class="text-2xl font-semibold leading-tight">
-                  Applications Licensed By Others
+                  Letters Licensed By Others
                 </h2>
               </div>
               <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
@@ -145,201 +145,202 @@ export default {
     };
     const licensedByOthers = () => {
       applicationStatus(store, "AP").then((ap) => {
-        applicationStatus(store, "CONF").then((conf) => {
-          applicationStatus(store, "APP").then((app) => {
-            let adminStatus = [adminId, ap, conf, app];
+        applicationStatus(store, "APP").then((app) => {
+          let adminStatus = [adminId, ap, app];
+          store
+            .dispatch(
+              "reviewerGoodStanding/getGoodStandingOtherLicensed",
+              adminStatus
+            )
+            .then(() => {
+              allInfo.value.assignApplication =
+                store.getters[
+                  "reviewerGoodStanding/getGoodStandingOthersLicensedSearched"
+                ];
 
-            store
-              .dispatch(
-                "reviewerNewLicense/getNewLicenseOtherLicensed",
-                adminStatus
-              )
-              .then(() => {
-                allInfo.value.assignApplication =
-                  store.getters[
-                    "reviewerNewLicense/getNewLicenseOthersLicensedSearched"
-                  ];
-
-                for (let applicant in allInfo.value.assignApplication) {
-                  if (
-                    allInfo.value.assignApplication[applicant]
-                      .applicationType === undefined
-                  ) {
-                    allInfo.value.assignApplication[applicant].applicationType =
-                      allInfo.value.assignApplication[applicant].applicantType;
-                  }
+              for (let applicant in allInfo.value.assignApplication) {
+                if (
+                  allInfo.value.assignApplication[applicant].applicationType ===
+                  undefined
+                ) {
+                  allInfo.value.assignApplication[applicant].applicationType =
+                    allInfo.value.assignApplication[applicant].applicantType;
                 }
+              }
 
-                JSON.parse(
-                  JSON.stringify(allInfo.value.assignApplication)
-                ).forEach((element) => {
-                  tableData.value.push({
-                    id: element.id,
-                    ApplicantName:
-                      element.profile.name +
-                      " " +
-                      element.profile.fatherName +
-                      " " +
-                      element.profile.grandFatherName,
-                    ApplicationType: element.applicationType.name,
-                    Date: new Date(element.applicationType.createdAt)
-                      .toJSON()
-                      .slice(0, 10)
-                      .replace(/-/g, "/"),
-                    data: element,
-                  });
+              JSON.parse(
+                JSON.stringify(allInfo.value.assignApplication)
+              ).forEach((element) => {
+                tableData.value.push({
+                  id: element ? element.id : "",
+                  ApplicantName:
+                    (element.profile ? element.profile.name : "") +
+                    " " +
+                    (element.profile ? element.profile.fatherName : "") +
+                    " " +
+                    (element.profile ? element.profile.grandFatherName : ""),
+                  ApplicationType: element.applicationType
+                    ? element.applicationType.name
+                    : "",
+                  Date: new Date(
+                    element.applicationType
+                      ? element.applicationType.createdAt
+                      : ""
+                  )
+                    .toJSON()
+                    .slice(0, 10)
+                    .replace(/-/g, "/"),
+                  data: element ? element : {},
                 });
-
-                toOthersTable.value = {
-                  columns: [
-                    {
-                      label: "ID",
-                      field: "id",
-                      width: "3%",
-                      sortable: true,
-                      isKey: true,
-                    },
-                    {
-                      label: "Applicant Name",
-                      field: "ApplicantName",
-                      width: "20%",
-                      sortable: true,
-                    },
-                    {
-                      label: "Applicant Type",
-                      field: "ApplicationType",
-                      width: "15%",
-                      sortable: true,
-                    },
-                    {
-                      label: "Date",
-                      field: "Date",
-                      width: "15%",
-                      sortable: true,
-                    },
-                    {
-                      label: "",
-                      field: "quick",
-                      width: "10%",
-                      display: function (row) {
-                        return (
-                          '<button  data-set="' +
-                          row +
-                          '"  data-bs-toggle="modal" data-bs-target="#staticBackdropOthers" class="edit-btn-others inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" data-id="' +
-                          row.id +
-                          '" >View/Edit</button>'
-                        );
-                      },
-                    },
-                  ],
-                  rows: JSON.parse(JSON.stringify(tableData.value)),
-                  totalRecordCount: tableData.value.length,
-                  sortable: {
-                    order: "id",
-                    sort: "asc",
-                  },
-                };
               });
-          });
+
+              toOthersTable.value = {
+                columns: [
+                  {
+                    label: "ID",
+                    field: "id",
+                    width: "3%",
+                    sortable: true,
+                    isKey: true,
+                  },
+                  {
+                    label: "Applicant Name",
+                    field: "ApplicantName",
+                    width: "20%",
+                    sortable: true,
+                  },
+                  {
+                    label: "Applicant Type",
+                    field: "ApplicationType",
+                    width: "15%",
+                    sortable: true,
+                  },
+                  {
+                    label: "Date",
+                    field: "Date",
+                    width: "15%",
+                    sortable: true,
+                  },
+                  {
+                    label: "",
+                    field: "quick",
+                    width: "10%",
+                    display: function (row) {
+                      return (
+                        '<button  data-set="' +
+                        row +
+                        '"  data-bs-toggle="modal" data-bs-target="#staticBackdropOthers" class="edit-btn-others inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" data-id="' +
+                        row.id +
+                        '" >View/Edit</button>'
+                      );
+                    },
+                  },
+                ],
+                rows: JSON.parse(JSON.stringify(tableData.value)),
+                totalRecordCount: tableData.value.length,
+                sortable: {
+                  order: "id",
+                  sort: "asc",
+                },
+              };
+            });
         });
       });
     };
 
     const licensedByYou = () => {
-      applicationStatus(store, "AP").then((ap) => {
-        applicationStatus(store, "CONF").then((conf) => {
-          applicationStatus(store, "APP").then((app) => {
-            let adminStatus = [adminId, ap, conf, app];
+      store
+        .dispatch("reviewerGoodStanding/getGoodStandingAllLicensed")
+        .then(() => {
+          allInfo.value.assignApplication =
+            store.getters[
+              "reviewerGoodStanding/getGoodStandingAllLicensedSearched"
+            ];
 
-            store
-              .dispatch("reviewerNewLicense/getNewLicenseLicensed", adminStatus)
-              .then(() => {
-                allInfo.value.assignApplication =
-                  store.getters[
-                    "reviewerNewLicense/getNewLicenseLicensedSearched"
-                  ];
+          for (let applicant in allInfo.value.assignApplication) {
+            if (
+              allInfo.value.assignApplication[applicant].applicationType ===
+              undefined
+            ) {
+              allInfo.value.assignApplication[applicant].applicationType =
+                allInfo.value.assignApplication[applicant].applicantType;
+            }
+          }
 
-                for (let applicant in allInfo.value.assignApplication) {
-                  if (
-                    allInfo.value.assignApplication[applicant]
-                      .applicationType === undefined
-                  ) {
-                    allInfo.value.assignApplication[applicant].applicationType =
-                      allInfo.value.assignApplication[applicant].applicantType;
-                  }
-                }
-
-                JSON.parse(
-                  JSON.stringify(allInfo.value.assignApplication)
-                ).forEach((element) => {
-                  toYouTableData.value.push({
-                    id: element.id,
-                    ApplicantName:
-                      element.profile.name +
-                      " " +
-                      element.profile.fatherName +
-                      " " +
-                      element.profile.grandFatherName,
-                    ApplicationType: element.applicationType.name,
-                    Date: new Date(element.applicationType.createdAt)
-                      .toJSON()
-                      .slice(0, 10)
-                      .replace(/-/g, "/"),
-                    data: element,
-                  });
-                });
-
-                toYouTable.value = {
-                  columns: [
-                    {
-                      label: "ID",
-                      field: "id",
-                      width: "3%",
-                      sortable: true,
-                      isKey: true,
-                    },
-                    {
-                      label: "Applicant Name",
-                      field: "ApplicantName",
-                      width: "20%",
-                      sortable: true,
-                    },
-                    {
-                      label: "Applicant Type",
-                      field: "ApplicationType",
-                      width: "15%",
-                      sortable: true,
-                    },
-                    {
-                      label: "Date",
-                      field: "Date",
-                      width: "15%",
-                      sortable: true,
-                    },
-                    {
-                      label: "",
-                      field: "quick",
-                      width: "10%",
-                      display: function (row) {
-                        return (
-                          '<button data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="edit-btn inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" data-id="' +
-                          row.id +
-                          '" >View/Edit</button>'
-                        );
-                      },
-                    },
-                  ],
-                  rows: JSON.parse(JSON.stringify(toYouTableData.value)),
-                  totalRecordCount: toYouTableData.value.length,
-                  sortable: {
-                    order: "id",
-                    sort: "asc",
-                  },
-                };
+          JSON.parse(JSON.stringify(allInfo.value.assignApplication)).forEach(
+            (element) => {
+              toYouTableData.value.push({
+                id: element ? element.id : "",
+                ApplicantName:
+                  (element.profile ? element.profile.name : "") +
+                  " " +
+                  (element.profile ? element.profile.fatherName : "") +
+                  " " +
+                  (element.profile ? element.profile.grandFatherName : ""),
+                ApplicationType: element.applicationType
+                  ? element.applicationType.name
+                  : "",
+                Date: new Date(
+                  element.applicationType
+                    ? element.applicationType.createdAt
+                    : ""
+                )
+                  .toJSON()
+                  .slice(0, 10)
+                  .replace(/-/g, "/"),
+                data: element ? element : {},
               });
-          });
+            }
+          );
+
+          toYouTable.value = {
+            columns: [
+              {
+                label: "ID",
+                field: "id",
+                width: "3%",
+                sortable: true,
+                isKey: true,
+              },
+              {
+                label: "Applicant Name",
+                field: "ApplicantName",
+                width: "20%",
+                sortable: true,
+              },
+              {
+                label: "Applicant Type",
+                field: "ApplicationType",
+                width: "15%",
+                sortable: true,
+              },
+              {
+                label: "Date",
+                field: "Date",
+                width: "15%",
+                sortable: true,
+              },
+              {
+                label: "",
+                field: "quick",
+                width: "10%",
+                display: function (row) {
+                  return (
+                    '<button data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="edit-btn inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" data-id="' +
+                    row.id +
+                    '" >View/Edit</button>'
+                  );
+                },
+              },
+            ],
+            rows: JSON.parse(JSON.stringify(toYouTableData.value)),
+            totalRecordCount: toYouTableData.value.length,
+            sortable: {
+              order: "id",
+              sort: "asc",
+            },
+          };
         });
-      });
     };
 
     const tableLoadingFinish = () => {
@@ -354,8 +355,7 @@ export default {
       });
     };
 
-        const tableLoadingFinishOthers = () => {
-
+    const tableLoadingFinishOthers = () => {
       let elements = document.getElementsByClassName("edit-btn-others");
 
       Array.prototype.forEach.call(elements, function (element) {
@@ -363,7 +363,7 @@ export default {
           element.addEventListener("click", rowClicked());
         }
       });
-            toOthersTable.value.isLoading = false;
+      toOthersTable.value.isLoading = false;
     };
 
     const rowClicked = (row) => {
@@ -374,7 +374,7 @@ export default {
       }
     };
 
-        const rowClickedOthers = (row) => {
+    const rowClickedOthers = (row) => {
       if (row != undefined) {
         row = JSON.parse(JSON.stringify(row));
         modalDataIdOthers.value.change++;
@@ -400,7 +400,7 @@ export default {
       modalDataId,
       modalDataIdOthers,
       rowClickedOthers,
-      tableLoadingFinishOthers
+      tableLoadingFinishOthers,
     };
   },
 };

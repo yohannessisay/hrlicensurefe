@@ -291,7 +291,6 @@
   .home-content .sales-boxes {
     display: flex;
     justify-content: space-between;
-    /* padding: 0 20px; */
   }
 
   /* left box */
@@ -313,7 +312,6 @@
   .sales-boxes .box .title {
     font-size: 24px;
     font-weight: 500;
-    /* margin-bottom: 10px; */
   }
 
   .sales-boxes .sales-details li.topic {
@@ -399,44 +397,7 @@
 
 
 
-  /* Apply these for table */
-  .vtl-table .vtl-thead .vtl-thead-th {
-    color: #fff;
-    background-color: #0d3552;
-    border-color: #0d3552;
-  }
-
-  .vtl-table td,
-  .vtl-table tr {
-    border: none !important;
-    border-bottom: solid 1px rgba(128, 128, 128, 0.664) !important;
-  }
-
-  .vtl-paging-info {
-    color: rgb(25, 155, 230) !important;
-  }
-
-  .vtl-paging-count-label,
-  .vtl-paging-page-label {
-    margin-right: 10px !important;
-    margin-left: 10px !important;
-    color: rgb(25, 155, 230) !;
-  }
-
-  .vtl-paging-pagination-page-link {
-    border: none !important;
-  }
-
-  .vtl-paging-count-dropdown {
-    margin-right: 10px !important;
-    margin-left: 10px !important;
-    color: rgb(0, 0, 0) !important;
-  }
-
-  .vtl-tbody-tr {
-    border-bottom: 1px solid rgb(128, 128, 128) !important;
-    padding: 5px !important;
-  }
+ 
 
 
   /* Vue toast custom part */
@@ -525,6 +486,46 @@
   .btn-close:hover {
     background:  url('data:image/svg+xml,%3csvg xmlns="http://www.w3.org/2000/svg" class="text-white" viewBox="0 0 16 16" fill="%23000"%3e%3cpath d="M.293.293a1 1 0 011.414 0L8 6.586 14.293.293a1 1 0 111.414 1.414L9.414 8l6.293 6.293a1 1 0 01-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 01-1.414-1.414L6.586 8 .293 1.707a1 1 0 010-1.414z"/%3e%3c/svg%3e') center/1em auto no-repeat #285180 !important;
 
+  }
+
+
+  /* Apply these for table */
+  .vtl-table .vtl-thead .vtl-thead-th {
+    color: #fff;
+    background-color: #0d3552;
+    border-color: #0d3552;
+  }
+
+  .vtl-table td,
+  .vtl-table tr {
+    border: none !important;
+    border-bottom: solid 1px rgba(128, 128, 128, 0.664) !important;
+  }
+
+  .vtl-paging-info {
+    color: rgb(25, 155, 230) !important;
+  }
+
+  .vtl-paging-count-label,
+  .vtl-paging-page-label {
+    margin-right: 10px !important;
+    margin-left: 10px !important;
+    color: rgb(25, 155, 230) !;
+  }
+
+  .vtl-paging-pagination-page-link {
+    border: none !important;
+  }
+
+  .vtl-paging-count-dropdown {
+    margin-right: 10px !important;
+    margin-left: 10px !important;
+    color: rgb(0, 0, 0) !important;
+  }
+
+  .vtl-tbody-tr {
+    border-bottom: 1px solid rgb(128, 128, 128) !important;
+    padding: 5px !important;
   }
 
 

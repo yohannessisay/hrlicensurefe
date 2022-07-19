@@ -60,28 +60,28 @@
             aria-label="Close"
           ></button>
         </div>
-         <div class="vld-parent">
-                <loading
-                  :active="isLoading"
-                  :is-full-page="false"
-                  :color="'#2F639D'"
-                  :opacity="1"
-                ></loading>
-        <div class="modal-body relative p-4">
-          <div class="container px-6 mx-auto">
-            <section class="text-gray-800">
-              <div class="flex justify-center">
-                <div class="text-center lg:max-w-3xl md:max-w-xl">
-                  <h2 class="text-2xl font-bold mb-8 px-6">
-                    Showing
-                    <span class="text-2xl font-bold px-6">
-                      {{ modalData.name ? modalData.name : "" }}
-                    </span>
-                    's License Data
-                  </h2>
+        <div class="vld-parent">
+          <loading
+            :active="isLoading"
+            :is-full-page="false"
+            :color="'#2F639D'"
+            :opacity="1"
+          ></loading>
+          <div class="modal-body relative p-4">
+            <div class="container px-6 mx-auto">
+              <section class="text-gray-800">
+                <div class="flex justify-center">
+                  <div class="text-center lg:max-w-3xl md:max-w-xl">
+                    <h2 class="text-2xl font-bold mb-8 px-6">
+                      Showing
+                      <span class="text-2xl font-bold px-6">
+                        {{ modalData.name ? modalData.name : "" }}
+                      </span>
+                      's License Data
+                    </h2>
+                  </div>
                 </div>
-              </div>
-        
+
                 <div class="flex flex-wrap">
                   <div class="grow-0 shrink-0 basis-auto w-full lg:w-11/12">
                     <div class="flex flex-wrap">
@@ -309,9 +309,7 @@
                               uppercase
                               rounded
                               shadow-lg
-                              focus:shadow-lg
-                              focus:outline-none
-                              focus:ring-0
+                              focus:shadow-lg focus:outline-none focus:ring-0
                               active:bg-blue-800 active:shadow-lg
                               transition
                               duration-150
@@ -393,11 +391,10 @@
                     </div>
                   </div>
                 </div>
-              
-            </section>
+              </section>
+            </div>
           </div>
         </div>
-         </div>
         <div
           class="
             modal-footer
@@ -495,59 +492,64 @@ export default {
     let result = {};
     const check = () => {
       store
-        .dispatch("reviewer/getNewLicenseApplication", props.modalDataId.id)
+        .dispatch("reviewer/getGoodStandingApplication", props.modalDataId.id)
         .then((res) => {
           if (res.data.status == "Success") {
             result = res.data.data;
             modalData.value.name =
-              result.profile.name +
+              (result.profile ? result.profile.name : "") +
               " " +
-              result.profile.fatherName +
+              (result.profile ? result.profile.fatherName : "") +
               "  " +
-              result.profile.grandFatherName;
-            modalData.value.gender = result.profile.gender
+              (result.profile ? result.profile.grandFatherName : "");
+            modalData.value.gender = result.profile
               ? result.profile.gender
               : "-----";
-            modalData.value.nationality = result.profile.nationality
+            modalData.value.nationality = result.profile
               ? result.profile.nationality.name
               : "-----";
-            modalData.value.dateOfBirth = result.profile.dateOfBirth
+            modalData.value.dateOfBirth = result.profile
               ? result.profile.dateOfBirth
               : "-----";
-            modalData.value.martialStatus = result.profile.martialStatus?.name
+            modalData.value.martialStatus = result.profile?.name
               ? result.profile.martialStatus.name
               : "-----";
-            modalData.value.mobileNumber = result.applicant.phoneNumber
+            modalData.value.mobileNumber = result.applicant
               ? result.applicant.phoneNumber
               : "-----";
-            modalData.value.email = result.applicant.emailAddress
+            modalData.value.email = result.applicant
               ? result.applicant.emailAddress
               : "-----";
-            modalData.value.instName = result.education.institution?.name
+            modalData.value.instName = result.education?.name
               ? result.education.institution?.name
               : "-----";
-            modalData.value.instType = result.education.institution
-              ?.institutionType
+            modalData.value.instType = result.education?.institutionType
               ? result.education.institution?.institutionType
               : "-----";
-            modalData.value.department = result.education.department.name
+            modalData.value.department = result.education
               ? result.education?.department.name
               : "-----";
-            modalData.value.profile = result.profile;
-            modalData.value.professionalTypes = result.licenseProfessions;
-            modalData.value.certifiedDate = result.certifiedDate;
-            modalData.value.licenseExpirationDate =
-              result.licenseExpirationDate;
-            modalData.value.documents=result.documents
-             modalData.value.data=result
+            modalData.value.profile = result.profile ? result.profile : "";
+            modalData.value.professionalTypes = result.licenseProfessions
+              ? result.licenseProfessions
+              : "";
+            modalData.value.certifiedDate = result.certifiedDate
+              ? result.certifiedDate
+              : "";
+            modalData.value.licenseExpirationDate = result.licenseExpirationDate
+              ? result.licenseExpirationDate
+              : "";
+            modalData.value.documents = result.documents
+              ? result.documents
+              : "";
+            modalData.value.data = result;
             isLoading.value = false;
-
           }
         });
     };
 
-    watch(props.modalDataId,() => {
-         isLoading.value = true;
+    watch(props.modalDataId, () => {
+      isLoading.value = true;
       check();
     });
     return {

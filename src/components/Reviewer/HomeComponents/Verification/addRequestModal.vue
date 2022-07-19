@@ -342,6 +342,10 @@ export default {
               isLoading.value = false;
               toast.success("Verification request added Successfully", {
                 timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
               });
             } else {
               isLoading.value = false;
@@ -356,13 +360,16 @@ export default {
             }
           },
           () => {
-           toast.error("Sorry there seems to be a problem, try again later and if problem persists contact system admins.", {
+            toast.error(
+              "Sorry there seems to be a problem, try again later and if problem persists contact system admins.",
+              {
                 timeout: 20000,
                 position: "bottom-center",
                 pauseOnFocusLoss: true,
                 pauseOnHover: true,
                 icon: true,
-              });
+              }
+            );
           }
         );
     };

@@ -455,8 +455,11 @@ export default {
           console.log(res, editedData);
           if (res.data.status == "Success") {
             toast.success("Verification request is successfully verified", {
-              timeout: 5000,
+                 timeout: 5000,
               position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
             });
             emit("getVerification");
           } else {
