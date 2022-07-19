@@ -540,7 +540,6 @@ export default {
       store
         .dispatch("reviewer/assignRenewalReviewer", assign.value)
         .then(response => {
-          console.log(response.statusText);
           if (response.statusText == "Created") {
             toast.success("Selected reviewer is successfully assigned.", {
               timeout: 5000
@@ -640,7 +639,7 @@ export default {
               ? result.education.institution?.name
               : "-----";
             modalData.value.instType = result.education.institution
-              ?.institutionType.name
+              ?.institutionType
               ? result.education.institution?.institutionType.name
               : "-----";
             modalData.value.department = result.education.department.name
