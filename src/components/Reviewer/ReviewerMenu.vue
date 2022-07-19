@@ -26,7 +26,7 @@
           </a>
         </li>
       </router-link>
-      <router-link to="/admin/newLicense/">
+      <router-link to="/admin/goodStanding/">
         <li class="mb-2">
           <a href="#GoodStanding">
             <i class="fa fa-thumbs-up"></i>

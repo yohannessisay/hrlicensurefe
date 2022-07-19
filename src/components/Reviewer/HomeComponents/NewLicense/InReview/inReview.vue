@@ -379,7 +379,8 @@ export default {
     const rowClicked = (row) => {
       if (row != undefined) {
         store.dispatch("reviewer/getAdmins").then((res) => {
-          reviewers.value = res.data.data.filter((e) => {
+          console.log(res)
+          reviewers.value = res?.data?.data.filter((e) => {
             return e.role.code !== "UM";
           });
         });

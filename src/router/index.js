@@ -952,7 +952,7 @@ const routes = [
     name: "NewLicenseEvaluate",
     component: () =>
       import(
-        "../components/Reviewer/HomeComponents/NewLicense/InReview/inReviewEvaluationModal.vue"
+        "../components/Reviewer/HomeComponents/NewLicense/InReview/inReviewEvaluation.vue"
       ),
   },
 
@@ -1016,6 +1016,47 @@ const routes = [
         "../components/Reviewer/HomeComponents/Renewal/InReview/inReviewEvaluationModal.vue"
       ),
   },
+
+  //Admin Good Standing Section
+  {
+    path: "/admin/goodStanding",
+    name: "GoodStandingHome",
+    component: () =>
+      import(
+        "../components/Reviewer/HomeComponents/GoodStanding/Unassigned/unassigned.vue"
+      ),
+  },
+  {
+    path: "/admin/goodStanding/assigned",
+    name: "GoodStandingAssigned",
+    component: () =>
+      import("../components/Reviewer/HomeComponents/GoodStanding/Assigned/assigned.vue"),
+  },
+  {
+    path: "/admin/goodStanding/draft",
+    name: "GoodStandingDraft",
+    component: () =>
+      import("../components/Reviewer/HomeComponents/GoodStanding/Draft/draft.vue"),
+  },
+  {
+    path: "/admin/goodStanding/approved",
+    name: "GoodStandingApproved",
+    component: () =>
+      import("../components/Reviewer/HomeComponents/GoodStanding/Approved/approved.vue"),
+  },
+  {
+    path: "/admin/goodStanding/declined",
+    name: "GoodStandingDeclined",
+    component: () =>
+      import("../components/Reviewer/HomeComponents/GoodStanding/Declined/declined.vue"),
+  },
+  {
+    path: "/admin/goodStanding/licensed",
+    name: "GoodStandingLicensed",
+    component: () =>
+      import("../components/Reviewer/HomeComponents/GoodStanding/Licensed/licensed.vue"),
+  },
+
   //Verification part
   {
     path: "/admin/verification",
@@ -1023,9 +1064,8 @@ const routes = [
     component: () =>
       import(
         "../components/Reviewer/HomeComponents/Verification/verification.vue"
-      )
+      ),
   },
-
 
   //Cpd part
   {
@@ -1034,8 +1074,8 @@ const routes = [
     component: () =>
       import(
         "../components/Reviewer/HomeComponents/CpdCertified/cpdCertified.vue"
-      )
-  }
+      ),
+  },
 ];
 
 const router = createRouter({

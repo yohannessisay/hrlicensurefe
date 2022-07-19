@@ -435,7 +435,23 @@
           </div>
         </div>
         <div v-if="!showLoading">
-          <div v-if="this.draftStatus == 'DRA' || !this.draftStatus">
+         <div
+            v-if="buttons && !draftStatus"
+            class="flex justify-center mb-8 mt-4"
+          >
+            <button @click="submitBack">
+              Back
+            </button>
+            <button @click="submit">Next</button>
+            <button
+              @click="draft(buttons[1].action)"
+              variant="outline"
+              class="p-1"
+            >
+              {{ buttons[1]["name"] }}
+            </button>
+          </div>
+          <div v-if="this.draftStatus == 'DRA'">
             <div class="flex justify-center mt-4 mb-8">
               <button @click="submitBack">Back</button>
               <button @click="submit">Next</button>
@@ -1371,6 +1387,8 @@ export default {
             otherEducationalInstitution:
               this.licenseInfo.otherEducationalInstitution,
             otherProfessionalType: this.licenseInfo.otherProfessionalType,
+            otherProfessionalTypeAmharic: this.licenseInfo.otherProfessionalTypeAmharic,
+
           },
         };
         this.$store

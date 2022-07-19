@@ -3,7 +3,7 @@
   <reviewer-side-nav />
   <!-- Sidebar -->
 
-  <section class="home-section">
+  <section class="home-section ">
     <!-- Header -->
     <reviewer-nav-bar>
       <h2 class="dashboard">Evaluate</h2>
@@ -11,9 +11,10 @@
     <!-- Header -->
 
     <!-- Main Content -->
-    <div class="home-content">
-      <div class="container mx-auto px-4 sm:px-4">
-        <div class="rounded-lg overflow-hidden bg-primary-800 w-full shadow-md">
+    <div class="home-content ">
+      <div class="container mx-auto px-4 sm:px-4 mb-12 ">
+       
+ <div class="rounded-lg  bg-primary-800 w-full shadow-md ">
           <h2 class="text-white ml-4">
             Evaluating
             {{
@@ -29,14 +30,15 @@
             }}
             's License
           </h2>
-          <div class="bg-white w-full">
+          <div class=" w-full ">
             <div class="box-shadow-pop bg-lightGrey-100">
-              <div class="flex mb-large mt-medium justify-center">
+              <div class="flex  justify-center">
                 <div
                   class="
                     w-64
                     h-40
                     mt-8
+                    ml-8
                     shadow-lg
                     container
                     box-shadow-pop
@@ -154,6 +156,7 @@
                     w-64
                     h-40
                     mt-8
+                    mr-8
                     shadow-lg
                     container
                     box-shadow-pop
@@ -490,10 +493,10 @@
                           </div>
                         </div>
                         <div class="flex justify-start">
-                          <Title message="Professional Type" />
+                         <h2 class="font-bold">Professional Type</h2>
                         </div>
                         <div class="flex flex-row">
-                          <div v-if="renewal?.professionalTypes?.length > 0">
+                          <div v-if="renewal?.licenseProfessions?.length > 0">
                             <div class="flex flex-col mb-medium mr-12 ml-8">
                               <div style="background: lightgray; padding: 8px">
                                 <p style="color: blue">
@@ -504,7 +507,7 @@
                               <ul
                                 v-for="(
                                   professionName, index
-                                ) in renewal.professionalTypes"
+                                ) in renewal.licenseProfessions"
                                 v-bind:key="professionName.professionalTypeId"
                                 v-bind:value="professionName.professionalTypeId"
                               >
@@ -748,6 +751,9 @@
                               "
                               v-bind:src="googleApi + '' + docs[index].filePath"
                             />
+                            <div style="width: 400px">
+                            
+                            </div>
                           </div>
                         </picture>
                       </div>
@@ -1105,6 +1111,8 @@
             </div>
           </div>
         </div>
+
+
       </div>
     </div>
     <!-- Main Content -->
@@ -1245,19 +1253,17 @@ export default {
     let professionalTypes = ref([]);
     let evaluateRoute = ref("/admin/evaluate/Renewal" + route.params.id);
     const created = async (applicationTypeName, applicationId) => {
-      applicationType.value = applicationTypeName;
+      applicationType.value = "New License";
 
       store
         .dispatch("reviewer/getRenewalApplication", applicationId)
         .then((res) => {
           renewal.value = res.data.data;
-
           departmentId.value = res.data.data.education.department.id;
           getProfessionalTypesByDepartmentId(departmentId.value);
           profileInfo.value = renewal.value.profile;
           buttons.value = res.data.data.applicationStatus.buttons;
           docs.value = res.data.data.documents;
-          console.log(renewal.value);
           fetchDocumentTypes();
           for (let i = 0; i < renewal.value.licenseProfessions.length; i++) {
             renewal.value.licenseProfessions[i].showPrefix = false;
@@ -1301,7 +1307,7 @@ export default {
           }
         });
 
-      applicationType.value = route.params.applicationType;
+      applicationType.value = "New License";
     };
     const fetchDocumentTypes = async () => {
       store.dispatch("reviewer/getDocumentTypes").then((res) => {
@@ -1571,8 +1577,6 @@ export default {
           setTimeout(() => {
             showProfessionChangeError.value = false;
           }, 4000);
-          // professionalTypeIdss.value = [];
-          // professionalTypePrefixes.value = [];
           showActionLoading.value = false;
           showLoadingButtons.value = false;
           return;
@@ -1618,8 +1622,9 @@ export default {
         applicationType.value == "New License" &&
         sendDeclinedData.value == true
       ) {
+        console.log(req)
         store
-          .dispatch("reviewer/editrenewal", req)
+          .dispatch("reviewer/editRenewal", req)
           .then((res) => {
             showActionLoading.value = false;
             if (res.statusText == "Created") {

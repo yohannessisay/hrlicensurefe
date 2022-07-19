@@ -122,7 +122,7 @@
             variant="block"
             @click="updateUser()"
           >
-            Edit User
+           update User
           </button>
         </div>
       </form>

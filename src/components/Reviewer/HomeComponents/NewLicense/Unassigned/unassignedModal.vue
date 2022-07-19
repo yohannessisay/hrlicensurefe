@@ -546,6 +546,7 @@ export default {
               position: "bottom",
               toastClass: "toast-success",
             });
+            isLoading.value = false;
           } else {
             toast("Something is wrong, please try again in a few minutes.", {
               duration: 3000,

@@ -98,8 +98,9 @@ export default {
   async getNewLicenseUnassigned({ commit }, statusId) {
     const url = baseUrl + "/newLicenses/status/" + statusId;
     const resp = await ApiService.get(url);
+
     const unassignedApplications = resp.data.data.filter((unassigned) => {
-      return unassigned.transferFrom === null;
+      return unassigned.transferFromId === null;
     });
     commit(SET_NEW_LICENSE_UNASSIGNED, unassignedApplications);
   },
@@ -129,7 +130,7 @@ export default {
     const resp = await ApiService.get(url);
 
     const transferdApplications = resp.data.data.filter((unassigned) => {
-      return unassigned.transferFrom !== null;
+      return unassigned.transferFromId !== null;
     });
     commit(SET_NEW_LICENSE_FROM_OTHER_REGION, transferdApplications);
   },
@@ -1051,6 +1052,12 @@ export default {
 
   async getNewLicenseAllLicensed({ commit }) {
     const url = baseUrl + "/newLicenses/all/licensed";
+    const resp = await ApiService.get(url);
+    const newLicenseAllLicensed = resp.data.data;
+    commit(SET_NEW_LICENSE_ALL_LICENSED, newLicenseAllLicensed);
+  },
+  async getCertificateIssuedNewLicense({ commit }) {
+    const url = baseUrl + "/newLicenses/certficate/issued";
     const resp = await ApiService.get(url);
     const newLicenseAllLicensed = resp.data.data;
     commit(SET_NEW_LICENSE_ALL_LICENSED, newLicenseAllLicensed);

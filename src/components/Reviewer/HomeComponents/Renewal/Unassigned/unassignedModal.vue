@@ -518,7 +518,7 @@ export default {
       role.value = JSON.parse(localStorage.getItem("allAdminData")).role;
     };
 
-    const assignReviewer = () => {
+      const assignReviewer = () => {
       if (role.value.code === "TL" || role.value.code === "ADM") {
         assign.value = {
           licenseId: licenseData.value.id,
@@ -538,7 +538,7 @@ export default {
       isLoading.value = true;
 
       store
-        .dispatch("reviewer/assignReviewer", assign.value)
+        .dispatch("reviewer/assignRenewalReviewer", assign.value)
         .then((response) => {
           if (response.statusText == "Created") {
             toast("Selected reviewer is successfully assigned.", {
@@ -546,6 +546,7 @@ export default {
               position: "bottom",
               toastClass: "toast-success",
             });
+            isLoading.value = false;
           } else {
             toast("Something is wrong, please try again in a few minutes.", {
               duration: 3000,
@@ -635,8 +636,8 @@ export default {
               ? result.education.institution?.name
               : "-----";
             modalData.value.instType = result.education.institution
-              ?.institutionType
-              ? result.education.institution?.institutionType
+              ?.institutionType.name
+              ? result.education.institution?.institutionType.name
               : "-----";
             modalData.value.department = result.education.department.name
               ? result.education?.department.name

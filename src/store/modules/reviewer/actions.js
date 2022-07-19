@@ -1048,17 +1048,22 @@ export default {
         baseUrl + "/licenseReviewers/assign",
         assign
       );
+      
       return resp;
+      
     } catch (error) {
       return error;
     }
   },
   async assignRenewalReviewer({ commit }, assign) {
     try {
+      console.log(resp,assign);
+
       const resp = await ApiService.post(
         baseUrl + "/renewalReviewers/assign",
         assign
       );
+      console.log(resp,assign);
       return resp;
     } catch (error) {
       return error;
@@ -1255,7 +1260,7 @@ export default {
   async editNewLicense({ commit }, license) {
     try {
       const resp = await ApiService.put(
-        baseUrl + "/newlicenses/" + license.data.id,
+        baseUrl + "/newlicenses/" + license.data.data.id,
         license
       );
       console.log(resp)
