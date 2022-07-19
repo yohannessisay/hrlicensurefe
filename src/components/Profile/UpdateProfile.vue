@@ -506,7 +506,7 @@ export default {
       store.dispatch("profile/getProfileByUserId", userID).then(res => {
         const userData = res.data.data;
         personalInfo.value = userData;
-        photoFile.value = userData.profileDocuments;
+        photoFile.value = userData.profilePicture;
         showPreview.value = true;
         filePreview.value = googleApi + photoFile.value.filePath;
         showUpload.value = false;

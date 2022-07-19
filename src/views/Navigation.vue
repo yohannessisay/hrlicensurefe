@@ -212,8 +212,8 @@ export default {
       if (!profile) {
         isFirstTime.value = true;
       } else {
-        console.log(googleApi + profile.profileDocuments.filePath);
-        pic.value =  googleApi + profile.profileDocuments.filePath;
+        console.log(googleApi + profile.profilePicture.filePath);
+        pic.value =  googleApi + profile.profilePicture.filePath;
       }
     };
     const getName = (profile) => {
