@@ -635,7 +635,7 @@ export default {
               : "-----";
             modalData.value.instType = result.education.institution
               ?.institutionType
-              ? result.education.institution?.institutionType
+              ? result.education.institution?.institutionType.name
               : "-----";
             modalData.value.department = result.education.department.name
               ? result.education?.department.name

@@ -106,17 +106,21 @@
                                   bg-white
                                   blue-box-shadow-light
                                   rounded
+                                  justify-center
+                                  items-center
                                 "
                               >
                                 <div>
-                                  <Title message="በኢትዮፕያ ፌደራላዊ ዴሞክራሲያዊ ሪፐብሊክ" />
-                                  <Title
-                                    message="Federal Democratic Republic Ethiopia"
-                                  />
+                                  <h2 class="font-bold">
+                                    በኢትዮፕያ ፌደራላዊ ዴሞክራሲያዊ ሪፐብሊክ
+                                  </h2>
+                                  <h2 class="font-bold">
+                                    Federal Democratic Republic Ethiopia
+                                  </h2>
                                 </div>
                                 <span class="mt-1">
-                                  <Title message="የጤና ሚኒስቴር" />
-                                  <Title message="Ministry of Health" />
+                                  <h2 class="font-bold">የጤና ሚኒስቴር</h2>
+                                  <h2 class="font-bold">Ministry of Health</h2>
                                 </span>
 
                                 <div class="flex">
@@ -129,16 +133,17 @@
                                       mr-12
                                     "
                                   >
-                                    <Title
-                                      message="የጤና ባለሙያዎች የሙያ ምዝገባና ፈቃድ የምስከር ወረቀት"
-                                    />
+                                    <h2 class="font-bold">
+                                      የጤና ባለሙያዎች የሙያ ምዝገባና ፈቃድ የምስከር ወረቀት
+                                    </h2>
                                   </div>
                                   <div
                                     class="flex flex-col mb-medium w-1/2 mr-12"
                                   >
-                                    <Title
-                                      message="HEALTH PROFFESSIONALS REGISTRATION AND"
-                                    />
+                                    <h2 class="font-bold">
+                                      Health Professionals Registration and
+                                      Certification
+                                    </h2>
                                   </div>
                                 </div>
                                 <div class="flex">
@@ -226,9 +231,9 @@
                                 </div>
 
                                 <div class="flex">
-                                  <div class="flex flex-col w-1/2 mr-12">
-                                    <h3 class="underline ml-4">
-                                      <b v-if="modalData.profile"
+                                  <div class="flex flex-row w-1/2 mr-64" style="margin-left:-100px">
+                                    <h3 class="underline">
+                                      <b v-if="modalData.profile" class="text-yellow-300"
                                         >{{
                                           modalData.profile.alternativeName
                                             ? modalData.profile.alternativeName
@@ -251,10 +256,10 @@
                                       >
                                     </h3>
                                   </div>
-                                  <div class="flex flex-col w-1/2 mr-12">
-                                    <br />
-                                    <h3 class="underline ml-4 mb-4">
-                                      <b
+                                  <div class="flex flex-row w-1/2 ml-24">
+                                 
+                                    <h4 class="underline">
+                                      <b class="text-yellow-300"
                                         >{{
                                           modalData?.profile?.name
                                             ? modalData?.profile?.name
@@ -271,12 +276,12 @@
                                             : ""
                                         }}</b
                                       >
-                                    </h3>
+                                    </h4>
                                   </div>
                                 </div>
 
                                 <div class="flex">
-                                  <div class="flex flex-col ml-4 w-1/2 mr-12">
+                                  <div class="flex flex-col w-1/2 mr-12">
                                     <h4>
                                       ተገቢውን መስፈርት አሟልተው ስለተገኙ ሚኒስቴር መስሪያ ቤቱ
                                     </h4>
@@ -287,7 +292,7 @@
                                         :key="professions"
                                         class="flex flex-row ml-4"
                                       >
-                                        <b
+                                        <b class="text-yellow-300"
                                           >{{
                                             professions.professionalTypes
                                               .amharicProfessionalType === "ሌላ"
@@ -297,7 +302,7 @@
                                           }}
                                         </b>
                                       </div>
-                                      <br />ሙያ መዝግቦ ይህን የሙያ ስራ ፈቃድ ሰጥቷል።
+                                   ሙያ መዝግቦ ይህን የሙያ ስራ ፈቃድ ሰጥቷል።
                                     </h4>
                                   </div>
                                   <div
@@ -320,7 +325,7 @@
                                         :key="professions"
                                         class="flex flex-row ml-4"
                                       >
-                                        <b
+                                        <b class="text-yellow-300"
                                           >{{
                                             professions.prefix
                                               ? "(" + professions.prefix + ")"
@@ -350,9 +355,9 @@
                                       mr-12
                                     "
                                   >
-                                    <h3>
-                                      ይህ የሙያ የስራ ፈቃድ የሚያገለግለው
-                                      <b>
+                                    <h4>
+                                      ይህ የሙያ የስራ ፈቃድ የሚያገለግለው ከ
+                                      <b class="text-yellow-300">
                                         {{
                                           modalData.certifiedDate
                                             ? toEthiopian(
@@ -363,7 +368,7 @@
                                               )
                                             : ""
                                         }}
-                                        -{{
+                                       <span> -እስከ-</span>{{
                                           modalData.licenseExpirationDate !==
                                           null
                                             ? toEthiopian(
@@ -375,13 +380,13 @@
                                             : " አልተገለጸም"
                                         }}
                                       </b>
-                                    </h3>
+                                    </h4>
                                   </div>
                                   <div
                                     class="flex flex-col mb-medium w-1/2 mr-12"
                                   >
-                                    <h3>
-                                      The license is valid:<b
+                                    <h4>
+                                      The license is valid from:<b class="text-yellow-300"
                                         >{{
                                           modalData.certifiedDate
                                             ? moment(
@@ -389,7 +394,7 @@
                                               ).format("MMM DD, YYYY")
                                             : ""
                                         }}
-                                        -
+                                        <span> -To-</span>
                                         {{
                                           modalData.licenseExpirationDate
                                             ? moment(
@@ -398,7 +403,7 @@
                                             : " Not specified"
                                         }}</b
                                       >
-                                    </h3>
+                                    </h4>
                                   </div>
                                 </div>
                               </div>
@@ -567,13 +572,13 @@ export default {
 
     const updateLicenseGenerated = () => {
       let req = {
-        data: { ...props.modalData, isLicenseGenerated: true},
+        data: { ...props.modalData, isLicenseGenerated: true },
       };
       editApplication(req);
     };
 
     const editApplication = (req) => {
-      console.log(req)
+      console.log(req);
       store
         .dispatch("reviewer/editNewLicense", req)
         .then((res) => {
@@ -581,7 +586,7 @@ export default {
           if (res.statusText == "Created") {
             showGenerateModal.value = false;
             toast.success("Done", {
-                timeout: 5000,
+              timeout: 5000,
               position: "bottom-center",
               pauseOnFocusLoss: true,
               pauseOnHover: true,

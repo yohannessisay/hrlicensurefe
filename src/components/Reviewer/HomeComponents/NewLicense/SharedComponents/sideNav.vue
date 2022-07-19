@@ -36,7 +36,7 @@
         <li
           :class="$route.fullPath === '/admin/newLicense/' ? 'mb-2 active' : ''"
         >
-          <a href="">
+          <a href="#Unassigned">
             <i class="bx bx-certification"></i>
 
             <span class="links_name"> Unassigned</span>
@@ -51,7 +51,7 @@
               : ''
           "
         >
-          <a href="">
+          <a href="#inReview">
             <i class="bx bx-refresh"></i>
             <span class="links_name">In Review</span>
           </a>
@@ -63,7 +63,7 @@
             $route.fullPath === '/admin/newLicense/draft' ? 'mb-2 active' : ''
           "
         >
-          <a href="">
+          <a href="#Draft">
             <i class="bx bx-pencil"></i>
             <span class="links_name">Draft</span>
           </a>
@@ -77,7 +77,7 @@
               : ''
           "
         >
-          <a href="#">
+          <a href="#Approved">
             <i class="bx bx-badge"></i>
             <span class="links_name">Approved</span>
           </a>
@@ -91,7 +91,7 @@
               : ''
           "
         >
-          <a href="#">
+          <a href="#Declined">
             <i class="bx bx-error-alt"></i>
             <span class="links_name">Declined</span>
           </a>
@@ -105,7 +105,7 @@
               : ''
           "
         >
-          <a href="#">
+          <a href="#Under Supervision">
             <i class="bx bx-folder-open"></i>
             <span class="links_name">Under Supervision</span>
           </a>
@@ -119,7 +119,7 @@
               : ''
           "
         >
-          <a href="#">
+          <a href="#Licensed">
             <i class="bx bx-badge-check"></i>
             <span class="links_name">Licensed</span>
           </a>
