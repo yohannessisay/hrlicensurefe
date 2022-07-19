@@ -581,7 +581,11 @@ export default {
           if (res.statusText == "Created") {
             showGenerateModal.value = false;
             toast.success("Done", {
-              timeout: 5000,
+                timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
             });
           } else {
             showGenerateModal.value = false;

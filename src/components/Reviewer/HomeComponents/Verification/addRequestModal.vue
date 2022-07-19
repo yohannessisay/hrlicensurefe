@@ -341,7 +341,11 @@ export default {
             if (res.data.status == "Success") {
               isLoading.value = false;
               toast.success("Verification request added Successfully", {
-                timeout: 5000,
+                  timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
               });
             } else {
               isLoading.value = false;
