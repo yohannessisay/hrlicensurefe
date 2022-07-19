@@ -481,21 +481,21 @@
 import { useStore } from "vuex";
 import { ref, onMounted, watch } from "vue";
 import moment from "moment";
-import toast from "toast-me";
+import { useToast } from "vue-toastification";
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 
 export default {
   props: ["modalDataId", "reviewers"],
   components: {
-    Loading,
+    Loading
   },
   computed: {
-    moment: () => moment,
+    moment: () => moment
   },
   setup(props) {
     const store = useStore();
-
+    const toast = useToast();
     let show = ref(true);
     let showRes = ref(false);
     let showOptions = ref(false);
@@ -504,8 +504,8 @@ export default {
 
     let assign = ref({
       reviewerId: "",
-      licenseId: "",
-      createdByAdminId: "",
+      renewalId: "",
+      createdByAdminId: ""
     });
     let role = ref({});
     let isLoadingStart = ref(true);
@@ -518,20 +518,20 @@ export default {
       role.value = JSON.parse(localStorage.getItem("allAdminData")).role;
     };
 
-      const assignReviewer = () => {
+    const assignReviewer = () => {
       if (role.value.code === "TL" || role.value.code === "ADM") {
         assign.value = {
-          licenseId: licenseData.value.id,
+          renewalId: licenseData.value.id,
           reviewerId: assign.value.reviewerId,
-          createdByAdminId: +localStorage.getItem("adminId"),
+          createdByAdminId: +localStorage.getItem("adminId")
         };
       }
 
       if (role.value.code == "REV") {
         assign.value = {
-          licenseId: licenseData.value.id,
+          renewalId: licenseData.value.id,
           reviewerId: +localStorage.getItem("adminId"),
-          createdByAdminId: +localStorage.getItem("adminId"),
+          createdByAdminId: +localStorage.getItem("adminId")
         };
       }
 
@@ -539,27 +539,31 @@ export default {
 
       store
         .dispatch("reviewer/assignRenewalReviewer", assign.value)
-        .then((response) => {
+        .then(response => {
           if (response.statusText == "Created") {
-            toast("Selected reviewer is successfully assigned.", {
-              duration: 3000,
-              position: "bottom",
-              toastClass: "toast-success",
+            toast.success("Selected reviewer is successfully assigned.", {
+              timeout: 5000
             });
             isLoading.value = false;
           } else {
-            toast("Something is wrong, please try again in a few minutes.", {
-              duration: 3000,
-              position: "bottom",
-              toastClass: "toast-error",
+            toast.error(response.data.message, {
+              timeout: 20000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true
             });
+
+            isLoading.value = false;
           }
         })
         .catch(() => {
-          toast("Sorry there seems to be a problem, please try again.", {
-            duration: 3000,
-            position: "bottom",
-            toastClass: "toast-error",
+          toast.error("Sorry there seems to be a problem, please try again.", {
+            timeout: 20000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true
           });
         });
     };
@@ -569,11 +573,11 @@ export default {
     };
     const resultQuery = () => {
       if (reviewer.value.name) {
-        let data = props.reviewers.filter((item) => {
+        let data = props.reviewers.filter(item => {
           return reviewer.value.name
             .toLowerCase()
             .split(" ")
-            .every((v) => item.name.toLowerCase().includes(v));
+            .every(v => item.name.toLowerCase().includes(v));
         });
 
         return data;
@@ -582,12 +586,12 @@ export default {
       }
     };
 
-    const setInput = (value) => {
+    const setInput = value => {
       reviewer.value = {
         id: value.id,
         name: value.name,
         expertLevel: value.expertLevel.code,
-        role: value.role.code,
+        role: value.role.code
       };
       assign.value.reviewerId = value.id;
       showOptions.value = false;
@@ -601,11 +605,10 @@ export default {
     const check = () => {
       store
         .dispatch("reviewer/getRenewalApplication", props.modalDataId.id)
-        .then((res) => {
+        .then(res => {
           if (
             res.data.status == "Success" &&
-            res.data.message !=
-              "Renewal total count retrieved successfully!"
+            res.data.message != "Renewal total count retrieved successfully!"
           ) {
             result = res.data.data;
             modalData.value.name =
@@ -636,7 +639,7 @@ export default {
               ? result.education.institution?.name
               : "-----";
             modalData.value.instType = result.education.institution
-              ?.institutionType.name
+              ?.institutionType
               ? result.education.institution?.institutionType.name
               : "-----";
             modalData.value.department = result.education.department.name
@@ -681,9 +684,9 @@ export default {
       fullPage,
       assignReviewer,
       onCancel,
-      modalData,
+      modalData
     };
-  },
+  }
 };
 </script>
 

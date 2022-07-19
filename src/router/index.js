@@ -1010,7 +1010,7 @@ const routes = [
   },
   {
     path: "/admin/renewal/evaluate/:id",
-    name: "NewLicenseEvaluate",
+    name: "RenewalEvaluate",
     component: () =>
       import(
         "../components/Reviewer/HomeComponents/Renewal/InReview/inReviewEvaluationModal.vue"
