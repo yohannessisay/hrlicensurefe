@@ -1,12 +1,20 @@
 <template>
   <div class="w-screen max-w-4xl mt-small h-full">
     <div
-      class="flex flex-col mt-medium w-full bg-white blue-box-shadow-light rounded mb-large"
+      class="
+        flex flex-col
+        mt-medium
+        w-full
+        bg-white
+        blue-box-shadow-light
+        rounded
+        mb-large
+      "
     >
       <div class="mt-large">
         <TitleWithIllustration
           illustration="PersonalInfo"
-          message="Personal Info"
+          message="Personal Infos"
         />
       </div>
       <form class="mx-auto max-w-3xl w-full mt-10" @submit.prevent="nextStep">
@@ -33,7 +41,7 @@
                   class="photoFile"
                   ref="photoFileP"
                   v-on:change="handleFileUpload()"
-                  style="margin-bottom: 15px !important;"
+                  style="margin-bottom: 15px !important"
                 />
                 <!-- file format can be restricted by using accept=".jpeg,.jpg,.png,.pdf,...." -->
                 <p>
@@ -109,7 +117,9 @@
         </div>
         <div class="flex">
           <div class="flex flex-col mb-medium w-1/2 mr-12">
-            <label class="text-primary-700">የአባት ስም በአማርኛ (Father's Name in Amharic)</label>
+            <label class="text-primary-700"
+              >የአባት ስም በአማርኛ (Father's Name in Amharic)</label
+            >
             <input
               class="max-w-3xl"
               type="text"
@@ -173,7 +183,7 @@
             <span style="color: red">{{ personalInfoErrors.dateOfBirth }}</span>
             <span
               v-if="invalidBirthDate"
-              style="color:red"
+              style="color: red"
               class="mt-2 text-lg"
             >
               Applicant must be at least 18.
@@ -259,7 +269,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="flex  flex-col w-1/3">
+                <div class="flex flex-col w-1/3">
                   <div class="flex py-2">
                     <input
                       type="radio"
@@ -278,10 +288,64 @@
               }}</span>
             </div>
           </div>
+
+          <div class="flex w-1/2 mb-small m1-12 mt-8">
+            <div class="form-check">
+              <input
+                class="
+                  form-check-input
+                  appearance-none
+                  h-4
+                  w-4
+                  border border-gray-300
+                  rounded-sm
+                  bg-white
+                  checked:bg-blue-600 checked:border-blue-600
+                  focus:outline-none
+                  transition
+                  duration-200
+                  mt-1
+                  align-top
+                  bg-no-repeat bg-center bg-contain
+                  float-left
+                  mr-2
+                  cursor-pointer
+                "
+                type="checkbox"
+                id="flexCheckDefault"
+                v-model="hraUserStat"
+                @click="hraUser()"
+              />
+
+              <label
+                class="form-check-label inline-block text-gray-800"
+                for="flexCheckDefault"
+              >
+                Check here if you are registered on HRA
+              </label>
+              <br />
+              <div v-if="hraUserStat">
+                <label for="employeeId">Employee Id</label>
+                <input
+                  v-model="employeeId"
+                  type="text"
+                  id="employeeId"
+                  name="employeeId"
+                />
+              </div>
+            </div>
+          </div>
         </div>
+
         <div class="flex mb-medium w-full mt-medium">
           <button
-            class="block mx-auto w-1/4  bg-lightBlue-500 hover:bg-lightBlue-600 hover:shadow-lg"
+            class="
+              block
+              mx-auto
+              w-1/4
+              bg-lightBlue-500
+              hover:bg-lightBlue-600 hover:shadow-lg
+            "
           >
             Next
           </button>
@@ -310,7 +374,11 @@ export default {
     let nationality = ref("");
     let maritalStatus = ref("");
     let invalidBirthDate = ref(false);
-
+    const hraUserStat = ref(false);
+    const employeeId = ref("");
+    const hraUser = () => {
+      hraUserStat.value = !hraUserStat.value;
+    };
     let personalInfo = ref({
       name: "",
       fatherName: "",
@@ -324,6 +392,7 @@ export default {
       nationalityId: "",
       maritalStatusId: "",
       photo: "",
+      employeeId:"",
     });
     let personalInfoErrors = ref({
       name: "",
@@ -377,7 +446,7 @@ export default {
         }
         reader.addEventListener(
           "load",
-          async function() {
+          async function () {
             showPreview.value = true;
             filePreview.value = reader.result;
             var base64 = reader.result;
@@ -431,6 +500,7 @@ export default {
       });
     };
     const nextStep = () => {
+      personalInfo.value.employeeId=employeeId.value
       personalInfoErrors.value = validateForm(personalInfo.value);
       for (let i = 0; i < state.value.nationalities.length; i++) {
         if (
@@ -452,8 +522,9 @@ export default {
         return;
       }
       if (empty == true) {
+        console.log(personalInfo)
         store.dispatch("profile/setProfileInfo", personalInfo);
-        store.dispatch("profile/setPhoto", photoFile);
+        store.dispatch("profile/setPhoto", photoFile.value);
         emit("changeActiveState");
       }
     };
@@ -514,7 +585,7 @@ export default {
           }
           reader.addEventListener(
             "load",
-            async function() {
+            async function () {
               showPreview.value = true;
               filePreview.value = reader.result;
               var base64 = reader.result;
@@ -556,6 +627,9 @@ export default {
       isEmpty,
       state,
       id,
+      hraUserStat,
+      employeeId,
+      hraUser,
       fetchUserTypes,
       nextStep,
       fetchRegions,

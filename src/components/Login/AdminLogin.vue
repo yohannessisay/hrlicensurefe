@@ -81,7 +81,12 @@
                 <i class="fa fa-eye" style="font-size: 26px;" @click="showVisibility()"></i></a>
               </div>
             </div>
-
+    <div>
+       <a
+        href="#"
+        class="text-primary-500 w-full text-right mr-small hover:underline"
+        @click="$emit('forgotPassword')">Forgot Password</a>
+    </div>
             <div class="form-group mb-6 text-center">
               <button
                 class="
@@ -148,14 +153,8 @@ import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import Spinner from "@/sharedComponents/Spinner";
 import VueElementLoading from "vue-element-loading";
 export default {
-  components: {
-    Title,
-    FlashMessage,
-    ErrorFlashMessage,
-    Spinner,
-    VueElementLoading,
-  },
-  setup(props, context) {
+  components: { Title, FlashMessage, ErrorFlashMessage, Spinner, VueElementLoading },
+  setup( { emit }) {
     const store = useStore();
     const router = useRouter();
     let show = ref(false);

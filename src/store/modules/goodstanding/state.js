@@ -11,6 +11,7 @@ export default {
         applicantPositionId: "",
         professionalTypeId: "",
         otherProfessionalType: "",
+        otherProfessionalTypeAmharic:"",
         buttons: [],
         applicationId: 0,
         documentSpec: [],

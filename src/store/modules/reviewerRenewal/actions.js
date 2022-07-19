@@ -89,13 +89,14 @@ import {
 } from "./mutation-types";
 
 export default {
-  async getUnassignedRenewal({ commit }, statusId) {
+  async getRenewalUnassigned({ commit }, statusId) {
     try {
       const url = baseUrl + "/renewals/status/"+statusId;
       const resp = await ApiService.get(url);
+      console.log(resp);
       commit(SET_RENEWAL_UNASSIGNED, resp.data.data);
     } catch (err) {
-      return error;
+      return err;
     }
   },
   async getRenewalReport({ commit }) {
@@ -109,7 +110,7 @@ export default {
       return err;
     }
   },
-  getUnassignedRenewalSearched({ commit, getters }, searchKey) {
+  getRenewalUnassignedSearched({ commit, getters }, searchKey) {
     if (getters.getRenewalUnassigned === undefined) {
       return;
     }
@@ -998,6 +999,13 @@ export default {
 
   async getRenewalAllLicensed({ commit }) {
     const url = baseUrl + "/renewals/all/licensed";
+    const resp = await ApiService.get(url);
+    const renewalAllLicensed = resp.data.data;
+    commit(SET_RENEWAL_ALL_LICENSED, renewalAllLicensed);
+  },
+
+  async getCertificateIssuedRenewal({ commit }) {
+    const url = baseUrl + "/renewals/certificate/issued";
     const resp = await ApiService.get(url);
     const renewalAllLicensed = resp.data.data;
     commit(SET_RENEWAL_ALL_LICENSED, renewalAllLicensed);

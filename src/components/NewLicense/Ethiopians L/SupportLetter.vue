@@ -105,8 +105,8 @@
               Back
             </button>
             <button @click="submit">Next</button>
-            <button @click="draft(buttons[2].action)" variant="outline">
-              {{ buttons[2]["name"] }}
+            <button @click="draft(buttons[0].action)" variant="outline">
+              {{ buttons[0]["name"] }}
             </button>
             <button
               class="withdraw"
@@ -426,7 +426,9 @@ export default {
             expertLevelId: licenseInfo.expertLevelId,
             otherEducationalInstitution:
               licenseInfo.otherEducationalInstitution,
-            otherProfessionalType: licenseInfo.otherProfessionalType,
+              otherProfessionalType: licenseInfo.otherProfessionalType,
+             otherProfessionalTypeAmharic:licenseInfo.otherProfessionalType,
+
           },
         };
         store.dispatch("newlicense/addNewLicense", license).then((res) => {
@@ -599,7 +601,9 @@ export default {
             expertLevelId: licenseInfo.expertLevelId,
             otherEducationalInstitution:
               licenseInfo.otherEducationalInstitution,
-            otherProfessionalType: licenseInfo.otherProfessionalType,
+              otherProfessionalType: licenseInfo.otherProfessionalType,
+             otherProfessionalTypeAmharic:licenseInfo.otherProfessionalType,
+
           },
         };
         store.dispatch("newlicense/addNewLicense", license).then((res) => {

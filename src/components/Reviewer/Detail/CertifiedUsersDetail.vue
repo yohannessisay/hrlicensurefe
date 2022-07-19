@@ -603,6 +603,8 @@ export default {
                 myRegion.value = false;
               }
             }
+          showApplicationLoading.value = false;
+
           });
       } else if (route.params.applicationType === "Renewal") {
         store

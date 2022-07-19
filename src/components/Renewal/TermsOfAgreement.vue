@@ -26,7 +26,7 @@
         <h2>Foreigner</h2>
         <ul>
           <li>Health Exam Certificate</li>
-          <div class="tooltip">
+          <div class="tooltipclass">
             Letter from Hiring Organization
             <span class="tooltiptext ml-4">
               Found in Ethiopia
@@ -46,7 +46,7 @@
           <li>Previous License</li>
           <li>CPD Certificate</li>
           <li>
-            <div class="tooltip">
+            <div class="tooltipclass">
               Payroll Document
               <span class="tooltiptext ml-4">
                 Non-government Institutions
@@ -107,7 +107,7 @@ export default {
     box-shadow: 0px 3px 6px #1e40af82;
   }
 }
-.tooltip .tooltiptext {
+.tooltipclass .tooltiptext {
   visibility: hidden;
   width: 120px;
   background-color: #1e40af82;
@@ -116,16 +116,16 @@ export default {
   padding: 5px 0;
   border-radius: 6px;
 
-  /* Position the tooltip text - see examples below! */
+  /* Position the tooltipclass text - see examples below! */
   position: absolute;
   z-index: 1;
 }
 
-/* Show the tooltip text when you mouse over the tooltip container */
-.tooltip:hover .tooltiptext {
+/* Show the tooltipclass text when you mouse over the tooltipclass container */
+.tooltipclass:hover .tooltiptext {
   visibility: visible;
 }
-.tooltip {
+.tooltipclass {
   position: relative;
   display: inline-block;
   border-bottom: 1px dotted white; /* If you want dots under the hoverable text */

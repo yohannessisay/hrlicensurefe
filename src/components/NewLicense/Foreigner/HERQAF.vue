@@ -32,7 +32,7 @@
         >
           ACCEPTED
         </h2>
-        <div class="tooltip">
+        <div class="tooltipclass">
           <TitleWithIllustration
             illustration="Certificate"
             message="Higher Education Relevance and Quality Agency(HERQA)"
@@ -111,8 +111,8 @@
               Back
             </button>
             <button @click="submit">Next</button>
-            <button @click="draft(buttons[2].action)" variant="outline">
-              {{ buttons[2]["name"] }}
+            <button @click="draft(buttons[0].action)" variant="outline">
+              {{ buttons[0]["name"] }}
             </button>
             <button
               class="withdraw"
@@ -518,7 +518,9 @@ export default {
             expertLevelId: licenseInfo.expertLevelId,
             otherEducationalInstitution:
               licenseInfo.otherEducationalInstitution,
-            otherProfessionalType: licenseInfo.otherProfessionalType,
+              otherProfessionalType: licenseInfo.otherProfessionalType,
+             otherProfessionalTypeAmharic:licenseInfo.otherProfessionalType,
+
           },
         };
         store.dispatch("newlicense/addNewLicense", license).then((res) => {
@@ -751,7 +753,9 @@ export default {
             expertLevelId: licenseInfo.expertLevelId,
             otherEducationalInstitution:
               licenseInfo.otherEducationalInstitution,
-            otherProfessionalType: licenseInfo.otherProfessionalType,
+              otherProfessionalType: licenseInfo.otherProfessionalType,
+             otherProfessionalTypeAmharic:licenseInfo.otherProfessionalType,
+
           },
         };
         store.dispatch("newlicense/addNewLicense", license).then((res) => {
@@ -930,7 +934,7 @@ img {
   color: white;
   border-color: tomato;
 }
-.tooltip .tooltiptext {
+.tooltipclass .tooltiptext {
   visibility: hidden;
   width: 120px;
   background-color: #1e40af82;
@@ -944,16 +948,16 @@ img {
   z-index: 1;
 }
 
-/* Show the tooltip text when you mouse over the tooltip container */
-.tooltip:hover .tooltiptext {
+/* Show the tooltipclass text when you mouse over the tooltipclass container */
+.tooltipclass:hover .tooltiptext {
   visibility: visible;
 }
-.tooltip {
+.tooltipclass {
   position: relative;
   display: inline-block;
   border-bottom: 1px dotted white; /* If you want dots under the hoverable text */
 }
-.tooltip .tooltiptext {
+.tooltipclass .tooltiptext {
   visibility: hidden;
   width: 120px;
   background-color: #1e40af82;
@@ -962,16 +966,16 @@ img {
   padding: 5px 0;
   border-radius: 6px;
 
-  /* Position the tooltip text - see examples below! */
+  /* Position the tooltipclass text - see examples below! */
   position: absolute;
   z-index: 1;
 }
 
-/* Show the tooltip text when you mouse over the tooltip container */
-.tooltip:hover .tooltiptext {
+/* Show the tooltipclass text when you mouse over the tooltipclass container */
+.tooltipclass:hover .tooltiptext {
   visibility: visible;
 }
-.tooltip {
+.tooltipclass {
   position: relative;
   display: inline-block;
   border-bottom: 1px dotted white; /* If you want dots under the hoverable text */

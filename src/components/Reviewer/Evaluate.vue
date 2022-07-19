@@ -196,7 +196,7 @@
                 <div class="flex flex-row">
                   <div
                     :class="[
-                      profileInfo.name === null ? errorClass : activeClassd,
+                      profileInfo.name === null ? errorClass : activeClassd
                     ]"
                   >
                     <label class="ml-8 titleColors"> Full Name </label>
@@ -219,7 +219,7 @@
                       :class="[
                         profileInfo.alternativeName === null
                           ? errorClass
-                          : activeClass,
+                          : activeClass
                       ]"
                     >
                       <!-- <div v-if="true"> -->
@@ -310,7 +310,7 @@
                 <div class="flex flex-row">
                   <div
                     :class="[
-                      profileInfo.gender === null ? errorClass : activeClass,
+                      profileInfo.gender === null ? errorClass : activeClass
                     ]"
                   >
                     <label class="ml-8 titleColors"> Gender</label>
@@ -320,9 +320,7 @@
                   </div>
                   <div
                     :class="[
-                      profileInfo.nationality == null
-                        ? errorClass
-                        : activeClass,
+                      profileInfo.nationality == null ? errorClass : activeClass
                     ]"
                   >
                     <label class="ml-8 titleColors"> Nationality</label>
@@ -338,7 +336,7 @@
                     :class="[
                       profileInfo.maritalStatus.name === null
                         ? errorClass
-                        : activeClass,
+                        : activeClass
                     ]"
                   >
                     <label class="ml-8 titleColors"> Marital Status</label>
@@ -359,7 +357,7 @@
                     :class="[
                       profileInfo.user.phoneNumber === null
                         ? errorClass
-                        : activeClass,
+                        : activeClass
                     ]"
                   >
                     <label class="ml-8 titleColors"> Mobile Number</label>
@@ -376,7 +374,7 @@
                     :class="[
                       profileInfo.user.emailAddress === null
                         ? errorClass
-                        : activeClass,
+                        : activeClass
                     ]"
                   >
                     <label class="ml-8 titleColors"> Email</label>
@@ -499,7 +497,7 @@
                           <!-- <div class="flex flex-row ml-16 mr-8 mt-3 mb-3">
                             <div class="flex flex-col"> -->
                           <div
-                            style="
+                            style="min-width: 600px;
                               float: left;
                               border-right: 1px solid lightgray;
                             "
@@ -514,6 +512,15 @@
                               style="display: block"
                               type="text"
                               v-model="newLicense.otherProfessionalType"
+                            />
+                            <label style="display: block"
+                              >የሙያ ስም በአማርኛ (ለኢትዮጵያውያን አመልካች) :</label
+                            >
+                            <input
+                              class="mt-1"
+                              style="display: block"
+                              type="text"
+                              v-model="newLicense.otherProfessionalTypeAmharic"
                             />
                           </div>
                           <div
@@ -596,7 +603,7 @@
                         </div>
                         <div class="grid grid-cols-2 gap-4 mb-4 ml-8 mt-2">
                           <div
-                            style="
+                            style="min-width: 600px;
                               float: left;
                               border-right: 1px solid lightgray;
                             "
@@ -612,6 +619,12 @@
                               style="display: block"
                               type="text"
                               v-model="newLicense.otherProfessionalType"
+                            />
+                            <label style="display: block">የሙያ ስም በአማርኛ :</label>
+                            <input
+                              style="display: block"
+                              type="text"
+                              v-model="newLicense.otherProfessionalTypeAmharic"
                             />
                           </div>
                           <div
@@ -686,8 +699,15 @@
             <button class="mr-medium" @click="accept(docs[index])">
               Accept
             </button>
-            <button class="decline" @click="reject(docs[index])">Reject</button>
             <button
+              class="decline"
+              v-if="!isReprint"
+              @click="reject(docs[index])"
+            >
+              Reject
+            </button>
+            <button
+              v-if="!isReprint"
               class="p-1"
               variant="outline"
               @click="action('ReviewerDraftEvent')"
@@ -695,7 +715,7 @@
               Save as Draft
             </button>
             <button
-            v-if="showTransferToAdminButton" 
+              v-if="expertLevelId !=3 && showTransferToAdminButton && !isReprint"
               variant="outline"
               @click="transferToFederal()"
             >
@@ -753,7 +773,7 @@
 
       <div
         class="flex justify-center items-center mb-medium"
-        v-if="showButtons && !showLoadingButtons"
+        v-if="showButtons && !showLoadingButtons && !isReprint"
       >
         <div
           v-for="button in buttons"
@@ -769,6 +789,20 @@
           </button>
         </div>
       </div>
+      <div
+        class="flex justify-center items-center mb-medium"
+        v-if="showButtons && !showLoadingButtons && isReprint"
+      >
+        
+        <button
+          variant="outline"
+          style="background-color: rgba(54, 116, 185, var(--bg-opacity)); color:white"
+          @click="action('ApproveEvent')"
+        >
+          Update
+        </button>
+      </div>
+
       <div
         v-if="showActionLoading"
         class="flex justify-center justify-items-center mt-2"
@@ -1019,25 +1053,22 @@
         />
       </div>
       <div v-if="showTransferSuccessMessage">
-            <FlashMessage message="Transfer Successful!" />
-
-        </div>
-            <div v-if="showTransferErrorMessage">
-        <ErrorFlashMessage
-          message="Error! Couldn't transfer to federal"
-        />
+        <FlashMessage message="Transfer Successful!" />
+      </div>
+      <div v-if="showTransferErrorMessage">
+        <ErrorFlashMessage message="Error! Couldn't transfer to federal" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import {useStore} from "vuex";
-import {useRoute} from "vue-router";
-import {ref, onMounted} from "vue";
+import { useStore } from "vuex";
+import { useRoute } from "vue-router";
+import { ref, onMounted } from "vue";
 
-import {useRouter} from "vue-router";
-import {googleApi} from "@/composables/baseURL";
+import { useRouter } from "vue-router";
+import { googleApi } from "@/composables/baseURL";
 
 import Title from "@/sharedComponents/Title";
 import Modal from "@/sharedComponents/Modal";
@@ -1054,16 +1085,16 @@ export default {
     ErrorFlashMessage,
     ReviewerNavBar,
     Title,
-    Spinner,
+    Spinner
   },
   computed: {
-    moment: () => moment,
+    moment: () => moment
   },
   setup() {
     const route = useRoute();
     const store = useStore();
     const router = useRouter();
-
+    const expertLevelId = JSON.parse(localStorage.getItem("allAdminData")).expertLevelId;
     const options = ref([0, 1, 2]);
     const selectedOptions = ref([0]);
     const newSelectedOptions = ref([0]);
@@ -1078,19 +1109,21 @@ export default {
     let isProfessionalTypeChanged = ref(false);
 
     let otherProfessionalType = ref();
+    let otherProfessionalTypeAmharic = ref();
+
     let showOtherProfessionError = ref(false);
 
     let professionalTypeIds = ref([]);
     let professionalTypeIdss = ref([]);
     let prefixList = ref([
-      {name: "None", id: 0},
-      {name: "Consultant", id: 1},
-      {name: "Expert", id: 2},
-      {name: "Junior", id: 3},
-      {name: "Senior", id: 4},
-      {name: "Senior expert", id: 5},
-      {name: "Chief", id: 6},
-      {name: "Chief expert", id: 7},
+      { name: "None", id: 0 },
+      { name: "Consultant", id: 1 },
+      { name: "Expert", id: 2 },
+      { name: "Junior", id: 3 },
+      { name: "Senior", id: 4 },
+      { name: "Senior expert", id: 5 },
+      { name: "Chief", id: 6 },
+      { name: "Chief expert", id: 7 }
     ]);
     let prefix = ref();
     let canChangeName = ref(false);
@@ -1106,24 +1139,24 @@ export default {
     let adminId = localStorage.getItem("adminId");
 
     let newLicense = ref({
-      applicant: {profile: {name: "", fatherName: ""}},
-      applicantType: {name: ""},
+      applicant: { profile: { name: "", fatherName: "" } },
+      applicantType: { name: "" },
       education: {
-        department: {name: ""},
-        institution: {institutionType: {}, name: ""},
+        department: { name: "" },
+        institution: { institutionType: {}, name: "" }
       },
       declinedFields: "",
       remark: "",
-      documents: [{filePath: ""}],
+      documents: [{ filePath: "" }],
       applicationStatus: {
-        buttons: [{action: "", name: ""}],
-      },
+        buttons: [{ action: "", name: "" }]
+      }
     });
     let buttons = ref([
-      {action: "", name: ""},
-      {action: "", name: ""},
-      {action: "", name: ""},
-      {action: "", name: ""},
+      { action: "", name: "" },
+      { action: "", name: "" },
+      { action: "", name: "" },
+      { action: "", name: "" }
     ]);
 
     let professionalTypePrefixes = ref([]);
@@ -1141,6 +1174,7 @@ export default {
     let showTransferToAdminButton = ref(false);
     let rejectedObj = ref([]);
     let showButtons = ref(false);
+    let isReprint = ref(false);
     let disableNext = ref(true);
     let nextClickable = ref(false);
     let foundInRejected = ref(false);
@@ -1174,13 +1208,17 @@ export default {
       if (applicationType.value == "New License") {
         store
           .dispatch("reviewer/getNewLicenseApplication", applicationId)
-          .then((res) => {
+          .then(res => {
             newLicense.value = res.data.data;
+            console.log(newLicense.value.applicationStatusId);
             departmentId.value = res.data.data.education.department.id;
             getProfessionalTypesByDepartmentId(departmentId.value);
             profileInfo.value = newLicense.value.applicant.profile;
             buttons.value = res.data.data.applicationStatus.buttons;
             docs.value = res.data.data.documents;
+            isReprint.value =
+              newLicense.value.applicationStatusId == 5 ? true : false;
+            console.log(isReprint.value);
             fetchDocumentTypes();
             for (
               let i = 0;
@@ -1231,7 +1269,7 @@ export default {
       if (applicationType.value == "Good Standing") {
         store
           .dispatch("reviewer/getGoodStandingApplication", applicationId)
-          .then((res) => {
+          .then(res => {
             isGoodStanding.value = true;
             newLicense.value = res.data.data;
             departmentId.value = res.data.data.departmentId;
@@ -1240,14 +1278,14 @@ export default {
             applicantId.value = res.data.data.applicantId;
             newLicense.value = {
               ...newLicense.value,
-              ...res.data.data,
+              ...res.data.data
             };
             buttons.value = res.data.data.applicationStatus.buttons.filter(
-              (allButtons) => {
+              allButtons => {
                 return allButtons.name != "Under supervision";
               }
             );
-            buttons.value.forEach((button) => {
+            buttons.value.forEach(button => {
               button.name === "Approve"
                 ? (button.name = "Verify")
                 : (button.name = button.name);
@@ -1303,17 +1341,17 @@ export default {
       if (applicationType.value == "Verification") {
         store
           .dispatch("reviewer/getVerificationApplication", applicationId)
-          .then((res) => {
+          .then(res => {
             newLicense.value = res.data.data;
             departmentId.value = res.data.data.education.department.id;
             getProfessionalTypesByDepartmentId(departmentId.value);
             profileInfo.value = newLicense.value.applicant.profile;
             buttons.value = res.data.data.applicationStatus.buttons.filter(
-              (allButtons) => {
+              allButtons => {
                 return allButtons.name != "Under supervision";
               }
             );
-            buttons.value.forEach((button) => {
+            buttons.value.forEach(button => {
               button.name === "Approve"
                 ? (button.name = "Verify")
                 : (button.name = "-");
@@ -1367,7 +1405,7 @@ export default {
       if (applicationType.value == "Renewal") {
         store
           .dispatch("reviewer/getRenewalApplication", applicationId)
-          .then((res) => {
+          .then(res => {
             newLicense.value = res.data.data;
             departmentId.value = res.data.data.education.department.id;
             getProfessionalTypesByDepartmentId(departmentId.value);
@@ -1424,12 +1462,12 @@ export default {
       applicationType.value = route.params.applicationType;
     };
     const fetchDocumentTypes = async () => {
-      store.dispatch("reviewer/getDocumentTypes").then((res) => {
+      store.dispatch("reviewer/getDocumentTypes").then(res => {
         documentTypes.value = res.data.data;
         findDocumentType(documentTypes.value, docs.value[0]);
       });
     };
-    const next = (doc) => {
+    const next = doc => {
       if (nextClickable.value == true) {
         index.value = index.value + 1;
         amount.value = ((index.value + 1) / docs.value.length) * 100;
@@ -1485,33 +1523,26 @@ export default {
       }
     };
     const transferToFederal = () => {
-      store.dispatch("renewal/getExpertLevel").then((res) => {
-        let federalData = res.data.data.filter((r) => r.code == "FED");
+      store.dispatch("renewal/getExpertLevel").then(res => {
+        let federalData = res.data.data.filter(r => r.code == "FED");
         let transferData = {
           licenseId: route.params.applicationId,
           expertLevelId: federalData[0].id,
-          createdByAdminId: adminId,
+          createdByAdminId: adminId
         };
-        store
-          .dispatch("reviewer/transferToFederal", transferData)
-          .then((res) => {
-             if(res.data?.status == "Success")
-             {
-               showTransferSuccessMessage.value = true;
-               setTimeout(()=>
-               {
-                    router.push({ path: "/admin/review" });
-
-               }, 4000)
-             }
-             else
-             {
-               showTransferErrorMessage.value = true;
-             }
-          });
+        store.dispatch("reviewer/transferToFederal", transferData).then(res => {
+          if (res.data?.status == "Success") {
+            showTransferSuccessMessage.value = true;
+            setTimeout(() => {
+              router.push({ path: "/admin/review" });
+            }, 4000);
+          } else {
+            showTransferErrorMessage.value = true;
+          }
+        });
       });
     };
-    const accept = (doc) => {
+    const accept = doc => {
       nextClickable.value = true;
       if (accepted.value.length > 0) {
         if (!accepted.value.includes(doc.documentTypeCode)) {
@@ -1561,7 +1592,7 @@ export default {
       }
     };
 
-    const reject = (doc) => {
+    const reject = doc => {
       nextClickable.value = true;
       if (rejected.value.length > 0) {
         if (!rejected.value.includes(doc.documentTypeCode)) {
@@ -1611,7 +1642,7 @@ export default {
       }
     };
 
-    const action = (actionValue) => {
+    const action = actionValue => {
       showActionLoading.value = true;
       showLoadingButtons.value = true;
       if (professionalTypeIdss.value.length > 0) {
@@ -1649,7 +1680,7 @@ export default {
         if (loopCounter == newLicense.value.professionalTypePrefixes.length) {
           newLicense.value.professionalTypePrefixes.push({
             professionalTypeId: professionId,
-            prefix: null,
+            prefix: null
           });
         }
         loopCounter = 0;
@@ -1737,7 +1768,7 @@ export default {
       newLicense.value.certifiedDate = new Date();
       let req = {
         action: actionValue,
-        data: newLicense.value,
+        data: newLicense.value
       };
       if (
         applicationType.value == "New License" &&
@@ -1745,7 +1776,7 @@ export default {
       ) {
         store
           .dispatch("reviewer/editNewLicense", req)
-          .then((res) => {
+          .then(res => {
             showActionLoading.value = false;
             if (res.statusText == "Created") {
               showFlash.value = true;
@@ -1760,7 +1791,7 @@ export default {
               }, 3000);
             }
           })
-          .catch((err) => {
+          .catch(err => {
             showErrorFlash.value = true;
             setTimeout(() => {
               router.go();
@@ -1771,7 +1802,7 @@ export default {
         applicationType.value == "Verification" &&
         sendDeclinedData.value == true
       ) {
-        store.dispatch("reviewer/editVerification", req).then((res) => {
+        store.dispatch("reviewer/editVerification", req).then(res => {
           showActionLoading.value = false;
           if (res.statusText == "Created") {
             showFlash.value = true;
@@ -1791,7 +1822,7 @@ export default {
         applicationType.value == "Good Standing" &&
         sendDeclinedData.value == true
       ) {
-        store.dispatch("reviewer/editGoodStanding", req).then((res) => {
+        store.dispatch("reviewer/editGoodStanding", req).then(res => {
           showActionLoading.value = false;
           if (res.statusText == "Created") {
             showFlash.value = true;
@@ -1821,7 +1852,7 @@ export default {
         applicationType.value == "Renewal" &&
         sendDeclinedData.value == true
       ) {
-        store.dispatch("reviewer/editRenewal", req).then((res) => {
+        store.dispatch("reviewer/editRenewal", req).then(res => {
           showActionLoading.value = false;
           if (res.statusText == "Created") {
             showFlash.value = true;
@@ -1850,7 +1881,7 @@ export default {
       showRemark.value = !showRemark.value;
     };
 
-    const openPdfInNewTab = (pdfPath) => {
+    const openPdfInNewTab = pdfPath => {
       pdfFilePath.value = pdfPath;
       window.open(googleApi + "" + pdfPath, "_blank");
     };
@@ -1863,11 +1894,11 @@ export default {
     };
     const changeProfession = () => {};
 
-    const getProfessionalTypesByDepartmentId = (id) => {
+    const getProfessionalTypesByDepartmentId = id => {
       let professionSelected = ref(false);
       store
         .dispatch("reviewer/getProfessionalTypeByDepartmentId", id)
-        .then((res) => {
+        .then(res => {
           res.data.data
             .filter(function(e) {
               for (let i in newLicense.value.professionalTypes) {
@@ -1883,7 +1914,7 @@ export default {
               }
               professionSelected.value = false;
             })
-            .map((mapData) => {
+            .map(mapData => {
               mapData.showPrefix = false;
               mapData.showPrefixLink = false;
               return mapData;
@@ -1904,7 +1935,7 @@ export default {
         alternativeFatherName:
           newLicense.value.applicant.profile.alternativeFatherName,
         alternativeGrandFatherName:
-          newLicense.value.applicant.profile.alternativeGrandFatherName,
+          newLicense.value.applicant.profile.alternativeGrandFatherName
       };
       const profileData = [id, newProfile];
       store
@@ -1917,7 +1948,7 @@ export default {
             showNameChangeFlash.value = false;
           }, 3000);
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
           canChangeName.value = false;
           showNameChangeErrorFlash.value = true;
@@ -1956,7 +1987,7 @@ export default {
 
           if (previousProfession) {
             professionalTypePrefixes.value = professionalTypePrefixes.value.filter(
-              (data) => {
+              data => {
                 return (
                   data.professionalTypeId != profession.professionalTypes.id
                 );
@@ -1964,7 +1995,7 @@ export default {
             );
           } else {
             professionalTypePrefixes.value = professionalTypePrefixes.value.filter(
-              (data) => {
+              data => {
                 return data.professionalTypeId != profession.id;
               }
             );
@@ -1975,8 +2006,10 @@ export default {
             profession.professionalTypes.name == "Other"
           ) {
             newLicense.value.otherProfessionalType = null;
+            newLicense.value.otherProfessionalTypeAmharic = null;
           } else if (!previousProfession && profession.name == "Other") {
             newLicense.value.otherProfessionalType = null;
+            newLicense.value.otherProfessionalTypeAmharic = null;
           }
         }
       }
@@ -2008,7 +2041,7 @@ export default {
       if (professionalTypePrefixes.value.length === 0) {
         professionalTypePrefixes.value.push({
           professionalTypeId: professionId,
-          prefix: event.target.value,
+          prefix: event.target.value
         });
         return;
       }
@@ -2020,7 +2053,7 @@ export default {
           if (countProLength.value === professionalTypePrefixes.value.length) {
             professionalTypePrefixes.value.push({
               professionalTypeId: professionId,
-              prefix: event.target.value,
+              prefix: event.target.value
             });
             countProLength.value = 0;
             return;
@@ -2028,7 +2061,7 @@ export default {
         } else {
           professionalTypePrefixes.value.splice(
             professionalTypePrefixes.value.indexOf({
-              professionalTypeId: professionId,
+              professionalTypeId: professionId
             }),
             1
           );
@@ -2037,7 +2070,7 @@ export default {
           }
           professionalTypePrefixes.value.push({
             professionalTypeId: professionId,
-            prefix: event.target.value,
+            prefix: event.target.value
           });
           countProLength.value = 0;
           return;
@@ -2045,7 +2078,7 @@ export default {
       }
     };
 
-    const checkProfessionChanged = (previousProfessionType) => {
+    const checkProfessionChanged = previousProfessionType => {
       let count = 0;
       if (previousProfessionType.length !== professionalTypeIdss.value.length) {
         return true;
@@ -2097,6 +2130,7 @@ export default {
       buttons,
       action,
       showButtons,
+      isReprint,
       isToChangeProfession,
       profileInfo,
       disableNext,
@@ -2145,6 +2179,7 @@ export default {
       selectedOptions,
       newSelectedOptions,
       otherProfessionalType,
+      otherProfessionalTypeAmharic,
       showOtherProfessionError,
       chkcontrol,
       checkResult,
@@ -2153,9 +2188,9 @@ export default {
       isGoodStanding,
       showActionLoading,
       showLoadingButtons,
-      googleApi,
+      googleApi
     };
-  },
+  }
 };
 </script>
 <style>

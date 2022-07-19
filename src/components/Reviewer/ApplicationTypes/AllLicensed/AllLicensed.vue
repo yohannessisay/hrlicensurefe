@@ -9,13 +9,13 @@
               :class="[
                 selectedTab == 'New License'
                   ? selectedTabClass
-                  : notSelectedTabClass,
+                  : notSelectedTabClass
               ]"
               @click="changeTab('New License')"
               :style="[
                 selectedTab == 'New License'
                   ? 'background-color: white'
-                  : 'background-color: #C3DBD9',
+                  : 'background-color: #C3DBD9'
               ]"
             >
               New License
@@ -24,12 +24,12 @@
               :class="[
                 selectedTab == 'Renewal'
                   ? selectedTabClass
-                  : notSelectedTabClass,
+                  : notSelectedTabClass
               ]"
               :style="[
                 selectedTab == 'Renewal'
                   ? 'background-color: white'
-                  : 'background-color: #C3DBD9',
+                  : 'background-color: #C3DBD9'
               ]"
               @click="changeTab('Renewal')"
             >
@@ -40,12 +40,12 @@
                 selectedTab == 'Good Standing'
                   ? selectedTabClass
                   : notSelectedTabClass,
-                'tabColor',
+                'tabColor'
               ]"
               :style="[
                 selectedTab == 'Good Standing'
                   ? 'background-color: white'
-                  : 'background-color: #C3DBD9',
+                  : 'background-color: #C3DBD9'
               ]"
               @click="changeTab('Good Standing')"
             >
@@ -98,6 +98,7 @@
           "
         />
         <all-licensed-applications
+          v-if="display != 'reprint'"
           :allLicensedApplication="
             selectedTab == 'New License'
               ? getNewLicenseAllLicensed
@@ -107,6 +108,18 @@
           "
           :app_type="app_type"
           others_licensed="false"
+        />
+        <assigned-applications
+          v-if="display == 'reprint'"
+          :assignedApplication="
+            selectedTab == 'New License'
+              ? getNewLicenseAllLicensed
+              : selectedTab == 'Renewal'
+              ? getRenewalAllLicensed
+              : getGoodStandingAllLicensed
+          "
+          :app_type="app_type"
+          assigned_to_others="false"
         />
       </div>
     </div>
@@ -154,7 +167,7 @@ import { useStore } from "vuex";
 
 import AllLicensedApplications from "../ChildApplicationTypes/AllLicensedApplications.vue";
 import applicationStatus from "../../Configurations/getApplicationStatus.js";
-
+import AssignedApplications from "../ChildApplicationTypes/AssignedApplications.vue";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import filterApplication from "../../ChildComponents/FilteredDatas/FilterApplication.js";
 import FilteredInfo from "../../ChildComponents/FilteredDatas/FilteredInfo.vue";
@@ -180,8 +193,12 @@ export default {
       return store.getters[
         "reviewerGoodStanding/getGoodStandingAllLicensedSearched"
       ];
-    },
+    }
   },
+  props: {
+    display: String
+  },
+
   components: {
     ReviewerNavBar,
     ErrorFlashMessage,
@@ -189,9 +206,11 @@ export default {
     Spinner,
     NothingToShow,
     AllLicensedApplications,
-    Title,
+    AssignedApplications,
+    Title
   },
-  setup() {
+  setup(props) {
+    console.log(props.display);
     const store = useStore();
     let renewalAllLicensed = ref([]);
     let newLicenseAllLicensed = ref([]);
@@ -217,15 +236,15 @@ export default {
       searchByInput: false,
       assignApplication: [],
       message: {
-        showErrorFlash: false,
+        showErrorFlash: false
       },
       filteredByDate: [],
       searchFromDate: "",
       searchUpToDate: "",
-      app_type: "",
+      app_type: ""
     });
 
-    const changeTab = (type) => {
+    const changeTab = type => {
       selectedTab.value = type;
       message.value = `${type} All Licensed`;
       app_type.value = type;
@@ -261,37 +280,39 @@ export default {
 
     const fetchNewLicenseAllLicensed = () => {
       showLoadingNewLicense.value = true;
-      store
-        .dispatch("reviewerNewLicense/getNewLicenseAllLicensed")
-        .then((res) => {
-          showLoadingNewLicense.value = false;
-          newLicenseAllLicensed.value =
-            store.getters[
-              "reviewerNewLicense/getNewLicenseAllLicensedSearched"
-            ];
-          allInfo.value.assignApplication =
-            store.getters[
-              "reviewerNewLicense/getNewLicenseAllLicensedSearched"
-            ];
+      const pathurl =
+        props.display == "reprint"
+          ? "reviewerNewLicense/getCertificateIssuedNewLicense"
+          : "reviewerNewLicense/getNewLicenseAllLicensed";
+      store.dispatch(pathurl).then(res => {
+        showLoadingNewLicense.value = false;
+        newLicenseAllLicensed.value =
+          store.getters["reviewerNewLicense/getNewLicenseAllLicensedSearched"];
+        allInfo.value.assignApplication =
+          store.getters["reviewerNewLicense/getNewLicenseAllLicensedSearched"];
 
-          for (let applicant in allInfo.value.assignApplication) {
-            if (
-              allInfo.value.assignApplication[applicant].applicationType ===
-              undefined
-            ) {
-              allInfo.value.assignApplication[applicant].applicationType =
-                allInfo.value.assignApplication[applicant].applicantType;
-            }
+        for (let applicant in allInfo.value.assignApplication) {
+          if (
+            allInfo.value.assignApplication[applicant].applicationType ===
+            undefined
+          ) {
+            allInfo.value.assignApplication[applicant].applicationType =
+              allInfo.value.assignApplication[applicant].applicantType;
           }
-          if (newLicenseAllLicensed.value.length === 0) {
-            nothingToShowNewLicense.value = true;
-          }
-        });
+        }
+        if (newLicenseAllLicensed.value.length === 0) {
+          nothingToShowNewLicense.value = true;
+        }
+      });
     };
 
     const fetchRenewalAllLicensed = () => {
       showLoadingRenewal.value = true;
-      store.dispatch("reviewerRenewal/getRenewalAllLicensed").then((res) => {
+      const pathurl =
+        props.display == "reprint"
+          ? "reviewerRenewal/getCertificateIssuedRenewal"
+          : "reviewerRenewal/getRenewalAllLicensed";
+      store.dispatch(pathurl).then(res => {
         showLoadingRenewal.value = false;
         renewalAllLicensed.value =
           store.getters["reviewerRenewal/getRenewalAllLicensedSearched"];
@@ -303,23 +324,30 @@ export default {
 
     const fetchGoodStandingAllLicensed = () => {
       showLoadingGoodStanding.value = true;
-      store
-        .dispatch("reviewerGoodStanding/getGoodStandingAllLicensed")
-        .then((res) => {
-          showLoadingGoodStanding.value = false;
-          goodStandingAllLicensed.value =
-            store.getters[
-              "reviewerGoodStanding/getGoodStandingAllLicensedSearched"
-            ];
-          if (goodStandingAllLicensed.value.length === 0) {
-            nothingToShowGoodStanding.value = true;
-          }
-        });
+      const pathurl =
+        props.display == "reprint"
+          ? "reviewerGoodStanding/getCertificateIssuedGoodStanding"
+          : "reviewerGoodStanding/getGoodStandingAllLicensed";
+      store.dispatch(pathurl).then(res => {
+        showLoadingGoodStanding.value = false;
+        goodStandingAllLicensed.value =
+          store.getters[
+            "reviewerGoodStanding/getGoodStandingAllLicensedSearched"
+          ];
+        if (goodStandingAllLicensed.value.length === 0) {
+          nothingToShowGoodStanding.value = true;
+        }
+      });
     };
-    onMounted(() => {
+
+    const fetchdata = () => {
       fetchRenewalAllLicensed();
       fetchNewLicenseAllLicensed();
       fetchGoodStandingAllLicensed();
+    };
+
+    onMounted(() => {
+      fetchdata();
     });
 
     return {
@@ -341,8 +369,17 @@ export default {
       changeTab,
       message,
       app_type,
+      fetchdata
     };
   },
+
+  watch: {
+    display: function(newVal, oldVal) {
+      if (newVal != oldVal) {
+        this.fetchdata();
+      }
+    }
+  }
 };
 </script>
 <style scoped>

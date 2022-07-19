@@ -114,6 +114,13 @@
                   placeholder="Write Other Profession"
                   type="text"
                 />
+                  <input
+                  v-model="licenseInfo.otherProfessionalTypeAmharic"
+                  v-if="showOtherProfession && this.draftStatus == 'USUP'"
+                  class="mt-2"
+                  placeholder="የሙያ ስም በአማርኛ"
+                  type="text"
+                />
               </div>
             </div>
           </div>
@@ -476,6 +483,7 @@ export default {
       applicantPositionId: null,
       professionalTypeIds: [],
       otherProfessionalType: null,
+      otherProfessionalTypeAmharic: null,    
       applicationStatusId: null,
     },
 
@@ -611,6 +619,7 @@ export default {
               professionalTypeIds: this.licenseInfo.professionalTypeIds,
               expertLevelId: this.licenseInfo.expertLevelId,
               otherProfessionalType: this.licenseInfo.otherProfessionalType,
+              otherProfessionalTypeAmharic: this.licenseInfo.otherProfessionalTypeAmharic,
               departmentId: this.licenseInfo.departmentId,
               applicationStatusId: this.licenseInfo.applicationStatusId,
             },
@@ -664,6 +673,7 @@ export default {
             professionalTypeIds: this.licenseInfo.professionalTypeIds,
             expertLevelId: this.licenseInfo.expertLevelId,
             otherProfessionalType: this.licenseInfo.otherProfessionalType,
+            otherProfessionalTypeAmharic: this.licenseInfo.otherProfessionalTypeAmharic,
             departmentId: this.licenseInfo.departmentId,
             applicationStatusId: this.licenseInfo.applicationStatusId,
           },
@@ -740,6 +750,7 @@ export default {
           professionalTypeIds: this.licenseInfo.professionalTypeIds,
           expertLevelId: this.licenseInfo.expertLevelId,
           otherProfessionalType: this.licenseInfo.otherProfessionalType,
+          otherProfessionalTypeAmharic: this.licenseInfo.otherProfessionalTypeAmharic,
           regionId: this.regionID,
           zoneId: this.zoneID,
           departmentId: this.licenseInfo.departmentId,

@@ -410,6 +410,8 @@ export default {
     this.buttons = this.getButtons;
 
     this.otherProfessionalType = this.license.otherProfessionalType;
+    this.otherProfessionalTypeAmharic = this.license.otherProfessionalTypeAmharic;
+
     this.departmentId = this.license.departmentId;
   },
   data: () => ({
@@ -426,6 +428,7 @@ export default {
     professionalTypeIds: "",
     expertLevelId: "",
     otherProfessionalType: null,
+    otherProfessionalTypeAmharic:null,
     draftId: "",
     draftData: "",
     draftStatus: "",
@@ -585,6 +588,7 @@ export default {
             expertLevelId: this.expertLevelId,
             islegal: this.checkBoxValue,
             otherProfessionalType: this.otherProfessionalType,
+            otherProfessionalTypeAmharic: this.otherProfessionalTypeAmharic,
             departmentId: this.departmentId,
           },
         };
@@ -682,6 +686,7 @@ export default {
             expertLevelId: this.licenseInfo.expertLevel,
             islegal: this.checkBoxValue,
             otherProfessionalType: this.otherProfessionalType,
+            otherProfessionalTypeAmharic: this.otherProfessionalTypeAmharic,
             departmentId: this.departmentId,
           },
         };
@@ -730,6 +735,7 @@ export default {
             expertLevelId: this.licenseInfo.expertLevel,
             islegal: this.checkBoxValue,
             otherProfessionalType: this.otherProfessionalType,
+            otherProfessionalTypeAmharic: this.otherProfessionalTypeAmharic,
             departmentId: this.departmentId,
           },
         },

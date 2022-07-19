@@ -25,6 +25,17 @@ export default {
             return error;
         }
     },
+    async getAdminReport({ commit }) {
+        try {
+            console.log("jkahja");
+
+            const resp = await ApiService.get(baseUrl + "/admin/Report");
+            console.log("jkahja"+resp);
+            return resp;
+        } catch (error) {
+            return error;
+        }
+    },
     async getRenewalReport({ commit }) {
         try {
             const resp = await ApiService.get(baseUrl + "/renewalReport");
