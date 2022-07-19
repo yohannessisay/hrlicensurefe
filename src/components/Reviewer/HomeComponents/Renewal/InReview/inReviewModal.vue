@@ -543,24 +543,27 @@ export default {
     const transferReviewer = () => {
       if (role.value.code === "TL" || role.value.code === "ADM") {
         transfer.value = {
-          licenseId: props.modalDataId.id,
+          renewalId: props.modalDataId.id,
           reviewerId: transfer.value.reviewerId,
           createdByAdminId: +localStorage.getItem("adminId"),
+          isTransferred: true
+
         };
       }
 
       if (role.value.code == "REV") {
         transfer.value = {
-          licenseId: props.modalDataId.id,
+          renewalId: props.modalDataId.id,
           reviewerId: +localStorage.getItem("adminId"),
           createdByAdminId: +localStorage.getItem("adminId"),
+          isTransferred: true
         };
       }
 
       isLoading.value = true;
 
       store
-        .dispatch("reviewer/transferLicenseReview", transfer.value)
+        .dispatch("reviewer/transferRenewalReview", transfer.value)
         .then((response) => {
           if (response.statusText == "Created") {
             toast("Selected reviewer is successfully assigned.", {
@@ -697,7 +700,7 @@ export default {
       resultQuery,
       isLoading,
       isLoadingStart,
-      licenseId,
+      renewalId,
       fullPage,
       modalData,
       evaluationData,

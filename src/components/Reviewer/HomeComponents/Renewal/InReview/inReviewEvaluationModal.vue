@@ -1377,6 +1377,8 @@ export default {
           licenseId: route.params.applicationId,
           expertLevelId: federalData[0].id,
           createdByAdminId: adminId,
+          isTransferred: true
+
         };
         store
           .dispatch("reviewer/transferToFederal", transferData)
