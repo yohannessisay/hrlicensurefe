@@ -188,12 +188,8 @@ export default {
           maritalStatusId: personalInfo.maritalStatusId,
           poBox: personalInfo.poBox,
           photo: personalInfo.photo,
-<<<<<<< HEAD
-          userId: +localStorage.getItem("userId")
-=======
           userId: +localStorage.getItem("userId"),
           employeeId:personalInfo.employeeId
->>>>>>> 6664a83ba95c84bfc0c81f59b03d1e4aa709bc10
         })
         .then(response => {
           if (response.statusText == "Created") {
