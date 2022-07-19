@@ -164,13 +164,13 @@ export default {
 
         store
           .dispatch(
-            "reviewerNewLicense/getNewLicenseOthersOnReview",
+            "reviewerRenewal/getRenewalOthersOnReview",
             adminStatus
           )
           .then((res) => {
             allInfo.value.assignApplication =
               store.getters[
-                "reviewerNewLicense/getNewLicenseOthersOnReviewSearched"
+                "reviewerRenewal/getRenewalOthersOnReviewSearched"
               ];
 
             for (let applicant in allInfo.value.assignApplication) {
@@ -266,10 +266,10 @@ export default {
         let adminStatus = [statusId, adminId];
 
         store
-          .dispatch("reviewerNewLicense/getNewLicenseOnReview", adminStatus)
+          .dispatch("reviewerRenewal/getRenewalOnReview", adminStatus)
           .then(() => {
             allInfo.value.assignApplication =
-              store.getters["reviewerNewLicense/getNewLicenseOnReviewSearched"];
+              store.getters["reviewerRenewal/getRenewalOnReviewSearched"];
 
             for (let applicant in allInfo.value.assignApplication) {
               if (

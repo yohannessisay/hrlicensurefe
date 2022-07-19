@@ -437,6 +437,7 @@
           "
         >
           <button
+            @click="evaluate()"
             type="button"
             class="
               inline-block
@@ -497,6 +498,7 @@
 
 <script>
 import { useStore } from "vuex";
+import { useRouter } from "vue-router";
 import { ref, onMounted, watch } from "vue";
 import moment from "moment";
 import toast from "toast-me";
@@ -530,6 +532,7 @@ export default {
     let isLoading = ref(false);
     const isLoadingStart = ref(true);
     const fullPage = ref(false);
+    const router = useRouter();
 
     let reviewerAdminId = ref(0);
 
@@ -628,6 +631,11 @@ export default {
     let result;
     const licenseData = ref({});
 
+     const evaluate = () => {
+          router.push(
+        "/admin/renewal/evaluate/"+licenseData.value.id
+      );
+    };
     const check = () => {
       store
         .dispatch("reviewer/getRenewalApplication", props.modalDataId.id)
@@ -691,6 +699,7 @@ export default {
       reviewer,
       setInput,
       showModal,
+      evaluate,
       resultQuery,
       isLoading,
       isLoadingStart,

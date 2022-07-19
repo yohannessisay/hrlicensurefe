@@ -328,7 +328,7 @@ export default {
     const check = () => {
       store
         .dispatch(
-          "reviewer/getNewLicenseApplication",
+          "reviewer/getRenewalApplication",
           props.modalDataIdOthers.id
         )
         .then((res) => {

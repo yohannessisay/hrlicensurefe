@@ -435,33 +435,33 @@
             rounded-b-md
           "
         >
+        <a :href="'/admin/renewal/evaluate/'+licenseId">
           <button
             type="button"
             class="
               inline-block
               px-6
+              py-2.5
+              bg-blue-600
               text-white
               font-medium
               text-xs
               leading-tight
               uppercase
               rounded
-              ml-4
-              shadow-lg
-              hover:bg-purple-700 hover:shadow-lg
-              focus:bg-purple-700
-              focus:shadow-lg
-              focus:outline-none
-              focus:ring-0
-              active:bg-purple-800 active:shadow-lg
+              shadow-md
+              hover:bg-blue-700 hover:shadow-lg
+              focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0
+              active:bg-blue-800 active:shadow-lg
               transition
               duration-150
               ease-in-out
             "
-            data-bs-dismiss="modal"
+          
           >
-            Continue Evaluating
+          Evaluate
           </button>
+          </a>
           <button
             type="button"
             class="
@@ -492,16 +492,18 @@
       </div>
     </div>
   </div>
+
 </template>
 
 <script>
 import { useStore } from "vuex";
-import { ref, onMounted, watch } from "vue";
+import { ref, onMounted, watch,computed } from "vue";
 import moment from "moment";
 import toast from "toast-me";
 import Loading from "vue3-loading-overlay";
 // Import stylesheet
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
+
 
 export default {
   props: ["modalDataId", "reviewers"],
@@ -519,7 +521,7 @@ export default {
     let showOptions = ref(false);
     let reviewer = ref({ id: "", name: "", expertLevel: "", role: "" });
     let adminId = +localStorage.getItem("adminId");
-
+    const licenseId=computed(()=>props.modalDataId.id);
     let transfer = ref({
       reviewerId: "",
       licenseId: "",
@@ -529,7 +531,7 @@ export default {
     let isLoading = ref(false);
     const isLoadingStart = ref(true);
     const fullPage = ref(false);
-
+    const evaluationData = ref({});
     let reviewerAdminId = ref(0);
 
     const fetchRole = (id) => {
@@ -622,6 +624,7 @@ export default {
     watch(props.modalDataId, () => {
       isLoadingStart.value = true;
       check();
+
     });
     const modalData = ref({});
     let result;
@@ -629,10 +632,11 @@ export default {
 
     const check = () => {
       store
-        .dispatch("reviewer/getNewLicenseApplication", props.modalDataId.id)
+        .dispatch("reviewer/getRenewalApplication", props.modalDataId.id)
         .then((res) => {
           if (res.data.status == "Success") {
             result = res.data.data;
+            evaluationData.value = result;
             modalData.value.name =
               result.profile.name +
               " " +
@@ -693,8 +697,10 @@ export default {
       resultQuery,
       isLoading,
       isLoadingStart,
+      licenseId,
       fullPage,
       modalData,
+      evaluationData,
       transferReviewer,
       onCancel,
     };

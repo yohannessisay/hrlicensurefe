@@ -970,6 +970,14 @@ const routes = [
   //     import("../components/Reviewer/HomeComponents/Renewal/assigned.vue"),
   // },
   {
+    path: "/admin/renewal/inReview",
+    name: "NewLicenseInReview",
+    component: () =>
+      import(
+        "../components/Reviewer/HomeComponents/Renewal/InReview/inReview.vue"
+      ),
+  },
+  {
     path: "/admin/renewal/draft",
     name: "RenewalDraft",
     component: () =>
@@ -1000,7 +1008,14 @@ const routes = [
     component: () =>
       import("../components/Reviewer/HomeComponents/Renewal/Licensed/licensed.vue"),
   },
-
+  {
+    path: "/admin/renewal/evaluate/:id",
+    name: "NewLicenseEvaluate",
+    component: () =>
+      import(
+        "../components/Reviewer/HomeComponents/Renewal/InReview/inReviewEvaluationModal.vue"
+      ),
+  },
   //Verification part
   {
     path: "/admin/verification",
