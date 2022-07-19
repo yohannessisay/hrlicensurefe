@@ -1057,10 +1057,13 @@ export default {
   },
   async assignRenewalReviewer({ commit }, assign) {
     try {
+      console.log(resp,assign);
+
       const resp = await ApiService.post(
         baseUrl + "/renewalReviewers/assign",
         assign
       );
+      console.log(resp,assign);
       return resp;
     } catch (error) {
       return error;

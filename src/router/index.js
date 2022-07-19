@@ -961,45 +961,60 @@ const routes = [
     path: "/admin/renewal",
     name: "RenewalHome",
     component: () =>
-      import("../components/Reviewer/HomeComponents/Renewal/unassigned.vue"),
+      import("../components/Reviewer/HomeComponents/Renewal/Unassigned/unassigned.vue"),
   },
+  // {
+  //   path: "/admin/renewal/assigned",
+  //   name: "RenewalAssigned",
+  //   component: () =>
+  //     import("../components/Reviewer/HomeComponents/Renewal/assigned.vue"),
+  // },
   {
-    path: "/admin/renewal/assigned",
-    name: "RenewalAssigned",
+    path: "/admin/renewal/inReview",
+    name: "NewLicenseInReview",
     component: () =>
-      import("../components/Reviewer/HomeComponents/Renewal/assigned.vue"),
+      import(
+        "../components/Reviewer/HomeComponents/Renewal/InReview/inReview.vue"
+      ),
   },
   {
     path: "/admin/renewal/draft",
     name: "RenewalDraft",
     component: () =>
-      import("../components/Reviewer/HomeComponents/Renewal/draft.vue"),
+      import("../components/Reviewer/HomeComponents/Renewal/Draft/draft.vue"),
   },
   {
     path: "/admin/renewal/approved",
     name: "RenewalApproved",
-    component: () =>
-      import("../components/Reviewer/HomeComponents/Renewal/approved.vue"),
+    component: () => import("../components/Reviewer/HomeComponents/Renewal/Approved/approved.vue"),
   },
   {
     path: "/admin/renewal/declined",
     name: "RenewalDeclined",
     component: () =>
-      import("../components/Reviewer/HomeComponents/Renewal/declined.vue"),
+      import("../components/Reviewer/HomeComponents/Renewal/Declined/declined.vue"),
   },
   {
     path: "/admin/renewal/underSupervision",
     name: "RenewalUnderSupervision",
     component: () =>
       import(
-        "../components/Reviewer/HomeComponents/Renewal/underSupervision.vue"
+        "../components/Reviewer/HomeComponents/Renewal/UnderSupervision/underSupervision.vue"
       ),
   },
   {
     path: "/admin/renewal/licensed",
     name: "RenewalLicensed",
     component: () =>
-      import("../components/Reviewer/HomeComponents/Renewal/licensed.vue"),
+      import("../components/Reviewer/HomeComponents/Renewal/Licensed/licensed.vue"),
+  },
+  {
+    path: "/admin/renewal/evaluate/:id",
+    name: "NewLicenseEvaluate",
+    component: () =>
+      import(
+        "../components/Reviewer/HomeComponents/Renewal/InReview/inReviewEvaluationModal.vue"
+      ),
   },
 
   //Admin Good Standing Section
