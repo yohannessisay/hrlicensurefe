@@ -23,7 +23,6 @@ export default {
 
 <style>
 @import "styles/fonts.css";
-@import "styles/main.css";
 @import "styles/design-system.css";
 
 .fade-enter-from,

@@ -481,7 +481,7 @@
 import { useStore } from "vuex";
 import { ref, onMounted, watch } from "vue";
 import moment from "moment";
-import { useToast } from "vue-toastification";
+// import { useToast } from "vue-toastification";
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 
@@ -495,7 +495,7 @@ export default {
   },
   setup(props) {
     const store = useStore();
-    const toast = useToast();
+    // const toast = useToast();
     let show = ref(true);
     let showRes = ref(false);
     let showOptions = ref(false);
@@ -541,30 +541,30 @@ export default {
         .dispatch("reviewer/assignRenewalReviewer", assign.value)
         .then(response => {
           if (response.statusText == "Created") {
-            toast.success("Selected reviewer is successfully assigned.", {
-              timeout: 5000
-            });
+            // toast.success("Selected reviewer is successfully assigned.", {
+            //   timeout: 5000
+            // });
             isLoading.value = false;
           } else {
-            toast.error(response.data.message, {
-              timeout: 20000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true
-            });
+            // toast.error(response.data.message, {
+            //   timeout: 20000,
+            //   position: "bottom-center",
+            //   pauseOnFocusLoss: true,
+            //   pauseOnHover: true,
+            //   icon: true
+            // });
 
             isLoading.value = false;
           }
         })
         .catch(() => {
-          toast.error("Sorry there seems to be a problem, please try again.", {
-            timeout: 20000,
-            position: "bottom-center",
-            pauseOnFocusLoss: true,
-            pauseOnHover: true,
-            icon: true
-          });
+          // toast.error("Sorry there seems to be a problem, please try again.", {
+          //   timeout: 20000,
+          //   position: "bottom-center",
+          //   pauseOnFocusLoss: true,
+          //   pauseOnHover: true,
+          //   icon: true
+          // });
         });
     };
 

@@ -100,7 +100,7 @@ import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
 
 import applicationStatus from "../../../Configurations/getApplicationStatus.js";
-import VueTableLite from "vue3-table-lite";
+import VueTableLite from "../../../../../plugins/TableLite.vue";
 import editModal from "./licensedModal.vue";
 import editModalOthers from "./licensedModalOthers.vue";
 
