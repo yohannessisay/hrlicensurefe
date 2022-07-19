@@ -291,7 +291,6 @@
   .home-content .sales-boxes {
     display: flex;
     justify-content: space-between;
-    /* padding: 0 20px; */
   }
 
   /* left box */
@@ -313,7 +312,6 @@
   .sales-boxes .box .title {
     font-size: 24px;
     font-weight: 500;
-    /* margin-bottom: 10px; */
   }
 
   .sales-boxes .sales-details li.topic {
@@ -399,44 +397,7 @@
 
 
 
-  /* Apply these for table */
-  .vtl-table .vtl-thead .vtl-thead-th {
-    color: #fff;
-    background-color: #0d3552;
-    border-color: #0d3552;
-  }
-
-  .vtl-table td,
-  .vtl-table tr {
-    border: none !important;
-    border-bottom: solid 1px rgba(128, 128, 128, 0.664) !important;
-  }
-
-  .vtl-paging-info {
-    color: rgb(25, 155, 230) !important;
-  }
-
-  .vtl-paging-count-label,
-  .vtl-paging-page-label {
-    margin-right: 10px !important;
-    margin-left: 10px !important;
-    color: rgb(25, 155, 230) !;
-  }
-
-  .vtl-paging-pagination-page-link {
-    border: none !important;
-  }
-
-  .vtl-paging-count-dropdown {
-    margin-right: 10px !important;
-    margin-left: 10px !important;
-    color: rgb(0, 0, 0) !important;
-  }
-
-  .vtl-tbody-tr {
-    border-bottom: 1px solid rgb(128, 128, 128) !important;
-    padding: 5px !important;
-  }
+ 
 
 
   /* Vue toast custom part */
