@@ -715,7 +715,7 @@
               Save as Draft
             </button>
             <button
-              v-if="showTransferToAdminButton && !isReprint"
+              v-if="expertLevelId !=3 && showTransferToAdminButton && !isReprint"
               variant="outline"
               @click="transferToFederal()"
             >
@@ -1094,7 +1094,7 @@ export default {
     const route = useRoute();
     const store = useStore();
     const router = useRouter();
-
+    const expertLevelId = JSON.parse(localStorage.getItem("allAdminData")).expertLevelId;
     const options = ref([0, 1, 2]);
     const selectedOptions = ref([0]);
     const newSelectedOptions = ref([0]);

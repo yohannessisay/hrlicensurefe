@@ -220,8 +220,34 @@
                                 >
                                   Users
                                 </label>
+                             
+                              </div>
+                              <label class="block text-left">
                                 <div>
-                                  <button
+                                  <div class="w-full relative">
+                                    <div
+                                      class="
+                                        mt-1
+                                        ml-1
+                                        relative
+                                        border border-gray-300
+                                        overflow-hidden
+                                        rounded-md
+                                        shadow-sm
+                                      "
+                                    >
+                                      <input
+                                        id="email"
+                                        @keyup="showOptions = true"
+                                        v-model="reviewer.name"
+                                        class="w-full px-3 py-3"
+                                        style="border: none"
+                                        autocomplete="off"
+                                        placeholder="Select reviewer by typing a name"
+                                      />
+                                    </div>
+     <div>
+                                       <button
                                     class="
                                       inline-block
                                       px-6
@@ -248,32 +274,8 @@
                                   >
                                     Transfer
                                   </button>
-                                </div>
-                              </div>
-                              <label class="block text-left">
-                                <div>
-                                  <div class="w-full relative">
-                                    <div
-                                      class="
-                                        mt-1
-                                        ml-1
-                                        relative
-                                        border border-gray-300
-                                        overflow-hidden
-                                        rounded-md
-                                        shadow-sm
-                                      "
-                                    >
-                                      <input
-                                        id="email"
-                                        @keyup="showOptions = true"
-                                        v-model="reviewer.name"
-                                        class="w-full px-3 py-3"
-                                        style="border: none"
-                                        autocomplete="off"
-                                        placeholder="Select reviewer by typing a name"
-                                      />
                                     </div>
+                                    
                                     <div
                                       v-show="
                                         resultQuery().length && showOptions
@@ -499,10 +501,10 @@
 import { useStore } from "vuex";
 import { ref, onMounted, watch,computed } from "vue";
 import moment from "moment";
-import toast from "toast-me";
 import Loading from "vue3-loading-overlay";
 // Import stylesheet
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
+import { useToast } from "vue-toastification";
 
 
 export default {
@@ -515,8 +517,9 @@ export default {
   },
   setup(props) {
     const store = useStore();
-
+    const toast = useToast();
     let show = ref(true);
+
     let showRes = ref(false);
     let showOptions = ref(false);
     let reviewer = ref({ id: "", name: "", expertLevel: "", role: "" });
@@ -524,8 +527,10 @@ export default {
     const licenseId=computed(()=>props.modalDataId.id);
     let transfer = ref({
       reviewerId: "",
-      licenseId: "",
+      renewalId: "",
       createdByAdminId: "",
+      isTransferred: true
+
     });
     let role = ref({});
     let isLoading = ref(false);
@@ -543,44 +548,52 @@ export default {
     const transferReviewer = () => {
       if (role.value.code === "TL" || role.value.code === "ADM") {
         transfer.value = {
-          licenseId: props.modalDataId.id,
+          renewalId: props.modalDataId.id,
           reviewerId: transfer.value.reviewerId,
           createdByAdminId: +localStorage.getItem("adminId"),
+          isTransferred: true
+
         };
       }
 
       if (role.value.code == "REV") {
         transfer.value = {
-          licenseId: props.modalDataId.id,
+          renewalId: props.modalDataId.id,
           reviewerId: +localStorage.getItem("adminId"),
           createdByAdminId: +localStorage.getItem("adminId"),
+          isTransferred: true
         };
       }
 
       isLoading.value = true;
 
       store
-        .dispatch("reviewer/transferLicenseReview", transfer.value)
+        .dispatch("reviewer/transferRenewalReview", transfer.value)
         .then((response) => {
-          if (response.statusText == "Created") {
-            toast("Selected reviewer is successfully assigned.", {
-              duration: 4000,
-              position: "bottom",
-              toastClass: "toast-success",
+        if (response.statusText == "Created") {
+            toast.success("Transfer successfully to Selected reviewer.", {
+              timeout: 5000
             });
+            isLoading.value = false;
           } else {
-            toast("Something is wrong please try again after few minutes.", {
-              duration: 4000,
-              position: "bottom",
-              toastClass: "toast-error",
+            toast.error(response.data.message, {
+              timeout: 20000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true
             });
+
+            isLoading.value = false;
           }
         })
         .catch(() => {
-          toast("Sorry there seems to be a problem, please try again.", {
-            duration: 3000,
-            position: "bottom",
-            toastClass: "toast-error",
+          toast.error("Sorry there seems to be a problem, please try again.", {
+            timeout: 20000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true
           });
         });
     };

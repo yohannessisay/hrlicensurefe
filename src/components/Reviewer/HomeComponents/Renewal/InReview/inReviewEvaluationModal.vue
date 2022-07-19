@@ -492,11 +492,11 @@
                             </h5>
                           </div>
                         </div>
-                        <div class="flex justify-start">
+                           <div class="flex justify-start">
                          <h2 class="font-bold">Professional Type</h2>
                         </div>
                         <div class="flex flex-row">
-                          <div v-if="renewal?.licenseProfessions?.length > 0">
+                          <div v-if="renewal?.renewalProfessions?.length > 0">
                             <div class="flex flex-col mb-medium mr-12 ml-8">
                               <div style="background: lightgray; padding: 8px">
                                 <p style="color: blue">
@@ -507,7 +507,7 @@
                               <ul
                                 v-for="(
                                   professionName, index
-                                ) in renewal.licenseProfessions"
+                                ) in renewal.renewalProfessions"
                                 v-bind:key="professionName.professionalTypeId"
                                 v-bind:value="professionName.professionalTypeId"
                               >
@@ -1265,11 +1265,11 @@ export default {
           buttons.value = res.data.data.applicationStatus.buttons;
           docs.value = res.data.data.documents;
           fetchDocumentTypes();
-          for (let i = 0; i < renewal.value.licenseProfessions.length; i++) {
-            renewal.value.licenseProfessions[i].showPrefix = false;
-            renewal.value.licenseProfessions[i].showPrefixLink = true;
+          for (let i = 0; i < renewal.value.renewalProfessions.length; i++) {
+            renewal.value.renewalProfessions[i].showPrefix = false;
+            renewal.value.renewalProfessions[i].showPrefixLink = true;
             professionalTypeIdss.value.push(
-              renewal.value.licenseProfessions[i].professionalTypeId
+              renewal.value.renewalProfessions[i].professionalTypeId
             );
           }
           if (renewal.value.applicationStatus.code == "REVDRA") {
@@ -1377,6 +1377,8 @@ export default {
           licenseId: route.params.applicationId,
           expertLevelId: federalData[0].id,
           createdByAdminId: adminId,
+          isTransferred: true
+
         };
         store
           .dispatch("reviewer/transferToFederal", transferData)
