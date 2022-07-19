@@ -98,8 +98,9 @@ export default {
   async getNewLicenseUnassigned({ commit }, statusId) {
     const url = baseUrl + "/newLicenses/status/" + statusId;
     const resp = await ApiService.get(url);
+
     const unassignedApplications = resp.data.data.filter((unassigned) => {
-      return unassigned.transferFrom === null;
+      return unassigned.transferFromId === null;
     });
     commit(SET_NEW_LICENSE_UNASSIGNED, unassignedApplications);
   },
@@ -127,8 +128,9 @@ export default {
   async getNewLicenseFromOtherRegion({ commit }, statusId) {
     const url = baseUrl + "/newLicenses/status/" + statusId;
     const resp = await ApiService.get(url);
+
     const transferdApplications = resp.data.data.filter((unassigned) => {
-      return unassigned.transferFrom !== null;
+      return unassigned.transferFromId !== null;
     });
     commit(SET_NEW_LICENSE_FROM_OTHER_REGION, transferdApplications);
   },
@@ -157,10 +159,13 @@ export default {
 
   async getNewLicenseUnfinished({ commit }, adminStatus) {
     const url = baseUrl + "/newLicenses/status/" + adminStatus[0];
+
     const resp = await ApiService.get(url);
+
     const myUnfinished = resp.data.data.filter(function(e) {
-      return e.reviewerId === adminStatus[1];
+      return e.reviewerId == adminStatus[1];
     });
+  
     commit(SET_NEW_LICENSE_UNFINISHED, myUnfinished);
   },
 
@@ -191,6 +196,7 @@ export default {
     const othresUnfinished = resp.data.data.filter(function(e) {
       return e.reviewerId !== adminStatus[1];
     });
+ 
     commit(SET_NEW_LICENSE_OTHERS_UNFINISHED, othresUnfinished);
   },
   getNewLicenseOthersUnfinishedSearched({ commit, getters }, searchKey) {
@@ -223,6 +229,7 @@ export default {
     const assignedToMe = resp.data.data.filter(function(e) {
       return e.reviewerId === adminStatus[1];
     });
+  
     commit(SET_NEW_LICENSE_ASSIGNED_TO_YOU, assignedToMe);
   },
 
@@ -608,9 +615,11 @@ export default {
   async getNewLicenseOnReview({ commit }, adminStatus) {
     const url = baseUrl + "/newlicenses/status/" + adminStatus[0];
     const resp = await ApiService.get(url);
+   
     const onReview = resp.data.data.filter(function(e) {
       return e.reviewerId === adminStatus[1];
     });
+  
     commit(SET_NEW_LICENSE_ON_REVIEW, onReview);
   },
 

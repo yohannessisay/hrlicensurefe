@@ -89,23 +89,24 @@
   }
 
   span {
-    @apply text-primary-1000 text-xs font-AtkinsonHyperlegible;
+    @apply text-primary-1000 text-lg font-AtkinsonHyperlegible;
   }
 
   [type="button"],
   [type="submit"],
   button {
-    @apply px-medium blue-with-light-blue-gradient text-white blue-box-shadow text-lg m-tiny cursor-pointer rounded-full transition duration-500;
-    min-width: 100px;
+    @apply px-medium blue-with-light-blue-gradient text-white blue-box-shadow text-lg  cursor-pointer rounded-full transition duration-500;
+    min-width: 80px;
     min-height: 40px;
     width: fit-content;
     outline: none;
-    font-weight: 700;
+    font-weight: 600;
     padding: 1;
     line-height: inherit;
+    margin:2px;
 
     &:hover {
-      @apply bg-white no-background-image border text-primary-600;
+      @apply bg-white no-background-image border text-primary-600 ;
     }
     &:focus {
       @apply border-primary-500;
@@ -129,9 +130,9 @@
   }
   [variant="rounded"] {
     @apply flex items-center justify-center rounded-full;
-    min-width: 48px;
-    width: 48px;
-    min-height: 48px;
+    min-width: 28px;
+    width: 28px;
+    min-height: 38px;
     height: 48px;
     padding: 0;
     margin: 0;

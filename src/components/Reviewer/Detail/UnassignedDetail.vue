@@ -26,8 +26,15 @@
                   {{ types.name }}
                 </option>
               </select>
-              <button v-if="!showButtons"
-                class="block mx-auto bg-lightBlue-300 hover:bg-lightBlue-600 hover:shadow-lg mt-small"
+              <button
+                v-if="!showButtons"
+                class="
+                  block
+                  mx-auto
+                  bg-lightBlue-300
+                  hover:bg-lightBlue-600 hover:shadow-lg
+                  mt-small
+                "
                 @click="assignReviewer()"
               >
                 Assign
@@ -38,7 +45,12 @@
             <div class="flex flex-col mb-medium w-2/3 ml-small mt-small"></div>
             <div class="flex flex-col mb-medium w-1/3 mr-small mt-small">
               <button
-                class="block mx-auto bg-lightBlue-300 hover:bg-lightBlue-600 hover:shadow-lg"
+                class="
+                  block
+                  mx-auto
+                  bg-lightBlue-300
+                  hover:bg-lightBlue-600 hover:shadow-lg
+                "
                 @click="assignReviewer()"
               >
                 Assign to me
@@ -60,10 +72,10 @@
               <h5 class="ml-8">
                 {{
                   profileInfo.name +
-                    " " +
-                    profileInfo.fatherName +
-                    " " +
-                    profileInfo.grandFatherName
+                  " " +
+                  profileInfo.fatherName +
+                  " " +
+                  profileInfo.grandFatherName
                 }}
               </h5>
             </div>
@@ -284,8 +296,9 @@ export default {
 
     let adminId = +localStorage.getItem("adminId");
     let regionId = JSON.parse(localStorage.getItem("allAdminData")).regionId;
-    const expertLevelId = JSON.parse(localStorage.getItem("allAdminData"))
-      .expertLevelId;
+    const expertLevelId = JSON.parse(
+      localStorage.getItem("allAdminData")
+    ).expertLevelId;
 
     let show = ref(false);
     let license = ref({
@@ -533,8 +546,8 @@ export default {
             } else {
               showErrorFlash.value = true;
               setTimeout(() => {
-                router.go()
-              }, 3000)
+                router.go();
+              }, 3000);
             }
           })
           .catch((err) => {
@@ -560,7 +573,7 @@ export default {
               showErrorFlash.value = true;
               setTimeout(() => {
                 router.go();
-              }, 3000)
+              }, 3000);
             }
           })
           .catch((err) => {
@@ -614,7 +627,7 @@ export default {
                 showErrorFlash.value = true;
                 setTimeout(() => {
                   router.go();
-                }, 3000)
+                }, 3000);
               }
             })
             .catch((err) => {
