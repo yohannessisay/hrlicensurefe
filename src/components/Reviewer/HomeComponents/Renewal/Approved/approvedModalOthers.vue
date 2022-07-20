@@ -291,7 +291,7 @@
                           lg:px-6
                         "
                       >
-                        <div>
+                        <!-- <div>
                           <label class="font-bold text-lg text-primary-600 mb-1"
                             >Actions</label
                           >
@@ -354,7 +354,7 @@
                             <i class="fa fa-file-text"></i>
                             Generate PDF
                           </button>
-                        </div>
+                        </div> -->
                       </div>
                     </div>
 

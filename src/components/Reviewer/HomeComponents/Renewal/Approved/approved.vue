@@ -101,7 +101,7 @@ import { useStore } from "vuex";
 
 import applicationStatus from "../../../Configurations/getApplicationStatus.js";
 import VueTableLite from "vue3-table-lite";
-import editModal from "./approved.vue";
+import editModal from "./approvedModal.vue";
 import editModalOthers from "./approvedModalOthers.vue";
 
 export default {
@@ -182,7 +182,7 @@ export default {
                       " " +
                       element.profile.grandFatherName,
                     ApplicationType: element.applicationType.name,
-                    Date: new Date(element.applicationType.createdAt)
+                    Date: new Date(element.createdAt)
                       .toJSON()
                       .slice(0, 10)
                       .replace(/-/g, "/"),
@@ -212,7 +212,7 @@ export default {
                       sortable: true,
                     },
                     {
-                      label: "Date",
+                      label: "Requested Date",
                       field: "Date",
                       width: "15%",
                       sortable: true,
@@ -258,7 +258,8 @@ export default {
               .then(() => {
                 allInfo.value.assignApplication =
                   store.getters[
-                          "reviewerRenewal/getRenewalApprovedSearched"                         ];
+                    "reviewerRenewal/getRenewalApprovedSearched"
+                  ];
            console.log(allInfo.value.assignApplication);
                 for (let applicant in allInfo.value.assignApplication) {
                   if (
@@ -282,7 +283,7 @@ export default {
                       " " +
                       element.profile.grandFatherName,
                     ApplicationType: element.applicationType.name,
-                    Date: new Date(element.applicationType.createdAt)
+                    Date: new Date(element.createdAt)
                       .toJSON()
                       .slice(0, 10)
                       .replace(/-/g, "/"),

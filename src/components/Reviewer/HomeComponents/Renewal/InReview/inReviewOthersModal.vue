@@ -344,7 +344,7 @@ export default {
               ? result.profile.gender
               : "-----";
             modalData.value.nationality = result.profile.nationality
-              ? result.profile.nationality
+              ? result.profile.nationality.name
               : "-----";
             modalData.value.dateOfBirth = result.profile.dateOfBirth
               ? result.profile.dateOfBirth
