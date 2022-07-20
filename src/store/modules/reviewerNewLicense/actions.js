@@ -165,7 +165,7 @@ export default {
     const myUnfinished = resp.data.data.filter(function(e) {
       return e.reviewerId == adminStatus[1];
     });
-  
+
     commit(SET_NEW_LICENSE_UNFINISHED, myUnfinished);
   },
 
@@ -196,7 +196,7 @@ export default {
     const othresUnfinished = resp.data.data.filter(function(e) {
       return e.reviewerId !== adminStatus[1];
     });
- 
+
     commit(SET_NEW_LICENSE_OTHERS_UNFINISHED, othresUnfinished);
   },
   getNewLicenseOthersUnfinishedSearched({ commit, getters }, searchKey) {
@@ -229,7 +229,7 @@ export default {
     const assignedToMe = resp.data.data.filter(function(e) {
       return e.reviewerId === adminStatus[1];
     });
-  
+
     commit(SET_NEW_LICENSE_ASSIGNED_TO_YOU, assignedToMe);
   },
 
@@ -286,13 +286,12 @@ export default {
     commit(SET_NEW_LICENSE_ASSIGNED_TO_OTHERS_SEARCHED, searchedVal);
   },
 
-  async getNewLicenseApproved({ commit }, adminStatus) {
-    const url = baseUrl + "/newLicenses/status/" + adminStatus[0];
+  async getNewLicenseApproved({ commit }) {
+    const url = baseUrl + "/newLicenses/all/approved";
     const resp = await ApiService.get(url);
-    const Approved = resp.data.data.filter(function(e) {
-      return e.reviewerId === adminStatus[1];
-    });
-    commit(SET_NEW_LICENSE_APPROVED, Approved);
+
+    commit(SET_NEW_LICENSE_APPROVED, resp.data.data);
+    return resp.data.data;
   },
 
   getNewLicenseApprovedSearched({ commit, getters }, searchKey) {
@@ -615,11 +614,11 @@ export default {
   async getNewLicenseOnReview({ commit }, adminStatus) {
     const url = baseUrl + "/newlicenses/status/" + adminStatus[0];
     const resp = await ApiService.get(url);
-   
+
     const onReview = resp.data.data.filter(function(e) {
       return e.reviewerId === adminStatus[1];
     });
-  
+
     commit(SET_NEW_LICENSE_ON_REVIEW, onReview);
   },
 
@@ -944,36 +943,11 @@ export default {
     commit(SET_NEW_LICENSE_OTHERS_PENDING_PAYMENT_SEARCHED, searchedVal);
   },
 
-  async getNewLicenseLicensed({ commit }, adminStatus) {
-    const expertLevelId = JSON.parse(localStorage.getItem("allAdminData"))
-      .expertLevelId;
-    const url = baseUrl + "/newlicenses/status/" + adminStatus[1];
-    const confirmedUrl = baseUrl + "/newlicenses/status/" + adminStatus[2];
+  async getNewLicenseLicensed({ commit }) {
+    const url = baseUrl + "/newlicenses/all/licensed";
     const resp = await ApiService.get(url);
-    const confirmedResp = await ApiService.get(confirmedUrl);
-    const licensed = resp.data.data.filter(function(e) {
-      return e.reviewerId === adminStatus[0];
-    });
-    const confirmedLicensed = confirmedResp.data.data.filter(function(e) {
-      return (
-        e.reviewerId === adminStatus[0] &&
-        e.previousApplicationStatus.code === "APP"
-      );
-    });
-    const concateLicensedUsers = licensed.concat(confirmedLicensed);
-    if (expertLevelId === 3) {
-      const ApprovedUrl = baseUrl + "/newlicenses/status/" + adminStatus[3];
-      const ApprovedResp = await ApiService.get(ApprovedUrl);
-      const ApprovedLicensed = ApprovedResp.data.data.filter(function(e) {
-        return e.reviewerId === adminStatus[0];
-      });
-      const concateForFederalApproved = concateLicensedUsers.concat(
-        ApprovedLicensed
-      );
-      commit(SET_NEW_LICENSE_LICENSED, concateForFederalApproved);
-      return;
-    }
-    commit(SET_NEW_LICENSE_LICENSED, concateLicensedUsers);
+    commit(SET_NEW_LICENSE_LICENSED, resp.data.data);
+    return resp.data.data;
   },
 
   getNewLicenseLicensedSearched({ commit, getters }, searchKey) {

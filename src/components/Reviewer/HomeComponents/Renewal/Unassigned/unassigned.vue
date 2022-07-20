@@ -162,7 +162,7 @@ export default {
       id: "",
       change: 0,
     });
-        let modalDataIdResub = ref({
+    let modalDataIdResub = ref({
       id: "",
       change: 0,
     });
@@ -200,11 +200,9 @@ export default {
         store
           .dispatch("reviewerRenewal/getRenewalUnassigned", statusId)
           .then((res) => {
-                          console.log(res)
+            console.log(res);
             allInfo.value.assignApplication =
-              store.getters[
-                "reviewerRenewal/getRenewalUnassignedSearched"
-              ];
+              store.getters["reviewerRenewal/getRenewalUnassignedSearched"];
 
             for (let applicant in allInfo.value.assignApplication) {
               if (
@@ -294,12 +292,8 @@ export default {
         applicationStatus(store, "SUB").then((res) => {
           const statusId = res;
           store
-            .dispatch(
-              "reviewerRenewal/getRenewalFromOtherRegion",
-              statusId
-            )
+            .dispatch("reviewerRenewal/getRenewalFromOtherRegion", statusId)
             .then((res) => {
-
               allInfo.value.assignApplication =
                 store.getters[
                   "reviewerRenewal/getRenewalFromOtherRegionSearched"
@@ -453,7 +447,7 @@ export default {
         store
           .dispatch("reviewerRenewal/getRenewalReApply", adminStatus)
           .then((res) => {
-            console.log(res)
+            console.log(res);
             allInfo.value.assignApplication =
               store.getters["reviewerRenewal/getRenewalReApplySearched"];
 
@@ -550,8 +544,7 @@ export default {
       unassignedTable.value.isLoading = false;
     };
 
-
-        const tableLoadingFinishResub = () => {
+    const tableLoadingFinishResub = () => {
       let elementsResub = document.getElementsByClassName(
         "edit-btn-resubmitted"
       );
@@ -562,9 +555,6 @@ export default {
       });
       reSubmittedTable.value.isLoading = false;
     };
-
-
-
 
     const rowClicked = (row) => {
       if (row != undefined) {
@@ -578,18 +568,17 @@ export default {
         row = JSON.parse(JSON.stringify(row));
         modalDataIdResub.value.change++;
         modalDataIdResub.value.id = row.data.id ? row.data.id : "";
-     
       }
     };
 
     onMounted(() => {
       unassigned();
       reSubmitted();
-              store.dispatch("reviewer/getAdmins").then((res) => {
-          reviewers.value = res.data.data.filter((e) => {
-            return e.role.code !== "UM";
-          });
+      store.dispatch("reviewer/getAdmins").then((res) => {
+        reviewers.value = res.data.data.filter((e) => {
+          return e.role.code !== "UM";
         });
+      });
     });
 
     return {
@@ -609,7 +598,7 @@ export default {
       includeFromOthers,
       rowClickedResub,
       modalDataId,
-       modalDataIdResub,
+      modalDataIdResub,
     };
   },
 };

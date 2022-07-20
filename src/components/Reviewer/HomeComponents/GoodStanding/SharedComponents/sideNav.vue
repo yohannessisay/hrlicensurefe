@@ -32,9 +32,9 @@
       </div>
     </router-link>
     <li class="inverted-border-radius mb-8 mt-4">
-      <i class="fa fa-thumbs-up ml-8 mt-4" style="color: #224771"></i>
+      <i class="fa fa-thumbs-up fa-2x ml-8 mt-2" style="color: #224771"></i>
 
-      <span class="header_text"> Good Standing</span>
+      <span class="header_text ml-4"> Good Standing</span>
     </li>
     <ul class="nav-links">
       <router-link to="/admin/goodStanding/">

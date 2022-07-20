@@ -37,7 +37,7 @@
     <li class="inverted-border-radius mb-8 mt-4">
       <i class="bx bx-plus ml-8 mt-4" style="color: #224771"></i>
 
-      <span class="header_text"> New License</span>
+      <span class="header_text ml-4"> New License</span>
     </li>
     <ul class="nav-links">
       <router-link to="/admin/newLicense/">

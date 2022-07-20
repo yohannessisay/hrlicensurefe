@@ -1259,7 +1259,6 @@ export default {
 
   async editNewLicense({ commit }, license) {
     try {
-      console.log(license)
       const resp = await ApiService.put(
         baseUrl + "/newlicenses/" + license.data.id,
         license
