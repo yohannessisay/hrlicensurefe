@@ -537,6 +537,7 @@ import { useToast } from "vue-toastification";
 import moment from "moment";
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
+import { googleApi } from "../../../../../composables/baseURL";
 
 export default {
   computed: {
@@ -901,7 +902,7 @@ export default {
       updateLicenseGenerated();
 
       const userImage = certifiedUser.value.profilePicture
-        ? certifiedUser.value.profilePicture
+        ? googleApi + certifiedUser.value.profilePicture.filePath
         : null;
 
       if (certificateDetail.value.reviewer.expertLevel.code === "FED") {

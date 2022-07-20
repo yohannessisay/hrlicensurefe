@@ -162,7 +162,7 @@ export default {
       id: "",
       change: 0,
     });
-        let modalDataIdResub = ref({
+    let modalDataIdResub = ref({
       id: "",
       change: 0,
     });
@@ -200,7 +200,7 @@ export default {
         store
           .dispatch("reviewerNewLicense/getNewLicenseUnassigned", statusId)
           .then((res) => {
-                          console.log(res)
+            console.log(res);
             allInfo.value.assignApplication =
               store.getters[
                 "reviewerNewLicense/getNewLicenseUnassignedSearched"
@@ -299,7 +299,6 @@ export default {
               statusId
             )
             .then((res) => {
-
               allInfo.value.assignApplication =
                 store.getters[
                   "reviewerNewLicense/getNewLicenseFromOtherRegionSearched"
@@ -453,7 +452,7 @@ export default {
         store
           .dispatch("reviewerNewLicense/getNewLicenseReApply", adminStatus)
           .then((res) => {
-            console.log(res)
+            console.log(res);
             allInfo.value.assignApplication =
               store.getters["reviewerNewLicense/getNewLicenseReApplySearched"];
 
@@ -472,11 +471,11 @@ export default {
                 reTableData.value.push({
                   LicenseNumber: element.newLicenseCode,
                   ApplicantName:
-                    element.profile.name +
+                    (element.profile ? element.profile.name : "") +
                     " " +
-                    element.profile.fatherName +
+                    (element.profile ? element.profile.fatherName : "") +
                     " " +
-                    element.profile.grandFatherName,
+                    (element.profile ? element.profile.grandFatherName : ""),
                   ApplicationType: element.newLicenseCode ? "New License" : "",
                   Date: new Date(element.createdAt)
                     .toJSON()
@@ -550,8 +549,7 @@ export default {
       unassignedTable.value.isLoading = false;
     };
 
-
-        const tableLoadingFinishResub = () => {
+    const tableLoadingFinishResub = () => {
       let elementsResub = document.getElementsByClassName(
         "edit-btn-resubmitted"
       );
@@ -562,9 +560,6 @@ export default {
       });
       reSubmittedTable.value.isLoading = false;
     };
-
-
-
 
     const rowClicked = (row) => {
       if (row != undefined) {
@@ -578,18 +573,17 @@ export default {
         row = JSON.parse(JSON.stringify(row));
         modalDataIdResub.value.change++;
         modalDataIdResub.value.id = row.data.id ? row.data.id : "";
-     
       }
     };
 
     onMounted(() => {
       unassigned();
       reSubmitted();
-              store.dispatch("reviewer/getAdmins").then((res) => {
-          reviewers.value = res.data.data.filter((e) => {
-            return e.role.code !== "UM";
-          });
+      store.dispatch("reviewer/getAdmins").then((res) => {
+        reviewers.value = res.data.data.filter((e) => {
+          return e.role.code !== "UM";
         });
+      });
     });
 
     return {
@@ -609,7 +603,7 @@ export default {
       includeFromOthers,
       rowClickedResub,
       modalDataId,
-       modalDataIdResub,
+      modalDataIdResub,
     };
   },
 };

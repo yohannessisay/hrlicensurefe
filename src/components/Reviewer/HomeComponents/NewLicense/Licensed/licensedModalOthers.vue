@@ -61,27 +61,27 @@
           ></button>
         </div>
         <div class="vld-parent">
-                <loading
-                  :active="isLoading"
-                  :is-full-page="false"
-                  :color="'#2F639D'"
-                  :opacity="1"
-                ></loading>
-        <div class="modal-body relative p-4">
-          <div class="container px-6 mx-auto">
-            <section class="text-gray-800">
-              <div class="flex justify-center">
-                <div class="text-center lg:max-w-3xl md:max-w-xl">
-                  <h2 class="text-2xl font-bold mb-8 px-6">
-                    Showing
-                    <span class="text-2xl font-bold px-6">
-                      {{ modalData.name ? modalData.name : "" }}
-                    </span>
-                    's License Data
-                  </h2>
+          <loading
+            :active="isLoading"
+            :is-full-page="false"
+            :color="'#2F639D'"
+            :opacity="1"
+          ></loading>
+          <div class="modal-body relative p-4">
+            <div class="container px-6 mx-auto">
+              <section class="text-gray-800">
+                <div class="flex justify-center">
+                  <div class="text-center lg:max-w-3xl md:max-w-xl">
+                    <h2 class="text-2xl font-bold mb-8 px-6">
+                      Showing
+                      <span class="text-2xl font-bold px-6">
+                        {{ modalData.name ? modalData.name : "" }}
+                      </span>
+                      's License Data
+                    </h2>
+                  </div>
                 </div>
-              </div>
-      
+
                 <div class="flex flex-wrap">
                   <div class="grow-0 shrink-0 basis-auto w-full lg:w-11/12">
                     <div class="flex flex-wrap">
@@ -279,83 +279,6 @@
                           </div>
                         </div>
                       </div>
-
-                      <div
-                        class="
-                          grow-0
-                          shrink-0
-                          basis-auto
-                          w-full
-                          lg:w-6/12
-                          px-3
-                          lg:px-6
-                        "
-                      >
-                        <div>
-                          <label class="font-bold text-lg text-primary-600 mb-1"
-                            >Actions</label
-                          >
-                          <br />
-                          <button
-                            class="
-                              inline-block
-                              px-6
-                              py-2.5
-                              bg-yellow-200
-                              text-white
-                              font-medium
-                              text-xs
-                              leading-tight
-                              uppercase
-                              rounded
-                              shadow-lg
-                              hover:bg-yellow-200 hover:shadow-lg
-                              focus:bg-yellow-200
-                              focus:shadow-lg
-                              focus:outline-none
-                              focus:ring-0
-                              active:bg-blue-800 active:shadow-lg
-                              transition
-                              duration-150
-                              ease-in-out
-                            "
-                            type="button"
-                          >
-                            <i class="fa fa-ban"></i>
-                            Suspend
-                          </button>
-                          <button
-                            class="
-                              inline-block
-                              px-6
-                              py-2.5
-                              bg-
-                              text-white
-                              font-medium
-                              text-xs
-                              leading-tight
-                              uppercase
-                              rounded
-                              shadow-lg
-                              hover:bg-blue-700 hover:shadow-lg
-                              focus:bg-blue-700
-                              focus:shadow-lg
-                              focus:outline-none
-                              focus:ring-0
-                              active:bg-blue-800 active:shadow-lg
-                              transition
-                              duration-150
-                              ease-in-out
-                            "
-                            type="button"
-                            data-bs-toggle="modal"
-                            data-bs-target="#generatePdf"
-                          >
-                            <i class="fa fa-file-text"></i>
-                            Generate PDF
-                          </button>
-                        </div>
-                      </div>
                     </div>
 
                     <div class="collapse mt-12" id="collapseExample">
@@ -395,10 +318,9 @@
                     </div>
                   </div>
                 </div>
-            
-            </section>
+              </section>
+            </div>
           </div>
-        </div>
         </div>
         <div
           class="
@@ -474,14 +396,13 @@
 </template>
 <script>
 import { googleApi } from "@/composables/baseURL";
-import generatePdf from "./generateLicensedPdf.vue";
 import { ref, watch } from "vue";
 import { useStore } from "vuex";
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 export default {
   name: "Modal",
-  components: { generatePdf, Loading },
+  components: { Loading },
   props: ["modalDataIdOthers"],
   setup(props) {
     const store = useStore();
@@ -497,7 +418,10 @@ export default {
     let result = {};
     const check = () => {
       store
-        .dispatch("reviewer/getNewLicenseApplication", props.modalDataIdOthers.id)
+        .dispatch(
+          "reviewer/getNewLicenseApplication",
+          props.modalDataIdOthers.id
+        )
         .then((res) => {
           if (res.data.status == "Success") {
             result = res.data.data;
@@ -540,16 +464,15 @@ export default {
             modalData.value.certifiedDate = result.certifiedDate;
             modalData.value.licenseExpirationDate =
               result.licenseExpirationDate;
-            modalData.value.documents=result.documents
-            modalData.value.data=result
+            modalData.value.documents = result.documents;
+            modalData.value.data = result;
             isLoading.value = false;
-
           }
         });
     };
 
-    watch(props.modalDataIdOthers,() => {
-       isLoading.value = true;
+    watch(props.modalDataIdOthers, () => {
+      isLoading.value = true;
       check();
     });
     return {

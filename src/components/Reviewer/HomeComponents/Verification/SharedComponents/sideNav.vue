@@ -31,6 +31,11 @@
         <span class="logo_name ml-4">eHPL</span>
       </div>
     </router-link>
+        <li class="inverted-border-radius mb-8 mt-4">
+      <i class="bx bx-message-check ml-8 mt-4" style="color: #224771"></i>
+
+      <span class="header_text ml-4">Verification</span>
+    </li>
     <ul class="nav-links mb-64">
       <router-link to="/admin/verification/">
         <li
