@@ -884,7 +884,7 @@ export default {
       });
       updateLicenseGenerated();
       const userImage = certifiedUser.value.profilePicture
-        ? certifiedUser.value.profilePicture
+        ? null
         : null;
       if (certificateDetail.value.reviewer.expertLevel.code === "FED") {
         doc.addImage(backgroundImage, "JPG", 0, 0, 298, 213, undefined, "FAST");

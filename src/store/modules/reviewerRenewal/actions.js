@@ -912,10 +912,11 @@ export default {
     console.log(confirmedResp);
     const confirmedLicensed = confirmedResp.data.data.filter(function(e) {
       // return e.reviewerId === adminStatus[0] && e.previousApplicationStatus.code === "APP";
-      return e.reviewerId === adminStatus[0] ;
+      return e.reviewerId === adminStatus[0];
     })
     const concateLicensedUsers = licensed.concat(confirmedLicensed);
-    if(expertLevelId === 3) {
+    console.log(expertLevelId);
+    if(expertLevelId === 3 ||expertLevelId ==4) {
       const ApprovedUrl = baseUrl + "/renewals/status/"+adminStatus[3];
       const ApprovedResp = await ApiService.get(ApprovedUrl);
       const ApprovedLicensed = ApprovedResp.data.data.filter(function(e) {
