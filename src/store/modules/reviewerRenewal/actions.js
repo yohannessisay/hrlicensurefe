@@ -909,8 +909,10 @@ export default {
     const licensed = resp.data.data.filter(function(e) {
       return e.reviewerId === adminStatus[0];
     });
+    console.log(confirmedResp);
     const confirmedLicensed = confirmedResp.data.data.filter(function(e) {
-      return e.reviewerId === adminStatus[0] && e.previousApplicationStatus.code === "APP";
+      // return e.reviewerId === adminStatus[0] && e.previousApplicationStatus.code === "APP";
+      return e.reviewerId === adminStatus[0] ;
     })
     const concateLicensedUsers = licensed.concat(confirmedLicensed);
     if(expertLevelId === 3) {

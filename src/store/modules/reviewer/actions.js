@@ -1260,7 +1260,7 @@ export default {
   async editNewLicense({ commit }, license) {
     try {
       const resp = await ApiService.put(
-        baseUrl + "/newlicenses/" + license.data.data.id,
+        baseUrl + "/newlicenses/" + license.data.id,
         license
       );
       console.log(resp)
@@ -1270,6 +1270,7 @@ export default {
       return error;
     }
   },
+
 
   async editVerification({ commit }, license) {
     try {
@@ -1293,15 +1294,30 @@ export default {
       return error;
     }
   },
+
+  
   async editRenewal({ commit }, license) {
     try {
-      console.log("license is", license);
+      console.log("license is", license.data.id);
       const resp = await ApiService.put(
         baseUrl + "/renewals/" + license.data.id,
         license
       );
       // const resp = await ApiService.put(url + "newLicenses/" + license);
       return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+  async RenewalGenerate({ commit }, license) {
+    try {
+      const resp = await ApiService.put(
+        baseUrl + "/renewals/" + license.data.data.id,
+        license
+      );
+      console.log(resp)
+      return resp;
+      
     } catch (error) {
       return error;
     }
