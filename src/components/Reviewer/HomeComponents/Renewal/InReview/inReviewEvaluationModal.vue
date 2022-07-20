@@ -1570,7 +1570,7 @@ export default {
         let checkProfessionResult = false;
         renewal.value.isProfessionChanged == false
           ? (checkProfessionResult = checkProfessionChanged(
-              renewal.value.professionalTypes
+              renewal.value.professionalTypeIds
             ))
           : (checkProfessionResult = true);
 
@@ -1593,9 +1593,10 @@ export default {
 
       if (actionValue == "ReviewerDraftEvent") {
         let checkProfessionResult = false;
+        console.log(renewal.value);
         renewal.value.isProfessionChanged == false
           ? (checkProfessionResult = checkProfessionChanged(
-              renewal.value.professionalTypes
+              renewal.value.professionalTypeIds
             ))
           : (checkProfessionResult = true);
 

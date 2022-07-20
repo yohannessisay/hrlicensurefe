@@ -246,11 +246,13 @@ export default {
     };
 
     const licensedByYou = () => {
+                   console.log("adminStatus");
+
       applicationStatus(store, "AP").then((ap) => {
         applicationStatus(store, "CONF").then((conf) => {
           applicationStatus(store, "APP").then((app) => {
             let adminStatus = [adminId, ap, conf, app];
-
+             console.log(adminStatus);
             store
               .dispatch("reviewerRenewal/getRenewalLicensed", adminStatus)
               .then(() => {

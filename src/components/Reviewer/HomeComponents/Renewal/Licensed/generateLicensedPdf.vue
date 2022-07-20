@@ -578,7 +578,7 @@ export default {
 
     const editApplication = (req) => {
       store
-        .dispatch("reviewer/editRenewal", req)
+        .dispatch("reviewer/RenewalGenerate", req)
         .then((res) => {
           isLoading.value = false;
           if (res.statusText == "Created") {
@@ -665,16 +665,15 @@ export default {
       let xPosition = ref(185);
       for (
         let i = 0;
-        i < certificateDetail.value.professionalTypePrefixes.length;
+        i < certificateDetail.value.renewalProfessions.length;
         i++
       ) {
         let professionPrefix = `${
-          certificateDetail.value.professionalTypePrefixes[i].prefix
-            ? certificateDetail.value.professionalTypePrefixes[i].prefix
+          certificateDetail.value.renewalProfessions[i].prefix
+            ? certificateDetail.value.renewalProfessions[i].prefix
             : ""
         }  ${
-          certificateDetail.value.professionalTypePrefixes[i].professionalTypes
-            .name
+          certificateDetail.value.renewalProfessions[i].professionalTypes.name
         }`;
         let getLength = doc.getTextWidth(professionPrefix);
         if (getLength > 125 && getLength <= 132) {
@@ -698,33 +697,33 @@ export default {
       }
       for (
         let i = 0;
-        i < certificateDetail.value.professionalTypePrefixes.length;
+        i < certificateDetail.value.renewalProfessions.length;
         i++
       ) {
         doc.text(
           xPosition.value,
           professionPossition + i * professionListGap,
           `${
-            certificateDetail.value.professionalTypes.length > 1
+            certificateDetail.value.renewalProfessions.length > 1
               ? i + 1 + ". "
               : ""
           }${
-            certificateDetail.value.professionalTypePrefixes[i]
+            certificateDetail.value.renewalProfessions[i]
               .professionalTypes.name
               ? `${
-                  certificateDetail.value.professionalTypePrefixes[i].prefix
+                  certificateDetail.value.renewalProfessions[i].prefix
                     ? "(" +
-                      certificateDetail.value.professionalTypePrefixes[i]
+                      certificateDetail.value.renewalProfessions[i]
                         .prefix +
                       ")"
                     : ""
                 }   ${
-                  certificateDetail.value.professionalTypePrefixes[i]
+                  certificateDetail.value.renewalProfessions[i]
                     .professionalTypes.code === "OTH"
                     ? certificateDetail.value.otherProfessionalType
                       ? certificateDetail.value.otherProfessionalType
                       : ""
-                    : certificateDetail.value.professionalTypePrefixes[i]
+                    : certificateDetail.value.renewalProfessions[i]
                         .professionalTypes.name
                 }`
               : ""
@@ -819,23 +818,23 @@ export default {
 
       for (
         let i = 0;
-        i < certificateDetail.value.professionalTypes.length;
+        i < certificateDetail.value.renewalProfessions.length;
         i++
       ) {
         doc.text(
           xPosition.value,
           professionPossition + i * professionListGap,
           `${
-            certificateDetail.value.professionalTypes.length > 1
+            certificateDetail.value.renewalProfessions.length > 1
               ? i + 1 + ". "
               : ""
           }${
-            certificateDetail.value.professionalTypes[i].professionalTypes
+            certificateDetail.value.renewalProfessions[i].professionalTypes
               .amharicProfessionalType
-              ? certificateDetail.value.professionalTypes[i].professionalTypes
+              ? certificateDetail.value.renewalProfessions[i].professionalTypes
                   .amharicProfessionalType === "ሌላ"
                 ? ""
-                : certificateDetail.value.professionalTypes[i].professionalTypes
+                : certificateDetail.value.renewalProfessions[i].professionalTypes
                     .amharicProfessionalType
               : ""
           }`
@@ -884,7 +883,9 @@ export default {
         filters: ["ASCIIHexEncode"],
       });
       updateLicenseGenerated();
-      const userImage = certifiedUser.value.photo;
+      const userImage = certifiedUser.value.profilePicture
+        ? certifiedUser.value.profilePicture
+        : null;
       if (certificateDetail.value.reviewer.expertLevel.code === "FED") {
         doc.addImage(backgroundImage, "JPG", 0, 0, 298, 213, undefined, "FAST");
         handleRegionsLayout(doc, "FED", 100, 125, 7);
