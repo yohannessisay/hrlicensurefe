@@ -60,28 +60,28 @@
             aria-label="Close"
           ></button>
         </div>
-         <div class="vld-parent">
-                <loading
-                  :active="isLoading"
-                  :is-full-page="false"
-                  :color="'#2F639D'"
-                  :opacity="1"
-                ></loading>
-        <div class="modal-body relative p-4">
-          <div class="container px-6 mx-auto">
-            <section class="text-gray-800">
-              <div class="flex justify-center">
-                <div class="text-center lg:max-w-3xl md:max-w-xl">
-                  <h2 class="text-2xl font-bold mb-8 px-6">
-                    Showing
-                    <span class="text-2xl font-bold px-6">
-                      {{ modalData.name ? modalData.name : "" }}
-                    </span>
-                    's License Data
-                  </h2>
+        <div class="vld-parent">
+          <loading
+            :active="isLoading"
+            :is-full-page="false"
+            :color="'#2F639D'"
+            :opacity="1"
+          ></loading>
+          <div class="modal-body relative p-4">
+            <div class="container px-6 mx-auto">
+              <section class="text-gray-800">
+                <div class="flex justify-center">
+                  <div class="text-center lg:max-w-3xl md:max-w-xl">
+                    <h2 class="text-2xl font-bold mb-8 px-6">
+                      Showing
+                      <span class="text-2xl font-bold px-6">
+                        {{ modalData.name ? modalData.name : "" }}
+                      </span>
+                      's License Data
+                    </h2>
+                  </div>
                 </div>
-              </div>
-        
+
                 <div class="flex flex-wrap">
                   <div class="grow-0 shrink-0 basis-auto w-full lg:w-11/12">
                     <div class="flex flex-wrap">
@@ -309,9 +309,7 @@
                               uppercase
                               rounded
                               shadow-lg
-                              focus:shadow-lg
-                              focus:outline-none
-                              focus:ring-0
+                              focus:shadow-lg focus:outline-none focus:ring-0
                               active:bg-blue-800 active:shadow-lg
                               transition
                               duration-150
@@ -393,11 +391,10 @@
                     </div>
                   </div>
                 </div>
-              
-            </section>
+              </section>
+            </div>
           </div>
         </div>
-         </div>
         <div
           class="
             modal-footer
@@ -475,8 +472,8 @@ import { googleApi } from "@/composables/baseURL";
 import generatePdf from "./generateLicensedPdf.vue";
 import { ref, watch } from "vue";
 import { useStore } from "vuex";
-import Loading from "vue3-loading-overlay";
-import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
+import Loading from "../../../../../plugins/Loader/index.js";
+
 export default {
   name: "Modal",
   components: { generatePdf, Loading },
@@ -538,16 +535,15 @@ export default {
             modalData.value.certifiedDate = result.certifiedDate;
             modalData.value.licenseExpirationDate =
               result.licenseExpirationDate;
-            modalData.value.documents=result.documents
-             modalData.value.data=result
+            modalData.value.documents = result.documents;
+            modalData.value.data = result;
             isLoading.value = false;
-
           }
         });
     };
 
-    watch(props.modalDataId,() => {
-         isLoading.value = true;
+    watch(props.modalDataId, () => {
+      isLoading.value = true;
       check();
     });
     return {

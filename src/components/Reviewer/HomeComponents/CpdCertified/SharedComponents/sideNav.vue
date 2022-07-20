@@ -31,6 +31,11 @@
         <span class="logo_name ml-4">eHPL</span>
       </div>
     </router-link>
+        <li class="inverted-border-radius mb-8 mt-4">
+      <i class="bx bx-badge-check ml-8 mt-4" style="color: #224771"></i>
+
+      <span class="header_text">Cpd Certified</span>
+    </li>
     <ul class="nav-links mb-64">
       <router-link to="/admin/cpdCertified/">
         <li

@@ -1,12 +1,15 @@
 import axios from "axios";
-import router from "../router";
-axios.interceptors.response.use(function (response) {
-  return response;
-  }, function (error) {
-    localStorage.removeItem('token');
-    router.push('/landing')
-  return Promise.reject(error);
-  });
+// import router from "../router";
+// axios.interceptors.response.use(
+//   function(response) {
+//     return response;
+//   },
+//   function(error) {
+//     localStorage.removeItem("token");
+//     router.push("/landing");
+//     return Promise.reject(error);
+//   }
+// );
 const ApiService = {
   // Stores the 401 interceptor position so that it can be later ejected when needed
   _401interceptor: null,
@@ -107,11 +110,9 @@ const ApiService = {
 function authHeaders(needsAuth) {
   const token = localStorage.getItem("token");
   return needsAuth
-    ? 
-      {
-        "Authorization" : token ? `Bearer ${token}` : "",
+    ? {
+        Authorization: token ? `Bearer ${token}` : "",
       }
-      
     : {};
 }
 

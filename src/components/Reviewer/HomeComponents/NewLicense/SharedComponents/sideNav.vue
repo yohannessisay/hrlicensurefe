@@ -31,6 +31,14 @@
         <span class="logo_name ml-4">eHPL</span>
       </div>
     </router-link>
+    <div id="outer">
+      <div class="top left"></div>
+    </div>
+    <li class="inverted-border-radius mb-8 mt-4">
+      <i class="bx bx-plus ml-8 mt-4" style="color: #224771"></i>
+
+      <span class="header_text"> New License</span>
+    </li>
     <ul class="nav-links">
       <router-link to="/admin/newLicense/">
         <li
@@ -126,7 +134,7 @@
         </li>
       </router-link>
     </ul>
-      <ul class="nav-links">
+    <ul class="nav-links">
       <div
         class="profile-details mb-8 ml-4"
         style="
@@ -141,9 +149,9 @@
         <router-link to="/admin/review/">
           <li>
             <a href="" class="ml-6">
-              <i class="bx bx-arrow-to-left text-white "></i>
+              <i class="bx bx-arrow-to-left text-white"></i>
 
-              <span class="links_name text-white mr-12 ">All Listing</span>
+              <span class="links_name text-white mr-12">All Listing</span>
             </a>
           </li>
         </router-link>
