@@ -93,7 +93,6 @@ export default {
     try {
       const url = baseUrl + "/renewals/status/"+statusId;
       const resp = await ApiService.get(url);
-      console.log(resp);
       commit(SET_RENEWAL_UNASSIGNED, resp.data.data);
     } catch (err) {
       return err;
@@ -901,32 +900,19 @@ export default {
   },
 
   async getRenewalLicensed({ commit }, adminStatus) {
-    const expertLevelId = JSON.parse(localStorage.getItem("allAdminData")).expertLevelId;
-    const url = baseUrl + "/renewals/status/"+adminStatus[1];
-    const confirmedUrl = baseUrl + "/renewals/status/"+adminStatus[2];
+  
+    const url = baseUrl + "/renewals/all/licensed";
     const resp = await ApiService.get(url);
-    const confirmedResp = await ApiService.get(confirmedUrl);
-    const licensed = resp.data.data.filter(function(e) {
-      return e.reviewerId === adminStatus[0];
+
+    const otherLicensed = resp.data.data.filter(function(e) {
+      return e.reviewerId !== adminStatus[1];
     });
-    console.log(confirmedResp);
-    const confirmedLicensed = confirmedResp.data.data.filter(function(e) {
-      // return e.reviewerId === adminStatus[0] && e.previousApplicationStatus.code === "APP";
-      return e.reviewerId === adminStatus[0];
-    })
-    const concateLicensedUsers = licensed.concat(confirmedLicensed);
-    console.log(expertLevelId);
-    if(expertLevelId === 3 ||expertLevelId ==4) {
-      const ApprovedUrl = baseUrl + "/renewals/status/"+adminStatus[3];
-      const ApprovedResp = await ApiService.get(ApprovedUrl);
-      const ApprovedLicensed = ApprovedResp.data.data.filter(function(e) {
-        return e.reviewerId === adminStatus[0];
-      });
-      const concateForFederalApproved = concateLicensedUsers.concat(ApprovedLicensed);
-      commit(SET_RENEWAL_LICENSED, concateForFederalApproved);
-      return;
-    }
-    commit(SET_RENEWAL_LICENSED, concateLicensedUsers);
+
+    const licensedByYou = resp.data.data.filter(function(e) {
+      return e.reviewerId == adminStatus[1];
+    });
+    commit(SET_RENEWAL_LICENSED, licensedByYou);
+    commit(SET_RENEWAL_OTHERS_LICENSED, otherLicensed);
   },
 
   getRenewalLicensedSearched({ commit, getters }, searchKey) {
@@ -977,10 +963,11 @@ export default {
   },
 
   getRenewalOthersLicensedSearched({ commit, getters }, searchKey) {
-    if (getters.getRenewalOthersLicensed === undefined) {
+
+    if (getters.getRenewalLicensed === undefined) {
       return;
     }
-    const searchedVal = getters.getRenewalOthersLicensed.filter(function(
+    const searchedVal = getters.getRenewalLicensed.filter(function(
       e
     ) {
       return e.renewalCode === undefined
