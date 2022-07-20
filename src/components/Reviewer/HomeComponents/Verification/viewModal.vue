@@ -395,12 +395,12 @@
 <script>
 import { ref, computed } from "vue";
 import { useStore } from "vuex";
-import { useToast } from "vue-toastification";
+// import { useToast } from "vue-toastification";
 export default {
   props: ["modalData"],
   setup(props, { emit }) {
     const store = useStore();
-    const toast = useToast();
+    // const toast = useToast();
     const remark = ref("");
     let loggedInAdmin = JSON.parse(localStorage.getItem("allAdminData"));
     const malpracticeInfo = computed(() =>
@@ -454,22 +454,22 @@ export default {
         .then((res) => {
           console.log(res, editedData);
           if (res.data.status == "Success") {
-            toast.success("Verification request is successfully verified", {
-                 timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true,
-            });
+            // toast.success("Verification request is successfully verified", {
+            //      timeout: 5000,
+            //   position: "bottom-center",
+            //   pauseOnFocusLoss: true,
+            //   pauseOnHover: true,
+            //   icon: true,
+            // });
             emit("getVerification");
           } else {
-            toast.error(res.data.message, {
-              timeout: 20000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true,
-            });
+            // toast.error(res.data.message, {
+            //   timeout: 20000,
+            //   position: "bottom-center",
+            //   pauseOnFocusLoss: true,
+            //   pauseOnHover: true,
+            //   icon: true,
+            // });
           }
         });
     };

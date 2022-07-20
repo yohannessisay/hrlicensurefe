@@ -285,7 +285,7 @@ import { useStore } from "vuex";
 import { ref, onMounted } from "vue";
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
-import { useToast } from "vue-toastification";
+// import { useToast } from "vue-toastification";
 export default {
   components: {
     Loading,
@@ -293,7 +293,7 @@ export default {
 
   setup() {
     const store = useStore();
-    const toast = useToast();
+    // const toast = useToast();
     let users = ref([]);
     let filteredUsers = ref([]);
     let searchInput = ref("");
@@ -340,36 +340,36 @@ export default {
           (res) => {
             if (res.data.status == "Success") {
               isLoading.value = false;
-              toast.success("Verification request added Successfully", {
-                timeout: 5000,
-                position: "bottom-center",
-                pauseOnFocusLoss: true,
-                pauseOnHover: true,
-                icon: true,
-              });
+              // toast.success("Verification request added Successfully", {
+              //   timeout: 5000,
+              //   position: "bottom-center",
+              //   pauseOnFocusLoss: true,
+              //   pauseOnHover: true,
+              //   icon: true,
+              // });
             } else {
               isLoading.value = false;
 
-              toast.error(res.data.message, {
-                timeout: 20000,
-                position: "bottom-center",
-                pauseOnFocusLoss: true,
-                pauseOnHover: true,
-                icon: true,
-              });
+              // toast.error(res.data.message, {
+              //   timeout: 20000,
+              //   position: "bottom-center",
+              //   pauseOnFocusLoss: true,
+              //   pauseOnHover: true,
+              //   icon: true,
+              // });
             }
           },
           () => {
-            toast.error(
-              "Sorry there seems to be a problem, try again later and if problem persists contact system admins.",
-              {
-                timeout: 20000,
-                position: "bottom-center",
-                pauseOnFocusLoss: true,
-                pauseOnHover: true,
-                icon: true,
-              }
-            );
+            // toast.error(
+            //   "Sorry there seems to be a problem, try again later and if problem persists contact system admins.",
+            //   {
+            //     timeout: 20000,
+            //     position: "bottom-center",
+            //     pauseOnFocusLoss: true,
+            //     pauseOnHover: true,
+            //     icon: true,
+            //   }
+            // );
           }
         );
     };

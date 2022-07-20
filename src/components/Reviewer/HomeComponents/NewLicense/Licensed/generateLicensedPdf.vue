@@ -527,7 +527,7 @@ import addisAbabaCertificateBackground from "../../../../../assets/A_A_Certifica
 import AmharicFont from "../../../Configurations/amharicFont.js";
 import { toEthiopian } from "../../../Configurations/dateConvertor";
 import STATIC_CERTIFICATE_URL from "../../../../../sharedComponents/constants/message.js";
-import { useToast } from "vue-toastification";
+// import { useToast } from "vue-toastification";
 import moment from "moment";
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
@@ -543,7 +543,7 @@ export default {
   components: { Title, Loading },
   setup(props) {
     const store = useStore();
-    const toast = useToast();
+    // const toast = useToast();
     const showGenerateModal = ref(true);
     let show = ref(false);
     let certifiedUser = ref({});
@@ -585,23 +585,23 @@ export default {
           isLoading.value = false;
           if (res.statusText == "Created") {
             showGenerateModal.value = false;
-            toast.success("Done", {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true,
-            });
+            // toast.success("Done", {
+            //   timeout: 5000,
+            //   position: "bottom-center",
+            //   pauseOnFocusLoss: true,
+            //   pauseOnHover: true,
+            //   icon: true,
+            // });
           } else {
             showGenerateModal.value = false;
 
-            toast.error(res.data.message, {
-              timeout: 5000,
-              position: "bottom-center",
-              pauseOnFocusLoss: true,
-              pauseOnHover: true,
-              icon: true,
-            });
+            // toast.error(res.data.message, {
+            //   timeout: 5000,
+            //   position: "bottom-center",
+            //   pauseOnFocusLoss: true,
+            //   pauseOnHover: true,
+            //   icon: true,
+            // });
           }
         })
         .catch((err) => {
