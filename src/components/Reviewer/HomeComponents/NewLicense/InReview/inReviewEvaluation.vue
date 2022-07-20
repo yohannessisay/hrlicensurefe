@@ -3,7 +3,7 @@
   <reviewer-side-nav />
   <!-- Sidebar -->
 
-  <section class="home-section ">
+  <section class="home-section">
     <!-- Header -->
     <reviewer-nav-bar>
       <h2 class="dashboard">Evaluate</h2>
@@ -11,10 +11,9 @@
     <!-- Header -->
 
     <!-- Main Content -->
-    <div class="home-content ">
-      <div class="container mx-auto px-4 sm:px-4 mb-12 ">
-       
- <div class="rounded-lg  bg-primary-800 w-full shadow-md ">
+    <div class="home-content">
+      <div class="container mx-auto px-4 sm:px-4 mb-12">
+        <div class="rounded-lg bg-primary-800 w-full shadow-md">
           <h2 class="text-white ml-4">
             Evaluating
             {{
@@ -30,9 +29,9 @@
             }}
             's License
           </h2>
-          <div class=" w-full ">
+          <div class="w-full">
             <div class="box-shadow-pop bg-lightGrey-100">
-              <div class="flex  justify-center">
+              <div class="flex justify-center">
                 <div
                   class="
                     w-64
@@ -343,12 +342,7 @@
                             <button @click="disallowChangeName">cancel</button>
                           </div>
                         </div>
-                        <div
-                          v-if="showSpinner"
-                          class="flex justify-center justify-items-center mt-24"
-                        >
-                          <Spinner />
-                        </div>
+
                         <div class="flex flex-row">
                           <div
                             :class="[
@@ -493,10 +487,12 @@
                           </div>
                         </div>
                         <div class="flex justify-start">
-                         <h2 class="font-bold">Professional Type</h2>
+                          <h2 class="font-bold">Professional Type</h2>
                         </div>
                         <div class="flex flex-row">
-                          <div v-if="newLicense?.licenseProfessions?.length > 0">
+                          <div
+                            v-if="newLicense?.licenseProfessions?.length > 0"
+                          >
                             <div class="flex flex-col mb-medium mr-12 ml-8">
                               <div style="background: lightgray; padding: 8px">
                                 <p style="color: blue">
@@ -751,9 +747,7 @@
                               "
                               v-bind:src="googleApi + '' + docs[index].filePath"
                             />
-                            <div style="width: 400px">
-                            
-                            </div>
+                            <div style="width: 400px"></div>
                           </div>
                         </picture>
                       </div>
@@ -859,12 +853,7 @@
                   </button>
                 </div>
               </div>
-              <div
-                v-if="showActionLoading"
-                class="flex justify-center justify-items-center mt-2"
-              >
-                <Spinner />
-              </div>
+
               <Modal v-if="showRemark">
                 <div>
                   <div
@@ -1111,8 +1100,6 @@
             </div>
           </div>
         </div>
-
-
       </div>
     </div>
     <!-- Main Content -->
@@ -1128,22 +1115,24 @@ import { googleApi } from "@/composables/baseURL";
 
 import Title from "@/sharedComponents/Title";
 import Modal from "@/sharedComponents/Modal";
-import FlashMessage from "@/sharedComponents/FlashMessage";
-import Spinner from "@/sharedComponents/Spinner";
-import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
+import { useToast } from "vue-toastification";
 
 import moment from "moment";
 import ReviewerSideNav from "../SharedComponents/sideNav.vue";
 import ReviewerNavBar from "../SharedComponents/navBar.vue";
+
+import FlashMessage from "@/sharedComponents/FlashMessage";
+import Spinner from "@/sharedComponents/Spinner";
+import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
+
 export default {
   components: {
     Modal,
-    FlashMessage,
-    ErrorFlashMessage,
     Title,
-    Spinner,
     ReviewerSideNav,
     ReviewerNavBar,
+    FlashMessage,
+    ErrorFlashMessage,
   },
   computed: {
     moment: () => moment,
@@ -1152,6 +1141,7 @@ export default {
     const route = useRoute();
     const store = useStore();
     const router = useRouter();
+    const toast = useToast();
 
     const options = ref([0, 1, 2]);
     const selectedOptions = ref([0]);
@@ -1184,7 +1174,6 @@ export default {
     let prefix = ref();
     let canChangeName = ref(false);
     let showProfessionChangeError = ref(false);
-    let showSpinner = ref(false);
 
     let showNameChangeFlash = ref(false);
     let showNameChangeErrorFlash = ref(false);
@@ -1384,7 +1373,7 @@ export default {
             if (res.data?.status == "Success") {
               showTransferSuccessMessage.value = true;
               setTimeout(() => {
-                router.push({ path: "/admin/review" });
+                router.push({ path: "/admin/newLicense/inReview" });
               }, 4000);
             } else {
               showTransferErrorMessage.value = true;
@@ -1622,100 +1611,38 @@ export default {
         applicationType.value == "New License" &&
         sendDeclinedData.value == true
       ) {
-        console.log(req)
+        console.log(req);
         store
           .dispatch("reviewer/editNewLicense", req)
           .then((res) => {
             showActionLoading.value = false;
             if (res.statusText == "Created") {
-              showFlash.value = true;
-              showDeclineFlash.value = true;
-              setTimeout(() => {
-                router.push("/admin/review");
-              }, 3000);
+              toast.success("Application Approved Successfully", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              });
             } else {
-              showErrorFlash.value = true;
-              setTimeout(() => {
-                router.go();
-              }, 3000);
+              toast.error("Please try again", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              });
             }
           })
           .catch((err) => {
-            showErrorFlash.value = true;
-            setTimeout(() => {
-              router.go();
-            }, 3000);
+            toast.error("Please try again", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
           });
-      }
-      if (
-        applicationType.value == "Verification" &&
-        sendDeclinedData.value == true
-      ) {
-        store.dispatch("reviewer/editVerification", req).then((res) => {
-          showActionLoading.value = false;
-          if (res.statusText == "Created") {
-            showFlash.value = true;
-            showDeclineFlash.value = true;
-            setTimeout(() => {
-              router.push("/admin/review");
-            }, 3000);
-          } else {
-            showErrorFlash.value = true;
-            setTimeout(() => {
-              router.go();
-            }, 3000);
-          }
-        });
-      }
-      if (
-        applicationType.value == "Good Standing" &&
-        sendDeclinedData.value == true
-      ) {
-        store.dispatch("reviewer/editGoodStanding", req).then((res) => {
-          showActionLoading.value = false;
-          if (res.statusText == "Created") {
-            showFlash.value = true;
-            showDeclineFlash.value = true;
-            // let redirectUrl = "/admin/review";
-            // if (req.action == "ApproveEvent") {
-            //   redirectUrl =
-            //     "/admin/finishedDetail/" +
-            //     route.params.applicationType +
-            //     "/" +
-            //     route.params.applicationId +
-            //     "/" +
-            //     applicantId.value;
-            // }
-            setTimeout(() => {
-              router.push("/admin/review");
-            }, 3000);
-          } else {
-            showErrorFlash.value = true;
-            setTimeout(() => {
-              router.go();
-            }, 3000);
-          }
-        });
-      }
-      if (
-        applicationType.value == "Renewal" &&
-        sendDeclinedData.value == true
-      ) {
-        store.dispatch("reviewer/editRenewal", req).then((res) => {
-          showActionLoading.value = false;
-          if (res.statusText == "Created") {
-            showFlash.value = true;
-            showDeclineFlash.value = true;
-            setTimeout(() => {
-              router.push("/admin/review");
-            }, 3000);
-          } else {
-            showErrorFlash.value = true;
-            setTimeout(() => {
-              router.go();
-            }, 3000);
-          }
-        });
       }
     };
 
@@ -1777,7 +1704,6 @@ export default {
       canChangeName.value = false;
     };
     const changeAmharicName = () => {
-      showSpinner.value = true;
       const id = profileInfo.value.id;
       let newProfile = {
         alternativeName: newLicense.value.profile.alternativeName,
@@ -1789,7 +1715,6 @@ export default {
       store
         .dispatch("profile/changeUserProfile", profileData)
         .then(() => {
-          showSpinner.value = false;
           canChangeName.value = false;
           showNameChangeFlash.value = true;
           setTimeout(() => {
@@ -2006,7 +1931,6 @@ export default {
       allowChangeName,
       disallowChangeName,
       changeAmharicName,
-      showSpinner,
       showNameChangeFlash,
       showNameChangeErrorFlash,
       showLicenseDateRequirementError,

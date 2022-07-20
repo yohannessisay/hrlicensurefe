@@ -31,10 +31,17 @@
         <span class="logo_name ml-4">eHPL</span>
       </div>
     </router-link>
+    <li class="inverted-border-radius mb-8 mt-4">
+      <i class="fa fa-thumbs-up ml-8 mt-4" style="color: #224771"></i>
+
+      <span class="header_text"> Good Standing</span>
+    </li>
     <ul class="nav-links">
       <router-link to="/admin/goodStanding/">
         <li
-          :class="$route.fullPath === '/admin/goodStanding/' ? 'mb-2 active' : ''"
+          :class="
+            $route.fullPath === '/admin/goodStanding/' ? 'mb-2 active' : ''
+          "
         >
           <a href="">
             <i class="bx bx-certification"></i>
@@ -126,7 +133,7 @@
         </li>
       </router-link>
     </ul>
-      <ul class="nav-links">
+    <ul class="nav-links">
       <div
         class="profile-details mb-8 ml-4"
         style="
@@ -141,9 +148,9 @@
         <router-link to="/admin/review/">
           <li>
             <a href="" class="ml-6">
-              <i class="bx bx-arrow-to-left text-white "></i>
+              <i class="bx bx-arrow-to-left text-white"></i>
 
-              <span class="links_name text-white mr-12 ">All Listing</span>
+              <span class="links_name text-white mr-12">All Listing</span>
             </a>
           </li>
         </router-link>

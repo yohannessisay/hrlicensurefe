@@ -57,15 +57,7 @@
           <div class="container px-6 mx-auto">
             <section class="text-gray-800">
               <div class="flex justify-center">
-                <div class="text-center lg:max-w-3xl md:max-w-xl">
-                  <h2 class="text-2xl font-bold mb-8 px-6">
-                    Generate
-                    <span class="text-2xl font-bold">{{
-                      modalData.name ? modalData.name : ""
-                    }}</span>
-                    's License Data
-                  </h2>
-                </div>
+                <div class="text-center lg:max-w-3xl md:max-w-xl"></div>
               </div>
               <div class="vld-parent">
                 <loading
@@ -79,365 +71,305 @@
                 <div class="flex flex-wrap">
                   <div class="grow-0 shrink-0 basis-auto w-full">
                     <div>
-                      <span>
-                        <span v-if="isUserCertified && myRegion">
+                      <div
+                        class="
+                          bg-lightBlueB-200
+                          flex
+                          items-center
+                          justify-center
+                        "
+                      >
+                        <div class="w-screen">
                           <div
-                            v-if="
-                              applicationStatus !== 'CANC' &&
-                              applicationStatus !== 'SUSP' &&
-                              !showActionLoading
-                            "
-                          ></div>
-
-                          <div
-                            v-if="modalData"
                             class="
-                              bg-lightBlueB-200
-                              flex
-                              items-center
+                              flex flex-col
+                              w-full
+                              bg-white
+                              blue-box-shadow-light
+                              rounded
                               justify-center
+                              items-center
                             "
                           >
-                            <div class="w-screen">
-                              <div
-                                class="
-                                  flex flex-col
-                                  w-full
-                                  bg-white
-                                  blue-box-shadow-light
-                                  rounded
-                                "
-                              >
-                                <div>
-                                  <Title message="በኢትዮፕያ ፌደራላዊ ዴሞክራሲያዊ ሪፐብሊክ" />
-                                  <Title
-                                    message="Federal Democratic Republic Ethiopia"
-                                  />
-                                </div>
-                                <span class="mt-1">
-                                  <Title message="የጤና ሚኒስቴር" />
-                                  <Title message="Ministry of Health" />
-                                </span>
-
-                                <div class="flex">
-                                  <div
-                                    class="
-                                      flex flex-col
-                                      mb-medium
-                                      ml-2
-                                      w-1/2
-                                      mr-12
-                                    "
-                                  >
-                                    <Title
-                                      message="የጤና ባለሙያዎች የሙያ ምዝገባና ፈቃድ የምስከር ወረቀት"
-                                    />
-                                  </div>
-                                  <div
-                                    class="flex flex-col mb-medium w-1/2 mr-12"
-                                  >
-                                    <Title
-                                      message="HEALTH PROFFESSIONALS REGISTRATION AND"
-                                    />
-                                  </div>
-                                </div>
-                                <div class="flex">
-                                  <div class="flex flex-col ml-4 w-1/2 mr-12">
-                                    <!-- <h4>
-                                      በኢትዮጵያ ፌዴራላዊ ዴሞክራሲያዊ ረፐብሊክ የጤና ሚንስቴር በአዋጅ
-                                      ቁጥር
-                                  
-                                    
-                                           {{modalData.data.reviewer&&modalData.data.reviewer.expertLevelId === 3
-                                          ? "1112/2011"
-                                          :modalData.data.reviewer.regionId&&modalData.data.reviewer.region.code === "AA"
-                                          ? "64/2011"
-                                          :modalData.data.reviewer.regionId&& modalData.data.reviewer.region.code === "ORO"
-                                          ? "661/2009"
-                                          : "-"
-                                      }}
-                                           
-                                      አንቀጽ
-                                      {{
-                                        modalData.data.reviewer &&
-                                        modalData.data.reviewer.expertLevelId === 3
-                                          ? "73"
-                                          : modalData.data.reviewer &&
-                                            modalData.data.reviewer.region &&
-                                            modalData.data.reviewer.region
-                                              .code === "AA"
-                                          ? "44/8"
-                                          : modalData.data.reviewer &&
-                                            modalData.data.reviewer.region &&
-                                            modalData.data.reviewer.region
-                                              .code === "ORO"
-                                          ? "3/3"
-                                          : "-"
-                                      }}
-                                      ስልጣን መሰረት
-                                    </h4> -->
-                                  </div>
-
-                                  <div class="flex flex-col w-1/2 mr-12">
-                                    <!-- <h4>
-                                      Under the Federal Democratic Republic of
-                                      Ethiopia the Minstry of Health by Virtue
-                                      of proclamation No.
-                                      {{
-                                        modalData.data.reviewer &&
-                                        modalData.data.reviewer.expertLevel &&
-                                        modalData.data.reviewer.expertLevel
-                                          .code === "FED"
-                                          ? "1112/2019"
-                                          : modalData.data.reviewer &&
-                                            modalData.data.reviewer.region &&
-                                            modalData.data.reviewer.region
-                                              .code === "AA"
-                                          ? "64/2019"
-                                          : modalData.data.reviewer &&
-                                            modalData.data.reviewer.region &&
-                                            modalData.data.reviewer.region
-                                              .code === "ORO"
-                                          ? "661/2002"
-                                          : "-"
-                                      }}
-                                      Article
-                                      {{
-                                        modalData.data.reviewer &&
-                                        modalData.data.reviewer.expertLevel &&
-                                        modalData.data.reviewer.expertLevel
-                                          .code === "FED"
-                                          ? "73"
-                                          : modalData.data.reviewer &&
-                                            modalData.data.reviewer.region &&
-                                            modalData.data.reviewer.region
-                                              .code === "AA"
-                                          ? "44/8"
-                                          : modalData.data.reviewer &&
-                                            modalData.data.reviewer.region &&
-                                            modalData.data.reviewer.region
-                                              .code === "ORO"
-                                          ? "3/3"
-                                          : "-"
-                                      }}
-                                      is given the authority to issue
-                                    </h4> -->
-                                  </div>
-                                </div>
-
-                                <div class="flex">
-                                  <div class="flex flex-col w-1/2 mr-12">
-                                    <h3 class="underline ml-4">
-
-                                      <b
-                                      v-if="modalData.profile"
-                                        >{{
-                                          modalData.profile.alternativeName
-                                            ? modalData.profile
-                                                .alternativeName
-                                            : ""
-                                        }}
-                                        {{
-                                          modalData.profile
-                                            .alternativeFatherName
-                                            ? modalData.profile
-                                                .alternativeFatherName
-                                            : ""
-                                        }}
-                                        {{
-                                          modalData.profile
-                                            .alternativeGrandFatherName
-                                            ? modalData.profile
-                                                .alternativeGrandFatherName
-                                            : ""
-                                        }}</b
-                                      >
-                                    </h3>
-                                  </div>
-                                  <div class="flex flex-col w-1/2 mr-12">
-                                    <br />
-                                    <h3 class="underline ml-4 mb-4">
-                                      <b
-                                        >{{
-                                          modalData?.profile?.name
-                                            ? modalData?.profile?.name
-                                            : ""
-                                        }}
-                                        {{
-                                          modalData.profile?.fatherName
-                                            ? modalData.profile?.fatherName
-                                            : ""
-                                        }}
-                                        {{
-                                          modalData.profile?.grandFatherName
-                                            ? modalData.profile?.grandFatherName
-                                            : ""
-                                        }}</b
-                                      >
-                                    </h3>
-                                  </div>
-                                </div>
-
-                                <div class="flex">
-                                  <div class="flex flex-col ml-4 w-1/2 mr-12">
-                                    <h4>
-                                      ተገቢውን መስፈርት አሟልተው ስለተገኙ ሚኒስቴር መስሪያ ቤቱ
-                                    </h4>
-                                 
-                                    <h4 v-if="modalData.professionalTypes">
-                                      <div
-                                        v-for="professions in modalData.professionalTypes"
-                                        :key="professions"
-                                        class="flex flex-row ml-4"
-                                      >
-                                        <b
-                                          >{{
-                                            professions.professionalTypes
-                                              .amharicProfessionalType === "ሌላ"
-                                              ? ""
-                                              : professions.professionalTypes
-                                                  .amharicProfessionalType
-                                          }}
-                                        </b>
-                                      </div>
-                                      <br />ሙያ መዝግቦ ይህን የሙያ ስራ ፈቃድ ሰጥቷል።
-                                    </h4>
-                                  </div>
-                                  <div
-                                    class="flex flex-col mb-medium w-1/2 mr-12"
-                                  >
-                                    <h4>
-                                      Having duly satisfied the requirements of
-                                      the Ministry
-                                    </h4>
-                                    <h4>hereby registered and licensed as</h4>
-                                    <h4
+                            <div class="bg-lightBlueB-200">
+                              <div class="bg-lightBlueB-200 h-full">
+                                <div
+                                  v-if="show"
+                                  style="
+                                    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+                                  "
+                                  class="ml-8 mr-8 mb-12"
+                                >
+                                  <div class="mt-large bg-white">
+                                    <span
                                       v-if="
-                                        modalData.professionalTypes &&
-                                        modalData.professionalTypes[0]
-                                          .professionalTypes.name
+                                        isGoodStanding &&
+                                          license &&
+                                          license.applicationStatus &&
+                                          (license.applicationStatus.code ===
+                                            'AP' ||
+                                            license.applicationStatus.code ===
+                                              'APP') &&
+                                          myRegion
                                       "
                                     >
+                                      <button @click="GenerateLetter">
+                                        Generate Letter
+                                      </button>
+                                    </span>
+                                    <div class="flex justify-center">
+                                      <Title message="Summary" />
+                                    </div>
+                                    <div class="flex justify-start">
+                                      <Title message="Personal Info" />
+                                    </div>
+                                    <div class="flex flex-row">
                                       <div
-                                        v-for="professions in modalData.professionalTypes"
-                                        :key="professions"
-                                        class="flex flex-row ml-4"
+                                        :class="[
+                                          profileInfo &&
+                                          profileInfo.name == null
+                                            ? errorClass
+                                            : activeClass
+                                        ]"
                                       >
-                                        <b
-                                          >{{
-                                            professions.prefix
-                                              ? "(" + professions.prefix + ")"
-                                              : ""
-                                          }}
+                                        <label class="ml-8"> Full Name</label>
+                                        <h5 class="ml-8">
                                           {{
-                                            professions.professionalTypes
-                                              .code === "OTH"
-                                              ? certificateDetail.otherProfessionalType
-                                                ? certificateDetail.otherProfessionalType
-                                                : ""
-                                              : professions.professionalTypes
-                                                  .name
-                                          }}</b
-                                        >
+                                            (profileInfo
+                                              ? profileInfo.name
+                                              : "") +
+                                              " " +
+                                              (profileInfo
+                                                ? profileInfo.fatherName
+                                                : "") +
+                                              " " +
+                                              (profileInfo
+                                                ? profileInfo.grandFatherName
+                                                : "")
+                                          }}
+                                        </h5>
                                       </div>
-                                    </h4>
-                                  </div>
-                                </div>
-                                <div class="flex">
-                                  <div
-                                    class="
-                                      flex flex-col
-                                      mb-medium
-                                      ml-4
-                                      w-1/2
-                                      mr-12
-                                    "
-                                  >
-                                    <h3>
-                                      ይህ የሙያ የስራ ፈቃድ የሚያገለግለው
-                                      <b>
-                                        {{
-                                          modalData.certifiedDate
-                                            ? toEthiopian(
-                                                moment(
-                                                  modalData.certifiedDate
-                                                )._d.toISOString(),
-                                                false
-                                              )
-                                            : ""
-                                        }}
-                                        -{{
-                                          modalData
-                                            .licenseExpirationDate !== null
-                                            ? toEthiopian(
-                                                moment(
-                                                  modalData
-                                                    .licenseExpirationDate
-                                                )._d.toISOString(),
-                                                false
-                                              )
-                                            : " አልተገለጸም"
-                                        }}
-                                      </b>
-                                    </h3>
-                                  </div>
-                                  <div
-                                    class="flex flex-col mb-medium w-1/2 mr-12"
-                                  >
-                                    <h3>
-                                      The license is valid:<b
-                                        >{{
-                                          modalData.certifiedDate
-                                            ? moment(
-                                                modalData.certifiedDate
-                                              ).format("MMM DD, YYYY")
-                                            : ""
-                                        }}
-                                        -
-                                        {{
-                                          modalData.licenseExpirationDate
-                                            ? moment(
-                                                modalData
-                                                  .licenseExpirationDate
-                                              ).format("MMM DD, YYYY")
-                                            : " Not specified"
-                                        }}</b
+                                      <div
+                                        :class="[
+                                          profileInfo &&
+                                          profileInfo.gender === null
+                                            ? errorClass
+                                            : activeClass
+                                        ]"
                                       >
-                                    </h3>
+                                        <label class="ml-8"> Gender</label>
+                                        <h5 class="ml-8">
+                                          {{
+                                            profileInfo && profileInfo.gender
+                                              ? profileInfo["gender"]
+                                              : "-"
+                                          }}
+                                        </h5>
+                                      </div>
+                                      <div
+                                        :class="[
+                                          profileInfo &&
+                                          profileInfo.nationality === null
+                                            ? errorClass
+                                            : activeClass
+                                        ]"
+                                      >
+                                        <label class="ml-8"> Nationality</label>
+                                        <h5 class="ml-8">
+                                          {{
+                                            profileInfo
+                                              ? profileInfo.nationality.name
+                                              : "-"
+                                          }}
+                                        </h5>
+                                      </div>
+                                      <div
+                                        :class="[
+                                          profileInfo &&
+                                          profileInfo.dateOfBirth === null
+                                            ? errorClass
+                                            : activeClass
+                                        ]"
+                                      >
+                                        <label class="ml-8">
+                                          Date of Birth</label
+                                        >
+                                        <h5 class="ml-8">
+                                          {{
+                                            profileInfo
+                                              ? moment(
+                                                  profileInfo.dateOfBirth
+                                                ).format("MMM D, YYYY")
+                                              : "-"
+                                          }}
+                                        </h5>
+                                      </div>
+                                      <div
+                                        :class="[
+                                          profileInfo &&
+                                          profileInfo.maritalStatus.name ===
+                                            null
+                                            ? errorClass
+                                            : activeClass
+                                        ]"
+                                      >
+                                        <label class="ml-8">
+                                          Marital Status</label
+                                        >
+                                        <h5 class="ml-8">
+                                          {{
+                                            profileInfo
+                                              ? profileInfo.maritalStatus.name
+                                              : "-"
+                                          }}
+                                        </h5>
+                                      </div>
+                                    </div>
+
+                                    <div
+                                      class="flex justify-start"
+                                      v-if="expertLevelId != 3"
+                                    >
+                                      <Title message="Address" />
+                                    </div>
+                                    <div
+                                      class="flex flex-row"
+                                      v-if="expertLevelId != 3"
+                                    >
+                                      <div
+                                        :class="[
+                                          license.woreda &&
+                                          license.woreda === null
+                                            ? errorClass
+                                            : license.woreda &&
+                                              license.woreda.zone === null
+                                            ? errorClass
+                                            : license.woreda &&
+                                              license.woreda.zone.region ===
+                                                null
+                                            ? errorClass
+                                            : activeClass
+                                        ]"
+                                      >
+                                        <label class="ml-8"> Region</label>
+                                        <h5 class="ml-8">
+                                          {{
+                                            license.woreda &&
+                                            license.woreda === null
+                                              ? "-"
+                                              : license.woreda &&
+                                                license.woreda.zone === null
+                                              ? "-"
+                                              : license.woreda.zone &&
+                                                license.woreda.zone.region
+                                              ? license.woreda.zone.region.name
+                                              : "-"
+                                          }}
+                                        </h5>
+                                      </div>
+                                      <div
+                                        :class="[
+                                          license.woreda &&
+                                          license.woreda === null
+                                            ? errorClass
+                                            : license.woreda.zone &&
+                                              license.woreda.zone === null
+                                            ? errorClass
+                                            : activeClass
+                                        ]"
+                                      >
+                                        <label class="ml-8"> Zone</label>
+                                        <h5 class="ml-8">
+                                          {{
+                                            license.woreda &&
+                                            license.woreda === null
+                                              ? "-"
+                                              : license.woreda
+                                              ? license.woreda.zone.name
+                                              : "-"
+                                          }}
+                                        </h5>
+                                      </div>
+                                      <div
+                                        :class="[
+                                          license.woreda &&
+                                          license.woreda === null
+                                            ? errorClass
+                                            : activeClass
+                                        ]"
+                                      >
+                                        <label class="ml-8"> Wereda</label>
+                                        <h5 class="ml-8">
+                                          {{
+                                            license.woreda
+                                              ? license.woreda.name
+                                              : "-"
+                                          }}
+                                        </h5>
+                                      </div>
+                                    </div>
+                                    <div class="flex justify-start">
+                                      <Title message="Contact" />
+                                    </div>
+                                    <div class="flex flex-row">
+                                      <div
+                                        :class="[
+                                          profileInfo &&
+                                          profileInfo.phoneNumber === null
+                                            ? errorClass
+                                            : activeClass
+                                        ]"
+                                      >
+                                        <label class="ml-8">
+                                          Mobile Number</label
+                                        >
+                                        <h5 class="ml-8">
+                                          {{
+                                            profileInfo
+                                              ? profileInfo.phoneNumber
+                                              : "-"
+                                          }}
+                                        </h5>
+                                      </div>
+
+                                      <div
+                                        :class="[
+                                          profileInfo &&
+                                          profileInfo.emailAddress === null
+                                            ? errorClass
+                                            : activeClass
+                                        ]"
+                                      >
+                                        <label class="ml-8"> Email</label>
+                                        <h5 class="ml-8">
+                                          {{
+                                            profileInfo
+                                              ? profileInfo.emailAddress
+                                              : "-"
+                                          }}
+                                        </h5>
+                                      </div>
+                                    </div>
+                                    <div
+                                      class="flex justify-start flex-wrap"
+                                    ></div>
                                   </div>
                                 </div>
                               </div>
+                              <span
+                                v-if="showLoading"
+                                class="
+                                  flex
+                                  justify-center justify-items-center
+                                  mt-24
+                                "
+                              >
+                                <Spinner />
+                              </span>
                             </div>
                           </div>
-                        </span>
-                        <span v-else-if="!isUserCertified && isUserFound">
-                          <div
-                            class="
-                              flex
-                              justify-center
-                              content-center
-                              userNotFound
-                            "
-                          >
-                            <h1>User is not Certified</h1>
-                          </div>
-                        </span>
-
-                        <span v-else-if="!myRegion">
-                          <div
-                            class="
-                              flex
-                              justify-center
-                              content-center
-                              userNotFound
-                            "
-                          >
-                            <h1>
-                              You can't generate Certificate for other region
-                            </h1>
-                          </div>
-                        </span>
-                      </span>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -515,445 +447,254 @@
     </div>
   </div>
 </template>
-<script>
-import Title from "@/sharedComponents/Title";
-import { ref } from "vue";
-import { useStore } from "vuex";
 
-import jsPDF from "jspdf";
-import backgroundImage from "../../../../../assets/Federal_Certificate.jpg";
-import oromiaCertificateBackground from "../../../../../assets/Oromia_Certificate.jpg";
-import addisAbabaCertificateBackground from "../../../../../assets/A_A_Certificate.jpg";
-import AmharicFont from "../../../Configurations/amharicFont.js";
-import { toEthiopian } from "../../../Configurations/dateConvertor";
-import STATIC_CERTIFICATE_URL from "../../../../../sharedComponents/constants/message.js";
-import toast from "toast-me";
+<script>
+import { ref, computed } from "vue";
 import moment from "moment";
+import jsPDF from "jspdf";
+
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 
 export default {
+  props: ["modalDataGenerate"],
+  components: { Loading },
   computed: {
-    moment: () => moment,
-    AmharicFont: () => AmharicFont,
-    toEthiopian: () => toEthiopian,
-    STATIC_CERTIFICATE_URL: () => STATIC_CERTIFICATE_URL,
+    moment: () => moment
   },
-  props: ["modalData"],
-  components: { Title, Loading },
   setup(props) {
-    const store = useStore();
-    const showGenerateModal = ref(true);
-    let show = ref(false);
-    let certifiedUser = ref({});
-    let certificateDetail = ref({});
-    let isLoading = ref(false);
-    let showLoading = ref(false);
-    let showActionLoading = ref(false);
-    const fullPage = ref(false);
-    let isUserCertified = ref(true);
-    let isUserFound = ref(true);
     let myRegion = ref(true);
-    let imageSrc = ref("");
-    const adminRegionId = JSON.parse(
-      localStorage.getItem("allAdminData")
-    ).regionId;
+    const expertLevelId = JSON.parse(localStorage.getItem("allAdminData"))
+      .expertLevelId;
 
-    const expertLevelCode = JSON.parse(localStorage.getItem("allAdminData"))
-      .expertLevel.code;
+    const adminRegionId = JSON.parse(localStorage.getItem("allAdminData"))
+      .regionId;
 
-    let isLicenseGenerated = ref(false);
+    let show = ref(false);
 
-    let applicationStatus = ref("");
+    let showLoading = ref(false);
+    let isUserApproved = ref(false);
 
+    let isGoodStanding = ref(false);
+
+    let goodStandingUser = ref({});
+    let gender = ref("");
+    let userProfile = ref({
+      name: "",
+      fatherName: "",
+      grandFatherName: ""
+    });
+    let applicantPosition = ref("-");
+
+    let license = ref({
+      applicant: {},
+      applicantType: {},
+      education: {
+        institution: {
+          institutionType: {}
+        },
+        department: {}
+      }
+    });
+    let profileInfo = ref({
+      maritalStatus: {},
+      woreda: {
+        zone: {}
+      },
+      user: {},
+      userType: {}
+    });
+    let applicantId = ref("");
+    let applicantTypeId = ref("");
+    let education = ref({
+      departmentId: "",
+      institutionId: ""
+    });
+    let licenseId = ref("");
+    let activeClass = ref("active");
+    let errorClass = ref("text-danger");
+    let dataFetched = ref(false);
     let showFlash = ref(false);
     let showErrorFlash = ref(false);
+    let profile = ref({});
+    let applicationType = ref("");
 
-    const updateLicenseGenerated = () => {
-      let req = {
-        data: { ...props.modalData, isLicenseGenerated: true },
-      };
-      editApplication(req);
-    };
-
-    const editApplication = (req) => {
-      store
-        .dispatch("reviewer/editNewLicense", req)
-        .then((res) => {
-          isLoading.value = false;
-          if (res.statusText == "Created") {
-            showGenerateModal.value = false;
-          } else {
-            showGenerateModal.value = false;
-            toast("Certificate Generated Successfully.", {
-              duration: 3000,
-              position: "bottom",
-            });
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    };
-
-    const fetchQrCode = () => {
-      const staticUrl = STATIC_CERTIFICATE_URL;
-      const userId = props.modalData.profile.id;
-      const applicationId = props.modalData.data.id;
-      const applicationType = "NewLicense"
-
-      const qrParam = { url: null };
-
-      qrParam.url =
-        staticUrl + "/" + applicationType + "/" + userId + "/" + applicationId;
-      store
-        .dispatch("reviewer/getQrCode", qrParam)
-        .then((res) => {
-          imageSrc.value = res.data.data;
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    };
-
-    const generate = () => {
-      isLoading.value = true;
-      fetchQrCode();
-      certifiedUser.value = props.modalData.profile;
-      certificateDetail.value = props.modalData.data;
-
-      applicationStatus.value = props.modalData.data.applicationStatus.code;
-      isLicenseGenerated.value = props.modalData.data.isLicenseGenerated;
-      certificateDetail.value.licenseNumber =
-        certificateDetail.value.newLicenseCode;
-      if (props.modalData.data.certified != true) {
-        isUserCertified.value = false;
-      }
-      if (expertLevelCode != certificateDetail.value.expertLevels.code) {
-        myRegion.value = false;
-      } else {
-        if (
-          expertLevelCode === "REG" &&
-          adminRegionId != certificateDetail.value.woreda?.zone?.region?.id
-        ) {
-          myRegion.value = false;
-        }
-      }
-      downloadPdf();
-    };
-
-    const handleRegionsLayout = (
-      doc,
-      code,
-      namePosition,
-      professionPossition,
-      professionListGap
-    ) => {
-      doc.setFontSize(17);
-      doc.text(
-        190,
-        namePosition,
-        `${certifiedUser.value.name} ${certifiedUser.value.fatherName} ${
-          certifiedUser.value.grandFatherName
-            ? certifiedUser.value.grandFatherName
-            : ""
-        }`
-      );
-
-      let changeWidth = ref(false);
-      let changeWidthTooSmall = ref(false);
-      let xPosition = ref(185);
-      console.log(certificateDetail.value)
-      for (
-        let i = 0;
-        i < certificateDetail.value.licenseProfessions.length;
-        i++
+    let getReviewId = ref(0);
+    let modalData=computed(()=>props.modalDataGenerate)
+    const GenerateLetter = () => {
+      if (
+        license.value.applicationStatus.code !== "AP" &&
+        license.value.applicationStatus.code !== "APP"
       ) {
-        let professionPrefix = `${
-          certificateDetail.value.licenseProfessions[i].prefix
-            ? certificateDetail.value.licenseProfessions[i].prefix
-            : ""
-        }  ${
-          certificateDetail.value.licenseProfessions[i].professionalTypes
-            .name
-        }`;
-        let getLength = doc.getTextWidth(professionPrefix);
-        if (getLength > 125 && getLength <= 132) {
-          if (!changeWidthTooSmall.value) {
-            changeWidth.value = true;
-          }
-        }
-        if (getLength > 132) {
-          changeWidthTooSmall.value = true;
-          changeWidth.value = false;
-        }
-      }
-      if (changeWidth.value) {
-        doc.setFontSize(10);
-        xPosition.value = 167;
-      } else if (changeWidthTooSmall.value) {
-        doc.setFontSize(10);
-        xPosition.value = 153;
-      } else {
-        doc.setFontSize(14);
-      }
-      for (
-        let i = 0;
-        i < certificateDetail.value.licenseProfessions.length;
-        i++
-      ) {
-        doc.text(
-          xPosition.value,
-          professionPossition + i * professionListGap,
-          `${
-            certificateDetail.value.licenseProfessions.length > 1
-              ? i + 1 + ". "
-              : ""
-          }${
-            certificateDetail.value.licenseProfessions[i]
-              .professionalTypes.name
-              ? `${
-                  certificateDetail.value.licenseProfessions[i].prefix
-                    ? "(" +
-                      certificateDetail.value.licenseProfessions[i]
-                        .prefix +
-                      ")"
-                    : ""
-                }   ${
-                  certificateDetail.value.licenseProfessions[i]
-                    .professionalTypes.code === "OTH"
-                    ? certificateDetail.value.otherProfessionalType
-                      ? certificateDetail.value.otherProfessionalType
-                      : ""
-                    : certificateDetail.value.licenseProfessions[i]
-                        .professionalTypes.name
-                }`
-              : ""
-          }`
-        );
+        // if user is not approved don't generate a good standing letter
+        return;
       }
 
-      doc.setFontSize(12);
+      const doc = new jsPDF({ orientation: "landscape" });
+      const pageWidth =
+        doc.internal.pageSize.width || doc.internal.pageSize.getWidth;
+      doc.setFontSize(20);
+      doc.setFont("times", "bold");
+      doc.text(40, 58, "To: " + license.value.whomGoodStandingFor + ".");
+      doc.setFontSize(14);
+
+      const letter = "LETTER OF GOOD STANDING";
+      doc.text(letter, pageWidth / 2, 75, { align: "center" });
+      const letterPosition = pageWidth / 2 - doc.getTextWidth(letter) / 2;
+      doc.line(
+        letterPosition,
+        77,
+        letterPosition + doc.getTextWidth(letter),
+        77
+      );
+      doc.setFontSize(15);
+
+      doc.setFont("times", "normal");
       doc.text(
-        197,
-        164,
-        `${
-          certificateDetail.value.certifiedDate
-            ? moment(certificateDetail.value.certifiedDate).format(
-                "MMM DD, YYYY"
-              ) + " - "
-            : "Not Specified"
-        }`
+        40,
+        90,
+        "This letter of good standing and " +
+          "confirmation of registration is written" +
+          " upon request of " +
+          license.value.applicantTitle +
+          " " +
+          userProfile.value.name +
+          " " +
+          userProfile.value.fatherName +
+          " " +
+          userProfile.value.grandFatherName +
+          "."
       );
       doc.text(
-        226,
-        164,
-        `${
-          certificateDetail.value.licenseExpirationDate
-            ? moment(certificateDetail.value.licenseExpirationDate).format(
-                "MMM DD, YYYY"
-              )
-            : "Not Specified"
-        }`
-      );
-      // License Number
-      // doc.text(245, 58, `${certificateDetail.value.licenseNumber}`);
-      // License Number for amharic
-      doc.text(38, 58, `${certificateDetail.value.licenseNumber}`);
-
-      // doc.addFileToVFS("Amiri-Regular.ttf", AmiriRegular);
-      doc.addFileToVFS("Tera-Regular-normal.ttf", AmharicFont);
-
-      doc.addFont("Tera-Regular-normal.ttf", "Tera-Regular", "normal");
-
-      doc.setFont("Tera-Regular"); // set font
-
-      doc.setFontSize(17);
-      if (code === "AA" || code == "FED") {
-        doc.text(
-          60,
-          namePosition - 5,
-          `${
-            certifiedUser.value.alternativeName
-              ? certifiedUser.value.alternativeName
-              : ""
-          } ${
-            certifiedUser.value.alternativeFatherName
-              ? certifiedUser.value.alternativeFatherName
-              : ""
-          } ${
-            certifiedUser.value.alternativeGrandFatherName
-              ? certifiedUser.value.alternativeGrandFatherName
-              : ""
-          }`
-        );
-      } else {
-        doc.text(
-          60,
-          namePosition,
-          `${
-            certifiedUser.value.alternativeName
-              ? certifiedUser.value.alternativeName
-              : ""
-          } ${
-            certifiedUser.value.alternativeFatherName
-              ? certifiedUser.value.alternativeFatherName
-              : ""
-          } ${
-            certifiedUser.value.alternativeGrandFatherName
-              ? certifiedUser.value.alternativeGrandFatherName
-              : ""
-          }`
-        );
-      }
-
-      if (changeWidth.value) {
-        doc.setFontSize(11);
-        xPosition.value = 40;
-      } else if (changeWidthTooSmall.value) {
-        doc.setFontSize(11);
-        xPosition.value = 28;
-      } else {
-        doc.setFontSize(14);
-        xPosition.value = 65;
-      }
-
-      for (
-        let i = 0;
-        i < certificateDetail.value.licenseProfessions.length;
-        i++
-      ) {
-        doc.text(
-          xPosition.value,
-          professionPossition + i * professionListGap,
-          `${
-            certificateDetail.value.licenseProfessions.length > 1
-              ? i + 1 + ". "
-              : ""
-          }${
-            certificateDetail.value.licenseProfessions[i].professionalTypes
-              .amharicProfessionalType
-              ? certificateDetail.value.licenseProfessions[i].professionalTypes
-                  .amharicProfessionalType === "ሌላ"
-                ? ""
-                : certificateDetail.value.licenseProfessions[i].professionalTypes
-                    .amharicProfessionalType
-              : ""
-          }`
-        );
-      }
-
-      doc.setFontSize(12);
-      // doc.text(80)
-      let getAmharicLicensedDate = doc.getTextWidth(
-        toEthiopian(
-          moment(certificateDetail.value.certifiedDate)._d.toISOString(),
-          false
-        ) + " - "
+        40,
+        100,
+        userProfile.value.name +
+          " " +
+          userProfile.value.fatherName +
+          " " +
+          userProfile.value.grandFatherName +
+          " " +
+          "was registered as " +
+          applicantPosition.value +
+          " " +
+          moment(license.value.licenseIssuedDate).format("MMMM D, YYYY") +
+          " by " +
+          license.value.whoIssued +
+          ","
       );
       doc.text(
-        75,
-        164,
-        `${
-          certificateDetail.value.certifiedDate
-            ? toEthiopian(
-                moment(certificateDetail.value.certifiedDate)._d.toISOString(),
-                false
-              ) + " - "
-            : ""
-        }`
+        40,
+        110,
+        `which is the responsible organ for registration and licensing of health professionals and ${
+          gender.value == "male" ? "his" : "her"
+        } registration`
       );
       doc.text(
-        75 + getAmharicLicensedDate,
-        164,
-        `${
-          certificateDetail.value.licenseExpirationDate
-            ? toEthiopian(
-                moment(
-                  certificateDetail.value.licenseExpirationDate
-                )._d.toISOString(),
-                false
-              )
-            : " አልተገለጸም"
-        }`
+        40,
+        120,
+        `number is ${license.value.licenseRegistrationNumber}.`
       );
-    };
-
-    const downloadPdf = () => {
-      const doc = new jsPDF({
-        orientation: "landscape",
-        filters: ["ASCIIHexEncode"],
-      });
-    
-      updateLicenseGenerated();
-       
-      const userImage = certifiedUser.value.profilePicture?certifiedUser.value.profilePicture:null;
-     
-     if (certificateDetail.value.reviewer.expertLevel.code === "FED") {
-        doc.addImage(backgroundImage, "JPG", 0, 0, 298, 213, undefined, "FAST");
-
-        handleRegionsLayout(doc, "FED", 100, 125, 7);
-      } else if (certificateDetail.value.reviewer.region.code === "ORO") {
-        doc.addImage(
-          oromiaCertificateBackground,
-          "JPG",
-          0,
-          0,
-          298,
-          213,
-          undefined,
-          "FAST"
-        );
-        handleRegionsLayout(doc, "ORO", 110, 133, 4);
-      } else if (certificateDetail.value.reviewer.region.code === "AA") {
-        doc.addImage(
-          addisAbabaCertificateBackground,
-          "JPG",
-          0,
-          0,
-          298,
-          213,
-          undefined,
-          "FAST"
-        );
-        handleRegionsLayout(doc, "AA", 110, 133, 4);
-      }
-
-      // doc.addImage(backgroundImage, "JPEG", 0, 0, 298, 213, undefined, "FAST");
-      doc.addImage(imageSrc.value, "JPG", 246, 14, 35, 35);
-      if (userImage !== null) {
-        doc.addImage(userImage, "JPEG", 33, 20, 30, 30);
-      }
-      // doc.text(10, 203, `ቀን: ${toEthiopian(new Date().toISOString(), false)}`)
-      doc.setFontSize(10);
-
+      doc.text(
+        40,
+        130,
+        `${
+          gender.value == "male" ? "he" : "she"
+        } has no any reported medico legal records and malpractices while ${
+          gender.value == "male" ? "he" : "she"
+        } has practiced ${
+          gender.value == "male" ? "his" : "her"
+        } medical profession`
+      );
+      doc.text(
+        40,
+        140,
+        `in Ethiopia till ${moment(new Date()).format("MMMM DD, YYYY")}.`
+      );
+      doc.text(
+        40,
+        165,
+        `Hence we appreciate any assistance, which will be rendered to ${
+          gender.value == "male" ? "him" : "her"
+        }.`
+      );
+      doc.text(40, 185, "With best regards");
       window.open(doc.output("bloburl"));
     };
 
-    const onCancel = () => {
-      isLoading.value = false;
-    };
+    if (modalData.value.applicationStatus&&modalData.value.applicationStatus.code === "APP"
+    ) {
+      isUserApproved.value = true;
+    }
+    licenseId.value = modalData.value.id?modalData.value.id:"";
+    applicationType.value = modalData.value.applicationType?modalData.value.applicationType.name:"";
+    showLoading.value = true;
+    isGoodStanding.value = true;
+
+    license.value = modalData.value?modalData.value:{};
+    goodStandingUser.value =modalData.value;
+    if (
+      goodStandingUser.value.woreda != null &&
+      goodStandingUser.value.woreda.zone != null &&
+      goodStandingUser.value.woreda.zone.region != null
+    ) {
+      if (adminRegionId != goodStandingUser.value.woreda.zone.region.id) {
+        myRegion.value = false;
+      }
+    } else {
+      if (expertLevelId != goodStandingUser.value.expertLevelId) {
+        myRegion.value = false;
+      }
+    }
+    const prof = modalData.value ? modalData.value.profile : {};
+    gender.value = modalData.value.profile ? modalData.value.profile.gender : "";
+    if (prof.value) {
+      userProfile.value.name = prof.value.name ? prof.value.name : "";
+      userProfile.value.fatherName = prof.value.fatherName
+        ? prof.value.fatherName
+        : "";
+      userProfile.value.grandFatherName = prof.value.grandFatherName
+        ? prof.value.grandFatherName
+        : "";
+    }
+    const apPosition =modalData.value ? modalData.value.applicantPosition : {};
+    if (apPosition.value) {
+      applicantPosition.value = apPosition.value.name
+        ? apPosition.value.name
+        : "-";
+    }
+    getReviewId.value = license.value.reviewerId;
+    show.value = true;
+    profileInfo.value = license.value.profile;
 
     return {
-      show,
-      downloadPdf,
-      certifiedUser,
-      showLoading,
-      certificateDetail,
-      isUserCertified,
-      isUserFound,
-      myRegion,
-      generate,
-      onCancel,
-      fullPage,
-      showGenerateModal,
-      isLicenseGenerated,
-      isLoading,
-      showActionLoading,
-      applicationStatus,
+      license,
+      profileInfo,
+      activeClass,
+      errorClass,
+      dataFetched,
+      getReviewId,
       showFlash,
       showErrorFlash,
+      profile,
+      applicantId,
+      applicantTypeId,
+      education,
+      show,
+      showLoading,
+      applicationType,
+      licenseId,
+      isUserApproved,
+      isGoodStanding,
+      GenerateLetter,
+      myRegion,
+      expertLevelId
     };
-  },
+  }
 };
 </script>
+<style>
+.text-danger > label,
+.text-danger > h5 {
+  color: red;
+}
+</style>

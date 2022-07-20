@@ -465,7 +465,10 @@
       </div>
     </div>
   </div>
-  <generate-pdf v-if="showGenerateModal" :modalData="modalData"></generate-pdf>
+  <generate-pdf
+    v-if="showGenerateModal"
+    :modalDataGenerate="modalDataGenerate"
+  ></generate-pdf>
 </template>
 <script>
 import { googleApi } from "@/composables/baseURL";
@@ -489,11 +492,13 @@ export default {
     const showOptions = ref(true);
     const isLoading = ref(true);
     const modalData = ref({});
+    const modalDataGenerate = ref({});
     let result = {};
     const check = () => {
       store
         .dispatch("reviewer/getGoodStandingApplication", props.modalDataId.id)
         .then((res) => {
+          console.log(res);
           if (res.data.status == "Success") {
             result = res.data.data;
             modalData.value.name =
@@ -505,13 +510,13 @@ export default {
             modalData.value.gender = result.profile
               ? result.profile.gender
               : "-----";
-            modalData.value.nationality = result.profile
+            modalData.value.nationality = result.profile.nationality
               ? result.profile.nationality.name
               : "-----";
             modalData.value.dateOfBirth = result.profile
               ? result.profile.dateOfBirth
               : "-----";
-            modalData.value.martialStatus = result.profile?.name
+            modalData.value.martialStatus = result.martialStatus
               ? result.profile.martialStatus.name
               : "-----";
             modalData.value.mobileNumber = result.applicant
@@ -543,6 +548,7 @@ export default {
               ? result.documents
               : "";
             modalData.value.data = result;
+            modalDataGenerate.value = result;
             isLoading.value = false;
           }
         });
@@ -562,6 +568,7 @@ export default {
       showOptions,
       googleApi,
       modalData,
+      modalDataGenerate,
     };
   },
 };

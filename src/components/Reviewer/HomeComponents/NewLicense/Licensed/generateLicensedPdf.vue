@@ -231,9 +231,14 @@
                                 </div>
 
                                 <div class="flex">
-                                  <div class="flex flex-row w-1/2 mr-64" style="margin-left:-100px">
+                                  <div
+                                    class="flex flex-row w-1/2 mr-64"
+                                    style="margin-left: -100px"
+                                  >
                                     <h3 class="underline">
-                                      <b v-if="modalData.profile" class="text-yellow-300"
+                                      <b
+                                        v-if="modalData.profile"
+                                        class="text-yellow-300"
                                         >{{
                                           modalData.profile.alternativeName
                                             ? modalData.profile.alternativeName
@@ -257,7 +262,6 @@
                                     </h3>
                                   </div>
                                   <div class="flex flex-row w-1/2 ml-24">
-                                 
                                     <h4 class="underline">
                                       <b class="text-yellow-300"
                                         >{{
@@ -302,7 +306,7 @@
                                           }}
                                         </b>
                                       </div>
-                                   ሙያ መዝግቦ ይህን የሙያ ስራ ፈቃድ ሰጥቷል።
+                                      ሙያ መዝግቦ ይህን የሙያ ስራ ፈቃድ ሰጥቷል።
                                     </h4>
                                   </div>
                                   <div
@@ -368,7 +372,8 @@
                                               )
                                             : ""
                                         }}
-                                       <span> -እስከ-</span>{{
+                                        <span> -እስከ-</span
+                                        >{{
                                           modalData.licenseExpirationDate !==
                                           null
                                             ? toEthiopian(
@@ -386,7 +391,8 @@
                                     class="flex flex-col mb-medium w-1/2 mr-12"
                                   >
                                     <h4>
-                                      The license is valid from:<b class="text-yellow-300"
+                                      The license is valid from:<b
+                                        class="text-yellow-300"
                                         >{{
                                           modalData.certifiedDate
                                             ? moment(
@@ -527,7 +533,7 @@ import addisAbabaCertificateBackground from "../../../../../assets/A_A_Certifica
 import AmharicFont from "../../../Configurations/amharicFont.js";
 import { toEthiopian } from "../../../Configurations/dateConvertor";
 import STATIC_CERTIFICATE_URL from "../../../../../sharedComponents/constants/message.js";
-// import { useToast } from "vue-toastification";
+import { useToast } from "vue-toastification";
 import moment from "moment";
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
@@ -540,10 +546,10 @@ export default {
     STATIC_CERTIFICATE_URL: () => STATIC_CERTIFICATE_URL,
   },
   props: ["modalData"],
-  components: { Title, Loading },
+  components: { Loading },
   setup(props) {
     const store = useStore();
-    // const toast = useToast();
+    const toast = useToast();
     const showGenerateModal = ref(true);
     let show = ref(false);
     let certifiedUser = ref({});
@@ -578,30 +584,28 @@ export default {
     };
 
     const editApplication = (req) => {
-      console.log(req);
       store
         .dispatch("reviewer/editNewLicense", req)
         .then((res) => {
           isLoading.value = false;
           if (res.statusText == "Created") {
             showGenerateModal.value = false;
-            // toast.success("Done", {
-            //   timeout: 5000,
-            //   position: "bottom-center",
-            //   pauseOnFocusLoss: true,
-            //   pauseOnHover: true,
-            //   icon: true,
-            // });
+            toast.success("Done", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
           } else {
             showGenerateModal.value = false;
-
-            // toast.error(res.data.message, {
-            //   timeout: 5000,
-            //   position: "bottom-center",
-            //   pauseOnFocusLoss: true,
-            //   pauseOnHover: true,
-            //   icon: true,
-            // });
+            toast.error(res.data.message, {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
           }
         })
         .catch((err) => {

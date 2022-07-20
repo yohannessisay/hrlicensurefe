@@ -481,7 +481,7 @@ import { ref, onMounted, watch } from "vue";
 import moment from "moment";
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
-// import { useToast } from "vue-toastification";
+import { useToast } from "vue-toastification";
 
 export default {
   props: ["modalDataId", "reviewers"],
@@ -493,7 +493,7 @@ export default {
   },
   setup(props) {
     const store = useStore();
-    // const toast = useToast();
+    const toast = useToast();
     let show = ref(true);
     let showRes = ref(false);
     let showOptions = ref(false);
@@ -535,38 +535,38 @@ export default {
 
       isLoading.value = true;
 
-      // store
-      //   .dispatch("reviewer/assignReviewer", assign.value)
-      //   .then((response) => {
-      //     if (response.statusText == "Created") {
-      //       isLoading.value = false;
-      //       toast.success("Selected Rviewer assigned Successfully", {
-      //         timeout: 5000,
-      //         position: "bottom-center",
-      //         pauseOnFocusLoss: true,
-      //         pauseOnHover: true,
-      //         icon: true,
-      //       });
-      //     } else {
-      //       toast.error(
-      //         "Sorry there seems to be a problem, please try again.",
-      //         {
-      //           timeout: 20000,
-      //           position: "bottom-center",
-      //           pauseOnFocusLoss: true,
-      //           pauseOnHover: true,
-      //           icon: true,
-      //         }
-      //       );
-      //     }
-      //   })
-      //   .catch(() => {
-      //     toast("Sorry there seems to be a problem, please try again.", {
-      //       duration: 3000,
-      //       position: "bottom",
-      //       toastClass: "toast-error",
-      //     });
-      //   });
+      store
+        .dispatch("reviewer/assignReviewer", assign.value)
+        .then((response) => {
+          if (response.statusText == "Created") {
+            isLoading.value = false;
+            toast.success("Selected Rviewer assigned Successfully", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+          } else {
+            toast.error(
+              "Sorry there seems to be a problem, please try again.",
+              {
+                timeout: 20000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              }
+            );
+          }
+        })
+        .catch(() => {
+          toast("Sorry there seems to be a problem, please try again.", {
+            duration: 3000,
+            position: "bottom",
+            toastClass: "toast-error",
+          });
+        });
     };
 
     const showModal = () => {
