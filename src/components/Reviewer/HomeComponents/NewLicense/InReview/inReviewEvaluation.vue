@@ -342,7 +342,7 @@
                             <button @click="disallowChangeName">cancel</button>
                           </div>
                         </div>
-                  
+
                         <div class="flex flex-row">
                           <div
                             :class="[
@@ -853,7 +853,7 @@
                   </button>
                 </div>
               </div>
-        
+
               <Modal v-if="showRemark">
                 <div>
                   <div
@@ -1132,7 +1132,7 @@ export default {
     ReviewerSideNav,
     ReviewerNavBar,
     FlashMessage,
-    ErrorFlashMessage
+    ErrorFlashMessage,
   },
   computed: {
     moment: () => moment,
@@ -1625,7 +1625,7 @@ export default {
                 icon: true,
               });
             } else {
-                  toast.error("Please try again", {
+              toast.error("Please try again", {
                 timeout: 5000,
                 position: "bottom-center",
                 pauseOnFocusLoss: true,
@@ -1635,13 +1635,13 @@ export default {
             }
           })
           .catch((err) => {
-                     toast.error("Please try again", {
-                timeout: 5000,
-                position: "bottom-center",
-                pauseOnFocusLoss: true,
-                pauseOnHover: true,
-                icon: true,
-              });
+            toast.error("Please try again", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
           });
       }
     };

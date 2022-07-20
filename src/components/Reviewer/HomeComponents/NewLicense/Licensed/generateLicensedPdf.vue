@@ -584,7 +584,6 @@ export default {
     };
 
     const editApplication = (req) => {
-      console.log(req);
       store
         .dispatch("reviewer/editNewLicense", req)
         .then((res) => {

@@ -537,6 +537,7 @@ export default {
               result.licenseExpirationDate;
             modalData.value.documents = result.documents;
             modalData.value.data = result;
+            modalData.value.id=result.id
             isLoading.value = false;
           }
         });
