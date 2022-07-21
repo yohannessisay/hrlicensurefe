@@ -186,64 +186,7 @@
                         "
                       >
                         <div>
-                          <label class="font-bold text-lg text-primary-600 mb-1"
-                            >Actions</label
-                          >
-                          <br />
-                          <button
-                            class="
-                              inline-block
-                              px-6
-                              py-2.5
-                              custom-warning
-                              text-white
-                              font-medium
-                              text-xs
-                              leading-tight
-                              uppercase
-                              rounded
-                              shadow-lg
-                              focus:shadow-lg focus:outline-none focus:ring-0
-                              active:bg-blue-800 active:shadow-lg
-                              transition
-                              duration-150
-                              ease-in-out
-                            "
-                            type="button"
-                          >
-                            <i class="fa fa-ban"></i>
-                            Suspend
-                          </button>
-                          <button
-                            class="
-                              inline-block
-                              px-6
-                              py-2.5
-                              bg-
-                              text-white
-                              font-medium
-                              text-xs
-                              leading-tight
-                              uppercase
-                              rounded
-                              shadow-lg
-                              hover:bg-blue-700 hover:shadow-lg
-                              focus:bg-blue-700
-                              focus:shadow-lg
-                              focus:outline-none
-                              focus:ring-0
-                              active:bg-blue-800 active:shadow-lg
-                              transition
-                              duration-150
-                              ease-in-out
-                            "
-                            type="button"
-                            data-bs-toggle="modal"
-                            data-bs-target="#generatePdf"
-                          >
-                            <i class="fa fa-file-text"></i>
-                            Generate PDF
-                          </button>
+                         
 
                           <button
                             class="
@@ -428,14 +371,9 @@
       </div>
     </div>
   </div>
-  <generate-pdf
-    v-if="showGenerateModal"
-    :modalDataGenerate="modalDataGenerate"
-  ></generate-pdf>
 </template>
 <script>
 import { googleApi } from "@/composables/baseURL";
-import generatePdf from "./generateLicensedPdf.vue";
 import { ref, watch } from "vue";
 import { useStore } from "vuex";
 import Loading from "vue3-loading-overlay";

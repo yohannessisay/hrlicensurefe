@@ -470,18 +470,16 @@
       </div>
     </div>
   </div>
-  <generate-pdf v-if="showGenerateModal" :modalData="modalData"></generate-pdf>
 </template>
 <script>
 import { googleApi } from "@/composables/baseURL";
-import generatePdf from "./generateLicensedPdf.vue";
 import { ref, watch } from "vue";
 import { useStore } from "vuex";
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 export default {
   name: "Modal",
-  components: { generatePdf, Loading },
+  components: {  Loading },
   props: ["modalDataIdOthers"],
   setup(props) {
     const store = useStore();

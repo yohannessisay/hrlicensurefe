@@ -64,6 +64,7 @@
                       <span
                         v-if="
                           goodStanding&&
+                          goodStanding.profile&&
                           goodStanding.profile.profilePicture !== '' &&
                           goodStanding.profile.profilePicture !== null
                         "
@@ -297,12 +298,7 @@
                             <button @click="disallowChangeName">cancel</button>
                           </div>
                         </div>
-                        <div
-                          v-if="showSpinner"
-                          class="flex justify-center justify-items-center mt-24"
-                        >
-                          <Spinner />
-                        </div>
+                  
                         <div class="flex flex-row">
                           <div
                             :class="[
@@ -328,6 +324,7 @@
                             <label class="ml-8 titleColors"> Nationality</label>
                             <h5 class="ml-8">
                               {{
+                                profileInfo&&
                                 profileInfo.nationality
                                   ? profileInfo.nationality.name
                                   : "-"
@@ -336,6 +333,7 @@
                           </div>
                           <div
                             :class="[
+                            profileInfo&&profileInfo.maritalStatus&&
                               profileInfo.maritalStatus.name === null
                                 ? errorClass
                                 : activeClass,
@@ -346,6 +344,7 @@
                             >
                             <h5 class="ml-8">
                               {{
+                                profileInfo&&profileInfo.maritalStatus&&
                                 profileInfo.maritalStatus.name
                                   ? profileInfo.maritalStatus.name
                                   : "-"
@@ -579,18 +578,7 @@
                             </div>
                           </div>
                         </div>
-                        <div v-if="!docs.length>0">
-                          <div class="flex justify-start">
-                            <Title message="License Expiration Date" />
-                          </div>
-                          <div class="flex flex-col mb-medium w-1/2 ml-8 mr-12">
-                            <input
-                              class="max-w-3xl mr-5"
-                              type="date"
-                              v-model="goodStanding.licenseExpirationDate"
-                            />
-                          </div>
-                        </div>
+                
                       </div>
                       <div v-else>
                         <picture v-if="docs.length > 0">
@@ -963,19 +951,13 @@
               <div v-if="showNameChangeErrorFlash">
                 <ErrorFlashMessage message="name change Failed!" />
               </div>
-              <div v-if="showLicenseDateRequirementError">
-                <ErrorFlashMessage message="Please add Expiration date!" />
-              </div>
+          
               <div v-if="showProfessionChangeError">
                 <ErrorFlashMessage
                   message="you can't change profession if you are not approving"
                 />
               </div>
-              <div v-if="expirationDateExceedTodayError">
-                <ErrorFlashMessage
-                  message="Error! license expiration date must exceed today"
-                />
-              </div>
+       
               <div v-if="showTransferSuccessMessage">
                 <FlashMessage message="Transfer Successful!" />
               </div>
@@ -1037,7 +1019,7 @@ export default {
 
     let isGoodStanding = ref(false);
 
-    let expirationDateExceedTodayError = ref(false);
+   
     let isProfessionalTypeChanged = ref(false);
 
     let otherProfessionalType = ref();
@@ -1412,33 +1394,7 @@ export default {
         loopCounter = 0;
       }
 
-      if (actionValue === "ApproveEvent") {
-        if (
-          goodStanding.value.licenseExpirationDate === null &&
-          !isGoodStanding.value
-        ) {
-          showLicenseDateRequirementError.value = true;
-          setTimeout(() => {
-            showLicenseDateRequirementError.value = false;
-          }, 4000);
-          showActionLoading.value = false;
-          showLoadingButtons.value = false;
-          return;
-        } else if (
-          !moment(goodStanding.value.licenseExpirationDate).isAfter(
-            new Date()
-          ) &&
-          !isGoodStanding.value
-        ) {
-          expirationDateExceedTodayError.value = true;
-          setTimeout(() => {
-            expirationDateExceedTodayError.value = false;
-          }, 4000);
-          showActionLoading.value = false;
-          showLoadingButtons.value = false;
-          return;
-        }
-      }
+
 
       if (actionValue == "DeclineEvent") {
         showActionLoading.value = false;
@@ -1805,7 +1761,6 @@ export default {
       showLicenseDateRequirementError,
       professionalTypeIds,
       showProfessionChangeError,
-      expirationDateExceedTodayError,
       prefixList,
       prefix,
       professionalTypeIdss,
