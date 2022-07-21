@@ -5,7 +5,7 @@ import { SET_STATS } from "./mutation-types";
 export default {
   async getStats({ commit }) {
     try {
-      const url =baseUrl+"/newLicenses/count";
+      const url =baseUrl+"/admins/stats/count";
       const resp = await ApiService.get(url);
       commit(SET_STATS, resp.data.data);
       return resp.data
