@@ -115,9 +115,9 @@
           <label class="ml-4 text-primary-300"> Mobile Number</label>
           <h5 class="ml-4">
             {{
-              this.profileInfo.user.phoneNumber
+              this.profileInfo.user ? (this.profileInfo.user.phoneNumber
                 ? this.profileInfo.user.phoneNumber
-                : "-"
+                : "-") : '-'
             }}
           </h5>
         </div>
