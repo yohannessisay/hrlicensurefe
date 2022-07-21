@@ -277,7 +277,7 @@ export default {
                   },
                 },
               ],
-              rows: JSON.parse(JSON.stringify(tableData.value)),
+              rows: JSON.parse(JSON.stringify(tableData.value))?JSON.parse(JSON.stringify(tableData.value)):1,
               totalRecordCount: tableData.value.length,
               sortable: {
                 order: "id",

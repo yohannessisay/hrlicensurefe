@@ -814,7 +814,7 @@ export default defineComponent({
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgb(0, 0, 0);
   display: flex;
   flex-flow: column;
   transition: opacity 0.3s ease;

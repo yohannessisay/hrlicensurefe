@@ -18,20 +18,18 @@
       <a
         href="#tabs-homeFill"
         class="
-          nav-link
+                 nav-link
           w-full
           block
           font-medium
           text-xs
           leading-tight
           uppercase
-          border-x-0 border-t-0 border-b-2 border-transparent
+          border-2
           px-6
           py-3
-             rounded-lg
-          shadow-2xl
+          rounded
           my-2
-          focus:border-transparent
           active
         "
         id="tabs-home-tabFill"
@@ -55,13 +53,12 @@
           text-xs
           leading-tight
           uppercase
-          border-x-0 border-t-0 border-b-2 border-transparent
+          border-2
           px-6
           py-3
+          rounded
           my-2
-          hover:border-r
-             rounded-lg
-          shadow-2xl
+        
         "
         id="tabs-messages-tabFill"
         data-bs-toggle="pill"
@@ -101,19 +98,3 @@ export default {
   },
 };
 </script>
-<style scoped>
-.nav-tabs .nav-link.active {
-  color: white;
-  border-color: #4185d0;
-  margin-top: -4px;
-  background-color: #0d3552;
-  border-radius: 5px;
-  font-size: 14px;
-  box-shadow: none !important;
-  font-weight: bold;
-}
-
-.nav-tabs :hover.nav-link {
-  color: #4185d0;
-}
-</style>
