@@ -162,7 +162,7 @@ export default {
       id: "",
       change: 0,
     });
-        let modalDataIdResub = ref({
+    let modalDataIdResub = ref({
       id: "",
       change: 0,
     });
@@ -198,13 +198,9 @@ export default {
         let statusId = res;
 
         store
-          .dispatch("reviewerNewLicense/getNewLicenseUnassigned", statusId)
+          .dispatch("reviewerGoodStanding/getUnassignedGoodStanding", statusId)
           .then((res) => {
-                          console.log(res)
-            allInfo.value.assignApplication =
-              store.getters[
-                "reviewerNewLicense/getNewLicenseUnassignedSearched"
-              ];
+            allInfo.value.assignApplication = res;
 
             for (let applicant in allInfo.value.assignApplication) {
               if (
@@ -219,14 +215,18 @@ export default {
             JSON.parse(JSON.stringify(allInfo.value.assignApplication)).forEach(
               (element) => {
                 tableData.value.push({
-                  LicenseNumber: element.newLicenseCode,
+                  LicenseNumber: element.goodStandingCode
+                    ? element.goodStandingCode
+                    : "",
                   ApplicantName:
-                    element.profile.name +
+                    (element.profile ? element.profile.name : "") +
                     " " +
-                    element.profile.fatherName +
+                    (element.profile ? element.profile.fatherName : "") +
                     " " +
-                    element.profile.grandFatherName,
-                  ApplicationType: element.newLicenseCode ? "New License" : "",
+                    (element.profile ? element.profile.grandFatherName : ""),
+                  ApplicationType: element.applicationType
+                    ? element.applicationType.name
+                    : "",
                   Date: new Date(element.createdAt)
                     .toJSON()
                     .slice(0, 10)
@@ -253,7 +253,7 @@ export default {
                   sortable: true,
                 },
                 {
-                  label: "Appliction Type",
+                  label: "Application Type",
                   field: "ApplicationType",
                   width: "15%",
                   sortable: true,
@@ -299,7 +299,6 @@ export default {
               statusId
             )
             .then((res) => {
-
               allInfo.value.assignApplication =
                 store.getters[
                   "reviewerNewLicense/getNewLicenseFromOtherRegionSearched"
@@ -453,7 +452,6 @@ export default {
         store
           .dispatch("reviewerNewLicense/getNewLicenseReApply", adminStatus)
           .then((res) => {
-            console.log(res)
             allInfo.value.assignApplication =
               store.getters["reviewerNewLicense/getNewLicenseReApplySearched"];
 
@@ -503,7 +501,7 @@ export default {
                   sortable: true,
                 },
                 {
-                  label: "Appliction Type",
+                  label: "Application Type",
                   field: "ApplicationType",
                   width: "15%",
                   sortable: true,
@@ -550,8 +548,7 @@ export default {
       unassignedTable.value.isLoading = false;
     };
 
-
-        const tableLoadingFinishResub = () => {
+    const tableLoadingFinishResub = () => {
       let elementsResub = document.getElementsByClassName(
         "edit-btn-resubmitted"
       );
@@ -562,9 +559,6 @@ export default {
       });
       reSubmittedTable.value.isLoading = false;
     };
-
-
-
 
     const rowClicked = (row) => {
       if (row != undefined) {
@@ -578,18 +572,17 @@ export default {
         row = JSON.parse(JSON.stringify(row));
         modalDataIdResub.value.change++;
         modalDataIdResub.value.id = row.data.id ? row.data.id : "";
-     
       }
     };
 
     onMounted(() => {
       unassigned();
       reSubmitted();
-              store.dispatch("reviewer/getAdmins").then((res) => {
-          reviewers.value = res.data.data.filter((e) => {
-            return e.role.code !== "UM";
-          });
+      store.dispatch("reviewer/getAdmins").then((res) => {
+        reviewers.value = res.data.data.filter((e) => {
+          return e.role.code !== "UM";
         });
+      });
     });
 
     return {
@@ -609,7 +602,7 @@ export default {
       includeFromOthers,
       rowClickedResub,
       modalDataId,
-       modalDataIdResub,
+      modalDataIdResub,
     };
   },
 };

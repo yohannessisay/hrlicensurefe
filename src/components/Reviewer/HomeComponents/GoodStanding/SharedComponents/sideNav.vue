@@ -50,7 +50,7 @@
           </a>
         </li>
       </router-link>
-      <router-link to="/admin/goodStanding/goodStanding">
+      <router-link to="/admin/goodStanding/assigned">
         <li
           :class="
             $route.fullPath === '/admin/goodStanding/assigned'

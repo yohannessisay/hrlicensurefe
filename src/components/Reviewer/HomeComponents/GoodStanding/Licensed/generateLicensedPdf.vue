@@ -101,130 +101,146 @@
                                   class="ml-8 mr-8 mb-12"
                                 >
                                   <div class="mt-large bg-white">
-                                    <span
+                                    <!-- <span
                                       v-if="
                                         isGoodStanding &&
-                                          license &&
-                                          license.applicationStatus &&
-                                          (license.applicationStatus.code ===
-                                            'AP' ||
-                                            license.applicationStatus.code ===
-                                              'APP') &&
-                                          myRegion
+                                        license &&
+                                        license.applicationStatus &&
+                                        (license.applicationStatus.code ===
+                                          'AP' ||
+                                          license.applicationStatus.code ===
+                                            'APP') &&
+                                        myRegion
                                       "
                                     >
                                       <button @click="GenerateLetter">
                                         Generate Letter
                                       </button>
-                                    </span>
-                                    <div class="flex justify-center">
-                                      <Title message="Summary" />
-                                    </div>
-                                    <div class="flex justify-start">
-                                      <Title message="Personal Info" />
-                                    </div>
-                                    <div class="flex flex-row">
-                                      <div
-                                        :class="[
-                                          profileInfo &&
-                                          profileInfo.name == null
-                                            ? errorClass
-                                            : activeClass
-                                        ]"
-                                      >
-                                        <label class="ml-8"> Full Name</label>
-                                        <h5 class="ml-8">
-                                          {{
-                                            (profileInfo
-                                              ? profileInfo.name
-                                              : "") +
-                                              " " +
-                                              (profileInfo
-                                                ? profileInfo.fatherName
-                                                : "") +
-                                              " " +
-                                              (profileInfo
-                                                ? profileInfo.grandFatherName
-                                                : "")
-                                          }}
-                                        </h5>
-                                      </div>
-                                      <div
-                                        :class="[
-                                          profileInfo &&
-                                          profileInfo.gender === null
-                                            ? errorClass
-                                            : activeClass
-                                        ]"
-                                      >
-                                        <label class="ml-8"> Gender</label>
-                                        <h5 class="ml-8">
-                                          {{
-                                            profileInfo && profileInfo.gender
-                                              ? profileInfo["gender"]
-                                              : "-"
-                                          }}
-                                        </h5>
-                                      </div>
-                                      <div
-                                        :class="[
-                                          profileInfo &&
-                                          profileInfo.nationality === null
-                                            ? errorClass
-                                            : activeClass
-                                        ]"
-                                      >
-                                        <label class="ml-8"> Nationality</label>
-                                        <h5 class="ml-8">
-                                          {{
-                                            profileInfo
-                                              ? profileInfo.nationality.name
-                                              : "-"
-                                          }}
-                                        </h5>
-                                      </div>
-                                      <div
-                                        :class="[
-                                          profileInfo &&
-                                          profileInfo.dateOfBirth === null
-                                            ? errorClass
-                                            : activeClass
-                                        ]"
-                                      >
-                                        <label class="ml-8">
-                                          Date of Birth</label
-                                        >
-                                        <h5 class="ml-8">
-                                          {{
-                                            profileInfo
-                                              ? moment(
-                                                  profileInfo.dateOfBirth
-                                                ).format("MMM D, YYYY")
-                                              : "-"
-                                          }}
-                                        </h5>
-                                      </div>
-                                      <div
-                                        :class="[
-                                          profileInfo &&
-                                          profileInfo.maritalStatus.name ===
-                                            null
-                                            ? errorClass
-                                            : activeClass
-                                        ]"
-                                      >
-                                        <label class="ml-8">
-                                          Marital Status</label
-                                        >
-                                        <h5 class="ml-8">
-                                          {{
-                                            profileInfo
-                                              ? profileInfo.maritalStatus.name
-                                              : "-"
-                                          }}
-                                        </h5>
-                                      </div>
-                                    </div>
+                                    </span> -->
+
+                                    <h2 class="ml-3">To: EFDA .</h2>
+                                    <h3 class="ml-64 mb-8">
+                                      LETTER OF GOOD STANDING
+                                    </h3>
+                                    <h4 class="ml-8">
+                                      This letter of good standing and
+                                      confirmation of registration is written
+                                      upon request of
+                                      <span class="text-yellow-300">{{
+                                        modalData
+                                          ? modalData.applicantTitle
+                                          : ""
+                                      }}</span>
+                                      <span class="ml-1 text-yellow-300">
+                                        {{
+                                          (modalData && modalData.profile
+                                            ? modalData.profile.name
+                                            : "") +
+                                          " " +
+                                          (modalData && modalData.profile
+                                            ? modalData.profile.fatherName
+                                            : "") +
+                                          " " +
+                                          (modalData && modalData.profile
+                                            ? modalData.profile.grandFatherName
+                                            : "")
+                                        }}
+                                      </span>
+                                      .
+                                    </h4>
+
+                                    <h4 class="ml-4">
+                                      <span>
+                                        {{
+                                          modalData && modalData.profile
+                                            ? modalData.profile.gender == "male"
+                                              ? "He"
+                                              : "She"
+                                            : ""
+                                        }}
+                                      </span>
+                                      was registered as
+                                      <span class="text-yellow-300">{{
+                                        modalData && modalData.applicantPosition
+                                          ? modalData.applicantPosition.name
+                                          : ""
+                                      }}</span>
+                                      on
+                                      <span class="text-yellow-300">{{
+                                        modalData
+                                          ? moment(
+                                              modalData
+                                                ? modalData.licenseIssuedDate
+                                                : ""
+                                            ).format("MMMM D, YYYY")
+                                          : ""
+                                      }}</span>
+                                      by
+                                      <span class="text-yellow-300">{{
+                                        modalData && modalData.whoIssued
+                                          ? modalData.whoIssued
+                                          : ""
+                                      }}</span
+                                      >, which is the responsible organ for
+                                      registration and licensing of health
+                                      professionals and
+                                      <span>
+                                        {{
+                                          modalData && modalData.profile
+                                            ? modalData.profile.gender == "male"
+                                              ? "His"
+                                              : "Her"
+                                            : ""
+                                        }}
+                                      </span>
+                                      registration number is
+                                      <span class="text-yellow-300">
+                                        {{
+                                          modalData
+                                            ? modalData.licenseRegistrationNumber
+                                            : ""
+                                        }}
+                                      </span>
+                                      .
+                                    </h4>
+                                    <h4 class="ml-8 mt-8">
+                                      <span>
+                                        {{
+                                          modalData && modalData.profile
+                                            ? modalData.profile.gender == "male"
+                                              ? "He"
+                                              : "She"
+                                            : ""
+                                        }}
+                                      </span>
+                                      has no any reported medico legal records
+                                      and malpractices while he has practiced
+                                      his medical profession in Ethiopia
+                                    </h4>
+                                    <h4 class="ml-4">
+                                      untill
+                                      <span class="text-yellow-300">{{
+                                        moment(new Date()).format(
+                                          "MMMM DD, YYYY"
+                                        )
+                                      }}</span>
+                                      .
+                                    </h4>
+
+                                    <h4 class="ml-4 mt-8">
+                                      Hence we appreciate any assistance, which
+                                      will be rendered to
+                                      <span>
+                                        {{
+                                          modalData && modalData.profile
+                                            ? modalData.profile.gender == "male"
+                                              ? "him"
+                                              : "her"
+                                            : ""
+                                        }} </span
+                                      >.
+                                    </h4>
+                                    <h4 class="ml-4 mb-8">With best regards</h4>
 
                                     <div
                                       class="flex justify-start"
@@ -232,140 +248,14 @@
                                     >
                                       <Title message="Address" />
                                     </div>
-                                    <div
-                                      class="flex flex-row"
-                                      v-if="expertLevelId != 3"
-                                    >
-                                      <div
-                                        :class="[
-                                          license.woreda &&
-                                          license.woreda === null
-                                            ? errorClass
-                                            : license.woreda &&
-                                              license.woreda.zone === null
-                                            ? errorClass
-                                            : license.woreda &&
-                                              license.woreda.zone.region ===
-                                                null
-                                            ? errorClass
-                                            : activeClass
-                                        ]"
-                                      >
-                                        <label class="ml-8"> Region</label>
-                                        <h5 class="ml-8">
-                                          {{
-                                            license.woreda &&
-                                            license.woreda === null
-                                              ? "-"
-                                              : license.woreda &&
-                                                license.woreda.zone === null
-                                              ? "-"
-                                              : license.woreda.zone &&
-                                                license.woreda.zone.region
-                                              ? license.woreda.zone.region.name
-                                              : "-"
-                                          }}
-                                        </h5>
-                                      </div>
-                                      <div
-                                        :class="[
-                                          license.woreda &&
-                                          license.woreda === null
-                                            ? errorClass
-                                            : license.woreda.zone &&
-                                              license.woreda.zone === null
-                                            ? errorClass
-                                            : activeClass
-                                        ]"
-                                      >
-                                        <label class="ml-8"> Zone</label>
-                                        <h5 class="ml-8">
-                                          {{
-                                            license.woreda &&
-                                            license.woreda === null
-                                              ? "-"
-                                              : license.woreda
-                                              ? license.woreda.zone.name
-                                              : "-"
-                                          }}
-                                        </h5>
-                                      </div>
-                                      <div
-                                        :class="[
-                                          license.woreda &&
-                                          license.woreda === null
-                                            ? errorClass
-                                            : activeClass
-                                        ]"
-                                      >
-                                        <label class="ml-8"> Wereda</label>
-                                        <h5 class="ml-8">
-                                          {{
-                                            license.woreda
-                                              ? license.woreda.name
-                                              : "-"
-                                          }}
-                                        </h5>
-                                      </div>
-                                    </div>
-                                    <div class="flex justify-start">
-                                      <Title message="Contact" />
-                                    </div>
-                                    <div class="flex flex-row">
-                                      <div
-                                        :class="[
-                                          profileInfo &&
-                                          profileInfo.phoneNumber === null
-                                            ? errorClass
-                                            : activeClass
-                                        ]"
-                                      >
-                                        <label class="ml-8">
-                                          Mobile Number</label
-                                        >
-                                        <h5 class="ml-8">
-                                          {{
-                                            profileInfo
-                                              ? profileInfo.phoneNumber
-                                              : "-"
-                                          }}
-                                        </h5>
-                                      </div>
+                               
 
-                                      <div
-                                        :class="[
-                                          profileInfo &&
-                                          profileInfo.emailAddress === null
-                                            ? errorClass
-                                            : activeClass
-                                        ]"
-                                      >
-                                        <label class="ml-8"> Email</label>
-                                        <h5 class="ml-8">
-                                          {{
-                                            profileInfo
-                                              ? profileInfo.emailAddress
-                                              : "-"
-                                          }}
-                                        </h5>
-                                      </div>
-                                    </div>
                                     <div
                                       class="flex justify-start flex-wrap"
                                     ></div>
                                   </div>
                                 </div>
                               </div>
-                              <span
-                                v-if="showLoading"
-                                class="
-                                  flex
-                                  justify-center justify-items-center
-                                  mt-24
-                                "
-                              >
-                                <Spinner />
-                              </span>
                             </div>
                           </div>
                         </div>
@@ -410,7 +300,7 @@
               duration-150
               ease-in-out
             "
-            @click="generate()"
+            @click="GenerateLetter()"
           >
             <i class="fa fa-check"></i>
             Generate
@@ -452,23 +342,27 @@
 import { ref, computed } from "vue";
 import moment from "moment";
 import jsPDF from "jspdf";
-
+import { useStore } from "vuex";
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
-
+import { useToast } from "vue-toastification";
 export default {
   props: ["modalDataGenerate"],
   components: { Loading },
   computed: {
-    moment: () => moment
+    moment: () => moment,
   },
   setup(props) {
+    const store = useStore();
+    const toast = useToast();
     let myRegion = ref(true);
-    const expertLevelId = JSON.parse(localStorage.getItem("allAdminData"))
-      .expertLevelId;
+    const expertLevelId = JSON.parse(
+      localStorage.getItem("allAdminData")
+    ).expertLevelId;
 
-    const adminRegionId = JSON.parse(localStorage.getItem("allAdminData"))
-      .regionId;
+    const adminRegionId = JSON.parse(
+      localStorage.getItem("allAdminData")
+    ).regionId;
 
     let show = ref(false);
 
@@ -478,37 +372,26 @@ export default {
     let isGoodStanding = ref(false);
 
     let goodStandingUser = ref({});
-    let gender = ref("");
     let userProfile = ref({
       name: "",
       fatherName: "",
-      grandFatherName: ""
+      grandFatherName: "",
+      gender: "",
+      phoneNumber: "",
+      email: "",
+      martialStatus: "",
+      nationality: "",
+      dateOfBirth: "",
     });
     let applicantPosition = ref("-");
 
-    let license = ref({
-      applicant: {},
-      applicantType: {},
-      education: {
-        institution: {
-          institutionType: {}
-        },
-        department: {}
-      }
-    });
-    let profileInfo = ref({
-      maritalStatus: {},
-      woreda: {
-        zone: {}
-      },
-      user: {},
-      userType: {}
-    });
+    let license = computed(() => props.modalDataGenerate);
+
     let applicantId = ref("");
     let applicantTypeId = ref("");
     let education = ref({
       departmentId: "",
-      institutionId: ""
+      institutionId: "",
     });
     let licenseId = ref("");
     let activeClass = ref("active");
@@ -520,7 +403,8 @@ export default {
     let applicationType = ref("");
 
     let getReviewId = ref(0);
-    let modalData=computed(()=>props.modalDataGenerate)
+    let modalData = computed(() => props.modalDataGenerate);
+
     const GenerateLetter = () => {
       if (
         license.value.applicationStatus.code !== "AP" &&
@@ -553,56 +437,80 @@ export default {
       doc.text(
         40,
         90,
-        "This letter of good standing and " +
-          "confirmation of registration is written" +
-          " upon request of " +
-          license.value.applicantTitle +
-          " " +
-          userProfile.value.name +
-          " " +
-          userProfile.value.fatherName +
-          " " +
-          userProfile.value.grandFatherName +
-          "."
+        "This letter of good standing and confirmation of registration is written upon request of "
       );
       doc.text(
         40,
         100,
-        userProfile.value.name +
+        (modalData.value && modalData.value.profile
+          ? modalData.value.profile.name
+          : "") +
           " " +
-          userProfile.value.fatherName +
+          (modalData.value && modalData.value.profile
+            ? modalData.value.profile.fatherName
+            : "") +
           " " +
-          userProfile.value.grandFatherName +
-          " " +
+          (modalData.value && modalData.value.profile
+            ? modalData.value.profile.grandFatherName
+            : "") +
+          ` .${
+            modalData.value && modalData.value.profile
+              ? modalData.value.profile.gender == "male"
+                ? "He "
+                : "She "
+              : ""
+          }` +
           "was registered as " +
-          applicantPosition.value +
-          " " +
-          moment(license.value.licenseIssuedDate).format("MMMM D, YYYY") +
+          (modalData.value && modalData.value.applicantPosition
+            ? modalData.value.applicantPosition.name
+            : "") +
+          ` on ` +
+          moment(
+            modalData.value ? modalData.value.licenseIssuedDate : ""
+          ).format("MMMM D, YYYY") +
           " by " +
-          license.value.whoIssued +
+          (modalData.value ? modalData.value.whoIssued : "") +
           ","
       );
       doc.text(
         40,
         110,
         `which is the responsible organ for registration and licensing of health professionals and ${
-          gender.value == "male" ? "his" : "her"
+          modalData.value && modalData.value.profile
+            ? modalData.value.profile.gender == "male"
+              ? "his"
+              : "her"
+            : ""
         } registration`
       );
       doc.text(
         40,
         120,
-        `number is ${license.value.licenseRegistrationNumber}.`
+        `number is ${
+          modalData.value ? modalData.value.licenseRegistrationNumber : ""
+        }.`
       );
       doc.text(
         40,
         130,
         `${
-          gender.value == "male" ? "he" : "she"
+          modalData.value && modalData.value.profile
+            ? modalData.value.profile.gender == "male"
+              ? "He"
+              : "S  he"
+            : ""
         } has no any reported medico legal records and malpractices while ${
-          gender.value == "male" ? "he" : "she"
+          modalData.value && modalData.value.profile
+            ? modalData.value.profile.gender == "male"
+              ? "he"
+              : "she"
+            : ""
         } has practiced ${
-          gender.value == "male" ? "his" : "her"
+          modalData.value && modalData.value.profile
+            ? modalData.value.profile.gender == "male"
+              ? "his"
+              : "her"
+            : ""
         } medical profession`
       );
       doc.text(
@@ -614,25 +522,66 @@ export default {
         40,
         165,
         `Hence we appreciate any assistance, which will be rendered to ${
-          gender.value == "male" ? "him" : "her"
+          modalData.value && modalData.value.profile
+            ? modalData.value.profile.gender == "male"
+              ? "him"
+              : "her"
+            : ""
         }.`
       );
       doc.text(40, 185, "With best regards");
+
+      license.value.isLicenseGenerated = true;
+          let req = {
+        data: { ...license.value, isLicenseGenerated: true },
+      };
+      store
+        .dispatch("reviewer/editGoodStanding", req)
+        .then((res) => {
+          if (res.statusText == "Created") {
+            toast.success("Done", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+          } else {
+            toast.error(res, {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
       window.open(doc.output("bloburl"));
     };
 
-    if (modalData.value.applicationStatus&&modalData.value.applicationStatus.code === "APP"
+    if (
+      modalData.value &&
+      modalData.value.applicationStatus &&
+      modalData.value.applicationStatus.code == "APP"
     ) {
       isUserApproved.value = true;
     }
-    licenseId.value = modalData.value.id?modalData.value.id:"";
-    applicationType.value = modalData.value.applicationType?modalData.value.applicationType.name:"";
+    licenseId.value = modalData.value ? modalData.value.id : "";
+    applicationType.value =
+      modalData.value && modalData.value.applicationType
+        ? modalData.value.applicationType.name
+        : "";
     showLoading.value = true;
     isGoodStanding.value = true;
 
-    license.value = modalData.value?modalData.value:{};
-    goodStandingUser.value =modalData.value;
+    license.value = modalData.value ? modalData.value : {};
+    goodStandingUser.value = modalData.value;
     if (
+      goodStandingUser.value &&
       goodStandingUser.value.woreda != null &&
       goodStandingUser.value.woreda.zone != null &&
       goodStandingUser.value.woreda.zone.region != null
@@ -641,34 +590,42 @@ export default {
         myRegion.value = false;
       }
     } else {
-      if (expertLevelId != goodStandingUser.value.expertLevelId) {
+      if (expertLevelId != goodStandingUser?.value?.expertLevelId) {
         myRegion.value = false;
       }
     }
-    const prof = modalData.value ? modalData.value.profile : {};
-    gender.value = modalData.value.profile ? modalData.value.profile.gender : "";
-    if (prof.value) {
-      userProfile.value.name = prof.value.name ? prof.value.name : "";
-      userProfile.value.fatherName = prof.value.fatherName
-        ? prof.value.fatherName
+
+    userProfile.value.name =
+      modalData.value && modalData.value.profile
+        ? modalData.value.profile.name
         : "";
-      userProfile.value.grandFatherName = prof.value.grandFatherName
-        ? prof.value.grandFatherName
+    userProfile.value.fatherName =
+      modalData.value && modalData.value.profile
+        ? modalData.value.profile.fatherName
         : "";
-    }
-    const apPosition =modalData.value ? modalData.value.applicantPosition : {};
+    userProfile.value.grandFatherName =
+      modalData.value && modalData.value.profile
+        ? modalData.value.profilegrandFatherName
+        : "";
+    userProfile.value.gender =
+      modalData.value && modalData.value.profile
+        ? modalData.value.profile.gender
+        : "";
+
+    const apPosition = ref(
+      modalData.value ? modalData.value.applicantPosition : {}
+    );
     if (apPosition.value) {
       applicantPosition.value = apPosition.value.name
         ? apPosition.value.name
         : "-";
     }
-    getReviewId.value = license.value.reviewerId;
+    getReviewId.value = modalData.value ? modalData.value.reviewerId : "";
     show.value = true;
-    profileInfo.value = license.value.profile;
 
     return {
       license,
-      profileInfo,
+      userProfile,
       activeClass,
       errorClass,
       dataFetched,
@@ -687,9 +644,10 @@ export default {
       isGoodStanding,
       GenerateLetter,
       myRegion,
-      expertLevelId
+      modalData,
+      expertLevelId,
     };
-  }
+  },
 };
 </script>
 <style>

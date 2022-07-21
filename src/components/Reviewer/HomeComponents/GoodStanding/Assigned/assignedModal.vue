@@ -220,7 +220,6 @@
                                 >
                                   Users
                                 </label>
-                              
                               </div>
                               <label class="block text-left">
                                 <div>
@@ -247,33 +246,33 @@
                                       />
                                     </div>
                                     <div>
-                                       <button
-                                    class="
-                                      inline-block
-                                      px-6
-                                      py-2.5
-                                      bg-blue-600
-                                      text-white
-                                      font-medium
-                                      text-xs
-                                      leading-tight
-                                      uppercase
-                                      rounded
-                                      shadow-lg
-                                      hover:bg-blue-700 hover:shadow-lg
-                                      focus:bg-blue-700
-                                      focus:shadow-lg
-                                      focus:outline-none
-                                      focus:ring-0
-                                      active:bg-blue-800 active:shadow-lg
-                                      transition
-                                      duration-150
-                                      ease-in-out
-                                    "
-                                    @click="transferReviewer()"
-                                  >
-                                    Transfer
-                                  </button>
+                                      <button
+                                        class="
+                                          inline-block
+                                          px-6
+                                          py-2.5
+                                          bg-blue-600
+                                          text-white
+                                          font-medium
+                                          text-xs
+                                          leading-tight
+                                          uppercase
+                                          rounded
+                                          shadow-lg
+                                          hover:bg-blue-700 hover:shadow-lg
+                                          focus:bg-blue-700
+                                          focus:shadow-lg
+                                          focus:outline-none
+                                          focus:ring-0
+                                          active:bg-blue-800 active:shadow-lg
+                                          transition
+                                          duration-150
+                                          ease-in-out
+                                        "
+                                        @click="transferReviewer()"
+                                      >
+                                        Transfer
+                                      </button>
                                     </div>
                                     <div
                                       v-show="
@@ -330,59 +329,6 @@
                             lg:px-6
                           "
                         >
-                          <div class="flex align-center">
-                            <div class="shrink-0">
-                              <div
-                                class="
-                                  p-4
-                                  bg-blue-600
-                                  rounded-md
-                                  shadow-lg
-                                  w-48
-                                  h-48
-                                  flex
-                                  items-center
-                                  justify-center
-                                "
-                              >
-                                <i class="fa fa-building fa-4x"></i>
-                              </div>
-                            </div>
-                            <div class="grow ml-6">
-                              <h2 class="font-bold mb-1">Institution Info</h2>
-                              <p class="text-gray-500">
-                                <span class="font-medium text-primary-700 mb-1"
-                                  >Institution Name:</span
-                                >
-                                {{ modalData.instName }}
-                              </p>
-                              <p class="text-gray-500">
-                                <span class="font-medium text-primary-700 mb-1"
-                                  >Department:</span
-                                >
-                                {{ modalData.department }}
-                              </p>
-                              <p class="text-gray-500">
-                                <span class="font-medium text-primary-700 mb-1"
-                                  >Institution Type:</span
-                                >
-                                {{ modalData.instType }}
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div
-                          class="
-                            grow-0
-                            shrink-0
-                            basis-auto
-                            w-full
-                            lg:w-6/12
-                            px-3
-                            lg:px-6
-                          "
-                        >
                           <div class="flex items-start">
                             <div class="shrink-0">
                               <div
@@ -418,6 +364,20 @@
                             </div>
                           </div>
                         </div>
+
+                        <div
+                          class="
+                            grow-0
+                            shrink-0
+                            basis-auto
+                            w-full
+                            lg:w-6/12
+                            px-3
+                            lg:px-6
+                          "
+                        >
+                          <div class="flex align-center"></div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -436,33 +396,32 @@
             rounded-b-md
           "
         >
-        <a :href="'/admin/newLicense/evaluate/'+licenseId">
-          <button
-            type="button"
-            class="
-          inline-block
-              px-6
-              text-white
-              font-medium
-              text-xs
-              leading-tight
-              uppercase
-              rounded
-              shadow-lg
-              hover:bg-purple-700 hover:shadow-lg
-              focus:bg-purple-700
-              focus:shadow-lg
-              focus:outline-none
-              focus:ring-0
-              active:bg-purple-800 active:shadow-lg
-              transition
-              duration-150
-              ease-in-out
-            "
-          
-          >
-          Evaluate
-          </button>
+          <a :href="'/admin/goodStanding/evaluate/' + licenseId">
+            <button
+              type="button"
+              class="
+                inline-block
+                px-6
+                text-white
+                font-medium
+                text-xs
+                leading-tight
+                uppercase
+                rounded
+                shadow-lg
+                hover:bg-purple-700 hover:shadow-lg
+                focus:bg-purple-700
+                focus:shadow-lg
+                focus:outline-none
+                focus:ring-0
+                active:bg-purple-800 active:shadow-lg
+                transition
+                duration-150
+                ease-in-out
+              "
+            >
+              Evaluate
+            </button>
           </a>
           <button
             type="button"
@@ -494,18 +453,16 @@
       </div>
     </div>
   </div>
-
 </template>
 
 <script>
 import { useStore } from "vuex";
-import { ref, onMounted, watch,computed } from "vue";
+import { ref, onMounted, watch, computed } from "vue";
 import moment from "moment";
 import toast from "toast-me";
 import Loading from "vue3-loading-overlay";
 // Import stylesheet
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
-
 
 export default {
   props: ["modalDataId", "reviewers"],
@@ -523,7 +480,7 @@ export default {
     let showOptions = ref(false);
     let reviewer = ref({ id: "", name: "", expertLevel: "", role: "" });
     let adminId = +localStorage.getItem("adminId");
-    const licenseId=computed(()=>props.modalDataId.id);
+    const licenseId = computed(() => props.modalDataId.id);
     let transfer = ref({
       reviewerId: "",
       licenseId: "",
@@ -626,7 +583,6 @@ export default {
     watch(props.modalDataId, () => {
       isLoadingStart.value = true;
       check();
-
     });
     const modalData = ref({});
     let result;
@@ -634,7 +590,7 @@ export default {
 
     const check = () => {
       store
-        .dispatch("reviewer/getNewLicenseApplication", props.modalDataId.id)
+        .dispatch("reviewer/getGoodStandingApplication", props.modalDataId.id)
         .then((res) => {
           if (res.data.status == "Success") {
             result = res.data.data;
@@ -663,16 +619,7 @@ export default {
             modalData.value.email = result.applicant.emailAddress
               ? result.applicant.emailAddress
               : "-----";
-            modalData.value.instName = result.education.institution?.name
-              ? result.education.institution?.name
-              : "-----";
-            modalData.value.instType = result.education.institution
-              ?.institutionType
-              ? result.education.institution?.institutionType.name.name
-              : "-----";
-            modalData.value.department = result.education.department.name
-              ? result.education?.department.name
-              : "-----";
+
             modalData.value.profile = result.profile;
             modalData.value.professionalTypes = result.licenseProfessions;
             modalData.value.certifiedDate = result.certifiedDate;

@@ -3,7 +3,7 @@
   <reviewer-side-nav />
   <!-- Sidebar -->
 
-  <section class="home-section ">
+  <section class="home-section">
     <!-- Header -->
     <reviewer-nav-bar>
       <h2 class="dashboard">Evaluate</h2>
@@ -11,28 +11,27 @@
     <!-- Header -->
 
     <!-- Main Content -->
-    <div class="home-content ">
-      <div class="container mx-auto px-4 sm:px-4 mb-12 ">
-       
- <div class="rounded-lg  bg-primary-800 w-full shadow-md ">
+    <div class="home-content">
+      <div class="container mx-auto px-4 sm:px-4 mb-12">
+        <div class="rounded-lg bg-primary-800 w-full shadow-md">
           <h2 class="text-white ml-4">
             Evaluating
             {{
-              newLicense.profile
-                ? newLicense.profile.name
-                  ? newLicense.profile.name +
+              goodStanding.profile
+                ? goodStanding.profile.name
+                  ? goodStanding.profile.name +
                     " " +
-                    (newLicense.profile.fatherName
-                      ? newLicense.profile.fatherName
+                    (goodStanding.profile.fatherName
+                      ? goodStanding.profile.fatherName
                       : "-")
                   : "-"
                 : "-"
             }}
             's License
           </h2>
-          <div class=" w-full ">
+          <div class="w-full">
             <div class="box-shadow-pop bg-lightGrey-100">
-              <div class="flex  justify-center">
+              <div class="flex justify-center">
                 <div
                   class="
                     w-64
@@ -60,16 +59,17 @@
                   <div>
                     <picture
                       class="flex justify-center items-center mb-small"
-                      v-if="docs.length > 0"
+                  
                     >
                       <span
                         v-if="
-                          newLicense.profile.profilePicture !== '' &&
-                          newLicense.profile.profilePicture !== null
+                          goodStanding&&
+                          goodStanding.profile.profilePicture !== '' &&
+                          goodStanding.profile.profilePicture !== null
                         "
                       >
                         <img
-                          :src="newLicense.profile.profilePicture"
+                          :src="googleApi+goodStanding.profile.profilePicture.filePath"
                           alt="profile"
                           class="w-20 h-12"
                         />
@@ -88,66 +88,20 @@
                         </h4>
                         <h4 class="text-left ml-3">
                           {{
-                            newLicense.profile
-                              ? newLicense.profile.name
-                                ? newLicense.profile.name +
+                            goodStanding.profile
+                              ? goodStanding.profile.name
+                                ? goodStanding.profile.name +
                                   " " +
-                                  (newLicense.profile.fatherName
-                                    ? newLicense.profile.fatherName
+                                  (goodStanding.profile.fatherName
+                                    ? goodStanding.profile.fatherName
                                     : "-")
                                 : "-"
                               : "-"
                           }}
                         </h4>
                       </div>
-                      <div class="mt-2 ml-small w-1/2">
-                        <h4 class="text-left text-primary-600">Department:</h4>
-                        <h4 class="text-left ml-3">
-                          {{
-                            newLicense.department
-                              ? newLicense.department.name
-                              : newLicense.education
-                              ? newLicense.education.department
-                                ? newLicense.education.department.name
-                                : "-"
-                              : "-"
-                          }}
-                        </h4>
-                      </div>
                     </div>
-                    <div class="flex justify-center items-center">
-                      <div class="mt-2 mr-small w-1/2" v-if="!isGoodStanding">
-                        <h4 class="text-left text-primary-600">Institution:</h4>
-                        <h4 class="text-left ml-3">
-                          {{
-                            newLicense.education
-                              ? newLicense.otherEducationalInstitution
-                                ? newLicense.otherEducationalInstitution
-                                : newLicense.education.institution.name
-                              : "-"
-                          }}
-                        </h4>
-                      </div>
-
-                      <div class="mt-2 ml-small w-1/2" v-if="!isGoodStanding">
-                        <h4 class="text-left text-primary-600">
-                          Institution Type:
-                        </h4>
-                        <h4 class="text-left ml-3">
-                          {{
-                            newLicense.education
-                              ? newLicense.education.institution
-                                ? newLicense.education.institution
-                                    .institutionType
-                                  ? newLicense.education.institution
-                                      .institutionType.name
-                                  : "-"
-                                : "-"
-                              : "-"
-                          }}
-                        </h4>
-                      </div>
-                    </div>
+                    <div class="flex justify-center items-center"></div>
                   </div>
                 </div>
                 <div
@@ -201,7 +155,7 @@
                 <div class="flex flex-col justify-center items-center ml-large">
                   <div class="ml-medium">
                     <label
-                      v-if="!showButtons"
+                      v-if="!docs.length>0"
                       class="
                         justify-center
                         items-center
@@ -213,7 +167,7 @@
                     </label>
 
                     <div class="flex justify-start flex-wrap">
-                      <div v-if="showButtons">
+                      <div v-if="!docs.length>0">
                         <div class="flex justify-center">
                           <Title message="Summary" />
                         </div>
@@ -291,7 +245,7 @@
                                 <input
                                   class="max-w-3xl ml-8"
                                   type="text"
-                                  v-model="newLicense.profile.alternativeName"
+                                  v-model="goodStanding.profile.alternativeName"
                                 />
                               </div>
                             </div>
@@ -304,7 +258,7 @@
                                   class="max-w-3xl ml-8"
                                   type="text"
                                   v-model="
-                                    newLicense.profile.alternativeFatherName
+                                    goodStanding.profile.alternativeFatherName
                                   "
                                 />
                               </div>
@@ -318,7 +272,7 @@
                                   class="max-w-3xl ml-8"
                                   type="text"
                                   v-model="
-                                    newLicense.profile
+                                    goodStanding.profile
                                       .alternativeGrandFatherName
                                   "
                                 />
@@ -399,104 +353,15 @@
                             </h5>
                           </div>
                         </div>
-                        <div class="flex justify-start">
-                          <Title message="Contact" />
-                        </div>
-                        <div class="flex flex-row">
-                          <div
-                            :class="[
-                              profileInfo?.user?.phoneNumber === null
-                                ? errorClass
-                                : activeClass,
-                            ]"
-                          >
-                            <label class="ml-8 titleColors">
-                              Mobile Number</label
-                            >
-                            <h5 class="ml-8">
-                              {{
-                                profileInfo?.user?.phoneNumber
-                                  ? profileInfo?.user?.phoneNumber
-                                  : "-"
-                              }}
-                            </h5>
-                          </div>
+            
 
-                          <div
-                            :class="[
-                              profileInfo?.user?.emailAddress === null
-                                ? errorClass
-                                : activeClass,
-                            ]"
-                          >
-                            <label class="ml-8 titleColors"> Email</label>
-                            <h5 class="ml-8">
-                              {{
-                                profileInfo?.user?.emailAddress
-                                  ? profileInfo?.user?.emailAddress
-                                  : "-"
-                              }}
-                            </h5>
-                          </div>
-                        </div>
-                        <div class="flex justify-start">
-                          <Title message="Institution" />
-                        </div>
-                        <div class="flex flex-row">
-                          <div>
-                            <label class="ml-8 titleColors"> Department</label>
-                            <h5 class="ml-8">
-                              {{
-                                newLicense.department
-                                  ? newLicense.department.name
-                                  : newLicense.education
-                                  ? newLicense.education.department
-                                    ? newLicense.education.department.name
-                                    : "-"
-                                  : "-"
-                              }}
-                            </h5>
-                          </div>
-                          <div v-if="!isGoodStanding">
-                            <label class="ml-8 titleColors">
-                              Institution Name</label
-                            >
-                            <h5 class="ml-8">
-                              {{
-                                newLicense.otherEducationalInstitution
-                                  ? newLicense.otherEducationalInstitution
-                                  : newLicense.education
-                                  ? newLicense.education.institution
-                                    ? newLicense.education.institution.name
-                                    : "-"
-                                  : "-"
-                              }}
-                            </h5>
-                          </div>
-                          <div v-if="!isGoodStanding">
-                            <label class="ml-8 titleColors">
-                              Institution Type</label
-                            >
-                            <h5 class="ml-8">
-                              {{
-                                newLicense.education
-                                  ? newLicense.education.institution
-                                    ? newLicense.education.institution
-                                        .institutionType
-                                      ? newLicense.education.institution
-                                          .institutionType.name
-                                      : "-"
-                                    : "-"
-                                  : "-"
-                              }}
-                            </h5>
-                          </div>
-                        </div>
                         <div class="flex justify-start">
                           <Title message="Professional Type" />
                         </div>
                         <div class="flex flex-row">
-                          <div v-if="newLicense?.professionalTypes?.length > 0">
+                          <div
+                            v-if="goodStanding?.GSProfessionals?.length > 0"
+                          >
                             <div class="flex flex-col mb-medium mr-12 ml-8">
                               <div style="background: lightgray; padding: 8px">
                                 <p style="color: blue">
@@ -507,7 +372,7 @@
                               <ul
                                 v-for="(
                                   professionName, index
-                                ) in newLicense.professionalTypes"
+                                ) in goodStanding.GSProfessionals"
                                 v-bind:key="professionName.professionalTypeId"
                                 v-bind:value="professionName.professionalTypeId"
                               >
@@ -571,7 +436,9 @@
                                     <input
                                       style="display: block"
                                       type="text"
-                                      v-model="newLicense.otherProfessionalType"
+                                      v-model="
+                                        goodStanding.otherProfessionalType
+                                      "
                                     />
                                   </div>
                                   <div
@@ -676,7 +543,9 @@
                                     <input
                                       style="display: block"
                                       type="text"
-                                      v-model="newLicense.otherProfessionalType"
+                                      v-model="
+                                        goodStanding.otherProfessionalType
+                                      "
                                     />
                                   </div>
                                   <div
@@ -710,7 +579,7 @@
                             </div>
                           </div>
                         </div>
-                        <div v-if="!isGoodStanding">
+                        <div v-if="!docs.length>0">
                           <div class="flex justify-start">
                             <Title message="License Expiration Date" />
                           </div>
@@ -718,7 +587,7 @@
                             <input
                               class="max-w-3xl mr-5"
                               type="date"
-                              v-model="newLicense.licenseExpirationDate"
+                              v-model="goodStanding.licenseExpirationDate"
                             />
                           </div>
                         </div>
@@ -751,9 +620,7 @@
                               "
                               v-bind:src="googleApi + '' + docs[index].filePath"
                             />
-                            <div style="width: 400px">
-                            
-                            </div>
+                            <div style="width: 400px"></div>
                           </div>
                         </picture>
                       </div>
@@ -766,9 +633,18 @@
                     </div>
                   </div>
                   <div class="mt-medium" v-if="!showButtons">
-                    <button class="mr-medium" @click="accept(docs[index])">
-                      Accept
-                    </button>
+                    <span v-if="docs.length>0">
+                      <button class="mr-medium" @click="accept(docs[index])">
+                        Accept
+                      </button>
+                    </span>
+
+                    <span v-else>
+                      <button class="mr-medium" @click="action('ApproveEvent')">
+                        Submit
+                      </button>
+                    </span>
+
                     <button class="decline" @click="reject(docs[index])">
                       Reject
                     </button>
@@ -1026,7 +902,7 @@
                         </div>
                         <!--footer-->
                         <textarea
-                          v-model="newLicense.remark"
+                          v-model="goodStanding.remark"
                           class="
                             resize-none
                             tArea
@@ -1111,8 +987,6 @@
             </div>
           </div>
         </div>
-
-
       </div>
     </div>
     <!-- Main Content -->
@@ -1194,7 +1068,7 @@ export default {
     let departmentId = ref(0);
     let adminId = localStorage.getItem("adminId");
 
-    let newLicense = ref({
+    let goodStanding = ref({
       applicant: { profile: { name: "", fatherName: "" } },
       applicantType: { name: "" },
       education: {
@@ -1251,41 +1125,41 @@ export default {
     let showLoadingButtons = ref(false);
 
     let professionalTypes = ref([]);
-    let evaluateRoute = ref("/admin/evaluate/NewLicense" + route.params.id);
+    let evaluateRoute = ref("/admin/evaluate/goodStanding" + route.params.id);
     const created = async (applicationTypeName, applicationId) => {
       applicationType.value = applicationTypeName;
 
       store
-        .dispatch("reviewer/getNewLicenseApplication", applicationId)
+        .dispatch("reviewer/getGoodStandingApplication", applicationId)
         .then((res) => {
-          newLicense.value = res.data.data;
-          departmentId.value = res.data.data.education.department.id;
+          goodStanding.value = res.data.data;
+          departmentId.value = goodStanding.value.department.id;
           getProfessionalTypesByDepartmentId(departmentId.value);
-          profileInfo.value = newLicense.value.profile;
+          profileInfo.value = goodStanding.value.profile;
           buttons.value = res.data.data.applicationStatus.buttons;
           docs.value = res.data.data.documents;
           fetchDocumentTypes();
-          for (let i = 0; i < newLicense.value.licenseProfessions.length; i++) {
-            newLicense.value.licenseProfessions[i].showPrefix = false;
-            newLicense.value.licenseProfessions[i].showPrefixLink = true;
+          for (let i = 0; i < goodStanding.value.GSProfessionals.length; i++) {
+            goodStanding.value.GSProfessionals[i].showPrefix = false;
+            goodStanding.value.GSProfessionals[i].showPrefixLink = true;
             professionalTypeIdss.value.push(
-              newLicense.value.licenseProfessions[i].professionalTypeId
+              goodStanding.value.GSProfessionals[i].professionalTypeId
             );
           }
-          if (newLicense.value.applicationStatus.code == "REVDRA") {
-            rejected.value = newLicense.value.declinedFields;
-            for (let i in newLicense.value.documents) {
+          if (goodStanding.value.applicationStatus.code == "REVDRA") {
+            rejected.value = goodStanding.value.declinedFields;
+            for (let i in goodStanding.value.documents) {
               for (let j in rejected.value) {
                 if (
-                  newLicense.value.documents[i].documentTypeCode ==
+                  goodStanding.value.documents[i].documentTypeCode ==
                   rejected.value[j]
                 ) {
-                  rejectedObj.value.push(newLicense.value.documents[i]);
+                  rejectedObj.value.push(goodStanding.value.documents[i]);
                   break;
                 }
               }
             }
-            accepted.value = newLicense.value.acceptedFields;
+            accepted.value = goodStanding.value.acceptedFields;
             index.value = rejected.value.length + accepted.value.length;
             if (index.value == docs.value.length) {
               index.value -= 1;
@@ -1300,9 +1174,11 @@ export default {
                 docs.value[index.value - 1].documentTypeCode
               )
             ) {
-              findDocumentType(documentTypes.value, docs.value[index.value]);
+              if (goodStanding.value.documnets) {
+                findDocumentType(documentTypes.value, docs.value[index.value]);
+              }
             }
-          } else if (newLicense.value.applicationStatus.code == "IRV") {
+          } else if (goodStanding.value.applicationStatus.code == "IRV") {
             showTransferToAdminButton.value = true;
           }
         });
@@ -1357,7 +1233,7 @@ export default {
     };
     const findDocumentType = (obj, ab) => {
       for (var prop in obj) {
-        if (obj[prop].code == ab.documentTypeCode) {
+        if (obj[prop].code == ab?.documentTypeCode) {
           documentTypeName.value = obj[prop].name;
         }
       }
@@ -1395,7 +1271,7 @@ export default {
     const accept = (doc) => {
       nextClickable.value = true;
       if (accepted.value.length > 0) {
-        if (!accepted.value.includes(doc.documentTypeCode)) {
+        if (doc && !accepted.value.includes(doc.documentTypeCode)) {
           accepted.value.push(doc.documentTypeCode);
           if (index.value == docs.value.length - 1) {
             showButtons.value = true;
@@ -1423,7 +1299,7 @@ export default {
           }
         }
       } else {
-        accepted.value.push(doc.documentTypeCode);
+        accepted.value.push(doc ? doc.documentTypeCode : "");
         if (index.value == docs.value.length - 1) {
           showButtons.value = true;
         } else {
@@ -1432,7 +1308,7 @@ export default {
           width.value = "width:" + amount.value + "%";
           findDocumentType(documentTypes.value, docs.value[index.value]);
         }
-        if (rejected.value.includes(doc.documentTypeCode)) {
+        if (rejected.value.includes(doc && doc.documentTypeCode)) {
           rejected.value.splice(
             rejected.value.indexOf(doc.documentTypeCode),
             1
@@ -1496,8 +1372,8 @@ export default {
       showActionLoading.value = true;
       showLoadingButtons.value = true;
       if (professionalTypeIdss.value.length > 0) {
-        newLicense.value.professionalTypeIds = professionalTypeIdss.value;
-        newLicense.value.professionalTypePrefixes =
+        goodStanding.value.professionalTypeIds = professionalTypeIdss.value;
+        goodStanding.value.professionalTypePrefixes =
           professionalTypePrefixes.value;
       } else {
         showProfessionChangeError.value = true;
@@ -1517,18 +1393,18 @@ export default {
         let professionId = professionalTypeIdss.value[i];
         for (
           let j = 0;
-          j < newLicense.value.professionalTypePrefixes.length;
+          j < goodStanding.value.professionalTypePrefixes.length;
           j++
         ) {
           if (
-            newLicense.value.professionalTypePrefixes[j].professionalTypeId !=
+            goodStanding.value.professionalTypePrefixes[j].professionalTypeId !=
             professionId
           ) {
             loopCounter++;
           }
         }
-        if (loopCounter == newLicense.value.professionalTypePrefixes.length) {
-          newLicense.value.professionalTypePrefixes.push({
+        if (loopCounter == goodStanding.value.professionalTypePrefixes.length) {
+          goodStanding.value.professionalTypePrefixes.push({
             professionalTypeId: professionId,
             prefix: null,
           });
@@ -1538,7 +1414,7 @@ export default {
 
       if (actionValue === "ApproveEvent") {
         if (
-          newLicense.value.licenseExpirationDate === null &&
+          goodStanding.value.licenseExpirationDate === null &&
           !isGoodStanding.value
         ) {
           showLicenseDateRequirementError.value = true;
@@ -1549,7 +1425,9 @@ export default {
           showLoadingButtons.value = false;
           return;
         } else if (
-          !moment(newLicense.value.licenseExpirationDate).isAfter(new Date()) &&
+          !moment(goodStanding.value.licenseExpirationDate).isAfter(
+            new Date()
+          ) &&
           !isGoodStanding.value
         ) {
           expirationDateExceedTodayError.value = true;
@@ -1566,9 +1444,9 @@ export default {
         showActionLoading.value = false;
         showLoadingButtons.value = false;
         let checkProfessionResult = false;
-        newLicense.value.isProfessionChanged == false
+        goodStanding.value.isProfessionChanged == false
           ? (checkProfessionResult = checkProfessionChanged(
-              newLicense.value.professionalTypes
+              goodStanding.value.professionalTypes
             ))
           : (checkProfessionResult = true);
 
@@ -1591,131 +1469,47 @@ export default {
 
       if (actionValue == "ReviewerDraftEvent") {
         let checkProfessionResult = false;
-        newLicense.value.isProfessionChanged == false
+        goodStanding.value.isProfessionChanged == false
           ? (checkProfessionResult = checkProfessionChanged(
-              newLicense.value.professionalTypes
+              goodStanding.value.professionalTypes
             ))
           : (checkProfessionResult = true);
 
         if (checkProfessionResult) {
-          newLicense.value.isProfessionChanged = true;
+          goodStanding.value.isProfessionChanged = true;
         }
       }
 
       if (prefix.value !== undefined) {
-        newLicense.value.prefix = prefix.value;
+        goodStanding.value.prefix = prefix.value;
       }
       if (professionalTypeIdss.value.length > 0) {
-        newLicense.value.professionalTypeIds = professionalTypeIdss.value;
-        newLicense.value.professionalTypePrefixes =
+        goodStanding.value.professionalTypeIds = professionalTypeIdss.value;
+        goodStanding.value.professionalTypePrefixes =
           professionalTypePrefixes.value;
       }
-      newLicense.value.declinedFields = rejected.value;
-      newLicense.value.acceptedFields = accepted.value;
-      newLicense.value.certified = true;
-      newLicense.value.certifiedDate = new Date();
+      goodStanding.value.declinedFields = rejected.value;
+      goodStanding.value.acceptedFields = accepted.value;
+      goodStanding.value.certified = true;
+      goodStanding.value.certifiedDate = new Date();
       let req = {
         action: actionValue,
-        data: newLicense.value,
+        data: goodStanding.value,
       };
-      if (
-        applicationType.value == "New License" &&
-        sendDeclinedData.value == true
-      ) {
-        store
-          .dispatch("reviewer/editNewLicense", req)
-          .then((res) => {
-            showActionLoading.value = false;
-            if (res.statusText == "Created") {
-              showFlash.value = true;
-              showDeclineFlash.value = true;
-              setTimeout(() => {
-                router.push("/admin/review");
-              }, 3000);
-            } else {
-              showErrorFlash.value = true;
-              setTimeout(() => {
-                router.go();
-              }, 3000);
-            }
-          })
-          .catch((err) => {
-            showErrorFlash.value = true;
-            setTimeout(() => {
-              router.go();
-            }, 3000);
-          });
-      }
-      if (
-        applicationType.value == "Verification" &&
-        sendDeclinedData.value == true
-      ) {
-        store.dispatch("reviewer/editVerification", req).then((res) => {
+
+      store
+        .dispatch("reviewer/editGoodStanding", req)
+        .then((res) => {
           showActionLoading.value = false;
           if (res.statusText == "Created") {
             showFlash.value = true;
-            showDeclineFlash.value = true;
-            setTimeout(() => {
-              router.push("/admin/review");
-            }, 3000);
           } else {
             showErrorFlash.value = true;
-            setTimeout(() => {
-              router.go();
-            }, 3000);
           }
+        })
+        .catch((err) => {
+          showErrorFlash.value = true;
         });
-      }
-      if (
-        applicationType.value == "Good Standing" &&
-        sendDeclinedData.value == true
-      ) {
-        store.dispatch("reviewer/editGoodStanding", req).then((res) => {
-          showActionLoading.value = false;
-          if (res.statusText == "Created") {
-            showFlash.value = true;
-            showDeclineFlash.value = true;
-            // let redirectUrl = "/admin/review";
-            // if (req.action == "ApproveEvent") {
-            //   redirectUrl =
-            //     "/admin/finishedDetail/" +
-            //     route.params.applicationType +
-            //     "/" +
-            //     route.params.applicationId +
-            //     "/" +
-            //     applicantId.value;
-            // }
-            setTimeout(() => {
-              router.push("/admin/review");
-            }, 3000);
-          } else {
-            showErrorFlash.value = true;
-            setTimeout(() => {
-              router.go();
-            }, 3000);
-          }
-        });
-      }
-      if (
-        applicationType.value == "Renewal" &&
-        sendDeclinedData.value == true
-      ) {
-        store.dispatch("reviewer/editRenewal", req).then((res) => {
-          showActionLoading.value = false;
-          if (res.statusText == "Created") {
-            showFlash.value = true;
-            showDeclineFlash.value = true;
-            setTimeout(() => {
-              router.push("/admin/review");
-            }, 3000);
-          } else {
-            showErrorFlash.value = true;
-            setTimeout(() => {
-              router.go();
-            }, 3000);
-          }
-        });
-      }
     };
 
     const submitRemark = () => {
@@ -1749,10 +1543,10 @@ export default {
         .then((res) => {
           res.data.data
             .filter(function (e) {
-              for (let i in newLicense.value.professionalTypes) {
+              for (let i in goodStanding.value.GSProfessionals) {
                 if (
                   e.code ===
-                  newLicense.value.professionalTypes[i].professionalTypes.code
+                  goodStanding.value.GSProfessionals[i].professionalTypes.code
                 ) {
                   professionSelected.value = true;
                 }
@@ -1779,10 +1573,10 @@ export default {
       showSpinner.value = true;
       const id = profileInfo.value.id;
       let newProfile = {
-        alternativeName: newLicense.value.profile.alternativeName,
-        alternativeFatherName: newLicense.value.profile.alternativeFatherName,
+        alternativeName: goodStanding.value.profile.alternativeName,
+        alternativeFatherName: goodStanding.value.profile.alternativeFatherName,
         alternativeGrandFatherName:
-          newLicense.value.profile.alternativeGrandFatherName,
+          goodStanding.value.profile.alternativeGrandFatherName,
       };
       const profileData = [id, newProfile];
       store
@@ -1811,14 +1605,14 @@ export default {
       if (checkResult.value) {
         if (event.target.checked) {
           previousProfession
-            ? (newLicense.value.professionalTypes[index].showPrefixLink = true)
+            ? (goodStanding.value.GSProfessionals[index].showPrefixLink = true)
             : (professionalTypes.value[index].showPrefixLink = true);
           previousProfession
             ? professionalTypeIdss.value.push(profession.professionalTypes.id)
             : professionalTypeIdss.value.push(profession.id);
         } else {
           previousProfession
-            ? (newLicense.value.professionalTypes[index].showPrefixLink = false)
+            ? (goodStanding.value.GSProfessionals[index].showPrefixLink = false)
             : (professionalTypes.value[index].showPrefixLink = false);
           previousProfession
             ? professionalTypeIdss.value.splice(
@@ -1850,9 +1644,9 @@ export default {
             previousProfession &&
             profession.professionalTypes.name == "Other"
           ) {
-            newLicense.value.otherProfessionalType = null;
+            goodStanding.value.otherProfessionalType = null;
           } else if (!previousProfession && profession.name == "Other") {
-            newLicense.value.otherProfessionalType = null;
+            goodStanding.value.otherProfessionalType = null;
           }
         }
       }
@@ -1950,7 +1744,7 @@ export default {
     });
     return {
       isPdf,
-      newLicense,
+      goodStanding,
       index,
       docs,
       next,

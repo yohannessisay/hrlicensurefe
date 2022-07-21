@@ -327,10 +327,7 @@ export default {
     let result;
     const check = () => {
       store
-        .dispatch(
-          "reviewer/getNewLicenseApplication",
-          props.modalDataIdOthers.id
-        )
+.dispatch("reviewer/getGoodStandingApplication", props.modalDataId.id)
         .then((res) => {
           if (res.data.status == "Success") {
             result = res.data.data;

@@ -305,9 +305,23 @@
   </div>
 </template>
 <script>
+import {onMounted} from "vue";
+import { useStore } from "vuex";
 export default {
-  emits: ["menuChange"],
+
   setup() {
+const store = useStore();
+
+const getStats=()=>{
+
+store.dispatch("stats/getStats").then((res) => {
+console.log(res)
+
+});
+};
+   onMounted(() => {
+      getStats();
+    });
     return {};
   },
 };

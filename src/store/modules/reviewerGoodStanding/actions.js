@@ -45,8 +45,9 @@ export default {
       const url = baseUrl + "/goodStandings/status/" + statusId;
       const resp = await ApiService.get(url);
       commit(SET_GOOD_STANDING_UNASSIGNED, resp.data.data);
+      return resp.data.data
     } catch (err) {
-      return error;
+      return err;
     }
   },
   async getGoodstandingReport({ commit }) {
