@@ -482,9 +482,9 @@
 import { useStore } from "vuex";
 import { ref, onMounted, watch } from "vue";
 import moment from "moment";
-import toast from "toast-me";
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
+import { useToast } from "vue-toastification";
 
 export default {
   props: ["modalDataIdResub", "reviewers"],
@@ -496,6 +496,7 @@ export default {
   },
   setup(props) {
     const store = useStore();
+    const toast = useToast();
 
     let show = ref(true);
     let showRes = ref(false);
@@ -541,25 +542,35 @@ export default {
       store
         .dispatch("reviewer/assignReviewer", assign.value)
         .then((response) => {
-          if (response.statusText == "Created") {
-            toast("Selected reviewer is successfully assigned.", {
-              duration: 3000,
-              position: "bottom",
+        if (response.statusText == "Created") {
+            toast.success("Selected reviewer is successfully assigned.", {
+              timeout: 20000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true
             });
-            setTimeout(() => {
-              isLoading.value = false;
-              window.location.reload();
-            }, 1000);
+            isLoading.value = false;
           } else {
-            console.log("no sup");
+            toast.error(response.data.message, {
+              timeout: 20000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true
+            });
+
+            isLoading.value = false;
           }
         })
         .catch(() => {
-          toast("Sorry there seems to be a problem, please try again.", {
-            duration: 3000,
-            position: "bottom",
+            toast.error("Sorry there seems to be a problem, please try again.", {
+            timeout: 20000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true
           });
-          console.log("Error is related to the reviewer/assignReviewer action");
         });
     };
 

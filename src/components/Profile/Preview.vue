@@ -185,11 +185,11 @@ export default {
           gender: personalInfo.gender,
           dateOfBirth: personalInfo.dateOfBirth,
           nationalityId: personalInfo.nationalityId,
-          maritalStatusId: personalInfo.maritalStatusId,
+          maritalStatusId: parseInt(personalInfo.maritalStatusId),
           poBox: personalInfo.poBox,
           photo: personalInfo.photo,
           userId: +localStorage.getItem("userId"),
-          employeeId:personalInfo.employeeId
+          employeeId:personalInfo.employeeId?personalInfo.employeeId:null
         })
         .then(response => {
           if (response.statusText == "Created") {
@@ -238,6 +238,7 @@ export default {
         .dispatch("profile/getUserById", localStorage.getItem("userId"))
         .then(res => {
           user.value = res.data.data;
+          console.log(user.value);
           message.value.showLoading2 = false;
         });
     };

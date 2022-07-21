@@ -6,7 +6,7 @@
   <section class="home-section">
     <!-- Header -->
     <reviewer-nav-bar>
-      <h2 class="dashboard">Licensed</h2>
+      <h2 class="dashboard">Approved</h2>
     </reviewer-nav-bar>
     <!-- Header -->
 
@@ -18,7 +18,7 @@
             <div class="py-8">
               <div>
                 <h2 class="text-2xl font-semibold leading-tight">
-                  Applications Licensed By You
+                  Applications Approved By You
                 </h2>
               </div>
               <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
@@ -54,7 +54,7 @@
             <div class="py-8">
               <div>
                 <h2 class="text-2xl font-semibold leading-tight">
-                  Applications Licensed By Others
+                  Applications Approved By Others
                 </h2>
               </div>
               <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
@@ -78,9 +78,7 @@
                     @is-finished="tableLoadingFinishOthers"
                     @row-clicked="rowClickedOthers"
                   ></vue-table-lite>
-                  <edit-modal-others
-                    :modalDataIdOthers="modalDataIdOthers"
-                  ></edit-modal-others>
+                  <edit-modal-others :modalDataIdOthers="modalDataIdOthers"></edit-modal-others>
                 </div>
               </div>
             </div>
@@ -95,14 +93,14 @@
 <script>
 import ReviewerSideNav from "../SharedComponents/sideNav.vue";
 import ReviewerNavBar from "../SharedComponents/navBar.vue";
-import NewLicenseMainContent from "../../../ApplicationTypes/NewLicense/MainComponents/licensed.vue";
+import NewLicenseMainContent from "../../../ApplicationTypes/NewLicense/MainComponents/inReview.vue";
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
 
 import applicationStatus from "../../../Configurations/getApplicationStatus.js";
 import VueTableLite from "vue3-table-lite";
 import editModal from "./licensedModal.vue";
-import editModalOthers from "./licensedModalOthers.vue";
+import editModalOthers from "./licensedModalOthers.vue"
 
 export default {
   name: "home",
@@ -112,26 +110,35 @@ export default {
     NewLicenseMainContent,
     VueTableLite,
     editModal,
-    editModalOthers,
+    editModalOthers
   },
   setup() {
     const store = useStore();
     const showModal = ref(true);
     const adminId = +localStorage.getItem("adminId");
 
-    let nothingToShow = ref(false);
-    let loading = ref(false);
 
     let modalDataId = ref({
       id: "",
       change: 0,
     });
-    let modalDataIdOthers = ref({
+       let modalDataIdOthers = ref({
       id: "",
       change: 0,
     });
 
-    let allInfo = ref({});
+    let allInfo = ref({
+      alreadyPushed: false,
+      searchByInput: false,
+      assignApplication: [],
+      message: {
+        showErrorFlash: false,
+      },
+      filteredByDate: [],
+      searchFromDate: "",
+      searchUpToDate: "",
+      app_type: "",
+    });
 
     const toOthersTable = ref({});
     const toYouTable = ref({});
@@ -143,204 +150,204 @@ export default {
     toYouTable.value = {
       isLoading: true,
     };
-    const licensedByOthers = () => {
-      applicationStatus(store, "AP").then((ap) => {
-        applicationStatus(store, "CONF").then((conf) => {
-          applicationStatus(store, "APP").then((app) => {
-            let adminStatus = [adminId, ap, conf, app];
+    const approvedByOthers = () => {
+      applicationStatus(store, "APP").then((res) => {
+        let statusId = res;
+        let adminStatus = [statusId, adminId];
 
-            store
-              .dispatch(
-                "reviewerRenewal/getRenewalOtherLicensed",
-                adminStatus
-              )
-              .then(() => {
-                allInfo.value.assignApplication =
-                  store.getters[
-                    "reviewerRenewal/getRenewalOthersLicensedSearched"
-                  ];
+        store
+          .dispatch("reviewerRenewal/getRenewalLicensed", adminStatus)
+          .then(() => {
+            allInfo.value.assignApplication =
+              store.getters[
+                "reviewerRenewal/getRenewalOthersLicensedSearched"
+              ];
 
-                for (let applicant in allInfo.value.assignApplication) {
-                  if (
-                    allInfo.value.assignApplication[applicant]
-                      .applicationType === undefined
-                  ) {
-                    allInfo.value.assignApplication[applicant].applicationType =
-                      allInfo.value.assignApplication[applicant].applicantType;
-                  }
-                }
+            for (let applicant in allInfo.value.assignApplication) {
+              if (
+                allInfo.value.assignApplication[applicant].applicationType ===
+                undefined
+              ) {
+                allInfo.value.assignApplication[applicant].applicationType =
+                  allInfo.value.assignApplication[applicant].applicantType;
+              }
+            }
 
-                JSON.parse(
-                  JSON.stringify(allInfo.value.assignApplication)
-                ).forEach((element) => {
-                  tableData.value.push({
-                    id: element.id,
-                    ApplicantName:
-                      element.profile.name +
-                      " " +
-                      element.profile.fatherName +
-                      " " +
-                      element.profile.grandFatherName,
-                    ApplicationType: element.applicationType.name,
-                    Date: new Date(element.applicationType.createdAt)
-                      .toJSON()
-                      .slice(0, 10)
-                      .replace(/-/g, "/"),
-                    data: element,
-                  });
+            JSON.parse(JSON.stringify(allInfo.value.assignApplication)).forEach(
+              (element) => {
+                tableData.value.push({
+                  id: element.id,
+                  ApplicantName:
+                    (element.profile.name ? element.profile.name : "-----") +
+                    " " +
+                    (element.profile.fatherName
+                      ? element.profile.fatherName
+                      : "-----") +
+                    " " +
+                    (element.profile.grandFatherName
+                      ? element.profile.grandFatherName
+                      : "-----"),
+                            ApplicationType: element.applicationType.name,
+                  Date: new Date(element.createdAt)
+                    .toJSON()
+                    .slice(0, 10)
+                    .replace(/-/g, "/"),
+                  data: element,
                 });
+              }
+            );
 
-                toOthersTable.value = {
-                  columns: [
-                    {
-                      label: "ID",
-                      field: "id",
-                      width: "3%",
-                      sortable: true,
-                      isKey: true,
-                    },
-                    {
-                      label: "Applicant Name",
-                      field: "ApplicantName",
-                      width: "20%",
-                      sortable: true,
-                    },
-                    {
-                      label: "Applicant Type",
-                      field: "ApplicationType",
-                      width: "15%",
-                      sortable: true,
-                    },
-                    {
-                      label: "Date",
-                      field: "Date",
-                      width: "15%",
-                      sortable: true,
-                    },
-                    {
-                      label: "",
-                      field: "quick",
-                      width: "10%",
-                      display: function (row) {
-                        return (
-                          '<button  data-set="' +
-                          row +
-                          '"  data-bs-toggle="modal" data-bs-target="#staticBackdropOthers" class="edit-btn-others inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" data-id="' +
-                          row.id +
-                          '" >View/Edit</button>'
-                        );
-                      },
-                    },
-                  ],
-                  rows: JSON.parse(JSON.stringify(tableData.value)),
-                  totalRecordCount: tableData.value.length,
-                  sortable: {
-                    order: "id",
-                    sort: "asc",
+            toOthersTable.value = {
+              isLoading: false,
+              columns: [
+                {
+                  label: "ID",
+                  field: "id",
+                  width: "3%",
+                  sortable: true,
+                  isKey: true,
+                },
+                {
+                  label: "Applicant Name",
+                  field: "ApplicantName",
+                  width: "20%",
+                  sortable: true,
+                },
+                {
+                  label: "Applicant Type",
+                  field: "ApplicationType",
+                  width: "15%",
+                  sortable: true,
+                },
+                {
+                  label: "Date",
+                  field: "Date",
+                  width: "15%",
+                  sortable: true,
+                },
+                {
+                  label: "",
+                  field: "quick",
+                  width: "10%",
+                  display: function (row) {
+                    return (
+                      '<button  data-set="' +
+                      row +
+                      '"  data-bs-toggle="modal" data-bs-target="#staticBackdropOthers" class="edit-btn-others inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" data-id="' +
+                      row.id +
+                      '" >View/Edit</button>'
+                    );
                   },
-                };
-              });
+                },
+              ],
+              rows: JSON.parse(JSON.stringify(tableData.value)),
+              totalRecordCount: tableData.value.length,
+              sortable: {
+                order: "id",
+                sort: "asc",
+              },
+            };
           });
-        });
       });
     };
 
-    const licensedByYou = () => {
-                   console.log("adminStatus");
+    const approvedByYou = () => {
+      applicationStatus(store, "APP").then((res) => {
+        let statusId = res;
+        let adminStatus = [statusId, adminId];
 
-      applicationStatus(store, "AP").then((ap) => {
-        applicationStatus(store, "CONF").then((conf) => {
-          applicationStatus(store, "APP").then((app) => {
-            let adminStatus = [adminId, ap, conf, app];
-             console.log(adminStatus);
-            store
-              .dispatch("reviewerRenewal/getRenewalLicensed", adminStatus)
-              .then(() => {
-                allInfo.value.assignApplication =
-                  store.getters[
-                    "reviewerRenewal/getRenewalLicensedSearched"
-                  ];
-           console.log(allInfo.value.assignApplication);
-                for (let applicant in allInfo.value.assignApplication) {
-                  if (
-                    allInfo.value.assignApplication[applicant]
-                      .applicationType === undefined
-                  ) {
-                    allInfo.value.assignApplication[applicant].applicationType =
-                      allInfo.value.assignApplication[applicant].applicantType;
-                  }
-                }
+        store
+         .dispatch("reviewerRenewal/getRenewalLicensed", adminStatus)
+          .then((res) => {
+            allInfo.value.assignApplication =
+              store.getters["reviewerRenewal/getRenewalLicensedSearched"];
 
-                JSON.parse(
-                  JSON.stringify(allInfo.value.assignApplication)
-                ).forEach((element) => {
-                  toYouTableData.value.push({
-                    id: element.id,
-                    ApplicantName:
-                      element.profile.name +
-                      " " +
-                      element.profile.fatherName +
-                      " " +
-                      element.profile.grandFatherName,
-                    ApplicationType: element.applicationType.name,
-                    Date: new Date(element.applicationType.createdAt)
-                      .toJSON()
-                      .slice(0, 10)
-                      .replace(/-/g, "/"),
-                    data: element,
-                  });
+              console.log(allInfo.value.assignApplication);
+            for (let applicant in allInfo.value.assignApplication) {
+              if (
+                allInfo.value.assignApplication[applicant].applicationType ===
+                undefined
+              ) {
+                allInfo.value.assignApplication[applicant].applicationType =
+                  allInfo.value.assignApplication[applicant].applicantType;
+              }
+            }
+
+            JSON.parse(JSON.stringify(allInfo.value.assignApplication)).forEach(
+              (element) => {
+                toYouTableData.value.push({
+                  id: element.id,
+                  ApplicantName:
+                    (element.profile.name ? element.profile.name : "-----") +
+                    " " +
+                    (element.profile.fatherName
+                      ? element.profile.fatherName
+                      : "-----") +
+                    " " +
+                    (element.profile.grandFatherName
+                      ? element.profile.grandFatherName
+                      : "-----"),
+                  ApplicationType: element.applicationType.name,
+                  Date: new Date(element.createdAt)
+                    .toJSON()
+                    .slice(0, 10)
+                    .replace(/-/g, "/"),
+                  data: element,
                 });
+              }
+            );
 
-                toYouTable.value = {
-                  columns: [
-                    {
-                      label: "ID",
-                      field: "id",
-                      width: "3%",
-                      sortable: true,
-                      isKey: true,
-                    },
-                    {
-                      label: "Applicant Name",
-                      field: "ApplicantName",
-                      width: "20%",
-                      sortable: true,
-                    },
-                    {
-                      label: "Applicant Type",
-                      field: "ApplicationType",
-                      width: "15%",
-                      sortable: true,
-                    },
-                    {
-                      label: "Date",
-                      field: "Date",
-                      width: "15%",
-                      sortable: true,
-                    },
-                    {
-                      label: "",
-                      field: "quick",
-                      width: "10%",
-                      display: function (row) {
-                        return (
-                          '<button data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="edit-btn inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" data-id="' +
-                          row.id +
-                          '" >View/Edit</button>'
-                        );
-                      },
-                    },
-                  ],
-                  rows: JSON.parse(JSON.stringify(toYouTableData.value)),
-                  totalRecordCount: toYouTableData.value.length,
-                  sortable: {
-                    order: "id",
-                    sort: "asc",
+            toYouTable.value = {
+              isLoading: false,
+              columns: [
+                {
+                  label: "ID",
+                  field: "id",
+                  width: "3%",
+                  sortable: true,
+                  isKey: true,
+                },
+                {
+                  label: "Applicant Name",
+                  field: "ApplicantName",
+                  width: "20%",
+                  sortable: true,
+                },
+                {
+                  label: "Applicant Type",
+                  field: "ApplicationType",
+                  width: "15%",
+                  sortable: true,
+                },
+                {
+                  label: "Date",
+                  field: "Date",
+                  width: "15%",
+                  sortable: true,
+                },
+                {
+                  label: "",
+                  field: "quick",
+                  width: "10%",
+                  display: function (row) {
+                    return (
+                      '<button  data-set="' +
+                      row +
+                      '"  data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="edit-btn inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" data-id="' +
+                      row.id +
+                      '" >View/Edit</button>'
+                    );
                   },
-                };
-              });
+                },
+              ],
+              rows: JSON.parse(JSON.stringify(toYouTableData.value)),
+              totalRecordCount: toYouTableData.value.length,
+              sortable: {
+                order: "id",
+                sort: "asc",
+              },
+            };
           });
-        });
       });
     };
 
@@ -356,54 +363,50 @@ export default {
       });
     };
 
-        const tableLoadingFinishOthers = () => {
-
+    const tableLoadingFinishOthers = () => {
       let elements = document.getElementsByClassName("edit-btn-others");
 
       Array.prototype.forEach.call(elements, function (element) {
         if (element.classList.contains("edit-btn-others")) {
-          element.addEventListener("click", rowClicked());
+          element.addEventListener("click", rowClickedOthers());
         }
       });
-            toOthersTable.value.isLoading = false;
+      toOthersTable.value.isLoading = false;
     };
-
     const rowClicked = (row) => {
       if (row != undefined) {
         row = JSON.parse(JSON.stringify(row));
+        modalDataId.value.id = row.id ? row.id : "------";
         modalDataId.value.change++;
-        modalDataId.value.id = row.id ? row.id : "";
       }
     };
-
-        const rowClickedOthers = (row) => {
+    const rowClickedOthers = (row) => {
       if (row != undefined) {
         row = JSON.parse(JSON.stringify(row));
+
+        modalDataIdOthers.value.id = row.id ? row.id : "------";
         modalDataIdOthers.value.change++;
-        modalDataIdOthers.value.id = row.id ? row.id : "";
       }
     };
-
     onMounted(() => {
-      licensedByYou();
-      licensedByOthers();
+      approvedByOthers();
+      approvedByYou();
     });
 
     return {
-      nothingToShow,
       allInfo,
-      loading,
       toOthersTable,
       toYouTable,
       showModal,
       tableLoadingFinish,
-      licensedByOthers,
+      approvedByOthers,
       rowClicked,
       modalDataId,
-      modalDataIdOthers,
       rowClickedOthers,
-      tableLoadingFinishOthers
+      modalDataIdOthers,
+      tableLoadingFinishOthers,
     };
   },
 };
 </script>
+

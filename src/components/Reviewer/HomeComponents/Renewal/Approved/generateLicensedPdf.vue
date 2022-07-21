@@ -531,6 +531,7 @@ import toast from "toast-me";
 import moment from "moment";
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
+import { useToast } from "vue-toastification";
 
 export default {
   computed: {
@@ -543,6 +544,7 @@ export default {
   components: { Title, Loading },
   setup(props) {
     const store = useStore();
+    const toast = useToast();
     const showGenerateModal = ref(true);
     let show = ref(false);
     let certifiedUser = ref({});
@@ -585,9 +587,13 @@ export default {
             showGenerateModal.value = false;
           } else {
             showGenerateModal.value = false;
-            toast("Certificate Generated Successfully.", {
-              duration: 3000,
-              position: "bottom",
+      
+            toast.success("Certificate Generated Successfully.", {
+              timeout: 20000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true
             });
           }
         })
@@ -610,6 +616,12 @@ export default {
         .dispatch("reviewer/getQrCode", qrParam)
         .then((res) => {
           imageSrc.value = res.data.data;
+
+        })
+        .finally(()=>{
+          console.log("akjhdkjfhakjdhk");
+          downloadPdf();
+
         })
         .catch((err) => {
           console.log(err);
@@ -618,7 +630,6 @@ export default {
 
     const generate = () => {
       isLoading.value = true;
-      fetchQrCode();
       certifiedUser.value = props.modalData.profile;
       certificateDetail.value = props.modalData.data;
 
@@ -639,7 +650,8 @@ export default {
           myRegion.value = false;
         }
       }
-      downloadPdf();
+    fetchQrCode();
+downloadPdf()
     };
 
     const handleRegionsLayout = (
@@ -922,7 +934,6 @@ export default {
       }
       // doc.text(10, 203, `ቀን: ${toEthiopian(new Date().toISOString(), false)}`)
       doc.setFontSize(10);
-
       window.open(doc.output("bloburl"));
     };
 
