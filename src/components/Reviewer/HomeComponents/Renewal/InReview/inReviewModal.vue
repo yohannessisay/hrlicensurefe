@@ -504,7 +504,7 @@ import moment from "moment";
 import Loading from "vue3-loading-overlay";
 // Import stylesheet
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
-// import { useToast } from "vue-toastification";
+import { useToast } from "vue-toastification";
 
 
 export default {
@@ -517,7 +517,7 @@ export default {
   },
   setup(props) {
     const store = useStore();
-    // const toast = useToast();
+    const toast = useToast();
     let show = ref(true);
 
     let showRes = ref(false);
@@ -571,30 +571,34 @@ export default {
         .dispatch("reviewer/transferRenewalReview", transfer.value)
         .then((response) => {
         if (response.statusText == "Created") {
-            // toast.success("Transfer successfully to Selected reviewer.", {
-            //   timeout: 5000
-            // });
+            toast.success("Transfer successfully to Selected reviewer.", {
+           timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true
+            });
             isLoading.value = false;
           } else {
-            // toast.error(response.data.message, {
-            //   timeout: 20000,
-            //   position: "bottom-center",
-            //   pauseOnFocusLoss: true,
-            //   pauseOnHover: true,
-            //   icon: true
-            // });
+            toast.error(response.data.message, {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true
+            });
 
             isLoading.value = false;
           }
         })
         .catch(() => {
-          // toast.error("Sorry there seems to be a problem, please try again.", {
-          //   timeout: 20000,
-          //   position: "bottom-center",
-          //   pauseOnFocusLoss: true,
-          //   pauseOnHover: true,
-          //   icon: true
-          // });
+          toast.error("Sorry there seems to be a problem, please try again.", {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true
+          });
         });
     };
 

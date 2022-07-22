@@ -230,8 +230,33 @@
                                 >
                                   Users
                                 </label>
+                              
+                              </div>
+                              <label class="block text-left">
                                 <div>
-                                  <button
+                                  <div class="w-full relative">
+                                    <div
+                                      class="
+                                        mt-1
+                                        ml-1
+                                        relative
+                                        border border-gray-300
+                                        overflow-hidden
+                                        rounded-md
+                                        shadow-sm
+                                      "
+                                    >
+                                      <input
+                                        id="email"
+                                        @keyup="showOptions = true"
+                                        v-model="reviewer.name"
+                                        class="w-full px-3 py-3"
+                                        style="border: none"
+                                        autocomplete="off"
+                                        placeholder="Select reviewer by typing a name"
+                                      />
+                                    </div>
+                                     <button
                                     class="
                                       inline-block
                                       px-6
@@ -258,32 +283,6 @@
                                   >
                                     Assign
                                   </button>
-                                </div>
-                              </div>
-                              <label class="block text-left">
-                                <div>
-                                  <div class="w-full relative">
-                                    <div
-                                      class="
-                                        mt-1
-                                        ml-1
-                                        relative
-                                        border border-gray-300
-                                        overflow-hidden
-                                        rounded-md
-                                        shadow-sm
-                                      "
-                                    >
-                                      <input
-                                        id="email"
-                                        @keyup="showOptions = true"
-                                        v-model="reviewer.name"
-                                        class="w-full px-3 py-3"
-                                        style="border: none"
-                                        autocomplete="off"
-                                        placeholder="Select reviewer by typing a name"
-                                      />
-                                    </div>
                                     <div
                                       v-show="
                                         resultQuery().length && showOptions
@@ -481,7 +480,6 @@
 import { useStore } from "vuex";
 import { ref, onMounted, watch } from "vue";
 import moment from "moment";
-import toast from "toast-me";
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 
