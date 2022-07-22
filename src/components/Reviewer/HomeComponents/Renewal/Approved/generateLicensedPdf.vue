@@ -578,10 +578,10 @@ export default {
         .then((res) => {
           isLoading.value = false;
           if (res.statusText == "Created") {
+            console.log("sucessfull api");
             showGenerateModal.value = false;
           } else {
             showGenerateModal.value = false;
-
             toast.success("Certificate Generated Successfully.", {
               timeout: 5000,
               position: "bottom-center",

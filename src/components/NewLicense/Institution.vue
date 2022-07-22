@@ -1143,18 +1143,18 @@ export default {
           this.licenseInfo.education.departmentId
         );
         this.showOtherProfession = false;
-        for (var k = 0; k < draftData.professionalTypes.length; k++) {
+        for (var k = 0; k < draftData.licenseProfessions.length; k++) {
           if (
-            draftData.professionalTypes[k].professionalTypes.name == "Other"
+            draftData.licenseProfessions[k].professionalTypes.name == "Other"
           ) {
             this.showOtherProfession = true;
             break;
           }
         }
         this.professionalTypes.map(profData => {
-          for (var j = 0; j < draftData.professionalTypes.length; j++) {
+          for (var j = 0; j < draftData.licenseProfessions.length; j++) {
             if (
-              profData.id == draftData.professionalTypes[j].professionalTypeId
+              profData.id == draftData.licenseProfessions[j].professionalTypeId
             ) {
               profData.checked = true;
             }
@@ -1167,10 +1167,10 @@ export default {
           return profData;
         });
       }
-      if (draftData.professionalTypes.length > 0) {
-        for (var k = 0; k < draftData.professionalTypes.length; k++) {
+      if (draftData.licenseProfessions.length > 0) {
+        for (var k = 0; k < draftData.licenseProfessions.length; k++) {
           this.licenseInfo.professionalTypeIds.push(
-            draftData.professionalTypes[k].professionalTypeId
+            draftData.licenseProfessions[k].professionalTypeId
           );
         }
       }
