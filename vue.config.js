@@ -1,4 +1,7 @@
 module.exports = {
+  devServer: {
+    host: "localhost",
+  },
   css: { extract: false },
   chainWebpack: (config) => {
     const svgRule = config.module.rule("svg");
@@ -12,5 +15,4 @@ module.exports = {
       .use("vue-svg-loader")
       .loader("vue-svg-loader");
   },
-
 };

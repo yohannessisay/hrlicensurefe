@@ -1082,12 +1082,14 @@ export default {
   },
   async assignGoodStandingReviewer({ commit }, assign) {
     try {
+      
       const resp = await ApiService.post(
         baseUrl + "/goodStandingReviewers/assign",
         assign
       );
       return resp;
     } catch (error) {
+      console.log(error)
       return error;
     }
   },

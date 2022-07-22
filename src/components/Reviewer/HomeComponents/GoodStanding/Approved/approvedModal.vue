@@ -270,6 +270,64 @@
                           lg:px-6
                         "
                       >
+                        <label class="font-bold text-lg text-primary-600 mb-1"
+                          >Actions</label
+                        >
+                        <br />
+                        <button
+                          class="
+                            inline-block
+                            px-6
+                            py-2.5
+                            custom-warning
+                            text-white
+                            font-medium
+                            text-xs
+                            leading-tight
+                            uppercase
+                            rounded
+                            shadow-lg
+                            focus:shadow-lg focus:outline-none focus:ring-0
+                            active:bg-blue-800 active:shadow-lg
+                            transition
+                            duration-150
+                            ease-in-out
+                          "
+                          type="button"
+                        >
+                          <i class="fa fa-ban"></i>
+                          Suspend
+                        </button>
+                        <button
+                          class="
+                            inline-block
+                            px-6
+                            py-2.5
+                            bg-
+                            text-white
+                            font-medium
+                            text-xs
+                            leading-tight
+                            uppercase
+                            rounded
+                            shadow-lg
+                            hover:bg-blue-700 hover:shadow-lg
+                            focus:bg-blue-700
+                            focus:shadow-lg
+                            focus:outline-none
+                            focus:ring-0
+                            active:bg-blue-800 active:shadow-lg
+                            transition
+                            duration-150
+                            ease-in-out
+                          "
+                          type="button"
+                          data-bs-toggle="modal"
+                          data-bs-target="#generatePdf"
+                        >
+                          <i class="fa fa-file-text"></i>
+                          Generate PDF
+                        </button>
                         <button
                           class="
                             inline-block
@@ -333,9 +391,7 @@
                                   />
                                 </a>
 
-                                <h4 style="font-weight: bold">
-                                  Document Type
-                                </h4>
+                                <h4 style="font-weight: bold">Document Type</h4>
                                 <h5 class="text-primary-500">
                                   {{
                                     document.documentType
@@ -395,6 +451,9 @@
       </div>
     </div>
   </div>
+  <generate-pdf
+    :modalDataGenerate="modalDataGenerate"
+  ></generate-pdf>
 </template>
 <script>
 import { useStore } from "vuex";
@@ -403,11 +462,13 @@ import moment from "moment";
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 import { googleApi } from "@/composables/baseURL";
+import generatePdf from "./generateLicensedPdf.vue";
 
 export default {
   props: ["modalDataId"],
   components: {
     Loading,
+    generatePdf,
   },
   computed: {
     moment: () => moment,
@@ -421,7 +482,7 @@ export default {
     let isLoading = ref(false);
     const licenseData = ref({});
     let reviewerAdminId = ref(0);
-
+    const modalDataGenerate = ref({});
     const showModal = () => {
       show.value = true;
     };
@@ -485,6 +546,7 @@ export default {
 
             licenseData.value = result;
             modalData.value.documents = result.documents;
+            modalDataGenerate.value = result;
             isLoading.value = false;
           }
         });
@@ -504,6 +566,7 @@ export default {
       onCancel,
       modalData,
       googleApi,
+      modalDataGenerate,
     };
   },
 };

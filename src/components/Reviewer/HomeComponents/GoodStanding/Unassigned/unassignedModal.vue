@@ -504,7 +504,7 @@ export default {
 
     let assign = ref({
       reviewerId: "",
-      licenseId: "",
+      goodStandingId: "",
       createdByAdminId: "",
     });
     let role = ref({});
@@ -521,15 +521,15 @@ export default {
     const assignReviewer = () => {
       if (role.value.code === "TL" || role.value.code === "ADM") {
         assign.value = {
-          licenseId: licenseData.value.id,
-          reviewerId: assign.value.reviewerId,
+          goodStandingId: licenseData.value.id,
+          reviewerId: adminId,
           createdByAdminId: +localStorage.getItem("adminId"),
         };
       }
 
       if (role.value.code == "REV") {
         assign.value = {
-          licenseId: licenseData.value.id,
+          goodStandingId: licenseData.value.id,
           reviewerId: +localStorage.getItem("adminId"),
           createdByAdminId: +localStorage.getItem("adminId"),
         };
@@ -538,8 +538,9 @@ export default {
       isLoading.value = true;
 
       store
-        .dispatch("reviewer/assignReviewer", assign.value)
+        .dispatch("reviewer/assignGoodStandingReviewer", assign.value)
         .then((response) => {
+       
           if (response.statusText == "Created") {
             toast("Selected reviewer is successfully assigned.", {
               duration: 3000,
@@ -599,7 +600,7 @@ export default {
 
     const check = () => {
       store
-        .dispatch("reviewer/getNewLicenseApplication", props.modalDataId.id)
+        .dispatch("reviewer/getGoodStandingApplication", props.modalDataId.id)
         .then((res) => {
           if (
             res.data.status == "Success" &&
@@ -608,39 +609,43 @@ export default {
           ) {
             result = res.data.data;
             modalData.value.name =
-              result.profile.name +
+              (result.profile ? result.profile.name : "") +
               " " +
-              result.profile.fatherName +
+              (result.profile ? result.profile.fatherName : "") +
               "  " +
-              result.profile.grandFatherName;
-            modalData.value.gender = result.profile.gender
+              (result.profile ? result.profile.grandFatherName : "");
+            modalData.value.gender = result.profile
               ? result.profile.gender
               : "-----";
-            modalData.value.nationality = result.profile.nationality?.name
-              ? result.profile.nationality?.name
-              : "-----";
-            modalData.value.dateOfBirth = result.profile.dateOfBirth
+            modalData.value.nationality =
+              result.profile && result.profile.nationality
+                ? result.profile.nationality?.name
+                : "-----";
+            modalData.value.dateOfBirth = result.profile
               ? result.profile.dateOfBirth
               : "-----";
-            modalData.value.martialStatus = result.profile.martialStatus?.name
-              ? result.profile.martialStatus.name
-              : "-----";
-            modalData.value.mobileNumber = result.applicant.phoneNumber
+            modalData.value.martialStatus =
+              result.profile && result.profile.martialStatus
+                ? result.profile.martialStatus.name
+                : "-----";
+            modalData.value.mobileNumber = result.applicant
               ? result.applicant.phoneNumber
               : "-----";
-            modalData.value.email = result.applicant.emailAddress
+            modalData.value.email = result.applicant
               ? result.applicant.emailAddress
               : "-----";
-            modalData.value.instName = result.education.institution?.name
-              ? result.education.institution?.name
-              : "-----";
-            modalData.value.instType = result.education.institution
-              ?.institutionType
-              ? result.education.institution?.institutionType.name
-              : "-----";
-            modalData.value.department = result.education.department.name
-              ? result.education?.department.name
-              : "-----";
+            modalData.value.instName =
+              result.education && result.education.institution
+                ? result.education.institution?.name
+                : "-----";
+            modalData.value.instType =
+              result.education && result.education.institution
+                ? result.education.institution?.institutionType.name
+                : "-----";
+            modalData.value.department =
+              result.education && result.education.department
+                ? result.education?.department.name
+                : "-----";
             modalData.value.profile = result.profile;
             modalData.value.professionalTypes = result.licenseProfessions;
             modalData.value.certifiedDate = result.certifiedDate;

@@ -185,47 +185,41 @@
                           lg:px-6
                         "
                       >
-                        <div class="flex align-center">
-                          <div class="shrink-0">
-                            <div
-                              class="
-                                p-4
-                                bg-blue-600
-                                rounded-md
-                                shadow-lg
-                                w-48
-                                h-48
-                                flex
-                                items-center
-                                justify-center
-                              "
-                            >
-                              <i class="fa fa-building fa-4x"></i>
-                            </div>
-                          </div>
-                          <div class="grow ml-6">
-                            <h2 class="font-bold mb-1">Institution Info</h2>
-                            <p class="text-gray-500">
-                              <span class="font-medium text-primary-700 mb-1"
-                                >Institution Name:</span
-                              >
-                              {{ modalData.instName ? modalData.instName : "" }}
-                            </p>
-                            <p class="text-gray-500">
-                              <span class="font-medium text-primary-700 mb-1"
-                                >Department:</span
-                              >
-                              {{
-                                modalData.department ? modalData.department : ""
-                              }}
-                            </p>
-                            <p class="text-gray-500">
-                              <span class="font-medium text-primary-700 mb-1"
-                                >Institution Type:</span
-                              >
-                              {{ modalData.instType ? modalData.instType : "" }}
-                            </p>
-                          </div>
+                        <div>
+                         
+
+                          <button
+                            class="
+                              inline-block
+                              px-6
+                              py-2.5
+                              bg-primary-400
+                              text-white
+                              font-medium
+                              text-xs
+                              leading-tight
+                              uppercase
+                              rounded
+                              shadow-lg
+                              hover:bg-blue-700 hover:shadow-lg
+                              focus:bg-blue-700
+                              focus:shadow-lg
+                              focus:outline-none
+                              focus:ring-0
+                              active:bg-blue-800 active:shadow-lg
+                              transition
+                              duration-150
+                              ease-in-out
+                            "
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#collapseExample"
+                            aria-expanded="false"
+                            aria-controls="collapseExample"
+                          >
+                            <i class="fa fa-eye"></i>
+                            Show Attached Documents
+                          </button>
                         </div>
                       </div>
 
@@ -291,66 +285,7 @@
                           lg:px-6
                         "
                       >
-                        <div>
-                          <label class="font-bold text-lg text-primary-600 mb-1"
-                            >Actions</label
-                          >
-                          <br />
-                          <button
-                            class="
-                              inline-block
-                              px-6
-                              py-2.5
-                              custom-warning
-                              text-white
-                              font-medium
-                              text-xs
-                              leading-tight
-                              uppercase
-                              rounded
-                              shadow-lg
-                              focus:shadow-lg focus:outline-none focus:ring-0
-                              active:bg-blue-800 active:shadow-lg
-                              transition
-                              duration-150
-                              ease-in-out
-                            "
-                            type="button"
-                          >
-                            <i class="fa fa-ban"></i>
-                            Suspend
-                          </button>
-                          <button
-                            class="
-                              inline-block
-                              px-6
-                              py-2.5
-                              bg-
-                              text-white
-                              font-medium
-                              text-xs
-                              leading-tight
-                              uppercase
-                              rounded
-                              shadow-lg
-                              hover:bg-blue-700 hover:shadow-lg
-                              focus:bg-blue-700
-                              focus:shadow-lg
-                              focus:outline-none
-                              focus:ring-0
-                              active:bg-blue-800 active:shadow-lg
-                              transition
-                              duration-150
-                              ease-in-out
-                            "
-                            type="button"
-                            data-bs-toggle="modal"
-                            data-bs-target="#generatePdf"
-                          >
-                            <i class="fa fa-file-text"></i>
-                            Generate PDF
-                          </button>
-                        </div>
+                        <div class="flex align-center"></div>
                       </div>
                     </div>
 
@@ -406,35 +341,6 @@
           "
         >
           <button
-            class="
-              inline-block
-              px-6
-              py-2.5
-              bg-primary-400
-              text-white
-              font-medium
-              text-xs
-              leading-tight
-              uppercase
-              rounded
-              shadow-lg
-              hover:bg-blue-700 hover:shadow-lg
-              focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0
-              active:bg-blue-800 active:shadow-lg
-              transition
-              duration-150
-              ease-in-out
-            "
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#collapseExample"
-            aria-expanded="false"
-            aria-controls="collapseExample"
-          >
-            <i class="fa fa-eye"></i>
-            Show Attached Documents
-          </button>
-          <button
             type="button"
             class="
               inline-block
@@ -465,14 +371,9 @@
       </div>
     </div>
   </div>
-  <generate-pdf
-    v-if="showGenerateModal"
-    :modalDataGenerate="modalDataGenerate"
-  ></generate-pdf>
 </template>
 <script>
 import { googleApi } from "@/composables/baseURL";
-import generatePdf from "./generateLicensedPdf.vue";
 import { ref, watch } from "vue";
 import { useStore } from "vuex";
 import Loading from "vue3-loading-overlay";
@@ -498,7 +399,6 @@ export default {
       store
         .dispatch("reviewer/getGoodStandingApplication", props.modalDataId.id)
         .then((res) => {
-          console.log(res);
           if (res.data.status == "Success") {
             result = res.data.data;
             modalData.value.name =

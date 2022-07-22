@@ -480,7 +480,6 @@ import { useStore } from "vuex";
 import { ref, onMounted, watch } from "vue";
 import moment from "moment";
 import Loading from "vue3-loading-overlay";
-import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 import { useToast } from "vue-toastification";
 
 export default {

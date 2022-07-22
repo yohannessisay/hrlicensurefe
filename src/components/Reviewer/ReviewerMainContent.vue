@@ -23,11 +23,11 @@
               font-light font-mono
               transition-all
               duration-200
-              text-white 
-              text-3xl
+              text-white text-3xl
             "
+            id="totalApp"
           >
-            9
+            {{ stat.applicantCount }}
           </p>
         </div>
       </div>
@@ -47,18 +47,18 @@
         "
       >
         <div class="m-3 text-center">
-          <h2 class="text-xl mb-2 text-white">Total Licensed</h2>
+          <h2 class="text-xl mb-2 text-white">Total New Licensed</h2>
           <i class="fa fa-check fa-2x text-white"></i>
           <p
             class="
               font-light font-mono
               transition-all
               duration-200
-              text-white 
-              text-3xl
+              text-white text-3xl
             "
+            id="totalNew"
           >
-            999
+            {{ stat.newLicenseCount }}
           </p>
         </div>
       </div>
@@ -85,11 +85,11 @@
               font-light font-mono
               transition-all
               duration-200
-              text-white
-              text-3xl
+              text-white text-3xl
             "
+            id="totalRen"
           >
-            999,999
+            {{ stat.renewalCount }}
           </p>
         </div>
       </div>
@@ -116,11 +116,11 @@
               font-light font-mono
               transition-all
               duration-200
-              text-white 
-              text-3xl
+              text-white text-3xl
             "
+            id="totalGoo"
           >
-            999,999,999
+            {{ stat.goodStandingCount }}
           </p>
         </div>
       </div>
@@ -305,10 +305,55 @@
   </div>
 </template>
 <script>
+import { ref, onMounted } from "vue";
+import { useStore } from "vuex";
 export default {
-  emits: ["menuChange"],
   setup() {
-    return {};
+    const store = useStore();
+    const stat = ref({});
+    let objApp = document.getElementById("totalApp");
+    let objRen = document.getElementById("totalNew");
+    let objNew = document.getElementById("totalRen");
+    let objGoo = document.getElementById("totalGoo");
+    const getStats = () => {
+      store.dispatch("stats/getStats").then((res) => {
+        stat.value = res.data;
+
+        const animateValue = (obj, start, end, duration) => {
+          let startTimestamp = null;
+          const step = (timestamp) => {
+            if (!startTimestamp) startTimestamp = timestamp;
+            const progress = Math.min(
+              (timestamp - startTimestamp) / duration,
+              1
+            );
+            obj.innerHTML = Math.floor(progress * (end - start) + start);
+            if (progress < 1) {
+              window.requestAnimationFrame(step);
+            }
+          };
+          window.requestAnimationFrame(step);
+        };
+
+        animateValue(objApp, 0, stat.value.applicantCount, 5000);
+        animateValue(objRen, 0, stat.value.newLicenseCount, 5000);
+        animateValue(objNew, 0, stat.value.renewalCount, 5000);
+        animateValue(objGoo, 0, stat.value.goodStandingCount, 5000);
+      });
+    };
+
+    onMounted(() => {
+      objApp = document.getElementById("totalApp");
+      objRen = document.getElementById("totalNew");
+      objNew = document.getElementById("totalRen");
+      objGoo = document.getElementById("totalGoo");
+    
+      getStats();
+    });
+
+    return {
+      stat,
+    };
   },
 };
 </script>

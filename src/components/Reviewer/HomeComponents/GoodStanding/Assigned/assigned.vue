@@ -18,7 +18,7 @@
             <div class="py-8">
               <div>
                 <h2 class="text-2xl font-semibold leading-tight">
-                  Applications in Review Assigned To You
+                  Applications Assigned To You
                 </h2>
               </div>
               <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
@@ -58,7 +58,7 @@
             <div class="py-8">
               <div>
                 <h2 class="text-2xl font-semibold leading-tight">
-                  Applications in Review Assigned To Others
+                  Applications Assigned To Others
                 </h2>
               </div>
               <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
@@ -157,20 +157,20 @@ export default {
     toYouTable.value = {
       isLoading: true,
     };
-    const inReviewAssignedToOthers = () => {
+    const assignedToOthers = () => {
       applicationStatus(store, "IRV").then((res) => {
         let statusId = res;
         let adminStatus = [statusId, adminId];
 
         store
           .dispatch(
-            "reviewerNewLicense/getNewLicenseOthersOnReview",
+            "reviewerGoodStanding/getGoodStandingOthersAssigned",
             adminStatus
           )
           .then((res) => {
             allInfo.value.assignApplication =
               store.getters[
-                "reviewerNewLicense/getNewLicenseOthersOnReviewSearched"
+                "reviewerGoodStanding/getGoodStandingAssignedToOthersSearched"
               ];
 
             for (let applicant in allInfo.value.assignApplication) {
@@ -197,7 +197,7 @@ export default {
                     (element.profile.grandFatherName
                       ? element.profile.grandFatherName
                       : "------"),
-                  ApplicationType: element.applicationType.name,
+                  ApplicationType: element.applicationType?element.applicationType.name:"",
                   Date: new Date(element.createdAt)
                     .toJSON()
                     .slice(0, 10)
@@ -260,16 +260,18 @@ export default {
       });
     };
 
-    const inReviewAssignedToYou = () => {
+    const assignedToYou = () => {
       applicationStatus(store, "IRV").then((res) => {
         let statusId = res;
         let adminStatus = [statusId, adminId];
 
         store
-          .dispatch("reviewerNewLicense/getNewLicenseOnReview", adminStatus)
-          .then(() => {
+          .dispatch("reviewerGoodStanding/getGoodStandingAssigned", adminStatus)
+          .then((res) => {
             allInfo.value.assignApplication =
-              store.getters["reviewerNewLicense/getNewLicenseOnReviewSearched"];
+              store.getters[
+                "reviewerGoodStanding/getGoodStandingAssignedToYouSearched"
+              ];
 
             for (let applicant in allInfo.value.assignApplication) {
               if (
@@ -379,7 +381,7 @@ export default {
     const rowClicked = (row) => {
       if (row != undefined) {
         store.dispatch("reviewer/getAdmins").then((res) => {
-          console.log(res)
+          console.log(res);
           reviewers.value = res?.data?.data.filter((e) => {
             return e.role.code !== "UM";
           });
@@ -398,8 +400,8 @@ export default {
       }
     };
     onMounted(() => {
-      inReviewAssignedToYou();
-      inReviewAssignedToOthers();
+      assignedToYou();
+      assignedToOthers();
     });
 
     return {
@@ -409,7 +411,6 @@ export default {
       showModal,
       reviewers,
       tableLoadingFinish,
-      inReviewAssignedToOthers,
       tableLoadingFinishOthers,
       rowClicked,
       rowClickedOthers,

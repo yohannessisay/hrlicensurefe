@@ -253,7 +253,7 @@ export default {
                   sortable: true,
                 },
                 {
-                  label: "Appliction Type",
+                  label: "Application Type",
                   field: "ApplicationType",
                   width: "15%",
                   sortable: true,
@@ -277,7 +277,7 @@ export default {
                   },
                 },
               ],
-              rows: JSON.parse(JSON.stringify(tableData.value)),
+              rows: JSON.parse(JSON.stringify(tableData.value))?JSON.parse(JSON.stringify(tableData.value)):1,
               totalRecordCount: tableData.value.length,
               sortable: {
                 order: "id",
@@ -502,7 +502,7 @@ export default {
                   sortable: true,
                 },
                 {
-                  label: "Appliction Type",
+                  label: "Application Type",
                   field: "ApplicationType",
                   width: "15%",
                   sortable: true,

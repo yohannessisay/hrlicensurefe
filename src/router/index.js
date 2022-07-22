@@ -1056,6 +1056,14 @@ const routes = [
     component: () =>
       import("../components/Reviewer/HomeComponents/GoodStanding/Licensed/licensed.vue"),
   },
+  {
+    path: "/admin/goodStanding/evaluate/:id",
+    name: "GoodStandingEvaluate",
+    component: () =>
+      import(
+        "../components/Reviewer/HomeComponents/GoodStanding/Assigned/assignedEvaluation.vue"
+      ),
+  },
 
   //Verification part
   {

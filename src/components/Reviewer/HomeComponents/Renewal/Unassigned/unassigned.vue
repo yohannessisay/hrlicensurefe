@@ -251,7 +251,7 @@ export default {
                   sortable: true,
                 },
                 {
-                  label: "Appliction Type",
+                  label: "Application Type",
                   field: "ApplicationType",
                   width: "15%",
                   sortable: true,
@@ -497,7 +497,7 @@ export default {
                   sortable: true,
                 },
                 {
-                  label: "Appliction Type",
+                  label: "Application Type",
                   field: "ApplicationType",
                   width: "15%",
                   sortable: true,
