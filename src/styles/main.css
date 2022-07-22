@@ -1,6 +1,6 @@
   /* Googlefont Poppins CDN Link */
   @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
-
+/* purgecss start ignore */
   * {
     margin: 0;
     padding: 0;
@@ -665,7 +665,7 @@
     border-radius: 5px !important;
   }
 
-/* purgecss start ignore */
+
 /* sass-plugin-1:/Users/maronato/Developer/vue-toastification/src/scss/index.scss */
 .Vue-Toastification__container {
   z-index: 9999;
@@ -1327,7 +1327,7 @@
 }
 
 
-/* purgecss end ignore */
+
 
 
 
@@ -1472,3 +1472,5 @@
       width: calc(100% - 60px);
     }
   }
+
+  /* purgecss end ignore */
