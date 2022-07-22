@@ -432,10 +432,11 @@
             flex flex-shrink-0 flex-wrap
             items-center
             justify-end
-            border-t border-grey-200
+            border-t border-grey-100
             rounded-b-md
           "
         >
+          <a :href="'/admin/goodStanding/evaluate/' + licenseId">
           <button
             type="button"
             class="
@@ -463,6 +464,7 @@
           >
             Continue Evaluating
           </button>
+          </a>
           <button
             type="button"
             class="
@@ -497,12 +499,12 @@
 
 <script>
 import { useStore } from "vuex";
-import { ref, onMounted, watch } from "vue";
+import { ref, onMounted, watch,computed } from "vue";
 import moment from "moment";
 import Loading from "vue3-loading-overlay";
 // Import stylesheet
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
-
+import { useToast } from "vue-toastification";
 export default {
   props: ["modalDataId", "reviewers"],
   components: {
@@ -513,13 +515,13 @@ export default {
   },
   setup(props) {
     const store = useStore();
-
+const toast = useToast();
     let show = ref(true);
     let showRes = ref(false);
     let showOptions = ref(false);
     let reviewer = ref({ id: "", name: "", expertLevel: "", role: "" });
     let adminId = +localStorage.getItem("adminId");
-
+  const licenseId = computed(() => props.modalDataId.id);
     let transfer = ref({
       reviewerId: "",
       licenseId: "",
@@ -561,25 +563,43 @@ export default {
         .dispatch("reviewer/transferLicenseReview", transfer.value)
         .then((response) => {
           if (response.statusText == "Created") {
-            toast("Selected reviewer is successfully assigned.", {
-              duration: 4000,
-              position: "bottom",
-              toastClass: "toast-success",
+                     toast.success("Selected application is successfully drafted", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
             });
+            isLoading.value=false;
+                setTimeout(() => {
+              window.location.reload();
+            }, 3000);
           } else {
-            toast("Something is wrong please try again after few minutes.", {
-              duration: 4000,
-              position: "bottom",
-              toastClass: "toast-error",
+                         toast.error("Error Occured", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
             });
+            isLoading.value=false;
+                setTimeout(() => {
+              window.location.reload();
+            }, 3000);
           }
         })
         .catch(() => {
-          toast("Sorry there seems to be a problem, please try again.", {
-            duration: 3000,
-            position: "bottom",
-            toastClass: "toast-error",
-          });
+                     toast.error("Error Occured", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+            isLoading.value=false;
+                setTimeout(() => {
+              window.location.reload();
+            }, 3000);
         });
     };
 
@@ -629,7 +649,7 @@ export default {
 
     const check = () => {
       store
-        .dispatch("reviewer/getNewLicenseApplication", props.modalDataId.id)
+        .dispatch("reviewer/getGoodStandingApplication", props.modalDataId.id)
         .then((res) => {
           if (res.data.status == "Success") {
             result = res.data.data;
@@ -657,14 +677,13 @@ export default {
             modalData.value.email = result.applicant.emailAddress
               ? result.applicant.emailAddress
               : "-----";
-            modalData.value.instName = result.education.institution?.name
+            modalData.value.instName = result.education&&result.education.institution
               ? result.education.institution?.name
               : "-----";
-            modalData.value.instType = result.education.institution
-              ?.institutionType
-              ? result.education.institution?.institutionType.name.name
+            modalData.value.instType = result.education&&result.education.institution&&result.education.institution.institutionType
+              ? result.education.institution?.institutionType.name
               : "-----";
-            modalData.value.department = result.education.department.name
+            modalData.value.department = result.education&&result.education.department
               ? result.education?.department.name
               : "-----";
             modalData.value.profile = result.profile;
@@ -694,6 +713,7 @@ export default {
       isLoading,
       isLoadingStart,
       fullPage,
+      licenseId,
       modalData,
       transferReviewer,
       onCancel,

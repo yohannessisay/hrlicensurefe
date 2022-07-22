@@ -662,12 +662,12 @@ export default {
       verificationId.value = "";
 
       applicantName.value =
-        data.Profiles.name +
+        data.profile.name +
         " " +
-        data.Profiles.fatherName +
+        data.profile.fatherName +
         " " +
-        data.Profiles.grandFatherName;
-      requestedRegion.value = data.Region.name;
+        data.profile.grandFatherName;
+      requestedRegion.value = data.region.name;
       licenseCode.value = data.NewLicense
         ? data.NewLicense.newLicenseCode
         : data.Renewal
@@ -762,10 +762,10 @@ export default {
           if (res.data.status == "Success") {
             response.value.success = true;
             showResponseVerificationModal.value = false;
-            getVerifications();
-            setTimeout(() => {
-              response.value.success = false;
-            }, 3000);
+            // getVerifications();
+            // setTimeout(() => {
+            //   response.value.success = false;
+            // }, 3000);
           } else {
             response.value.error = true;
             message.value.errorMessage = res.data.message;

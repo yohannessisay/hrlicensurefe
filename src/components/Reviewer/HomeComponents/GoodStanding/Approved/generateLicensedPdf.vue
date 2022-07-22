@@ -101,24 +101,11 @@
                                   class="ml-8 mr-8 mb-12"
                                 >
                                   <div class="mt-large bg-white">
-                                    <!-- <span
-                                      v-if="
-                                        isGoodStanding &&
-                                        license &&
-                                        license.applicationStatus &&
-                                        (license.applicationStatus.code ===
-                                          'AP' ||
-                                          license.applicationStatus.code ===
-                                            'APP') &&
-                                        myRegion
-                                      "
-                                    >
-                                      <button @click="GenerateLetter">
-                                        Generate Letter
-                                      </button>
-                                    </span> -->
+                            
 
-                                    <h2 class="ml-3 mt-4">To: EFDA .</h2>
+                                    <h2 class="ml-4 mt-8">To: {{  modalData
+                                          ? modalData.whomGoodStandingFor
+                                          : "" }}.</h2>
                                     <h3 class="ml-64 mb-8">
                                       LETTER OF GOOD STANDING
                                     </h3>
@@ -227,7 +214,7 @@
                                       .
                                     </h4>
 
-                                    <h4 class="ml-4 mt-8">
+                                    <h4 class="ml-8 mt-8">
                                       Hence we appreciate any assistance, which
                                       will be rendered to
                                       <span>
@@ -240,13 +227,13 @@
                                         }} </span
                                       >.
                                     </h4>
-                                    <h4 class="ml-4 mb-8">With best regards</h4>
+                                    <h4 class="ml-8 mb-8">With best regards</h4>
 
                                     <div
                                       class="flex justify-start"
                                       v-if="expertLevelId != 3"
                                     >
-                                      <Title message="Address" />
+                                     <h3 class="font-bold">Address</h3>
                                     </div>
                                
 
@@ -274,7 +261,7 @@
             flex flex-shrink-0 flex-wrap
             items-center
             justify-end
-            border-t border-grey-200
+            border-t border-grey-100
             rounded-b-md
           "
         >
@@ -410,6 +397,7 @@ export default {
         license.value.applicationStatus.code !== "AP" &&
         license.value.applicationStatus.code !== "APP"
       ) {
+        console.log(license.value)
         // if user is not approved don't generate a good standing letter
         return;
       }
@@ -546,6 +534,9 @@ export default {
               pauseOnHover: true,
               icon: true,
             });
+                setTimeout(() => {
+              window.location.reload();
+            }, 3000);
           } else {
             toast.error(res, {
               timeout: 5000,
@@ -554,10 +545,16 @@ export default {
               pauseOnHover: true,
               icon: true,
             });
+                setTimeout(() => {
+              window.location.reload();
+            }, 3000);
           }
         })
         .catch((err) => {
           console.log(err);
+              setTimeout(() => {
+              window.location.reload();
+            }, 3000);
         });
 
       window.open(doc.output("bloburl"));

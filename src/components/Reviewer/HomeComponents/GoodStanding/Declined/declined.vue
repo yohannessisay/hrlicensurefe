@@ -78,7 +78,9 @@
                     @is-finished="tableLoadingFinishOthers"
                     @row-clicked="rowClickedOthers"
                   ></vue-table-lite>
-                  <edit-modal-others :modalDataIdOthers="modalDataIdOthers"></edit-modal-others>
+                  <edit-modal-others
+                    :modalDataIdOthers="modalDataIdOthers"
+                  ></edit-modal-others>
                 </div>
               </div>
             </div>
@@ -100,7 +102,7 @@ import { useStore } from "vuex";
 import applicationStatus from "../../../Configurations/getApplicationStatus.js";
 import VueTableLite from "vue3-table-lite";
 import editModal from "./declinedModal.vue";
-import editModalOthers from "./declinedModalOthers.vue"
+import editModalOthers from "./declinedModalOthers.vue";
 
 export default {
   name: "home",
@@ -110,19 +112,18 @@ export default {
     NewLicenseMainContent,
     VueTableLite,
     editModal,
-    editModalOthers
+    editModalOthers,
   },
   setup() {
     const store = useStore();
     const showModal = ref(true);
     const adminId = +localStorage.getItem("adminId");
 
-
     let modalDataId = ref({
       id: "",
       change: 0,
     });
-       let modalDataIdOthers = ref({
+    let modalDataIdOthers = ref({
       id: "",
       change: 0,
     });
@@ -155,12 +156,12 @@ export default {
         let statusId = res;
         let adminStatus = [statusId, adminId];
 
-        store.dispatch("reviewerNewLicense/getNewLicenseAllDeclined", adminStatus)
+        store
+          .dispatch("reviewerGoodStanding/getGoodStandingAllDeclined", adminStatus)
           .then(() => {
-
             allInfo.value.assignApplication =
               store.getters[
-                "reviewerNewLicense/getNewLicenseAllDeclinedSearched"
+                "reviewerGoodStanding/getGoodStandingAllDeclinedSearched"
               ];
             for (let applicant in allInfo.value.assignApplication) {
               if (
@@ -186,7 +187,7 @@ export default {
                     (element.profile.grandFatherName
                       ? element.profile.grandFatherName
                       : "-----"),
-                            ApplicationType: element.applicationType.name,
+                  ApplicationType: element.applicationType.name,
                   Date: new Date(element.createdAt)
                     .toJSON()
                     .slice(0, 10)
@@ -255,12 +256,13 @@ export default {
         let statusId = res;
         let adminStatus = [statusId, adminId];
 
-        store
-          .dispatch("reviewerNewLicense/getNewLicenseDeclined", adminStatus)
+          store
+          .dispatch("reviewerGoodStanding/getGoodStandingDeclined", adminStatus)
           .then(() => {
-        
             allInfo.value.assignApplication =
-              store.getters["reviewerNewLicense/getNewLicenseDeclinedSearched"];
+              store.getters[
+                "reviewerGoodStanding/getGoodStandingDeclinedSearched"
+              ];
 
             for (let applicant in allInfo.value.assignApplication) {
               if (

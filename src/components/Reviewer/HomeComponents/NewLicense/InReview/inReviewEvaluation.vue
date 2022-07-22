@@ -17,23 +17,18 @@
           <h2 class="text-white ml-4">
             Evaluating
             {{
-              newLicense.profile
+              newLicense && newLicense.profile && newLicense.profile.name
                 ? newLicense.profile.name
-                  ? newLicense.profile.name +
-                    " " +
-                    (newLicense.profile.fatherName
-                      ? newLicense.profile.fatherName
-                      : "-")
-                  : "-"
-                : "-"
+                : ""
             }}
             's License
           </h2>
           <div class="w-full">
             <div class="box-shadow-pop bg-lightGrey-100">
-              <div class="flex justify-center">
+              <div class="flex justify-content-evenly">
                 <div
                   class="
+                    p-4
                     w-64
                     h-40
                     mt-8
@@ -55,20 +50,26 @@
                     </div>
                   </div>
                 </div>
-                <div class="flex justify-start mt-4 flex-wrap ml-12">
-                  <div>
+                <div class="flex justify-start mt-4 flex-wrap p-4">
+                  <div class="box-shadow-pop bg-lightGrey-100 mb-8 p-4">
                     <picture
                       class="flex justify-center items-center mb-small"
                       v-if="docs.length > 0"
                     >
                       <span
                         v-if="
-                          newLicense.profile.profilePicture !== '' &&
-                          newLicense.profile.profilePicture !== null
+                          newLicense &&
+                          newLicense.profile &&
+                          newLicense.profile.profilePicture != '' &&
+                          newLicense.profile.profilePicture != null
                         "
                       >
                         <img
-                          :src="newLicense.profile.profilePicture"
+                          :src="
+                            newLicense && newLicense.profile
+                              ? newLicense.profile.profilePicture
+                              : ''
+                          "
                           alt="profile"
                           class="w-20 h-12"
                         />
@@ -147,14 +148,1064 @@
                         </h4>
                       </div>
                     </div>
+                    <div class="">
+                      <svg
+                        width="40"
+                        height="60"
+                        xmlns="http://www.w3.org/2000/svg"
+                        version="1.1"
+                        @click="previous()"
+                        v-if="index != 0"
+                      >
+                        <polyline
+                          points="30 10 10 30 30 50"
+                          stroke="rgba(103,128,159,1)"
+                          stroke-width="3"
+                          stroke-linecap="butt"
+                          fill="none"
+                          stroke-linejoin="round"
+                        >
+                          &gt;
+                        </polyline>
+                      </svg>
+                    </div>
+
+                    <div class="flex flex-col justify-center items-center">
+                      <div class="mt-8">
+                        <label
+                          v-if="!showButtons"
+                          class="
+                            justify-center
+                            items-center
+                            text-grey-200 text-2xl
+                          "
+                        >
+                          {{ documentTypeName }}
+                        </label>
+
+                        <div
+                          class="container my-2 mx-auto px-4 md:px-4"
+                          v-if="showButtons"
+                        >
+                          <div class="flex flex-wrap md:-mx-4 lg:-mx-8">
+                            <!-- Personal Info card -->
+                            <div class="my-1 mx-4 w-full mb-4">
+                              <!-- Article -->
+                              <article
+                                class="overflow-hidden rounded-lg shadow-lg"
+                              >
+                                <header
+                                  class="
+                                    flex
+                                    items-center
+                                    justify-between
+                                    leading-tight
+                                    p-2
+                                    md:p-4
+                                  "
+                                >
+                                  <h2 class="font-bold">
+                                    Personal Information
+                                    <span
+                                      @click="
+                                        editPersonalData = !editPersonalData
+                                      "
+                                      ><i
+                                        class="
+                                          fa fa-pencil
+                                          cursor-pointer
+                                          ml-4
+                                          text-yellow-300
+                                        "
+                                      ></i
+                                      >Edit Amharic Name</span
+                                    >
+                                  </h2>
+                                  <i
+                                    class="fa fa-user fa-2x text-primary-600"
+                                  ></i>
+                                </header>
+                                <hr class="text-grey-100" />
+                                <div
+                                  class="
+                                    container
+                                    flex
+                                    items-center
+                                    justify-between
+                                    leading-tight
+                                    p-2
+                                    md:p-4
+                                  "
+                                >
+                                  <div class="font-bold">Full Name</div>
+
+                                  <div>
+                                    {{
+                                      (profileInfo.name
+                                        ? profileInfo.name
+                                        : "-") +
+                                      " " +
+                                      (profileInfo.fatherName
+                                        ? profileInfo.fatherName
+                                        : "-") +
+                                      " " +
+                                      (profileInfo.grandFatherName
+                                        ? profileInfo.grandFatherName
+                                        : "-")
+                                    }}
+                                  </div>
+                                </div>
+                                <div
+                                  class="
+                                    container
+                                    flex
+                                    items-center
+                                    justify-between
+                                    leading-tight
+                                    p-2
+                                    md:p-4
+                                  "
+                                >
+                                  <div class="font-bold">
+                                    Full Name In Amharic
+                                  </div>
+                                  <div v-if="editPersonalData">
+                                    <input
+                                      v-model="
+                                        newLicense.profile.alternativeName
+                                      "
+                                      class="w-48 mr-1"
+                                      type="text"
+                                    />
+                                  </div>
+                                  <div v-if="editPersonalData">
+                                    <input
+                                      v-model="
+                                        newLicense.profile.alternativeFatherName
+                                      "
+                                      class="w-48 mr-1"
+                                      type="text"
+                                    />
+                                  </div>
+                                  <div v-if="editPersonalData">
+                                    <input
+                                      v-model="
+                                        newLicense.profile
+                                          .alternativeGrandFatherName
+                                      "
+                                      class="w-48"
+                                      type="text"
+                                    />
+                                  </div>
+                                  <div class="vld-parent">
+                                    <loading
+                                      :active="isLoadingName"
+                                      :is-full-page="false"
+                                      :color="'#2F639D'"
+                                      :opacity="1"
+                                    ></loading>
+                                    <button
+                                      v-if="editPersonalData"
+                                      class="
+                                        inline-block
+                                        px-6
+                                        text-white
+                                        font-medium
+                                        text-xs
+                                        leading-tight
+                                        uppercase
+                                        rounded
+                                        shadow-lg
+                                        hover:bg-purple-700 hover:shadow-lg
+                                        focus:bg-purple-700
+                                        focus:shadow-lg
+                                        focus:outline-none
+                                        focus:ring-0
+                                        active:bg-purple-800 active:shadow-lg
+                                        transition
+                                        duration-150
+                                        ease-in-out
+                                      "
+                                      @click="changeAmharicName"
+                                    >
+                                      Save
+                                    </button>
+                                  </div>
+
+                                  <div v-if="!editPersonalData">
+                                    {{
+                                      (profileInfo.alternativeName
+                                        ? profileInfo.alternativeName
+                                        : "-") +
+                                      " " +
+                                      (profileInfo.alternativeFatherName
+                                        ? profileInfo.alternativeFatherName
+                                        : "-") +
+                                      " " +
+                                      (profileInfo.alternativeGrandFatherName
+                                        ? profileInfo.alternativeGrandFatherName
+                                        : "-")
+                                    }}
+                                  </div>
+                                </div>
+                                <div
+                                  class="
+                                    container
+                                    flex
+                                    items-center
+                                    justify-between
+                                    leading-tight
+                                    p-2
+                                    md:p-4
+                                  "
+                                >
+                                  <div class="font-bold">Nationality</div>
+                                  <div>
+                                    {{
+                                      profileInfo.nationality
+                                        ? profileInfo.nationality.name
+                                        : "-"
+                                    }}
+                                  </div>
+                                </div>
+
+                                <div
+                                  class="
+                                    container
+                                    flex
+                                    items-center
+                                    justify-between
+                                    leading-tight
+                                    p-2
+                                    md:p-4
+                                  "
+                                >
+                                  <div class="font-bold">gender</div>
+                                  <div>
+                                    {{
+                                      profileInfo.gender
+                                        ? profileInfo["gender"]
+                                        : "-"
+                                    }}
+                                  </div>
+                                </div>
+
+                                <div
+                                  class="
+                                    container
+                                    flex
+                                    items-center
+                                    justify-between
+                                    leading-tight
+                                    p-2
+                                    md:p-4
+                                  "
+                                >
+                                  <div class="font-bold">Martial Status</div>
+                                  <div>
+                                    {{
+                                      profileInfo.maritalStatus
+                                        ? profileInfo.maritalStatus.name
+                                        : "-"
+                                    }}
+                                  </div>
+                                </div>
+                                <hr class="text-grey-100" />
+                                <footer
+                                  class="
+                                    flex
+                                    items-center
+                                    justify-center
+                                    leading-none
+                                    p-2
+                                    md:p-4
+                                  "
+                                >
+                                  {{ new Date().toISOString().slice(0, 10) }}
+                                </footer>
+                              </article>
+                              <!-- END Article -->
+                            </div>
+                            <!-- Personal Info card -->
+                            <!-- Contact card -->
+                            <div
+                              class="
+                                my-1
+                                mb-4
+                                px-1
+                                w-full
+                                md:w-1/2
+                                lg:my-4 lg:px-4 lg:w-1/2
+                              "
+                            >
+                              <!-- Article -->
+                              <article
+                                class="overflow-hidden rounded-lg shadow-lg"
+                              >
+                                <header
+                                  class="
+                                    flex
+                                    items-center
+                                    justify-between
+                                    leading-tight
+                                    p-2
+                                    md:p-4
+                                  "
+                                >
+                                  <h2 class="font-bold">Contact Information</h2>
+                                  <i
+                                    class="fa fa-phone text-primary-600 fa-2xl"
+                                  ></i>
+                                </header>
+                                <hr class="text-grey-100" />
+                                <div
+                                  class="
+                                    container
+                                    flex
+                                    items-center
+                                    justify-between
+                                    leading-tight
+                                    p-2
+                                    md:p-4
+                                  "
+                                >
+                                  <div class="font-bold">Mobile Number</div>
+                                  <div>
+                                    {{
+                                      newLicense && newLicense.applicant
+                                        ? newLicense.applicant.phoneNumber
+                                        : "---"
+                                    }}
+                                  </div>
+                                </div>
+
+                                <div
+                                  class="
+                                    container
+                                    flex
+                                    items-center
+                                    justify-between
+                                    leading-tight
+                                    p-2
+                                    md:p-4
+                                    mb-12
+                                  "
+                                >
+                                  <div class="font-bold mb-1">Email</div>
+                                  <div>
+                                    {{
+                                      newLicense && newLicense.applicant
+                                        ? newLicense.applicant.emailAddress
+                                        : "---"
+                                    }}
+                                  </div>
+                                </div>
+                              </article>
+                              <!-- END Article -->
+                            </div>
+                            <!-- Contact card -->
+
+                            <!-- Institution Card -->
+                            <div
+                              class="
+                                my-1
+                                px-1
+                                w-full
+                                md:w-1/2
+                                lg:my-4 lg:px-4 lg:w-1/2
+                              "
+                            >
+                              <!-- Article -->
+                              <article
+                                class="overflow-hidden rounded-lg shadow-lg"
+                              >
+                                <header
+                                  class="
+                                    flex
+                                    items-center
+                                    justify-between
+                                    leading-tight
+                                    p-2
+                                    md:p-4
+                                  "
+                                >
+                                  <h2 class="font-bold">
+                                    Institution Informatiom
+                                  </h2>
+                                  <i
+                                    class="
+                                      fa fa-building
+                                      text-primary-600
+                                      fa-2xl
+                                    "
+                                  ></i>
+                                </header>
+                                <hr class="text-grey-100" />
+                                <div
+                                  class="
+                                    container
+                                    flex
+                                    items-center
+                                    justify-between
+                                    leading-tight
+                                    p-2
+                                    md:p-4
+                                  "
+                                >
+                                  <div class="font-bold">Department</div>
+                                  <div>
+                                    {{
+                                      newLicense.department
+                                        ? newLicense.department.name
+                                        : newLicense.education
+                                        ? newLicense.education.department
+                                          ? newLicense.education.department.name
+                                          : "-"
+                                        : "-"
+                                    }}
+                                  </div>
+                                </div>
+
+                                <div
+                                  class="
+                                    container
+                                    flex
+                                    items-center
+                                    justify-between
+                                    leading-tight
+                                    p-2
+                                    md:p-4
+                                  "
+                                >
+                                  <div class="font-bold">Institution Name</div>
+                                  <div>
+                                    {{
+                                      newLicense.otherEducationalInstitution
+                                        ? newLicense.otherEducationalInstitution
+                                        : newLicense.education
+                                        ? newLicense.education.institution
+                                          ? newLicense.education.institution
+                                              .name
+                                          : "-"
+                                        : "-"
+                                    }}
+                                  </div>
+                                </div>
+
+                                <div
+                                  class="
+                                    container
+                                    flex
+                                    items-center
+                                    justify-between
+                                    leading-tight
+                                    p-2
+                                    md:p-4
+                                  "
+                                >
+                                  <div class="font-bold">Institution Type</div>
+                                  <div>
+                                    {{
+                                      newLicense &&
+                                      newLicense.education &&
+                                      newLicense.education.institution &&
+                                      newLicense.education.institution
+                                        .institutionType
+                                        ? newLicense.education.institution
+                                            .institutionType.name
+                                        : "--------------"
+                                    }}
+                                  </div>
+                                </div>
+                              </article>
+                              <!-- END Article -->
+                            </div>
+                            <!-- Institution Card -->
+                            <!-- Profession Card -->
+                            <div class="my-1 mx-4 w-full mb-4">
+                              <!-- Article -->
+                              <article
+                                class="overflow-hidden rounded-lg shadow-lg"
+                              >
+                                <header
+                                  class="
+                                    flex
+                                    items-center
+                                    justify-between
+                                    leading-tight
+                                    p-2
+                                    md:p-4
+                                  "
+                                >
+                                  <h2 class="font-bold">
+                                    Professional Information
+                                  </h2>
+                                  <i
+                                    class="
+                                      fa fa-briefcase
+                                      text-primary-600
+                                      fa-2xl
+                                    "
+                                  ></i>
+                                </header>
+                                <hr class="text-grey-100 mb-2" />
+                                <div class="flex flex-row">
+                                  <div
+                                    v-if="
+                                      newLicense?.licenseProfessions?.length > 0
+                                    "
+                                  >
+                                    <div
+                                      class="flex flex-col mb-medium mr-12 ml-8"
+                                    >
+                                      <div
+                                        style="
+                                          background: lightgray;
+                                          padding: 8px;
+                                        "
+                                      >
+                                        <p style="color: blue">
+                                          Previous Professional Types
+                                        </p>
+                                      </div>
+
+                                      <ul
+                                        v-for="(
+                                          professionName, index
+                                        ) in newLicense.licenseProfessions"
+                                        v-bind:key="
+                                          professionName.professionalTypeId
+                                        "
+                                        v-bind:value="
+                                          professionName.professionalTypeId
+                                        "
+                                      >
+                                        <div class="grid grid-cols-1">
+                                          <li>
+                                            <input
+                                              v-on:click="
+                                                checkBoxClicked(
+                                                  professionName,
+                                                  true,
+                                                  index,
+                                                  $event
+                                                )
+                                              "
+                                              type="checkbox"
+                                              class="form-checkbox"
+                                              name="ckb"
+                                              :checked="
+                                                professionName.showPrefixLink
+                                              "
+                                            />
+                                            {{
+                                              professionName.professionalTypes
+                                                .name
+                                            }}
+                                            |
+                                            {{
+                                              professionName.professionalTypes
+                                                .amharicProfessionalType
+                                            }}
+                                          </li>
+                                          <a
+                                            class="ml-5"
+                                            style="
+                                              text-decoration: underline;
+                                              font-style: italic;
+                                            "
+                                            @click="
+                                              professionName.showPrefix =
+                                                !professionName.showPrefix
+                                            "
+                                            v-show="
+                                              professionName.showPrefixLink
+                                            "
+                                            >{{
+                                              professionName.showPrefix
+                                                ? "Hide Prefix?"
+                                                : "Show Prefix?"
+                                            }}</a
+                                          >
+                                        </div>
+                                        <div
+                                          class="
+                                            grid grid-cols-2
+                                            gap-4
+                                            mb-4
+                                            ml-8
+                                            mt-2
+                                          "
+                                        >
+                                          <div
+                                            style="
+                                              float: left;
+                                              border-right: 1px solid lightgray;
+                                            "
+                                            v-if="
+                                              professionName.professionalTypes
+                                                .name == 'Other'
+                                            "
+                                          >
+                                            <label style="display: block"
+                                              >Other professional Type
+                                              Name:</label
+                                            >
+                                            <input
+                                              style="display: block"
+                                              type="text"
+                                              v-model="
+                                                newLicense.otherProfessionalType
+                                              "
+                                            />
+                                          </div>
+                                          <div
+                                            style="float: left"
+                                            v-show="
+                                              professionName.showPrefixLink &&
+                                              professionName.showPrefix
+                                            "
+                                          >
+                                            <label style="display: block"
+                                              >Prefix:</label
+                                            >
+                                            <select
+                                              style="display: block"
+                                              class="select"
+                                              @change="
+                                                addPrefix(
+                                                  professionName.professionalTypeId,
+                                                  $event
+                                                )
+                                              "
+                                              :v-model="
+                                                selectedOption + `${index}`
+                                              "
+                                            >
+                                              <option
+                                                v-for="prefix in prefixList"
+                                                v-bind:key="prefix.id"
+                                                v-bind:value="prefix.name"
+                                              >
+                                                {{ prefix.name }}
+                                              </option>
+                                            </select>
+                                          </div>
+                                        </div>
+                                      </ul>
+                                      <div
+                                        style="
+                                          background: lightgray;
+                                          padding: 8px;
+                                        "
+                                      >
+                                        <p style="color: blue">
+                                          New Professional Types
+                                        </p>
+                                      </div>
+
+                                      <ul
+                                        v-for="(
+                                          newProfessionName, index
+                                        ) in professionalTypes"
+                                        v-bind:key="newProfessionName.id"
+                                        v-bind:value="newProfessionName.id"
+                                      >
+                                        <div class="grid grid-cols-1">
+                                          <li>
+                                            <input
+                                              v-on:click="
+                                                checkBoxClicked(
+                                                  newProfessionName,
+                                                  false,
+                                                  index,
+                                                  $event
+                                                )
+                                              "
+                                              type="checkbox"
+                                              class="form-checkbox"
+                                              name="nckb"
+                                            />
+                                            {{ newProfessionName.name }} |
+                                            {{
+                                              newProfessionName.amharicProfessionalType
+                                            }}
+                                          </li>
+                                          <a
+                                            class="ml-5"
+                                            style="
+                                              text-decoration: underline;
+                                              font-style: italic;
+                                            "
+                                            @click="
+                                              newProfessionName.showPrefix =
+                                                !newProfessionName.showPrefix
+                                            "
+                                            v-show="
+                                              newProfessionName.showPrefixLink
+                                            "
+                                            >{{
+                                              newProfessionName.showPrefix
+                                                ? "Hide Prefix?"
+                                                : "Show Prefix?"
+                                            }}</a
+                                          >
+                                        </div>
+                                        <div
+                                          class="
+                                            grid grid-cols-2
+                                            gap-4
+                                            mb-4
+                                            ml-8
+                                            mt-2
+                                          "
+                                        >
+                                          <div
+                                            style="
+                                              float: left;
+                                              border-right: 1px solid lightgray;
+                                            "
+                                            v-if="
+                                              newProfessionName.showPrefixLink &&
+                                              newProfessionName.name == 'Other'
+                                            "
+                                          >
+                                            <label style="display: block"
+                                              >Other profession name*</label
+                                            >
+                                            <input
+                                              style="display: block"
+                                              type="text"
+                                              v-model="
+                                                newLicense.otherProfessionalType
+                                              "
+                                            />
+                                            <label style="display: block"
+                                              >Other profession name
+                                              (Amharic)*</label
+                                            >
+                                            <input
+                                              style="display: block"
+                                              type="text"
+                                              v-model="
+                                                newLicense.otherProfessionalTypeAmharic
+                                              "
+                                            />
+                                          </div>
+                                          <div
+                                            style="float: left"
+                                            v-show="
+                                              newProfessionName.showPrefixLink &&
+                                              newProfessionName.showPrefix
+                                            "
+                                          >
+                                            <label style="display: block"
+                                              >Prefix:</label
+                                            >
+                                            <select
+                                              style="display: block"
+                                              @change="
+                                                addPrefix(
+                                                  newProfessionName.id,
+                                                  $event
+                                                )
+                                              "
+                                              :v-model="
+                                                newSelectedOptions + `${index}`
+                                              "
+                                            >
+                                              <option
+                                                v-for="prefix in prefixList"
+                                                v-bind:key="prefix.name"
+                                                v-bind:value="prefix.name"
+                                              >
+                                                {{ prefix.name }}
+                                              </option>
+                                            </select>
+                                          </div>
+                                        </div>
+                                      </ul>
+                                    </div>
+                                  </div>
+                                </div>
+                              </article>
+                              <!-- END Article -->
+                            </div>
+                            <!-- Profession Card -->
+                            <!-- licesne Exp Card -->
+                            <div class="my-1 mx-4 w-full">
+                              <!-- Article -->
+                              <article
+                                class="overflow-hidden rounded-lg shadow-lg"
+                              >
+                                <header
+                                  class="
+                                    flex
+                                    items-center
+                                    justify-between
+                                    leading-tight
+                                    p-2
+                                    md:p-4
+                                  "
+                                >
+                                  <h2 class="font-bold">
+                                    License Expiration Date
+                                  </h2>
+                                  <i
+                                    class="
+                                      fa fa-calendar fa-2x
+                                      text-primary-600
+                                    "
+                                  ></i>
+                                </header>
+                                <hr class="text-grey-100" />
+
+                                <div
+                                  class="
+                                    container
+                                    flex
+                                    items-center
+                                    justify-between
+                                    leading-tight
+                                    p-2
+                                    md:p-4
+                                  "
+                                >
+                                  <input
+                                    class="max-w-3xl mr-5"
+                                    type="date"
+                                    v-model="newLicense.licenseExpirationDate"
+                                  />
+                                </div>
+                                <hr class="text-grey-100" />
+                                <footer
+                                  class="
+                                    flex
+                                    items-center
+                                    justify-center
+                                    leading-none
+                                    p-2
+                                    md:p-4
+                                  "
+                                >
+                                  License Expiration date minimum value should
+                                  be set after today
+                                </footer>
+                              </article>
+                              <!-- END Article -->
+                            </div>
+                            <!-- licesne Exp Card -->
+                          </div>
+                        </div>
+
+                        <div v-else class="flex justify-start flex-wrap">
+                          <div>
+                            <picture v-if="docs.length > 0">
+                              <div
+                                v-if="
+                                  docs[index].fileName.split('.')[1] == 'pdf'
+                                "
+                              >
+                                <div>
+                                  <iframe
+                                    v-bind:src="
+                                      googleApi + '' + docs[index].filePath
+                                    "
+                                  ></iframe>
+                                </div>
+                                <br />
+                                <button
+                                  @click="openPdfInNewTab(docs[index].filePath)"
+                                >
+                                  See pdf in detail
+                                </button>
+                              </div>
+
+                              <div v-else>
+                                <h5 class="text-grey-200 text-2xl">
+                                  {{
+                                    docs[index].documentType
+                                      ? docs[index].documentType.name
+                                      : ""
+                                  }}
+                                </h5>
+                                <img
+                                  class="
+                                    scale-50
+                                    hover:scale-75
+                                    ease-in
+                                    duration-500
+                                  "
+                                  style="height: 600px; width: 800px"
+                                  v-bind:src="
+                                    googleApi + '' + docs[index].filePath
+                                  "
+                                />
+                                <div style="width: 400px"></div>
+                              </div>
+                            </picture>
+                          </div>
+                          <div
+                            class="flex content-center justify-center pb-large"
+                            v-if="docs.length == 0"
+                          >
+                            <h2>No Documents To Show!!</h2>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="mt-medium" v-if="!showButtons">
+                        <button
+                          class="
+                            inline-block
+                            px-6
+                            text-white
+                            font-medium
+                            text-xs
+                            leading-tight
+                            uppercase
+                            rounded
+                            shadow-lg
+                            hover:bg-purple-700 hover:shadow-lg
+                            focus:bg-purple-700
+                            focus:shadow-lg
+                            focus:outline-none
+                            focus:ring-0
+                            active:bg-purple-800 active:shadow-lg
+                            transition
+                            duration-150
+                            ease-in-out
+                          "
+                          @click="accept(docs[index])"
+                        >
+                          Accept
+                        </button>
+                        <button
+                          class="
+                            inline-block
+                            px-6
+                            text-white
+                            font-medium
+                            text-xs
+                            leading-tight
+                            uppercase
+                            rounded
+                            shadow-lg
+                            hover:bg-purple-700 hover:shadow-lg
+                            focus:bg-purple-700
+                            focus:shadow-lg
+                            focus:outline-none
+                            focus:ring-0
+                            active:bg-white active:shadow-lg
+                            hover:bg-red-300 hover:text-white
+                            transition
+                            duration-150
+                            ease-in-out
+                          "
+                          @click="reject(docs[index])"
+                        >
+                          Reject
+                        </button>
+                        <button
+                          class="
+                            inline-block
+                            px-6
+                            text-white
+                            font-medium
+                            text-xs
+                            leading-tight
+                            uppercase
+                            rounded
+                            shadow-lg
+                            hover:bg-purple-700 hover:shadow-lg
+                            focus:bg-purple-700
+                            focus:shadow-lg
+                            focus:outline-none
+                            focus:ring-0
+                            active:bg-purple-800 active:shadow-lg
+                            transition
+                            duration-150
+                            hover:bg-yellow-300 hover:text-white
+                            ease-in-out
+                          "
+                          @click="action('ReviewerDraftEvent')"
+                        >
+                          Save as Draft
+                        </button>
+                        <button
+                          v-if="showTransferToAdminButton"
+                          class="
+                            inline-block
+                            px-6
+                            text-white
+                            font-medium
+                            text-xs
+                            leading-tight
+                            uppercase
+                            rounded
+                            shadow-lg
+                            hover:bg-purple-700 hover:shadow-lg
+                            focus:bg-purple-700
+                            focus:shadow-lg
+                            focus:outline-none
+                            focus:ring-0
+                            active:bg-purple-800 active:shadow-lg
+                            transition
+                            duration-150
+                            hover:bg-primary-400 hover:text-white
+                            ease-in-out
+                          "
+                          @click="transferToFederal()"
+                        >
+                          Transfer to Federal
+                        </button>
+                      </div>
+                      <div class="relative pt-1 mt-medium">
+                        <div class="flex items-center justify-between">
+                          <radial-progress-bar
+                            :diameter="200"
+                            :completed-steps="completedSteps"
+                            :total-steps="totalSteps"
+                          >
+                            {{ completedSteps }} Completed/{{ totalSteps }}
+                          </radial-progress-bar>
+                        </div>
+                      </div>
+
+                      <div>
+                        <div
+                          class="
+                            ml-10
+                            h-3
+                            relative
+                            max-w-xl
+                            rounded-full
+                            overflow-hidden
+                          "
+                        >
+                          <div class="w-full h-full absolute"></div>
+                          <div
+                            id="bar"
+                            class="
+                              transition-all
+                              ease-out
+                              duration-1000
+                              h-full
+                              bg-green-500
+                              relative
+                              w-0
+                            "
+                          ></div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <div
                   class="
-                    ml-12
                     w-64
                     h-40
                     mt-8
+                    p-4
                     mr-8
                     shadow-lg
                     container
@@ -164,672 +1215,12 @@
                 >
                   <div class="mt-8">
                     <div class="my-auto flex justify-center items-center">
-                      <h2 class="text-red-200 text-3xl">
+                      <h2 class="text-red-300 text-3xl">
                         {{ rejected.length }}
                       </h2>
                     </div>
                     <div class="flex justify-center items-center">
-                      <h2 class="text-red-200 text-3xl">Rejected</h2>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="flex justify-center">
-                <div class="">
-                  <svg
-                    width="40"
-                    height="60"
-                    xmlns="http://www.w3.org/2000/svg"
-                    version="1.1"
-                    @click="previous()"
-                    v-if="index != 0"
-                  >
-                    <polyline
-                      points="30 10 10 30 30 50"
-                      stroke="rgba(103,128,159,1)"
-                      stroke-width="3"
-                      stroke-linecap="butt"
-                      fill="none"
-                      stroke-linejoin="round"
-                    >
-                      &gt;
-                    </polyline>
-                  </svg>
-                </div>
-
-                <div class="flex flex-col justify-center items-center ml-large">
-                  <div class="ml-medium">
-                    <label
-                      v-if="!showButtons"
-                      class="
-                        justify-center
-                        items-center
-                        ml-large
-                        text-grey-200 text-2xl
-                      "
-                    >
-                      {{ documentTypeName }}
-                    </label>
-
-                    <div class="flex justify-start flex-wrap">
-                      <div v-if="showButtons">
-                        <div class="flex justify-center">
-                          <Title message="Summary" />
-                        </div>
-                        <div class="flex justify-start">
-                          <Title message="Personal Info" />
-                          <div>
-                            <button @click="allowChangeName">
-                              change name?
-                            </button>
-                            <i
-                              class="fas fa-chevron-edit float-right mt-2"
-                              @click="allowChangeName"
-                            ></i>
-                          </div>
-                        </div>
-                        <div class="flex flex-row">
-                          <div
-                            :class="[
-                              profileInfo.name === null
-                                ? errorClass
-                                : activeClass,
-                            ]"
-                          >
-                            <label class="ml-8 titleColors"> Full Name </label>
-                            <h5 class="ml-8">
-                              {{
-                                (profileInfo.name ? profileInfo.name : "-") +
-                                " " +
-                                (profileInfo.fatherName
-                                  ? profileInfo.fatherName
-                                  : "-") +
-                                " " +
-                                (profileInfo.grandFatherName
-                                  ? profileInfo.grandFatherName
-                                  : "-")
-                              }}
-                            </h5>
-                          </div>
-                          <div v-if="!canChangeName" class="flex flex-row">
-                            <div
-                              :class="[
-                                profileInfo.alternativeName === null
-                                  ? errorClass
-                                  : activeClass,
-                              ]"
-                            >
-                              <label class="ml-8 titleColors">
-                                Full Name In Amharic
-                              </label>
-                              <div>
-                                <h5 class="ml-8">
-                                  {{
-                                    (profileInfo.alternativeName
-                                      ? profileInfo.alternativeName
-                                      : "-") +
-                                    " " +
-                                    (profileInfo.alternativeFatherName
-                                      ? profileInfo.alternativeFatherName
-                                      : "-") +
-                                    " " +
-                                    (profileInfo.alternativeGrandFatherName
-                                      ? profileInfo.alternativeGrandFatherName
-                                      : "-")
-                                  }}
-                                </h5>
-                              </div>
-                            </div>
-                          </div>
-                          <div v-if="canChangeName" class="flex flex-row">
-                            <div>
-                              <label class="ml-8 titleColors">
-                                Amharic First Name</label
-                              >
-                              <div>
-                                <input
-                                  class="max-w-3xl ml-8"
-                                  type="text"
-                                  v-model="newLicense.profile.alternativeName"
-                                />
-                              </div>
-                            </div>
-                            <div>
-                              <label class="ml-8 titleColors">
-                                Amharic Middle Name</label
-                              >
-                              <div>
-                                <input
-                                  class="max-w-3xl ml-8"
-                                  type="text"
-                                  v-model="
-                                    newLicense.profile.alternativeFatherName
-                                  "
-                                />
-                              </div>
-                            </div>
-                            <div>
-                              <label class="ml-8 titleColors">
-                                Amharic Last Name</label
-                              >
-                              <div>
-                                <input
-                                  class="max-w-3xl ml-8"
-                                  type="text"
-                                  v-model="
-                                    newLicense.profile
-                                      .alternativeGrandFatherName
-                                  "
-                                />
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div
-                          class="flex flex-row justify-center"
-                          v-if="canChangeName"
-                        >
-                          <div>
-                            <button
-                              style="backgroundcolor: red"
-                              @click="changeAmharicName"
-                            >
-                              Save
-                            </button>
-                          </div>
-                          <div>
-                            &#160;
-                            <button @click="disallowChangeName">cancel</button>
-                          </div>
-                        </div>
-
-                        <div class="flex flex-row">
-                          <div
-                            :class="[
-                              profileInfo.gender === null
-                                ? errorClass
-                                : activeClass,
-                            ]"
-                          >
-                            <label class="ml-8 titleColors"> Gender</label>
-                            <h5 class="ml-8">
-                              {{
-                                profileInfo.gender ? profileInfo["gender"] : "-"
-                              }}
-                            </h5>
-                          </div>
-                          <div
-                            :class="[
-                              profileInfo.nationality == null
-                                ? errorClass
-                                : activeClass,
-                            ]"
-                          >
-                            <label class="ml-8 titleColors"> Nationality</label>
-                            <h5 class="ml-8">
-                              {{
-                                profileInfo.nationality
-                                  ? profileInfo.nationality.name
-                                  : "-"
-                              }}
-                            </h5>
-                          </div>
-                          <div
-                            :class="[
-                              profileInfo.maritalStatus.name === null
-                                ? errorClass
-                                : activeClass,
-                            ]"
-                          >
-                            <label class="ml-8 titleColors">
-                              Marital Status</label
-                            >
-                            <h5 class="ml-8">
-                              {{
-                                profileInfo.maritalStatus.name
-                                  ? profileInfo.maritalStatus.name
-                                  : "-"
-                              }}
-                            </h5>
-                          </div>
-                        </div>
-                        <div class="flex justify-start">
-                          <Title message="Contact" />
-                        </div>
-                        <div class="flex flex-row">
-                          <div
-                            :class="[
-                              profileInfo?.user?.phoneNumber === null
-                                ? errorClass
-                                : activeClass,
-                            ]"
-                          >
-                            <label class="ml-8 titleColors">
-                              Mobile Number</label
-                            >
-                            <h5 class="ml-8">
-                              {{
-                                profileInfo?.user?.phoneNumber
-                                  ? profileInfo?.user?.phoneNumber
-                                  : "-"
-                              }}
-                            </h5>
-                          </div>
-
-                          <div
-                            :class="[
-                              profileInfo?.user?.emailAddress === null
-                                ? errorClass
-                                : activeClass,
-                            ]"
-                          >
-                            <label class="ml-8 titleColors"> Email</label>
-                            <h5 class="ml-8">
-                              {{
-                                profileInfo?.user?.emailAddress
-                                  ? profileInfo?.user?.emailAddress
-                                  : "-"
-                              }}
-                            </h5>
-                          </div>
-                        </div>
-                        <div class="flex justify-start">
-                          <Title message="Institution" />
-                        </div>
-                        <div class="flex flex-row">
-                          <div>
-                            <label class="ml-8 titleColors"> Department</label>
-                            <h5 class="ml-8">
-                              {{
-                                newLicense.department
-                                  ? newLicense.department.name
-                                  : newLicense.education
-                                  ? newLicense.education.department
-                                    ? newLicense.education.department.name
-                                    : "-"
-                                  : "-"
-                              }}
-                            </h5>
-                          </div>
-                          <div v-if="!isGoodStanding">
-                            <label class="ml-8 titleColors">
-                              Institution Name</label
-                            >
-                            <h5 class="ml-8">
-                              {{
-                                newLicense.otherEducationalInstitution
-                                  ? newLicense.otherEducationalInstitution
-                                  : newLicense.education
-                                  ? newLicense.education.institution
-                                    ? newLicense.education.institution.name
-                                    : "-"
-                                  : "-"
-                              }}
-                            </h5>
-                          </div>
-                          <div v-if="!isGoodStanding">
-                            <label class="ml-8 titleColors">
-                              Institution Type</label
-                            >
-                            <h5 class="ml-8">
-                              {{
-                                newLicense.education
-                                  ? newLicense.education.institution
-                                    ? newLicense.education.institution
-                                        .institutionType
-                                      ? newLicense.education.institution
-                                          .institutionType.name
-                                      : "-"
-                                    : "-"
-                                  : "-"
-                              }}
-                            </h5>
-                          </div>
-                        </div>
-                        <div class="flex justify-start">
-                          <h2 class="font-bold">Professional Type</h2>
-                        </div>
-                        <div class="flex flex-row">
-                          <div
-                            v-if="newLicense?.licenseProfessions?.length > 0"
-                          >
-                            <div class="flex flex-col mb-medium mr-12 ml-8">
-                              <div style="background: lightgray; padding: 8px">
-                                <p style="color: blue">
-                                  Previous Professional Types
-                                </p>
-                              </div>
-
-                              <ul
-                                v-for="(
-                                  professionName, index
-                                ) in newLicense.licenseProfessions"
-                                v-bind:key="professionName.professionalTypeId"
-                                v-bind:value="professionName.professionalTypeId"
-                              >
-                                <div class="grid grid-cols-1">
-                                  <li>
-                                    <input
-                                      v-on:click="
-                                        checkBoxClicked(
-                                          professionName,
-                                          true,
-                                          index,
-                                          $event
-                                        )
-                                      "
-                                      type="checkbox"
-                                      class="form-checkbox"
-                                      name="ckb"
-                                      :checked="professionName.showPrefixLink"
-                                    />
-                                    {{ professionName.professionalTypes.name }}
-                                    |
-                                    {{
-                                      professionName.professionalTypes
-                                        .amharicProfessionalType
-                                    }}
-                                  </li>
-                                  <a
-                                    class="ml-5"
-                                    style="
-                                      text-decoration: underline;
-                                      font-style: italic;
-                                    "
-                                    @click="
-                                      professionName.showPrefix =
-                                        !professionName.showPrefix
-                                    "
-                                    v-show="professionName.showPrefixLink"
-                                    >{{
-                                      professionName.showPrefix
-                                        ? "Hide Prefix?"
-                                        : "Show Prefix?"
-                                    }}</a
-                                  >
-                                </div>
-                                <div
-                                  class="grid grid-cols-2 gap-4 mb-4 ml-8 mt-2"
-                                >
-                                  <div
-                                    style="
-                                      float: left;
-                                      border-right: 1px solid lightgray;
-                                    "
-                                    v-if="
-                                      professionName.professionalTypes.name ==
-                                      'Other'
-                                    "
-                                  >
-                                    <label style="display: block"
-                                      >Other professional Type Name:</label
-                                    >
-                                    <input
-                                      style="display: block"
-                                      type="text"
-                                      v-model="newLicense.otherProfessionalType"
-                                    />
-                                  </div>
-                                  <div
-                                    style="float: left"
-                                    v-show="
-                                      professionName.showPrefixLink &&
-                                      professionName.showPrefix
-                                    "
-                                  >
-                                    <label style="display: block"
-                                      >Prefix:</label
-                                    >
-                                    <select
-                                      style="display: block"
-                                      class="select"
-                                      @change="
-                                        addPrefix(
-                                          professionName.professionalTypeId,
-                                          $event
-                                        )
-                                      "
-                                      :v-model="selectedOption + `${index}`"
-                                    >
-                                      <option
-                                        v-for="prefix in prefixList"
-                                        v-bind:key="prefix.id"
-                                        v-bind:value="prefix.name"
-                                      >
-                                        {{ prefix.name }}
-                                      </option>
-                                    </select>
-                                  </div>
-                                </div>
-                              </ul>
-                              <div style="background: lightgray; padding: 8px">
-                                <p style="color: blue">
-                                  New Professional Types
-                                </p>
-                              </div>
-
-                              <ul
-                                v-for="(
-                                  newProfessionName, index
-                                ) in professionalTypes"
-                                v-bind:key="newProfessionName.id"
-                                v-bind:value="newProfessionName.id"
-                              >
-                                <div class="grid grid-cols-1">
-                                  <li>
-                                    <input
-                                      v-on:click="
-                                        checkBoxClicked(
-                                          newProfessionName,
-                                          false,
-                                          index,
-                                          $event
-                                        )
-                                      "
-                                      type="checkbox"
-                                      class="form-checkbox"
-                                      name="nckb"
-                                    />
-                                    {{ newProfessionName.name }} |
-                                    {{
-                                      newProfessionName.amharicProfessionalType
-                                    }}
-                                  </li>
-                                  <a
-                                    class="ml-5"
-                                    style="
-                                      text-decoration: underline;
-                                      font-style: italic;
-                                    "
-                                    @click="
-                                      newProfessionName.showPrefix =
-                                        !newProfessionName.showPrefix
-                                    "
-                                    v-show="newProfessionName.showPrefixLink"
-                                    >{{
-                                      newProfessionName.showPrefix
-                                        ? "Hide Prefix?"
-                                        : "Show Prefix?"
-                                    }}</a
-                                  >
-                                </div>
-                                <div
-                                  class="grid grid-cols-2 gap-4 mb-4 ml-8 mt-2"
-                                >
-                                  <div
-                                    style="
-                                      float: left;
-                                      border-right: 1px solid lightgray;
-                                    "
-                                    v-if="
-                                      newProfessionName.showPrefixLink &&
-                                      newProfessionName.name == 'Other'
-                                    "
-                                  >
-                                    <label style="display: block"
-                                      >other profession name</label
-                                    >
-                                    <input
-                                      style="display: block"
-                                      type="text"
-                                      v-model="newLicense.otherProfessionalType"
-                                    />
-                                  </div>
-                                  <div
-                                    style="float: left"
-                                    v-show="
-                                      newProfessionName.showPrefixLink &&
-                                      newProfessionName.showPrefix
-                                    "
-                                  >
-                                    <label style="display: block"
-                                      >Prefix:</label
-                                    >
-                                    <select
-                                      style="display: block"
-                                      @change="
-                                        addPrefix(newProfessionName.id, $event)
-                                      "
-                                      :v-model="newSelectedOptions + `${index}`"
-                                    >
-                                      <option
-                                        v-for="prefix in prefixList"
-                                        v-bind:key="prefix.name"
-                                        v-bind:value="prefix.name"
-                                      >
-                                        {{ prefix.name }}
-                                      </option>
-                                    </select>
-                                  </div>
-                                </div>
-                              </ul>
-                            </div>
-                          </div>
-                        </div>
-                        <div v-if="!isGoodStanding">
-                          <div class="flex justify-start">
-                            <Title message="License Expiration Date" />
-                          </div>
-                          <div class="flex flex-col mb-medium w-1/2 ml-8 mr-12">
-                            <input
-                              class="max-w-3xl mr-5"
-                              type="date"
-                              v-model="newLicense.licenseExpirationDate"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <div v-else>
-                        <picture v-if="docs.length > 0">
-                          <div
-                            v-if="docs[index].fileName.split('.')[1] == 'pdf'"
-                          >
-                            <div>
-                              <iframe
-                                v-bind:src="
-                                  googleApi + '' + docs[index].filePath
-                                "
-                              ></iframe>
-                            </div>
-                            <br />
-                            <a @click="openPdfInNewTab(docs[index].filePath)"
-                              >see pdf in detail</a
-                            >
-                          </div>
-
-                          <div v-else>
-                            <img
-                              class="
-                                scale-50
-                                hover:scale-75
-                                ease-in
-                                duration-500
-                              "
-                              v-bind:src="googleApi + '' + docs[index].filePath"
-                            />
-                            <div style="width: 400px"></div>
-                          </div>
-                        </picture>
-                      </div>
-                      <div
-                        class="flex content-center justify-center pb-large"
-                        v-if="docs.length == 0"
-                      >
-                        <h2>No Documents To Show!!</h2>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="mt-medium" v-if="!showButtons">
-                    <button class="mr-medium" @click="accept(docs[index])">
-                      Accept
-                    </button>
-                    <button class="decline" @click="reject(docs[index])">
-                      Reject
-                    </button>
-                    <button
-                      class="p-1"
-                      variant="outline"
-                      @click="action('ReviewerDraftEvent')"
-                    >
-                      Save as Draft
-                    </button>
-                    <button
-                      v-if="showTransferToAdminButton"
-                      variant="outline"
-                      @click="transferToFederal()"
-                    >
-                      Transfer to Federal
-                    </button>
-                  </div>
-                  <div class="relative pt-1 mt-medium">
-                    <div
-                      class="
-                        overflow-hidden
-                        h-2
-                        mb-4
-                        text-xs
-                        flex
-                        rounded
-                        bg-grey-100
-                      "
-                    >
-                      <div
-                        :style="width"
-                        class="
-                          shadow-none
-                          flex flex-col
-                          text-center
-                          whitespace-nowrap
-                          justify-center
-                          bg-primary-400
-                        "
-                      ></div>
-                    </div>
-                  </div>
-                  <div>
-                    <div
-                      class="
-                        ml-10
-                        h-3
-                        relative
-                        max-w-xl
-                        rounded-full
-                        overflow-hidden
-                      "
-                    >
-                      <div class="w-full h-full absolute"></div>
-                      <div
-                        id="bar"
-                        class="
-                          transition-all
-                          ease-out
-                          duration-1000
-                          h-full
-                          bg-green-500
-                          relative
-                          w-0
-                        "
-                      ></div>
+                      <h2 class="text-red-300 text-3xl">Rejected</h2>
                     </div>
                   </div>
                 </div>
@@ -844,13 +1235,70 @@
                   v-bind:key="button.name"
                   v-bind:value="button.id"
                 >
-                  <button
-                    variant="outline"
-                    v-bind:class="button.class"
-                    @click="action(button.action)"
-                  >
-                    {{ button.name }}
-                  </button>
+                  <div class="vld-parent">
+                    <loading
+                      :active="isLoadingFinalAction"
+                      :is-full-page="false"
+                      :color="'#2F639D'"
+                      :opacity="1"
+                    ></loading>
+                    <button
+                      v-if="button.code != 'US'"
+                      class="
+                        inline-block
+                        px-6
+                        text-white
+                        font-medium
+                        text-xs
+                        leading-tight
+                        uppercase
+                        rounded
+                        shadow-lg
+                        hover:bg-purple-700 hover:shadow-lg
+                        focus:bg-purple-700
+                        focus:shadow-lg
+                        focus:outline-none
+                        focus:ring-0
+                        active:bg-purple-800 active:shadow-lg
+                        transition
+                        duration-150
+                        hover:bg-primary-400 hover:text-white
+                        ease-in-out
+                      "
+                      @click="action(button.action)"
+                    >
+                      {{ button.name }}
+                    </button>
+                    <button
+                      v-else
+                      class="
+                        inline-block
+                        px-6
+                        text-white
+                        font-medium
+                        text-xs
+                        leading-tight
+                        uppercase
+                        rounded
+                        shadow-lg
+                        hover:bg-purple-700 hover:shadow-lg
+                        focus:bg-purple-700
+                        focus:shadow-lg
+                        focus:outline-none
+                        focus:ring-0
+                        active:bg-purple-800 active:shadow-lg
+                        transition
+                        duration-150
+                        hover:bg-yellow-300 hover:text-white
+                        ease-in-out
+                      "
+                      data-bs-toggle="modal"
+                      data-bs-target="#superviseModal"
+                      @click="changeAction(button.action)"
+                    >
+                      {{ button.name }}
+                    </button>
+                  </div>
                 </div>
               </div>
 
@@ -878,7 +1326,7 @@
                             flex
                             items-start
                             justify-between
-                            border-b border-solid border-blueGray-200
+                            border-b border-solid border-grey-100
                             mt-medium
                             rounded-t
                           "
@@ -899,21 +1347,7 @@
                             "
                             v-on:click="toggleModal()"
                           >
-                            <span
-                              class="
-                                bg-transparent
-                                text-black
-                                opacity-5
-                                h-6
-                                w-6
-                                text-2xl
-                                block
-                                outline-none
-                                focus:outline-none
-                              "
-                            >
-                              ×
-                            </span>
+                            <span class="text-3xl"> × </span>
                           </div>
                         </div>
                         <!--body-->
@@ -948,15 +1382,13 @@
                                   flex flex-col
                                   justify-center
                                   items-center
-                                  ml-large
                                 "
                               >
-                                <div class="ml-medium">
+                                <div class="mt-8">
                                   <label
                                     class="
                                       justify-center
                                       items-center
-                                      ml-large
                                       text-grey-200 text-2xl
                                     "
                                   >
@@ -988,7 +1420,7 @@
                                 </div>
                               </div>
 
-                              <div class="ml-large">
+                              <div>
                                 <svg
                                   width="40"
                                   height="60"
@@ -1104,16 +1536,308 @@
     </div>
     <!-- Main Content -->
   </section>
+
+  <div
+    class="
+      modal
+      fade
+      fixed
+      top-0
+      left-0
+      hidden
+      w-full
+      h-full
+      outline-none
+      overflow-x-hidden overflow-y-auto
+    "
+    id="superviseModal"
+    tabindex="-1"
+    aria-labelledby="superviseModalTitle"
+    aria-modal="true"
+    role="dialog"
+  >
+    <div
+      class="
+        modal-dialog modal-dialog-centered
+        relative
+        w-auto
+        pointer-events-none
+      "
+    >
+      <div
+        class="
+          modal-content
+          border-none
+          shadow-lg
+          relative
+          flex flex-col
+          w-full
+          pointer-events-auto
+          bg-white bg-clip-padding
+          rounded-md
+          outline-none
+          text-current
+        "
+      >
+        <div
+          class="
+            modal-header
+            flex flex-shrink-0
+            items-center
+            justify-between
+            p-4
+            border-b border-grey-100
+            rounded-t-md
+          "
+        >
+          <h5
+            class="text-xl font-medium leading-normal text-gray-800"
+            id="superviseModalLabel"
+          >
+            Supervise Detail
+          </h5>
+          <button
+            type="button"
+            class="
+              btn-close
+              box-content
+              w-4
+              h-4
+              p-1
+              text-black
+              border-none
+              rounded-none
+              opacity-50
+              focus:shadow-none focus:outline-none focus:opacity-100
+              hover:text-black hover:opacity-75 hover:no-underline
+            "
+            data-bs-dismiss="modal"
+            aria-label="Close"
+            style="min-height: 28px; min-width: 28px"
+          ></button>
+        </div>
+        <div class="modal-body relative p-4">
+          <label for="" class="ml-2">Institution </label>
+          <label class="block text-left mb-4">
+            <div>
+              <div class="w-full relative">
+                <div
+                  class="
+                    mt-1
+                    ml-1
+                    relative
+                    border border-gray-300
+                    overflow-hidden
+                    rounded-md
+                    shadow-sm
+                  "
+                >
+                  <input
+                    id="institution"
+                    @keyup="showOptions = true"
+                    v-model="instSearched.name"
+                    class="w-full px-3 py-3"
+                    style="border: none"
+                    placeholder="Select institution by typing a name"
+                  />
+                </div>
+                <div></div>
+                <div
+                  v-show="resultQuery().length && showOptions"
+                  class="
+                    w-full
+                    bg-white
+                    border border-gray-300
+                    mt-2
+                    ml-1
+                    max-height-12
+                    overflow-hidden overflow-y-scroll
+                    rounded-lg
+                    shadow-lg
+                    text-left
+                    dropdown-menu
+                  "
+                  style="height: 148px; border: none"
+                >
+                  <ul class="py-1">
+                    <li
+                      v-for="value in resultQuery()"
+                      :key="value.id"
+                      @click="setInput(value)"
+                      class="
+                        dropdown-toggle
+                        px-4
+                        py-2
+                        cursor-pointer
+                        hover:bg-primary-700 hover:text-white
+                      "
+                    >
+                      {{ value.name }}
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </label>
+
+          <label for="" class="ml-2">Supervisor Name</label>
+
+          <div
+            class="
+              mt-1
+              ml-1
+              relative
+              border border-gray-300
+              overflow-hidden
+              rounded-md
+              shadow-sm
+            "
+          >
+            <input
+              id="supervisor"
+              v-model="supervisor"
+              required
+              class="w-full px-3 py-3"
+              style="border: none"
+              placeholder="Type supervisors name"
+            />
+          </div>
+
+          <div class="grid grid-cols-2 gap-4">
+            <div class="form-group mb-6 mt-4">
+              <label for="" class="ml-2">Start Date</label>
+              <input
+                v-model="startDate"
+                required
+                type="date"
+                class="
+                  form-control
+                  block
+                  w-full
+                  px-3
+                  py-1.5
+                  text-base
+                  font-normal
+                  text-gray-700
+                  bg-white bg-clip-padding
+                  border border-solid border-gray-300
+                  rounded
+                  transition
+                  ease-in-out
+                  m-0
+                  focus:text-gray-700
+                  focus:bg-white
+                  focus:border-blue-600
+                  focus:outline-none
+                "
+              />
+            </div>
+            <div class="form-group mb-6 mt-4">
+              <label for="" class="ml-2">End Date</label>
+              <input
+                required
+                class="
+                  form-control
+                  block
+                  w-full
+                  px-3
+                  py-1.5
+                  text-base
+                  font-normal
+                  text-gray-700
+                  bg-white bg-clip-padding
+                  border border-solid border-gray-300
+                  rounded
+                  transition
+                  ease-in-out
+                  m-0
+                  focus:text-gray-700
+                  focus:bg-white
+                  focus:border-blue-600
+                  focus:outline-none
+                "
+                v-model="endDate"
+                type="date"
+              />
+            </div>
+          </div>
+          <h6 v-show="showDateError.show" class="text-red-300">
+            {{ showDateError.message }}
+          </h6>
+        </div>
+        <div
+          class="
+            modal-footer
+            flex flex-shrink-0 flex-wrap
+            items-center
+            justify-end
+            p-1
+            border-t border-grey-100
+            rounded-b-md
+          "
+        >
+          <button
+            type="button"
+            class="
+              inline-block
+              px-2
+              py-1
+              bg-purple-600
+              text-white
+              font-medium
+              text-xs
+              leading-tight
+              uppercase
+              rounded
+              shadow-md
+              hover:bg-purple-700 hover:shadow-lg
+              focus:bg-purple-700
+              focus:shadow-lg
+              focus:outline-none
+              focus:ring-0
+              active:bg-purple-800 active:shadow-lg
+              transition
+              duration-150
+              ease-in-out
+            "
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+          <button
+            class="
+              inline-block
+              px-6
+              py-2.5
+              bg-blue-600
+              text-white
+              font-medium
+              text-xs
+              leading-tight
+              uppercase
+              rounded
+              shadow-lg
+              hover:bg-blue-700 hover:shadow-lg
+              focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0
+              active:bg-blue-800 active:shadow-lg
+              transition
+              duration-150
+              ease-in-out
+            "
+            @click="supervise()"
+          >
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 <script>
 import { useStore } from "vuex";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { ref, onMounted } from "vue";
-
-import { useRouter } from "vue-router";
 import { googleApi } from "@/composables/baseURL";
-
-import Title from "@/sharedComponents/Title";
 import Modal from "@/sharedComponents/Modal";
 import { useToast } from "vue-toastification";
 
@@ -1122,16 +1846,19 @@ import ReviewerSideNav from "../SharedComponents/sideNav.vue";
 import ReviewerNavBar from "../SharedComponents/navBar.vue";
 
 import FlashMessage from "@/sharedComponents/FlashMessage";
-import Spinner from "@/sharedComponents/Spinner";
+import Loading from "vue3-loading-overlay";
+// Import stylesheet
+import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
-
+import RadialProgressBar from "vue3-radial-progress";
 export default {
   components: {
     Modal,
-    Title,
+    Loading,
     ReviewerSideNav,
     ReviewerNavBar,
     FlashMessage,
+    RadialProgressBar,
     ErrorFlashMessage,
   },
   computed: {
@@ -1140,23 +1867,24 @@ export default {
   setup() {
     const route = useRoute();
     const store = useStore();
-    const router = useRouter();
     const toast = useToast();
-
+    const router = useRouter();
     const options = ref([0, 1, 2]);
     const selectedOptions = ref([0]);
     const newSelectedOptions = ref([0]);
-
     let isPdf = ref(false);
-
+    let isLoadingFinalAction = ref(false);
     let pdfFilePath = ref("");
-
+    const completedSteps = ref(0);
+    const totalSteps = ref(0);
     let isGoodStanding = ref(false);
-
+    let institutions = ref([]);
     let expirationDateExceedTodayError = ref(false);
     let isProfessionalTypeChanged = ref(false);
-
+    let startDate = ref("");
+    let endDate = ref("");
     let otherProfessionalType = ref();
+    let otherProfessionalTypeAmharic = ref();
     let showOtherProfessionError = ref(false);
 
     let professionalTypeIds = ref([]);
@@ -1203,9 +1931,9 @@ export default {
       { action: "", name: "" },
       { action: "", name: "" },
     ]);
-
+    let isLoadingName = ref(false);
     let professionalTypePrefixes = ref([]);
-
+    let superviseAction = ref("");
     let documentTypes = ref([]);
     let documentTypeName = ref("");
     let modalDocumentTypeName = ref("");
@@ -1229,39 +1957,71 @@ export default {
     let errorClass = ref("text-danger");
     let showRemark = ref(false);
     let applicationType = ref("");
-    let applicantId = ref("");
+    let showDateError = ref({ show: false, message: "" });
+    let supervisor = ref("");
     let showFlash = ref(false);
     let showErrorFlash = ref(false);
     let showDeclineFlash = ref(false);
     let sendDeclinedData = ref(true);
     let fromModalSendDeclinedData = ref(false);
-
+    let showOptions = ref(false);
     let showActionLoading = ref(false);
     let showLoadingButtons = ref(false);
-
+    let instSearched = ref({ name: "" });
     let professionalTypes = ref([]);
     let evaluateRoute = ref("/admin/evaluate/NewLicense" + route.params.id);
-    const created = async (applicationTypeName, applicationId) => {
+    const editPersonalData = ref(false);
+    const editPersonalInfo = () => {
+      editPersonalData.value = !editPersonalData.value;
+    };
+    const created = async (applicationId) => {
       applicationType.value = "New License";
 
       store
         .dispatch("reviewer/getNewLicenseApplication", applicationId)
         .then((res) => {
-          newLicense.value = res.data.data;
-          departmentId.value = res.data.data.education.department.id;
+          newLicense.value = res.data.data ? res.data.data : {};
+          departmentId.value =
+            res.data.data &&
+            res.data.data.education &&
+            res.data.data.education.department
+              ? res.data.data.education.department.id
+              : "";
           getProfessionalTypesByDepartmentId(departmentId.value);
-          profileInfo.value = newLicense.value.profile;
-          buttons.value = res.data.data.applicationStatus.buttons;
-          docs.value = res.data.data.documents;
+          profileInfo.value =
+            newLicense.value && newLicense.value.profile
+              ? newLicense.value.profile
+              : {};
+          buttons.value =
+            newLicense.value &&
+            newLicense.value.applicationStatus &&
+            newLicense.value.applicationStatus.buttons
+              ? newLicense.value.applicationStatus.buttons
+              : {};
+          docs.value =
+            newLicense.value && newLicense.value.documents
+              ? newLicense.value.documents
+              : {};
+          totalSteps.value = docs.value ? docs.value.length : 0;
           fetchDocumentTypes();
-          for (let i = 0; i < newLicense.value.licenseProfessions.length; i++) {
-            newLicense.value.licenseProfessions[i].showPrefix = false;
-            newLicense.value.licenseProfessions[i].showPrefixLink = true;
-            professionalTypeIdss.value.push(
-              newLicense.value.licenseProfessions[i].professionalTypeId
-            );
+          if (newLicense.value && newLicense.value.licenseProfessions) {
+            for (
+              let i = 0;
+              i < newLicense.value.licenseProfessions.length;
+              i++
+            ) {
+              newLicense.value.licenseProfessions[i].showPrefix = false;
+              newLicense.value.licenseProfessions[i].showPrefixLink = true;
+              professionalTypeIdss.value.push(
+                newLicense.value.licenseProfessions[i].professionalTypeId
+              );
+            }
           }
-          if (newLicense.value.applicationStatus.code == "REVDRA") {
+
+          if (
+            newLicense.value &&
+            newLicense.value.applicationStatus.code == "REVDRA"
+          ) {
             rejected.value = newLicense.value.declinedFields;
             for (let i in newLicense.value.documents) {
               for (let j in rejected.value) {
@@ -1274,7 +2034,17 @@ export default {
                 }
               }
             }
+            if (rejected.value > 0) {
+              for (let i = 0; i < buttons.value.length; i++) {
+                if (buttons.value[i].code === "APP") {
+                  buttons.value.splice(i, 1);
+                  i--;
+                }
+              }
+            }
+
             accepted.value = newLicense.value.acceptedFields;
+            completedSteps.value = accepted.value.length;
             index.value = rejected.value.length + accepted.value.length;
             if (index.value == docs.value.length) {
               index.value -= 1;
@@ -1291,7 +2061,10 @@ export default {
             ) {
               findDocumentType(documentTypes.value, docs.value[index.value]);
             }
-          } else if (newLicense.value.applicationStatus.code == "IRV") {
+          } else if (
+            newLicense.value &&
+            newLicense.value.applicationStatus.code == "IRV"
+          ) {
             showTransferToAdminButton.value = true;
           }
         });
@@ -1346,7 +2119,9 @@ export default {
     };
     const findDocumentType = (obj, ab) => {
       for (var prop in obj) {
-        if (obj[prop].code == ab.documentTypeCode) {
+        if (
+          obj[prop].code == ab && ab.documentTypeCode ? ab.documentTypeCode : ""
+        ) {
           documentTypeName.value = obj[prop].name;
         }
       }
@@ -1360,10 +2135,10 @@ export default {
       }
     };
     const transferToFederal = () => {
-      store.dispatch("renewal/getExpertLevel").then((res) => {
+      store.dispatch("newlicense/getExpertLevel").then((res) => {
         let federalData = res.data.data.filter((r) => r.code == "FED");
         let transferData = {
-          licenseId: route.params.applicationId,
+          licenseId: route.params.id,
           expertLevelId: federalData[0].id,
           createdByAdminId: adminId,
         };
@@ -1371,18 +2146,29 @@ export default {
           .dispatch("reviewer/transferToFederal", transferData)
           .then((res) => {
             if (res.data?.status == "Success") {
-              showTransferSuccessMessage.value = true;
-              setTimeout(() => {
-                router.push({ path: "/admin/newLicense/inReview" });
-              }, 4000);
+              toast.success("Application transfered Successfully", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              });
             } else {
-              showTransferErrorMessage.value = true;
+              toast.error("Failed to transfer application", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              });
             }
           });
       });
     };
+
     const accept = (doc) => {
       nextClickable.value = true;
+      completedSteps.value += 1;
       if (accepted.value.length > 0) {
         if (!accepted.value.includes(doc.documentTypeCode)) {
           accepted.value.push(doc.documentTypeCode);
@@ -1432,7 +2218,15 @@ export default {
     };
 
     const reject = (doc) => {
+      completedSteps.value += 1;
       nextClickable.value = true;
+      for (let i = 0; i < buttons.value.length; i++) {
+        if (buttons.value[i].code === "APP") {
+          buttons.value.splice(i, 1);
+          i--;
+        }
+      }
+
       if (rejected.value.length > 0) {
         if (!rejected.value.includes(doc.documentTypeCode)) {
           rejected.value.push(doc.documentTypeCode);
@@ -1482,6 +2276,8 @@ export default {
     };
 
     const action = (actionValue) => {
+      let smsMessage = "";
+      let goTo = "admin/newLicense/underSupervision";
       showActionLoading.value = true;
       showLoadingButtons.value = true;
       if (professionalTypeIdss.value.length > 0) {
@@ -1524,40 +2320,60 @@ export default {
         }
         loopCounter = 0;
       }
-
+      isLoadingFinalAction.value = true;
       if (actionValue === "ApproveEvent") {
+        smsMessage = newLicense.value
+          ? "Dear applicant your applied new license of number " +
+            newLicense.value.newLicenseCode +
+            " has been approved after careful examination of your uploaded documents by our reviewers. Thank you for using eHPL. visit https://hrl.moh.gov.et for more."
+          : "";
+        goTo = "/admin/newLicense/approved";
         if (
           newLicense.value.licenseExpirationDate === null &&
           !isGoodStanding.value
         ) {
-          showLicenseDateRequirementError.value = true;
-          setTimeout(() => {
-            showLicenseDateRequirementError.value = false;
-          }, 4000);
+          toast.warning("Please fill in license expiration date", {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true,
+          });
           showActionLoading.value = false;
           showLoadingButtons.value = false;
+          isLoadingFinalAction.value = false;
           return;
         } else if (
           !moment(newLicense.value.licenseExpirationDate).isAfter(new Date()) &&
           !isGoodStanding.value
         ) {
-          expirationDateExceedTodayError.value = true;
-          setTimeout(() => {
-            expirationDateExceedTodayError.value = false;
-          }, 4000);
+          toast.warning("License expiration date must exceed today", {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true,
+          });
           showActionLoading.value = false;
           showLoadingButtons.value = false;
+          isLoadingFinalAction.value = false;
           return;
         }
       }
 
       if (actionValue == "DeclineEvent") {
+        smsMessage = newLicense.value
+          ? "Dear applicant your applied new license of number " +
+            newLicense.value.newLicenseCode +
+            " has been declined after careful examination of your uploaded documents by our reviewers. Thank you for using eHPL. visit https://hrl.moh.gov.et for more."
+          : "";
+        goTo = "/admin/newLicense/declined";
         showActionLoading.value = false;
         showLoadingButtons.value = false;
         let checkProfessionResult = false;
         newLicense.value.isProfessionChanged == false
           ? (checkProfessionResult = checkProfessionChanged(
-              newLicense.value.professionalTypes
+              newLicense.value.licenseProfessions
             ))
           : (checkProfessionResult = true);
 
@@ -1568,6 +2384,7 @@ export default {
           }, 4000);
           showActionLoading.value = false;
           showLoadingButtons.value = false;
+          isLoadingFinalAction.value = false;
           return;
         } else {
           showRemark.value = true;
@@ -1579,10 +2396,11 @@ export default {
       }
 
       if (actionValue == "ReviewerDraftEvent") {
+        goTo = "/admin/newLicense/draft";
         let checkProfessionResult = false;
         newLicense.value.isProfessionChanged == false
           ? (checkProfessionResult = checkProfessionChanged(
-              newLicense.value.professionalTypes
+              newLicense.value.licenseProfessions
             ))
           : (checkProfessionResult = true);
 
@@ -1607,22 +2425,36 @@ export default {
         action: actionValue,
         data: newLicense.value,
       };
+      let smsData = {
+        recipients: [
+          newLicense.value && newLicense.value.applicant
+            ? "251" + newLicense.value.applicant.phoneNumber
+            : "",
+        ],
+        message: smsMessage ? smsMessage : "",
+      };
+
       if (
         applicationType.value == "New License" &&
         sendDeclinedData.value == true
       ) {
-        console.log(req);
         store
           .dispatch("reviewer/editNewLicense", req)
           .then((res) => {
             showActionLoading.value = false;
             if (res.statusText == "Created") {
-              toast.success("Application Approved Successfully", {
-                timeout: 5000,
-                position: "bottom-center",
-                pauseOnFocusLoss: true,
-                pauseOnHover: true,
-                icon: true,
+              store.dispatch("sms/sendSms", smsData).then(() => {
+                toast.success("Application reviewed Successfully", {
+                  timeout: 5000,
+                  position: "bottom-center",
+                  pauseOnFocusLoss: true,
+                  pauseOnHover: true,
+                  icon: true,
+                });
+                isLoadingFinalAction.value = false;
+                   setTimeout(() => {
+            window.location.reload();
+          }, 3000);
               });
             } else {
               toast.error("Please try again", {
@@ -1632,9 +2464,14 @@ export default {
                 pauseOnHover: true,
                 icon: true,
               });
+              isLoadingFinalAction.value = false;
+                   setTimeout(() => {
+            window.location.reload();
+          }, 3000);
             }
           })
-          .catch((err) => {
+          .catch(() => {
+            isLoadingFinalAction.value = false;
             toast.error("Please try again", {
               timeout: 5000,
               position: "bottom-center",
@@ -1642,6 +2479,9 @@ export default {
               pauseOnHover: true,
               icon: true,
             });
+            setTimeout(() => {
+              window.location.reload();
+            }, 3000);
           });
       }
     };
@@ -1677,10 +2517,12 @@ export default {
         .then((res) => {
           res.data.data
             .filter(function (e) {
-              for (let i in newLicense.value.professionalTypes) {
+              for (let i in newLicense.value
+                ? newLicense.value.licenseProfessions
+                : {}) {
                 if (
                   e.code ===
-                  newLicense.value.professionalTypes[i].professionalTypes.code
+                  newLicense.value.licenseProfessions[i].professionalTypes.code
                 ) {
                   professionSelected.value = true;
                 }
@@ -1704,6 +2546,7 @@ export default {
       canChangeName.value = false;
     };
     const changeAmharicName = () => {
+      isLoadingName.value = true;
       const id = profileInfo.value.id;
       let newProfile = {
         alternativeName: newLicense.value.profile.alternativeName,
@@ -1716,17 +2559,29 @@ export default {
         .dispatch("profile/changeUserProfile", profileData)
         .then(() => {
           canChangeName.value = false;
-          showNameChangeFlash.value = true;
+          toast.success("Name change was Successfull", {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true,
+          });
+          isLoadingName.value = false;
           setTimeout(() => {
-            showNameChangeFlash.value = false;
+            window.location.reload();
           }, 3000);
         })
-        .catch((err) => {
-          console.log(err);
-          canChangeName.value = false;
-          showNameChangeErrorFlash.value = true;
+        .catch(() => {
+          toast.error("Error Occured", {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true,
+          });
+          isLoadingName.value = false;
           setTimeout(() => {
-            showNameChangeErrorFlash.value = false;
+            window.location.reload();
           }, 3000);
         });
     };
@@ -1737,14 +2592,16 @@ export default {
       if (checkResult.value) {
         if (event.target.checked) {
           previousProfession
-            ? (newLicense.value.professionalTypes[index].showPrefixLink = true)
+            ? (newLicense.value.licenseProfessions[index].showPrefixLink = true)
             : (professionalTypes.value[index].showPrefixLink = true);
           previousProfession
             ? professionalTypeIdss.value.push(profession.professionalTypes.id)
             : professionalTypeIdss.value.push(profession.id);
         } else {
           previousProfession
-            ? (newLicense.value.professionalTypes[index].showPrefixLink = false)
+            ? (newLicense.value.licenseProfessions[
+                index
+              ].showPrefixLink = false)
             : (professionalTypes.value[index].showPrefixLink = false);
           previousProfession
             ? professionalTypeIdss.value.splice(
@@ -1777,8 +2634,10 @@ export default {
             profession.professionalTypes.name == "Other"
           ) {
             newLicense.value.otherProfessionalType = null;
+            newLicense.value.otherProfessionalTypeAmharic = null;
           } else if (!previousProfession && profession.name == "Other") {
             newLicense.value.otherProfessionalType = null;
+            newLicense.value.otherProfessionalTypeAmharic = null;
           }
         }
       }
@@ -1787,9 +2646,7 @@ export default {
     const chkcontrol = (j, previousProfession, event) => {
       if (event.target.checked) {
         if (professionalTypeIdss.value.length == 3) {
-          alert(
-            "You can only select 3 professional types. Please Select only four!"
-          );
+          alert("You can only select 3 professional types.");
           if (previousProfession) {
             document.getElementsByName("ckb")[j].checked = false;
             return false;
@@ -1814,6 +2671,7 @@ export default {
         });
         return;
       }
+
       for (let i = 0; i < professionalTypePrefixes.value.length; i++) {
         if (
           professionId !== professionalTypePrefixes.value[i].professionalTypeId
@@ -1849,7 +2707,11 @@ export default {
 
     const checkProfessionChanged = (previousProfessionType) => {
       let count = 0;
-      if (previousProfessionType.length !== professionalTypeIdss.value.length) {
+      if (
+        previousProfessionType &&
+        professionalTypeIdss &&
+        previousProfessionType.length != professionalTypeIdss.value.length
+      ) {
         return true;
       } else {
         for (let i = 0; i < previousProfessionType.length; i++) {
@@ -1871,25 +2733,159 @@ export default {
       return false;
     };
 
+    const setInput = (value) => {
+      instSearched.value = value ? value : "";
+      showOptions.value = false;
+    };
+
+    const resultQuery = () => {
+      if (institutions.value) {
+        let data = institutions.value.filter((item) => {
+          return instSearched.value
+            ? instSearched.value.name
+                .toLowerCase()
+                .split(" ")
+                .every((v) => item.name.toLowerCase().includes(v))
+            : "";
+        });
+
+        return data;
+      } else {
+        return [];
+      }
+    };
+
+    const supervise = () => {
+      newLicense.value.superviseEndDate = endDate.value ? endDate.value : "";
+      newLicense.value.superviseStartDate = startDate.value
+        ? startDate.value
+        : "";
+      newLicense.value.supervisor = supervisor.value ? supervisor.value : "";
+      newLicense.value.supervisingInstitutionId = instSearched.value
+        ? instSearched.value.id
+        : "";
+
+      let req = {
+        action: superviseAction.value ? superviseAction.value : "",
+        data: newLicense.value,
+      };
+      let minDate = moment(endDate.value).diff(moment(startDate.value), "days");
+      let lessThanToday = moment(startDate.value).diff(
+        moment(new Date()),
+        "days"
+      );
+
+      if (minDate < 30) {
+        showDateError.value.message =
+          "Minimum supervised time is 3 month please change start and end date.";
+        showDateError.value.show = true;
+        return;
+      } else if (lessThanToday < 0) {
+        showDateError.value.message =
+          "Start date can not be set to past,minimum start date is today.";
+        showDateError.value.show = true;
+        return;
+      } else {
+        let smsData = {
+          recipients: [
+            newLicense.value && newLicense.value.applicant
+              ? "251" + newLicense.value.applicant.phoneNumber
+              : "",
+          ],
+          message: newLicense.value
+            ? "Dear applicant your applied new license of number " +
+              newLicense.value.newLicenseCode +
+              " has been set to be under supervison of MR/MRS:-" +
+              newLicense.value.supervisor +
+              " at institution of " +
+              instSearched.value.name +
+              " for " +
+              minDate +
+              " days  .Thank you for using eHPL. visit https://hrl.moh.gov.et for more."
+            : "",
+        };
+        store
+          .dispatch("reviewer/editNewLicense", req)
+          .then((res) => {
+            showActionLoading.value = false;
+            if (res.statusText == "Created") {
+              store.dispatch("sms/sendSms", smsData).then(() => {
+                toast.success("Application reviewed Successfully", {
+                  timeout: 5000,
+                  position: "bottom-center",
+                  pauseOnFocusLoss: true,
+                  pauseOnHover: true,
+                  icon: true,
+                });
+                isLoadingFinalAction.value = false;
+                setTimeout(() => {
+                  window.location.reload();
+                }, 2000);
+              });
+            } else {
+              toast.error("Please try again", {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              });
+              isLoadingFinalAction.value = false;
+              setTimeout(() => {
+                window.location.reload();
+              }, 2000);
+            }
+          })
+          .catch(() => {
+            isLoadingFinalAction.value = false;
+            toast.error("Please try again", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+            setTimeout(() => {
+              window.location.reload();
+            }, 2000);
+          });
+      }
+    };
+    const changeAction = (action) => {
+      superviseAction.value = action;
+    };
     onMounted(() => {
-      created("New License", route.params.id);
+      created(route.params.id);
+      store.dispatch("goodstanding/getInstitution").then((res) => {
+        institutions.value = res.data.data.filter((elm) => elm.isLocal == true);
+      });
     });
     return {
       isPdf,
       newLicense,
       index,
       docs,
+      resultQuery,
       next,
+      setInput,
       previous,
       nextRemark,
       previousRemark,
       amount,
+      supervise,
+      showOptions,
       width,
+      instSearched,
+      institutions,
       documentTypes,
       findDocumentType,
       documentTypeName,
       accepted,
       rejected,
+      startDate,
+      supervisor,
+      showDateError,
+      endDate,
       accept,
       transferToFederal,
       showTransferToAdminButton,
@@ -1902,6 +2898,7 @@ export default {
       isToChangeProfession,
       profileInfo,
       disableNext,
+      changeAction,
       nextClickable,
       foundInRejected,
       foundInAcceptted,
@@ -1912,11 +2909,14 @@ export default {
       submitRemark,
       applicationType,
       showFlash,
+      isLoadingName,
       showErrorFlash,
       showDeclineFlash,
       sendDeclinedData,
       fromModalSendDeclinedData,
       rejectedObj,
+      completedSteps,
+      totalSteps,
       ind,
       modalDocumentTypeName,
       modalFindDocumentType,
@@ -1943,9 +2943,12 @@ export default {
       checkBoxClicked,
       addPrefix,
       options,
+      editPersonalData,
+      editPersonalInfo,
       selectedOptions,
       newSelectedOptions,
       otherProfessionalType,
+      otherProfessionalTypeAmharic,
       showOtherProfessionError,
       chkcontrol,
       checkResult,

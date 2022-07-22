@@ -83,7 +83,6 @@
   <add-request></add-request>
   <view-modal
     :modalData="modalData"
-    @getVerification="getVerification"
   ></view-modal>
 </template>
 
@@ -138,18 +137,20 @@ export default {
             tableData.value.push({
               Number: element.id,
               ApplicantName:
-                element.profile.name +
+                (element.profile.name ? element.profile.name : "") +
                 " " +
-                element.profile.fatherName +
+                (element.profile.fatherName ? element.profile.fatherName : "") +
                 " " +
-                element.profile.grandFatherName,
+                (element.profile.grandFatherName
+                  ? element.profile.grandFatherName
+                  : ""),
               RequestedRegion: element.region.name,
               LicenseCode: element.newLicense
                 ? element.newLicense.newLicenseCode
                 : element.renewal
                 ? element.renewal.renewalCode
                 : "-------",
-              IsVerified: element.isVerified,
+              IsVerified: element.isVerified?"Verified":"Not Verified",
               data: element,
             });
           });
@@ -226,7 +227,6 @@ export default {
       if (row != undefined) {
         row = JSON.parse(JSON.stringify(row));
         modalData.value = row ? row : {};
-
       }
     };
 

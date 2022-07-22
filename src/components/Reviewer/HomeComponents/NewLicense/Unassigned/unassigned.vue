@@ -5,7 +5,7 @@
 
   <section class="home-section">
     <!-- Header -->
-    <reviewer-nav-bar></reviewer-nav-bar>
+    <reviewer-nav-bar><h2>Unassigned</h2></reviewer-nav-bar>
     <!-- Header -->
 
     <!-- Main Content -->
@@ -31,7 +31,7 @@
                     focus:outline-none
                     transition
                     duration-200
-                    mt-1
+                    mt-2
                     align-top
                     bg-no-repeat bg-center bg-contain
                     float-left
@@ -43,14 +43,97 @@
                   value=""
                   id="flexCheckDefault"
                 />
-                <label
+                <h4
                   class="form-check-label inline-block text-gray-800 mt-1"
                   for="flexCheckDefault"
                 >
                   Include From Other Regions
-                </label>
+                </h4>
               </div>
               <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
+                <div class="mb-3 xl:w-full">
+                  <div
+                    class="
+                      input-group
+                      relative
+                      flex flex-wrap
+                      items-stretch
+                      w-full
+                      mb-4
+                    "
+                  >
+                    <input
+                      type="search"
+                      class="
+                        form-control
+                        relative
+                        flex-auto
+                        min-w-0
+                        block
+                        w-full
+                        px-6
+                        py-1.5
+                        text-base
+                        font-normal
+                        text-gray-700
+                        bg-white bg-clip-padding
+                        border border-solid border-gray-300
+                        rounded
+                        transition
+                        ease-in-out
+                        focus:text-gray-700
+                        focus:bg-white
+                        focus:border-blue-600
+                        focus:outline-none
+                      "
+                      placeholder="Start Searching For Name"
+                      aria-label="Search"
+                      aria-describedby="button-addon2"
+                      v-model="searchTerm"
+                    />
+                    <button
+                      class="
+                        inline-block
+                        px-6
+                        py-2
+                        bg-primary-700
+                        text-white
+                        font-medium
+                        text-xs
+                        leading-tight
+                        uppercase
+                        rounded
+                        shadow-md
+                        hover:bg-blue-700 hover:shadow-lg
+                        focus:bg-blue-700
+                        focus:shadow-lg
+                        focus:outline-none
+                        focus:ring-0
+                        active:bg-blue-800 active:shadow-lg
+                        transition
+                        duration-150
+                        ease-in-out
+                        items-center
+                      "
+                    >
+                      <svg
+                        aria-hidden="true"
+                        focusable="false"
+                        data-prefix="fas"
+                        data-icon="search"
+                        class="w-5"
+                        role="img"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 512 512"
+                      >
+                        <path
+                          fill="currentColor"
+                          d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"
+                        ></path>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
                 <div
                   class="
                     inline-block
@@ -91,6 +174,89 @@
                 </h2>
               </div>
               <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
+                <div class="mb-3 xl:w-full">
+                  <div
+                    class="
+                      input-group
+                      relative
+                      flex flex-wrap
+                      items-stretch
+                      w-full
+                      mb-4
+                    "
+                  >
+                    <input
+                      type="search"
+                      class="
+                        form-control
+                        relative
+                        flex-auto
+                        min-w-0
+                        block
+                        w-full
+                        px-6
+                        py-1.5
+                        text-base
+                        font-normal
+                        text-gray-700
+                        bg-white bg-clip-padding
+                        border border-solid border-gray-300
+                        rounded
+                        transition
+                        ease-in-out
+                        focus:text-gray-700
+                        focus:bg-white
+                        focus:border-blue-600
+                        focus:outline-none
+                      "
+                      placeholder="Start Searching For Name"
+                      aria-label="Search"
+                      aria-describedby="button-addon2"
+                      v-model="searchTermOthers"
+                    />
+                    <button
+                      class="
+                        inline-block
+                        px-6
+                        py-2
+                        bg-primary-700
+                        text-white
+                        font-medium
+                        text-xs
+                        leading-tight
+                        uppercase
+                        rounded
+                        shadow-md
+                        hover:bg-blue-700 hover:shadow-lg
+                        focus:bg-blue-700
+                        focus:shadow-lg
+                        focus:outline-none
+                        focus:ring-0
+                        active:bg-blue-800 active:shadow-lg
+                        transition
+                        duration-150
+                        ease-in-out
+                        items-center
+                      "
+                    >
+                      <svg
+                        aria-hidden="true"
+                        focusable="false"
+                        data-prefix="fas"
+                        data-icon="search"
+                        class="w-5"
+                        role="img"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 512 512"
+                      >
+                        <path
+                          fill="currentColor"
+                          d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"
+                        ></path>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
                 <div
                   class="
                     inline-block
@@ -132,7 +298,7 @@
 import ReviewerSideNav from "../SharedComponents/sideNav.vue";
 import ReviewerNavBar from "../SharedComponents/navBar.vue";
 import NewLicenseMainContent from "../../../ApplicationTypes/NewLicense/MainComponents/unassigned.vue";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { useStore } from "vuex";
 import applicationStatus from "../../../Configurations/getApplicationStatus.js";
 import VueTableLite from "vue3-table-lite";
@@ -155,7 +321,8 @@ export default {
     const showModalResubmitted = ref(true);
     const reviewers = ref([]);
     const include = ref(false);
-
+    const searchTerm = ref("");
+    const searchTermOthers = ref("");
     let searchedReviewer = ref("");
     const adminId = +localStorage.getItem("adminId");
     let modalDataId = ref({
@@ -200,7 +367,6 @@ export default {
         store
           .dispatch("reviewerNewLicense/getNewLicenseUnassigned", statusId)
           .then((res) => {
-            console.log(res);
             allInfo.value.assignApplication =
               store.getters[
                 "reviewerNewLicense/getNewLicenseUnassignedSearched"
@@ -242,20 +408,20 @@ export default {
                 {
                   label: "License Number",
                   field: "LicenseNumber",
-                  width: "3%",
+                  width: "15%",
                   sortable: true,
                   isKey: true,
                 },
                 {
                   label: "Applicant Name",
                   field: "ApplicantName",
-                  width: "20%",
+                  width: "45%",
                   sortable: true,
                 },
                 {
                   label: "Application Type",
                   field: "ApplicationType",
-                  width: "15%",
+                  width: "20%",
                   sortable: true,
                 },
                 {
@@ -265,7 +431,7 @@ export default {
                   sortable: true,
                 },
                 {
-                  label: "",
+                  label: "Action",
                   field: "quick",
                   width: "10%",
                   display: function (row) {
@@ -277,7 +443,17 @@ export default {
                   },
                 },
               ],
-              rows: JSON.parse(JSON.stringify(tableData.value))?JSON.parse(JSON.stringify(tableData.value)):1,
+              rows: computed(() => {
+                return tableData.value.filter(
+                  (x) =>
+                    x.ApplicationType.toLowerCase().includes(
+                      searchTerm.value.toLowerCase()
+                    ) ||
+                    x.ApplicantName.toLowerCase().includes(
+                      searchTerm.value.toLowerCase()
+                    )
+                );
+              }),
               totalRecordCount: tableData.value.length,
               sortable: {
                 order: "id",
@@ -338,23 +514,22 @@ export default {
               unassignedTable.value = {
                 columns: [
                   {
-                    label: "ID",
-                    field: "id",
-                    width: "3%",
+                    label: "License Number",
+                    field: "LicenseNumber",
+                    width: "15%",
                     sortable: true,
                     isKey: true,
                   },
                   {
                     label: "Applicant Name",
                     field: "ApplicantName",
-                    width: "20%",
+                    width: "45%",
                     sortable: true,
                   },
-
                   {
-                    label: "Applicant Type",
+                    label: "Application Type",
                     field: "ApplicationType",
-                    width: "15%",
+                    width: "20%",
                     sortable: true,
                   },
                   {
@@ -364,7 +539,7 @@ export default {
                     sortable: true,
                   },
                   {
-                    label: "",
+                    label: "Actions",
                     field: "quick",
                     width: "10%",
                     display: function (row) {
@@ -378,7 +553,17 @@ export default {
                     },
                   },
                 ],
-                rows: JSON.parse(JSON.stringify(tableData.value)),
+            rows: computed(() => {
+                return tableData.value.filter(
+                  (x) =>
+                    x.ApplicationType.toLowerCase().includes(
+                      searchTerm.value.toLowerCase()
+                    ) ||
+                    x.ApplicantName.toLowerCase().includes(
+                      searchTerm.value.toLowerCase()
+                    )
+                );
+              }),
                 totalRecordCount: tableData.value.length,
                 sortable: {
                   order: "id",
@@ -420,7 +605,7 @@ export default {
               sortable: true,
             },
             {
-              label: "",
+              label: "Actions",
               field: "quick",
               width: "10%",
               display: function (row) {
@@ -434,7 +619,17 @@ export default {
               },
             },
           ],
-          rows: JSON.parse(JSON.stringify(tableData.value)),
+          rows: computed(() => {
+            return tableData.value.filter(
+              (x) =>
+                x.ApplicationType.toLowerCase().includes(
+                  searchTerm.value.toLowerCase()
+                ) ||
+                x.ApplicantName.toLowerCase().includes(
+                  searchTerm.value.toLowerCase()
+                )
+            );
+          }),
           totalRecordCount: tableData.value.length,
           sortable: {
             order: "id",
@@ -452,7 +647,6 @@ export default {
         store
           .dispatch("reviewerNewLicense/getNewLicenseReApply", adminStatus)
           .then((res) => {
-            console.log(res);
             allInfo.value.assignApplication =
               store.getters["reviewerNewLicense/getNewLicenseReApplySearched"];
 
@@ -514,7 +708,7 @@ export default {
                   sortable: true,
                 },
                 {
-                  label: "",
+                  label: "Actions",
                   field: "quick",
                   width: "10%",
                   display: function (row) {
@@ -528,7 +722,17 @@ export default {
                   },
                 },
               ],
-              rows: JSON.parse(JSON.stringify(reTableData.value)),
+              rows: computed(() => {
+                return reTableData.value.filter(
+                  (x) =>
+                    x.ApplicationType.toLowerCase().includes(
+                      searchTermOthers.value.toLowerCase()
+                    ) ||
+                    x.ApplicantName.toLowerCase().includes(
+                      searchTermOthers.value.toLowerCase()
+                    )
+                );
+              }),
               totalRecordCount: reTableData.value.length,
               sortable: {
                 order: "id",
@@ -589,6 +793,8 @@ export default {
     return {
       allInfo,
       unassignedTable,
+      searchTermOthers,
+      searchTerm,
       reSubmittedTable,
       showModal,
       include,
