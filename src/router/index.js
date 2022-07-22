@@ -161,7 +161,7 @@ const routes = [
     component: () => import("../components/Report/Report.vue"),
   },
   {
-    path: "/admin/review/dashboard",
+    path: "/admin/dashboard",
     name: "dashboard",
     component: () => import("../components/Reviewer/Dashboard.vue"),
   },
@@ -1076,6 +1076,14 @@ const routes = [
   },
 
   //Cpd part
+  {
+    path: "/admin/cpdCertified",
+    name: "AdminCpdCertified",
+    component: () =>
+      import(
+        "../components/Reviewer/HomeComponents/CpdCertified/cpdCertified.vue"
+      ),
+  },
   {
     path: "/admin/cpdCertified",
     name: "AdminCpdCertified",
