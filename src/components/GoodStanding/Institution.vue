@@ -890,18 +890,18 @@ export default {
         this.showProfessionalTypes = true;
         await this.fetchProfessionalType(this.licenseInfo.departmentId);
         this.showOtherProfession = false;
-        for (var k = 0; k < draftData.professionalTypes.length; k++) {
+        for (var k = 0; k < draftData.GSProfessionals.length; k++) {
           if (
-            draftData.professionalTypes[k].professionalTypes.name == "Other"
+            draftData.GSProfessionals[k].professionalTypes.name == "Other"
           ) {
             this.showOtherProfession = true;
             break;
           }
         }
         this.professionalTypes.map((profData) => {
-          for (var j = 0; j < draftData.professionalTypes.length; j++) {
+          for (var j = 0; j < draftData.GSProfessionals.length; j++) {
             if (
-              profData.id == draftData.professionalTypes[j].professionalTypeId
+              profData.id == draftData.GSProfessionals[j].professionalTypeId
             ) {
               profData.checked = true;
             }
@@ -914,10 +914,10 @@ export default {
           return profData;
         });
       }
-      if (draftData.professionalTypes.length > 0) {
-        for (var k = 0; k < draftData.professionalTypes.length; k++) {
+      if (draftData.GSProfessionals.length > 0) {
+        for (var k = 0; k < draftData.GSProfessionals.length; k++) {
           this.licenseInfo.professionalTypeIds.push(
-            draftData.professionalTypes[k].professionalTypeId
+            draftData.GSProfessionals[k].professionalTypeId
           );
         }
       }

@@ -42,6 +42,15 @@
           </a>
         </li>
       </router-link>
+
+        <router-link to="/admin/dashboard">
+        <li class="mb-2">
+          <a href="#Dashboard">
+            <i class="bx bx-badge-check"></i>
+            <span class="links_name">Dashboard</span>
+          </a>
+        </li>
+      </router-link>
     </ul>
   </reviewer-side-bar>
 

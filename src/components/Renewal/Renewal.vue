@@ -1504,7 +1504,7 @@ export default {
       this.$store.dispatch("renewal/getDraft", id).then((res) => {
         const results = res.data.data;
         this.$store
-          .dispatch("renewal/searchNewLicense", results.professionalTypes.id)
+          .dispatch("renewal/searchNewLicense", results.renewalProfessions.id)
           .then((res) => {
             if (res.data.data) {
               this.firstTimeUser = false;
