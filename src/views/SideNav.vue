@@ -28,7 +28,7 @@
                   <div class="">
                     <h3 class="text-lightBlueB-500 mt-tiny">
                       <span style="color: white;">
-                        <i class="mr-2 fas fa-file-signature fa-x fa-light"></i>
+                        <i class="mr-2 fas fa-file-signature"></i>
                       </span>
                       <span style="color: white; ">Draft</span>
                     </h3>
@@ -45,8 +45,8 @@
                 <div class=" justify-center items-center ">
                   <div class=" ">
                     <h3 class="text-lightBlueB-500 mt-tiny">
-                      <span style="color: white;">
-                        <i class="mr-2 fas fa-exchange-alt fa-x fa-light"></i>
+                      <span style="color: white;">          
+                        <i class="mr-2 fas fa-exchange-alt"></i>
                       </span>
                       <span style="color: white; ">Withdrawn</span>
                     </h3>
@@ -69,7 +69,7 @@
                           class="fas fa-chevron-circle-down float-right mt-2"
                         ></i>
 
-                        <i class="mr-2 far fa-address-book fa-x fa-light"></i>
+                        <i class="mr-2 far fa-address-book"></i>
                       </span>
                       <span style="color: white; ">Submitted</span>
                     </h3>
@@ -83,13 +83,13 @@
                   <ul class="block w-full  shadow float-right ">
                     <li @click="selectMenu(3)" class=" mt-2">
                       <p class=" text-sm" style="color: white; ">
-                        <i class="mr-2 far fa-address-book fa-x fa-light"></i>
+                        <i class="mr-2 far fa-address-book"></i>
                         Submitted
                       </p>
                     </li>
                     <li @click="selectMenu(4)" class="mt-4">
                       <p class=" text-sm" style="color: white; ">
-                        <i class="mr-2 mb-4 far fa-id-card fa-x"></i>In Review
+                        <i class="mr-2 far fa-id-card"></i>In Review
                       </p>
                     </li>
                   </ul>
@@ -107,7 +107,7 @@
                   <div class="">
                     <h3 class="text-lightBlueB-500 mt-tiny">
                       <span style="color: white;">
-                        <i class="mr-2 far fa-thumbs-up fa-x fa-light"></i>
+                        <i class="mr-2 far fa-thumbs-up"></i>
                       </span>
                       <span style="color: white;">Approved</span>
                       <span style="color: white;">
@@ -130,13 +130,13 @@
                   >
                     <li @click="selectMenu(5)" class=" mt-2">
                       <p class=" text-sm" style="color: white; ">
-                        <i class="mr-2 far fa-thumbs-up fa-x fa-light"></i>
+                        <i class="mr-2 far fa-thumbs-up"></i>
                         Approved
                       </p>
                     </li>
                     <li @click="selectMenu(6)" class="mt-4">
                       <p class=" text-sm" style="color: white; ">
-                        <i class="mr-2 mb-4 fa fa-money-bill fa-x fa-light"></i
+                        <i class="mr-2 fa fa-money-bill"></i
                         >Approved Payment
                       </p>
                     </li>
@@ -154,7 +154,7 @@
                   <div class=" ">
                     <h3 class="text-lightBlueB-500 mt-tiny">
                       <span style="color: white;">
-                        <i class="mr-2 far fa-thumbs-down fa-x fa-light"></i>
+                        <i class="mr-2 far fa-thumbs-down"></i>
                       </span>
 
                       <span style="color: white;">Declined </span>
@@ -175,14 +175,13 @@
                   <ul class="block w-full  shadow float-right">
                     <li @click="selectMenu(7)" class="mt-2">
                       <p class=" text-sm" style="color: white; ">
-                        <i class="mr-2 far fa-thumbs-down fa-x fa-light"></i>
+                        <i class="mr-2 far fa-thumbs-down"></i>
                         Declined
                       </p>
                     </li>
                     <li @click="selectMenu(8)" class="mt-4">
                       <p class=" text-sm" style="color: white; ">
-                        <i
-                          class="mr-2 mb-4 fa fa-credit-card-alt fa-x fa-light"
+                        <i class="mr-2  fa fa-credit-card-alt"
                         ></i
                         >Declined Payment
                       </p>
@@ -201,7 +200,7 @@
                   <div class="">
                     <h3 class="text-lightBlueB-500 mt-tiny">
                       <span style="color: white;">
-                        <i class="mr-2 far fa-id-badge fa-x"></i>
+                        <i class="mr-2 fa fa-id-badge"></i>
                       </span>
                       <span style="color: white; ">Under Supervision</span>
                     </h3>
@@ -219,7 +218,7 @@
                   <div class=" ">
                     <h3 class="text-lightBlueB-500 mt-tiny">
                       <span style="color: white;">
-                        <i class="mr-2 fas fa-comments-dollar fa-x"></i>
+                        <i class="mr-2 fa fa-comments-dollar "></i>
                       </span>
                       <span style="color: white; ">Pending Payment</span>
                     </h3>
