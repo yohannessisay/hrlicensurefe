@@ -8,6 +8,8 @@ import "tw-elements";
 import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
 import "./styles/main.css"
+import "@fortawesome/fontawesome-free/css/all.css";
+import "@fortawesome/fontawesome-free/js/all.js";
 const app = createApp(App);
 
 app.use(store);
