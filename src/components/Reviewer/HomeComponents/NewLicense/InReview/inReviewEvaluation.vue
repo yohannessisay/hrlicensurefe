@@ -31,7 +31,7 @@
           </h2>
           <div class="w-full">
             <div class="box-shadow-pop bg-lightGrey-100">
-              <div class="flex justify-center">
+              <div class="flex justify-content-evenly">
                 <div
                   class="
                     w-64
@@ -55,8 +55,8 @@
                     </div>
                   </div>
                 </div>
-                <div class="flex justify-start mt-4 flex-wrap ml-12">
-                  <div>
+                <div class="flex justify-start mt-4 flex-wrap p-4">
+                  <div class="box-shadow-pop bg-lightGrey-100 mb-8 p-4">
                     <picture
                       class="flex justify-center items-center mb-small"
                       v-if="docs.length > 0"
@@ -147,11 +147,809 @@
                         </h4>
                       </div>
                     </div>
+                    <div class="">
+                      <svg
+                        width="40"
+                        height="60"
+                        xmlns="http://www.w3.org/2000/svg"
+                        version="1.1"
+                        @click="previous()"
+                        v-if="index != 0"
+                      >
+                        <polyline
+                          points="30 10 10 30 30 50"
+                          stroke="rgba(103,128,159,1)"
+                          stroke-width="3"
+                          stroke-linecap="butt"
+                          fill="none"
+                          stroke-linejoin="round"
+                        >
+                          &gt;
+                        </polyline>
+                      </svg>
+                    </div>
+
+                    <div class="flex flex-col justify-center items-center">
+                      <div class="mt-8">
+                        <label
+                          v-if="!showButtons"
+                          class="
+                            justify-center
+                            items-center
+                            text-grey-200 text-2xl
+                          "
+                        >
+                          {{ documentTypeName }}
+                        </label>
+
+                        <div class="flex justify-start flex-wrap">
+                          <div v-if="showButtons">
+                            <div class="flex justify-center">
+                              <Title message="Summary" />
+                            </div>
+                            <div class="flex justify-start">
+                              <Title message="Personal Info" />
+                              <div>
+                                <button @click="allowChangeName">
+                                  change name?
+                                </button>
+                                <i
+                                  class="fas fa-chevron-edit float-right mt-2"
+                                  @click="allowChangeName"
+                                ></i>
+                              </div>
+                            </div>
+                            <div class="flex flex-row">
+                              <div
+                                :class="[
+                                  profileInfo.name === null
+                                    ? errorClass
+                                    : activeClass,
+                                ]"
+                              >
+                                <label class="ml-8 titleColors">
+                                  Full Name
+                                </label>
+                                <h5 class="ml-8">
+                                  {{
+                                    (profileInfo.name
+                                      ? profileInfo.name
+                                      : "-") +
+                                    " " +
+                                    (profileInfo.fatherName
+                                      ? profileInfo.fatherName
+                                      : "-") +
+                                    " " +
+                                    (profileInfo.grandFatherName
+                                      ? profileInfo.grandFatherName
+                                      : "-")
+                                  }}
+                                </h5>
+                              </div>
+                              <div v-if="!canChangeName" class="flex flex-row">
+                                <div
+                                  :class="[
+                                    profileInfo.alternativeName === null
+                                      ? errorClass
+                                      : activeClass,
+                                  ]"
+                                >
+                                  <label class="ml-8 titleColors">
+                                    Full Name In Amharic
+                                  </label>
+                                  <div>
+                                    <h5 class="ml-8">
+                                      {{
+                                        (profileInfo.alternativeName
+                                          ? profileInfo.alternativeName
+                                          : "-") +
+                                        " " +
+                                        (profileInfo.alternativeFatherName
+                                          ? profileInfo.alternativeFatherName
+                                          : "-") +
+                                        " " +
+                                        (profileInfo.alternativeGrandFatherName
+                                          ? profileInfo.alternativeGrandFatherName
+                                          : "-")
+                                      }}
+                                    </h5>
+                                  </div>
+                                </div>
+                              </div>
+                              <div v-if="canChangeName" class="flex flex-row">
+                                <div>
+                                  <label class="ml-8 titleColors">
+                                    Amharic First Name</label
+                                  >
+                                  <div>
+                                    <input
+                                      class="max-w-3xl ml-8"
+                                      type="text"
+                                      v-model="
+                                        newLicense.profile.alternativeName
+                                      "
+                                    />
+                                  </div>
+                                </div>
+                                <div>
+                                  <label class="ml-8 titleColors">
+                                    Amharic Middle Name</label
+                                  >
+                                  <div>
+                                    <input
+                                      class="max-w-3xl ml-8"
+                                      type="text"
+                                      v-model="
+                                        newLicense.profile.alternativeFatherName
+                                      "
+                                    />
+                                  </div>
+                                </div>
+                                <div>
+                                  <label class="ml-8 titleColors">
+                                    Amharic Last Name</label
+                                  >
+                                  <div>
+                                    <input
+                                      class="max-w-3xl ml-8"
+                                      type="text"
+                                      v-model="
+                                        newLicense.profile
+                                          .alternativeGrandFatherName
+                                      "
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div
+                              class="flex flex-row justify-center"
+                              v-if="canChangeName"
+                            >
+                              <div>
+                                <button
+                                  style="backgroundcolor: red"
+                                  @click="changeAmharicName"
+                                >
+                                  Save
+                                </button>
+                              </div>
+                              <div>
+                                &#160;
+                                <button @click="disallowChangeName">
+                                  cancel
+                                </button>
+                              </div>
+                            </div>
+
+                            <div class="flex flex-row">
+                              <div
+                                :class="[
+                                  profileInfo.gender === null
+                                    ? errorClass
+                                    : activeClass,
+                                ]"
+                              >
+                                <label class="ml-8 titleColors"> Gender</label>
+                                <h5 class="ml-8">
+                                  {{
+                                    profileInfo.gender
+                                      ? profileInfo["gender"]
+                                      : "-"
+                                  }}
+                                </h5>
+                              </div>
+                              <div
+                                :class="[
+                                  profileInfo.nationality == null
+                                    ? errorClass
+                                    : activeClass,
+                                ]"
+                              >
+                                <label class="ml-8 titleColors">
+                                  Nationality</label
+                                >
+                                <h5 class="ml-8">
+                                  {{
+                                    profileInfo.nationality
+                                      ? profileInfo.nationality.name
+                                      : "-"
+                                  }}
+                                </h5>
+                              </div>
+                              <div
+                                :class="[
+                                  profileInfo.maritalStatus.name === null
+                                    ? errorClass
+                                    : activeClass,
+                                ]"
+                              >
+                                <label class="ml-8 titleColors">
+                                  Marital Status</label
+                                >
+                                <h5 class="ml-8">
+                                  {{
+                                    profileInfo.maritalStatus.name
+                                      ? profileInfo.maritalStatus.name
+                                      : "-"
+                                  }}
+                                </h5>
+                              </div>
+                            </div>
+                            <div class="flex justify-start">
+                              <Title message="Contact" />
+                            </div>
+                            <div class="flex flex-row">
+                              <div
+                                :class="[
+                                  profileInfo?.user?.phoneNumber === null
+                                    ? errorClass
+                                    : activeClass,
+                                ]"
+                              >
+                                <label class="ml-8 titleColors">
+                                  Mobile Number</label
+                                >
+                                <h5 class="ml-8">
+                                  {{
+                                    profileInfo?.user?.phoneNumber
+                                      ? profileInfo?.user?.phoneNumber
+                                      : "-"
+                                  }}
+                                </h5>
+                              </div>
+
+                              <div
+                                :class="[
+                                  profileInfo?.user?.emailAddress === null
+                                    ? errorClass
+                                    : activeClass,
+                                ]"
+                              >
+                                <label class="ml-8 titleColors"> Email</label>
+                                <h5 class="ml-8">
+                                  {{
+                                    profileInfo?.user?.emailAddress
+                                      ? profileInfo?.user?.emailAddress
+                                      : "-"
+                                  }}
+                                </h5>
+                              </div>
+                            </div>
+                            <div class="flex justify-start">
+                              <Title message="Institution" />
+                            </div>
+                            <div class="flex flex-row">
+                              <div>
+                                <label class="ml-8 titleColors">
+                                  Department</label
+                                >
+                                <h5 class="ml-8">
+                                  {{
+                                    newLicense.department
+                                      ? newLicense.department.name
+                                      : newLicense.education
+                                      ? newLicense.education.department
+                                        ? newLicense.education.department.name
+                                        : "-"
+                                      : "-"
+                                  }}
+                                </h5>
+                              </div>
+                              <div v-if="!isGoodStanding">
+                                <label class="ml-8 titleColors">
+                                  Institution Name</label
+                                >
+                                <h5 class="ml-8">
+                                  {{
+                                    newLicense.otherEducationalInstitution
+                                      ? newLicense.otherEducationalInstitution
+                                      : newLicense.education
+                                      ? newLicense.education.institution
+                                        ? newLicense.education.institution.name
+                                        : "-"
+                                      : "-"
+                                  }}
+                                </h5>
+                              </div>
+                              <div v-if="!isGoodStanding">
+                                <label class="ml-8 titleColors">
+                                  Institution Type</label
+                                >
+                                <h5 class="ml-8">
+                                  {{
+                                    newLicense.education
+                                      ? newLicense.education.institution
+                                        ? newLicense.education.institution
+                                            .institutionType
+                                          ? newLicense.education.institution
+                                              .institutionType.name
+                                          : "-"
+                                        : "-"
+                                      : "-"
+                                  }}
+                                </h5>
+                              </div>
+                            </div>
+                            <div class="flex justify-start">
+                              <h2 class="font-bold">Professional Type</h2>
+                            </div>
+                            <div class="flex flex-row">
+                              <div
+                                v-if="
+                                  newLicense?.licenseProfessions?.length > 0
+                                "
+                              >
+                                <div class="flex flex-col mb-medium mr-12 ml-8">
+                                  <div
+                                    style="background: lightgray; padding: 8px"
+                                  >
+                                    <p style="color: blue">
+                                      Previous Professional Types
+                                    </p>
+                                  </div>
+
+                                  <ul
+                                    v-for="(
+                                      professionName, index
+                                    ) in newLicense.licenseProfessions"
+                                    v-bind:key="
+                                      professionName.professionalTypeId
+                                    "
+                                    v-bind:value="
+                                      professionName.professionalTypeId
+                                    "
+                                  >
+                                    <div class="grid grid-cols-1">
+                                      <li>
+                                        <input
+                                          v-on:click="
+                                            checkBoxClicked(
+                                              professionName,
+                                              true,
+                                              index,
+                                              $event
+                                            )
+                                          "
+                                          type="checkbox"
+                                          class="form-checkbox"
+                                          name="ckb"
+                                          :checked="
+                                            professionName.showPrefixLink
+                                          "
+                                        />
+                                        {{
+                                          professionName.professionalTypes.name
+                                        }}
+                                        |
+                                        {{
+                                          professionName.professionalTypes
+                                            .amharicProfessionalType
+                                        }}
+                                      </li>
+                                      <a
+                                        class="ml-5"
+                                        style="
+                                          text-decoration: underline;
+                                          font-style: italic;
+                                        "
+                                        @click="
+                                          professionName.showPrefix =
+                                            !professionName.showPrefix
+                                        "
+                                        v-show="professionName.showPrefixLink"
+                                        >{{
+                                          professionName.showPrefix
+                                            ? "Hide Prefix?"
+                                            : "Show Prefix?"
+                                        }}</a
+                                      >
+                                    </div>
+                                    <div
+                                      class="
+                                        grid grid-cols-2
+                                        gap-4
+                                        mb-4
+                                        ml-8
+                                        mt-2
+                                      "
+                                    >
+                                      <div
+                                        style="
+                                          float: left;
+                                          border-right: 1px solid lightgray;
+                                        "
+                                        v-if="
+                                          professionName.professionalTypes
+                                            .name == 'Other'
+                                        "
+                                      >
+                                        <label style="display: block"
+                                          >Other professional Type Name:</label
+                                        >
+                                        <input
+                                          style="display: block"
+                                          type="text"
+                                          v-model="
+                                            newLicense.otherProfessionalType
+                                          "
+                                        />
+                                      </div>
+                                      <div
+                                        style="float: left"
+                                        v-show="
+                                          professionName.showPrefixLink &&
+                                          professionName.showPrefix
+                                        "
+                                      >
+                                        <label style="display: block"
+                                          >Prefix:</label
+                                        >
+                                        <select
+                                          style="display: block"
+                                          class="select"
+                                          @change="
+                                            addPrefix(
+                                              professionName.professionalTypeId,
+                                              $event
+                                            )
+                                          "
+                                          :v-model="selectedOption + `${index}`"
+                                        >
+                                          <option
+                                            v-for="prefix in prefixList"
+                                            v-bind:key="prefix.id"
+                                            v-bind:value="prefix.name"
+                                          >
+                                            {{ prefix.name }}
+                                          </option>
+                                        </select>
+                                      </div>
+                                    </div>
+                                  </ul>
+                                  <div
+                                    style="background: lightgray; padding: 8px"
+                                  >
+                                    <p style="color: blue">
+                                      New Professional Types
+                                    </p>
+                                  </div>
+
+                                  <ul
+                                    v-for="(
+                                      newProfessionName, index
+                                    ) in professionalTypes"
+                                    v-bind:key="newProfessionName.id"
+                                    v-bind:value="newProfessionName.id"
+                                  >
+                                    <div class="grid grid-cols-1">
+                                      <li>
+                                        <input
+                                          v-on:click="
+                                            checkBoxClicked(
+                                              newProfessionName,
+                                              false,
+                                              index,
+                                              $event
+                                            )
+                                          "
+                                          type="checkbox"
+                                          class="form-checkbox"
+                                          name="nckb"
+                                        />
+                                        {{ newProfessionName.name }} |
+                                        {{
+                                          newProfessionName.amharicProfessionalType
+                                        }}
+                                      </li>
+                                      <a
+                                        class="ml-5"
+                                        style="
+                                          text-decoration: underline;
+                                          font-style: italic;
+                                        "
+                                        @click="
+                                          newProfessionName.showPrefix =
+                                            !newProfessionName.showPrefix
+                                        "
+                                        v-show="
+                                          newProfessionName.showPrefixLink
+                                        "
+                                        >{{
+                                          newProfessionName.showPrefix
+                                            ? "Hide Prefix?"
+                                            : "Show Prefix?"
+                                        }}</a
+                                      >
+                                    </div>
+                                    <div
+                                      class="
+                                        grid grid-cols-2
+                                        gap-4
+                                        mb-4
+                                        ml-8
+                                        mt-2
+                                      "
+                                    >
+                                      <div
+                                        style="
+                                          float: left;
+                                          border-right: 1px solid lightgray;
+                                        "
+                                        v-if="
+                                          newProfessionName.showPrefixLink &&
+                                          newProfessionName.name == 'Other'
+                                        "
+                                      >
+                                        <label style="display: block"
+                                          >other profession name</label
+                                        >
+                                        <input
+                                          style="display: block"
+                                          type="text"
+                                          v-model="
+                                            newLicense.otherProfessionalType
+                                          "
+                                        />
+                                      </div>
+                                      <div
+                                        style="float: left"
+                                        v-show="
+                                          newProfessionName.showPrefixLink &&
+                                          newProfessionName.showPrefix
+                                        "
+                                      >
+                                        <label style="display: block"
+                                          >Prefix:</label
+                                        >
+                                        <select
+                                          style="display: block"
+                                          @change="
+                                            addPrefix(
+                                              newProfessionName.id,
+                                              $event
+                                            )
+                                          "
+                                          :v-model="
+                                            newSelectedOptions + `${index}`
+                                          "
+                                        >
+                                          <option
+                                            v-for="prefix in prefixList"
+                                            v-bind:key="prefix.name"
+                                            v-bind:value="prefix.name"
+                                          >
+                                            {{ prefix.name }}
+                                          </option>
+                                        </select>
+                                      </div>
+                                    </div>
+                                  </ul>
+                                </div>
+                              </div>
+                            </div>
+                            <div v-if="!isGoodStanding">
+                              <div class="flex justify-start">
+                                <Title message="License Expiration Date" />
+                              </div>
+                              <div
+                                class="flex flex-col mb-medium w-1/2 ml-8 mr-12"
+                              >
+                                <input
+                                  class="max-w-3xl mr-5"
+                                  type="date"
+                                  v-model="newLicense.licenseExpirationDate"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                          <div v-else>
+                            <picture v-if="docs.length > 0">
+                              <div
+                                v-if="
+                                  docs[index].fileName.split('.')[1] == 'pdf'
+                                "
+                              >
+                                <div>
+                                  <iframe
+                                    v-bind:src="
+                                      googleApi + '' + docs[index].filePath
+                                    "
+                                  ></iframe>
+                                </div>
+                                <br />
+                                <a
+                                  @click="openPdfInNewTab(docs[index].filePath)"
+                                  >see pdf in detail</a
+                                >
+                              </div>
+
+                              <div v-else>
+                                <img
+                                  class="
+                                    scale-50
+                                    hover:scale-75
+                                    ease-in
+                                    duration-500
+                                  "
+                                  v-bind:src="
+                                    googleApi + '' + docs[index].filePath
+                                  "
+                                />
+                                <div style="width: 400px"></div>
+                              </div>
+                            </picture>
+                          </div>
+                          <div
+                            class="flex content-center justify-center pb-large"
+                            v-if="docs.length == 0"
+                          >
+                            <h2>No Documents To Show!!</h2>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="mt-medium" v-if="!showButtons">
+                        <button
+                          class="
+                            inline-block
+                            px-6
+                            text-white
+                            font-medium
+                            text-xs
+                            leading-tight
+                            uppercase
+                            rounded
+                            shadow-lg
+                            hover:bg-purple-700 hover:shadow-lg
+                            focus:bg-purple-700
+                            focus:shadow-lg
+                            focus:outline-none
+                            focus:ring-0
+                            active:bg-purple-800 active:shadow-lg
+                            transition
+                            duration-150
+                            ease-in-out
+                          "
+                          @click="accept(docs[index])"
+                        >
+                          Accept
+                        </button>
+                        <button
+                          class="
+                            inline-block
+                            px-6
+                            text-white
+                            font-medium
+                            text-xs
+                            leading-tight
+                            uppercase
+                            rounded
+                            shadow-lg
+                            hover:bg-purple-700 hover:shadow-lg
+                            focus:bg-purple-700
+                            focus:shadow-lg
+                            focus:outline-none
+                            focus:ring-0
+                            active:bg-white active:shadow-lg
+                            hover:bg-red-300 hover:text-white
+                            transition
+                            duration-150
+                            ease-in-out
+                          "
+                          @click="reject(docs[index])"
+                        >
+                          Reject
+                        </button>
+                        <button
+                          class="
+                            inline-block
+                            px-6
+                            text-white
+                            font-medium
+                            text-xs
+                            leading-tight
+                            uppercase
+                            rounded
+                            shadow-lg
+                            hover:bg-purple-700 hover:shadow-lg
+                            focus:bg-purple-700
+                            focus:shadow-lg
+                            focus:outline-none
+                            focus:ring-0
+                            active:bg-purple-800 active:shadow-lg
+                            transition
+                            duration-150
+                            hover:bg-yellow-300 hover:text-white
+                            ease-in-out
+                          "
+                          @click="action('ReviewerDraftEvent')"
+                        >
+                          Save as Draft
+                        </button>
+                        <button
+                          v-if="showTransferToAdminButton"
+                          class="
+                            inline-block
+                            px-6
+                            text-white
+                            font-medium
+                            text-xs
+                            leading-tight
+                            uppercase
+                            rounded
+                            shadow-lg
+                            hover:bg-purple-700 hover:shadow-lg
+                            focus:bg-purple-700
+                            focus:shadow-lg
+                            focus:outline-none
+                            focus:ring-0
+                            active:bg-purple-800 active:shadow-lg
+                            transition
+                            duration-150
+                            hover:bg-primary-400 hover:text-white
+                            ease-in-out
+                          "
+                          @click="transferToFederal()"
+                        >
+                          Transfer to Federal
+                        </button>
+                      </div>
+                      <div class="relative pt-1 mt-medium">
+                        <div
+                          class="
+                            overflow-hidden
+                            h-2
+                            mb-4
+                            text-xs
+                            flex
+                            rounded
+                            bg-grey-100
+                          "
+                        >
+                          <div
+                            :style="width"
+                            class="
+                              shadow-none
+                              flex flex-col
+                              text-center
+                              whitespace-nowrap
+                              justify-center
+                              bg-primary-400
+                            "
+                          ></div>
+                        </div>
+                      </div>
+                      <div>
+                        <div
+                          class="
+                            ml-10
+                            h-3
+                            relative
+                            max-w-xl
+                            rounded-full
+                            overflow-hidden
+                          "
+                        >
+                          <div class="w-full h-full absolute"></div>
+                          <div
+                            id="bar"
+                            class="
+                              transition-all
+                              ease-out
+                              duration-1000
+                              h-full
+                              bg-green-500
+                              relative
+                              w-0
+                            "
+                          ></div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <div
                   class="
-                    ml-12
                     w-64
                     h-40
                     mt-8
@@ -164,672 +962,12 @@
                 >
                   <div class="mt-8">
                     <div class="my-auto flex justify-center items-center">
-                      <h2 class="text-red-200 text-3xl">
+                      <h2 class="text-red-300 text-3xl">
                         {{ rejected.length }}
                       </h2>
                     </div>
                     <div class="flex justify-center items-center">
-                      <h2 class="text-red-200 text-3xl">Rejected</h2>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="flex justify-center">
-                <div class="">
-                  <svg
-                    width="40"
-                    height="60"
-                    xmlns="http://www.w3.org/2000/svg"
-                    version="1.1"
-                    @click="previous()"
-                    v-if="index != 0"
-                  >
-                    <polyline
-                      points="30 10 10 30 30 50"
-                      stroke="rgba(103,128,159,1)"
-                      stroke-width="3"
-                      stroke-linecap="butt"
-                      fill="none"
-                      stroke-linejoin="round"
-                    >
-                      &gt;
-                    </polyline>
-                  </svg>
-                </div>
-
-                <div class="flex flex-col justify-center items-center ml-large">
-                  <div class="ml-medium">
-                    <label
-                      v-if="!showButtons"
-                      class="
-                        justify-center
-                        items-center
-                        ml-large
-                        text-grey-200 text-2xl
-                      "
-                    >
-                      {{ documentTypeName }}
-                    </label>
-
-                    <div class="flex justify-start flex-wrap">
-                      <div v-if="showButtons">
-                        <div class="flex justify-center">
-                          <Title message="Summary" />
-                        </div>
-                        <div class="flex justify-start">
-                          <Title message="Personal Info" />
-                          <div>
-                            <button @click="allowChangeName">
-                              change name?
-                            </button>
-                            <i
-                              class="fas fa-chevron-edit float-right mt-2"
-                              @click="allowChangeName"
-                            ></i>
-                          </div>
-                        </div>
-                        <div class="flex flex-row">
-                          <div
-                            :class="[
-                              profileInfo.name === null
-                                ? errorClass
-                                : activeClass,
-                            ]"
-                          >
-                            <label class="ml-8 titleColors"> Full Name </label>
-                            <h5 class="ml-8">
-                              {{
-                                (profileInfo.name ? profileInfo.name : "-") +
-                                " " +
-                                (profileInfo.fatherName
-                                  ? profileInfo.fatherName
-                                  : "-") +
-                                " " +
-                                (profileInfo.grandFatherName
-                                  ? profileInfo.grandFatherName
-                                  : "-")
-                              }}
-                            </h5>
-                          </div>
-                          <div v-if="!canChangeName" class="flex flex-row">
-                            <div
-                              :class="[
-                                profileInfo.alternativeName === null
-                                  ? errorClass
-                                  : activeClass,
-                              ]"
-                            >
-                              <label class="ml-8 titleColors">
-                                Full Name In Amharic
-                              </label>
-                              <div>
-                                <h5 class="ml-8">
-                                  {{
-                                    (profileInfo.alternativeName
-                                      ? profileInfo.alternativeName
-                                      : "-") +
-                                    " " +
-                                    (profileInfo.alternativeFatherName
-                                      ? profileInfo.alternativeFatherName
-                                      : "-") +
-                                    " " +
-                                    (profileInfo.alternativeGrandFatherName
-                                      ? profileInfo.alternativeGrandFatherName
-                                      : "-")
-                                  }}
-                                </h5>
-                              </div>
-                            </div>
-                          </div>
-                          <div v-if="canChangeName" class="flex flex-row">
-                            <div>
-                              <label class="ml-8 titleColors">
-                                Amharic First Name</label
-                              >
-                              <div>
-                                <input
-                                  class="max-w-3xl ml-8"
-                                  type="text"
-                                  v-model="newLicense.profile.alternativeName"
-                                />
-                              </div>
-                            </div>
-                            <div>
-                              <label class="ml-8 titleColors">
-                                Amharic Middle Name</label
-                              >
-                              <div>
-                                <input
-                                  class="max-w-3xl ml-8"
-                                  type="text"
-                                  v-model="
-                                    newLicense.profile.alternativeFatherName
-                                  "
-                                />
-                              </div>
-                            </div>
-                            <div>
-                              <label class="ml-8 titleColors">
-                                Amharic Last Name</label
-                              >
-                              <div>
-                                <input
-                                  class="max-w-3xl ml-8"
-                                  type="text"
-                                  v-model="
-                                    newLicense.profile
-                                      .alternativeGrandFatherName
-                                  "
-                                />
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div
-                          class="flex flex-row justify-center"
-                          v-if="canChangeName"
-                        >
-                          <div>
-                            <button
-                              style="backgroundcolor: red"
-                              @click="changeAmharicName"
-                            >
-                              Save
-                            </button>
-                          </div>
-                          <div>
-                            &#160;
-                            <button @click="disallowChangeName">cancel</button>
-                          </div>
-                        </div>
-
-                        <div class="flex flex-row">
-                          <div
-                            :class="[
-                              profileInfo.gender === null
-                                ? errorClass
-                                : activeClass,
-                            ]"
-                          >
-                            <label class="ml-8 titleColors"> Gender</label>
-                            <h5 class="ml-8">
-                              {{
-                                profileInfo.gender ? profileInfo["gender"] : "-"
-                              }}
-                            </h5>
-                          </div>
-                          <div
-                            :class="[
-                              profileInfo.nationality == null
-                                ? errorClass
-                                : activeClass,
-                            ]"
-                          >
-                            <label class="ml-8 titleColors"> Nationality</label>
-                            <h5 class="ml-8">
-                              {{
-                                profileInfo.nationality
-                                  ? profileInfo.nationality.name
-                                  : "-"
-                              }}
-                            </h5>
-                          </div>
-                          <div
-                            :class="[
-                              profileInfo.maritalStatus.name === null
-                                ? errorClass
-                                : activeClass,
-                            ]"
-                          >
-                            <label class="ml-8 titleColors">
-                              Marital Status</label
-                            >
-                            <h5 class="ml-8">
-                              {{
-                                profileInfo.maritalStatus.name
-                                  ? profileInfo.maritalStatus.name
-                                  : "-"
-                              }}
-                            </h5>
-                          </div>
-                        </div>
-                        <div class="flex justify-start">
-                          <Title message="Contact" />
-                        </div>
-                        <div class="flex flex-row">
-                          <div
-                            :class="[
-                              profileInfo?.user?.phoneNumber === null
-                                ? errorClass
-                                : activeClass,
-                            ]"
-                          >
-                            <label class="ml-8 titleColors">
-                              Mobile Number</label
-                            >
-                            <h5 class="ml-8">
-                              {{
-                                profileInfo?.user?.phoneNumber
-                                  ? profileInfo?.user?.phoneNumber
-                                  : "-"
-                              }}
-                            </h5>
-                          </div>
-
-                          <div
-                            :class="[
-                              profileInfo?.user?.emailAddress === null
-                                ? errorClass
-                                : activeClass,
-                            ]"
-                          >
-                            <label class="ml-8 titleColors"> Email</label>
-                            <h5 class="ml-8">
-                              {{
-                                profileInfo?.user?.emailAddress
-                                  ? profileInfo?.user?.emailAddress
-                                  : "-"
-                              }}
-                            </h5>
-                          </div>
-                        </div>
-                        <div class="flex justify-start">
-                          <Title message="Institution" />
-                        </div>
-                        <div class="flex flex-row">
-                          <div>
-                            <label class="ml-8 titleColors"> Department</label>
-                            <h5 class="ml-8">
-                              {{
-                                newLicense.department
-                                  ? newLicense.department.name
-                                  : newLicense.education
-                                  ? newLicense.education.department
-                                    ? newLicense.education.department.name
-                                    : "-"
-                                  : "-"
-                              }}
-                            </h5>
-                          </div>
-                          <div v-if="!isGoodStanding">
-                            <label class="ml-8 titleColors">
-                              Institution Name</label
-                            >
-                            <h5 class="ml-8">
-                              {{
-                                newLicense.otherEducationalInstitution
-                                  ? newLicense.otherEducationalInstitution
-                                  : newLicense.education
-                                  ? newLicense.education.institution
-                                    ? newLicense.education.institution.name
-                                    : "-"
-                                  : "-"
-                              }}
-                            </h5>
-                          </div>
-                          <div v-if="!isGoodStanding">
-                            <label class="ml-8 titleColors">
-                              Institution Type</label
-                            >
-                            <h5 class="ml-8">
-                              {{
-                                newLicense.education
-                                  ? newLicense.education.institution
-                                    ? newLicense.education.institution
-                                        .institutionType
-                                      ? newLicense.education.institution
-                                          .institutionType.name
-                                      : "-"
-                                    : "-"
-                                  : "-"
-                              }}
-                            </h5>
-                          </div>
-                        </div>
-                        <div class="flex justify-start">
-                          <h2 class="font-bold">Professional Type</h2>
-                        </div>
-                        <div class="flex flex-row">
-                          <div
-                            v-if="newLicense?.licenseProfessions?.length > 0"
-                          >
-                            <div class="flex flex-col mb-medium mr-12 ml-8">
-                              <div style="background: lightgray; padding: 8px">
-                                <p style="color: blue">
-                                  Previous Professional Types
-                                </p>
-                              </div>
-
-                              <ul
-                                v-for="(
-                                  professionName, index
-                                ) in newLicense.licenseProfessions"
-                                v-bind:key="professionName.professionalTypeId"
-                                v-bind:value="professionName.professionalTypeId"
-                              >
-                                <div class="grid grid-cols-1">
-                                  <li>
-                                    <input
-                                      v-on:click="
-                                        checkBoxClicked(
-                                          professionName,
-                                          true,
-                                          index,
-                                          $event
-                                        )
-                                      "
-                                      type="checkbox"
-                                      class="form-checkbox"
-                                      name="ckb"
-                                      :checked="professionName.showPrefixLink"
-                                    />
-                                    {{ professionName.professionalTypes.name }}
-                                    |
-                                    {{
-                                      professionName.professionalTypes
-                                        .amharicProfessionalType
-                                    }}
-                                  </li>
-                                  <a
-                                    class="ml-5"
-                                    style="
-                                      text-decoration: underline;
-                                      font-style: italic;
-                                    "
-                                    @click="
-                                      professionName.showPrefix =
-                                        !professionName.showPrefix
-                                    "
-                                    v-show="professionName.showPrefixLink"
-                                    >{{
-                                      professionName.showPrefix
-                                        ? "Hide Prefix?"
-                                        : "Show Prefix?"
-                                    }}</a
-                                  >
-                                </div>
-                                <div
-                                  class="grid grid-cols-2 gap-4 mb-4 ml-8 mt-2"
-                                >
-                                  <div
-                                    style="
-                                      float: left;
-                                      border-right: 1px solid lightgray;
-                                    "
-                                    v-if="
-                                      professionName.professionalTypes.name ==
-                                      'Other'
-                                    "
-                                  >
-                                    <label style="display: block"
-                                      >Other professional Type Name:</label
-                                    >
-                                    <input
-                                      style="display: block"
-                                      type="text"
-                                      v-model="newLicense.otherProfessionalType"
-                                    />
-                                  </div>
-                                  <div
-                                    style="float: left"
-                                    v-show="
-                                      professionName.showPrefixLink &&
-                                      professionName.showPrefix
-                                    "
-                                  >
-                                    <label style="display: block"
-                                      >Prefix:</label
-                                    >
-                                    <select
-                                      style="display: block"
-                                      class="select"
-                                      @change="
-                                        addPrefix(
-                                          professionName.professionalTypeId,
-                                          $event
-                                        )
-                                      "
-                                      :v-model="selectedOption + `${index}`"
-                                    >
-                                      <option
-                                        v-for="prefix in prefixList"
-                                        v-bind:key="prefix.id"
-                                        v-bind:value="prefix.name"
-                                      >
-                                        {{ prefix.name }}
-                                      </option>
-                                    </select>
-                                  </div>
-                                </div>
-                              </ul>
-                              <div style="background: lightgray; padding: 8px">
-                                <p style="color: blue">
-                                  New Professional Types
-                                </p>
-                              </div>
-
-                              <ul
-                                v-for="(
-                                  newProfessionName, index
-                                ) in professionalTypes"
-                                v-bind:key="newProfessionName.id"
-                                v-bind:value="newProfessionName.id"
-                              >
-                                <div class="grid grid-cols-1">
-                                  <li>
-                                    <input
-                                      v-on:click="
-                                        checkBoxClicked(
-                                          newProfessionName,
-                                          false,
-                                          index,
-                                          $event
-                                        )
-                                      "
-                                      type="checkbox"
-                                      class="form-checkbox"
-                                      name="nckb"
-                                    />
-                                    {{ newProfessionName.name }} |
-                                    {{
-                                      newProfessionName.amharicProfessionalType
-                                    }}
-                                  </li>
-                                  <a
-                                    class="ml-5"
-                                    style="
-                                      text-decoration: underline;
-                                      font-style: italic;
-                                    "
-                                    @click="
-                                      newProfessionName.showPrefix =
-                                        !newProfessionName.showPrefix
-                                    "
-                                    v-show="newProfessionName.showPrefixLink"
-                                    >{{
-                                      newProfessionName.showPrefix
-                                        ? "Hide Prefix?"
-                                        : "Show Prefix?"
-                                    }}</a
-                                  >
-                                </div>
-                                <div
-                                  class="grid grid-cols-2 gap-4 mb-4 ml-8 mt-2"
-                                >
-                                  <div
-                                    style="
-                                      float: left;
-                                      border-right: 1px solid lightgray;
-                                    "
-                                    v-if="
-                                      newProfessionName.showPrefixLink &&
-                                      newProfessionName.name == 'Other'
-                                    "
-                                  >
-                                    <label style="display: block"
-                                      >other profession name</label
-                                    >
-                                    <input
-                                      style="display: block"
-                                      type="text"
-                                      v-model="newLicense.otherProfessionalType"
-                                    />
-                                  </div>
-                                  <div
-                                    style="float: left"
-                                    v-show="
-                                      newProfessionName.showPrefixLink &&
-                                      newProfessionName.showPrefix
-                                    "
-                                  >
-                                    <label style="display: block"
-                                      >Prefix:</label
-                                    >
-                                    <select
-                                      style="display: block"
-                                      @change="
-                                        addPrefix(newProfessionName.id, $event)
-                                      "
-                                      :v-model="newSelectedOptions + `${index}`"
-                                    >
-                                      <option
-                                        v-for="prefix in prefixList"
-                                        v-bind:key="prefix.name"
-                                        v-bind:value="prefix.name"
-                                      >
-                                        {{ prefix.name }}
-                                      </option>
-                                    </select>
-                                  </div>
-                                </div>
-                              </ul>
-                            </div>
-                          </div>
-                        </div>
-                        <div v-if="!isGoodStanding">
-                          <div class="flex justify-start">
-                            <Title message="License Expiration Date" />
-                          </div>
-                          <div class="flex flex-col mb-medium w-1/2 ml-8 mr-12">
-                            <input
-                              class="max-w-3xl mr-5"
-                              type="date"
-                              v-model="newLicense.licenseExpirationDate"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <div v-else>
-                        <picture v-if="docs.length > 0">
-                          <div
-                            v-if="docs[index].fileName.split('.')[1] == 'pdf'"
-                          >
-                            <div>
-                              <iframe
-                                v-bind:src="
-                                  googleApi + '' + docs[index].filePath
-                                "
-                              ></iframe>
-                            </div>
-                            <br />
-                            <a @click="openPdfInNewTab(docs[index].filePath)"
-                              >see pdf in detail</a
-                            >
-                          </div>
-
-                          <div v-else>
-                            <img
-                              class="
-                                scale-50
-                                hover:scale-75
-                                ease-in
-                                duration-500
-                              "
-                              v-bind:src="googleApi + '' + docs[index].filePath"
-                            />
-                            <div style="width: 400px"></div>
-                          </div>
-                        </picture>
-                      </div>
-                      <div
-                        class="flex content-center justify-center pb-large"
-                        v-if="docs.length == 0"
-                      >
-                        <h2>No Documents To Show!!</h2>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="mt-medium" v-if="!showButtons">
-                    <button class="mr-medium" @click="accept(docs[index])">
-                      Accept
-                    </button>
-                    <button class="decline" @click="reject(docs[index])">
-                      Reject
-                    </button>
-                    <button
-                      class="p-1"
-                      variant="outline"
-                      @click="action('ReviewerDraftEvent')"
-                    >
-                      Save as Draft
-                    </button>
-                    <button
-                      v-if="showTransferToAdminButton"
-                      variant="outline"
-                      @click="transferToFederal()"
-                    >
-                      Transfer to Federal
-                    </button>
-                  </div>
-                  <div class="relative pt-1 mt-medium">
-                    <div
-                      class="
-                        overflow-hidden
-                        h-2
-                        mb-4
-                        text-xs
-                        flex
-                        rounded
-                        bg-grey-100
-                      "
-                    >
-                      <div
-                        :style="width"
-                        class="
-                          shadow-none
-                          flex flex-col
-                          text-center
-                          whitespace-nowrap
-                          justify-center
-                          bg-primary-400
-                        "
-                      ></div>
-                    </div>
-                  </div>
-                  <div>
-                    <div
-                      class="
-                        ml-10
-                        h-3
-                        relative
-                        max-w-xl
-                        rounded-full
-                        overflow-hidden
-                      "
-                    >
-                      <div class="w-full h-full absolute"></div>
-                      <div
-                        id="bar"
-                        class="
-                          transition-all
-                          ease-out
-                          duration-1000
-                          h-full
-                          bg-green-500
-                          relative
-                          w-0
-                        "
-                      ></div>
+                      <h2 class="text-red-300 text-3xl">Rejected</h2>
                     </div>
                   </div>
                 </div>
@@ -948,15 +1086,13 @@
                                   flex flex-col
                                   justify-center
                                   items-center
-                                  ml-large
                                 "
                               >
-                                <div class="ml-medium">
+                                <div class="mt-8">
                                   <label
                                     class="
                                       justify-center
                                       items-center
-                                      ml-large
                                       text-grey-200 text-2xl
                                     "
                                   >
@@ -988,7 +1124,7 @@
                                 </div>
                               </div>
 
-                              <div class="ml-large">
+                              <div>
                                 <svg
                                   width="40"
                                   height="60"

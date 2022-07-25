@@ -544,7 +544,7 @@ export default {
         .then((response) => {
         if (response.statusText == "Created") {
             toast.success("Selected reviewer is successfully assigned.", {
-              timeout: 20000,
+              timeout: 5000,
               position: "bottom-center",
               pauseOnFocusLoss: true,
               pauseOnHover: true,
@@ -553,7 +553,7 @@ export default {
             isLoading.value = false;
           } else {
             toast.error(response.data.message, {
-              timeout: 20000,
+              timeout: 5000,
               position: "bottom-center",
               pauseOnFocusLoss: true,
               pauseOnHover: true,
@@ -565,7 +565,7 @@ export default {
         })
         .catch(() => {
             toast.error("Sorry there seems to be a problem, please try again.", {
-            timeout: 20000,
+            timeout: 5000,
             position: "bottom-center",
             pauseOnFocusLoss: true,
             pauseOnHover: true,

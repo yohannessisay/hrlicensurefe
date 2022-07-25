@@ -546,25 +546,30 @@ export default {
               pauseOnHover: true,
               icon: true,
             });
+            isLoading.value = true;
           } else {
             toast.error(
               "Sorry there seems to be a problem, please try again.",
               {
-                timeout: 20000,
+                timeout: 5000,
                 position: "bottom-center",
                 pauseOnFocusLoss: true,
                 pauseOnHover: true,
                 icon: true,
               }
             );
+            isLoading.value = true;
           }
         })
         .catch(() => {
-          toast("Sorry there seems to be a problem, please try again.", {
-            duration: 3000,
-            position: "bottom",
-            toastClass: "toast-error",
+          toast.error("Sorry there seems to be a problem, please try again.", {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true,
           });
+          isLoading.value = true;
         });
     };
 

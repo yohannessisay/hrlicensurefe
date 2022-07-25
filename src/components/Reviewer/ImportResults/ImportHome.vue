@@ -1000,7 +1000,6 @@ import { useStore } from "vuex";
 import moment from "moment";
 import Spinner from "@/sharedComponents/Spinner";
 import VueTailwindPagination from "@ocrv/vue-tailwind-pagination";
-import toast from "toast-me";
 
 export default {
   components: {

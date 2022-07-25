@@ -228,13 +228,10 @@
                                 <div class="flex">
                                   <div class="flex flex-col w-1/2 mr-12">
                                     <h3 class="underline ml-4">
-
-                                      <b
-                                      v-if="modalData.profile"
+                                      <b v-if="modalData.profile"
                                         >{{
                                           modalData.profile.alternativeName
-                                            ? modalData.profile
-                                                .alternativeName
+                                            ? modalData.profile.alternativeName
                                             : ""
                                         }}
                                         {{
@@ -283,7 +280,7 @@
                                     <h4>
                                       ተገቢውን መስፈርት አሟልተው ስለተገኙ ሚኒስቴር መስሪያ ቤቱ
                                     </h4>
-                                 
+
                                     <h4 v-if="modalData.professionalTypes">
                                       <div
                                         v-for="professions in modalData.professionalTypes"
@@ -367,12 +364,11 @@
                                             : ""
                                         }}
                                         -{{
-                                          modalData
-                                            .licenseExpirationDate !== null
+                                          modalData.licenseExpirationDate !==
+                                          null
                                             ? toEthiopian(
                                                 moment(
-                                                  modalData
-                                                    .licenseExpirationDate
+                                                  modalData.licenseExpirationDate
                                                 )._d.toISOString(),
                                                 false
                                               )
@@ -397,8 +393,7 @@
                                         {{
                                           modalData.licenseExpirationDate
                                             ? moment(
-                                                modalData
-                                                  .licenseExpirationDate
+                                                modalData.licenseExpirationDate
                                               ).format("MMM DD, YYYY")
                                             : " Not specified"
                                         }}</b
@@ -527,7 +522,6 @@ import addisAbabaCertificateBackground from "../../../../../assets/A_A_Certifica
 import AmharicFont from "../../../Configurations/amharicFont.js";
 import { toEthiopian } from "../../../Configurations/dateConvertor";
 import STATIC_CERTIFICATE_URL from "../../../../../sharedComponents/constants/message.js";
-import toast from "toast-me";
 import moment from "moment";
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
@@ -589,11 +583,11 @@ export default {
           } else {
             showGenerateModal.value = false;
             toast.success("Certificate Generated Successfully.", {
-              timeout: 20000,
+              timeout: 5000,
               position: "bottom-center",
               pauseOnFocusLoss: true,
               pauseOnHover: true,
-              icon: true
+              icon: true,
             });
           }
         })
@@ -606,7 +600,7 @@ export default {
       const staticUrl = STATIC_CERTIFICATE_URL;
       const userId = props.modalData.profile.id;
       const applicationId = props.modalData.data.id;
-      const applicationType = "Renewal"
+      const applicationType = "Renewal";
 
       const qrParam = { url: null };
 
@@ -616,12 +610,23 @@ export default {
         .dispatch("reviewer/getQrCode", qrParam)
         .then((res) => {
           imageSrc.value = res.data.data;
-
+          toast.success("Certificate Generated Successfully.", {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true,
+          });
         })
-        .finally(()=>{
-          console.log("akjhdkjfhakjdhk");
+        .finally(() => {
+          toast.success("Certificate Generated Successfully.", {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true,
+          });
           downloadPdf();
-
         })
         .catch((err) => {
           console.log(err);
@@ -650,8 +655,8 @@ export default {
           myRegion.value = false;
         }
       }
-    fetchQrCode();
-downloadPdf()
+      fetchQrCode();
+      downloadPdf();
     };
 
     const handleRegionsLayout = (
@@ -720,13 +725,11 @@ downloadPdf()
               ? i + 1 + ". "
               : ""
           }${
-            certificateDetail.value.renewalProfessions[i]
-              .professionalTypes.name
+            certificateDetail.value.renewalProfessions[i].professionalTypes.name
               ? `${
                   certificateDetail.value.renewalProfessions[i].prefix
                     ? "(" +
-                      certificateDetail.value.renewalProfessions[i]
-                        .prefix +
+                      certificateDetail.value.renewalProfessions[i].prefix +
                       ")"
                     : ""
                 }   ${
@@ -846,8 +849,8 @@ downloadPdf()
               ? certificateDetail.value.renewalProfessions[i].professionalTypes
                   .amharicProfessionalType === "ሌላ"
                 ? ""
-                : certificateDetail.value.renewalProfessions[i].professionalTypes
-                    .amharicProfessionalType
+                : certificateDetail.value.renewalProfessions[i]
+                    .professionalTypes.amharicProfessionalType
               : ""
           }`
         );
@@ -895,9 +898,7 @@ downloadPdf()
         filters: ["ASCIIHexEncode"],
       });
       updateLicenseGenerated();
-      const userImage = certifiedUser.value.profilePicture
-        ? null
-        : null;
+      const userImage = certifiedUser.value.profilePicture ? null : null;
       if (certificateDetail.value.reviewer.expertLevel.code === "FED") {
         doc.addImage(backgroundImage, "JPG", 0, 0, 298, 213, undefined, "FAST");
         handleRegionsLayout(doc, "FED", 100, 125, 7);
