@@ -546,6 +546,7 @@ export default {
               pauseOnHover: true,
               icon: true,
             });
+            isLoading.value = true;
           } else {
             toast.error(
               "Sorry there seems to be a problem, please try again.",
@@ -557,19 +558,18 @@ export default {
                 icon: true,
               }
             );
+            isLoading.value = true;
           }
         })
         .catch(() => {
-          toast.error(
-              "Sorry there seems to be a problem, please try again.",
-              {
-                timeout: 5000,
-                position: "bottom-center",
-                pauseOnFocusLoss: true,
-                pauseOnHover: true,
-                icon: true,
-              }
-            );
+          toast.error("Sorry there seems to be a problem, please try again.", {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true,
+          });
+          isLoading.value = true;
         });
     };
 

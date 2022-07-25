@@ -230,7 +230,6 @@
                                 >
                                   Users
                                 </label>
-                              
                               </div>
                               <label class="block text-left">
                                 <div>
@@ -256,33 +255,33 @@
                                         placeholder="Select reviewer by typing a name"
                                       />
                                     </div>
-                                     <button
-                                    class="
-                                      inline-block
-                                      px-6
-                                      py-2.5
-                                      bg-blue-600
-                                      text-white
-                                      font-medium
-                                      text-xs
-                                      leading-tight
-                                      uppercase
-                                      rounded
-                                      shadow-lg
-                                      hover:bg-blue-700 hover:shadow-lg
-                                      focus:bg-blue-700
-                                      focus:shadow-lg
-                                      focus:outline-none
-                                      focus:ring-0
-                                      active:bg-blue-800 active:shadow-lg
-                                      transition
-                                      duration-150
-                                      ease-in-out
-                                    "
-                                    @click="assignReviewer()"
-                                  >
-                                    Assign
-                                  </button>
+                                    <button
+                                      class="
+                                        inline-block
+                                        px-6
+                                        py-2.5
+                                        bg-blue-600
+                                        text-white
+                                        font-medium
+                                        text-xs
+                                        leading-tight
+                                        uppercase
+                                        rounded
+                                        shadow-lg
+                                        hover:bg-blue-700 hover:shadow-lg
+                                        focus:bg-blue-700
+                                        focus:shadow-lg
+                                        focus:outline-none
+                                        focus:ring-0
+                                        active:bg-blue-800 active:shadow-lg
+                                        transition
+                                        duration-150
+                                        ease-in-out
+                                      "
+                                      @click="assignReviewer()"
+                                    >
+                                      Assign
+                                    </button>
                                     <div
                                       v-show="
                                         resultQuery().length && showOptions
@@ -482,7 +481,7 @@ import { ref, onMounted, watch } from "vue";
 import moment from "moment";
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
-
+import { useToast } from "vue-toastification";
 export default {
   props: ["modalDataId", "reviewers"],
   components: {
@@ -493,7 +492,7 @@ export default {
   },
   setup(props) {
     const store = useStore();
-
+    const toast = useToast();
     let show = ref(true);
     let showRes = ref(false);
     let showOptions = ref(false);
@@ -538,27 +537,38 @@ export default {
       store
         .dispatch("reviewer/assignGoodStandingReviewer", assign.value)
         .then((response) => {
-       
           if (response.statusText == "Created") {
-            toast("Selected reviewer is successfully assigned.", {
-              duration: 3000,
-              position: "bottom",
-              toastClass: "toast-success",
+            toast.success("Selected Rviewer assigned Successfully", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
             });
+            isLoading.value = false;
           } else {
-            toast("Something is wrong, please try again in a few minutes.", {
-              duration: 3000,
-              position: "bottom",
-              toastClass: "toast-error",
-            });
+            toast.error(
+              "Sorry there seems to be a problem, please try again.",
+              {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              }
+            );
+            isLoading.value = false;
           }
         })
         .catch(() => {
-          toast("Sorry there seems to be a problem, please try again.", {
-            duration: 3000,
-            position: "bottom",
-            toastClass: "toast-error",
+          toast.error("Sorry there seems to be a problem, please try again.", {
+            timeout: 5000,
+            position: "bottom-center",
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            icon: true,
           });
+          isLoading.value = false;
         });
     };
 

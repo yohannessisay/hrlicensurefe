@@ -46,7 +46,7 @@ module.exports = {
       red: {
         100: "#FECACA",
         200: "#F87171",
-        300:"#FF0000"
+        300:"#ff5252 "
       },
       yellow: {
         100: "#FDE68A",

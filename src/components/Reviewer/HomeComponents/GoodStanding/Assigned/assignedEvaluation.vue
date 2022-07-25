@@ -1452,7 +1452,6 @@ export default {
         action: actionValue,
         data: goodStanding.value,
       };
-
       store
         .dispatch("reviewer/editGoodStanding", req)
         .then((res) => {

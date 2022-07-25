@@ -423,7 +423,7 @@ export default {
     const check = () => {
       store
         .dispatch(
-          "reviewer/getNewLicenseApplication",
+          "reviewer/getGoodStandingApplication",
           props.modalDataIdOthers.id
         )
         .then((res) => {

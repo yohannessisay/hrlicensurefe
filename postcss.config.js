@@ -22,10 +22,12 @@ module.exports = {
         whitelistPatterns: [
           /-(leave|enter|appear)(|-(to|from|active))$/,
           /^(?!(|.*?:)cursor-move).+-move$/,
-          /^router-link(|-exact)-active$/
-         ,/modal*/, /accordion*/, /card*/
+          /^router-link(|-exact)-active$/,
+          /modal*/,
+          /accordion*/,
+          /card*/,
         ],
-      whitelistPatternsChildren: [/modal*/, /accordion*/, /card*/]
+        whitelistPatternsChildren: [/modal*/, /accordion*/, /card*/],
       }),
     require("autoprefixer")(),
   ],
