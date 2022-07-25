@@ -5,7 +5,7 @@
 
   <section class="home-section">
     <!-- Header -->
-    <reviewer-nav-bar></reviewer-nav-bar>
+    <reviewer-nav-bar><h2>Unassigned</h2></reviewer-nav-bar>
     <!-- Header -->
 
     <!-- Main Content -->
@@ -31,7 +31,7 @@
                     focus:outline-none
                     transition
                     duration-200
-                    mt-1
+                    mt-2
                     align-top
                     bg-no-repeat bg-center bg-contain
                     float-left
@@ -43,12 +43,12 @@
                   value=""
                   id="flexCheckDefault"
                 />
-                <label
+                <h4
                   class="form-check-label inline-block text-gray-800 mt-1"
                   for="flexCheckDefault"
                 >
                   Include From Other Regions
-                </label>
+                </h4>
               </div>
               <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
                 <div
@@ -242,20 +242,20 @@ export default {
                 {
                   label: "License Number",
                   field: "LicenseNumber",
-                  width: "3%",
+                  width: "15%",
                   sortable: true,
                   isKey: true,
                 },
                 {
                   label: "Applicant Name",
                   field: "ApplicantName",
-                  width: "20%",
+                  width: "45%",
                   sortable: true,
                 },
                 {
                   label: "Application Type",
                   field: "ApplicationType",
-                  width: "15%",
+                  width: "20%",
                   sortable: true,
                 },
                 {
@@ -265,7 +265,7 @@ export default {
                   sortable: true,
                 },
                 {
-                  label: "",
+                  label: "Action",
                   field: "quick",
                   width: "10%",
                   display: function (row) {
@@ -337,32 +337,31 @@ export default {
 
               unassignedTable.value = {
                 columns: [
-                  {
-                    label: "ID",
-                    field: "id",
-                    width: "3%",
-                    sortable: true,
-                    isKey: true,
-                  },
-                  {
-                    label: "Applicant Name",
-                    field: "ApplicantName",
-                    width: "20%",
-                    sortable: true,
-                  },
-
-                  {
-                    label: "Applicant Type",
-                    field: "ApplicationType",
-                    width: "15%",
-                    sortable: true,
-                  },
-                  {
-                    label: "Date",
-                    field: "Date",
-                    width: "15%",
-                    sortable: true,
-                  },
+                   {
+                  label: "License Number",
+                  field: "LicenseNumber",
+                  width: "15%",
+                  sortable: true,
+                  isKey: true,
+                },
+                {
+                  label: "Applicant Name",
+                  field: "ApplicantName",
+                  width: "45%",
+                  sortable: true,
+                },
+                {
+                  label: "Application Type",
+                  field: "ApplicationType",
+                  width: "20%",
+                  sortable: true,
+                },
+                {
+                  label: "Date",
+                  field: "Date",
+                  width: "15%",
+                  sortable: true,
+                },
                   {
                     label: "",
                     field: "quick",

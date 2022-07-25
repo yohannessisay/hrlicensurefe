@@ -380,7 +380,7 @@ import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 export default {
   name: "Modal",
-  components: { generatePdf, Loading },
+  components: {  Loading },
   props: ["modalDataId"],
   setup(props) {
     const store = useStore();

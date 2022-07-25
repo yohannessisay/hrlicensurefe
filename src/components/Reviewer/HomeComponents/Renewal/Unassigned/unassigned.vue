@@ -5,7 +5,7 @@
 
   <section class="home-section">
     <!-- Header -->
-    <reviewer-nav-bar></reviewer-nav-bar>
+    <reviewer-nav-bar><h2>Unassigned</h2></reviewer-nav-bar>
     <!-- Header -->
 
     <!-- Main Content -->

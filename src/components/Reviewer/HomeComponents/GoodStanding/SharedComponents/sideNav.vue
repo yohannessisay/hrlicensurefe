@@ -104,20 +104,7 @@
           </a>
         </li>
       </router-link>
-      <router-link to="/admin/goodStanding/underSupervision">
-        <li
-          :class="
-            $route.fullPath === '/admin/goodStanding/underSupervision'
-              ? 'mb-2 active'
-              : ''
-          "
-        >
-          <a href="#">
-            <i class="bx bx-folder-open"></i>
-            <span class="links_name">Under Supervision</span>
-          </a>
-        </li>
-      </router-link>
+
       <router-link to="/admin/goodStanding/licensed">
         <li
           :class="
