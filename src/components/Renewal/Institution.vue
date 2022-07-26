@@ -4,7 +4,7 @@
       <div
         class="
           flex flex-col
-          pt-large
+          pt-small
           w-full
           bg-white
           blue-box-shadow-light
@@ -215,6 +215,13 @@
                   v-if="showOtherProfession"
                   class="mt-2"
                   placeholder="Write Other Profession"
+                  type="text"
+                />
+                  <input
+                  v-model="licenseInfo.otherProfessionalTypeAmharic"
+                  v-if="showOtherProfession && this.draftStatus == 'USUP'"
+                  class="mt-2"
+                  placeholder="የሙያ ስም በአማርኛ"
                   type="text"
                 />
               </div>
@@ -466,6 +473,7 @@ export default {
       educationalLevelId: null,
       otherEducationalInstitution: null,
       otherProfessionalType: null,
+      otherProfessionalTypeAmharic: null,      
       applicationStatusId: null,
     },
     licenseInfoErrors: {
@@ -660,6 +668,7 @@ export default {
               otherEducationalInstitution: this.licenseInfo
                 .otherEducationalInstitution,
               otherProfessionalType: this.licenseInfo.otherProfessionalType,
+              otherProfessionalTypeAmharic: this.licenseInfo.otherProfessionalTypeAmharic,
               applicationStatusId: this.licenseInfo.applicationStatusId,
             },
           },
@@ -716,6 +725,7 @@ export default {
             otherEducationalInstitution: this.licenseInfo
               .otherEducationalInstitution,
             otherProfessionalType: this.licenseInfo.otherProfessionalType,
+            otherProfessionalTypeAmharic: this.licenseInfo.otherProfessionalTypeAmharic,
             applicationStatusId: this.licenseInfo.applicationStatusId,
           },
         },
@@ -795,6 +805,8 @@ export default {
           otherEducationalInstitution: this.licenseInfo
             .otherEducationalInstitution,
           otherProfessionalType: this.licenseInfo.otherProfessionalType,
+          otherProfessionalTypeAmharic: this.licenseInfo.otherProfessionalTypeAmharic,
+
         };
         let profTypes = {
           professionalTypeIds: this.licenseInfo.professionalTypeIds,
@@ -1089,18 +1101,18 @@ export default {
           this.licenseInfo.education.departmentId
         );
         this.showOtherProfession = false;
-        for (var k = 0; k < draftData.professionalTypes.length; k++) {
+        for (var k = 0; k < draftData.renewalProfessions.length; k++) {
           if (
-            draftData.professionalTypes[k].professionalTypes.name == "Other"
+            draftData.renewalProfessions[k].professionalTypes.name == "Other"
           ) {
             this.showOtherProfession = true;
             break;
           }
         }
         this.professionalTypes.map((profData) => {
-          for (var j = 0; j < draftData.professionalTypes.length; j++) {
+          for (var j = 0; j < draftData.renewalProfessions.length; j++) {
             if (
-              profData.id == draftData.professionalTypes[j].professionalTypeId
+              profData.id == draftData.renewalProfessions[j].professionalTypeId
             ) {
               profData.checked = true;
             }
@@ -1113,10 +1125,10 @@ export default {
           return profData;
         });
       }
-      if (draftData.professionalTypes.length > 0) {
-        for (var k = 0; k < draftData.professionalTypes.length; k++) {
+      if (draftData.renewalProfessions.length > 0) {
+        for (var k = 0; k < draftData.renewalProfessions.length; k++) {
           this.licenseInfo.professionalTypeIds.push(
-            draftData.professionalTypes[k].professionalTypeId
+            draftData.renewalProfessions[k].professionalTypeId
           );
         }
       }

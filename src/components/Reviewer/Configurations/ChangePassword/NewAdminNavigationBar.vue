@@ -11,7 +11,8 @@
             />
           </router-link>
           <h2 class="text-md AtkinsonHyperlegibleBold text-primary-600 ml-2 ">
-            HRIS - License
+           electronical Health Professional Licensing (eHPL) 
+
           </h2>
         </div>
 

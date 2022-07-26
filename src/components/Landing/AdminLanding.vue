@@ -13,7 +13,15 @@
       <Modal v-if="showLogin">
         <AdminLogin
           @closeModal="showLogin = false"
-          @redirectToSignup="redirectToSignup"
+          @forgotPassword="forgotPassword"
+        />
+      </Modal>
+    </transition>
+    <transition name="slide-fade-to-left">
+
+       <Modal v-if="showForgotPassword">
+        <AdminForgotPassword
+          @closeModal="showForgotPassword = false"
         />
       </Modal>
     </transition>
@@ -32,6 +40,8 @@ import MinistryOfHealthSection from "./sections/MinistryOfHealthSection";
 import FooterSection from "./sections/FooterSection";
 import Modal from "@/sharedComponents/Modal";
 import AdminLogin from "@/components/Login/AdminLogin";
+import AdminForgotPassword from "@/components/Signup/AdminForgotPassword";
+
 
 export default {
   components: {
@@ -46,17 +56,26 @@ export default {
     FooterSection,
     Modal,
     AdminLogin,
+    AdminForgotPassword
   },
   setup() {
     const showLogin = ref(false);
+    const showForgotPassword = ref(false);
+
 
     const redirectToLogin = () => {
       showLogin.value = true;
     };
-
+  const forgotPassword = () =>
+  {
+    showLogin.value= false ;
+    showForgotPassword.value=true;
+  };
     return {
       showLogin,
       redirectToLogin,
+      forgotPassword,
+      showForgotPassword
     };
   },
 };

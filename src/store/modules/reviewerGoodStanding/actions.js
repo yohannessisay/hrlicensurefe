@@ -45,8 +45,9 @@ export default {
       const url = baseUrl + "/goodStandings/status/" + statusId;
       const resp = await ApiService.get(url);
       commit(SET_GOOD_STANDING_UNASSIGNED, resp.data.data);
+      return resp.data.data
     } catch (err) {
-      return error;
+      return err;
     }
   },
   async getGoodstandingReport({ commit }) {
@@ -562,6 +563,12 @@ export default {
 
   async getGoodStandingAllLicensed({ commit }) {
     const url = baseUrl + "/goodStandings/all/licensed";
+    const resp = await ApiService.get(url);
+    const goodStandingAllLicensed = resp.data.data;
+    commit(SET_GOOD_STANDING_ALL_LICENSED, goodStandingAllLicensed);
+  },
+  async getCertificateIssuedGoodStanding({ commit }) {
+    const url = baseUrl + "/goodStandings/certificat/issued";
     const resp = await ApiService.get(url);
     const goodStandingAllLicensed = resp.data.data;
     commit(SET_GOOD_STANDING_ALL_LICENSED, goodStandingAllLicensed);

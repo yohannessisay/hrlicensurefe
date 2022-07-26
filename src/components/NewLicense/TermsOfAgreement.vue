@@ -27,21 +27,21 @@
         <ul>
           <li>Passport</li>
           <li>Medical Certificate</li>
-          <div class="tooltip">
+          <div class="tooltipclass">
             English Language Proficiency Certificate
             <span class="tooltiptext ml-4">
               For non-English speaking countries only
             </span>
           </div>
           <br />
-          <div class="tooltip">
+          <div class="tooltipclass">
             Higher Education Relevance and Quality Agency
             <span class="tooltiptext ml-4">
               Equivalence Letter
             </span>
           </div>
           <br />
-          <div class="tooltip">
+          <div class="tooltipclass">
             Authenticated Academic Document
             <span class="tooltiptext ml-4">
               Diploma, Transcript for both Under and Post-Graduate Certificate
@@ -51,21 +51,21 @@
           <li>
             Authenticated Professional License from Country of Origin
           </li>
-          <div class="tooltip">
+          <div class="tooltipclass">
             Current Work Experience / Goodstanding Letter
             <span class="tooltiptext ml-4">
               More than two years.
             </span>
           </div>
           <br />
-          <div class="tooltip">
+          <div class="tooltipclass">
             Renewed License of Health Facility
             <span class="tooltiptext ml-4">
               Found in Ethiopia
             </span>
           </div>
           <br />
-          <div class="tooltip">
+          <div class="tooltipclass">
             Request Letter from Hiring Health Facility
             <span class="tooltiptext ml-4">
               Found in Ethiopia
@@ -78,14 +78,14 @@
         <ul>
           <li>Residence ID</li>
           <li>Medical Certificate</li>
-          <div class="tooltip">
+          <div class="tooltipclass">
             COC Certificate
             <span class="tooltiptext ml-4">
               Only for Diploma Graduates
             </span>
           </div>
           <br />
-          <div class="tooltip">
+          <div class="tooltipclass">
             Academic Document
             <span class="tooltiptext ml-4">
               Diploma, Bachelor or MD, Masters or specialists, PhD
@@ -97,14 +97,14 @@
           </li>
           <li>9<sup>th</sup> - 10<sup>th</sup> Grade Transcript</li>
           <li>11<sup>th</sup> - 12<sup>th</sup> Grade Transcript</li>
-          <div class="tooltip">
+          <div class="tooltipclass">
             Payroll Document
             <span class="tooltiptext ml-4">
               Non-government Institutions
             </span>
           </div>
           <br />
-          <div class="tooltip">
+          <div class="tooltipclass">
             Support Letter from Sponsored Institution
             <span class="tooltiptext ml-4">
               For those upgraded by the sponsorship of an Institution
@@ -118,7 +118,7 @@
       <div class="ml-2">
         <h2>Ethiopians from Abroad</h2>
         <ul>
-          <div class="tooltip">
+          <div class="tooltipclass">
             Residence ID or Passport or Yellow Card
             <span class="tooltiptext ml-4">
               Proof of Ethiopian decent
@@ -126,14 +126,14 @@
           </div>
           <br />
           <li>Medical Certificate</li>
-          <div class="tooltip">
+          <div class="tooltipclass">
             Higher Education Relevance and Quality Agency
             <span class="tooltiptext ml-4">
               Equivalence letter
             </span>
           </div>
           <br />
-          <div class="tooltip">
+          <div class="tooltipclass">
             Authenticated Academic Document
             <span class="tooltiptext ml-4">
               Diploma, Transcript for both Under and Post-Graduate Certificate
@@ -143,7 +143,7 @@
           <li>
             Authenticated Professional License from Country of Origin
           </li>
-          <div class="tooltip">
+          <div class="tooltipclass">
             Current Work Experience/ Goodstanding Letter
             <span class="tooltiptext ml-4">
               More than two years
@@ -195,7 +195,7 @@ export default {
     box-shadow: 0px 3px 6px #1e40af82;
   }
 }
-.tooltip .tooltiptext {
+.tooltipclass .tooltiptext {
   visibility: hidden;
   width: 120px;
   background-color: #1e40af82;
@@ -204,16 +204,16 @@ export default {
   padding: 5px 0;
   border-radius: 6px;
 
-  /* Position the tooltip text - see examples below! */
+  /* Position the tooltipclass text - see examples below! */
   position: absolute;
   z-index: 1;
 }
 
-/* Show the tooltip text when you mouse over the tooltip container */
-.tooltip:hover .tooltiptext {
+/* Show the tooltipclass text when you mouse over the tooltipclass container */
+.tooltipclass:hover .tooltiptext {
   visibility: visible;
 }
-.tooltip {
+.tooltipclass {
   position: relative;
   display: inline-block;
   border-bottom: 1px dotted white; /* If you want dots under the hoverable text */

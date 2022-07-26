@@ -2,7 +2,14 @@
   <ReviewerNavBar tab="ConfirmReview" />
   <div class="w-screen bg-white flex items-center justify-center">
     <div
-      class="w-screen max-w-6xl mt-medium mb-large box-shadow-pop bg-lightGrey-100"
+      class="
+        w-screen
+        max-w-6xl
+        mt-medium
+        mb-large
+        box-shadow-pop
+        bg-lightGrey-100
+      "
     >
       <div class="flex mb-large mt-medium justify-center">
         <div class="w-64 h-40 container box-shadow-pop rounded-lg">
@@ -13,7 +20,7 @@
               </h2>
             </div>
             <div class="flex justify-center items-center">
-              <h2 class=" text-lightBlueB-500 text-2xl">Accepted</h2>
+              <h2 class="text-lightBlueB-500 text-2xl">Accepted</h2>
             </div>
           </div>
         </div>
@@ -37,9 +44,9 @@
               <h4 class="mt-2 mr-small w-1/2">
                 {{
                   "Name: " +
-                    newLicense.applicant.profile.name +
-                    " " +
-                    newLicense.applicant.profile.fatherName
+                  newLicense.applicant.profile.name +
+                  " " +
+                  newLicense.applicant.profile.fatherName
                 }}
               </h4>
 
@@ -52,7 +59,9 @@
                 {{ "Department:  " + newLicense.education.department.name }}
               </h4>
               <h4 class="mt-2 ml-small w-1/2">
-                Institution: {{newLicense.otherEducationalInstitution
+                Institution:
+                {{
+                  newLicense.otherEducationalInstitution
                     ? newLicense.otherEducationalInstitution
                     : newLicense.education.institution.name
                 }}
@@ -63,20 +72,19 @@
               <div class="mt-2 ml-small w-1/2"></div>
               <h4 class="mt-2 ml-small w-1/2">
                 {{
-                  "Institution Type:  " +
-                    newLicense.education.institution.name
+                  "Institution Type:  " + newLicense.education.institution.name
                 }}
               </h4>
             </div>
           </div>
         </div>
-        <div class="ml-12 w-64 h-40  container box-shadow-pop rounded-lg">
+        <div class="ml-12 w-64 h-40 container box-shadow-pop rounded-lg">
           <div class="mt-8">
             <div class="my-auto flex justify-center items-center">
               <h2 class="text-red-200 text-2xl">{{ rejected.length }}</h2>
             </div>
             <div class="flex justify-center items-center">
-              <h2 class=" text-red-200 text-2xl">Rejected</h2>
+              <h2 class="text-red-200 text-2xl">Rejected</h2>
             </div>
           </div>
         </div>
@@ -104,10 +112,15 @@
           </svg>
         </div>
 
-        <div class="flex flex-col justify-center items-center ml-large ">
+        <div class="flex flex-col justify-center items-center ml-large">
           <div class="ml-medium">
             <label
-              class="justify-center items-center ml-large text-grey-200 text-2xl"
+              class="
+                justify-center
+                items-center
+                ml-large
+                text-grey-200 text-2xl
+              "
             >
               <!-- <div
                 v-if="
@@ -115,15 +128,16 @@
                     accepted[index]
                 "
               > -->
-              {{ documentTypeName }} | </label>
-              <label
-                :class="
-                  'justify-center items-center text-' + 
-                  approvedColor + 
-                  ' text-2x1'
-                "
-              >
-                {{ approvedOrRejected }}
+              {{ documentTypeName }} |
+            </label>
+            <label
+              :class="
+                'justify-center items-center text-' +
+                approvedColor +
+                ' text-2x1'
+              "
+            >
+              {{ approvedOrRejected }}
               <!-- </div> -->
               <!-- <div
                 v-else-if="
@@ -136,12 +150,7 @@
             </label>
             <div class="flex justify-start flex-wrap">
               <picture v-if="docs.length > 0">
-                <img
-                  v-bind:src="
-                    googleApi + '' +
-                      docs[index].filePath
-                  "
-                />
+                <img v-bind:src="googleApi + '' + docs[index].filePath" />
               </picture>
               <div
                 class="flex content-center justify-center pb-large"
@@ -167,11 +176,28 @@
           </div> -->
           <div class="relative pt-1 mt-medium">
             <div
-              class="overflow-hidden h-2 mb-4 text-xs flex rounded bg-grey-100 w-screen max-w-2xl"
+              class="
+                overflow-hidden
+                h-2
+                mb-4
+                text-xs
+                flex
+                rounded
+                bg-grey-100
+                w-screen
+                max-w-2xl
+              "
             >
               <div
                 :style="width"
-                class="shadow-none flex flex-col text-center whitespace-nowrap  justify-center bg-primary-400"
+                class="
+                  shadow-none
+                  flex flex-col
+                  text-center
+                  whitespace-nowrap
+                  justify-center
+                  bg-primary-400
+                "
               ></div>
             </div>
           </div>
@@ -182,7 +208,15 @@
               <div class="w-full h-full absolute"></div>
               <div
                 id="bar"
-                class="transition-all ease-out duration-1000 h-full bg-green-500 relative w-0"
+                class="
+                  transition-all
+                  ease-out
+                  duration-1000
+                  h-full
+                  bg-green-500
+                  relative
+                  w-0
+                "
               ></div>
             </div>
           </div>
@@ -248,24 +282,60 @@
       <Modal v-if="showRemark">
         <div>
           <div
-            class="card-wrapper bg-white sm:rounded-lg w-full flex justify-center relative mb-xl mt-large"
+            class="
+              card-wrapper
+              bg-white
+              sm:rounded-lg
+              w-full
+              flex
+              justify-center
+              relative
+              mb-xl
+              mt-large
+            "
           >
             <div class="">
               <!--content-->
               <div class="w-full">
                 <!--header-->
                 <div
-                  class="flex items-start justify-between border-b border-solid border-blueGray-200 mt-medium rounded-t"
+                  class="
+                    flex
+                    items-start
+                    justify-between
+                    border-b border-solid border-blueGray-200
+                    mt-medium
+                    rounded-t
+                  "
                 >
-                  <h3 class="text-3xl font-semibold">
-                    Remark
-                  </h3>
+                  <h3 class="text-3xl font-semibold">Remark</h3>
                   <div
-                    class=" bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+                    class="
+                      bg-transparent
+                      border-0
+                      text-black
+                      opacity-5
+                      float-right
+                      text-3xl
+                      leading-none
+                      font-semibold
+                      outline-none
+                      focus:outline-none
+                    "
                     v-on:click="toggleModal()"
                   >
                     <span
-                      class="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none"
+                      class="
+                        bg-transparent
+                        text-black
+                        opacity-5
+                        h-6
+                        w-6
+                        text-2xl
+                        block
+                        outline-none
+                        focus:outline-none
+                      "
                     >
                       ×
                     </span>
@@ -299,7 +369,12 @@
                       </div> -->
 
                       <div
-                        class="flex flex-col justify-center items-center ml-large"
+                        class="
+                          flex flex-col
+                          justify-center
+                          items-center
+                          ml-large
+                        "
                       >
                         <div class="ml-medium">
                           <!-- <label
@@ -353,10 +428,25 @@
                 <!--footer -->
                 <textarea
                   v-model="newLicense.remark"
-                  class="resize-none tArea border rounded-md flex mb-small w-full"
+                  class="
+                    resize-none
+                    tArea
+                    border
+                    rounded-md
+                    flex
+                    mb-small
+                    w-full
+                  "
                 ></textarea>
                 <div
-                  class="flex items-center justify-center p-6 border-t border-solid border-blueGray-200 rounded-b"
+                  class="
+                    flex
+                    items-center
+                    justify-center
+                    p-6
+                    border-t border-solid border-blueGray-200
+                    rounded-b
+                  "
                 >
                   <button
                     class="md-danger"
@@ -444,8 +534,7 @@ export default {
     let documentTypes = ref([]);
     let documentTypeName = ref("");
     let modalDocumentTypeName = ref("");
-    let evaluateData = ref({actionEvent: "", 
-            remark: ""});
+    let evaluateData = ref({ actionEvent: "", remark: "" });
     const newLicense = ref({
       applicant: { profile: { name: "", fatherName: "" } },
       applicantType: { name: "" },
@@ -568,7 +657,7 @@ export default {
         }
         evaluateData.value[0].remark = newLicense.value.remark;
       }
-      
+
       req.value = {
         ...evaluateData.value[0],
       };
@@ -591,21 +680,21 @@ export default {
     const evaluateApplication = (applicationType, req) => {
       showLoadingconfirmed.value = true;
       showLoadingButtons.value = true;
-        store.dispatch("reviewer/" + applicationType, req).then((res) => {
-          showLoadingconfirmed.value = false;
-          if (res.statusText == "Created") {
-            showFlash.value = true;
-            evaluationSuccess.value = true;
-            setTimeout(() => {
-              router.push("/admin/review");
-            }, 2000);
-          } else {
-            showErrorFlash.value = true;
-            setTimeout(() => {
-              router.go();
-            }, 2000);
-          }
-        });
+      store.dispatch("reviewer/" + applicationType, req).then((res) => {
+        showLoadingconfirmed.value = false;
+        if (res.statusText == "Created") {
+          showFlash.value = true;
+          evaluationSuccess.value = true;
+          setTimeout(() => {
+            router.push("/admin/review");
+          }, 2000);
+        } else {
+          showErrorFlash.value = true;
+          setTimeout(() => {
+            router.go();
+          }, 2000);
+        }
+      });
     };
 
     const toggleModal = () => {
@@ -695,7 +784,7 @@ export default {
       approvedColor,
       approvedOrRejected,
       showLoadingButtons,
-      googleApi
+      googleApi,
     };
   },
 };

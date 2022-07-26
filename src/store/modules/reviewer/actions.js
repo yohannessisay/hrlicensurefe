@@ -1048,17 +1048,22 @@ export default {
         baseUrl + "/licenseReviewers/assign",
         assign
       );
+      
       return resp;
+      
     } catch (error) {
       return error;
     }
   },
   async assignRenewalReviewer({ commit }, assign) {
     try {
+      console.log(resp,assign);
+
       const resp = await ApiService.post(
         baseUrl + "/renewalReviewers/assign",
         assign
       );
+      console.log(resp,assign);
       return resp;
     } catch (error) {
       return error;
@@ -1077,12 +1082,14 @@ export default {
   },
   async assignGoodStandingReviewer({ commit }, assign) {
     try {
+      
       const resp = await ApiService.post(
         baseUrl + "/goodStandingReviewers/assign",
         assign
       );
       return resp;
     } catch (error) {
+      console.log(error)
       return error;
     }
   },
@@ -1093,6 +1100,7 @@ export default {
         baseUrl + "/licenseReviewers/transfer",
         transfer
       );
+    
       return resp;
     } catch (error) {
       return error;
@@ -1257,11 +1265,14 @@ export default {
         baseUrl + "/newlicenses/" + license.data.id,
         license
       );
+
       return resp;
+      
     } catch (error) {
       return error;
     }
   },
+
 
   async editVerification({ commit }, license) {
     try {
@@ -1285,15 +1296,30 @@ export default {
       return error;
     }
   },
+
+  
   async editRenewal({ commit }, license) {
     try {
-      console.log("license is", license);
+      console.log("license is", license.data.id);
       const resp = await ApiService.put(
         baseUrl + "/renewals/" + license.data.id,
         license
       );
       // const resp = await ApiService.put(url + "newLicenses/" + license);
       return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+  async RenewalGenerate({ commit }, license) {
+    try {
+      const resp = await ApiService.put(
+        baseUrl + "/renewals/" + license.data.data.id,
+        license
+      );
+      console.log(resp)
+      return resp;
+      
     } catch (error) {
       return error;
     }
@@ -1359,10 +1385,9 @@ export default {
     }
   },
 
-  async addImported(data) {
+  async addImported(id,data) {
     try {
       const url = baseUrl + "/nationalExamResult/import";
-
       const resp = await ApiService.post(url, data);
    
       return resp;
@@ -1371,11 +1396,22 @@ export default {
     }
   },
 
-  async editImported(data,editedData) {
+  async editImported(id,editedData) {
     try {
       const url = baseUrl + "/nationalExamResult/"+editedData.id;
 
       const resp = await ApiService.put(url, editedData);
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+
+  async getMultiple(id,multipleId) {
+    try {
+      const url = baseUrl + "/nationalExamResult/getMultiple";
+
+      const resp = await ApiService.post(url, multipleId);
       return resp;
     } catch (error) {
       return error;

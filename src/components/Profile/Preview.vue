@@ -1,5 +1,5 @@
 <template>
-  <div v-if="message.showLoading2" class="h-screen mt-large pt-large">
+  <div v-if="message.showLoading2" class="h-screen mt-large pt-small">
     <Spinner class="bg-lightBlueB-200  " />
   </div>
   <div
@@ -77,6 +77,12 @@
           <h5 class="ml-8">{{ user.emailAddress }}</h5>
         </div>
       </div>
+            <div class="flex flex-row">
+        <div v-if="personalInfo.employeeId!=null ||personalInfo.employeeId!=''">
+          <label class="ml-8 font-bold text-primary-500">HRA Employee Id</label>
+          <h5 class="ml-8">{{ personalInfo.employeeId }}</h5>
+        </div>
+      </div>
       <div class="mt-12 flex justify-center mb-medium">
         <div>
           <button @click="prevStep" class="mx-auto w-1/2" variant="outline">
@@ -84,7 +90,7 @@
           </button>
         </div>
         <div v-if="!message.showLoading">
-          <button v-on:click="submit()">Save Profile</button>
+          <button v-on:click="submit()" class="p-1">Save Profile</button>
         </div>
       </div>
       <div
@@ -117,7 +123,7 @@ import moment from "moment";
 export default {
   components: { Title, FlashMessage, ErrorFlashMessage, Spinner },
   computed: {
-    moment: () => moment,
+    moment: () => moment
   },
   props: ["activeState"],
   setup(props, { emit }) {
@@ -128,12 +134,12 @@ export default {
       showFlash: false,
       showErrorFlash: false,
       showLoading: false,
-      showLoading2: false,
+      showLoading2: false
     });
     let user = ref({
       id: "",
       emailAddress: "",
-      phoneNumber: "",
+      phoneNumber: ""
     });
 
     let personalInfo = {
@@ -149,19 +155,21 @@ export default {
       maritalStatusId: null,
       maritalStatus: null,
       poBox: null,
+      employeeId:null
     };
     let address = {
-      poBox: null,
+      poBox: null
     };
     let contact = {
       email: null,
-      poBox: null,
+      poBox: null
     };
     let success = ref(false);
     let response = {};
     let showFlash = ref(false);
     let nationality = ref("");
     let maritalStatus = ref("");
+    let photoFormData = ref("");
     const addProfile = () => {
       message.value.showLoading = true;
       message.value.showFlash = false;
@@ -177,16 +185,37 @@ export default {
           gender: personalInfo.gender,
           dateOfBirth: personalInfo.dateOfBirth,
           nationalityId: personalInfo.nationalityId,
-          maritalStatusId: personalInfo.maritalStatusId,
+          maritalStatusId: parseInt(personalInfo.maritalStatusId),
           poBox: personalInfo.poBox,
           photo: personalInfo.photo,
           userId: +localStorage.getItem("userId"),
+          employeeId:personalInfo.employeeId?personalInfo.employeeId:null
         })
-        .then((response) => {
+        .then(response => {
           if (response.statusText == "Created") {
+            let userId = +localStorage.getItem("userId");
+            let formData = new FormData();
+            formData.append("document", photoFormData);
+            let payload = { document: formData, id: userId };
+            store
+              .dispatch("profile/uploadProfilePicture", payload)
+              .then(res => {
+                if (res.status == 200) {
+                  message.value.showFlash = !message.value.showFlash;
+                  message.value.showLoading = false;
+                  setTimeout(() => {
+                    router.push({ path: "/menu" });
+                  }, 1500);
+                } else {
+                  message.value.showErrorFlash = !message.value.showErrorFlash;
+                }
+              })
+              .catch(err => {});
+
             message.value.showLoading = false;
             message.value.showFlash = true;
             message.value.showErrorFlash = false;
+
             setTimeout(() => {
               location.reload(true);
             }, 1500);
@@ -207,8 +236,9 @@ export default {
       message.value.showLoading2 = true;
       store
         .dispatch("profile/getUserById", localStorage.getItem("userId"))
-        .then((res) => {
+        .then(res => {
           user.value = res.data.data;
+          console.log(user.value);
           message.value.showLoading2 = false;
         });
     };
@@ -230,6 +260,7 @@ export default {
     contact = store.getters["profile/getContact"];
     nationality = store.getters["profile/getNationality"];
     maritalStatus = store.getters["profile/getMaritalStatus"];
+    photoFormData = store.getters["profile/getPhoto"];
     onMounted(() => {
       fetchUser();
       nextTick(function() {
@@ -251,9 +282,9 @@ export default {
       submit,
       user,
       fetchUser,
-      prevStep,
+      prevStep
     };
-  },
+  }
 };
 </script>
 <style>

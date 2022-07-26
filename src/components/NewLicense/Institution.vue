@@ -4,7 +4,7 @@
       <div
         class="
           flex flex-col
-          pt-large
+          pt-small
           w-full
           bg-white
           blue-box-shadow-light
@@ -185,7 +185,19 @@
                 <input
                   v-on:click="checkOtherProfession(types, $event)"
                   type="checkbox"
-                  class="bg-gray-50 mr-4 border border-gray-300 focus:ring-3 focus:ring-blue-300 h-4 w-4 rounded dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
+                  class="
+                    bg-gray-50
+                    mr-4
+                    border border-gray-300
+                    focus:ring-3 focus:ring-blue-300
+                    h-4
+                    w-4
+                    rounded
+                    dark:bg-gray-700
+                    dark:border-gray-600
+                    dark:focus:ring-blue-600
+                    dark:ring-offset-gray-800
+                  "
                   required
                   :checked="types.checked"
                 />
@@ -210,19 +222,20 @@
                   You can't select more than 3 professional types.
                 </span>
               </div>
-              <div>
+              <div class="flex flex-col" style="min-width: 400px;">
                 <input
                   v-model="licenseInfo.otherProfessionalType"
                   v-if="showOtherProfession"
-                  class="mt-2"
+                  class="mt-2 mb-2"
                   placeholder="Write Other Profession"
                   type="text"
                 />
+
               </div>
             </div>
           </div>
           <div
-            v-if="this.displayEnglishLanguageOption || this.displayPayrollDoc"
+            v-if="this.displayEnglishLanguageOption || this.displayPayrollDoc" 
             id="main"
             class="flex pt-8 mt-4"
           >
@@ -278,14 +291,14 @@
           </div>
           <div
             v-if="this.showButtons && this.draftStatus == 'DRA'"
-            class="flex justify-center mb-8"
+            class="flex justify-center mb-8 p-1"
           >
             <button @click="submit">Apply</button>
-            <button @click="draft(this.buttons[2].action)" variant="outline">
-              {{ this.buttons[2]["name"] }}
+            <button @click="draft(this.buttons[0].action)" variant="outline">
+              {{ this.buttons[0]["name"] }}
             </button>
             <button
-              class="withdraw"
+              class="withdraw p-1"
               @click="withdraw(this.buttons[1].action)"
               variant="outline"
             >
@@ -298,7 +311,7 @@
           >
             <button @click="submit">Apply</button>
             <button
-              class="withdraw"
+              class="withdraw p-1"
               @click="withdraw(this.buttons[1].action)"
               variant="outline"
             >
@@ -310,10 +323,18 @@
             class="flex justify-center mb-8"
           >
             <button @click="submit">Apply</button>
-            <button @click="draft(this.buttons[0].action)" variant="outline">
+            <button
+              @click="draft(this.buttons[0].action)"
+              variant="outline"
+              class="p-1"
+            >
               {{ this.buttons[0]["name"] }}
             </button>
-            <button @click="update(this.buttons[1].action)" variant="outline">
+            <button
+              @click="update(this.buttons[1].action)"
+              variant="outline"
+              class="p-1"
+            >
               {{ this.buttons[1]["name"] }}
             </button>
           </div>
@@ -325,7 +346,11 @@
             <!-- <button @click="draft(this.buttons[0].action)" variant="outline">
             {{ this.buttons[0]["name"] }}
           </button> -->
-            <button @click="update(this.buttons[1].action)" variant="outline">
+            <button
+              @click="update(this.buttons[1].action)"
+              variant="outline"
+              class="p-1"
+            >
               {{ this.buttons[1]["name"] }}
             </button>
           </div>
@@ -357,7 +382,7 @@ export default {
     TitleWithIllustration,
     FlashMessage,
     ErrorFlashMessage,
-    Spinner,
+    Spinner
   },
 
   async created() {
@@ -371,9 +396,11 @@ export default {
     this.showLoading = true;
     setTimeout(() => {
       this.buttons = this.getButtons;
+      console.log(this.buttons);
       this.showButtons = true;
       this.showLoading = false;
     }, 5000);
+    console.table(this.buttons)
     if (this.getLicense && Object.keys(this.getLicense).length != 0) {
       let draftData = this.getLicense;
       this.licenseInfo.applicantId = draftData.applicantId;
@@ -392,13 +419,13 @@ export default {
       this.setEducationLevel(this.licenseInfo.educationalLevelId);
       this.licenseInfo.expertLevelId = draftData.expertLevelId;
       if (this.licenseInfo.applicantTypeId == 1) {
-        this.$store.dispatch("newlicense/getExpertLevel").then((res) => {
+        this.$store.dispatch("newlicense/getExpertLevel").then(res => {
           this.expertLevels = res.data.data.filter(function(e) {
             return e.code.includes("REG");
           });
         });
       } else {
-        this.$store.dispatch("newlicense/getExpertLevel").then((res) => {
+        this.$store.dispatch("newlicense/getExpertLevel").then(res => {
           this.expertLevels = res.data.data.filter(function(e) {
             return e.code.includes("FED");
           });
@@ -458,7 +485,7 @@ export default {
       }
     } else if (this.$route.params.id != undefined) {
       this.draftId = this.$route.params.id;
-      if (this.draftId != undefined) {
+      if (this.draftId != undefined || this.draftStatus) {
         setTimeout(() => {
           this.fetchDraft();
         }, 6500);
@@ -470,8 +497,8 @@ export default {
     ...mapGetters({
       getButtons: "newlicense/getButtons",
       getDraft: "newlicense/getDraft",
-      getLicense: "newlicense/getLicense",
-    }),
+      getLicense: "newlicense/getLicense"
+    })
   },
   data: () => ({
     licenseInfo: {
@@ -480,7 +507,7 @@ export default {
       education: {
         departmentId: null,
         institutionId: null,
-        id: null,
+        id: null
       },
       residenceWoredaId: null,
       professionalTypeIds: [],
@@ -490,13 +517,14 @@ export default {
       educationalLevelId: null,
       otherEducationalInstitution: null,
       otherProfessionalType: null,
-      applicationStatusId: null,
+      otherProfessionalTypeAmharic: null,
+      applicationStatusId: null
     },
     licenseInfoErrors: {
       applicantTypeId: null,
       departmentId: null,
       institutionId: null,
-      educationalLevelId: null,
+      educationalLevelId: null
     },
     regionID: "",
     zoneID: "",
@@ -539,12 +567,12 @@ export default {
 
     profession: "",
     showOtherProfession: false,
-    checkedProfessionalTypes: [],
+    checkedProfessionalTypes: []
   }),
 
   methods: {
     fetchEnglishSpeaker() {
-      this.$store.dispatch("lookups/getNativeLanguage").then((res) => {
+      this.$store.dispatch("lookups/getNativeLanguage").then(res => {
         if (res.data.status == "Success") {
           this.englishData = res.data;
         } else {
@@ -553,14 +581,14 @@ export default {
     },
 
     fetchEducationLevel() {
-      this.$store.dispatch("lookups/getEducationalLevel").then((res) => {
+      this.$store.dispatch("lookups/getEducationalLevel").then(res => {
         if (res.data.status == "Success") {
           this.educationData = res.data.data;
         }
       });
     },
     fetchPayrollData() {
-      this.$store.dispatch("lookups/getGovernment").then((res) => {
+      this.$store.dispatch("lookups/getGovernment").then(res => {
         if (res.data.status == "Success") {
           this.payrollData = res.data;
         } else {
@@ -629,13 +657,13 @@ export default {
         this.showRegion = false;
       }
       if (applicantType == 1) {
-        this.$store.dispatch("newlicense/getExpertLevel").then((res) => {
+        this.$store.dispatch("newlicense/getExpertLevel").then(res => {
           this.expertLevels = res.data.data.filter(function(e) {
             return e.code.includes("REG");
           });
         });
       } else {
-        this.$store.dispatch("newlicense/getExpertLevel").then((res) => {
+        this.$store.dispatch("newlicense/getExpertLevel").then(res => {
           this.expertLevels = res.data.data.filter(function(e) {
             return e.code.includes("FED");
           });
@@ -700,7 +728,7 @@ export default {
               education: {
                 departmentId: this.licenseInfo.education.departmentId,
                 institutionId: this.licenseInfo.education.institutionId,
-                id: this.licenseInfo.education.id,
+                id: this.licenseInfo.education.id
               },
               residenceWoredaId: this.licenseInfo.residenceWoredaId,
               professionalTypeIds: this.licenseInfo.professionalTypeIds,
@@ -712,15 +740,17 @@ export default {
               otherEducationalInstitution: this.licenseInfo
                 .otherEducationalInstitution,
               otherProfessionalType: this.licenseInfo.otherProfessionalType,
-              applicationStatusId: this.licenseInfo.applicationStatusId,
-            },
+              otherProfessionalTypeAmharic: this.licenseInfo
+                .otherProfessionalTypeAmharic,
+              applicationStatusId: this.licenseInfo.applicationStatusId
+            }
           },
-          id: this.draftId,
+          id: this.draftId
         };
         if (this.draftId != undefined) {
           this.$store
             .dispatch("newlicense/editNewLicense", license)
-            .then((res) => {
+            .then(res => {
               if (res.data.status == "Success") {
                 this.showFlash = true;
                 this.showLoading = false;
@@ -734,7 +764,7 @@ export default {
         } else {
           this.$store
             .dispatch("newlicense/addNewLicense", license.data)
-            .then((res) => {
+            .then(res => {
               if (res.data.status == "Success") {
                 this.showFlash = true;
                 this.showLoading = false;
@@ -756,7 +786,7 @@ export default {
             education: {
               departmentId: this.licenseInfo.education.departmentId,
               institutionId: this.licenseInfo.education.institutionId,
-              id: this.licenseInfo.education.id,
+              id: this.licenseInfo.education.id
             },
             residenceWoredaId: this.licenseInfo.residenceWoredaId,
             professionalTypeIds: this.licenseInfo.professionalTypeIds,
@@ -768,29 +798,29 @@ export default {
               .otherEducationalInstitution,
             expertLevelId: this.licenseInfo.expertLevelId,
             otherProfessionalType: this.licenseInfo.otherProfessionalType,
-            applicationStatusId: this.licenseInfo.applicationStatusId,
-          },
+            otherProfessionalTypeAmharic: this.licenseInfo
+              .otherProfessionalTypeAmharic,
+            applicationStatusId: this.licenseInfo.applicationStatusId
+          }
         },
-        id: this.draftId,
+        id: this.draftId
       };
 
       if (this.draftId != undefined) {
-        this.$store
-          .dispatch("newlicense/editNewLicense", license)
-          .then((res) => {
-            if (res.data.status == "Success") {
-              this.showFlash = true;
-              this.showLoading = false;
-              setTimeout(() => {}, 1500);
-              this.$router.push({ path: "/menu" });
-            } else {
-              this.showErrorFlash = true;
-            }
-          });
+        this.$store.dispatch("newlicense/editNewLicense", license).then(res => {
+          if (res.data.status == "Success") {
+            this.showFlash = true;
+            this.showLoading = false;
+            setTimeout(() => {}, 1500);
+            this.$router.push({ path: "/menu" });
+          } else {
+            this.showErrorFlash = true;
+          }
+        });
       } else {
         this.$store
           .dispatch("newlicense/addNewLicense", license.data)
-          .then((res) => {
+          .then(res => {
             if (res.data.status == "Success") {
               this.showFlash = true;
               this.showLoading = false;
@@ -804,13 +834,13 @@ export default {
       this.showLoading = true;
       let withdrawObj = {
         action: action,
-        data: this.getDraft,
+        data: this.getDraft
       };
       let payload = {
         licenseId: this.getDraft.id,
-        withdrawData: withdrawObj,
+        withdrawData: withdrawObj
       };
-      this.$store.dispatch("newlicense/withdraw", payload).then((res) => {
+      this.$store.dispatch("newlicense/withdraw", payload).then(res => {
         if (res.data.status == "Success") {
           this.showFlash = true;
           this.showLoading = false;
@@ -824,6 +854,7 @@ export default {
     },
     submit() {
       this.licenseInfoErrors = this.validateForm(this.licenseInfo);
+
       if (
         this.licenseInfoErrors &&
         Object.keys(this.licenseInfoErrors).length === 0 &&
@@ -835,6 +866,7 @@ export default {
           education: {
             departmentId: this.licenseInfo.education.departmentId,
             institutionId: this.licenseInfo.education.institutionId,
+            id: this.licenseInfo.education.id
           },
           regionId: this.regionID,
           zoneId: this.zoneID,
@@ -845,17 +877,21 @@ export default {
           occupationTypeId: this.licenseInfo.occupationTypeId,
           nativeLanguageId: this.licenseInfo.nativeLanguageId,
           expertLevelId: this.licenseInfo.expertLevelId,
-          otherProfessionalType: this.licenseInfo.otherProfessionalType,
           otherEducationalInstitution: this.licenseInfo
             .otherEducationalInstitution,
+          otherProfessionalType: this.licenseInfo.otherProfessionalType,
+          otherProfessionalTypeAmharic: this.licenseInfo
+            .otherProfessionalTypeAmharic,
+          applicationStatusId: this.licenseInfo.applicationStatusId
         };
+
         let profTypes = {
-          professionalTypeIds: this.licenseInfo.professionalTypeIds,
+          professionalTypeIds: this.licenseInfo.professionalTypeIds
         };
         if (this.$route.params.status == undefined) {
           this.$store
             .dispatch("newlicense/searchProfessionalType", profTypes)
-            .then((res) => {
+            .then(res => {
               if (res.data.data.length > 0) {
                 this.professionalTypeRepeat = true;
                 this.repeatedProfArray = res.data.data;
@@ -896,13 +932,13 @@ export default {
       }
     },
     fetchApplicantType() {
-      this.$store.dispatch("newlicense/getApplicantType").then((res) => {
+      this.$store.dispatch("newlicense/getApplicantType").then(res => {
         const results = res.data.data;
         this.applicantTypes = results;
       });
     },
     fetchInstitutions(value) {
-      this.$store.dispatch("newlicense/getInstitution", value).then((res) => {
+      this.$store.dispatch("newlicense/getInstitution", value).then(res => {
         const results = res.data.data;
         this.institutions = results;
         if (this.getLicense && Object.keys(this.getLicense).length != 0) {
@@ -947,27 +983,27 @@ export default {
       });
     },
     fetchDepartments() {
-      this.$store.dispatch("newlicense/getDepartmentType").then((res) => {
+      this.$store.dispatch("newlicense/getDepartmentType").then(res => {
         const results = res.data.data;
         this.departments = results;
       });
     },
     fetchRegions() {
-      this.$store.dispatch("newlicense/getRegions").then((res) => {
+      this.$store.dispatch("newlicense/getRegions").then(res => {
         const regionsResult = res.data;
         this.regionArray = regionsResult.data;
       });
     },
 
     fetchZones() {
-      this.$store.dispatch("newlicense/getZones", this.regionID).then((res) => {
+      this.$store.dispatch("newlicense/getZones", this.regionID).then(res => {
         const zonesResult = res.data;
         this.zoneArray = zonesResult.data;
       });
     },
 
     fetchWoredas() {
-      this.$store.dispatch("newlicense/getWoredas", this.zoneID).then((res) => {
+      this.$store.dispatch("newlicense/getWoredas", this.zoneID).then(res => {
         const woredasResult = res.data;
         this.woredaArray = woredasResult.data;
       });
@@ -979,7 +1015,7 @@ export default {
       this.showProfessionalTypes = true;
       await this.$store
         .dispatch("newlicense/getProfessionalTypes", id)
-        .then((res) => {
+        .then(res => {
           this.professionalTypes = res.data.data;
         });
       // if (this.getLicense && Object.keys(this.getLicense).length != 0) {
@@ -1017,6 +1053,7 @@ export default {
     },
     async fetchDraft() {
       let draftData = this.getDraft;
+
       this.licenseInfo.applicantId = draftData.applicantId;
       this.licenseInfo.applicantTypeId = draftData.applicantTypeId;
       if (this.licenseInfo.applicantTypeId == 1) {
@@ -1041,7 +1078,7 @@ export default {
       this.setEducationLevel(this.licenseInfo.educationalLevelId);
       if (this.licenseInfo.applicantTypeId == 1) {
         this.displayPayrollDoc = true;
-        this.$store.dispatch("newlicense/getExpertLevel").then((res) => {
+        this.$store.dispatch("newlicense/getExpertLevel").then(res => {
           this.expertLevels = res.data.data.filter(function(e) {
             return e.code.includes("REG");
           });
@@ -1050,7 +1087,7 @@ export default {
         this.licenseInfo.occupationTypeId = draftData.occupationTypeId;
       } else {
         this.displayEnglishLanguageOption = true;
-        this.$store.dispatch("newlicense/getExpertLevel").then((res) => {
+        this.$store.dispatch("newlicense/getExpertLevel").then(res => {
           this.expertLevels = res.data.data.filter(function(e) {
             return e.code.includes("FED");
           });
@@ -1088,14 +1125,14 @@ export default {
       }
       this.$store
         .dispatch("newlicense/getZones", this.regionID)
-        .then((res) => {
+        .then(res => {
           const zonesResult = res.data;
           this.zoneArray = zonesResult.data;
         })
-        .then((res) => {
+        .then(res => {
           this.$store
             .dispatch("newlicense/getWoredas", this.zoneID)
-            .then((res) => {
+            .then(res => {
               const woredasResult = res.data;
               this.woredaArray = woredasResult.data;
             });
@@ -1106,18 +1143,18 @@ export default {
           this.licenseInfo.education.departmentId
         );
         this.showOtherProfession = false;
-        for (var k = 0; k < draftData.professionalTypes.length; k++) {
+        for (var k = 0; k < draftData.licenseProfessions.length; k++) {
           if (
-            draftData.professionalTypes[k].professionalTypes.name == "Other"
+            draftData.licenseProfessions[k].professionalTypes.name == "Other"
           ) {
             this.showOtherProfession = true;
             break;
           }
         }
-        this.professionalTypes.map((profData) => {
-          for (var j = 0; j < draftData.professionalTypes.length; j++) {
+        this.professionalTypes.map(profData => {
+          for (var j = 0; j < draftData.licenseProfessions.length; j++) {
             if (
-              profData.id == draftData.professionalTypes[j].professionalTypeId
+              profData.id == draftData.licenseProfessions[j].professionalTypeId
             ) {
               profData.checked = true;
             }
@@ -1130,10 +1167,10 @@ export default {
           return profData;
         });
       }
-      if (draftData.professionalTypes.length > 0) {
-        for (var k = 0; k < draftData.professionalTypes.length; k++) {
+      if (draftData.licenseProfessions.length > 0) {
+        for (var k = 0; k < draftData.licenseProfessions.length; k++) {
           this.licenseInfo.professionalTypeIds.push(
-            draftData.professionalTypes[k].professionalTypeId
+            draftData.licenseProfessions[k].professionalTypeId
           );
         }
       }
@@ -1144,9 +1181,11 @@ export default {
         this.showOtherProfession = true;
         this.licenseInfo.otherProfessionalType =
           draftData.otherProfessionalType;
+        this.licenseInfo.otherProfessionalTypeAmharic =
+          draftData.otherProfessionalTypeAmharic;
       }
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -1156,6 +1195,7 @@ export default {
   color: white;
   border-color: tomato;
 }
+
 #main {
   border: 1px solid #cccccc;
   border-radius: 5px;

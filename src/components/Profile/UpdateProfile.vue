@@ -319,6 +319,7 @@ import { useRoute, useRouter } from "vue-router";
 import Spinner from "@/sharedComponents/Spinner";
 import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
+import { googleApi } from "@/composables/baseURL";
 
 export default {
   components: {
@@ -326,7 +327,7 @@ export default {
     Navigation,
     Spinner,
     FlashMessage,
-    ErrorFlashMessage,
+    ErrorFlashMessage
   },
   props: ["activeState"],
   setup(props, { emit }) {
@@ -337,7 +338,7 @@ export default {
     let message = ref({
       showFlash: false,
       showErrorFlash: false,
-      showLoading: false,
+      showLoading: false
     });
 
     let photoFile = ref("");
@@ -363,7 +364,7 @@ export default {
       dateOfBirth: "",
       nationalityId: "",
       maritalStatusId: "",
-      photo: "",
+      photo: ""
     });
     let personalInfoErrors = ref({
       name: "",
@@ -375,7 +376,7 @@ export default {
       nationalityId: "",
       gender: "",
       maritalStatusId: "",
-      photo: "",
+      photo: ""
     });
     let state = ref({
       userTypes: {},
@@ -385,11 +386,11 @@ export default {
       regions: {},
       zones: {},
       woreda: {},
-      nationalities: {},
+      nationalities: {}
     });
     let id = ref({
       regionID: {},
-      zoneID: {},
+      zoneID: {}
     });
     const reset = () => {
       showUpload.value = true;
@@ -437,12 +438,12 @@ export default {
       }
     };
     const fetchNationalities = () => {
-      store.dispatch("profile/getNationalities").then((res) => {
+      store.dispatch("profile/getNationalities").then(res => {
         const nationalities = res.data;
         state.value.nationalities = nationalities.data;
       });
     };
-    const validateForm = (formData) => {
+    const validateForm = formData => {
       const errors = {};
       if (!formData.photo) errors.photo = "Profile Picture Required";
       if (!formData.name) errors.name = "First Name Required";
@@ -454,7 +455,7 @@ export default {
       if (!formData.dateOfBirth) errors.dateOfBirth = "Date of Birth Required";
       return errors;
     };
-    const isEmpty = (obj) => {
+    const isEmpty = obj => {
       for (var prop in obj) {
         if (obj.hasOwnProperty(prop)) {
           return false;
@@ -464,32 +465,50 @@ export default {
     };
     const updateProfile = () => {
       message.value.showLoading = true;
-      store
-        .dispatch("profile/updateProfile", personalInfo.value)
-        .then((res) => {
-          if (res) {
-            message.value.showLoading = false;
-            message.value.showFlash = true;
-            setTimeout(() => {
-              router.push({ path: "/menu" });
-            }, 1500);
-          } else {
-            message.value.showLoading = false;
-            message.value.showErrorFlash = true;
-            setTimeout(() => {
-              message.value.showErrorFlash = false;
-            }, 3000);
-          }
-        });
+      store.dispatch("profile/updateProfile", personalInfo.value).then(res => {
+        if (res) {
+          message.value.showLoading = false;
+          message.value.showFlash = true;
+          let userId = +localStorage.getItem("userId");
+          let formData = new FormData();
+          console.log("uploadedDocument:  "+ photoFile.value);
+          formData.append("document", photoFile.value);
+          let payload = { document: formData, id: userId };
+          store
+            .dispatch("profile/updateProfilePicture", payload)
+            .then(res => {
+              if (res.status == 200) {
+                message.value.showFlash = !message.value.showFlash;
+                message.value.showLoading = false;
+                setTimeout(() => {
+                  router.push({ path: "/menu" });
+                }, 1500);
+              } else {
+                message.value.showErrorFlash = !message.value.showErrorFlash;
+              }
+            })
+            .catch(err => {});
+
+          setTimeout(() => {
+            router.push({ path: "/menu" });
+          }, 1500);
+        } else {
+          message.value.showLoading = false;
+          message.value.showErrorFlash = true;
+          setTimeout(() => {
+            message.value.showErrorFlash = false;
+          }, 3000);
+        }
+      });
     };
     onMounted(() => {
       let userID = route.params.id.substring(1);
-      store.dispatch("profile/getProfileByUserId", userID).then((res) => {
+      store.dispatch("profile/getProfileByUserId", userID).then(res => {
         const userData = res.data.data;
         personalInfo.value = userData;
-        photoFile.value = userData.photo;
+        photoFile.value = userData.profilePicture;
         showPreview.value = true;
-        filePreview.value = photoFile.value;
+        filePreview.value = googleApi + photoFile.value.filePath;
         showUpload.value = false;
       });
 
@@ -516,9 +535,9 @@ export default {
       id,
       fetchNationalities,
       updateProfile,
-      message,
+      message
     };
-  },
+  }
 };
 </script>
 <style>

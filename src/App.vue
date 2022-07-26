@@ -22,9 +22,9 @@ export default {
 </script>
 
 <style>
-@import "styles/tailwind.postcss";
 @import "styles/fonts.css";
 @import "styles/design-system.css";
+
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;

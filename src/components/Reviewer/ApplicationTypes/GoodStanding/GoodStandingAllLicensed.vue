@@ -19,16 +19,18 @@
           type="date"
           v-model="allInfo.searchUpToDate"
         />
-        <button @click="filterAllLicensedApplication">
-          Filter
-        </button>
+        <button @click="filterAllLicensedApplication">Filter</button>
       </div>
       <div class="flex pl-12 pt-tiny">
         <Title message="Good Standing All Letters" />
       </div>
       <div class="flex flex-wrap pb-medium rounded h-full" v-if="!showLoading">
         <nothing-to-show :nothingToShow="nothingToShow" />
-        <all-licensed-applications :allLicensedApplication="getGoodStandingAllLicensed" app_type="Good Standing" others_licensed="false"/>
+        <all-licensed-applications
+          :allLicensedApplication="getGoodStandingAllLicensed"
+          app_type="Good Standing"
+          others_licensed="false"
+        />
       </div>
     </div>
     <div
@@ -40,10 +42,13 @@
     <div class="bg-lightBlueB-200 h-full" v-if="allInfo.searchByInput">
       <div class="flex pl-12 pt-tiny">
         <Title
-        :message="
-          'All Licensed Applicants on Date Range ' + moment(allInfo.searchFromDate).format('MMM D, YYYY') + ' To ' + moment(allInfo.searchUpToDate).format('MMM D, YYYY')
-        "
-      />
+          :message="
+            'All Licensed Applicants on Date Range ' +
+            moment(allInfo.searchFromDate).format('MMM D, YYYY') +
+            ' To ' +
+            moment(allInfo.searchUpToDate).format('MMM D, YYYY')
+          "
+        />
         <button @click="backClicked">back</button>
       </div>
       <filtered-info
@@ -76,15 +81,13 @@ import Spinner from "@/sharedComponents/Spinner";
 import store from "../../../../store";
 import Title from "@/sharedComponents/TitleWithIllustration";
 
-
-
-
-
 export default {
   computed: {
     moment: () => moment,
     getGoodStandingAllLicensed() {
-      return store.getters["reviewerGoodStanding/getGoodStandingAllLicensedSearched"];
+      return store.getters[
+        "reviewerGoodStanding/getGoodStandingAllLicensedSearched"
+      ];
     },
   },
   components: {
@@ -133,26 +136,32 @@ export default {
 
     const fetchGoodStandingAllLicensed = () => {
       showLoading.value = true;
-      store.dispatch("reviewerGoodStanding/getGoodStandingAllLicensed").then((res) => {
-        showLoading.value = false;
-        goodStandingAllLicensed.value =
-          store.getters["reviewerGoodStanding/getGoodStandingAllLicensedSearched"];
-        allInfo.value.assignApplication =
-          store.getters["reviewerGoodStanding/getGoodStandingAllLicensedSearched"];
+      store
+        .dispatch("reviewerGoodStanding/getGoodStandingAllLicensed")
+        .then((res) => {
+          showLoading.value = false;
+          goodStandingAllLicensed.value =
+            store.getters[
+              "reviewerGoodStanding/getGoodStandingAllLicensedSearched"
+            ];
+          allInfo.value.assignApplication =
+            store.getters[
+              "reviewerGoodStanding/getGoodStandingAllLicensedSearched"
+            ];
 
-        for (let applicant in allInfo.value.assignApplication) {
-          if (
-            allInfo.value.assignApplication[applicant].applicationType ===
-            undefined
-          ) {
-            allInfo.value.assignApplication[applicant].applicationType =
-              allInfo.value.assignApplication[applicant].applicantType;
+          for (let applicant in allInfo.value.assignApplication) {
+            if (
+              allInfo.value.assignApplication[applicant].applicationType ===
+              undefined
+            ) {
+              allInfo.value.assignApplication[applicant].applicationType =
+                allInfo.value.assignApplication[applicant].applicantType;
+            }
           }
-        }
-        if (goodStandingAllLicensed.value.length === 0) {
-          nothingToShow.value = true;
-        }
-      });
+          if (goodStandingAllLicensed.value.length === 0) {
+            nothingToShow.value = true;
+          }
+        });
     };
     onMounted(() => {
       fetchGoodStandingAllLicensed();

@@ -1,6 +1,18 @@
 <template>
   <div
-    class="card-wrapper bg-white sm:rounded-lg w-full p-large flex flex-col justify-center items-center relative pt-8 pb-8"
+    class="
+      card-wrapper
+      bg-white
+      sm:rounded-lg
+      w-full
+      p-large
+      flex flex-col
+      justify-center
+      items-center
+      relative
+      pt-8
+      pb-8
+    "
   >
     <button
       class="absolute top-0 right-0 mr-2 mt-2"
@@ -63,21 +75,11 @@
           <ul>
             Password should be:
             <div class="ml-16 pl-8">
-              <li>
-                Minimum of Eight Characters
-              </li>
-              <li>
-                At least one Uppercase Character
-              </li>
-              <li>
-                At least one Lowercase Character
-              </li>
-              <li>
-                At least one Number
-              </li>
-              <li>
-                At least one special Character
-              </li>
+              <li>Minimum of Eight Characters</li>
+              <li>At least one Uppercase Character</li>
+              <li>At least one Lowercase Character</li>
+              <li>At least one Number</li>
+              <li>At least one special Character</li>
             </div>
           </ul>
         </div>
@@ -96,15 +98,14 @@
         <password-meter :password="credentials.repassword" />
         <span style="color: red">{{ credentialsErrors.repassword }}</span>
       </div>
+  
       <div v-if="!message.showLoading">
-        <button click="submit()">
-          Sign up
-        </button>
+        <button click="submit()">Sign up</button>
       </div>
       <Spinner
         v-if="message.showLoading"
         class="mt-4 mb-4"
-        style="width:20px; height:20px"
+        style="width: 20px; height: 20px"
       />
       <a
         class="text-base text-primary-500 hover:underline cursor-pointer"
@@ -148,6 +149,7 @@ export default {
       showLoading: false,
       errorMessage: "",
     });
+
     const credentials = ref({
       emailAddress: "",
       phoneNumber: "",
@@ -162,6 +164,7 @@ export default {
       password: undefined,
       repassword: undefined,
     });
+
     const showPasswordStrength = (password) => {
       if (password != "") {
         passwordStrengthDisplay.value = true;
@@ -223,6 +226,7 @@ export default {
       if (Object.keys(errors).length === 0) return false;
       return true;
     };
+
     return {
       credentials,
       credentialsErrors,

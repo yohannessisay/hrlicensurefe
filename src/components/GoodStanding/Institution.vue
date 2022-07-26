@@ -2,7 +2,7 @@
   <div class="flex justify-center items">
     <div class="bg-lightBlueB-200 w-screen h-screen max-w-4xl">
       <div
-        class="flex flex-col pt-large w-full bg-white blue-box-shadow-light rounded"
+        class="flex flex-col pt-small w-full bg-white blue-box-shadow-light rounded"
       >
         <div class="mt-small">
           <TitleWithIllustration
@@ -112,6 +112,13 @@
                   v-if="showOtherProfession"
                   class="mt-2"
                   placeholder="Write Other Profession"
+                  type="text"
+                />
+                  <input
+                  v-model="licenseInfo.otherProfessionalTypeAmharic"
+                  v-if="showOtherProfession && this.draftStatus == 'USUP'"
+                  class="mt-2"
+                  placeholder="የሙያ ስም በአማርኛ"
                   type="text"
                 />
               </div>
@@ -476,6 +483,7 @@ export default {
       applicantPositionId: null,
       professionalTypeIds: [],
       otherProfessionalType: null,
+      otherProfessionalTypeAmharic: null,    
       applicationStatusId: null,
     },
 
@@ -611,6 +619,7 @@ export default {
               professionalTypeIds: this.licenseInfo.professionalTypeIds,
               expertLevelId: this.licenseInfo.expertLevelId,
               otherProfessionalType: this.licenseInfo.otherProfessionalType,
+              otherProfessionalTypeAmharic: this.licenseInfo.otherProfessionalTypeAmharic,
               departmentId: this.licenseInfo.departmentId,
               applicationStatusId: this.licenseInfo.applicationStatusId,
             },
@@ -664,6 +673,7 @@ export default {
             professionalTypeIds: this.licenseInfo.professionalTypeIds,
             expertLevelId: this.licenseInfo.expertLevelId,
             otherProfessionalType: this.licenseInfo.otherProfessionalType,
+            otherProfessionalTypeAmharic: this.licenseInfo.otherProfessionalTypeAmharic,
             departmentId: this.licenseInfo.departmentId,
             applicationStatusId: this.licenseInfo.applicationStatusId,
           },
@@ -740,6 +750,7 @@ export default {
           professionalTypeIds: this.licenseInfo.professionalTypeIds,
           expertLevelId: this.licenseInfo.expertLevelId,
           otherProfessionalType: this.licenseInfo.otherProfessionalType,
+          otherProfessionalTypeAmharic: this.licenseInfo.otherProfessionalTypeAmharic,
           regionId: this.regionID,
           zoneId: this.zoneID,
           departmentId: this.licenseInfo.departmentId,
@@ -879,18 +890,18 @@ export default {
         this.showProfessionalTypes = true;
         await this.fetchProfessionalType(this.licenseInfo.departmentId);
         this.showOtherProfession = false;
-        for (var k = 0; k < draftData.professionalTypes.length; k++) {
+        for (var k = 0; k < draftData.GSProfessionals.length; k++) {
           if (
-            draftData.professionalTypes[k].professionalTypes.name == "Other"
+            draftData.GSProfessionals[k].professionalTypes.name == "Other"
           ) {
             this.showOtherProfession = true;
             break;
           }
         }
         this.professionalTypes.map((profData) => {
-          for (var j = 0; j < draftData.professionalTypes.length; j++) {
+          for (var j = 0; j < draftData.GSProfessionals.length; j++) {
             if (
-              profData.id == draftData.professionalTypes[j].professionalTypeId
+              profData.id == draftData.GSProfessionals[j].professionalTypeId
             ) {
               profData.checked = true;
             }
@@ -903,10 +914,10 @@ export default {
           return profData;
         });
       }
-      if (draftData.professionalTypes.length > 0) {
-        for (var k = 0; k < draftData.professionalTypes.length; k++) {
+      if (draftData.GSProfessionals.length > 0) {
+        for (var k = 0; k < draftData.GSProfessionals.length; k++) {
           this.licenseInfo.professionalTypeIds.push(
-            draftData.professionalTypes[k].professionalTypeId
+            draftData.GSProfessionals[k].professionalTypeId
           );
         }
       }

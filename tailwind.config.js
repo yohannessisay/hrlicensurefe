@@ -45,12 +45,14 @@ module.exports = {
       },
       red: {
         100: "#FECACA",
-        200: "#F87171"
+        200: "#F87171",
+        300:"#ff5252 "
       },
       yellow: {
         100: "#FDE68A",
-        200: "#FCD34D",
-        300: "#D97706"
+        200: "#FFC400",
+        300: "#D97706",
+        400: "#FAD400"
       },
       lightBlue: {
         100: "#EFF6FF",
@@ -64,7 +66,7 @@ module.exports = {
         900: "#1E40AF",
         1000: "#1E3A8A"
       },
-      lightBlueB:{
+      lightBlueB: {
         100: "#f3f6f9",
         200: "#eceff5",
         300: "#e2e9f5",
@@ -75,7 +77,7 @@ module.exports = {
         100: "#3c5d82",
         200: "#3c82f5"
       },
-      lightGrey:{
+      lightGrey: {
         100: "#f3f4f6"
       }
     },
@@ -167,5 +169,9 @@ module.exports = {
   corePlugins: {
     container: false
   },
-  plugins: [require("@tailwindcss/forms")]
+  content: [
+    "./src/**/*.{html,js}",
+    "./node_modules/tw-elements/dist/js/**/*.js"
+  ],
+  plugins: [require("@tailwindcss/forms"), require("tw-elements/dist/plugin")]
 };

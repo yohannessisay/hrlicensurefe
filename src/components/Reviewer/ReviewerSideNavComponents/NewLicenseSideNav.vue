@@ -1,16 +1,16 @@
 <template>
   <div class="mb-2">
-    <li class=" justify-start static">
-      <transition name="slide-fade-to-left">
+    <li class="justify-start static">
+      <transition name="fade"  mode="out-in">
         <div class="">
           <div
             @click="newlicenseDDHandler('NewLicense')"
-            class=" justify-center items-center "
+            class="justify-center items-center"
           >
-            <div class="p-1 ">
+            <div class="p-1">
               <h3 class="text-lightBlueB-500 mt-tiny">
-                <span style="color: white;">
-                  <i class="mr-2 far fa-thumbs-up fa-x fa-light"></i>
+                <span style="color: white">
+                  <i class="mr-2 fa fa-plus fa-x fa-light"></i>
                   <i
                     v-if="newLicenseDDIcon.isNewLicenseUp"
                     class="fas fa-chevron-circle-up float-right mt-2"
@@ -20,17 +20,17 @@
                     class="fas fa-chevron-circle-down float-right mt-2"
                   ></i>
                 </span>
-                <span class="text-lg" style="color: white; ">New License</span>
+                <span class="text-lg" style="color: white">New License</span>
               </h3>
             </div>
           </div>
 
           <div
             v-if="dropdownValue.newLicense"
-            class="dropdown-menu   mb-12 ml-4 "
-            style="color: #648ea3; width: 200px;"
+            class="dropdown-menu mb-12 ml-4"
+            style="color: #648ea3; width: 200px"
           >
-            <ul class="block w-full shadow float-right" style="color: #648ea3;">
+            <ul class="block w-full shadow float-right" style="color: #648ea3">
               <drop-down-lists
                 :dropdownValue="[
                   dropdownValue.newLicense,
@@ -51,32 +51,42 @@
 
               <!-- under review started here -->
               <div v-if="expertLevelId == 4">
-                <li class=" justify-start ">
+                <li class="justify-start">
                   <transition name="slide-fade-to-left">
                     <div class="">
-                      <div class=" justify-center items-center ">
-                        <div class="p-1 ">
+                      <div class="justify-center items-center">
+                        <div class="p-1">
                           <h3
                             class="text-lightBlueB-500 mt-tiny"
                             @click="
                               newlicenseDDHandler('NewLicenseUnderReview')
                             "
                           >
-                            <span style="color: white;">
+                            <span style="color: white">
                               <i
                                 v-if="newLicenseDDIcon.isUnderReviewUp"
-                                class="fas fa-chevron-circle-up float-right mt-2"
+                                class="
+                                  fas
+                                  fa-chevron-circle-up
+                                  float-right
+                                  mt-2
+                                "
                               ></i>
                               <i
                                 v-else
-                                class="fas fa-chevron-circle-down float-right mt-2"
+                                class="
+                                  fas
+                                  fa-chevron-circle-down
+                                  float-right
+                                  mt-2
+                                "
                               ></i>
 
                               <i
                                 class="mr-2 far fa-address-book fa-x fa-light"
                               ></i>
                             </span>
-                            <span class="text-base" style="color: white; "
+                            <span class="text-base" style="color: white"
                               >Under Review</span
                             >
                           </h3>
@@ -128,44 +138,64 @@
                       </div>
                       <div
                         v-if="dropdownValue.newLicenseUnderReview"
-                        class="dropdown-menu relative  shadow-md mb-12 ml-4"
-                        style="color: #648ea3; width: 200px;"
+                        class="dropdown-menu relative shadow-md mb-12 ml-4"
+                        style="color: #648ea3; width: 200px"
                       >
                         <ul
                           class="block w-full shadow float-right"
-                          style="color: #648ea3;"
+                          style="color: #648ea3"
                         >
-                          <li class=" justify-start ">
-                            <div class=" justify-center items-center ">
-                              <div class="p-1 ">
+                          <li class="justify-start">
+                            <div class="justify-center items-center">
+                              <div class="p-1">
                                 <h3
                                   class="text-lightBlueB-500 mt-tiny"
                                   @click="
                                     newlicenseDDHandler('NewLicenseEvaluation')
                                   "
                                 >
-                                  <span style="color: white;">
+                                  <span style="color: white">
                                     <i
                                       v-if="newLicenseDDIcon.isEvaluationUp"
-                                      class="fas fa-chevron-circle-up float-right mt-2"
+                                      class="
+                                        fas
+                                        fa-chevron-circle-up
+                                        float-right
+                                        mt-2
+                                      "
                                     ></i>
                                     <i
                                       v-else
-                                      class="fas fa-chevron-circle-down float-right mt-2"
+                                      class="
+                                        fas
+                                        fa-chevron-circle-down
+                                        float-right
+                                        mt-2
+                                      "
                                     ></i>
 
                                     <i
-                                      class="mr-2 far fa-address-book fa-x fa-light"
+                                      class="
+                                        mr-2
+                                        far
+                                        fa-address-book fa-x fa-light
+                                      "
                                     ></i>
                                   </span>
-                                  <span class="text-base" style="color: white; "
+                                  <span class="text-base" style="color: white"
                                     >Evaluation</span
                                   >
                                 </h3>
                                 <div
                                   v-if="dropdownValue.newLicenseEvaluation"
-                                  class="dropdown-menu relative  shadow-md mb-12 ml-4"
-                                  style="color: #648ea3; width: 200px;"
+                                  class="
+                                    dropdown-menu
+                                    relative
+                                    shadow-md
+                                    mb-12
+                                    ml-4
+                                  "
+                                  style="color: #648ea3; width: 200px"
                                 >
                                   <drop-down-lists
                                     :dropdownValue="[
@@ -263,16 +293,16 @@
                       </div>
                       <div
                         v-if="dropdownValue.newLicenseUnderReview"
-                        class="dropdown-menu relative  shadow-md mb-12 ml-4"
-                        style="color: #648ea3; width: 200px;"
+                        class="dropdown-menu relative shadow-md mb-12 ml-4"
+                        style="color: #648ea3; width: 200px"
                       >
                         <ul
                           class="block w-full shadow float-right"
-                          style="color: #648ea3;"
+                          style="color: #648ea3"
                         >
-                          <li class=" justify-start ">
-                            <div class=" justify-center items-center ">
-                              <div class="p-1 ">
+                          <li class="justify-start">
+                            <div class="justify-center items-center">
+                              <div class="p-1">
                                 <h3
                                   class="text-lightBlueB-500 mt-tiny"
                                   @click="
@@ -281,23 +311,37 @@
                                     )
                                   "
                                 >
-                                  <span style="color: white;">
+                                  <span style="color: white">
                                     <i
                                       v-if="
                                         newLicenseDDIcon.isConfirmedEvaluationUp
                                       "
-                                      class="fas fa-chevron-circle-up float-right mt-2"
+                                      class="
+                                        fas
+                                        fa-chevron-circle-up
+                                        float-right
+                                        mt-2
+                                      "
                                     ></i>
                                     <i
                                       v-else
-                                      class="fas fa-chevron-circle-down float-right mt-2"
+                                      class="
+                                        fas
+                                        fa-chevron-circle-down
+                                        float-right
+                                        mt-2
+                                      "
                                     ></i>
 
                                     <i
-                                      class="mr-2 far fa-address-book fa-x fa-light"
+                                      class="
+                                        mr-2
+                                        far
+                                        fa-address-book fa-x fa-light
+                                      "
                                     ></i>
                                   </span>
-                                  <span class="text-base" style="color: white; "
+                                  <span class="text-base" style="color: white"
                                     >Confirmed</span
                                   >
                                 </h3>
@@ -305,8 +349,14 @@
                                   v-if="
                                     dropdownValue.newLicenseConfirmedEvaluation
                                   "
-                                  class="dropdown-menu relative  shadow-md mb-12 ml-4"
-                                  style="color: #648ea3; width: 200px;"
+                                  class="
+                                    dropdown-menu
+                                    relative
+                                    shadow-md
+                                    mb-12
+                                    ml-4
+                                  "
+                                  style="color: #648ea3; width: 200px"
                                 >
                                   <drop-down-lists
                                     :dropdownValue="[
@@ -733,7 +783,7 @@
 <script>
 import { ref } from "vue";
 import DropDownLists from "./DropDownLists.vue";
-import { useRouter } from 'vue-router';
+import { useRouter } from "vue-router";
 
 export default {
   name: "NewLicenseSideNav",
@@ -775,41 +825,41 @@ export default {
 
     const dropDownHandler = (applicationValue) => {
       if (applicationValue == "NewLicenseUnfinished") {
-        newLicenseDDIcon.value.isUnfinishedUp = !newLicenseDDIcon.value
-          .isUnfinishedUp;
+        newLicenseDDIcon.value.isUnfinishedUp =
+          !newLicenseDDIcon.value.isUnfinishedUp;
       } else if (applicationValue == "NewLicenseUnassignedEvaluation") {
-        newLicenseDDIcon.value.isUnassignedEvaluationUp = !newLicenseDDIcon
-          .value.isUnassignedEvaluationUp;
+        newLicenseDDIcon.value.isUnassignedEvaluationUp =
+          !newLicenseDDIcon.value.isUnassignedEvaluationUp;
       } else if (applicationValue == "NewLicenseUnderEvaluation") {
-        newLicenseDDIcon.value.isUnderEvaluationUp = !newLicenseDDIcon.value
-          .isUnderEvaluationUp;
+        newLicenseDDIcon.value.isUnderEvaluationUp =
+          !newLicenseDDIcon.value.isUnderEvaluationUp;
       } else if (applicationValue == "NewLicenseReturnedEvaluation") {
-        newLicenseDDIcon.value.isReturnedEvaluationUp = !newLicenseDDIcon.value
-          .isReturnedEvaluationUp;
+        newLicenseDDIcon.value.isReturnedEvaluationUp =
+          !newLicenseDDIcon.value.isReturnedEvaluationUp;
       } else if (applicationValue == "NewLicenseConfirmedEvaluation") {
-        newLicenseDDIcon.value.isConfirmedEvaluationUp = !newLicenseDDIcon.value
-          .isConfirmedEvaluationUp;
+        newLicenseDDIcon.value.isConfirmedEvaluationUp =
+          !newLicenseDDIcon.value.isConfirmedEvaluationUp;
       } else if (applicationValue == "NewLicenseDeclined") {
-        newLicenseDDIcon.value.isDeclinedUp = !newLicenseDDIcon.value
-          .isDeclinedUp;
+        newLicenseDDIcon.value.isDeclinedUp =
+          !newLicenseDDIcon.value.isDeclinedUp;
       } else if (applicationValue == "NewLicenseDeclineConfirmed") {
-        newLicenseDDIcon.value.isDeclineConfirmedUp = !newLicenseDDIcon.value
-          .isDeclineConfirmedUp;
+        newLicenseDDIcon.value.isDeclineConfirmedUp =
+          !newLicenseDDIcon.value.isDeclineConfirmedUp;
       } else if (applicationValue == "NewLicenseUnderSuperVisionConfirmed") {
-        newLicenseDDIcon.value.isUnderSuperVisionConfirmedUp = !newLicenseDDIcon
-          .value.isUnderSuperVisionConfirmedUp;
+        newLicenseDDIcon.value.isUnderSuperVisionConfirmedUp =
+          !newLicenseDDIcon.value.isUnderSuperVisionConfirmedUp;
       } else if (applicationValue == "NewLicensePaymentReview") {
-        newLicenseDDIcon.value.isPaymentReviewnUp = !newLicenseDDIcon.value
-          .isPaymentReviewnUp;
+        newLicenseDDIcon.value.isPaymentReviewnUp =
+          !newLicenseDDIcon.value.isPaymentReviewnUp;
       } else if (applicationValue == "NewLicenseInReviewPayment") {
-        newLicenseDDIcon.value.isInReviewPaymentUp = !newLicenseDDIcon.value
-          .isInReviewPaymentUp;
+        newLicenseDDIcon.value.isInReviewPaymentUp =
+          !newLicenseDDIcon.value.isInReviewPaymentUp;
       } else if (applicationValue == "NewLicenseLicensed") {
-        newLicenseDDIcon.value.isLicensedUp = !newLicenseDDIcon.value
-          .isLicensedUp;
+        newLicenseDDIcon.value.isLicensedUp =
+          !newLicenseDDIcon.value.isLicensedUp;
       } else if (applicationValue == "NewLicenseUnassigned") {
-        newLicenseDDIcon.value.isUnassignedUp = !newLicenseDDIcon.value
-          .isUnassignedUp;
+        newLicenseDDIcon.value.isUnassignedUp =
+          !newLicenseDDIcon.value.isUnassignedUp;
       }
       emit("applicationTypeSelected", applicationValue);
     };
@@ -819,44 +869,44 @@ export default {
 
     const newlicenseDDHandler = (applicationValue) => {
       if (applicationValue == "NewLicense") {
-        newLicenseDDIcon.value.isNewLicenseUp = !newLicenseDDIcon.value
-          .isNewLicenseUp;
+        newLicenseDDIcon.value.isNewLicenseUp =
+          !newLicenseDDIcon.value.isNewLicenseUp;
       } else if (applicationValue == "NewLicenseUnderReview") {
-        newLicenseDDIcon.value.isUnderReviewUp = !newLicenseDDIcon.value
-          .isUnderReviewUp;
+        newLicenseDDIcon.value.isUnderReviewUp =
+          !newLicenseDDIcon.value.isUnderReviewUp;
       } else if (applicationValue == "NewLicenseFinished") {
-        newLicenseDDIcon.value.isFinishedUp = !newLicenseDDIcon.value
-          .isFinishedUp;
+        newLicenseDDIcon.value.isFinishedUp =
+          !newLicenseDDIcon.value.isFinishedUp;
       } else if (applicationValue == "NewLicenseAssigned") {
-        newLicenseDDIcon.value.isAssignedUp = !newLicenseDDIcon.value
-          .isAssignedUp;
+        newLicenseDDIcon.value.isAssignedUp =
+          !newLicenseDDIcon.value.isAssignedUp;
       } else if (applicationValue == "NewLicenseUnfinished") {
-        newLicenseDDIcon.value.isUnfinishedUp = !newLicenseDDIcon.value
-          .isUnfinishedUp;
+        newLicenseDDIcon.value.isUnfinishedUp =
+          !newLicenseDDIcon.value.isUnfinishedUp;
       } else if (applicationValue == "NewLicenseUnconfirmed") {
-        newLicenseDDIcon.value.isUnconfirmedUp = !newLicenseDDIcon.value
-          .isUnconfirmedUp;
+        newLicenseDDIcon.value.isUnconfirmedUp =
+          !newLicenseDDIcon.value.isUnconfirmedUp;
       } else if (applicationValue == "NewLicenseOnReview") {
-        newLicenseDDIcon.value.isOnReivewUp = !newLicenseDDIcon.value
-          .isOnReivewUp;
+        newLicenseDDIcon.value.isOnReivewUp =
+          !newLicenseDDIcon.value.isOnReivewUp;
       } else if (applicationValue == "NewLicenseReEvaluate") {
-        newLicenseDDIcon.value.isReEvaluateUp = !newLicenseDDIcon.value
-          .isReEvaluateUp;
+        newLicenseDDIcon.value.isReEvaluateUp =
+          !newLicenseDDIcon.value.isReEvaluateUp;
       } else if (applicationValue == "NewLicenseUnderSuperVision") {
-        newLicenseDDIcon.value.isUnderSuperVisionUp = !newLicenseDDIcon.value
-          .isUnderSuperVisionUp;
+        newLicenseDDIcon.value.isUnderSuperVisionUp =
+          !newLicenseDDIcon.value.isUnderSuperVisionUp;
       } else if (applicationValue == "NewLicenseConfirmed") {
-        newLicenseDDIcon.value.isConfirmedUp = !newLicenseDDIcon.value
-          .isConfirmedUp;
+        newLicenseDDIcon.value.isConfirmedUp =
+          !newLicenseDDIcon.value.isConfirmedUp;
       } else if (applicationValue == "NewLicenseReturned") {
-        newLicenseDDIcon.value.isReturnedUp = !newLicenseDDIcon.value
-          .isReturnedUp;
+        newLicenseDDIcon.value.isReturnedUp =
+          !newLicenseDDIcon.value.isReturnedUp;
       } else if (applicationValue == "NewLicenseFederalApproved") {
-        newLicenseDDIcon.value.isFederalApprovedUp = !newLicenseDDIcon.value
-          .isFederalApprovedUp;
+        newLicenseDDIcon.value.isFederalApprovedUp =
+          !newLicenseDDIcon.value.isFederalApprovedUp;
       } else if (applicationValue == "NewLicenseEvaluation") {
-        newLicenseDDIcon.value.isEvaluationUp = !newLicenseDDIcon.value
-          .isEvaluationUp;
+        newLicenseDDIcon.value.isEvaluationUp =
+          !newLicenseDDIcon.value.isEvaluationUp;
       }
       emit("applicationTypeSelected", applicationValue);
     };
@@ -870,3 +920,14 @@ export default {
   },
 };
 </script>
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 1s ease-out !important;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0 !important; 
+}
+</style>

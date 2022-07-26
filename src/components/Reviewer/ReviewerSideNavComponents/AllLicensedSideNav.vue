@@ -10,7 +10,7 @@
             <div class="p-1 ">
               <h3 class="text-lightBlueB-500 mt-tiny">
                 <span style="color: white;">
-                  <i class="mr-2 far fa-thumbs-up fa-x fa-light"></i>
+                  <i class="mr-2 fa fa-check fa-x fa-light"></i>
                   <i
                     v-if="allLicensedDDIcon.isAllLicensedUp"
                     class="fas fa-chevron-circle-up float-right mt-2"
@@ -49,6 +49,12 @@
                   <!-- <i class="far fa-thumbs-up fa-x fa-light mt-4"></i> -->
                   Suspended / Cancelled
                 </div>
+              </li>
+              <li @click="AllLicensedMenuHandler('reprint')" class="mb-2">
+                <div class=" text-base" style="color: white; ">
+                  <!-- <i class="far fa-thumbs-up fa-x fa-light mt-4"></i> -->
+                 Reprint
+                 </div>
               </li>
             </ul>
           </div>

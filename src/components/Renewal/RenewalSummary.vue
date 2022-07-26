@@ -951,6 +951,7 @@ export default {
     expertLevelId: null,
     otherEducationalInstitution: null,
     otherProfessionalType: null,
+    otherProfessionalTypeAmharic: null,
     draftId: "",
     draftData: "",
     draftStatus: "",

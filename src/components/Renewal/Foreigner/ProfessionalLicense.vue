@@ -4,7 +4,7 @@
       <div
         class="
           flex flex-col
-          pt-large
+          pt-small
           w-full
           bg-white
           blue-box-shadow-light
@@ -421,6 +421,8 @@ export default {
             otherEducationalInstitution:
               licenseInfo.otherEducationalInstitution,
             otherProfessionalType: licenseInfo.otherProfessionalType,
+            otherProfessionalTypeAmharic:licenseInfo.otherProfessionalType,
+
           },
         };
         store.dispatch("renewal/addRenewalLicense", license).then((res) => {
@@ -573,6 +575,9 @@ export default {
             otherEducationalInstitution:
               licenseInfo.otherEducationalInstitution,
             otherProfessionalType: licenseInfo.otherProfessionalType,
+            otherProfessionalTypeAmharic:licenseInfo.otherProfessionalType,
+
+
           },
         };
         store.dispatch("renewal/addRenewalLicense", license).then((res) => {

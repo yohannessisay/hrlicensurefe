@@ -9,13 +9,13 @@
         >
           <RenderIllustration class="" illustration="Logo" message="Address" />
           <h2 class="text-md AtkinsonHyperlegibleBold text-primary-600 ml-2 ">
-            HRIS - License
+           electronical Health Professional Licensing (eHPL) 
           </h2>
         </div>
         <div v-if="isFirstTime" class="flex items-center">
           <RenderIllustration class="" illustration="Logo" message="Address" />
           <h2 class="text-md AtkinsonHyperlegibleBold text-primary-600 ml-2 ">
-            HRIS - License
+           electronical Health Professional Licensing (eHPL) 
           </h2>
         </div>
 
@@ -137,6 +137,7 @@ import Title from "@/sharedComponents/Title";
 import RenderIllustration from "@/sharedComponents/RenderIllustration";
 import { useStore } from "vuex";
 import { ref, onMounted } from "vue";
+import { googleApi } from "@/composables/baseURL";
 
 export default {
   components: { Title, RenderIllustration },
@@ -211,7 +212,8 @@ export default {
       if (!profile) {
         isFirstTime.value = true;
       } else {
-        pic.value = profile.photo;
+        console.log(googleApi + profile.profilePicture.filePath);
+        pic.value =  googleApi + profile.profilePicture.filePath;
       }
     };
     const getName = (profile) => {

@@ -10,7 +10,7 @@
     <MinistryOfHealthSection />
     <FooterSection />
     <transition name="slide-fade-to-left">
-      <Modal v-if="showLogin">
+      <Modal v-if="showLogin" >
         <Login
           @closeModal="showLogin = false"
           @redirectToSignup="redirectToSignup"

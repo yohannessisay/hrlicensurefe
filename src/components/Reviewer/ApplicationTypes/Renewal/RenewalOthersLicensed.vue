@@ -143,7 +143,7 @@ export default {
         confirmedStatus,
         approvedStatus,
       ];
-      store.dispatch("reviewerRenewal/getRenewalOtherLicensed", adminStatus).then((res) => {
+      store.dispatch("reviewerRenewal/getRenewalOtherLicensed").then((res) => {
         showLoading.value = false;
         renewalOthersLicensed.value =
           store.getters["reviewerRenewal/getRenewalOthersLicensedSearched"];

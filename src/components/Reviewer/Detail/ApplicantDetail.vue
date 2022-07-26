@@ -4,26 +4,28 @@
     <div class="bg-lightBlueB-200 h-full">
       <div
         v-if="show"
-        style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);"
-        class="ml-8  mr-8 mb-12"
+        style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2)"
+        class="ml-8 mr-8 mb-12"
       >
         <div class="mt-large bg-white">
-          <div class="flex justify-center"><Title message="Summary" /></div>
+          <div class="flex justify-center"><Title message="Summarys" /></div>
           <div class="flex justify-start">
             <Title message="Personal Info" />
           </div>
+
           <div class="flex flex-row">
             <div
               :class="[profileInfo.name === null ? errorClass : activeClass]"
             >
               <label class="ml-8"> Full Name</label>
-              <h5 class="ml-8">
+              <hr class="ml-4" />
+              <h5 class="ml-8 mt-4">
                 {{
                   profileInfo.name +
-                    " " +
-                    profileInfo.fatherName +
-                    " " +
-                    profileInfo.grandFatherName
+                  " " +
+                  profileInfo.fatherName +
+                  " " +
+                  profileInfo.grandFatherName
                 }}
               </h5>
             </div>
@@ -31,7 +33,8 @@
               :class="[profileInfo.gender === null ? errorClass : activeClass]"
             >
               <label class="ml-8"> Gender</label>
-              <h5 class="ml-8">
+              <hr />
+              <h5 class="ml-8 mt-4">
                 {{ profileInfo.gender ? profileInfo["gender"] : "-" }}
               </h5>
             </div>
@@ -41,8 +44,11 @@
               ]"
             >
               <label class="ml-8"> Nationality</label>
-              <h5 class="ml-8">
-                {{ profileInfo.nationality ? profileInfo.nationality.name : "-" }}
+              <hr />
+              <h5 class="ml-8 mt-4">
+                {{
+                  profileInfo.nationality ? profileInfo.nationality.name : "-"
+                }}
               </h5>
             </div>
             <div
@@ -51,7 +57,8 @@
               ]"
             >
               <label class="ml-8"> Date of Birth</label>
-              <h5 class="ml-8">
+              <hr />
+              <h5 class="ml-8 mt-4">
                 {{
                   profileInfo.dateOfBirth
                     ? moment(profileInfo.dateOfBirth).format("MMM D, YYYY")
@@ -67,7 +74,8 @@
               ]"
             >
               <label class="ml-8"> Marital Status</label>
-              <h5 class="ml-8">
+              <hr />
+              <h5 class="ml-8 mt-4">
                 {{
                   profileInfo.maritalStatus.name
                     ? profileInfo.maritalStatus.name
@@ -92,7 +100,8 @@
               ]"
             >
               <label class="ml-8"> Region</label>
-              <h5 class="ml-8">
+              <hr class="ml-4" />
+              <h5 class="ml-8 mt-4">
                 {{
                   license.woreda === null
                     ? "-"
@@ -114,7 +123,8 @@
               ]"
             >
               <label class="ml-8"> Zone</label>
-              <h5 class="ml-8">
+              <hr />
+              <h5 class="ml-8 mt-4">
                 {{
                   license.woreda === null
                     ? "-"
@@ -126,7 +136,8 @@
             </div>
             <div :class="[license.woreda === null ? errorClass : activeClass]">
               <label class="ml-8"> Wereda</label>
-              <h5 class="ml-8">
+              <hr />
+              <h5 class="ml-8 mt-4">
                 {{ license.woreda ? license.woreda.name : "-" }}
               </h5>
             </div>
@@ -143,7 +154,8 @@
               ]"
             >
               <label class="ml-8"> Mobile Number</label>
-              <h5 class="ml-8">
+              <hr class="ml-4" />
+              <h5 class="ml-8 mt-4">
                 {{
                   profileInfo.user.phoneNumber
                     ? profileInfo.user.phoneNumber
@@ -160,7 +172,8 @@
               ]"
             >
               <label class="ml-8"> Email</label>
-              <h5 class="ml-8">
+              <hr />
+              <h5 class="ml-8 mt-4">
                 {{
                   profileInfo.user.emailAddress
                     ? profileInfo.user.emailAddress
@@ -175,24 +188,54 @@
           <div class="flex flex-row">
             <div>
               <label class="ml-8"> Institution Name</label>
-              <h5 class="ml-8" v-if="education.institutionName">
+              <hr class="ml-4" />
+              <h5 class="ml-8 mt-4" v-if="education.institutionName">
                 {{ education.institutionName }}
               </h5>
             </div>
             <div>
               <label class="ml-8"> Department</label>
-              <h5 class="ml-8" v-if="education.departmentName">
+              <hr />
+              <h5 class="ml-8 mt-4" v-if="education.departmentName">
                 {{ education.departmentName }}
               </h5>
             </div>
             <div>
               <label class="ml-8"> Institution Type</label>
-              <h5 class="ml-8" v-if="education.institutionTypeName">
+              <hr />
+              <h5 class="ml-8 mt-4" v-if="education.institutionTypeName">
                 {{ education.institutionTypeName }}
               </h5>
             </div>
           </div>
           <div class="flex justify-start flex-wrap"></div>
+        </div>
+        <Title message="Attached Documents" />
+        <div class="grid grid-cols-4 gap-4">
+          <div
+            class="mt-4 mb-8 bg-white"
+            style="border-radius: 15px; padding: 10px"
+            v-for="document in documents"
+            :key="document.id"
+          >
+            <div class="flex justify-center">
+              <div class="mt-large bg-white">
+                <a
+                  :href="googleApi + document.filePath"
+                  :data-title="document.documentType.name"
+                  data-lightbox="example-2"
+                >
+                  <img
+                    :src="googleApi + document.filePath"
+                    class="w-full h-48 object-cover"
+                  />
+                </a>
+
+                <h4 style="font-weight: bold">Document Type:-</h4>
+                <h6>{{ document.documentType.name }}</h6>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -213,6 +256,7 @@ import ReviewerNavBar from "@/components/Reviewer/ReviewerNavBar";
 import { ref, onMounted } from "vue";
 import Spinner from "@/sharedComponents/Spinner";
 import moment from "moment";
+import { googleApi } from "@/composables/baseURL";
 
 export default {
   props: ["activeState"],
@@ -263,19 +307,21 @@ export default {
       department: { name: "" },
     });
     let licenseId = ref("");
+
     let activeClass = ref("active");
     let errorClass = ref("text-danger");
     let dataFetched = ref(false);
     let showFlash = ref(false);
     let showErrorFlash = ref(false);
     let profile = ref({});
+    let documents = ref({});
     let applicationType = ref("");
-
     let getReviewId = ref(0);
 
     let loggedInAdminId = +localStorage.getItem("adminId");
-    let expertLevelId = JSON.parse(localStorage.getItem("allAdminData"))
-      .expertLevelId;
+    let expertLevelId = JSON.parse(
+      localStorage.getItem("allAdminData")
+    ).expertLevelId;
 
     const created = async (applicationTypeName, applicationId, applicantId) => {
       licenseId.value = applicationId;
@@ -287,9 +333,12 @@ export default {
           .then((res) => {
             showLoading.value = false;
             license.value = res.data.data;
+
             getReviewId.value = license.value.reviewerId;
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
+            documents.value = license.value.documents;
+
             education.value.departmentName =
               license.value.education.department.name;
             if (license.value.otherEducationalInstitution) {
@@ -309,6 +358,7 @@ export default {
           .then((res) => {
             showLoading.value = false;
             license.value = res.data.data;
+
             getReviewId.value = license.value.reviewerId;
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
@@ -331,6 +381,7 @@ export default {
           .then((res) => {
             showLoading.value = false;
             license.value = res.data.data;
+
             getReviewId.value = license.value.reviewerId;
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
@@ -353,6 +404,7 @@ export default {
           .then((res) => {
             showLoading.value = false;
             license.value = res.data.data;
+
             getReviewId.value = license.value.reviewerId;
             show.value = true;
             profileInfo.value = license.value.applicant.profile;
@@ -380,6 +432,7 @@ export default {
     });
 
     return {
+      googleApi,
       userId,
       license,
       profileInfo,
@@ -400,21 +453,24 @@ export default {
       licenseId,
       showLoading,
       expertLevelId,
+      documents,
     };
   },
-
-  //   this.license = this.getLicense;
-  //   this.applicantId = this.license.applicantId;
-  //   this.applicantTypeId = this.license.applicantTypeId;
-  //   this.education.departmentId = this.license.education.departmentId;
-  //   this.education.institutionId = this.license.education.institutionId;
-  //   this.docs = this.getDocs.data;
-  // },
 };
 </script>
 <style>
 .text-danger > label,
 .text-danger > h5 {
   color: red;
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+  grid-gap: 30px;
+}
+
+.gallery img {
+  width: 100%;
 }
 </style>

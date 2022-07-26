@@ -17,6 +17,7 @@ export default {
         paymentSlip: null,
         otherEducationalInstitution: "",
         otherProfessionalType: "",
+        otherProfessionalTypeAmharic:"",
         buttons: [],
         applicationId: 0,
         documentSpec: [],

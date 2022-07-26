@@ -122,7 +122,7 @@
             variant="block"
             @click="updateUser()"
           >
-            Edit User
+           update User
           </button>
         </div>
       </form>
@@ -316,7 +316,7 @@ export default {
       selectedExpertLevel,
       selectedRegion,
       showButtons,
-      updateUser
+      updateUser  
     };
   },
 };

@@ -4,7 +4,7 @@
       <div
         class="
           flex flex-col
-          pt-large
+          pt-small
           w-full
           bg-white
           blue-box-shadow-light
@@ -898,6 +898,8 @@ export default {
             otherEducationalInstitution: this.licenseInfo
               .otherEducationalInstitution,
             otherProfessionalType: this.licenseInfo.otherProfessionalType,
+            otherProfessionalTypeAmharic: this.licenseInfo.otherProfessionalTypeAmharic,
+
           },
         };
         this.$store

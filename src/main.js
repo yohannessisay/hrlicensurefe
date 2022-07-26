@@ -1,23 +1,23 @@
-import {
-  createApp
-} from "vue";
+import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import VueApexCharts from "vue3-apexcharts";
-import IdleVue from "idle-vue"
-
-// const eventsHub = new Vue();
-
+import IdleVue from "idle-vue";
+import "tw-elements";
+import Toast from "vue-toastification";
+import "./styles/main.css"
+import "@fortawesome/fontawesome-free/css/all.css";
+import "@fortawesome/fontawesome-free/js/all.js";
 const app = createApp(App);
 
 app.use(store);
 app.use(IdleVue, {
-  // eventEmitter: eventsHub,
   store,
   idleTime: 1800000,
-  startAtIdle: false
+  startAtIdle: false,
 });
 app.use(VueApexCharts);
 app.use(router);
+app.use(Toast, { transition: "Vue-Toastification__slideBlurred" });
 app.mount("#app");

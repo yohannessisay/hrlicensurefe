@@ -104,7 +104,7 @@
 
   <transition name="slide-fade-up">
     <Modal v-if="this.showErrorModal">
-      <ErrorModal @showErrorModal="this.showErrorModal = false">
+      <ErrorModal :showErrorModal="showErrorModal">
         <h1>
           This are the errors in the file you imported, please correct them
           accordingly
@@ -202,20 +202,18 @@
 </template>
 
 <script>
-import { useStore } from "vuex";
-import store from "../store/modules/reviewer/actions";
 import Spinner from "@/sharedComponents/Spinner";
 import ErrorModal from "./ImportErrorModal";
 export default {
   components: { Spinner, ErrorModal },
   props: ["finalData", "getData"],
-  data: function () {
+  data: function() {
     return {
       content: "",
       err: "",
       saveStatus: false,
       showErrorModal: false,
-      importPart: true,
+      importPart: true
     };
   },
   methods: {
@@ -235,8 +233,7 @@ export default {
         (today.getMonth() + 1) +
         "-" +
         today.getDate();
-      add.shift();
-      add.forEach((element) => {
+      add.forEach(element => {
         let tempObj = {
           registrationNo: element[1],
           firstName: element[3],
@@ -245,49 +242,57 @@ export default {
           lastName: element[5],
           sex: element[6],
           profession: element[7],
-          testDate: element[8],
+          dateOfExamination: element[8],
           result: element[9],
           createdAt: createdAt,
-          updatedAt: updatedAt,
+          updatedAt: updatedAt
         };
         finalArray.push(tempObj);
       });
-
+      let idArray = [];
+      finalArray.forEach(element => {
+        idArray.push(element.registrationNo);
+      });
       this.saveStatus = true;
-      this.$store.dispatch("reviewer/getImported").then((res) => {
+
+      this.$store.dispatch("reviewer/getMultiple", idArray).then(res => {
         let checkforExisting = res.data.data;
         let errorForExisting = [];
-        let i = 0;
-        if (checkforExisting.length > 0) {
-          checkforExisting.forEach((element) => {
-            finalArray.forEach((element2) => {
-              if (element.registrationNo === element2.registrationNo) {
-                i++;
+
+        if (res.data.status === "Success") {
+          for (let i = 0; i < finalArray.length; i++) {
+            for (let j = 0; j < checkforExisting.length; j++) {
+              if (
+                finalArray[i].registrationNo ===
+                checkforExisting[j].registrationNo
+              ) {
                 errorForExisting.push({
                   row: i,
                   column: 1,
-                  columnData: element2.registrationNo,
+                  columnData: finalArray[i].registrationNo,
                   errorMessage:
-                    "There is an already existing record with that id",
+                    "There is an already existing record with that id"
                 });
               }
-            });
-          });
+            }
+          }
         }
 
         if (errorForExisting.length > 0) {
           this.importPart = false;
           this.errors = errorForExisting;
           this.showErrorModal = true;
+          return;
+        } else {
+          this.saveStatus = false;
+          this.$store.dispatch("reviewer/addImported", finalArray).then(res => {
+            this.$emit("importModal", false);
+            this.getData();
+          });
         }
       });
-      console.log(this);
-      this.saveStatus = false;
-      // store.addImported(finalArray);
-      //  this.$emit("importModal", false);
-      this.$parent.getData();
-    },
-  },
+    }
+  }
 };
 </script>
 <style>
