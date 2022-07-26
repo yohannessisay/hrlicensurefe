@@ -396,12 +396,23 @@
         <div v-if="this.display == 'dashboard'">
           <dashboard />
         </div>
+        <div v-if="this.display == 'userManagement'">
+          <UserManagement />
+        </div>
         <div v-if="this.display == 'allLicensed'">
           <all-licensed />
         </div>
         <div v-if="this.display == 'accredited'">
           <accredited />
         </div>
+        <div v-if="this.display == 'suspendedCancelled'">
+          <suspended-cancelled />
+        </div>
+
+             <div v-if="this.display == 'importResults'">
+          <import-results />
+        </div>
+      
       </div>
     </div>
   </div>
@@ -509,11 +520,15 @@ import GoodStandingAllLicensed from "./ApplicationTypes/GoodStanding/GoodStandin
 
 import AllLicensed from "./ApplicationTypes/AllLicensed/AllLicensed.vue";
 import Accredited from "./ApplicationTypes/AllLicensed/Accredited.vue";
+import SuspendedCancelled from "./ApplicationTypes/AllLicensed/SuspendedCancelled.vue"
 // import AllLicensed from "./ApplicationTypes/AllLicensed/AllLicensed.vue";
 // import Accredited from "./ApplicationTypes/AllLicensed/Accredited.vue";
+import ImportResults from "./ImportResults/ImportHome.vue";
+
 
 import Report from "../Report/Report.vue";
 import Dashboard from "./Dashboard.vue";
+import UserManagement from "../UserManagement/UserDashboard.vue";
 
 import ReviewerNavBar from "./ReviewerNavBar.vue";
 import ReviewerSideNav from "./ReviewerSideNav.vue";
@@ -615,11 +630,14 @@ export default {
     GoodStandingOthersLicensed,
     GoodStandingAllLicensed,
 
+    ImportResults,
     AllLicensed,
     Accredited,
+    SuspendedCancelled,
 
     Dashboard,
     Report,
+    UserManagement
   },
   setup() {
     const store = useStore();

@@ -1,81 +1,84 @@
 export default {
-    state: {
-        unassigned: [],
-        unassignedSearched: [],
-        assgnedToYou: [],
-        assignedToYouSearched: [],
-        unfinished: [],
-        unfinishedSearched: [],
-        recentlyFinished: [],
-        recentlyFinishedSearched: [],
+  state: {
+    unassigned: [],
+    unassignedSearched: [],
+    assgnedToYou: [],
+    assignedToYouSearched: [],
+    unfinished: [],
+    unfinishedSearched: [],
+    recentlyFinished: [],
+    recentlyFinishedSearched: [],
 
-        unconfirmed: [],
-        unconfirmedSearched: [],
-        othersUnconfirmed: [],
-        othersUnconfirmedSearched: [],
+    unconfirmed: [],
+    unconfirmedSearched: [],
+    othersUnconfirmed: [],
+    othersUnconfirmedSearched: [],
 
-        returnedToMe: [],
-        returnedToMeSearched: [],
-        returnedToOthers: [],
-        retunedToOthersSearched: [],
+    returnedToMe: [],
+    returnedToMeSearched: [],
+    returnedToOthers: [],
+    retunedToOthersSearched: [],
 
-        confirmReview: [],
-        confirmReviewSearched: [],
-        othersConfirmReview: [],
-        othersConfirmReviewSearched: [],
+    confirmReview: [],
+    confirmReviewSearched: [],
+    othersConfirmReview: [],
+    othersConfirmReviewSearched: [],
 
-        evaluateReviewer: [],
-        evaluateReviewerSearched: [],
-        othresEvaluateReviewer: [],
-        othresEvaluateReviewerSearched: [],
+    evaluateReviewer: [],
+    evaluateReviewerSearched: [],
+    othresEvaluateReviewer: [],
+    othresEvaluateReviewerSearched: [],
 
-        confirmed: [],
-        confirmedSearched: [],
+    confirmed: [],
+    confirmedSearched: [],
 
-        approved: [],
-        approvedSearched: [],
-        allApproved: [],
-        allApprovedSearched: [],
+    approved: [],
+    approvedSearched: [],
+    allApproved: [],
+    allApprovedSearched: [],
 
-        rejected: [],
-        rejectedSearched: [],
-        allRejected: [],
-        allRejectedSearched: [],
+    rejected: [],
+    rejectedSearched: [],
+    allRejected: [],
+    allRejectedSearched: [],
 
-        underSuperVision: [],
-        underSuperVisionSearched: [],
-        allUnderSuperVision: [],
-        allUnderSuperVisionSearched: [],
+    underSuperVision: [],
+    underSuperVisionSearched: [],
+    allUnderSuperVision: [],
+    allUnderSuperVisionSearched: [],
 
-        assignedForEveryOne: [],
-        assignedForEveryOneSearched: [],
+    assignedForEveryOne: [],
+    assignedForEveryOneSearched: [],
 
-        everyOneUnfinished: [],
-        eveyOneUnfinishedSearched: [],
+    everyOneUnfinished: [],
+    eveyOneUnfinishedSearched: [],
 
-        allRecentlyFinished: [],
-        allRecentlyFinishedSearched: [],
+    allRecentlyFinished: [],
+    allRecentlyFinishedSearched: [],
 
-        certifiedUsers: [],
-        certifiedUsersSearched: [],
+    certifiedUsers: [],
+    certifiedUsersSearched: [],
 
-        allCertifiedUsers: [],
-        allCertifiedUsersSearched: [],
+    allCertifiedUsers: [],
+    allCertifiedUsersSearched: [],
 
-        myRegionCertifiedUsers: [],
-        myRegionCertifiedUsersSearched: [],
+    myRegionCertifiedUsers: [],
+    myRegionCertifiedUsersSearched: [],
 
-        pendingPayments: [],
-        pendingPaymentsSearched: [],
-        
-        approvedPendingPayments: [],
-        approvedPendingPaymentsSearched: [],
+    pendingPayments: [],
+    pendingPaymentsSearched: [],
 
-        allPendingPayment: [],
-        allPendingPaymentSearched: [],
+    approvedPendingPayments: [],
+    approvedPendingPaymentsSearched: [],
 
-        allLicensed: [],
-        allLicensedSearched: [],
+    allPendingPayment: [],
+    allPendingPaymentSearched: [],
 
-    }
-}
+    allLicensed: [],
+    allLicensedSearched: [],
+
+    legacyData: [],
+    legacyDataSearched: [],
+    imported: []
+  }
+};

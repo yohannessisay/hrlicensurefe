@@ -18,6 +18,13 @@
         >
           REJECTED
         </h2>
+        <h6
+          style="font-weight: bold;"
+          class="flex justify-center ml-4 mr-4"
+          v-if="declinedFieldsCheck"
+        >
+          Remark: <span class="ml-2" style="color: #e63636"> {{ remark }}</span>
+        </h6>
         <h2
           class="flex justify-center"
           v-if="acceptedFieldsCheck"
@@ -186,6 +193,7 @@ import Spinner from "@/sharedComponents/Spinner";
 import MESSAGE from "../../../composables/documentMessage";
 import MAX_FILE_SIZE from "../../../composables/documentMessage";
 import MAX_SIZE_MB from "../../../composables/documentMessage";
+import { googleApi } from "@/composables/baseURL";
 
 export default {
   components: {
@@ -199,8 +207,6 @@ export default {
     const store = useStore();
     const route = useRoute();
     const router = useRouter();
-
-    const basePath = "https://storage.googleapis.com/hris-lisence-dev/";
 
     let message = ref({
       showFlash: false,
@@ -366,11 +372,17 @@ export default {
     };
     const submit = () => {
       emit("changeActiveState");
-      store.dispatch("newlicense/setRequestLetterFromHiringHealthFacility", requestLetterFile);
+      store.dispatch(
+        "newlicense/setRequestLetterFromHiringHealthFacility",
+        requestLetterFile
+      );
     };
     const submitBack = () => {
       emit("changeActiveStateMinus");
-      store.dispatch("newlicense/setRequestLetterFromHiringHealthFacility", requestLetterFile);
+      store.dispatch(
+        "newlicense/setRequestLetterFromHiringHealthFacility",
+        requestLetterFile
+      );
     };
     buttons = store.getters["newlicense/getButtons"];
     documentSpecs = store.getters["newlicense/getDocumentSpec"];
@@ -432,6 +444,8 @@ export default {
       store.getters["newlicense/getProfessionalDocTranscript4"];
     professionalDocTranscript5 =
       store.getters["newlicense/getProfessionalDocTranscript5"];
+
+    remark = store.getters["newlicense/getRemark"];
 
     const draft = (action) => {
       message.value.showLoading = true;
@@ -796,7 +810,8 @@ export default {
       documentMessage.value = MESSAGE.DOC_MESSAGE;
       maxFileSize.value = MAX_FILE_SIZE.MAX_FILE_SIZE;
       maxSizeMB.value = MAX_SIZE_MB.MAX_SIZE_MB;
-      requestLetterBack = store.getters["newlicense/getRequestLetterFromHiringHealthFacility"];
+      requestLetterBack =
+        store.getters["newlicense/getRequestLetterFromHiringHealthFacility"];
       if (
         requestLetterBack &&
         requestLetterBack !== undefined &&
@@ -836,7 +851,6 @@ export default {
       }
       declinedFields = store.getters["newlicense/getDeclinedFields"];
       acceptedFields = store.getters["newlicense/getAcceptedFields"];
-      remark = store.getters["newlicense/getRemark"];
       if (declinedFields != undefined && declinedFields.includes("RLFHHF")) {
         declinedFieldsCheck.value = true;
       }
@@ -859,7 +873,7 @@ export default {
 
             requestLetterFile.value = draftData.documents[i];
             showPreview.value = true;
-            filePreview.value = basePath + draftData.documents[i].filePath;
+            filePreview.value = googleApi + draftData.documents[i].filePath;
           }
         }
       }
@@ -884,7 +898,7 @@ export default {
       draftStatus,
       update,
       draftData,
-      basePath,
+      googleApi,
       message,
       dataChanged,
       acceptedFields,

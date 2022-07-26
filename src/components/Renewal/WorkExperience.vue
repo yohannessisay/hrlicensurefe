@@ -18,6 +18,13 @@
         >
           REJECTED
         </h2>
+        <h6
+          style="font-weight: bold;"
+          class="flex justify-center ml-4 mr-4"
+          v-if="declinedFieldsCheck"
+        >
+          Remark: <span class="ml-2" style="color: #e63636"> {{ remark }}</span>
+        </h6>
         <h2
           class="flex justify-center"
           v-if="acceptedFieldsCheck"
@@ -132,7 +139,9 @@
             <button @click="submitBack">
               Back
             </button>
-            <button @click="submit">Next</button>
+            <button @click="submit">
+              Next
+            </button>
             <button @click="draft(buttons[1].action)" variant="outline">
               {{ buttons[1]["name"] }}
             </button>
@@ -144,7 +153,9 @@
             <button @click="submitBack">
               Back
             </button>
-            <button @click="submit">Next</button>
+            <button @click="submit">
+              Next
+            </button>
             <button @click="draft(buttons[2].action)" variant="outline">
               {{ buttons[2]["name"] }}
             </button>
@@ -163,7 +174,9 @@
             <button @click="submitBack">
               Back
             </button>
-            <button @click="submit">Next</button>
+            <button @click="submit">
+              Next
+            </button>
             <button
               class="withdraw"
               @click="withdraw(buttons[1].action)"
@@ -179,7 +192,9 @@
             <button @click="submitBack">
               Back
             </button>
-            <button @click="submit">Next</button>
+            <button @click="submit">
+              Next
+            </button>
             <button @click="draft(buttons[0].action)" variant="outline">
               {{ buttons[0]["name"] }}
             </button>
@@ -194,7 +209,9 @@
             <button @click="submitBack">
               Back
             </button>
-            <button @click="submit">Next</button>
+            <button @click="submit">
+              Next
+            </button>
             <!-- <button @click="draft(buttons[0].action)" variant="outline">
             {{ buttons[0]["name"] }}
           </button> -->
@@ -227,6 +244,7 @@ import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import MESSAGE from "../../composables/documentMessage";
 import MAX_FILE_SIZE from "../../composables/documentMessage";
 import MAX_SIZE_MB from "../../composables/documentMessage";
+import { googleApi } from "@/composables/baseURL";
 
 export default {
   props: ["activeState"],
@@ -446,6 +464,7 @@ export default {
     mastersTranscript = store.getters["renewal/getMastersTranscript"];
     phd = store.getters["renewal/getPhd"];
     phdTranscript = store.getters["renewal/getPhdTranscript"];
+    remark = store.getters["renewal/getRemark"];
 
     const submit = () => {
       emit("changeActiveState");
@@ -532,7 +551,6 @@ export default {
       }
       declinedFields = store.getters["renewal/getDeclinedFields"];
       acceptedFields = store.getters["renewal/getAcceptedFields"];
-      remark = store.getters["renewal/getRemark"];
       if (declinedFields != undefined && declinedFields.includes("WE")) {
         declinedFieldsCheck.value = true;
       }
@@ -553,7 +571,7 @@ export default {
             }
             workExperienceFile.value = draftData.documents[i];
             showPreview.value = true;
-            filePreview.value = basePath + draftData.documents[i].filePath;
+            filePreview.value = googleApi + draftData.documents[i].filePath;
           }
           if (draftData.documents[i].documentTypeCode == "WE1") {
             docCount.value++;
@@ -565,7 +583,7 @@ export default {
             }
             workExperienceFile2.value = draftData.documents[i];
             showPreview2.value = true;
-            filePreview2.value = basePath + draftData.documents[i].filePath;
+            filePreview2.value = googleApi + draftData.documents[i].filePath;
           }
         }
       }
@@ -933,7 +951,7 @@ export default {
       withdraw,
       buttons,
       draftData,
-      basePath,
+      googleApi,
       message,
       dataChanged,
 

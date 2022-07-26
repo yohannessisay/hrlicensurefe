@@ -23,7 +23,7 @@
               <img
                 style="border-radius: 100%"
                 v-bind:src="
-                  'https://ihris.moh.gov.et/hrl/' +
+                  googleApi + '' +
                     'docs[0].filePath'
                 "
                 class="img"
@@ -135,7 +135,7 @@
               <picture v-if="docs.length > 0">
                 <img
                   v-bind:src="
-                    'https://ihris.moh.gov.et/hrl/' +
+                    googleApi + '' +
                       docs[index].filePath
                   "
                 />
@@ -149,24 +149,6 @@
               <!-- {{docs[0].filePath}} -->
             </div>
           </div>
-          <!-- ---------- re evaluator don't have to accept and reject already evaluated
-          --------------- applications, rather he reviews and finally he will accept or
-          --------------- return the application to the evaluator who approved the 
-          --------------- application before
-          -->
-          <!-- <div class="mt-medium" v-if="!showButtons">
-            <button class="mr-medium" @click="accept(docs[index])">
-              Accept
-            </button>
-            <button class="decline" @click="reject(docs[index])">Reject</button>
-            <button
-              class=""
-              variant="outline"
-              @click="action('ReviewerDraftEvent')"
-            >
-              save as Draft
-            </button>
-          </div> -->
           <div class="relative pt-1 mt-medium">
             <div
               class="overflow-hidden h-2 mb-4 text-xs flex rounded bg-grey-100 w-screen max-w-2xl"
@@ -312,7 +294,7 @@
                             >
                               <img
                                 v-bind:src="
-                                  'https://ihris.moh.gov.et/hrl/' +
+                                  googleApi + '' +
                                     rejectedObj[ind].filePath
                                 "
                               />
@@ -396,6 +378,7 @@
 import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useStore } from "vuex";
+import { googleApi } from "@/composables/baseURL";
 
 import Modal from "@/sharedComponents/Modal";
 import FlashMessage from "@/sharedComponents/FlashMessage";
@@ -757,6 +740,7 @@ export default {
       previousRemark,
       findDocumentType,
       modalFindDocumentType,
+      googleApi
     };
   },
 };

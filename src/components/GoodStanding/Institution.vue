@@ -271,15 +271,15 @@
             <button @click="submit">
               Apply
             </button>
-            <button @click="draft(this.buttons[2].action)" variant="outline">
-              {{ this.buttons[2]["name"] }}
+            <button @click="draft(this.buttons[1].action)" variant="outline">
+              {{ this.buttons[1]["name"] }}
             </button>
             <button
               class="withdraw"
-              @click="withdraw(this.buttons[1].action)"
+              @click="withdraw(this.buttons[2].action)"
               variant="outline"
             >
-              {{ this.buttons[1]["name"] }}
+              {{ this.buttons[2]["name"] }}
             </button>
           </div>
           <div

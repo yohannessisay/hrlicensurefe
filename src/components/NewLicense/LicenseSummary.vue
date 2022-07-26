@@ -176,12 +176,7 @@
           >
             <Title class="" :message="item.documentType.name" />
             <picture>
-              <img
-                :src="
-                  'https://storage.googleapis.com/hris-lisence-dev/' +
-                    item.filePath
-                "
-              />
+              <img :src="this.basePath + item.filePath" />
             </picture>
           </div>
         </div>
@@ -300,9 +295,6 @@
           </button>
           <button
             id="reapplyButton"
-            style="opacity: 0.3"
-            :disabled="this.checkBoxValue == true"
-            disabled
             @click="draft('UpdateEvent')"
             variant="outline"
           >
@@ -337,7 +329,7 @@ import FlashMessage from "@/sharedComponents/FlashMessage";
 import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 import Spinner from "@/sharedComponents/Spinner";
 import moment from "moment";
-import idVue from "../../sharedComponents/illustrations/id.vue";
+import { googleApi } from "@/composables/baseURL";
 
 export default {
   props: ["activeState"],
@@ -348,6 +340,7 @@ export default {
     Spinner,
   },
   async created() {
+    this.basePath = googleApi;
     this.showCheckBox = true;
     this.userId = +localStorage.getItem("userId");
     this.draftId = this.$route.params.id;
@@ -1251,7 +1244,7 @@ export default {
   },
 
   data: () => ({
-    basePath: "https://ihris.moh.gov.et/hrl/",
+    basePath: "",
     docList: [],
     documentsArray: [],
     show: false,
@@ -1584,7 +1577,6 @@ export default {
         this.proDiploma !== "" &&
         this.proTranscript !== "" &&
         this.professionalLicense !== "" &&
-        this.renewedLicense !== "" &&
         this.renewedLicenseFromHealthFacility !== "" &&
         this.requestLetterFromHiringHealthFacility !== ""
       ) {
@@ -1602,7 +1594,6 @@ export default {
         this.proDiploma !== "" &&
         this.proTranscript !== "" &&
         this.professionalLicense !== "" &&
-        this.renewedLicense !== "" &&
         this.renewedLicenseFromHealthFacility !== "" &&
         this.requestLetterFromHiringHealthFacility !== ""
       ) {
@@ -1620,7 +1611,6 @@ export default {
         this.proDiploma !== "" &&
         this.proTranscript !== "" &&
         this.professionalLicense !== "" &&
-        this.renewedLicense !== "" &&
         this.renewedLicenseFromHealthFacility !== "" &&
         this.requestLetterFromHiringHealthFacility !== ""
       ) {
@@ -1638,7 +1628,6 @@ export default {
         this.proDiploma !== "" &&
         this.proTranscript !== "" &&
         this.professionalLicense !== "" &&
-        this.renewedLicense !== "" &&
         this.renewedLicenseFromHealthFacility !== "" &&
         this.requestLetterFromHiringHealthFacility !== ""
       ) {
@@ -1699,231 +1688,246 @@ export default {
       }
     },
     async submitRequest(act) {
+      let educationLevel = localStorage.getItem("educationalLevel");
+      let payroll = localStorage.getItem("payroll");
+      let language = localStorage.getItem("language");
       let action = act;
       this.showLoading = true;
       if (this.draftId != null) {
-        let license = {
-          data: {
-            action: action,
-            data: this.draftData,
-          },
-          id: this.draftId,
-        };
-        this.$store
-          .dispatch("newlicense/editNewLicense", license)
-          .then((res) => {
-            if (res.data.status == "Success") {
-              let licenseId = this.draftId;
-              let formData = new FormData();
+        if (
+          !this.checkRequiredDocs(
+            this.applicantTypeId,
+            educationLevel,
+            language,
+            payroll
+          )
+        ) {
+          this.showLoading = false;
+          this.showAllAttachements = true;
+        } else {
+          let license = {
+            data: {
+              action: action,
+              data: this.draftData,
+            },
+            id: this.draftId,
+          };
+          this.$store
+            .dispatch("newlicense/editNewLicense", license)
+            .then((res) => {
+              if (res.data.status == "Success") {
+                let licenseId = this.draftId;
+                let formData = new FormData();
 
-              formData.append(
-                this.documentTypes[1].documentType.code,
-                this.passport
-              );
-              formData.append(
-                this.documentTypes[2].documentType.code,
-                this.healthExamCert
-              );
-              formData.append(
-                this.documentTypes[4].documentType.code,
-                this.workExperience
-              );
-              formData.append(
-                this.documentTypes[28].documentType.code,
-                this.workExperience2
-              );
-              formData.append(
-                this.documentTypes[5].documentType.code,
-                this.englishLanguage
-              );
-              formData.append(
-                this.documentTypes[23].documentType.code,
-                this.transcript
-              );
-              formData.append(
-                this.documentTypes[52].documentType.code,
-                this.transcript2
-              );
-              formData.append(
-                this.documentTypes[20].documentType.code,
-                this.payroll
-              );
-              formData.append(
-                this.documentTypes[21].documentType.code,
-                this.degree
-              );
-              formData.append(
-                this.documentTypes[6].documentType.code,
-                this.proCertificate
-              );
-              formData.append(
-                this.documentTypes[29].documentType.code,
-                this.proCertificate2
-              );
-              formData.append(
-                this.documentTypes[30].documentType.code,
-                this.proCertificate3
-              );
-              formData.append(
-                this.documentTypes[31].documentType.code,
-                this.proCertificate4
-              );
-              formData.append(
-                this.documentTypes[32].documentType.code,
-                this.proCertificate5
-              );
-              formData.append(
-                this.documentTypes[this.docIdx].documentType.code,
-                this.proDiploma
-              );
-              formData.append(
-                this.documentTypes[this.docIdx2].documentType.code,
-                this.proDiploma2
-              );
-              formData.append(
-                this.documentTypes[this.docIdx3].documentType.code,
-                this.proDiploma3
-              );
-              formData.append(
-                this.documentTypes[this.docIdx4].documentType.code,
-                this.proDiploma4
-              );
-              formData.append(
-                this.documentTypes[this.docIdx5].documentType.code,
-                this.proDiploma5
-              );
-              formData.append(
-                this.documentTypes[8].documentType.code,
-                this.proTranscript
-              );
-              formData.append(
-                this.documentTypes[37].documentType.code,
-                this.proTranscript2
-              );
-              formData.append(
-                this.documentTypes[38].documentType.code,
-                this.proTranscript3
-              );
-              formData.append(
-                this.documentTypes[39].documentType.code,
-                this.proTranscript4
-              );
-              formData.append(
-                this.documentTypes[40].documentType.code,
-                this.proTranscript5
-              );
-              formData.append(
-                this.documentTypes[9].documentType.code,
-                this.coc
-              );
-              formData.append(
-                this.documentTypes[41].documentType.code,
-                this.coc2
-              );
-              formData.append(
-                this.documentTypes[42].documentType.code,
-                this.coc3
-              );
-              if (this.educationalDocs != undefined) {
                 formData.append(
-                  this.documentTypes[10].documentType.code,
-                  this.educationalDocs[0]
+                  this.documentTypes[1].documentType.code,
+                  this.passport
                 );
                 formData.append(
-                  this.documentTypes[11].documentType.code,
-                  this.educationalDocs[1]
+                  this.documentTypes[2].documentType.code,
+                  this.healthExamCert
                 );
                 formData.append(
-                  this.documentTypes[12].documentType.code,
-                  this.educationalDocs[2]
+                  this.documentTypes[4].documentType.code,
+                  this.workExperience
                 );
                 formData.append(
-                  this.documentTypes[13].documentType.code,
-                  this.educationalDocs[3]
+                  this.documentTypes[28].documentType.code,
+                  this.workExperience2
                 );
                 formData.append(
-                  this.documentTypes[14].documentType.code,
-                  this.educationalDocs[4]
+                  this.documentTypes[5].documentType.code,
+                  this.englishLanguage
                 );
-              }
-              if (this.applicantTypeId == 1) {
                 formData.append(
-                  this.documentTypes[15].documentType.code,
-                  this.supportLetter
+                  this.documentTypes[23].documentType.code,
+                  this.transcript
                 );
-              }
-              if (this.applicantTypeId == 3) {
                 formData.append(
-                  this.documentTypes[64].documentType.code,
-                  this.supportLetter
+                  this.documentTypes[52].documentType.code,
+                  this.transcript2
                 );
-              }
-              formData.append(
-                this.documentTypes[16].documentType.code,
-                this.herqa
-              );
-              formData.append(
-                this.documentTypes[18].documentType.code,
-                this.renewedLicense
-              );
-              formData.append(
-                this.documentTypes[19].documentType.code,
-                this.professionalLicense
-              );
-              formData.append(
-                this.documentTypes[52].documentType.code,
-                this.professionalLicense2
-              );
-              formData.append(
-                this.documentTypes[24].documentType.code,
-                this.masters
-              );
-              formData.append(
-                this.documentTypes[25].documentType.code,
-                this.mastersTranscript
-              );
-              formData.append(
-                this.documentTypes[57].documentType.code,
-                this.mastersTranscript2
-              );
-              formData.append(
-                this.documentTypes[26].documentType.code,
-                this.phd
-              );
-              formData.append(
-                this.documentTypes[27].documentType.code,
-                this.phdTranscript
-              );
-              formData.append(
-                this.documentTypes[58].documentType.code,
-                this.phdTranscript2
-              );
-              formData.append(
-                this.documentTypes[63].documentType.code,
-                this.renewedLicenseFromHealthFacility
-              );
-              formData.append(
-                this.documentTypes[65].documentType.code,
-                this.requestLetterFromHiringHealthFacility
-              );
-              let payload = { document: formData, id: licenseId };
+                formData.append(
+                  this.documentTypes[20].documentType.code,
+                  this.payroll
+                );
+                formData.append(
+                  this.documentTypes[21].documentType.code,
+                  this.degree
+                );
+                formData.append(
+                  this.documentTypes[6].documentType.code,
+                  this.proCertificate
+                );
+                formData.append(
+                  this.documentTypes[29].documentType.code,
+                  this.proCertificate2
+                );
+                formData.append(
+                  this.documentTypes[30].documentType.code,
+                  this.proCertificate3
+                );
+                formData.append(
+                  this.documentTypes[31].documentType.code,
+                  this.proCertificate4
+                );
+                formData.append(
+                  this.documentTypes[32].documentType.code,
+                  this.proCertificate5
+                );
+                formData.append(
+                  this.documentTypes[this.docIdx].documentType.code,
+                  this.proDiploma
+                );
+                formData.append(
+                  this.documentTypes[this.docIdx2].documentType.code,
+                  this.proDiploma2
+                );
+                formData.append(
+                  this.documentTypes[this.docIdx3].documentType.code,
+                  this.proDiploma3
+                );
+                formData.append(
+                  this.documentTypes[this.docIdx4].documentType.code,
+                  this.proDiploma4
+                );
+                formData.append(
+                  this.documentTypes[this.docIdx5].documentType.code,
+                  this.proDiploma5
+                );
+                formData.append(
+                  this.documentTypes[8].documentType.code,
+                  this.proTranscript
+                );
+                formData.append(
+                  this.documentTypes[37].documentType.code,
+                  this.proTranscript2
+                );
+                formData.append(
+                  this.documentTypes[38].documentType.code,
+                  this.proTranscript3
+                );
+                formData.append(
+                  this.documentTypes[39].documentType.code,
+                  this.proTranscript4
+                );
+                formData.append(
+                  this.documentTypes[40].documentType.code,
+                  this.proTranscript5
+                );
+                formData.append(
+                  this.documentTypes[9].documentType.code,
+                  this.coc
+                );
+                formData.append(
+                  this.documentTypes[41].documentType.code,
+                  this.coc2
+                );
+                formData.append(
+                  this.documentTypes[42].documentType.code,
+                  this.coc3
+                );
+                if (this.educationalDocs != undefined) {
+                  formData.append(
+                    this.documentTypes[10].documentType.code,
+                    this.educationalDocs[0]
+                  );
+                  formData.append(
+                    this.documentTypes[11].documentType.code,
+                    this.educationalDocs[1]
+                  );
+                  formData.append(
+                    this.documentTypes[12].documentType.code,
+                    this.educationalDocs[2]
+                  );
+                  formData.append(
+                    this.documentTypes[13].documentType.code,
+                    this.educationalDocs[3]
+                  );
+                  formData.append(
+                    this.documentTypes[14].documentType.code,
+                    this.educationalDocs[4]
+                  );
+                }
+                if (this.applicantTypeId == 1) {
+                  formData.append(
+                    this.documentTypes[15].documentType.code,
+                    this.supportLetter
+                  );
+                }
+                if (this.applicantTypeId == 3) {
+                  formData.append(
+                    this.documentTypes[64].documentType.code,
+                    this.supportLetter
+                  );
+                }
+                formData.append(
+                  this.documentTypes[16].documentType.code,
+                  this.herqa
+                );
+                formData.append(
+                  this.documentTypes[18].documentType.code,
+                  this.renewedLicense
+                );
+                formData.append(
+                  this.documentTypes[19].documentType.code,
+                  this.professionalLicense
+                );
+                formData.append(
+                  this.documentTypes[52].documentType.code,
+                  this.professionalLicense2
+                );
+                formData.append(
+                  this.documentTypes[24].documentType.code,
+                  this.masters
+                );
+                formData.append(
+                  this.documentTypes[25].documentType.code,
+                  this.mastersTranscript
+                );
+                formData.append(
+                  this.documentTypes[57].documentType.code,
+                  this.mastersTranscript2
+                );
+                formData.append(
+                  this.documentTypes[26].documentType.code,
+                  this.phd
+                );
+                formData.append(
+                  this.documentTypes[27].documentType.code,
+                  this.phdTranscript
+                );
+                formData.append(
+                  this.documentTypes[58].documentType.code,
+                  this.phdTranscript2
+                );
+                formData.append(
+                  this.documentTypes[63].documentType.code,
+                  this.renewedLicenseFromHealthFacility
+                );
+                formData.append(
+                  this.documentTypes[65].documentType.code,
+                  this.requestLetterFromHiringHealthFacility
+                );
+                let payload = { document: formData, id: licenseId };
 
-              this.$store
-                .dispatch("newlicense/uploadDocuments", payload)
-                .then((res) => {
-                  if (res.status == 200) {
-                    this.showFlash = true;
-                    this.showLoading = false;
-                    setTimeout(() => {
-                      this.$router.push({ path: "/menu" });
-                    }, 1500);
-                  } else {
-                    this.showErrorFlash = true;
-                  }
-                })
-                .catch((err) => {});
-            }
-          });
+                this.$store
+                  .dispatch("newlicense/uploadDocuments", payload)
+                  .then((res) => {
+                    if (res.status == 200) {
+                      this.showFlash = true;
+                      this.showLoading = false;
+                      setTimeout(() => {
+                        this.$router.push({ path: "/menu" });
+                      }, 1500);
+                    } else {
+                      this.showErrorFlash = true;
+                    }
+                  })
+                  .catch((err) => {});
+              }
+            });
+        }
       } else {
         let formData = new FormData();
         formData.append(this.documentTypes[1].documentType.code, this.passport);

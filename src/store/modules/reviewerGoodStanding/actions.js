@@ -1,4 +1,5 @@
 import ApiService from "../../../services/api.service";
+import { baseUrl } from "../../../composables/baseURL";
 import {
   SET_GOOD_STANDING_UNASSIGNED,
   SET_GOOD_STANDING_UNASSIGNED_SEARCHED,
@@ -37,7 +38,6 @@ import {
   SET_GOOD_STANDING_OTHERS_RE_APPLY,
   SET_GOOD_STANDING_OTHERS_RE_APPLY_SEARCHED,
 } from "./mutation-types";
-const baseUrl = "https://ihris.moh.gov.et/hrl/api";
 
 export default {
   async getUnassignedGoodStanding({ commit }, statusId) {
@@ -591,9 +591,7 @@ export default {
   async getGoodStandingReApply({ commit }, adminStatus) {
     const url = baseUrl + "/goodstandings/status/" + adminStatus[0];
     const resp = await ApiService.get(url);
-    const reApply = resp.data.data.filter(function(e) {
-      return e.reviewerId === adminStatus[1];
-    });
+    const reApply = resp.data.data;
     commit(SET_GOOD_STANDING_RE_APPLY, reApply);
   },
 

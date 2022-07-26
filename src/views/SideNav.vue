@@ -60,8 +60,8 @@
         <div class="mb-4">
           <li class=" justify-start ">
             <transition name="slide-fade-to-left">
-              <div class="">
-                <div class=" justify-center items-center ">
+              <div>
+                <div @click="submittedDD" class="justify-center items-center">
                   <div>
                     <h3 class="text-lightBlueB-500 mt-tiny">
                       <span style="color: white;">
@@ -71,9 +71,7 @@
 
                         <i class="mr-2 far fa-address-book fa-x fa-light"></i>
                       </span>
-                      <span @click="submittedDD" style="color: white; "
-                        >Submitted</span
-                      >
+                      <span style="color: white; ">Submitted</span>
                     </h3>
                   </div>
                 </div>
@@ -104,16 +102,14 @@
         <div class="mb-4">
           <li class=" justify-start static">
             <transition name="slide-fade-to-left">
-              <div class=" ">
-                <div class=" justify-center items-center ">
+              <div>
+                <div @click="approvedDD" class="justify-center items-center">
                   <div class="">
                     <h3 class="text-lightBlueB-500 mt-tiny">
                       <span style="color: white;">
                         <i class="mr-2 far fa-thumbs-up fa-x fa-light"></i>
                       </span>
-                      <span @click="approvedDD" style="color: white; "
-                        >Approved</span
-                      >
+                      <span style="color: white;">Approved</span>
                       <span style="color: white;">
                         <i
                           class="fas fa-chevron-circle-down float-right mt-2"
@@ -153,17 +149,15 @@
         <div class="mb-4">
           <li class=" justify-start ">
             <transition name="slide-fade-to-left">
-              <div class=" ">
-                <div class=" justify-center items-center ">
+              <div>
+                <div @click="declinedDD" class="justify-center items-center">
                   <div class=" ">
                     <h3 class="text-lightBlueB-500 mt-tiny">
                       <span style="color: white;">
                         <i class="mr-2 far fa-thumbs-down fa-x fa-light"></i>
                       </span>
 
-                      <span @click="declinedDD" style="color: white; "
-                        >Declined
-                      </span>
+                      <span style="color: white;">Declined </span>
                       <span style="color: white;">
                         <i
                           class="fas fa-chevron-circle-down float-right mt-2"
@@ -243,13 +237,46 @@
 import { ref } from "vue";
 
 export default {
-  props: ["display"],
   data() {
     return {};
   },
   methods: {
     selectMenu(menu) {
-      this.$emit("changeDisplay", menu);
+      switch (menu) {
+        case 0:
+          this.$router.push({ path: "/menu" });
+          break;
+        case 1:
+          this.$router.push({ path: "/draft" });
+          break;
+        case 2:
+          this.$router.push({ path: "/withdrawn" });
+          break;
+        case 3:
+          this.$router.push({ path: "/submitted" });
+          break;
+        case 4:
+          this.$router.push({ path: "/inReview" });
+          break;
+        case 5:
+          this.$router.push({ path: "/approved" });
+          break;
+        case 6:
+          this.$router.push({ path: "/approvedPayment" });
+          break;
+        case 7:
+          this.$router.push({ path: "/declined" });
+          break;
+        case 8:
+          this.$router.push({ path: "/declinedPayment" });
+          break;
+        case 9:
+          this.$router.push({ path: "/undersupervision" });
+          break;
+        case 10:
+          this.$router.push({ path: "/pendingPayment" });
+          break;
+      }
     },
   },
   setup() {

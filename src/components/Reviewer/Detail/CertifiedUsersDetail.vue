@@ -9,7 +9,38 @@
     </span>
     <span v-else>
       <span v-if="isUserCertified && myRegion">
-        <button @click="downloadPdf">Download PDF</button>
+        <div
+          class="flex justify-center items-center mb-medium"
+          v-if="
+            applicationStatus !== 'CANC' &&
+              applicationStatus !== 'SUSP' &&
+              !showActionLoading
+          "
+        >
+          <div v-if="true">
+            <button @click="downloadPdf">Download PDF</button>
+          </div>
+          <div
+            v-if="isLicenseGenerated"
+            v-for="button in buttons"
+            v-bind:key="button.name"
+            v-bind:value="button.id"
+          >
+            <button
+              variant="outline"
+              v-bind:class="button.class"
+              @click="action(button.action)"
+            >
+              {{ button.name }}
+            </button>
+          </div>
+        </div>
+        <div
+          v-if="showActionLoading"
+          class="flex justify-center justify-items-center mt-2"
+        >
+          <Spinner />
+        </div>
         <div
           class="w-screen bg-lightBlueB-200 flex items-center justify-center"
         >
@@ -22,7 +53,7 @@
                 <Title message="Federal Democratic Republic Ethiopia" />
               </div>
               <span class="mt-1">
-                <Title message="የጤና ጥበቃ ሚኒስቴር" />
+                <Title message="የጤና ሚኒስቴር" />
                 <Title message="Ministry of Health" />
               </span>
               <form class="mx-auto max-w-3xl w-full mt-1" v-if="show">
@@ -36,62 +67,79 @@
                 </div>
                 <div class="flex">
                   <div class="flex flex-col mb-medium w-1/2 mr-12">
-                    <h4> በኢትዮጵያ ፌዴራላዊ ዴሞክራሲያዊ ረፐብሊክ የጤና ጥበቃ ሚንስቴር በአዋጅ ቁጥር {{
-                      certificateDetail.reviewer && certificateDetail.reviewer.expertLevel &&
-                      certificateDetail.reviewer.expertLevel.code === "FED"
-                        ? "1112/2011"
-                        : certificateDetail.reviewer &&certificateDetail.reviewer.region &&
-                          certificateDetail.reviewer.region.code === "AA"
-                        ? "64/2011"
-                        : certificateDetail.reviewer && certificateDetail.reviewer.region &&
-                          certificateDetail.reviewer.region.code === "ORO"
-                        ? "661/2009"
-                        : "-" 
-                    }} አንቀጽ
+                    <h4>
+                      በኢትዮጵያ ፌዴራላዊ ዴሞክራሲያዊ ረፐብሊክ የጤና ሚንስቴር በአዋጅ ቁጥር
                       {{
-                        certificateDetail.reviewer && certificateDetail.reviewer.expertLevel &&
+                        certificateDetail.reviewer &&
+                        certificateDetail.reviewer.expertLevel &&
+                        certificateDetail.reviewer.expertLevel.code === "FED"
+                          ? "1112/2011"
+                          : certificateDetail.reviewer &&
+                            certificateDetail.reviewer.region &&
+                            certificateDetail.reviewer.region.code === "AA"
+                          ? "64/2011"
+                          : certificateDetail.reviewer &&
+                            certificateDetail.reviewer.region &&
+                            certificateDetail.reviewer.region.code === "ORO"
+                          ? "661/2009"
+                          : "-"
+                      }}
+                      አንቀጽ
+                      {{
+                        certificateDetail.reviewer &&
+                        certificateDetail.reviewer.expertLevel &&
                         certificateDetail.reviewer.expertLevel.code === "FED"
                           ? "73"
-                          : certificateDetail.reviewer && certificateDetail.reviewer.region &&
+                          : certificateDetail.reviewer &&
+                            certificateDetail.reviewer.region &&
                             certificateDetail.reviewer.region.code === "AA"
                           ? "44/8"
-                          : certificateDetail.reviewer && certificateDetail.reviewer.region &&
+                          : certificateDetail.reviewer &&
+                            certificateDetail.reviewer.region &&
                             certificateDetail.reviewer.region.code === "ORO"
                           ? "3/3"
                           : "-"
                       }}
-                      ስልጣን መሰረት </h4>
+                      ስልጣን መሰረት
+                    </h4>
                   </div>
+
                   <div class="flex flex-col mb-medium w-1/2 mr-12">
-                  <h4>
+                    <h4>
                       Under the Federal Democratic Republic of Ethiopiathe
-                      Minstry
-                      of Health by Virtue of proclamation No.
+                      Minstry of Health by Virtue of proclamation No.
                       {{
-                        certificateDetail.reviewer && certificateDetail.reviewer.expertLevel &&
+                        certificateDetail.reviewer &&
+                        certificateDetail.reviewer.expertLevel &&
                         certificateDetail.reviewer.expertLevel.code === "FED"
                           ? "1112/2019"
-                          : certificateDetail.reviewer && certificateDetail.reviewer.region &&
+                          : certificateDetail.reviewer &&
+                            certificateDetail.reviewer.region &&
                             certificateDetail.reviewer.region.code === "AA"
                           ? "64/2019"
-                          : certificateDetail.reviewer && certificateDetail.reviewer.region &&
+                          : certificateDetail.reviewer &&
+                            certificateDetail.reviewer.region &&
                             certificateDetail.reviewer.region.code === "ORO"
                           ? "661/2002"
                           : "-"
                       }}
                       Article
                       {{
-                        certificateDetail.reviewer && certificateDetail.reviewer.expertLevel &&
+                        certificateDetail.reviewer &&
+                        certificateDetail.reviewer.expertLevel &&
                         certificateDetail.reviewer.expertLevel.code === "FED"
                           ? "73"
-                          : certificateDetail.reviewer && certificateDetail.reviewer.region &&
+                          : certificateDetail.reviewer &&
+                            certificateDetail.reviewer.region &&
                             certificateDetail.reviewer.region.code === "AA"
                           ? "44/8"
-                          : certificateDetail.reviewer && certificateDetail.reviewer.region &&
+                          : certificateDetail.reviewer &&
+                            certificateDetail.reviewer.region &&
                             certificateDetail.reviewer.region.code === "ORO"
                           ? "3/3"
                           : "-"
-                      }} is given the authority to issue
+                      }}
+                      is given the authority to issue
                     </h4>
                   </div>
                 </div>
@@ -134,7 +182,7 @@
                 </div>
                 <div class="flex">
                   <div class="flex flex-col mb-medium w-1/2 mr-12">
-                     <h4>ተገቢውን መስፈርት አሟልተው ስለተገኙ ሚኒስቴር መስሪያ ቤቱ</h4>
+                    <h4>ተገቢውን መስፈርት አሟልተው ስለተገኙ ሚኒስቴር መስሪያ ቤቱ</h4>
                     <h4
                       v-if="
                         certificateDetail.professionalTypes &&
@@ -146,15 +194,17 @@
                         v-for="professions in certificateDetail.professionalTypes"
                         class="flex flex-row"
                       >
-                        <b>{{
-                          professions.professionalTypes
-                            .amharicProfessionalType === "ሌላ"
-                            ? ""
-                            : professions.professionalTypes
-                                .amharicProfessionalType
-                        }} </b>
+                        <b
+                          >{{
+                            professions.professionalTypes
+                              .amharicProfessionalType === "ሌላ"
+                              ? ""
+                              : professions.professionalTypes
+                                  .amharicProfessionalType
+                          }}
+                        </b>
                       </div>
-                      <br>ሙያ መዝግቦ ይህን የሙያ ስራ ፈቃድ ሰጥቷል።
+                      <br />ሙያ መዝግቦ ይህን የሙያ ስራ ፈቃድ ሰጥቷል።
                     </h4>
                   </div>
                   <div class="flex flex-col mb-medium w-1/2 mr-12">
@@ -245,248 +295,6 @@
             </div>
           </div>
         </div>
-        <!-- <div class="bg-lightBlueB-200 h-full">
-          <div
-            v-if="show"
-            style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2)"
-            class="ml-8 mr-8 mb-12"
-          >
-            <div class="container">
-              <img
-                src="../../../assets/certeficate_Background_image.jpg"
-                alt="Notebook"
-                style="width: 100%"
-              />
-              <div class="content"></div>
-              <span id="main">
-                <div class="flex-container">
-                  <div></div>
-                  <div class="inner-flex">
-                    <h2><b>በኢትዮፕያ ፌደራላዊ ዴሞክራሲያዊ ሪፐብሊክ</b></h2>
-                    <h2><b>Federal Democratic Republic Ethiopia</b></h2>
-                    <br />
-                    <div class="flex-center">
-                      <h2>የጤና ጥበቃ ሚኒስቴር</h2>
-                      <h2>Ministry of Health</h2>
-                    </div>
-                  </div>
-                  <div>
-                    <h6>የምዝገባ ቁጥር: {{ certificateDetail.licenseNumber }}</h6>
-                  </div>
-                </div>
-                <div class="flex-second-container">
-                  <div>
-                    <h3 class="underline">
-                      <b>የጤና ባለሙያዎች የሙያ ምዝገባና ፈቃድ የምስከር ወረቀት</b>
-                    </h3>
-                    <br />
-                    <h4>በኢትዮጵያ ፌዴራላዊ ዴሞክራሲያዊ ረፐብሊክ የጤና ጥበቃ ሚንስቴር</h4>
-                    <h4>
-                      በአዋጅ ቁጥር
-                      {{
-                        certificateDetail.reviewer.expertLevel &&
-                        certificateDetail.reviewer.expertLevel.code === "FED"
-                          ? "1112/2011"
-                          : certificateDetail.reviewer.region &&
-                            certificateDetail.reviewer.region.code === "AA"
-                          ? "64/2011"
-                          : certificateDetail.reviewer.region &&
-                            certificateDetail.reviewer.region.code === "ORO"
-                          ? "661/2009"
-                          : "-"
-                      }}
-                      አንቀጽ
-                      {{
-                        certificateDetail.reviewer.expertLevel &&
-                        certificateDetail.reviewer.expertLevel.code === "FED"
-                          ? "73"
-                          : certificateDetail.reviewer.region &&
-                            certificateDetail.reviewer.region.code === "AA"
-                          ? "44/8"
-                          : certificateDetail.reviewer.region &&
-                            certificateDetail.reviewer.region.code === "ORO"
-                          ? "3/3"
-                          : "-"
-                      }}
-                      ስልጣን መሰረት
-                    </h4>
-                    <br /><br /><br /><br />
-                    <h3 class="underline">
-                      <b
-                        >{{
-                          certifiedUser.alternativeName != null
-                            ? certifiedUser.alternativeName
-                            : ""
-                        }}
-                        {{
-                          certifiedUser.alternativeFatherName != null
-                            ? certifiedUser.alternativeFatherName
-                            : ""
-                        }}
-                        {{
-                          certifiedUser.alternativeGrandFatherName != null
-                            ? certifiedUser.alternativeGrandFatherName
-                            : ""
-                        }}</b
-                      >
-                    </h3>
-                    <h4>ተገቢውን መስፈርት አሟልተው ስለተገኙ ሚኒስቴር መስሪያ ቤቱ</h4>
-                    <h4
-                      v-if="
-                        certificateDetail.professionalTypes &&
-                          certificateDetail.professionalTypes[0]
-                            .professionalTypes.amharicProfessionalType
-                      "
-                    >
-                      <div
-                        v-for="professions in certificateDetail.professionalTypes"
-                        class="flex flex-row"
-                      >
-                        <b>{{
-                          professions.professionalTypes
-                            .amharicProfessionalType === "ሌላ"
-                            ? ""
-                            : professions.professionalTypes
-                                .amharicProfessionalType
-                        }}</b>
-                      </div>
-                    </h4>
-                    <br />
-                    <h3>ሙያ መዝግቦ ይህን የሙያ ስራ ፈቃድ ሰጥቷል።</h3>
-                    <h3>
-                      ይህ የሙያ የስራ ፈቃድ የሚያገለግለው
-                      <b>
-                        {{
-                          certificateDetail.certifiedDate
-                            ? toEthiopian(
-                                moment(
-                                  certificateDetail.certifiedDate
-                                )._d.toISOString(),
-                                false
-                              )
-                            : ""
-                        }}
-                        -{{
-                          certificateDetail.licenseExpirationDate !== null
-                            ? toEthiopian(
-                                moment(
-                                  certificateDetail.licenseExpirationDate
-                                )._d.toISOString(),
-                                false
-                              )
-                            : " አልተገለጸም"
-                        }}
-                      </b>
-                    </h3>
-                  </div>
-                  <div>
-                    <h3 class="underline">
-                      <b>HEALTH PROFFESSIONALS REGISTRATION AND</b>
-                    </h3>
-                    <h3 class="underline"><b>LICENSING CERTEFICATE</b></h3>
-                    <br />
-                    <h4>
-                      Under the Federal Democratic Republic of Ethiopiathe
-                      Minstry
-                    </h4>
-                    <h4>
-                      of Health by Virtue of proclamation No.
-                      {{
-                        certificateDetail.reviewer.expertLevel &&
-                        certificateDetail.reviewer.expertLevel.code === "FED"
-                          ? "1112/2019"
-                          : certificateDetail.reviewer.region &&
-                            certificateDetail.reviewer.region.code === "AA"
-                          ? "64/2019"
-                          : certificateDetail.reviewer.region &&
-                            certificateDetail.reviewer.region.code === "ORO"
-                          ? "661/2002"
-                          : "-"
-                      }}
-                      Article
-                      {{
-                        certificateDetail.reviewer.expertLevel &&
-                        certificateDetail.reviewer.expertLevel.code === "FED"
-                          ? "73"
-                          : certificateDetail.reviewer.region &&
-                            certificateDetail.reviewer.region.code === "AA"
-                          ? "44/8"
-                          : certificateDetail.reviewer.region &&
-                            certificateDetail.reviewer.region.code === "ORO"
-                          ? "3/3"
-                          : "-"
-                      }}
-                    </h4>
-                    <h4>is given the authority to issue</h4>
-                    <br />
-                    <h3 class="underline">
-                      <b
-                        >{{ certifiedUser.name }}
-                        {{ certifiedUser.fatherName }}
-                        {{
-                          certifiedUser.grandFatherName != null
-                            ? certifiedUser.grandFatherName
-                            : ""
-                        }}</b
-                      >
-                    </h3>
-                    <h4>
-                      Having duly satisfied the requirements of the Ministry
-                    </h4>
-                    <h4>hereby registered and licensed as</h4>
-                    <h4
-                      v-if="
-                        certificateDetail.professionalTypes &&
-                          certificateDetail.professionalTypes[0]
-                            .professionalTypes.name
-                      "
-                    >
-                      <div
-                        v-for="professions in certificateDetail.professionalTypePrefixes"
-                        class="flex flex-row"
-                      >
-                        <b
-                          >{{
-                            professions.prefix
-                              ? "(" + professions.prefix + ")"
-                              : ""
-                          }}
-                          {{
-                            professions.professionalTypes.code === "OTH"
-                              ? certificateDetail.otherProfessionalType
-                                ? certificateDetail.otherProfessionalType
-                                : ""
-                              : professions.professionalTypes.name
-                          }}</b
-                        >
-                      </div>
-                    </h4>
-                    <br />
-                    <h3>
-                      The license is valid:<b
-                        >{{
-                          certificateDetail.certifiedDate
-                            ? moment(certificateDetail.certifiedDate).format(
-                                "MMM DD, YYYY"
-                              )
-                            : ""
-                        }}
-                        -
-                        {{
-                          certificateDetail.licenseExpirationDate
-                            ? moment(
-                                certificateDetail.licenseExpirationDate
-                              ).format("MMM DD, YYYY")
-                            : " Not specified"
-                        }}</b
-                      >
-                    </h3>
-                  </div>
-                </div>
-              </span>
-            </div>
-          </div>
-        </div> -->
       </span>
       <span v-else-if="!isUserCertified && isUserFound">
         <div class="flex justify-center content-center userNotFound">
@@ -504,6 +312,12 @@
         </div>
       </span>
     </span>
+  </div>
+  <div v-if="showFlash">
+    <FlashMessage message="Operation Successful!" />
+  </div>
+  <div v-if="showErrorFlash">
+    <ErrorFlashMessage message="Operation Failed!" />
   </div>
 </template>
 <script>
@@ -524,6 +338,9 @@ import { toEthiopian } from "../Configurations/dateConvertor";
 import STATIC_CERTIFICATE_URL from "../../../sharedComponents/constants/message.js";
 
 import moment from "moment";
+import router from "../../../router";
+import FlashMessage from "@/sharedComponents/FlashMessage";
+import ErrorFlashMessage from "@/sharedComponents/ErrorFlashMessage";
 export default {
   computed: {
     moment: () => moment,
@@ -538,6 +355,8 @@ export default {
     Title,
     ReviewerNavBar,
     Spinner,
+    FlashMessage,
+    ErrorFlashMessage,
   },
   setup() {
     const store = useStore();
@@ -545,7 +364,12 @@ export default {
     let show = ref(false);
     let certifiedUser = ref({});
     let certificateDetail = ref({});
+    let renewalData = ref({
+      data: {},
+    });
     let showLoading = ref(false);
+    let showActionLoading = ref(false);
+
     let showApplicationLoading = ref(false);
     let isUserCertified = ref(true);
     let isUserFound = ref(true);
@@ -558,6 +382,86 @@ export default {
 
     const expertLevelCode = JSON.parse(localStorage.getItem("allAdminData"))
       .expertLevel.code;
+
+    let buttons = ref([
+      { action: "", name: "" },
+      { action: "", name: "" },
+    ]);
+    let isLicenseGenerated = ref(false);
+    let applicationTypes = route.params.applicationType;
+    let applicationStatus = ref("");
+
+    let showFlash = ref(false);
+    let showErrorFlash = ref(false);
+
+    const updateLicenseGenerated = () => {
+      let req = {
+        action: null,
+        data: { ...certificateDetail.value, isLicenseGenerated: true },
+      };
+      editApplication(applicationTypes, req);
+    };
+
+    const editApplication = (applicationType, req) => {
+      showActionLoading.value = true;
+      if (applicationType == "New License") {
+        store
+          .dispatch("reviewer/editNewLicense", req)
+          .then((res) => {
+            showActionLoading.value = false;
+            if (res.statusText == "Created") {
+              showFlash.value = true;
+              setTimeout(() => {
+                router.go();
+              }, 3000);
+            } else {
+              showErrorFlash.value = true;
+              setTimeout(() => {
+                router.go();
+              }, 3000);
+            }
+          })
+          .catch((err) => {
+            showErrorFlash.value = true;
+            showActionLoading.value = false;
+            setTimeout(() => {
+              router.go();
+            }, 3000);
+          });
+      } else if (applicationType == "Renewal") {
+        store
+          .dispatch("reviewer/editRenewal", req)
+          .then((res) => {
+            showActionLoading.value = false;
+            if (res.statusText == "Created") {
+              showFlash.value = true;
+              setTimeout(() => {
+                router.go();
+              }, 3000);
+            } else {
+              showErrorFlash.value = true;
+              setTimeout(() => {
+                router.go();
+              }, 3000);
+            }
+          })
+          .catch((err) => {
+            showErrorFlash.value = true;
+            showActionLoading.value = false;
+            setTimeout(() => {
+              router.go();
+            }, 3000);
+          });
+      }
+    };
+
+    const action = (actionValue) => {
+      let req = {
+        action: actionValue,
+        data: certificateDetail.value,
+      };
+      editApplication(applicationTypes, req);
+    };
 
     const fetchCertifiedUser = () => {
       showLoading.value = true;
@@ -601,9 +505,15 @@ export default {
           .then((res) => {
             showApplicationLoading.value = false;
             certificateDetail.value = res.data.data;
-            certificateDetail.value = res.data.data;
             certificateDetail.value.licenseNumber =
               certificateDetail.value.verificationCode;
+            buttons.value = res.data.data.applicationStatus.buttons.filter(
+              (button) => {
+                return button.code == "CAN" || button.code == "SUS";
+              }
+            );
+            applicationStatus.value = res.data.data.applicationStatus.code;
+            isLicenseGenerated.value = res.data.data.isLicenseGenerated;
             if (
               route.params.applicantId != certificateDetail.value.applicantId
             ) {
@@ -635,7 +545,13 @@ export default {
           .then((res) => {
             showApplicationLoading.value = false;
             certificateDetail.value = res.data.data;
-            certificateDetail.value = res.data.data;
+            buttons.value = res.data.data.applicationStatus.buttons.filter(
+              (button) => {
+                return button.code == "CAN" || button.code == "SUS";
+              }
+            );
+            applicationStatus.value = res.data.data.applicationStatus.code;
+            isLicenseGenerated.value = res.data.data.isLicenseGenerated;
             certificateDetail.value.licenseNumber =
               certificateDetail.value.goodStandingCode;
             if (
@@ -663,6 +579,13 @@ export default {
           .then((res) => {
             showApplicationLoading.value = false;
             certificateDetail.value = res.data.data;
+            buttons.value = res.data.data.applicationStatus.buttons.filter(
+              (button) => {
+                return button.code == "CAN" || button.code == "SUS";
+              }
+            );
+            applicationStatus.value = res.data.data.applicationStatus.code;
+            isLicenseGenerated.value = res.data.data.isLicenseGenerated;
             certificateDetail.value.licenseNumber =
               certificateDetail.value.newLicenseCode;
             if (
@@ -690,9 +613,15 @@ export default {
           .then((res) => {
             showApplicationLoading.value = false;
             certificateDetail.value = res.data.data;
+            buttons.value = res.data.data.applicationStatus.buttons.filter(
+              (button) => {
+                return button.code == "CAN" || button.code == "SUS";
+              }
+            );
+            applicationStatus.value = res.data.data.applicationStatus.code;
+            isLicenseGenerated.value = res.data.data.isLicenseGenerated;
             certificateDetail.value.licenseNumber =
               certificateDetail.value.renewalCode;
-              console.log("certificate detail", certificateDetail.value)
             if (
               route.params.applicantId != certificateDetail.value.applicantId
             ) {
@@ -953,6 +882,7 @@ export default {
         orientation: "landscape",
         filters: ["ASCIIHexEncode"],
       });
+      updateLicenseGenerated();
       const userImage = certifiedUser.value.photo;
       if (certificateDetail.value.reviewer.expertLevel.code === "FED") {
         doc.addImage(
@@ -1016,6 +946,13 @@ export default {
       isUserCertified,
       isUserFound,
       myRegion,
+      buttons,
+      isLicenseGenerated,
+      action,
+      showActionLoading,
+      applicationStatus,
+      showFlash,
+      showErrorFlash,
     };
   },
 };

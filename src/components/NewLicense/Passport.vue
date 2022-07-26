@@ -18,6 +18,13 @@
         >
           REJECTED
         </h2>
+        <h6
+          style="font-weight: bold;"
+          class="flex justify-center ml-4 mr-4"
+          v-if="declinedFieldsCheck"
+        >
+          Remark: <span class="ml-2" style="color: #e63636"> {{ remark }}</span>
+        </h6>
         <h2
           class="flex justify-center"
           v-if="acceptedFieldsCheck"
@@ -184,6 +191,7 @@ import Spinner from "@/sharedComponents/Spinner";
 import MESSAGE from "../../composables/documentMessage";
 import MAX_FILE_SIZE from "../../composables/documentMessage";
 import MAX_SIZE_MB from "../../composables/documentMessage";
+import { googleApi } from "@/composables/baseURL";
 
 export default {
   components: {
@@ -197,8 +205,6 @@ export default {
     const store = useStore();
     const route = useRoute();
     const router = useRouter();
-
-    const basePath = "https://ihris.moh.gov.et/hrl/";
 
     let message = ref({
       showFlash: false,
@@ -440,6 +446,8 @@ export default {
       store.getters["newlicense/getProfessionalDocTranscript4"];
     professionalDocTranscript5 =
       store.getters["newlicense/getProfessionalDocTranscript5"];
+
+    remark = store.getters["newlicense/getRemark"];
 
     const draft = (action) => {
       message.value.showLoading = true;
@@ -859,7 +867,6 @@ export default {
       }
       declinedFields = store.getters["newlicense/getDeclinedFields"];
       acceptedFields = store.getters["newlicense/getAcceptedFields"];
-      remark = store.getters["newlicense/getRemark"];
       if (declinedFields != null && declinedFields.includes("IC")) {
         declinedFieldsCheck.value = true;
       }
@@ -880,7 +887,7 @@ export default {
             }
             passportFile.value = draftData.documents[i];
             showPreview.value = true;
-            filePreview.value = basePath + draftData.documents[i].filePath;
+            filePreview.value = googleApi + draftData.documents[i].filePath;
           }
         }
       }
@@ -905,7 +912,7 @@ export default {
       draftData,
       draftStatus,
       update,
-      basePath,
+      googleApi,
       message,
       dataChanged,
       acceptedFields,

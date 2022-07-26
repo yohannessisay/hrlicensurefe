@@ -85,5 +85,15 @@ export default {
     renewalUnderSuperVisionConfirmedSearched: [],
     renewalOthersUnderSuperVisionConfirmed: [],
     renewalOthersUnderSuperVisionConfirmedSearched: [],
+
+    renewalSuspended: [],
+    renewalSuspendedSearched: [],
+    renewalCancelled: [],
+    renewalCancelledSearched: [],
+
+    renewalAllSuspended: [],
+    renewalAllSuspendedSearched: [],
+    renewalAllCancelled: [],
+    renewalAllCancelledSearched: [],
   },
 };

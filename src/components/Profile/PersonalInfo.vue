@@ -19,14 +19,14 @@
         <div class="flex mb-4 justify-center">
           <span v-if="showUpload">
             <span>
-              <label class="text-primary-700 ml-4"
+              <label class="text-primary-700 text-justify"
                 >Maximum size for profile picture is 3 MB
               </label>
             </span>
             <br />
-            <label class="text-primary-700 ml-4"
+            <label class="text-primary-700 text-justify"
               >Upload Profile Picture: (*)
-              <div class="dropbox">
+              <div class="dropbox ml-8">
                 <input
                   type="file"
                   id="photoFile"
@@ -46,7 +46,6 @@
               </div>
             </label>
           </span>
-
           <picture v-if="!showUpload && isImage">
             <p class="ml-4">
               <a href="javascript:void(0)" @click="reset()">Upload again</a>
@@ -54,8 +53,7 @@
             <img v-bind:src="filePreview" v-show="showPreview" />
           </picture>
           <span v-if="photoSizeCheck" style="color: red"
-            >Image size to big, Upload again. Image must be less than 3
-            MB</span
+            >Image size to big, Upload again. Image must be less than 3 MB</span
           >
           <span v-if="!showUpload && !isImage && !photoSizeCheck">
             <img :src="filePreview" alt="" class="preview" />
@@ -64,7 +62,12 @@
         <div class="flex">
           <div class="flex flex-col mb-medium w-1/2 mr-6">
             <label class="text-primary-700">First Name (*)</label>
-            <input class="max-w-3xl" type="text" v-model="personalInfo.name" />
+            <input
+              class="max-w-3xl"
+              type="text"
+              onkeypress="return /[a-zA-Z]/i.test(event.key)"
+              v-model="personalInfo.name"
+            />
             <span style="color: red">{{ personalInfoErrors.name }}</span>
           </div>
           <div class="flex flex-col mb-medium w-1/2 ml-12">
@@ -72,6 +75,7 @@
             <input
               class="max-w-3xl"
               type="text"
+              onkeypress="return /[a-zA-Z]/i.test(event.key)"
               v-model="personalInfo.fatherName"
             />
             <span style="color: red">{{ personalInfoErrors.fatherName }}</span>
@@ -83,6 +87,7 @@
             <input
               class="max-w-3xl"
               type="text"
+              onkeypress="return /[a-zA-Z]/i.test(event.key)"
               v-model="personalInfo.grandFatherName"
             />
             <span style="color: red">{{
@@ -94,6 +99,7 @@
             <input
               class="max-w-3xl"
               type="text"
+              onkeypress="return /[a-zA-Z]/i.test(event.key)"
               v-model="personalInfo.alternativeName"
             />
             <span style="color: red">{{
@@ -107,6 +113,7 @@
             <input
               class="max-w-3xl"
               type="text"
+              onkeypress="return /[a-zA-Z]/i.test(event.key)"
               v-model="personalInfo.alternativeFatherName"
             />
             <span style="color: red">{{
@@ -120,6 +127,7 @@
             <input
               class="max-w-3xl"
               type="text"
+              onkeypress="return /[a-zA-Z]/i.test(event.key)"
               v-model="personalInfo.alternativeGrandFatherName"
             />
             <span style="color: red">{{
@@ -160,8 +168,16 @@
               class="max-w-3xl"
               type="date"
               v-model="personalInfo.dateOfBirth"
+              @change="validateDate(personalInfo.dateOfBirth)"
             />
             <span style="color: red">{{ personalInfoErrors.dateOfBirth }}</span>
+            <span
+              v-if="invalidBirthDate"
+              style="color:red"
+              class="mt-2 text-lg"
+            >
+              Applicant must be at least 18.
+            </span>
           </div>
           <div class="flex flex-col mb-medium w-1/2 ml-12">
             <div class="flex flex-col w-full">
@@ -293,6 +309,7 @@ export default {
     let fileSize = ref("");
     let nationality = ref("");
     let maritalStatus = ref("");
+    let invalidBirthDate = ref(false);
 
     let personalInfo = ref({
       name: "",
@@ -440,6 +457,22 @@ export default {
         emit("changeActiveState");
       }
     };
+    const validateDate = (dateInput) => {
+      let today = new Date();
+      let birthYear = parseInt(dateInput.slice(0, 4));
+      let birthMonth = parseInt(dateInput.slice(5, 7));
+      let birthDay = parseInt(dateInput.slice(8, 10));
+      let age = today.getFullYear() - birthYear;
+      let month = today.getMonth() - birthMonth;
+      if (month < 0 || (month === 0 && today.getDate() < birthDay)) {
+        age--;
+      }
+      if (age < 18) {
+        invalidBirthDate.value = true;
+      } else {
+        invalidBirthDate.value = false;
+      }
+    };
     const validateForm = (formData) => {
       const errors = {};
       if (!formData.photo) errors.photo = "Profile Picture Required";
@@ -449,7 +482,6 @@ export default {
         errors.grandFatherName = "Grandfather's Name Required";
       if (!formData.nationalityId)
         errors.nationalityId = "Nationality Required";
-      if (!formData.dateOfBirth) errors.dateOfBirth = "Date of Birth Required";
       return errors;
     };
     const isEmpty = (obj) => {
@@ -530,6 +562,8 @@ export default {
       fetchZones,
       fetchWoredas,
       fetchNationalities,
+      validateDate,
+      invalidBirthDate,
     };
   },
 };

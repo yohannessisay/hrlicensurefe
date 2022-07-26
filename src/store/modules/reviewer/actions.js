@@ -1,4 +1,5 @@
 import ApiService from "../../../services/api.service";
+import { baseUrl } from "../../../composables/baseURL";
 import {
   SET_UNASSIGNED,
   SET_UNASSIGNED_SEARCHED,
@@ -44,11 +45,9 @@ import {
   SET_MY_REGION_CERTIFIED_USERS,
   SET_MY_REGION_CERTIFIED_USERS_SEARCHED,
   SET_PROFESSIONAL_TYPES,
+  SET_IMPORTED,
+  SET_LEGACY_DATA_SEARCHED,
 } from "./mutation-types";
-const baseUrl = "https://ihris.moh.gov.et/hrl/api";
-const adminId = +localStorage.getItem("adminId");
-const adminRole = localStorage.getItem("role");
-// let headers = new Headers({'Bearer Token': bearerToken});
 
 export default {
   async getApplicationStatuses({ commit }) {
@@ -60,8 +59,6 @@ export default {
 
   async getUnfinished({ commit }, id) {
     try {
-      // const resp = await ApiService.get("https://randomuser.me/api/?results=10");
-      // const url = baseUrl + "/newLicenses/user/" + id;
       const url = baseUrl + "/applications/unfinished/" + id;
       const resp = await ApiService.get(url);
       commit(SET_UNFINISHED, resp.data.data);
@@ -929,6 +926,49 @@ export default {
     commit(SET_PENDING_PAYMENTS_SEARCHED, searchedVal);
   },
 
+  async updateLicenseGenerated({ commit }, appInfo) {
+    console.log("app data", appInfo);
+    const id = parseInt(appInfo[2]);
+    const url = `${baseUrl}/${appInfo[1]}/${id}`;
+    const resp = await ApiService.put(url, appInfo[0]);
+    console.log("respond", resp);
+    return resp;
+  },
+
+  async getLegacyData({ commit }, parameters) {
+    let url = "";
+    parameters[2]
+      ? (url =
+          baseUrl +
+          `/legacyData?page=${parameters[0]}&size=${parameters[1]}&value=${parameters[2]}`)
+      : (url =
+          baseUrl + `/legacyData?page=${parameters[0]}&size=${parameters[1]}`);
+    const resp = await ApiService.get(url);
+    return resp.data.data;
+    // commit(SET_LEGACY_DATA, resp.data.data);
+  },
+
+  getLegacyDataSearched({ commit, getters }, searchKey) {
+    if (getters.legacyData === undefined) {
+      return;
+    }
+    const searchedVal = getters.legacyData.filter(function(e) {
+      return (
+        e.newLicenseCode.toLowerCase().includes(searchKey.toLowerCase()) ||
+        (e.applicant.profile.name + " " + e.applicant.profile.fatherName)
+          .toLowerCase()
+          .includes(searchKey.toLowerCase()) ||
+        e.applicant.profile.name
+          .toLowerCase()
+          .includes(searchKey.toLowerCase()) ||
+        e.applicant.profile.fatherName
+          .toLowerCase()
+          .includes(searchKey.toLowerCase())
+      );
+    });
+    commit(SET_LEGACY_DATA_SEARCHED, searchedVal);
+  },
+
   async getProfile(context, id) {
     try {
       const url = baseUrl + "/profiles/" + id;
@@ -1247,6 +1287,7 @@ export default {
   },
   async editRenewal({ commit }, license) {
     try {
+      console.log("license is", license);
       const resp = await ApiService.put(
         baseUrl + "/renewals/" + license.data.id,
         license
@@ -1289,6 +1330,52 @@ export default {
   async getCertifiedUserById({ commit }, id) {
     try {
       const resp = await ApiService.get(baseUrl + "/users/" + id);
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+  async transferToFederal({ commit }, data) {
+    try {
+      const resp = await ApiService.post(
+        baseUrl + "/licenseReviewers/transfer",
+        data
+      );
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+
+  async getImported({ commit }) {
+    try {
+      const url = baseUrl + "/nationalExamResult";
+      const resp = await ApiService.get(url);
+
+      commit(SET_IMPORTED, resp.data);
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+
+  async addImported(data) {
+    try {
+      const url = baseUrl + "/nationalExamResult/import";
+
+      const resp = await ApiService.post(url, data);
+   
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
+
+  async editImported(data,editedData) {
+    try {
+      const url = baseUrl + "/nationalExamResult/"+editedData.id;
+
+      const resp = await ApiService.put(url, editedData);
       return resp;
     } catch (error) {
       return error;

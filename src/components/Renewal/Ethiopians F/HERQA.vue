@@ -18,6 +18,13 @@
         >
           REJECTED
         </h2>
+        <h6
+          style="font-weight: bold;"
+          class="flex justify-center ml-4 mr-4"
+          v-if="declinedFieldsCheck"
+        >
+          Remark: <span class="ml-2" style="color: #e63636"> {{ remark }}</span>
+        </h6>
         <h2
           class="flex justify-center"
           v-if="acceptedFieldsCheck"
@@ -26,16 +33,14 @@
           ACCEPTED
         </h2>
         <div class="tooltip">
-              <TitleWithIllustration
-          illustration="Certificate"
-          message="Higher Education Relevance and Quality Agency(HERQA)"
-          class="mt-8"
-        />
-            <span class="tooltiptext ml-4">R
-             Equivalence letter
-            </span>
-          </div>
-          
+          <TitleWithIllustration
+            illustration="Certificate"
+            message="Higher Education Relevance and Quality Agency(HERQA)"
+            class="mt-8"
+          />
+          <span class="tooltiptext ml-4">R Equivalence letter </span>
+        </div>
+
         <span class="flex justify-center">{{ documentMessage }}</span>
         <form @submit.prevent="submit" class="mx-auto max-w-3xl w-full mt-8">
           <div class="flex justify-center">
@@ -190,6 +195,7 @@ import Spinner from "@/sharedComponents/Spinner";
 import MESSAGE from "../../../composables/documentMessage";
 import MAX_FILE_SIZE from "../../../composables/documentMessage";
 import MAX_SIZE_MB from "../../../composables/documentMessage";
+import { googleApi } from "@/composables/baseURL";
 
 export default {
   components: {
@@ -203,8 +209,6 @@ export default {
     const store = useStore();
     const route = useRoute();
     const router = useRouter();
-
-    const basePath = "https://storage.googleapis.com/hris-lisence-dev/";
 
     let message = ref({
       showFlash: false,
@@ -335,6 +339,7 @@ export default {
     letterFromHiringManager = store.getters["renewal/getRenewalLicense"];
     workExperience = store.getters["renewal/getRenewalWorkExperience"];
     workExperience2 = store.getters["renewal/getRenewalWorkExperience2"];
+    remark = store.getters["renewal/getRemark"];
 
     const draft = (action) => {
       message.value.showLoading = true;
@@ -454,7 +459,10 @@ export default {
               letterFromHiringManager
             );
             formData.append(documentSpecs[5].documentType.code, workExperience);
-            formData.append(documentSpecs[35].documentType.code, workExperience2);
+            formData.append(
+              documentSpecs[35].documentType.code,
+              workExperience2
+            );
             store
               .dispatch("renewal/uploadDocuments", payload)
               .then((res) => {
@@ -647,7 +655,6 @@ export default {
       }
       declinedFields = store.getters["renewal/getDeclinedFields"];
       acceptedFields = store.getters["renewal/getAcceptedFields"];
-      remark = store.getters["renewal/getRemark"];
       if (declinedFields != undefined && declinedFields.includes("HERQA")) {
         declinedFieldsCheck.value = true;
       }
@@ -670,7 +677,7 @@ export default {
 
             herqaFile.value = draftData.documents[i];
             showPreview.value = true;
-            filePreview.value = basePath + draftData.documents[i].filePath;
+            filePreview.value = googleApi + draftData.documents[i].filePath;
           }
         }
       }
@@ -695,7 +702,7 @@ export default {
       draftStatus,
       update,
       draftData,
-      basePath,
+      googleApi,
       message,
       dataChanged,
       acceptedFields,

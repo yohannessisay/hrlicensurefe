@@ -405,6 +405,7 @@ export default {
         admins.value = res.data.data.filter(e => {
           return e.id !== loggedInAdminId;
         })
+        console.log("admins value is ", admins.value)
       });
     };
 
@@ -413,6 +414,7 @@ export default {
         admins.value = res.data.data.filter(e => {
           return e.id !== loggedInAdminId
         });
+        console.log("admins value is ", admins.value)
       });
     };
 
