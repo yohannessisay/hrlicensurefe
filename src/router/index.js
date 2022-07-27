@@ -49,7 +49,7 @@ const routes = [
   {
     path: "/menu",
     name: "Menu",
-    component: () => import("../views/Menu.vue"),
+    component: () => import("../views/Applicant/Menu.vue"),
   },
   {
     path: "/resetpassword/:id",
