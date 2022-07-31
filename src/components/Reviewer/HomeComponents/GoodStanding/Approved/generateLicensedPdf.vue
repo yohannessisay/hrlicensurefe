@@ -101,24 +101,11 @@
                                   class="ml-8 mr-8 mb-12"
                                 >
                                   <div class="mt-large bg-white">
-                                    <!-- <span
-                                      v-if="
-                                        isGoodStanding &&
-                                        license &&
-                                        license.applicationStatus &&
-                                        (license.applicationStatus.code ===
-                                          'AP' ||
-                                          license.applicationStatus.code ===
-                                            'APP') &&
-                                        myRegion
-                                      "
-                                    >
-                                      <button @click="GenerateLetter">
-                                        Generate Letter
-                                      </button>
-                                    </span> -->
+                            
 
-                                    <h2 class="ml-3 mt-4">To: EFDA .</h2>
+                                    <h2 class="ml-4 mt-8">To: {{  modalData
+                                          ? modalData.whomGoodStandingFor
+                                          : "" }}.</h2>
                                     <h3 class="ml-64 mb-8">
                                       LETTER OF GOOD STANDING
                                     </h3>
@@ -227,7 +214,7 @@
                                       .
                                     </h4>
 
-                                    <h4 class="ml-4 mt-8">
+                                    <h4 class="ml-8 mt-8">
                                       Hence we appreciate any assistance, which
                                       will be rendered to
                                       <span>
@@ -240,7 +227,7 @@
                                         }} </span
                                       >.
                                     </h4>
-                                    <h4 class="ml-4 mb-8">With best regards</h4>
+                                    <h4 class="ml-8 mb-8">With best regards</h4>
 
                                     <div
                                       class="flex justify-start"

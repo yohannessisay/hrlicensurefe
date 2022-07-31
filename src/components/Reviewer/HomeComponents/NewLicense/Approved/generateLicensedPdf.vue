@@ -58,13 +58,7 @@
             <section class="text-gray-800">
               <div class="flex justify-center">
                 <div class="text-center lg:max-w-3xl md:max-w-xl">
-                  <h2 class="text-2xl font-bold mb-8 px-6">
-                    Generate
-                    <span class="text-2xl font-bold">{{
-                      modalData.name ? modalData.name : ""
-                    }}</span>
-                    's License Data
-                  </h2>
+           
                 </div>
               </div>
               <div class="vld-parent">
