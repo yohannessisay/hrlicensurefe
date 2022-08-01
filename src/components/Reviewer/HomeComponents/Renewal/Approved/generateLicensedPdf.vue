@@ -1,6 +1,5 @@
 <template>
-  <div
-    class="
+  <div class="
       modal
       fade
       fixed
@@ -11,24 +10,15 @@
       h-full
       outline-none
       overflow-x-hidden overflow-y-auto
-    "
-    id="generatePdf"
-    data-bs-backdrop="static"
-    data-bs-keyboard="false"
-    tabindex="-1"
-    aria-labelledby="generatePdfLabel"
-    aria-hidden="true"
-  >
-    <div
-      class="
+    " id="generatePdf" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="generatePdfLabel" aria-hidden="true">
+    <div class="
         modal-dialog modal-dialog-centered modal-xl
         relative
         w-auto
         pointer-events-none
-      "
-    >
-      <div
-        class="
+      ">
+      <div class="
           modal-content
           border-none
           shadow-lg
@@ -40,18 +30,15 @@
           rounded-md
           outline-none
           text-current
-        "
-      >
-        <div
-          class="
+        ">
+        <div class="
             modal-header
             flex flex-shrink-0
             items-center
             justify-between
             p-2
             rounded-t-md
-          "
-        ></div>
+          "></div>
 
         <div class="modal-body relative p-4">
           <div class="container px-6 mx-auto">
@@ -61,58 +48,43 @@
                   <h2 class="text-2xl font-bold mb-8 px-6">
                     Generate
                     <span class="text-2xl font-bold">{{
-                      modalData.name ? modalData.name : ""
+                        modalData.name ? modalData.name : ""
                     }}</span>
                     's License Data
                   </h2>
                 </div>
               </div>
               <div class="vld-parent">
-                <loading
-                  :active="isLoading"
-                  :can-cancel="true"
-                  :on-cancel="onCancel"
-                  :is-full-page="fullPage"
-                  :color="'#2F639D'"
-                  :opacity="0.7"
-                ></loading>
+                <loading :active="isLoading" :can-cancel="true" :on-cancel="onCancel" :is-full-page="fullPage"
+                  :color="'#2F639D'" :opacity="0.7"></loading>
                 <div class="flex flex-wrap">
                   <div class="grow-0 shrink-0 basis-auto w-full">
                     <div>
                       <span>
                         <span v-if="isUserCertified && myRegion">
-                          <div
-                            v-if="
-                              applicationStatus !== 'CANC' &&
-                              applicationStatus !== 'SUSP' &&
-                              !showActionLoading
-                            "
-                          ></div>
+                          <div v-if="
+                            applicationStatus !== 'CANC' &&
+                            applicationStatus !== 'SUSP' &&
+                            !showActionLoading
+                          "></div>
 
-                          <div
-                            v-if="modalData"
-                            class="
+                          <div v-if="modalData" class="
                               bg-lightBlueB-200
                               flex
                               items-center
                               justify-center
-                            "
-                          >
+                            ">
                             <div class="w-screen">
-                              <div
-                                class="
+                              <div class="
                                   flex flex-col
                                   w-full
                                   bg-white
                                   blue-box-shadow-light
                                   rounded
-                                "
-                              >
+                                ">
                                 <div>
                                   <Title message="በኢትዮፕያ ፌደራላዊ ዴሞክራሲያዊ ሪፐብሊክ" />
-                                  <Title
-                                    message="Federal Democratic Republic Ethiopia"
-                                  />
+                                  <Title message="Federal Democratic Republic Ethiopia" />
                                 </div>
                                 <span class="mt-1">
                                   <Title message="የጤና ሚኒስቴር" />
@@ -120,25 +92,17 @@
                                 </span>
 
                                 <div class="flex">
-                                  <div
-                                    class="
+                                  <div class="
                                       flex flex-col
                                       mb-medium
                                       ml-2
                                       w-1/2
                                       mr-12
-                                    "
-                                  >
-                                    <Title
-                                      message="የጤና ባለሙያዎች የሙያ ምዝገባና ፈቃድ የምስከር ወረቀት"
-                                    />
+                                    ">
+                                    <Title message="የጤና ባለሙያዎች የሙያ ምዝገባና ፈቃድ የምስከር ወረቀት" />
                                   </div>
-                                  <div
-                                    class="flex flex-col mb-medium w-1/2 mr-12"
-                                  >
-                                    <Title
-                                      message="HEALTH PROFFESSIONALS REGISTRATION AND"
-                                    />
+                                  <div class="flex flex-col mb-medium w-1/2 mr-12">
+                                    <Title message="HEALTH PROFFESSIONALS REGISTRATION AND" />
                                   </div>
                                 </div>
                                 <div class="flex">
@@ -228,49 +192,45 @@
                                 <div class="flex">
                                   <div class="flex flex-col w-1/2 mr-12">
                                     <h3 class="underline ml-4">
-                                      <b v-if="modalData.profile"
-                                        >{{
+                                      <b v-if="modalData.profile">{{
                                           modalData.profile.alternativeName
                                             ? modalData.profile.alternativeName
                                             : ""
-                                        }}
+                                      }}
                                         {{
-                                          modalData.profile
-                                            .alternativeFatherName
-                                            ? modalData.profile
+                                            modalData.profile
+                                              .alternativeFatherName
+                                              ? modalData.profile
                                                 .alternativeFatherName
-                                            : ""
+                                              : ""
                                         }}
                                         {{
-                                          modalData.profile
-                                            .alternativeGrandFatherName
-                                            ? modalData.profile
+                                            modalData.profile
+                                              .alternativeGrandFatherName
+                                              ? modalData.profile
                                                 .alternativeGrandFatherName
-                                            : ""
-                                        }}</b
-                                      >
+                                              : ""
+                                        }}</b>
                                     </h3>
                                   </div>
                                   <div class="flex flex-col w-1/2 mr-12">
                                     <br />
                                     <h3 class="underline ml-4 mb-4">
-                                      <b
-                                        >{{
+                                      <b>{{
                                           modalData?.profile?.name
                                             ? modalData?.profile?.name
                                             : ""
+                                      }}
+                                        {{
+                                            modalData.profile?.fatherName
+                                              ? modalData.profile?.fatherName
+                                              : ""
                                         }}
                                         {{
-                                          modalData.profile?.fatherName
-                                            ? modalData.profile?.fatherName
-                                            : ""
-                                        }}
-                                        {{
-                                          modalData.profile?.grandFatherName
-                                            ? modalData.profile?.grandFatherName
-                                            : ""
-                                        }}</b
-                                      >
+                                            modalData.profile?.grandFatherName
+                                              ? modalData.profile?.grandFatherName
+                                              : ""
+                                        }}</b>
                                     </h3>
                                   </div>
                                 </div>
@@ -282,122 +242,105 @@
                                     </h4>
 
                                     <h4 v-if="modalData.professionalTypes">
-                                      <div
-                                        v-for="professions in modalData.professionalTypes"
-                                        :key="professions"
-                                        class="flex flex-row ml-4"
-                                      >
-                                        <b
-                                          >{{
+                                      <div v-for="professions in modalData.professionalTypes" :key="professions"
+                                        class="flex flex-row ml-4">
+                                        <b>{{
                                             professions.professionalTypes
                                               .amharicProfessionalType === "ሌላ"
                                               ? ""
                                               : professions.professionalTypes
-                                                  .amharicProfessionalType
-                                          }}
+                                                .amharicProfessionalType
+                                        }}
                                         </b>
                                       </div>
                                       <br />ሙያ መዝግቦ ይህን የሙያ ስራ ፈቃድ ሰጥቷል።
                                     </h4>
                                   </div>
-                                  <div
-                                    class="flex flex-col mb-medium w-1/2 mr-12"
-                                  >
+                                  <div class="flex flex-col mb-medium w-1/2 mr-12">
                                     <h4>
                                       Having duly satisfied the requirements of
                                       the Ministry
                                     </h4>
                                     <h4>hereby registered and licensed as</h4>
-                                    <h4
-                                      v-if="
-                                        modalData.professionalTypes &&
-                                        modalData.professionalTypes[0]
-                                          .professionalTypes.name
-                                      "
-                                    >
-                                      <div
-                                        v-for="professions in modalData.professionalTypes"
-                                        :key="professions"
-                                        class="flex flex-row ml-4"
-                                      >
-                                        <b
-                                          >{{
+                                    <h4 v-if="
+                                      modalData.professionalTypes &&
+                                      modalData.professionalTypes[0]
+                                        .professionalTypes.name
+                                    ">
+                                      <div v-for="professions in modalData.professionalTypes" :key="professions"
+                                        class="flex flex-row ml-4">
+                                        <b>{{
                                             professions.prefix
                                               ? "(" + professions.prefix + ")"
                                               : ""
-                                          }}
+                                        }}
                                           {{
-                                            professions.professionalTypes
-                                              .code === "OTH"
-                                              ? certificateDetail.otherProfessionalType
+                                              professions.professionalTypes
+                                                .code === "OTH"
                                                 ? certificateDetail.otherProfessionalType
-                                                : ""
-                                              : professions.professionalTypes
+                                                  ? certificateDetail.otherProfessionalType
+                                                  : ""
+                                                : professions.professionalTypes
                                                   .name
-                                          }}</b
-                                        >
+                                          }}</b>
                                       </div>
                                     </h4>
                                   </div>
                                 </div>
                                 <div class="flex">
-                                  <div
-                                    class="
+                                  <div class="
                                       flex flex-col
                                       mb-medium
                                       ml-4
                                       w-1/2
                                       mr-12
-                                    "
-                                  >
+                                    ">
                                     <h3>
+                                      <img v-bind:src="imgdata" id="output" />
+
                                       ይህ የሙያ የስራ ፈቃድ የሚያገለግለው
                                       <b>
                                         {{
-                                          modalData.certifiedDate
-                                            ? toEthiopian(
+                                            modalData.certifiedDate
+                                              ? toEthiopian(
                                                 moment(
                                                   modalData.certifiedDate
                                                 )._d.toISOString(),
                                                 false
                                               )
-                                            : ""
+                                              : ""
                                         }}
                                         -{{
-                                          modalData.licenseExpirationDate !==
-                                          null
-                                            ? toEthiopian(
+                                            modalData.licenseExpirationDate !==
+                                              null
+                                              ? toEthiopian(
                                                 moment(
                                                   modalData.licenseExpirationDate
                                                 )._d.toISOString(),
                                                 false
                                               )
-                                            : " አልተገለጸም"
+                                              : " አልተገለጸም"
                                         }}
                                       </b>
                                     </h3>
                                   </div>
-                                  <div
-                                    class="flex flex-col mb-medium w-1/2 mr-12"
-                                  >
+                                  <div class="flex flex-col mb-medium w-1/2 mr-12">
                                     <h3>
-                                      The license is valid:<b
-                                        >{{
+                                      The license is valid:<b>{{
                                           modalData.certifiedDate
                                             ? moment(
-                                                modalData.certifiedDate
-                                              ).format("MMM DD, YYYY")
+                                              modalData.certifiedDate
+                                            ).format("MMM DD, YYYY")
                                             : ""
-                                        }}
+                                      }}
                                         -
                                         {{
-                                          modalData.licenseExpirationDate
-                                            ? moment(
+                                            modalData.licenseExpirationDate
+                                              ? moment(
                                                 modalData.licenseExpirationDate
                                               ).format("MMM DD, YYYY")
-                                            : " Not specified"
-                                        }}</b
-                                      >
+                                              : " Not specified"
+                                        }}</b>
                                     </h3>
                                   </div>
                                 </div>
@@ -406,27 +349,23 @@
                           </div>
                         </span>
                         <span v-else-if="!isUserCertified && isUserFound">
-                          <div
-                            class="
+                          <div class="
                               flex
                               justify-center
                               content-center
                               userNotFound
-                            "
-                          >
+                            ">
                             <h1>User is not Certified</h1>
                           </div>
                         </span>
 
                         <span v-else-if="!myRegion">
-                          <div
-                            class="
+                          <div class="
                               flex
                               justify-center
                               content-center
                               userNotFound
-                            "
-                          >
+                            ">
                             <h1>
                               You can't generate Certificate for other region
                             </h1>
@@ -441,19 +380,15 @@
           </div>
         </div>
 
-        <div
-          class="
+        <div class="
             modal-footer
             flex flex-shrink-0 flex-wrap
             items-center
             justify-end
             border-t border-grey-200
             rounded-b-md
-          "
-        >
-          <button
-            type="button"
-            class="
+          ">
+          <button type="button" class="
               inline-block
               px-6
               text-white
@@ -472,15 +407,11 @@
               transition
               duration-150
               ease-in-out
-            "
-            @click="generate()"
-          >
+            " @click="generate()">
             <i class="fa fa-check"></i>
             Generate
           </button>
-          <button
-            type="button"
-            class="
+          <button type="button" class="
               inline-block
               px-6
               text-white
@@ -499,9 +430,7 @@
               transition
               duration-150
               ease-in-out
-            "
-            data-bs-dismiss="modal"
-          >
+            " data-bs-dismiss="modal">
             <i class="fa fa-times-circle"></i>
             Close
           </button>
@@ -526,13 +455,15 @@ import moment from "moment";
 import Loading from "vue3-loading-overlay";
 import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 import { useToast } from "vue-toastification";
+import { googleApi } from "@/composables/baseURL";
+import { Base64 } from "js-base64";
 
 export default {
   computed: {
     moment: () => moment,
     AmharicFont: () => AmharicFont,
     toEthiopian: () => toEthiopian,
-    STATIC_CERTIFICATE_URL: () => STATIC_CERTIFICATE_URL,
+    STATIC_CERTIFICATE_URL: () => STATIC_CERTIFICATE_URL
   },
   props: ["modalData"],
   components: { Title, Loading },
@@ -551,9 +482,8 @@ export default {
     let isUserFound = ref(true);
     let myRegion = ref(true);
     let imageSrc = ref("");
-    const adminRegionId = JSON.parse(
-      localStorage.getItem("allAdminData")
-    ).regionId;
+    const adminRegionId = JSON.parse(localStorage.getItem("allAdminData"))
+      .regionId;
 
     const expertLevelCode = JSON.parse(localStorage.getItem("allAdminData"))
       .expertLevel.code;
@@ -564,18 +494,21 @@ export default {
 
     let showFlash = ref(false);
     let showErrorFlash = ref(false);
-
+    let imgdata = ref("");
+    console.log(imgdata);
     const updateLicenseGenerated = () => {
       let req = {
-        data: { ...props.modalData, isLicenseGenerated: true },
+        data: { ...props.modalData, isLicenseGenerated: true }
       };
+      imgdata = props.modalData.profile.filePath;
+
       editApplication(req);
     };
 
-    const editApplication = (req) => {
+    const editApplication = req => {
       store
         .dispatch("reviewer/RenewalGenerate", req)
-        .then((res) => {
+        .then(res => {
           isLoading.value = false;
           if (res.statusText == "Created") {
             console.log("sucessfull api");
@@ -587,11 +520,11 @@ export default {
               position: "bottom-center",
               pauseOnFocusLoss: true,
               pauseOnHover: true,
-              icon: true,
+              icon: true
             });
           }
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     };
@@ -608,14 +541,14 @@ export default {
         staticUrl + "/" + applicationType + "/" + userId + "/" + applicationId;
       store
         .dispatch("reviewer/getQrCode", qrParam)
-        .then((res) => {
+        .then(res => {
           imageSrc.value = res.data.data;
           toast.success("Certificate Generated Successfully.", {
             timeout: 5000,
             position: "bottom-center",
             pauseOnFocusLoss: true,
             pauseOnHover: true,
-            icon: true,
+            icon: true
           });
         })
         .finally(() => {
@@ -624,11 +557,11 @@ export default {
             position: "bottom-center",
             pauseOnFocusLoss: true,
             pauseOnHover: true,
-            icon: true,
+            icon: true
           });
           downloadPdf();
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     };
@@ -656,7 +589,6 @@ export default {
         }
       }
       fetchQrCode();
-      downloadPdf();
     };
 
     const handleRegionsLayout = (
@@ -670,10 +602,9 @@ export default {
       doc.text(
         190,
         namePosition,
-        `${certifiedUser.value.name} ${certifiedUser.value.fatherName} ${
-          certifiedUser.value.grandFatherName
-            ? certifiedUser.value.grandFatherName
-            : ""
+        `${certifiedUser.value.name} ${certifiedUser.value.fatherName} ${certifiedUser.value.grandFatherName
+          ? certifiedUser.value.grandFatherName
+          : ""
         }`
       );
 
@@ -685,13 +616,11 @@ export default {
         i < certificateDetail.value.renewalProfessions.length;
         i++
       ) {
-        let professionPrefix = `${
-          certificateDetail.value.renewalProfessions[i].prefix
+        let professionPrefix = `${certificateDetail.value.renewalProfessions[i].prefix
             ? certificateDetail.value.renewalProfessions[i].prefix
             : ""
-        }  ${
-          certificateDetail.value.renewalProfessions[i].professionalTypes.name
-        }`;
+          }  ${certificateDetail.value.renewalProfessions[i].professionalTypes.name
+          }`;
         let getLength = doc.getTextWidth(professionPrefix);
         if (getLength > 125 && getLength <= 132) {
           if (!changeWidthTooSmall.value) {
@@ -720,28 +649,24 @@ export default {
         doc.text(
           xPosition.value,
           professionPossition + i * professionListGap,
-          `${
-            certificateDetail.value.renewalProfessions.length > 1
-              ? i + 1 + ". "
+          `${certificateDetail.value.renewalProfessions.length > 1
+            ? i + 1 + ". "
+            : ""
+          }${certificateDetail.value.renewalProfessions[i].professionalTypes.name
+            ? `${certificateDetail.value.renewalProfessions[i].prefix
+              ? "(" +
+              certificateDetail.value.renewalProfessions[i].prefix +
+              ")"
               : ""
-          }${
-            certificateDetail.value.renewalProfessions[i].professionalTypes.name
-              ? `${
-                  certificateDetail.value.renewalProfessions[i].prefix
-                    ? "(" +
-                      certificateDetail.value.renewalProfessions[i].prefix +
-                      ")"
-                    : ""
-                }   ${
-                  certificateDetail.value.renewalProfessions[i]
-                    .professionalTypes.code === "OTH"
-                    ? certificateDetail.value.otherProfessionalType
-                      ? certificateDetail.value.otherProfessionalType
-                      : ""
-                    : certificateDetail.value.renewalProfessions[i]
-                        .professionalTypes.name
-                }`
-              : ""
+            }   ${certificateDetail.value.renewalProfessions[i]
+              .professionalTypes.code === "OTH"
+              ? certificateDetail.value.otherProfessionalType
+                ? certificateDetail.value.otherProfessionalType
+                : ""
+              : certificateDetail.value.renewalProfessions[i]
+                .professionalTypes.name
+            }`
+            : ""
           }`
         );
       }
@@ -750,23 +675,21 @@ export default {
       doc.text(
         197,
         164,
-        `${
-          certificateDetail.value.certifiedDate
-            ? moment(certificateDetail.value.certifiedDate).format(
-                "MMM DD, YYYY"
-              ) + " - "
-            : "Not Specified"
+        `${certificateDetail.value.certifiedDate
+          ? moment(certificateDetail.value.certifiedDate).format(
+            "MMM DD, YYYY"
+          ) + " - "
+          : "Not Specified"
         }`
       );
       doc.text(
         226,
         164,
-        `${
-          certificateDetail.value.licenseExpirationDate
-            ? moment(certificateDetail.value.licenseExpirationDate).format(
-                "MMM DD, YYYY"
-              )
-            : "Not Specified"
+        `${certificateDetail.value.licenseExpirationDate
+          ? moment(certificateDetail.value.licenseExpirationDate).format(
+            "MMM DD, YYYY"
+          )
+          : "Not Specified"
         }`
       );
       // License Number
@@ -786,36 +709,30 @@ export default {
         doc.text(
           60,
           namePosition - 5,
-          `${
-            certifiedUser.value.alternativeName
-              ? certifiedUser.value.alternativeName
-              : ""
-          } ${
-            certifiedUser.value.alternativeFatherName
-              ? certifiedUser.value.alternativeFatherName
-              : ""
-          } ${
-            certifiedUser.value.alternativeGrandFatherName
-              ? certifiedUser.value.alternativeGrandFatherName
-              : ""
+          `${certifiedUser.value.alternativeName
+            ? certifiedUser.value.alternativeName
+            : ""
+          } ${certifiedUser.value.alternativeFatherName
+            ? certifiedUser.value.alternativeFatherName
+            : ""
+          } ${certifiedUser.value.alternativeGrandFatherName
+            ? certifiedUser.value.alternativeGrandFatherName
+            : ""
           }`
         );
       } else {
         doc.text(
           60,
           namePosition,
-          `${
-            certifiedUser.value.alternativeName
-              ? certifiedUser.value.alternativeName
-              : ""
-          } ${
-            certifiedUser.value.alternativeFatherName
-              ? certifiedUser.value.alternativeFatherName
-              : ""
-          } ${
-            certifiedUser.value.alternativeGrandFatherName
-              ? certifiedUser.value.alternativeGrandFatherName
-              : ""
+          `${certifiedUser.value.alternativeName
+            ? certifiedUser.value.alternativeName
+            : ""
+          } ${certifiedUser.value.alternativeFatherName
+            ? certifiedUser.value.alternativeFatherName
+            : ""
+          } ${certifiedUser.value.alternativeGrandFatherName
+            ? certifiedUser.value.alternativeGrandFatherName
+            : ""
           }`
         );
       }
@@ -839,19 +756,17 @@ export default {
         doc.text(
           xPosition.value,
           professionPossition + i * professionListGap,
-          `${
-            certificateDetail.value.renewalProfessions.length > 1
-              ? i + 1 + ". "
-              : ""
-          }${
-            certificateDetail.value.renewalProfessions[i].professionalTypes
-              .amharicProfessionalType
-              ? certificateDetail.value.renewalProfessions[i].professionalTypes
-                  .amharicProfessionalType === "ሌላ"
-                ? ""
-                : certificateDetail.value.renewalProfessions[i]
-                    .professionalTypes.amharicProfessionalType
-              : ""
+          `${certificateDetail.value.renewalProfessions.length > 1
+            ? i + 1 + ". "
+            : ""
+          }${certificateDetail.value.renewalProfessions[i].professionalTypes
+            .amharicProfessionalType
+            ? certificateDetail.value.renewalProfessions[i].professionalTypes
+              .amharicProfessionalType === "ሌላ"
+              ? ""
+              : certificateDetail.value.renewalProfessions[i]
+                .professionalTypes.amharicProfessionalType
+            : ""
           }`
         );
       }
@@ -867,40 +782,50 @@ export default {
       doc.text(
         75,
         164,
-        `${
-          certificateDetail.value.certifiedDate
-            ? toEthiopian(
-                moment(certificateDetail.value.certifiedDate)._d.toISOString(),
-                false
-              ) + " - "
-            : ""
+        `${certificateDetail.value.certifiedDate
+          ? toEthiopian(
+            moment(certificateDetail.value.certifiedDate)._d.toISOString(),
+            false
+          ) + " - "
+          : ""
         }`
       );
       doc.text(
         75 + getAmharicLicensedDate,
         164,
-        `${
-          certificateDetail.value.licenseExpirationDate
-            ? toEthiopian(
-                moment(
-                  certificateDetail.value.licenseExpirationDate
-                )._d.toISOString(),
-                false
-              )
-            : " አልተገለጸም"
+        `${certificateDetail.value.licenseExpirationDate
+          ? toEthiopian(
+            moment(
+              certificateDetail.value.licenseExpirationDate
+            )._d.toISOString(),
+            false
+          )
+          : " አልተገለጸም"
         }`
       );
     };
 
     const downloadPdf = () => {
+      const userImage = certifiedUser.value.profilePicture
+        ? certifiedUser.value.profilePicture.filePath
+        : null;
       const doc = new jsPDF({
         orientation: "landscape",
-        filters: ["ASCIIHexEncode"],
+        filters: ["ASCIIHexEncode"]
       });
       updateLicenseGenerated();
-      const userImage = certifiedUser.value.profilePicture ? null : null;
+
       if (certificateDetail.value.reviewer.expertLevel.code === "FED") {
-        doc.addImage(backgroundImage, "JPG", 0, 0, 298, 213, undefined, "FAST");
+        doc.addImage(
+          backgroundImage,
+          "JPG",
+          0,
+          0,
+          298,
+          213,
+          undefined,
+          "FAST"
+        );
         handleRegionsLayout(doc, "FED", 100, 125, 7);
       } else if (certificateDetail.value.reviewer.region.code === "ORO") {
         doc.addImage(
@@ -927,15 +852,22 @@ export default {
         );
         handleRegionsLayout(doc, "AA", 110, 133, 4);
       }
-
-      // doc.addImage(backgroundImage, "JPEG", 0, 0, 298, 213, undefined, "FAST");
       doc.addImage(imageSrc.value, "JPG", 246, 14, 35, 35);
       if (userImage !== null) {
-        doc.addImage(userImage, "JPEG", 33, 20, 30, 30);
+        let path = {
+          path: userImage
+        };
+        store.dispatch("profile/converProfilePicture", path).then(res => {
+          // doc.addImage(backgroundImage, "JPEG", 0, 0, 298, 213, undefined, "FAST");
+          doc.addImage(res.data.data, "JPG", 33, 20, 30, 30);
+          doc.setFontSize(10);
+          window.open(doc.output("bloburl"));
+        });
       }
-      // doc.text(10, 203, `ቀን: ${toEthiopian(new Date().toISOString(), false)}`)
-      doc.setFontSize(10);
-      window.open(doc.output("bloburl"));
+      else {
+        doc.setFontSize(10);
+        window.open(doc.output("bloburl"));
+      }
     };
 
     const onCancel = () => {
@@ -951,6 +883,7 @@ export default {
       isUserCertified,
       isUserFound,
       myRegion,
+      imgdata,
       generate,
       onCancel,
       fullPage,
@@ -960,8 +893,8 @@ export default {
       showActionLoading,
       applicationStatus,
       showFlash,
-      showErrorFlash,
+      showErrorFlash
     };
-  },
+  }
 };
 </script>

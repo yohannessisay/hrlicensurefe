@@ -98,7 +98,6 @@ import ReviewerNavBar from "../SharedComponents/navBar.vue";
 import NewLicenseMainContent from "../../../ApplicationTypes/NewLicense/MainComponents/licensed.vue";
 import { ref, onMounted } from "vue";
 import { useStore } from "vuex";
-
 import applicationStatus from "../../../Configurations/getApplicationStatus.js";
 import VueTableLite from "vue3-table-lite";
 import editModal from "./approvedModal.vue";
