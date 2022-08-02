@@ -1114,7 +1114,7 @@ export default {
         }
         const filePreview = await this.blobToBase64(this.transcript2);
         this.transcript2.docFile = filePreview;
-        this.transcript2.title = "Degree Transcript 2";
+        this.transcript2.title = "Transcript 2";
         this.docList.push(this.transcript2);
       }
     }

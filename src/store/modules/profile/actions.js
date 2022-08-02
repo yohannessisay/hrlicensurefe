@@ -132,6 +132,16 @@ export default {
       return error;
     }
   },
+  async converProfilePicture({commit}, path) {
+    try {
+      console.log(path);
+      const resp = await ApiService.post(baseUrl + "/profiles/convert/profilePicture",path);
+      console.log(resp);
+      return resp;
+    } catch (error) {
+      return error;
+    }
+  },
   async getProfileById({ commit }, id) {
     try {
       const resp = await ApiService.get(baseUrl + "/profiles/" + id);
