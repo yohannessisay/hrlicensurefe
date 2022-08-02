@@ -75,7 +75,8 @@ module.exports = {
       },
       blue: {
         100: "#3c5d82",
-        200: "#3c82f5"
+        200: "#3c82f5",
+        600: "#2F639D"
       },
       lightGrey: {
         100: "#f3f4f6"

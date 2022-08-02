@@ -105,11 +105,23 @@
                                 justify-center
                               "
                             >
-                              <img
-                                src="../../../../../assets/showLicense/profile.png"
-                                alt=""
-                                style="height: 152px; width: 150px"
-                              />
+                              <picture>
+                                <source
+                                  :srcset="
+                                    modalData.profile &&
+                                    modalData.profile.profilePicture
+                                      ? googleApi +
+                                        modalData.profile.profilePicture
+                                          .filePath
+                                      : ''
+                                  "
+                                  type="image/jpg"
+                                />
+
+                                <img
+                                  src="../../../../../assets/showLicense/profile.png"
+                                />
+                              </picture>
                             </div>
                           </div>
                           <div class="grow ml-6">
@@ -185,7 +197,7 @@
                                 justify-center
                               "
                             >
-                              <i class="fa fa-building fa-4x"></i>
+                              <i class="fa fa-building fa-4x text-white"></i>
                             </div>
                           </div>
                           <div class="grow ml-6">
@@ -238,7 +250,7 @@
                                 justify-center
                               "
                             >
-                              <i class="fa fa-phone fa-4x"></i>
+                              <i class="fa fa-phone fa-4x text-white"></i>
                             </div>
                           </div>
                           <div class="grow ml-6">
@@ -367,7 +379,11 @@
                             <div class="flex justify-center">
                               <div class="mt-large bg-white">
                                 <a
-                                  :href="googleApi + document.filePath"
+                                  :href="
+                                    document.filePath
+                                      ? googleApi + document.filePath
+                                      : ''
+                                  "
                                   :data-title="
                                     document.documentType
                                       ? document.documentType.name
@@ -376,7 +392,11 @@
                                   data-lightbox="example-2"
                                 >
                                   <img
-                                    :src="googleApi + document.filePath"
+                                    :src="
+                                      document.filePath
+                                        ? googleApi + document.filePath
+                                        : ''
+                                    "
                                     class="w-full h-48 object-cover"
                                   />
                                 </a>
@@ -407,7 +427,7 @@
             flex flex-shrink-0 flex-wrap
             items-center
             justify-end
-            border-t border-grey-200
+            border-t border-grey-100
             rounded-b-md
           "
         >
@@ -530,7 +550,7 @@ export default {
             modalData.value.data = result;
             modalData.value.id = result.id;
             modalData.value.profileImage =
-              googleApi + result.profile.profilePicture
+              result.profile && result.profile.profilePicture
                 ? googleApi + result.profile.profilePicture.filePath
                 : "";
             isLoading.value = false;

@@ -462,7 +462,7 @@
       />
     </div>
   </div>
-
+ 
   <transition name="slide-fade-up">
     <Modal v-if="this.importModal">
       <ImportModal
