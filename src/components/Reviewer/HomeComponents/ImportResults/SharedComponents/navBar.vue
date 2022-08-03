@@ -1,5 +1,5 @@
   <template>
-  <nav>
+  <nav id="mainNav">
     <div class="sidebar-button">
      <slot></slot>
     </div>

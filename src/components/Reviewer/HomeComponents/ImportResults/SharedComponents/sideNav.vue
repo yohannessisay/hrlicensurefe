@@ -1,5 +1,5 @@
 <template>
-  <div class="sidebar">
+  <div class="sidebar" id="mainSidebar">
     <router-link to="/admin/review/">
       <div class="logo-details ml-4">
         <svg
