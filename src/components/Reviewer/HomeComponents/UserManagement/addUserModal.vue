@@ -383,7 +383,7 @@
                         </span>
                       </div>
 
-                      <div class="flex justify-center ml-4" >
+                      <div class="flex justify-center ml-4">
                         <button
                           class="
                             px-2
@@ -472,7 +472,7 @@ export default {
 
   setup() {
     const store = useStore();
-    let isLoading=ref(false)
+    let isLoading = ref(false);
     const toast = useToast();
     const adminExpertId = JSON.parse(
       localStorage.getItem("allAdminData")
@@ -488,7 +488,7 @@ export default {
       roleId: null,
       expertLevelId: null,
       regionId: null,
-      password: "password123@#",
+      password: "password1",
       isActive: true,
     };
 
@@ -545,6 +545,7 @@ export default {
 
     const selectedExpertLevel = () => {
       admin.expertLevelId = expertLevels.value.id;
+      admin.regionId='';
     };
 
     const selectedRegion = () => {
@@ -552,8 +553,7 @@ export default {
     };
 
     const registerAdmin = () => {
-    
-      isLoading.value=true;
+      isLoading.value = true;
       let isValidated = validateForm(admin);
       showLoading.value = true;
       showButtons.value = true;
@@ -571,12 +571,13 @@ export default {
           admin.grandfatherName;
 
         admin.email = admin.email.toLowerCase();
-         
+
         store
           .dispatch("admin/registerAdmin", admin)
           .then((res) => {
+            console.log(res);
             showLoading.value = false;
-        if (res.data.status == "Success") {
+            if (res.data.status == "Success") {
               toast.success("User added Successfully", {
                 timeout: 5000,
                 position: "bottom-center",
@@ -584,23 +585,20 @@ export default {
                 pauseOnHover: true,
                 icon: true,
               });
-                isLoading.value=false
+              isLoading.value = false;
             } else if (res.data.status == "Error") {
-              toast.error(
-                "Error regarding server, please try again after few minutes",
-                {
-                  timeout: 5000,
-                  position: "bottom-center",
-                  pauseOnFocusLoss: true,
-                  pauseOnHover: true,
-                  icon: true,
-                }
-              );
-                isLoading.value=false
+              toast.error(res.data.message, {
+                timeout: 5000,
+                position: "bottom-center",
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                icon: true,
+              });
+              isLoading.value = false;
             }
           })
           .catch(() => {
-              isLoading.value=false
+            isLoading.value = false;
             toast.error(
               "Error regarding server, please try again after few minutes",
               {
@@ -673,7 +671,7 @@ export default {
       selectedExpertLevel,
       selectedRegion,
       showButtons,
-      isLoading
+      isLoading,
     };
   },
 };

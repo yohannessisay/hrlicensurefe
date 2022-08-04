@@ -5,11 +5,13 @@
   <!-- Sidebar -->
   <section class="home-section">
     <!-- Header -->
-    <reviewer-nav-bar><h2>User Management</h2></reviewer-nav-bar>
+    <reviewer-nav-bar
+      ><h2>Import and Manage National Exam Results</h2></reviewer-nav-bar
+    >
     <!-- Header -->
 
     <!-- Main Content -->
-    <div class="home-content">
+    <div class="home-content" id="mainContent">
       <div
         class="
           p-4
@@ -99,165 +101,558 @@
           <h1 class="ml-4 mt-4">These are the previously added records</h1>
 
           <div>
-            <div class="blue ml-4 mt-4">
-                 <input
-                    type="search"
-                    class="
-                      form-control
-                      relative
-                      flex-auto
-                      min-w-0
-                      block
-                      w-full
-                      px-6
-                      py-1.5
-                      text-base
-                      font-normal
-                      text-gray-700
-                      bg-white bg-clip-padding
-                      border border-solid border-gray-300
-                      rounded
-                      transition
-                      ease-in-out
-                      focus:text-gray-700
-                      focus:bg-white
-                      focus:border-blue-600
-                      focus:outline-none
-                    "
-                    placeholder="Start Searching For Name"
-                    aria-label="Search"
-                    aria-describedby="button-addon2"
-                    v-model="searchTerm"
-                  />
-       
-            </div>
             <div class="grid lg:grid-cols-4 xl:gap-6 ml-4 mt-4">
-              <div class="relative z-0 w-full mb-6 group">
-                <div class="flex flex-col mb-medium w-22 mr-4">
-                  <label class="text-primary-700">Institution</label>
-                  <select
-                    class="max-w-1xl"
-                    v-model="vFilterInstitution"
-                    @change="filterInstitution()"
-                    clearable
-                  >
-                    <option value="instfilterAll">All</option>
-                    <option
-                      v-for="inst in institutions"
-                      v-bind:key="inst.id"
-                      v-bind:value="inst.name"
-                    >
-                      {{ inst.name }}
-                    </option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="relative z-0 w-full mb-6 group">
-                <div class="flex flex-col mb-medium w-22 mr-4">
-                  <label class="text-primary-700">Profession</label>
-                  <select
-                    class="max-w-1xl"
-                    v-model="vFilterProfession"
-                    @change="filterProfession()"
-                  >
-                    <option value="proffilterAll">All</option>
-                    <option
-                      v-for="profession in professions"
-                      :value="profession.name"
-                      :key="profession.id"
-                    >
-                      {{ profession.name }}
-                    </option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="relative z-0 w-full mb-6 group">
-                <div class="flex flex-col mb-medium w-44 mr-4">
-                  <label class="text-primary-700">Sex</label>
-                  <select
-                    class="max-w-1xl"
-                    v-model="vFilterGender"
-                    @change="filterGender()"
-                  >
-                    <option value="genderfilterAll">All</option>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="relative z-0 w-full mb-6 group">
-                <div class="flex flex-col mb-medium w-44 mr-4">
-                  <label class="text-primary-700">Result</label>
-                  <select
-                    class="max-w-1xl"
-                    v-model="vFilterResult"
-                    @change="filterResult()"
-                  >
-                    <option value="resultfilterAll">All</option>
-                    <option value="pass">Pass</option>
-                    <option value="fail">Fail</option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="flex flex-row mb-small w-80 mr-4">
-                <label class="text-primary-700 mr-2">From</label>
+              <div class="mb-3 xl:w-full">
                 <input
-                  v-model="startDate"
-                  class="max-w-3xl mr-5"
-                  type="date"
-                  @change="filterDate()"
+                  type="search"
+                  class="
+                    form-control
+                    relative
+                    flex-auto
+                    min-w-0
+                    block
+                    w-full
+                    px-6
+                    py-1.5
+                    text-base
+                    font-normal
+                    text-gray-700
+                    bg-white bg-clip-padding
+                    border border-solid border-gray-300
+                    rounded
+                    transition
+                    ease-in-out
+                    focus:text-gray-700
+                    focus:bg-white
+                    focus:border-blue-600
+                    focus:outline-none
+                  "
+                  placeholder="Start Searching For Name"
+                  aria-label="Search"
+                  aria-describedby="button-addon2"
+                  v-model="searchTerm"
                 />
-                <label class="text-primary-700 mr-2">To</label>
-                <input
-                  v-model="endDate"
-                  @change="filterDate()"
-                  class="max-w-3xl mr-5"
-                  type="date"
-                />
+              </div>
+
+              <div class="mb-3 xl:w-full">
+                <select
+                  class="
+                    form-select
+                    appearance-none
+                    block
+                    w-full
+                    px-6
+                    ml-4
+                    py-2
+                    text-base
+                    font-normal
+                    text-gray-700
+                    bg-white bg-clip-padding bg-no-repeat
+                    border border-solid border-gray-300
+                    rounded
+                    transition
+                    ease-in-out
+                    focus:text-gray-700
+                    focus:bg-white
+                    focus:border-blue-600
+                    focus:outline-none
+                  "
+                  @change="filterGender($event.target.value)"
+                  aria-label="Default select"
+                >
+                  <option selected value="Gender">Gender</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                </select>
+              </div>
+
+              <div class="mb-3 xl:w-full">
+                <select
+                  class="
+                    form-select
+                    appearance-none
+                    block
+                    w-full
+                    px-6
+                    ml-4
+                    py-2
+                    text-base
+                    font-normal
+                    text-gray-700
+                    bg-white bg-clip-padding bg-no-repeat
+                    border border-solid border-gray-300
+                    rounded
+                    transition
+                    ease-in-out
+                    focus:text-gray-700
+                    focus:bg-white
+                    focus:border-blue-600
+                    focus:outline-none
+                  "
+                  @change="filterResult($event.target.value)"
+                  aria-label="Default select"
+                >
+                  <option selected value="Result">Result</option>
+                  <option value="pass">Pass</option>
+                  <option value="fail">Fail</option>
+                </select>
               </div>
             </div>
           </div>
-          <hr />
-          <label class="text-primary-700 ml-4">Rows per page: </label>
-          <select
-            class="max-w-3xl mb-4"
-            v-model="paginationSize"
-            @change="handlePagSize()"
-            style="
-              padding: 0px 35px 0px 5px;
-              border: none;
-              border-radius: unset;
-              border-bottom: 2px solid lightblue;
-              margin-left: 8px;
-            "
-          >
-            <option
-              v-for="size in paginationSizeList"
-              v-bind:key="size"
-              v-bind:value="size"
-            >
-              {{ size }}
-            </option>
-          </select>
-            <vue-table-lite
-                :is-static-mode="true"
-                :is-loading="userTable.isLoading"
-                :columns="userTable.columns"
-                :rows="userTable.rows"
-                :total="userTable.totalRecordCount"
-                :sortable="userTable.sortable"
-                @is-finished="tableLoadingFinishOthers"
-                @row-clicked="rowClickedOthers"
-              ></vue-table-lite>
+
+          <vue-table-lite
+            :is-static-mode="true"
+            :is-loading="userTable.isLoading"
+            :columns="userTable.columns"
+            :rows="userTable.rows"
+            :total="userTable.totalRecordCount"
+            :sortable="userTable.sortable"
+            @is-finished="tableLoadingFinish"
+            @row-clicked="rowClicked"
+          ></vue-table-lite>
         </div>
       </div>
     </div>
     <!-- Main Content -->
   </section>
+  <view-result :result="resultData"></view-result>
+
+  <div
+    class="fixed z-10 overflow-y-auto top-0 w-full left-0 hidden"
+    id="errorModal"
+  >
+    <div
+      class="
+        flex
+        items-center
+        justify-center
+        min-height-100vh min-w-full
+        pt-4
+        px-4
+        pb-20
+        text-center
+        sm:block sm:p-0
+      "
+    >
+      <div class="fixed inset-0 transition-opacity">
+        <div class="absolute inset-0 bg-gray-900 opacity-75" />
+      </div>
+      <span class="hidden md:inline-block md:align-middle md:h-screen"
+        >&#8203;</span
+      >
+      <div
+        class="
+          inline-block
+          align-center
+          bg-white
+          rounded-lg
+          text-left
+          overflow-hidden
+          shadow-xl
+          transform
+          max-w-3xl
+          transition-all
+          sm:my-8 sm:align-middle sm:max-w-6xl sm:w-full
+        "
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modal-headline"
+      >
+        <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+          <h1 class="text-primary-600 font-bold m-4">
+            This are the errors in the file you imported, please correct them
+            accordingly
+          </h1>
+          <hr />
+
+          <table
+            class="w-full"
+            style="display: block; height: 500px; overflow-y: scroll"
+          >
+            <thead>
+              <tr>
+                <th
+                  class="
+                    px-5
+                    py-3
+                    border-b-2 border-gray-200
+                    bg-gray-100
+                    text-left text-xs
+                    font-semibold
+                    text-gray-700
+                    uppercase
+                    tracking-wider
+                  "
+                >
+                  Row Number
+                </th>
+                <th
+                  class="
+                    px-5
+                    py-3
+                    border-b-2 border-gray-200
+                    bg-gray-100
+                    text-left text-xs
+                    font-semibold
+                    text-gray-700
+                    uppercase
+                    tracking-wider
+                  "
+                >
+                  Column Number
+                </th>
+
+                <th
+                  class="
+                    px-5
+                    py-3
+                    border-b-2 border-gray-200
+                    bg-gray-100
+                    text-left text-xs
+                    font-semibold
+                    text-gray-700
+                    uppercase
+                    tracking-wider
+                  "
+                >
+                  Error Column Data
+                </th>
+                <th
+                  class="
+                    px-5
+                    py-3
+                    border-b-2 border-gray-200
+                    bg-gray-100
+                    text-left text-xs
+                    font-semibold
+                    text-gray-700
+                    uppercase
+                    tracking-wider
+                  "
+                >
+                  Error Message
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="row in Finalerrors" :key="row.id">
+                <td
+                  class="px-5 py-5 border-gray-200 bg-green-100 text-sm"
+                  v-for="item in row"
+                  :key="item.id"
+                >
+                  <div class="flex">
+                    <div class="ml-3">
+                      <p style="color: red">
+                        {{ item }}
+                      </p>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="bg-gray-200 px-4 mb-4 text-right">
+          <button
+            class="
+              px-4
+              bg-red-300
+              text-white
+              rounded
+              hover:bg-white hover:text-primary-600
+              mr-2
+            "
+            @click="toggleErrorModal()"
+          >
+            <i class="fas fa-times"></i> Cancel
+          </button>
+          <button
+            class="
+              px-4
+              bg-primary-700
+              text-white
+              rounded
+              hover:bg-blue-700
+              mr-2
+            "
+            @click="addImported()"
+          >
+            <i class="fas fa-save"></i> Save
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="fixed z-10 overflow-y-auto top-0 w-full left-0 hidden" id="modal">
+    <div
+      class="
+        flex
+        items-center
+        justify-center
+        min-height-100vh min-w-full
+        pt-4
+        px-4
+        pb-20
+        text-center
+        sm:block sm:p-0
+      "
+    >
+      <div class="fixed inset-0 transition-opacity">
+        <div class="absolute inset-0 bg-gray-900 opacity-75" />
+      </div>
+      <span class="hidden md:inline-block md:align-middle md:h-screen"
+        >&#8203;</span
+      >
+      <div
+        class="
+          inline-block
+          align-center
+          bg-white
+          rounded-lg
+          text-left
+          overflow-hidden
+          shadow-xl
+          transform
+          max-w-3xl
+          transition-all
+          sm:my-8 sm:align-middle sm:max-w-6xl sm:w-full
+        "
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modal-headline"
+      >
+        <div class="vld-parent mt-4">
+          <loading
+            :active="isLoading"
+            :is-full-page="false"
+            :color="'#2F639D'"
+            :opacity="1"
+          ></loading>
+          <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+            <h1 class="text-primary-600 font-bold m-4">IMPORTED RESULTS</h1>
+            <hr />
+            <table
+              class="w-full"
+              style="display: block; height: 500px; overflow-y: scroll"
+            >
+              <thead>
+                <tr>
+                  <th
+                    class="
+                      px-5
+                      py-3
+                      border-b-2 border-gray-200
+                      bg-gray-100
+                      text-left text-xs
+                      font-semibold
+                      text-gray-700
+                      uppercase
+                      tracking-wider
+                    "
+                  >
+                    Number
+                  </th>
+                  <th
+                    class="
+                      px-5
+                      py-3
+                      border-b-2 border-gray-200
+                      bg-gray-100
+                      text-left text-xs
+                      font-semibold
+                      text-gray-700
+                      uppercase
+                      tracking-wider
+                    "
+                  >
+                    Registration Number
+                  </th>
+                  <th
+                    class="
+                      px-5
+                      py-3
+                      border-b-2 border-gray-200
+                      bg-gray-100
+                      text-left text-xs
+                      font-semibold
+                      text-gray-700
+                      uppercase
+                      tracking-wider
+                    "
+                  >
+                    Institution
+                  </th>
+                  <th
+                    class="
+                      px-5
+                      py-3
+                      border-b-2 border-gray-200
+                      bg-gray-100
+                      text-left text-xs
+                      font-semibold
+                      text-gray-700
+                      uppercase
+                      tracking-wider
+                    "
+                  >
+                    First Name
+                  </th>
+                  <th
+                    class="
+                      px-5
+                      py-3
+                      border-b-2 border-gray-200
+                      bg-gray-100
+                      text-left text-xs
+                      font-semibold
+                      text-gray-700
+                      uppercase
+                      tracking-wider
+                    "
+                  >
+                    Middle Name
+                  </th>
+                  <th
+                    class="
+                      px-5
+                      py-3
+                      border-b-2 border-gray-200
+                      bg-gray-100
+                      text-left text-xs
+                      font-semibold
+                      text-gray-700
+                      uppercase
+                      tracking-wider
+                    "
+                  >
+                    Last Name
+                  </th>
+                  <th
+                    class="
+                      px-5
+                      py-3
+                      border-b-2 border-gray-200
+                      bg-gray-100
+                      text-left text-xs
+                      font-semibold
+                      text-gray-700
+                      uppercase
+                      tracking-wider
+                    "
+                  >
+                    Sex
+                  </th>
+                  <th
+                    class="
+                      px-5
+                      py-3
+                      border-b-2 border-gray-200
+                      bg-gray-100
+                      text-left text-xs
+                      font-semibold
+                      text-gray-700
+                      uppercase
+                      tracking-wider
+                    "
+                  >
+                    Profession
+                  </th>
+                  <th
+                    class="
+                      px-5
+                      py-3
+                      border-b-2 border-gray-200
+                      bg-gray-100
+                      text-left text-xs
+                      font-semibold
+                      text-gray-700
+                      uppercase
+                      tracking-wider
+                    "
+                  >
+                    Date of Examination
+                  </th>
+                  <th
+                    class="
+                      px-5
+                      py-3
+                      border-b-2 border-gray-200
+                      bg-gray-100
+                      text-left text-xs
+                      font-semibold
+                      text-gray-700
+                      uppercase
+                      tracking-wider
+                    "
+                  >
+                    Result
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="row in finalData" :key="row.id">
+                  <td
+                    :class="
+                      item === 'Fail' || item === 'fail'
+                        ? 'cell-red'
+                        : 'cell-green'
+                    "
+                    v-for="item in row"
+                    :key="item.id"
+                  >
+                    <div class="flex">
+                      <div class="ml-3">
+                        <p
+                          :class="
+                            item === 'Fail' || item === 'fail'
+                              ? 'px-5 py-5 border-gray-200 bg-green-100 text-sm cell-red'
+                              : ' px-5 py-5 border-gray-200 bg-green-100 text-sm'
+                          "
+                        >
+                          {{ item }}
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="bg-gray-200 px-4 mb-4 text-right">
+          <button
+            class="
+              px-4
+              bg-red-300
+              text-white
+              rounded
+              hover:bg-white hover:text-primary-600
+              mr-2
+            "
+            @click="toggleModal()"
+          >
+            <i class="fas fa-times"></i> Cancel
+          </button>
+          <button
+            class="
+              px-4
+              bg-primary-700
+              text-white
+              rounded
+              hover:bg-blue-700
+              mr-2
+            "
+            @click="addImported()"
+          >
+            <i class="fas fa-save"></i> Save
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -265,25 +660,29 @@ import "@ocrv/vue-tailwind-pagination/dist/style.css";
 import { ref, computed, reactive } from "@vue/reactivity";
 import { onMounted } from "@vue/runtime-core";
 import { useStore } from "vuex";
-import { useRouter } from "vue-router";
 import ReviewerNavBar from "./SharedComponents/navBar.vue";
 import ReviewerSideBar from "./SharedComponents/sideNav.vue";
-import addUser from "./addUserModal.vue";
+import viewResult from "./viewResult.vue";
 import VueTableLite from "vue3-table-lite";
-
+import { read } from "xlsx";
+import { useToast } from "vue-toastification";
+import transformSheets from "@/services/excelConverter";
+import Loading from "vue3-loading-overlay";
+import "vue3-loading-overlay/dist/vue3-loading-overlay.css";
 export default {
   components: {
     ReviewerNavBar,
     ReviewerSideBar,
     VueTableLite,
-    addUser,
+    viewResult,
+    Loading,
   },
   computed: {},
 
   setup() {
     const store = useStore();
-    const router = useRouter();
-    
+
+    const toast = useToast();
     let allData = ref([]);
     let searchData = ref();
     let expertLevelFilter = ref();
@@ -295,11 +694,27 @@ export default {
     ]);
 
     let userTable = ref({ isLoading: true });
-
+    let Finalerrors = ref([]);
+    let content = ref("");
+    let errorModal = ref(false);
+    let editModal = ref(false);
+    let finalData = ref([]);
+    let importModal = ref(false);
     let tableData = reactive([]);
     const searchTerm = ref("");
     let professions = ref([]);
     let institutions = ref([]);
+    let firstName = ref("");
+    let lastName = ref("");
+    let middleName = ref("");
+    let isLoading = ref(false);
+    let institution = ref("");
+    let profession = ref("");
+    let sex = ref("");
+    let result = ref("");
+    let registrationNumber = ref("");
+    let dateOfExamination = ref("");
+
     const getResults = () => {
       store.dispatch("reviewer/getProfessionalType").then((res) => {
         professions.value = res.data.data;
@@ -308,7 +723,7 @@ export default {
       store.dispatch("goodstanding/getInstitution").then((res) => {
         institutions.value = res.data.data;
       });
-
+      tableData = [];
       store.dispatch("reviewer/getImported").then((res) => {
         res.data.data.forEach((element) => {
           tableData.push({
@@ -323,16 +738,16 @@ export default {
             Profession: element.profession ? element.profession : "",
             Result: element.result ? element.result : "",
             DateOfExamination: element.dateOfExamination
-              ? element.dateOfExamination
+              ? element.dateOfExamination.slice(0, 10)
               : "",
           });
         });
         allData.value = tableData;
         userTable.value = {
-          isLoading: false,
+          isLoading: true,
           columns: [
             {
-              label: "ID",
+              label: "Registration Number",
               field: "RegistrationNumber",
               width: "5%",
               sortable: true,
@@ -370,31 +785,20 @@ export default {
               sortable: true,
             },
             {
-              label: "Profession",
-              field: "Profession",
-              width: "15%",
-              sortable: true,
-            },
-                   {
               label: "Result",
               field: "Result",
-              width: "10%",
+              width: "5%",
               sortable: true,
             },
-                   {
-              label: "Date Of Examination",
-              field: "DateOfExamination",
-              width: "15%",
-              sortable: true,
-            },
+
             {
               label: "Action",
               field: "quick",
               width: "10%",
               display: function (row) {
                 return (
-                  '<button data-bs-toggle="modal" data-bs-target="#viewUser" class="edit-btn inline-block px-6 py-2.5 bg-primary-700 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" data-id="' +
-                  row.id +
+                  '<button data-bs-toggle="modal" data-bs-target="#viewResult" class="edit-btn inline-block px-6 py-2.5 bg-primary-700 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" data="' +
+                  row +
                   '" ><i class="fa fa-eye"></i> View</button>'
                 );
               },
@@ -406,10 +810,13 @@ export default {
                 x.FirstName.toLowerCase().includes(
                   searchTerm.value.toLowerCase()
                 ) ||
-                  x.MiddleName.toLowerCase().includes(
+                x.MiddleName.toLowerCase().includes(
                   searchTerm.value.toLowerCase()
                 ) ||
                 x.LastName.toLowerCase().includes(
+                  searchTerm.value.toLowerCase()
+                ) ||
+                x.Institution.toLowerCase().includes(
                   searchTerm.value.toLowerCase()
                 )
             );
@@ -423,17 +830,50 @@ export default {
       });
     };
 
-    const createAdmin = () => {
-      router.push({ path: "/admin/create" });
+    let resultData = ref({});
+
+    const tableLoadingFinish = () => {
+      userTable.value.isLoading = false;
+      let elements = document.getElementsByClassName("edit-btn");
+      Array.prototype.forEach.call(elements, function (element) {
+        if (element.classList.contains("edit-btn")) {
+          element.addEventListener("click", rowClicked());
+        }
+      });
     };
+
+    const rowClicked = (row) => {
+      if (row != undefined) {
+        row = JSON.parse(JSON.stringify(row));
+        resultData.value = row ? row : {};
+        firstName.value = row.FirstName ? row.FirstName : "";
+        lastName.value = row.LastName ? row.LastName : "";
+        middleName.value = row.MiddleName ? row.MiddleName : "";
+        institution.value = row.Institution ? row.Institution : "";
+        profession.value = row.Profession ? row.Profession : "";
+        sex.value = row.Sex ? row.Sex.replace(/\s/g, "") : "";
+        registrationNumber.value = row.RegistrationNumber
+          ? row.RegistrationNumber
+          : "";
+        dateOfExamination.value = row.DateOfExamination
+          ? row.DateOfExamination.slice(0, 10)
+          : "";
+        result.value = row.Result ? row.Result : "";
+      }
+    };
+
     const filterExpertLevel = (eventParam) => {
       if (eventParam == "All") {
         tableData = allData.value;
         userTable.value.rows = computed(() => {
           return tableData.filter(
             (x) =>
-              x.FirstName.toLowerCase().includes(searchTerm.value.toLowerCase()) ||
-              x.MiddleName.toLowerCase().includes(searchTerm.value.toLowerCase()) ||
+              x.FirstName.toLowerCase().includes(
+                searchTerm.value.toLowerCase()
+              ) ||
+              x.MiddleName.toLowerCase().includes(
+                searchTerm.value.toLowerCase()
+              ) ||
               x.LastName.toLowerCase().includes(searchTerm.value.toLowerCase())
           );
         });
@@ -446,10 +886,286 @@ export default {
         userTable.value.rows = computed(() => {
           return tableData.filter(
             (x) =>
-       x.FirstName.toLowerCase().includes(searchTerm.value.toLowerCase()) ||
-              x.MiddleName.toLowerCase().includes(searchTerm.value.toLowerCase()) ||
+              x.FirstName.toLowerCase().includes(
+                searchTerm.value.toLowerCase()
+              ) ||
+              x.MiddleName.toLowerCase().includes(
+                searchTerm.value.toLowerCase()
+              ) ||
               x.LastName.toLowerCase().includes(searchTerm.value.toLowerCase())
           );
+        });
+      }
+    };
+    const toggleModal = () => {
+      document.getElementById("modal").classList.toggle("hidden");
+      document.getElementById("mainContent").classList.toggle("blurBackground");
+      document.getElementById("mainSidebar").classList.toggle("blurBackground");
+      document.getElementById("mainNav").classList.toggle("blurBackground");
+    };
+
+    const toggleErrorModal = () => {
+      document.getElementById("errorModal").classList.toggle("hidden");
+      document.getElementById("mainContent").classList.toggle("blurBackground");
+      document.getElementById("mainSidebar").classList.toggle("blurBackground");
+      document.getElementById("mainNav").classList.toggle("blurBackground");
+    };
+
+    const importExcel = () => {
+      let file = [];
+      let errors = [];
+      let hasNumber = /\d/;
+      file = document.getElementById("upload").files[0];
+
+      let reader = new FileReader();
+      let extension = file.name.split(".").pop().toLowerCase();
+
+      if (extension === "xlsx" || extension === "xls" || extension === "csv") {
+        reader.readAsBinaryString(file);
+        reader.onload = (event) => {
+          let data = event.target.result;
+
+          let workbook = read(data, { type: "binary" });
+
+          let sheets = workbook.Sheets;
+
+          let transformed = transformSheets(sheets, workbook);
+
+          if (transformed.length < 2) {
+            transformed.shift();
+            transformed.pop();
+          } else {
+            transformed.shift();
+          }
+
+          for (let i = 0; i < transformed.length; i++) {
+            let tempDate = new Date(Date.UTC(0, 0, transformed[i][8] - 1));
+
+            transformed[i][8] = tempDate.toLocaleDateString();
+            console.log(transformed[i]);
+            if (hasNumber.test(transformed[i][2])) {
+              errors.push({
+                row: i,
+                column: 3,
+                columnData: transformed[i][2],
+                errorMessage: "Number is not allowed in name",
+              });
+            }
+            if (hasNumber.test(transformed[i][3])) {
+              errors.push({
+                row: i,
+                column: 4,
+                columnData: transformed[i][3],
+                errorMessage: "Number is not allowed in name",
+              });
+            }
+
+            if (hasNumber.test(transformed[i][4])) {
+              errors.push({
+                row: i,
+                column: 5,
+                columnData: transformed[i][4],
+                errorMessage: "Number is not allowed in name",
+              });
+            }
+            if (hasNumber.test(transformed[i][5])) {
+              errors.push({
+                row: i,
+                column: 6,
+                columnData: transformed[i][5],
+                errorMessage:
+                  "Number is not allowed in gender(only female or male is allowed)",
+              });
+            }
+
+            if (hasNumber.test(transformed[i][9])) {
+              errors.push({
+                row: i,
+                column: 9,
+                columnData: transformed[i][9],
+                errorMessage:
+                  "Number is not allowed in result(only pass or fail is allowed)",
+              });
+            }
+
+            if (transformed[i][9] === "Pass" || transformed[i][9] === "pass") {
+              transformed[i].result = "pass";
+            } else transformed[i].result = "fail";
+          }
+
+          content.value = transformed;
+          if (errors.length > 0) {
+            errorModal.value = true;
+            Finalerrors.value = errors;
+            toggleErrorModal();
+            return;
+          } else finalData.value = transformed;
+          importModal.value = true;
+          toggleModal();
+        };
+      } else {
+        toast.error("The file type choosen is incorrect", {
+          timeout: 5000,
+          position: "bottom-center",
+          pauseOnFocusLoss: true,
+          pauseOnHover: true,
+          icon: true,
+        });
+      }
+
+      return;
+    };
+    const addImported = () => {
+      isLoading.value = true;
+      let add = JSON.parse(JSON.stringify(finalData.value));
+      let finalArray = [];
+      let today = new Date();
+      let createdAt =
+        today.getFullYear() +
+        "-" +
+        (today.getMonth() + 1) +
+        "-" +
+        today.getDate();
+      let updatedAt =
+        today.getFullYear() +
+        "-" +
+        (today.getMonth() + 1) +
+        "-" +
+        today.getDate();
+      add.forEach((element) => {
+        let tempObj = {
+          registrationNo: element[1],
+          firstName: element[2],
+          middleName: element[3],
+          institution: element[6],
+          lastName: element[4],
+          sex: element[5],
+          profession: element[7],
+          dateOfExamination: element[8],
+          result: element[9],
+          createdAt: createdAt,
+          updatedAt: updatedAt,
+        };
+        finalArray.push(tempObj);
+      });
+      let idArray = [];
+      finalArray.forEach((element) => {
+        idArray.push(element.registrationNo);
+      });
+
+      store.dispatch("reviewer/getMultiple", idArray).then((res) => {
+        let checkforExisting = res.data.data;
+        let errorForExisting = [];
+
+        if (res.data.status === "Success") {
+          for (let i = 0; i < finalArray.length; i++) {
+            for (let j = 0; j < checkforExisting.length; j++) {
+              if (
+                finalArray[i].registrationNo ===
+                checkforExisting[j].registrationNo
+              ) {
+                errorForExisting.push({
+                  row: i,
+                  column: 1,
+                  columnData: finalArray[i].registrationNo,
+                  errorMessage:
+                    "There is an already existing record with that id",
+                });
+                toast.error(
+                  "There is an already existing record with that id",
+                  {
+                    timeout: 5000,
+                    position: "bottom-center",
+                    pauseOnFocusLoss: true,
+                    pauseOnHover: true,
+                    icon: true,
+                  }
+                );
+                isLoading.value = false;
+              }
+            }
+          }
+        }
+
+        if (errorForExisting.length > 0) {
+          Finalerrors.value = errorForExisting;
+          errorModal.value = true;
+          return;
+        } else {
+          store.dispatch("reviewer/addImported", finalArray).then(() => {
+            toast.success("Result/s added successfully", {
+              timeout: 5000,
+              position: "bottom-center",
+              pauseOnFocusLoss: true,
+              pauseOnHover: true,
+              icon: true,
+            });
+            isLoading.value = false;
+
+            getResults();
+          });
+        }
+      });
+    };
+
+    const filterGender = (eventParam) => {
+      if (eventParam == "Gender") {
+        tableData = allData.value;
+        userTable.value.rows = computed(() => {
+          return tableData;
+        });
+      } else if (eventParam == "male") {
+        tableData = allData.value.filter((data) => {
+          return data.Sex
+            ? data.Sex.toLowerCase() == "male" ||
+                data.Sex.toLowerCase() == "Male" ||
+                data.Sex.toLowerCase() == "m" ||
+                data.Sex.toLowerCase() == "M"
+            : "";
+        });
+        userTable.value.rows = computed(() => {
+          return tableData;
+        });
+      } else {
+        tableData = allData.value.filter((data) => {
+          return data.Sex
+            ? data.Sex.toLowerCase() == "female" ||
+                data.Sex.toLowerCase() == "Female" ||
+                data.Sex.toLowerCase() == "f" ||
+                data.Sex.toLowerCase() == "F"
+            : "";
+        });
+        userTable.value.rows = computed(() => {
+          return tableData;
+        });
+      }
+    };
+
+       const filterResult = (eventParam) => {
+      if (eventParam == "Result") {
+        tableData = allData.value;
+        userTable.value.rows = computed(() => {
+          return tableData;
+        });
+      } else if (eventParam == "pass") {
+        tableData = allData.value.filter((data) => {
+          return data.Result
+            ? data.Result.toLowerCase() == "Pass" ||
+                data.Result.toLowerCase() == "pass" 
+            : "";
+        });
+        userTable.value.rows = computed(() => {
+          return tableData;
+        });
+      } else {
+        tableData = allData.value.filter((data) => {
+          return data.Result
+            ? data.Result.toLowerCase() == "fail" ||
+                data.Result.toLowerCase() == "Fail" 
+            : "";
+        });
+        userTable.value.rows = computed(() => {
+          return tableData;
         });
       }
     };
@@ -461,12 +1177,42 @@ export default {
       searchData,
       isUserManager,
       userTable,
-      createAdmin,
+      tableLoadingFinish,
       searchTerm,
       expertLevels,
+      importExcel,
+      rowClicked,
+      content,
+      errorModal,
+      editModal,
+      resultData,
+      finalData,
+      importModal,
+      firstName,
+      lastName,
+      middleName,
+      institution,
+      profession,
+      result,
+      isLoading,
+      sex,
+      filterGender,
+      addImported,
+      registrationNumber,
+      dateOfExamination,
+      toggleModal,
+      toggleErrorModal,
+      filterResult,
+      Finalerrors,
       expertLevelFilter,
       filterExpertLevel,
     };
   },
 };
 </script>
+
+<style>
+.blurBackground {
+  filter: blur(3px);
+}
+</style>

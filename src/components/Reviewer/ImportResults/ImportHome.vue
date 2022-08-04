@@ -1032,7 +1032,6 @@ export default {
       result: "",
       startDate: "",
       endDate: "",
-
       currentPage: 0,
       totalCount: 0,
       paginationSizeList: [10, 25, 50, 100],
