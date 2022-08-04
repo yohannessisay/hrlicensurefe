@@ -155,13 +155,7 @@ const routes = [
         "../components/Reviewer/Configurations/ChangePassword/ChangePassword.vue"
       ),
   },
-  {
-    path: "/admin/review/report",
-    name: "report",
-    component: () => import("../components/Report/Report.vue"),
-  },
-
-  {
+    {
     path: "/myWork",
     name: "myWork",
     component: () => import("../components/Reviewer/MyWork.vue"),
@@ -1101,6 +1095,15 @@ const routes = [
       import(
         "../components/Reviewer/HomeComponents/CpdCertified/cpdCertified.vue"
       ),
+  },
+
+  {
+    path: "/admin/report",
+    name: "report",
+    component: () =>
+    import(
+      "../components/Reviewer/HomeComponents/Report/Report.vue"
+    ),
   },
 
   //Dashboard
