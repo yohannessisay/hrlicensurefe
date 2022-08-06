@@ -1,6 +1,6 @@
 <template>
   <div class="sidebar">
-    <router-link to="/admin/review/">
+    <router-link to="/admin/list/">
       <div class="logo-details ml-4">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -37,13 +37,11 @@
     <li class="inverted-border-radius mb-8 mt-4">
       <i class="bx bx-user ml-8 mt-4" style="color: #224771"></i>
 
-      <span class="header_text ml-4">User Management</span>
+      <span class="header_text ml-4">Users Management</span>
     </li>
     <ul class="nav-links">
-      <router-link to="/admin/userManagement/">
-        <li
-          :class="$route.fullPath === '/admin/userManagement' ? 'mb-2 active' : ''"
-        >
+      <router-link :to="!isUserManager?'userManagement/':'list/'">
+        <li :class="$route.fullPath === '/admin/list' ? 'mb-2 active' : ''">
           <a href="#UserManagement">
             <i class="bx bx-user"></i>
 
@@ -52,7 +50,7 @@
         </li>
       </router-link>
     </ul>
-    <ul class="nav-links">
+  <ul class="nav-links" v-if="!isUserManager">
       <div
         class="profile-details mb-8 ml-4"
         style="
@@ -78,5 +76,13 @@
   </div>
 </template>
 <script>
-export default {};
+export default {
+  setup() {
+    const isUserManager = localStorage.getItem("role") == "UM";
+
+    return {
+      isUserManager
+    };
+  }
+};
 </script>

@@ -11,7 +11,7 @@
     <!-- Main Content -->
     <div class="home-content">
       <div class="container mx-auto px-4 sm:px-8">
-        <div class="relative py-4">
+        <div class="relative py-4" v-if="isUserManager">
           <p class="absolute left-0 text-2xl font-semibold leading-tight">
             Add, Update or Remove Users
           </p>
@@ -156,7 +156,7 @@
                         @change="filterExpertLevel($event.target.value)"
                         aria-label="Default select example"
                       >
-                        <option selected>Expert Level</option>
+                        <option selected disabled>Expert Level</option>
                         <option
                           v-for="status in expertLevels"
                           v-bind:key="status.code"
@@ -188,8 +188,8 @@
                 :rows="userTable.rows"
                 :total="userTable.totalRecordCount"
                 :sortable="userTable.sortable"
-                @is-finished="tableLoadingFinishOthers"
-                @row-clicked="rowClickedOthers"
+                @is-finished="tableLoadingFinish"
+                @row-clicked="rowClicked"
               ></vue-table-lite>
               <addUser></addUser>
             </div>
@@ -199,6 +199,7 @@
     </div>
     <!-- Main Content -->
   </section>
+  <edit-user :modalData="modalData"></edit-user>
 </template>
 
 <script>
@@ -210,6 +211,7 @@ import { useRouter } from "vue-router";
 import ReviewerNavBar from "./SharedComponents/navBar.vue";
 import ReviewerSideBar from "./SharedComponents/sideNav.vue";
 import addUser from "./addUserModal.vue";
+import editUser from "./editUserModal.vue";
 import VueTableLite from "vue3-table-lite";
 
 export default {
@@ -217,7 +219,8 @@ export default {
     ReviewerNavBar,
     ReviewerSideBar,
     VueTableLite,
-    addUser
+    addUser,
+    editUser
   },
   computed: {},
 
@@ -235,7 +238,7 @@ export default {
     ]);
 
     let userTable = ref({ isLoading: true });
-
+    let modalData=ref({change:0});
     let tableData = reactive([]);
     const searchTerm = ref("");
     const getAdmins = () => {
@@ -251,6 +254,7 @@ export default {
             Role: element.role ? element.role.name : "",
             PhoneNumber: element.phoneNumber ? element.phoneNumber : "",
             ExpertLevel: element.expertLevel ? element.expertLevel.name : "",
+            data:element?element:{}
           });
         });
         allData.value = tableData;
@@ -300,7 +304,7 @@ export default {
               width: "10%",
               display: function (row) {
                 return (
-                  '<button data-bs-toggle="modal" data-bs-target="#viewUser" class="edit-btn inline-block px-6 py-2.5 bg-primary-700 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" data-id="' +
+                  '<button data-bs-toggle="modal" data-bs-target="#editUser" class="edit-btn inline-block px-6 py-2.5 bg-primary-700 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" data-id="' +
                   row.id +
                   '" ><i class="fa fa-eye"></i> View</button>'
                 );
@@ -354,7 +358,25 @@ export default {
         });
       }
     };
+    const tableLoadingFinish = () => {
+      userTable.value.isLoading = false;
+      userTable.value.isLoading = false;
+      let elements = document.getElementsByClassName("edit-btn");
 
+      Array.prototype.forEach.call(elements, function (element) {
+        if (element.classList.contains("edit-btn")) {
+          element.addEventListener("click", rowClicked());
+        }
+      });
+    };
+
+        const rowClicked = (row) => {
+      if (row != undefined) {
+        row = JSON.parse(JSON.stringify(row));
+           modalData.value.change++;
+        modalData.value.data = row ? row : {};
+      }
+    };
     onMounted(getAdmins);
 
     return {
@@ -363,7 +385,10 @@ export default {
       isUserManager,
       userTable,
       createAdmin,
+      rowClicked,
       searchTerm,
+      modalData,
+      tableLoadingFinish,
       expertLevels,
       expertLevelFilter,
       filterExpertLevel,
