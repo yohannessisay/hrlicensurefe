@@ -1,6 +1,6 @@
 <template>
   <div class="sidebar">
-    <router-link :to="!isUserManager?'review/':'list/'">
+    <router-link to="/admin/review">
       <div class="logo-details ml-4">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -35,22 +35,22 @@
       <div class="top left"></div>
     </div>
     <li class="inverted-border-radius mb-8 mt-4">
-      <i class="bx bx-user ml-8 mt-4" style="color: #224771"></i>
+      <i class="bx bx-table ml-8 mt-4" style="color: #224771"></i>
 
-      <span class="header_text ml-4">Users Management</span>
+      <span class="header_text ml-4">Report</span>
     </li>
     <ul class="nav-links">
-      <router-link :to="!isUserManager?'userManagement/':'list/'">
-        <li :class="$route.fullPath === '/admin/list'||'/admin/userManagement' ? 'mb-2 active' : ''">
+      <router-link to="admin/report">
+        <li :class="$route.fullPath === '/admin/report' ? 'mb-2 active' : ''">
           <a href="#UserManagement">
-            <i class="bx bx-user"></i>
+            <i class="bx bx-table"></i>
 
-            <span class="links_name"> User Management</span>
+            <span class="links_name">Report</span>
           </a>
         </li>
       </router-link>
     </ul>
-  <ul class="nav-links" v-if="!isUserManager">
+  <ul class="nav-links">
       <div
         class="profile-details mb-8 ml-4"
         style="
@@ -76,13 +76,5 @@
   </div>
 </template>
 <script>
-export default {
-  setup() {
-    const isUserManager = localStorage.getItem("role") == "UM";
-
-    return {
-      isUserManager
-    };
-  }
-};
+export default {};
 </script>

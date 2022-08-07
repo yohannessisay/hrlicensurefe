@@ -1132,6 +1132,16 @@ const routes = [
         "../components/Reviewer/HomeComponents/ImportResults/importResults.vue"
       ),
   },
+
+    //Report
+    {
+      path: "/admin/report",
+      name: "AdminReport",
+      component: () =>
+        import(
+          "../components/Reviewer/HomeComponents/Report/report.vue"
+        ),
+    },
 ];
 
 const router = createRouter({

@@ -60,9 +60,9 @@
         </li>
       </router-link>
 
-      <router-link to="/admin/cpdCertified">
+      <router-link to="/admin/report">
         <li class="mb-2">
-          <a href="#CpdCertified">
+          <a href="#Report">
             <i class="bx bx-table"></i>
             <span class="links_name">Report</span>
           </a>
